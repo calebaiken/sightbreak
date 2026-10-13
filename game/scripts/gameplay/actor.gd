@@ -18,14 +18,14 @@ const CROUCH_SPEED := 2.5
 const GRAVITY := 22.0
 const DEPLOY_SECONDS := 0.3
 const READY_EPSILON := 0.000001
-## Shot volumes follow the drawn operator (body space, before the crouch squash):
-## the head and helmet ellipsoids are the rendered meshes; the torso/legs are a
-## vertical cylinder ending below the head. The movement capsule is not a hitbox.
+## Shot volumes. Head: the rendered head and helmet ellipsoids (body space, before
+## the crouch squash). Body: exactly the 0.3 movement capsule (same radius, height
+## and placement as the collision shape) cut off where the drawn torso ends, so a
+## body hit is only ever registered where 0.3 registered one.
 const HEAD_VOLUMES := [
 	[Vector3(0, 1.56, 0), Vector3(0.16, 0.195, 0.165)],
 	[Vector3(0, 1.68, 0.005), Vector3(0.175, 0.1175, 0.18)]
 ]
-const BODY_RADIUS := 0.31
 const BODY_TOP := 1.38
 var actor_id: int = 0
 var team: int = 0
@@ -681,20 +681,22 @@ func volume_intersection(origin: Vector3, direction: Vector3, max_distance: floa
 	var inverse := global_transform.affine_inverse()
 	var local_origin := inverse * origin
 	var local_direction := inverse.basis * direction
-	# Undo the drawn crouch squash; the ray parameter remains a world distance.
 	var squash := maxf(0.05, _body.scale.y) if _body != null else 1.0
-	local_origin.y /= squash
-	local_direction.y /= squash
+	# Body: the movement capsule at the current stance, in unsquashed local space.
+	var capsule := _collision.shape as CapsuleShape3D
+	var body_t := _capsule_entry(local_origin - Vector3(0, _collision.position.y, 0), local_direction, capsule.radius, capsule.height, BODY_TOP * squash - _collision.position.y)
+	# Head: undo the drawn crouch squash; the ray parameter remains a world distance.
+	var head_origin := Vector3(local_origin.x, local_origin.y / squash, local_origin.z)
+	var head_direction := Vector3(local_direction.x, local_direction.y / squash, local_direction.z)
 	var nearest := max_distance
 	var headshot := false
 	var found := false
 	for volume: Array in HEAD_VOLUMES:
-		var t := _ellipsoid_entry(local_origin, local_direction, volume[0], volume[1])
+		var t := _ellipsoid_entry(head_origin, head_direction, volume[0], volume[1])
 		if t >= 0.0 and t < nearest:
 			nearest = t
 			headshot = true
 			found = true
-	var body_t := _cylinder_entry(local_origin, local_direction, BODY_RADIUS, BODY_TOP)
 	if body_t >= 0.0 and body_t < nearest:
 		nearest = body_t
 		headshot = false
@@ -719,29 +721,58 @@ static func _ellipsoid_entry(origin: Vector3, direction: Vector3, center: Vector
 	var t := (-b - sqrt(disc)) / a
 	return t if t >= 0.0 else -1.0
 
-static func _cylinder_entry(origin: Vector3, direction: Vector3, radius: float, top: float) -> float:
-	var radius_sq := radius * radius
-	if origin.x * origin.x + origin.z * origin.z <= radius_sq and origin.y >= 0.0 and origin.y <= top:
-		return 0.0
-	var best := -1.0
+## Entry distance of a ray into a y-axis capsule centred on the origin (height
+## includes both caps, as CapsuleShape3D) intersected with the half-space y <= top;
+## -1 on a miss, 0 from inside. Both pieces are convex, so each meets the ray in one
+## interval and the solid's interval is their overlap. Grazing rays miss, as they do
+## against the physics capsule.
+static func _capsule_entry(origin: Vector3, direction: Vector3, radius: float, height: float, top: float) -> float:
+	var half := maxf(0.0, height * 0.5 - radius)
+	var cylinder := _overlap(_radial_span(origin, direction, radius), _slab_span(origin.y, direction.y, -half, half))
+	var capsule := cylinder
+	for cap_y in [-half, half]:
+		var cap := _sphere_span(origin - Vector3(0, cap_y, 0), direction, radius)
+		if cap.x < cap.y:
+			capsule = cap if capsule.x >= capsule.y else Vector2(minf(capsule.x, cap.x), maxf(capsule.y, cap.y))
+	var span := _overlap(capsule, _slab_span(origin.y, direction.y, -INF, top))
+	if span.x >= span.y or span.y < 0.0:
+		return -1.0
+	return maxf(span.x, 0.0)
+
+const _EMPTY_SPAN := Vector2(INF, -INF)
+
+static func _overlap(a: Vector2, b: Vector2) -> Vector2:
+	return Vector2(maxf(a.x, b.x), minf(a.y, b.y))
+
+## Ray parameters inside the infinite vertical cylinder of the given radius.
+static func _radial_span(origin: Vector3, direction: Vector3, radius: float) -> Vector2:
 	var a := direction.x * direction.x + direction.z * direction.z
-	if a > 0.000000001:
-		var b := origin.x * direction.x + origin.z * direction.z
-		var c := origin.x * origin.x + origin.z * origin.z - radius_sq
-		var disc := b * b - a * c
-		if disc >= 0.0:
-			var t := (-b - sqrt(disc)) / a
-			var y := origin.y + direction.y * t
-			if t >= 0.0 and y >= 0.0 and y <= top:
-				best = t
-	if absf(direction.y) > 0.000000001:
-		for plane in [top, 0.0]:
-			var t: float = (plane - origin.y) / direction.y
-			if t >= 0.0 and (best < 0.0 or t < best):
-				var p := origin + direction * t
-				if p.x * p.x + p.z * p.z <= radius_sq:
-					best = t
-	return best
+	var c := origin.x * origin.x + origin.z * origin.z - radius * radius
+	if a < 0.000000000001:
+		return Vector2(-INF, INF) if c < 0.0 else _EMPTY_SPAN
+	var b := origin.x * direction.x + origin.z * direction.z
+	var disc := b * b - a * c
+	if disc <= 0.0:
+		return _EMPTY_SPAN
+	var root := sqrt(disc)
+	return Vector2((-b - root) / a, (-b + root) / a)
+
+## Ray parameters where low <= origin_y + direction_y * t <= high.
+static func _slab_span(origin_y: float, direction_y: float, low: float, high: float) -> Vector2:
+	if absf(direction_y) < 0.000000000001:
+		return Vector2(-INF, INF) if origin_y >= low and origin_y <= high else _EMPTY_SPAN
+	var t1 := (low - origin_y) / direction_y
+	var t2 := (high - origin_y) / direction_y
+	return Vector2(minf(t1, t2), maxf(t1, t2))
+
+static func _sphere_span(origin: Vector3, direction: Vector3, radius: float) -> Vector2:
+	var a := direction.dot(direction)
+	var b := origin.dot(direction)
+	var disc := b * b - a * (origin.dot(origin) - radius * radius)
+	if a <= 0.0 or disc <= 0.0:
+		return _EMPTY_SPAN
+	var root := sqrt(disc)
+	return Vector2((-b - root) / a, (-b + root) / a)
 
 ## Half-angle of the random cone for the next shot, in radians. The authority
 ## passes its floor contact; the HUD estimates airborne state from velocity.
