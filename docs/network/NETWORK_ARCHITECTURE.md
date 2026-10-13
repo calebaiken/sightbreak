@@ -17,3 +17,9 @@ Recipient filtering must preserve a public roster for scores and elimination nam
 Protocol authentication times out, but a compatible peer can stay connected without joining. Account rejection relies on client cooperation to close. Reservations are in memory. The input gate rejects newer packets arriving within 12 ms. Result delivery makes three attempts but has no durable outbox. One inactive/disconnected participant currently invalidates rewards for all ten players; changing that policy requires a product decision.
 
 These are development foundations, not Internet deployment approval. See the milestone record in `docs/engineering/PARALLEL_WORK.md`.
+
+## Current engineering stack (supersedes baseline gaps above)
+
+Privacy-v2 is based on corrected Claude77e0433; movement-v2 stacks on privacy; lifecycle-v2 stacks on movement. The authority remains60Hz. Snapshots are exactly20Hz with tick/epoch headers, per-recipient authorization and remote render buffering. Numbered bounded redundant commands are submitted30Hz and consumed at most once per server physics step. Local prediction is development opt-in. See dedicated movement/privacy contracts.
+
+`SBPeerLifecycle` owns wall-clock admission/idle deadlines, per-transport generations and input decode quotas. `match.gd` owns actual peer↔actor binding and provisional account/slot claims; the economy bridge owns trusted ticket inspect/consume HTTP calls. HTTP continuations must validate generation/deadline before committing a binding. A pending request cannot bypass slot reservation or revive a disconnected peer. The new read-only backend inspect route must be deployed alongside an account-enabled lifecycle server; older backends fail admission safely with404.
