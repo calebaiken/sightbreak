@@ -48,6 +48,7 @@ Commit game changes, then export every target from that same game source:
 ./scripts/export.sh linux
 ./scripts/export.sh android
 ./scripts/export.sh ios
+python3 scripts/verify_builds.py
 python3 scripts/build_manifest.py package
 (cd builds && sha256sum --check checksums.txt)
 ```
