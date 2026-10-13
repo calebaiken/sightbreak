@@ -59,6 +59,7 @@ def main():
             run('profile', [str(ROOT / 'scripts/godot.sh'), '--headless', '--script', 'res://tests/profile_test.gd'], {'SIGHTBREAK_STATE_DIR': str(args.out / 'profile-state')})
     run('worker-unit', ['python3', '-m', 'unittest', 'discover', '-s', 'server/tests', '-v'])
     run('network', ['bash', 'scripts/test_network.sh'])
+    run('network-soak', ['python3', 'scripts/test_network_soak.py', '--out', str(args.out / 'soak')])
     run('connection-lifecycle', ['python3', 'scripts/test_connection_lifecycle.py', '--out', str(args.out / 'connections')])
     run('bridge-transport', ['python3', 'scripts/test_bridge_transport.py'])
     run('build-manifest', ['python3', 'scripts/test_build_manifest.py'])
@@ -75,7 +76,7 @@ def main():
             run('postgresql', [str(ROOT / '.venv/bin/python'), '-m', 'pytest', 'backend/tests', '-q'], {'PYTHONPATH': 'backend', 'DATABASE_URL': 'postgresql+psycopg://sightbreak:sightbreak_local_only@127.0.0.1:55432/' + database})
         finally:
             with psycopg.connect(**connection) as db: db.execute(sql.SQL('DROP DATABASE {} WITH (FORCE)').format(sql.Identifier(database)))
-        for label, script in [('account-capacity', 'test_admission_capacity.py'), ('outbox-crash', 'test_result_outbox.py'), ('native-economy', 'test_native_economy.py')]:
+        for label, script in [('account-protocol', 'test_account_isolated.py'), ('account-capacity', 'test_admission_capacity.py'), ('outbox-crash', 'test_result_outbox.py'), ('native-economy', 'test_native_economy.py')]:
             run(label, [str(ROOT / '.venv/bin/python'), 'scripts/' + script])
         run('economy-conservation', ['python3', 'backend/simulate.py'])
     if args.render:
