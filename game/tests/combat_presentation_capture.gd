@@ -10,6 +10,8 @@ func _initialize() -> void:
 	_run.call_deferred()
 
 func shot(name: String) -> void:
+	# MultiMesh uploads can be one frame behind the scene mutation.
+	await process_frame
 	await process_frame
 	await RenderingServer.frame_post_draw
 	var result := root.get_texture().get_image().save_png(output.path_join(name + ".png"))
@@ -50,11 +52,13 @@ func _run() -> void:
 	actor.tick_visual(0.016)
 	await shot("05-rifle-reseated")
 	var effects := SBCombatEffects.for_world(world)
-	effects.impact(actor.global_position + Vector3(0.25, 1.1, 2), Vector3(0, 0, -1), false)
+	effects.impact(actor.global_position + Vector3(-0.25, 1.3, 1.7), Vector3(0, 0, -1), false)
 	effects.set_process(false)
 	effects._process(0.05)
 	await shot("05b-bullet-impact")
 	effects.set_process(true)
+	effects._process(1.0)
+	actor._gun.visible = false
 	actor.camera.current = false
 	var camera := Camera3D.new()
 	world.add_child(camera)

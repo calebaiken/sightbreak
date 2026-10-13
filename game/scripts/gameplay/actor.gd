@@ -280,9 +280,11 @@ func _build_body() -> void:
 		_body.add_child(arm)
 		arm.position = Vector3(x * 1.85, 1.31, 0)
 		_arms.append(arm)
-		_limb(arm, Vector3.ZERO, Vector3(x * 0.16, -0.23, 0.015), 0.093, uniform)
-		_limb(arm, Vector3(x * 0.16, -0.23, 0.015), Vector3(-x * 0.45, -0.23, -0.29), 0.078, uniform)
-		_rounded(arm, Vector3(-x * 0.45, -0.23, -0.29), Vector3(0.13, 0.13, 0.16), dark)
+		var elbow := Vector3(x * 0.16, -0.23, 0.015)
+		var grip_at := Vector3(-x * 1.5 + 0.07, -0.08, -0.38 if x < 0 else -0.23)
+		_limb(arm, Vector3.ZERO, elbow, 0.093, uniform)
+		_limb(arm, elbow, grip_at, 0.078, uniform)
+		_rounded(arm, grip_at, Vector3(0.12, 0.115, 0.15), dark)
 		_rounded(arm, Vector3(x * 0.15, -0.04, 0), Vector3(0.17, 0.20, 0.21), accent)
 	_head = _rounded(_body, Vector3(0, 1.56, 0), Vector3(0.32, 0.39, 0.33), dark)
 	# Helmet rim and smoke-tinted visor sit at root scale, not scaled head-local.
@@ -298,10 +300,10 @@ func _build_body() -> void:
 		_part(_body, Vector3(0, y, -0.238), Vector3(0.34, 0.016, 0.012), Color("101a20"))
 	_part(_body, Vector3(0, 1.08, 0.19), Vector3(0.32, 0.35, 0.13), dark)
 	# A lightweight world proxy: first-person attachments need no tenfold overhead.
-	var rifle := _part(_body, Vector3(0.13, 1.12, -0.37), Vector3(0.075, 0.11, 0.44), Color("1b242b"))
+	var rifle := _part(_body, Vector3(0.07, 1.26, -0.37), Vector3(0.075, 0.11, 0.44), Color("1b242b"))
 	rifle.material_override = _body_material(Color("1b242b"), 0.48, 0.55)
-	_part(_body, Vector3(0.13, 1.13, -0.65), Vector3(0.029, 0.029, 0.16), dark)
-	_part(_body, Vector3(0.13, 1.00, -0.38), Vector3(0.054, 0.15, 0.08), dark)
+	_part(_body, Vector3(0.07, 1.27, -0.65), Vector3(0.029, 0.029, 0.16), dark)
+	_part(_body, Vector3(0.07, 1.14, -0.38), Vector3(0.054, 0.15, 0.08), dark)
 	_world_muzzle = MeshInstance3D.new()
 	var flash := PrismMesh.new()
 	flash.size = Vector3(0.085, 0.085, 0.16)
@@ -312,7 +314,7 @@ func _build_body() -> void:
 	_world_muzzle.material_override = flash_material
 	_world_muzzle.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	_body.add_child(_world_muzzle)
-	_world_muzzle.position = Vector3(0.13, 1.13, -0.765)
+	_world_muzzle.position = Vector3(0.07, 1.27, -0.765)
 	_world_muzzle.visible = false
 	_batch_body_visuals(_body)
 

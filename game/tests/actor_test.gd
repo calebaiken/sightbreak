@@ -88,6 +88,16 @@ func _run() -> void:
 	smoke.global_position = Vector3(0, 1, -12)
 	smoke._detonate()
 	check(not player.can_see(enemy), "smoke blocks bot line of sight")
+	check(smoke._cloud_puffs.size() == 7, "High smoke uses one closed core and at most six soft edge quads")
+	check(Utility.smoke_texture().get_width() == 64 and Utility.smoke_texture() == Utility.smoke_texture(), "all smoke clouds share one bounded 64-pixel texture")
+	Utility.high_quality_smoke = false
+	var low_smoke := Utility.new()
+	low_smoke.kind = "smoke"
+	world.add_child(low_smoke)
+	low_smoke._detonate()
+	check(low_smoke._cloud_puffs.size() == 4, "Low smoke halves translucent quads without removing opaque core")
+	low_smoke.queue_free()
+	Utility.high_quality_smoke = true
 	smoke.queue_free()
 	await process_frame
 	var before := player.global_position

@@ -12,25 +12,49 @@ var _detonated := false
 var _mesh: MeshInstance3D
 var _cloud_puffs: Array[MeshInstance3D] = []
 var _cloud_elapsed := 0.0
-static var _smoke_shader: Shader
+static var high_quality_smoke := true
+static var _smoke_texture: ImageTexture
+static var _smoke_core_shader: Shader
 
-static func smoke_shader() -> Shader:
-	if _smoke_shader == null:
-		_smoke_shader = Shader.new()
-		_smoke_shader.code = """shader_type spatial;
-render_mode unshaded;
-uniform vec4 smoke_tint : source_color;
-varying float billow;
-void vertex() {
- billow = sin(VERTEX.x*3.8 + VERTEX.y*2.9) * sin(VERTEX.z*4.2-VERTEX.y*2.1);
- VERTEX += NORMAL * billow * 0.22;
-}
+static func smoke_texture() -> ImageTexture:
+	# One original deterministic 64² RGBA texture, about 22 KiB including mipmaps.
+	# Shared by all clouds; never allocates a texture per particle or per frame.
+	if _smoke_texture == null:
+		var texture_image := Image.create(64, 64, false, Image.FORMAT_RGBA8)
+		var noise := FastNoiseLite.new()
+		noise.seed = 3817
+		noise.frequency = 0.083
+		noise.fractal_octaves = 4
+		for y in range(64):
+			for x in range(64):
+				var n := noise.get_noise_2d(x, y)
+				var radius := (Vector2(x, y) - Vector2(31.5, 31.5)).length() / 31.5
+				var density := smoothstep(1.0, 0.42, radius + n * 0.09)
+				var shade := 0.46 + n * 0.15
+				texture_image.set_pixel(x, y, Color(shade * 0.94, shade, shade * 1.035, density))
+		texture_image.generate_mipmaps()
+		_smoke_texture = ImageTexture.create_from_image(texture_image)
+	return _smoke_texture
+
+static func smoke_core_shader() -> Shader:
+	if _smoke_core_shader == null:
+		_smoke_core_shader = Shader.new()
+		_smoke_core_shader.code = """shader_type spatial;
+render_mode unshaded, cull_disabled;
+uniform sampler2D cloud_noise : source_color, filter_linear_mipmap, repeat_enable;
+varying vec3 cloud_position;
+varying vec3 cloud_normal;
+void vertex() { cloud_position = VERTEX; cloud_normal = NORMAL; }
 void fragment() {
- ALBEDO = smoke_tint.rgb * (0.90 + billow*0.035 + max(dot(NORMAL,vec3(0.3,0.8,0.4)),0.0)*0.1);
+ vec3 weights = abs(cloud_normal);
+ weights /= max(weights.x + weights.y + weights.z, 0.001);
+ ALBEDO = texture(cloud_noise, cloud_position.yz * 0.14 + 0.5).rgb * weights.x
+        + texture(cloud_noise, cloud_position.xz * 0.14 + 0.5).rgb * weights.y
+        + texture(cloud_noise, cloud_position.xy * 0.14 + 0.5).rgb * weights.z;
  ROUGHNESS = 1.0;
 }
 """
-	return _smoke_shader
+	return _smoke_core_shader
 
 func _ready() -> void:
 	_mesh = MeshInstance3D.new()
@@ -72,25 +96,45 @@ func _detonate() -> void:
 		_lifetime = 12
 		global_position.y = 1.6
 		add_to_group("smoke_clouds")
-		for i in range(11):
+		# A closed opaque core preserves concealment even inside the cloud. Only
+		# the boundary uses alpha: at most six quads (three in Low), no lights.
+		var core := MeshInstance3D.new()
+		var sphere := SphereMesh.new()
+		sphere.radius = 2.15
+		sphere.height = 4.1
+		sphere.radial_segments = 24
+		sphere.rings = 12
+		core.mesh = sphere
+		var core_material := ShaderMaterial.new()
+		core_material.shader = smoke_core_shader()
+		core_material.set_shader_parameter("cloud_noise", smoke_texture())
+		core.material_override = core_material
+		core.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		add_child(core)
+		_cloud_puffs.append(core)
+		var puff_count := 6 if high_quality_smoke else 3
+		var material := StandardMaterial3D.new()
+		material.albedo_texture = smoke_texture()
+		material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		material.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
+		material.cull_mode = BaseMaterial3D.CULL_DISABLED
+		material.depth_draw_mode = BaseMaterial3D.DEPTH_DRAW_DISABLED
+		for i in range(puff_count):
 			var puff := MeshInstance3D.new()
-			var sphere := SphereMesh.new()
-			sphere.radius = 1.7
-			sphere.height = 3.4
-			sphere.radial_segments = 16
-			sphere.rings = 8
-			puff.mesh = sphere
-			var material := ShaderMaterial.new()
-			material.shader = smoke_shader()
-			material.set_shader_parameter("smoke_tint", Color("677378").lightened(float(i % 3) * 0.015))
+			var quad := QuadMesh.new()
+			quad.size = Vector2(4.7, 4.7)
+			puff.mesh = quad
 			puff.material_override = material
 			puff.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			add_child(puff)
-			puff.position = Vector3(sin(i * 2.4) * 1.35, cos(i * 1.9) * 0.48, cos(i * 2.4) * 1.35)
+			puff.position = Vector3(sin(i * TAU / puff_count) * 0.88, cos(i * 2.1) * 0.28, cos(i * TAU / puff_count) * 0.88)
 			_cloud_puffs.append(puff)
+		for puff in _cloud_puffs:
 			puff.scale = Vector3.ONE * 0.2
 			var grow := puff.create_tween()
 			grow.tween_property(puff, "scale", Vector3.ONE, 0.8)
+
 	else:
 		_lifetime = 0.45
 		for actor in ([] if visual_only else get_tree().get_nodes_in_group("combatants")):
