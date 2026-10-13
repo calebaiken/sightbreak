@@ -19,6 +19,7 @@ var screen := "menu"
 var paused := false
 var input_look := Vector2.ZERO
 var mouse_delta := Vector2.ZERO
+var physical_mouse_fire := false
 var status_label: Label
 var score_label: Label
 var phase_label: Label
@@ -108,6 +109,28 @@ func label(text: String, font_size: int = 18, color: Color = Color.WHITE) -> Lab
 	node.add_theme_font_size_override("font_size", font_size)
 	node.add_theme_color_override("font_color", color)
 	return node
+
+func wrapped_label(text: String, font_size: int = 18, color: Color = Color.WHITE) -> Label:
+	var node := label(text, font_size, color)
+	node.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	node.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	return node
+
+func scroll_rows(parent: Control) -> VBoxContainer:
+	var scroll := ScrollContainer.new()
+	scroll.name = "ContentScroll"
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	parent.add_child(scroll)
+	var content := VBoxContainer.new()
+	content.name = "ScrollRows"
+	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	content.add_theme_constant_override("separation", 12)
+	scroll.add_child(content)
+	return content
+
+func uses_touch_controls() -> bool:
+	return DisplayServer.is_touchscreen_available() or bool(profile.data.settings.touch_visible)
 
 func button(text: String, callback: Callable, height: float = 48) -> Button:
 	var node := Button.new()
@@ -226,11 +249,11 @@ func show_menu() -> void:
 	right.add_child(map_note)
 	var footer := HBoxContainer.new()
 	rows.add_child(footer)
-	footer.add_child(label("◈  LEVEL %02d     %s     /     TRAINING" % [profile.data.level, str(profile.data.display_name).to_upper()], 14, MUTED))
+	footer.add_child(wrapped_label("◈  LEVEL %02d     %s     /     TRAINING" % [profile.data.level, str(profile.data.display_name).to_upper()], 14, MUTED))
 	var gap := Control.new()
 	gap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	footer.add_child(gap)
-	footer.add_child(label("EARNED IN PLAY.  ZERO REAL-MONEY PURCHASES.", 13, GOLD))
+	footer.add_child(wrapped_label("EARNED IN PLAY.  ZERO REAL-MONEY PURCHASES.", 13, GOLD))
 
 func panel_screen(title: String, subtitle: String, back: Callable = show_menu) -> VBoxContainer:
 	clear_ui()
@@ -244,25 +267,28 @@ func panel_screen(title: String, subtitle: String, back: Callable = show_menu) -
 	var top := HBoxContainer.new()
 	rows.add_child(top)
 	top.add_child(button("← BACK", back, 42))
-	top.add_child(label(title, 32))
-	rows.add_child(label(subtitle, 15, MUTED))
-	return rows
+	top.add_child(wrapped_label(title, 32))
+	rows.add_child(wrapped_label(subtitle, 15, MUTED))
+	return scroll_rows(rows)
 
 func show_connect() -> void:
 	screen = "connect"
 	var rows := panel_screen("LOCAL NETWORK", "Unranked LAN sessions • Server owns movement, combat and round rules • No online economy rewards")
 	rows.add_child(label("Join a dedicated server", 26))
 	var address := LineEdit.new()
+	address.custom_minimum_size.y = 48
 	address.placeholder_text = "Server address"
 	address.text = "127.0.0.1"
 	rows.add_child(address)
 	var port := SpinBox.new()
+	port.custom_minimum_size.y = 48
 	port.min_value = 1024
 	port.max_value = 65535
 	port.value = 27020
 	rows.add_child(port)
 	rows.add_child(button("JOIN GUEST LAN MATCH", func(): start_match({"mode": "client", "address": address.text.strip_edges(), "port": int(port.value), "name": profile.data.display_name})))
 	var server_id := LineEdit.new()
+	server_id.custom_minimum_size.y = 48
 	server_id.text = "local-relay"
 	server_id.placeholder_text = "Account server ID"
 	rows.add_child(server_id)
@@ -293,8 +319,8 @@ func connect_account(address: String, port: int, server_id: String, feedback: La
 func show_progress() -> void:
 	screen = "progress"
 	var rows := panel_screen("OPERATOR RECORD", "Offline training record • Separate from authenticated online accounts and tradable inventory")
-	rows.add_child(label("LEVEL %d     /     %d XP     /     %d TRAINING CREDITS" % [profile.data.level, profile.data.xp, profile.data.credits], 28, GOLD))
-	rows.add_child(label("%d MATCHES     %d WINS     %d ELIMINATIONS     %d DEATHS" % [profile.data.matches, profile.data.wins, profile.data.kills, profile.data.deaths], 20))
+	rows.add_child(wrapped_label("LEVEL %d     /     %d XP     /     %d TRAINING CREDITS" % [profile.data.level, profile.data.xp, profile.data.credits], 28, GOLD))
+	rows.add_child(wrapped_label("%d MATCHES     %d WINS     %d ELIMINATIONS     %d DEATHS" % [profile.data.matches, profile.data.wins, profile.data.kills, profile.data.deaths], 20))
 	var name_row := HBoxContainer.new()
 	rows.add_child(name_row)
 	var display := LineEdit.new()
@@ -307,19 +333,16 @@ func show_progress() -> void:
 		profile.save()
 	))
 	rows.add_child(button("ONLINE ACCOUNT & INVENTORY", func(): open_economy("profile")))
-	var scroll := ScrollContainer.new()
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	rows.add_child(scroll)
 	var history := VBoxContainer.new()
-	history.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(history)
-	if profile.data.history.is_empty(): history.add_child(label("Complete an offline match to establish your training record.", 18, MUTED))
+	rows.add_child(history)
+	if profile.data.history.is_empty(): history.add_child(wrapped_label("Complete an offline match to establish your training record.", 18, MUTED))
 	for result in profile.data.history:
-		history.add_child(label("%s   •   %s   •   %d eliminations   •   +%d Credits" % [result.get("time", ""), "VICTORY" if result.get("won", false) else "DEFEAT", int(result.get("kills", 0)), int(result.get("credits_earned", 0))], 17, MUTED))
+		history.add_child(wrapped_label("%s   •   %s   •   %d eliminations   •   +%d Credits" % [result.get("time", ""), "VICTORY" if result.get("won", false) else "DEFEAT", int(result.get("kills", 0)), int(result.get("credits_earned", 0))], 17, MUTED))
 
 func setting_slider(parent: VBoxContainer, title: String, key: String, low: float, high: float, step: float) -> void:
 	var row := HBoxContainer.new()
 	parent.add_child(row)
+	row.custom_minimum_size.y = 48
 	var caption := label(title, 17)
 	caption.custom_minimum_size.x = 250
 	row.add_child(caption)
@@ -343,41 +366,40 @@ func setting_slider(parent: VBoxContainer, title: String, key: String, low: floa
 func show_settings() -> void:
 	screen = "settings"
 	var rows := panel_screen("FIELD SETTINGS", "Controls and accessibility are saved on this device. Touch HUD layouts are editable during a match.")
-	var scroll := ScrollContainer.new()
-	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	rows.add_child(scroll)
-	var settings := VBoxContainer.new()
-	settings.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	scroll.add_child(settings)
+	var settings := rows
 	setting_slider(settings, "MOUSE SENSITIVITY", "sensitivity", 0.0005, 0.008, 0.0001)
 	setting_slider(settings, "TOUCH SENSITIVITY", "touch_sensitivity", 0.001, 0.012, 0.0002)
 	setting_slider(settings, "FIELD OF VIEW", "fov", 60, 100, 1)
 	setting_slider(settings, "MASTER VOLUME", "volume", 0, 1, 0.05)
-	setting_slider(settings, "TOUCH BUTTON SIZE", "hud_scale", 0.7, 1.6, 0.05)
+	setting_slider(settings, "TOUCH BUTTON SIZE", "hud_scale", 0.7, 1.5, 0.05)
 	setting_slider(settings, "CROSSHAIR SIZE", "crosshair_size", 2, 12, 1)
 	for definition in [["GYROSCOPE AIMING (supported devices)", "gyro"], ["SHOW TOUCH CONTROLS ON DESKTOP", "touch_visible"], ["REDUCED MOTION", "reduced_motion"]]:
 		var key: String = definition[1]
 		var check := CheckButton.new()
+		check.custom_minimum_size.y = 48
 		check.text = definition[0]
 		check.button_pressed = bool(profile.data.settings[key])
 		check.toggled.connect(func(value: bool): profile.data.settings[key] = value; profile.save())
 		settings.add_child(check)
-	var quality := HBoxContainer.new()
+	var quality := HFlowContainer.new()
 	settings.add_child(quality)
 	quality.add_child(label("FRAME LIMIT", 17))
 	var frame_limit := OptionButton.new()
+	frame_limit.custom_minimum_size.y = 48
 	for value in [30, 60, 90, 120]: frame_limit.add_item(str(value), value)
 	frame_limit.select([30, 60, 90, 120].find(int(profile.data.settings.fps_limit)))
 	frame_limit.item_selected.connect(func(index: int): profile.data.settings.fps_limit = frame_limit.get_item_id(index); profile.save(); apply_settings())
 	quality.add_child(frame_limit)
 	quality.add_child(label("BOT DIFFICULTY", 17))
 	var difficulty := OptionButton.new()
+	difficulty.custom_minimum_size.y = 48
 	for value in ["RECRUIT", "STANDARD", "VETERAN"]: difficulty.add_item(value)
 	difficulty.select(int(profile.data.settings.difficulty))
 	difficulty.item_selected.connect(func(index: int): profile.data.settings.difficulty = index; profile.save())
 	quality.add_child(difficulty)
 	quality.add_child(label("GRAPHICS", 17))
 	var graphics := OptionButton.new()
+	graphics.custom_minimum_size.y = 48
 	graphics.add_item("LOW / NO SHADOWS")
 	graphics.add_item("STANDARD")
 	graphics.select(int(profile.data.settings.graphics_quality))
@@ -391,7 +413,9 @@ func show_settings() -> void:
 	picker.custom_minimum_size = Vector2(100, 35)
 	picker.color_changed.connect(func(color: Color): profile.data.settings.crosshair_color = color.to_html(false); profile.save())
 	color_row.add_child(picker)
-	settings.add_child(label("WASD / left stick: move  •  Mouse / right stick: aim  •  LMB / R2: fire\nR: reload  •  E: hold plant / defuse  •  Space: jump  •  Ctrl: crouch\nB: buy  •  G: frag  •  Q: smoke  •  1 / 2: switch  •  Tab: score  •  Esc: pause", 17, MUTED))
+	settings.add_child(wrapped_label("WASD / left stick: move  •  Mouse / right stick: aim  •  LMB / R2: fire\nR: reload  •  E: hold plant / defuse  •  Space: jump  •  Ctrl: crouch\nB: buy  •  G: frag  •  Q: smoke  •  1 / 2: switch  •  Tab: score  •  Esc: pause", 17, MUTED))
+
+	settings.add_child(wrapped_label("TOUCH: Left thumb moves; drag the open area or FIRE to aim. Hold FIRE to shoot; hold USE to plant or defuse. Tap II → EDIT TOUCH HUD to move buttons and the joystick. RESET POSITIONS restores the layout.", 17, GOLD))
 
 func apply_settings() -> void:
 	Engine.max_fps = int(profile.data.settings.fps_limit)
@@ -446,6 +470,7 @@ func start_match(options: Dictionary) -> void:
 	cosmetic_weapon = ""
 	apply_settings()
 	mouse_delta = Vector2.ZERO
+	physical_mouse_fire = false
 	if not server_mode:
 		build_hud()
 		if not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -488,14 +513,14 @@ func build_hud() -> void:
 	side.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	side.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(side)
-	action_label = label("", 16, GOLD)
+	action_label = wrapped_label("", 16, GOLD)
 	action_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	side.add_child(action_label)
 	var space := Control.new()
 	space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	space.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	rows.add_child(space)
-	status_label = label("BUY PHASE  /  Press B to equip", 19, GOLD)
+	status_label = wrapped_label("BUY PHASE  /  " + ("Tap BUY to equip" if uses_touch_controls() else "Press B to equip"), 19, GOLD)
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	rows.add_child(status_label)
 	objective_bar = ProgressBar.new()
@@ -507,13 +532,14 @@ func build_hud() -> void:
 	var bottom := HBoxContainer.new()
 	bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	rows.add_child(bottom)
-	health_label = label("100  /  HEALTH", 26)
+	health_label = wrapped_label("100  /  HEALTH", 22)
 	health_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	bottom.add_child(health_label)
-	var controls := label("B  BUY     E  OBJECTIVE     TAB  TEAM     ESC  MENU", 13, MUTED)
+	var controls := wrapped_label("BUY  EQUIP     USE  OBJECTIVE     TEAM  ROSTER     II  MENU" if uses_touch_controls() else "B  BUY     E  OBJECTIVE     TAB  TEAM     ESC  MENU", 13, MUTED)
+	controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	controls.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	bottom.add_child(controls)
-	ammo_label = label("12 / 36", 26)
+	ammo_label = wrapped_label("12 / 36", 22)
 	ammo_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	ammo_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	bottom.add_child(ammo_label)
@@ -523,7 +549,7 @@ func build_hud() -> void:
 	ui.add_child(crosshair)
 	crosshair.draw.connect(draw_crosshair)
 	touch = Touch.new()
-	touch.enabled = DisplayServer.is_touchscreen_available() or bool(profile.data.settings.touch_visible)
+	touch.enabled = uses_touch_controls()
 	touch.hud_scale = float(profile.data.settings.hud_scale)
 	touch.restore_layout(profile.data.settings.hud_positions)
 	touch.buy_pressed.connect(show_buy)
@@ -543,20 +569,26 @@ func draw_crosshair() -> void:
 		crosshair.draw_line(center + direction * 4, center + direction * (4 + width), color, 2)
 	crosshair.draw_circle(center, 1.5, color)
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
+		physical_mouse_fire = false
+		mouse_delta = Vector2.ZERO
+		if is_instance_valid(touch): touch.reset_input()
+
 func _input(event: InputEvent) -> void:
 	if server_mode: return
+	# Touch-to-mouse emulation is needed by menus, but must never fire the weapon.
+	if event is InputEventMouse and event.device == InputEvent.DEVICE_ID_EMULATION:
+		return
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		physical_mouse_fire = event.pressed and screen == "game" and not paused
 	if event is InputEventMouseMotion and screen == "game" and not paused and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
 		mouse_delta += event.relative
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_ESCAPE:
 			if screen == "game":
 				if touch != null and touch.editing:
-					touch.editing = false
-					profile.data.settings.hud_positions = touch.exported_layout()
-					profile.save()
-					touch.queue_redraw()
-					paused = false
-					Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+					finish_touch_editor()
 				else: toggle_pause()
 			elif screen != "menu": show_menu()
 		elif screen == "game" and not paused and event.keycode == KEY_B:
@@ -594,7 +626,7 @@ func _physics_process(delta: float) -> void:
 		input_look.y = clampf(input_look.y, -1.45, 1.45)
 		state.move = move.limit_length(1.0)
 		state.look = input_look
-		state.fire = Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) or Input.get_joy_axis(0, JOY_AXIS_TRIGGER_RIGHT) > 0.4 or touch_action("fire")
+		state.fire = physical_mouse_fire or Input.get_joy_axis(0, JOY_AXIS_TRIGGER_RIGHT) > 0.4 or touch_action("fire")
 		state.reload = Input.is_physical_key_pressed(KEY_R) or Input.is_joy_button_pressed(0, JOY_BUTTON_X) or touch_action("reload")
 		state.jump = Input.is_physical_key_pressed(KEY_SPACE) or Input.is_joy_button_pressed(0, JOY_BUTTON_A) or touch_action("jump")
 		state.crouch = Input.is_physical_key_pressed(KEY_CTRL) or Input.is_joy_button_pressed(0, JOY_BUTTON_B) or touch_action("crouch")
@@ -654,8 +686,8 @@ func _process(delta: float) -> void:
 	if actor != null:
 		health_label.text = "%03d   /   HEALTH" % maxi(0, int(actor.health)) if actor.alive else "ELIMINATED  /  SPECTATING"
 		ammo_label.text = "%s   %02d / %02d" % [str(actor.weapon_id).to_upper(), actor.ammo, actor.reserve]
-		if match_game.phase == "buy": status_label.text = "MATCH FUNDS  %d   /   PRESS B TO EQUIP" % actor.credits
-		elif match_game.phase != "waiting" and elapsed > float(status_label.get_meta("until", 0.0)): status_label.text = "HOLD E AT A SITE TO PLANT" if actor.team == 0 and str(match_game.objective_state) != "planted" else "HOLD E NEAR THE DEVICE TO DEFUSE" if str(match_game.objective_state) == "planted" else "DEFEND THE TWO OBJECTIVE SITES"
+		if match_game.phase == "buy": status_label.text = "MATCH FUNDS  %d   /   %s TO EQUIP" % [actor.credits, "TAP BUY" if uses_touch_controls() else "PRESS B"]
+		elif match_game.phase != "waiting" and elapsed > float(status_label.get_meta("until", 0.0)): status_label.text = ("HOLD USE AT A SITE TO PLANT" if uses_touch_controls() else "HOLD E AT A SITE TO PLANT") if actor.team == 0 and str(match_game.objective_state) != "planted" else ("HOLD USE NEAR THE DEVICE TO DEFUSE" if uses_touch_controls() else "HOLD E NEAR THE DEVICE TO DEFUSE") if str(match_game.objective_state) == "planted" else "DEFEND THE TWO OBJECTIVE SITES"
 		crosshair.visible = actor.alive and not paused
 	if (Input.is_physical_key_pressed(KEY_TAB) or elapsed < touch_score_until) and not paused:
 		if not is_instance_valid(score_panel): show_scoreboard()
@@ -676,11 +708,11 @@ func make_overlay(title: String) -> VBoxContainer:
 	fill(overlay)
 	ui.add_child(overlay)
 	var margins := margin_frame(overlay, 64)
-	var rows := VBoxContainer.new()
+	var rows := scroll_rows(margins)
 	rows.add_theme_constant_override("separation", 18)
-	margins.add_child(rows)
-	rows.add_child(label(title, 38, GOLD))
+	rows.add_child(wrapped_label(title, 38, GOLD))
 	paused = true
+	physical_mouse_fire = false
 	if touch != null: touch.reset_input(); touch.enabled = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	return rows
@@ -689,8 +721,9 @@ func close_overlay() -> void:
 	if is_instance_valid(overlay): overlay.queue_free()
 	overlay = null
 	paused = false
+	physical_mouse_fire = false
 	mouse_delta = Vector2.ZERO
-	if touch != null: touch.enabled = DisplayServer.is_touchscreen_available() or bool(profile.data.settings.touch_visible)
+	if touch != null: touch.enabled = uses_touch_controls()
 	if not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func toggle_pause() -> void:
@@ -700,32 +733,43 @@ func toggle_pause() -> void:
 	var rows := make_overlay("FIELD MENU")
 	rows.add_child(label("The match continues while this menu is open.", 18, MUTED))
 	rows.add_child(button("RESUME", close_overlay))
-	rows.add_child(button("EDIT TOUCH HUD", func():
-		close_overlay()
-		touch.enabled = true
-		touch.editing = true
-		touch.queue_redraw()
-		paused = true
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-		var done := button("SAVE TOUCH LAYOUT", func():
-			touch.editing = false
-			profile.data.settings.hud_positions = touch.exported_layout()
-			profile.save()
-			build_hud()
-			paused = false
-		)
-		done.position = Vector2(480, 130)
-		done.custom_minimum_size = Vector2(280, 60)
-		ui.add_child(done)
-	))
+	rows.add_child(button("EDIT TOUCH HUD", open_touch_editor))
 	rows.add_child(button("LEAVE MATCH", leave_match))
+
+func open_touch_editor() -> void:
+	close_overlay()
+	touch.enabled = true
+	touch.editing = true
+	paused = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	var toolbar := HBoxContainer.new()
+	toolbar.alignment = BoxContainer.ALIGNMENT_CENTER
+	toolbar.add_theme_constant_override("separation", 16)
+	toolbar.set_anchors_and_offsets_preset(Control.PRESET_TOP_WIDE)
+	var safe := SafeArea.viewport_rect(ui.size)
+	toolbar.offset_left = safe.position.x + 24
+	toolbar.offset_right = -(ui.size.x - safe.end.x) - 24
+	toolbar.offset_top = safe.position.y + 120
+	toolbar.add_child(button("SAVE TOUCH LAYOUT", finish_touch_editor, 60))
+	toolbar.add_child(button("RESET POSITIONS", func(): touch.reset_layout(), 60))
+	ui.add_child(toolbar)
+
+func finish_touch_editor() -> void:
+	touch.editing = false
+	profile.data.settings.hud_positions = touch.exported_layout()
+	profile.save()
+	build_hud()
+	paused = false
+	physical_mouse_fire = false
+	mouse_delta = Vector2.ZERO
+	if not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func show_buy() -> void:
 	if not is_instance_valid(match_game): return
 	var rows := make_overlay("REQUISITION  /  MATCH EQUIPMENT")
 	var actor = match_game.local_actor()
 	var funds := int(actor.credits) if actor != null else 0
-	rows.add_child(label("Available: %d match funds   •   Purchases are validated during the buy phase." % funds, 18, MUTED))
+	rows.add_child(wrapped_label("Available: %d match funds   •   Purchases are validated during the buy phase." % funds, 18, MUTED))
 	var weapons = load("res://scripts/gameplay/weapons.gd")
 	var catalog: Dictionary = weapons.DATA
 	for key in catalog:
@@ -739,15 +783,26 @@ func show_buy() -> void:
 
 func show_scoreboard() -> void:
 	score_panel = PanelContainer.new()
-	score_panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER)
-	score_panel.position = ui.size * Vector2(0.18, 0.18)
-	score_panel.custom_minimum_size = ui.size * Vector2(0.64, 0.60)
+	score_panel.name = "Scoreboard"
 	ui.add_child(score_panel)
-	var rows := VBoxContainer.new()
-	score_panel.add_child(rows)
-	rows.add_child(label("TEAM ROSTER     /     K  ·  A  ·  D", 24, GOLD))
+	fill(score_panel)
+	var safe := SafeArea.viewport_rect(ui.size)
+	score_panel.offset_left = safe.position.x + safe.size.x * 0.15
+	score_panel.offset_right = -(ui.size.x - safe.end.x) - safe.size.x * 0.15
+	score_panel.offset_top = safe.position.y + safe.size.y * 0.15
+	score_panel.offset_bottom = -(ui.size.y - safe.end.y) - safe.size.y * 0.15
+	var rows := scroll_rows(score_panel)
+	rows.add_theme_constant_override("separation", 4)
+	rows.add_child(wrapped_label("TEAM ROSTER     /     K  ·  A  ·  D", 24, GOLD))
 	for actor in match_game.scoreboard():
-		rows.add_child(label("%s    %s        %d  /  %d  /  %d" % ["ATK" if int(actor.get("team", 0)) == 0 else "DEF", str(actor.get("name", actor.get("display_name", "Operator"))), int(actor.get("kills", 0)), int(actor.get("assists", 0)), int(actor.get("deaths", 0))], 19))
+		var row := HBoxContainer.new()
+		rows.add_child(row)
+		row.add_child(label("ATK" if int(actor.get("team", 0)) == 0 else "DEF", 19, GOLD))
+		var player := label(str(actor.get("name", actor.get("display_name", "Operator"))), 19)
+		player.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		player.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		row.add_child(player)
+		row.add_child(label("%d  /  %d  /  %d" % [int(actor.get("kills", 0)), int(actor.get("assists", 0)), int(actor.get("deaths", 0))], 19))
 
 func on_match_finished(summary: Dictionary) -> void:
 	if server_mode: return
@@ -756,15 +811,16 @@ func on_match_finished(summary: Dictionary) -> void:
 	var rows := make_overlay("OPERATION COMPLETE")
 	rows.add_child(label("FINAL SCORE   %02d  /  %02d" % [match_game.attack_score, match_game.defend_score], 30))
 	if not reward.is_empty():
-		rows.add_child(label("OFFLINE TRAINING  +%d XP    +%d CREDITS    LEVEL %d" % [reward.xp, reward.credits, reward.level], 20, GOLD))
+		rows.add_child(wrapped_label("OFFLINE TRAINING  +%d XP    +%d CREDITS    LEVEL %d" % [reward.xp, reward.credits, reward.level], 20, GOLD))
 		if reward.save_error != OK: rows.add_child(label("Local progress could not be saved. Check device storage.", 18, CRIMSON))
 	elif str(match_game.reward_status) != "unranked":
 		reward_label = label("ACCOUNT REWARDS  /  " + str(match_game.reward_status).to_upper(), 18, MUTED)
 		rows.add_child(reward_label)
-	else: rows.add_child(label("Unranked LAN result. No online wallet or inventory rewards.", 18, MUTED))
+	else: rows.add_child(wrapped_label("Unranked LAN result. No online wallet or inventory rewards.", 18, MUTED))
 	rows.add_child(button("RETURN TO OPERATIONS", leave_match))
 
 func leave_match() -> void:
+	physical_mouse_fire = false
 	if server_mode:
 		get_tree().quit(1)
 		return
