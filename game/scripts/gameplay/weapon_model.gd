@@ -26,12 +26,13 @@ const RELAY_AR_ALBEDO := "res://assets/weapons/relay_ar/relay_ar_albedo.png"
 const RELAY_AR_HANDS := "res://assets/weapons/relay_ar/relay_ar_hands.glb"
 const RELAY_AR_HANDS_MATERIAL := "res://assets/weapons/relay_ar/relay_ar_hands.tres"
 ## Viewmodel placement inside the camera-attached weapon node (presentation only).
-## The weapon node rests 0.235 m right, 0.235 m down and 0.42 m ahead of the eye;
-## this puts the ejection port about 0.19 / 0.17 / 0.32 m from the eye, canted so
-## the left receiver face and the handguard read, with the stock behind the camera.
+## The weapon node rests 0.235 m right, 0.235 m down and 0.42 m ahead of the eye.
+## These values come from tools/art/viewmodel_fit.py: the muzzle near the crosshair,
+## the reflex sight right of centre, the pistol grip at the lower right and the stock
+## behind the camera, with about 6 degrees of roll so the left receiver face reads.
 static var relay_ar_scale := 1.0
-static var relay_ar_rotation := Vector3(0.06, 0.12, -0.30)
-static var relay_ar_offset := Vector3(-0.045, 0.065, 0.10) - Basis.from_euler(Vector3(0.06, 0.12, -0.30)) * Vector3(0.024, 0.031, -0.13)
+static var relay_ar_rotation := Vector3(-0.050, 0.270, -0.10)
+static var relay_ar_offset := Vector3(0.087, 0.082, 0.149)
 ## Inspection and other hand-less builds keep the rifle upright, centred in the
 ## existing studio framing (the studio's yaw brings the muzzle end nearer the camera).
 const RELAY_AR_UPRIGHT_OFFSET := Vector3(0, -0.015, -0.07)
