@@ -68,3 +68,7 @@ Logs: `/workspace/reviews/lifecycle-{module-final,backend,account,capacity,nativ
 ## Phase F: durable result delivery
 
 Local tests: PostgreSQL51 passed; Godot outbox9 passed; Python worker/supervision10 passed; actual Godot/PostgreSQL crash/outage/lost-ack integration passed. Independent review identified a producer rename race and unreaped game child; both were fixed and have maintained tests. Files use unique destinations and strict field allowlists. No policy changes, physical-device claims or blanket quality score. See `../network/RESULT_OUTBOX.md` for exact durability boundaries and long-outage reward limitations.
+
+## Phase E: isolated history foundation
+
+Godot history638/638 checks passed. Exact live head/body math is reused; epochs, stale/future ticks, death/team/teleport continuity and the200ms cap have deterministic checks. Recording is disabled by default. Active lag compensation, latency hit outcomes and human fairness remain **UNVERIFIED/INCOMPLETE**; no compensated damage is shipped.
