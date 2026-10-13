@@ -11,7 +11,7 @@ case "$target" in
 esac
 mkdir -p "$(dirname "$output")"
 python3 "$repo_dir/scripts/build_manifest.py" begin "$target"
-"$repo_dir/scripts/godot.sh" --headless --editor --import 2>&1 | tee "$(dirname "$output")/import.log"
+"$repo_dir/scripts/godot.sh" --headless --editor --import --quit 2>&1 | tee "$(dirname "$output")/import.log"
 "$repo_dir/scripts/godot.sh" --headless --export-debug "$preset" "$output" 2>&1 | tee "$(dirname "$output")/export.log"
 if rg -q '^(SCRIPT ERROR|ERROR:)|Parse Error' "$(dirname "$output")/import.log" "$(dirname "$output")/export.log"; then
   echo 'Export emitted an error; artifact is not verified.' >&2

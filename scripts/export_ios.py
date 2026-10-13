@@ -30,7 +30,7 @@ with tempfile.TemporaryDirectory(prefix="ios-export-", dir=state) as temporary:
     text = presets.read_text().replace('application/app_store_team_id=""', 'application/app_store_team_id="UNSIGNED00"')
     text = text.replace('application/export_project_only=true', 'application/export_project_only=true\napplication/delete_old_export_files_unconditionally=true')
     presets.write_text(text)
-    for label, arguments in [("import", ["--editor", "--import"]), ("export", ["--export-debug", "iOS", str(output / "sightbreak.zip")])]:
+    for label, arguments in [("import", ["--editor", "--import", "--quit"]), ("export", ["--export-debug", "iOS", str(output / "sightbreak.zip")])]:
         result = subprocess.run([binary, "--headless", "--path", str(project), *arguments], env=environment, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         (output / f"{label}.log").write_text(result.stdout)
         if result.returncode or re.search(r"^(?:SCRIPT ERROR|ERROR:)|Parse Error", result.stdout, re.M):
