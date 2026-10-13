@@ -28,6 +28,25 @@ func run() -> void:
 	check(arena.get_child_count() < 250, "temporary box parents released after batching")
 	var bodies := arena.find_children("*", "StaticBody3D", true, false)
 	check(bodies.size() == 26, "decorative improvements add no walkable collision obstacles")
+	var roof_supported := arena.roof_equipment_bounds.size() == 6
+	for equipment: AABB in arena.roof_equipment_bounds:
+		var west := equipment.get_center().x < 0
+		var roof := AABB(Vector3(-37.5, 12.0, -22) if west else Vector3(24.5, 9.65, -16), Vector3(13, 0.3, 30 if west else 38))
+		var footprint := Rect2(Vector2(roof.position.x, roof.position.z), Vector2(roof.size.x, roof.size.z))
+		var unit := Rect2(Vector2(equipment.position.x, equipment.position.z), Vector2(equipment.size.x, equipment.size.z))
+		roof_supported = roof_supported and footprint.encloses(unit) and equipment.position.y <= roof.end.y and equipment.end.y >= roof.end.y
+	check(roof_supported, "all six air handling units rest on their building roof, with no floating off-edge units")
+	var signs_clear := true
+	var brand_signs := 0
+	var wall_labels_inward := true
+	for label: Node in arena.find_children("*", "Label3D", true, false):
+		if absf(label.position.x) > 23.0:
+			wall_labels_inward = wall_labels_inward and label.basis.z.x * label.position.x < 0
+		if label.text.begins_with("SIGHTBREAK"):
+			brand_signs += 1
+			signs_clear = signs_clear and label.position.y >= 6.0 and label.position.z < 23.22
+	check(brand_signs == 1 and signs_clear, "brand header clears loading-door occlusion")
+	check(wall_labels_inward, "wall fascia and staff labels face the playable yard instead of mirrored back faces")
 	var lights := arena.find_children("*", "Light3D", true, false)
 	check(lights.size() == 1, "one directional light with no additive dynamic lighting")
 	var world_env: WorldEnvironment = arena.find_children("*", "WorldEnvironment", true, false)[0]
