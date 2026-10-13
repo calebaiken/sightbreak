@@ -34,6 +34,10 @@ New modules: `state_privacy.gd`, `snapshot_schema.gd`. `match.gd` passes recipie
 
 Privacy tests, network dictionary inspection and a CPU/payload profiling harness are maintained. Independent reviewer accepted the bounded development scope after adversarial corrections; complete quality gates and Claude's Unicode HUD correction remain outstanding. Before rebasing, preserve Claude changes around shot effects, spectator camera, snapshot application and smoke growth; reconcile these small integrations explicitly.
 
+## Movement branch
+
+Current work: `codex/network-movement`, stacked on published privacy branch `acfa7041ea61ae835a158d324e276472d8dfdd22`. Target its eventual PR at `codex/competitive-network-systems`. Timestamped interpolation is isolated from future local prediction in separate commits. Protocol 4 adds tick/epoch headers; `match.gd` presents remote transforms every render callback. No asset/animation-node contract changes. The UDP impairment harness uses real guest processes and isolated loopback ports; it does not deploy a server.
+
 ## Updated Claude dependency and preserved stack — 2026-10-13
 
 Claude PR1 advanced to `77e0433166b71c9de1456ef8639ce125d1b92029`. Independent focused recheck passes hit-volume40, weapon28 and hostile handshake8; Unicode feed height still fails in this environment. No main/PR merge authorized or performed. Graphics branch observed at `498311e4d63aa5d50f2be59777c1c79f09b6a66a` (`claude/cs2-fidelity-art-production`) is Claude-owned and untouched.
