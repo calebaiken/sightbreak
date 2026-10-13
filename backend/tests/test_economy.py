@@ -530,3 +530,20 @@ def test_ticket_inspection_rechecks_revocation_and_expiry(client, monkeypatch):
     with transaction() as db:
         db.get(GameTicket, digest(ticket)).expires_at = now() - timedelta(seconds=1)
     assert post(client, '/server/tickets/inspect', authority, {'ticket': ticket, 'server_id': 'local-relay'}).status_code == 401
+
+
+def test_match_replay_after_freshness_window_does_not_award_again(client, monkeypatch):
+    body = match_body()
+    secret = 'fictional-durable-result-' + 'x' * 32
+    monkeypatch.setenv('SIGHTBREAK_SERVER_KEY', secret)
+    authority = {'X-Server-Key': secret}
+    first = post(client, '/server/matches', authority, body)
+    assert first.status_code == 200
+    later = now() + timedelta(minutes=20)
+    monkeypatch.setattr('app.now', lambda: later)
+    assert post(client, '/server/matches', authority, body).json() == first.json()
+    assert post(client, '/server/matches', authority, {**body, 'match_id': str(uuid4())}).status_code == 400
+    body['participants'][0]['objective_contributions'] += 1
+    assert post(client, '/server/matches', authority, body).status_code == 409
+    with transaction() as db:
+        assert db.scalar(select(func.count()).select_from(Ledger)) == 10

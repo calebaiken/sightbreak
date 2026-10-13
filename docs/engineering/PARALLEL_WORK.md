@@ -54,3 +54,7 @@ New `codex/state-privacy-v2` is based directly on verified Claude77e0433 and rep
 - Lifecycle: `codex/network-lifecycle-v2`, base movement. Adds `peer_lifecycle.gd`, bounded admission cleanup, provisional slot/account claims and backend ticket-inspection route. Requires updated backend for account admission. No new gameplay RPC or art interface. Full native regressions on the reconciled stack remain required.
 
 Original branches are preserved. No PR merge, force push, public deployment or direct communication with Claude has occurred. A precise latest HUD review comment is prepared in `docs/reports/CLAUDE_PR1_FOLLOWUP.md`; API access still controls whether it can be posted.
+
+### Durable results branch
+
+`codex/durable-match-results` stacks on lifecycle `e8b9d8e06bf0a2a2b8f356a7df5d85f4b6c665f8`. Shared integration only changes the match submission status to `queued_for_delivery` when the server-local outbox accepts a handoff. No visual resources or economy rates change. New Python worker and launcher supervision require persistent server-local storage; see `RESULT_OUTBOX.md`. Backend change only permits exact previously committed result acknowledgments after the freshness window. New stale results remain rejected. This branch requires the updated backend and launcher together.

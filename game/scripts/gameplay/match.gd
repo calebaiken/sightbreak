@@ -1235,7 +1235,10 @@ func _submit_ranked_result() -> void:
 		return
 	reward_status = "submitting"
 	var response: Dictionary = await _bridge.submit_result(payload)
-	if bool(response.get("ok", false)):
+	if bool(response.get("ok", false)) and bool(response.get("queued", false)):
+		reward_status = "queued_for_delivery"
+		_announce("Match rewards queued for delivery; account balance updates after backend confirmation.")
+	elif bool(response.get("ok", false)):
 		reward_status = "committed"
 		_announce("Account match rewards committed by the economy service.")
 	else:

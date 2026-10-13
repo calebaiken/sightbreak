@@ -25,6 +25,8 @@ run_godot input-stream --headless --script res://tests/input_stream_test.gd
 run_godot movement-replay --headless --script res://tests/movement_prediction_test.gd
 run_godot input-lifecycle --headless --script res://tests/input_lifecycle_test.gd
 run_godot peer-lifecycle --headless --script res://tests/peer_lifecycle_test.gd
+run_godot result-outbox --headless --script res://tests/result_outbox_test.gd
+python3 -m unittest discover -s server/tests -v
 run_godot bots --headless --script res://tests/bot_match_test.gd
 run_godot bot-lifecycle --headless --script res://tests/bot_lifecycle_test.gd
 SIGHTBREAK_STATE_DIR="$validation_dir/profile-state" run_godot profile --headless --script res://tests/profile_test.gd
@@ -46,6 +48,7 @@ if [[ "${1:-}" == --backend ]]; then
   DATABASE_URL="postgresql+psycopg://sightbreak:sightbreak_local_only@127.0.0.1:55432/$test_database" \
     PYTHONPATH=backend .venv/bin/pytest backend/tests -q
   .venv/bin/python scripts/test_admission_capacity.py
+  .venv/bin/python scripts/test_result_outbox.py
   .venv/bin/python scripts/test_native_economy.py
   .venv/bin/python backend/simulate.py
 fi

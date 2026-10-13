@@ -384,7 +384,7 @@ def match_result(body:MatchResult,request:Request,x_server_key:Annotated[str|Non
     trusted_server(x_server_key)
     if not body.started_at.tzinfo or not body.ended_at.tzinfo: fail('UTC timestamps required',400)
     seconds=(body.ended_at-body.started_at).total_seconds()
-    if seconds<CONFIG['minimum_match_seconds'] or seconds>7200 or body.ended_at>now()+timedelta(seconds=30) or body.ended_at<now()-timedelta(minutes=15): fail('Ineligible match duration or timestamp',400)
+    if seconds<CONFIG['minimum_match_seconds'] or seconds>7200 or body.ended_at>now()+timedelta(seconds=30): fail('Ineligible match duration or timestamp',400)
     ids=[str(p.player_id) for p in body.participants]
     if len(set(ids))!=10 or sum(p.won for p in body.participants)!=5: fail('Requires ten unique humans and five winners',400)
     with transaction() as db:
@@ -392,6 +392,9 @@ def match_result(body:MatchResult,request:Request,x_server_key:Annotated[str|Non
         if old:
             if old.request_hash!=hashed: fail('Match ID reused with changed results')
             return old.response
+        # Old identical acknowledgments remain replayable after the freshness
+        # window; a new stale result still cannot create rewards.
+        if body.ended_at<now()-timedelta(minutes=15): fail('Ineligible match duration or timestamp',400)
         day=body.ended_at.astimezone(timezone.utc).date().isoformat(); rewards=[]
         for result in body.participants:
             p=db.get(Player,str(result.player_id))
