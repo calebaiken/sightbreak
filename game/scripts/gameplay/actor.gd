@@ -620,10 +620,7 @@ func _fire() -> void:
 	var physics_step := 1.0 / float(Engine.physics_ticks_per_second)
 	var carry := minf(0.0, maxf(float(_weapon_cooldowns.get(weapon_id, 0.0)), -physics_step)) if _fire_previous else 0.0
 	_weapon_cooldowns[weapon_id] = carry + float(spec["interval"])
-	var moving := Vector2(velocity.x, velocity.z).length() / WALK_SPEED
-	var spread := float(spec["spread"]) + moving * 0.026 + (0.045 if not is_on_floor() else 0.0)
-	if _crouching:
-		spread *= 0.6
+	var spread := current_spread(not is_on_floor())
 	var shot_yaw := yaw + recoil.x + _rng.randf_range(-spread, spread)
 	var shot_pitch := pitch + recoil.y + _rng.randf_range(-spread, spread)
 	var direction := Vector3(-sin(shot_yaw) * cos(shot_pitch), sin(shot_pitch), -cos(shot_yaw) * cos(shot_pitch)).normalized()
@@ -742,6 +739,14 @@ static func _cylinder_entry(origin: Vector3, direction: Vector3, radius: float, 
 				if p.x * p.x + p.z * p.z <= radius_sq:
 					best = t
 	return best
+
+## Half-angle of the random cone for the next shot, in radians. The authority
+## passes its floor contact; the HUD estimates airborne state from velocity.
+func current_spread(airborne: bool) -> float:
+	var spec := Weapons.get_weapon(weapon_id)
+	var moving := Vector2(velocity.x, velocity.z).length() / WALK_SPEED
+	var spread := float(spec["spread"]) + moving * 0.026 + (0.045 if airborne else 0.0)
+	return spread * 0.6 if _crouching else spread
 
 func show_hit_feedback(headshot: bool, lethal: bool) -> void:
 	# Presentation called only by an authority-confirmed hit (or its server RPC).

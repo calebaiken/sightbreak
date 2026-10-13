@@ -8,8 +8,9 @@ const API = preload("res://scripts/ui/economy_api.gd")
 const INSPECTOR = preload("res://scripts/ui/item_inspector.gd")
 const REVEAL = preload("res://scripts/ui/case_reveal.gd")
 const SAFE_AREA = preload("res://scripts/ui/safe_area.gd")
-const GOLD := Color("c8ad76")
-const MUTED := Color("a5afbf")
+const DESIGN = preload("res://scripts/ui/design_tokens.gd")
+const GOLD := DESIGN.GOLD
+const MUTED := DESIGN.STEEL
 var api: EconomyAPI
 var offline_profile: Dictionary = {}
 var account: Dictionary = {}
@@ -35,6 +36,7 @@ var market_mine_only := false
 var pending_transaction: Dictionary = {}
 var retry_button: Button
 var safe_margin: MarginContainer
+var tab_buttons: Dictionary = {}
 
 func configure(profile: Dictionary) -> void:
 	offline_profile = profile.duplicate(true)
@@ -56,7 +58,7 @@ func open_tab(tab: String) -> void:
 
 func _build_shell() -> void:
 	var background := ColorRect.new()
-	background.color = Color("0b1017")
+	background.color = DESIGN.OBSIDIAN
 	background.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(background)
 	var margin := MarginContainer.new()
@@ -73,9 +75,10 @@ func _build_shell() -> void:
 	var header := HBoxContainer.new()
 	body.add_child(header)
 	var brand := _label("SIGHTBREAK  /  ARMORY", 24, GOLD)
+	brand.add_theme_font_override("font", DESIGN.heading_font())
 	brand.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header.add_child(brand)
-	_button(header, "BACK", func(): closed.emit())
+	DESIGN.apply_button(_button(header, "←  BACK", func(): closed.emit()), "ghost")
 	brand.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	wallet = _label("OFFLINE TRAINING", 15, MUTED)
 	wallet.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -84,8 +87,11 @@ func _build_shell() -> void:
 	tabs.add_theme_constant_override("h_separation", 8)
 	body.add_child(tabs)
 	for tab in ["inventory", "cases", "market", "trades", "profile"]:
-		_button(tabs, str(tab).to_upper(), open_tab.bind(tab))
-	_button(tabs, "REFRESH", _refresh)
+		var tab_button := _button(tabs, str(tab).to_upper(), open_tab.bind(tab))
+		tab_button.toggle_mode = true
+		tab_button.name = "Tab_" + tab
+		tab_buttons[tab] = tab_button
+	DESIGN.apply_button(_button(tabs, "REFRESH", _refresh), "ghost")
 	status = _label("Offline progress and online ownership are separate.", 14, MUTED)
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	body.add_child(status)
@@ -107,26 +113,7 @@ func _build_shell() -> void:
 			pending_action.call()
 		pending_action = Callable())
 	add_child(dialog)
-	var ui_theme := Theme.new()
-	ui_theme.default_font_size = 16
-	var panel := StyleBoxFlat.new()
-	panel.bg_color = Color("1c2531")
-	panel.border_color = Color("36404f")
-	panel.set_border_width_all(1)
-	panel.set_corner_radius_all(4)
-	panel.content_margin_left = 16
-	panel.content_margin_right = 16
-	panel.content_margin_top = 10
-	panel.content_margin_bottom = 10
-	ui_theme.set_stylebox("normal", "Button", panel)
-	var hover: StyleBoxFlat = panel.duplicate()
-	hover.bg_color = Color("392332")
-	hover.border_color = Color("a43950")
-	ui_theme.set_stylebox("hover", "Button", hover)
-	ui_theme.set_stylebox("pressed", "Button", hover)
-	ui_theme.set_color("font_color", "Label", Color("e6e9ed"))
-	ui_theme.set_color("font_color", "Button", Color("e6e9ed"))
-	theme = ui_theme
+	theme = DESIGN.build_theme(float(offline_profile.get("settings", {}).get("ui_text_scale", 1.0)))
 
 func _update_safe_margins() -> void:
 	if not is_instance_valid(safe_margin):
@@ -138,14 +125,14 @@ func _update_safe_margins() -> void:
 	for index in 4:
 		safe_margin.add_theme_constant_override("margin_" + sides[index], insets[index])
 
-func _label(value: String, font_size := 16, color := Color("e6e9ed")) -> Label:
+func _label(value: String, font_size := 16, color := DESIGN.TEXT) -> Label:
 	var node := Label.new()
 	node.text = value
 	node.add_theme_font_size_override("font_size", font_size)
 	node.add_theme_color_override("font_color", color)
 	return node
 
-func _text(parent: Node, value: String, font_size := 16, color := Color("e6e9ed")) -> Label:
+func _text(parent: Node, value: String, font_size := 16, color := DESIGN.TEXT) -> Label:
 	var node := _label(value, font_size, color)
 	node.size.x = minf(560, maxf(260, size.x - 80))
 	node.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
@@ -155,7 +142,7 @@ func _text(parent: Node, value: String, font_size := 16, color := Color("e6e9ed"
 func _button(parent: Node, title: String, action: Callable) -> Button:
 	var node := Button.new()
 	node.text = title
-	node.custom_minimum_size.y = 44
+	node.custom_minimum_size.y = DESIGN.TOUCH_MIN
 	node.pressed.connect(action)
 	parent.add_child(node)
 	return node
@@ -165,22 +152,13 @@ func _field(parent: Node, hint: String, value := "", secret := false) -> LineEdi
 	node.placeholder_text = hint
 	node.text = value
 	node.secret = secret
-	node.custom_minimum_size.y = 44
+	node.custom_minimum_size.y = DESIGN.TOUCH_MIN
 	parent.add_child(node)
 	return node
 
 func _panel(parent: Node) -> VBoxContainer:
 	var panel := PanelContainer.new()
-	var style := StyleBoxFlat.new()
-	style.bg_color = Color("141b25")
-	style.border_color = Color("2a3544")
-	style.set_border_width_all(1)
-	style.set_corner_radius_all(6)
-	style.content_margin_left = 18
-	style.content_margin_right = 18
-	style.content_margin_top = 16
-	style.content_margin_bottom = 16
-	panel.add_theme_stylebox_override("panel", style)
+	panel.add_theme_stylebox_override("panel", DESIGN.panel())
 	parent.add_child(panel)
 	var stack := VBoxContainer.new()
 	stack.add_theme_constant_override("separation", 10)
@@ -194,7 +172,21 @@ func _render() -> void:
 		content.remove_child(node)
 		node.queue_free()
 	wallet.text = "ONLINE  •  %s  •  LEVEL %s  •  %s EARNED CREDITS" % [account.get("display_name", ""), account.get("level", 1), account.get("credits", 0)] if not api.token.is_empty() else "OFFLINE TRAINING  •  LOCAL PROGRESS ONLY"
-	_text(content, active_tab.to_upper(), 28, GOLD)
+	for tab in tab_buttons:
+		var tab_button: Button = tab_buttons[tab]
+		tab_button.set_pressed_no_signal(tab == active_tab)
+		if tab == active_tab:
+			tab_button.add_theme_stylebox_override("normal", DESIGN.tab_selected_style())
+			tab_button.add_theme_stylebox_override("pressed", DESIGN.tab_selected_style())
+			tab_button.add_theme_color_override("font_color", GOLD)
+			tab_button.add_theme_color_override("font_pressed_color", GOLD)
+		else:
+			tab_button.remove_theme_stylebox_override("normal")
+			tab_button.remove_theme_stylebox_override("pressed")
+			tab_button.remove_theme_color_override("font_color")
+			tab_button.remove_theme_color_override("font_pressed_color")
+	var title := _text(content, active_tab.to_upper(), 28, GOLD)
+	title.add_theme_font_override("font", DESIGN.heading_font())
 	match active_tab:
 		"profile": _profile()
 		"inventory": _inventory()
@@ -230,7 +222,7 @@ func _profile() -> void:
 		var server := _field(login, "Economy server URL", api.base_url)
 		_text(login, "Use HTTPS for public servers. HTTP exposes credentials and is for loopback or trusted LAN development only. A phone must use the host computer's LAN address.", 14, GOLD)
 		var username := _field(login, "Username (3–32 characters)")
-		var password := _field(login, "Password (at least 10 characters)", "", true)
+		var password := _field(login, "Password (12–128 characters)", "", true)
 		var name_field := _field(login, "Display name (registration only)")
 		var actions := HFlowContainer.new()
 		login.add_child(actions)
@@ -685,7 +677,7 @@ func _market() -> void:
 			_button(row, "CANCEL MY LISTING", func(): _perform("/market/%s/cancel" % listing.id, {}, "Listing cancelled; item returned."))
 		else:
 			_button(row, "BUY WITH EARNED CREDITS", func():
-				_confirm("Buy %s for %s earned Credits?" % [_item_name(item), listing.get("price", 0)], func(): _perform("/market/%s/buy" % listing.id, {"idempotency_key": api.key()}, "Purchase confirmed.")))
+				_confirm("Buy this exact item for %s earned Credits?\n\n%s\n%s  ·  %s\nWear %.4f  ·  Pattern %s\n\nThe seller receives the price minus the market fee." % [listing.get("price", 0), _item_name(item), str(item.get("rarity", "")).to_upper(), item.get("collection", ""), float(item.get("wear", 0)), item.get("pattern_seed", "—")], func(): _perform("/market/%s/buy" % listing.id, {"idempotency_key": api.key()}, "Purchase confirmed.")))
 	if count == 0:
 		_text(content, "No matching active listings. Refresh to check for new offers.", 18, MUTED)
 
@@ -716,6 +708,43 @@ func _trades() -> void:
 	for raw in trades:
 		_trade_card(raw)
 
+## Partner as "Display name (id prefix)": names are not unique, the id is.
+func partner_label(trade: Dictionary) -> String:
+	var partner_id := _partner_id(trade)
+	var names: Dictionary = trade.get("names", {})
+	var display := str(names.get(partner_id, "Unknown player"))
+	return display if partner_id.is_empty() else "%s (%s)" % [display, partner_id.left(8)]
+
+func _partner_id(trade: Dictionary) -> String:
+	var a: Variant = trade.get("a")
+	var b: Variant = trade.get("b")
+	var partner: Variant = b if str(a) == api.player_id else a
+	return "" if partner == null else str(partner)
+
+func _offer_lines(items: Variant) -> String:
+	if not items is Array or (items as Array).is_empty():
+		return "    nothing"
+	var lines: Array[String] = []
+	for item in items:
+		if item is Dictionary:
+			lines.append("    %s  ·  %s  ·  wear %.4f  ·  pattern %s" % [_item_name(item), str(item.get("rarity", "")).to_upper(), float(item.get("wear", 0)), item.get("pattern_seed", "—")])
+		else:
+			lines.append("    item " + str(item))
+	return "\n".join(lines)
+
+## The exact terms of the displayed revision, stated at the moment of commitment.
+func trade_confirmation_text(trade: Dictionary) -> String:
+	var offers: Dictionary = trade.get("offers", {})
+	var offer_items: Dictionary = trade.get("offer_items", offers)
+	var partner_id := _partner_id(trade)
+	var giving: Variant = offer_items.get(api.player_id, offers.get(api.player_id, []))
+	var receiving: Variant = offer_items.get(partner_id, offers.get(partner_id, []))
+	var text := "Trade with %s — revision %d\n\nYOU GIVE:\n%s\n\nYOU RECEIVE:\n%s" % [partner_label(trade), int(trade.get("revision", 0)), _offer_lines(giving), _offer_lines(receiving)]
+	if not receiving is Array or (receiving as Array).is_empty():
+		text += "\n\nYou receive nothing in return. This is a gift."
+	text += "\n\nThe exchange completes atomically when both players confirm this revision. Any later edit cancels both confirmations."
+	return text
+
 func _trade_card(trade: Dictionary) -> void:
 	var panel := _panel(content)
 	var trade_id := str(trade.get("id", ""))
@@ -724,8 +753,10 @@ func _trade_card(trade: Dictionary) -> void:
 	_text(panel, "State: " + str(trade.get("state", "open")), 15)
 	var offers: Dictionary = trade.get("offers", {})
 	var offer_items: Dictionary = trade.get("offer_items", offers)
+	var partner := partner_label(trade)
+	_text(panel, "WITH  " + partner, 15)
 	for owner in offers:
-		_text(panel, ("YOUR OFFER" if str(owner) == api.player_id else "PARTNER " + str(owner)), 15, GOLD)
+		_text(panel, ("YOU GIVE" if str(owner) == api.player_id else partner + " GIVES"), 15, GOLD)
 		var offered: Variant = offer_items.get(owner, offers[owner])
 		if offered is Array:
 			if offered.is_empty():
@@ -767,5 +798,5 @@ func _trade_card(trade: Dictionary) -> void:
 		if proposed != original_ids:
 			_message("Your selection contains unsaved edits. Save your offer first, then review and confirm the new revision.", true)
 			return
-		_confirm("Confirm revision %d exactly as displayed? Both confirmations complete the exchange atomically. Refresh first if your partner has changed their offer." % revision, func(): _perform("/trades/%s/confirm" % trade_id, {"revision": revision}, "Confirmation recorded by server.")))
+		_confirm(trade_confirmation_text(trade), func(): _perform("/trades/%s/confirm" % trade_id, {"revision": revision}, "Confirmation recorded by server.")))
 	_button(panel, "CANCEL TRADE", func(): _perform("/trades/%s/cancel" % trade_id, {}, "Trade cancelled; reservations released."))

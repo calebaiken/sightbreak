@@ -3,11 +3,18 @@ extends Node
 const Profile = preload("res://scripts/profile.gd")
 const Touch = preload("res://scripts/ui/touch_controls.gd")
 const SafeArea = preload("res://scripts/ui/safe_area.gd")
-const BG := Color("10151c")
-const PANEL := Color("19212b")
-const MUTED := Color("8c9bad")
-const GOLD := Color("c8b17c")
-const CRIMSON := Color("b63045")
+const Design = preload("res://scripts/ui/design_tokens.gd")
+const Radar = preload("res://scripts/ui/radar.gd")
+const Weapons = preload("res://scripts/gameplay/weapons.gd")
+const BG := Design.OBSIDIAN
+const PANEL := Design.GRAPHITE
+const MUTED := Design.STEEL
+const GOLD := Design.GOLD
+const CRIMSON := Design.CRIMSON
+const KILL_FEED_SECONDS := 5.0
+const KILL_FEED_ROWS := 4
+const TEXT_SCALES := [0.9, 1.0, 1.15, 1.3]
+const WEAPON_ROLES := {"sidearm": "SIDEARM", "smg": "SMG", "rifle": "RIFLE", "marksman": "MARKSMAN"}
 var profile = Profile.new()
 var canvas: CanvasLayer
 var ui: Control
@@ -23,10 +30,17 @@ var physical_mouse_fire := false
 var status_label: Label
 var score_label: Label
 var phase_label: Label
+var squad_label: Label
 var ammo_label: Label
+var utility_label: Label
 var health_label: Label
+var health_bar: ProgressBar
 var action_label: Label
 var crosshair: Control
+var radar: Control
+var attack_pips: Control
+var defend_pips: Control
+var kill_feed: VBoxContainer
 var objective_bar: ProgressBar
 var score_panel: PanelContainer
 var overlay: Control
@@ -45,6 +59,7 @@ var touch_score_until := 0.0
 var reward_label: Label
 var current_loadout: Dictionary = {}
 var cosmetic_weapon := ""
+var match_suspended := false
 
 func _ready() -> void:
 	profile.load_profile()
@@ -75,42 +90,20 @@ func _ready() -> void:
 	show_menu()
 	if demo_mode: start_match({"mode": "offline", "difficulty": "normal", "name": "Operator"})
 
+func text_scale() -> float:
+	return clampf(float(profile.data.settings.get("ui_text_scale", 1.0)), 0.85, 1.3)
+
 func build_theme() -> Theme:
-	var theme := Theme.new()
-	theme.default_font_size = 18
-	theme.set_color("font_color", "Label", Color("e7eaf0"))
-	theme.set_color("font_color", "Button", Color("e7eaf0"))
-	theme.set_color("font_hover_color", "Button", Color.WHITE)
-	theme.set_stylebox("normal", "Button", box(PANEL, 5, Color("344353")))
-	theme.set_stylebox("hover", "Button", box(Color("2c3542"), 5, GOLD))
-	theme.set_stylebox("pressed", "Button", box(Color("702536"), 5, CRIMSON))
-	theme.set_stylebox("focus", "Button", box(Color.TRANSPARENT, 5, GOLD))
-	theme.set_stylebox("normal", "LineEdit", box(Color("0b1119"), 4, Color("405064")))
-	theme.set_stylebox("panel", "PanelContainer", box(PANEL, 5, Color("344353")))
-	theme.set_constant("separation", "VBoxContainer", 12)
-	theme.set_constant("separation", "HBoxContainer", 12)
-	return theme
+	return Design.build_theme(text_scale())
 
-func box(color: Color, radius: int = 0, border: Color = Color.TRANSPARENT) -> StyleBoxFlat:
-	var s := StyleBoxFlat.new()
-	s.bg_color = color
-	s.set_corner_radius_all(radius)
-	s.set_border_width_all(1)
-	s.border_color = border
-	s.content_margin_left = 18
-	s.content_margin_right = 18
-	s.content_margin_top = 12
-	s.content_margin_bottom = 12
-	return s
+func box(color: Color, _radius: int = 0, border: Color = Color.TRANSPARENT) -> StyleBoxFlat:
+	return Design.box(color, border)
 
-func label(text: String, font_size: int = 18, color: Color = Color.WHITE) -> Label:
-	var node := Label.new()
-	node.text = text
-	node.add_theme_font_size_override("font_size", font_size)
-	node.add_theme_color_override("font_color", color)
+func label(text: String, font_size: int = 18, color: Color = Design.TEXT, heading := false) -> Label:
+	var node := Design.label(text, int(round(font_size * text_scale())), color, heading)
 	return node
 
-func wrapped_label(text: String, font_size: int = 18, color: Color = Color.WHITE) -> Label:
+func wrapped_label(text: String, font_size: int = 18, color: Color = Design.TEXT) -> Label:
 	var node := label(text, font_size, color)
 	node.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	node.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -125,23 +118,41 @@ func scroll_rows(parent: Control) -> VBoxContainer:
 	var content := VBoxContainer.new()
 	content.name = "ScrollRows"
 	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	content.add_theme_constant_override("separation", 12)
+	content.add_theme_constant_override("separation", Design.SPACE_M)
 	scroll.add_child(content)
 	return content
 
 func uses_touch_controls() -> bool:
 	return DisplayServer.is_touchscreen_available() or bool(profile.data.settings.touch_visible)
 
-func button(text: String, callback: Callable, height: float = 48) -> Button:
+func button(text: String, callback: Callable, height: float = 48, variant := "secondary") -> Button:
 	var node := Button.new()
 	node.text = text
-	node.custom_minimum_size.y = height
+	node.custom_minimum_size.y = maxf(height, Design.TOUCH_MIN)
 	node.pressed.connect(callback)
 	node.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	if variant != "secondary":
+		Design.apply_button(node, variant)
 	return node
 
 func fill(node: Control) -> void:
 	node.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+
+## A short accent rule, or a full-width hairline when width is zero.
+func divider(width: float = 64, color: Color = GOLD) -> ColorRect:
+	var rule := ColorRect.new()
+	rule.color = color
+	rule.custom_minimum_size = Vector2(width, 2 if width > 0 else 1)
+	rule.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN if width > 0 else Control.SIZE_EXPAND_FILL
+	rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return rule
+
+func section(parent: Control, title: String) -> void:
+	var header := VBoxContainer.new()
+	header.add_theme_constant_override("separation", Design.SPACE_XS)
+	parent.add_child(header)
+	header.add_child(label(title, Design.TYPE_SMALL, GOLD, true))
+	header.add_child(divider(0, Design.LINE))
 
 func clear_ui() -> void:
 	if ui == null: return
@@ -153,6 +164,8 @@ func clear_ui() -> void:
 	touch = null
 	crosshair = null
 	score_panel = null
+	radar = null
+	kill_feed = null
 
 func margin_frame(parent: Control, amount: int = 36) -> MarginContainer:
 	var margins := MarginContainer.new()
@@ -172,6 +185,19 @@ func apply_safe_margins(margins: MarginContainer, base: int) -> void:
 	margins.add_theme_constant_override("margin_top", base + int(safe.position.y))
 	margins.add_theme_constant_override("margin_right", base + int(viewport_size.x - safe.end.x))
 	margins.add_theme_constant_override("margin_bottom", base + int(viewport_size.y - safe.end.y))
+
+## Left-to-right scrim: legible menu column without hiding the live yard.
+func scrim(strength_left: float, strength_right: float) -> Control:
+	var shade := Control.new()
+	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fill(shade)
+	shade.draw.connect(func():
+		var left := Color(BG, strength_left)
+		var right := Color(BG, strength_right)
+		shade.draw_polygon(PackedVector2Array([Vector2.ZERO, Vector2(shade.size.x, 0), shade.size, Vector2(0, shade.size.y)]), PackedColorArray([left, right, right, left]))
+	)
+	shade.resized.connect(shade.queue_redraw)
+	return shade
 
 func ensure_menu_world() -> void:
 	if is_instance_valid(menu_world): return
@@ -197,70 +223,79 @@ func show_menu() -> void:
 	clear_ui()
 	ensure_menu_world()
 	menu_world.show()
-	var shade := ColorRect.new()
-	shade.color = Color(0.02, 0.03, 0.045, 0.72)
-	fill(shade)
-	ui.add_child(shade)
+	ui.add_child(scrim(0.94, 0.38))
 	var margins := margin_frame(ui)
 	var rows := VBoxContainer.new()
-	rows.add_theme_constant_override("separation", 18)
+	rows.add_theme_constant_override("separation", Design.SPACE_L)
 	margins.add_child(rows)
 	var top := HBoxContainer.new()
 	rows.add_child(top)
-	top.add_child(label("S / B     TACTICAL OPERATIONS", 16, GOLD))
+	top.add_child(label("S / B", Design.TYPE_SMALL, GOLD, true))
+	top.add_child(label("TACTICAL OPERATIONS", Design.TYPE_SMALL, MUTED, true))
 	var spring := Control.new()
 	spring.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(spring)
-	top.add_child(label("DEVELOPMENT BUILD   /   0.3.0-dev", 14, MUTED))
+	top.add_child(label("DEVELOPMENT BUILD  ·  0.3.0-dev", Design.TYPE_MICRO + 1, MUTED))
 	var middle := HBoxContainer.new()
 	middle.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	rows.add_child(middle)
 	var left := VBoxContainer.new()
 	left.custom_minimum_size.x = 440
 	left.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	left.add_theme_constant_override("separation", Design.SPACE_M)
 	middle.add_child(left)
-	left.add_child(label("SIGHTBREAK", 72))
-	left.add_child(label("PRECISION. PRESSURE. PURPOSE.", 15, GOLD))
+	left.add_child(label("SIGHTBREAK", Design.TYPE_DISPLAY, Design.TEXT, true))
+	left.add_child(label("PRECISION · PRESSURE · PURPOSE", Design.TYPE_SMALL, GOLD, true))
+	left.add_child(divider(72))
 	var spacer := Control.new()
-	spacer.custom_minimum_size.y = 8
+	spacer.custom_minimum_size.y = Design.SPACE_XS
 	left.add_child(spacer)
-	var play := button("DEPLOY  /  OFFLINE 5 v 5                 →", func(): start_match({"mode": "offline", "difficulty": ["easy", "normal", "hard"][clampi(int(profile.data.settings.difficulty), 0, 2)], "name": profile.data.display_name}), 60)
-	play.add_theme_stylebox_override("normal", box(CRIMSON, 4, CRIMSON.lightened(0.15)))
+	var play := button("DEPLOY   ·   OFFLINE 5V5", func(): start_match({"mode": "offline", "difficulty": ["easy", "normal", "hard"][clampi(int(profile.data.settings.difficulty), 0, 2)], "name": profile.data.display_name}), 60, "primary")
+	play.add_theme_font_override("font", Design.heading_font())
 	left.add_child(play)
-	left.add_child(button("LOCAL NETWORK  /  DIRECT CONNECT", show_connect))
+	left.add_child(button("LOCAL NETWORK   ·   DIRECT CONNECT", show_connect))
 	var economy_row := HBoxContainer.new()
+	economy_row.add_theme_constant_override("separation", Design.SPACE_S)
 	left.add_child(economy_row)
 	for tab in ["inventory", "cases", "market", "trades"]:
 		var tab_name: String = tab
-		var entry := button(tab_name.to_upper(), func(): open_economy(tab_name), 44)
-		entry.add_theme_font_size_override("font_size", 13)
+		var entry := button(tab_name.to_upper(), func(): open_economy(tab_name), Design.TOUCH_MIN)
+		entry.add_theme_font_size_override("font_size", int(round(Design.TYPE_MICRO * text_scale())) + 1)
 		entry.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		economy_row.add_child(entry)
-	left.add_child(button("OPERATOR  /  LOCAL PROGRESSION", show_progress))
-	left.add_child(button("SETTINGS  /  CONTROLS", show_settings))
+	var account_row := HBoxContainer.new()
+	account_row.add_theme_constant_override("separation", Design.SPACE_S)
+	left.add_child(account_row)
+	for entry in [button("OPERATOR RECORD", show_progress), button("SETTINGS", show_settings)]:
+		entry.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		account_row.add_child(entry)
 	var right := VBoxContainer.new()
 	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	right.size_flags_vertical = Control.SIZE_SHRINK_END
 	right.alignment = BoxContainer.ALIGNMENT_END
+	right.add_theme_constant_override("separation", Design.SPACE_XS)
 	middle.add_child(right)
-	var map_title := label("RELAY YARD", 36)
+	var map_kicker := label("CURRENT OPERATION", Design.TYPE_MICRO, MUTED, true)
+	map_kicker.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	right.add_child(map_kicker)
+	var map_title := label("RELAY YARD", 36, Design.TEXT, true)
 	map_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	right.add_child(map_title)
-	var map_note := label("02 SITES   /   03 ROUTES\nINDUSTRIAL TRANSFER STATION", 14, GOLD)
+	var map_note := label("2 SITES  ·  3 ROUTES  ·  FIRST TO 7", Design.TYPE_SMALL, GOLD)
 	map_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	right.add_child(map_note)
 	var footer := HBoxContainer.new()
 	rows.add_child(footer)
-	footer.add_child(wrapped_label("◈  LEVEL %02d     %s     /     TRAINING" % [profile.data.level, str(profile.data.display_name).to_upper()], 14, MUTED))
+	footer.add_child(wrapped_label("LEVEL %02d   ·   %s   ·   TRAINING" % [profile.data.level, str(profile.data.display_name).to_upper()], Design.TYPE_SMALL, MUTED))
 	var gap := Control.new()
 	gap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	footer.add_child(gap)
-	footer.add_child(wrapped_label("EARNED IN PLAY.  ZERO REAL-MONEY PURCHASES.", 13, GOLD))
+	footer.add_child(wrapped_label("EARNED IN PLAY  ·  NO REAL-MONEY PURCHASES", Design.TYPE_MICRO + 1, GOLD))
 
 func panel_screen(title: String, subtitle: String, back: Callable = show_menu) -> VBoxContainer:
 	clear_ui()
 	var shade := ColorRect.new()
-	shade.color = Color(0.025, 0.04, 0.06, 0.95)
+	shade.color = Color(BG, 0.96)
 	fill(shade)
 	ui.add_child(shade)
 	var margins := margin_frame(ui, 32)
@@ -268,45 +303,45 @@ func panel_screen(title: String, subtitle: String, back: Callable = show_menu) -
 	margins.add_child(rows)
 	var top := HBoxContainer.new()
 	rows.add_child(top)
-	top.add_child(button("← BACK", back, 42))
-	top.add_child(wrapped_label(title, 32))
-	rows.add_child(wrapped_label(subtitle, 15, MUTED))
+	top.add_child(button("←  BACK", back, Design.TOUCH_MIN, "ghost"))
+	top.add_child(wrapped_label(title, Design.TYPE_H1))
+	(top.get_child(1) as Label).add_theme_font_override("font", Design.heading_font())
+	rows.add_child(wrapped_label(subtitle, Design.TYPE_SMALL, MUTED))
 	return scroll_rows(rows)
 
 func show_connect() -> void:
 	screen = "connect"
-	var rows := panel_screen("LOCAL NETWORK", "Unranked LAN sessions • Server owns movement, combat and round rules • No online economy rewards")
-	rows.add_child(label("Join a dedicated server", 26))
+	var rows := panel_screen("LOCAL NETWORK", "Unranked LAN sessions  ·  The server owns movement, combat and round rules  ·  No online economy rewards")
+	section(rows, "JOIN A DEDICATED SERVER")
 	var address := LineEdit.new()
-	address.custom_minimum_size.y = 48
+	address.custom_minimum_size.y = Design.TOUCH_MIN
 	address.placeholder_text = "Server address"
 	address.text = "127.0.0.1"
 	rows.add_child(address)
 	var port := SpinBox.new()
-	port.custom_minimum_size.y = 48
+	port.custom_minimum_size.y = Design.TOUCH_MIN
 	port.min_value = 1024
 	port.max_value = 65535
 	port.value = 27020
+	port.prefix = "UDP port"
 	rows.add_child(port)
-	rows.add_child(button("JOIN GUEST LAN MATCH", func(): start_match({"mode": "client", "address": address.text.strip_edges(), "port": int(port.value), "name": profile.data.display_name})))
+	rows.add_child(button("JOIN GUEST LAN MATCH", func(): start_match({"mode": "client", "address": address.text.strip_edges(), "port": int(port.value), "name": profile.data.display_name}), Design.TOUCH_MIN, "primary"))
+	section(rows, "ACCOUNT SERVER")
 	var server_id := LineEdit.new()
-	server_id.custom_minimum_size.y = 48
+	server_id.custom_minimum_size.y = Design.TOUCH_MIN
 	server_id.text = "local-relay"
 	server_id.placeholder_text = "Account server ID"
 	rows.add_child(server_id)
-	var account_status := label("Account sessions require ten authenticated players. Log in through the online account screen first.", 15, MUTED)
-	account_status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	var account_status := wrapped_label("Account sessions start when ten signed-in players have joined. Sign in through the armory first.", Design.TYPE_SMALL, MUTED)
 	rows.add_child(account_status)
 	var account_join := button("JOIN ACCOUNT SERVER", func(): pass)
 	account_join.pressed.connect(func(): connect_account(address.text.strip_edges(), int(port.value), server_id.text.strip_edges(), account_status, account_join))
 	rows.add_child(account_join)
-	var info := label("Start the dedicated server on another terminal or machine:\n./scripts/godot.sh --headless -- --server --port=27020\n\nUDP port 27020 must be reachable on your local network.\nFor authenticated local sessions use ./scripts/serve-account-match.sh.\nInternet matchmaking and automatic server discovery are not available.", 18, MUTED)
-	info.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	rows.add_child(info)
+	rows.add_child(wrapped_label("Ask the host for its address. UDP port 27020 must be reachable on your local network. Internet matchmaking and server discovery are not available in this build.", Design.TYPE_SMALL, MUTED))
 
 func connect_account(address: String, port: int, server_id: String, feedback: Label, submit: Button) -> void:
 	if not is_instance_valid(economy_panel) or economy_panel.api.token.is_empty():
-		feedback.text = "Log in at OPERATOR → ONLINE ACCOUNT & INVENTORY, then return here."
+		feedback.text = "Sign in at ARMORY → PROFILE, then return here."
 		return
 	submit.disabled = true
 	feedback.text = "Requesting a single-use server ticket…"
@@ -320,14 +355,16 @@ func connect_account(address: String, port: int, server_id: String, feedback: La
 
 func show_progress() -> void:
 	screen = "progress"
-	var rows := panel_screen("OPERATOR RECORD", "Offline training record • Separate from authenticated online accounts and tradable inventory")
-	rows.add_child(wrapped_label("LEVEL %d     /     %d XP     /     %d TRAINING CREDITS" % [profile.data.level, profile.data.xp, profile.data.credits], 28, GOLD))
-	rows.add_child(wrapped_label("%d MATCHES     %d WINS     %d ELIMINATIONS     %d DEATHS" % [profile.data.matches, profile.data.wins, profile.data.kills, profile.data.deaths], 20))
+	var rows := panel_screen("OPERATOR RECORD", "Offline training record  ·  Separate from online accounts and tradable inventory")
+	rows.add_child(wrapped_label("LEVEL %d   ·   %d XP   ·   %d TRAINING CREDITS" % [profile.data.level, profile.data.xp, profile.data.credits], 26, GOLD))
+	rows.add_child(wrapped_label("%d MATCHES   ·   %d WINS   ·   %d ELIMINATIONS   ·   %d DEATHS" % [profile.data.matches, profile.data.wins, profile.data.kills, profile.data.deaths], Design.TYPE_H3))
+	section(rows, "CALLSIGN")
 	var name_row := HBoxContainer.new()
 	rows.add_child(name_row)
 	var display := LineEdit.new()
 	display.text = profile.data.display_name
 	display.max_length = 20
+	display.custom_minimum_size.y = Design.TOUCH_MIN
 	display.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	name_row.add_child(display)
 	name_row.add_child(button("SAVE NAME", func():
@@ -335,17 +372,18 @@ func show_progress() -> void:
 		profile.save()
 	))
 	rows.add_child(button("ONLINE ACCOUNT & INVENTORY", func(): open_economy("profile")))
+	section(rows, "RECENT TRAINING")
 	var history := VBoxContainer.new()
 	rows.add_child(history)
-	if profile.data.history.is_empty(): history.add_child(wrapped_label("Complete an offline match to establish your training record.", 18, MUTED))
+	if profile.data.history.is_empty(): history.add_child(wrapped_label("Complete an offline match to establish your training record.", Design.TYPE_BODY, MUTED))
 	for result in profile.data.history:
-		history.add_child(wrapped_label("%s   •   %s   •   %d eliminations   •   +%d Credits" % [result.get("time", ""), "VICTORY" if result.get("won", false) else "DEFEAT", int(result.get("kills", 0)), int(result.get("credits_earned", 0))], 17, MUTED))
+		history.add_child(wrapped_label("%s   ·   %s   ·   %d eliminations   ·   +%d Credits" % [result.get("time", ""), "VICTORY" if result.get("won", false) else "DEFEAT", int(result.get("kills", 0)), int(result.get("credits_earned", 0))], Design.TYPE_SMALL + 1, MUTED))
 
-func setting_slider(parent: VBoxContainer, title: String, key: String, low: float, high: float, step: float) -> void:
+func setting_slider(parent: VBoxContainer, title: String, key: String, low: float, high: float, step: float, percent := false) -> void:
 	var row := HBoxContainer.new()
 	parent.add_child(row)
-	row.custom_minimum_size.y = 48
-	var caption := label(title, 17)
+	row.custom_minimum_size.y = Design.TOUCH_MIN
+	var caption := label(title, Design.TYPE_BODY)
 	caption.custom_minimum_size.x = 250
 	row.add_child(caption)
 	var slider := HSlider.new()
@@ -356,70 +394,85 @@ func setting_slider(parent: VBoxContainer, title: String, key: String, low: floa
 	slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	slider.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(slider)
-	var value := label(str(slider.value), 16, GOLD)
+	var format := func(v: float) -> String: return "%d%%" % int(round(v * 100)) if percent else str(v)
+	var value := label(format.call(slider.value), Design.TYPE_BODY, GOLD)
 	value.custom_minimum_size.x = 90
+	value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	row.add_child(value)
 	slider.value_changed.connect(func(v: float):
 		profile.data.settings[key] = v
-		value.text = str(v)
+		value.text = format.call(v)
 		profile.save()
 		apply_settings()
 	)
 
+func setting_toggle(parent: VBoxContainer, title: String, key: String) -> void:
+	var check := CheckButton.new()
+	check.custom_minimum_size.y = Design.TOUCH_MIN
+	check.text = title
+	check.button_pressed = bool(profile.data.settings[key])
+	check.toggled.connect(func(value: bool): profile.data.settings[key] = value; profile.save())
+	parent.add_child(check)
+
+func setting_choice(parent: Control, title: String, choices: Array, selected: int, on_select: Callable) -> void:
+	var row := HBoxContainer.new()
+	parent.add_child(row)
+	var caption := label(title, Design.TYPE_BODY)
+	caption.custom_minimum_size.x = 250
+	row.add_child(caption)
+	var options := OptionButton.new()
+	options.custom_minimum_size.y = Design.TOUCH_MIN
+	options.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	for choice in choices: options.add_item(str(choice))
+	options.select(clampi(selected, 0, choices.size() - 1))
+	options.item_selected.connect(on_select)
+	row.add_child(options)
+
 func show_settings() -> void:
 	screen = "settings"
-	var rows := panel_screen("FIELD SETTINGS", "Controls and accessibility are saved on this device. Touch HUD layouts are editable during a match.")
-	var settings := rows
-	setting_slider(settings, "MOUSE SENSITIVITY", "sensitivity", 0.0005, 0.008, 0.0001)
-	setting_slider(settings, "TOUCH SENSITIVITY", "touch_sensitivity", 0.001, 0.012, 0.0002)
-	setting_slider(settings, "FIELD OF VIEW", "fov", 60, 100, 1)
-	setting_slider(settings, "MASTER VOLUME", "volume", 0, 1, 0.05)
-	setting_slider(settings, "TOUCH BUTTON SIZE", "hud_scale", 0.7, 1.5, 0.05)
-	setting_slider(settings, "3D RENDER SCALE", "render_scale", 0.5, 1.0, 0.05)
-	setting_slider(settings, "CROSSHAIR SIZE", "crosshair_size", 2, 12, 1)
-	for definition in [["GYROSCOPE AIMING (supported devices)", "gyro"], ["SHOW TOUCH CONTROLS ON DESKTOP", "touch_visible"], ["REDUCED MOTION", "reduced_motion"]]:
-		var key: String = definition[1]
-		var check := CheckButton.new()
-		check.custom_minimum_size.y = 48
-		check.text = definition[0]
-		check.button_pressed = bool(profile.data.settings[key])
-		check.toggled.connect(func(value: bool): profile.data.settings[key] = value; profile.save())
-		settings.add_child(check)
-	var quality := HFlowContainer.new()
-	settings.add_child(quality)
-	quality.add_child(label("FRAME LIMIT", 17))
-	var frame_limit := OptionButton.new()
-	frame_limit.custom_minimum_size.y = 48
-	for value in [30, 60, 90, 120]: frame_limit.add_item(str(value), value)
-	frame_limit.select([30, 60, 90, 120].find(int(profile.data.settings.fps_limit)))
-	frame_limit.item_selected.connect(func(index: int): profile.data.settings.fps_limit = frame_limit.get_item_id(index); profile.save(); apply_settings())
-	quality.add_child(frame_limit)
-	quality.add_child(label("BOT DIFFICULTY", 17))
-	var difficulty := OptionButton.new()
-	difficulty.custom_minimum_size.y = 48
-	for value in ["RECRUIT", "STANDARD", "VETERAN"]: difficulty.add_item(value)
-	difficulty.select(int(profile.data.settings.difficulty))
-	difficulty.item_selected.connect(func(index: int): profile.data.settings.difficulty = index; profile.save())
-	quality.add_child(difficulty)
-	quality.add_child(label("GRAPHICS", 17))
-	var graphics := OptionButton.new()
-	graphics.custom_minimum_size.y = 48
-	graphics.add_item("LOW / NO SHADOWS")
-	graphics.add_item("STANDARD")
-	graphics.select(int(profile.data.settings.graphics_quality))
-	graphics.item_selected.connect(func(index: int): profile.data.settings.graphics_quality = index; profile.save(); apply_settings())
-	quality.add_child(graphics)
+	var rows := panel_screen("FIELD SETTINGS", "Saved on this device. Touch HUD layouts are editable during a match from the field menu.")
+	section(rows, "CONTROLS")
+	setting_slider(rows, "MOUSE SENSITIVITY", "sensitivity", 0.0005, 0.008, 0.0001)
+	setting_slider(rows, "TOUCH SENSITIVITY", "touch_sensitivity", 0.001, 0.012, 0.0002)
+	setting_slider(rows, "TOUCH BUTTON SIZE", "hud_scale", 0.7, 1.5, 0.05, true)
+	setting_toggle(rows, "GYROSCOPE AIMING (supported devices)", "gyro")
+	setting_toggle(rows, "SHOW TOUCH CONTROLS ON DESKTOP", "touch_visible")
+	section(rows, "DISPLAY & PERFORMANCE")
+	setting_choice(rows, "GRAPHICS", ["LOW  ·  NO SHADOWS", "STANDARD"], int(profile.data.settings.graphics_quality), func(index: int): profile.data.settings.graphics_quality = index; profile.save(); apply_settings())
+	setting_slider(rows, "3D RENDER SCALE", "render_scale", 0.5, 1.0, 0.05, true)
+	var limits := [30, 60, 90, 120]
+	setting_choice(rows, "FRAME LIMIT", limits, limits.find(int(profile.data.settings.fps_limit)), func(index: int): profile.data.settings.fps_limit = limits[index]; profile.save(); apply_settings())
+	setting_slider(rows, "FIELD OF VIEW", "fov", 60, 100, 1)
+	section(rows, "ACCESSIBILITY")
+	var scale_labels: Array = []
+	for value in TEXT_SCALES: scale_labels.append("%d%%" % int(round(value * 100)))
+	var current_scale := 0
+	for i in range(TEXT_SCALES.size()):
+		if absf(TEXT_SCALES[i] - text_scale()) < absf(TEXT_SCALES[current_scale] - text_scale()): current_scale = i
+	setting_choice(rows, "INTERFACE TEXT SIZE", scale_labels, current_scale, func(index: int):
+		profile.data.settings.ui_text_scale = TEXT_SCALES[index]
+		profile.save()
+		ui.theme = build_theme()
+		show_settings.call_deferred()
+	)
+	setting_toggle(rows, "REDUCED MOTION", "reduced_motion")
+	setting_slider(rows, "CROSSHAIR SIZE", "crosshair_size", 2, 12, 1)
 	var color_row := HBoxContainer.new()
-	settings.add_child(color_row)
-	color_row.add_child(label("CROSSHAIR COLOR", 17))
+	rows.add_child(color_row)
+	var color_caption := label("CROSSHAIR COLOR", Design.TYPE_BODY)
+	color_caption.custom_minimum_size.x = 250
+	color_row.add_child(color_caption)
 	var picker := ColorPickerButton.new()
 	picker.color = Color(str(profile.data.settings.crosshair_color))
-	picker.custom_minimum_size = Vector2(100, 35)
+	picker.custom_minimum_size = Vector2(120, Design.TOUCH_MIN)
 	picker.color_changed.connect(func(color: Color): profile.data.settings.crosshair_color = color.to_html(false); profile.save())
 	color_row.add_child(picker)
-	settings.add_child(wrapped_label("WASD / left stick: move  •  Mouse / right stick: aim  •  LMB / R2: fire\nR: reload  •  E: hold plant / defuse  •  Space: jump  •  Ctrl: crouch\nB: buy  •  G: frag  •  Q: smoke  •  1 / 2: switch  •  Tab: score  •  Esc: pause", 17, MUTED))
-
-	settings.add_child(wrapped_label("TOUCH: Left thumb moves; drag the open area or FIRE to aim. Hold FIRE to shoot; hold USE to plant or defuse. Tap II → EDIT TOUCH HUD to move buttons and the joystick. RESET POSITIONS restores the layout.", 17, GOLD))
+	section(rows, "AUDIO & OPPONENTS")
+	setting_slider(rows, "MASTER VOLUME", "volume", 0, 1, 0.05, true)
+	setting_choice(rows, "BOT DIFFICULTY", ["RECRUIT", "STANDARD", "VETERAN"], int(profile.data.settings.difficulty), func(index: int): profile.data.settings.difficulty = index; profile.save())
+	section(rows, "BINDINGS")
+	rows.add_child(wrapped_label("WASD / left stick: move  ·  Mouse / right stick: aim  ·  LMB / R2: fire\nR: reload  ·  E: hold plant / defuse  ·  Space: jump  ·  Ctrl: crouch\nB: buy  ·  G: frag  ·  Q: smoke  ·  1 / 2: switch  ·  Tab: roster  ·  Esc: field menu", Design.TYPE_SMALL + 1, MUTED))
+	rows.add_child(wrapped_label("TOUCH: left thumb moves; drag the open area or FIRE to aim. Hold FIRE to shoot; hold USE to plant or defuse. Field menu → EDIT TOUCH HUD moves buttons and the joystick; RESET POSITIONS restores the layout.", Design.TYPE_SMALL + 1, GOLD))
 
 func apply_settings() -> void:
 	Engine.max_fps = int(profile.data.settings.fps_limit)
@@ -455,6 +508,7 @@ func open_economy(tab: String) -> void:
 			)
 	else:
 		economy_panel.configure(profile.data)
+		economy_panel.theme = ui.theme
 		economy_panel.show()
 	economy_panel.open_tab(tab)
 
@@ -468,6 +522,7 @@ func start_match(options: Dictionary) -> void:
 		menu_world = null
 		menu_camera = null
 	clear_ui()
+	match_suspended = false
 	match_game = load("res://scripts/gameplay/match.gd").new()
 	match_game.name = "Match"
 	match_game.configure(options)
@@ -475,6 +530,7 @@ func start_match(options: Dictionary) -> void:
 	match_game.match_finished.connect(on_match_finished)
 	match_game.notification.connect(show_notification)
 	match_game.exit_requested.connect(leave_match)
+	match_game.elimination_reported.connect(add_kill_feed)
 	screen = "game"
 	paused = false
 	input_look = Vector2.ZERO
@@ -488,6 +544,38 @@ func start_match(options: Dictionary) -> void:
 		build_hud()
 		if not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
+func _hud_block(alignment: int) -> VBoxContainer:
+	var block := VBoxContainer.new()
+	block.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	block.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	block.alignment = BoxContainer.ALIGNMENT_END
+	block.add_theme_constant_override("separation", 3)
+	block.set_meta("align", alignment)
+	return block
+
+func _pips(team: int) -> Control:
+	# Five squad pips: filled for living operators, outlined when eliminated.
+	var pips := Control.new()
+	pips.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	pips.custom_minimum_size = Vector2(78, 16)
+	pips.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	pips.set_meta("alive", 5)
+	pips.set_meta("team", team)
+	pips.draw.connect(func():
+		var alive := int(pips.get_meta("alive"))
+		var side := int(pips.get_meta("team"))
+		var tint := Design.squad_color(side)
+		for i in range(5):
+			# Attack fills from the score outward on the left, defense on the right.
+			var slot := 4 - i if side == 0 else i
+			var rect := Rect2(Vector2(slot * 15.5, 2), Vector2(11, 11))
+			if i < alive:
+				pips.draw_rect(rect, tint)
+			else:
+				pips.draw_rect(rect, Color(tint, 0.5), false, 1.2)
+	)
+	return pips
+
 func build_hud() -> void:
 	clear_ui()
 	# Lightweight vertex-only fades preserve contrast without blocking a third of the view.
@@ -497,10 +585,10 @@ func build_hud() -> void:
 	fill(shade)
 	ui.add_child(shade)
 	shade.draw.connect(func():
-		var tint := Color(0.018, 0.024, 0.032, 0.82)
+		var tint := Color(0.018, 0.024, 0.032, 0.72)
 		var clear := Color(0.018, 0.024, 0.032, 0.0)
-		shade.draw_polygon(PackedVector2Array([Vector2.ZERO, Vector2(shade.size.x, 0), Vector2(shade.size.x, 120), Vector2(0, 120)]), PackedColorArray([tint, tint, clear, clear]))
-		shade.draw_polygon(PackedVector2Array([Vector2(0, shade.size.y), shade.size, shade.size - Vector2(0, 120), Vector2(0, shade.size.y - 120)]), PackedColorArray([tint, tint, clear, clear]))
+		shade.draw_polygon(PackedVector2Array([Vector2.ZERO, Vector2(shade.size.x, 0), Vector2(shade.size.x, 110), Vector2(0, 110)]), PackedColorArray([tint, tint, clear, clear]))
+		shade.draw_polygon(PackedVector2Array([Vector2(0, shade.size.y), shade.size, shade.size - Vector2(0, 110), Vector2(0, shade.size.y - 110)]), PackedColorArray([tint, tint, clear, clear]))
 	)
 	shade.resized.connect(shade.queue_redraw)
 	var margins := margin_frame(ui, 22)
@@ -511,42 +599,68 @@ func build_hud() -> void:
 	var top := HBoxContainer.new()
 	top.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	rows.add_child(top)
-	var nameplate := VBoxContainer.new()
-	nameplate.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	nameplate.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	nameplate.custom_minimum_size.x = 240
-	top.add_child(nameplate)
-	nameplate.add_child(label("RELAY YARD", 17, GOLD))
-	nameplate.add_child(label("SECTOR 07  /  TRANSFER STATION", 11, MUTED))
+	var left := VBoxContainer.new()
+	left.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	left.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	left.custom_minimum_size.x = 240
+	top.add_child(left)
+	radar = Radar.new()
+	radar.name = "Radar"
+	radar.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	left.add_child(radar)
+	radar.bind(match_game)
 	var central := VBoxContainer.new()
 	central.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	central.add_theme_constant_override("separation", 2)
 	top.add_child(central)
-	score_label = label("00    /    00", 32)
+	var score_row := HBoxContainer.new()
+	score_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	score_row.alignment = BoxContainer.ALIGNMENT_CENTER
+	score_row.add_theme_constant_override("separation", Design.SPACE_M)
+	central.add_child(score_row)
+	attack_pips = _pips(0)
+	score_row.add_child(attack_pips)
+	score_label = label("00  :  00", Design.TYPE_H1, Design.TEXT, true)
 	score_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	central.add_child(score_label)
-	phase_label = label("DEPLOYING", 13, GOLD)
+	score_row.add_child(score_label)
+	defend_pips = _pips(1)
+	score_row.add_child(defend_pips)
+	phase_label = label("DEPLOYING", Design.TYPE_MICRO + 1, GOLD, true)
 	phase_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	central.add_child(phase_label)
+	squad_label = label("", Design.TYPE_MICRO, MUTED, true)
+	squad_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	central.add_child(squad_label)
 	var side := VBoxContainer.new()
 	side.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	side.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	side.custom_minimum_size.x = 240
 	top.add_child(side)
-	action_label = wrapped_label("", 16, GOLD)
-	action_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	var action_margin := MarginContainer.new()
+	action_margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	action_margin.add_theme_constant_override("margin_right", 80 if uses_touch_controls() else 0)
 	side.add_child(action_margin)
-	action_margin.add_child(action_label)
+	var side_stack := VBoxContainer.new()
+	side_stack.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	side_stack.add_theme_constant_override("separation", Design.SPACE_S)
+	action_margin.add_child(side_stack)
+	action_label = wrapped_label("", Design.TYPE_BODY, GOLD)
+	action_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	side_stack.add_child(action_label)
+	kill_feed = VBoxContainer.new()
+	kill_feed.name = "KillFeed"
+	kill_feed.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	kill_feed.add_theme_constant_override("separation", 3)
+	side_stack.add_child(kill_feed)
 	var space := Control.new()
 	space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	space.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	rows.add_child(space)
-	status_label = wrapped_label("BUY PHASE  /  " + ("Tap BUY to equip" if uses_touch_controls() else "Press B to equip"), 16, GOLD)
+	status_label = wrapped_label("BUY PHASE  /  " + ("Tap BUY to equip" if uses_touch_controls() else "Press B to equip"), Design.TYPE_BODY, GOLD)
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	rows.add_child(status_label)
 	objective_bar = ProgressBar.new()
-	objective_bar.custom_minimum_size = Vector2(180, 8)
+	objective_bar.custom_minimum_size = Vector2(200, 8)
 	objective_bar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	objective_bar.show_percentage = false
 	objective_bar.max_value = 1.0
@@ -554,20 +668,35 @@ func build_hud() -> void:
 	var bottom := HBoxContainer.new()
 	bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	rows.add_child(bottom)
-	health_label = wrapped_label("100  /  HEALTH", 22)
+	var vitals := _hud_block(HORIZONTAL_ALIGNMENT_LEFT)
+	bottom.add_child(vitals)
+	health_label = wrapped_label("100  ·  HEALTH", 22)
+	health_label.add_theme_font_override("font", Design.heading_font())
 	health_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.8))
 	health_label.add_theme_constant_override("shadow_offset_y", 2)
-	health_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	bottom.add_child(health_label)
-	var controls := wrapped_label("BUY  EQUIP     USE  OBJECTIVE     TEAM  ROSTER     II  MENU" if uses_touch_controls() else "B  BUY     E  OBJECTIVE     TAB  TEAM     ESC  MENU", 13, MUTED)
+	vitals.add_child(health_label)
+	health_bar = ProgressBar.new()
+	health_bar.custom_minimum_size = Vector2(170, 6)
+	health_bar.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	health_bar.show_percentage = false
+	health_bar.max_value = 100
+	health_bar.value = 100
+	health_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	vitals.add_child(health_bar)
+	var controls := wrapped_label("BUY  EQUIP     USE  OBJECTIVE     TEAM  ROSTER     II  MENU" if uses_touch_controls() else "B  BUY     E  OBJECTIVE     TAB  ROSTER     ESC  MENU", Design.TYPE_MICRO + 1, MUTED)
 	controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	controls.visible = not uses_touch_controls()
 	controls.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	bottom.add_child(controls)
+	var loadout := _hud_block(HORIZONTAL_ALIGNMENT_RIGHT)
+	bottom.add_child(loadout)
 	ammo_label = wrapped_label("12 / 36", 22)
-	ammo_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	ammo_label.add_theme_font_override("font", Design.heading_font())
 	ammo_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	bottom.add_child(ammo_label)
+	loadout.add_child(ammo_label)
+	utility_label = wrapped_label("", Design.TYPE_MICRO + 1, MUTED)
+	utility_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	loadout.add_child(utility_label)
 	crosshair = Control.new()
 	crosshair.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	fill(crosshair)
@@ -586,24 +715,58 @@ func build_hud() -> void:
 	touch.layout_changed.connect(func(layout: Dictionary): profile.data.settings.hud_positions = layout; profile.save())
 	ui.add_child(touch)
 
+## Reticle gap follows the actual authoritative spread cone of the next shot.
+func crosshair_gap(actor) -> float:
+	if actor == null or actor.camera == null: return 4.0
+	var spread: float = actor.current_spread(absf(actor.velocity.y) > 0.5)
+	var half_height := get_viewport().get_visible_rect().size.y * 0.5
+	var pixels := tan(spread) / tan(deg_to_rad(actor.camera.fov) * 0.5) * half_height
+	return clampf(3.0 + pixels, 3.0, 36.0)
+
 func draw_crosshair() -> void:
 	if not is_instance_valid(crosshair): return
 	var center: Vector2 = get_viewport().get_visible_rect().size / 2
 	var width: float = profile.data.settings.crosshair_size
 	var color := Color(str(profile.data.settings.crosshair_color))
+	var actor = match_game.local_actor() if is_instance_valid(match_game) else null
+	var gap := crosshair_gap(actor)
 	for direction in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
-		crosshair.draw_line(center + direction * 4, center + direction * (4 + width), Color(0, 0, 0, 0.7), 4)
-		crosshair.draw_line(center + direction * 4, center + direction * (4 + width), color, 2)
+		crosshair.draw_line(center + direction * gap, center + direction * (gap + width), Color(0, 0, 0, 0.7), 4)
+		crosshair.draw_line(center + direction * gap, center + direction * (gap + width), color, 2)
 	crosshair.draw_circle(center, 1.5, color)
 	# Confirmation follows resolved authoritative damage, never a speculative client ray.
-	var actor = match_game.local_actor() if is_instance_valid(match_game) else null
 	if actor != null and actor.hit_feedback_remaining > 0:
-		var hit_color := CRIMSON if actor.hit_feedback_lethal else GOLD if actor.hit_feedback_headshot else Color.WHITE
+		var hit_color := Design.CRIMSON_BRIGHT if actor.hit_feedback_lethal else GOLD if actor.hit_feedback_headshot else Color.WHITE
 		hit_color.a = clampf(actor.hit_feedback_remaining / 0.08, 0.0, 1.0)
 		for diagonal in [Vector2(-1, -1), Vector2(1, -1), Vector2(-1, 1), Vector2(1, 1)]:
 			crosshair.draw_line(center + diagonal * 9, center + diagonal * 14, Color(0, 0, 0, hit_color.a * 0.6), 4)
 			crosshair.draw_line(center + diagonal * 9, center + diagonal * 14, hit_color, 2)
 
+func add_kill_feed(killer_id: int, victim_id: int, headshot: bool) -> void:
+	if not is_instance_valid(kill_feed) or not is_instance_valid(match_game): return
+	var killer: SBActor = match_game.actors.get(killer_id)
+	var victim: SBActor = match_game.actors.get(victim_id)
+	if victim == null: return
+	var involved: bool = victim_id == match_game.local_id or killer_id == match_game.local_id
+	var entry := PanelContainer.new()
+	entry.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	entry.size_flags_horizontal = Control.SIZE_SHRINK_END
+	entry.add_theme_stylebox_override("panel", Design.box(Color(Design.OBSIDIAN, 0.62), GOLD if involved else Color.TRANSPARENT, 1, Vector2(8, 3)))
+	var row := HBoxContainer.new()
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_theme_constant_override("separation", 6)
+	entry.add_child(row)
+	# Display names are user supplied: plain labels only, never rich text.
+	if killer != null and killer != victim:
+		row.add_child(label(killer.display_name.left(16), Design.TYPE_SMALL, Design.squad_color(killer.team)))
+	row.add_child(label("HEADSHOT" if headshot else "›", Design.TYPE_MICRO, GOLD if headshot else MUTED, headshot))
+	row.add_child(label(victim.display_name.left(16), Design.TYPE_SMALL, Design.squad_color(victim.team)))
+	entry.set_meta("born", elapsed)
+	kill_feed.add_child(entry)
+	while kill_feed.get_child_count() > KILL_FEED_ROWS:
+		var oldest := kill_feed.get_child(0)
+		kill_feed.remove_child(oldest)
+		oldest.queue_free()
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
@@ -705,10 +868,20 @@ func _process(delta: float) -> void:
 			get_viewport().get_texture().get_image().save_png(output_path)
 			print("SIGHTBREAK_DEMO_CAPTURED")
 			get_tree().quit(0)
-	if screen != "game" or not is_instance_valid(match_game): return
+	if screen != "game" or not is_instance_valid(match_game) or not is_instance_valid(score_label): return
 	var actor = match_game.local_actor()
-	score_label.text = "%02d     /     %02d" % [match_game.attack_score, match_game.defend_score]
-	phase_label.text = "ROUND %02d   •   %s   •   %02d:%02d" % [match_game.round_number, str(match_game.phase).to_upper(), int(match_game.time_left) / 60, int(match_game.time_left) % 60]
+	score_label.text = "%02d  :  %02d" % [match_game.attack_score, match_game.defend_score]
+	var seconds := int(ceil(match_game.time_left))
+	phase_label.text = "ROUND %02d   ·   %s   ·   %02d:%02d" % [match_game.round_number, str(match_game.phase).to_upper(), seconds / 60, seconds % 60]
+	var urgent: bool = match_game.phase == "live" and match_game.time_left <= 10.0 and match_game.objective_state != "planted"
+	phase_label.add_theme_color_override("font_color", Design.CRIMSON_BRIGHT if urgent else GOLD)
+	var alive := [0, 0]
+	for operator: SBActor in match_game.actors.values():
+		if operator.alive: alive[clampi(operator.team, 0, 1)] += 1
+	for pair in [[attack_pips, alive[0]], [defend_pips, alive[1]]]:
+		if is_instance_valid(pair[0]) and int(pair[0].get_meta("alive")) != pair[1]:
+			pair[0].set_meta("alive", pair[1])
+			pair[0].queue_redraw()
 	action_label.text = "DEVICE  %02d s" % int(match_game.objective_timer) if match_game.objective_state == "planted" else "DEVICE  /  " + str(match_game.objective_state).to_upper()
 	if match_game.objective_state == "dropped": action_label.text = "DEVICE DROPPED  /  RECOVER"
 	if match_game.phase == "waiting":
@@ -720,14 +893,27 @@ func _process(delta: float) -> void:
 		reward_label.text = "ACCOUNT REWARDS  /  " + str(match_game.reward_status).to_upper().replace("_", " ")
 	objective_bar.value = float(match_game.interaction_progress)
 	objective_bar.visible = objective_bar.value > 0
+	for entry in kill_feed.get_children():
+		var age := elapsed - float(entry.get_meta("born", elapsed))
+		entry.modulate.a = clampf((KILL_FEED_SECONDS - age) / 0.6, 0.0, 1.0)
+		if age > KILL_FEED_SECONDS:
+			entry.queue_free()
+	if is_instance_valid(radar): radar.queue_redraw()
 	if actor != null:
-		health_label.text = "%03d   /   HEALTH" % maxi(0, int(actor.health)) if actor.alive else "ELIMINATED  /  SPECTATING"
-		var health_color: Color = CRIMSON.lightened(0.3) if actor.alive and actor.health <= 25 else Color("e7eaf0")
+		squad_label.text = "YOU  ·  " + Design.squad_name(actor.team)
+		squad_label.add_theme_color_override("font_color", Design.squad_color(actor.team))
+		health_label.text = "%03d  ·  HEALTH" % maxi(0, int(actor.health)) if actor.alive else "ELIMINATED  ·  SPECTATING"
+		var critical: bool = actor.alive and actor.health <= 25
+		var health_color: Color = CRIMSON.lightened(0.3) if critical else Design.TEXT
 		if health_label.get_theme_color("font_color") != health_color: health_label.add_theme_color_override("font_color", health_color)
+		health_bar.value = maxf(0, actor.health) if actor.alive else 0.0
+		health_bar.add_theme_stylebox_override("fill", Design.box(CRIMSON.lightened(0.3) if critical else Design.STEEL_BRIGHT, Color.TRANSPARENT, 0, Vector2.ZERO))
 		ammo_label.text = "%s   %02d / %02d" % [str(actor.weapon_id).to_upper(), actor.ammo, actor.reserve]
 		if actor.reload_remaining > 0: ammo_label.text = "RELOADING   %0.1fs" % actor.reload_remaining
-		var ammo_color: Color = GOLD if actor.reload_remaining > 0 else CRIMSON.lightened(0.3) if actor.ammo == 0 else Color("e7eaf0")
+		var ammo_color: Color = GOLD if actor.reload_remaining > 0 else CRIMSON.lightened(0.3) if actor.ammo == 0 else Design.TEXT
 		if ammo_label.get_theme_color("font_color") != ammo_color: ammo_label.add_theme_color_override("font_color", ammo_color)
+		utility_label.text = "FRAG ×%d    SMOKE ×%d    FUNDS %d" % [actor.grenades, actor.smokes, actor.credits]
+		if touch != null: touch.counts = {"grenade": actor.grenades, "smoke": actor.smokes}
 		if match_game.phase == "buy": status_label.text = "MATCH FUNDS  %d   /   %s TO EQUIP" % [actor.credits, "TAP BUY" if uses_touch_controls() else "PRESS B"]
 		elif match_game.phase != "waiting" and elapsed > float(status_label.get_meta("until", 0.0)): status_label.text = ("HOLD USE AT A SITE TO PLANT" if uses_touch_controls() else "HOLD E AT A SITE TO PLANT") if actor.team == 0 and str(match_game.objective_state) != "planted" else ("HOLD USE NEAR THE DEVICE TO DEFUSE" if uses_touch_controls() else "HOLD E NEAR THE DEVICE TO DEFUSE") if str(match_game.objective_state) == "planted" else "DEFEND THE TWO OBJECTIVE SITES"
 		crosshair.visible = actor.alive and not paused
@@ -747,18 +933,29 @@ func show_notification(message: String) -> void:
 func make_overlay(title: String) -> VBoxContainer:
 	if is_instance_valid(overlay): overlay.queue_free()
 	overlay = ColorRect.new()
-	overlay.color = Color(0.015, 0.025, 0.035, 0.92)
+	overlay.color = Design.SCRIM
 	fill(overlay)
 	ui.add_child(overlay)
-	var margins := margin_frame(overlay, 64)
+	var margins := margin_frame(overlay, 56)
 	var rows := scroll_rows(margins)
-	rows.add_theme_constant_override("separation", 18)
-	rows.add_child(wrapped_label(title, 38, GOLD))
+	rows.add_theme_constant_override("separation", Design.SPACE_L)
+	var heading := wrapped_label(title, 34, GOLD)
+	heading.add_theme_font_override("font", Design.heading_font())
+	rows.add_child(heading)
 	paused = true
 	physical_mouse_fire = false
 	if touch != null: touch.reset_input(); touch.enabled = false
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	return rows
+
+## Offline training has no other players: menus genuinely pause it. Network
+## matches keep running because the server does not wait for one client.
+func set_match_suspended(suspended: bool) -> void:
+	if not is_instance_valid(match_game) or str(match_game.options.get("mode", "offline")) != "offline":
+		match_suspended = false
+		return
+	match_suspended = suspended
+	match_game.process_mode = Node.PROCESS_MODE_DISABLED if suspended else Node.PROCESS_MODE_INHERIT
 
 func close_overlay() -> void:
 	if is_instance_valid(overlay): overlay.queue_free()
@@ -766,6 +963,7 @@ func close_overlay() -> void:
 	paused = false
 	physical_mouse_fire = false
 	mouse_delta = Vector2.ZERO
+	set_match_suspended(false)
 	if touch != null: touch.enabled = uses_touch_controls()
 	if not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
@@ -774,13 +972,15 @@ func toggle_pause() -> void:
 		close_overlay()
 		return
 	var rows := make_overlay("FIELD MENU")
-	rows.add_child(label("The match continues while this menu is open.", 18, MUTED))
-	rows.add_child(button("RESUME", close_overlay))
+	set_match_suspended(true)
+	rows.add_child(label("Training is paused." if match_suspended else "The match continues while this menu is open.", Design.TYPE_BODY, MUTED))
+	rows.add_child(button("RESUME", close_overlay, Design.TOUCH_MIN, "primary"))
 	rows.add_child(button("EDIT TOUCH HUD", open_touch_editor))
-	rows.add_child(button("LEAVE MATCH", leave_match))
+	rows.add_child(button("LEAVE MATCH", leave_match, Design.TOUCH_MIN, "ghost"))
 
 func open_touch_editor() -> void:
 	close_overlay()
+	set_match_suspended(true)
 	touch.enabled = true
 	touch.editing = true
 	paused = true
@@ -793,7 +993,7 @@ func open_touch_editor() -> void:
 	toolbar.offset_left = safe.position.x + 24
 	toolbar.offset_right = -(ui.size.x - safe.end.x) - 24
 	toolbar.offset_top = safe.position.y + 120
-	toolbar.add_child(button("SAVE TOUCH LAYOUT", finish_touch_editor, 60))
+	toolbar.add_child(button("SAVE TOUCH LAYOUT", finish_touch_editor, 60, "primary"))
 	toolbar.add_child(button("RESET POSITIONS", func(): touch.reset_layout(), 60))
 	ui.add_child(toolbar)
 
@@ -805,62 +1005,103 @@ func finish_touch_editor() -> void:
 	paused = false
 	physical_mouse_fire = false
 	mouse_delta = Vector2.ZERO
+	set_match_suspended(false)
 	if not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+
+## Buy state for one weapon: owned, affordable, or the shortfall.
+func requisition_state(actor, key: String) -> Dictionary:
+	var spec: Dictionary = Weapons.get_weapon(key)
+	var funds := int(actor.credits) if actor != null else 0
+	var cost := int(spec.get("cost", 0))
+	var buy_phase: bool = is_instance_valid(match_game) and match_game.phase == "buy"
+	if actor != null and actor.inventory.has(key):
+		return {"available": false, "note": "EQUIPPED" if actor.weapon_id == key else "OWNED"}
+	if not buy_phase:
+		return {"available": false, "note": "%d  ·  PREPARATION ONLY" % cost}
+	if funds < cost:
+		return {"available": false, "note": "%d  ·  NEED %d MORE" % [cost, cost - funds]}
+	return {"available": true, "note": "%d" % cost}
 
 func show_buy() -> void:
 	if not is_instance_valid(match_game): return
-	var rows := make_overlay("REQUISITION  /  MATCH EQUIPMENT")
+	var rows := make_overlay("REQUISITION")
 	var actor = match_game.local_actor()
 	var funds := int(actor.credits) if actor != null else 0
-	rows.add_child(wrapped_label("Available: %d match funds   •   Purchases are validated during the buy phase." % funds, 18, MUTED))
-	var weapons = load("res://scripts/gameplay/weapons.gd")
-	var catalog: Dictionary = weapons.DATA
-	for key in catalog:
+	rows.add_child(wrapped_label("MATCH FUNDS  %d" % funds, Design.TYPE_H2, Design.TEXT))
+	if match_game.phase != "buy":
+		rows.add_child(wrapped_label("Equipment can be requisitioned during the 15-second preparation phase.", Design.TYPE_SMALL, Design.CRIMSON_BRIGHT))
+	else:
+		rows.add_child(wrapped_label("Purchases last for this match only and are validated by the match authority.", Design.TYPE_SMALL, MUTED))
+	var cards := HFlowContainer.new()
+	cards.add_theme_constant_override("h_separation", Design.SPACE_M)
+	cards.add_theme_constant_override("v_separation", Design.SPACE_M)
+	rows.add_child(cards)
+	for key in Weapons.DATA:
 		var weapon_key: String = key
-		var definition: Dictionary = catalog[key]
-		rows.add_child(button("%s     /     %d" % [str(definition.get("name", key)).to_upper(), int(definition.get("cost", 0))], func():
+		var spec: Dictionary = Weapons.DATA[key]
+		var state := requisition_state(actor, weapon_key)
+		var card := button("%s   ·   %s\n%d DMG   ·   %.1f RPS   ·   %d RND\n%s" % [str(spec.name).to_upper(), WEAPON_ROLES.get(weapon_key, ""), int(spec.damage), 1.0 / float(spec.interval), int(spec.magazine), state.note], func():
 			match_game.request_buy(weapon_key)
 			close_overlay()
-		))
-	rows.add_child(button("BACK TO FIELD", close_overlay))
+		, 92)
+		card.name = "Buy_" + weapon_key
+		card.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		card.custom_minimum_size.x = 260
+		card.disabled = not state.available
+		cards.add_child(card)
+	rows.add_child(button("BACK TO FIELD", close_overlay, Design.TOUCH_MIN, "ghost"))
 
 func show_scoreboard() -> void:
 	score_panel = PanelContainer.new()
 	score_panel.name = "Scoreboard"
+	score_panel.add_theme_stylebox_override("panel", Design.panel("overlay"))
 	ui.add_child(score_panel)
 	fill(score_panel)
 	var safe := SafeArea.viewport_rect(ui.size)
 	score_panel.offset_left = safe.position.x + safe.size.x * 0.15
 	score_panel.offset_right = -(ui.size.x - safe.end.x) - safe.size.x * 0.15
-	score_panel.offset_top = safe.position.y + safe.size.y * 0.15
-	score_panel.offset_bottom = -(ui.size.y - safe.end.y) - safe.size.y * 0.15
+	score_panel.offset_top = safe.position.y + safe.size.y * 0.12
+	score_panel.offset_bottom = -(ui.size.y - safe.end.y) - safe.size.y * 0.12
 	var rows := scroll_rows(score_panel)
-	rows.add_theme_constant_override("separation", 4)
-	rows.add_child(wrapped_label("TEAM ROSTER     /     K  ·  A  ·  D", 24, GOLD))
-	for actor in match_game.scoreboard():
-		var row := HBoxContainer.new()
-		rows.add_child(row)
-		row.add_child(label("ATK" if int(actor.get("team", 0)) == 0 else "DEF", 19, GOLD))
-		var player := label(str(actor.get("name", actor.get("display_name", "Operator"))), 19)
-		player.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		player.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
-		row.add_child(player)
-		row.add_child(label("%d  /  %d  /  %d" % [int(actor.get("kills", 0)), int(actor.get("assists", 0)), int(actor.get("deaths", 0))], 19))
+	rows.add_theme_constant_override("separation", 3)
+	var roster: Array = match_game.scoreboard()
+	for team in [0, 1]:
+		var header := HBoxContainer.new()
+		rows.add_child(header)
+		var title := label("%s   %02d" % [Design.squad_name(team), match_game.attack_score if team == 0 else match_game.defend_score], Design.TYPE_H3, Design.squad_color(team), true)
+		title.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		header.add_child(title)
+		header.add_child(label("K  ·  A  ·  D  ·  OBJ", Design.TYPE_MICRO, MUTED, true))
+		for entry in roster:
+			if int(entry.get("team", 0)) != team: continue
+			var row := HBoxContainer.new()
+			rows.add_child(row)
+			var tint: Color = GOLD if entry.get("local", false) else Design.TEXT
+			if not entry.get("alive", true): tint = Color(tint, 0.45)
+			var player := label(str(entry.get("name", "Operator")) + ("   BOT" if entry.get("bot", false) else ""), Design.TYPE_BODY + 1, tint)
+			player.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			player.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+			row.add_child(player)
+			row.add_child(label("%d  ·  %d  ·  %d  ·  %d" % [int(entry.get("kills", 0)), int(entry.get("assists", 0)), int(entry.get("deaths", 0)), int(entry.get("objectives", 0))], Design.TYPE_BODY + 1, tint))
 
 func on_match_finished(summary: Dictionary) -> void:
 	if server_mode: return
 	var reward: Dictionary = {}
 	if match_game.options.get("mode", "offline") == "offline": reward = profile.record_match(summary)
 	var rows := make_overlay("OPERATION COMPLETE")
-	rows.add_child(label("FINAL SCORE   %02d  /  %02d" % [match_game.attack_score, match_game.defend_score], 30))
+	var outcome := "DRAW" if summary.get("draw", false) else "VICTORY" if summary.get("won", false) else "DEFEAT"
+	var outcome_label := label(outcome, Design.TYPE_DISPLAY - 12, GOLD if outcome == "VICTORY" else Design.CRIMSON_BRIGHT if outcome == "DEFEAT" else MUTED, true)
+	rows.add_child(outcome_label)
+	rows.add_child(label("FINAL   %02d  :  %02d   ·   %d ROUNDS" % [match_game.attack_score, match_game.defend_score, int(summary.get("rounds", 0))], Design.TYPE_H2))
+	rows.add_child(wrapped_label("%d ELIMINATIONS   ·   %d ASSISTS   ·   %d DEATHS   ·   %d OBJECTIVES" % [int(summary.get("kills", 0)), int(summary.get("assists", 0)), int(summary.get("deaths", 0)), int(summary.get("objectives", 0))], Design.TYPE_BODY + 1, MUTED))
 	if not reward.is_empty():
-		rows.add_child(wrapped_label("OFFLINE TRAINING  +%d XP    +%d CREDITS    LEVEL %d" % [reward.xp, reward.credits, reward.level], 20, GOLD))
-		if reward.save_error != OK: rows.add_child(label("Local progress could not be saved. Check device storage.", 18, CRIMSON))
+		rows.add_child(wrapped_label("OFFLINE TRAINING  +%d XP    +%d CREDITS    LEVEL %d" % [reward.xp, reward.credits, reward.level], Design.TYPE_H3, GOLD))
+		if reward.save_error != OK: rows.add_child(label("Local progress could not be saved. Check device storage.", Design.TYPE_BODY, Design.CRIMSON_BRIGHT))
 	elif str(match_game.reward_status) != "unranked":
-		reward_label = label("ACCOUNT REWARDS  /  " + str(match_game.reward_status).to_upper(), 18, MUTED)
+		reward_label = label("ACCOUNT REWARDS  /  " + str(match_game.reward_status).to_upper(), Design.TYPE_BODY, MUTED)
 		rows.add_child(reward_label)
-	else: rows.add_child(wrapped_label("Unranked LAN result. No online wallet or inventory rewards.", 18, MUTED))
-	rows.add_child(button("RETURN TO OPERATIONS", leave_match))
+	else: rows.add_child(wrapped_label("Unranked LAN result. No online wallet or inventory rewards.", Design.TYPE_BODY, MUTED))
+	rows.add_child(button("RETURN TO OPERATIONS", leave_match, Design.TOUCH_MIN, "primary"))
 
 func leave_match() -> void:
 	physical_mouse_fire = false
@@ -871,5 +1112,6 @@ func leave_match() -> void:
 		remove_child(match_game)
 		match_game.queue_free()
 		match_game = null
+	match_suspended = false
 	multiplayer.multiplayer_peer = null
 	show_menu()

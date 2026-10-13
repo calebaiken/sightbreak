@@ -4,6 +4,8 @@ extends Node3D
 signal match_finished(summary: Dictionary)
 signal notification(text: String)
 signal exit_requested
+## Structured elimination for the HUD feed; mirrored to clients by the server.
+signal elimination_reported(killer_id: int, victim_id: int, headshot: bool)
 
 const BUY_SECONDS := 15.0
 const ROUND_SECONDS := 100.0
@@ -147,7 +149,13 @@ func _buy(id: int, weapon: String) -> void:
 	if actor == null or phase != "buy":
 		return
 	if not actor.buy_weapon(weapon) and id == local_id:
-		notification.emit("Purchase unavailable: check your round funds.")
+		var spec: Dictionary = SBWeapons.get_weapon(weapon)
+		if actor.inventory.has(weapon):
+			notification.emit("%s is already in your loadout." % str(spec.name).to_upper())
+		elif SBWeapons.DATA.has(weapon) and actor.credits < int(spec.cost):
+			notification.emit("Need %d more match funds for the %s." % [int(spec.cost) - actor.credits, str(spec.name).to_upper()])
+		else:
+			notification.emit("Purchase unavailable.")
 
 func scoreboard() -> Array:
 	var result: Array = []
@@ -358,6 +366,7 @@ func _eliminated(victim: int, killer: int) -> void:
 		source.kills += 1
 		source.credits = mini(9000, source.credits + 300)
 		_announce(source.display_name + "  ›  " + killed.display_name)
+	_report_elimination(killer, victim, killed.last_hit_headshot)
 	for assistant_id: int in _damage_history.get(victim, {}):
 		if assistant_id != killer and actors.has(assistant_id) and float(_damage_history[victim][assistant_id]) >= 20:
 			var helper: SBActor = actors[assistant_id]
@@ -368,6 +377,18 @@ func _eliminated(victim: int, killer: int) -> void:
 		objective_position = killed.position
 		objective_carrier = 0
 		_announce("Relay device dropped")
+
+func _report_elimination(killer: int, victim: int, headshot: bool) -> void:
+	elimination_reported.emit(killer, victim, headshot)
+	if options.get("mode", "offline") == "server":
+		for peer_id: int in _active_peers():
+			_elimination_rpc.rpc_id(peer_id, killer, victim, headshot)
+
+@rpc("authority", "call_remote", "reliable")
+func _elimination_rpc(killer: int, victim: int, headshot: bool) -> void:
+	if _authority or not actors.has(victim):
+		return
+	elimination_reported.emit(killer, victim, headshot)
 
 func _shot(id: int, origin: Vector3, _direction: Vector3) -> void:
 	_heard[id] = {"position": origin, "time": _elapsed}
