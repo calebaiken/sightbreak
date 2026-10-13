@@ -21,6 +21,10 @@ func _start() -> void:
 	match_node.configure({"mode": role, "name": "Network QA", "address": "127.0.0.1", "port": 27991})
 	root.add_child(match_node)
 	if role == "server":
+		if match_node.multiplayer.server_relay:
+			push_error("Authoritative match must not enable client-to-client relay")
+			quit(1)
+			return
 		match_node.phase = "live"
 		match_node.time_left = 100
 		# Disable bots for deterministic transport assertions; their ticks are covered separately.

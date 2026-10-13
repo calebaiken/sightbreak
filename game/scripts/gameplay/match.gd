@@ -119,8 +119,11 @@ func _spawn_actor(id: int, team: int, player_name: String) -> SBActor:
 	actor.eliminated.connect(_eliminated)
 	actor.damage_taken.connect(_damaged)
 	actor.shot_fired.connect(_shot)
-	_bot_state[id] = {"reaction": 0.0, "target": 0, "last_position": actor.position, "stuck": 0.0}
+	_reset_bot_state(actor)
 	return actor
+
+func _reset_bot_state(actor: SBActor) -> void:
+	_bot_state[actor.actor_id] = {"reaction": 0.0, "target": 0, "last_position": actor.position, "stuck": 0.0, "last_seen": Vector3.ZERO, "seen_at": -100.0}
 
 func local_actor() -> SBActor:
 	return actors.get(local_id) as SBActor
@@ -240,6 +243,7 @@ func _begin_round() -> void:
 			spawn = arena.defend_spawns[defend_index % arena.defend_spawns.size()]
 			defend_index += 1
 		actor.reset_for_round(spawn)
+		_reset_bot_state(actor)
 		if _is_bot(actor.actor_id):
 			actor.buy_weapon("rifle" if actor.credits >= 2400 else "smg")
 		actor.input_state = {"move": Vector2.ZERO, "look": Vector2(PI if actor.team == 0 else 0, 0)}
@@ -390,9 +394,12 @@ func _bot_input(actor: SBActor, delta: float) -> void:
 	var interact: bool = false
 	if objective_state == "planted":
 		destination = objective_position
-		interact = actor.team == 1 and actor.position.distance_to(destination) <= 2.6
-		if actor.team == 0:
-			destination += Vector3((actor.actor_id % 3 - 1) * 4, 0, 4)
+		var defuser_id: int = _nearest_defender()
+		interact = actor.team == 1 and actor.actor_id == defuser_id and actor.position.distance_to(destination) <= 2.6
+		if actor.team == 0 or actor.actor_id != defuser_id:
+			# Hold separate approach angles while one teammate works the device.
+			var hold_angle: float = float(actor.actor_id % 5) * TAU / 5.0
+			destination += Vector3(cos(hold_angle), 0, sin(hold_angle)) * 4.5
 	elif actor.team == 0 and objective_state == "dropped":
 		destination = objective_position
 	elif actor.team == 0:
@@ -409,11 +416,18 @@ func _bot_input(actor: SBActor, delta: float) -> void:
 		if int(state.target) != target.actor_id:
 			state.reaction = 0.0
 		state.target = target.actor_id
+		state.last_seen = target.position
+		state.seen_at = _elapsed
 		state.reaction = float(state.reaction) + delta
 		var aim: Vector3 = target.position + Vector3(0, 1.15, 0) - (actor.position + Vector3(0, 1.5, 0))
 		var error: float = 0.045 if difficulty == "easy" else (0.008 if difficulty == "hard" else 0.022)
-		look = Vector2(atan2(-aim.x, -aim.z) + _rng.randf_range(-error, error), atan2(aim.y, Vector2(aim.x, aim.z).length()))
-		firing = float(state.reaction) >= reaction_delay and not interact
+		var desired := Vector2(atan2(-aim.x, -aim.z) + _rng.randf_range(-error, error), atan2(aim.y, Vector2(aim.x, aim.z).length()))
+		var turn_speed: float = 3.5 if difficulty == "easy" else (7.0 if difficulty == "hard" else 5.0)
+		look.x = rotate_toward(actor.yaw, desired.x, turn_speed * delta)
+		look.y = move_toward(actor.pitch, desired.y, turn_speed * delta)
+		# Reaction time never allows shooting before the muzzle reaches the target.
+		var aligned: bool = absf(angle_difference(look.x, desired.x)) < 0.07 and absf(look.y - desired.y) < 0.07
+		firing = float(state.reaction) >= reaction_delay and aligned and not interact
 		if not bool(SBWeapons.get_weapon(actor.weapon_id).automatic) and bool(actor.input_state.get("fire", false)):
 			firing = false
 		move = Vector2(sin(_elapsed * 1.1 + actor.actor_id) * 0.4, 0)
@@ -426,11 +440,20 @@ func _bot_input(actor: SBActor, delta: float) -> void:
 	else:
 		state.target = 0
 		state.reaction = 0.0
+		# Investigate a briefly remembered sighting; never aim/fire at hidden live coordinates.
+		if _elapsed - float(state.seen_at) < 2.0 and not interact and objective_state != "planted":
+			destination = state.last_seen
 		if actor.position.distance_to(destination) > 1.8 and not interact:
 			var waypoint: Vector3 = arena.bot_navigation(actor.position, destination)
 			var direction: Vector3 = waypoint - actor.position
 			look = Vector2(atan2(-direction.x, -direction.z), 0)
 			move = Vector2(0, 1)
+		elif not interact:
+			# Scan the approach rather than staring permanently away from the attackers.
+			var approach := Vector3(0, 0, -18) if actor.team == 1 else Vector3(0, 0, 20)
+			var toward_approach: Vector3 = approach - actor.position
+			var scan_yaw: float = atan2(-toward_approach.x, -toward_approach.z) + sin(_elapsed * 0.65 + actor.actor_id) * 0.7
+			look = Vector2(rotate_toward(actor.yaw, scan_yaw, delta * 2.0), 0)
 	if actor.position.distance_to(state.last_position) < 0.05 and move.length() > 0:
 		state.stuck = float(state.stuck) + delta
 	else:
@@ -438,7 +461,24 @@ func _bot_input(actor: SBActor, delta: float) -> void:
 	state.last_position = actor.position
 	if float(state.stuck) > 0.9:
 		move.x = 1 if actor.actor_id % 2 == 0 else -1
-	actor.input_state = {"move": Vector2.ZERO if interact else move, "look": look, "fire": firing, "reload": actor.ammo == 0, "jump": float(state.stuck) > 1.5, "crouch": target != null and actor.actor_id % 3 == 0, "interact": interact}
+	var magazine: int = int(SBWeapons.get_weapon(actor.weapon_id).magazine)
+	var safe_reload: bool = target == null and _elapsed - float(state.seen_at) > 2.5 and actor.ammo <= magazine / 3
+	actor.input_state = {"move": Vector2.ZERO if interact else move, "look": look, "fire": firing, "reload": not interact and (actor.ammo == 0 or safe_reload), "jump": float(state.stuck) > 1.5, "crouch": target != null and actor.actor_id % 3 == 0, "interact": interact}
+
+func _nearest_defender() -> int:
+	var chosen: int = 0
+	var nearest: float = INF
+	for actor: SBActor in actors.values():
+		if not actor.alive or actor.team != 1:
+			continue
+		# A human already holding interact keeps priority; bots provide covering fire.
+		if not _is_bot(actor.actor_id) and bool(actor.input_state.get("interact", false)) and actor.position.distance_to(objective_position) <= 2.8:
+			return actor.actor_id
+		var distance: float = actor.position.distance_squared_to(objective_position)
+		if _is_bot(actor.actor_id) and (distance < nearest or (is_equal_approx(distance, nearest) and actor.actor_id < chosen)):
+			chosen = actor.actor_id
+			nearest = distance
+	return chosen
 
 func _cover_position(actor: SBActor, threat: SBActor) -> Vector3:
 	var choice: Vector3 = actor.position
@@ -490,6 +530,10 @@ func _host() -> void:
 		connection_state = "failed"
 		notification.emit("Cannot bind dedicated server port: %s" % error_string(error))
 		return
+	# Clients only exchange inputs/snapshots with this authority. Disabling the
+	# implicit peer relay also avoids peer-list traffic to simultaneously closing
+	# ENet channels during reconnect; gameplay never needs client-to-client RPCs.
+	multiplayer.server_relay = false
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_disconnected.connect(_peer_disconnected)
 	connection_state = "hosting"
@@ -528,7 +572,8 @@ func _client_tick(delta: float) -> void:
 		# Predict view orientation only; movement and combat remain authoritative.
 		if look.is_finite():
 			actor.rotation.y = look.x
-			actor.camera.rotation.x = clampf(look.y, -1.42, 1.42)
+			actor.camera.rotation.x = clampf(look.y, -1.42, 1.42) + actor.recoil.y
+			actor.camera.rotation.y = actor.recoil.x
 	if connection_state == "reconnecting":
 		_reconnect_clock -= delta
 		if _reconnect_clock <= 0:

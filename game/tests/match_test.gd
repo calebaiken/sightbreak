@@ -1,5 +1,10 @@
 extends SceneTree
 
+class PerceptionActor extends SBActor:
+	var visible_enemy: bool = true
+	func can_see(_other: SBActor) -> bool:
+		return visible_enemy
+
 var checks: int = 0
 var failures: int = 0
 
@@ -170,6 +175,96 @@ func _run() -> void:
 	complete.objective_position = Vector3(3, 0, 4)
 	complete._update_device_visual(0.1)
 	check(complete._device.visible and complete._device.position == complete.objective_position, "dropped objective has a visible world device")
+	# Bot perception is per round, preventing immediate inherited locks after respawn.
+	complete._bot_state[6].target = 1
+	complete._bot_state[6].reaction = 3.0
+	complete._bot_state[6].seen_at = complete._elapsed
+	complete._begin_round()
+	check(complete._bot_state[6].target == 0 and complete._bot_state[6].reaction == 0 and complete._bot_state[6].seen_at == -100.0, "round reset clears bot target and memory")
+	complete.phase = "live"
+	complete.objective_state = "planted"
+	complete.objective_position = Vector3(15, 0, 10)
+	for actor: SBActor in complete.actors.values():
+		actor.alive = actor.team == 1
+		actor.input_state.clear()
+		actor.position = complete.objective_position + Vector3(actor.actor_id - 5, 0, 0)
+	var defuser_id: int = complete._nearest_defender()
+	check(defuser_id != 0, "planted objective chooses a living defender")
+	for actor: SBActor in complete.actors.values():
+		complete._bot_input(actor, 0.12)
+	var interacting: int = 0
+	for actor: SBActor in complete.actors.values():
+		if bool(actor.input_state.get("interact", false)):
+			interacting += 1
+	check(interacting == 1, "only nearest bot defuses while teammates cover")
+	complete.actors[defuser_id].alive = false
+	check(complete._nearest_defender() != defuser_id, "another living bot replaces fallen defuser")
+	complete.local_id = 7
+	complete.actors[7].alive = true
+	complete.actors[7].position = complete.objective_position
+	complete.actors[7].input_state = {"interact": true}
+	check(complete._nearest_defender() == 7, "human holding interaction has defuse priority")
+	complete.local_id = 0
+	complete.objective_state = "carried"
+	var reloader: SBActor = complete.actors[7]
+	reloader.ammo = 1
+	complete._bot_input(reloader, 0.12)
+	check(bool(reloader.input_state.reload) and not bool(reloader.input_state.fire), "safe bot tops up depleted magazine without firing at unseen foes")
+	# Exercise timer-driven transitions, including the post-round window and final freeze.
+	var timed := TacticalMatch.new()
+	timed.configure({"mode": "offline"})
+	root.add_child(timed)
+	timed.set_physics_process(false)
+	timed.time_left = 0.001
+	timed._authority_tick(0.01)
+	check(timed.phase == "live" and timed.time_left == TacticalMatch.ROUND_SECONDS, "buy timer opens live play")
+	timed.time_left = 0.001
+	timed._authority_tick(0.01)
+	check(timed.phase == "post" and timed.defend_score == 1, "unplanted round timer awards defense")
+	timed.time_left = 0.001
+	timed._authority_tick(0.01)
+	check(timed.phase == "buy" and timed.round_number == 2, "post timer starts fresh round")
+	timed.phase = "live"
+	timed.objective_state = "planted"
+	timed.objective_timer = 1.0
+	timed.time_left = 0.001
+	timed._authority_tick(0.01)
+	check(timed.phase == "live" and timed.objective_timer > 0, "planted objective outlives round timer")
+	timed.objective_timer = 0.001
+	timed._authority_tick(0.01)
+	check(timed.phase == "post" and timed.attack_score == 1, "device timer finishes planted round")
+	timed.phase = "live"
+	timed.attack_score = 6
+	timed._end_round(0, "Timer QA finish")
+	timed._authority_tick(10.0)
+	check(timed.phase == "match_over" and timed.attack_score == 7, "completed offline match never auto-restarts")
+	# Deterministic perception fixture isolates aim policy from map ray geometry.
+	var old_bot: SBActor = timed.actors[6]
+	var aiming_bot := PerceptionActor.new()
+	aiming_bot.configure(6, 1, "Aim fixture", false)
+	timed.add_child(aiming_bot)
+	timed.actors[6] = aiming_bot
+	old_bot.queue_free()
+	timed.phase = "live"
+	timed.objective_state = "carried"
+	for actor: SBActor in timed.actors.values():
+		actor.alive = actor.actor_id == 1 or actor.actor_id == 6
+	aiming_bot.position = Vector3.ZERO
+	aiming_bot.yaw = 0
+	timed.actors[1].position = Vector3(5, 0, 0)
+	timed._bot_state[6].target = 1
+	timed._bot_state[6].reaction = 1.0
+	timed._bot_input(aiming_bot, 0.12)
+	check(not bool(aiming_bot.input_state.fire) and absf(aiming_bot.input_state.look.x) <= 0.61, "bot turn rate and alignment prevent snap shooting")
+	aiming_bot.yaw = -PI / 2
+	timed._bot_input(aiming_bot, 0.12)
+	check(bool(aiming_bot.input_state.fire), "aligned visible enemy permits fire after reaction time")
+	var last_visible: Vector3 = timed._bot_state[6].last_seen
+	aiming_bot.visible_enemy = false
+	timed.actors[1].position = Vector3(20, 0, 10)
+	timed._bot_input(aiming_bot, 0.12)
+	check(not bool(aiming_bot.input_state.fire) and timed._bot_state[6].last_seen == last_visible, "occluded enemy cannot be tracked or shot through geometry")
+	timed.queue_free()
 	request.free()
 	bridge.free()
 	draw_match.queue_free()
