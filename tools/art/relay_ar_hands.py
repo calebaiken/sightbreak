@@ -79,7 +79,7 @@ def digit(bm, joints, width, around, widths=PHALANX, thickness=0.88):
         knuckle(bm, joints[i], w, w * thickness)
 
 
-def finish_organic(name, bm, material, voxel=0.0011, target_tris=3600):
+def finish_organic(name, bm, material, voxel=0.0011, target_tris=3500):
     obj = hs.from_bmesh(name, bm, material)
     remesh = obj.modifiers.new('fuse', 'REMESH')
     remesh.mode = 'VOXEL'
@@ -130,13 +130,13 @@ def left_hand():
     guard = (0.0, 0.0, 0.027)
     guard_mid = (0.0, 0.45, 0.027)
     for finger, y, reach in (('index', 0.455, 1.0), ('middle', 0.435, 1.0), ('ring', 0.415, 1.0), ('pinky', 0.396, 0.78)):
-        joints = [(0.012, y, -0.014), (0.0245, y, -0.0045), (0.0325, y, 0.015), (0.0325, y, 0.034), (0.0255, y, 0.0505), (0.021, y, 0.0585)]
+        joints = [(0.012, y, -0.014), (0.0245, y, -0.0045), (0.0325, y, 0.015), (0.0325, y, 0.034), (0.0275, y, 0.0455)]
         if reach < 1.0:
-            joints = joints[:5]
+            joints = joints[:4]
         digit(bm, joints, FINGER_WIDTH[finger], (guard[0], y, guard[2]), PHALANX + (0.74,))
     # Thumb: thenar mass, proximal and distal phalanges along the left face.
-    digit(bm, [(-0.040, 0.409, -0.015), (-0.0385, 0.441, 0.000), (-0.0362, 0.468, 0.014), (-0.0328, 0.4905, 0.0245)],
-          0.0300, guard_mid, (1.0, 0.82, 0.72, 0.60), thickness=0.86)
+    digit(bm, [(-0.040, 0.409, -0.015), (-0.0385, 0.441, -0.004), (-0.0362, 0.466, 0.006), (-0.0338, 0.486, 0.0125)],
+          0.0305, guard_mid, (1.0, 0.90, 0.82, 0.74), thickness=0.90)
     # Wrist into the forearm.
     segment(bm, (-0.047, 0.405, -0.020), (-0.070, 0.385, -0.032), 0.052, 0.042, guard_mid)
     return finish_organic('glove_left', bm, 'glove')
@@ -151,17 +151,17 @@ def sleeve(side, wrist, elbow, r_wrist, r_elbow, flat_angle):
     axis = elbow - wrist
     rot = Vector((0, 0, 1)).rotation_difference(axis.normalized()).to_matrix()
     bm = bmesh.new()
-    rings, segments = 14, 20
+    rings, segments = 20, 18
     grid = []
     for i in range(rings + 1):
         t = i / rings
         base = r_wrist + (r_elbow - r_wrist) * t ** 0.85
-        gathered = 1.0 + 0.11 * math.exp(-((t - 0.07) / 0.09) ** 2)
+        gathered = 1.0 + 0.11 * math.exp(-((t - 0.04) / 0.05) ** 2)
         ring = []
         for j in range(segments):
             a = 2 * math.pi * j / segments
             oval = 1.0 + 0.075 * math.cos(2 * (a - flat_angle))
-            fold = 1.0 + 0.040 * math.sin(t * 15.0 + 2.5 * a) * math.sin(3 * a + t * 6.0) * min(1.0, t * 5.0)
+            fold = 1.0 + 0.040 * math.sin(t * 30.0 + 2.5 * a) * math.sin(3 * a + t * 11.0) * min(1.0, t * 8.0)
             diff = (a - flat_angle - math.pi / 2 + math.pi) % (2 * math.pi) - math.pi
             seam = 1.0 + 0.045 * math.exp(-(diff / 0.11) ** 2)
             r = base * gathered * oval * fold * seam
@@ -210,10 +210,10 @@ def build(reset=True):
         hs.reset_scene()
     materials()
     parts = [right_hand(), left_hand()]
-    right_wrist, right_elbow = (0.040, -0.088, -0.094), (0.150, -0.330, -0.200)
-    left_wrist, left_elbow = (-0.072, 0.383, -0.034), (-0.300, 0.165, -0.180)
-    parts.append(sleeve('right', right_wrist, right_elbow, 0.034, 0.060, 0.4))
-    parts.append(sleeve('left', left_wrist, left_elbow, 0.033, 0.058, -0.4))
+    right_wrist, right_elbow = (0.040, -0.088, -0.094), (0.293, -0.645, -0.338)
+    left_wrist, left_elbow = (-0.072, 0.383, -0.034), (-0.505, -0.031, -0.311)
+    parts.append(sleeve('right', right_wrist, right_elbow, 0.034, 0.075, 0.4))
+    parts.append(sleeve('left', left_wrist, left_elbow, 0.033, 0.074, -0.4))
     parts += wrist_trim('right', right_wrist, right_elbow, 0.034)
     parts += wrist_trim('left', left_wrist, left_elbow, 0.033)
     return parts, None
