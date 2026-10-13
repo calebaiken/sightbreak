@@ -196,6 +196,7 @@ func show_menu() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	clear_ui()
 	ensure_menu_world()
+	menu_world.show()
 	var shade := ColorRect.new()
 	shade.color = Color(0.02, 0.03, 0.045, 0.72)
 	fill(shade)
@@ -431,6 +432,8 @@ func apply_settings() -> void:
 
 func open_economy(tab: String) -> void:
 	screen = "economy"
+	# The account shell is fully opaque; retain cached resources without rendering the yard.
+	if is_instance_valid(menu_world): menu_world.hide()
 	clear_ui()
 	if not is_instance_valid(economy_panel):
 		economy_panel = load("res://scripts/ui/economy_ui.gd").new()
@@ -676,7 +679,7 @@ func touch_action(action: String) -> bool:
 func _process(delta: float) -> void:
 	elapsed += delta
 	if server_mode: return
-	if is_instance_valid(menu_camera) and menu_camera.is_inside_tree():
+	if is_instance_valid(menu_camera) and menu_camera.is_inside_tree() and menu_camera.is_visible_in_tree():
 		menu_camera.position = Vector3(27 + sin(elapsed * 0.07) * 4, 18, 30)
 		menu_camera.look_at(Vector3.ZERO)
 	if smoke_mode:

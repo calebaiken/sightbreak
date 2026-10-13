@@ -24,10 +24,12 @@ func run() -> void:
 	check(main.screen == "connect", "LAN connection controls open")
 	main.open_economy("inventory")
 	await frames(2)
+	check(not main.menu_world.visible, "Opaque account interface suppresses hidden 3D yard rendering")
 	var original_panel = main.economy_panel
 	check(original_panel.visible and original_panel.api.token.is_empty(), "Offline armory opens without fabricated online identity")
 	main.show_menu()
 	check(not original_panel.visible, "Armory closes without losing its session node")
+	check(main.menu_world.visible, "Returning to menu restores the retained 3D yard")
 	main.open_economy("cases")
 	check(main.economy_panel == original_panel, "Same account UI instance reused between visits")
 	main.show_menu()
