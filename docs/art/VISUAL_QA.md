@@ -65,3 +65,80 @@ The final captures are in `captures/after-authored/`. Every other defect stays o
 4. Weapon lighting checked on real GPUs.
 5. Authored reload, equip and inspect animation.
 
+
+## Hands v2 re-review (2026-10-13)
+
+**Reviewer:** another Claude agent, so again **not independent acceptance**. It had stills only, llvmpipe captures and no CS2 reference. It reviewed commit `ecd290b` (the evidence is kept in `reviewed-hands-v2/`). Scores cover the first-person weapon, hands and inspection only.
+
+| Category | Previous | New | Reviewer's reason (abridged) |
+| --- | ---: | ---: | --- |
+| 1 Geometry/composition | not scored | 5.5 | The whole rifle, optic and both hands are framed, but the pose is broadside and the rear is cropped. |
+| 2 Materials | 5.5 | 5.5 | Baked wear exists, but the receiver sat at 19–27/255 at 1:1 and the sleeve and gloves are smooth. Gains and losses cancel. |
+| 4 Models/animation | 5.5 | 6.0 | The hands now read as hands. Held back by a reload frame with a huge slab, a visible sleeve end and a rigid forearm. |
+| 5 Effects/cosmetic/inspection | 5.0 | 5.2 | Inspection centring is fixed. The flash and skin band are unchanged, and the reload magazine looks worse. |
+| 6 Identity | 5.0 | 5.0 | The gold strap echoes the yard. The rifle now clashes more with the cuboid containers. |
+| 7 Readability | 6.0 | 6.0 | Strong silhouette; weak in shade (receiver 13/255 against a floor of 38). |
+
+- **Mean of categories 2, 4, 5, 6 and 7:** 5.4 → 5.5 (27.7/5).
+- **Whole-game effect:** about +0.03. The game stays at about 6.6–6.7, and nothing here moves it toward 7.
+- **CS2 comparison** (general knowledge only): the reviewer put a CS2-like first-person weapon at about 9.
+
+**Verdicts on my claims:**
+
+| Claim | Reviewer's verdict |
+| --- | --- |
+| Default finish shows the baked surface | Partly true: present, but crushed to near-black at 1:1 |
+| Inspection centring | True |
+| Casing origin | Unverifiable in the frames (a sliver at the right edge) |
+| Hand anatomy | Partly true: segmented fingers and a thenar mass, but "lumpy putty gloves", a thumb poking into an M-LOK slot and three knuckle balls floating over the rail |
+| Sleeve taper, darker fabric, strap | True, but folds and the strap are invisible in-engine (the strap is a 1–2 px line) |
+| Roll reduced, fitted placement | Mostly true: the diagonal fell from about 32° to about 17°. The firing hand is half visible, there is no right forearm, and the stock and buffer tube are cropped |
+| **"Holds at 16:9, 20:9 and 4:3"** | **False. My aspect captures were 1280×720 and 1024×576. I resized them for the comparison without checking their real size, so those layouts were never shown. The claim has been withdrawn and the captures redone (below).** |
+
+**Regressions the reviewer found, and their status:**
+- **Reload frame (03):** a flat tan slab about 190 px wide jammed against the right edge. It was the buttstock: the actor tilts the weapon node about its origin, which sat about 0.45 m from the stock. **Fixed.**
+  - The model now declares a pivot, so tilts turn about its middle.
+  - The stock is its own mesh and first person leaves it out.
+  - `weapon_art_test.gd` pins both. A negative control showed the earlier stock-visibility test failing at full roll, which is what led to the omission.
+- **Sleeve end visible (01):** hidden, not fixed. The forearms were lengthened to about 0.65 m, 2.4 times a real forearm; the next review rejected this (below).
+- **Thumb in an M-LOK slot and floating fingertips:** **fixed.** The thumb is thicker and runs below the slot row, and the fingers stop at the side of the handguard.
+- **Receiver too dark, "black plastic":** **fixed in sun only.** It reads about 58–60/255 in sun with panel lines and edge wear, but 24–28/255 backlit and in shade (next review).
+- **Cycles `eye` view not matching the game:** **fixed.** Two bugs of mine: it used the old placement, and Blender's YXZ Euler order, which is Godot's ZXY.
+- **Not fixed:**
+  - skin band blow-out;
+  - the unchanged star flash, box casing and tilt-only reload;
+  - the detail mismatch with the box-built environment;
+  - the rifle still reads as "held out for display" rather than aimed;
+  - the right forearm is out of frame;
+  - the hand and sleeve surfaces are still smooth.
+
+The reviewer's top next steps, in its order: lift the receiver and add rim/specular (done in part); re-pose with more foreshortening and both forearms visible; author reload, draw and inspect; replace the flash with a multi-plane flash, light, smoke and a real casing; and redo the aspect captures (redone at real sizes, but see the next review: they show an "expand" stretch the project does not use).
+
+## Review of `2bba519` (2026-10-13)
+
+**Reviewer:** a fresh Claude agent, read-only, given the evidence and the code but not my conclusions. It is the same model family, so this is **not independent acceptance**. It had stills only and no CS2 reference images.
+
+**Verdict:** about **4.5/10** against a CS2-class bar of about 9. The rifle is at coherent-alpha level; hands, sleeves, motion, composition and lighting are at blockout level. Passing tests do not change that.
+
+| Area | Score | Main defects |
+| --- | ---: | --- |
+| Hand anatomy | 4.5 | Fingers are chains of ellipsoids: lumpy, four near-equal visible segments instead of three phalanges in about 5:3:2, identical lengths across fingers, a 30 mm featureless thumb, no back-of-hand plane, a 52 mm wrist inside a 75 mm cuff. No glove construction. |
+| Sleeves | 3.5 | Forearms 2.4× human length; uniform cones with no elbow; folds and strap invisible in-engine; the right forearm never on screen. |
+| Rifle | 5.5 | Sound real-world dimensions, but slab-sided forms and a box magazine well; the optic has no reticle and an opaque lens. The finish is grainy grey in sun and crushed in shade. Skins drop the baked wear and clash (glossy red over a matte body). |
+| Positioning and motion | 3.5 | The world camera's 82° vertical field of view (about 114° horizontal) also draws the viewmodel; CS-style viewmodels use about 47–54°. A 15.5° yaw puts the barrel's vanishing point 115 px left of the crosshair. No skeletal animation: reload is a rigid tilt and a magazine slide, fire is a kick, equip is a drop. Wall clipping is likely (inferred from code). |
+| 20:9 and 4:3 captures | 5 | At 20:9 the left 60 % is empty; at 4:3 the firing hand is cut to fingertips. **These captures do not show shipped behaviour:** `project.godot` uses `canvas_items` stretch with the default "keep" aspect and nothing overrides it, so a 20:9 or 4:3 screen shows the 16:9 frame with bars. I verified this. |
+| Lighting and visibility | 4 | Receiver 28/255 backlit, 58 in sun, 24 in shade against a 37 floor. Flat ambient, no viewmodel fill or rim, and near-black albedos on glove, sleeve and receiver with no value separation. |
+| Rendering cost | 5 | +35,230 primitives (48 % of the frame) and +60 ms on llvmpipe (relative only). The rifle atlas uses 54.7 % of its area, 9.5 % of it on the stock, which first person never shows. Sleeves take about 70 % of the hands atlas. The handguard alone is 7,976 triangles, mostly rail-slot booleans. Suggested budget: 15–18k triangles for the first-person rifle plus about 5k for the arms. |
+
+**Its top changes, by impact per effort:**
+1. A viewmodel light rig and value separation between glove, sleeve and receiver.
+2. Render inspection at full resolution. It reports `stretch_shrink` resolving to 2 at 1280×720 (not yet verified by me).
+3. A separate viewmodel projection (about 50° vertical) with anti-clip depth, then a pose with the barrel near-parallel to the view.
+4. Real-length forearms with elbows.
+5. Re-sculpted hands with glove construction in the normal map.
+6. A UV repack without the stock and with texel priority for the gloves.
+7. Rigged arms with reload, fire and draw clips.
+8. A material and skin pass.
+
+**Response:** the hands, sleeves and motion are being rebuilt rather than patched (arms v3: signed-distance anatomy with three phalanges per finger, a glove with a knuckle guard, padded phalanges, seams, cuff and strap, a jacket sleeve of real length, a skeleton with automatic weights, fingers closed on the rifle by contact, and a skeletal reload driven by the existing reload timer). The stretch-aspect question is a product decision, "keep" (every player sees the same field of view) or "expand" (fill the screen), and it is left to the project owner and Codex.
+

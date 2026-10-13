@@ -17,8 +17,8 @@ The game exposes two quality settings (LOW and STANDARD) plus a render-scale sli
 
 | Item | Budget | Relay AR v1 |
 | --- | --- | --- |
-| Triangles, weapon | ≤ 32,000 | 30,326 |
-| Triangles, hands and sleeves | ≤ 10,000 | 9,684 |
+| Triangles, weapon | ≤ 32,000 | 30,326 (25,194 in first person, which omits the stock) |
+| Triangles, hands and sleeves | ≤ 10,000 | 9,800 |
 | Draw nodes in the viewmodel | ≤ 6 (asserted) | 6 |
 | Texture sets | 1 atlas per GLB | 2 (rifle, hands) |
 | Texture size shipped | ≤ 1024² per map | 1024² albedo, ORM and normal for each |

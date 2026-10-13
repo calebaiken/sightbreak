@@ -59,6 +59,7 @@ Review renders: `$B $T/render_views.py $T/relay_ar.py <dir> [view ...] --samples
   - The receiver rear is at the origin and the bore at 0.025 m, matching the procedural rifle.
 - **Naming contract** (read by `SBWeaponModel`):
   - `paint_*` take the cosmetic finish (two groups: receiver and handguard);
+  - `stock` is the buttstock, a separate mesh that first person leaves out;
   - `magazine` has its pivot at the seated top, with the `magazine_rounds` child;
   - `body` is everything else;
   - `hands` is a separate GLB;

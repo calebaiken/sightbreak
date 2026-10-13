@@ -30,10 +30,11 @@ The standard every first-person weapon follows, using the Relay AR as the worked
 | --- | ---: | --- | --- |
 | `paint_receiver` | 4,508 | 1 | upper, lower and upper rail; takes the cosmetic finish |
 | `paint_handguard` | 7,976 | 1 | handguard and its rail; takes the cosmetic finish |
-| `body` | 16,214 | 1 | every non-paint part |
+| `body` | 11,082 | 1 | every non-paint, non-stock part |
+| `stock` | 5,132 | 1 (inspection only) | the buttstock, which is behind the camera in first person and is left out there |
 | `magazine` + `magazine_rounds` | 1,392 + 236 | 2 | animated by reload |
-| **Rifle total** | **30,326** | **5** | budget 32,000 |
-| `hands` (separate GLB) | 9,684 | 1 | budget 10,000 |
+| **Rifle total** | **30,326** (**25,194** in first person) | **5** (**4** in first person, plus the cartridge) | budget 32,000 |
+| `hands` (separate GLB) | 9,800 | 1 | budget 10,000 |
 
 The first-person node therefore holds six draw nodes: body, two paint parts, magazine, hands and muzzle flash. The magazine's cartridge is one more draw. The procedural rifle used five draws plus the magazine detail.
 
@@ -47,11 +48,13 @@ The first-person node therefore holds six draw nodes: body, two paint parts, mag
 | Magazine moves on reload and reseats | `magazine` pivot at its seated top; the actor's existing extraction offsets | `actor_test.gd`, `weapon_art_test.gd` |
 | Two paint parts take one finish | `paint_receiver` and `paint_handguard` | `actor_test.gd`, `render_budget_test.gd` |
 | Finishes are presentation only | `CosmeticMaterial.apply` binds the material and baked detail; no stat is read | `actor_test.gd` (cosmetic seed affects the paint material only) |
-| Inspection uses the same geometry without hands | `build(..., hands = false)` skips the hands GLB | `actor_test.gd` |
+| Inspection uses the same geometry without hands | `build(..., hands = false)` skips the hands GLB and keeps the stock | `actor_test.gd`, `weapon_art_test.gd` |
+| Tilts turn the rifle about its middle | The model reports a `pivot` (the balance point between the hands). The actor adds it to the node's rest position and the model is offset by the same amount, so the rest pose is unchanged | `weapon_art_test.gd` |
+| First person never shows the buttstock | The stock is its own mesh and first person omits it | `weapon_art_test.gd` |
 | Shared geometry across equips | The packed scene is cached by id, hands and placement | `render_budget_test.gd` |
 | Procedural fallback | `SBWeaponModel.use_authored = false` or missing asset | `weapon_art_test.gd` |
 
-Recoil kick, sway, bob, equip and reload tilt still move the whole weapon node exactly as before, because the actor code is untouched apart from `apply_cosmetic` delegating to `CosmeticMaterial.apply`. Casings leave from the authored `ejection` marker. Procedural weapons keep the previous fixed offset.
+Recoil kick, sway, bob, equip and reload tilt still move the whole weapon node with the same formulas and amplitudes. The actor changes are presentation only: `apply_cosmetic` delegates to `CosmeticMaterial.apply`, casings leave from the authored `ejection` marker, and the node's rest position is a named constant plus the model's optional pivot. Procedural weapons have no pivot and keep the previous rest position and casing offset. No gameplay value is read or changed.
 
 ## Viewmodel placement
 
@@ -65,7 +68,11 @@ Recoil kick, sway, bob, equip and reload tilt still move the whole weapon node e
   - the pistol-grip hand is at the lower right;
   - the stock ends behind the camera.
 - **Derivation:** `tools/art/viewmodel_fit.py` projects rifle landmarks through the game camera (82° vertical field of view) and fits the pitch, yaw and offset to screen targets. Rerun it when the rifle's proportions change.
-- **Aspect ratios:** the layout holds at 16:9, 20:9 and 4:3 (captures in `docs/reports/media/art-v1/`).
+- **Aspect ratios** (captures in `docs/reports/media/art-v1/captures/aspect-ratios/`, at their real sizes):
+  - 16:9 (1280×720) is the fitted layout.
+  - At 20:9 (1600×720) the whole rifle stays in frame.
+  - At 4:3 (1024×768) the horizontal view is narrower: the optic is partly cut and the firing hand is off-screen, though the muzzle, handguard and support hand still read.
+  - **Open question for the project's display settings:** `project.godot` sets `canvas_items` stretch with no explicit `stretch/aspect`, and Godot's default (`keep`) letterboxes screens wider than 16:9. The landscape UI tests set `root.size` directly, so they do not show what a real 20:9 device gets. I have not verified how the Android and iOS exports handle this.
 
 The placement is presentation only. Shots trace from the camera, as before.
 
