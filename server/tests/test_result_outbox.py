@@ -76,6 +76,17 @@ class OutboxTests(unittest.TestCase):
         self.assertTrue(target.exists())
         self.assertEqual(self.box.import_spool(spool), 1)
         self.assertEqual(self.row()['payload'], canonical(data)[1])
+    def test_producer_finishes_during_quarantine(self):
+        spool = self.root / 'spool'; spool.mkdir(); data = payload()
+        source = spool / (data['match_id'] + '.tmp'); target = source.with_suffix('.json')
+        source.write_text('{'); os.utime(source, (0, 0)); original = Path.rename
+        def rename(path, destination):
+            if path == source:
+                source.write_text(json.dumps(data)); original(source, target)
+            return original(path, destination)
+        with patch.object(Path, 'rename', rename): self.box.import_spool(spool, 100)
+        self.assertTrue(target.exists())
+        self.assertEqual(self.box.import_spool(spool), 1)
     def test_capacity_keeps_spool(self):
         self.box.enqueue(payload()); self.box.enqueue(payload())
         spool = self.root / 'spool'; spool.mkdir(); data = payload(); source = spool / (data['match_id'] + '.json'); source.write_text(json.dumps(data))
