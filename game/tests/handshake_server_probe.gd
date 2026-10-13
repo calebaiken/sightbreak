@@ -2,6 +2,7 @@ extends SceneTree
 ## Hostile handshake server for scripts/test_handshake_hardening.sh: answers the
 ## stock client's hello in ways a real server never should.
 ## Args: --port=N --scenario=hang_up|reject_then_hang_up|accepted_text
+const Match = preload("res://scripts/gameplay/match.gd")
 var scenario := ""
 var api: SceneMultiplayer
 
@@ -9,7 +10,7 @@ func _initialize() -> void:
 	_run.call_deferred()
 
 func _reply(accepted: Variant) -> PackedByteArray:
-	return JSON.stringify({"game": "sightbreak", "protocol": 2, "build": "probe", "accepted": accepted, "reason": "Probe server refuses this client."}).to_utf8_buffer()
+	return JSON.stringify({"game": "sightbreak", "protocol": Match.PROTOCOL_VERSION, "build": "probe", "accepted": accepted, "reason": "Probe server refuses this client."}).to_utf8_buffer()
 
 func _on_hello(peer: int, _data: PackedByteArray) -> void:
 	match scenario:

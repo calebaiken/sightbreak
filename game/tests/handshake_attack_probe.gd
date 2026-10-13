@@ -3,6 +3,10 @@ extends SceneTree
 ## SceneMultiplayer authentication to a stock dedicated server.
 ## Args: --port=N --scenario=spam|fractional|huge|good_then_bad|bad_then_good
 ## Prints HANDSHAKE_ATTACK {scenario, admitted, replies, dropped_after}.
+## "Good" hellos carry this build's PROTOCOL_VERSION; mismatched ones carry the next.
+const Match = preload("res://scripts/gameplay/match.gd")
+const GOOD := Match.PROTOCOL_VERSION
+const BAD := Match.PROTOCOL_VERSION + 1
 var port := 0
 var scenario := ""
 var api: SceneMultiplayer
@@ -49,23 +53,23 @@ func _attack(peer: int) -> void:
 			# A mismatched hello every frame, twenty at a time, while still connected.
 			while api.get_authenticating_peers().has(peer) and now() < 7.0:
 				for i in range(20):
-					api.send_auth(peer, _hello(3))
+					api.send_auth(peer, _hello(BAD))
 				await process_frame
 		"fractional":
-			api.send_auth(peer, _hello(2.9))
+			api.send_auth(peer, _hello(GOOD + 0.9))
 			api.complete_auth(peer)
 		"huge":
 			api.send_auth(peer, '{"game":"sightbreak","protocol":1e400}'.to_utf8_buffer())
 			api.complete_auth(peer)
 		"good_then_bad":
-			api.send_auth(peer, _hello(2))
-			api.send_auth(peer, _hello(3))
+			api.send_auth(peer, _hello(GOOD))
+			api.send_auth(peer, _hello(BAD))
 			await create_timer(0.3).timeout
 			if api.get_authenticating_peers().has(peer):
 				api.complete_auth(peer)
 		"bad_then_good":
-			api.send_auth(peer, _hello(3))
+			api.send_auth(peer, _hello(BAD))
 			await create_timer(0.2).timeout
 			if api.get_authenticating_peers().has(peer):
-				api.send_auth(peer, _hello(2))
+				api.send_auth(peer, _hello(GOOD))
 				api.complete_auth(peer)
