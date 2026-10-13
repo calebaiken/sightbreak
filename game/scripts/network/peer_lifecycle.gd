@@ -15,17 +15,17 @@ func connected(peer: int, now: int) -> bool:
 	peers[peer] = {"generation": generation, "deadline": now + JOIN_MSEC, "joined": false, "attempted": false, "rejected": false, "last_input": now, "rate_start": now, "rate_count": 0}
 	return true
 
-func begin_join(peer: int) -> int:
-	if not peers.has(peer) or peers[peer].attempted or peers[peer].rejected:
+func begin_join(peer: int, now: int) -> int:
+	if not peers.has(peer) or peers[peer].attempted or peers[peer].rejected or now >= int(peers[peer].deadline):
 		return -1
 	peers[peer].attempted = true
 	return int(peers[peer].generation)
 
-func current(peer: int, attempt: int) -> bool:
-	return peers.has(peer) and int(peers[peer].generation) == attempt and not peers[peer].rejected
+func current(peer: int, attempt: int, now: int) -> bool:
+	return peers.has(peer) and int(peers[peer].generation) == attempt and not peers[peer].rejected and now < int(peers[peer].deadline)
 
 func admitted(peer: int, attempt: int, now: int) -> bool:
-	if not current(peer, attempt):
+	if not current(peer, attempt, now):
 		return false
 	peers[peer].joined = true
 	peers[peer].last_input = now
