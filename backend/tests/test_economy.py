@@ -488,3 +488,45 @@ def test_history_orders_by_instant_across_utc_offsets(client, monkeypatch):
     assert older['ended_at'] > newer['ended_at']  # the text order is wrong
     assert [datetime.fromisoformat(m['ended_at']) for m in matches] == sorted((datetime.fromisoformat(m['ended_at']) for m in matches), reverse=True)
     assert matches[0]['ended_at'] == newer['ended_at']
+
+
+def test_ticket_inspection_is_trusted_read_only_preflight(client, monkeypatch):
+    from models import GameTicket
+    pid, headers = player()
+    secret = 'fictional-preflight-secret-' + 'x' * 32
+    monkeypatch.setenv('SIGHTBREAK_SERVER_KEY', secret)
+    ticket = issue_ticket(client, headers)
+    body = {'ticket': ticket, 'server_id': 'local-relay'}
+    authority = {'X-Server-Key': secret}
+    assert post(client, '/server/tickets/inspect', headers, body).status_code == 403
+    assert post(client, '/server/tickets/inspect', authority, {**body, 'server_id': 'other'}).status_code == 403
+    with transaction() as db:
+        expiry = db.get(GameTicket, digest(ticket)).expires_at
+    for _ in range(2):
+        reply = post(client, '/server/tickets/inspect', authority, body)
+        assert reply.status_code == 200 and reply.json()['player_id'] == pid
+    with transaction() as db:
+        record = db.get(GameTicket, digest(ticket))
+        assert record.consumed_at is None and record.expires_at == expiry
+    assert post(client, '/server/tickets/consume', authority, body).status_code == 200
+    assert post(client, '/server/tickets/inspect', authority, body).status_code == 401
+    assert post(client, '/server/tickets/consume', authority, body).status_code == 401
+
+
+def test_ticket_inspection_rechecks_revocation_and_expiry(client, monkeypatch):
+    from models import GameTicket
+    _, headers = player()
+    secret = 'fictional-preflight-secret-' + 'x' * 32
+    monkeypatch.setenv('SIGHTBREAK_SERVER_KEY', secret)
+    authority = {'X-Server-Key': secret}
+    ticket = issue_ticket(client, headers)
+    body = {'ticket': ticket, 'server_id': 'local-relay'}
+    assert post(client, '/server/tickets/inspect', authority, body).status_code == 200
+    post(client, '/auth/logout', headers)
+    assert post(client, '/server/tickets/consume', authority, body).status_code == 401
+    assert post(client, '/server/tickets/inspect', authority, body).status_code == 401
+    _, headers = player()
+    ticket = issue_ticket(client, headers)
+    with transaction() as db:
+        db.get(GameTicket, digest(ticket)).expires_at = now() - timedelta(seconds=1)
+    assert post(client, '/server/tickets/inspect', authority, {'ticket': ticket, 'server_id': 'local-relay'}).status_code == 401

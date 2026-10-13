@@ -46,3 +46,11 @@ New `codex/state-privacy-v2` is based directly on verified Claude77e0433 and rep
 ### Prediction integration contract
 
 `actor.gd` delegates its existing movement section to `SBMovementStep`; weapon logic and visual attachment contracts are unchanged. `match.gd` queues own reconciliation for fixed physics and uses the new input stream. Protocol 5 changes the input RPC payload to bounded compressed bytes and adds owner-only movement acknowledgment fields. This change requires matched client/server builds. Independent review found and drove fixes for synthetic input edges, epoch stalls and persistent input backlog; these have maintained regressions. Prediction accuracy/feel and adverse network results remain a separate acceptance gate.
+
+### Current v2 stack
+
+- Privacy: `codex/state-privacy-v2`, base Claude77e0433, branch tipf60389b before later evidence.
+- Movement: `codex/network-movement-v2`, base privacy, tip0fc8d54. One shared conflict in `_peer_disconnected` was resolved by preserving **both** Claude handshake cleanup and Codex input-stream cleanup. Actor hit-volume changes and all art contracts remain intact.
+- Lifecycle: `codex/network-lifecycle-v2`, base movement. Adds `peer_lifecycle.gd`, bounded admission cleanup, provisional slot/account claims and backend ticket-inspection route. Requires updated backend for account admission. No new gameplay RPC or art interface. Full native regressions on the reconciled stack remain required.
+
+Original branches are preserved. No PR merge, force push, public deployment or direct communication with Claude has occurred. A precise latest HUD review comment is prepared in `docs/reports/CLAUDE_PR1_FOLLOWUP.md`; API access still controls whether it can be posted.

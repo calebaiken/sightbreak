@@ -15,3 +15,7 @@ Any change to RPC names/order/signature, input or snapshot meaning requires a ve
 Baseline real-process matrix verified matching version-2 builds, rejection of unversioned/future clients, missing-server-hello failure, and unconsumed tickets on incompatible account admission. Protocol-3 matrix and account admission also pass in the workspace; rerun after finalizing each milestone. Use `scripts/test_protocol_compat.sh`, `scripts/test_account_network.py`, and their isolated backend fixture instructions.
 
 Remaining baseline hardening: numeric fractional versions currently truncate, and rejection is not terminal if a peer resubmits a valid hello during the delayed drop. Neither grants an account identity. Tightening those and post-handshake peer deadlines belongs to the server-hardening milestone.
+
+## Updated dependency / lifecycle integration
+
+Claude77e0433 now verifies exact whole-number protocols and makes the first hello decision terminal; eight hostile real-process checks pass. The earlier strictness issues above are historical. Codex preserves those changes. Lifecycle enforcement changes no gameplay RPC schema beyond protocol5, so version5 remains the movement/lifecycle wire contract. Account servers additionally require the backend `/server/tickets/inspect` route. Preflight is read-only; backend consumption still revalidates the ticket transactionally. Missing route fails safely rather than falling back to consuming blindly.

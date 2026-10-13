@@ -77,6 +77,9 @@ var reward_status: String = "unranked"
 var _bridge: SBEconomyBridge
 var _account_ids: Dictionary = {}
 var _pending_joins: Dictionary = {}
+var _join_slots: Dictionary = {}
+var _join_accounts: Dictionary = {}
+var _peer_lifecycle := SBPeerLifecycle.new()
 var _activity_seconds: Dictionary = {}
 var _last_activity: Dictionary = {}
 var _ranked_eligible: bool = false
@@ -226,6 +229,8 @@ func _process(delta: float) -> void:
 
 func _authority_tick(delta: float) -> void:
 	_simulation_tick += 1
+	if options.get("mode", "offline") == "server":
+		_service_peers()
 	for peer_id: int in _peer_actors:
 		var id: int = _peer_actors[peer_id]
 		var command := _input_stream.pop(peer_id)
@@ -682,6 +687,7 @@ func _host() -> void:
 	api.peer_authentication_failed.connect(_handshake_failed)
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_disconnected.connect(_peer_disconnected)
+	multiplayer.peer_connected.connect(_peer_connected)
 	connection_state = "hosting"
 	print("SIGHTBREAK_SERVER_READY port=%d" % int(options.get("port", 27020)))
 
@@ -750,7 +756,7 @@ func _server_handshake(peer_id: int, data: PackedByteArray) -> void:
 	# Never admitted: no join, slot or account ticket is touched for this peer.
 	var reason := "This server uses network protocol %d; this client sent %s." % [PROTOCOL_VERSION, "protocol %d" % protocol if protocol >= 0 else "no readable protocol"]
 	api.send_auth(peer_id, _hello(false, reason))
-	_handshake_drops[peer_id] = _elapsed + 0.5
+	_handshake_drops[peer_id] = Time.get_ticks_msec() + 500
 	print("PROTOCOL_REJECTED peer=%d client_protocol=%d" % [peer_id, protocol])
 
 func _client_handshake(peer_id: int, data: PackedByteArray) -> void:
@@ -792,7 +798,7 @@ func _handshake_failed(peer_id: int) -> void:
 func _drop_rejected_peers() -> void:
 	var api := multiplayer as SceneMultiplayer
 	for peer_id: int in _handshake_drops.keys():
-		if _elapsed < float(_handshake_drops[peer_id]):
+		if Time.get_ticks_msec() < int(_handshake_drops[peer_id]):
 			continue
 		_handshake_drops.erase(peer_id)
 		if api.get_authenticating_peers().has(peer_id):
@@ -858,58 +864,106 @@ func _client_tick(delta: float) -> void:
 				packed = var_to_bytes(packet).compress(FileAccess.COMPRESSION_DEFLATE)
 			_input_rpc.rpc_id(1, packed)
 
+func _peer_connected(peer_id: int) -> void:
+	if not _peer_lifecycle.connected(peer_id, Time.get_ticks_msec()):
+		(multiplayer as SceneMultiplayer).disconnect_peer(peer_id)
+
+func _service_peers() -> void:
+	for peer_id: int in _peer_lifecycle.expired(Time.get_ticks_msec()):
+		# Server enforces release even if a hostile client ignores rejection RPCs.
+		(multiplayer as SceneMultiplayer).disconnect_peer(peer_id)
+		_peer_disconnected(peer_id)
+
+func _reject_join(peer_id: int, reason: String) -> void:
+	_pending_joins.erase(peer_id)
+	_join_slots.erase(peer_id)
+	_join_accounts.erase(peer_id)
+	_peer_lifecycle.reject(peer_id, Time.get_ticks_msec())
+	if multiplayer.get_peers().has(peer_id):
+		_rejected_rpc.rpc_id(peer_id, reason)
+
+func _join_current(peer_id: int, attempt: int) -> bool:
+	return _peer_lifecycle.current(peer_id, attempt, Time.get_ticks_msec()) and int(_pending_joins.get(peer_id, -1)) == attempt and multiplayer.get_peers().has(peer_id)
+
+func _available_join_slot(account: String, reconnect_id: int) -> int:
+	if not account.is_empty():
+		if _join_accounts.values().has(account):
+			return 0
+		for account_actor: int in _account_ids:
+			if str(_account_ids[account_actor]) == account:
+				return 0 if _peer_actors.values().has(account_actor) or _join_slots.values().has(account_actor) else account_actor
+	if reconnect_id != 0:
+		return 0 if _peer_actors.values().has(reconnect_id) or _join_slots.values().has(reconnect_id) else reconnect_id
+	for candidate: int in actors:
+		if _peer_actors.values().has(candidate) or _join_slots.values().has(candidate):
+			continue
+		var reserved := false
+		for entry: Dictionary in _reservations.values():
+			if int(entry.id) == candidate and _elapsed < float(entry.expires):
+				reserved = true
+		if not reserved:
+			return candidate
+	return 0
+
 @rpc("any_peer", "call_remote", "reliable")
 func _join_rpc(player_name: String, token: String, join_ticket: String = "") -> void:
 	if not _authority or options.get("mode", "offline") != "server":
 		return
 	var peer_id: int = multiplayer.get_remote_sender_id()
-	if phase == "match_over":
-		_rejected_rpc.rpc_id(peer_id, "This match is complete. The next lobby opens when the remaining players leave.")
+	var attempt := _peer_lifecycle.begin_join(peer_id, Time.get_ticks_msec())
+	if attempt < 0 or _peer_actors.has(peer_id):
 		return
-	if _peer_actors.has(peer_id) or _pending_joins.has(peer_id):
+	if phase == "match_over":
+		_reject_join(peer_id, "This match is complete. The next lobby opens when the remaining players leave.")
+		return
+	if player_name.length() > 128 or token.length() > 128 or join_ticket.length() > 128:
+		_reject_join(peer_id, "Invalid admission data.")
 		return
 	_expire_reservations()
-	var account: String = ""
-	var id: int = 0
+	_pending_joins[peer_id] = attempt
+	var account := ""
+	var id := 0
 	if token.length() == 64 and _reservations.has(token):
 		var record: Dictionary = _reservations[token]
 		if _elapsed < float(record.expires) and not _peer_actors.values().has(int(record.id)):
 			id = int(record.id)
+	var needs_ticket := bool(options.get("require_accounts", false)) and id == 0
 	if bool(options.get("require_accounts", false)):
 		if id != 0:
 			account = str(_account_ids.get(id, ""))
 		else:
-			_pending_joins[peer_id] = true
-			var response: Dictionary = await _bridge.consume_ticket(join_ticket)
-			_pending_joins.erase(peer_id)
-			if not multiplayer.get_peers().has(peer_id):
+			var inspected: Dictionary = await _bridge.inspect_ticket(join_ticket)
+			if not _join_current(peer_id, attempt):
 				return
-			if not bool(response.get("ok", false)):
-				_rejected_rpc.rpc_id(peer_id, str(response.get("error", "Account verification failed.")))
+			if not bool(inspected.get("ok", false)):
+				_reject_join(peer_id, str(inspected.get("error", "Account verification failed.")))
 				return
-			account = str(response.data.get("player_id", ""))
-			player_name = str(response.data.get("display_name", "Operator"))
-			if account.is_empty():
-				_rejected_rpc.rpc_id(peer_id, "The account service returned an invalid identity.")
-				return
-			for account_actor: int in _account_ids:
-				if str(_account_ids[account_actor]) == account:
-					if _peer_actors.values().has(account_actor):
-						_rejected_rpc.rpc_id(peer_id, "This account is already connected to this server.")
-						return
-					id = account_actor
+			account = str(inspected.data.get("player_id", ""))
+			player_name = str(inspected.data.get("display_name", "Operator"))
+		if account.is_empty():
+			_reject_join(peer_id, "The account service returned an invalid identity.")
+			return
+	id = _available_join_slot(account, id)
 	if id == 0:
-		for candidate: int in actors:
-			var reserved: bool = false
-			for entry: Dictionary in _reservations.values():
-				if int(entry.id) == candidate and _elapsed < float(entry.expires):
-					reserved = true
-			if not _peer_actors.values().has(candidate) and not reserved:
-				id = candidate
-				break
-	if id == 0:
-		_rejected_rpc.rpc_id(peer_id, "Server is full; disconnected players retain their slots for 60 seconds.")
+		_reject_join(peer_id, "No slot is available for this account; disconnected players retain their slots for 60 seconds.")
 		return
+	# Reserve capacity before the irreversible one-use ticket consumption.
+	_join_slots[peer_id] = id
+	if not account.is_empty():
+		_join_accounts[peer_id] = account
+	if needs_ticket:
+		var response: Dictionary = await _bridge.consume_ticket(join_ticket)
+		if not _join_current(peer_id, attempt):
+			return
+		if not bool(response.get("ok", false)) or str(response.get("data", {}).get("player_id", "")) != account:
+			_reject_join(peer_id, "Account ticket consumption failed; request a fresh ticket.")
+			return
+	if phase == "match_over" or not _peer_lifecycle.admitted(peer_id, attempt, Time.get_ticks_msec()):
+		_reject_join(peer_id, "Admission expired; reconnect with a fresh ticket.")
+		return
+	_pending_joins.erase(peer_id)
+	_join_slots.erase(peer_id)
+	_join_accounts.erase(peer_id)
 	# Rotate reconnect credentials so a reused bearer token cannot claim two slots.
 	for old_token: String in _reservations.keys():
 		if int(_reservations[old_token].id) == id:
@@ -929,6 +983,12 @@ func _join_rpc(player_name: String, token: String, join_ticket: String = "") -> 
 		_start_ranked_match()
 
 func _peer_disconnected(peer_id: int) -> void:
+	_peer_lifecycle.forget(peer_id)
+	_pending_joins.erase(peer_id)
+	_join_slots.erase(peer_id)
+	_join_accounts.erase(peer_id)
+	_handshake_drops.erase(peer_id)
+	_gate.forget(peer_id)
 	_handshake_seen.erase(peer_id)
 	_input_stream.forget(peer_id)
 	if not _peer_actors.has(peer_id):
@@ -951,7 +1011,7 @@ func _input_rpc(packed: PackedByteArray) -> void:
 	if not _authority:
 		return
 	var peer_id: int = multiplayer.get_remote_sender_id()
-	if not _peer_actors.has(peer_id) or packed.is_empty() or packed.size() > 1100:
+	if not _peer_actors.has(peer_id) or not _peer_lifecycle.allow_input(peer_id, Time.get_ticks_msec()) or packed.is_empty() or packed.size() > 1100:
 		return
 	var decoded: Variant = bytes_to_var(packed.decompress_dynamic(8192, FileAccess.COMPRESSION_DEFLATE))
 	if not decoded is Dictionary:
@@ -959,6 +1019,7 @@ func _input_rpc(packed: PackedByteArray) -> void:
 	var data: Dictionary = decoded
 	if not _input_stream.accept(peer_id, data, _snapshot_generation, Time.get_ticks_msec()):
 		return
+	_peer_lifecycle.active(peer_id, Time.get_ticks_msec())
 	var clean: Dictionary = SBInputStream.sanitize(data.commands.back())
 	var id: int = int(_peer_actors[peer_id])
 	var old_look: Vector2 = actors[id].input_state.get("look", Vector2.ZERO)
@@ -1264,7 +1325,11 @@ func _reset_server_match() -> void:
 	_gate = SBInputGate.new()
 	_bot_state.clear()
 	_account_ids.clear()
+	for peer_id: int in _pending_joins.keys():
+		_reject_join(peer_id, "The server lobby reset; reconnect with a fresh ticket.")
 	_pending_joins.clear()
+	_join_slots.clear()
+	_join_accounts.clear()
 	_reservations.clear()
 	_activity_seconds.clear()
 	_last_activity.clear()
