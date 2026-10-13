@@ -35,6 +35,7 @@ var phase_label: Label
 var squad_label: Label
 var ammo_label: Label
 var utility_label: Label
+var funds_label: Label
 var health_label: Label
 var health_bar: ProgressBar
 var action_label: Label
@@ -691,6 +692,18 @@ func build_hud() -> void:
 	rows.add_child(bottom)
 	var vitals := _hud_block(HORIZONTAL_ALIGNMENT_LEFT)
 	bottom.add_child(vitals)
+	# Funds sit just above the health readout but take no layout height, so the
+	# bottom row, and the status line above it, keep their positions.
+	var funds_anchor := Control.new()
+	funds_anchor.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	vitals.add_child(funds_anchor)
+	funds_label = label("0  ·  FUNDS", Design.TYPE_SMALL, GOLD, true)
+	funds_label.name = "Funds"
+	funds_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.8))
+	funds_label.add_theme_constant_override("shadow_offset_y", 1)
+	funds_label.set_anchors_and_offsets_preset(Control.PRESET_BOTTOM_LEFT)
+	funds_label.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	funds_anchor.add_child(funds_label)
 	health_label = wrapped_label("100  ·  HEALTH", 22)
 	health_label.name = "Health"
 	health_label.add_theme_font_override("font", Design.heading_font())
@@ -1026,9 +1039,10 @@ func _process(delta: float) -> void:
 		if actor.reload_remaining > 0: ammo_label.text = "RELOADING   %0.1fs" % actor.reload_remaining
 		var ammo_color: Color = GOLD if actor.reload_remaining > 0 else CRIMSON.lightened(0.3) if actor.ammo == 0 else Design.TEXT
 		if ammo_label.get_theme_color("font_color") != ammo_color: ammo_label.add_theme_color_override("font_color", ammo_color)
-		utility_label.text = "FRAG ×%d    SMOKE ×%d    FUNDS %d" % [actor.grenades, actor.smokes, actor.credits]
+		funds_label.text = "%d  ·  FUNDS" % actor.credits
+		utility_label.text = "FRAG ×%d    SMOKE ×%d" % [actor.grenades, actor.smokes]
 		if touch != null: touch.counts = {"grenade": actor.grenades, "smoke": actor.smokes}
-		if match_game.phase == "buy": status_label.text = "MATCH FUNDS  %d   /   %s TO EQUIP" % [actor.credits, "TAP BUY" if uses_touch_controls() else "PRESS B"]
+		if match_game.phase == "buy": status_label.text = "BUY PHASE   /   %s TO EQUIP" % ("TAP BUY" if uses_touch_controls() else "PRESS B")
 		elif match_game.phase != "waiting" and elapsed > float(status_label.get_meta("until", 0.0)): status_label.text = ("HOLD USE AT A SITE TO PLANT" if uses_touch_controls() else "HOLD E AT A SITE TO PLANT") if actor.team == 0 and str(match_game.objective_state) != "planted" else ("HOLD USE NEAR THE DEVICE TO DEFUSE" if uses_touch_controls() else "HOLD E NEAR THE DEVICE TO DEFUSE") if str(match_game.objective_state) == "planted" else "DEFEND THE TWO OBJECTIVE SITES"
 		crosshair.visible = actor.alive and not paused
 		crosshair.queue_redraw()

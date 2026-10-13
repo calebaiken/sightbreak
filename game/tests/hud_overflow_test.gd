@@ -70,7 +70,7 @@ func run_pass(main: Node, face: String) -> void:
 			game.set_physics_process(false)
 			var score_x: float = main.score_label.get_global_rect().get_center().x
 			var resting := {}
-			for critical in [main.ammo_label, main.utility_label, main.health_label, main.score_label, main.radar, main.status_label]:
+			for critical in [main.ammo_label, main.utility_label, main.funds_label, main.health_label, main.score_label, main.radar, main.status_label]:
 				resting[critical] = critical.get_global_rect()
 			for set_name: String in NAMES:
 				if face == "taller" and set_name not in ["ordinary", "unicode"]:
@@ -85,7 +85,7 @@ func run_pass(main: Node, face: String) -> void:
 				await settle()
 				var label := "%s %s%s" % [context, set_name, " (taller CJK face)" if face == "taller" else ""]
 				check(absf(main.score_label.get_global_rect().get_center().x - dimensions.x * 0.5) < 1.0 and absf(main.score_label.get_global_rect().get_center().x - score_x) < 1.0, label + ": score stays centred")
-				for critical in [main.ammo_label, main.utility_label, main.health_label, main.score_label, main.radar]:
+				for critical in [main.ammo_label, main.utility_label, main.funds_label, main.health_label, main.score_label, main.radar]:
 					check(inside(critical.get_global_rect(), screen), label + ": %s stays on screen %s" % [critical.name, critical.get_global_rect()])
 				for critical: Control in resting:
 					check(critical.get_global_rect().position.is_equal_approx(resting[critical].position), label + ": %s does not move when the feed fills or grows" % critical.name)
