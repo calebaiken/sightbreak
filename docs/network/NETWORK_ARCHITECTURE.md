@@ -2,7 +2,7 @@
 
 Baseline examined: `cf9a630417fa1e50d76b59dd6f45ce8819de6ce8`.
 
-The Godot dedicated server owns ten actors, bots, collision, firing, ammunition, damage, objectives, round transitions and match funds. Physics runs at 60 Hz; the authority sends snapshots every 50 ms and clients send input at 30 Hz. Clients predict view orientation only at this baseline. Remote actors perform one 90% lerp per received snapshot and then hold until the next arrival.
+The Godot dedicated server owns ten actors, bots, collision, firing, ammunition, damage, objectives, round transitions and match funds. Physics runs at 60 Hz; the authority intends snapshots every 50 ms and clients send input at 30 Hz. Independent measurement found **15 Hz actual baseline replication**: floating-point residue in the decrement/reset timer defers the third-tick send until the fourth tick. Clients predict view orientation only at this baseline. Remote actors perform one 90% lerp per received snapshot and then hold until the next arrival.
 
 SceneMultiplayer authenticates a bounded JSON protocol hello before gameplay RPCs. Protocol 2 rejects version mismatch before consuming an account ticket. Optional one-use, server-scoped tickets bind backend account identity; guest LAN matches cannot earn account rewards. ENet is unencrypted: tickets and reconnect bearer tokens require trusted LAN use. Disabling peer relay prevents direct client-to-client RPC routing.
 

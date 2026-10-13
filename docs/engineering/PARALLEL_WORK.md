@@ -6,7 +6,7 @@
 - Claude PR #1: `cf9a630417fa1e50d76b59dd6f45ce8819de6ce8`, branch `claude/independent-audit-visual-v04`; fetched directly from GitHub. Main does not contain this head.
 - Codex: `codex/competitive-network-systems`, **stacked on that exact corrected head**. Do not integrate before PR #1. No merge authorization has been given.
 - No additional graphics branch was advertised by `git ls-remote` at the check. Recheck before shared-file integration.
-- GitHub API access is blocked by the environment proxy. Git fetch works. Open/closed PR status and comments cannot yet be independently confirmed through the API. An `api.github.com` environment configuration draft was saved; saving does not activate it.
+- GitHub's normal `/pulls` page independently confirms PR #1 is open and the sole listed open PR. GitHub API access is blocked by the environment proxy, preventing API writes. Git fetch works. An `api.github.com` environment configuration draft was saved; saving does not activate it.
 
 ## Ownership and contracts
 
@@ -27,3 +27,9 @@ Shared `match.gd` changes must be small integration commits. Actor movement/pres
 Each milestone needs its own commits and review branch/PR. Stacked PRs target their immediate dependency until reconciled with main. Re-run gameplay, economy, layout and renderer regressions before integration. The baseline Unicode kill-feed defect belongs to Claude's UI work; it must not be hidden or silently fixed in networking commits.
 
 See [QA](../reports/CODEX_NETWORK_QA.md) for evidence, remaining failures and environment details.
+
+## Phase B integration surfaces
+
+New modules: `state_privacy.gd`, `snapshot_schema.gd`. `match.gd` passes recipient IDs at both snapshot send sites, filters effect/notice channels, validates packets and handles geometry revocation. Protocol is now 3. `utility.gd` gains the narrow `set_replica_lifetime(remaining)` contract: network replica age controls growth/fade without a birth tween; offline/authority animation stays on the existing path. No mesh, material, shader, UI or attachment identifier changed.
+
+Privacy tests, network dictionary inspection and a CPU/payload profiling harness are maintained. Independent reviewer accepted the bounded development scope after adversarial corrections; complete quality gates and Claude's Unicode HUD correction remain outstanding. Before rebasing, preserve Claude changes around shot effects, spectator camera, snapshot application and smoke growth; reconcile these small integrations explicitly.
