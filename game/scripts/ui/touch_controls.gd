@@ -31,8 +31,8 @@ const DEFAULT_POSITIONS := {"fire": Vector2(0.89, 0.53), "jump": Vector2(0.91, 0
 	"interact": Vector2(0.65, 0.72), "grenade": Vector2(0.60, 0.81),
 	"smoke": Vector2(0.69, 0.81), "buy": Vector2(0.19, 0.14), "pause": Vector2(0.96, 0.07), "switch": Vector2(0.91, 0.84), "score": Vector2(0.08, 0.14), "move": Vector2(0.13, 0.74)}
 var positions: Dictionary = DEFAULT_POSITIONS.duplicate()
-const LABELS := {"fire": "FIRE", "jump": "JUMP", "crouch": "LOW", "reload": "LOAD",
-	"interact": "USE", "grenade": "FRAG", "smoke": "SMOKE", "buy": "BUY", "pause": "II", "switch": "SWAP", "score": "TEAM"}
+const LABELS := {"fire": "FIRE", "jump": "JUMP", "crouch": "LOW", "reload": "RELOAD",
+	"interact": "USE", "grenade": "FRAG", "smoke": "SMOKE", "buy": "BUY", "pause": "MENU", "switch": "SWAP", "score": "TEAM"}
 var fingers: Dictionary = {}
 var move_origin := Vector2.ZERO
 var move_position := Vector2.ZERO
@@ -118,6 +118,7 @@ func _input(event: InputEvent) -> void:
 		return
 	if event is InputEventScreenTouch:
 		if event.pressed and not event.canceled:
+			if not event.position.is_finite(): return
 			var action := action_at(event.position)
 			if editing:
 				if action.is_empty() or fingers.values().has(action): return
@@ -145,6 +146,7 @@ func _input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		queue_redraw()
 	elif event is InputEventScreenDrag and fingers.has(event.index):
+		if not event.position.is_finite(): return
 		var action: String = fingers[event.index]
 		if editing and positions.has(action):
 			var rect := safe_rect if safe_rect.size.x > 0 and safe_rect.size.y > 0 else Rect2(Vector2.ZERO, size)
@@ -155,7 +157,7 @@ func _input(event: InputEvent) -> void:
 			move_position = event.position
 			movement = joystick_vector(event.position - move_origin)
 		elif action == "look" or action == "fire":
-			look_delta += event.relative
+			if event.relative.is_finite(): look_delta += event.relative
 		get_viewport().set_input_as_handled()
 		queue_redraw()
 
@@ -172,14 +174,56 @@ func _draw() -> void:
 		if key == "move": continue
 		var point := control_point(key)
 		var r := radius(key)
-		draw_circle(point, r, Color(0.08, 0.1, 0.13, 0.65))
-		draw_arc(point, r, 0, TAU, 48, Color(0.85, 0.72, 0.45, 0.95) if editing else Color(0.9, 0.9, 0.9, 0.55), 2.0)
-		if actions.get(key, false): draw_circle(point, r - 5, Color(0.7, 0.15, 0.22, 0.55))
+		draw_circle(point, r, Color(0.045, 0.058, 0.072, 0.42))
+		draw_arc(point, r, 0, TAU, 48, Color(0.85, 0.72, 0.45, 0.95) if editing else Color(0.83, 0.87, 0.89, 0.5), 1.25)
+		if key == "fire":
+			draw_arc(point, r - 5, -PI * 0.8, -PI * 0.2, 24, Color(0.77, 0.24, 0.30, 0.95), 2.5)
+		if actions.get(key, false):
+			draw_circle(point, r - 3, Color(0.7, 0.15, 0.22, 0.65))
+			draw_arc(point, r, 0, TAU, 48, Color(0.85, 0.72, 0.45, 0.95), 2.0)
 		var label_text: String = LABELS[key]
 		var width := font.get_string_size(label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
-		draw_string(font, point + Vector2(-width / 2, 5), label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color.WHITE)
+		_draw_action_icon(key, point + Vector2(0, -8), Color(0.9, 0.92, 0.94, 0.9))
+		draw_string(font, point + Vector2(-width / 2, 17), label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color.WHITE)
 	var origin := move_origin if not editing and fingers.values().has("move") else control_point("move")
 	draw_arc(origin, 65 * hud_scale, 0, TAU, 48, Color(0.8, 0.85, 0.9, 0.24), 2.0)
 	draw_circle(origin + Vector2(movement.x, -movement.y) * 40 * hud_scale, 23 * hud_scale, Color(0.8, 0.85, 0.9, 0.25))
 	if editing:
 		draw_string(font, Vector2(size.x * 0.30, size.y * 0.45), "DRAG CONTROLS  /  TAP SAVE ABOVE", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color(0.9, 0.78, 0.5))
+
+# Shared geometric glyphs require no textures or shader variants.
+func _draw_action_icon(action: String, at: Vector2, color: Color) -> void:
+	match action:
+		"fire":
+			draw_arc(at, 7, 0, TAU, 24, color, 1.5)
+			for axis in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]: draw_line(at + axis * 10, at + axis * 14, color, 2)
+			draw_circle(at, 2, color)
+		"reload":
+			draw_arc(at, 8, -PI * 0.8, PI * 0.7, 22, color, 1.5)
+			draw_line(at + Vector2(-5, -6), at + Vector2(-5, -1), color, 1.5)
+			draw_line(at + Vector2(-5, -6), at + Vector2(0, -6), color, 1.5)
+		"jump", "crouch":
+			var sign_y := -1 if action == "jump" else 1
+			draw_line(at + Vector2(-8, 3 * sign_y), at + Vector2(0, 8 * sign_y), color, 2)
+			draw_line(at + Vector2(0, 8 * sign_y), at + Vector2(8, 3 * sign_y), color, 2)
+			draw_line(at + Vector2(0, 8 * sign_y), at + Vector2(0, -7 * sign_y), color, 2)
+		"switch":
+			draw_line(at + Vector2(-10, -4), at + Vector2(10, -4), color, 1.5)
+			draw_line(at + Vector2(10, -4), at + Vector2(6, -8), color, 1.5)
+			draw_line(at + Vector2(10, 4), at + Vector2(-10, 4), color, 1.5)
+			draw_line(at + Vector2(-10, 4), at + Vector2(-6, 8), color, 1.5)
+		"grenade", "smoke":
+			draw_rect(Rect2(at + Vector2(-5, -5), Vector2(10, 13)), color, false, 1.5)
+			draw_line(at + Vector2(-3, -8), at + Vector2(4, -8), color, 2)
+			if action == "smoke": draw_line(at + Vector2(-3, 0), at + Vector2(3, 0), color, 1.5)
+		"pause":
+			draw_line(at + Vector2(-4, -6), at + Vector2(-4, 7), color, 3)
+			draw_line(at + Vector2(4, -6), at + Vector2(4, 7), color, 3)
+		"score":
+			for row in [-5, 0, 5]: draw_line(at + Vector2(-8, row), at + Vector2(8, row), color, 1.5)
+		"buy":
+			draw_rect(Rect2(at + Vector2(-8, -5), Vector2(16, 12)), color, false, 1.5)
+			draw_line(at + Vector2(-3, -8), at + Vector2(3, -8), color, 2)
+		"interact":
+			draw_line(at + Vector2(-7, 0), at + Vector2(7, 0), color, 2)
+			draw_line(at + Vector2(0, -7), at + Vector2(0, 7), color, 2)

@@ -33,7 +33,7 @@ func run() -> void:
 	main.profile.data.settings.touch_visible = true
 	main.profile.data.settings.hud_positions = {}
 	await settle()
-	for dimensions in [Vector2i(1280, 720), Vector2i(1600, 720), Vector2i(960, 720)]:
+	for dimensions in [Vector2i(1280, 720), Vector2i(1600, 720), Vector2i(960, 720), Vector2i(1560, 720)]:
 		root.content_scale_size = dimensions
 		root.size = dimensions
 		await settle()
@@ -51,6 +51,12 @@ func run() -> void:
 		main.start_match({"mode": "offline", "difficulty": "normal", "name": "Landscape QA"})
 		await settle()
 		check_horizontal(main.ui, str(dimensions) + " combat HUD")
+		check(main.crosshair.get_global_rect().get_center().is_equal_approx(Vector2(dimensions) * 0.5), "Reticle canvas remains at optical viewport center")
+		check(absf(main.score_label.get_global_rect().get_center().x - dimensions.x * 0.5) < 1.0, "Match score stays horizontally centered independent of side labels")
+		for control_name in main.touch.positions:
+			var point: Vector2 = main.touch.control_point(control_name)
+			var radius: float = main.touch.radius(control_name)
+			check(point.x - radius >= 0 and point.y - radius >= 0 and point.x + radius <= dimensions.x and point.y + radius <= dimensions.y, control_name + " full touch target stays in landscape")
 		await capture(main, "%dx%d-touch-hud" % [dimensions.x, dimensions.y])
 		for action in ["grenade", "smoke"]:
 			var point: Vector2 = main.touch.control_point(action)

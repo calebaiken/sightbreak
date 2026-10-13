@@ -40,6 +40,21 @@ func run() -> void:
 	drag.relative = Vector2(10, 2)
 	root.push_input(drag)
 	check(touch.consume_look() == Vector2(10, 2), "Fourth finger aims while firing and moving")
+	check(touch.consume_look() == Vector2.ZERO, "Touch aim is consumed once without an artificial smoothing tail")
+	for sample in [Vector2(3, 1), Vector2(4, -2), Vector2(-1, 5)]:
+		drag.relative = sample
+		root.push_input(drag)
+	check(touch.consume_look() == Vector2(6, 4), "High-frequency touch motion sums exactly across physics ticks")
+	drag.relative = Vector2(NAN, 1)
+	root.push_input(drag)
+	check(touch.consume_look() == Vector2.ZERO, "Malformed non-finite touch motion cannot corrupt camera aim")
+	drag.index = 0
+	drag.position = Vector2(INF, 100)
+	var old_movement: Vector2 = touch.movement
+	root.push_input(drag)
+	check(touch.movement == old_movement, "Malformed pointer position cannot poison joystick movement")
+	press(12, Vector2(NAN, 200))
+	check(not touch.fingers.has(12), "Malformed pointer press cannot reserve a finger action")
 	press(1, touch.control_point("fire"), false)
 	check(not touch.actions.get("fire", false) and touch.fingers.size() == 3, "One pointer release doesn't cancel other pointers")
 	touch.reset_input()

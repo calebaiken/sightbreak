@@ -79,6 +79,15 @@ func run() -> void:
 	main._physics_process(1.0 / 60.0)
 	var expected_look: Vector2 = look_before - Vector2(10, 5) * float(main.profile.data.settings.touch_sensitivity)
 	check(main.input_look.is_equal_approx(expected_look), "Touch aiming applies configured sensitivity exactly once")
+	actor.health = 20
+	actor.reload_remaining = 0.8
+	main._process(0.01)
+	check(main.ammo_label.text.begins_with("RELOADING"), "Reload timer is readable in HUD while magazine is unavailable")
+	check(main.health_label.get_theme_color("font_color") == main.CRIMSON.lightened(0.3), "Critical health receives a distinct readable HUD cue")
+	actor.health = 100
+	actor.reload_remaining = 0.0
+	main._process(0.01)
+	check(not main.ammo_label.text.begins_with("RELOADING"), "HUD restores weapon and ammunition when reload completes")
 	main.open_touch_editor()
 	check(main.paused and main.touch.editing, "Mobile HUD editor opens without controlling character")
 	main.touch.positions.fire = Vector2(0.5, 0.5)

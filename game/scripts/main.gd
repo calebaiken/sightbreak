@@ -187,6 +187,7 @@ func ensure_menu_world() -> void:
 	menu_camera.look_at(Vector3(0, 1, 0))
 	menu_camera.current = true
 	menu_camera.fov = 61
+	apply_settings()
 
 func show_menu() -> void:
 	if is_instance_valid(economy_panel): economy_panel.hide()
@@ -209,7 +210,7 @@ func show_menu() -> void:
 	var spring := Control.new()
 	spring.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(spring)
-	top.add_child(label("NATIVE ALPHA   /   01", 14, MUTED))
+	top.add_child(label("DEVELOPMENT BUILD   /   0.3", 14, MUTED))
 	var middle := HBoxContainer.new()
 	middle.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	rows.add_child(middle)
@@ -425,6 +426,8 @@ func apply_settings() -> void:
 	var high_quality := int(profile.data.settings.graphics_quality) > 0
 	get_viewport().msaa_3d = Viewport.MSAA_2X if high_quality else Viewport.MSAA_DISABLED
 	for light in find_children("*", "DirectionalLight3D", true, false): light.shadow_enabled = high_quality
+	for node in find_children("*", "Node3D", true, false):
+		if node.has_method("apply_detail_quality"): node.apply_detail_quality(high_quality)
 
 func open_economy(tab: String) -> void:
 	screen = "economy"
@@ -478,15 +481,19 @@ func start_match(options: Dictionary) -> void:
 
 func build_hud() -> void:
 	clear_ui()
-	for area in [Rect2(0, 0, 1, 0.16), Rect2(0, 0.83, 1, 0.17)]:
-		var backdrop := ColorRect.new()
-		backdrop.color = Color(0.015, 0.023, 0.032, 0.72)
-		backdrop.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		backdrop.anchor_left = area.position.x
-		backdrop.anchor_top = area.position.y
-		backdrop.anchor_right = area.end.x
-		backdrop.anchor_bottom = area.end.y
-		ui.add_child(backdrop)
+	# Lightweight vertex-only fades preserve contrast without blocking a third of the view.
+	var shade := Control.new()
+	shade.name = "CombatShade"
+	shade.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fill(shade)
+	ui.add_child(shade)
+	shade.draw.connect(func():
+		for band in 24:
+			var fade := pow(1.0 - float(band) / 24.0, 1.6) * 0.8
+			shade.draw_rect(Rect2(0, band * 5, shade.size.x, 5), Color(0.018, 0.024, 0.032, fade))
+			shade.draw_rect(Rect2(0, shade.size.y - (band + 1) * 5, shade.size.x, 5), Color(0.018, 0.024, 0.032, fade))
+	)
+	shade.resized.connect(shade.queue_redraw)
 	var margins := margin_frame(ui, 22)
 	margins.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var rows := VBoxContainer.new()
@@ -498,21 +505,23 @@ func build_hud() -> void:
 	var nameplate := VBoxContainer.new()
 	nameplate.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	nameplate.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	nameplate.custom_minimum_size.x = 240
 	top.add_child(nameplate)
-	nameplate.add_child(label("RELAY YARD", 20, GOLD))
-	nameplate.add_child(label("SIGHTBREAK / TACTICAL", 12, MUTED))
+	nameplate.add_child(label("RELAY YARD", 17, GOLD))
+	nameplate.add_child(label("SECTOR 07  /  TRANSFER STATION", 11, MUTED))
 	var central := VBoxContainer.new()
 	central.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	top.add_child(central)
-	score_label = label("00    /    00", 34)
+	score_label = label("00    /    00", 32)
 	score_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	central.add_child(score_label)
-	phase_label = label("DEPLOYING", 15, GOLD)
+	phase_label = label("DEPLOYING", 13, GOLD)
 	phase_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	central.add_child(phase_label)
 	var side := VBoxContainer.new()
 	side.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	side.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	side.custom_minimum_size.x = 240
 	top.add_child(side)
 	action_label = wrapped_label("", 16, GOLD)
 	action_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -524,7 +533,7 @@ func build_hud() -> void:
 	space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	space.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	rows.add_child(space)
-	status_label = wrapped_label("BUY PHASE  /  " + ("Tap BUY to equip" if uses_touch_controls() else "Press B to equip"), 19, GOLD)
+	status_label = wrapped_label("BUY PHASE  /  " + ("Tap BUY to equip" if uses_touch_controls() else "Press B to equip"), 16, GOLD)
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	rows.add_child(status_label)
 	objective_bar = ProgressBar.new()
@@ -537,6 +546,8 @@ func build_hud() -> void:
 	bottom.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	rows.add_child(bottom)
 	health_label = wrapped_label("100  /  HEALTH", 22)
+	health_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.8))
+	health_label.add_theme_constant_override("shadow_offset_y", 2)
 	health_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	bottom.add_child(health_label)
 	var controls := wrapped_label("BUY  EQUIP     USE  OBJECTIVE     TEAM  ROSTER     II  MENU" if uses_touch_controls() else "B  BUY     E  OBJECTIVE     TAB  TEAM     ESC  MENU", 13, MUTED)
@@ -553,6 +564,8 @@ func build_hud() -> void:
 	fill(crosshair)
 	ui.add_child(crosshair)
 	crosshair.draw.connect(draw_crosshair)
+	crosshair.resized.connect(crosshair.queue_redraw)
+	crosshair.queue_redraw()
 	touch = Touch.new()
 	touch.enabled = uses_touch_controls()
 	touch.hud_scale = float(profile.data.settings.hud_scale)
@@ -566,13 +579,22 @@ func build_hud() -> void:
 
 func draw_crosshair() -> void:
 	if not is_instance_valid(crosshair): return
-	var center: Vector2 = ui.size / 2
+	var center: Vector2 = get_viewport().get_visible_rect().size / 2
 	var width: float = profile.data.settings.crosshair_size
 	var color := Color(str(profile.data.settings.crosshair_color))
 	for direction in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]:
 		crosshair.draw_line(center + direction * 4, center + direction * (4 + width), Color(0, 0, 0, 0.7), 4)
 		crosshair.draw_line(center + direction * 4, center + direction * (4 + width), color, 2)
 	crosshair.draw_circle(center, 1.5, color)
+	# Confirmation follows resolved authoritative damage, never a speculative client ray.
+	var actor = match_game.local_actor() if is_instance_valid(match_game) else null
+	if actor != null and actor.hit_feedback_remaining > 0:
+		var hit_color := CRIMSON if actor.hit_feedback_lethal else GOLD if actor.hit_feedback_headshot else Color.WHITE
+		hit_color.a = clampf(actor.hit_feedback_remaining / 0.08, 0.0, 1.0)
+		for diagonal in [Vector2(-1, -1), Vector2(1, -1), Vector2(-1, 1), Vector2(1, 1)]:
+			crosshair.draw_line(center + diagonal * 9, center + diagonal * 14, Color(0, 0, 0, hit_color.a * 0.6), 4)
+			crosshair.draw_line(center + diagonal * 9, center + diagonal * 14, hit_color, 2)
+
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
@@ -677,7 +699,7 @@ func _process(delta: float) -> void:
 	var actor = match_game.local_actor()
 	score_label.text = "%02d     /     %02d" % [match_game.attack_score, match_game.defend_score]
 	phase_label.text = "ROUND %02d   •   %s   •   %02d:%02d" % [match_game.round_number, str(match_game.phase).to_upper(), int(match_game.time_left) / 60, int(match_game.time_left) % 60]
-	action_label.text = "DEVICE  %02d s" % int(match_game.objective_timer) if match_game.objective_state == "planted" else str(match_game.objective_state).to_upper()
+	action_label.text = "DEVICE  %02d s" % int(match_game.objective_timer) if match_game.objective_state == "planted" else "DEVICE  /  " + str(match_game.objective_state).to_upper()
 	if match_game.objective_state == "dropped": action_label.text = "DEVICE DROPPED  /  RECOVER"
 	if match_game.phase == "waiting":
 		var humans := 0
@@ -690,10 +712,16 @@ func _process(delta: float) -> void:
 	objective_bar.visible = objective_bar.value > 0
 	if actor != null:
 		health_label.text = "%03d   /   HEALTH" % maxi(0, int(actor.health)) if actor.alive else "ELIMINATED  /  SPECTATING"
+		var health_color: Color = CRIMSON.lightened(0.3) if actor.alive and actor.health <= 25 else Color("e7eaf0")
+		if health_label.get_theme_color("font_color") != health_color: health_label.add_theme_color_override("font_color", health_color)
 		ammo_label.text = "%s   %02d / %02d" % [str(actor.weapon_id).to_upper(), actor.ammo, actor.reserve]
+		if actor.reload_remaining > 0: ammo_label.text = "RELOADING   %0.1fs" % actor.reload_remaining
+		var ammo_color: Color = GOLD if actor.reload_remaining > 0 else CRIMSON.lightened(0.3) if actor.ammo == 0 else Color("e7eaf0")
+		if ammo_label.get_theme_color("font_color") != ammo_color: ammo_label.add_theme_color_override("font_color", ammo_color)
 		if match_game.phase == "buy": status_label.text = "MATCH FUNDS  %d   /   %s TO EQUIP" % [actor.credits, "TAP BUY" if uses_touch_controls() else "PRESS B"]
 		elif match_game.phase != "waiting" and elapsed > float(status_label.get_meta("until", 0.0)): status_label.text = ("HOLD USE AT A SITE TO PLANT" if uses_touch_controls() else "HOLD E AT A SITE TO PLANT") if actor.team == 0 and str(match_game.objective_state) != "planted" else ("HOLD USE NEAR THE DEVICE TO DEFUSE" if uses_touch_controls() else "HOLD E NEAR THE DEVICE TO DEFUSE") if str(match_game.objective_state) == "planted" else "DEFEND THE TWO OBJECTIVE SITES"
 		crosshair.visible = actor.alive and not paused
+		crosshair.queue_redraw()
 	if (Input.is_physical_key_pressed(KEY_TAB) or elapsed < touch_score_until) and not paused:
 		if not is_instance_valid(score_panel): show_scoreboard()
 	elif is_instance_valid(score_panel):
