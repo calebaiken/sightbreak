@@ -22,6 +22,8 @@ func _run() -> void:
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--capture-dir="):
 			output = argument.trim_prefix("--capture-dir=")
+		if argument == "--quality=low":
+			SBUtility.high_quality_smoke = false
 	if not output.is_empty():
 		DirAccess.make_dir_recursive_absolute(output)
 	root.size = Vector2i(1280, 720)

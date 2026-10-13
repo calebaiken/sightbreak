@@ -46,7 +46,7 @@ Settings → Accessibility → Interface text size scales body copy and `main.gd
 
 | Component | States | Notes |
 | --- | --- | --- |
-| Button — `primary` | normal, hover, pressed, focus, disabled | Crimson fill with a 3 px lower edge. One per screen (DEPLOY, RESUME, JOIN, SAVE LAYOUT, RETURN). |
+| Button — `primary` | normal, hover, pressed, focus, disabled | Crimson fill with a 3 px lower edge. One per screen (DEPLOY, RESUME, JOIN GUEST LAN MATCH, SAVE TOUCH LAYOUT, RETURN). |
 | Button — `secondary` | same | Default theme button. |
 | Button — `ghost` | same | Transparent fill: BACK, LEAVE, REFRESH, BACK TO FIELD. |
 | Tab | normal, selected | Selected = raised surface, gold underline and gold text (`tab_selected_style`). The armory always shows which section is open. |

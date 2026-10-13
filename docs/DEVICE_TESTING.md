@@ -6,7 +6,7 @@ This is a test procedure, not completed evidence. Record results and defects; le
 
 - Artifact SHA256 and `builds/manifest.json` source identity.
 - Phone/tablet model, SoC, RAM, OS, refresh rate, notch/navigation configuration.
-- Graphics quality, FOV, sensitivity, frame cap, touch scale and customized layout.
+- Graphics quality, 3D render scale (record frame time at 100 % and 75 %), FOV, sensitivity, frame cap, interface text size, touch scale and customized layout.
 - Build type, battery level, charging state, room temperature, network topology.
 
 ## Installation and first play

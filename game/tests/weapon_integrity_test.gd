@@ -121,7 +121,7 @@ func _quick_switch() -> void:
 		if pistol_ammo >= 0 and actor.ammo < pistol_ammo:
 			pistol_at = t
 			break
-	check(switched_at >= 0 and pistol_at > switched_at and absf(float(pistol_at - switched_at) * DT - 0.3) <= DT * 1.5, "ready sidearm costs only the deploy delay after a marksman shot")
+	check(switched_at >= 0 and pistol_at > switched_at and absf(float(pistol_at - switched_at) * DT - Actor.DEPLOY_SECONDS) <= DT * 1.5, "ready sidearm costs only the deploy delay after a marksman shot")
 	# Swapping cannot be used to clear accumulated recoil instantly.
 	actor.recoil = Vector2(0.01, 0.12)
 	actor.input_state = {"look": Vector2(0, 1.4), "weapon": "marksman"}
