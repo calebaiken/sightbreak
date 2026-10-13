@@ -6,23 +6,24 @@
 
 The test uses one fixed yard view at 1280×720 and alternates three variants over 3 rounds. Each round runs 8 warm-up frames and 40 measured frames, and the median frame time per round is recorded. Raw output is in `docs/reports/media/art-v1/logs/weapon_render_benchmark-<head>.log`.
 
-| Variant | Draw calls | Primitives | Median, `498311e` | Median, `b376e61` (final) |
-| --- | ---: | ---: | ---: | ---: |
-| No weapon | 23 | 37,452 | 120.8 ms | 118.4 ms |
-| Procedural rifle with box hands (0.4) | 28 | 40,476 | 128.3 ms | 129.4 ms |
-| Relay AR with baked hands | 30 | 76,326 | 160.0 ms | 169.5 ms |
+| Variant | Draw calls | Primitives | `498311e` | `b376e61` | `ecd290b` (hands v2) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| No weapon | 23 | 37,452 | 120.8 ms | 118.4 ms | 112.9 ms |
+| Procedural rifle with box hands (0.4) | 28 | 40,476 | 128.3 ms | 129.4 ms | 126.3 ms |
+| Relay AR with baked hands | 30 | 76,326 (77,698 at `ecd290b`) | 160.0 ms | 169.5 ms | 174.2 ms |
+
+Each cell is the median of 3 round medians. Round-to-round spread is a few milliseconds, and the "no weapon" row also moves between runs, so compare within a column.
 
 What this shows:
-- The authored viewmodel adds **2 draw calls** and about **36k primitives** compared with the procedural one. That matches the budgets: 30.3k triangles for the rifle and 8.3k for the hands.
-- On llvmpipe it costs **+32 ms** per frame over the procedural rifle at `498311e`, and **+40 ms** at the final head.
-  - The final head's default finish also samples the baked albedo, which is probably most of that difference on a CPU rasteriser.
-  - Round-to-round spread is several milliseconds.
+- The authored viewmodel adds **2 draw calls** and about **37k primitives** compared with the procedural one. That matches the budgets: 30.3k triangles for the rifle and 9.7k for the hands, which grew with the second hands pass.
+- On llvmpipe it costs **+32 ms** per frame over the procedural rifle at `498311e`, **+40 ms** at `b376e61` and **+48 ms** at `ecd290b`.
+  - The default finish then sampled the baked albedo, and the hands grew by about 1.4k triangles.
   - The view is simple, so the viewmodel's share is large.
 - **Texture memory:** six 1024² maps, VRAM compressed with mipmaps, take 5.59 MB in S3TC/BPTC and the same in ETC2. This is measured from the imported `.ctex` files.
 
 ## Risk and mitigation
 
-Thirty-nine thousand first-person triangles is within what current mid-range mobile GPUs draw comfortably, but that is **an expectation, not a measurement**. Until a device run exists:
+About forty thousand first-person triangles is within what current mid-range mobile GPUs draw comfortably, but that is **an expectation, not a measurement**. Until a device run exists:
 
 1. On the LOW tier, render the viewmodel from a reduced LOD. The importer already generates LODs, and `lod_bias` or an explicit decimated export can select one. Measure LOW and STANDARD separately.
 2. Keep viewmodel shadow casting off (already the case).
@@ -31,4 +32,4 @@ Thirty-nine thousand first-person triangles is within what current mid-range mob
 
 ## Regression status (art branch head)
 
-`scripts/validate.sh` passes on `b376e61`, with 1,958 native assertions. That includes `weapon_art_test.gd` (43), the bot match and two ENet clients. The log is in `docs/reports/media/art-v1/logs/validate-art-head.log`. No gameplay value, hit volume, network protocol or economy behaviour is changed by this slice.
+`scripts/validate.sh` passes on `ecd290b`, with 1,958 native assertions. That includes `weapon_art_test.gd` (43), the bot match and two ENet clients. The log is in `docs/reports/media/art-v1/logs/validate-art-head.log`. No gameplay value, hit volume, network protocol or economy behaviour is changed by this slice.

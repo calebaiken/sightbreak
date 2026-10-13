@@ -33,7 +33,7 @@ The standard every first-person weapon follows, using the Relay AR as the worked
 | `body` | 16,214 | 1 | every non-paint part |
 | `magazine` + `magazine_rounds` | 1,392 + 236 | 2 | animated by reload |
 | **Rifle total** | **30,326** | **5** | budget 32,000 |
-| `hands` (separate GLB) | 8,312 | 1 | budget 10,000 |
+| `hands` (separate GLB) | 9,684 | 1 | budget 10,000 |
 
 The first-person node therefore holds six draw nodes: body, two paint parts, magazine, hands and muzzle flash. The magazine's cartridge is one more draw. The procedural rifle used five draws plus the magazine detail.
 
@@ -56,9 +56,16 @@ Recoil kick, sway, bob, equip and reload tilt still move the whole weapon node e
 ## Viewmodel placement
 
 `weapon_model.gd` places the rifle inside the camera-attached node, which rests 0.235 m right, 0.235 m down and 0.42 m ahead of the eye:
-- **Ejection port:** about 19 cm right, 17 cm down and 32 cm ahead of the eye.
-- **Cant:** YXZ Euler (0.06, 0.12, −0.30) rad, so the left receiver face and handguard read and the barrel converges below the crosshair.
-- **Stock:** ends behind the camera.
+- **Rotation:** YXZ Euler (−0.05, 0.27, −0.10) rad, so about 6° of roll and 15° of yaw. The barrel converges toward the crosshair and the left receiver face and handguard read.
+- **Offset:** (0.087, 0.082, 0.149) m in the weapon node's space.
+- **Result at 1280×720:**
+  - the muzzle sits near the crosshair;
+  - the support hand is at mid-handguard;
+  - the reflex sight is right of centre;
+  - the pistol-grip hand is at the lower right;
+  - the stock ends behind the camera.
+- **Derivation:** `tools/art/viewmodel_fit.py` projects rifle landmarks through the game camera (82° vertical field of view) and fits the pitch, yaw and offset to screen targets. Rerun it when the rifle's proportions change.
+- **Aspect ratios:** the layout holds at 16:9, 20:9 and 4:3 (captures in `docs/reports/media/art-v1/`).
 
 The placement is presentation only. Shots trace from the camera, as before.
 

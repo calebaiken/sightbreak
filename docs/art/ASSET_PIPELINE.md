@@ -29,7 +29,8 @@ generator.py ──► render_views.py   (Cycles review renders; nothing written
 | --- | --- |
 | `hardsurface.py` | The modelling toolkit: filleted 2D profiles; two-view silhouette modelling (side profile ∩ plan profile); lathe; EXACT booleans that keep the target's material; bevel, harden-normals and weighted-normal finishing |
 | `relay_ar.py` | The Relay AR rifle generator. It declares the mesh `GROUPS` and hand `ANCHORS` that `export.py` reads |
-| `relay_ar_hands.py` | Gloved hands and sleeves posed on the rifle: capsule chains through explicit joints, fused by a voxel remesh, smoothed and decimated |
+| `relay_ar_hands.py` | Gloved hands and sleeves posed on the rifle: flattened ellipsoid phalanges through explicit joints (knuckles come from the overlaps), palm, heel and thenar masses, tapered oval sleeves with folds and a seam, flared cuffs and wrist straps. Hands are fused by a voxel remesh, smoothed and decimated |
+| `viewmodel_fit.py` | Fits the first-person placement constants in `weapon_model.gd`: it projects rifle landmarks through the game camera and searches for the pitch, yaw and offset that best match screen targets |
 | `render_views.py` | Cycles views that frame themselves from object bounds: left and right ¾, side profile, top, receiver, grip and magazine, materials, both hands. `eye` reproduces the in-game first-person camera (82° vertical field of view) from the placement in `weapon_model.gd` |
 | `bake.py` | Smart-UV atlas, then object-space procedural surfaces (tone, grain, directional scratches, edge chipping, grime, stipple). It bakes albedo, roughness, tangent normal (OpenGL +Y), 3.5 cm contact AO and metallic, and saves the unwrapped `.blend` |
 | `export.py` | Joins parts into one mesh per draw group, splits the magazine's cartridge into a child, adds marker and anchor empties, and exports the GLB. UVs and normals are left exactly as baked |

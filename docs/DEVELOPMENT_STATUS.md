@@ -20,7 +20,7 @@ Ownership (from Codex's `docs/engineering/PARALLEL_WORK.md`):
 
 - **Asset pipeline:** `tools/art/` with headless Blender (bpy 5.2.2): generators, bake, export, texture packing and review renders. See `docs/art/ASSET_PIPELINE.md`.
 - **Relay AR rifle:** original, real scale, 30,326 triangles, 1024² baked PBR set.
-- **First-person hands:** gloved hands and sleeves, 8,312 triangles.
+- **First-person hands:** gloved hands and sleeves, 9,684 triangles; the viewmodel is fitted (about 6° of roll) with `tools/art/viewmodel_fit.py`.
 - **Integration:**
   - the authored rifle in first person and inspection, with the weapon contract unchanged (`docs/art/WEAPON_PRODUCTION.md`);
   - casings leave from the authored ejection port;
