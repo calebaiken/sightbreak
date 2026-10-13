@@ -35,6 +35,9 @@ func consume_ticket(ticket: String) -> Dictionary:
 	return await _post("/server/tickets/consume", {"ticket": ticket, "server_id": server_id})
 
 func submit_result(result: Dictionary) -> Dictionary:
+	var spool := OS.get_environment("SIGHTBREAK_RESULT_SPOOL")
+	if not spool.is_empty():
+		return SBResultOutbox.stage(result, spool)
 	var response: Dictionary = {}
 	# The immutable UUID and payload are reused: a lost response cannot mint twice.
 	for attempt in range(3):
