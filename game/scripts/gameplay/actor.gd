@@ -740,6 +740,10 @@ static func _capsule_entry(origin: Vector3, direction: Vector3, radius: float, h
 	return maxf(span.x, 0.0)
 
 const _EMPTY_SPAN := Vector2(INF, -INF)
+## Discriminants this small are tangent rays (passing within ~2 micrometres of the
+## surface); they miss, as against the physics capsule, instead of being decided by
+## 32-bit Vector3 rounding.
+const GRAZE := 0.000001
 
 static func _overlap(a: Vector2, b: Vector2) -> Vector2:
 	return Vector2(maxf(a.x, b.x), minf(a.y, b.y))
@@ -749,10 +753,10 @@ static func _radial_span(origin: Vector3, direction: Vector3, radius: float) -> 
 	var a := direction.x * direction.x + direction.z * direction.z
 	var c := origin.x * origin.x + origin.z * origin.z - radius * radius
 	if a < 0.000000000001:
-		return Vector2(-INF, INF) if c < 0.0 else _EMPTY_SPAN
+		return Vector2(-INF, INF) if c < -GRAZE else _EMPTY_SPAN
 	var b := origin.x * direction.x + origin.z * direction.z
 	var disc := b * b - a * c
-	if disc <= 0.0:
+	if disc <= GRAZE:
 		return _EMPTY_SPAN
 	var root := sqrt(disc)
 	return Vector2((-b - root) / a, (-b + root) / a)
@@ -769,7 +773,7 @@ static func _sphere_span(origin: Vector3, direction: Vector3, radius: float) -> 
 	var a := direction.dot(direction)
 	var b := origin.dot(direction)
 	var disc := b * b - a * (origin.dot(origin) - radius * radius)
-	if a <= 0.0 or disc <= 0.0:
+	if a <= 0.0 or disc <= GRAZE:
 		return _EMPTY_SPAN
 	var root := sqrt(disc)
 	return Vector2((-b - root) / a, (-b + root) / a)

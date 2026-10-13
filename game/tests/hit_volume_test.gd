@@ -5,7 +5,7 @@ extends SceneTree
 ## (0.3.0) and SBActor.trace_shot (this build). The body may never hit where 0.3.0
 ## missed. The only extra area allowed is the drawn crouched helmet where it sticks out
 ## of the 0.3.0 crouched capsule's rounded top (straight section to 0.94 m, cap to
-## 1.25 m); that design conflict is documented in CODEX_REVIEW_RESPONSE.md.
+## 1.25 m); that design conflict is documented in docs/audits/CODEX_REVIEW_RESPONSE.md.
 const Actor = preload("res://scripts/gameplay/actor.gd")
 const Arena = preload("res://scripts/gameplay/arena.gd")
 const DT := 1.0 / 60.0
@@ -53,6 +53,7 @@ func _run() -> void:
 	await _parity()
 	await _specific_rays()
 	await _pass_through_and_ordering()
+	_tangent_rays()
 	world.queue_free()
 	await process_frame
 	print("HIT_VOLUME_TEST checks=%d failures=%d" % [checks, failures.size()])
@@ -183,3 +184,20 @@ func _pass_through_and_ordering() -> void:
 	behind.queue_free()
 	shooter.queue_free()
 	await physics_frame
+
+func _tangent_rays() -> void:
+	# Rays that only touch the 0.31 x 1.8 m capsule miss it, as against the physics
+	# capsule, whatever the float32 rounding of the discriminant.
+	var misses := [
+		[Vector3(0.31, 2.0, 0.0), Vector3.DOWN, "vertical ray on the radius"],
+		[Vector3(-1.0, -0.9, 0.0), Vector3.RIGHT, "ray under the rounded bottom"],
+		[Vector3(-1.0, 0.0, 0.31), Vector3.RIGHT, "ray along the side"],
+	]
+	for case in misses:
+		check(Actor._capsule_entry(case[0], case[1], 0.31, 1.8, 0.48) < 0.0, "tangent %s misses" % case[2])
+	var hits := [
+		[Vector3(0.3099, 2.0, 0.0), Vector3.DOWN, "vertical ray 0.1 mm inside"],
+		[Vector3(-1.0, -0.899, 0.0), Vector3.RIGHT, "ray 1 mm into the rounded bottom"],
+	]
+	for case in hits:
+		check(Actor._capsule_entry(case[0], case[1], 0.31, 1.8, 0.48) >= 0.0, "%s hits" % case[2])
