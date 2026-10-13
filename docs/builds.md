@@ -61,28 +61,28 @@ Godot editor and templates are pinned to the SHA512 values published in the offi
 
 The client and service remain a development implementation. Public competitive service deployment, anti-cheat hardening, external account binding, payment providers, production custody, release signing and device performance certification are separate release work.
 
-## Validated 0.2.0 development artifacts
+## Validated 0.3.0 development artifacts
 
-These exports contain the renderer lifetime mitigation, touch/HUD corrections, weapon and arena polish, bot lifecycle changes, and cosmetic recovery work. All targets were exported from committed game tree `79e725c31ae9c5ae401c0ea55deb50b6007366da`; the exact shipped-source SHA256 is `1eb2e937a11b672b89b41127bdad07c2f1c42a6fea48d079169e60bec43d0e58`. Documentation-only commits can follow without changing that game tree. The machine-readable manifest records the Git commit at each export and the full payload checksums.
+These exports contain the authored Relay Yard surfaces and architecture, shared weapon models, combat effects, mobile HUD improvements, and native cosmetic presentation. All targets were exported from committed source `538f52f9a9dfb5dac38209b7541bde145fc01976`, game tree `ab35c845326fe859c86f3d0b4e37038e82e18c44`; the exact shipped-source SHA256 is `2c6cf58b4c49914d5d8901bc81e73e4e3734c939fcf11464448fbae39e72d60a`. Documentation-only commits can follow without changing that game tree. The machine-readable manifest records the Git commit at each export and full payload checksums.
 
 `python3 scripts/verify_builds.py` passed against the actual final artifacts:
 
 - Exported Linux menu startup and 120-frame offline startup completed without runtime errors.
-- Linux and iOS PCK directories each contained 48 resources; test harnesses were excluded. Android asset inspection also excluded test harnesses.
-- Android signature verification passed v2/v3; version `0.2.0-dev`/code `2`, API24 minimum/API36 target, ARM64 and x86_64, landscape orientation, and exported `com.godot.game.GodotAppLauncher` alias were confirmed from the APK.
-- Generated iOS Xcode project contains the game PCK, native frameworks, landscape Info.plist, LAN permission explanation and empty Development Team. It is an unsigned project, not an IPA.
-- Artifact provenance guards compared committed game tree, shipped-source digest and every payload file before verification and packaging. Eight regression checks cover stale source, changed/missing payloads, uncommitted source and the prebuilt Android SDK configuration.
+- Linux and iOS PCK directories each contained 66 resources; test harnesses were excluded. Android asset inspection found 68 asset entries and also excluded test harnesses.
+- Android signature verification passed v2/v3; version `0.3.0-dev`/code `3`, API24 minimum/API36 target, ARM64 and x86_64, landscape orientation, and exported `com.godot.game.GodotAppLauncher` alias were confirmed from the APK.
+- Generated iOS Xcode project contains the game PCK, native frameworks, landscape Info.plist, LAN permission explanation, version `0.3.0`/build `3`, and empty Development Team. It is an unsigned project, not an IPA.
+- Artifact provenance guards compared committed game tree, shipped-source digest and every payload file before verification and packaging. Ten regression checks cover stale source, changed/missing payloads, uncommitted source, bundled licenses, target version consistency and inherited prebuilt Android SDK configuration.
 
 | Artifact under `builds/` | Bytes | SHA256 |
 | --- | ---: | --- |
-| `linux/sightbreak.x86_64` | 73,914,592 | `950c55e0d7af82423cc9c24cb7ae3d4e9794029242d50a2d293d684759d51a75` |
-| `sightbreak-linux-debug.zip` | 30,660,079 | `906d2f0a3eb06cd2ffeb0fc57bfe29555ba5e268e106cc8062d76ec2ce17eb03` |
-| `android/sightbreak-debug.apk` | 57,155,775 | `d2b4e1492ccba6abc198a3b7909ab3f834d121c16ae3bd2af77be653ca0e1b8f` |
-| `sightbreak-android-debug.zip` | 57,184,469 | `a5df858ad1f635b43e74305dcef9aa46081dc30543138ef6e722199ee89f7952` |
-| `sightbreak-ios-xcode-project.zip` | 123,976,053 | `6b92053a8ad384e34ffae9bcbae1fe9fe2ae70abceaa4db6c1e38bd90687cdbb` |
+| `linux/sightbreak.x86_64` | 74,058,680 | `88636e5b4d949de2c772114876a53435a42087b2f548353f4410d3cd29a7db9c` |
+| `sightbreak-linux-debug.zip` | 30,800,111 | `20e1d591410375fdf2bc2cf9ad230f21e2dbc06b9108e3a3d6461a5f645ea879` |
+| `android/sightbreak-debug.apk` | 57,305,124 | `5db3bf8ab03e14e8b4d9ef69f713f2a957b3d99f0c21dec597d0d6703e289280` |
+| `sightbreak-android-debug.zip` | 57,329,857 | `33746170070b85c589dd85cde26073eb34dc40a01302d5612ce377c3a988d16e` |
+| `sightbreak-ios-xcode-project.zip` | 124,115,785 | `1c4346480252fecfa5544e4da986ab5f6f690a3dfb3717e34fd04dc7e62e2a1b` |
 
-ZIPs include engine license notices and per-target source provenance. The iOS ZIP also includes `BUILD-ON-MAC.md`. Verify local copies with `(cd builds && sha256sum --check checksums.txt)`. The tracked records are [build manifest](reports/build-manifest.json) and [artifact validation](reports/build-validation.json).
+ZIPs include engine license notices and per-target source provenance. The iOS ZIP also includes `BUILD-ON-MAC.md`. All five listed checksum checks passed. Verify local copies with `(cd builds && sha256sum --check checksums.txt)`. The tracked records are [build manifest](reports/build-manifest.json) and [artifact validation](reports/build-validation.json).
 
-The original two GL texture teardown errors were isolated to retiring a newly created procedural sky before its first rendered frame in Godot's Compatibility renderer. The project mitigation shares an immutable sky. Independent native demo and repeated menu/match lifecycle checks passed on Xvfb/Mesa; see [QA](reports/QA.md) and [diagnostic reproduction](diagnostics/README.md). This does not establish physical GPU/mobile behavior or indefinite memory stability.
+The shared immutable sky mitigation from 0.2 remains in place. Current native lifecycle and visual acceptance results are recorded separately in [0.3 QA](reports/QA-0.3.md); see [diagnostic reproduction](diagnostics/README.md) for the original renderer defect. Desktop software rendering does not establish physical GPU/mobile behavior or indefinite memory stability.
 
-No physical Android installation, mobile performance measurement, macOS/Xcode compilation, signed IPA, or Apple-device execution is claimed. Use [device testing instructions](DEVICE_TESTING.md) to record the remaining release evidence. These artifacts remain development builds; the full 8.5/10 acceptance gate has not been achieved.
+No physical Android installation, mobile performance measurement, macOS/Xcode compilation, signed IPA, or Apple-device execution is claimed. Use [device testing instructions](DEVICE_TESTING.md) to record the remaining release evidence. These artifacts remain development builds; consult the independent QA report for scored categories and unresolved release gates.
