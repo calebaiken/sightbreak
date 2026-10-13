@@ -62,6 +62,8 @@ var _reconnect_attempts: int = 0
 var _state_clock: float = 0.0
 ## Server: peers that failed the version check, dropped once their reply is sent.
 var _handshake_drops: Dictionary = {}
+var _handshake_seen: Dictionary = {}
+var _auth_started := 0.0
 var reward_status: String = "unranked"
 var _bridge: SBEconomyBridge
 var _account_ids: Dictionary = {}
@@ -649,10 +651,24 @@ static func _read_hello(data: PackedByteArray) -> Dictionary:
 	var parsed: Variant = JSON.parse_string(data.get_string_from_utf8())
 	return parsed if parsed is Dictionary and str(parsed.get("game", "")) == "sightbreak" else {}
 
+## The hello's protocol number, or -1 for anything but a whole number (2.9, inf,
+## text and missing values are unreadable rather than rounded).
+static func _hello_protocol(hello: Dictionary) -> int:
+	var value: Variant = hello.get("protocol")
+	if not (value is float or value is int):
+		return -1
+	var number := float(value)
+	return int(number) if is_finite(number) and number == floorf(number) and number >= 0.0 and number < 1000000.0 else -1
+
 func _server_handshake(peer_id: int, data: PackedByteArray) -> void:
+	# Only a peer's first hello counts. Later ones are ignored, so a peer cannot
+	# re-arm its drop timer, multiply replies or reverse a decision.
+	if _handshake_seen.has(peer_id):
+		return
+	_handshake_seen[peer_id] = true
 	var api := multiplayer as SceneMultiplayer
 	var hello := _read_hello(data)
-	var protocol := int(hello.get("protocol", -1)) if hello.get("protocol") is float or hello.get("protocol") is int else -1
+	var protocol := _hello_protocol(hello)
 	if protocol == PROTOCOL_VERSION:
 		api.send_auth(peer_id, _hello(true, ""))
 		api.complete_auth(peer_id)
@@ -665,8 +681,8 @@ func _server_handshake(peer_id: int, data: PackedByteArray) -> void:
 
 func _client_handshake(peer_id: int, data: PackedByteArray) -> void:
 	var hello := _read_hello(data)
-	var protocol := int(hello.get("protocol", -1)) if hello.get("protocol") is float or hello.get("protocol") is int else -1
-	if bool(hello.get("accepted", false)) and protocol == PROTOCOL_VERSION:
+	var protocol := _hello_protocol(hello)
+	if hello.get("accepted") is bool and hello.accepted and protocol == PROTOCOL_VERSION:
 		(multiplayer as SceneMultiplayer).complete_auth(peer_id)
 		connection_state = "joining"
 		_state_clock = 0.0
@@ -679,15 +695,23 @@ func _send_hello(peer_id: int) -> void:
 	if _authority or peer_id != 1:
 		return
 	connection_state = "authenticating"
+	_auth_started = _elapsed
 	(multiplayer as SceneMultiplayer).send_auth(peer_id, _hello(true, ""))
 
 func _handshake_failed(peer_id: int) -> void:
 	if _authority:
 		# A peer without the handshake (0.3.0 and earlier clients) or a silent one.
 		_handshake_drops.erase(peer_id)
+		_handshake_seen.erase(peer_id)
 		print("PROTOCOL_TIMEOUT peer=%d" % peer_id)
 		return
-	if connection_state != "failed":
+	if connection_state == "failed":
+		return
+	if _elapsed - _auth_started < HANDSHAKE_SECONDS - 0.5:
+		# The server hung up before the timeout; any reason it queued was discarded
+		# with the connection, so do not guess that it is the older side.
+		_fail_connection("The server closed the connection during the version check. It may run a different SIGHTBREAK version, or the connection dropped. Join a server running the same version as this client.")
+	else:
 		_fail_connection("No version handshake from the server within %d seconds. It is probably running an older SIGHTBREAK release (0.3.0 has no handshake) or is not a SIGHTBREAK server. Join a server running the same version as this client." % int(HANDSHAKE_SECONDS))
 
 ## Disconnects peers that failed the version check once their reply had time to go out.
@@ -811,6 +835,7 @@ func _join_rpc(player_name: String, token: String, join_ticket: String = "") -> 
 		_start_ranked_match()
 
 func _peer_disconnected(peer_id: int) -> void:
+	_handshake_seen.erase(peer_id)
 	if not _peer_actors.has(peer_id):
 		return
 	var id: int = int(_peer_actors[peer_id])
