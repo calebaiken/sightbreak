@@ -10,6 +10,19 @@ const SURFACES := {
 	"metal": preload("res://assets/materials/painted_metal.png")
 }
 
+const SURFACE_NORMALS := {
+	"asphalt": preload("res://assets/materials/asphalt_normal.png"),
+	"concrete": preload("res://assets/materials/concrete_normal.png"),
+	"metal": preload("res://assets/materials/painted_metal_normal.png")
+}
+const SURFACE_ROUGHNESS := {
+	"asphalt": preload("res://assets/materials/asphalt_roughness.png"),
+	"concrete": preload("res://assets/materials/concrete_roughness.png"),
+	"metal": preload("res://assets/materials/painted_metal_roughness.png")
+}
+var _detail_quality := true
+var _surface_materials: Dictionary = {}
+
 var sites: Array[Vector3] = [Vector3(-15, 0, 10), Vector3(15, 0, 10)]
 var attack_spawns: Array[Vector3] = []
 var defend_spawns: Array[Vector3] = []
@@ -18,6 +31,11 @@ var _obstacles: Array[AABB] = []
 var _navigation := AStar3D.new()
 var _materials: Dictionary = {}
 var _box_visuals: Array[MeshInstance3D] = []
+var presentation_stats: Dictionary = {}
+const INDUSTRIAL_STEEL := Color("344148")
+const WEATHERED_GOLD := Color("ae935c")
+const SAFETY_CRIMSON := Color("9c4344")
+const PANEL_PAINT := Color("6f7b7c")
 
 func _ready() -> void:
 	name = "RelayYard"
@@ -39,7 +57,13 @@ func _material(color: Color, roughness: float = 0.85, emission: bool = false, su
 		result.uv1_scale = Vector3.ONE * 0.5
 		result.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
 		result.roughness = 0.65 if surface == "metal" else 0.94
-		result.metallic = 0.2 if surface == "metal" else 0.0
+		result.metallic = 0.38 if surface == "metal" else 0.0
+		result.normal_texture = SURFACE_NORMALS[surface]
+		result.normal_enabled = _detail_quality
+		result.normal_scale = 0.55 if surface == "metal" else 0.35
+		result.roughness_texture = SURFACE_ROUGHNESS[surface] if _detail_quality else null
+		result.roughness_texture_channel = BaseMaterial3D.TEXTURE_CHANNEL_RED
+		_surface_materials[result] = surface
 	if emission:
 		result.emission_enabled = true
 		result.emission = color
@@ -74,7 +98,9 @@ func _label(text: String, at: Vector3, color: Color, size: int = 110, turn: floa
 	label.font_size = size
 	label.pixel_size = 0.008
 	label.modulate = color
-	label.outline_size = 5
+	label.outline_size = 1
+	label.outline_modulate = Color("1b262c")
+	label.shaded = true
 	label.no_depth_test = false
 	add_child(label)
 	label.position = at
@@ -105,14 +131,14 @@ func _build() -> void:
 	env.sky = RELAY_SKY
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color("c9dfe8")
-	env.ambient_light_energy = 0.42
+	env.ambient_light_energy = 0.49
 	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	environment.environment = env
 	add_child(environment)
 	var sun := DirectionalLight3D.new()
-	sun.rotation_degrees = Vector3(-48, -32, 0)
+	sun.rotation_degrees = Vector3(-40, -32, 0)
 	sun.light_color = Color("fff0d5")
-	sun.light_energy = 1.08
+	sun.light_energy = 1.12
 	sun.shadow_enabled = true
 	sun.directional_shadow_max_distance = 70
 	add_child(sun)
@@ -122,10 +148,10 @@ func _build() -> void:
 	_box(Vector3(0, 3, 24), Vector3(48, 6, 1), Color("65757b"), true, true, "concrete")
 	_box(Vector3(0, 3, -24), Vector3(48, 6, 1), Color("65757b"), true, true, "concrete")
 	# Three readable routes: west freight, exposed relay center, east service lane.
-	_container(Vector3(-7, 0, -11), Color("754436"), 9)
-	_container(Vector3(7, 0, -11), Color("315963"), 9)
-	_container(Vector3(-7, 0, 4), Color("754436"), 8)
-	_container(Vector3(7, 0, 4), Color("315963"), 8)
+	_container(Vector3(-7, 0, -11), Color("703d3e"), 9)
+	_container(Vector3(7, 0, -11), Color("36535c"), 9)
+	_container(Vector3(-7, 0, 4), Color("703d3e"), 8)
+	_container(Vector3(7, 0, 4), Color("36535c"), 8)
 	_container(Vector3(-20, 0, 0), Color("7f8988"), 5)
 	_container(Vector3(20, 0, 0), Color("7f8988"), 5)
 	for at in [Vector3(-14, 0.65, -5), Vector3(14, 0.65, -5), Vector3(-18, 0.65, 13), Vector3(18, 0.65, 13), Vector3(0, 0.65, 8), Vector3(-3, 0.65, -1), Vector3(3, 0.65, -1)]:
@@ -133,7 +159,7 @@ func _build() -> void:
 		_box(at + Vector3(0, 0.67, 0), Vector3(2.55, 0.10, 2.55), Color("b5a889"), false)
 	for site_index in range(2):
 		var at: Vector3 = sites[site_index]
-		var tint := Color("e3a153") if site_index == 0 else Color("51c5c9")
+		var tint := Color("bb955c") if site_index == 0 else Color("6ca5a5")
 		for offset in [-3.5, 3.5]:
 			_box(at + Vector3(offset, 0.018, 0), Vector3(0.14, 0.025, 7.1), tint, false)
 			_box(at + Vector3(0, 0.018, offset), Vector3(7.1, 0.025, 0.14), tint, false)
@@ -153,6 +179,9 @@ func _build() -> void:
 	_label("SIGHTBREAK  //  RELAY YARD", Vector3(0, 4.1, 23.4), Color("dce7e9"), 120, PI)
 	_label("01  FREIGHT   ←      →   RELAY  02", Vector3(0, 3.8, -23.4), Color("c9d6dc"), 85, 0)
 	_add_environment_detail()
+	_add_transfer_architecture()
+	_add_service_infrastructure()
+	_add_cargo_fittings()
 	for i in range(5):
 		attack_spawns.append(Vector3((i - 2) * 2.2, 0.05, -21))
 		defend_spawns.append(Vector3((i - 2) * 2.2, 0.05, 20.5))
@@ -260,7 +289,7 @@ func _add_environment_detail() -> void:
 	# Far transfer warehouse: dark glazing, structural mullions, roof monitors.
 	_box(Vector3(0, 5.9, 32), Vector3(49, 11.8, 15), Color("657274"), false)
 	_box(Vector3(0, 11.85, 31.5), Vector3(51, 0.30, 16.5), Color("384a54"), false)
-	_box(Vector3(0, 8.1, 24.46), Vector3(46, 2.8, 0.08), Color("2a414d"), false)
+	_box(Vector3(0, 8.1, 24.46), Vector3(46, 2.8, 0.08), Color("273b46"), false, true, "metal")
 	for x in range(-22, 23, 4):
 		_box(Vector3(x, 8.1, 24.35), Vector3(0.17, 3.1, 0.12), Color("738081"), false)
 		_box(Vector3(x, 5.95, 24.33), Vector3(0.25, 11.7, 0.20), Color("4a5b62"), false)
@@ -308,7 +337,11 @@ func _add_environment_detail() -> void:
 		_label("LINK / 01" if i == 0 else "LINK / 02", sites[i] + Vector3(0, 0.70, 1.886), tint, 24, PI)
 
 func _batch_static_boxes() -> void:
-	# One instanced draw per material; physics bodies and route geometry stay intact.
+	# Shared unit-cube mesh and one instanced draw per material. Hundreds of repeated
+	# hardware pieces do not each submit a draw or retain an empty scene node.
+	presentation_stats["box_instances"] = _box_visuals.size()
+	presentation_stats["static_batches"] = 0
+	# Physics bodies and route geometry stay intact.
 	var batches: Dictionary = {}
 	for visual in _box_visuals:
 		var material: Material = visual.material_override
@@ -330,8 +363,155 @@ func _batch_static_boxes() -> void:
 			var local := global_transform.affine_inverse() * visual.global_transform
 			local.basis = local.basis.scaled_local(shape.size)
 			instances.set_instance_transform(i, local)
-			visual.queue_free()
+			if visual.get_parent() is StaticBody3D:
+				visual.queue_free()
+			else:
+				visual.get_parent().queue_free()
 		batch.multimesh = instances
 		batch.material_override = material
 		add_child(batch)
+		presentation_stats["static_batches"] += 1
 	_box_visuals.clear()
+
+func _beam_between(start: Vector3, finish: Vector3, width: float, depth: float, tint: Color) -> Node3D:
+	var beam := _box((start + finish) * 0.5, Vector3(width, start.distance_to(finish), depth), tint, false)
+	# Orthonormal basis for a cuboid whose long local Y axis follows the strut.
+	var axis := (finish - start).normalized()
+	var reference := Vector3.FORWARD if absf(axis.dot(Vector3.FORWARD)) < 0.95 else Vector3.RIGHT
+	var right := axis.cross(reference).normalized()
+	beam.basis = Basis(right, axis, right.cross(axis))
+	return beam
+
+func _add_transfer_architecture() -> void:
+	# All additions are fitted to existing collision shells or above player clearance.
+	# The transfer hall is an engineered building, with docking doors and service bays.
+	for x in [-16.0, 0.0, 16.0]:
+		_box(Vector3(x, 2.6, 23.40), Vector3(7.7, 5.1, 0.13), INDUSTRIAL_STEEL, false)
+		_box(Vector3(x, 2.45, 23.30), Vector3(6.8, 4.7, 0.10), Color("4e5c61"), false, true, "metal")
+		for y in range(1, 12):
+			_box(Vector3(x, y * 0.4, 23.22), Vector3(6.75, 0.028, 0.07), INDUSTRIAL_STEEL, false)
+		for dx in [-3.55, 3.55]:
+			_box(Vector3(x + dx, 2.5, 23.22), Vector3(0.25, 5.05, 0.28), PANEL_PAINT, false)
+			_box(Vector3(x + dx, 0.60, 23.08), Vector3(0.32, 1.2, 0.08), WEATHERED_GOLD, false)
+			for y in [0.25, 0.70, 1.10]:
+				_box(Vector3(x + dx, y, 23.025), Vector3(0.33, 0.13, 0.035), INDUSTRIAL_STEEL, false)
+		_box(Vector3(x, 5.15, 23.10), Vector3(8.1, 0.18, 0.70), INDUSTRIAL_STEEL, false)
+		_box(Vector3(x, 4.94, 22.95), Vector3(2.0, 0.09, 0.20), Color("c1baa2"), false)
+		_label("01 / FREIGHT" if x < 0 else ("02 / RELAY" if x > 0 else "TRANSFER CONTROL"), Vector3(x, 5.7, 23.25), Color("d1c6aa"), 50, PI)
+	# Recessed ribbed fascia and vertical columns extend above the old perimeter.
+	for x in range(-22, 23, 2):
+		_box(Vector3(x, 10.8, 24.17), Vector3(0.06, 1.25, 0.11), INDUSTRIAL_STEEL, false)
+	for x in range(-24, 25, 8):
+		_box(Vector3(x, 7.5, 24.10), Vector3(0.45, 8.75, 0.48), INDUSTRIAL_STEEL, false)
+		_box(Vector3(x, 11.75, 23.9), Vector3(0.8, 0.22, 0.8), PANEL_PAINT, false)
+	# I-section crane structure: paired rails, diagonal web, column feet, trolley.
+	for z in [15.5, 16.5]:
+		_box(Vector3(0, 6.53, z), Vector3(43.8, 0.16, 0.38), WEATHERED_GOLD, false)
+		_box(Vector3(0, 7.82, z), Vector3(43.8, 0.16, 0.38), WEATHERED_GOLD, false)
+		for x in range(-20, 21, 4):
+			_beam_between(Vector3(x - 1.9, 6.65, z), Vector3(x + 1.9, 7.71, z), 0.12, 0.13, INDUSTRIAL_STEEL)
+	for x in [-21.0, 21.0]:
+		_box(Vector3(x, 0.1, 16), Vector3(0.82, 0.16, 0.82), INDUSTRIAL_STEEL, false)
+		for z in [15.75, 16.25]:
+			_box(Vector3(x, 3.45, z), Vector3(0.62, 6.75, 0.09), WEATHERED_GOLD, false)
+		_beam_between(Vector3(x, 5.1, 16), Vector3(x - signf(x) * 2.5, 6.65, 16), 0.19, 0.3, WEATHERED_GOLD)
+		for height in [0.35, 0.70, 1.05]:
+			_box(Vector3(x, height, 15.70), Vector3(0.63, 0.15, 0.06), INDUSTRIAL_STEEL, false)
+	_box(Vector3(0, 7.0, 16), Vector3(3.3, 0.65, 1.8), SAFETY_CRIMSON, false, true, "metal")
+	_box(Vector3(0, 6.5, 16), Vector3(1.3, 0.35, 1.1), INDUSTRIAL_STEEL, false)
+	for x in [-0.43, 0.43]:
+		_box(Vector3(x, 5.74, 16), Vector3(0.035, 1.35, 0.035), INDUSTRIAL_STEEL, false)
+	_box(Vector3(0, 5.05, 16), Vector3(1.05, 0.28, 0.45), WEATHERED_GOLD, false)
+	_label("RY • 08 T", Vector3(0, 7.03, 15.085), Color("e1d3b4"), 37, PI)
+	# Service walkway is beyond collision perimeter: railings/cable trays create scale.
+	for side in [-1, 1]:
+		_box(Vector3(side * 24.8, 6.30, 0), Vector3(2.4, 0.22, 44), INDUSTRIAL_STEEL, false)
+		for z in range(-20, 23, 4):
+			_box(Vector3(side * 23.65, 6.95, z), Vector3(0.075, 1.2, 0.075), PANEL_PAINT, false)
+			_beam_between(Vector3(side * 23.8, 6.10, z), Vector3(side * 25.1, 4.9, z), 0.12, 0.12, INDUSTRIAL_STEEL)
+		for y in [6.65, 7.45]:
+			_box(Vector3(side * 23.65, y, 0), Vector3(0.08, 0.08, 44), PANEL_PAINT, false)
+		_box(Vector3(side * 23.63, 6.38, 0), Vector3(0.08, 0.15, 44), WEATHERED_GOLD, false)
+
+func _add_service_infrastructure() -> void:
+	# Architectural service layer at human scale: wall-mounted electrical cabinets,
+	# conduit, air handling units and drainage. Detail stays out of firing lanes.
+	for side in [-1, 1]:
+		for z in [-16.0, 6.0, 19.0]:
+			_box(Vector3(side * 23.38, 1.80, z), Vector3(0.22, 2.20, 2.00), INDUSTRIAL_STEEL, false)
+			_box(Vector3(side * 23.22, 1.80, z), Vector3(0.12, 1.97, 1.78), PANEL_PAINT, false, true, "metal")
+			_box(Vector3(side * 23.13, 1.65, z + 0.60), Vector3(0.08, 0.28, 0.05), INDUSTRIAL_STEEL, false)
+			for vent in range(5):
+				_box(Vector3(side * 23.13, 1.09 + vent * 0.075, z), Vector3(0.035, 0.026, 1.10), INDUSTRIAL_STEEL, false)
+			_box(Vector3(side * 23.11, 2.30, z), Vector3(0.036, 0.26, 0.36), WEATHERED_GOLD, false)
+			_label("!", Vector3(side * 23.07, 2.30, z), INDUSTRIAL_STEEL, 28, side * PI * 0.5)
+			_box(Vector3(side * 23.26, 3.7, z - 0.6), Vector3(0.07, 1.55, 0.075), PANEL_PAINT, false)
+			_box(Vector3(side * 23.26, 3.7, z - 0.4), Vector3(0.07, 1.55, 0.075), PANEL_PAINT, false)
+		# Flat slotted drains are geometry, so no alpha, decal or shader dependency.
+		_box(Vector3(side * 22.8, 0.013, 0), Vector3(0.38, 0.018, 45), INDUSTRIAL_STEEL, false)
+		for z in range(-22, 23):
+			_box(Vector3(side * 22.8, 0.025, z), Vector3(0.33, 0.008, 0.08), PANEL_PAINT, false)
+		# Roof ventilation banks give the side halls an industrial silhouette.
+		for z in [-15.0, 0.0, 15.0]:
+			var roof_y := 12.8 if side < 0 else 10.5
+			_box(Vector3(side * 28.8, roof_y, z), Vector3(4.0, 1.3, 2.4), PANEL_PAINT, false, true, "metal")
+			for y in range(5):
+				_box(Vector3(side * 26.78, roof_y - 0.45 + y * 0.20, z), Vector3(0.05, 0.08, 2.05), INDUSTRIAL_STEEL, false)
+			_box(Vector3(side * 28.8, roof_y + 0.72, z), Vector3(4.2, 0.16, 2.6), INDUSTRIAL_STEEL, false)
+		# Cable ladder over the wall, elevated sufficiently to preserve shooting lanes.
+		for z in range(-21, 22, 3):
+			_box(Vector3(side * 23.30, 4.55, z), Vector3(0.2, 0.08, 0.55), INDUSTRIAL_STEEL, false)
+		for y in [4.50, 4.65]:
+			_box(Vector3(side * 23.20, y, 0), Vector3(0.08, 0.05, 44), SAFETY_CRIMSON if y > 4.6 else PANEL_PAINT, false)
+	# Buried power routing explains each relay zone's industrial purpose.
+	for site in sites:
+		for dx in [-0.16, 0.16]:
+			_box(Vector3(site.x + dx, 0.024, 17.8), Vector3(0.07, 0.01, 10.0), WEATHERED_GOLD.darkened(0.3), false)
+		for x in [-0.38, 0.38]:
+			_box(site + Vector3(x, 0.46, 1.89), Vector3(0.08, 0.77, 0.03), INDUSTRIAL_STEEL, false)
+			for y in [0.2, 0.8]:
+				_box(site + Vector3(x, y, 1.865), Vector3(0.04, 0.035, 0.035), PANEL_PAINT, false)
+		_box(site + Vector3(0, 0.35, 1.87), Vector3(0.51, 0.33, 0.03), Color("151f27"), false)
+		for x in [-0.16, 0.0, 0.16]:
+			_box(site + Vector3(x, 0.36, 1.85), Vector3(0.06, 0.18, 0.015), PANEL_PAINT, false)
+
+func _add_cargo_fittings() -> void:
+	var cargo: Array = [
+		[Vector3(-7, 0, -11), 9.0], [Vector3(7, 0, -11), 9.0],
+		[Vector3(-7, 0, 4), 8.0], [Vector3(7, 0, 4), 8.0],
+		[Vector3(-20, 0, 0), 5.0], [Vector3(20, 0, 0), 5.0]
+	]
+	for entry in cargo:
+		var at: Vector3 = entry[0]
+		var length: float = entry[1]
+		for side in [-1, 1]:
+			# Heavy corner castings, bottom rails, door hinges and small data plates.
+			_box(at + Vector3(side * 1.49, 0.14, 0), Vector3(0.12, 0.23, length), INDUSTRIAL_STEEL, false)
+			for end in [-1, 1]:
+				for y in [0.14, 2.97]:
+					_box(at + Vector3(side * 1.49, y, end * (length * 0.5 - 0.09)), Vector3(0.20, 0.27, 0.24), INDUSTRIAL_STEEL, false)
+					_box(at + Vector3(side * 1.59, y, end * (length * 0.5 - 0.09)), Vector3(0.014, 0.095, 0.10), Color("101b23"), false)
+				for y in [0.52, 1.55, 2.55]:
+					_box(at + Vector3(side * 1.34, y, end * (length * 0.5 + 0.06)), Vector3(0.20, 0.10, 0.08), PANEL_PAINT, false)
+			_box(at + Vector3(side * 1.588, 0.86, -length * 0.30), Vector3(0.026, 0.35, 0.75), INDUSTRIAL_STEEL, false)
+			_box(at + Vector3(side * 1.605, 0.86, -length * 0.30), Vector3(0.014, 0.17, 0.47), Color("b0b7aa"), false)
+			for z in [-length * 0.40, length * 0.40]:
+				_box(at + Vector3(side * 1.582, 0.25, z), Vector3(0.025, 0.12, 0.44), WEATHERED_GOLD, false)
+	# Reinforced transit cases with handles, latches and raised corner guards.
+	for at in [Vector3(-14, 0.65, -5), Vector3(14, 0.65, -5), Vector3(-18, 0.65, 13), Vector3(18, 0.65, 13), Vector3(0, 0.65, 8), Vector3(-3, 0.65, -1), Vector3(3, 0.65, -1)]:
+		for end in [-1, 1]:
+			for x in [-0.86, 0.86]:
+				_box(at + Vector3(x, 0.32, end * 1.289), Vector3(0.17, 0.25, 0.07), PANEL_PAINT, false)
+				_box(at + Vector3(x, 0.32, end * 1.335), Vector3(0.06, 0.15, 0.03), INDUSTRIAL_STEEL, false)
+			_box(at + Vector3(0, 0.15, end * 1.283), Vector3(0.52, 0.18, 0.035), INDUSTRIAL_STEEL, false)
+			_box(at + Vector3(0, 0.17, end * 1.328), Vector3(0.37, 0.055, 0.065), PANEL_PAINT, false)
+			_box(at + Vector3(0.43, -0.26, end * 1.273), Vector3(0.40, 0.21, 0.022), Color("c5c3aa"), false)
+		for x in [-1.16, 1.16]:
+			for z in [-1.16, 1.16]:
+				_box(at + Vector3(x, 0.60, z), Vector3(0.21, 0.22, 0.21), INDUSTRIAL_STEEL, false)
+
+func apply_detail_quality(high_quality: bool) -> void:
+	_detail_quality = high_quality
+	for material: StandardMaterial3D in _surface_materials:
+		material.normal_enabled = high_quality
+		material.roughness_texture = SURFACE_ROUGHNESS[_surface_materials[material]] if high_quality else null
