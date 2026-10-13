@@ -49,8 +49,9 @@ is involved.
 ## Verification
 
 `./scripts/godot.sh --headless --script res://tests/world_test.gd`:
-21 assertions passed, including objective routing, batch bounds, cleanup, finite
-instance transforms, shared-sky identity and graphics-quality toggling.
+22 assertions passed, including objective routing, batch bounds, cleanup, finite
+instance transforms, shared-sky identity, mipmaps and graphics-quality toggling.
+All nine generated PNGs were also regenerated and confirmed byte-identical.
 
 Rendered comparisons and independent scoring are recorded separately in `QA-0.3.md`.
 Headless assertions do not establish visual quality or physical-device performance.

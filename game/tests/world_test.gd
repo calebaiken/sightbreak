@@ -34,6 +34,7 @@ func run() -> void:
 	check(world_env.environment.sky == Arena.RELAY_SKY, "world uses shared retained sky resource")
 	var material: StandardMaterial3D = arena._material(Color.WHITE, .85, false, "asphalt")
 	check(material.normal_texture.get_width() == 128 and material.roughness_texture.get_width() == 128, "bounded 128px PBR companions")
+	check(material.normal_texture.get_image().has_mipmaps() and material.roughness_texture.get_image().has_mipmaps(), "surface companions retain mipmaps against distant aliasing")
 	check(material.normal_enabled, "high preset enables shallow surface response")
 	arena.apply_detail_quality(false)
 	check(not material.normal_enabled and material.roughness_texture == null, "low preset removes optional texture lookups")
