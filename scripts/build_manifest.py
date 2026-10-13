@@ -10,6 +10,9 @@ import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 BUILDS = ROOT / "builds"
+VERSION = "0.3.0-dev"
+BUILD_NUMBER = 3
+IOS_VERSION = "0.3.0"
 OUTPUTS = {"linux": "linux/sightbreak.x86_64", "android": "android/sightbreak-debug.apk", "ios": "ios/sightbreak.xcodeproj/project.pbxproj"}
 
 
@@ -93,7 +96,7 @@ def package():
                 info.compress_type = zipfile.ZIP_DEFLATED
                 bundle.writestr(info, path.read_bytes(), compresslevel=1)
         artifacts.append(descriptor(archive))
-    manifest = {"game": "SIGHTBREAK", "version": "0.2.0-dev", "engine": "Godot 4.7.2", "build_type": "debug",
+    manifest = {"game": "SIGHTBREAK", "version": VERSION, "engine": "Godot 4.7.2", "build_type": "debug",
                 **current, "exports": records, "artifacts": artifacts,
                 "limitations": ["Android debug signed; physical device installation and performance unverified.",
                                 "iOS unsigned Xcode project; macOS/Xcode compilation and signing unverified.",

@@ -9,7 +9,7 @@ import struct
 import subprocess
 import zipfile
 
-from build_manifest import BUILDS, ROOT, OUTPUTS, payload, source, write_json
+from build_manifest import BUILDS, ROOT, OUTPUTS, VERSION, BUILD_NUMBER, IOS_VERSION, payload, source, write_json
 
 
 def packed_paths(path, embedded=False):
@@ -78,7 +78,7 @@ def main():
     assert "Verified using v2 scheme (APK Signature Scheme v2): true" in signature
     assert "Verified using v3 scheme (APK Signature Scheme v3): true" in signature
     badging = run("android-manifest", [str(android_tools / "aapt"), "dump", "badging", apk])
-    for expected in ["versionCode='2'", "versionName='0.2.0-dev'", "sdkVersion:'24'", "targetSdkVersion:'36'", "'arm64-v8a'", "'x86_64'"]:
+    for expected in [f"versionCode='{BUILD_NUMBER}'", f"versionName='{VERSION}'", "sdkVersion:'24'", "targetSdkVersion:'36'", "'arm64-v8a'", "'x86_64'"]:
         assert expected in badging, f"Missing APK metadata: {expected}"
     android_manifest = run("android-layout", [str(android_tools / "aapt"), "dump", "xmltree", apk, "AndroidManifest.xml"])
     assert re.search(r"android:screenOrientation[^\n]*\(type 0x10\)0x0\b", android_manifest), "Android landscape orientation missing"
@@ -102,11 +102,13 @@ def main():
     project = (ios / "sightbreak.xcodeproj/project.pbxproj").read_text()
     assert "UNSIGNED00" not in project and 'DEVELOPMENT_TEAM = "";' in project
     assert "PRODUCT_BUNDLE_IDENTIFIER = com.sightbreak.game;" in project
+    assert f"MARKETING_VERSION = {IOS_VERSION};" in project, "Wrong iOS marketing version"
+    assert f"CURRENT_PROJECT_VERSION = {BUILD_NUMBER};" in project, "Wrong iOS build number"
     assert source()["source_content_sha256"] == build_source["source_content_sha256"], "Game changed during verification"
     report = {**build_source, "passed": True, "linux_menu_smoke": True, "linux_demo_120_frames": True,
               "linux_pck_resources": len(linux_paths), "android_assets": len(android_paths), "ios_pck_resources": len(ios_paths),
               "test_harnesses_excluded": True, "android_signature_schemes": ["v2", "v3"],
-              "android_version": "0.2.0-dev (2)", "android_min_sdk": 24, "android_target_sdk": 36,
+              "android_version": f"{VERSION} ({BUILD_NUMBER})", "android_min_sdk": 24, "android_target_sdk": 36,
               "android_abis": ["arm64-v8a", "x86_64"], "android_landscape_manifest": True,
               "android_launcher_alias": "com.sightbreak.game/com.godot.game.GodotAppLauncher", "ios_project_plist_and_unsigned_team": True,
               "physical_device_installation": "NOT TESTED", "device_performance": "NOT TESTED", "xcode_build": "NOT TESTED"}

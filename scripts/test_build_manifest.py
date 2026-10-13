@@ -73,6 +73,32 @@ class BuildManifestTests(unittest.TestCase):
         self.assertTrue(data["export_completed"])
         self.assertEqual(data["artifact"], manifest.descriptor(self.builds / manifest.OUTPUTS["android"]))
 
+    def test_all_targets_package_with_current_version_and_license(self):
+        for target in manifest.OUTPUTS:
+            self.make_export(target)
+            (self.builds / target / "GODOT-LICENSE.txt").write_text("license fixture")
+            manifest.finish(target)
+        with patch("builtins.print"):
+            manifest.package()
+        data = json.loads((self.builds / "manifest.json").read_text())
+        self.assertEqual(data["version"], manifest.VERSION)
+        self.assertEqual(len(data["exports"]), 3)
+        self.assertEqual(len(data["artifacts"]), 5)
+        import zipfile
+        for target in manifest.OUTPUTS:
+            suffix = "xcode-project" if target == "ios" else "debug"
+            with zipfile.ZipFile(self.builds / f"sightbreak-{target}-{suffix}.zip") as bundle:
+                self.assertIn(f"{target}/GODOT-LICENSE.txt", bundle.namelist())
+                self.assertIn(f"{target}/source.json", bundle.namelist())
+
+    def test_export_versions_match_manifest(self):
+        presets = configparser.ConfigParser(interpolation=None)
+        presets.read(pathlib.Path(__file__).resolve().parents[1] / "game/export_presets.cfg")
+        self.assertEqual(presets["preset.1.options"]["version/name"], f'"{manifest.VERSION}"')
+        self.assertEqual(int(presets["preset.1.options"]["version/code"]), manifest.BUILD_NUMBER)
+        self.assertEqual(presets["preset.2.options"]["application/short_version"], f'"{manifest.IOS_VERSION}"')
+        self.assertEqual(presets["preset.2.options"]["application/version"], f'"{manifest.BUILD_NUMBER}"')
+
     def test_prebuilt_android_template_does_not_override_gradle_sdk(self):
         presets = configparser.ConfigParser(interpolation=None)
         presets.read(pathlib.Path(__file__).resolve().parents[1] / "game/export_presets.cfg")
