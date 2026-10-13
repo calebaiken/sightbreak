@@ -62,3 +62,7 @@ Original branches are preserved. No PR merge, force push, public deployment or d
 ### Combat history foundation
 
 `codex/combat-history-foundation` stacks on durable results `e954158`. Adds one server-only helper, deterministic parity tests and a four-line diagnostic recording hook in `match.gd`; recording is opt-in, live damage does not use rewind. Reuses existing actor static hit-volume math without changing actor.gd, attachment names, animations or art. Graphics branch advanced to `9e8acdf` during the upstream recheck and remains untouched. Do not activate compensation without the separate fairness/integration gates in `LAG_COMPENSATION.md`.
+
+### Validation/build branch
+
+`codex/network-validation-builds` stacks on combat history (including the same reviewed outbox follow-up fixes, cherry-picked without rewriting published history). Owns regression orchestration, UDP impairment metrics and manual CI. Tests keep Claude's existing Unicode HUD failure visible. No visual/UI/asset changes. GitHub API remains blocked; branch publication is not PR creation. Small PRs must target the preceding dependency and remain unmerged until Claude PR1 and all applicable blockers are resolved.
