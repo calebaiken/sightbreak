@@ -43,7 +43,7 @@ VIEWS = {
     'side_profile': (Vector((1, 0, 0)), None, 0, 0.94, True),
     'top_perspective': (Vector((0.35, -0.55, 0.95)), None, 30, 0.92, False),
     'receiver_closeup': (Vector((0.80, 0.25, 0.32)), ['paint_upper', 'paint_lower', 'bolt', 'dust', 'deflector', 'charging'], 24, 0.95, False),
-    'grip_magazine_closeup': (Vector((0.75, 0.35, -0.10)), ['grip', 'magazine', 'trigger', 'mag_release', 'release_fence'], 26, 0.92, False),
+    'grip_magazine_closeup': (Vector((0.75, 0.35, 0.18)), ['grip', 'magazine', 'trigger', 'mag_release', 'release_fence'], 26, 0.92, False),
     'materials_closeup': (Vector((0.70, 0.45, 0.40)), ['barrel_nut', 'screw', 'pin1'], 18, 0.55, False),
     'support_hand': (Vector((-0.85, -0.25, 0.35)), ['glove_left'], 30, 0.9, False),
     'firing_hand': (Vector((-0.80, 0.30, 0.10)), ['glove_right'], 30, 0.9, False),
