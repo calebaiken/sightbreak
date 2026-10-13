@@ -37,6 +37,7 @@ def main():
     parser.add_argument('--seed', type=int, default=7301)
     parser.add_argument('--port', type=int, default=29400)
     parser.add_argument('--out', type=Path, required=True)
+    parser.add_argument('--no-prediction', action='store_true')
     args = parser.parse_args()
     if not (0 <= args.loss < 1 and 0 <= args.reorder <= 1 and args.rtt_ms >= 0 and args.jitter_ms >= 0 and 5 <= args.seconds <= 600):
         parser.error('invalid impairment bounds')
@@ -54,6 +55,8 @@ def main():
         logs.append(log)
         cmd = [str(ROOT / 'scripts/godot.sh'), '--headless', '--max-fps', '60', '--script', 'res://tests/network_simulation_probe.gd', '--',
                '--role=' + role, '--port=' + str(port), '--seconds=' + str(seconds), '--output=' + str((args.out / (name + '.json')).resolve())]
+        if args.no_prediction:
+            cmd.append('--no-prediction')
         process = subprocess.Popen(cmd, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
         processes.append((name, process))
         samples[name] = {'rss_peak_kib': 0, 'cpu_seconds': 0.0}
@@ -126,12 +129,18 @@ def main():
         trajectories = {}
         for pose in server_report.get('poses', []):
             trajectories.setdefault(pose['id'], []).append(pose)
-        errors, gaps, rendered_steps = [], [], []
+        errors, gaps, rendered_steps, prediction_errors = [], [], [], []
+        corrections, hard_corrections = 0, 0
+        first_movement = []
         for index in range(args.clients):
             path = args.out / f'client-{index}.json'
             if not path.exists():
                 continue
             data = json.loads(path.read_text())
+            first_movement.append(data.get("first_movement_seconds"))
+            prediction_errors.extend(data.get('prediction_errors_m', []))
+            corrections += data.get('corrections', 0)
+            hard_corrections += data.get('hard_corrections', 0)
             gaps.extend(data['snapshot_tick_gaps'])
             previous = {}
             for pose in data['poses']:
@@ -149,11 +158,16 @@ def main():
         intervals = server_report.get('tick_intervals_usec', [])
         report = {'conditions': {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()},
                   'scope': 'loopback real Godot processes; added RTT simulation; no device/cellular claim',
+                  'traffic_window_seconds': time.monotonic() - start,
                   'failures': failures, 'traffic': traffic, 'processes': samples,
+                  'skipped_commands': server_report.get('skipped_commands', 0),
                   'tick_usec_p50': percentile(ticks, .5), 'tick_usec_p95': percentile(ticks, .95), 'tick_usec_max': max(ticks, default=0),
                   'tick_interval_usec_p50': percentile(intervals, .5), 'tick_interval_usec_p95': percentile(intervals, .95), 'tick_interval_usec_max': max(intervals, default=0),
                   'received_tick_gap_median': statistics.median(gaps) if gaps else None,
                   'render_position_error_p50_m': percentile(errors, .5), 'render_position_error_p95_m': percentile(errors, .95),
+                  'prediction_error_at_ack_p50_m': percentile(prediction_errors, .5), 'prediction_error_at_ack_p95_m': percentile(prediction_errors, .95),
+                  'first_movement_seconds': first_movement,
+                  'corrections': corrections, 'hard_corrections': hard_corrections,
                   'render_step_p95_m': percentile(rendered_steps, .95), 'render_samples_compared': len(errors)}
         (args.out / 'summary.json').write_text(json.dumps(report, indent=2) + '\n')
         print(json.dumps(report, indent=2))

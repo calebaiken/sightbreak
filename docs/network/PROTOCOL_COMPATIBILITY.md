@@ -8,6 +8,7 @@ Never negotiate through gameplay RPCs. Preserve the corrected PR's bounded raw S
 | 2 | Corrected Claude PR `cf9a630`; full snapshots and existing effect RPCs |
 | 3 | Codex recipient state authorization, relevant/hidden roster semantics, attributed visible-shot and unattributed audible-shot events |
 | 4 | Tick/epoch snapshot headers and continuous remote interpolation; exact 20 Hz authority replication |
+| 5 | Compressed redundant numbered input commands, round sequence reset, owner-only movement acknowledgments/grounded state and prediction replay |
 
 Any change to RPC names/order/signature, input or snapshot meaning requires a version bump. A version assertion is compatibility negotiation, not proof that a client is honest. Account authentication remains separate.
 

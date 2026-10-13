@@ -151,8 +151,13 @@ func snapshot(match_node: Node3D, recipient_id: int) -> Dictionary:
 	var states: Array = []
 	for actor: SBActor in match_node.actors.values():
 		var same_team := actor.team == owner.team
-		states.append(actor_state(actor.snapshot(), actor.actor_id == recipient_id, same_team,
-			false if same_team else observable(match_node, viewer, actor, eye)))
+		var state := actor_state(actor.snapshot(), actor.actor_id == recipient_id, same_team,
+			false if same_team else observable(match_node, viewer, actor, eye))
+		if actor.actor_id == recipient_id:
+			state.move_ack = int(match_node._last_input_sequence.get(recipient_id, 0))
+			state.jump_held = actor._jump_previous
+			state.grounded = actor.is_on_floor()
+		states.append(state)
 	var objective: String = match_node.objective_state
 	var objective_known: bool = owner.team == 0 or objective == "planted" or (objective == "dropped" and point_visible(match_node, viewer, match_node.objective_position + Vector3.UP * 0.15, eye))
 	var interactions: Dictionary = {}

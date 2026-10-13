@@ -45,6 +45,12 @@ static func valid(data: Dictionary) -> bool:
 			return false
 		if state.has("crouch") and not state.crouch is bool:
 			return false
+		if state.has("grounded") and not state.grounded is bool:
+			return false
+		if state.has("jump_held") and not state.jump_held is bool:
+			return false
+		if state.has("move_ack") and (not state.move_ack is int or state.move_ack < 0):
+			return false
 		if bool(state.get("relevant", true)) and not vector(state.get("position")):
 			return false
 		for field: String in ["position", "velocity"]:

@@ -21,6 +21,9 @@ run_godot smoke-presentation --headless --script res://tests/smoke_presentation_
 run_godot match --headless --script res://tests/match_test.gd
 run_godot state-privacy --headless --script res://tests/state_privacy_test.gd
 run_godot snapshot-buffer --headless --script res://tests/snapshot_buffer_test.gd
+run_godot input-stream --headless --script res://tests/input_stream_test.gd
+run_godot movement-replay --headless --script res://tests/movement_prediction_test.gd
+run_godot input-lifecycle --headless --script res://tests/input_lifecycle_test.gd
 run_godot bots --headless --script res://tests/bot_match_test.gd
 run_godot bot-lifecycle --headless --script res://tests/bot_lifecycle_test.gd
 SIGHTBREAK_STATE_DIR="$validation_dir/profile-state" run_godot profile --headless --script res://tests/profile_test.gd

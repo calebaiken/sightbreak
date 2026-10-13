@@ -47,6 +47,9 @@ var elapsed := 0.0
 var joined := false
 var origin := Vector3.ZERO
 var max_distance := 0.0
+var prediction_enabled := true
+var first_input_time := -1.0
+var first_movement_seconds := -1.0
 
 func _initialize() -> void:
 	for arg: String in OS.get_cmdline_user_args():
@@ -54,11 +57,12 @@ func _initialize() -> void:
 		elif arg.begins_with("--port="): port = int(arg.get_slice("=", 1))
 		elif arg.begins_with("--seconds="): duration = float(arg.get_slice("=", 1))
 		elif arg.begins_with("--output="): output = arg.trim_prefix("--output=")
+		elif arg == "--no-prediction": prediction_enabled = false
 	call_deferred("start")
 
 func start() -> void:
 	game = MeasuredMatch.new()
-	game.configure({"mode": role, "port": port, "address": "127.0.0.1", "name": "Simulation fixture"})
+	game.configure({"mode": role, "port": port, "address": "127.0.0.1", "name": "Simulation fixture", "prediction": prediction_enabled})
 	root.add_child(game)
 	if role == "server":
 		game._bot_clock = 1000
@@ -74,14 +78,20 @@ func _process(delta: float) -> bool:
 		if not joined:
 			joined = true
 			origin = actor.position
+			first_input_time = elapsed
 		max_distance = maxf(max_distance, origin.distance_to(actor.position))
+		if first_movement_seconds < 0 and Vector2(actor.position.x - origin.x, actor.position.z - origin.z).length() > 0.01:
+			first_movement_seconds = elapsed - first_input_time
 		var section := int(elapsed / 2) % 4
 		var move := [Vector2(0, 1), Vector2(1, 0), Vector2(0, -1), Vector2(-1, 0)][section] as Vector2
 		game.set_local_input({"move": move, "look": Vector2(PI, 0), "crouch": section == 2, "jump": section == 1 and fmod(elapsed, 2.0) < 0.2})
 	if elapsed >= duration:
 		var report := {"role": role, "joined": joined, "state": game.connection_state, "elapsed_seconds": elapsed, "max_displacement": max_distance,
+			"first_movement_seconds": first_movement_seconds, "prediction_enabled": prediction_enabled, "prediction_errors_m": game._prediction.error_samples,
+			"corrections": game._prediction.corrections, "hard_corrections": game._prediction.hard_corrections,
+			"pending_inputs": game._prediction.pending.size(), "large_corrections": game._prediction.large_corrections,
 			"snapshots": game.received_snapshots, "snapshot_tick_gaps": game.snapshot_steps, "reencoded_snapshot_bytes": game.received_payload_bytes,
-			"tick_usec": game.ticks, "tick_intervals_usec": game.tick_intervals, "poses": game.records, "stale_snapshots": game._replica_buffer.stale_packets}
+			"skipped_commands": game._input_stream.skipped_commands, "tick_usec": game.ticks, "tick_intervals_usec": game.tick_intervals, "poses": game.records, "stale_snapshots": game._replica_buffer.stale_packets}
 		if not output.is_empty():
 			var file := FileAccess.open(output, FileAccess.WRITE)
 			file.store_string(JSON.stringify(report))
