@@ -21,4 +21,10 @@ if rg -q '^ERROR:|SCRIPT ERROR|Parse Error' "$run_dir/lifecycle.log"; then
   exit 1
 fi
 rg -q 'NATIVE_LIFECYCLE_TEST checks=11 failures=0' "$run_dir/lifecycle.log"
+"$repo_dir/scripts/godot.sh" --audio-driver Dummy --script res://tests/cosmetic_lifecycle_test.gd 2>&1 | tee "$run_dir/cosmetic-lifecycle.log"
+if rg -q '^ERROR:|SCRIPT ERROR|Parse Error' "$run_dir/cosmetic-lifecycle.log"; then
+  printf 'Native cosmetic lifecycle check FAILED; inspect %s\n' "$run_dir/cosmetic-lifecycle.log" >&2
+  exit 1
+fi
+rg -q 'COSMETIC_LIFECYCLE_TEST checks=19 failures=0' "$run_dir/cosmetic-lifecycle.log"
 printf 'Native graphics and lifecycle checks passed. Capture and logs: %s\n' "$run_dir"

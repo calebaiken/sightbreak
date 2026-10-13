@@ -119,6 +119,8 @@ func _spawn_actor(id: int, team: int, player_name: String) -> SBActor:
 	actor.eliminated.connect(_eliminated)
 	actor.damage_taken.connect(_damaged)
 	actor.shot_fired.connect(_shot)
+	actor.hit_confirmed.connect(_confirmed_hit)
+	actor.impact_created.connect(_confirmed_impact)
 	_reset_bot_state(actor)
 	return actor
 
@@ -372,6 +374,31 @@ func _shot(id: int, origin: Vector3, _direction: Vector3) -> void:
 	if options.get("mode", "offline") == "server":
 		for peer_id: int in _active_peers():
 			_shot_rpc.rpc_id(peer_id, id)
+
+func _confirmed_hit(id: int, headshot: bool, lethal: bool) -> void:
+	# Emitted only after authority ray damage; never trust a client hit claim.
+	if not _authority or not actors.has(id): return
+	if options.get("mode", "offline") == "server":
+		for peer_id: int in _active_peers():
+			if int(_peer_actors.get(peer_id, 0)) == id:
+				_hit_feedback_rpc.rpc_id(peer_id, id, headshot, lethal)
+
+@rpc("authority", "call_remote", "reliable")
+func _hit_feedback_rpc(id: int, headshot: bool, lethal: bool) -> void:
+	if _authority or id != local_id or not actors.has(id): return
+	actors[id].show_hit_feedback(headshot, lethal)
+
+func _confirmed_impact(at: Vector3, normal: Vector3, hit_actor: bool) -> void:
+	if not _authority or options.get("mode", "offline") != "server": return
+	for peer_id: int in _active_peers():
+		_impact_rpc.rpc_id(peer_id, at, normal, hit_actor)
+
+@rpc("authority", "call_remote", "unreliable", 4)
+func _impact_rpc(at: Vector3, normal: Vector3, hit_actor: bool) -> void:
+	if _authority or not at.is_finite() or not normal.is_finite(): return
+	if absf(at.x) > 256 or absf(at.y) > 256 or absf(at.z) > 256: return
+	if normal.length_squared() < 0.5 or normal.length_squared() > 1.5: return
+	load("res://scripts/gameplay/combat_effects.gd").for_world(self).impact(at, normal.normalized(), hit_actor)
 
 func _bot_input(actor: SBActor, delta: float) -> void:
 	if not actor.alive or phase != "live":
