@@ -1,6 +1,15 @@
 class_name RelayYard
 extends Node3D
 
+# Shared immutable lighting avoids sky allocation churn across menu/match transitions.
+# Godot 4.7.2 GLES3 can leak a dirty sky retired before its first rendered frame.
+const RELAY_SKY = preload("res://assets/environments/relay_sky.tres")
+const SURFACES := {
+	"asphalt": preload("res://assets/materials/asphalt.png"),
+	"concrete": preload("res://assets/materials/concrete.png"),
+	"metal": preload("res://assets/materials/painted_metal.png")
+}
+
 var sites: Array[Vector3] = [Vector3(-15, 0, 10), Vector3(15, 0, 10)]
 var attack_spawns: Array[Vector3] = []
 var defend_spawns: Array[Vector3] = []
@@ -16,13 +25,21 @@ func _ready() -> void:
 	_batch_static_boxes()
 	_build_navigation()
 
-func _material(color: Color, roughness: float = 0.85, emission: bool = false) -> StandardMaterial3D:
-	var key := str(color) + str(emission)
+func _material(color: Color, roughness: float = 0.85, emission: bool = false, surface: String = "") -> StandardMaterial3D:
+	var key := str(color) + str(roughness) + str(emission) + surface
 	if _materials.has(key):
 		return _materials[key]
 	var result := StandardMaterial3D.new()
 	result.albedo_color = color
 	result.roughness = roughness
+	if SURFACES.has(surface):
+		result.albedo_texture = SURFACES[surface]
+		result.uv1_triplanar = true
+		result.uv1_world_triplanar = true
+		result.uv1_scale = Vector3.ONE * 0.5
+		result.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		result.roughness = 0.65 if surface == "metal" else 0.94
+		result.metallic = 0.2 if surface == "metal" else 0.0
 	if emission:
 		result.emission_enabled = true
 		result.emission = color
@@ -30,7 +47,7 @@ func _material(color: Color, roughness: float = 0.85, emission: bool = false) ->
 	_materials[key] = result
 	return result
 
-func _box(at: Vector3, size: Vector3, color: Color, solid: bool = true, nav_block: bool = true) -> Node3D:
+func _box(at: Vector3, size: Vector3, color: Color, solid: bool = true, nav_block: bool = true, surface: String = "") -> Node3D:
 	var node: Node3D = StaticBody3D.new() if solid else Node3D.new()
 	add_child(node)
 	node.position = at
@@ -38,7 +55,7 @@ func _box(at: Vector3, size: Vector3, color: Color, solid: bool = true, nav_bloc
 	var box := BoxMesh.new()
 	box.size = size
 	mesh.mesh = box
-	mesh.material_override = _material(color)
+	mesh.material_override = _material(color, 0.85, false, surface)
 	node.add_child(mesh)
 	_box_visuals.append(mesh)
 	if solid:
@@ -64,7 +81,7 @@ func _label(text: String, at: Vector3, color: Color, size: int = 110, turn: floa
 	label.rotation.y = turn
 
 func _container(at: Vector3, color: Color, length: float = 7.0) -> void:
-	_box(at + Vector3(0, 1.55, 0), Vector3(3.0, 3.1, length), color)
+	_box(at + Vector3(0, 1.55, 0), Vector3(3.0, 3.1, length), color, true, true, "metal")
 	for z in range(int(length / 0.65)):
 		_box(at + Vector3(-1.53, 1.55, -length * 0.5 + z * 0.65 + 0.25), Vector3(0.08, 2.85, 0.10), color.lightened(0.13), false)
 		_box(at + Vector3(1.53, 1.55, -length * 0.5 + z * 0.65 + 0.25), Vector3(0.08, 2.85, 0.10), color.lightened(0.13), false)
@@ -85,34 +102,25 @@ func _build() -> void:
 	var environment := WorldEnvironment.new()
 	var env := Environment.new()
 	env.background_mode = Environment.BG_SKY
-	var sky := Sky.new()
-	var atmosphere := ProceduralSkyMaterial.new()
-	atmosphere.sky_top_color = Color("45647d")
-	atmosphere.sky_horizon_color = Color("c3ccc8")
-	atmosphere.ground_bottom_color = Color("333d46")
-	atmosphere.ground_horizon_color = Color("c3ccc8")
-	atmosphere.sky_curve = 0.2
-	atmosphere.sun_angle_max = 12
-	sky.sky_material = atmosphere
-	env.sky = sky
+	env.sky = RELAY_SKY
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color("c9dfe8")
-	env.ambient_light_energy = 0.38
+	env.ambient_light_energy = 0.42
 	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	environment.environment = env
 	add_child(environment)
 	var sun := DirectionalLight3D.new()
 	sun.rotation_degrees = Vector3(-48, -32, 0)
 	sun.light_color = Color("fff0d5")
-	sun.light_energy = 1.0
+	sun.light_energy = 1.08
 	sun.shadow_enabled = true
 	sun.directional_shadow_max_distance = 70
 	add_child(sun)
-	_box(Vector3(0, -0.3, 0), Vector3(48, 0.6, 48), Color("343e46"), true, false)
-	_box(Vector3(-24, 3, 0), Vector3(1, 6, 49), Color("5a6a73"))
-	_box(Vector3(24, 3, 0), Vector3(1, 6, 49), Color("5a6a73"))
-	_box(Vector3(0, 3, 24), Vector3(48, 6, 1), Color("65757b"))
-	_box(Vector3(0, 3, -24), Vector3(48, 6, 1), Color("65757b"))
+	_box(Vector3(0, -0.3, 0), Vector3(48, 0.6, 48), Color("3c464d"), true, false, "asphalt")
+	_box(Vector3(-24, 3, 0), Vector3(1, 6, 49), Color("5a6a73"), true, true, "concrete")
+	_box(Vector3(24, 3, 0), Vector3(1, 6, 49), Color("5a6a73"), true, true, "concrete")
+	_box(Vector3(0, 3, 24), Vector3(48, 6, 1), Color("65757b"), true, true, "concrete")
+	_box(Vector3(0, 3, -24), Vector3(48, 6, 1), Color("65757b"), true, true, "concrete")
 	# Three readable routes: west freight, exposed relay center, east service lane.
 	_container(Vector3(-7, 0, -11), Color("754436"), 9)
 	_container(Vector3(7, 0, -11), Color("315963"), 9)
@@ -231,7 +239,7 @@ func _add_environment_detail() -> void:
 	var steel := Color("35434b")
 	var concrete := Color("5b6464")
 	var paint := Color("998859")
-	# Continuous paved-panel seams break up the large flat ground without textures.
+	# Paved-panel seams complement the fine baked asphalt grain.
 	for z in range(-21, 22, 7):
 		_box(Vector3(0, 0.006, z), Vector3(46, 0.006, 0.028), Color("263139"), false)
 	for x in [-21, -10, 10, 21]:
