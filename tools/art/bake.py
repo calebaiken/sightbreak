@@ -53,8 +53,8 @@ bpy.ops.object.mode_set(mode='OBJECT')
 # ------------------------------------------------------------------ procedural surfaces
 # name: (base linear rgb, metallic, roughness, edge rgb, edge metallic, edge roughness, micro bump, stipple)
 SURFACES = {
-    'anodized': ((0.040, 0.043, 0.047), 0.70, 0.42, (0.30, 0.31, 0.32), 1.0, 0.30, 0.15, 0.0),
-    'steel': ((0.030, 0.031, 0.033), 0.95, 0.36, (0.22, 0.22, 0.23), 1.0, 0.26, 0.10, 0.0),
+    'anodized': ((0.085, 0.090, 0.098), 0.45, 0.46, (0.36, 0.37, 0.38), 1.0, 0.30, 0.15, 0.0),
+    'steel': ((0.060, 0.062, 0.066), 0.65, 0.45, (0.30, 0.30, 0.31), 1.0, 0.26, 0.10, 0.0),
     'polymer': ((0.105, 0.088, 0.064), 0.0, 0.64, (0.15, 0.13, 0.10), 0.0, 0.48, 0.20, 0.0),
     'rubber': ((0.020, 0.020, 0.021), 0.0, 0.88, (0.035, 0.035, 0.036), 0.0, 0.80, 0.25, 0.6),
     'glass': ((0.012, 0.025, 0.022), 0.0, 0.05, (0.012, 0.025, 0.022), 0.0, 0.05, 0.0, 0.0),
@@ -91,7 +91,7 @@ def build_surface(mat_name, stippled):
     geo = node(t, 'ShaderNodeNewGeometry')
     # Edge mask: rounded (bevel) normal versus true normal.
     bevel = node(t, 'ShaderNodeBevel', samples=8)
-    bevel.inputs['Radius'].default_value = 0.0012
+    bevel.inputs['Radius'].default_value = 0.0025   # wide enough to show at first-person distance
     dot = node(t, 'ShaderNodeVectorMath', operation='DOT_PRODUCT')
     t.links.new(bevel.outputs['Normal'], dot.inputs[0])
     t.links.new(geo.outputs['Normal'], dot.inputs[1])

@@ -13,6 +13,7 @@ var _hands := false
 var _materials: Dictionary = {}
 var _authored: Array[MeshInstance3D] = []
 var _ejection := Vector3.INF
+var _pivot := Vector3.ZERO
 
 ## Authored first-person rifle built by tools/art (Blender, original geometry). Units
 ## are meters: receiver rear at the origin, bore at +Y 0.025, barrel along -Z. The
@@ -36,6 +37,12 @@ static var relay_ar_offset := Vector3(0.087, 0.082, 0.149)
 ## Inspection and other hand-less builds keep the rifle upright, centred in the
 ## existing studio framing (the studio's yaw brings the muzzle end nearer the camera).
 const RELAY_AR_UPRIGHT_OFFSET := Vector3(0, -0.015, -0.07)
+## Balance point between the two hands, in the GLB's axes (barrel along -Z). First-person
+## builds move the weapon node's origin here, so reload and equip tilts turn the rifle
+## about its middle instead of sweeping the stock through the view. The rest pose is
+## unchanged: the actor adds the pivot to the node's rest position and the models are
+## offset by the same amount.
+const RELAY_AR_PIVOT := Vector3(0.0, 0.0, -0.19)
 ## Captures switch this off for before/after comparisons; gameplay never reads it.
 static var use_authored := true
 
@@ -51,7 +58,7 @@ static func build(parent: Node3D, id: String, hands: bool = false) -> Dictionary
 	if not _packed.has(key):
 		_packed[key] = _pack(id, hands)
 	var instance: Node = (_packed[key] as PackedScene).instantiate()
-	var result := {"paint": [] as Array[MeshInstance3D], "magazine": null, "muzzle": null, "ejection": instance.get_meta("ejection", Vector3.INF)}
+	var result := {"paint": [] as Array[MeshInstance3D], "magazine": null, "muzzle": null, "ejection": instance.get_meta("ejection", Vector3.INF), "pivot": instance.get_meta("pivot", Vector3.ZERO)}
 	for child in instance.get_children():
 		instance.remove_child(child)
 		release_owner(child)
@@ -86,6 +93,8 @@ static func _pack(id: String, hands: bool) -> PackedScene:
 	model._muzzle.set_meta("weapon_role", "muzzle")
 	if model._ejection != Vector3.INF:
 		root.set_meta("ejection", model._ejection)
+	if model._pivot != Vector3.ZERO:
+		root.set_meta("pivot", model._pivot)
 	return pack_children(root)
 
 ## Packs a procedurally built hierarchy, then frees the source nodes.
@@ -434,9 +443,15 @@ func _add_authored(part_name: String, mesh: Mesh, at: Transform3D, material: Mat
 ## Adds the authored rifle's meshes and hands; returns the muzzle position.
 func _build_authored_rifle() -> Vector3:
 	var placement := Transform3D(Basis.from_euler(relay_ar_rotation).scaled(Vector3.ONE * relay_ar_scale), relay_ar_offset) if _hands else Transform3D(Basis.IDENTITY, RELAY_AR_UPRIGHT_OFFSET)
+	if _hands:
+		_pivot = placement * RELAY_AR_PIVOT
+		placement.origin -= _pivot
 	var rifle := _authored_nodes(RELAY_AR, placement)
 	var material: Material = load(RELAY_AR_MATERIAL)
-	for part_name in ["body", "paint_receiver", "paint_handguard", "magazine"]:
+	var part_names := ["body", "paint_receiver", "paint_handguard", "magazine"]
+	if not _hands and rifle.meshes.has("stock"):
+		part_names.append("stock")
+	for part_name in part_names:
 		var part := _add_authored(part_name, rifle.meshes[part_name], rifle.markers[part_name], material)
 		if part_name.begins_with("paint_"):
 			_paint_parts.append(part)

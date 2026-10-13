@@ -83,6 +83,10 @@ var _visual_look := Vector2.ZERO
 var _visual_initialized := false
 var _magazine: MeshInstance3D
 var _magazine_rest := Vector3.ZERO
+## Where the first-person weapon node rests, relative to the eye. Authored models move
+## it to their own balance point so tilts turn about the middle of the weapon.
+const GUN_REST := Vector3(0.235, -0.235, -0.42)
+var _gun_rest := GUN_REST
 ## Ejection port in weapon-node space when the model provides one (authored models).
 var _ejection_point := Vector3.INF
 var _legs: Array[Node3D] = []
@@ -421,7 +425,8 @@ func _build_gun() -> void:
 	_muzzle = model.muzzle
 	_ejection_point = model.get("ejection", Vector3.INF)
 	_gun_color = Weapons.get_weapon(weapon_id)["color"]
-	_gun.position = Vector3(0.235, -0.235, -0.42)
+	_gun_rest = GUN_REST + (model.get("pivot", Vector3.ZERO) as Vector3)
+	_gun.position = _gun_rest
 	apply_cosmetic(_cosmetic)
 
 func apply_cosmetic(metadata: Dictionary) -> void:
@@ -913,7 +918,7 @@ func tick_visual(delta: float) -> void:
 			reload_tilt *= 0.2
 		var bob_weight := 0.0 if reduced_motion else minf(speed / WALK_SPEED, 1.0)
 		var equip_motion := _equip_blend * (0.25 if reduced_motion else 1.0)
-		_gun.position = Vector3(0.235 + sin(_bob) * 0.006 * bob_weight - _sway.x, -0.235 + absf(cos(_bob)) * 0.006 * bob_weight - reload_tilt * 0.13 - _sway.y - equip_motion * 0.19, -0.42 + _kick * (0.075 if weapon_id == "marksman" else 0.046) + equip_motion * 0.08)
+		_gun.position = Vector3(_gun_rest.x + sin(_bob) * 0.006 * bob_weight - _sway.x, _gun_rest.y + absf(cos(_bob)) * 0.006 * bob_weight - reload_tilt * 0.13 - _sway.y - equip_motion * 0.19, _gun_rest.z + _kick * (0.075 if weapon_id == "marksman" else 0.046) + equip_motion * 0.08)
 		_gun.rotation = Vector3(_kick * (0.13 if weapon_id == "sidearm" else 0.065) - reload_tilt * 0.38 - equip_motion * 0.48, -_sway.x * 1.8, reload_tilt * 0.38 - _sway.x)
 		if is_instance_valid(_magazine):
 			# Pull down, seat the same magazine, then return to ready. Only visual.

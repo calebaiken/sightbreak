@@ -34,6 +34,9 @@ GROUPS = {
     'paint_receiver': ('paint_upper', 'paint_lower', 'paint_rail_upper'),
     'paint_handguard': ('paint_handguard', 'paint_rail_handguard'),
     'magazine': ('magazine',),
+    # The buttstock sits behind the camera in first person, so it is its own mesh and the
+    # viewmodel leaves it out (inspection includes it).
+    'stock': ('stock_body', 'stock_lever', 'butt_pad'),
 }
 # Hand anchors for the first-person rig: centre of the firing-hand grip and the
 # support-hand hold under the handguard.

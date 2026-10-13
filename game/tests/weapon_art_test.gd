@@ -33,7 +33,7 @@ func _run() -> void:
 	for path in [WeaponModel.RELAY_AR, WeaponModel.RELAY_AR_HANDS, WeaponModel.RELAY_AR_MATERIAL, WeaponModel.RELAY_AR_HANDS_MATERIAL]:
 		check(ResourceLoader.exists(path), "authored asset present: " + path)
 	var rifle := WeaponModel._authored_nodes(WeaponModel.RELAY_AR, Transform3D.IDENTITY)
-	for node in ["body", "paint_receiver", "paint_handguard", "magazine", "magazine_rounds", "muzzle", "ejection", "grip_hand", "support_hand"]:
+	for node in ["body", "paint_receiver", "paint_handguard", "magazine", "magazine_rounds", "stock", "muzzle", "ejection", "grip_hand", "support_hand"]:
 		check(rifle.markers.has(node), "rifle exports node " + node)
 	var muzzle: Vector3 = rifle.anchors["muzzle"]
 	check(muzzle.z < -0.6 and absf(muzzle.x) < 0.001 and absf(muzzle.y - 0.025) < 0.002, "barrel runs along -Z with the bore at 0.025 m")
@@ -62,7 +62,10 @@ func _run() -> void:
 	check(holder.get_child_count() <= 6, "first-person rifle with hands is at most six draw nodes (%d)" % holder.get_child_count())
 	check(parts.magazine.get_child_count() == 1, "cartridge follows the magazine")
 	check(parts.muzzle.position.distance_to(parts.magazine.position) > 0.3, "muzzle flash sits at the authored muzzle")
-	var expected_port: Vector3 = (Transform3D(Basis.from_euler(WeaponModel.relay_ar_rotation), WeaponModel.relay_ar_offset) * Transform3D(Basis.IDENTITY, rifle.anchors["ejection"])).origin
+	var base := Transform3D(Basis.from_euler(WeaponModel.relay_ar_rotation).scaled(Vector3.ONE * WeaponModel.relay_ar_scale), WeaponModel.relay_ar_offset)
+	var pivot: Vector3 = base * WeaponModel.RELAY_AR_PIVOT
+	check(parts.pivot is Vector3 and parts.pivot.distance_to(pivot) < 0.001, "the model reports its balance point as the weapon node's pivot")
+	var expected_port: Vector3 = base * (rifle.anchors["ejection"] as Vector3) - pivot
 	check(parts.ejection is Vector3 and parts.ejection.distance_to(expected_port) < 0.001, "casings leave from the authored ejection port")
 	for part: MeshInstance3D in parts.paint:
 		check(part.has_meta("detail_orm") and part.has_meta("detail_normal"), "paint part carries baked detail: " + part.name)
@@ -82,6 +85,7 @@ func _run() -> void:
 	var inspection: Dictionary = WeaponModel.build(upright, "rifle", false)
 	var body_node: MeshInstance3D = upright.get_node("body")
 	check(body_node.transform.basis.is_equal_approx(Basis.IDENTITY) and absf(inspection.muzzle.position.x) < 0.001, "inspection rifle is upright and on axis, without the viewmodel cant")
+	check(upright.has_node("stock") and not upright.has_node("hands"), "inspection keeps the buttstock and has no hands")
 	upright.queue_free()
 
 	# The procedural rifle remains a complete fallback.
@@ -107,6 +111,20 @@ func _run() -> void:
 	actor.reload_remaining = 0
 	actor.tick_visual(0.016)
 	check(actor._magazine.position == actor._magazine_rest, "reload completion reseats it")
+
+	# Rest pose is independent of the pivot: a model point lands where the placement alone puts it.
+	actor._equip_blend = 0.0
+	actor._kick = 0.0
+	actor.reload_remaining = 0
+	actor.tick_visual(0.016)
+	var rest_point: Vector3 = actor._gun.global_transform * (actor._gun.get_node("body") as Node3D).transform * Vector3(0, 0, 0.1)
+	var camera_point: Vector3 = actor.camera.global_transform.affine_inverse() * rest_point
+	var expected_camera_point: Vector3 = Actor.GUN_REST + base * Vector3(0, 0, 0.1)
+	check(camera_point.distance_to(expected_camera_point) < 0.002, "moving the pivot leaves the rest pose where the fitted placement put it")
+
+	# The buttstock is behind the camera in first person, so the viewmodel leaves it out
+	# (it would sweep into the frame during reload and equip, and at wider aspects).
+	check(not actor._gun.has_node("stock") and actor._gun.get_node("body").mesh.get_aabb().end.z < 0.22, "first person omits the buttstock")
 	actor.queue_free()
 	holder.queue_free()
 	fallback.queue_free()

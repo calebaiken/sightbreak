@@ -22,6 +22,9 @@ uniform sampler2D detail_orm : hint_default_white, filter_linear_mipmap;
 uniform sampler2D detail_normal : hint_normal, filter_linear_mipmap;
 // Without a skin (patterned = 0) an authored model shows its own baked surface.
 uniform sampler2D detail_albedo : source_color, hint_default_white, filter_linear_mipmap;
+// Linear gain on the baked albedo, matching relay_ar_body.tres, so the unskinned parts and
+// the rest of the model read as one graphite finish.
+uniform float detail_gain = 0.70;
 varying vec3 local_position;
 void vertex() { local_position = VERTEX; }
 void fragment() {
@@ -47,7 +50,7 @@ void fragment() {
  float occlusion = mix(1.0, orm.r, detail);
  ALBEDO *= mix(0.6, 1.0, occlusion);
  float baked = detail * (1.0 - patterned);
- ALBEDO = mix(ALBEDO, texture(detail_albedo, UV).rgb, baked);
+ ALBEDO = mix(ALBEDO, texture(detail_albedo, UV).rgb * detail_gain, baked);
  ROUGHNESS = mix(ROUGHNESS, orm.g, baked);
  METALLIC = mix(METALLIC, orm.b, baked);
  AO = occlusion;
