@@ -15,4 +15,10 @@ if rg -q '^ERROR:|SCRIPT ERROR|Parse Error' "$run_dir/render.log"; then
 fi
 rg -q SIGHTBREAK_DEMO_CAPTURED "$run_dir/render.log"
 test -s "$run_dir/viewport.png"
-printf 'Native graphics check passed. Capture and log: %s\n' "$run_dir"
+"$repo_dir/scripts/godot.sh" --audio-driver Dummy --script res://tests/render_lifecycle_test.gd 2>&1 | tee "$run_dir/lifecycle.log"
+if rg -q '^ERROR:|SCRIPT ERROR|Parse Error' "$run_dir/lifecycle.log"; then
+  printf 'Native lifecycle check FAILED; inspect %s\n' "$run_dir/lifecycle.log" >&2
+  exit 1
+fi
+rg -q 'NATIVE_LIFECYCLE_TEST checks=11 failures=0' "$run_dir/lifecycle.log"
+printf 'Native graphics and lifecycle checks passed. Capture and logs: %s\n' "$run_dir"
