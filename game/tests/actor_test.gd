@@ -1,0 +1,142 @@
+extends SceneTree
+
+const Actor = preload("res://scripts/gameplay/actor.gd")
+const Arena = preload("res://scripts/gameplay/arena.gd")
+const Weapons = preload("res://scripts/gameplay/weapons.gd")
+const Utility = preload("res://scripts/gameplay/utility.gd")
+var failures: Array[String] = []
+var checks := 0
+
+func _initialize() -> void:
+	_run.call_deferred()
+
+func check(condition: bool, message: String) -> void:
+	checks += 1
+	if not condition:
+		failures.append(message)
+		push_error(message)
+
+func _run() -> void:
+	var world := Node3D.new()
+	root.add_child(world)
+	var arena := Arena.new()
+	world.add_child(arena)
+	var player := Actor.new()
+	player.configure(1, 0, "Test attacker", true)
+	world.add_child(player)
+	var enemy := Actor.new()
+	enemy.configure(2, 1, "Test defender")
+	world.add_child(enemy)
+	player.reset_for_round(Vector3(0, 0.05, -15))
+	enemy.reset_for_round(Vector3(0, 0.05, -9))
+	await physics_frame
+	await physics_frame
+	check(arena.sites.size() == 2, "two objective sites")
+	check(arena.attack_spawns.size() == 5 and arena.defend_spawns.size() == 5, "five spawns per team")
+	check(arena.is_at_site(Vector3(-15, 0, 10)) == 0, "site A detection")
+	check(arena.is_at_site(Vector3(15, 0, 10)) == 1, "site B detection")
+	check(arena.is_at_site(Vector3.ZERO) == -1, "center not objective")
+	check(arena.waypoints.size() > 100, "walkable navigation graph")
+	var waypoint: Vector3 = arena.bot_navigation(Vector3(-14, 0, -18), Vector3(14, 0, 10))
+	check(waypoint != Vector3(-14, 0, -18), "bot routes around freight containers")
+	check(player.can_see(enemy), "open lane visible")
+	check(not player.buy_weapon("rifle"), "insufficient match credits rejected")
+	check(not player.buy_weapon("invented"), "unknown weapon rejected")
+	player.credits = 3000
+	check(player.buy_weapon("rifle"), "rifle purchase succeeds")
+	check(player.credits == 600, "purchase debits match currency")
+	check(not player.buy_weapon("rifle"), "duplicate purchase rejected")
+	check(player.ammo == 30 and player.reserve == 90, "rifle magazine and reserve")
+	# A floor-stationary accurate head hit at six meters must be lethal.
+	for i in range(30):
+		player.input_state = {"look": Vector2(PI, 0), "move": Vector2.ZERO}
+		player.tick_authority(1.0 / 60.0)
+		enemy.tick_authority(1.0 / 60.0)
+		await physics_frame
+	player.input_state = {"look": Vector2(PI, 0), "fire": true}
+	player.tick_authority(1.0 / 60.0)
+	check(player.ammo == 29, "shot consumes one bullet")
+	check(not enemy.alive and enemy.health == 0, "authoritative ray headshot eliminates enemy")
+	check(enemy.last_hit_headshot, "headshot identified by hit location")
+	player.input_state = {"fire": true}
+	player.tick_authority(1.0 / 60.0)
+	check(player.ammo == 29, "fire interval rejects rapid duplicate shot")
+	player.input_state = {"reload": true}
+	player.tick_authority(0.01)
+	check(player.reload_remaining > 0, "reload begins")
+	player.input_state = {}
+	player.tick_authority(3.0)
+	check(player.ammo == 30 and player.reserve == 89, "reload transfers only missing rounds")
+	enemy.reset_for_round(Vector3(0, 0.05, -9))
+	player.reset_for_round(Vector3(0, 0.05, -15))
+	await physics_frame
+	await physics_frame
+	var smoke := Utility.new()
+	smoke.kind = "smoke"
+	world.add_child(smoke)
+	smoke.global_position = Vector3(0, 1, -12)
+	smoke._detonate()
+	check(not player.can_see(enemy), "smoke blocks bot line of sight")
+	smoke.queue_free()
+	await process_frame
+	var before := player.global_position
+	player.input_state = {"move": Vector2(0, 1), "look": Vector2(PI, 0)}
+	for i in range(30):
+		player.tick_authority(1.0 / 60.0)
+		await physics_frame
+	check(player.global_position.z > before.z + 1, "forward movement follows yaw")
+	player.input_state = {"crouch": true}
+	player.tick_authority(0.01)
+	check(player.head_height == 1.13, "crouch lowers camera and collision")
+	var saved: Dictionary = player.snapshot()
+	check(saved["weapon"] == "rifle" and saved["grenades"] == 1, "snapshot includes equipment")
+	var original_position := player.global_position
+	player.global_position += Vector3(2, 0, 0)
+	player.apply_snapshot(saved, 0.016)
+	check(player.global_position.is_equal_approx(original_position), "local authoritative snapshot corrects position")
+	check(Weapons.get_weapon("invalid")["name"] == "Kestrel 9", "unknown spec safely falls back")
+	# Cosmetic network replicas must never apply client-side blast damage.
+	player.reset_for_round(Vector3(0, 0.05, -15))
+	enemy.reset_for_round(Vector3(0, 0.05, -12))
+	await physics_frame
+	await physics_frame
+	var replica := Utility.new()
+	replica.visual_only = true
+	replica.owner_team = 0
+	world.add_child(replica)
+	replica.global_position = Vector3(0, 0.5, -12)
+	replica._detonate()
+	check(enemy.health == 100, "network utility replica cannot damage actors")
+	var blast := Utility.new()
+	blast.owner_team = 0
+	blast.owner_id = 1
+	world.add_child(blast)
+	blast.global_position = Vector3(0, 0.5, -12)
+	blast._detonate()
+	check(enemy.health < 30 and enemy.health > 0, "authority grenade applies radial damage")
+	check(player.health == 100, "grenade excludes friendly actors")
+	enemy.reset_for_round(Vector3(-4.6, 0.05, -11))
+	await physics_frame
+	await physics_frame
+	var blocked_blast := Utility.new()
+	blocked_blast.owner_team = 0
+	world.add_child(blocked_blast)
+	blocked_blast.global_position = Vector3(-9.2, 1, -11)
+	blocked_blast._detonate()
+	check(enemy.health == 100, "solid freight container blocks blast damage")
+	player.team = 1
+	player.reset_for_round(Vector3(0, 0.05, 20))
+	check(player._body_team == 1 and player.yaw == 0, "side switch updates model and spawn facing")
+	player.inventory.append("smg")
+	player.reset_for_round(Vector3(0, 0.05, 20))
+	player._equip("smg")
+	check(player.ammo == 30 and player.reserve == 120, "round refill covers holstered weapons")
+	var stats_before: Dictionary = player.snapshot()
+	player.apply_cosmetic({"rarity": "mythic", "pattern_seed": 985, "wear": 0.75})
+	check(player.snapshot() == stats_before, "cosmetic application never changes competitive state")
+	check(player._finish.get_shader_parameter("pattern_seed") == 985.0, "cosmetic seed controls only paint material")
+	await create_timer(0.6).timeout
+	world.queue_free()
+	await process_frame
+	print("ACTOR TESTS: %d checks, %d failures" % [checks, failures.size()])
+	quit(0 if failures.is_empty() else 1)
