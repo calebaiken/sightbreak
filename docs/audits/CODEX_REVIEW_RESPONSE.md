@@ -1,10 +1,10 @@
 # Response to Codex's PR #1 review (REQUEST CHANGES at `e018a65`)
 
-Three blocking findings, fixed in three focused commits on `claude/independent-audit-visual-v04`, plus five follow-up commits from the second review (see the end of this document). Each defect was reproduced first, and each regression test was confirmed failing on the commit before its fix. The full matrix was then re-run on the final head, `d0278f0`. Evidence is in [`docs/reports/media/claude-v04/codex-review/`](../reports/media/claude-v04/codex-review/README.md). Nothing here is merged and no release readiness is claimed.
+Three blocking findings, fixed in three focused commits on `claude/independent-audit-visual-v04`, plus five follow-up commits from the second review and one from Codex's follow-up review at `77e0433` (see the end of this document). Each defect was reproduced first, and each regression test was confirmed failing on the commit before its fix. The full matrix was then re-run on the final head, `d0278f0`. Evidence is in [`docs/reports/media/claude-v04/codex-review/`](../reports/media/claude-v04/codex-review/README.md). Nothing here is merged and no release readiness is claimed.
 
 | Blocker | Commit | Regression test | On reviewed head | After fix |
 | --- | --- | --- | --- | --- |
-| 1 · Kill-feed HUD overflow | `89a743a`, `ff41188`, `d0278f0` | `game/tests/hud_overflow_test.gd` | 49 of 436 checks fail | 1,327/1,327 headless, 1,333/1,333 native with captures |
+| 1 · Kill-feed HUD overflow | `89a743a`, `ff41188`, `d0278f0`, `8803029` | `game/tests/hud_overflow_test.gd` | 49 of 436 checks fail | 2,437/2,437 headless, 2,444/2,444 native with captures (`7756e35`; see the follow-up review) |
 | 2 · Body hit-volume regression | `6e144a0`, `fc52e68`, `5407325` | `game/tests/hit_volume_test.gd` | 8 of 33 fail | 40/40 |
 | 3 · Mixed-version protocol stall | `cf9a630`, `a84b208` | `scripts/test_protocol_compat.sh`, `scripts/test_account_network.py`, `scripts/test_handshake_hardening.sh` | mixed pairs stall in "joining" for the full 15 s window | 6/6 pairings and 8/8 hostile-peer checks behave as specified |
 
@@ -128,8 +128,6 @@ No existing assertion was removed or loosened. The new tests failed on the revie
 
 ## Second review
 
-## Second review
-
 A second Claude agent reviewed the final blocker fixes adversarially. It wrote its own probes and attack harnesses rather than rereading these tests. It is the same model family as the author, so this is **not independent acceptance**; Codex's review remains the gate.
 
 - **First attempt:** an environment restart interrupted it before its report. Its recovered probes found two defects, both fixed with regression tests:
@@ -162,3 +160,71 @@ The reviewer found these sound:
 - **Unicode layouts:** emoji, Thai, CJK and Arabic feed layouts keep full rows.
 
 It did not test real packet loss or latency, raw crafted ENet packets, Jolt, or Android/ARM.
+
+## Codex follow-up review at `77e0433`: fallback-face row height
+
+Codex requested changes for one remaining defect. `main.gd` sized the clipped feed frame for four rows measured from "Ag" in the default face. With Noto Sans CJK as the system's CJK face, the unchanged test failed 10 checks headless (1,325) and 10 native (1,331): the fourth row at every size and both text scales.
+
+**Reproduced here.** This host's CJK face is WenQuanYi Zen Hei, which fits the 20 px Latin row, so the unchanged test passed (1,327/1,327). Noto Sans CJK was then selected through `FONTCONFIG_FILE` (the 2023-08-17 Debian package, extracted to a scratch folder; nothing installed system-wide or committed; recipe in `hud-fallback/noto-cjk-fonts.conf`). Under it, the unchanged test at `77e0433` gave exactly Codex's counts: 1,325 checks / 10 failures headless and 1,331 / 10 native.
+
+| 1560×720, Unicode/CJK names | Latin row | CJK row | Frame bottom | Fourth-row bottom | Clipped |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 100 % text, `77e0433` | 26 px | 28 px | 166 | 174 | **8 px** (Codex: 8 px) |
+| 130 % text, `77e0433` | 32 px | 33 px | 197 | 201 | **4 px** (Codex: 6 px) |
+| 100 % text, fixed | 26 px | 28 px | 174 | 174 | 0 |
+| 130 % text, fixed | 32 px | 33 px | 201 | 201 | 0 |
+
+At 130 % this Noto build shapes an 18 px line at 27 px; Codex's measured 28 px, hence 4 px here against 6 px there.
+
+**Root cause.** A label's line is as tall as the tallest face its text is shaped with. Godot shapes glyphs the default face lacks with an OS-chosen fallback face, so the line height is the OS's, not the project's. All four rows were assumed to be the Latin height. Truncation and mark limiting never touch height.
+
+**Fix (`8803029`).**
+- The Latin measurement is now only the reserve, so Latin feeds lay out exactly as before.
+- `_fit_kill_feed_frame()` sets the frame's height to the live rows' minimum heights plus gaps, never less than the reserve, whenever a row is added or expires.
+- Only the height is set. The frame is still a plain `Control`, so no row width can resize the HUD.
+- There is no fixed pixel allowance.
+
+**Test changes (`hud_overflow_test.gd`).** No assertion was removed or loosened.
+- **Second pass with a taller face.** It takes the system's own CJK face, makes it 3 px taller above and below the line, and installs it as the default font's explicit fallback. It runs the Latin and CJK sets at all five sizes and both text scales. The regression therefore fails on any machine with a CJK face, not only one whose face happens to be taller. If no system face covers the CJK sample, the pass prints that it was skipped.
+- **Guard against a vacuous pass:** it asserts the frame actually grew.
+- **Latin rows keep the reserved height.**
+- **Nothing else moves:** no score, radar, ammunition, utility, funds, health or status rect moves when the feed fills or grows.
+
+**Verified.** All runs use the same host and Godot 4.7.2; native runs use Xvfb/llvmpipe.
+
+| Run | `77e0433`, unchanged test | Old frame under the final test (negative control) | Final head `7756e35` |
+| --- | --- | --- | --- |
+| Headless, this host's fonts | 1,327 / 0 | 2,317 checks / **20 failures** | 2,437 / 0 |
+| Headless, Noto Sans CJK | **1,325 / 10** | 2,315 / **30** (Codex's 10 + 20 in the taller pass) | 2,435 / 0 |
+| Native with captures, Noto Sans CJK | **1,331 / 10** | — | 2,442 / 0 |
+| Native with captures, this host's fonts | — | — | 2,444 / 0 |
+
+The negative control is the final test run with `_fit_kill_feed_frame()` disabled. Counts differ between font setups because the prefix checks run only for names that were shortened.
+
+`scripts/validate.sh` on `7756e35` exits 0 (`codex-review/validate-7756e35.log`):
+- **3,079 native assertions:** 1,915 before, plus 1,110 HUD overflow, 52 landscape and 2 UX contract, the latter two from the funds change below;
+- the natural 10-round bot match;
+- two ENet clients with reconnect.
+
+Evidence is in `codex-review/hud-fallback/`:
+- before and after captures, and a cropped comparison;
+- every log listed above.
+
+One environment note: when two native Godot windows ran at once on the same Xvfb display, X11 refused one of them the mouse grab ("NO GRAB"). The final native runs above ran alone and logged no engine errors.
+
+**Also on this branch: funds label (`7756e35`).** At the project owner's request, match funds are now one gold "800 · FUNDS" label directly above the health readout and bar. They are no longer repeated in the utility row or the buy prompt.
+- The label hangs from a zero-height anchor, so the bottom row and the status line keep their positions.
+- A first version stacked it in the vitals block. That grew the row and pushed the buy prompt into the FRAG and SMOKE buttons. `landscape_ui_test.gd` caught it (8 failures) before anything was pushed.
+- New checks: the label clears every touch control (landscape test), sits above the health readout and is not repeated (UX contract test), and stays on screen and does not move (HUD test).
+- It is presentation only; no economy, network or gameplay code changed. Captures are in `docs/reports/media/claude-v04/hud-funds/`.
+
+**Confirmed by Codex and unchanged here:**
+- hit volumes 40/40;
+- weapon integrity 28/28;
+- the lower-leg grid 1,468/1,468;
+- handshake hardening 8/8.
+
+**Still open (not changed in this PR):** Codex observed that compatible raw peers that complete the handshake but never join stay connected after 26 s. That is the pre-existing Phase D hardening task, now recorded in `docs/KNOWN_LIMITATIONS.md`.
+
+Nothing is merged and no release readiness is claimed. Same-family review limits apply as above.
+
