@@ -1,10 +1,10 @@
-# SIGHTBREAK
+# SIGHTBREAK 0.3.0-dev
 
 A native **Godot 4.7.2** tactical FPS development build for desktop, Android and unsigned iOS project export. Fight a 5v5 offline match in the original Relay Yard, or connect to a dedicated server. The separate PostgreSQL economy supports authenticated accounts, earned Credits, collectible rifle finishes, cases, two-sided trades and marketplace purchases.
 
 **No real-money transactions.** There are no payments, premium purchases, withdrawals, cryptocurrency or external marketplaces. Offline training progress never becomes tradable online value.
 
-This is a playable **development alpha**, not the finished release in the [full specification](docs/SPECIFICATION.md). Independent QA has not accepted the required 8.5/10 milestone gates; physical mobile usability, sustained device performance and production security remain unverified. Read the [QA evidence](docs/reports/QA.md), [known limitations](docs/KNOWN_LIMITATIONS.md) and [milestone roadmap](docs/MILESTONES.md).
+This is a playable **development alpha**, not the finished release in the [full specification](docs/SPECIFICATION.md). Independent visual QA scores this pass **8.1/10**, below the required 8.5/10 milestone gate; physical mobile usability, sustained device performance and production security remain unverified. Read the [0.3 independent QA evidence](docs/reports/QA-0.3.md), [known limitations](docs/KNOWN_LIMITATIONS.md) and [milestone roadmap](docs/MILESTONES.md).
 
 ## Play locally
 
@@ -20,7 +20,7 @@ Choose **DEPLOY / OFFLINE 5 v 5**. No account or backend is needed. The first ro
 | Action | Desktop | Mobile |
 | --- | --- | --- |
 | Move / aim | WASD / mouse | Left joystick / right touch zone |
-| Fire / reload | Left mouse / R | FIRE / LOAD |
+| Fire / reload | Left mouse / R | FIRE / RELOAD |
 | Jump / crouch | Space / Ctrl | JUMP / LOW |
 | Plant / defuse | Hold E | Hold USE |
 | Weapons | 1 primary / 2 sidearm | SWAP |
@@ -30,12 +30,15 @@ Choose **DEPLOY / OFFLINE 5 v 5**. No account or backend is needed. The first ro
 
 Settings include sensitivity, FOV, frame cap, shadow quality, volume, crosshair size/color, gyro, controller input and reduced motion. During a match, the field menu opens the touch HUD editor. Drag the joystick or action buttons and press **SAVE TOUCH LAYOUT**; use **RESET POSITIONS** to restore defaults. Button scale is adjustable in settings. Touch input is canceled on focus loss, and simulated mouse events cannot fire the weapon. Physical gyro/controller behavior still needs device review.
 
-## Current stabilization work
+## 0.3 visual and mobile milestone
 
-- The two GL teardown errors were isolated with a standalone Godot sky-lifetime reproduction. Relay Yard now reuses one sky resource; actual rendering and repeated menu/match cycles pass with stable tracked texture allocations on the tested Linux software renderer. See [diagnostic and regression](docs/diagnostics/README.md).
-- Touch input, safe areas, editable joystick/buttons, scrollable landscape menus, recoil presentation, weapon sounds/animation, bot tactics and complete-match regression coverage have improved.
-- Case inspection/reveals share collection materials. A lost transaction response offers explicit retry with the original request/key; recovery remains in memory, so app-termination recovery is still outstanding. Backend probability boundaries and ownership/replay rules remain tested.
-- These checks do not certify physical-device feel, sustained FPS or public-server security. The [independent QA report](docs/reports/QA.md) identifies accepted scopes and unresolved quality gates.
+This continues the committed 0.2 alpha. Relay Yard now has framed industrial architecture, fitted cargo, crane structure, service details and original surface maps. Shared beveled weapon models, articulated operators, staged reload/equip motion and bounded muzzle/impact/casing effects improve native combat presentation. Server-confirmed hit and impact feedback reaches network clients without changing damage authority.
+
+The landscape HUD uses compact fading edges, centered score/reticle, vector controls and safe-area layout. Enlarged default controls clear each other at tablet and wide phone ratios. Cases use an original hinged 3D hardcase and committed-item reveal; the sharper demand-rendered inspector supports rotation/zoom and an explicitly **unowned knife reference**. Inventory and market filtering preserve existing authoritative transactions. No knife reward, payment or client-minted value was added.
+
+The screenshot-driven review found and corrected floating rooftop equipment, obscured signage, overly bright operator materials, foam-like smoke and missing knife geometry. See the [independent visual rubric and evidence](docs/reports/QA-0.3.md), [world changes](docs/reports/WORLD-0.3.md), [mobile captures](docs/reports/media/v03-mobile/README.md), [cosmetic comparisons](docs/reports/media/v03-cosmetics/README.md) and [measured rendering costs](docs/reports/PERFORMANCE-0.3.md).
+
+Repeated native match/inspection teardown checks preserve the shared-sky fix for the two original GL errors; see the [diagnostic reproduction](docs/diagnostics/README.md). Local tests and software-rendered images establish their stated scopes. Physical mobile comfort, GPU performance, thermals, battery use, human balance and production security remain open release gates.
 
 ## Test on a connected Android phone
 
@@ -100,6 +103,6 @@ Outputs are `builds/linux/sightbreak.x86_64` and `builds/android/sightbreak-debu
 
 - [Architecture](docs/ARCHITECTURE.md), [weapons](game/scripts/gameplay/weapons.gd), [economy configuration](backend/config/economy.json).
 - [Backend/API/migrations/backup](docs/backend.md), [economy simulation report](docs/economy.md), [network protocol](docs/network.md).
-- [Milestones and next work](docs/MILESTONES.md), [independent QA](docs/reports/QA.md), [known limitations](docs/KNOWN_LIMITATIONS.md).
+- [Milestones and next work](docs/MILESTONES.md), [independent QA](docs/reports/QA-0.3.md), [known limitations](docs/KNOWN_LIMITATIONS.md).
 
 Use this existing isolated checkout. Do not create a Git worktree unless requested. Preserve development state in commits and update evidence when behavior changes. Never mark untested device behavior, scores, screenshots or features as passed.
