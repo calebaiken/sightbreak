@@ -52,7 +52,7 @@ func _run() -> void:
 	actor.tick_visual(0.016)
 	await shot("05-rifle-reseated")
 	var effects := SBCombatEffects.for_world(world)
-	effects.impact(actor.global_position + Vector3(-0.25, 1.3, 1.7), Vector3(0, 0, -1), false)
+	effects.impact(actor.global_position + Vector3(0.8, 1.6, 2.5), Vector3(0, 0, -1), false)
 	effects.set_process(false)
 	effects._process(0.05)
 	await shot("05b-bullet-impact")

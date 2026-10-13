@@ -44,7 +44,11 @@ render_mode unshaded, cull_disabled;
 uniform sampler2D cloud_noise : source_color, filter_linear_mipmap, repeat_enable;
 varying vec3 cloud_position;
 varying vec3 cloud_normal;
-void vertex() { cloud_position = VERTEX; cloud_normal = NORMAL; }
+void vertex() {
+ float billow = sin(VERTEX.x*1.7+0.5)*sin(VERTEX.y*1.5)*sin(VERTEX.z*1.4+1.0);
+ VERTEX += NORMAL * billow * 0.30;
+ cloud_position = VERTEX; cloud_normal = NORMAL;
+}
 void fragment() {
  vec3 weights = abs(cloud_normal);
  weights /= max(weights.x + weights.y + weights.z, 0.001);
