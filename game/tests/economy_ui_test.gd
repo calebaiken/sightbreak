@@ -115,6 +115,22 @@ func run() -> void:
 	await capture("economy_knife_reference")
 	knife_popup.hide()
 	await process_frame
+	if not capture_dir.is_empty():
+		# Explicitly fictional metadata fixtures for finish/rarity visual coverage.
+		var crimson := {"id": "qa-crimson-fixture", "name": "Crimson Archive / Iridescence", "definition_id": "crimson_archive_legendary", "kind": "weapon_skin", "collection": "Crimson Archive", "rarity": "Legendary", "pattern_seed": 8483, "wear": 0.015}
+		var crimson_inspect := ui._show_inspector_popup(crimson, "QA FINISH FIXTURE • NOT OWNED")
+		for frame in 4:
+			await process_frame
+		await capture("economy_inspector_crimson_fixture")
+		crimson_inspect.hide()
+		await process_frame
+		ui.reduced_motion = true
+		var crimson_reveal := ui._show_committed_reveal(crimson)
+		for frame in 4:
+			await process_frame
+		await capture("economy_case_crimson_fixture")
+		crimson_reveal.hide()
+		await process_frame
 	ui.reduced_motion = true
 	var reduced_popup := ui._show_committed_reveal(first)
 	var reduced_reel = reduced_popup.find_child("CaseReel", true, false)

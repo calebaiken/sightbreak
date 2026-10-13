@@ -23,7 +23,7 @@ func run() -> void:
 	root.add_child(reveal)
 	await process_frame
 	check(reveal.world.own_world_3d, "Studio has isolated 3D world")
-	check(reveal.world.msaa_3d == Viewport.MSAA_2X and reveal.stretch_shrink == 2, "Studio uses bounded mobile rendering scale")
+	check(reveal.world.msaa_3d == Viewport.MSAA_2X and reveal.world.size.x <= 1024 and reveal.world.size.y <= 512, "Studio uses bounded mobile rendering scale")
 	check(reveal.lid is Node3D and reveal.reward is Node3D, "Case hinge and committed reward are actual 3D nodes")
 	check(reveal.world.find_children("*", "Light3D", true, false).size() == 3, "Studio lighting is bounded at three lights")
 	var env: WorldEnvironment = reveal.world.find_children("*", "WorldEnvironment", true, false)[0]
@@ -51,6 +51,25 @@ func run() -> void:
 	await process_frame
 	check(inspector.pivot.get_child_count() >= 4 and inspector.pivot.get_child_count() <= 8, "Knife reference is actual multi-part 3D mesh")
 	check(not inspector.item.has("id"), "Knife reference cannot masquerade as owned instance")
+	var indexed_blade_tip := false
+	var outward_blade_face := false
+	for mesh in inspector.pivot.get_children():
+		if not mesh is MeshInstance3D:
+			continue
+		var arrays: Array = mesh.mesh.surface_get_arrays(0)
+		var vertices: PackedVector3Array = arrays[Mesh.ARRAY_VERTEX]
+		var normals: PackedVector3Array = arrays[Mesh.ARRAY_NORMAL]
+		var indices: PackedInt32Array = arrays[Mesh.ARRAY_INDEX]
+		for offset in range(0, indices.size(), 3):
+			var a: Vector3 = vertices[indices[offset]]
+			var b: Vector3 = vertices[indices[offset + 1]]
+			var c: Vector3 = vertices[indices[offset + 2]]
+			if maxf(a.x, maxf(b.x, c.x)) > 0.9:
+				indexed_blade_tip = true
+				if (b - a).cross(c - a).z < 0 and normals[indices[offset]].z > 0:
+					outward_blade_face = true
+	check(indexed_blade_tip, "Batched blade tip remains referenced by triangle indices")
+	check(outward_blade_face, "Blade front uses Godot clockwise winding and outward normal")
 	var press := InputEventScreenTouch.new()
 	press.pressed = true
 	press.index = 0

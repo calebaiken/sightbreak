@@ -23,9 +23,9 @@ func _ready() -> void:
 	size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	size_flags_vertical = Control.SIZE_EXPAND_FILL
 	stretch = true
-	# Render at half the logical display resolution; never allocate full-screen
-	# texture per inventory item. Only selected item/reveal owns a viewport.
-	stretch_shrink = 2
+	# Only the selected item owns a viewport. Demand rendering allows crisp
+	# studio detail; larger layouts scale to at most 1024 × 512 pixels.
+	stretch_shrink = 1
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	world = SubViewport.new()
 	world.name = "ArmoryStudio"
@@ -41,17 +41,17 @@ func _ready() -> void:
 	env.environment.background_color = Color("10151b")
 	env.environment.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.environment.ambient_light_color = Color("97a3af")
-	env.environment.ambient_light_energy = 0.65
+	env.environment.ambient_light_energy = 0.85
 	world.add_child(env)
 	var key_light := DirectionalLight3D.new()
 	key_light.rotation_degrees = Vector3(-42, -32, 0)
 	key_light.light_color = Color("e3e9ed")
-	key_light.light_energy = 1.6
+	key_light.light_energy = 2.0
 	world.add_child(key_light)
 	var fill := OmniLight3D.new()
 	fill.position = Vector3(-2, 1, 2)
 	fill.light_color = Color("c5af86")
-	fill.light_energy = 2.5
+	fill.light_energy = 4.3
 	fill.omni_range = 5
 	world.add_child(fill)
 	rarity_light = OmniLight3D.new()
@@ -62,8 +62,8 @@ func _ready() -> void:
 	world.add_child(rarity_light)
 	var stage := Node3D.new()
 	world.add_child(stage)
-	DISPLAY.cylinder(stage, 1.42, 0.045, Vector3(0, -0.66, 0), DISPLAY.metal(Color("27313a"), 0.65, 0.25))
-	DISPLAY.cylinder(stage, 1.46, 0.018, Vector3(0, -0.69, 0), DISPLAY.metal(Color("9c844f"), 0.38, 0.65))
+	DISPLAY.cylinder(stage, 1.18, 0.045, Vector3(0, -0.84, 0), DISPLAY.metal(Color("27313a"), 0.65, 0.25))
+	DISPLAY.cylinder(stage, 1.22, 0.018, Vector3(0, -0.87, 0), DISPLAY.metal(Color("9c844f"), 0.38, 0.65))
 	camera = Camera3D.new()
 	camera.position = Vector3(0, 0.35, distance)
 	camera.fov = 32
@@ -82,6 +82,7 @@ func show_item(value: Dictionary) -> void:
 		pivot.remove_child(node)
 		node.queue_free()
 	pivot.rotation_degrees = Vector3(-8, -16, 0)
+	pivot.scale = Vector3.ONE
 	finish_material = FINISH.finish(item)
 	rarity_light.light_color = FINISH.rarity_color(str(item.get("rarity", "Common")))
 	var kind := str(item.get("kind", "weapon_skin"))
@@ -95,12 +96,14 @@ func show_item(value: Dictionary) -> void:
 		DISPLAY.box(pivot, Vector3(0.13, 0.22, 0.12), Vector3(0.48, -0.1, 0), gold)
 	elif kind == "knife_reference":
 		DISPLAY.build_knife(pivot)
+		pivot.scale = Vector3.ONE * 1.7
 	else:
 		_build_rifle(pivot)
 	_request_render()
 
 func _request_render() -> void:
 	if is_instance_valid(world):
+		stretch_shrink = maxi(1, ceili(maxf(size.x / 1024.0, size.y / 512.0)))
 		world.render_target_update_mode = SubViewport.UPDATE_ONCE
 
 func _build_rifle(parent: Node3D) -> Node3D:
@@ -108,7 +111,7 @@ func _build_rifle(parent: Node3D) -> Node3D:
 	rifle.name = "CommittedRifle"
 	parent.add_child(rifle)
 	rifle.rotation.y = -PI * 0.5
-	rifle.scale = Vector3.ONE * 2.3
+	rifle.scale = Vector3.ONE * 3.4
 	var model := Node3D.new()
 	model.position = Vector3(0, 0.05, 0.3125)
 	rifle.add_child(model)
@@ -141,7 +144,7 @@ func set_reveal_progress(value: float) -> void:
 	var lift := smoothstep(0.50, 1.0, value)
 	reward.visible = lift > 0.01
 	reward.position.y = lerpf(-0.20, 0.28, lift)
-	reward.scale = Vector3.ONE * lerpf(1.35, 2.0, lift)
+	reward.scale = Vector3.ONE * lerpf(1.35, 2.7, lift)
 	reward.rotation.z = lerpf(-0.08, 0.0, lift)
 	case_root.scale = Vector3.ONE * lerpf(1.0, 0.78, lift)
 	case_root.position.y = lerpf(-0.20, -0.40, lift)

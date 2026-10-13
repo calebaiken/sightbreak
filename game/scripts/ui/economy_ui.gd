@@ -423,10 +423,10 @@ func _inspect(parent: Node, item: Dictionary) -> void:
 		_text(panel, "PREVIEW ONLY  •  Not in your inventory", 14, GOLD)
 
 func _inventory() -> void:
-	_button(content, "INSPECT FIELD KNIFE  /  REFERENCE", func(): _show_inspector_popup({"name": "K-4 / Field knife", "kind": "knife_reference", "collection": "Training reference"}, "REFERENCE MODEL • NOT OWNED"))
 	if api.token.is_empty():
 		_inspect(content, {"name": "AR-7 / Training graphite", "kind": "weapon_skin", "rarity": "Common", "pattern_seed": 44, "wear": 0.18})
 		_text(content, "Standard training equipment is available to everyone. This preview is local and cannot be traded.", 15, MUTED)
+		_knife_reference_button()
 		_needs_account()
 		return
 	_text(content, "%d owned instances  •  Cosmetics never change weapon statistics" % inventory.size(), 15, MUTED)
@@ -482,6 +482,13 @@ func _inventory() -> void:
 			var equip := _button(content, "UNEQUIP RIFLE FINISH" if is_equipped else "EQUIP RIFLE FINISH", func():
 				_perform("/loadout", {"slot": "rifle", "item_id": null if is_equipped else selected.id}, "Rifle cosmetic loadout saved.", HTTPClient.METHOD_PUT))
 			equip.disabled = selected.get("reserved", false) and not is_equipped
+
+	_knife_reference_button()
+
+func _knife_reference_button() -> void:
+	var row := HFlowContainer.new()
+	content.add_child(row)
+	_button(row, "FIELD KNIFE REFERENCE", func(): _show_inspector_popup({"name": "K-4 / Field knife", "kind": "knife_reference", "collection": "Training reference"}, "REFERENCE MODEL • NOT OWNED"))
 
 func _cases() -> void:
 	if _needs_account():

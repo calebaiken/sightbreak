@@ -75,9 +75,10 @@ static func build_knife(parent: Node3D) -> void:
 	surface.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var points := [Vector3(-0.15, 0.10, 0), Vector3(0.95, 0, 0), Vector3(-0.15, -0.10, 0), Vector3(-0.15, 0, 0.055), Vector3(-0.15, 0, -0.055)]
 	for triangle in [[0, 3, 1], [3, 2, 1], [4, 0, 1], [2, 4, 1], [0, 4, 3], [3, 4, 2]]:
-		for index in triangle:
+		for index in [triangle[0], triangle[2], triangle[1]]:
 			surface.add_vertex(points[index])
 	surface.generate_normals()
+	surface.index() # Preserve blade triangles when batching with indexed primitive meshes.
 	var blade := MeshInstance3D.new()
 	blade.mesh = surface.commit()
 	blade.material_override = steel
