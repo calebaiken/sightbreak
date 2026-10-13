@@ -38,6 +38,14 @@
       "source_capture": ".local/screenshots/economy-polish/economy_case_result.png",
       "sha256": "a0526b0d4aea0b9eb66c50699728850ccfb0605b09d9a73ac6d9752741b951bf",
       "fixture": true
+    },
+    {
+      "file": "exported-linux-demo.png",
+      "source_capture": "builds/qa/exported/native-demo.png",
+      "sha256": "4ae26acb45f2bea48882677af207539f27883fcddce47de18c51cdbe2330344c",
+      "fixture": false,
+      "executable_sha256": "950c55e0d7af82423cc9c24cb7ae3d4e9794029242d50a2d293d684759d51a75",
+      "command": "builds/linux/sightbreak.x86_64 --audio-driver Dummy -- --demo --capture=<absolute output path>"
     }
   ]
 }

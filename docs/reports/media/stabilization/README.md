@@ -13,3 +13,5 @@ DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1 ./scripts/godot.sh --audio-driver Dummy --sc
 ```
 
 The final landscape run passed 66 assertions plus nine successful screenshot writes (75 total), with no logged script or texture cleanup errors. Device touch feel, FPS and visual-release acceptance remain separate gates. Environment before/after fixed-camera captures are in `../environment/`.
+
+`exported-linux-demo.png` comes from the actual final exported Linux executable (SHA256 in `captures.json`), using its real offline demo. The adjacent unedited `.txt` log records a successful capture and clean renderer shutdown on Xvfb/Mesa, with only the unsupported software-driver VSync warning. This additionally checks the shipped binary, not only editor source.
