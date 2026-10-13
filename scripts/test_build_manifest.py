@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Regression checks for export/source provenance; no engine or SDK required."""
 import json
+import configparser
 import pathlib
 import tempfile
 import unittest
@@ -71,6 +72,14 @@ class BuildManifestTests(unittest.TestCase):
         data = json.loads((self.builds / "android/source.json").read_text())
         self.assertTrue(data["export_completed"])
         self.assertEqual(data["artifact"], manifest.descriptor(self.builds / manifest.OUTPUTS["android"]))
+
+    def test_prebuilt_android_template_does_not_override_gradle_sdk(self):
+        presets = configparser.ConfigParser(interpolation=None)
+        presets.read(pathlib.Path(__file__).resolve().parents[1] / "game/export_presets.cfg")
+        android = presets["preset.1.options"]
+        if android["gradle_build/use_gradle_build"] == "false":
+            self.assertEqual(android["gradle_build/min_sdk"], '\"\"')
+            self.assertEqual(android["gradle_build/target_sdk"], '\"\"')
 
 
 if __name__ == "__main__":
