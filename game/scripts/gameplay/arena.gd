@@ -36,6 +36,7 @@ var roof_equipment_bounds: Array[AABB] = []
 ## Thinner geometry, flat ground markings and text cannot cast a shadow that
 ## reads at shadow-map resolution, so they skip every shadow pass.
 const SHADOW_MIN_THICKNESS := 0.06
+const HALL_HEADER_Z := 23.78
 const INDUSTRIAL_STEEL := Color("344148")
 const WEATHERED_GOLD := Color("ae935c")
 const SAFETY_CRIMSON := Color("9c4344")
@@ -311,8 +312,9 @@ func _add_environment_detail() -> void:
 		_box(Vector3(x, 12.35, 32), Vector3(7.5, 0.8, 7), Color("788383"), false)
 		var roof := _box(Vector3(x, 12.9, 32), Vector3(8.1, 0.22, 7.5), Color("35454e"), false)
 		roof.rotation.z = -0.08
-	# In front of the ribbed fascia (front faces at z=24.115) so no rib cuts the lettering.
-	_label("R Y   /   TRANSFER STATION", Vector3(0, 10.55, 24.05), Color("bac5ba"), 135, PI)
+	# In front of the ribbed fascia (z=24.115) and the structural columns (front faces
+	# at z=23.86) so neither cuts the lettering.
+	_label("R Y   /   TRANSFER STATION", Vector3(0, 10.55, HALL_HEADER_Z), Color("bac5ba"), 135, PI)
 	# Side buildings and a water tower create an original industrial skyline.
 	_box(Vector3(-31, 6, -7), Vector3(12, 12, 29), Color("4b5b62"), false)
 	_box(Vector3(-31, 12.15, -7), Vector3(13, 0.3, 30), steel, false)

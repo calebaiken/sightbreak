@@ -43,6 +43,22 @@ func _run() -> void:
 		if label.cast_shadow != GeometryInstance3D.SHADOW_CASTING_SETTING_OFF:
 			label_shadows += 1
 	check(label_shadows == 0, "signage text never renders into shadow maps")
+	# Signage sits in front of every box face it overlaps (no coplanar or occluded lettering).
+	var header: Label3D = null
+	for label in arena.find_children("*", "Label3D", true, false):
+		if label.text.begins_with("R Y"): header = label
+	var raw := Arena.new()
+	raw._build()
+	var occluders := 0
+	for visual in raw._box_visuals:
+		var size: Vector3 = (visual.mesh as BoxMesh).size
+		var at: Vector3 = visual.get_parent().position
+		var front := at.z - size.z * 0.5
+		var spans_text: bool = absf(at.x) - size.x * 0.5 < 8.0 and at.y - size.y * 0.5 < header.position.y + 0.5 and at.y + size.y * 0.5 > header.position.y - 0.5
+		if spans_text and front < header.position.z and at.z > header.position.z:
+			occluders += 1
+	raw.free()
+	check(header != null and occluders == 0, "transfer hall header is in front of every column and rib (%d occluders)" % occluders)
 	var sun: DirectionalLight3D = arena.find_children("*", "DirectionalLight3D", true, false)[0]
 	check(sun.directional_shadow_mode == DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS and sun.directional_shadow_max_distance <= 60.0, "two shadow cascades cover the 48 m yard")
 	var tinted := true
