@@ -60,6 +60,19 @@ void fragment() {
 """
 	return _smoke_core_shader
 
+## Cloud center height above the surface beneath the detonation point. The same
+## position drives replicated visuals and bot concealment.
+const CLOUD_HEIGHT := 1.6
+
+func cloud_rest_height() -> float:
+	if is_inside_tree():
+		var from := global_position + Vector3.UP * 0.25
+		var query := PhysicsRayQueryParameters3D.create(from, from + Vector3.DOWN * 40.0, 1)
+		var hit := get_world_3d().direct_space_state.intersect_ray(query)
+		if not hit.is_empty():
+			return float(hit.position.y) + CLOUD_HEIGHT
+	return CLOUD_HEIGHT
+
 func _ready() -> void:
 	_mesh = MeshInstance3D.new()
 	var shape := SphereMesh.new()
@@ -98,7 +111,7 @@ func _detonate() -> void:
 	_mesh.visible = false
 	if kind == "smoke":
 		_lifetime = 12
-		global_position.y = 1.6
+		global_position.y = cloud_rest_height()
 		add_to_group("smoke_clouds")
 		# A closed opaque core preserves concealment even inside the cloud. Only
 		# the boundary uses alpha: at most six quads (three in Low), no lights.

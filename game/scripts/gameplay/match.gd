@@ -218,6 +218,7 @@ func _begin_round() -> void:
 		for actor: SBActor in actors.values():
 			actor.team = 1 - actor.team
 			actor.credits = 1200
+			actor.reset_loadout()
 		var swap: int = attack_score
 		attack_score = defend_score
 		defend_score = swap

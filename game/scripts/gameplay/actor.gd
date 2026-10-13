@@ -16,6 +16,17 @@ const CosmeticMaterial = preload("res://scripts/ui/cosmetic_material.gd")
 const WALK_SPEED := 5.1
 const CROUCH_SPEED := 2.5
 const GRAVITY := 22.0
+const DEPLOY_SECONDS := 0.3
+const READY_EPSILON := 0.000001
+## Shot volumes follow the drawn operator (body space, before the crouch squash):
+## the head and helmet ellipsoids are the rendered meshes; the torso/legs are a
+## vertical cylinder ending below the head. The movement capsule is not a hitbox.
+const HEAD_VOLUMES := [
+	[Vector3(0, 1.56, 0), Vector3(0.16, 0.195, 0.165)],
+	[Vector3(0, 1.68, 0.005), Vector3(0.175, 0.1175, 0.18)]
+]
+const BODY_RADIUS := 0.31
+const BODY_TOP := 1.38
 var actor_id: int = 0
 var team: int = 0
 var display_name: String = "Operator"
@@ -56,7 +67,10 @@ var _head: MeshInstance3D
 var _gun: Node3D
 var _muzzle: MeshInstance3D
 var _collision: CollisionShape3D
-var _cooldown: float = 0.0
+# Seconds until the equipped weapon is drawn, and until each weapon may cycle
+# again. Intervals are tracked per weapon so swapping cannot clear them.
+var _deploy_remaining: float = 0.0
+var _weapon_cooldowns: Dictionary = {}
 var _shot_index: int = 0
 var _fire_previous: bool = false
 var _grenade_previous: bool = false
@@ -92,7 +106,8 @@ func configure(id: int, side: int, label: String, local: bool = false) -> void:
 	team = side
 	display_name = label
 	is_local = local
-	_rng.seed = id * 7919 + 103
+	# Authoritative spread must not be predictable from the public actor id.
+	_rng.seed = Crypto.new().generate_random_bytes(8).decode_u64(0)
 
 func _ready() -> void:
 	add_to_group("combatants")
@@ -286,9 +301,9 @@ func _build_body() -> void:
 		_limb(arm, elbow, grip_at, 0.078, uniform)
 		_rounded(arm, grip_at, Vector3(0.12, 0.115, 0.15), dark)
 		_rounded(arm, Vector3(x * 0.15, -0.04, 0), Vector3(0.17, 0.20, 0.21), accent)
-	_head = _rounded(_body, Vector3(0, 1.56, 0), Vector3(0.32, 0.39, 0.33), dark)
+	_head = _rounded(_body, HEAD_VOLUMES[0][0], HEAD_VOLUMES[0][1] * 2.0, dark)
 	# Helmet rim and smoke-tinted visor sit at root scale, not scaled head-local.
-	_rounded(_body, Vector3(0, 1.68, 0.005), Vector3(0.35, 0.235, 0.36), dark.lightened(0.03))
+	_rounded(_body, HEAD_VOLUMES[1][0], HEAD_VOLUMES[1][1] * 2.0, dark.lightened(0.03))
 	var visor := _rounded(_body, Vector3(0, 1.585, -0.158), Vector3(0.26, 0.065, 0.05), Color("14232a"))
 	visor.material_override = _body_material(Color("14232a"), 0.48, 0.1)
 	visor.set_meta("separate_material", true)
@@ -406,7 +421,9 @@ func reset_for_round(spawn: Vector3) -> void:
 	rotation.y = yaw
 	camera.rotation = Vector3.ZERO
 	reload_remaining = 0
-	_cooldown = 0
+	_deploy_remaining = 0
+	_weapon_cooldowns.clear()
+	_shot_index = 0
 	recoil = Vector2.ZERO
 	head_height = 1.62
 	camera.position.y = head_height
@@ -463,7 +480,9 @@ func tick_authority(delta: float) -> void:
 		velocity.y = 6.4
 	_jump_previous = jump
 	move_and_slide()
-	_cooldown = maxf(0, _cooldown - delta)
+	_deploy_remaining = maxf(0, _deploy_remaining - delta)
+	for id in _weapon_cooldowns:
+		_weapon_cooldowns[id] = float(_weapon_cooldowns[id]) - delta
 	recoil = recoil.move_toward(Vector2.ZERO, delta * 0.11)
 	if reload_remaining > 0:
 		reload_remaining = maxf(0, reload_remaining - delta)
@@ -478,11 +497,20 @@ func tick_authority(delta: float) -> void:
 		start_reload()
 	var firing: bool = input_state.get("fire", false)
 	var automatic: bool = Weapons.get_weapon(weapon_id)["automatic"]
-	if firing and (automatic or not _fire_previous) and _cooldown <= 0 and reload_remaining <= 0:
+	var fired_weapon := ""
+	if firing and (automatic or not _fire_previous) and weapon_ready() and reload_remaining <= 0:
 		if ammo > 0:
+			fired_weapon = weapon_id
 			_fire()
 		else:
 			start_reload()
+	# A held trigger carries at most this tick's remainder into the next interval,
+	# so sustained fire matches the weapon data at 60 Hz; idle time never banks shots.
+	for id in _weapon_cooldowns:
+		if id != fired_weapon:
+			_weapon_cooldowns[id] = maxf(0.0, float(_weapon_cooldowns[id]))
+	if not firing and recoil == Vector2.ZERO:
+		_shot_index = 0
 	_fire_previous = firing
 	var grenade: bool = input_state.get("grenade", false)
 	var smoke: bool = input_state.get("smoke", false)
@@ -495,6 +523,9 @@ func tick_authority(delta: float) -> void:
 	camera.position.y = head_height
 	camera.rotation.x = pitch + recoil.y
 	camera.rotation.y = recoil.x
+
+func weapon_ready() -> bool:
+	return _deploy_remaining <= READY_EPSILON and float(_weapon_cooldowns.get(weapon_id, 0.0)) <= READY_EPSILON
 
 func _can_stand() -> bool:
 	var query := PhysicsRayQueryParameters3D.create(global_position + Vector3.UP * 1.1, global_position + Vector3.UP * 1.85, 1, [get_rid()])
@@ -514,11 +545,21 @@ func _equip(id: String) -> void:
 	ammo = stored.x
 	reserve = stored.y
 	reload_remaining = 0
-	_cooldown = 0.3
-	recoil = Vector2.ZERO
+	# Drawing costs a fixed delay; the drawn weapon's own cycle time keeps running
+	# while holstered, and accumulated recoil keeps recovering normally.
+	_deploy_remaining = DEPLOY_SECONDS
 	_shot_index = 0
 	_build_gun()
 	_equip_blend = 1.0
+
+## Pistol-round equipment: purchases do not survive the halftime reset.
+func reset_loadout() -> void:
+	inventory.assign(["sidearm"])
+	_ammo_store.clear()
+	_weapon_cooldowns.clear()
+	if weapon_id != "sidearm":
+		weapon_id = "sidearm"
+		_build_gun()
 
 func buy_weapon(id: String) -> bool:
 	if not alive or not Weapons.DATA.has(id):
@@ -535,7 +576,11 @@ func buy_weapon(id: String) -> bool:
 func _fire() -> void:
 	var spec := Weapons.get_weapon(weapon_id)
 	ammo -= 1
-	_cooldown = float(spec["interval"])
+	# Only a continuously held trigger carries the sub-tick remainder; every burst
+	# starts from the same phase so its recoil pattern is repeatable.
+	var physics_step := 1.0 / float(Engine.physics_ticks_per_second)
+	var carry := minf(0.0, maxf(float(_weapon_cooldowns.get(weapon_id, 0.0)), -physics_step)) if _fire_previous else 0.0
+	_weapon_cooldowns[weapon_id] = carry + float(spec["interval"])
 	var moving := Vector2(velocity.x, velocity.z).length() / WALK_SPEED
 	var spread := float(spec["spread"]) + moving * 0.026 + (0.045 if not is_on_floor() else 0.0)
 	if _crouching:
@@ -544,28 +589,120 @@ func _fire() -> void:
 	var shot_pitch := pitch + recoil.y + _rng.randf_range(-spread, spread)
 	var direction := Vector3(-sin(shot_yaw) * cos(shot_pitch), sin(shot_pitch), -cos(shot_yaw) * cos(shot_pitch)).normalized()
 	var origin := global_position + Vector3.UP * head_height
-	var endpoint := origin + direction * float(spec["range"])
-	var query := PhysicsRayQueryParameters3D.create(origin, endpoint, 3, [get_rid()])
-	var hit := get_world_3d().direct_space_state.intersect_ray(query)
-	if not hit.is_empty():
-		endpoint = hit["position"]
-		var target: Object = hit["collider"]
-		if target is SBActor and target.team != team and target.alive:
-			var headshot: bool = endpoint.y > target.global_position.y + target.head_height - 0.25
-			var distance_ratio := clampf(origin.distance_to(endpoint) / float(spec["range"]), 0, 1)
+	var trace := trace_shot(origin, direction, float(spec["range"]))
+	if trace.hit:
+		var target: SBActor = trace.actor
+		if target != null and target.team != team and target.alive:
+			var headshot: bool = trace.headshot
+			var distance_ratio := clampf(float(trace.distance) / float(spec["range"]), 0, 1)
 			var amount := float(spec["damage"]) * lerpf(1, float(spec["falloff"]), distance_ratio)
 			if headshot:
 				amount *= float(spec["head"])
 			target.apply_damage(amount, actor_id, headshot)
 			show_hit_feedback(headshot, not target.alive)
 			hit_confirmed.emit(actor_id, headshot, not target.alive)
-		_impact(endpoint, hit["normal"], target is SBActor)
-		impact_created.emit(endpoint, hit["normal"], target is SBActor)
+		_impact(trace.position, trace.normal, target != null)
+		impact_created.emit(trace.position, trace.normal, target != null)
 	shot_fired.emit(actor_id, origin, direction)
 	play_shot_effect()
 	_shot_index += 1
 	recoil.y = minf(recoil.y + float(spec["recoil"]), 0.16)
 	recoil.x += sin(_shot_index * 1.7) * float(spec["recoil"]) * 0.55
+
+## Authoritative shot trace. World geometry uses the physics ray; operators use
+## their drawn head/body volumes, so a ray through the empty corners of another
+## operator's movement capsule continues to whatever is actually behind it.
+func trace_shot(origin: Vector3, direction: Vector3, max_distance: float) -> Dictionary:
+	var result := {"hit": false, "distance": max_distance, "position": origin + direction * max_distance, "normal": -direction, "actor": null, "headshot": false}
+	var query := PhysicsRayQueryParameters3D.create(origin, origin + direction * max_distance, 1, [get_rid()])
+	var world_hit := get_world_3d().direct_space_state.intersect_ray(query)
+	if not world_hit.is_empty():
+		result.hit = true
+		result.distance = origin.distance_to(world_hit.position)
+		result.position = world_hit.position
+		result.normal = world_hit.normal
+	for node in get_tree().get_nodes_in_group("combatants"):
+		var other := node as SBActor
+		if other == null or other == self or not other.alive:
+			continue
+		var contact := other.volume_intersection(origin, direction, float(result.distance))
+		if contact.is_empty():
+			continue
+		result.hit = true
+		result.distance = contact.distance
+		result.position = contact.position
+		result.normal = contact.normal
+		result.actor = other
+		result.headshot = contact.headshot
+	return result
+
+## Nearest entry of a world-space ray into this operator's drawn head or body,
+## closer than max_distance; empty when the ray misses both.
+func volume_intersection(origin: Vector3, direction: Vector3, max_distance: float) -> Dictionary:
+	var inverse := global_transform.affine_inverse()
+	var local_origin := inverse * origin
+	var local_direction := inverse.basis * direction
+	# Undo the drawn crouch squash; the ray parameter remains a world distance.
+	var squash := maxf(0.05, _body.scale.y) if _body != null else 1.0
+	local_origin.y /= squash
+	local_direction.y /= squash
+	var nearest := max_distance
+	var headshot := false
+	var found := false
+	for volume: Array in HEAD_VOLUMES:
+		var t := _ellipsoid_entry(local_origin, local_direction, volume[0], volume[1])
+		if t >= 0.0 and t < nearest:
+			nearest = t
+			headshot = true
+			found = true
+	var body_t := _cylinder_entry(local_origin, local_direction, BODY_RADIUS, BODY_TOP)
+	if body_t >= 0.0 and body_t < nearest:
+		nearest = body_t
+		headshot = false
+		found = true
+	if not found:
+		return {}
+	var at := origin + direction * nearest
+	var outward := at - Vector3(global_position.x, at.y, global_position.z)
+	return {"distance": nearest, "position": at, "normal": outward.normalized() if outward.length_squared() > 0.000001 else -direction, "headshot": headshot}
+
+static func _ellipsoid_entry(origin: Vector3, direction: Vector3, center: Vector3, radii: Vector3) -> float:
+	var o := (origin - center) / radii
+	var d := direction / radii
+	var c := o.dot(o) - 1.0
+	if c <= 0.0:
+		return 0.0
+	var a := d.dot(d)
+	var b := o.dot(d)
+	var disc := b * b - a * c
+	if a <= 0.0 or disc < 0.0:
+		return -1.0
+	var t := (-b - sqrt(disc)) / a
+	return t if t >= 0.0 else -1.0
+
+static func _cylinder_entry(origin: Vector3, direction: Vector3, radius: float, top: float) -> float:
+	var radius_sq := radius * radius
+	if origin.x * origin.x + origin.z * origin.z <= radius_sq and origin.y >= 0.0 and origin.y <= top:
+		return 0.0
+	var best := -1.0
+	var a := direction.x * direction.x + direction.z * direction.z
+	if a > 0.000000001:
+		var b := origin.x * direction.x + origin.z * direction.z
+		var c := origin.x * origin.x + origin.z * origin.z - radius_sq
+		var disc := b * b - a * c
+		if disc >= 0.0:
+			var t := (-b - sqrt(disc)) / a
+			var y := origin.y + direction.y * t
+			if t >= 0.0 and y >= 0.0 and y <= top:
+				best = t
+	if absf(direction.y) > 0.000000001:
+		for plane in [top, 0.0]:
+			var t: float = (plane - origin.y) / direction.y
+			if t >= 0.0 and (best < 0.0 or t < best):
+				var p := origin + direction * t
+				if p.x * p.x + p.z * p.z <= radius_sq:
+					best = t
+	return best
 
 func show_hit_feedback(headshot: bool, lethal: bool) -> void:
 	# Presentation called only by an authority-confirmed hit (or its server RPC).
