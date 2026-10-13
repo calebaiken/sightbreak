@@ -1,0 +1,43 @@
+{
+  "game": "SIGHTBREAK",
+  "version": "0.1.0",
+  "engine": "Godot 4.7.2.stable.official.ed1daf0bf",
+  "build_type": "debug",
+  "built_at_utc": "2026-10-13T03:17:06.412009+00:00",
+  "artifacts": [
+    {
+      "path": "linux/sightbreak.x86_64",
+      "bytes": 73864520,
+      "sha256": "06e18858c1cc5eb28cb11e08535c12ce2a5c48def3d22d7a823808cbc17101b6"
+    },
+    {
+      "path": "android/sightbreak-debug.apk",
+      "bytes": 57105591,
+      "sha256": "2976214ba47290374be03c659d026a918251902132246b5e1a79cd7f11b29c66"
+    }
+  ],
+  "validation": {
+    "linux_menu_smoke": "passed; SIGHTBREAK_MAIN_READY screen=menu",
+    "linux_offline_demo": "passed; 120 frames headless, no runtime errors",
+    "linux_embedded_pck_resources": 38,
+    "test_harnesses_excluded": true,
+    "android_signature_schemes_verified": [
+      "v2",
+      "v3"
+    ],
+    "android_min_sdk": 24,
+    "android_target_sdk": 36,
+    "android_abis": [
+      "arm64-v8a",
+      "x86_64"
+    ],
+    "native_graphics_smoke": "FAILED: scripts/test_render.sh exits1 on two GL texture teardown errors; see docs/reports/native-render.log"
+  },
+  "limitations": [
+    "Headless smoke does not validate GPU rendering or device performance.",
+    "Native software rendering logged two unresolved GL texture leaks on shutdown; headless smoke passed.",
+    "Android APK is locally debug signed; no physical-device install/run validation.",
+    "iOS preset only; macOS, Xcode and developer signing required."
+  ],
+  "source_game_tree": "c665d7024e81a393c656824779d698f193338c2f"
+}
