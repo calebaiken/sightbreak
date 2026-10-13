@@ -1,0 +1,65 @@
+{
+  "conditions": {
+    "rtt_ms": 150.0,
+    "jitter_ms": 0,
+    "loss": 0,
+    "reorder": 0,
+    "clients": 2,
+    "seconds": 14,
+    "seed": 7301,
+    "port": 29400,
+    "out": "/workspace/reviews/movement-d1b94bc/rtt-150",
+    "no_prediction": false
+  },
+  "scope": "loopback real Godot processes; added RTT simulation; no device/cellular claim",
+  "traffic_window_seconds": 16.948535374998755,
+  "failures": [],
+  "traffic": {
+    "up": {
+      "received_packets": 875,
+      "forwarded_packets": 875,
+      "dropped_packets": 0,
+      "udp_payload_bytes": 192619
+    },
+    "down": {
+      "received_packets": 640,
+      "forwarded_packets": 640,
+      "dropped_packets": 0,
+      "udp_payload_bytes": 452049
+    }
+  },
+  "processes": {
+    "server": {
+      "rss_peak_kib": 184044,
+      "cpu_seconds": 1.42
+    },
+    "client-0": {
+      "rss_peak_kib": 184384,
+      "cpu_seconds": 1.11
+    },
+    "client-1": {
+      "rss_peak_kib": 184008,
+      "cpu_seconds": 1.05
+    }
+  },
+  "skipped_commands": 0,
+  "tick_usec_p50": 338,
+  "tick_usec_p95": 1261,
+  "tick_usec_max": 2506,
+  "tick_interval_usec_p50": 16666,
+  "tick_interval_usec_p95": 16710,
+  "tick_interval_usec_max": 26173,
+  "received_tick_gap_median": 3.0,
+  "render_position_error_p50_m": 2.2937215859997195e-07,
+  "render_position_error_p95_m": 0.0067014378642086606,
+  "prediction_error_at_ack_p50_m": 0.0,
+  "prediction_error_at_ack_p95_m": 0.524061381816864,
+  "first_movement_seconds": [
+    0.0333333333333334,
+    0.0333333333333334
+  ],
+  "corrections": 45,
+  "hard_corrections": 0,
+  "render_step_p95_m": 0.08920627832412698,
+  "render_samples_compared": 1579
+}
