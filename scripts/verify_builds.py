@@ -72,6 +72,8 @@ def main():
     badging = run("android-manifest", [str(android_tools / "aapt"), "dump", "badging", apk])
     for expected in ["versionCode='2'", "versionName='0.2.0-dev'", "sdkVersion:'24'", "targetSdkVersion:'36'", "'arm64-v8a'", "'x86_64'"]:
         assert expected in badging, f"Missing APK metadata: {expected}"
+    android_manifest = run("android-layout", [str(android_tools / "aapt"), "dump", "xmltree", apk, "AndroidManifest.xml"])
+    assert re.search(r"android:screenOrientation[^\n]*\(type 0x10\)0x0\b", android_manifest), "Android landscape orientation missing"
     with zipfile.ZipFile(apk) as archive:
         android_paths = [name for name in archive.namelist() if name.startswith("assets/")]
     no_test_harnesses(android_paths)
@@ -90,7 +92,7 @@ def main():
               "linux_pck_resources": len(linux_paths), "android_assets": len(android_paths), "ios_pck_resources": len(ios_paths),
               "test_harnesses_excluded": True, "android_signature_schemes": ["v2", "v3"],
               "android_version": "0.2.0-dev (2)", "android_min_sdk": 24, "android_target_sdk": 36,
-              "android_abis": ["arm64-v8a", "x86_64"], "ios_project_plist_and_unsigned_team": True,
+              "android_abis": ["arm64-v8a", "x86_64"], "android_landscape_manifest": True, "ios_project_plist_and_unsigned_team": True,
               "physical_device_installation": "NOT TESTED", "device_performance": "NOT TESTED", "xcode_build": "NOT TESTED"}
     write_json(logs / "results.json", report)
     print(json.dumps(report, indent=2))

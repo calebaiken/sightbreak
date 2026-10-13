@@ -27,7 +27,7 @@ with tempfile.TemporaryDirectory(prefix="ios-export-", dir=state) as temporary:
     presets = project / "export_presets.cfg"
     # Godot requires a nonempty team even for project-only exports. The sentinel is
     # stripped from generated files; it is never a real signing identity.
-    text = presets.read_text().replace('application/app_store_team_id=""', 'application/app_store_team_id="UNSIGNED00"')
+    text = re.sub(r'^application/app_store_team_id=.*$', 'application/app_store_team_id="UNSIGNED00"', presets.read_text(), flags=re.M)
     text = text.replace('application/export_project_only=true', 'application/export_project_only=true\napplication/delete_old_export_files_unconditionally=true')
     presets.write_text(text)
     for label, arguments in [("import", ["--editor", "--import", "--quit"]), ("export", ["--export-debug", "iOS", str(output / "sightbreak.zip")])]:
