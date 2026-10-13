@@ -146,12 +146,14 @@ def main():
         errors, gaps, rendered_steps, prediction_errors = [], [], [], []
         corrections, hard_corrections = 0, 0
         first_movement = []
+        final_client_states = []
         for index in range(args.clients):
             path = args.out / f'client-{index}.json'
             if not path.exists():
                 continue
             data = json.loads(path.read_text())
             first_movement.append(data.get("first_movement_seconds"))
+            final_client_states.append({"client": index, "state": data.get("state"), "last_snapshot_age_seconds": data.get("last_snapshot_age_seconds")})
             prediction_errors.extend(data.get('prediction_errors_m', []))
             corrections += data.get('corrections', 0)
             hard_corrections += data.get('hard_corrections', 0)
@@ -181,7 +183,7 @@ def main():
                   'received_tick_gap_median': statistics.median(gaps) if gaps else None,
                   'render_position_error_p50_m': percentile(errors, .5), 'render_position_error_p95_m': percentile(errors, .95),
                   'prediction_error_at_ack_p50_m': percentile(prediction_errors, .5), 'prediction_error_at_ack_p95_m': percentile(prediction_errors, .95),
-                  'first_movement_seconds': first_movement,
+                  'first_movement_seconds': first_movement, 'final_client_states': final_client_states,
                   'corrections': corrections, 'hard_corrections': hard_corrections,
                   'render_step_p95_m': percentile(rendered_steps, .95), 'render_samples_compared': len(errors)}
         (args.out / 'summary.json').write_text(json.dumps(report, indent=2) + '\n')

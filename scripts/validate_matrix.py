@@ -67,15 +67,28 @@ def main():
         run('protocol-matrix', ['bash', 'scripts/test_protocol_compat.sh', str(args.out / 'protocol')])
         run('hostile-handshake', ['bash', 'scripts/test_handshake_hardening.sh', str(args.out / 'handshake')])
     if args.backend:
-        import psycopg
-        from psycopg import sql
-        connection = dict(host='127.0.0.1', port=55432, user='sightbreak', password='sightbreak_local_only', dbname='postgres', autocommit=True)
+        def unavailable(label, error):
+            path = args.out / (label + '.log')
+            path.write_text('UNAVAILABLE: ' + str(error) + '\n')
+            records.append({'name': label, 'passed': False, 'unavailable': True, 'log': path.name})
+            (args.out / 'summary.json').write_text(json.dumps(report, indent=2) + '\n')
+            print(label + ': UNAVAILABLE (' + str(error) + ')', flush=True)
+        created = False
         database = 'sightbreak_matrix_' + secrets.token_hex(6) + '_test'
-        with psycopg.connect(**connection) as db: db.execute(sql.SQL('CREATE DATABASE {}').format(sql.Identifier(database)))
         try:
+            import psycopg
+            from psycopg import sql
+            connection = dict(host='127.0.0.1', port=55432, user='sightbreak', password='sightbreak_local_only', dbname='postgres', autocommit=True, connect_timeout=5)
+            with psycopg.connect(**connection) as db: db.execute(sql.SQL('CREATE DATABASE {}').format(sql.Identifier(database)))
+            created = True
             run('postgresql', [str(ROOT / '.venv/bin/python'), '-m', 'pytest', 'backend/tests', '-q'], {'PYTHONPATH': 'backend', 'DATABASE_URL': 'postgresql+psycopg://sightbreak:sightbreak_local_only@127.0.0.1:55432/' + database})
+        except Exception as error:
+            unavailable('postgresql-setup', error)
         finally:
-            with psycopg.connect(**connection) as db: db.execute(sql.SQL('DROP DATABASE {} WITH (FORCE)').format(sql.Identifier(database)))
+            if created:
+                try:
+                    with psycopg.connect(**connection) as db: db.execute(sql.SQL('DROP DATABASE {} WITH (FORCE)').format(sql.Identifier(database)))
+                except Exception as error: unavailable('postgresql-cleanup', error)
         for label, script in [('account-protocol', 'test_account_isolated.py'), ('account-capacity', 'test_admission_capacity.py'), ('outbox-crash', 'test_result_outbox.py'), ('native-economy', 'test_native_economy.py')]:
             run(label, [str(ROOT / '.venv/bin/python'), 'scripts/' + script])
         run('economy-conservation', ['python3', 'backend/simulate.py'])
