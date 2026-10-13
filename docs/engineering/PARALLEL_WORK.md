@@ -58,3 +58,7 @@ Original branches are preserved. No PR merge, force push, public deployment or d
 ### Durable results branch
 
 `codex/durable-match-results` stacks on lifecycle `e8b9d8e06bf0a2a2b8f356a7df5d85f4b6c665f8`. Shared integration only changes the match submission status to `queued_for_delivery` when the server-local outbox accepts a handoff. No visual resources or economy rates change. New Python worker and launcher supervision require persistent server-local storage; see `RESULT_OUTBOX.md`. Backend change only permits exact previously committed result acknowledgments after the freshness window. New stale results remain rejected. This branch requires the updated backend and launcher together.
+
+### Combat history foundation
+
+`codex/combat-history-foundation` stacks on durable results `e954158`. Adds one server-only helper, deterministic parity tests and a four-line diagnostic recording hook in `match.gd`; recording is opt-in, live damage does not use rewind. Reuses existing actor static hit-volume math without changing actor.gd, attachment names, animations or art. Graphics branch advanced to `9e8acdf` during the upstream recheck and remains untouched. Do not activate compensation without the separate fairness/integration gates in `LAG_COMPENSATION.md`.

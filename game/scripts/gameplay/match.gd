@@ -50,6 +50,7 @@ var _gate := SBInputGate.new()
 var _privacy := SBStatePrivacy.new()
 var _replica_buffer := SBSnapshotBuffer.new()
 var _simulation_tick := 0
+var _hit_history := SBHitHistory.new()
 var _snapshot_generation := 0
 var _input_stream := SBInputStream.new()
 var _prediction := SBMovementPrediction.new()
@@ -268,6 +269,9 @@ func _authority_tick(delta: float) -> void:
 		if _ranked_started and phase != "match_over" and _peer_actors.values().has(actor.actor_id):
 			if _elapsed - float(_last_activity.get(actor.actor_id, -100)) <= 10:
 				_activity_seconds[actor.actor_id] = float(_activity_seconds.get(actor.actor_id, 0)) + delta
+	# Opt-in diagnostics only: no live shot ever consults historical state.
+	if options.get("mode", "offline") == "server" and bool(options.get("record_hit_history", false)):
+		_hit_history.record(_simulation_tick, _snapshot_generation, actors)
 	if phase == "live":
 		_objective_tick(delta)
 		_check_elimination()
