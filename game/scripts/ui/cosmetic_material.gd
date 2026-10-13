@@ -8,7 +8,9 @@ const PALETTES := {
 	"Spectral Circuit": [Color("243c57"), Color("62cec7")],
 	"Blacksite": [Color("394536"), Color("c7b779")]
 }
-const CODE := """shader_type spatial;
+const ViewmodelShading = preload("res://scripts/gameplay/viewmodel_shading.gd")
+# The viewmodel snippets do nothing unless viewmodel_fov is set (first person only).
+const CODE := """shader_type spatial;""" + ViewmodelShading.UNIFORMS + """
 uniform vec4 base_paint : source_color;
 uniform vec4 accent_paint : source_color;
 uniform float pattern_seed = 1.0;
@@ -26,7 +28,10 @@ uniform sampler2D detail_albedo : source_color, hint_default_white, filter_linea
 // the rest of the model read as one graphite finish.
 uniform float detail_gain = 0.70;
 varying vec3 local_position;
-void vertex() { local_position = VERTEX; }
+void vertex() {
+ local_position = VERTEX;
+""" + ViewmodelShading.PROJECT + """
+}
 void fragment() {
  vec3 p = local_position;
  float phase = pattern_seed * 0.017;
@@ -55,6 +60,7 @@ void fragment() {
  METALLIC = mix(METALLIC, orm.b, baked);
  AO = occlusion;
  NORMAL_MAP = mix(vec3(0.5, 0.5, 1.0), texture(detail_normal, UV).rgb, detail);
+""" + ViewmodelShading.FILL + """
 }"""
 
 ## Assigns one finish to every paint part, binding baked detail when the parts

@@ -13,6 +13,7 @@ const CombatEffects = preload("res://scripts/gameplay/combat_effects.gd")
 const WeaponModel = preload("res://scripts/gameplay/weapon_model.gd")
 const Utility = preload("res://scripts/gameplay/utility.gd")
 const CosmeticMaterial = preload("res://scripts/ui/cosmetic_material.gd")
+const ViewmodelShading = preload("res://scripts/gameplay/viewmodel_shading.gd")
 const WALK_SPEED := 5.1
 const CROUCH_SPEED := 2.5
 const GRAVITY := 22.0
@@ -89,6 +90,16 @@ const GUN_REST := Vector3(0.235, -0.235, -0.42)
 var _gun_rest := GUN_REST
 ## Ejection port in weapon-node space when the model provides one (authored models).
 var _ejection_point := Vector3.INF
+# Authored first person: drawn with the viewmodel projection, with rigged arms whose
+# reload clip is seeked by reload progress and whose index finger follows the kick.
+var _viewmodel := false
+var _arms_player: AnimationPlayer
+var _arms_skeleton: Skeleton3D
+var _arms_time := 0.0
+var _trigger_bones: Array[int] = []
+var _trigger_rest: Array[Quaternion] = []
+## Magazine drop down its own well, in the rifle's space (metres at full extraction).
+const MAGAZINE_DROP := 0.23
 var _legs: Array[Node3D] = []
 var _flash: float = 0.0
 var _crouching: bool = false
@@ -424,6 +435,18 @@ func _build_gun() -> void:
 		_magazine_rest = _magazine.position
 	_muzzle = model.muzzle
 	_ejection_point = model.get("ejection", Vector3.INF)
+	_viewmodel = model.get("viewmodel", false)
+	_arms_player = model.get("arms_player")
+	_arms_skeleton = model.get("arms_skeleton")
+	_arms_time = 0.0
+	_trigger_bones.clear()
+	_trigger_rest.clear()
+	if is_instance_valid(_arms_skeleton):
+		for bone_name in ["R_index_2", "R_index_3"]:
+			var bone := _arms_skeleton.find_bone(bone_name)
+			if bone >= 0:
+				_trigger_bones.append(bone)
+				_trigger_rest.append(_arms_skeleton.get_bone_rest(bone).basis.get_rotation_quaternion())
 	_gun_color = Weapons.get_weapon(weapon_id)["color"]
 	_gun_rest = GUN_REST + (model.get("pivot", Vector3.ZERO) as Vector3)
 	_gun.position = _gun_rest
@@ -436,6 +459,8 @@ func apply_cosmetic(metadata: Dictionary) -> void:
 	if metadata.is_empty():
 		var paint := Color("26323b")
 		_finish.set_shader_parameter("base_paint", paint)
+	if _viewmodel:
+		ViewmodelShading.enable(_finish)
 	CosmeticMaterial.apply(_finish, _paint_parts)
 
 func _exit_tree() -> void:
@@ -817,6 +842,8 @@ func play_shot_effect() -> void:
 	_muzzle.rotation.z = float(Time.get_ticks_msec() % 29) * 0.22
 	if is_local:
 		var port: Vector3 = _gun.global_transform * _ejection_point if _ejection_point != Vector3.INF else _gun.global_position + global_basis * Vector3(0.065, 0.02, -0.11)
+		if _viewmodel:
+			port = _viewmodel_to_world(port)
 		CombatEffects.for_world(get_parent()).casing(port, global_basis.x)
 	if _shot_audio != null:
 		if _shot_audio.stream != _shot_streams[weapon_id]:
@@ -918,12 +945,35 @@ func tick_visual(delta: float) -> void:
 			reload_tilt *= 0.2
 		var bob_weight := 0.0 if reduced_motion else minf(speed / WALK_SPEED, 1.0)
 		var equip_motion := _equip_blend * (0.25 if reduced_motion else 1.0)
-		_gun.position = Vector3(_gun_rest.x + sin(_bob) * 0.006 * bob_weight - _sway.x, _gun_rest.y + absf(cos(_bob)) * 0.006 * bob_weight - reload_tilt * 0.13 - _sway.y - equip_motion * 0.19, _gun_rest.z + _kick * (0.075 if weapon_id == "marksman" else 0.046) + equip_motion * 0.08)
-		_gun.rotation = Vector3(_kick * (0.13 if weapon_id == "sidearm" else 0.065) - reload_tilt * 0.38 - equip_motion * 0.48, -_sway.x * 1.8, reload_tilt * 0.38 - _sway.x)
+		# With rigged arms the support hand performs the reload, so the weapon only cants
+		# toward the camera to show the magazine well instead of dropping out of view.
+		var drop := 0.05 if is_instance_valid(_arms_player) else 0.13
+		var tip := 0.22 if is_instance_valid(_arms_player) else 0.38
+		var cant := 0.30 if is_instance_valid(_arms_player) else 0.38
+		_gun.position = Vector3(_gun_rest.x + sin(_bob) * 0.006 * bob_weight - _sway.x, _gun_rest.y + absf(cos(_bob)) * 0.006 * bob_weight - reload_tilt * drop - _sway.y - equip_motion * 0.19, _gun_rest.z + _kick * (0.075 if weapon_id == "marksman" else 0.046) + equip_motion * 0.08)
+		_gun.rotation = Vector3(_kick * (0.13 if weapon_id == "sidearm" else 0.065) - reload_tilt * tip - equip_motion * 0.48, -_sway.x * 1.8, reload_tilt * cant - _sway.x)
 		if is_instance_valid(_magazine):
-			# Pull down, seat the same magazine, then return to ready. Only visual.
+			# Pull down the well, seat the same magazine, then return to ready. Only
+			# visual. The rigged support hand's reload clip follows this curve.
 			var extraction := sin(clampf((reload_progress - 0.12) / 0.72, 0, 1) * PI) if reload_remaining > 0 else 0.0
-			_magazine.position = _magazine_rest + Vector3(-extraction * 0.04, -extraction * 0.24, 0)
+			_magazine.position = _magazine_rest + _magazine.basis * Vector3(0, -extraction * MAGAZINE_DROP, 0)
+		if is_instance_valid(_arms_player):
+			# The clip's first frame is the hold, so 0 returns the hands to the rifle.
+			var clip_time := reload_progress if reload_remaining > 0 else 0.0
+			if clip_time != _arms_time:
+				_arms_time = clip_time
+				_arms_player.seek(clip_time, true)
+		if is_instance_valid(_arms_skeleton):
+			var pull := clampf(_kick * 1.5, 0.0, 1.0) * 0.32
+			for i in range(_trigger_bones.size()):
+				_arms_skeleton.set_bone_pose_rotation(_trigger_bones[i], _trigger_rest[i] * Quaternion(Vector3.RIGHT, -pull * (1.0 if i == 0 else 0.6)))
+
+## A point of the viewmodel moved to where it appears on screen under the world
+## camera's projection (the viewmodel draws with a narrower one), at the same depth.
+func _viewmodel_to_world(point: Vector3) -> Vector3:
+	var local := camera.global_transform.affine_inverse() * point
+	var spread := tan(deg_to_rad(camera.fov) * 0.5) / tan(deg_to_rad(ViewmodelShading.FOV) * 0.5)
+	return camera.global_transform * Vector3(local.x * spread, local.y * spread, local.z)
 
 func snapshot() -> Dictionary:
 	return {"id": actor_id, "team": team, "name": display_name, "position": global_position, "velocity": velocity, "yaw": yaw, "pitch": pitch, "recoil": recoil, "health": health, "alive": alive, "kills": kills, "deaths": deaths, "assists": assists, "credits": credits, "weapon": weapon_id, "ammo": ammo, "reserve": reserve, "reload": reload_remaining, "grenades": grenades, "smokes": smokes, "crouch": _crouching, "inventory": inventory.duplicate()}

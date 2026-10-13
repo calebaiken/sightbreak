@@ -1,6 +1,7 @@
 extends SceneTree
 ## Fixed-view cost of the first-person rifle: no weapon, procedural rifle, authored
-## rifle, alternated over several rounds on the same frame. A software-render
+## rifle with the static v2 hands, and authored rifle with the rigged arms (the
+## default), alternated over several rounds on the same frame. A software-render
 ## diagnostic for relative cost only; it is not a device frame-rate measurement.
 ## Needs a native display. --rounds=N (default 3), --samples=N (default 40).
 const Actor = preload("res://scripts/gameplay/actor.gd")
@@ -53,10 +54,11 @@ func _run() -> void:
 	actor.buy_weapon("rifle")
 	actor.yaw = 0.35
 	actor.rotation.y = 0.35
-	var results := {"none": [], "procedural": [], "authored": []}
+	var results := {"none": [], "procedural": [], "static_hands": [], "authored": []}
 	for round_index in rounds:
-		for variant in ["none", "procedural", "authored"]:
-			WeaponModel.use_authored = variant == "authored"
+		for variant in ["none", "procedural", "static_hands", "authored"]:
+			WeaponModel.use_authored = variant in ["static_hands", "authored"]
+			WeaponModel.use_rigged_arms = variant == "authored"
 			actor._build_gun()
 			actor._gun.visible = variant != "none"
 			results[variant].append(await _measure(actor))

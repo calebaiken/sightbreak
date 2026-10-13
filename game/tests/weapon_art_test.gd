@@ -4,8 +4,11 @@ extends SceneTree
 const Actor = preload("res://scripts/gameplay/actor.gd")
 const WeaponModel = preload("res://scripts/gameplay/weapon_model.gd")
 const CosmeticMaterial = preload("res://scripts/ui/cosmetic_material.gd")
+const ViewmodelShading = preload("res://scripts/gameplay/viewmodel_shading.gd")
 const RIFLE_TRIANGLES := 32000
 const HAND_TRIANGLES := 10000
+const ARMS_TRIANGLES := 12000
+const ARMS_BONES := 34
 var checks := 0
 var failures: Array[String] = []
 
@@ -125,7 +128,58 @@ func _run() -> void:
 	# The buttstock is behind the camera in first person, so the viewmodel leaves it out
 	# (it would sweep into the frame during reload and equip, and at wider aspects).
 	check(not actor._gun.has_node("stock") and actor._gun.get_node("body").mesh.get_aabb().end.z < 0.22, "first person omits the buttstock")
+
+	# Rigged arms: one skinned mesh, the skeleton and the reload clip the actor seeks.
+	check(actor._gun.has_node("arms") and not actor._gun.has_node("hands"), "first person uses the rigged arms")
+	var skeleton: Skeleton3D = actor._arms_skeleton
+	var player: AnimationPlayer = actor._arms_player
+	check(skeleton != null and skeleton.get_bone_count() == ARMS_BONES and skeleton.find_bone("L_hand") >= 0 and skeleton.find_bone("R_index_3") >= 0, "arms skeleton has both arms' %d bones" % ARMS_BONES)
+	var arms_mesh: MeshInstance3D = actor._gun.get_node("arms").find_children("*", "MeshInstance3D", true, false).front()
+	check(arms_mesh.skin != null and _triangles(arms_mesh.mesh) <= ARMS_TRIANGLES, "arms are one skinned mesh within %d triangles (%d)" % [ARMS_TRIANGLES, _triangles(arms_mesh.mesh)])
+	for map in ["albedo", "orm", "normal"]:
+		check(_texture_ok("res://assets/weapons/relay_ar/relay_ar_arms_%s.png" % map, 1024), "arms %s is square, power of two, at most 1024" % map)
+	check(player != null and player.has_animation("reload") and is_equal_approx(player.get_animation("reload").length, 1.0), "the reload clip is one second long, seeked by reload progress")
+	# Viewmodel drawing: first person uses the narrower projection, inspection does not.
+	check(arms_mesh.material_override is ShaderMaterial and arms_mesh.material_override.get_shader_parameter("viewmodel_fov") == ViewmodelShading.FOV, "arms draw with the viewmodel projection")
+	check((actor._gun.get_node("body") as MeshInstance3D).material_override.get_shader_parameter("viewmodel_fov") == ViewmodelShading.FOV and actor._finish.get_shader_parameter("viewmodel_fov") == ViewmodelShading.FOV, "rifle body and finish draw with the viewmodel projection in first person")
+	var inspected := Node3D.new()
+	root.add_child(inspected)
+	WeaponModel.build(inspected, "rifle", false)
+	check((inspected.get_node("body") as MeshInstance3D).material_override is ORMMaterial3D, "inspection keeps the plain material and the world projection")
+	inspected.queue_free()
+	# The clip: the support hand leaves the handguard for the magazine, follows it down
+	# its well and returns exactly to the hold. Positions are in the skeleton's space.
+	var hand := skeleton.find_bone("L_hand")
+	var hold: Vector3 = skeleton.get_bone_global_pose(hand).origin
+	var reload_time: float = 2.25
+	actor.reload_remaining = reload_time * (1.0 - 0.45)
+	actor.tick_visual(0.016)
+	var low: Vector3 = skeleton.get_bone_global_pose(hand).origin
+	check(low.y < hold.y - 0.15, "mid-reload the support hand is down with the magazine (%.2f m below the hold)" % (hold.y - low.y))
+	var magazine_drop: Vector3 = actor._magazine.position - actor._magazine_rest
+	check(magazine_drop.length() > 0.15 and absf((actor._magazine.basis.inverse() * magazine_drop).normalized().y + 1.0) < 0.001, "the magazine drops straight down its own well")
+	actor.reload_remaining = 0
+	actor.tick_visual(0.016)
+	check(skeleton.get_bone_global_pose(hand).origin.distance_to(hold) < 0.001, "after the reload the support hand is back on the handguard")
+	# Trigger: the index finger curls with the kick and relaxes after it.
+	var index := skeleton.find_bone("R_index_2")
+	var rest_pose: Quaternion = skeleton.get_bone_pose_rotation(index)
+	actor._kick = 1.0
+	actor.tick_visual(0.001)
+	var pulled: Quaternion = skeleton.get_bone_pose_rotation(index)
+	check(rest_pose.angle_to(pulled) > 0.2, "firing curls the trigger finger (%.2f rad)" % rest_pose.angle_to(pulled))
+	actor._kick = 0.0
+	actor.tick_visual(0.016)
+	check(rest_pose.angle_to(skeleton.get_bone_pose_rotation(index)) < 0.01, "the trigger finger returns to rest")
 	actor.queue_free()
+	# Without the rigged arms the static hands remain the fallback.
+	WeaponModel.use_rigged_arms = false
+	var static_hands := Node3D.new()
+	root.add_child(static_hands)
+	var fallback_hands: Dictionary = WeaponModel.build(static_hands, "rifle", true)
+	check(static_hands.has_node("hands") and not static_hands.has_node("arms") and fallback_hands.arms_player == null, "static hands remain the fallback without the rigged arms")
+	static_hands.queue_free()
+	WeaponModel.use_rigged_arms = true
 	holder.queue_free()
 	fallback.queue_free()
 	await process_frame

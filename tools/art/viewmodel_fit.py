@@ -1,17 +1,20 @@
 """Fit the first-person placement of an authored weapon (weapon_model.gd constants).
 
-python3 viewmodel_fit.py
+python3 viewmodel_fit.py [--fov 54]
 
-Projects landmarks of the weapon (model space, Blender axes) through the game camera
-(82 degree vertical field of view, 16:9) and searches pitch, yaw and an offset in the
+Projects landmarks of the weapon (model space, Blender axes) through the viewmodel
+projection (SBViewmodelShading.FOV, 54 degrees vertical; 82 is the world camera, which
+drew the viewmodel before it had its own projection) at 16:9 and searches pitch, yaw
+and an offset in the
 weapon node's space for the best match to screen targets given as fractions of the
 frame. Roll and scale are fixed per run. Prints the screen position of every landmark
 so the layout can be checked, then confirm in engine with tests/weapon_art_capture.gd.
 Needs NumPy only. Re-run after changing the generator's proportions.
 """
-import math, itertools, random
+import math, itertools, random, sys
 import numpy as np
-W,H=1280,720; T=math.tan(math.radians(41)); A=W/H
+FOV=float(sys.argv[sys.argv.index('--fov')+1]) if '--fov' in sys.argv else 54.0
+W,H=1280,720; T=math.tan(math.radians(FOV/2)); A=W/H
 GUN=np.array([0.235,-0.235,-0.42])
 # Blender model (x,y,z) -> Godot model space (x, z, -y)
 def g(b): return np.array([b[0], b[2], -b[1]])
@@ -26,7 +29,16 @@ def cam_point(p, s, rot, off):
 def screen(q):
     if q[2] > -0.05: return None
     return np.array([W/2*(1+q[0]/(-q[2])/(T*A)), H/2*(1-q[1]/(-q[2])/T)])
-TARGET={'muzzle':(0.55,0.53),'palm':(0.60,0.70),'optic':(0.76,0.60),'grip':(0.90,0.97)}
+# A CS-style hold: muzzle just right of and below the crosshair, the support hand in the
+# lower middle, the optic in the right third and the firing hand at the lower right edge.
+TARGET={'muzzle':(0.57,0.58),'palm':(0.62,0.80),'optic':(0.80,0.63),'grip':(0.90,1.02)} if FOV<70 else \
+       {'muzzle':(0.55,0.53),'palm':(0.60,0.70),'optic':(0.76,0.60),'grip':(0.90,0.97)}
+# Where the bore's direction meets the horizon on screen. Near the crosshair the rifle
+# reads as aimed; well to the left (a large yaw) it reads as held out for display.
+VANISH=(0.50,0.47) if FOV<70 else None
+def vanishing(rot):
+    d=euler_yxz(*rot)@g((0,1,0))
+    return None if d[2]>-1e-3 else np.array([W/2*(1+d[0]/(-d[2])/(T*A)), H/2*(1-d[1]/(-d[2])/T)])
 def cost(params, roll, s):
     pitch,yaw,ox,oy,oz=params
     rot=(pitch,yaw,roll); off=np.array([ox,oy,oz]); c=0
@@ -34,6 +46,10 @@ def cost(params, roll, s):
         sp=screen(cam_point(P[k],s,rot,off))
         if sp is None: return 1e9
         c+=np.hypot(sp[0]-tx*W, sp[1]-ty*H)
+    if VANISH is not None:
+        vp=vanishing(rot)
+        if vp is None: return 1e9
+        c+=0.5*np.hypot(vp[0]-VANISH[0]*W, vp[1]-VANISH[1]*H)
     # the stock end must be behind the camera plane or off-screen
     sp=screen(cam_point(P['stock_end'],s,rot,off))
     if sp is not None and 0<sp[0]<W and 0<sp[1]<H: c+=400
@@ -56,4 +72,5 @@ if __name__=='__main__':
             c,x=fit(roll,s)
             pitch,yaw,ox,oy,oz=x; rot=(pitch,yaw,roll); off=np.array([ox,oy,oz])
             pos={k:(None if screen(cam_point(P[k],s,rot,off)) is None else tuple(int(v) for v in screen(cam_point(P[k],s,rot,off)))) for k in P}
-            print(f"roll={roll} s={s} err={c:.0f} pitch={pitch:.3f} yaw={yaw:.3f} off=({ox:.3f},{oy:.3f},{oz:.3f})", pos)
+            vp=vanishing(rot)
+            print(f"roll={roll} s={s} err={c:.0f} pitch={pitch:.3f} yaw={yaw:.3f} off=({ox:.3f},{oy:.3f},{oz:.3f}) vanish={None if vp is None else tuple(int(v) for v in vp)}", pos)

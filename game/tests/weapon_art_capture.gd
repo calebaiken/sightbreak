@@ -68,6 +68,10 @@ func _run() -> void:
 	actor.reload_remaining = 1.25
 	actor.tick_visual(0.016)
 	await shot("03-yard-backlit-reload")
+	# The support hand on the magazine as it starts to pull it (15 % through the reload).
+	actor.reload_remaining = 2.25 * 0.85
+	actor.tick_visual(0.016)
+	await shot("03b-yard-backlit-reload-grab")
 	actor.reload_remaining = 0
 	pose(Vector3(3, 0.05, -12), 0.35)
 	await shot("04-yard-sunlit-ready")

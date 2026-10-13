@@ -232,7 +232,7 @@ func _run() -> void:
 	var model_root := Node3D.new()
 	var inspection: Dictionary = Actor.WeaponModel.build(model_root, "rifle", false)
 	check(inspection.paint.size() == 2 and inspection.paint[0].mesh == player._paint_parts[0].mesh and inspection.paint[1].mesh == player._paint_parts[1].mesh, "inspection shares the exact weapon geometry (same mesh resources) with first person")
-	check(not model_root.has_node("hands") and player._gun.has_node("hands"), "only first person has hand meshes")
+	check(not model_root.has_node("hands") and not model_root.has_node("arms") and (player._gun.has_node("arms") or player._gun.has_node("hands")), "only first person has hand meshes (rigged arms, or the static hands as fallback)")
 	model_root.free()
 	player.apply_cosmetic({})
 	check(player._finish.get_shader_parameter("base_paint") == Color("26323b"), "default receiver retains matte graphite identity")
