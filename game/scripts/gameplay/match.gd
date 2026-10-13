@@ -10,7 +10,7 @@ signal elimination_reported(killer_id: int, victim_id: int, headshot: bool)
 ## gameplay RPC. Godot routes RPCs by method index, so builds whose RPC methods,
 ## arguments or snapshot meaning differ must never be admitted together; they would
 ## stall silently. Bump this with any such change. 0.3.0 had no handshake.
-const PROTOCOL_VERSION := 2
+const PROTOCOL_VERSION := 3
 const HANDSHAKE_SECONDS := 5.0
 const JOIN_TIMEOUT_SECONDS := 20.0
 const HELLO_LIMIT := 512
@@ -47,6 +47,7 @@ var _last_peer_input: Dictionary = {}
 var _damage_history: Dictionary = {}
 var _interactions: Dictionary = {}
 var _gate := SBInputGate.new()
+var _privacy := SBStatePrivacy.new()
 var _local_input: Dictionary = {"move": Vector2.ZERO, "look": Vector2.ZERO}
 var _snapshot_clock: float = 0.0
 var _input_clock: float = 0.0
@@ -230,8 +231,8 @@ func _authority_tick(delta: float) -> void:
 	_snapshot_clock -= delta
 	if options.get("mode", "offline") == "server" and _snapshot_clock <= 0:
 		_snapshot_clock = 0.05
-		var packed: PackedByteArray = var_to_bytes(_snapshot()).compress(FileAccess.COMPRESSION_DEFLATE)
 		for peer_id: int in _active_peers():
+			var packed: PackedByteArray = var_to_bytes(_snapshot(int(_peer_actors[peer_id]))).compress(FileAccess.COMPRESSION_DEFLATE)
 			_snapshot_rpc.rpc_id(peer_id, packed)
 
 func _is_bot(id: int) -> bool:
@@ -291,7 +292,7 @@ func _objective_tick(delta: float) -> void:
 			if actor.alive and actor.team == 0 and actor.position.distance_to(objective_position) < 2:
 				objective_carrier = actor.actor_id
 				objective_state = "carried"
-				_announce("Relay device recovered")
+				_announce_team("Relay device recovered", 0)
 				break
 	for actor: SBActor in actors.values():
 		var eligible: bool = actor.alive and bool(actor.input_state.get("interact", false)) and (actor.input_state.get("move", Vector2.ZERO) as Vector2).length() < 0.2
@@ -395,7 +396,7 @@ func _eliminated(victim: int, killer: int) -> void:
 		objective_state = "dropped"
 		objective_position = killed.position
 		objective_carrier = 0
-		_announce("Relay device dropped")
+		_announce_team("Relay device dropped", 0)
 
 func _report_elimination(killer: int, victim: int, headshot: bool) -> void:
 	elimination_reported.emit(killer, victim, headshot)
@@ -414,7 +415,16 @@ func _shot(id: int, origin: Vector3, _direction: Vector3) -> void:
 	_last_activity[id] = _elapsed
 	if options.get("mode", "offline") == "server":
 		for peer_id: int in _active_peers():
-			_shot_rpc.rpc_id(peer_id, id)
+			var recipient: int = _peer_actors[peer_id]
+			var viewer := SBStatePrivacy.observer(self, recipient)
+			if viewer == null:
+				continue
+			if actors[recipient].team == actors[id].team or _privacy.observable(self, viewer, actors[id], SBStatePrivacy.viewpoint(self, recipient)):
+				_shot_rpc.rpc_id(peer_id, id, origin, actors[id].weapon_id)
+			elif viewer.global_position.distance_to(origin) <= 65:
+				# A sound supplies an approximate audible location, never a hidden ID
+				# or continuous tracking stream. Preserve the existing 65 m audio range.
+				_audible_shot_rpc.rpc_id(peer_id, origin.snapped(Vector3.ONE), actors[id].weapon_id)
 
 func _confirmed_hit(id: int, headshot: bool, lethal: bool) -> void:
 	# Emitted only after authority ray damage; never trust a client hit claim.
@@ -432,7 +442,9 @@ func _hit_feedback_rpc(id: int, headshot: bool, lethal: bool) -> void:
 func _confirmed_impact(at: Vector3, normal: Vector3, hit_actor: bool) -> void:
 	if not _authority or options.get("mode", "offline") != "server": return
 	for peer_id: int in _active_peers():
-		_impact_rpc.rpc_id(peer_id, at, normal, hit_actor)
+		var recipient: int = _peer_actors[peer_id]
+		if _privacy.point_visible(self, SBStatePrivacy.observer(self, recipient), at + normal * 0.02, SBStatePrivacy.viewpoint(self, recipient)):
+			_impact_rpc.rpc_id(peer_id, at, normal, hit_actor)
 
 @rpc("authority", "call_remote", "unreliable", 4)
 func _impact_rpc(at: Vector3, normal: Vector3, hit_actor: bool) -> void:
@@ -567,7 +579,7 @@ func _update_spectator() -> void:
 		if actor:
 			for teammate: SBActor in actors.values():
 				if teammate.alive and teammate.team == actor.team:
-					_spectator.global_position = teammate.global_position + Vector3(sin(teammate.yaw) * 3, 2.8, cos(teammate.yaw) * 3)
+					_spectator.global_position = SBStatePrivacy.spectator_position(get_world_3d(), teammate)
 					_spectator.look_at(teammate.global_position + Vector3(0, 1.3, 0))
 					break
 	elif actor.camera:
@@ -577,6 +589,15 @@ func _announce(message: String) -> void:
 	notification.emit(message)
 	if options.get("mode", "offline") == "server":
 		for peer_id: int in _active_peers():
+			_notice_rpc.rpc_id(peer_id, message)
+
+func _announce_team(message: String, team: int) -> void:
+	if options.get("mode", "offline") != "server":
+		if local_actor() != null and local_actor().team == team:
+			notification.emit(message)
+		return
+	for peer_id: int in _active_peers():
+		if actors[_peer_actors[peer_id]].team == team:
 			_notice_rpc.rpc_id(peer_id, message)
 
 func _active_peers() -> Array:
@@ -720,6 +741,8 @@ func _server_disconnected() -> void:
 	notification.emit("Server disconnected. Attempting to reconnect…")
 
 func _client_tick(delta: float) -> void:
+	for utility: SBUtility in _remote_utilities.values():
+		utility.set_replica_lifetime(utility._lifetime - delta)
 	var actor: SBActor = local_actor()
 	if actor and actor.alive:
 		var look: Vector2 = _local_input.get("look", Vector2(actor.yaw, actor.pitch))
@@ -805,7 +828,7 @@ func _join_rpc(player_name: String, token: String, join_ticket: String = "") -> 
 	_last_activity[id] = _elapsed
 	var clean_name := SBDesign.plain_line(player_name, 24)
 	actors[id].display_name = clean_name if not clean_name.is_empty() else "Operator"
-	_welcome_rpc.rpc_id(peer_id, id, new_token, _snapshot())
+	_welcome_rpc.rpc_id(peer_id, id, new_token, _snapshot(id))
 	_announce(actors[id].display_name + " joined Relay Yard")
 	if phase == "waiting" and _peer_actors.size() == 10 and _account_ids.size() == 10:
 		_start_ranked_match()
@@ -872,9 +895,31 @@ func _snapshot_rpc(data: PackedByteArray) -> void:
 			_apply_snapshot(unpacked)
 
 @rpc("authority", "call_remote", "unreliable", 4)
-func _shot_rpc(id: int) -> void:
-	if actors.has(id):
+func _shot_rpc(id: int, at: Vector3 = Vector3.ZERO, weapon: String = "") -> void:
+	if not _authority and actors.has(id) and actors[id].visible:
 		actors[id].play_shot_effect()
+	elif not _authority:
+		# Event and snapshot channels may arrive in either order at a corner.
+		# Preserve authorized audio without exposing or moving a hidden actor.
+		_audible_shot_rpc(at, weapon)
+
+@rpc("authority", "call_remote", "unreliable", 4)
+func _audible_shot_rpc(at: Vector3, weapon: String) -> void:
+	if _authority or not at.is_finite() or at.length() > 1024 or not SBWeapons.DATA.has(weapon):
+		return
+	# Bound transient audio nodes even when delayed unreliable packets bunch up.
+	if get_tree().get_nodes_in_group("network_shot_audio").size() >= 24:
+		return
+	var audio := AudioStreamPlayer3D.new()
+	audio.stream = SBActor._shot_streams.get(weapon)
+	audio.max_distance = 65
+	audio.unit_size = 9
+	audio.volume_db = -10
+	add_child(audio)
+	audio.add_to_group("network_shot_audio")
+	audio.position = at
+	audio.finished.connect(audio.queue_free)
+	audio.play()
 
 @rpc("authority", "call_remote", "reliable")
 func _rejected_rpc(message: String) -> void:
@@ -886,7 +931,11 @@ func _rejected_rpc(message: String) -> void:
 func _notice_rpc(message: String) -> void:
 	notification.emit(message)
 
-func _snapshot() -> Dictionary:
+func _snapshot(recipient_id: int = 0) -> Dictionary:
+	if recipient_id != 0:
+		return _privacy.snapshot(self, recipient_id)
+	# Full state is retained solely for authority/offline rule tests. Both wire
+	# call sites always pass a server-bound recipient ID.
 	var utilities: Array = []
 	for child: Node in get_children():
 		if child is SBUtility:
@@ -897,6 +946,8 @@ func _snapshot() -> Dictionary:
 	return {"actors": states, "utilities": utilities, "humans": _peer_actors.values(), "contributions": objective_contributions, "reward_status": reward_status, "phase": phase, "round": round_number, "attack": attack_score, "defend": defend_score, "time": time_left, "objective": objective_state, "objective_timer": objective_timer, "objective_position": objective_position, "carrier": objective_carrier, "interactions": _interactions, "elapsed": _elapsed}
 
 func _apply_snapshot(data: Dictionary) -> void:
+	if not SBSnapshotSchema.valid(data):
+		return
 	reward_status = str(data.get("reward_status", "unranked"))
 	_connected_actor_ids = data.get("humans", [])
 	phase = data.phase
@@ -913,9 +964,27 @@ func _apply_snapshot(data: Dictionary) -> void:
 	interaction_progress = progress / (DEFUSE_SECONDS if objective_state == "planted" else PLANT_SECONDS)
 	for state: Dictionary in data.actors:
 		var id: int = int(state.get("id", state.get("actor_id", 0)))
+		var newly_spawned := not actors.has(id)
 		if not actors.has(id):
 			_spawn_actor(id, int(state.team), str(state.get("name", "Operator")))
-		actors[id].apply_snapshot(state, 0.05)
+		var actor: SBActor = actors[id]
+		var relevant: bool = state.get("relevant", true)
+		if not relevant:
+			# Erase cached spatial/private state on revocation. A modified client
+			# can remember old observations, but receives no fresh hidden updates.
+			actor.apply_snapshot({"team": state.team, "alive": state.alive, "kills": state.kills, "deaths": state.deaths, "assists": state.assists, "position": Vector3.ZERO, "velocity": Vector3.ZERO, "health": 0, "credits": 0, "ammo": 0, "reserve": 0, "grenades": 0, "smokes": 0, "inventory": []}, 1.0)
+		else:
+			var presentation := state.duplicate()
+			for field: String in ["health", "credits", "ammo", "reserve", "grenades", "smokes", "reload"]:
+				if not presentation.has(field):
+					presentation[field] = 0
+			if not presentation.has("inventory"):
+				presentation.inventory = []
+			actor.apply_snapshot(presentation, 1.0 if newly_spawned or not actor.visible else 0.05)
+		actor.display_name = state.name
+		actor.visible = relevant
+		actor.collision_layer = 2 if relevant else 0
+		actor.collision_mask = 3 if relevant else 0
 	objective_contributions = data.get("contributions", {}).duplicate()
 	_sync_utility_visuals(data.get("utilities", []))
 	if phase == "match_over":
@@ -936,13 +1005,14 @@ func _sync_utility_visuals(states: Array) -> void:
 		var visual: SBUtility = _remote_utilities[id]
 		visual.position = state.position
 		if bool(state.detonated) and not visual._detonated:
+			# A newly relevant mature cloud must not replay its birth animation.
+			if visual.kind == "smoke":
+				visual._cloud_elapsed = maxf(0, 12.0 - float(state.get("life", 12.0)))
 			visual._detonate()
 		# Replica physics is off, so the server's remaining lifetime drives the
 		# fade; visuals then thin exactly as the authoritative concealment shrinks.
 		if visual._detonated and state.has("life"):
-			visual._lifetime = float(state.life)
-			if visual.kind == "smoke":
-				visual._apply_dissipation()
+			visual.set_replica_lifetime(float(state.life))
 	for id: int in _remote_utilities.keys():
 		if not present.has(id):
 			_remote_utilities[id].queue_free()
