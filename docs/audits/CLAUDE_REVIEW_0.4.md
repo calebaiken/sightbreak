@@ -19,7 +19,8 @@ Companion to [CLAUDE_AUDIT_0.3.md](CLAUDE_AUDIT_0.3.md), which records the read-
 | `fa65b15` | Transfer hall header in front of its columns | L-9 (remaining part) |
 | `fd5776b` | Smoke cloud presentation; concealment shrinks with dissipation | Visual review's "spherical smoke" defect |
 | `82ce83f` | Contact occlusion and distance haze | Floating-cargo look on Low; depth separation |
-| `2237780` and later | Design-system document, evidence, this report, documentation corrections | — |
+| `2237780`, `b477fa7`, `f8ca47f` | Design-system document, documentation corrections, post-fix probes, this report and evidence | — |
+| `9c04d59` | Fixes for the separate reviewer's findings (§7): one-way smoke, client smoke fade, display-name injection, saved touch layouts, interrupted-fire carry, `/history` offsets | R-1, R-2, R-4, R-6, R-9, R-10 |
 
 37 files changed across the branch before this report. No new runtime dependencies, assets with external licenses, or fonts. The economy remains earned-currency only; reward generation is unchanged and still server-committed before any client reveal.
 
@@ -30,17 +31,20 @@ Companion to [CLAUDE_AUDIT_0.3.md](CLAUDE_AUDIT_0.3.md), which records the read-
 - **M-9** Rejected or idle ENet peers are not disconnected.
 - **M-2 (death)** Weapons still survive death into the next round. Whether dead players drop weapons is a game-design decision, not a defect I should decide; halftime now resets loadouts.
 - **L-4** Input gate still drops a newer packet within 12 ms. **L-7** One inactive participant still voids rewards for everyone. **L-8** Crouch still squashes the whole model (hit volumes now follow the squash). **L-10** Bot navigation cost unchanged (110 µs/call).
+- **R-3 (reviewer)** The body hit volume keeps the 0.3 capsule's 0.31 m footprint below the head. It does not match the drawn legs and arms: it adds empty air around the legs, misses the outer upper arms, and is wider than the drawing from the side. Only the head volume was rebuilt from the drawn geometry. Per-limb volumes would change time-to-kill, so they are a balance decision.
+- **R-5 (reviewer)** Halftime funds (1,200) still afford an SMG (1,100), so bots rebuy at once after the loadout reset. Whether the second half should open with pistols only is an economy decision.
+- **R-7 (reviewer)** There is no protocol version check, so any RPC change, including the new kill-feed RPC, silently breaks mixed-version play.
 - Operator and weapon models, materials and animation were not reworked; they remain the largest visual gap.
 
 ## 2. Verification
 
-All on the same host as the audit (4 vCPU cloud container, Godot 4.7.2 official, Xvfb + Mesa llvmpipe 25.2.8, PostgreSQL 16.15 instead of the pinned 17). Full matrix on `82ce83f`, then re-run on the head of the branch before the PR:
+All on the same host as the audit (4 vCPU cloud container, Godot 4.7.2 official, Xvfb + Mesa llvmpipe 25.2.8, PostgreSQL 16.15 instead of the pinned 17). The full matrix passed on `82ce83f`, then again on the tree with the reviewer fixes (§7):
 
 | Suite | Baseline `e67f2c8` | Branch | Result |
 | --- | --- | --- | --- |
-| `scripts/validate.sh` native assertions | 443 | **535** (+26 weapon integrity, +21 render budget, +20 smoke presentation, +25 UX contract) | exit 0, no script errors |
+| `scripts/validate.sh` native assertions | 443 | **548** (+28 weapon integrity, +21 render budget, +26 smoke presentation, +30 UX contract) | exit 0, no script errors |
 | Natural bot match (`validate.sh`) | 12 rounds, 5–7 | 10 rounds, 3–7, 64 kills, halftime, plant, one report | pass |
-| Backend PostgreSQL tests | 39 | **46** (+7) | 46 passed |
+| Backend PostgreSQL tests | 39 | **48** (+9) | 48 passed |
 | `test_native_economy.py` (real HTTP) | 14/14 | 14/14 | pass |
 | `test_render.sh` (native lifecycle + cosmetic lifecycle) | 11 + 19 | 11 + 19, texture bytes flat | pass |
 | `test_account_network.py` | pass | pass | pass |
@@ -113,7 +117,7 @@ Same rubric as the audit: **5** = happy path works with significant verified def
 | Category | Baseline | Branch | Basis | Not established |
 | --- | ---: | ---: | --- | --- |
 | Architecture & maintainability | 6.5 | 6.5 | Shared tokens, radar extracted, procedural meshes cached. But `main.gd` is still ~1,100 lines and `match.gd` is unchanged. | — |
-| Gameplay correctness | 6.0 | 7.5 | No open High. Fire rate, switching, hit volumes, spread, recoil, smoke placement and halftime are measured and regression-tested against weapon data. | Human gunplay feel and balance **UNVERIFIED**; death-drop rule open |
+| Gameplay correctness | 6.0 | 7.5 | No open High. Fire rate, switching, head volume, spread, recoil, smoke placement and halftime are measured and regression-tested against weapon data and drawn geometry. | Human gunplay feel and balance **UNVERIFIED**; body volume vs drawn limbs (R-3) and death-drop rule open |
 | UI/UX | 6.5 | 7.5 | U-1–U-6, M-10, M-11, L-3 closed with contract tests and native captures at four ratios. | Phone readability, touch feel, accessibility audit **UNVERIFIED** |
 | Visual quality | 6.6 | 6.9 | geometry 7.0, materials 6.5, lighting 7.0, models 6.0, effects 7.0, identity 7.5, readability 7.5 | Device rendering **UNVERIFIED**; operator/weapon art unchanged |
 | Animation | 6.0 | 6.0 | Not worked on. Stills only. | Motion review **UNVERIFIED** |
@@ -132,7 +136,7 @@ No category reaches 8.5 except economy integrity, which already did. The scores 
 3. **Packed body/weapon scenes are cached in static variables** for the process lifetime. Roles are found by node metadata (`body_role`, `weapon_role`), so new parts that need per-instance animation must carry a role and avoid being merged.
 4. **Hit volumes now come from the drawn head.** If Codex changes the head or helmet mesh dimensions, update `SBActor.HEAD_VOLUMES` (the body is built from the same constants); `weapon_integrity_test.gd` will fail otherwise.
 5. **Smoke frame cost** is probably higher than before (§2) and the Low preset does not reduce it. Measure on a device; if it matters, simplify the core shader (it samples the noise texture three times per pixel) rather than going back to the sphere.
-6. **The kill feed adds one reliable authority RPC per elimination.** It carries only actor IDs and a headshot flag, all public at that moment.
+6. **The kill feed adds one reliable authority RPC per elimination.** It carries only actor IDs and a headshot flag, all public at that moment. It also shifts Godot's name-ordered RPC IDs, so clients and servers from different builds must not mix (R-7). Utility snapshots gain an optional `life` field, which older peers ignore.
 7. **Rate limiting no longer takes the global advisory lock.** The economy write path still does. A new partial index on `listings(price, id) WHERE state='active'` (migration 004) must be applied with `backend/migrate.py` before deploying the new `/market`.
 
 ## 6. Instructions for Codex review
@@ -150,14 +154,31 @@ Do not merge on the strength of this report. Merge only after your own re-run an
 
 ## 7. Separate reviewer pass
 
-_Pending — filled in from the second agent's report below._
+A second agent, the same model family as the author, was given read-only access, the audit and the diff `e67f2c8..f8ca47f`. It was told to look for real, reproducible defects and to mark each claim VERIFIED (run) or INFERRED (read). It reviewed an exact `git archive` of the branch, re-ran every Godot suite and the backend tests, and wrote its probes outside the repository. This adds an adversarial pass, but it is **not** independent review: it shares the author's training and blind spots.
+
+It reported ten findings and listed what it checked and found clean. Every finding was re-checked before acting; the fixes are in `9c04d59`.
+
+| # | Severity (reviewer) | Finding | Status | Evidence after the fix |
+| --- | --- | --- | --- | --- |
+| R-1 | Medium, VERIFIED | One-way smoke: the shader treated the camera as "inside" only within 2.09 m of the centre, but the lobed mesh reaches about 2.9 m. From inside a side lobe you could see out while others could not see in. **Introduced by this branch.** | **Fixed.** One `CORE_LOBES` table now builds the mesh and generates the shader's inside test (every lobe, widened by the billow amplitude); `core_contains()` mirrors it in GDScript. | `smoke_presentation_test`: every vertex of the billowed core is covered and the test stays within 3.2 m. Native: looking out of the side lobe, 59,339 marker pixels before the fix (equal to the no-smoke control), **0** after; Standard and Low concealment still 0 leaked pixels. |
+| R-2 | Medium, VERIFIED | Network clients never fade smoke: replica physics is off, so their lifetime never counts down, while the server's concealment shrinks. **Introduced by this branch** (dissipation was new). | **Fixed.** Snapshots carry each utility's remaining lifetime (`life`, optional); replicas apply it. | `smoke_presentation_test`: a replica at half lifetime has 0.5 opacity, matching the server; snapshots without the field leave it unchanged. |
+| R-3 | Medium, VERIFIED | The body hit volume does not match the drawn operator: it adds empty air around the legs, misses the outer upper arms, and is 1.78× larger than the drawn body from the side. | **Open; predates this branch.** The 0.3 capsule had the same 0.31 m radius, and the branch kept that footprint below the head. Per-limb volumes would change time-to-kill and are a balance decision for Codex and design. | Recorded as an open finding. Section 2's "matches what is drawn" applies to the head only. |
+| R-4 | Medium, VERIFIED (backend) / INFERRED (UI) | Display names can contain newlines and control characters. The newly exposed `names` let a name inject a fake "YOU RECEIVE" block into the trade confirmation. **Exposure introduced by this branch.** | **Fixed.** The server rejects names containing control, format (bidi) or line/paragraph-separator characters. The client flattens names to one line and quotes them in trade terms. Guest names in matches are cleaned the same way on the server. | Backend test: five forged names get 422 and ordinary Unicode names get 201. UX test: a spoofed name stays one quoted line and the dialog has exactly one "YOU RECEIVE" block. |
+| R-5 | Low, VERIFIED | After the halftime reset, bots with 1,200 funds immediately buy an SMG (1,100), so the "pistol round" is not one. | **Open; design decision.** Funds and prices are unchanged. The reset now removes carried weapons as intended; whether the second half should open with pistols only is an economy-tuning call. | — |
+| R-6 | Low, INFERRED | Layouts saved under 0.3 keep the old TEAM/BUY positions, which the new radar covers. **Introduced by this branch.** | **Fixed.** Saved positions equal to the retired defaults follow the new defaults. Positions the player chose are kept. | UX test: untouched 0.3 positions move below the radar; custom and moved positions stay. |
+| R-7 | Low, INFERRED | Adding `_elimination_rpc` shifts Godot's name-ordered RPC IDs. With no protocol version check, a 0.3 client on this server would misroute RPCs silently. | **Open; predates this branch** (any RPC change does this). Recommend a protocol version in the join handshake. | Listed under risks. |
+| R-8 | Low | Some new checks were circular. The head test compared the constants with a head built from them, nothing compared the body with the drawing, and the smoke tests missed R-1 and R-2. | **Improved.** The head test now measures the rendered head mesh and the tallest rendered body point (the helmet crown), with 1 cm tolerance: the drawn head is a 12-segment sphere about 4 mm inside the ideal ellipsoid. R-1 and R-2 have regression tests. The body still has no drawn-geometry test (R-3). | `weapon_integrity_test` 28 checks. |
+| R-9 | Nit, VERIFIED | Holding the trigger through a reload banked one tick: the first rifle interval after it was 0.100 s instead of 0.105 s. | **Fixed.** A cooldown a whole tick or more overdue carries nothing. | New check fails before the fix (0.100 s) and passes after. Sustained rates are unchanged. |
+| R-10 | Nit, INFERRED | `/history` ordered `ended_at` as text, which is only correct while every server reports UTC. | **Fixed.** It orders by the value cast to `timestamptz`. | Backend test with a +05:00 server time fails under text order and passes now. |
+
+The reviewer also confirmed, by running code, that sustained fire matches the weapon data and swaps cannot shorten an interval. It found no null access when an actor dies mid-trace, `_elimination_rpc` cannot be exploited, cached meshes and materials are never mutated per actor, and graphics-quality switching updates all batched materials. On the backend it confirmed SQL filters keep the old semantics, the rate limiter is exact under concurrency (140 reads → 120 × 200 and 20 × 429), and login timing is equal (140.2 vs 142.0 ms). In the UI, every baseline setting is still present and pause edge cases behave.
 
 ## 8. Reproduction
 
 ```sh
-SIGHTBREAK_TOOLS_DIR=<tools> ./scripts/validate.sh                                   # 535 native assertions
+SIGHTBREAK_TOOLS_DIR=<tools> ./scripts/validate.sh                                   # 548 native assertions
 DATABASE_URL=postgresql+psycopg://sightbreak:sightbreak_local_only@127.0.0.1:55432/<name>_test \
-  PYTHONPATH=backend .venv/bin/pytest backend/tests -q                                # 46 tests
+  PYTHONPATH=backend .venv/bin/pytest backend/tests -q                                # 48 tests
 .venv/bin/python scripts/test_native_economy.py                                       # 14/14
 DISPLAY=:99 ./scripts/test_render.sh                                                  # 11/11 + 19/19
 DISPLAY=:99 ./scripts/profile_render.sh <out> standard|low                            # §2 benchmark

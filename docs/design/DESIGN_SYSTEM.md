@@ -77,7 +77,7 @@ Settings → Accessibility → Interface text size scales body copy and `main.gd
 
 Confirmation dialogs state the exact terms at the moment of commitment:
 
-- **Trades:** partner display name and ID prefix, revision, *you give* and *you receive* with name, rarity, wear and pattern, and an explicit gift warning when you receive nothing.
+- **Trades:** partner display name (flattened to one line and quoted, so it can never read as part of the terms) and ID prefix, revision, *you give* and *you receive* with name, rarity, wear and pattern, and an explicit gift warning when you receive nothing.
 - **Market purchases:** price, exact instance (rarity, collection, wear, pattern) and the seller fee note.
 - **Case openings:** the published probabilities, the case consumed and "results are final". The reveal shows only the server-committed item; skipping changes nothing.
 
@@ -94,7 +94,7 @@ Use for every new or changed screen. Each item is checkable in a native capture 
 - [ ] Color is paired with text, shape or luminance for every state.
 - [ ] Selection is visible (tabs, toggles, focused controls).
 - [ ] Disabled states explain why (e.g., "NEED 900 MORE", "PREPARATION ONLY").
-- [ ] User-supplied strings render in plain `Label`s, truncated, never as rich text.
+- [ ] User-supplied strings render in plain `Label`s via `SBDesign.plain_line()` (one line, no control or bidi characters, capped), never as rich text.
 - [ ] No HUD element covers the reticle region or the central 40 % of the play view.
 - [ ] Opponent information appears only when the player could see it in the world.
 - [ ] Transactions state exact items, price and finality before confirmation; no manipulative urgency.

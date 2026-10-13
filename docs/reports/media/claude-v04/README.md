@@ -13,6 +13,8 @@ Unedited viewport captures from the running Godot 4.7.2 application, rendered by
 | `menu-1280x720`, `settings-1280x720` | same | Shared tokens, primary/ghost buttons, sectioned settings with 3D render scale and interface text size. |
 | `armory-trades`, `armory-market`, `armory-inventory` | `tests/economy_ui_test.gd` with `ECONOMY_CAPTURE_DIR` | Selected tab state, "WITH <partner>", "YOU GIVE" / "<partner> GIVES". Data are the suite's fictional fixtures (the fixture trade has no partner name, so it shows "Unknown player"). |
 
+The "after" captures were taken with the game code of `82ce83f`, which is unchanged through `f8ca47f`. The later reviewer fixes (review §7, `9c04d59`) change the smoke shader's inside test, the client fade, trade name quoting and saved-layout migration. None of these alters the views captured here, except that a trade partner's name now appears in quotes. The one-way-smoke fix is verified by the `SMOKE_LOBE_VIEW` line of `smoke_visual_capture.gd`: 0 marker pixels (control 59,339).
+
 Both sides passed their capture runs: landscape 156/156 assertions each, economy UI pass each, 8 combat frames each, no script errors.
 
 ## Measured with the captures
