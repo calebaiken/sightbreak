@@ -52,14 +52,14 @@ func request(path: String, method: int = HTTPClient.METHOD_GET, payload: Diction
 	var completed: Array = await http.request_completed
 	http.queue_free()
 	if int(completed[0]) != HTTPRequest.RESULT_SUCCESS:
-		return {"_error": "Server unavailable or connection timed out. Check your network and server address. If a purchase was pending, refresh inventory before retrying."}
+		return {"_error": "Server unavailable or connection timed out. Check your network and server address. Use Retry pending transaction to recover a purchase without spending twice.", "_uncertain": true}
 	var code := int(completed[1])
 	var data: Variant = JSON.parse_string((completed[3] as PackedByteArray).get_string_from_utf8())
 	if not data is Dictionary:
-		return {"_error": "Server returned an unreadable response (%d)." % code}
+		return {"_error": "Server returned an unreadable response (%d)." % code, "_uncertain": true}
 	if code < 200 or code >= 300:
 		var detail: Variant = data.get("detail", data.get("error", "Request rejected"))
 		if code == 401:
 			logout()
-		return {"_error": "%s (%d)" % [str(detail), code], "_status": code}
+		return {"_error": "%s (%d)" % [str(detail), code], "_status": code, "_uncertain": code >= 500}
 	return data

@@ -28,6 +28,8 @@ var wallet: Label
 var dialog: ConfirmationDialog
 var pending_action := Callable()
 var market_filter := ""
+var pending_transaction: Dictionary = {}
+var retry_button: Button
 var safe_margin: MarginContainer
 
 func configure(profile: Dictionary) -> void:
@@ -70,7 +72,9 @@ func _build_shell() -> void:
 	brand.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header.add_child(brand)
 	_button(header, "BACK", func(): closed.emit())
+	brand.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	wallet = _label("OFFLINE TRAINING", 15, MUTED)
+	wallet.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	body.add_child(wallet)
 	var tabs := HFlowContainer.new()
 	tabs.add_theme_constant_override("h_separation", 8)
@@ -81,6 +85,8 @@ func _build_shell() -> void:
 	status = _label("Offline progress and online ownership are separate.", 14, MUTED)
 	status.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	body.add_child(status)
+	retry_button = _button(body, "RETRY PENDING TRANSACTION", _retry_pending)
+	retry_button.hide()
 	var scroll := ScrollContainer.new()
 	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -265,6 +271,8 @@ func _logout() -> void:
 	busy = true
 	var result := await api.request("/auth/logout", HTTPClient.METHOD_POST)
 	api.logout()
+	pending_transaction = {}
+	retry_button.hide()
 	account = {}
 	inventory = []
 	selected = {}
@@ -348,13 +356,33 @@ func _confirm(message: String, action: Callable) -> void:
 	pending_action = action
 	dialog.popup_centered(Vector2i(mini(560, int(size.x) - 40), 220))
 
+func _retry_pending() -> Dictionary:
+	if busy or pending_transaction.is_empty():
+		return {}
+	var pending := pending_transaction.duplicate(true)
+	if pending.owner != api.player_id or pending.server != api.base_url:
+		_message("Sign in to the original account and server to recover this transaction.", true)
+		return {"_error": "Account mismatch"}
+	pending_transaction = {}
+	var result := await _perform(pending.path, pending.payload, pending.message, pending.method)
+	if not result.has("_error") and pending.path == "/cases/open":
+		selected = result.get("item", {})
+		_show_committed_reveal(selected)
+	return result
+
 func _perform(path: String, payload := {}, message := "Transaction confirmed.", method := HTTPClient.METHOD_POST) -> Dictionary:
 	if busy:
 		return {"_error": "A request is already pending."}
+	if not pending_transaction.is_empty():
+		_message("Recover the pending transaction before starting another. Retry uses its original receipt identifier.", true)
+		return {"_error": "An unresolved transaction is pending."}
 	busy = true
 	_message("Waiting for server confirmation…")
 	var result := await api.request(path, method, payload)
 	busy = false
+	if result.get("_uncertain", false) and payload.has("idempotency_key"):
+		pending_transaction = {"path": path, "payload": payload.duplicate(true), "message": message, "method": method, "owner": api.player_id, "server": api.base_url}
+	retry_button.visible = not pending_transaction.is_empty()
 	if _failed(result):
 		return result
 	var refreshed := await _refresh()
@@ -374,10 +402,11 @@ func _inspect(parent: Node, item: Dictionary) -> void:
 	inspector.item = item
 	panel.add_child(inspector)
 	_text(panel, "Drag to rotate  •  Scroll or use + / − to zoom", 13, MUTED)
-	var zoom := HBoxContainer.new()
+	var zoom := HFlowContainer.new()
 	panel.add_child(zoom)
 	_button(zoom, "−", inspector.zoom.bind(0.3))
 	_button(zoom, "+", inspector.zoom.bind(-0.3))
+	_button(zoom, "RESET VIEW", inspector.reset_view)
 	_text(panel, "%s  •  %s\nPattern %s  /  Wear %.4f  /  %s" % [item.get("rarity", "Standard"), item.get("collection", "Training"), item.get("pattern_seed", 0), float(item.get("wear", 0)), item.get("variant", "Standard")], 15, MUTED)
 	if item.has("id"):
 		_text(panel, "Instance: " + str(item.id), 12, MUTED)
@@ -468,21 +497,25 @@ func _show_committed_reveal(item: Dictionary) -> PopupPanel:
 	add_child(popup)
 	var box := VBoxContainer.new()
 	box.add_theme_constant_override("separation", 12)
-	box.custom_minimum_size.x = mini(636, int(size.x) - 68)
-	popup.add_child(box)
+	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var scroll := _popup_scroll(popup)
+	scroll.add_child(box)
 	_text(box, "COLLECTION UNSEALED", 23, GOLD)
 	_text(box, "Your reward is already secured. Sealed panels are decoration; they do not represent other outcomes.", 14, MUTED)
 	var reel := REVEAL.new()
+	reel.name = "CaseReel"
 	reel.committed_item = item.duplicate(true)
 	reel.reduced_motion = reduced_motion
 	# Connect before entering the tree, including when reduced motion skips immediately.
 	var result := _label("UNSEALING…", 19, GOLD)
-	var actions := HBoxContainer.new()
+	result.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	var actions := HFlowContainer.new()
 	var inspect := _button(actions, "INSPECT REWARD", func(): popup.hide(); _show_inspector_popup(item, "REWARD CONFIRMED"))
 	inspect.disabled = true
 	var skip := _button(actions, "SKIP", reel.skip)
 	reel.finished.connect(func():
 		result.text = "%s  /  %s" % [_item_name(item), item.get("rarity", "")]
+		result.add_theme_color_override("font_color", REVEAL.FINISH.rarity_color(str(item.get("rarity", "Common"))))
 		inspect.disabled = false
 		skip.disabled = true)
 	box.add_child(reel)
@@ -498,14 +531,24 @@ func _show_inspector_popup(item: Dictionary, title := "ITEM INSPECTOR") -> Popup
 	_style_popup(popup)
 	add_child(popup)
 	var box := VBoxContainer.new()
-	box.custom_minimum_size.x = mini(616, int(size.x) - 64)
-	popup.add_child(box)
+	box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	var scroll := _popup_scroll(popup)
+	scroll.add_child(box)
 	_text(box, title, 20, GOLD)
 	_inspect(box, item)
 	_button(box, "CLOSE", popup.hide)
 	popup.popup_hide.connect(popup.queue_free)
 	_present_popup(popup, Vector2i(mini(640, int(size.x) - 40), mini(600, int(size.y) - 30)))
 	return popup
+
+func _popup_scroll(popup: PopupPanel) -> ScrollContainer:
+	# Popups must scroll on short landscape screens; children cannot force them offscreen.
+	var scroll := ScrollContainer.new()
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	popup.add_child(scroll)
+	return scroll
 
 func _style_popup(popup: PopupPanel) -> void:
 	var style := StyleBoxFlat.new()
@@ -522,11 +565,13 @@ func _style_popup(popup: PopupPanel) -> void:
 func _present_popup(popup: PopupPanel, desired: Vector2i) -> void:
 	# Wrapped labels need their final width before Window computes its minimum
 	# height. Lay out while hidden to avoid a full-screen transient popup.
+	var safe: Rect2 = SAFE_AREA.viewport_rect(size)
+	desired = Vector2i(mini(desired.x, int(safe.size.x) - 24), mini(desired.y, int(safe.size.y) - 24))
 	popup.size = desired
 	await get_tree().process_frame
 	await get_tree().process_frame
 	if is_instance_valid(popup) and not popup.is_queued_for_deletion():
-		popup.popup_centered(desired)
+		popup.popup(Rect2i(Vector2i(safe.position + (safe.size - Vector2(desired)) * 0.5), desired))
 
 func _market() -> void:
 	if _needs_account():

@@ -56,7 +56,7 @@ func run() -> void:
 		await capture("economy_" + tab)
 	ui.reduced_motion = false
 	var reveal_popup := ui._show_committed_reveal(first)
-	var reel = reveal_popup.get_child(0).get_child(2)
+	var reel = reveal_popup.find_child("CaseReel", true, false)
 	var reveal_events := [0]
 	reel.finished.connect(func(): reveal_events[0] += 1)
 	await create_timer(0.35).timeout
@@ -82,6 +82,18 @@ func run() -> void:
 	var original_rotation: Vector3 = model.pivot.rotation
 	model._rotate_model(Vector2(30, 15))
 	check(model.pivot.rotation != original_rotation, "Inspector drag rotates the actual 3D model")
+	var touch_drag := InputEventScreenDrag.new()
+	touch_drag.relative = Vector2(20, 0)
+	model._gui_input(touch_drag)
+	var after_touch: Vector3 = model.pivot.rotation
+	model.dragging = true
+	var emulated_mouse := InputEventMouseMotion.new()
+	emulated_mouse.device = InputEvent.DEVICE_ID_EMULATION
+	emulated_mouse.relative = touch_drag.relative
+	model._gui_input(emulated_mouse)
+	check(model.pivot.rotation == after_touch, "Touch inspector ignores duplicate emulated mouse motion")
+	model.reset_view()
+	check(is_equal_approx(model.distance, 3.5) and model.pivot.rotation_degrees.is_equal_approx(Vector3(-8, -16, 0)), "Reset restores inspection angle and zoom")
 	model.zoom(-100)
 	check(is_equal_approx(model.distance, 2.3), "Inspector zoom stays within near limit")
 	model.zoom(100)
@@ -92,12 +104,31 @@ func run() -> void:
 	await process_frame
 	ui.reduced_motion = true
 	var reduced_popup := ui._show_committed_reveal(first)
-	var reduced_reel = reduced_popup.get_child(0).get_child(2)
+	var reduced_reel = reduced_popup.find_child("CaseReel", true, false)
 	for frame in 4:
 		await process_frame
 	check(reduced_reel.revealed, "Reduced motion bypasses carousel movement")
 	reduced_popup.hide()
 	await process_frame
+	# Exercise short mobile landscape windows with scrollable reveal/inspection.
+	var original_size := root.size
+	var original_scale := root.content_scale_size
+	root.content_scale_size = Vector2i.ZERO
+	for landscape in [Vector2i(640, 360), Vector2i(896, 414), Vector2i(1280, 720)]:
+		root.size = landscape
+		for frame in 3:
+			await process_frame
+		for popup_kind in ["reveal", "inspect"]:
+			var compact: PopupPanel = ui._show_committed_reveal(first) if popup_kind == "reveal" else ui._show_inspector_popup(first)
+			for frame in 5:
+				await process_frame
+			check(compact.position.x >= 0 and compact.position.y >= 0 and compact.position.x + compact.size.x <= landscape.x and compact.position.y + compact.size.y <= landscape.y, "%s fits %s mobile landscape" % [popup_kind, landscape])
+			var scroll := compact.get_child(0) as ScrollContainer
+			check(scroll != null and scroll.horizontal_scroll_mode == ScrollContainer.SCROLL_MODE_DISABLED, "Landscape popup scrolls vertically without horizontal overflow")
+			compact.hide()
+			await process_frame
+	root.size = original_size
+	root.content_scale_size = original_scale
 	ui.api.logout()
 	var server := OS.get_environment("ECONOMY_UI_TEST_URL")
 	if not server.is_empty():

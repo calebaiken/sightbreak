@@ -335,3 +335,25 @@ def test_loadout_read_filters_stale_ownership_and_rejects_other_slots(client):
     assert equip(client, ha, skin).status_code == 200
     with transaction() as db: db.get(Item, skin).owner_id = b
     assert client.get('/loadout', headers=ha).json() == {'slots': {}}
+
+
+@pytest.mark.parametrize("roll,expected", [
+    (0,"Common"),(5799,"Common"),(5800,"Uncommon"),(8399,"Uncommon"),
+    (8400,"Rare"),(9499,"Rare"),(9500,"Epic"),(9899,"Epic"),
+    (9900,"Legendary"),(9989,"Legendary"),(9990,"Mythic"),(9999,"Mythic"),
+])
+def test_published_case_odds_match_every_boundary(client, monkeypatch, roll, expected):
+    import app as service
+    original_randbelow = service.secrets.randbelow
+    monkeypatch.setattr(service.secrets, "randbelow", lambda limit: roll if limit == 10000 else original_randbelow(limit))
+    probabilities = client.get('/catalog').json()['case_tables']['probabilities']
+    assert sum(service.CONFIG['rarities'].values()) == 10000
+    assert probabilities == {k: v / 100 for k, v in service.CONFIG['rarities'].items()}
+    pid, headers = player()
+    body = idem(case_id=item(pid, 'obsidian_case'), key_id=item(pid, 'key'))
+    response = post(client, '/cases/open', headers, body)
+    assert response.status_code == 200
+    assert response.json()['roll'] == roll
+    assert response.json()['item']['rarity'] == expected
+    assert post(client, '/cases/open', headers, body).json() == response.json()
+    assert len(client.get('/inventory', headers=headers).json()['items']) == 1
