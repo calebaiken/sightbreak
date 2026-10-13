@@ -10,6 +10,9 @@ static func vector(value: Variant) -> bool:
 static func valid(data: Dictionary) -> bool:
 	if data.size() > 24 or not data.get("actors") is Array or data.actors.size() != 10:
 		return false
+	for field: String in ["tick", "epoch"]:
+		if not data.get(field) is int or data[field] < 0:
+			return false
 	if not data.get("phase") in ["waiting", "buy", "live", "post", "match_over"] or not data.get("objective") in ["unknown", "carried", "dropped", "planted", "defused", "detonated"]:
 		return false
 	for field: String in ["round", "attack", "defend", "time", "objective_timer", "carrier", "elapsed"]:
@@ -41,6 +44,12 @@ static func valid(data: Dictionary) -> bool:
 		if state.has("relevant") and not state.relevant is bool:
 			return false
 		if state.has("crouch") and not state.crouch is bool:
+			return false
+		if state.has("grounded") and not state.grounded is bool:
+			return false
+		if state.has("jump_held") and not state.jump_held is bool:
+			return false
+		if state.has("move_ack") and (not state.move_ack is int or state.move_ack < 0):
 			return false
 		if bool(state.get("relevant", true)) and not vector(state.get("position")):
 			return false

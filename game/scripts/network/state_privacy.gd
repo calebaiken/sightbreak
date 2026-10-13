@@ -151,8 +151,13 @@ func snapshot(match_node: Node3D, recipient_id: int) -> Dictionary:
 	var states: Array = []
 	for actor: SBActor in match_node.actors.values():
 		var same_team := actor.team == owner.team
-		states.append(actor_state(actor.snapshot(), actor.actor_id == recipient_id, same_team,
-			false if same_team else observable(match_node, viewer, actor, eye)))
+		var state := actor_state(actor.snapshot(), actor.actor_id == recipient_id, same_team,
+			false if same_team else observable(match_node, viewer, actor, eye))
+		if actor.actor_id == recipient_id:
+			state.move_ack = int(match_node._last_input_sequence.get(recipient_id, 0))
+			state.jump_held = actor._jump_previous
+			state.grounded = actor.is_on_floor()
+		states.append(state)
 	var objective: String = match_node.objective_state
 	var objective_known: bool = owner.team == 0 or objective == "planted" or (objective == "dropped" and point_visible(match_node, viewer, match_node.objective_position + Vector3.UP * 0.15, eye))
 	var interactions: Dictionary = {}
@@ -163,7 +168,7 @@ func snapshot(match_node: Node3D, recipient_id: int) -> Dictionary:
 		if child is SBUtility and utility_relevant(match_node, viewer, eye, child):
 			# No owner attribution or private inventory count.
 			utilities.append({"id": child.get_instance_id(), "kind": child.kind, "position": child.position, "detonated": child._detonated, "life": child._lifetime})
-	return {"actors": states, "utilities": utilities, "humans": match_node._peer_actors.values(),
+	return {"tick": match_node._simulation_tick, "epoch": match_node._snapshot_generation, "actors": states, "utilities": utilities, "humans": match_node._peer_actors.values(),
 		"contributions": match_node.objective_contributions.duplicate(), "reward_status": match_node.reward_status,
 		"phase": match_node.phase, "round": match_node.round_number, "attack": match_node.attack_score,
 		"defend": match_node.defend_score, "time": match_node.time_left,
