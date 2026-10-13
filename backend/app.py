@@ -441,24 +441,38 @@ def game_ticket(body: TicketRequest, request: Request, authorization: Auth = Non
         audit(db, p.id, 'game_ticket_issued', server_id=body.server_id)
         return {'ticket': token, 'server_id': body.server_id, 'expires_at': expiry.isoformat()}
 
+def valid_game_ticket(db, body: TicketConsume):
+    ticket = db.get(GameTicket, digest(body.ticket))
+    if not ticket or ticket.consumed_at is not None or ticket.expires_at <= now() or ticket.server_id != body.server_id:
+        fail('Join ticket is expired, consumed or invalid', 401)
+    session = db.get(Session, ticket.session_hash)
+    if not session or session.expires_at <= now() or session.player_id != ticket.player_id:
+        fail('Account session revoked or expired', 401)
+    player = db.get(Player, ticket.player_id)
+    if not player or not player.active:
+        fail('Account unavailable', 403)
+    return ticket, player
+
+@app.post('/server/tickets/inspect')
+def inspect_game_ticket(body: TicketConsume, request: Request,
+                        x_server_key: Annotated[str | None, Header()] = None):
+    # Trusted-server capacity preflight. It neither consumes nor extends a ticket.
+    rate(request, 'server_ticket_inspect', 120)
+    trusted_server(x_server_key, body.server_id)
+    with DBSession(engine) as db:
+        _, player = valid_game_ticket(db, body)
+        return {'player_id': player.id, 'display_name': player.display_name}
+
 @app.post('/server/tickets/consume')
 def consume_game_ticket(body: TicketConsume, request: Request,
                         x_server_key: Annotated[str | None, Header()] = None):
     rate(request, 'server_ticket', 120)
     trusted_server(x_server_key, body.server_id)
     with transaction() as db:
-        ticket = db.get(GameTicket, digest(body.ticket))
-        if not ticket or ticket.consumed_at is not None or ticket.expires_at <= now() or ticket.server_id != body.server_id:
-            fail('Join ticket is expired, consumed or invalid', 401)
-        session = db.get(Session, ticket.session_hash)
-        if not session or session.expires_at <= now() or session.player_id != ticket.player_id:
-            fail('Account session revoked or expired', 401)
-        p = db.get(Player, ticket.player_id)
-        if not p or not p.active:
-            fail('Account unavailable', 403)
+        ticket, player = valid_game_ticket(db, body)
         ticket.consumed_at = now()
-        audit(db, p.id, 'game_ticket_consumed', server_id=body.server_id)
-        return {'player_id': p.id, 'display_name': p.display_name}
+        audit(db, player.id, 'game_ticket_consumed', server_id=body.server_id)
+        return {'player_id': player.id, 'display_name': player.display_name}
 
 
 class EquipRequest(Strict):
