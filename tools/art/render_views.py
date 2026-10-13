@@ -106,10 +106,16 @@ aspect = res[0] / res[1]
 # (0.235, -0.235, -0.42) and weapon_model.gd's placement (rotation YXZ, offset),
 # 82 degree vertical field of view.
 if 'eye' in wanted:
+    import re
     from mathutils import Euler, Matrix
-    rot = Euler((0.06, 0.12, -0.30), 'YXZ').to_matrix()
-    offset = Vector((-0.045, 0.065, 0.10)) - rot @ Vector((0.024, 0.031, -0.13))
-    to_godot_model = lambda cam: rot.inverted() @ (Vector(cam) - Vector((0.235, -0.235, -0.42)) - offset)
+    # Placement constants come straight from the game so this view cannot drift from it.
+    source = (pathlib.Path(__file__).resolve().parents[2] / 'game/scripts/gameplay/weapon_model.gd').read_text()
+    vector = lambda name: Vector(float(v) for v in re.search(r'static var %s := Vector3\(([^)]*)\)' % name, source).group(1).split(','))
+    scale = float(re.search(r'static var relay_ar_scale := ([0-9.]+)', source).group(1))
+    # Godot's Basis.from_euler default (YXZ) is R = Ry * Rx * Rz, which is Blender's 'ZXY'.
+    rot = Euler(vector('relay_ar_rotation'), 'ZXY').to_matrix()
+    offset = vector('relay_ar_offset')
+    to_godot_model = lambda cam: (rot.inverted() @ (Vector(cam) - Vector((0.235, -0.235, -0.42)) - offset)) / scale
     g2b = lambda g: Vector((g.x, -g.z, g.y))
     eye = g2b(to_godot_model((0, 0, 0)))
     forward = g2b(rot.inverted() @ Vector((0, 0, -1)))
@@ -121,6 +127,10 @@ if 'eye' in wanted:
     right = forward.cross(up)
     camera.matrix_world = Matrix((right, up, -forward)).transposed().to_4x4()
     camera.location = eye
+    # Level ground 1.55 m below the eye in camera space, as in the game.
+    ground = bpy.data.objects['floor']
+    ground.rotation_euler = up.to_track_quat('Z', 'Y').to_euler()
+    ground.location = eye - up * 1.55
     scene.render.filepath = str(out_dir / 'eye.png')
     bpy.ops.render.render(write_still=True)
     print('VIEW eye', scene.render.filepath)

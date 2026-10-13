@@ -2,7 +2,10 @@ extends SceneTree
 ## Real-engine review captures of the first-person rifle. Fixture poses, not played
 ## matches; asserts nothing about visual quality or frame rate.
 ## --capture-dir=<dir> output folder; --procedural captures the procedural rifle
-## (the "before" model) instead of the authored one.
+## (the "before" model) instead of the authored one; --size=WxH sets the viewport
+## (default 1280x720). The window's --resolution does not change the captured
+## viewport under this project's canvas_items stretch, so this sets root.size, as the
+## landscape tests do, and prints the real image size.
 const Actor = preload("res://scripts/gameplay/actor.gd")
 const Arena = preload("res://scripts/gameplay/arena.gd")
 const WeaponModel = preload("res://scripts/gameplay/weapon_model.gd")
@@ -19,9 +22,10 @@ func shot(name: String) -> void:
 	await process_frame
 	await process_frame
 	await RenderingServer.frame_post_draw
-	if root.get_texture().get_image().save_png(output.path_join(name + ".png")) != OK:
+	var image := root.get_texture().get_image()
+	if image.save_png(output.path_join(name + ".png")) != OK:
 		push_error("Capture failed: " + name)
-	print("WEAPON CAPTURE: " + name)
+	print("WEAPON CAPTURE: %s %dx%d" % [name, image.get_width(), image.get_height()])
 
 func pose(at: Vector3, yaw: float, pitch: float = -0.025) -> void:
 	actor.global_position = at
@@ -36,6 +40,11 @@ func _run() -> void:
 			output = argument.trim_prefix("--capture-dir=")
 		elif argument == "--procedural":
 			WeaponModel.use_authored = false
+		elif argument.begins_with("--size="):
+			var parts := argument.trim_prefix("--size=").split("x")
+			if parts.size() == 2:
+				root.content_scale_size = Vector2i(int(parts[0]), int(parts[1]))
+				root.size = root.content_scale_size
 	DirAccess.make_dir_recursive_absolute(output)
 	world = Node3D.new()
 	root.add_child(world)
