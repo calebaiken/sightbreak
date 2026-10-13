@@ -34,9 +34,25 @@ The preset uses Godot's native prebuilt template (no Gradle plugins), Android 7/
 
 ## iOS project and signing
 
-The `iOS` preset is supplied for Godot 4.7.2 with ARM64, iOS 15 minimum and bundle ID `com.sightbreak.game`. On macOS, install matching Godot export templates, configure the iOS export preset with your Apple team ID, export the Xcode project and open it in Xcode. Choose a unique bundle ID for your account, configure signing/provisioning, and build to an attached iPhone. App Store distribution requires the appropriate Apple developer account and review. No paid account is required for the Linux/Android development workflow.
+The `iOS` preset uses Godot 4.7.2, ARM64, iOS 15 minimum, landscape orientation and bundle ID `com.sightbreak.game`. `./scripts/export.sh ios` prepares an unsigned Xcode project on Linux or macOS, including the game PCK and engine frameworks. It stages a copy of the game under ignored `.local/`, so export cannot rewrite source signing configuration. Godot requires a Team ID even for project-only export; the script uses an explicit temporary sentinel and removes it from generated files. No real Apple identity is supplied or bundled. The generated Info.plist explains local-network permission for LAN matches.
 
-This Linux cloud machine cannot produce or validate a signed installable IPA. `scripts/export.sh ios` explains that prerequisite on Linux. Supplying a preset does not establish iOS device compatibility or store readiness.
+Open `builds/ios/sightbreak.xcodeproj` on macOS with current Xcode. Select the SIGHTBREAK target, set your Development Team in Signing & Capabilities, and choose a unique bundle identifier if necessary. Select an attached iPhone/iPad and Run. The artifact includes `BUILD-ON-MAC.md` and a compile-only `xcodebuild` command. An Apple developer account and review are needed for App Store distribution; no paid account is needed for Linux/Android development.
+
+This Linux cloud machine cannot compile with Xcode, sign an IPA, install on iOS, or measure Apple-device performance. The generated project is preparation for those steps, not evidence of successful iOS execution.
+
+## Reproducible delivery packaging
+
+Commit game changes, then export every target from that same game source:
+
+```sh
+./scripts/export.sh linux
+./scripts/export.sh android
+./scripts/export.sh ios
+python3 scripts/build_manifest.py package
+(cd builds && sha256sum --check checksums.txt)
+```
+
+Every export records the Git commit, game tree, and a content digest of shipped source in its `source.json`. Export fails if source changes during the build or if Godot logs errors despite exiting successfully. Packaging refuses uncommitted game source, incomplete exports, changed binaries, or stale source. Each ZIP includes engine license notices; normalized ZIP timestamps make packaging repeatable for identical inputs. Engine export timestamps and local Android debug signing keys can change binary hashes between rebuilds; byte-for-byte reproducible APKs across different workspaces are not claimed. Seven `python3 scripts/test_build_manifest.py` regression checks cover these provenance guards.
 
 ## Trust and release boundaries
 

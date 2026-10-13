@@ -6,15 +6,18 @@ case "$target" in
   linux) preset=Linux; output="$repo_dir/builds/linux/sightbreak.x86_64" ;;
   android) preset=Android; output="$repo_dir/builds/android/sightbreak-debug.apk" ;;
   ios)
-    if [[ "$(uname -s)" != Darwin ]]; then
-      echo 'iOS export requires macOS and Xcode. Open game/ with Godot 4.7.2 on macOS, set your Apple team in the iOS export preset, export the Xcode project, then sign/build on the Mac.' >&2
-      exit 1
-    fi
-    preset=iOS; output="$repo_dir/builds/ios/sightbreak.zip" ;;
+    exec python3 "$repo_dir/scripts/export_ios.py" ;;
   *) echo 'Usage: scripts/export.sh [linux|android|ios]' >&2; exit 2 ;;
 esac
 mkdir -p "$(dirname "$output")"
-"$repo_dir/scripts/godot.sh" --headless --editor --import
-"$repo_dir/scripts/godot.sh" --headless --export-debug "$preset" "$output"
+python3 "$repo_dir/scripts/build_manifest.py" begin "$target"
+"$repo_dir/scripts/godot.sh" --headless --editor --import 2>&1 | tee "$(dirname "$output")/import.log"
+"$repo_dir/scripts/godot.sh" --headless --export-debug "$preset" "$output" 2>&1 | tee "$(dirname "$output")/export.log"
+if rg -q '^(SCRIPT ERROR|ERROR:)|Parse Error' "$(dirname "$output")/import.log" "$(dirname "$output")/export.log"; then
+  echo 'Export emitted an error; artifact is not verified.' >&2
+  exit 1
+fi
+[[ -s "$output" ]]
 cp "$repo_dir/docs/GODOT-LICENSE.txt" "$repo_dir/docs/GODOT-COPYRIGHT.txt" "$(dirname "$output")/"
+python3 "$repo_dir/scripts/build_manifest.py" finish "$target"
 printf 'Exported %s\n' "$output"
