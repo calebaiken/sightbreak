@@ -74,6 +74,12 @@ func run() -> void:
 	main._physics_process(1.0 / 60.0)
 	check(not game._local_input.fire and game._local_input.move == Vector2(0.5, 0.5), "Joystick movement alone cannot fire")
 	main.touch.reset_input()
+	main.profile.data.settings.reduced_motion = true
+	main._physics_process(1.0 / 60.0)
+	check(actor.reduced_motion, "Accessibility setting reaches active first-person weapon animation")
+	main.profile.data.settings.reduced_motion = false
+	main._physics_process(1.0 / 60.0)
+	check(not actor.reduced_motion, "Standard weapon motion can be restored without rebuilding the match")
 	var look_before: Vector2 = main.input_look
 	main.touch.look_delta = Vector2(10, 5)
 	main._physics_process(1.0 / 60.0)

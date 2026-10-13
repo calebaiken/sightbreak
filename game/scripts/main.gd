@@ -629,6 +629,7 @@ func _physics_process(delta: float) -> void:
 		input_round = match_game.round_number
 		input_actor = actor.actor_id
 	var state: Dictionary = {"move": Vector2.ZERO, "look": input_look}
+	if actor != null: actor.reduced_motion = bool(profile.data.settings.reduced_motion)
 	if actor != null and actor.weapon_id != cosmetic_weapon:
 		actor.apply_cosmetic(current_loadout.get(actor.weapon_id, {}))
 		cosmetic_weapon = actor.weapon_id

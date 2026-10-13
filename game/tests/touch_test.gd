@@ -55,6 +55,11 @@ func run() -> void:
 	check(touch.movement == old_movement, "Malformed pointer position cannot poison joystick movement")
 	press(12, Vector2(NAN, 200))
 	check(not touch.fingers.has(12), "Malformed pointer press cannot reserve a finger action")
+	drag.index = 1
+	drag.position = touch.control_point("fire") + Vector2(4, -3)
+	drag.relative = Vector2(4, -3)
+	root.push_input(drag)
+	check(touch.consume_look() == Vector2(4, -3) and touch.actions.get("fire", false), "Fire-button drag aims continuously without releasing automatic fire")
 	press(1, touch.control_point("fire"), false)
 	check(not touch.actions.get("fire", false) and touch.fingers.size() == 3, "One pointer release doesn't cancel other pointers")
 	touch.reset_input()
