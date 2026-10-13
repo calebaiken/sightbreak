@@ -616,9 +616,12 @@ func _fire() -> void:
 	var spec := Weapons.get_weapon(weapon_id)
 	ammo -= 1
 	# Only a continuously held trigger carries the sub-tick remainder; every burst
-	# starts from the same phase so its recoil pattern is repeatable.
+	# starts from the same phase so its recoil pattern is repeatable. A cooldown a
+	# whole tick or more overdue means firing was blocked (reload, deploy), so
+	# nothing carries and the interruption cannot bank part of a shot.
 	var physics_step := 1.0 / float(Engine.physics_ticks_per_second)
-	var carry := minf(0.0, maxf(float(_weapon_cooldowns.get(weapon_id, 0.0)), -physics_step)) if _fire_previous else 0.0
+	var cooldown := float(_weapon_cooldowns.get(weapon_id, 0.0))
+	var carry := cooldown if _fire_previous and cooldown <= 0.0 and cooldown > -physics_step * 0.999 else 0.0
 	_weapon_cooldowns[weapon_id] = carry + float(spec["interval"])
 	var spread := current_spread(not is_on_floor())
 	var shot_yaw := yaw + recoil.x + _rng.randf_range(-spread, spread)

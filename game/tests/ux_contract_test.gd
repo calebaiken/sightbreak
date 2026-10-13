@@ -59,10 +59,15 @@ func run() -> void:
 		"offer_items": {armory.api.player_id: [{"id": "i1", "name": "Obsidian / Graphite", "rarity": "Common", "wear": 0.1234, "pattern_seed": 77}],
 			partner: [{"id": "i2", "name": "Blacksite / Gilded Fracture", "rarity": "Mythic", "wear": 0.0456, "pattern_seed": 901}]}, "confirmations": [], "state": "open"}
 	var terms: String = armory.trade_confirmation_text(trade)
-	check("Kestrel (bbbbbbbb)" in terms and "revision 3" in terms, "trade confirmation names the partner and revision")
+	check("\"Kestrel\" (bbbbbbbb)" in terms and "revision 3" in terms, "trade confirmation names the partner and revision")
 	check(terms.find("YOU GIVE") < terms.find("Obsidian / Graphite") and terms.find("YOU RECEIVE") < terms.find("Blacksite / Gilded Fracture") and terms.find("Obsidian / Graphite") < terms.find("YOU RECEIVE"), "trade confirmation lists what each side gives and receives")
 	check("wear 0.1234" in terms and "pattern 901" in terms and "MYTHIC" in terms, "trade confirmation identifies exact instances")
 	check(not "gift" in terms.to_lower(), "two-sided trade is not labelled a gift")
+	# A display name cannot inject lines that read as terms.
+	trade.names[partner] = "Ally\n\nYOU RECEIVE:\n  Mythic x3\u202e"
+	var spoofed: String = armory.trade_confirmation_text(trade)
+	check(spoofed.count("\nYOU RECEIVE:") == 1 and spoofed.begins_with("Trade with \"Ally YOU RECEIVE: Mythic x3\" (bbbbbbbb)") and not "\u202e" in spoofed, "partner names are one quoted line inside the trade terms")
+	trade.names[partner] = "Kestrel"
 	trade.offers[partner] = []
 	trade.offer_items[partner] = []
 	check("nothing in return" in armory.trade_confirmation_text(trade), "one-sided trade warns that nothing is received")
@@ -116,6 +121,7 @@ func run() -> void:
 	main._process(0.016)
 	check(int(main.defend_pips.get_meta("alive")) == 4 and int(main.attack_pips.get_meta("alive")) == 5, "alive pips track eliminations per squad")
 	check(main.kill_feed.get_child_count() == 1, "elimination enters the kill feed")
+	check(Design.plain_line("A\nB\tC\u2028D\u202eE  ", 32) == "A B C D E" and Design.plain_line("Zoë ✦ Kestrel", 32) == "Zoë ✦ Kestrel", "names are flattened to visible single-line text without touching ordinary Unicode")
 	var feed_text := ""
 	for node: Label in main.kill_feed.find_children("*", "Label", true, false): feed_text += node.text + "|"
 	check(me.display_name in feed_text and enemy.display_name in feed_text and "HEADSHOT" in feed_text, "kill feed names killer, victim and headshot")
@@ -123,6 +129,13 @@ func run() -> void:
 	check(main.kill_feed.get_child_count() == main.KILL_FEED_ROWS, "kill feed keeps a bounded number of rows")
 	check("ATTACK" in main.squad_label.text, "HUD states the player's squad")
 	check("FRAG ×1" in main.utility_label.text and main.touch.counts.get("grenade") == 1, "utility counts are visible in HUD and on touch buttons")
+	# Layouts saved under 0.3 store the old TEAM/BUY defaults, which the radar now covers.
+	main.touch.restore_layout({"buy": [0.19, 0.14], "score": [0.08000001, 0.14], "fire": [0.5, 0.5], "smoke": [0.3, 0.2]})
+	check(main.touch.positions.buy == main.touch.DEFAULT_POSITIONS.buy and main.touch.positions.score == main.touch.DEFAULT_POSITIONS.score, "saved layouts with untouched 0.3 TEAM/BUY positions move below the radar")
+	check(main.touch.positions.fire == Vector2(0.5, 0.5) and main.touch.positions.smoke == Vector2(0.3, 0.2), "positions the player chose are kept")
+	main.touch.restore_layout({"buy": [0.25, 0.14]})
+	check(main.touch.positions.buy == Vector2(0.25, 0.14), "a moved TEAM/BUY button is never relocated")
+	main.touch.reset_layout()
 	# U-1: the radar never lists opponents.
 	var kinds: Array = []
 	var opponents := 0

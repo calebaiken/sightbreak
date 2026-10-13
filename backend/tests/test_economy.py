@@ -5,7 +5,7 @@ Fictional balances/items are fixtures written directly through trusted DB code.
 """
 import os
 from concurrent.futures import ThreadPoolExecutor
-from datetime import timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from uuid import uuid4
 import pytest
@@ -455,3 +455,36 @@ def test_trade_exposes_participant_display_names_for_confirmation(client):
         expected = {a: db.get(Player, a).display_name, b: db.get(Player, b).display_name}
     assert trade['names'] == expected
     assert client.get('/trades', headers=hb).json()['trades'][0]['names'] == expected
+
+
+def test_display_names_must_be_one_visible_line(client):
+    # Trade confirmations embed the partner's name; it must not be able to forge terms.
+    for index, name in enumerate(['Ally\n\nYOU RECEIVE:', 'Tab\tName', 'Line\u2028Sep', 'Bidi\u202eflip', '   ']):
+        response = client.post('/auth/register', json=dict(username=f'spoof_user_{index}', password='long-test-password', display_name=name))
+        assert response.status_code == 422, name
+    for index, name in enumerate(['Zoë ✦ Kestrel', 'Rook 07']):
+        response = client.post('/auth/register', json=dict(username=f'plain_user_{index}', password='long-test-password', display_name=name))
+        assert response.status_code == 201, name
+
+
+def test_history_orders_by_instant_across_utc_offsets(client, monkeypatch):
+    # Servers may report any UTC offset; text order would put +05:00 after Z.
+    secret = 'fictional-server-secret-' + 'x' * 32
+    monkeypatch.setenv('SIGHTBREAK_SERVER_KEY', secret)
+    h = {'X-Server-Key': secret}
+    ahead = timezone(timedelta(hours=5))
+    older = match_body()
+    ended = now() - timedelta(minutes=9)
+    older['started_at'] = (ended - timedelta(seconds=600)).astimezone(ahead).isoformat(); older['ended_at'] = ended.astimezone(ahead).isoformat()
+    assert post(client, '/server/matches', h, older).status_code == 200
+    newer = {**older, 'match_id': str(uuid4()), 'started_at': (now() - timedelta(seconds=310)).isoformat(), 'ended_at': now().isoformat()}
+    for participant in newer['participants']:
+        participant['active_seconds'] = 300
+    assert post(client, '/server/matches', h, newer).status_code == 200
+    with transaction() as db:
+        token = 'history-' + uuid4().hex
+        db.add(Session(token_hash=digest(token), player_id=older['participants'][0]['player_id'], expires_at=now() + timedelta(hours=1)))
+    matches = client.get('/history', headers={'Authorization': 'Bearer ' + token}).json()['matches']
+    assert older['ended_at'] > newer['ended_at']  # the text order is wrong
+    assert [datetime.fromisoformat(m['ended_at']) for m in matches] == sorted((datetime.fromisoformat(m['ended_at']) for m in matches), reverse=True)
+    assert matches[0]['ended_at'] == newer['ended_at']

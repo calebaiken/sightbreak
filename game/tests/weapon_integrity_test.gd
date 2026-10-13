@@ -48,6 +48,7 @@ func _run() -> void:
 	await physics_frame
 	await _fire_rates()
 	await _quick_switch()
+	await _interrupted_fire()
 	await _recoil_pattern()
 	await _spread_seed()
 	await _hit_volumes()
@@ -78,6 +79,32 @@ func _fire_rates() -> void:
 		var tolerance := designed * 0.02 + (0.0 if spec.automatic else DT)
 		check(absf(mean - designed) <= tolerance, "%s sustained interval %.4fs matches data %.4fs" % [weapon, mean, designed])
 		actor.queue_free()
+	await physics_frame
+
+func _interrupted_fire() -> void:
+	# Holding the trigger through a reload must not bank a tick into the next shot.
+	var actor := _actor(73, 0, Vector3(3, 0.05, -20), "rifle")
+	await physics_frame
+	await _settle([actor], 30)
+	actor.ammo = int(Weapons.get_weapon("rifle").magazine)
+	var fired: Array[int] = []
+	var tick := [0]
+	var record := func(_id: int, _origin: Vector3, _direction: Vector3) -> void: fired.append(tick[0])
+	actor.shot_fired.connect(record)
+	for t in range(240):
+		tick[0] = t
+		actor.input_state = {"look": Vector2(0, 1.4), "weapon": "rifle", "fire": true, "reload": t == 20}
+		actor.tick_authority(DT)
+	actor.shot_fired.disconnect(record)
+	var resumed := -1
+	for index in range(1, fired.size()):
+		if fired[index] - fired[index - 1] > 10:
+			resumed = index
+			break
+	var designed := float(Weapons.get_weapon("rifle").interval)
+	var first_interval := float(fired[resumed + 1] - fired[resumed]) * DT if resumed > 0 and resumed + 1 < fired.size() else -1.0
+	check(first_interval >= designed - 0.000001, "first interval after a held-trigger reload is not shortened (%.4fs, data %.4fs)" % [first_interval, designed])
+	actor.queue_free()
 	await physics_frame
 
 func _quick_switch() -> void:
@@ -170,11 +197,23 @@ func _hit_volumes() -> void:
 	await physics_frame
 	await _settle([target, behind, shooter], 20, {"look": Vector2(PI, 0)})
 	var feet := target.global_position.y
-	# Hit volumes are derived from the rendered head, not hand-tuned constants.
+	# Hit volumes must agree with what is actually drawn: measure the rendered head
+	# mesh and the tallest rendered body point (the helmet crown) in body space.
 	var head_node: MeshInstance3D = target._head
-	var rendered_radii: Vector3 = head_node.scale * 0.5
+	var head_box: AABB = head_node.transform * head_node.mesh.get_aabb()
+	var rendered_radii: Vector3 = head_box.size * 0.5
 	var volume: Array = Actor.HEAD_VOLUMES[0]
-	check(volume[0].is_equal_approx(head_node.position) and volume[1].is_equal_approx(rendered_radii), "primary head volume matches the rendered head mesh")
+	# 1 cm per axis: the drawn head is a 12-segment sphere, about 4 mm inside the ideal ellipsoid.
+	var radius_error: Vector3 = (volume[1] - rendered_radii).abs()
+	check(volume[0].distance_to(head_box.get_center()) < 0.005 and maxf(radius_error.x, maxf(radius_error.y, radius_error.z)) < 0.01, "primary head volume matches the rendered head mesh")
+	var crown := -INF
+	for node: MeshInstance3D in target._body.find_children("*", "MeshInstance3D", true, false):
+		if node.mesh == null:
+			continue
+		var box: AABB = target._body.global_transform.affine_inverse() * node.global_transform * node.mesh.get_aabb()
+		crown = maxf(crown, box.end.y)
+	var helmet: Array = Actor.HEAD_VOLUMES[1]
+	check(absf(crown - (helmet[0].y + helmet[1].y)) < 0.01, "helmet volume reaches the top of the drawn operator (%.3f m drawn, %.3f m volume)" % [crown, helmet[0].y + helmet[1].y])
 	var center := _ray(shooter, Vector3(0, feet + 1.56, 0.5), Vector3(0, feet + 1.56, 12))
 	check(center.get("actor") == target and center.get("headshot") == true, "center of rendered head is a headshot")
 	var chest := _ray(shooter, Vector3(0, feet + 1.10, 0.5), Vector3(0, feet + 1.10, 12))

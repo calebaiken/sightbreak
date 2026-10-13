@@ -18,6 +18,15 @@ func shot(name: String) -> Image:
 	print("SMOKE CAPTURE: " + name)
 	return image
 
+func _red_pixels(image: Image) -> int:
+	var count := 0
+	for y in range(0, image.get_height(), 2):
+		for x in range(0, image.get_width(), 2):
+			var c := image.get_pixel(x, y)
+			if c.r > 0.6 and c.g < 0.25 and c.b < 0.25:
+				count += 1
+	return count
+
 func _run() -> void:
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--capture-dir="):
@@ -91,6 +100,27 @@ func _run() -> void:
 	for value in values: variance += (value - mean) * (value - mean)
 	variance /= values.size()
 	print("SMOKE_INSIDE_LUMINANCE mean=%.3f stddev=%.4f" % [mean, sqrt(variance)])
+	# One-way check: standing in a side lobe (beyond the central sphere) and looking
+	# out, a bright marker just past the cloud edge must stay hidden, as it is from outside.
+	var marker := MeshInstance3D.new()
+	var marker_mesh := BoxMesh.new()
+	marker_mesh.size = Vector3(0.3, 1.2, 1.2)
+	marker.mesh = marker_mesh
+	var marker_material := StandardMaterial3D.new()
+	marker_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	marker_material.albedo_color = Color(1, 0, 0)
+	marker.material_override = marker_material
+	world.add_child(marker)
+	var center := smoke.global_position
+	assert(not SBUtility.core_contains(Vector3(3.45, 0.25, 0.55)) and SBUtility.core_contains(Vector3(2.2, 0.25, 0.55)))
+	marker.global_position = center + Vector3(3.6, 0.25, 0.55)
+	camera.global_position = center + Vector3(2.2, 0.25, 0.55)
+	camera.look_at(marker.global_position)
+	var looking_out := await shot("smoke-lobe-out")
+	smoke.visible = false
+	var control := await shot("smoke-lobe-control")
+	smoke.visible = true
+	print("SMOKE_LOBE_VIEW marker_pixels=%d control_pixels=%d" % [_red_pixels(looking_out), _red_pixels(control)])
 	world.queue_free()
 	for i in 3: await process_frame
 	quit()

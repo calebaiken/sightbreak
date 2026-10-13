@@ -25,7 +25,7 @@ JSON requests reject extra fields. UUIDs are strings. Errors are non-2xx with `{
 
 | Method / route | Request / response |
 | --- | --- |
-| POST `/auth/register` | `{username,password,display_name}` → `{token,player_id,expires_at}`; password 12–128 characters; username 3–32 alphanumeric/underscore |
+| POST `/auth/register` | `{username,password,display_name}` → `{token,player_id,expires_at}`; password 12–128 characters; username 3–32 alphanumeric/underscore; display name 1–32 characters on one visible line (control, bidi-format and line/paragraph separator characters are rejected with 422) |
 | POST `/auth/login` | `{username,password}` → same session response |
 | POST `/auth/logout` | Auth; revokes current session and any unconsumed game tickets tied to it |
 | POST `/auth/game-ticket` | Auth; `{server_id}` → 201 `{ticket,server_id,expires_at}`; opaque, single-use, 60-second join credential |
@@ -46,7 +46,7 @@ JSON requests reject extra fields. UUIDs are strings. Errors are non-2xx with `{
 | PUT `/trades/{id}/offer` | `{item_ids,revision}` → Trade with revision incremented and confirmations cleared |
 | POST `/trades/{id}/confirm` | `{revision}` → Trade; settles only when both confirm same revision |
 | POST `/trades/{id}/cancel` | `{}` → Trade, releases reservations |
-| GET `/history` | Up to 100 recent ledger entries and match reward records |
+| GET `/history` | Up to 100 recent ledger entries and match reward records, each newest first (matches ordered by their end instant, whatever UTC offset the server reported) |
 
 `idempotency_key` must be a freshly generated UUID for a new operation. Retain it across retries. Retrying returns the original committed response; reuse for a different payload is rejected. The key is scoped to authenticated player and operation/target. Listing creation is safely protected against duplication by its item reservation, but its creation route is not a response-replay API.
 

@@ -8,6 +8,7 @@ import json
 import os
 import secrets
 import time
+import unicodedata
 from contextlib import contextmanager
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -17,8 +18,8 @@ from uuid import UUID
 from argon2 import PasswordHasher
 from argon2.exceptions import InvalidHashError, VerificationError
 from fastapi import FastAPI, HTTPException, Header, Query, Request
-from pydantic import BaseModel, ConfigDict, Field
-from sqlalchemy import create_engine, select, text, func, or_
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+from sqlalchemy import DateTime, cast, create_engine, select, text, func, or_
 from sqlalchemy.orm import Session as DBSession
 from models import Base, Player, Session, Ledger, Item, Operation, Audit, Listing, Trade, Reward, RateBucket, GameTicket, Loadout, now
 
@@ -139,7 +140,16 @@ class Strict(BaseModel): model_config = ConfigDict(extra='forbid')
 class Login(Strict):
     username: str = Field(min_length=3,max_length=32,pattern=r'^[a-zA-Z0-9_]+$')
     password: str = Field(min_length=12,max_length=128)
-class Register(Login): display_name: str = Field(min_length=1,max_length=32)
+class Register(Login):
+    display_name: str = Field(min_length=1,max_length=32)
+    @field_validator('display_name')
+    @classmethod
+    def one_visible_line(cls, value: str) -> str:
+        # Names appear inside trade and match text; control, format (bidi) and
+        # line/paragraph separators could forge or reorder the surrounding terms.
+        if not value.strip() or any(unicodedata.category(c) in ('Cc','Cf','Zl','Zp') for c in value):
+            raise ValueError('display name must be one line of visible text')
+        return value
 class Idempotent(Strict): idempotency_key: UUID
 class Buy(Idempotent): definition_id: str = Field(max_length=100)
 class Open(Idempotent):
@@ -408,7 +418,7 @@ def match_result(body:MatchResult,request:Request,x_server_key:Annotated[str|Non
 def history(authorization:Auth=None):
     with DBSession(engine) as db:
         p=authenticated(db,authorization)
-        return {'ledger':[dict(id=r.id,amount=r.amount,balance_after=r.balance_after,reason=r.reason,reference=r.reference,created_at=r.created_at.isoformat()) for r in db.scalars(select(Ledger).where(Ledger.player_id==p.id).order_by(Ledger.created_at.desc()).limit(100))], 'matches':[r.details for r in db.scalars(select(Reward).where(Reward.player_id==p.id).order_by(Reward.details['ended_at'].astext.desc()).limit(100))]}
+        return {'ledger':[dict(id=r.id,amount=r.amount,balance_after=r.balance_after,reason=r.reason,reference=r.reference,created_at=r.created_at.isoformat()) for r in db.scalars(select(Ledger).where(Ledger.player_id==p.id).order_by(Ledger.created_at.desc()).limit(100))], 'matches':[r.details for r in db.scalars(select(Reward).where(Reward.player_id==p.id).order_by(cast(Reward.details['ended_at'].astext, DateTime(timezone=True)).desc()).limit(100))]}
 
 
 class TicketRequest(Strict):

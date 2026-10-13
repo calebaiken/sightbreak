@@ -46,6 +46,18 @@ const MOTION_SLOW := 0.35
 
 static var _heading_font: FontVariation
 
+## User-supplied names as one plain line: control, bidi-format and line or
+## paragraph separator characters become spaces, runs collapse, length is capped.
+static func plain_line(text: String, limit: int = 32) -> String:
+	var cleaned := ""
+	for index in range(text.length()):
+		var code := text.unicode_at(index)
+		var hidden := code < 32 or (code >= 127 and code < 160) or code == 0xAD or (code >= 0x200B and code <= 0x200F) or (code >= 0x2028 and code <= 0x202E) or (code >= 0x2060 and code <= 0x206F) or code == 0xFEFF
+		cleaned += " " if hidden else text[index]
+	while "  " in cleaned:
+		cleaned = cleaned.replace("  ", " ")
+	return cleaned.strip_edges().left(limit)
+
 static func squad_color(team: int) -> Color:
 	return ATTACK if team == 0 else DEFEND
 

@@ -708,12 +708,15 @@ func _trades() -> void:
 	for raw in trades:
 		_trade_card(raw)
 
-## Partner as "Display name (id prefix)": names are not unique, the id is.
+## Partner as "Display name" (id prefix): names are not unique, the id is. The name
+## is flattened to one line and quoted so it can never read as part of the terms.
 func partner_label(trade: Dictionary) -> String:
 	var partner_id := _partner_id(trade)
 	var names: Dictionary = trade.get("names", {})
-	var display := str(names.get(partner_id, "Unknown player"))
-	return display if partner_id.is_empty() else "%s (%s)" % [display, partner_id.left(8)]
+	var display := DESIGN.plain_line(str(names.get(partner_id, "")))
+	if display.is_empty():
+		display = "Unknown player"
+	return "\"%s\"" % display if partner_id.is_empty() else "\"%s\" (%s)" % [display, partner_id.left(8)]
 
 func _partner_id(trade: Dictionary) -> String:
 	var a: Variant = trade.get("a")

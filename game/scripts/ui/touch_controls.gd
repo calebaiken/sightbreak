@@ -38,6 +38,10 @@ const DEFAULT_POSITIONS := {"fire": Vector2(0.89, 0.53), "jump": Vector2(0.91, 0
 	"interact": Vector2(0.65, 0.68), "grenade": Vector2(0.60, 0.80),
 	"smoke": Vector2(0.69, 0.80), "buy": Vector2(0.17, 0.36), "pause": Vector2(0.96, 0.07), "switch": Vector2(0.91, 0.84), "score": Vector2(0.06, 0.36), "move": Vector2(0.13, 0.74)}
 var positions: Dictionary = DEFAULT_POSITIONS.duplicate()
+## 0.3 defaults that the radar now covers. Saving a layout stores every button, so a
+## saved position equal to one of these was never moved by the player; it follows
+## the new default. Any position the player chose is kept.
+const RETIRED_DEFAULTS := {"buy": Vector2(0.19, 0.14), "score": Vector2(0.08, 0.14)}
 const LABELS := {"fire": "FIRE", "jump": "JUMP", "crouch": "LOW", "reload": "RELOAD",
 	"interact": "USE", "grenade": "FRAG", "smoke": "SMOKE", "buy": "BUY", "pause": "MENU", "switch": "SWAP", "score": "TEAM"}
 var fingers: Dictionary = {}
@@ -70,7 +74,10 @@ func restore_layout(saved: Dictionary) -> void:
 			var y: Variant = saved[key][1]
 			if not (x is float or x is int) or not (y is float or y is int): continue
 			if not is_finite(float(x)) or not is_finite(float(y)): continue
-			positions[key] = Vector2(clampf(float(x), 0.0, 1.0), clampf(float(y), 0.0, 1.0))
+			var restored := Vector2(clampf(float(x), 0.0, 1.0), clampf(float(y), 0.0, 1.0))
+			if RETIRED_DEFAULTS.has(key) and restored.distance_to(RETIRED_DEFAULTS[key]) < 0.002:
+				restored = DEFAULT_POSITIONS[key]
+			positions[key] = restored
 	queue_redraw()
 
 func reset_layout() -> void:

@@ -694,7 +694,8 @@ func _join_rpc(player_name: String, token: String, join_ticket: String = "") -> 
 	if not account.is_empty():
 		_account_ids[id] = account
 	_last_activity[id] = _elapsed
-	actors[id].display_name = player_name.strip_edges().left(24) if not player_name.strip_edges().is_empty() else "Operator"
+	var clean_name := SBDesign.plain_line(player_name, 24)
+	actors[id].display_name = clean_name if not clean_name.is_empty() else "Operator"
 	_welcome_rpc.rpc_id(peer_id, id, new_token, _snapshot())
 	_announce(actors[id].display_name + " joined Relay Yard")
 	if phase == "waiting" and _peer_actors.size() == 10 and _account_ids.size() == 10:
@@ -780,7 +781,7 @@ func _snapshot() -> Dictionary:
 	var utilities: Array = []
 	for child: Node in get_children():
 		if child is SBUtility:
-			utilities.append({"id": child.get_instance_id(), "kind": child.kind, "position": child.position, "detonated": child._detonated})
+			utilities.append({"id": child.get_instance_id(), "kind": child.kind, "position": child.position, "detonated": child._detonated, "life": child._lifetime})
 	var states: Array = []
 	for actor: SBActor in actors.values():
 		states.append(actor.snapshot())
@@ -827,6 +828,12 @@ func _sync_utility_visuals(states: Array) -> void:
 		visual.position = state.position
 		if bool(state.detonated) and not visual._detonated:
 			visual._detonate()
+		# Replica physics is off, so the server's remaining lifetime drives the
+		# fade; visuals then thin exactly as the authoritative concealment shrinks.
+		if visual._detonated and state.has("life"):
+			visual._lifetime = float(state.life)
+			if visual.kind == "smoke":
+				visual._apply_dissipation()
 	for id: int in _remote_utilities.keys():
 		if not present.has(id):
 			_remote_utilities[id].queue_free()

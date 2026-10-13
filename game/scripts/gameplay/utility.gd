@@ -17,6 +17,20 @@ static var _smoke_texture: ImageTexture
 static var _smoke_core_shader: Shader
 static var _smoke_core_mesh: ArrayMesh
 const CONCEALMENT_RADIUS := 3.2
+## Core lobes as [center, ellipsoid radii] in cloud space. The mesh, the shader's
+## inside test and the concealment bound all derive from this one table.
+const CORE_LOBES := [
+	[Vector3.ZERO, Vector3(2.15, 2.05, 2.15)],
+	[Vector3(0.25, 1.1, -0.2), Vector3(1.25, 1.1, 1.25)],
+	[Vector3(1.3, 0.25, 0.55), Vector3(1.2, 1.1, 1.15)],
+	[Vector3(-1.25, 0.4, -0.45), Vector3(1.2, 1.1, 1.15)],
+	[Vector3(1.25, -0.95, -0.85), Vector3(1.15, 0.75, 1.1)],
+	[Vector3(-1.15, -0.95, 1.0), Vector3(1.15, 0.75, 1.1)]
+]
+## The vertex shader billows the surface up to this far along its normal, so the
+## inside test is widened by the same amount: a camera in any part of the cloud
+## must see dense fog, never a one-way view out through a lobe.
+const CORE_BILLOW := 0.15
 ## Edge puffs as [offset from cloud center, quad size]: four upper layers and two
 ## small low layers whose lower edge ends at ground level, so no quad is cut by
 ## the floor. Low quality keeps the first, third and fifth.
@@ -56,27 +70,38 @@ static func smoke_texture() -> ImageTexture:
 static func smoke_core_shader() -> Shader:
 	if _smoke_core_shader == null:
 		_smoke_core_shader = Shader.new()
-		# Unshaded and opaque: a top-lit gradient toward the sun, drifting triplanar
-		# noise and a soft bright rim that blends into the translucent edge quads.
+		# Unshaded, drawn in the transparent pass: a gentle top-lit gradient,
+		# drifting triplanar noise and an opaque body whose grazing rim thins out.
 		# Culling stays disabled so the cloud remains opaque from inside.
+		var lobe_tests: Array[String] = []
+		for lobe: Array in CORE_LOBES:
+			var center: Vector3 = lobe[0]
+			var radii: Vector3 = lobe[1] + Vector3.ONE * CORE_BILLOW
+			lobe_tests.append("lobe_inside(camera_local, vec3(%.4f, %.4f, %.4f), vec3(%.4f, %.4f, %.4f))" % [center.x, center.y, center.z, radii.x, radii.y, radii.z])
 		_smoke_core_shader.code = """shader_type spatial;
 render_mode unshaded, cull_disabled, blend_mix, depth_draw_opaque;
 uniform sampler2D cloud_noise : source_color, filter_linear_mipmap, repeat_enable;
 uniform vec3 light_direction = vec3(-0.41, 0.64, 0.65);
-uniform float core_radius = 2.15;
 uniform float opacity = 1.0;
 varying vec3 cloud_position;
 varying vec3 world_normal;
+varying float inside_cloud;
+float lobe_inside(vec3 p, vec3 center, vec3 radii) {
+ vec3 d = (p - center) / radii;
+ return step(dot(d, d), 1.0);
+}
 void vertex() {
  float t = TIME * 0.11;
  float billow = sin(VERTEX.x*1.7+0.5+t)*sin(VERTEX.y*1.5-t*0.7)*sin(VERTEX.z*1.4+1.0+t*0.5);
- VERTEX += NORMAL * billow * 0.15;
+ VERTEX += NORMAL * billow * BILLOW;
  cloud_position = VERTEX;
  world_normal = normalize((MODEL_MATRIX * vec4(NORMAL, 0.0)).xyz);
+ // Same for every vertex: is the camera inside any (billow-widened) lobe?
+ vec3 camera_local = (inverse(MODEL_MATRIX) * vec4(CAMERA_POSITION_WORLD, 1.0)).xyz;
+ inside_cloud = INSIDE_TEST;
 }
 void fragment() {
- float scale = length(MODEL_MATRIX[0].xyz);
- bool inside = distance(CAMERA_POSITION_WORLD, NODE_POSITION_WORLD) < core_radius * scale * 0.97;
+ bool inside = inside_cloud > 0.5;
  // Outside, only the near surface draws; inside, the surrounding shell is dense fog.
  if (!FRONT_FACING && !inside) {
   discard;
@@ -100,7 +125,11 @@ void fragment() {
  ALBEDO = tone;
  ALPHA = body * opacity;
 }
-"""
+""".replace("BILLOW", "%.4f" % CORE_BILLOW)
+		var inside_test: String = lobe_tests[0]
+		for index in range(1, lobe_tests.size()):
+			inside_test = "max(%s, %s)" % [inside_test, lobe_tests[index]]
+		_smoke_core_shader.code = _smoke_core_shader.code.replace("INSIDE_TEST", inside_test)
 	return _smoke_core_shader
 
 ## One shared cumulus-like core: the original concealment sphere plus overlapping
@@ -108,14 +137,7 @@ void fragment() {
 ## bots and players lose sight together; the textured puffs layer over its seams.
 static func smoke_core_mesh() -> ArrayMesh:
 	if _smoke_core_mesh == null:
-		var lobes := [
-			[Vector3.ZERO, Vector3(2.15, 2.05, 2.15)],
-			[Vector3(0.25, 1.1, -0.2), Vector3(1.25, 1.1, 1.25)],
-			[Vector3(1.3, 0.25, 0.55), Vector3(1.2, 1.1, 1.15)],
-			[Vector3(-1.25, 0.4, -0.45), Vector3(1.2, 1.1, 1.15)],
-			[Vector3(1.25, -0.95, -0.85), Vector3(1.15, 0.75, 1.1)],
-			[Vector3(-1.15, -0.95, 1.0), Vector3(1.15, 0.75, 1.1)]
-		]
+		var lobes := CORE_LOBES
 		var builder := SurfaceTool.new()
 		builder.begin(Mesh.PRIMITIVE_TRIANGLES)
 		for index in range(lobes.size()):
@@ -146,6 +168,14 @@ func dissipation() -> float:
 	if not _detonated or kind != "smoke":
 		return 1.0
 	return clampf(_lifetime / DISSIPATE_SECONDS, 0.0, 1.0)
+
+## GDScript mirror of the core shader's inside test, in cloud space.
+static func core_contains(local_point: Vector3) -> bool:
+	for lobe: Array in CORE_LOBES:
+		var d: Vector3 = (local_point - lobe[0]) / (lobe[1] + Vector3.ONE * CORE_BILLOW)
+		if d.length_squared() <= 1.0:
+			return true
+	return false
 
 ## Line-of-sight blocking radius used by bots; it shrinks with the visible cloud.
 func concealment_radius() -> float:
