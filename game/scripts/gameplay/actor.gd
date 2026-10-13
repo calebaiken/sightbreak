@@ -4,9 +4,12 @@ extends CharacterBody3D
 signal eliminated(victim_id: int, killer_id: int)
 signal damage_taken(victim_id: int, attacker_id: int, amount: float)
 signal shot_fired(actor_id: int, origin: Vector3, direction: Vector3)
+signal hit_confirmed(attacker_id: int, headshot: bool, lethal: bool)
 signal utility_deployed(actor_id: int, at: Vector3, kind: String)
 
 const Weapons = preload("res://scripts/gameplay/weapons.gd")
+const CombatEffects = preload("res://scripts/gameplay/combat_effects.gd")
+const WeaponModel = preload("res://scripts/gameplay/weapon_model.gd")
 const Utility = preload("res://scripts/gameplay/utility.gd")
 const CosmeticMaterial = preload("res://scripts/ui/cosmetic_material.gd")
 const WALK_SPEED := 5.1
@@ -35,6 +38,15 @@ var smokes: int = 1
 var reload_remaining: float = 0.0
 var recoil := Vector2.ZERO
 var last_hit_headshot: bool = false
+var reduced_motion := false
+var _world_muzzle: MeshInstance3D
+var hit_feedback_remaining := 0.0
+var hit_feedback_headshot := false
+var hit_feedback_lethal := false
+var _equip_blend := 0.0
+var _knees: Array[Node3D] = []
+var _arms: Array[Node3D] = []
+var _body_materials: Dictionary = {}
 var inventory: Array[String] = ["sidearm"]
 var _ammo_store: Dictionary = {}
 var _body: Node3D
@@ -66,8 +78,13 @@ var _finish: ShaderMaterial
 var _rng := RandomNumberGenerator.new()
 var _shot_audio: AudioStreamPlayer3D
 var _hurt_audio: AudioStreamPlayer3D
+var _mechanical_audio: AudioStreamPlayer3D
+var _reload_visual_active := false
+var _reload_visual_seated := false
 static var _shot_streams: Dictionary = {}
 static var _hurt_stream: AudioStreamWAV
+static var _reload_release: AudioStreamWAV
+static var _reload_seat: AudioStreamWAV
 
 func configure(id: int, side: int, label: String, local: bool = false) -> void:
 	actor_id = id
@@ -114,10 +131,18 @@ func _ready() -> void:
 	_hurt_audio.max_distance = 18
 	_hurt_audio.volume_db = -13
 	add_child(_hurt_audio)
+	_mechanical_audio = AudioStreamPlayer3D.new()
+	_mechanical_audio.max_distance = 16
+	_mechanical_audio.unit_size = 1.5
+	_mechanical_audio.volume_db = -17
+	_mechanical_audio.position.y = head_height
+	add_child(_mechanical_audio)
 	if _shot_streams.is_empty():
 		for id in Weapons.DATA:
 			_shot_streams[id] = _synthesize_shot(id)
 		_hurt_stream = _synthesize_sound(0.08, 65, 0.25)
+		_reload_release = _synthesize_sound(0.06, 380, 0.58)
+		_reload_seat = _synthesize_sound(0.09, 240, 0.76)
 	_shot_audio.stream = _shot_streams[weapon_id]
 	_hurt_audio.stream = _hurt_stream
 
@@ -183,156 +208,120 @@ func _part(parent: Node3D, at: Vector3, dimensions: Vector3, color: Color) -> Me
 	visual.position = at
 	return visual
 
+func _body_material(color: Color, roughness: float = 0.85, metal: float = 0.0) -> StandardMaterial3D:
+	var key := "%s/%.2f/%.2f" % [color.to_html(), roughness, metal]
+	if not _body_materials.has(key):
+		var material := StandardMaterial3D.new()
+		material.albedo_color = color
+		material.roughness = roughness
+		material.metallic = metal
+		_body_materials[key] = material
+	return _body_materials[key]
+
+func _rounded(parent: Node3D, at: Vector3, size: Vector3, color: Color) -> MeshInstance3D:
+	var node := MeshInstance3D.new()
+	var sphere := SphereMesh.new()
+	sphere.radius = 0.5
+	sphere.height = 1.0
+	sphere.radial_segments = 12
+	sphere.rings = 6
+	node.mesh = sphere
+	node.material_override = _body_material(color)
+	parent.add_child(node)
+	node.position = at
+	node.scale = size
+	return node
+
+func _limb(parent: Node3D, from: Vector3, to: Vector3, radius: float, color: Color) -> void:
+	var node := MeshInstance3D.new()
+	var mesh := CapsuleMesh.new()
+	mesh.radius = radius
+	mesh.height = from.distance_to(to) + radius
+	mesh.radial_segments = 10
+	mesh.rings = 3
+	node.mesh = mesh
+	node.material_override = _body_material(color)
+	parent.add_child(node)
+	node.position = (from + to) * 0.5
+	node.quaternion = Quaternion(Vector3.UP, (to - from).normalized())
+
 func _build_body() -> void:
 	for child in _body.get_children():
 		_body.remove_child(child)
 		child.queue_free()
 	_legs.clear()
+	_knees.clear()
+	_arms.clear()
 	_body_team = team
-	var uniform := Color("bb8153") if team == 0 else Color("518caa")
-	_part(_body, Vector3(0, 1.03, 0), Vector3(0.57, 0.63, 0.31), uniform)
-	_part(_body, Vector3(0, 1.08, -0.18), Vector3(0.46, 0.45, 0.13), Color("29333a"))
+	# Broad muted team fields retain target recognition at distance. Body volume
+	# remains entirely within the unchanged competitive capsule/headshot regions.
+	var uniform := Color("ae8061") if team == 0 else Color("597f94")
+	var dark := Color("273339")
+	_rounded(_body, Vector3(0, 1.08, 0), Vector3(0.59, 0.68, 0.34), uniform)
+	_rounded(_body, Vector3(0, 0.82, 0), Vector3(0.44, 0.27, 0.32), uniform.darkened(0.2))
+	var vest := _part(_body, Vector3(0, 1.10, -0.15), Vector3(0.42, 0.42, 0.16), dark)
+	vest.material_override = _body_material(dark)
+	for x in [-0.13, 0.0, 0.13]:
+		var pouch := _part(_body, Vector3(x, 0.99, -0.254), Vector3(0.104, 0.18, 0.065), dark.lightened(0.1))
+		pouch.material_override = _body_material(dark.lightened(0.1))
+	# Distinct shoulder/arm silhouettes and two-joint legs, not rigid blocks.
 	for x in [-0.16, 0.16]:
 		var leg := Node3D.new()
 		_body.add_child(leg)
 		leg.position = Vector3(x, 0.87, 0)
 		_legs.append(leg)
-		_part(leg, Vector3(0, -0.42, 0), Vector3(0.23, 0.83, 0.24), uniform.darkened(0.25))
-		_part(leg, Vector3(0, -0.74, -0.07), Vector3(0.25, 0.23, 0.40), Color("263038"))
-		_part(_body, Vector3(x * 2.1, 1.05, -0.12), Vector3(0.19, 0.40, 0.25), uniform)
-	_head = _part(_body, Vector3(0, 1.58, 0), Vector3(0.37, 0.40, 0.36), Color("36434c"))
-	_part(_head, Vector3(0, -0.03, -0.19), Vector3(0.32, 0.11, 0.035), Color("c4e4e3"))
-	_part(_body, Vector3(0.20, 1.12, -0.40), Vector3(0.11, 0.13, 0.65), Color("1b242b"))
-
-func _chamfer(at: Vector3, size: Vector3, tint: Color, painted: bool = false) -> MeshInstance3D:
-	var mesh := MeshInstance3D.new()
-	var st := SurfaceTool.new()
-	st.begin(Mesh.PRIMITIVE_TRIANGLES)
-	var x := size.x * 0.5
-	var y := size.y * 0.5
-	var z := size.z * 0.5
-	var b := minf(x, y) * 0.32
-	var ring := [Vector2(-x + b, -y), Vector2(x - b, -y), Vector2(x, -y + b), Vector2(x, y - b), Vector2(x - b, y), Vector2(-x + b, y), Vector2(-x, y - b), Vector2(-x, -y + b)]
-	for i in range(8):
-		var a: Vector2 = ring[i]
-		var c: Vector2 = ring[(i + 1) % 8]
-		var front_a := Vector3(a.x, a.y, -z)
-		var front_b := Vector3(c.x, c.y, -z)
-		var back_a := Vector3(a.x, a.y, z)
-		var back_b := Vector3(c.x, c.y, z)
-		var vertices := [front_a, front_b, back_b, front_a, back_b, back_a, Vector3(0, 0, -z), front_b, front_a, Vector3(0, 0, z), back_a, back_b]
-		# Godot front faces use clockwise winding.
-		for triangle in range(0, vertices.size(), 3):
-			st.add_vertex(vertices[triangle])
-			st.add_vertex(vertices[triangle + 2])
-			st.add_vertex(vertices[triangle + 1])
-	st.generate_normals()
-	mesh.mesh = st.commit()
-	var material := StandardMaterial3D.new()
-	material.albedo_color = tint
-	material.roughness = 0.58
-	material.metallic = 0.35
-	mesh.material_override = material
-	_gun.add_child(mesh)
-	mesh.position = at
-	if painted:
-		_paint_parts.append(mesh)
-	return mesh
-
-func _sleeve(from: Vector3, to: Vector3, tint: Color) -> void:
-	var sleeve := _chamfer((from + to) * 0.5, Vector3(0.11, 0.105, from.distance_to(to)), tint)
-	sleeve.quaternion = Quaternion(Vector3.FORWARD, (to - from).normalized())
-
-func _barrel(at: Vector3, length: float, radius: float, tint: Color) -> MeshInstance3D:
-	var mesh := MeshInstance3D.new()
-	var shape := CylinderMesh.new()
-	shape.top_radius = radius
-	shape.bottom_radius = radius
-	shape.height = length
-	shape.radial_segments = 12
-	mesh.mesh = shape
-	var material := StandardMaterial3D.new()
-	material.albedo_color = tint
-	material.metallic = 0.5
-	material.roughness = 0.5
-	mesh.material_override = material
-	_gun.add_child(mesh)
-	mesh.position = at
-	mesh.rotation.x = PI * 0.5
-	return mesh
+		_limb(leg, Vector3.ZERO, Vector3(0, -0.35, 0), 0.105, uniform.darkened(0.14))
+		var knee := Node3D.new()
+		leg.add_child(knee)
+		knee.position.y = -0.35
+		_knees.append(knee)
+		_limb(knee, Vector3.ZERO, Vector3(0, -0.34, 0), 0.088, uniform.darkened(0.22))
+		_rounded(knee, Vector3(0, -0.02, -0.084), Vector3(0.18, 0.22, 0.065), dark)
+		_rounded(knee, Vector3(0, -0.38, -0.065), Vector3(0.22, 0.22, 0.35), Color("192229"))
+		var arm := Node3D.new()
+		_body.add_child(arm)
+		arm.position = Vector3(x * 1.85, 1.31, 0)
+		_arms.append(arm)
+		_limb(arm, Vector3.ZERO, Vector3(x * 0.16, -0.23, 0.015), 0.093, uniform)
+		_limb(arm, Vector3(x * 0.16, -0.23, 0.015), Vector3(-x * 0.45, -0.23, -0.29), 0.078, uniform)
+		_rounded(arm, Vector3(-x * 0.45, -0.23, -0.29), Vector3(0.13, 0.13, 0.16), dark)
+		_rounded(arm, Vector3(x * 0.15, -0.04, 0), Vector3(0.17, 0.20, 0.21), uniform.lightened(0.05))
+	_head = _rounded(_body, Vector3(0, 1.56, 0), Vector3(0.32, 0.39, 0.33), dark)
+	# Helmet rim and smoke-tinted visor sit at root scale, not scaled head-local.
+	_rounded(_body, Vector3(0, 1.68, 0.005), Vector3(0.38, 0.28, 0.37), uniform.darkened(0.30))
+	var visor := _rounded(_body, Vector3(0, 1.585, -0.158), Vector3(0.28, 0.09, 0.05), Color("809997"))
+	visor.material_override = _body_material(Color("809997"), 0.24, 0.35)
+	_part(_body, Vector3(0, 1.08, 0.19), Vector3(0.32, 0.35, 0.13), dark)
+	# A lightweight world proxy: first-person attachments need no tenfold overhead.
+	var rifle := _part(_body, Vector3(0.13, 1.12, -0.37), Vector3(0.075, 0.11, 0.44), Color("1b242b"))
+	rifle.material_override = _body_material(Color("1b242b"), 0.48, 0.55)
+	_part(_body, Vector3(0.13, 1.13, -0.65), Vector3(0.029, 0.029, 0.16), dark)
+	_part(_body, Vector3(0.13, 1.00, -0.38), Vector3(0.054, 0.15, 0.08), dark)
+	_world_muzzle = MeshInstance3D.new()
+	var flash := PrismMesh.new()
+	flash.size = Vector3(0.085, 0.085, 0.16)
+	_world_muzzle.mesh = flash
+	var flash_material := StandardMaterial3D.new()
+	flash_material.albedo_color = Color("ffda8a")
+	flash_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	_world_muzzle.material_override = flash_material
+	_world_muzzle.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_body.add_child(_world_muzzle)
+	_world_muzzle.position = Vector3(0.13, 1.13, -0.765)
+	_world_muzzle.visible = false
 
 func _build_gun() -> void:
 	for child in _gun.get_children():
 		_gun.remove_child(child)
 		child.queue_free()
-	_paint_parts.clear()
-	_magazine = null
+	var model: Dictionary = WeaponModel.build(_gun, weapon_id, true)
+	_paint_parts.assign(model.paint)
+	_magazine = model.magazine
+	if is_instance_valid(_magazine):
+		_magazine_rest = _magazine.position
+	_muzzle = model.muzzle
 	_gun_color = Weapons.get_weapon(weapon_id)["color"]
-	var metal := Color("151c23")
-	var edge := Color("323e48")
-	var glove := Color("343c39")
-	var muzzle_z := -0.35
-	if weapon_id == "sidearm":
-		_chamfer(Vector3(0, 0.022, -0.16), Vector3(0.085, 0.075, 0.31), edge, true)
-		_chamfer(Vector3(0, -0.023, -0.12), Vector3(0.074, 0.052, 0.26), metal)
-		var grip := _chamfer(Vector3(0, -0.105, -0.017), Vector3(0.066, 0.16, 0.09), metal)
-		grip.rotation.x = -0.23
-		_barrel(Vector3(0, 0.019, -0.32), 0.07, 0.022, metal)
-		_barrel(Vector3(0, 0.019, -0.357), 0.005, 0.014, Color("03070b"))
-		# A real open rear notch, fine front sight, ejection port, slide serrations.
-		for x in [-0.026, 0.026]:
-			_chamfer(Vector3(x, 0.074, -0.025), Vector3(0.018, 0.029, 0.025), metal)
-		_chamfer(Vector3(0, 0.072, -0.279), Vector3(0.014, 0.020, 0.021), Color("96b2a0"))
-		_chamfer(Vector3(0.043, 0.03, -0.13), Vector3(0.003, 0.028, 0.061), Color("060c10"))
-		for i in range(5):
-			_chamfer(Vector3(0.044, 0.017, 0.0 - i * 0.012), Vector3(0.006, 0.057, 0.004), metal)
-		# Trigger guard encloses open air rather than a solid rectangular block.
-		_chamfer(Vector3(0, -0.073, -0.107), Vector3(0.046, 0.009, 0.080), metal)
-		_chamfer(Vector3(0, -0.046, -0.147), Vector3(0.046, 0.060, 0.009), metal)
-		_chamfer(Vector3(0, -0.049, -0.102), Vector3(0.009, 0.031, 0.008), edge)
-		_chamfer(Vector3(0.015, -0.132, 0.037), Vector3(0.11, 0.10, 0.105), glove)
-		_sleeve(Vector3(0.11, -0.37, 0.43), Vector3(0.022, -0.16, 0.085), Color("28353c"))
-		var support := _chamfer(Vector3(-0.055, -0.143, 0.065), Vector3(0.09, 0.09, 0.13), glove)
-		support.rotation.z = 0.24
-		for i in range(3):
-			_chamfer(Vector3(0.059, -0.12 + i * 0.018, -0.005), Vector3(0.016, 0.014, 0.076), glove.lightened(0.045))
-	else:
-		_chamfer(Vector3(0, 0, -0.15), Vector3(0.104, 0.113, 0.30), edge, true)
-		_chamfer(Vector3(0, 0.007, -0.405), Vector3(0.092, 0.10, 0.23), edge, true)
-		_barrel(Vector3(0, 0.025, -0.59), 0.22, 0.023, metal)
-		_barrel(Vector3(0, 0.025, -0.72), 0.07, 0.031, edge)
-		_barrel(Vector3(0, 0.025, -0.758), 0.005, 0.021, Color("03070b"))
-		muzzle_z = -0.77
-		_chamfer(Vector3(0, 0.071, -0.26), Vector3(0.052, 0.018, 0.39), metal)
-		for i in range(13):
-			_chamfer(Vector3(0, 0.083, -0.06 - i * 0.029), Vector3(0.058, 0.009, 0.008), edge)
-		for i in range(5):
-			_chamfer(Vector3(0.048, 0.016, -0.32 - i * 0.033), Vector3(0.004, 0.020, 0.018), metal)
-		var magazine := _chamfer(Vector3(0, -0.15, -0.245), Vector3(0.064, 0.23, 0.10), metal, true)
-		magazine.rotation.x = 0.10
-		_magazine = magazine
-		_magazine_rest = magazine.position
-		var grip := _chamfer(Vector3(0, -0.12, -0.034), Vector3(0.07, 0.15, 0.085), metal)
-		grip.rotation.x = -0.23
-		_chamfer(Vector3(0, -0.032, 0.085), Vector3(0.085, 0.11, 0.18), metal)
-		_chamfer(Vector3(0.052, 0.015, -0.105), Vector3(0.005, 0.041, 0.065), metal)
-		# Compact bridge sight preserves center-screen target readability.
-		for x in [-0.026, 0.026]:
-			_chamfer(Vector3(x, 0.12, -0.16), Vector3(0.010, 0.071, 0.048), metal)
-		_chamfer(Vector3(0, 0.16, -0.16), Vector3(0.062, 0.010, 0.048), metal)
-		_chamfer(Vector3(0.035, -0.136, 0.017), Vector3(0.105, 0.10, 0.105), glove)
-		_sleeve(Vector3(0.16, -0.36, 0.43), Vector3(0.035, -0.16, 0.07), Color("28353c"))
-		var support := _chamfer(Vector3(-0.08, -0.10, -0.40), Vector3(0.14, 0.085, 0.13), glove)
-		support.rotation.z = 0.4
-		_sleeve(Vector3(-0.31, -0.35, 0.04), Vector3(-0.09, -0.11, -0.35), Color("28353c"))
-	_muzzle = _part(_gun, Vector3(0, 0.025, muzzle_z), Vector3(0.11, 0.075, 0.15), Color("ffda8c"))
-	var mat := _muzzle.material_override as StandardMaterial3D
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	_muzzle.visible = false
-	for child in _gun.get_children():
-		if child is MeshInstance3D:
-			child.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	_gun.position = Vector3(0.23, -0.22, -0.36)
+	_gun.position = Vector3(0.235, -0.235, -0.42)
 	apply_cosmetic(_cosmetic)
 
 func apply_cosmetic(metadata: Dictionary) -> void:
@@ -350,6 +339,8 @@ func _exit_tree() -> void:
 		_shot_audio.stop()
 	if is_instance_valid(_hurt_audio):
 		_hurt_audio.stop()
+	if is_instance_valid(_mechanical_audio):
+		_mechanical_audio.stop()
 
 func reset_for_round(spawn: Vector3) -> void:
 	if _body_team != team:
@@ -378,6 +369,10 @@ func reset_for_round(spawn: Vector3) -> void:
 	camera.position.y = head_height
 	_body.scale.y = 1.0
 	_kick = 0.0
+	_equip_blend = 0.0
+	_reload_visual_active = false
+	_reload_visual_seated = false
+	hit_feedback_remaining = 0.0
 	_flash = 0.0
 	_bob = 0.0
 	_sway = Vector2.ZERO
@@ -480,6 +475,7 @@ func _equip(id: String) -> void:
 	recoil = Vector2.ZERO
 	_shot_index = 0
 	_build_gun()
+	_equip_blend = 1.0
 
 func buy_weapon(id: String) -> bool:
 	if not alive or not Weapons.DATA.has(id):
@@ -518,6 +514,8 @@ func _fire() -> void:
 			if headshot:
 				amount *= float(spec["head"])
 			target.apply_damage(amount, actor_id, headshot)
+			show_hit_feedback(headshot, not target.alive)
+			hit_confirmed.emit(actor_id, headshot, not target.alive)
 		_impact(endpoint, hit["normal"], target is SBActor)
 	shot_fired.emit(actor_id, origin, direction)
 	play_shot_effect()
@@ -525,9 +523,18 @@ func _fire() -> void:
 	recoil.y = minf(recoil.y + float(spec["recoil"]), 0.16)
 	recoil.x += sin(_shot_index * 1.7) * float(spec["recoil"]) * 0.55
 
+func show_hit_feedback(headshot: bool, lethal: bool) -> void:
+	# Presentation called only by an authority-confirmed hit (or its server RPC).
+	hit_feedback_remaining = 0.18
+	hit_feedback_headshot = headshot
+	hit_feedback_lethal = lethal
+
 func play_shot_effect() -> void:
 	_kick = 1
-	_flash = 0.055
+	_flash = 0.040
+	_muzzle.rotation.z = float(Time.get_ticks_msec() % 29) * 0.22
+	if is_local:
+		CombatEffects.for_world(get_parent()).casing(_gun.global_position + global_basis * Vector3(0.065, 0.02, -0.11), global_basis.x)
 	if _shot_audio != null:
 		if _shot_audio.stream != _shot_streams[weapon_id]:
 			_shot_audio.stream = _shot_streams[weapon_id]
@@ -536,20 +543,7 @@ func play_shot_effect() -> void:
 		_shot_audio.play()
 
 func _impact(at: Vector3, normal: Vector3, hit_actor: bool) -> void:
-	var spark := MeshInstance3D.new()
-	var mesh := SphereMesh.new()
-	mesh.radius = 0.055
-	mesh.height = 0.11
-	spark.mesh = mesh
-	var material := StandardMaterial3D.new()
-	material.albedo_color = Color("e5b574") if hit_actor else Color("e8dfb1")
-	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	spark.material_override = material
-	get_parent().add_child(spark)
-	spark.global_position = at + normal * 0.025
-	var tween := spark.create_tween()
-	tween.tween_property(spark, "scale", Vector3.ONE * 0.05, 0.13)
-	tween.tween_callback(spark.queue_free)
+	CombatEffects.for_world(get_parent()).impact(at, normal, hit_actor)
 
 func _deploy_utility(kind: String) -> void:
 	if kind == "grenade":
@@ -597,15 +591,32 @@ func can_see(other: SBActor) -> bool:
 func tick_visual(delta: float) -> void:
 	if camera == null or delta <= 0:
 		return
+	var reloading := reload_remaining > 0
+	var reload_fraction := 1.0 - reload_remaining / float(Weapons.get_weapon(weapon_id)["reload"])
+	if reloading and not _reload_visual_active:
+		_reload_visual_seated = false
+		_mechanical_audio.stream = _reload_release
+		_mechanical_audio.play()
+	elif reloading and reload_fraction > 0.78 and not _reload_visual_seated:
+		_reload_visual_seated = true
+		_mechanical_audio.stream = _reload_seat
+		_mechanical_audio.play()
+	_reload_visual_active = reloading
 	var speed := Vector2(velocity.x, velocity.z).length()
 	_bob += delta * speed * 1.8
 	# Exponential return has the same response at 30, 60 and 120 Hz.
 	_kick *= exp(-delta * 20.0)
 	_flash = maxf(0, _flash - delta)
+	hit_feedback_remaining = maxf(0, hit_feedback_remaining - delta)
+	_equip_blend *= exp(-delta * 14.0)
 	_muzzle.visible = _flash > 0 and alive
+	_world_muzzle.visible = _flash > 0 and alive and not is_local
 	var gait := minf(speed / WALK_SPEED, 1.0) * (0.15 if _crouching else 0.35)
 	for i in range(_legs.size()):
 		_legs[i].rotation.x = sin(_bob + i * PI) * gait
+		_knees[i].rotation.x = maxf(0, -sin(_bob + i * PI)) * gait * 1.35
+	for i in range(_arms.size()):
+		_arms[i].rotation.x = -0.16 + sin(_bob + i * PI) * gait * 0.15 - _kick * 0.04
 	if is_local:
 		var look := Vector2(yaw, pitch)
 		if not _visual_initialized:
@@ -616,11 +627,16 @@ func tick_visual(delta: float) -> void:
 		_sway += look_delta.limit_length(0.15) * 0.20
 		_sway *= exp(-delta * 12.0)
 		_sway = _sway.limit_length(0.04)
+		if reduced_motion:
+			_sway = Vector2.ZERO
 		var reload_progress := 1.0 - clampf(reload_remaining / maxf(0.1, float(Weapons.get_weapon(weapon_id)["reload"])), 0, 1)
 		var reload_tilt := sin(reload_progress * PI) if reload_remaining > 0 else 0.0
-		var bob_weight := minf(speed / WALK_SPEED, 1.0)
-		_gun.position = Vector3(0.23 + sin(_bob) * 0.006 * bob_weight - _sway.x, -0.22 + absf(cos(_bob)) * 0.006 * bob_weight - reload_tilt * 0.13 - _sway.y, -0.36 + _kick * 0.055)
-		_gun.rotation = Vector3(_kick * 0.09 - reload_tilt * 0.38, -_sway.x * 1.8, reload_tilt * 0.38 - _sway.x)
+		if reduced_motion:
+			reload_tilt *= 0.2
+		var bob_weight := 0.0 if reduced_motion else minf(speed / WALK_SPEED, 1.0)
+		var equip_motion := _equip_blend * (0.25 if reduced_motion else 1.0)
+		_gun.position = Vector3(0.235 + sin(_bob) * 0.006 * bob_weight - _sway.x, -0.235 + absf(cos(_bob)) * 0.006 * bob_weight - reload_tilt * 0.13 - _sway.y - equip_motion * 0.19, -0.42 + _kick * (0.075 if weapon_id == "marksman" else 0.046) + equip_motion * 0.08)
+		_gun.rotation = Vector3(_kick * (0.13 if weapon_id == "sidearm" else 0.065) - reload_tilt * 0.38 - equip_motion * 0.48, -_sway.x * 1.8, reload_tilt * 0.38 - _sway.x)
 		if is_instance_valid(_magazine):
 			# Pull down, seat the same magazine, then return to ready. Only visual.
 			var extraction := sin(clampf((reload_progress - 0.12) / 0.72, 0, 1) * PI) if reload_remaining > 0 else 0.0

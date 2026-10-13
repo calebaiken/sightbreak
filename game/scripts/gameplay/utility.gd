@@ -10,6 +10,27 @@ var _fuse := 1.6
 var _lifetime := 0.0
 var _detonated := false
 var _mesh: MeshInstance3D
+var _cloud_puffs: Array[MeshInstance3D] = []
+var _cloud_elapsed := 0.0
+static var _smoke_shader: Shader
+
+static func smoke_shader() -> Shader:
+	if _smoke_shader == null:
+		_smoke_shader = Shader.new()
+		_smoke_shader.code = """shader_type spatial;
+render_mode diffuse_burley;
+uniform vec4 smoke_tint : source_color;
+varying float billow;
+void vertex() {
+ billow = sin(VERTEX.x*3.8 + VERTEX.y*2.9) * sin(VERTEX.z*4.2-VERTEX.y*2.1);
+ VERTEX += NORMAL * billow * 0.12;
+}
+void fragment() {
+ ALBEDO = smoke_tint.rgb * (0.94 + billow*0.055);
+ ROUGHNESS = 1.0;
+}
+"""
+	return _smoke_shader
 
 func _ready() -> void:
 	_mesh = MeshInstance3D.new()
@@ -25,6 +46,9 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	if _detonated:
 		_lifetime -= delta
+		_cloud_elapsed += delta
+		for i in range(_cloud_puffs.size()):
+			_cloud_puffs[i].rotation.y += delta * (0.025 if i % 2 == 0 else -0.025)
 		if _lifetime <= 0:
 			queue_free()
 		return
@@ -48,21 +72,22 @@ func _detonate() -> void:
 		_lifetime = 12
 		global_position.y = 1.6
 		add_to_group("smoke_clouds")
-		for i in range(9):
+		for i in range(11):
 			var puff := MeshInstance3D.new()
 			var sphere := SphereMesh.new()
-			sphere.radius = 1.9
-			sphere.height = 3.8
-			sphere.radial_segments = 12
-			sphere.rings = 6
+			sphere.radius = 1.7
+			sphere.height = 3.4
+			sphere.radial_segments = 16
+			sphere.rings = 8
 			puff.mesh = sphere
-			var material := StandardMaterial3D.new()
-			material.albedo_color = Color("8a979e").lightened(float(i % 3) * 0.04)
-			material.roughness = 1.0
+			var material := ShaderMaterial.new()
+			material.shader = smoke_shader()
+			material.set_shader_parameter("smoke_tint", Color("7c898e").lightened(float(i % 3) * 0.04))
 			puff.material_override = material
 			puff.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			add_child(puff)
-			puff.position = Vector3(sin(i * 2.4) * 1.4, cos(i * 1.9) * 0.5, cos(i * 2.4) * 1.4)
+			puff.position = Vector3(sin(i * 2.4) * 1.35, cos(i * 1.9) * 0.48, cos(i * 2.4) * 1.35)
+			_cloud_puffs.append(puff)
 			puff.scale = Vector3.ONE * 0.2
 			var grow := puff.create_tween()
 			grow.tween_property(puff, "scale", Vector3.ONE, 0.8)

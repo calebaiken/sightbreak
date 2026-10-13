@@ -1,0 +1,287 @@
+class_name SBWeaponModel
+extends RefCounted
+## Original, reusable in-engine geometry. All dimensions are meters; barrel faces -Z.
+## No collision, gameplay state, textures, lights or animation ownership.
+var _gun: Node3D
+var _paint_parts: Array[MeshInstance3D] = []
+var _magazine: MeshInstance3D
+var _magazine_rest := Vector3.ZERO
+var _muzzle: MeshInstance3D
+var _gun_color := Color("59616a")
+var weapon_id := "rifle"
+var _hands := false
+var _materials: Dictionary = {}
+
+static func build(parent: Node3D, id: String, hands: bool = false) -> Dictionary:
+	var model := SBWeaponModel.new()
+	model._gun = parent
+	model.weapon_id = id
+	model._hands = hands
+	model._build_gun()
+	model._batch_magazine()
+	model._batch_static_parts()
+	return {"paint": model._paint_parts, "magazine": model._magazine, "muzzle": model._muzzle}
+
+func _part(parent: Node3D, at: Vector3, dimensions: Vector3, color: Color) -> MeshInstance3D:
+	var visual := MeshInstance3D.new()
+	var shape := BoxMesh.new()
+	shape.size = dimensions
+	visual.mesh = shape
+	var material := StandardMaterial3D.new()
+	material.albedo_color = color
+	material.roughness = 0.65
+	visual.material_override = material
+	parent.add_child(visual)
+	visual.position = at
+	return visual
+
+func _chamfer(at: Vector3, size: Vector3, tint: Color, painted: bool = false) -> MeshInstance3D:
+	var mesh := MeshInstance3D.new()
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var x := size.x * 0.5
+	var y := size.y * 0.5
+	var z := size.z * 0.5
+	var b := minf(x, y) * 0.32
+	var ring := [Vector2(-x + b, -y), Vector2(x - b, -y), Vector2(x, -y + b), Vector2(x, y - b), Vector2(x - b, y), Vector2(-x + b, y), Vector2(-x, y - b), Vector2(-x, -y + b)]
+	for i in range(8):
+		var a: Vector2 = ring[i]
+		var c: Vector2 = ring[(i + 1) % 8]
+		var front_a := Vector3(a.x, a.y, -z)
+		var front_b := Vector3(c.x, c.y, -z)
+		var back_a := Vector3(a.x, a.y, z)
+		var back_b := Vector3(c.x, c.y, z)
+		var vertices := [front_a, front_b, back_b, front_a, back_b, back_a, Vector3(0, 0, -z), front_b, front_a, Vector3(0, 0, z), back_a, back_b]
+		# Godot front faces use clockwise winding.
+		for triangle in range(0, vertices.size(), 3):
+			st.add_vertex(vertices[triangle])
+			st.add_vertex(vertices[triangle + 2])
+			st.add_vertex(vertices[triangle + 1])
+	st.generate_normals()
+	mesh.mesh = st.commit()
+	var material := _material(tint, 0.48, 0.65)
+	mesh.material_override = material
+	_gun.add_child(mesh)
+	mesh.position = at
+	if painted:
+		_paint_parts.append(mesh)
+	return mesh
+
+func _material(tint: Color, roughness: float, metallic: float) -> StandardMaterial3D:
+	var key := "%s/%.2f/%.2f" % [tint.to_html(), roughness, metallic]
+	if not _materials.has(key):
+		var material := StandardMaterial3D.new()
+		material.albedo_color = tint
+		material.roughness = roughness
+		material.metallic = metallic
+		_materials[key] = material
+	return _materials[key]
+
+func _sleeve(from: Vector3, to: Vector3, tint: Color) -> void:
+	# Tapered twelve-sided forearm and a distinct cuff avoid the slab-arm silhouette.
+	var sleeve := MeshInstance3D.new()
+	var mesh := CylinderMesh.new()
+	mesh.top_radius = 0.048
+	mesh.bottom_radius = 0.069
+	mesh.height = from.distance_to(to)
+	mesh.radial_segments = 12
+	sleeve.mesh = mesh
+	sleeve.material_override = _material(tint, 0.93, 0.0)
+	_gun.add_child(sleeve)
+	sleeve.position = (from + to) * 0.5
+	sleeve.quaternion = Quaternion(Vector3.UP, (to - from).normalized())
+	var cuff := _chamfer(to, Vector3(0.10, 0.045, 0.10), Color("19272d"))
+	cuff.quaternion = sleeve.quaternion
+	cuff.material_override = _material(Color("19272d"), 0.95, 0)
+
+func _glove(at: Vector3, support: bool = false) -> void:
+	var tint := Color("3c463f")
+	var palm := _chamfer(at, Vector3(0.088, 0.08, 0.115), tint)
+	palm.material_override = _material(tint, 0.89, 0)
+	for i in range(4):
+		var finger := _chamfer(at + Vector3(0.036, 0.023 - i * 0.016, -0.035), Vector3(0.029, 0.014, 0.072), tint.lightened(0.035))
+		finger.material_override = _material(tint.lightened(0.035), 0.9, 0)
+		finger.rotation.y = -0.14 if support else 0.1
+	var thumb := _chamfer(at + Vector3(-0.039, 0.025, -0.022), Vector3(0.025, 0.036, 0.075), tint)
+	thumb.rotation.x = -0.35
+	thumb.material_override = _material(tint, 0.89, 0)
+	var knuckle := _chamfer(at + Vector3(0, 0.018, 0.048), Vector3(0.069, 0.033, 0.018), Color("24312e"))
+	knuckle.material_override = _material(Color("24312e"), 0.85, 0)
+
+func _batch_magazine() -> void:
+	if _magazine == null or _magazine.get_child_count() == 0:
+		return
+	var builder := SurfaceTool.new()
+	builder.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var material: Material
+	for rib in _magazine.get_children():
+		builder.append_from(rib.mesh, 0, rib.transform)
+		material = rib.material_override
+		_magazine.remove_child(rib)
+		rib.free()
+	var detail := MeshInstance3D.new()
+	detail.mesh = builder.commit()
+	detail.material_override = material
+	detail.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_magazine.add_child(detail)
+
+func _batch_static_parts() -> void:
+	# One mesh per shared material/paint role. Magazine and flash retain their own
+	# transforms; fixed attachments do not each consume a mobile draw call.
+	var groups: Dictionary = {}
+	for node in _gun.get_children():
+		if not node is MeshInstance3D or node == _magazine or node == _muzzle:
+			continue
+		var painted := _paint_parts.has(node)
+		var key := "paint" if painted else str(node.material_override.get_instance_id())
+		if not groups.has(key):
+			var builder := SurfaceTool.new()
+			builder.begin(Mesh.PRIMITIVE_TRIANGLES)
+			groups[key] = {"surface": builder, "material": node.material_override, "painted": painted}
+		groups[key].surface.append_from(node.mesh, 0, node.transform)
+		_paint_parts.erase(node)
+		_gun.remove_child(node)
+		node.free()
+	for group in groups.values():
+		var merged := MeshInstance3D.new()
+		merged.mesh = group.surface.commit()
+		merged.material_override = group.material
+		merged.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		_gun.add_child(merged)
+		if group.painted:
+			_paint_parts.append(merged)
+
+func _barrel(at: Vector3, length: float, radius: float, tint: Color) -> MeshInstance3D:
+	var mesh := MeshInstance3D.new()
+	var shape := CylinderMesh.new()
+	shape.top_radius = radius
+	shape.bottom_radius = radius
+	shape.height = length
+	shape.radial_segments = 12
+	mesh.mesh = shape
+	var material := _material(tint, 0.38, 0.8)
+	mesh.material_override = material
+	_gun.add_child(mesh)
+	mesh.position = at
+	mesh.rotation.x = PI * 0.5
+	return mesh
+
+func _build_gun() -> void:
+	for child in _gun.get_children():
+		_gun.remove_child(child)
+		child.queue_free()
+	_paint_parts.clear()
+	_magazine = null
+
+	var metal := Color("151c23")
+	var edge := Color("323e48")
+	var glove := Color("343c39")
+	var muzzle_z := -0.35
+	if weapon_id == "sidearm":
+		_chamfer(Vector3(0, 0.022, -0.16), Vector3(0.085, 0.075, 0.31), edge, true)
+		_chamfer(Vector3(0, -0.023, -0.12), Vector3(0.074, 0.052, 0.26), metal)
+		var grip := _chamfer(Vector3(0, -0.105, -0.017), Vector3(0.066, 0.16, 0.09), metal)
+		grip.rotation.x = -0.23
+		_barrel(Vector3(0, 0.019, -0.32), 0.07, 0.022, metal)
+		_barrel(Vector3(0, 0.019, -0.357), 0.005, 0.014, Color("03070b"))
+		# A real open rear notch, fine front sight, ejection port, slide serrations.
+		for x in [-0.026, 0.026]:
+			_chamfer(Vector3(x, 0.074, -0.025), Vector3(0.018, 0.029, 0.025), metal)
+		_chamfer(Vector3(0, 0.072, -0.279), Vector3(0.014, 0.020, 0.021), Color("96b2a0"))
+		_chamfer(Vector3(0.043, 0.03, -0.13), Vector3(0.003, 0.028, 0.061), Color("060c10"))
+		for i in range(5):
+			_chamfer(Vector3(0.044, 0.017, 0.0 - i * 0.012), Vector3(0.006, 0.057, 0.004), metal)
+		# Trigger guard encloses open air rather than a solid rectangular block.
+		_chamfer(Vector3(0, -0.073, -0.107), Vector3(0.046, 0.009, 0.080), metal)
+		_chamfer(Vector3(0, -0.046, -0.147), Vector3(0.046, 0.060, 0.009), metal)
+		_chamfer(Vector3(0, -0.049, -0.102), Vector3(0.009, 0.031, 0.008), edge)
+		if _hands:
+			_glove(Vector3(0.015, -0.132, 0.037))
+			_sleeve(Vector3(0.11, -0.37, 0.43), Vector3(0.022, -0.16, 0.085), Color("28353c"))
+			var support := _chamfer(Vector3(-0.055, -0.143, 0.065), Vector3(0.09, 0.09, 0.13), glove)
+			support.rotation.z = 0.24
+			for i in range(3):
+				_chamfer(Vector3(0.059, -0.12 + i * 0.018, -0.005), Vector3(0.016, 0.014, 0.076), glove.lightened(0.045))
+	else:
+		_chamfer(Vector3(0, 0, -0.15), Vector3(0.104, 0.113, 0.30), edge, true)
+		_chamfer(Vector3(0, 0.007, -0.405), Vector3(0.092, 0.10, 0.23), edge, true)
+		_barrel(Vector3(0, 0.025, -0.59), 0.22, 0.023, metal)
+		_barrel(Vector3(0, 0.025, -0.72), 0.07, 0.031, edge)
+		_barrel(Vector3(0, 0.025, -0.758), 0.005, 0.021, Color("03070b"))
+		muzzle_z = -0.77
+		_chamfer(Vector3(0, 0.071, -0.26), Vector3(0.052, 0.018, 0.39), metal)
+		for i in range(13):
+			_chamfer(Vector3(0, 0.083, -0.06 - i * 0.029), Vector3(0.058, 0.009, 0.008), edge)
+		for i in range(5):
+			_chamfer(Vector3(0.048, 0.016, -0.32 - i * 0.033), Vector3(0.004, 0.020, 0.018), metal)
+		var magazine := _chamfer(Vector3(0, -0.15, -0.245), Vector3(0.064, 0.23, 0.10), metal, true)
+		magazine.rotation.x = 0.10
+		_magazine = magazine
+		_magazine_rest = magazine.position
+		var grip := _chamfer(Vector3(0, -0.12, -0.034), Vector3(0.07, 0.15, 0.085), metal)
+		grip.rotation.x = -0.23
+		_chamfer(Vector3(0, -0.032, 0.085), Vector3(0.064, 0.088, 0.18), metal)
+		_chamfer(Vector3(0.052, 0.015, -0.105), Vector3(0.005, 0.041, 0.065), metal)
+		# Machined receiver controls, bolts, split handguard and magazine ribs.
+		_chamfer(Vector3(0.055, 0.02, -0.205), Vector3(0.011, 0.015, 0.052), Color("919a9a"))
+		_chamfer(Vector3(-0.057, -0.032, -0.098), Vector3(0.013, 0.035, 0.012), edge)
+		_chamfer(Vector3(0, -0.074, -0.098), Vector3(0.059, 0.009, 0.105), metal)
+		_chamfer(Vector3(0, -0.053, -0.15), Vector3(0.059, 0.048, 0.009), metal)
+		_chamfer(Vector3(0, -0.051, -0.104), Vector3(0.009, 0.032, 0.009), edge)
+		for side in [-1.0, 1.0]:
+			for i in range(3):
+				_chamfer(Vector3(side * 0.054, -0.03, -0.12 - i * 0.048), Vector3(0.003, 0.012, 0.012), Color("798183"))
+			_chamfer(Vector3(side * 0.046, 0.045, -0.415), Vector3(0.006, 0.016, 0.174), metal)
+			for i in range(5):
+				var rib := _chamfer(Vector3(side * 0.034, -0.205 + i * 0.026, -0.244), Vector3(0.008, 0.006, 0.082), edge)
+				# Ribs belong to the magazine animation; parent without changing local pose.
+				var magazine_local := magazine.transform.affine_inverse() * rib.transform
+				_gun.remove_child(rib)
+				magazine.add_child(rib)
+				rib.transform = magazine_local
+		_chamfer(Vector3(0, -0.008, -0.527), Vector3(0.104, 0.105, 0.015), metal)
+		if weapon_id == "smg":
+			# Short suppressed PDW silhouette, flatter rail and straight box magazine.
+			_barrel(Vector3(0, 0.025, -0.62), 0.23, 0.040, metal)
+			magazine.scale = Vector3(0.8, 0.9, 0.75)
+		elif weapon_id == "marksman":
+			_barrel(Vector3(0, 0.025, -0.77), 0.34, 0.025, metal)
+			_barrel(Vector3(0, 0.158, -0.23), 0.30, 0.049, metal)
+			_barrel(Vector3(0, 0.158, -0.386), 0.012, 0.039, Color("263d43"))
+			for z in [-0.12, -0.32]:
+				_chamfer(Vector3(0, 0.11, z), Vector3(0.08, 0.048, 0.022), edge)
+			muzzle_z = -0.955
+
+		# Compact bridge sight preserves center-screen target readability.
+		for x in [-0.026, 0.026]:
+			_chamfer(Vector3(x, 0.12, -0.16), Vector3(0.010, 0.071, 0.048), metal)
+		_chamfer(Vector3(0, 0.16, -0.16), Vector3(0.062, 0.010, 0.048), metal)
+		if _hands:
+			_glove(Vector3(0.035, -0.136, 0.017))
+			_sleeve(Vector3(0.16, -0.36, 0.43), Vector3(0.035, -0.16, 0.07), Color("28353c"))
+			_glove(Vector3(-0.055, -0.075, -0.40), true)
+			_sleeve(Vector3(-0.26, -0.33, 0.12), Vector3(-0.055, -0.10, -0.33), Color("28353c"))
+	_muzzle = MeshInstance3D.new()
+	var flash_mesh := SurfaceTool.new()
+	flash_mesh.begin(Mesh.PRIMITIVE_TRIANGLES)
+	for i in range(6):
+		var angle := i * TAU / 6.0
+		var radial := Vector3(cos(angle), sin(angle), 0)
+		flash_mesh.add_vertex(radial * 0.014 + Vector3(0, 0, 0.025))
+		flash_mesh.add_vertex(radial * 0.045 + Vector3(0, 0, -0.035))
+		flash_mesh.add_vertex(Vector3(0, 0, -0.19 if i % 2 == 0 else -0.105))
+	flash_mesh.generate_normals()
+	_muzzle.mesh = flash_mesh.commit()
+	_muzzle.material_override = _material(Color("ffde9c"), 1, 0).duplicate()
+	var mat := _muzzle.material_override as StandardMaterial3D
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+	_gun.add_child(_muzzle)
+	_muzzle.position = Vector3(0, 0.025, muzzle_z)
+	_muzzle.visible = false
+
+	for child in _gun.get_children():
+		if child is MeshInstance3D:
+			child.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+
+

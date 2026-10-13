@@ -181,6 +181,45 @@ func _run() -> void:
 		var sound: AudioStreamWAV = Actor._shot_streams[id]
 		check(sound.format == AudioStreamWAV.FORMAT_16_BITS and sound.data.size() > 5000 and sound.data != previous, "%s has distinct nonempty 16-bit audio" % id)
 		previous = sound.data
+	# v0.3 presentation contracts: same gameplay snapshots, bounded visuals and
+	# real reload/equip transforms; these do not assert aesthetic quality.
+	check(player._knees.size() == 2 and player._arms.size() == 2, "operator has two articulated knees and weapon-support arms")
+	check(player._head.mesh is SphereMesh, "helmet silhouette uses curved geometry")
+	check(player._gun.get_child_count() <= 16, "static first-person attachments batch into at most sixteen draw nodes")
+	check(player._paint_parts.size() == 2, "shared model retains separately animated magazine and batched finish")
+	check(player._magazine.get_child_count() == 1, "magazine ribs batch into one draw node following reload transform")
+	player.show_hit_feedback(true, true)
+	check(player.hit_feedback_remaining == 0.18 and player.hit_feedback_headshot and player.hit_feedback_lethal, "confirmed headshot kill exposes feedback independently of HUD")
+	var feedback_state: Dictionary = player.snapshot()
+	player.tick_visual(0.2)
+	check(player.hit_feedback_remaining == 0 and player.snapshot() == feedback_state, "feedback expires without changing authoritative state")
+	player._equip("rifle")
+	check(player._equip_blend == 1.0, "equip starts a visual ready transition")
+	player.tick_visual(0.016)
+	var full_equip_tilt: float = absf(player._gun.rotation.x)
+	player._equip_blend = 1.0
+	player.reduced_motion = true
+	player.tick_visual(0.016)
+	check(absf(player._gun.rotation.x) < full_equip_tilt * 0.5 and player._sway == Vector2.ZERO, "reduced motion attenuates equip and removes cosmetic sway")
+	player.reduced_motion = false
+	var effects: Node3D = world.get_node("CombatEffects")
+	for i in range(100):
+		effects.casing(Vector3.ZERO, Vector3.RIGHT)
+		effects.impact(Vector3.ZERO, Vector3.UP, false)
+	check(effects.get_child_count() == 3, "rapid effects reuse exactly three mesh pools")
+	check(effects._pools.casings.slots.size() == 24 and effects._pools.sparks.slots.size() == 40 and effects._pools.dust.slots.size() == 12, "effects cannot grow beyond fixed 76-instance budget")
+	effects._process(1.0)
+	var live := 0
+	for pool in effects._pools.values():
+		for slot in pool.slots:
+			if slot.life > 0: live += 1
+	check(live == 0, "all pooled effects expire after bounded lifetime")
+	var model_root := Node3D.new()
+	var inspection: Dictionary = Actor.WeaponModel.build(model_root, "rifle", false)
+	check(inspection.paint.size() == 2 and model_root.get_child_count() < player._gun.get_child_count(), "inspection shares exact weapon geometry without hand meshes")
+	model_root.free()
+	player.reset_for_round(Vector3(0, 0.05, 20))
+	check(player.hit_feedback_remaining == 0 and player._equip_blend == 0, "round reset clears hit and equip presentation")
 	await create_timer(0.6).timeout
 	world.queue_free()
 	await process_frame
