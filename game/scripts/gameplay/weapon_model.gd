@@ -12,6 +12,7 @@ var weapon_id := "rifle"
 var _hands := false
 var _materials: Dictionary = {}
 var _authored: Array[MeshInstance3D] = []
+var _ejection := Vector3.INF
 
 ## Authored first-person rifle built by tools/art (Blender, original geometry). Units
 ## are meters: receiver rear at the origin, bore at +Y 0.025, barrel along -Z. The
@@ -48,7 +49,7 @@ static func build(parent: Node3D, id: String, hands: bool = false) -> Dictionary
 	if not _packed.has(key):
 		_packed[key] = _pack(id, hands)
 	var instance: Node = (_packed[key] as PackedScene).instantiate()
-	var result := {"paint": [] as Array[MeshInstance3D], "magazine": null, "muzzle": null}
+	var result := {"paint": [] as Array[MeshInstance3D], "magazine": null, "muzzle": null, "ejection": instance.get_meta("ejection", Vector3.INF)}
 	for child in instance.get_children():
 		instance.remove_child(child)
 		release_owner(child)
@@ -80,6 +81,8 @@ static func _pack(id: String, hands: bool) -> PackedScene:
 			part.set_meta("detail_orm", load(RELAY_AR_ORM))
 			part.set_meta("detail_normal", load(RELAY_AR_NORMAL))
 	model._muzzle.set_meta("weapon_role", "muzzle")
+	if model._ejection != Vector3.INF:
+		root.set_meta("ejection", model._ejection)
 	return pack_children(root)
 
 ## Packs a procedurally built hierarchy, then frees the source nodes.
@@ -453,4 +456,5 @@ func _build_authored_rifle() -> Vector3:
 		_sleeve(Vector3(0.16, -0.36, 0.43), placement * (grip + Vector3(0.020, -0.040, 0.075)), Color("28353c"))
 		_glove(placement * (support + Vector3(-0.012, -0.022, 0.0)), true)
 		_sleeve(Vector3(-0.26, -0.33, 0.12), placement * (support + Vector3(-0.030, -0.070, 0.070)), Color("28353c"))
+	_ejection = rifle.markers["ejection"].origin
 	return rifle.markers["muzzle"].origin

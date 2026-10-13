@@ -83,6 +83,8 @@ var _visual_look := Vector2.ZERO
 var _visual_initialized := false
 var _magazine: MeshInstance3D
 var _magazine_rest := Vector3.ZERO
+## Ejection port in weapon-node space when the model provides one (authored models).
+var _ejection_point := Vector3.INF
 var _legs: Array[Node3D] = []
 var _flash: float = 0.0
 var _crouching: bool = false
@@ -417,6 +419,7 @@ func _build_gun() -> void:
 	if is_instance_valid(_magazine):
 		_magazine_rest = _magazine.position
 	_muzzle = model.muzzle
+	_ejection_point = model.get("ejection", Vector3.INF)
 	_gun_color = Weapons.get_weapon(weapon_id)["color"]
 	_gun.position = Vector3(0.235, -0.235, -0.42)
 	apply_cosmetic(_cosmetic)
@@ -808,7 +811,8 @@ func play_shot_effect() -> void:
 	_flash = 0.040
 	_muzzle.rotation.z = float(Time.get_ticks_msec() % 29) * 0.22
 	if is_local:
-		CombatEffects.for_world(get_parent()).casing(_gun.global_position + global_basis * Vector3(0.065, 0.02, -0.11), global_basis.x)
+		var port: Vector3 = _gun.global_transform * _ejection_point if _ejection_point != Vector3.INF else _gun.global_position + global_basis * Vector3(0.065, 0.02, -0.11)
+		CombatEffects.for_world(get_parent()).casing(port, global_basis.x)
 	if _shot_audio != null:
 		if _shot_audio.stream != _shot_streams[weapon_id]:
 			_shot_audio.stream = _shot_streams[weapon_id]

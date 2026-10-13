@@ -62,6 +62,8 @@ func _run() -> void:
 	check(holder.get_child_count() <= 6, "first-person rifle with hands is at most six draw nodes (%d)" % holder.get_child_count())
 	check(parts.magazine.get_child_count() == 1, "cartridge follows the magazine")
 	check(parts.muzzle.position.distance_to(parts.magazine.position) > 0.3, "muzzle flash sits at the authored muzzle")
+	var expected_port: Vector3 = (Transform3D(Basis.from_euler(WeaponModel.relay_ar_rotation), WeaponModel.relay_ar_offset) * Transform3D(Basis.IDENTITY, rifle.anchors["ejection"])).origin
+	check(parts.ejection is Vector3 and parts.ejection.distance_to(expected_port) < 0.001, "casings leave from the authored ejection port")
 	for part: MeshInstance3D in parts.paint:
 		check(part.has_meta("detail_orm") and part.has_meta("detail_normal"), "paint part carries baked detail: " + part.name)
 	var finish := CosmeticMaterial.finish({"collection": "Obsidian", "pattern_seed": 12, "wear": 0.3})
@@ -95,6 +97,7 @@ func _run() -> void:
 	actor.credits = 5000
 	actor.buy_weapon("rifle")
 	check(actor._magazine != null and actor._magazine.name == "magazine", "actor holds the authored magazine")
+	check(actor._ejection_point != Vector3.INF, "actor ejects casings from the model's port")
 	actor.reload_remaining = 1.25
 	actor.tick_visual(0.016)
 	check(actor._magazine.position.y < actor._magazine_rest.y - 0.05, "reload extracts the authored magazine")
