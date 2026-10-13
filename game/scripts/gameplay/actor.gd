@@ -739,26 +739,32 @@ static func _capsule_entry(origin: Vector3, direction: Vector3, radius: float, h
 	return maxf(span.x, 0.0)
 
 const _EMPTY_SPAN := Vector2(INF, -INF)
-## Discriminants this small are tangent rays (passing within ~2 micrometres of the
-## surface); they miss, as against the physics capsule, instead of being decided by
-## 32-bit Vector3 rounding.
+## A ray that passes within this of the surface (squared-distance margin, m^2; about
+## 1.6 micrometres at the 0.31 m radius) is tangent and misses, as against the
+## physics capsule.
 const GRAZE := 0.000001
 
 static func _overlap(a: Vector2, b: Vector2) -> Vector2:
 	return Vector2(maxf(a.x, b.x), minf(a.y, b.y))
 
+# The spans below work in 64-bit floats on Vector3 components. Vector3 maths is
+# 32-bit, which at 100 m moves the surface by millimetres; the closest-approach form
+# also keeps the tangent margin independent of range and of the ray's pitch.
+
 ## Ray parameters inside the infinite vertical cylinder of the given radius.
 static func _radial_span(origin: Vector3, direction: Vector3, radius: float) -> Vector2:
 	var a := direction.x * direction.x + direction.z * direction.z
-	var c := origin.x * origin.x + origin.z * origin.z - radius * radius
 	if a < 0.000000000001:
-		return Vector2(-INF, INF) if c < -GRAZE else _EMPTY_SPAN
-	var b := origin.x * direction.x + origin.z * direction.z
-	var disc := b * b - a * c
-	if disc <= GRAZE:
+		var inside := radius * radius - (origin.x * origin.x + origin.z * origin.z)
+		return Vector2(-INF, INF) if inside > GRAZE else _EMPTY_SPAN
+	var t := -(origin.x * direction.x + origin.z * direction.z) / a
+	var px := origin.x + direction.x * t
+	var pz := origin.z + direction.z * t
+	var h := radius * radius - (px * px + pz * pz)
+	if h <= GRAZE:
 		return _EMPTY_SPAN
-	var root := sqrt(disc)
-	return Vector2((-b - root) / a, (-b + root) / a)
+	var half := sqrt(h / a)
+	return Vector2(t - half, t + half)
 
 ## Ray parameters where low <= origin_y + direction_y * t <= high.
 static func _slab_span(origin_y: float, direction_y: float, low: float, high: float) -> Vector2:
@@ -768,14 +774,20 @@ static func _slab_span(origin_y: float, direction_y: float, low: float, high: fl
 	var t2 := (high - origin_y) / direction_y
 	return Vector2(minf(t1, t2), maxf(t1, t2))
 
+## Ray parameters inside a sphere of the given radius centred on the origin.
 static func _sphere_span(origin: Vector3, direction: Vector3, radius: float) -> Vector2:
-	var a := direction.dot(direction)
-	var b := origin.dot(direction)
-	var disc := b * b - a * (origin.dot(origin) - radius * radius)
-	if a <= 0.0 or disc <= GRAZE:
+	var a := direction.x * direction.x + direction.y * direction.y + direction.z * direction.z
+	if a <= 0.0:
 		return _EMPTY_SPAN
-	var root := sqrt(disc)
-	return Vector2((-b - root) / a, (-b + root) / a)
+	var t := -(origin.x * direction.x + origin.y * direction.y + origin.z * direction.z) / a
+	var px := origin.x + direction.x * t
+	var py := origin.y + direction.y * t
+	var pz := origin.z + direction.z * t
+	var h := radius * radius - (px * px + py * py + pz * pz)
+	if h <= GRAZE:
+		return _EMPTY_SPAN
+	var half := sqrt(h / a)
+	return Vector2(t - half, t + half)
 
 ## Half-angle of the random cone for the next shot, in radians. The authority
 ## passes its floor contact; the HUD estimates airborne state from velocity.

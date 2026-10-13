@@ -11,6 +11,8 @@ const NAMES := {
 	"ordinary": ["Rook", "Kestrel"],
 	"max_ascii": ["WWWWWWWWWWWWWWWWWWWWWWWW", "MMMMMMMMMMMMMMMMMMMMMMMM"],
 	"unicode": ["Zoë ✦ Ærøskøbing Ωmega Ü", "東京湾岸第七中継基地防衛隊長の名前です長い名"],
+	# Legal 24-code-point names that stack combining marks into a tall column.
+	"stacked_marks": ["Z\u0316\u0317\u0318\u0319\u031a\u031b\u031c\u031d\u031e\u031f\u0316\u0317\u0318\u0319\u031a\u031b\u031c\u031d\u031e\u031f\u0316\u0317\u0318", "a\u0300\u0316\u0301\u0317\u0302\u0318\u0303\u0319b\u0304\u031c\u0305\u031d\u0306\u031e\u0307\u031f\u0308\u0320c\u0309\u0321\u030a"],
 }
 
 func check(value: bool, message: String) -> void:
