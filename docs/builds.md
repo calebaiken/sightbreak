@@ -61,17 +61,28 @@ Godot editor and templates are pinned to the SHA512 values published in the offi
 
 The client and service remain a development implementation. Public competitive service deployment, anti-cheat hardening, external account binding, payment providers, production custody, release signing and device performance certification are separate release work.
 
-## Validated build artifacts
+## Validated 0.2.0 development artifacts
 
-The final cloud build includes the camera lifecycle, saved-profile validation and reward-bridge redirect fixes. Both native exports completed without script or export errors. The exported Linux executable passed menu startup (`--headless -- --smoke`) and an offline match startup (`--headless --quit-after 120 -- --demo`), both exiting successfully. Independent inspection of the embedded Linux PCK and Android ZIP confirmed that test harnesses are excluded.
+These exports contain the renderer lifetime mitigation, touch/HUD corrections, weapon and arena polish, bot lifecycle changes, and cosmetic recovery work. All targets were exported from committed game tree `79e725c31ae9c5ae401c0ea55deb50b6007366da`; the exact shipped-source SHA256 is `1eb2e937a11b672b89b41127bdad07c2f1c42a6fea48d079169e60bec43d0e58`. Documentation-only commits can follow without changing that game tree. The machine-readable manifest records the Git commit at each export and the full payload checksums.
 
-Android `apksigner verify --verbose` confirmed APK v2/v3 signatures. `aapt dump badging` confirmed package `com.sightbreak.game`, API24 minimum, API36 target, ARM64 and x86_64. These are debug development artifacts; no physical mobile device performance or installation is claimed.
+`python3 scripts/verify_builds.py` passed against the actual final artifacts:
+
+- Exported Linux menu startup and 120-frame offline startup completed without runtime errors.
+- Linux and iOS PCK directories each contained 48 resources; test harnesses were excluded. Android asset inspection also excluded test harnesses.
+- Android signature verification passed v2/v3; version `0.2.0-dev`/code `2`, API24 minimum/API36 target, ARM64 and x86_64, landscape orientation, and exported `com.godot.game.GodotAppLauncher` alias were confirmed from the APK.
+- Generated iOS Xcode project contains the game PCK, native frameworks, landscape Info.plist, LAN permission explanation and empty Development Team. It is an unsigned project, not an IPA.
+- Artifact provenance guards compared committed game tree, shipped-source digest and every payload file before verification and packaging. Eight regression checks cover stale source, changed/missing payloads, uncommitted source and the prebuilt Android SDK configuration.
 
 | Artifact under `builds/` | Bytes | SHA256 |
 | --- | ---: | --- |
-| `linux/sightbreak.x86_64` | 73,864,520 | `06e18858c1cc5eb28cb11e08535c12ce2a5c48def3d22d7a823808cbc17101b6` |
-| `android/sightbreak-debug.apk` | 57,105,591 | `2976214ba47290374be03c659d026a918251902132246b5e1a79cd7f11b29c66` |
+| `linux/sightbreak.x86_64` | 73,914,592 | `950c55e0d7af82423cc9c24cb7ae3d4e9794029242d50a2d293d684759d51a75` |
+| `sightbreak-linux-debug.zip` | 30,660,079 | `906d2f0a3eb06cd2ffeb0fc57bfe29555ba5e268e106cc8062d76ec2ce17eb03` |
+| `android/sightbreak-debug.apk` | 57,155,775 | `d2b4e1492ccba6abc198a3b7909ab3f834d121c16ae3bd2af77be653ca0e1b8f` |
+| `sightbreak-android-debug.zip` | 57,184,469 | `a5df858ad1f635b43e74305dcef9aa46081dc30543138ef6e722199ee89f7952` |
+| `sightbreak-ios-xcode-project.zip` | 123,976,053 | `6b92053a8ad384e34ffae9bcbae1fe9fe2ae70abceaa4db6c1e38bd90687cdbb` |
 
-The matching machine-readable record is `builds/manifest.json`; verify downloaded copies from the builds directory with `sha256sum --check checksums.txt`. Rebuilding changes these hashes.
+ZIPs include engine license notices and per-target source provenance. The iOS ZIP also includes `BUILD-ON-MAC.md`. Verify local copies with `(cd builds && sha256sum --check checksums.txt)`. The tracked records are [build manifest](reports/build-manifest.json) and [artifact validation](reports/build-validation.json).
 
-Native rendering validation under Xvfb/Mesa software rendering produced usable output, but logged two unresolved GL texture leaks at shutdown (349,524 bytes each), including a normal demo exit. Headless checks do not exercise that rendering path. This remains a rendering cleanup issue requiring further diagnosis and real device testing. iOS remains an export preset awaiting macOS/Xcode and signing.
+The original two GL texture teardown errors were isolated to retiring a newly created procedural sky before its first rendered frame in Godot's Compatibility renderer. The project mitigation shares an immutable sky. Independent native demo and repeated menu/match lifecycle checks passed on Xvfb/Mesa; see [QA](reports/QA.md) and [diagnostic reproduction](diagnostics/README.md). This does not establish physical GPU/mobile behavior or indefinite memory stability.
+
+No physical Android installation, mobile performance measurement, macOS/Xcode compilation, signed IPA, or Apple-device execution is claimed. Use [device testing instructions](DEVICE_TESTING.md) to record the remaining release evidence. These artifacts remain development builds; the full 8.5/10 acceptance gate has not been achieved.
