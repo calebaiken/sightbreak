@@ -15,6 +15,11 @@ uniform float pattern_seed = 1.0;
 uniform float wear = 0.0;
 uniform float patterned = 1.0;
 uniform int finish_family = 0;
+// Baked occlusion (R) and tangent normals from authored models; 0 leaves meshes
+// without UVs (procedural weapons) exactly as before.
+uniform float detail = 0.0;
+uniform sampler2D detail_orm : hint_default_white, filter_linear_mipmap;
+uniform sampler2D detail_normal : hint_normal, filter_linear_mipmap;
 varying vec3 local_position;
 void vertex() { local_position = VERTEX; }
 void fragment() {
@@ -36,7 +41,23 @@ void fragment() {
  ALBEDO = mix(paint, vec3(0.30,0.32,0.34), abrasion*wear*0.55);
  ROUGHNESS = 0.29 + wear*0.38 + abrasion*0.06;
  METALLIC = 0.66 - wear*0.14;
+ float occlusion = mix(1.0, texture(detail_orm, UV).r, detail);
+ ALBEDO *= mix(0.6, 1.0, occlusion);
+ AO = occlusion;
+ NORMAL_MAP = mix(vec3(0.5, 0.5, 1.0), texture(detail_normal, UV).rgb, detail);
 }"""
+
+## Assigns one finish to every paint part, binding baked detail when the parts
+## carry it (authored models set detail_orm/detail_normal metadata).
+static func apply(material: ShaderMaterial, parts: Array) -> void:
+	for part: MeshInstance3D in parts:
+		if part.has_meta("detail_orm"):
+			material.set_shader_parameter("detail_orm", part.get_meta("detail_orm"))
+			material.set_shader_parameter("detail_normal", part.get_meta("detail_normal"))
+			material.set_shader_parameter("detail", 1.0)
+			break
+	for part: MeshInstance3D in parts:
+		part.material_override = material
 
 static func rarity_color(rarity: String) -> Color:
 	return RARITIES.get(rarity.capitalize(), RARITIES.Common)

@@ -428,8 +428,7 @@ func apply_cosmetic(metadata: Dictionary) -> void:
 	if metadata.is_empty():
 		var paint := Color("26323b")
 		_finish.set_shader_parameter("base_paint", paint)
-	for part in _paint_parts:
-		part.material_override = _finish
+	CosmeticMaterial.apply(_finish, _paint_parts)
 
 func _exit_tree() -> void:
 	if is_instance_valid(_shot_audio):

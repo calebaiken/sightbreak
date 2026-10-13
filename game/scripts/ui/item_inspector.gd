@@ -116,8 +116,7 @@ func _build_rifle(parent: Node3D) -> Node3D:
 	model.position = Vector3(0, 0.05, 0.3125)
 	rifle.add_child(model)
 	var pieces: Dictionary = WEAPONS.build(model, "rifle", false)
-	for mesh in pieces.get("paint", []):
-		mesh.material_override = finish_material
+	FINISH.apply(finish_material, pieces.get("paint", []))
 	return rifle
 
 func prepare_reveal(value: Dictionary) -> void:
