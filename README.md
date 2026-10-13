@@ -6,6 +6,12 @@ A native **Godot 4.7.2** tactical FPS development build for desktop, Android and
 
 This is a playable **development alpha**, not the finished release in the [full specification](docs/SPECIFICATION.md). Independent visual QA scores this pass **8.1/10**, below the required 8.5/10 milestone gate; physical mobile usability, sustained device performance and production security remain unverified. Read the [0.3 independent QA evidence](docs/reports/QA-0.3.md), [known limitations](docs/KNOWN_LIMITATIONS.md) and [milestone roadmap](docs/MILESTONES.md).
 
+## Competitive engineering stack (development only)
+
+Codex draft PRs [3](https://github.com/calebaiken/sightbreak/pull/3) → [4](https://github.com/calebaiken/sightbreak/pull/4) → [5](https://github.com/calebaiken/sightbreak/pull/5) → [6](https://github.com/calebaiken/sightbreak/pull/6) → [7](https://github.com/calebaiken/sightbreak/pull/7) → [8](https://github.com/calebaiken/sightbreak/pull/8) depend on corrected Claude PR1. They add recipient state privacy, continuous remote interpolation, **opt-in** local prediction, bounded peer admission and durable result recovery. Protocol5 requires matched client/server builds. Historical hit-volume recording is diagnostic only; live lag compensation is incomplete. Claude's graphics PR2 remains separate and its assets are untouched.
+
+Read [current engineering QA](docs/reports/CODEX_NETWORK_QA.md), [network contracts](docs/network/NETWORK_ARCHITECTURE.md), [parallel integration instructions](docs/engineering/PARALLEL_WORK.md) and [build validation](docs/network/BUILD_VALIDATION.md). The reproduced Unicode feed clipping blocker remains open; no full8.5 quality or production gate is claimed. Git branches/PRs are reviewable work, not authorization to merge.
+
 ## Play locally
 
 From this repository, on Linux x86_64 with a graphical desktop:

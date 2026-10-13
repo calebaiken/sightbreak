@@ -62,3 +62,22 @@ Original branches are preserved. No PR merge, force push, public deployment or d
 ### Combat history foundation
 
 `codex/combat-history-foundation` stacks on durable results `e954158`. Adds one server-only helper, deterministic parity tests and a four-line diagnostic recording hook in `match.gd`; recording is opt-in, live damage does not use rewind. Reuses existing actor static hit-volume math without changing actor.gd, attachment names, animations or art. Graphics branch advanced to `9e8acdf` during the upstream recheck and remains untouched. Do not activate compensation without the separate fairness/integration gates in `LAG_COMPENSATION.md`.
+
+### Validation/build branch
+
+`codex/network-validation-builds` stacks on combat history (including the same reviewed outbox follow-up fixes, cherry-picked without rewriting published history). Owns regression orchestration, UDP impairment metrics and manual CI. Tests keep Claude's existing Unicode HUD failure visible. No visual/UI/asset changes. GitHub API remains blocked; branch publication is not PR creation. Small PRs must target the preceding dependency and remain unmerged until Claude PR1 and all applicable blockers are resolved.
+
+## Published coordination — 2026-10-13
+
+GitHub API access recovered during final validation. Independent PR1 blocker was actually posted: https://github.com/calebaiken/sightbreak/pull/1#issuecomment-6151054451 . Claude graphics work is open PR2, targeting its audit branch; observed graphics head advanced to `fd943c1` and remains untouched.
+
+| Draft PR | Branch | Required base |
+| --- | --- | --- |
+| #3 | codex/state-privacy-v2 | claude/independent-audit-visual-v04 |
+| #4 | codex/network-movement-v2 | codex/state-privacy-v2 |
+| #5 | codex/network-lifecycle-v2 | codex/network-movement-v2 |
+| #6 | codex/durable-match-results | codex/network-lifecycle-v2 |
+| #7 | codex/combat-history-foundation | codex/durable-match-results |
+| #8 | codex/network-validation-builds | codex/combat-history-foundation |
+
+All were created as drafts, none merged. Outbox readiness/quarantine follow-ups were appended to the result branch and cherry-picked into its descendants; published history was not rewritten. Retarget only after the preceding dependency integrates, reconcile each shared-file hunk with Claude's current source, and rerun the matrix. The app's PR attachment tool reports no handler; the PRs themselves exist on GitHub.

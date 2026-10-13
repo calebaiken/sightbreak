@@ -5,6 +5,7 @@ class MeasuredMatch extends TacticalMatch:
 	var ticks: Array = []
 	var received_payload_bytes := 0
 	var received_snapshots := 0
+	var last_snapshot_msec := 0
 	var snapshot_steps: Array = []
 	var last_received_tick := -1
 	var tick_intervals: Array = []
@@ -22,6 +23,7 @@ class MeasuredMatch extends TacticalMatch:
 			records.append({"t": _elapsed, "id": id, "x": at.x, "y": at.y, "z": at.z})
 	func _apply_snapshot(data: Dictionary) -> void:
 		received_snapshots += 1
+		last_snapshot_msec = Time.get_ticks_msec()
 		# Explicit size proxy including the welcome, not actual transport bytes.
 		received_payload_bytes += var_to_bytes(data).compress(FileAccess.COMPRESSION_DEFLATE).size()
 		if last_received_tick >= 0:
@@ -90,14 +92,14 @@ func _process(delta: float) -> bool:
 			"first_movement_seconds": first_movement_seconds, "prediction_enabled": prediction_enabled, "prediction_errors_m": game._prediction.error_samples,
 			"corrections": game._prediction.corrections, "hard_corrections": game._prediction.hard_corrections,
 			"pending_inputs": game._prediction.pending.size(), "large_corrections": game._prediction.large_corrections,
-			"snapshots": game.received_snapshots, "snapshot_tick_gaps": game.snapshot_steps, "reencoded_snapshot_bytes": game.received_payload_bytes,
+			"last_snapshot_age_seconds": (Time.get_ticks_msec() - game.last_snapshot_msec) / 1000.0, "snapshots": game.received_snapshots, "snapshot_tick_gaps": game.snapshot_steps, "reencoded_snapshot_bytes": game.received_payload_bytes,
 			"skipped_commands": game._input_stream.skipped_commands, "tick_usec": game.ticks, "tick_intervals_usec": game.tick_intervals, "poses": game.records, "stale_snapshots": game._replica_buffer.stale_packets}
 		if not output.is_empty():
 			var file := FileAccess.open(output, FileAccess.WRITE)
 			file.store_string(JSON.stringify(report))
 			file.close()
-		print("NETWORK_SIMULATION " + JSON.stringify({"role": role, "joined": joined, "snapshots": game.received_snapshots, "max_displacement": max_distance}))
-		var success := role == "server" or (joined and game.received_snapshots >= 10 and max_distance > 0.1)
+		print("NETWORK_SIMULATION " + JSON.stringify({"role": role, "joined": joined, "last_snapshot_age_seconds": (Time.get_ticks_msec() - game.last_snapshot_msec) / 1000.0, "snapshots": game.received_snapshots, "max_displacement": max_distance}))
+		var success := role == "server" or (joined and game.connection_state == "connected" and Time.get_ticks_msec() - game.last_snapshot_msec < 750 and game.received_snapshots >= 10 and max_distance > 0.1)
 		game.queue_free()
 		quit(0 if success else 1)
 	return false

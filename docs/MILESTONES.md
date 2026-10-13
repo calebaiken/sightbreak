@@ -1,5 +1,17 @@
 # Development milestones
 
+## Competitive systems initiative — review stack
+
+- A: corrected Claude77e0433 independently verified; Unicode HUD failure posted to PR1. No dependency merge performed.
+- B: recipient state privacy and adversarial tests, PR3.
+- C: timestamped continuous interpolation and opt-in movement replay/reconciliation, PR4. Human feel/accuracy gate remains open.
+- D: bounded admission/idle cleanup and ticket-preserving capacity/account preflight, PR5.
+- F: immutable server result outbox, crash/outage/lost-ack evidence, PR6. Long-outage policy and hardware durability remain open.
+- E: disabled diagnostic hit history with live-volume parity, PR7. Active compensation and fairness **incomplete**.
+- G/H: reproducible impairment/load/lifecycle metrics, full regression matrix, debug builds, manual CI definition and independent review, PR8. Remote CI execution and physical Android/iOS acceptance **unverified**.
+
+All are stacked drafts requiring dependency reconciliation, full applicable gates and explicit merge authorization. Claude graphics PR2 is a separate workstream. Follow [parallel work](engineering/PARALLEL_WORK.md) and [current QA](reports/CODEX_NETWORK_QA.md) when resuming; do not rebuild completed systems.
+
 The initial source state contained only a README. This implementation establishes a playable native alpha with substantial offline, network and economy foundations. The specification's quality gate remains **at least 8.5/10 in every applicable category**, backed by independent evidence. Implemented functionality is not automatic milestone acceptance. No full phase is accepted while its applicable physical-device, security or quality criteria remain unverified.
 
 | Phase | Implemented development scope | Remaining acceptance work |

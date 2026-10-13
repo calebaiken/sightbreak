@@ -11,6 +11,7 @@ import heapq
 import json
 import math
 import os
+import platform
 from pathlib import Path
 import random
 import selectors
@@ -38,16 +39,24 @@ def main():
     parser.add_argument('--port', type=int, default=29400)
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--no-prediction', action='store_true')
+    parser.add_argument('--blackout-at', type=float, default=-1, help='Seconds after clients launch; -1 disables')
+    parser.add_argument('--blackout-seconds', type=float, default=0)
     args = parser.parse_args()
-    if not (0 <= args.loss < 1 and 0 <= args.reorder <= 1 and args.rtt_ms >= 0 and args.jitter_ms >= 0 and 5 <= args.seconds <= 600):
+    if not (0 <= args.blackout_seconds <= 60 and -1 <= args.blackout_at <= args.seconds and 0 <= args.loss < 1 and 0 <= args.reorder <= 1 and args.rtt_ms >= 0 and args.jitter_ms >= 0 and 5 <= args.seconds <= 600):
         parser.error('invalid impairment bounds')
     args.out.mkdir(parents=True, exist_ok=True)
     rng = random.Random(args.seed)
     selector = selectors.DefaultSelector()
     routes, sockets, queue, processes, logs = [], [], [], [], []
-    traffic = {'up': {'received_packets': 0, 'forwarded_packets': 0, 'dropped_packets': 0, 'udp_payload_bytes': 0},
-               'down': {'received_packets': 0, 'forwarded_packets': 0, 'dropped_packets': 0, 'udp_payload_bytes': 0}}
+    traffic = {'up': {'received_packets': 0, 'forwarded_packets': 0, 'dropped_packets': 0, 'udp_payload_bytes': 0, 'max_datagram_bytes': 0, 'datagrams_over_1200': 0},
+               'down': {'received_packets': 0, 'forwarded_packets': 0, 'dropped_packets': 0, 'udp_payload_bytes': 0, 'max_datagram_bytes': 0, 'datagrams_over_1200': 0}}
     samples = {}
+    source = {'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
+              'dirty': bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip()),
+              'platform': platform.platform(), 'python': platform.python_version()}
+
+    def blackout(now):
+        return args.blackout_at >= 0 and args.blackout_at <= now - start < args.blackout_at + args.blackout_seconds
     serial = 0
 
     def launch(role, name, port, seconds):
@@ -90,7 +99,12 @@ def main():
             now = time.monotonic()
             while queue and queue[0][0] <= now:
                 _, _, sock, destination, packet, direction = heapq.heappop(queue)
+                if blackout(now):
+                    traffic[direction]['dropped_packets'] += 1
+                    continue
                 if destination is not None:
+                    traffic[direction]['max_datagram_bytes'] = max(traffic[direction]['max_datagram_bytes'], len(packet))
+                    traffic[direction]['datagrams_over_1200'] += int(len(packet) > 1200)
                     sock.sendto(packet, destination)
                     traffic[direction]['forwarded_packets'] += 1
                     traffic[direction]['udp_payload_bytes'] += len(packet)
@@ -100,7 +114,7 @@ def main():
                 traffic[direction]['received_packets'] += 1
                 if direction == 'up':
                     route['client'] = address
-                if rng.random() < args.loss:
+                if blackout(now) or rng.random() < args.loss:
                     traffic[direction]['dropped_packets'] += 1
                     continue
                 delay = max(0, args.rtt_ms / 2 + rng.uniform(-args.jitter_ms, args.jitter_ms)) / 1000
@@ -132,12 +146,14 @@ def main():
         errors, gaps, rendered_steps, prediction_errors = [], [], [], []
         corrections, hard_corrections = 0, 0
         first_movement = []
+        final_client_states = []
         for index in range(args.clients):
             path = args.out / f'client-{index}.json'
             if not path.exists():
                 continue
             data = json.loads(path.read_text())
             first_movement.append(data.get("first_movement_seconds"))
+            final_client_states.append({"client": index, "state": data.get("state"), "last_snapshot_age_seconds": data.get("last_snapshot_age_seconds")})
             prediction_errors.extend(data.get('prediction_errors_m', []))
             corrections += data.get('corrections', 0)
             hard_corrections += data.get('hard_corrections', 0)
@@ -158,6 +174,7 @@ def main():
         intervals = server_report.get('tick_intervals_usec', [])
         report = {'conditions': {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()},
                   'scope': 'loopback real Godot processes; added RTT simulation; no device/cellular claim',
+                  'source': source,
                   'traffic_window_seconds': time.monotonic() - start,
                   'failures': failures, 'traffic': traffic, 'processes': samples,
                   'skipped_commands': server_report.get('skipped_commands', 0),
@@ -166,7 +183,7 @@ def main():
                   'received_tick_gap_median': statistics.median(gaps) if gaps else None,
                   'render_position_error_p50_m': percentile(errors, .5), 'render_position_error_p95_m': percentile(errors, .95),
                   'prediction_error_at_ack_p50_m': percentile(prediction_errors, .5), 'prediction_error_at_ack_p95_m': percentile(prediction_errors, .95),
-                  'first_movement_seconds': first_movement,
+                  'first_movement_seconds': first_movement, 'final_client_states': final_client_states,
                   'corrections': corrections, 'hard_corrections': hard_corrections,
                   'render_step_p95_m': percentile(rendered_steps, .95), 'render_samples_compared': len(errors)}
         (args.out / 'summary.json').write_text(json.dumps(report, indent=2) + '\n')
