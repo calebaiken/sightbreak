@@ -357,3 +357,101 @@ def test_published_case_odds_match_every_boundary(client, monkeypatch, roll, exp
     assert response.json()['item']['rarity'] == expected
     assert post(client, '/cases/open', headers, body).json() == response.json()
     assert len(client.get('/inventory', headers=headers).json()['items']) == 1
+
+
+def test_market_filters_apply_before_result_cap(client):
+    # CLAUDE_AUDIT_0.3 M-7: 500 cheaper listings must not hide a matching rarity.
+    from models import Listing
+    seller, _ = player()
+    with transaction() as db:
+        for _ in range(500):
+            common = mint(db, seller, 'obsidian_common')
+            listing = Listing(item_id=common.id, seller_id=seller, price=10)
+            db.add(listing); db.flush(); common.reservation = 'market:' + listing.id
+        mythic = mint(db, seller, 'obsidian_mythic')
+        listing = Listing(item_id=mythic.id, seller_id=seller, price=5000)
+        db.add(listing); db.flush(); mythic.reservation = 'market:' + listing.id
+        mythic_id = mythic.id
+    rows = client.get('/market', params={'rarity': 'Mythic'}).json()['listings']
+    assert [row['item']['id'] for row in rows] == [mythic_id]
+    assert client.get('/market', params={'collection': 'Obsidian', 'finish': 'Gilded Fracture'}).json()['listings'][0]['item']['id'] == mythic_id
+    assert client.get('/market', params={'collection': 'Blacksite'}).json()['listings'] == []
+    assert len(client.get('/market', params={'limit': 25}).json()['listings']) == 25
+
+
+def test_market_read_uses_bounded_queries(client):
+    # CLAUDE_AUDIT_0.3 M-8: no per-listing round trip on the public read path.
+    from sqlalchemy import event
+    seller, hs = player()
+    for _ in range(40):
+        post(client, '/market/list', hs, dict(item_id=item(seller), price=50))
+    statements = []
+    listener = lambda *args: statements.append(args[2])
+    event.listen(engine, 'before_cursor_execute', listener)
+    try:
+        assert len(client.get('/market').json()['listings']) == 40
+    finally:
+        event.remove(engine, 'before_cursor_execute', listener)
+    assert len(statements) <= 3, statements
+
+
+def test_server_key_with_non_ascii_header_is_rejected_not_crashed(monkeypatch):
+    # CLAUDE_AUDIT_0.3 L-2
+    monkeypatch.setenv('SIGHTBREAK_SERVER_KEY', 'fictional-server-secret-' + 'x' * 32)
+    tolerant = TestClient(app, raise_server_exceptions=False)
+    response = tolerant.post('/server/tickets/consume', headers={'X-Server-Key': 'café'.encode('latin-1')},
+                             json={'ticket': 'x' * 40, 'server_id': 'local-relay'})
+    assert response.status_code == 403
+
+
+def test_login_verifies_a_hash_even_for_unknown_usernames(client, monkeypatch):
+    # CLAUDE_AUDIT_0.3 L-1: equal work for unknown and existing usernames.
+    import app as service
+    client.post('/auth/register', json=dict(username='known_user', password='long-test-password', display_name='Known'))
+    calls = []
+    real = service.password_hasher
+    class CountingHasher:
+        def verify(self, stored, supplied):
+            calls.append(stored)
+            return real.verify(stored, supplied)
+    monkeypatch.setattr(service, 'password_hasher', CountingHasher())
+    assert client.post('/auth/login', json={'username': 'nobody_registered', 'password': 'wrong-password-123'}).status_code == 401
+    assert client.post('/auth/login', json={'username': 'known_user', 'password': 'wrong-password-123'}).status_code == 401
+    assert len(calls) == 2 and all(stored.startswith('$argon2id$') for stored in calls)
+
+
+def test_login_with_unusable_stored_hash_is_rejected_cleanly(client):
+    pid, _ = player()
+    with transaction() as db:
+        name = db.get(Player, pid).username
+    assert client.post('/auth/login', json={'username': name, 'password': 'long-test-password'}).status_code == 401
+
+
+def test_history_lists_most_recent_match_first(client, monkeypatch):
+    # CLAUDE_AUDIT_0.3 L-6
+    secret = 'fictional-server-secret-' + 'x' * 32
+    monkeypatch.setenv('SIGHTBREAK_SERVER_KEY', secret)
+    h = {'X-Server-Key': secret}
+    older = match_body()
+    ended = now() - timedelta(minutes=9)
+    older['started_at'] = (ended - timedelta(seconds=600)).isoformat(); older['ended_at'] = ended.isoformat()
+    assert post(client, '/server/matches', h, older).status_code == 200
+    newer = {**older, 'match_id': str(uuid4()), 'started_at': (now() - timedelta(seconds=310)).isoformat(), 'ended_at': now().isoformat()}
+    for participant in newer['participants']:
+        participant['active_seconds'] = 300
+    assert post(client, '/server/matches', h, newer).status_code == 200
+    with transaction() as db:
+        token = 'history-' + uuid4().hex
+        db.add(Session(token_hash=digest(token), player_id=older['participants'][0]['player_id'], expires_at=now() + timedelta(hours=1)))
+    matches = client.get('/history', headers={'Authorization': 'Bearer ' + token}).json()['matches']
+    assert [m['ended_at'] for m in matches] == sorted([m['ended_at'] for m in matches], reverse=True) and len(matches) == 2
+
+
+def test_trade_exposes_participant_display_names_for_confirmation(client):
+    # Confirmation UI must name both sides, not only raw account IDs (CLAUDE_AUDIT_0.3 M-11).
+    a, ha = player(); b, hb = player()
+    trade = post(client, '/trades', ha, dict(partner_id=b)).json()
+    with transaction() as db:
+        expected = {a: db.get(Player, a).display_name, b: db.get(Player, b).display_name}
+    assert trade['names'] == expected
+    assert client.get('/trades', headers=hb).json()['trades'][0]['names'] == expected

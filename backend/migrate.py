@@ -7,4 +7,4 @@ if __name__ == '__main__':
     with engine.begin() as connection:
         for migration in sorted((Path(__file__).parent / 'migrations').glob('*.sql')):
             connection.exec_driver_sql(migration.read_text())
-    print('PostgreSQL schema migrated to version 3')
+    print('PostgreSQL schema migrated to version 4')

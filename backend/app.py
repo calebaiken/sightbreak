@@ -15,8 +15,8 @@ from typing import Annotated
 from uuid import UUID
 
 from argon2 import PasswordHasher
-from argon2.exceptions import VerifyMismatchError, VerificationError
-from fastapi import FastAPI, HTTPException, Header, Request
+from argon2.exceptions import InvalidHashError, VerificationError
+from fastapi import FastAPI, HTTPException, Header, Query, Request
 from pydantic import BaseModel, ConfigDict, Field
 from sqlalchemy import create_engine, select, text, func, or_
 from sqlalchemy.orm import Session as DBSession
@@ -30,6 +30,8 @@ if not DATABASE_URL.startswith('postgresql'):
     raise RuntimeError('Authoritative economy requires PostgreSQL; offline data is never imported')
 engine = create_engine(DATABASE_URL, pool_pre_ping=True, pool_size=10, max_overflow=10)
 password_hasher = PasswordHasher()
+# Unknown usernames verify against this hash so login timing does not reveal accounts.
+UNKNOWN_USER_HASH = password_hasher.hash(secrets.token_urlsafe(24))
 app = FastAPI(title='SIGHTBREAK earned-only economy', version='0.1.0')
 LOCK_ID = 0x5349474854
 
@@ -46,13 +48,14 @@ def transaction():
 
 def rate(request, category, limit=60):
     # Persisted across workers/restarts; ignore spoofable forwarding headers.
+    # One atomic upsert: limit checks never queue behind the economy write lock.
     host = request.client.host if request.client else 'unknown'
     key = f'{category}:{host}:{int(time.time()) // 60}'
-    with transaction() as db:
-        bucket = db.get(RateBucket, key)
-        if bucket and bucket.count >= limit: fail('Rate limit exceeded; retry next minute', 429)
-        if bucket: bucket.count += 1
-        else: db.add(RateBucket(id=key, count=1))
+    with engine.begin() as db:
+        count = db.execute(text('INSERT INTO rate_buckets (id, count) VALUES (:key, 1) '
+                                'ON CONFLICT (id) DO UPDATE SET count = rate_buckets.count + 1 RETURNING count'),
+                           {'key': key}).scalar_one()
+    if count > limit: fail('Rate limit exceeded; retry next minute', 429)
 
 def authenticated(db, authorization):
     if not authorization or not authorization.startswith('Bearer '): fail('Authentication required', 401)
@@ -64,7 +67,8 @@ def authenticated(db, authorization):
 
 def trusted_server(server_key, server_id=None):
     expected = os.environ.get('SIGHTBREAK_SERVER_KEY')
-    if not expected or len(expected) < 32 or not server_key or not secrets.compare_digest(server_key, expected):
+    # Compare bytes: str comparison raises on non-ASCII header values.
+    if not expected or len(expected) < 32 or not server_key or not secrets.compare_digest(server_key.encode(), expected.encode()):
         fail('Trusted game server required', 403)
     configured_id = os.environ.get('SIGHTBREAK_SERVER_ID', 'local-relay')
     if server_id is not None and server_id != configured_id:
@@ -173,8 +177,9 @@ def login(body:Login,request:Request):
     with DBSession(engine) as db:
         p=db.scalar(select(Player).where(Player.username==body.username.lower()))
         try:
-            if not p or not password_hasher.verify(p.password_hash,body.password): fail('Invalid credentials',401)
-        except VerificationError: fail('Invalid credentials',401)
+            password_hasher.verify(p.password_hash if p else UNKNOWN_USER_HASH,body.password)
+        except (VerificationError, InvalidHashError): fail('Invalid credentials',401)
+        if not p: fail('Invalid credentials',401)
         if not p.active: fail('Account unavailable',403)
         result=issue_session(db,p); db.commit(); return result
 @app.post('/auth/logout')
@@ -223,14 +228,18 @@ def open_case(body:Open,request:Request,authorization:Auth=None):
         audit(db,p.id,'case_opened',case_id=case.id,key_id=case_key.id,**response)
         return remember(db,key,h,response)
 @app.get('/market')
-def market(collection:str|None=None,rarity:str|None=None,max_price:int|None=None,weapon:str|None=None,finish:str|None=None):
+def market(request:Request,collection:str|None=None,rarity:str|None=None,max_price:int|None=None,weapon:str|None=None,finish:str|None=None,limit:int=Query(500,ge=1,le=500)):
+    # Filters run in SQL before the cap, in one joined query (CLAUDE_AUDIT_0.3 M-7/M-8).
+    rate(request,'market_read',120)
+    query=select(Listing,Item).join(Item,Item.id==Listing.item_id).where(Listing.state=='active')
+    if rarity: query=query.where(Item.rarity==rarity)
+    if max_price is not None: query=query.where(Listing.price<=max_price)
+    if collection or weapon or finish:
+        matching=[d['id'] for d in DEFINITIONS.values() if (not collection or d['collection']==collection) and (not weapon or d.get('weapon')==weapon) and (not finish or d.get('finish')==finish)]
+        query=query.where(Item.definition_id.in_(matching))
     with DBSession(engine) as db:
-        rows=[]
-        for listing in db.scalars(select(Listing).where(Listing.state=='active').order_by(Listing.price).limit(500)):
-            item=db.get(Item,listing.item_id); d=DEFINITIONS[item.definition_id]
-            if collection and d['collection']!=collection or rarity and item.rarity!=rarity or max_price is not None and listing.price>max_price or weapon and d.get('weapon')!=weapon or finish and d.get('finish')!=finish: continue
-            rows.append(dict(id=listing.id,seller_id=listing.seller_id,price=listing.price,item=item_json(item)))
-        return {'listings':rows}
+        rows=db.execute(query.order_by(Listing.price,Listing.id).limit(limit)).all()
+        return {'listings':[dict(id=listing.id,seller_id=listing.seller_id,price=listing.price,item=item_json(item)) for listing,item in rows]}
 @app.post('/market/list',status_code=201)
 def market_list(body:ListItem,request:Request,authorization:Auth=None):
     rate(request,'economy')
@@ -273,7 +282,8 @@ def trade_json(t):
     from sqlalchemy.orm import object_session
     db = object_session(t)
     offer_items = {owner: [item_json(db.get(Item, item_id)) for item_id in ids] for owner, ids in t.offers.items()}
-    return dict(id=t.id,a=t.a,b=t.b,revision=t.revision,offers=t.offers,offer_items=offer_items,confirmations=t.confirmations,state=t.state)
+    names = {pid: db.get(Player, pid).display_name for pid in (t.a, t.b)}
+    return dict(id=t.id,a=t.a,b=t.b,names=names,revision=t.revision,offers=t.offers,offer_items=offer_items,confirmations=t.confirmations,state=t.state)
 def get_trade(db, player, trade_id):
     trade=db.get(Trade,str(trade_id))
     if not trade or player.id not in (trade.a,trade.b): fail('Trade unavailable',404)
@@ -398,7 +408,7 @@ def match_result(body:MatchResult,request:Request,x_server_key:Annotated[str|Non
 def history(authorization:Auth=None):
     with DBSession(engine) as db:
         p=authenticated(db,authorization)
-        return {'ledger':[dict(id=r.id,amount=r.amount,balance_after=r.balance_after,reason=r.reason,reference=r.reference,created_at=r.created_at.isoformat()) for r in db.scalars(select(Ledger).where(Ledger.player_id==p.id).order_by(Ledger.created_at.desc()).limit(100))], 'matches':[r.details for r in db.scalars(select(Reward).where(Reward.player_id==p.id).limit(100))]}
+        return {'ledger':[dict(id=r.id,amount=r.amount,balance_after=r.balance_after,reason=r.reason,reference=r.reference,created_at=r.created_at.isoformat()) for r in db.scalars(select(Ledger).where(Ledger.player_id==p.id).order_by(Ledger.created_at.desc()).limit(100))], 'matches':[r.details for r in db.scalars(select(Reward).where(Reward.player_id==p.id).order_by(Reward.details['ended_at'].astext.desc()).limit(100))]}
 
 
 class TicketRequest(Strict):
