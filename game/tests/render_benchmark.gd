@@ -2,6 +2,7 @@ extends SceneTree
 # Fixed-work software-render diagnostic, not a device FPS benchmark.
 var output_dir := ""
 var quality := "standard"
+var render_scale := 1.0
 var sample_count := 24
 var warmup_count := 8
 var animations: Array = []
@@ -21,6 +22,7 @@ func run() -> void:
 		if arg.begins_with("--output="): output_dir = arg.trim_prefix("--output=")
 		if arg.begins_with("--quality="): quality = arg.trim_prefix("--quality=")
 		if arg.begins_with("--samples="): sample_count = maxi(12, int(arg.trim_prefix("--samples=")))
+		if arg.begins_with("--scale="): render_scale = clampf(float(arg.trim_prefix("--scale=")), 0.5, 1.0)
 	if output_dir.is_empty():
 		quit(2)
 		return
@@ -28,6 +30,8 @@ func run() -> void:
 	root.size = Vector2i(1280, 720)
 	root.content_scale_size = Vector2i(1280, 720)
 	root.msaa_3d = Viewport.MSAA_2X if quality == "standard" else Viewport.MSAA_DISABLED
+	root.scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
+	root.scaling_3d_scale = render_scale
 	DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
 	Engine.max_fps = 0
 	var start := Time.get_ticks_usec()
@@ -82,7 +86,7 @@ func run() -> void:
 		var result := {"view": view.name, "samples": sample_count, "first_present_ms": first_frame_ms, "median_frame_ms": frames[frames.size() / 2], "mean_frame_ms": sum / frames.size(), "p95_frame_ms": frames[mini(frames.size()-1,int(ceil(frames.size()*0.95))-1)], "p99_frame_ms": frames[-1], "draw_calls": Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME), "primitives": Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME), "texture_bytes": RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TEXTURE_MEM_USED), "static_bytes": Performance.get_monitor(Performance.MEMORY_STATIC)}
 		results.append(result)
 		if root.get_texture().get_image().save_png(output_dir.path_join(view.name + ".png")) != OK: failures += 1
-	var report := {"context": "Linux Xvfb / Mesa llvmpipe CPU rendering; fixed synthetic camera/actors. NOT physical GPU/mobile FPS, thermal or battery evidence.", "engine": Engine.get_version_info().string, "renderer": RenderingServer.get_video_adapter_name(), "quality": quality, "viewport": [1280, 720], "warmup_frames": warmup_count, "construction_ms": construction_ms, "views": results}
+	var report := {"context": "Linux Xvfb / Mesa llvmpipe CPU rendering; fixed synthetic camera/actors. NOT physical GPU/mobile FPS, thermal or battery evidence.", "engine": Engine.get_version_info().string, "renderer": RenderingServer.get_video_adapter_name(), "quality": quality, "render_scale": render_scale, "viewport": [1280, 720], "warmup_frames": warmup_count, "construction_ms": construction_ms, "views": results}
 	var file := FileAccess.open(output_dir.path_join("metrics.json"), FileAccess.WRITE)
 	file.store_string(JSON.stringify(report,"\t"))
 	file.close()

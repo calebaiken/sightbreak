@@ -15,6 +15,7 @@ run_godot actor --headless --script res://tests/actor_test.gd
 run_godot world --headless --script res://tests/world_test.gd
 run_godot hit-feedback --headless --script res://tests/hit_feedback_test.gd
 run_godot weapon-integrity --headless --script res://tests/weapon_integrity_test.gd
+run_godot render-budget --headless --script res://tests/render_budget_test.gd
 run_godot match --headless --script res://tests/match_test.gd
 run_godot bots --headless --script res://tests/bot_match_test.gd
 run_godot bot-lifecycle --headless --script res://tests/bot_lifecycle_test.gd

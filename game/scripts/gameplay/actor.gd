@@ -257,6 +257,10 @@ func _limb(parent: Node3D, from: Vector3, to: Vector3, radius: float, color: Col
 	node.position = (from + to) * 0.5
 	node.quaternion = Quaternion(Vector3.UP, (to - from).normalized())
 
+# One packed operator per side: spawning or switching sides instantiates shared
+# meshes instead of rebuilding and re-batching geometry for every actor.
+static var _packed_bodies: Dictionary = {}
+
 func _build_body() -> void:
 	for child in _body.get_children():
 		_body.remove_child(child)
@@ -265,73 +269,108 @@ func _build_body() -> void:
 	_knees.clear()
 	_arms.clear()
 	_body_team = team
+	if not _packed_bodies.has(team):
+		var template := Node3D.new()
+		_construct_body(template, team)
+		_packed_bodies[team] = WeaponModel.pack_children(template)
+	var instance: Node = (_packed_bodies[team] as PackedScene).instantiate()
+	for child in instance.get_children():
+		instance.remove_child(child)
+		WeaponModel.release_owner(child)
+		_body.add_child(child)
+	instance.free()
+	_collect_body_parts(_body)
+	_legs.sort_custom(_by_body_index)
+	_knees.sort_custom(_by_body_index)
+	_arms.sort_custom(_by_body_index)
+
+static func _by_body_index(a: Node3D, b: Node3D) -> bool:
+	return int(a.get_meta("body_index")) < int(b.get_meta("body_index"))
+
+func _collect_body_parts(node: Node) -> void:
+	for child in node.get_children():
+		match str(child.get_meta("body_role", "")):
+			"leg": _legs.append(child)
+			"knee": _knees.append(child)
+			"arm": _arms.append(child)
+			"head": _head = child
+			"world_muzzle": _world_muzzle = child
+		_collect_body_parts(child)
+
+func _construct_body(root: Node3D, side: int) -> void:
 	# Broad muted team fields retain target recognition at distance. Body volume
 	# remains entirely within the unchanged competitive capsule/headshot regions.
-	var accent := Color("73513b") if team == 0 else Color("335969")
-	var uniform := Color("303531") if team == 0 else Color("29343b")
+	var accent := Color("73513b") if side == 0 else Color("335969")
+	var uniform := Color("303531") if side == 0 else Color("29343b")
 	var dark := Color("182329")
-	_rounded(_body, Vector3(0, 1.08, 0), Vector3(0.59, 0.68, 0.34), uniform)
-	_rounded(_body, Vector3(0, 0.82, 0), Vector3(0.44, 0.27, 0.32), uniform.darkened(0.2))
-	var vest := _part(_body, Vector3(0, 1.10, -0.15), Vector3(0.42, 0.42, 0.16), dark)
+	_rounded(root, Vector3(0, 1.08, 0), Vector3(0.59, 0.68, 0.34), uniform)
+	_rounded(root, Vector3(0, 0.82, 0), Vector3(0.44, 0.27, 0.32), uniform.darkened(0.2))
+	var vest := _part(root, Vector3(0, 1.10, -0.15), Vector3(0.42, 0.42, 0.16), dark)
 	vest.material_override = _body_material(dark)
 	for x in [-0.13, 0.0, 0.13]:
-		var pouch := _part(_body, Vector3(x, 0.99, -0.254), Vector3(0.104, 0.18, 0.065), dark.lightened(0.1))
+		var pouch := _part(root, Vector3(x, 0.99, -0.254), Vector3(0.104, 0.18, 0.065), dark.lightened(0.1))
 		pouch.material_override = _body_material(dark.lightened(0.1))
 	# Distinct shoulder/arm silhouettes and two-joint legs, not rigid blocks.
 	for x in [-0.16, 0.16]:
+		var index := 0 if x < 0 else 1
 		var leg := Node3D.new()
-		_body.add_child(leg)
+		root.add_child(leg)
 		leg.position = Vector3(x, 0.87, 0)
-		_legs.append(leg)
+		leg.set_meta("body_role", "leg")
+		leg.set_meta("body_index", index)
 		_limb(leg, Vector3.ZERO, Vector3(0, -0.35, 0), 0.105, uniform.darkened(0.14))
 		var knee := Node3D.new()
 		leg.add_child(knee)
 		knee.position.y = -0.35
-		_knees.append(knee)
+		knee.set_meta("body_role", "knee")
+		knee.set_meta("body_index", index)
 		_limb(knee, Vector3.ZERO, Vector3(0, -0.34, 0), 0.088, uniform.darkened(0.22))
 		_rounded(knee, Vector3(0, -0.02, -0.084), Vector3(0.15, 0.17, 0.065), dark)
 		_rounded(knee, Vector3(0, -0.38, -0.065), Vector3(0.19, 0.17, 0.31), Color("192229"))
 		var arm := Node3D.new()
-		_body.add_child(arm)
+		root.add_child(arm)
 		arm.position = Vector3(x * 1.85, 1.31, 0)
-		_arms.append(arm)
+		arm.set_meta("body_role", "arm")
+		arm.set_meta("body_index", index)
 		var elbow := Vector3(x * 0.16, -0.23, 0.015)
 		var grip_at := Vector3(-x * 1.5 + 0.07, -0.08, -0.38 if x < 0 else -0.23)
 		_limb(arm, Vector3.ZERO, elbow, 0.093, uniform)
 		_limb(arm, elbow, grip_at, 0.078, uniform)
 		_rounded(arm, grip_at, Vector3(0.12, 0.115, 0.15), dark)
 		_rounded(arm, Vector3(x * 0.15, -0.04, 0), Vector3(0.17, 0.20, 0.21), accent)
-	_head = _rounded(_body, HEAD_VOLUMES[0][0], HEAD_VOLUMES[0][1] * 2.0, dark)
+	var head := _rounded(root, HEAD_VOLUMES[0][0], HEAD_VOLUMES[0][1] * 2.0, dark)
+	head.set_meta("body_role", "head")
 	# Helmet rim and smoke-tinted visor sit at root scale, not scaled head-local.
-	_rounded(_body, HEAD_VOLUMES[1][0], HEAD_VOLUMES[1][1] * 2.0, dark.lightened(0.03))
-	var visor := _rounded(_body, Vector3(0, 1.585, -0.158), Vector3(0.26, 0.065, 0.05), Color("14232a"))
+	_rounded(root, HEAD_VOLUMES[1][0], HEAD_VOLUMES[1][1] * 2.0, dark.lightened(0.03))
+	var visor := _rounded(root, Vector3(0, 1.585, -0.158), Vector3(0.26, 0.065, 0.05), Color("14232a"))
 	visor.material_override = _body_material(Color("14232a"), 0.48, 0.1)
 	visor.set_meta("separate_material", true)
-	_part(_body, Vector3(0, 1.705, -0.173), Vector3(0.19, 0.035, 0.018), accent)
-	_part(_body, Vector3(0, 1.18, -0.244), Vector3(0.21, 0.032, 0.01), accent)
+	_part(root, Vector3(0, 1.705, -0.173), Vector3(0.19, 0.035, 0.018), accent)
+	_part(root, Vector3(0, 1.18, -0.244), Vector3(0.21, 0.032, 0.01), accent)
 	for x in [-0.20, 0.20]:
-		_part(_body, Vector3(x, 1.20, -0.172), Vector3(0.052, 0.34, 0.035), dark.lightened(0.055))
+		_part(root, Vector3(x, 1.20, -0.172), Vector3(0.052, 0.34, 0.035), dark.lightened(0.055))
 	for y in [1.06, 1.13]:
-		_part(_body, Vector3(0, y, -0.238), Vector3(0.34, 0.016, 0.012), Color("101a20"))
-	_part(_body, Vector3(0, 1.08, 0.19), Vector3(0.32, 0.35, 0.13), dark)
+		_part(root, Vector3(0, y, -0.238), Vector3(0.34, 0.016, 0.012), Color("101a20"))
+	_part(root, Vector3(0, 1.08, 0.19), Vector3(0.32, 0.35, 0.13), dark)
 	# A lightweight world proxy: first-person attachments need no tenfold overhead.
-	var rifle := _part(_body, Vector3(0.07, 1.26, -0.37), Vector3(0.075, 0.11, 0.44), Color("1b242b"))
+	var rifle := _part(root, Vector3(0.07, 1.26, -0.37), Vector3(0.075, 0.11, 0.44), Color("1b242b"))
 	rifle.material_override = _body_material(Color("1b242b"), 0.48, 0.55)
-	_part(_body, Vector3(0.07, 1.27, -0.65), Vector3(0.029, 0.029, 0.16), dark)
-	_part(_body, Vector3(0.07, 1.14, -0.38), Vector3(0.054, 0.15, 0.08), dark)
-	_world_muzzle = MeshInstance3D.new()
+	_part(root, Vector3(0.07, 1.27, -0.65), Vector3(0.029, 0.029, 0.16), dark)
+	_part(root, Vector3(0.07, 1.14, -0.38), Vector3(0.054, 0.15, 0.08), dark)
+	var muzzle := MeshInstance3D.new()
 	var flash := PrismMesh.new()
 	flash.size = Vector3(0.085, 0.085, 0.16)
-	_world_muzzle.mesh = flash
+	muzzle.mesh = flash
 	var flash_material := StandardMaterial3D.new()
 	flash_material.albedo_color = Color("ffda8a")
 	flash_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	_world_muzzle.material_override = flash_material
-	_world_muzzle.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
-	_body.add_child(_world_muzzle)
-	_world_muzzle.position = Vector3(0.07, 1.27, -0.765)
-	_world_muzzle.visible = false
-	_batch_body_visuals(_body)
+	muzzle.material_override = flash_material
+	muzzle.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	muzzle.set_meta("body_role", "world_muzzle")
+	root.add_child(muzzle)
+	muzzle.position = Vector3(0.07, 1.27, -0.765)
+	muzzle.visible = false
+	_batch_body_visuals(root)
 
 func _batch_body_visuals(parent: Node3D) -> void:
 	# Color-vertex batching keeps articulated operators at one draw per joint;
@@ -342,7 +381,7 @@ func _batch_body_visuals(parent: Node3D) -> void:
 	for child in parent.get_children():
 		if child is Node3D and not child is MeshInstance3D:
 			_batch_body_visuals(child)
-		if not child is MeshInstance3D or child == _head or child == _world_muzzle or child.has_meta("separate_material"):
+		if not child is MeshInstance3D or child.has_meta("body_role") or child.has_meta("separate_material"):
 			continue
 		var source := MeshDataTool.new()
 		var arrays := ArrayMesh.new()

@@ -375,6 +375,7 @@ func show_settings() -> void:
 	setting_slider(settings, "FIELD OF VIEW", "fov", 60, 100, 1)
 	setting_slider(settings, "MASTER VOLUME", "volume", 0, 1, 0.05)
 	setting_slider(settings, "TOUCH BUTTON SIZE", "hud_scale", 0.7, 1.5, 0.05)
+	setting_slider(settings, "3D RENDER SCALE", "render_scale", 0.5, 1.0, 0.05)
 	setting_slider(settings, "CROSSHAIR SIZE", "crosshair_size", 2, 12, 1)
 	for definition in [["GYROSCOPE AIMING (supported devices)", "gyro"], ["SHOW TOUCH CONTROLS ON DESKTOP", "touch_visible"], ["REDUCED MOTION", "reduced_motion"]]:
 		var key: String = definition[1]
@@ -427,6 +428,10 @@ func apply_settings() -> void:
 	var high_quality := int(profile.data.settings.graphics_quality) > 0
 	SBUtility.high_quality_smoke = high_quality
 	get_viewport().msaa_3d = Viewport.MSAA_2X if high_quality else Viewport.MSAA_DISABLED
+	# The 3D world can render below native resolution (the HUD stays sharp): the
+	# main fill-rate control on phones. Compatibility supports bilinear scaling.
+	get_viewport().scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
+	get_viewport().scaling_3d_scale = clampf(float(profile.data.settings.render_scale), 0.5, 1.0)
 	for light in find_children("*", "DirectionalLight3D", true, false): light.shadow_enabled = high_quality
 	for node in find_children("*", "Node3D", true, false):
 		if node.has_method("apply_detail_quality"): node.apply_detail_quality(high_quality)

@@ -41,11 +41,18 @@ void fragment() {
 static func rarity_color(rarity: String) -> Color:
 	return RARITIES.get(rarity.capitalize(), RARITIES.Common)
 
+# One compiled program for every finish; materials differ only in parameters.
+static var _shader: Shader
+
+static func shader() -> Shader:
+	if _shader == null:
+		_shader = Shader.new()
+		_shader.code = CODE
+	return _shader
+
 static func finish(metadata: Dictionary) -> ShaderMaterial:
 	var material := ShaderMaterial.new()
-	var shader := Shader.new()
-	shader.code = CODE
-	material.shader = shader
+	material.shader = shader()
 	var collection := str(metadata.get("collection", ""))
 	var definition := str(metadata.get("definition_id", metadata.get("id", ""))).to_lower()
 	if collection.is_empty():

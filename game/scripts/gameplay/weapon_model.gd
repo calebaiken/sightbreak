@@ -12,15 +12,64 @@ var weapon_id := "rifle"
 var _hands := false
 var _materials: Dictionary = {}
 
+# One packed model per weapon/hands variant. Instances share every mesh and
+# material, so an equip costs node instantiation instead of geometry building.
+static var _packed: Dictionary = {}
+
 static func build(parent: Node3D, id: String, hands: bool = false) -> Dictionary:
+	for child in parent.get_children():
+		parent.remove_child(child)
+		child.queue_free()
+	var key := "%s|%s" % [id, hands]
+	if not _packed.has(key):
+		_packed[key] = _pack(id, hands)
+	var instance: Node = (_packed[key] as PackedScene).instantiate()
+	var result := {"paint": [] as Array[MeshInstance3D], "magazine": null, "muzzle": null}
+	for child in instance.get_children():
+		instance.remove_child(child)
+		release_owner(child)
+		parent.add_child(child)
+		if child.get_meta("weapon_paint", false):
+			result.paint.append(child)
+		match str(child.get_meta("weapon_role", "")):
+			"magazine": result.magazine = child
+			"muzzle": result.muzzle = child
+	instance.free()
+	return result
+
+static func _pack(id: String, hands: bool) -> PackedScene:
+	var root := Node3D.new()
 	var model := SBWeaponModel.new()
-	model._gun = parent
+	model._gun = root
 	model.weapon_id = id
 	model._hands = hands
 	model._build_gun()
 	model._batch_magazine()
 	model._batch_static_parts()
-	return {"paint": model._paint_parts, "magazine": model._magazine, "muzzle": model._muzzle}
+	for part in model._paint_parts:
+		part.set_meta("weapon_paint", true)
+	if model._magazine != null:
+		model._magazine.set_meta("weapon_role", "magazine")
+	model._muzzle.set_meta("weapon_role", "muzzle")
+	return pack_children(root)
+
+## Packs a procedurally built hierarchy, then frees the source nodes.
+static func pack_children(root: Node) -> PackedScene:
+	_own(root, root)
+	var packed := PackedScene.new()
+	packed.pack(root)
+	root.free()
+	return packed
+
+static func _own(node: Node, owner: Node) -> void:
+	for child in node.get_children():
+		child.owner = owner
+		_own(child, owner)
+
+static func release_owner(node: Node) -> void:
+	node.owner = null
+	for child in node.get_children():
+		release_owner(child)
 
 func _part(parent: Node3D, at: Vector3, dimensions: Vector3, color: Color) -> MeshInstance3D:
 	var visual := MeshInstance3D.new()
