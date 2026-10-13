@@ -15,6 +15,23 @@ var _cloud_elapsed := 0.0
 static var high_quality_smoke := true
 static var _smoke_texture: ImageTexture
 static var _smoke_core_shader: Shader
+static var _smoke_core_mesh: ArrayMesh
+const CONCEALMENT_RADIUS := 3.2
+## Edge puffs as [offset from cloud center, quad size]: four upper layers and two
+## small low layers whose lower edge ends at ground level, so no quad is cut by
+## the floor. Low quality keeps the first, third and fifth.
+const PUFF_LAYOUT := [
+	[Vector3(0.0, 0.75, -1.1), Vector2(4.4, 3.8)],
+	[Vector3(1.3, 0.45, 0.3), Vector2(4.2, 3.6)],
+	[Vector3(-1.25, 0.55, 0.2), Vector2(4.2, 3.6)],
+	[Vector3(0.2, 0.9, 1.2), Vector2(4.4, 3.8)],
+	[Vector3(1.35, -0.55, -0.9), Vector2(3.0, 2.2)],
+	[Vector3(-1.3, -0.55, 1.0), Vector2(3.0, 2.2)]
+]
+const LOW_PUFFS := [0, 2, 4]
+const DISSIPATE_SECONDS := 1.5
+var _puff_material: StandardMaterial3D
+var _core_material: ShaderMaterial
 
 static func smoke_texture() -> ImageTexture:
 	# One original deterministic 64² RGBA texture, about 22 KiB including mipmaps.
@@ -39,26 +56,77 @@ static func smoke_texture() -> ImageTexture:
 static func smoke_core_shader() -> Shader:
 	if _smoke_core_shader == null:
 		_smoke_core_shader = Shader.new()
+		# Unshaded and opaque: a top-lit gradient toward the sun, drifting triplanar
+		# noise and a soft bright rim that blends into the translucent edge quads.
+		# Culling stays disabled so the cloud remains opaque from inside.
 		_smoke_core_shader.code = """shader_type spatial;
-render_mode unshaded, cull_disabled;
+render_mode unshaded, cull_disabled, blend_mix, depth_draw_opaque;
 uniform sampler2D cloud_noise : source_color, filter_linear_mipmap, repeat_enable;
+uniform vec3 light_direction = vec3(-0.41, 0.64, 0.65);
+uniform float core_radius = 2.15;
+uniform float opacity = 1.0;
 varying vec3 cloud_position;
-varying vec3 cloud_normal;
+varying vec3 world_normal;
 void vertex() {
- float billow = sin(VERTEX.x*1.7+0.5)*sin(VERTEX.y*1.5)*sin(VERTEX.z*1.4+1.0);
- VERTEX += NORMAL * billow * 0.30;
- cloud_position = VERTEX; cloud_normal = NORMAL;
+ float t = TIME * 0.11;
+ float billow = sin(VERTEX.x*1.7+0.5+t)*sin(VERTEX.y*1.5-t*0.7)*sin(VERTEX.z*1.4+1.0+t*0.5);
+ VERTEX += NORMAL * billow * 0.15;
+ cloud_position = VERTEX;
+ world_normal = normalize((MODEL_MATRIX * vec4(NORMAL, 0.0)).xyz);
 }
 void fragment() {
- vec3 weights = abs(cloud_normal);
+ float scale = length(MODEL_MATRIX[0].xyz);
+ bool inside = distance(CAMERA_POSITION_WORLD, NODE_POSITION_WORLD) < core_radius * scale * 0.97;
+ // Outside, only the near surface draws; inside, the surrounding shell is dense fog.
+ if (!FRONT_FACING && !inside) {
+  discard;
+ }
+ vec3 n = normalize(world_normal);
+ vec3 weights = abs(n);
  weights /= max(weights.x + weights.y + weights.z, 0.001);
- ALBEDO = texture(cloud_noise, cloud_position.yz * 0.14 + 0.5).rgb * weights.x
-        + texture(cloud_noise, cloud_position.xz * 0.14 + 0.5).rgb * weights.y
-        + texture(cloud_noise, cloud_position.xy * 0.14 + 0.5).rgb * weights.z;
- ROUGHNESS = 1.0;
+ vec3 p = cloud_position * 0.19 + vec3(0.5) + vec3(TIME * 0.004, TIME * 0.007, 0.0);
+ float density = texture(cloud_noise, p.yz).r * weights.x + texture(cloud_noise, p.xz).r * weights.y + texture(cloud_noise, p.xy).r * weights.z;
+ // Smoke scatters light: only a gentle sun/sky gradient, never a dark terminator.
+ float sun = clamp(dot(n, normalize(light_direction)) * 0.5 + 0.5, 0.0, 1.0);
+ float sky = clamp(n.y * 0.5 + 0.5, 0.0, 1.0);
+ vec3 tone = vec3(0.29, 0.295, 0.305) * mix(0.9, 1.03, sun * 0.6 + sky * 0.4) * (0.52 + density * 1.45);
+ // Only the grazing rim thins out, broken up by the noise; the body stays opaque.
+ float facing = clamp(abs(dot(normalize(NORMAL), normalize(VIEW))), 0.0, 1.0);
+ float body = smoothstep(0.05, 0.4, facing + (density - 0.45) * 0.3);
+ if (!FRONT_FACING) {
+  tone = vec3(0.275, 0.28, 0.29) * (0.95 + density * 0.08);
+  body = 1.0;
+ }
+ ALBEDO = tone;
+ ALPHA = body * opacity;
 }
 """
 	return _smoke_core_shader
+
+## One shared cumulus-like core: the original concealment sphere plus overlapping
+## lobes merged into a single draw. Every lobe stays inside CONCEALMENT_RADIUS so
+## bots and players lose sight together; the textured puffs layer over its seams.
+static func smoke_core_mesh() -> ArrayMesh:
+	if _smoke_core_mesh == null:
+		var lobes := [
+			[Vector3.ZERO, Vector3(2.15, 2.05, 2.15)],
+			[Vector3(0.25, 1.1, -0.2), Vector3(1.25, 1.1, 1.25)],
+			[Vector3(1.3, 0.25, 0.55), Vector3(1.2, 1.1, 1.15)],
+			[Vector3(-1.25, 0.4, -0.45), Vector3(1.2, 1.1, 1.15)],
+			[Vector3(1.25, -0.95, -0.85), Vector3(1.15, 0.75, 1.1)],
+			[Vector3(-1.15, -0.95, 1.0), Vector3(1.15, 0.75, 1.1)]
+		]
+		var builder := SurfaceTool.new()
+		builder.begin(Mesh.PRIMITIVE_TRIANGLES)
+		for index in range(lobes.size()):
+			var sphere := SphereMesh.new()
+			sphere.radius = 1.0
+			sphere.height = 2.0
+			sphere.radial_segments = 28 if index == 0 else 22
+			sphere.rings = 14 if index == 0 else 11
+			builder.append_from(sphere, 0, Transform3D(Basis.from_scale(lobes[index][1]), lobes[index][0]))
+		_smoke_core_mesh = builder.commit()
+	return _smoke_core_mesh
 
 ## Cloud center height above the surface beneath the detonation point. The same
 ## position drives replicated visuals and bot concealment.
@@ -72,6 +140,28 @@ func cloud_rest_height() -> float:
 		if not hit.is_empty():
 			return float(hit.position.y) + CLOUD_HEIGHT
 	return CLOUD_HEIGHT
+
+## Remaining fraction of the cloud: 1 until the final DISSIPATE_SECONDS, then 0.
+func dissipation() -> float:
+	if not _detonated or kind != "smoke":
+		return 1.0
+	return clampf(_lifetime / DISSIPATE_SECONDS, 0.0, 1.0)
+
+## Line-of-sight blocking radius used by bots; it shrinks with the visible cloud.
+func concealment_radius() -> float:
+	return CONCEALMENT_RADIUS * dissipation()
+
+func _apply_dissipation() -> void:
+	var remaining := dissipation()
+	if remaining >= 1.0:
+		return
+	var scale_factor := lerpf(0.15, 1.0, remaining)
+	for puff in _cloud_puffs:
+		puff.scale = Vector3.ONE * scale_factor
+	if _puff_material != null:
+		_puff_material.albedo_color.a = remaining
+	if _core_material != null:
+		_core_material.set_shader_parameter("opacity", remaining)
 
 func _ready() -> void:
 	_mesh = MeshInstance3D.new()
@@ -90,6 +180,8 @@ func _physics_process(delta: float) -> void:
 		_cloud_elapsed += delta
 		for i in range(_cloud_puffs.size()):
 			_cloud_puffs[i].rotation.y += delta * (0.025 if i % 2 == 0 else -0.025)
+		if kind == "smoke":
+			_apply_dissipation()
 		if _lifetime <= 0:
 			queue_free()
 		return
@@ -116,14 +208,12 @@ func _detonate() -> void:
 		# A closed opaque core preserves concealment even inside the cloud. Only
 		# the boundary uses alpha: at most six quads (three in Low), no lights.
 		var core := MeshInstance3D.new()
-		var sphere := SphereMesh.new()
-		sphere.radius = 2.15
-		sphere.height = 4.1
-		sphere.radial_segments = 24
-		sphere.rings = 12
-		core.mesh = sphere
+		core.mesh = smoke_core_mesh()
 		var core_material := ShaderMaterial.new()
+		_core_material = core_material
 		core_material.shader = smoke_core_shader()
+		# Drawn before the textured edge puffs, which layer softly over it.
+		core_material.render_priority = 0
 		core_material.set_shader_parameter("cloud_noise", smoke_texture())
 		core.material_override = core_material
 		core.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
@@ -131,21 +221,24 @@ func _detonate() -> void:
 		_cloud_puffs.append(core)
 		var puff_count := 6 if high_quality_smoke else 3
 		var material := StandardMaterial3D.new()
+		_puff_material = material
 		material.albedo_texture = smoke_texture()
 		material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 		material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 		material.billboard_mode = BaseMaterial3D.BILLBOARD_ENABLED
 		material.cull_mode = BaseMaterial3D.CULL_DISABLED
 		material.depth_draw_mode = BaseMaterial3D.DEPTH_DRAW_DISABLED
+		material.render_priority = 1
 		for i in range(puff_count):
+			var layout: Array = PUFF_LAYOUT[i if high_quality_smoke else LOW_PUFFS[i]]
 			var puff := MeshInstance3D.new()
 			var quad := QuadMesh.new()
-			quad.size = Vector2(4.7, 4.7)
+			quad.size = layout[1]
 			puff.mesh = quad
 			puff.material_override = material
 			puff.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			add_child(puff)
-			puff.position = Vector3(sin(i * TAU / puff_count) * 0.88, cos(i * 2.1) * 0.28, cos(i * TAU / puff_count) * 0.88)
+			puff.position = layout[0]
 			_cloud_puffs.append(puff)
 		for puff in _cloud_puffs:
 			puff.scale = Vector3.ONE * 0.2

@@ -807,7 +807,7 @@ func can_see(other: SBActor) -> bool:
 	var to := other.global_position + Vector3.UP * other.head_height
 	for cloud in get_tree().get_nodes_in_group("smoke_clouds"):
 		var nearest := Geometry3D.get_closest_point_to_segment(cloud.global_position, from, to)
-		if nearest.distance_to(cloud.global_position) < 3.2:
+		if nearest.distance_to(cloud.global_position) < cloud.concealment_radius():
 			return false
 	var query := PhysicsRayQueryParameters3D.create(from, to, 3, [get_rid()])
 	var hit := get_world_3d().direct_space_state.intersect_ray(query)
