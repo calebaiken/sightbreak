@@ -68,4 +68,4 @@ procedural, the default rifle has strong highlight bands, impact dust remains
 simple, and the opaque smoke core still has a rounded mass. This evidence does
 not establish an 8.5 visual score, physical-device frame rate, thermal behavior,
 battery consumption, human-rated gunplay or release readiness. Independent
-scoring and remaining defects are in [QA-0.3](../../../QA-0.3.md).
+scoring and remaining defects are in [QA-0.3](../../QA-0.3.md).
