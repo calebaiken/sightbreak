@@ -8,6 +8,7 @@ signal utility_deployed(actor_id: int, at: Vector3, kind: String)
 
 const Weapons = preload("res://scripts/gameplay/weapons.gd")
 const Utility = preload("res://scripts/gameplay/utility.gd")
+const CosmeticMaterial = preload("res://scripts/ui/cosmetic_material.gd")
 const WALK_SPEED := 5.1
 const CROUCH_SPEED := 2.5
 const GRAVITY := 22.0
@@ -50,6 +51,12 @@ var _smoke_previous: bool = false
 var _jump_previous: bool = false
 var _bob: float = 0.0
 var _kick: float = 0.0
+var _sway := Vector2.ZERO
+var _visual_look := Vector2.ZERO
+var _visual_initialized := false
+var _magazine: MeshInstance3D
+var _magazine_rest := Vector3.ZERO
+var _legs: Array[Node3D] = []
 var _flash: float = 0.0
 var _crouching: bool = false
 var _gun_color := Color("9aabb5")
@@ -59,7 +66,7 @@ var _finish: ShaderMaterial
 var _rng := RandomNumberGenerator.new()
 var _shot_audio: AudioStreamPlayer3D
 var _hurt_audio: AudioStreamPlayer3D
-static var _shot_stream: AudioStreamWAV
+static var _shot_streams: Dictionary = {}
 static var _hurt_stream: AudioStreamWAV
 
 func configure(id: int, side: int, label: String, local: bool = false) -> void:
@@ -100,16 +107,18 @@ func _ready() -> void:
 	_shot_audio.max_distance = 65
 	_shot_audio.unit_size = 9
 	_shot_audio.volume_db = -10
+	_shot_audio.max_polyphony = 4
 	_shot_audio.position.y = head_height
 	add_child(_shot_audio)
 	_hurt_audio = AudioStreamPlayer3D.new()
 	_hurt_audio.max_distance = 18
 	_hurt_audio.volume_db = -13
 	add_child(_hurt_audio)
-	if _shot_stream == null:
-		_shot_stream = _synthesize_sound(0.12, 145, 0.85)
+	if _shot_streams.is_empty():
+		for id in Weapons.DATA:
+			_shot_streams[id] = _synthesize_shot(id)
 		_hurt_stream = _synthesize_sound(0.08, 65, 0.25)
-	_shot_audio.stream = _shot_stream
+	_shot_audio.stream = _shot_streams[weapon_id]
 	_hurt_audio.stream = _hurt_stream
 
 static func _synthesize_sound(duration: float, frequency: float, noise: float) -> AudioStreamWAV:
@@ -125,6 +134,38 @@ static func _synthesize_sound(duration: float, frequency: float, noise: float) -
 		var t := float(i) / stream.mix_rate
 		var envelope := pow(1.0 - float(i) / count, 3.0)
 		var wave := (sin(t * TAU * frequency * (1.0 - t * 3.0)) * (1.0 - noise) + rng.randf_range(-1.0, 1.0) * noise) * envelope * 0.75
+		data.encode_s16(i * 2, int(wave * 32767))
+	stream.data = data
+	return stream
+
+static func _synthesize_shot(id: String) -> AudioStreamWAV:
+	# Original layered transients: a short crack, low body and filtered noise tail.
+	# No samples/assets or timing/gameplay rules depend on this presentation.
+	var profiles := {
+		"sidearm": Vector3(0.18, 155.0, 0.72),
+		"smg": Vector3(0.13, 190.0, 0.56),
+		"rifle": Vector3(0.23, 105.0, 0.84),
+		"marksman": Vector3(0.34, 72.0, 1.0)
+	}
+	var profile: Vector3 = profiles.get(id, profiles["sidearm"])
+	var stream := AudioStreamWAV.new()
+	stream.format = AudioStreamWAV.FORMAT_16_BITS
+	stream.mix_rate = 22050
+	var count := int(profile.x * stream.mix_rate)
+	var data := PackedByteArray()
+	data.resize(count * 2)
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 711 + int(profile.y)
+	var low_noise := 0.0
+	for i in range(count):
+		var t := float(i) / stream.mix_rate
+		var noise := rng.randf_range(-1.0, 1.0)
+		low_noise = lerpf(low_noise, noise, 0.2)
+		var crack := noise * exp(-t * 160.0) * 0.62
+		var body := sin(TAU * profile.y * t + 0.9 * (1.0 - exp(-t * 35.0))) * exp(-t * 32.0) * 0.4
+		var tail := low_noise * exp(-t * 17.0) * profile.z
+		var fade := clampf((profile.x - t) / 0.012, 0.0, 1.0)
+		var wave := clampf((crack + body + tail) * fade, -0.95, 0.95)
 		data.encode_s16(i * 2, int(wave * 32767))
 	stream.data = data
 	return stream
@@ -146,13 +187,18 @@ func _build_body() -> void:
 	for child in _body.get_children():
 		_body.remove_child(child)
 		child.queue_free()
+	_legs.clear()
 	_body_team = team
 	var uniform := Color("bb8153") if team == 0 else Color("518caa")
 	_part(_body, Vector3(0, 1.03, 0), Vector3(0.57, 0.63, 0.31), uniform)
 	_part(_body, Vector3(0, 1.08, -0.18), Vector3(0.46, 0.45, 0.13), Color("29333a"))
 	for x in [-0.16, 0.16]:
-		_part(_body, Vector3(x, 0.45, 0), Vector3(0.23, 0.83, 0.24), uniform.darkened(0.25))
-		_part(_body, Vector3(x, 0.13, -0.07), Vector3(0.25, 0.23, 0.40), Color("263038"))
+		var leg := Node3D.new()
+		_body.add_child(leg)
+		leg.position = Vector3(x, 0.87, 0)
+		_legs.append(leg)
+		_part(leg, Vector3(0, -0.42, 0), Vector3(0.23, 0.83, 0.24), uniform.darkened(0.25))
+		_part(leg, Vector3(0, -0.74, -0.07), Vector3(0.25, 0.23, 0.40), Color("263038"))
 		_part(_body, Vector3(x * 2.1, 1.05, -0.12), Vector3(0.19, 0.40, 0.25), uniform)
 	_head = _part(_body, Vector3(0, 1.58, 0), Vector3(0.37, 0.40, 0.36), Color("36434c"))
 	_part(_head, Vector3(0, -0.03, -0.19), Vector3(0.32, 0.11, 0.035), Color("c4e4e3"))
@@ -220,6 +266,7 @@ func _build_gun() -> void:
 		_gun.remove_child(child)
 		child.queue_free()
 	_paint_parts.clear()
+	_magazine = null
 	_gun_color = Weapons.get_weapon(weapon_id)["color"]
 	var metal := Color("151c23")
 	var edge := Color("323e48")
@@ -263,6 +310,8 @@ func _build_gun() -> void:
 			_chamfer(Vector3(0.048, 0.016, -0.32 - i * 0.033), Vector3(0.004, 0.020, 0.018), metal)
 		var magazine := _chamfer(Vector3(0, -0.15, -0.245), Vector3(0.064, 0.23, 0.10), metal, true)
 		magazine.rotation.x = 0.10
+		_magazine = magazine
+		_magazine_rest = magazine.position
 		var grip := _chamfer(Vector3(0, -0.12, -0.034), Vector3(0.07, 0.15, 0.085), metal)
 		grip.rotation.x = -0.23
 		_chamfer(Vector3(0, -0.032, 0.085), Vector3(0.085, 0.11, 0.18), metal)
@@ -287,38 +336,12 @@ func _build_gun() -> void:
 	apply_cosmetic(_cosmetic)
 
 func apply_cosmetic(metadata: Dictionary) -> void:
-	# Appearance alone: no match state, prices, damage, ammo, or timing changes.
+	# Shared inspection/in-match material. Appearance never changes match state.
 	_cosmetic = metadata.duplicate(true)
-	if _finish == null:
-		_finish = ShaderMaterial.new()
-		var shader := Shader.new()
-		shader.code = """shader_type spatial;
-uniform vec4 base_paint : source_color = vec4(0.2,0.25,0.3,1.0);
-uniform vec4 accent_paint : source_color = vec4(0.35,0.42,0.40,1.0);
-uniform float pattern_seed = 1.0;
-uniform float wear = 0.0;
-uniform float patterned = 0.0;
-varying vec3 local_position;
-void vertex() { local_position = VERTEX; }
-void fragment() {
- float band = step(0.45, sin(local_position.z * 95.0 + local_position.x * 55.0 + pattern_seed));
- float grain = fract(sin(dot(floor(local_position * 580.0),vec3(12.98,78.23,31.18)) + pattern_seed) * 43758.54);
- vec3 paint = mix(base_paint.rgb, accent_paint.rgb, band * patterned * 0.55);
- ALBEDO = mix(paint, vec3(0.23,0.25,0.26), step(1.0-wear*0.24,grain));
- ROUGHNESS = 0.6 + wear * 0.2;
- METALLIC = 0.28;
-}"""
-		_finish.shader = shader
-	var rarity := str(metadata.get("rarity", "common")).to_lower()
-	var palette := {"common": Color("526774"), "uncommon": Color("3f7566"), "rare": Color("365988"), "epic": Color("755694"), "legendary": Color("9f7d46"), "mythic": Color("922c44")}
-	var paint: Color = palette.get(rarity, Color("526774"))
+	_finish = CosmeticMaterial.finish(metadata)
 	if metadata.is_empty():
-		paint = Color("35414a") if weapon_id == "sidearm" else _gun_color.darkened(0.48)
-	_finish.set_shader_parameter("base_paint", paint)
-	_finish.set_shader_parameter("accent_paint", paint.lightened(0.3))
-	_finish.set_shader_parameter("pattern_seed", float(int(metadata.get("pattern_seed", metadata.get("seed", 1))) % 10000))
-	_finish.set_shader_parameter("wear", clampf(float(metadata.get("wear", 0.05)), 0, 1))
-	_finish.set_shader_parameter("patterned", 0.0 if metadata.is_empty() else 1.0)
+		var paint := Color("35414a") if weapon_id == "sidearm" else _gun_color.darkened(0.48)
+		_finish.set_shader_parameter("base_paint", paint)
 	for part in _paint_parts:
 		part.material_override = _finish
 
@@ -351,6 +374,14 @@ func reset_for_round(spawn: Vector3) -> void:
 	reload_remaining = 0
 	_cooldown = 0
 	recoil = Vector2.ZERO
+	head_height = 1.62
+	camera.position.y = head_height
+	_body.scale.y = 1.0
+	_kick = 0.0
+	_flash = 0.0
+	_bob = 0.0
+	_sway = Vector2.ZERO
+	_visual_initialized = false
 	grenades = 1
 	smokes = 1
 	_fire_previous = false
@@ -498,7 +529,10 @@ func play_shot_effect() -> void:
 	_kick = 1
 	_flash = 0.055
 	if _shot_audio != null:
-		_shot_audio.pitch_scale = 1.2 if weapon_id == "smg" else (0.7 if weapon_id == "marksman" else 1.0)
+		if _shot_audio.stream != _shot_streams[weapon_id]:
+			_shot_audio.stream = _shot_streams[weapon_id]
+		# Separate cosmetic RNG: audio variation cannot alter authoritative spread.
+		_shot_audio.pitch_scale = 0.98 + fmod(float(Time.get_ticks_msec()), 41.0) * 0.001
 		_shot_audio.play()
 
 func _impact(at: Vector3, normal: Vector3, hit_actor: bool) -> void:
@@ -561,19 +595,39 @@ func can_see(other: SBActor) -> bool:
 	return hit.is_empty() or hit.get("collider") == other
 
 func tick_visual(delta: float) -> void:
-	if camera == null:
+	if camera == null or delta <= 0:
 		return
-	_bob += delta * Vector2(velocity.x, velocity.z).length() * 1.8
-	_kick = move_toward(_kick, 0, delta * 9)
+	var speed := Vector2(velocity.x, velocity.z).length()
+	_bob += delta * speed * 1.8
+	# Exponential return has the same response at 30, 60 and 120 Hz.
+	_kick *= exp(-delta * 20.0)
 	_flash = maxf(0, _flash - delta)
 	_muzzle.visible = _flash > 0 and alive
+	var gait := minf(speed / WALK_SPEED, 1.0) * (0.15 if _crouching else 0.35)
+	for i in range(_legs.size()):
+		_legs[i].rotation.x = sin(_bob + i * PI) * gait
 	if is_local:
-		var reload_tilt := sin(clampf(reload_remaining / maxf(0.1, float(Weapons.get_weapon(weapon_id)["reload"])), 0, 1) * PI)
-		_gun.position = Vector3(0.23 + sin(_bob) * 0.006, -0.22 + absf(cos(_bob)) * 0.006 - reload_tilt * 0.20, -0.36 + _kick * 0.045)
-		_gun.rotation = Vector3(_kick * 0.07 - reload_tilt * 0.5, 0, reload_tilt * 0.5)
+		var look := Vector2(yaw, pitch)
+		if not _visual_initialized:
+			_visual_look = look
+			_visual_initialized = true
+		var look_delta := Vector2(angle_difference(_visual_look.x, look.x), look.y - _visual_look.y)
+		_visual_look = look
+		_sway += look_delta.limit_length(0.15) * 0.20
+		_sway *= exp(-delta * 12.0)
+		_sway = _sway.limit_length(0.04)
+		var reload_progress := 1.0 - clampf(reload_remaining / maxf(0.1, float(Weapons.get_weapon(weapon_id)["reload"])), 0, 1)
+		var reload_tilt := sin(reload_progress * PI) if reload_remaining > 0 else 0.0
+		var bob_weight := minf(speed / WALK_SPEED, 1.0)
+		_gun.position = Vector3(0.23 + sin(_bob) * 0.006 * bob_weight - _sway.x, -0.22 + absf(cos(_bob)) * 0.006 * bob_weight - reload_tilt * 0.13 - _sway.y, -0.36 + _kick * 0.055)
+		_gun.rotation = Vector3(_kick * 0.09 - reload_tilt * 0.38, -_sway.x * 1.8, reload_tilt * 0.38 - _sway.x)
+		if is_instance_valid(_magazine):
+			# Pull down, seat the same magazine, then return to ready. Only visual.
+			var extraction := sin(clampf((reload_progress - 0.12) / 0.72, 0, 1) * PI) if reload_remaining > 0 else 0.0
+			_magazine.position = _magazine_rest + Vector3(-extraction * 0.04, -extraction * 0.24, 0)
 
 func snapshot() -> Dictionary:
-	return {"id": actor_id, "team": team, "name": display_name, "position": global_position, "velocity": velocity, "yaw": yaw, "pitch": pitch, "health": health, "alive": alive, "kills": kills, "deaths": deaths, "assists": assists, "credits": credits, "weapon": weapon_id, "ammo": ammo, "reserve": reserve, "reload": reload_remaining, "grenades": grenades, "smokes": smokes, "crouch": _crouching, "inventory": inventory.duplicate()}
+	return {"id": actor_id, "team": team, "name": display_name, "position": global_position, "velocity": velocity, "yaw": yaw, "pitch": pitch, "recoil": recoil, "health": health, "alive": alive, "kills": kills, "deaths": deaths, "assists": assists, "credits": credits, "weapon": weapon_id, "ammo": ammo, "reserve": reserve, "reload": reload_remaining, "grenades": grenades, "smokes": smokes, "crouch": _crouching, "inventory": inventory.duplicate()}
 
 func apply_snapshot(data: Dictionary, delta: float) -> void:
 	team = int(data.get("team", team))
@@ -584,6 +638,9 @@ func apply_snapshot(data: Dictionary, delta: float) -> void:
 	velocity = data.get("velocity", Vector3.ZERO)
 	yaw = float(data.get("yaw", yaw))
 	pitch = float(data.get("pitch", pitch))
+	var snapshot_recoil: Vector2 = data.get("recoil", Vector2.ZERO)
+	if is_finite(snapshot_recoil.x) and is_finite(snapshot_recoil.y):
+		recoil = snapshot_recoil.clamp(Vector2(-0.16, 0), Vector2(0.16, 0.16))
 	rotation.y = yaw
 	health = float(data.get("health", health))
 	alive = bool(data.get("alive", alive))
@@ -605,7 +662,8 @@ func apply_snapshot(data: Dictionary, delta: float) -> void:
 	_body.visible = alive and not is_local
 	_gun.visible = alive and is_local
 	camera.position.y = head_height
-	camera.rotation.x = pitch
+	camera.rotation.x = pitch + recoil.y
+	camera.rotation.y = recoil.x
 	var next_weapon: String = data.get("weapon", weapon_id)
 	if next_weapon != weapon_id and Weapons.DATA.has(next_weapon):
 		weapon_id = next_weapon

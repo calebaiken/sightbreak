@@ -135,6 +135,46 @@ func _run() -> void:
 	player.apply_cosmetic({"rarity": "mythic", "pattern_seed": 985, "wear": 0.75})
 	check(player.snapshot() == stats_before, "cosmetic application never changes competitive state")
 	check(player._finish.get_shader_parameter("pattern_seed") == 985.0, "cosmetic seed controls only paint material")
+	# Recoil affects both authoritative shot rays and replicated camera presentation.
+	player.recoil = Vector2(0.02, 0.08)
+	var aiming: Dictionary = player.snapshot()
+	check(aiming["recoil"] == player.recoil, "snapshot includes authoritative recoil")
+	enemy.apply_snapshot(aiming, 0.016)
+	check(is_equal_approx(enemy.camera.rotation.x, enemy.pitch + player.recoil.y) and is_equal_approx(enemy.camera.rotation.y, player.recoil.x), "replica camera follows authoritative recoil")
+	player.input_state = {"crouch": true}
+	player.tick_authority(0.01)
+	player.play_shot_effect()
+	player.reset_for_round(Vector3(0, 0.05, 20))
+	check(is_equal_approx(player.head_height, 1.62) and is_equal_approx(player.camera.position.y, 1.62) and is_equal_approx(player._body.scale.y, 1.0), "round reset immediately restores crouched head and body")
+	check(player._kick == 0 and player._flash == 0 and player.recoil == Vector2.ZERO, "round reset clears previous shot presentation")
+	# Cosmetic animation must not alter ammunition, look, hitboxes or recoil.
+	var visual_state: Dictionary = player.snapshot()
+	player.play_shot_effect()
+	player.tick_visual(1.0 / 30.0)
+	var kick_30: float = player._kick
+	player.play_shot_effect()
+	for i in range(4):
+		player.tick_visual(1.0 / 120.0)
+	check(is_equal_approx(player._kick, kick_30), "kick return is frame-rate independent at 30 and 120 Hz")
+	check(player.snapshot() == visual_state, "viewmodel animation cannot mutate competitive state")
+	player.reload_remaining = float(Weapons.get_weapon(player.weapon_id)["reload"]) * 0.5
+	player.tick_visual(0.016)
+	check(player._magazine.position.y < player._magazine_rest.y - 0.1, "reload extracts magazine visually")
+	player.reload_remaining = 0
+	player.tick_visual(0.016)
+	check(player._magazine.position == player._magazine_rest, "reload completion seats magazine")
+	player.yaw = PI - 0.001
+	player._visual_initialized = false
+	player.tick_visual(0.016)
+	player.yaw = -PI + 0.001
+	player.tick_visual(0.016)
+	check(player._sway.length() < 0.002, "look sway wraps yaw without full-turn jerk")
+	check(Actor._shot_streams.size() == 4, "all four weapons use original distinct sounds")
+	var previous := PackedByteArray()
+	for id in Weapons.DATA:
+		var sound: AudioStreamWAV = Actor._shot_streams[id]
+		check(sound.format == AudioStreamWAV.FORMAT_16_BITS and sound.data.size() > 5000 and sound.data != previous, "%s has distinct nonempty 16-bit audio" % id)
+		previous = sound.data
 	await create_timer(0.6).timeout
 	world.queue_free()
 	await process_frame
