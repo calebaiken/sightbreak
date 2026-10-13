@@ -37,7 +37,7 @@ func reject(peer: int, now: int) -> void:
 		peers[peer].deadline = now + REJECT_MSEC
 
 func allow_input(peer: int, now: int) -> bool:
-	if not peers.has(peer) or not peers[peer].joined or peers[peer].rejected:
+	if not peers.has(peer) or not peers[peer].joined or peers[peer].rejected or now - int(peers[peer].last_input) >= IDLE_MSEC:
 		return false
 	var entry: Dictionary = peers[peer]
 	if now - int(entry.rate_start) >= 1000:
@@ -47,7 +47,7 @@ func allow_input(peer: int, now: int) -> bool:
 	return int(entry.rate_count) <= 90
 
 func active(peer: int, now: int) -> void:
-	if peers.has(peer) and peers[peer].joined and not peers[peer].rejected:
+	if peers.has(peer) and peers[peer].joined and not peers[peer].rejected and now - int(peers[peer].last_input) < IDLE_MSEC:
 		peers[peer].last_input = now
 
 func expired(now: int) -> Array[int]:
