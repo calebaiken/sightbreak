@@ -1,5 +1,65 @@
 # Independent QA report
 
+## Follow-up review — 2026-10-13 UTC
+
+**Current decision: improved, verified development build; full release acceptance is still withheld.** The independent reviewer reran the original baseline before changes, reviewed the new source, reproduced the renderer failure/control, executed maintained regressions and exercised actual native HTTP/PostgreSQL transactions. Unedited command output is preserved in [follow-up evidence](followup-evidence/README.md). The historical review below is retained as the record of earlier defects; its open QA-012 status is superseded by this follow-up.
+
+### Stabilization evidence
+
+The renderer failure is now isolated beyond the project: `docs/diagnostics/godot_sky_retirement.gd` constructs procedural Godot worlds without SIGHTBREAK assets. On Godot 4.7.2 GLES3 / Xvfb / Mesa llvmpipe, retiring the first new sky before any rendered frame independently reproduced **two 349,524-byte texture leaks**. Adding `-- --wait-before-free` produced a clean control. Official renderer source inspection identifies sky dirty-list/free ordering consistent with the leaked radiance/raw-radiance pair; no other GPU driver was tested.
+
+The project mitigation preloads one immutable shared sky. The reviewer independently ran `DISPLAY=:99 LIBGL_ALWAYS_SOFTWARE=1 ./scripts/test_render.sh`: the real demo captured and exited cleanly; five menu/match cycles passed **11/11 assertions**, old scene weak references cleared and tracked texture allocation samples were **[56335286, 56335286, 56335286, 56335286, 56335286] bytes**. Logs: `.local/validation/native-0DVYK3/`. **QA-012 is closed for this measured project reproduction.** The upstream engine defect is not patched; a short texture plateau does not establish an indefinite memory soak or mobile GPU behavior.
+
+### Independently reproduced follow-up checks
+
+| Check | Observed result | Scope and limits |
+| --- | --- | --- |
+| Original baseline `./scripts/validate.sh --backend` | PASS, `.local/validation/run-32y9wL/` | Original 129 counted Godot assertions, economy widget suite, short bot round, two ENet clients, PostgreSQL 27 tests, synthetic economy conservation. |
+| Final `./scripts/validate.sh --backend` | PASS, `.local/validation/run-sbvU2f/` | Actor 51, match 75, profile 10, touch 27, main 26, landscape 66, economy recovery/material 12 = **267 counted native assertions**, plus economy widget suite, two bot harnesses, actual two-client ENet test and build-manifest **8 tests**. Earlier intermediate aggregate `run-87kywe` also passed. |
+| Real complete bot match in updated aggregate | PASS: **8 rounds, 1–7, 59 kills, halftime observed, plant observed, exactly one final report, 284.3 simulated seconds** | Ten bots use real physics and decisions, normal round timers, 4× time scale. No forced winner or objective state. An earlier independent aggregate also finished naturally in 12 rounds, 5–7, 81 kills and 371.0 simulated seconds. This is offline simulation, not ten human players, measured human play time or an earning match. |
+| Updated PostgreSQL suite | **39 passed**, 5.37 seconds, one dependency deprecation warning | Disposable dynamically named `_test` database. New cases cover every lower/upper CSPRNG rarity boundary and published percentages, exact repeat receipt, one resulting inventory item. Existing ownership, reservations, duplicate spend, ledger, marketplace, trading, sessions and reward authority regressions retained. |
+| Live native economy widget test | PASS | Actual HTTP registration/catalog/zero wallet, denied purchase from fictional local funds and loadout/signout. Test rendering fixtures are explicitly fictional. |
+| Independent populated native HTTP/PostgreSQL roundtrip | **14/14 passed** | Isolated `sightbreak_native_release_test` / loopback 8087, fictional trusted seed balances: case consumes case+key and mints one item; market purchase debits 400, credits seller 388, burns fee 12; revised two-sided trade exchanges unique owners; loadout persists and clears on transfer. Temporary service, database and credentials were removed after the run. |
+| Transaction response-loss recovery | **12/12 assertions passed** | Native UI test double models lost response after commit: retains immutable original receipt, blocks another mutation, refuses cross-account retry, replays identical endpoint/method/body, refreshes ownership and clears pending state. This is synthetic transport behavior; pending receipts remain memory-only. Includes deterministic collection/pattern/wear and standard finish checks. |
+| Account-network and HTTP bridge transport, repeated after changes | PASS | Real guest rejection, authenticated identity binding, waiting roster, ticket replay rejection and fresh-ticket reclaim. Fault server sees exactly three identical 503-retry requests, and one 302 request with no redirect forwarding. |
+| Actual reward settlement baseline during this follow-up | PASS | Dedicated isolated fixture: native Godot → HTTP → PostgreSQL ten exact wallets, ten ledger grants, ten match records; replay adds nothing. Synthetic duration/activity fixture, not an observed ten-human earning journey. |
+| Mobile input/source review | PASS within synthetic scope | Safe full-button bounds, finite saved layout, radial deadzone, movable/restorable joystick, nearest overlapping button, shared held-action fingers, OS touch cancellation, focus/hide/disable reset; physical vs emulated mouse prevents joystick touches firing or double aiming. Inspector also ignores emulated mouse; direct drag applies once. No physical touchscreen was available. |
+| Landscape form review | **66/66 final assertions passed**, independently repeated | Logical 1280×720, 1600×720 and 960×720: menu/connect/settings/progress, combat HUD, buy panel, scoreboard, editor; forms scroll within safe bounds and touch HUD uses actual touch prompts. The reviewer found SWAP overlapping the ammo baseline in the earlier 960×720 capture; the corrected default clears it, and 12 added assertions cover that and other HUD text overlaps. Bounds assertions do not prove device readability or touch comfort. |
+| Credit creation review | Verified current source boundary | New accounts start at zero. Positive currency creation is server-authenticated eligible match settlement; marketplace proceeds transfer existing value minus fee. Local training cannot import into account wallets. Daily/weekly challenges are still absent, so no challenge-earning claim is made. Payment/IAP/redemption integrations remain absent. |
+
+### Independent artifact verification
+
+`python3 scripts/verify_builds.py` passed independently against the final exports. Linux menu startup and 120-frame offline demo passed; Linux/iOS packs contain 48 resources and no test harnesses. APK v2/v3 signatures, version `0.2.0-dev (2)`, minimum API 24, target API 36, ARM64/x86_64 libraries, landscape orientation and the real exported launcher alias passed inspection. The iOS Xcode project, derived bundle identifier, landscape plist and empty signing team passed static verification; **Xcode compilation/signing and device installation remain untested**.
+
+Every exported payload passed source and full-file integrity checks. The reviewer separately recalculated all five deliverable SHA-256/byte counts and ran `sha256sum --check checksums.txt`: all passed. Verified game tree: `79e725c31ae9c5ae401c0ea55deb50b6007366da`; content digest: `1eb2e937a11b672b89b41127bdad07c2f1c42a6fea48d079169e60bec43d0e58`. Exact artifact hashes and filenames are recorded in [build documentation](../builds.md) and [build manifest](build-manifest.json). These checks establish installable-format Android packaging and an unsigned iOS project; they do not establish physical play or performance.
+
+### Final native visual review
+
+The reviewer inspected actual running-native captures from the final landscape harness at 960×720 and 1600×720 and the fixed-view arena comparison. Earlier screenshots exposed bottom action controls overlapping match prompts/ammunition and the pause circle overlapping device status; corrected defaults and a status inset visibly clear these. Settings sliders are vertically aligned with their labels, and longer screens have vertical scrolling. The normal software-rendered demo also remains legible.
+
+`media/environment/site-before.png` and `site-after.png` show a modest visible improvement from original asphalt/concrete/painted-metal textures without changing silhouettes or sight lines. Fixed-view draw/primitive counts are unchanged; the added texture sampling still has an unmeasured mobile GPU cost. The reviewer independently reran the resulting actor/arena suite: **51/51 passed**. Actual economy reveal and inspector captures show clear rarity/status text and collection paint, with neutral sealed cards and the committed result. All screenshots are native Linux software rendering; economy screens use labeled fictional fixture data. Simple character models, block-shaped geometry and limited art/animation breadth keep the visual release score below 8.5.
+
+### Scoped scores and remaining acceptance gates
+
+Scores below are reviewer judgments against the **explicit local scope**, not invented physical-device measurements or a mathematical conversion of passing assertions. An 8.5 local score does not waive broader release gates.
+
+| Applicable review category | Score / decision | Supporting evidence and remaining gap |
+| --- | --- | --- |
+| Gameplay rules and combat state correctness | **8.8/10, local regression scope** | Actor/rule assertions plus natural complete match, halftime/results, designated defuser, perception reset and no snap/hidden-target firing. Human gunplay enjoyment, balance and long-session navigation are unverified. |
+| Renderer scene/resource lifecycle | **9.0/10, measured configuration** | Independent minimal failing/control reproduction, normal native demo, five scene cycles, weak references and exact tracked-texture plateau. Real GPUs, device lifecycle and long memory soak remain unverified. |
+| Touch input and landscape layout implementation | **8.8/10, synthetic scope** | Independent 27 touch, 26 main and final 66 layout checks; input cancellation, emulated mouse separation and scrolling fix concrete mobile defects. Physical controls/safe areas/gyro/interruptions remain **UNVERIFIED**. |
+| Economy transaction correctness | **9.0/10, local service scope** | PostgreSQL 39, actual native 14-step ownership/ledger roundtrip, exact probability boundaries, trusted settlement/replay tests and retained receipt recovery. Durable client outbox, challenges, ten-human earning observation and production deployment remain incomplete. |
+| Multiplayer integrity | **8.5/10, tested LAN/account boundary scope** | Two real clients, reconnect, authoritative identity/ticket replay and bounded privileged HTTP retry checks. Optional ENet relay disabled because clients talk only to the authority. WAN conditions, ten humans, encrypted public transport, sustained abuse and full prediction remain **NOT ACCEPTED**. |
+| Visual presentation and cosmetic experience | **7.5/10, below the release threshold** | Native captures show readable hierarchy, coherent original industrial art, collection paint and clear committed reveals; procedural character/environment detail and human animation/art-direction review remain incomplete. Final native capture observations are recorded above. |
+| Overall stability, physical mobile usability, performance, subjective game feel | **UNVERIFIED for release** | Automated local stability is useful evidence; no phone/tablet install, thermal/FPS session, human full-match review, iPhone test or broad production audit occurred. |
+| Production security and operations | **NOT ACCEPTED** | Local authority/replay controls are tested. Public encrypted game transport, restricted deployment roles, rate/load/security review and operational hardening remain outstanding. |
+
+**No full product phase is certified at ≥8.5 in every applicable category.** The next review must use the exact artifact hashes and the device plan, complete physical installation/play and sustained measurements, review human control feel and bot balance, and recheck the complete earning journey. Unverified categories are not silently treated as passing.
+
+---
+
+## Historical initial review (superseded where stated above)
+
 Review date: 2026-10-12 (America/New_York). Scope: native Godot client, headless dedicated simulation, FastAPI/PostgreSQL economy and the original specification. The QA reviewer did not author gameplay or economy implementation and ran the checks below independently against the shared development checkout. Review included independent correction retests and a final full validation run. Evidence is scoped to the commands and observations recorded below; later changes require affected regression checks.
 
 ## Acceptance decision
