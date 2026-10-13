@@ -6,6 +6,14 @@ signal notification(text: String)
 signal exit_requested
 ## Structured elimination for the HUD feed; mirrored to clients by the server.
 signal elimination_reported(killer_id: int, victim_id: int, headshot: bool)
+## Network protocol, checked in SceneMultiplayer's authentication stage before any
+## gameplay RPC. Godot routes RPCs by method index, so builds whose RPC methods,
+## arguments or snapshot meaning differ must never be admitted together; they would
+## stall silently. Bump this with any such change. 0.3.0 had no handshake.
+const PROTOCOL_VERSION := 2
+const HANDSHAKE_SECONDS := 5.0
+const JOIN_TIMEOUT_SECONDS := 20.0
+const HELLO_LIMIT := 512
 
 const BUY_SECONDS := 15.0
 const ROUND_SECONDS := 100.0
@@ -49,6 +57,11 @@ var _finished_emitted: bool = false
 var _elapsed: float = 0.0
 var _reconnect_clock: float = 0.0
 var _reconnect_attempts: int = 0
+## Seconds spent in the current pre-game client state (connecting, authenticating,
+## joining); bounded by JOIN_TIMEOUT_SECONDS.
+var _state_clock: float = 0.0
+## Server: peers that failed the version check, dropped once their reply is sent.
+var _handshake_drops: Dictionary = {}
 var reward_status: String = "unranked"
 var _bridge: SBEconomyBridge
 var _account_ids: Dictionary = {}
@@ -105,11 +118,15 @@ func _ready() -> void:
 		multiplayer.connected_to_server.connect(_connected)
 		multiplayer.connection_failed.connect(_connection_failed)
 		multiplayer.server_disconnected.connect(_server_disconnected)
+		var api := multiplayer as SceneMultiplayer
+		api.peer_authenticating.connect(_send_hello)
+		api.peer_authentication_failed.connect(_handshake_failed)
 		_connect_client()
 
 func _exit_tree() -> void:
 	if str(options.get("mode", "offline")) != "offline":
 		multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
+		(multiplayer as SceneMultiplayer).auth_callback = Callable()
 
 func _spawn_actor(id: int, team: int, player_name: String) -> SBActor:
 	var actor := SBActor.new()
@@ -176,6 +193,8 @@ func _physics_process(delta: float) -> void:
 	_update_device_visual(delta)
 
 func _authority_tick(delta: float) -> void:
+	if not _handshake_drops.is_empty():
+		_drop_rejected_peers()
 	_bot_clock -= delta
 	if _bot_clock <= 0:
 		_bot_clock = 0.12
@@ -583,6 +602,11 @@ func _host() -> void:
 	# implicit peer relay also avoids peer-list traffic to simultaneously closing
 	# ENet channels during reconnect; gameplay never needs client-to-client RPCs.
 	multiplayer.server_relay = false
+	# Version handshake before any gameplay RPC (see PROTOCOL_VERSION).
+	var api := multiplayer as SceneMultiplayer
+	api.auth_timeout = HANDSHAKE_SECONDS
+	api.auth_callback = _server_handshake
+	api.peer_authentication_failed.connect(_handshake_failed)
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_disconnected.connect(_peer_disconnected)
 	connection_state = "hosting"
@@ -590,6 +614,10 @@ func _host() -> void:
 
 func _connect_client() -> void:
 	connection_state = "connecting"
+	_state_clock = 0.0
+	var api := multiplayer as SceneMultiplayer
+	api.auth_timeout = HANDSHAKE_SECONDS
+	api.auth_callback = _client_handshake
 	var peer := ENetMultiplayerPeer.new()
 	var error: Error = peer.create_client(str(options.get("address", "127.0.0.1")), int(options.get("port", 27020)))
 	if error != OK:
@@ -600,11 +628,88 @@ func _connect_client() -> void:
 
 func _connected() -> void:
 	connection_state = "joining"
+	_state_clock = 0.0
 	_join_rpc.rpc_id(1, str(options.get("name", "Operator")).left(24), reconnect_token, str(options.get("join_ticket", "")))
 
 func _connection_failed() -> void:
+	# Keep a more specific reason (version mismatch, join timeout) already shown.
+	if connection_state == "failed":
+		return
 	connection_state = "failed"
 	notification.emit("Connection failed. Check the address and UDP port.")
+
+## The hello both sides exchange during SceneMultiplayer authentication.
+func _hello(accepted: bool, reason: String) -> PackedByteArray:
+	return JSON.stringify({"game": "sightbreak", "protocol": PROTOCOL_VERSION, "build": str(ProjectSettings.get_setting("application/config/version", "")), "accepted": accepted, "reason": reason}).to_utf8_buffer()
+
+## Untrusted peer data: bounded size, a JSON object or nothing.
+static func _read_hello(data: PackedByteArray) -> Dictionary:
+	if data.size() > HELLO_LIMIT:
+		return {}
+	var parsed: Variant = JSON.parse_string(data.get_string_from_utf8())
+	return parsed if parsed is Dictionary and str(parsed.get("game", "")) == "sightbreak" else {}
+
+func _server_handshake(peer_id: int, data: PackedByteArray) -> void:
+	var api := multiplayer as SceneMultiplayer
+	var hello := _read_hello(data)
+	var protocol := int(hello.get("protocol", -1)) if hello.get("protocol") is float or hello.get("protocol") is int else -1
+	if protocol == PROTOCOL_VERSION:
+		api.send_auth(peer_id, _hello(true, ""))
+		api.complete_auth(peer_id)
+		return
+	# Never admitted: no join, slot or account ticket is touched for this peer.
+	var reason := "This server uses network protocol %d; this client sent %s." % [PROTOCOL_VERSION, "protocol %d" % protocol if protocol >= 0 else "no readable protocol"]
+	api.send_auth(peer_id, _hello(false, reason))
+	_handshake_drops[peer_id] = _elapsed + 0.5
+	print("PROTOCOL_REJECTED peer=%d client_protocol=%d" % [peer_id, protocol])
+
+func _client_handshake(peer_id: int, data: PackedByteArray) -> void:
+	var hello := _read_hello(data)
+	var protocol := int(hello.get("protocol", -1)) if hello.get("protocol") is float or hello.get("protocol") is int else -1
+	if bool(hello.get("accepted", false)) and protocol == PROTOCOL_VERSION:
+		(multiplayer as SceneMultiplayer).complete_auth(peer_id)
+		connection_state = "joining"
+		_state_clock = 0.0
+		return
+	var detail := str(hello.get("reason", "")).left(200) if not hello.is_empty() else "The server's version handshake could not be read."
+	_fail_connection("Version mismatch: this client uses SIGHTBREAK network protocol %d. %s Install the same SIGHTBREAK version as the server to join." % [PROTOCOL_VERSION, detail])
+	print("PROTOCOL_CLIENT_REJECTED server_protocol=%d" % protocol)
+
+func _send_hello(peer_id: int) -> void:
+	if _authority or peer_id != 1:
+		return
+	connection_state = "authenticating"
+	(multiplayer as SceneMultiplayer).send_auth(peer_id, _hello(true, ""))
+
+func _handshake_failed(peer_id: int) -> void:
+	if _authority:
+		# A peer without the handshake (0.3.0 and earlier clients) or a silent one.
+		_handshake_drops.erase(peer_id)
+		print("PROTOCOL_TIMEOUT peer=%d" % peer_id)
+		return
+	if connection_state != "failed":
+		_fail_connection("No version handshake from the server within %d seconds. It is probably running an older SIGHTBREAK release (0.3.0 has no handshake) or is not a SIGHTBREAK server. Join a server running the same version as this client." % int(HANDSHAKE_SECONDS))
+
+## Disconnects peers that failed the version check once their reply had time to go out.
+func _drop_rejected_peers() -> void:
+	var api := multiplayer as SceneMultiplayer
+	for peer_id: int in _handshake_drops.keys():
+		if _elapsed < float(_handshake_drops[peer_id]):
+			continue
+		_handshake_drops.erase(peer_id)
+		if api.get_authenticating_peers().has(peer_id):
+			api.disconnect_peer(peer_id)
+
+## Terminal client failure: shows the reason and never retries on its own.
+func _fail_connection(message: String) -> void:
+	connection_state = "failed"
+	notification.emit(message)
+	print("PROTOCOL_CLIENT_FAILED " + message)
+	_close_client.call_deferred()
+
+func _close_client() -> void:
+	if multiplayer.multiplayer_peer != null and not (multiplayer.multiplayer_peer is OfflineMultiplayerPeer):
+		multiplayer.multiplayer_peer.close()
 
 func _server_disconnected() -> void:
 	if connection_state == "failed":
@@ -627,6 +732,10 @@ func _client_tick(delta: float) -> void:
 		_reconnect_clock -= delta
 		if _reconnect_clock <= 0:
 			_connect_client()
+	if connection_state in ["connecting", "authenticating", "joining"]:
+		_state_clock += delta
+		if _state_clock > JOIN_TIMEOUT_SECONDS:
+			_fail_connection("The server did not admit this player within %d seconds (%s). Check the address and try again." % [int(JOIN_TIMEOUT_SECONDS), connection_state])
 	_input_clock -= delta
 	if connection_state == "connected" and _input_clock <= 0:
 		_input_clock = 1.0 / 30.0
