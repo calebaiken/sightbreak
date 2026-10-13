@@ -102,11 +102,14 @@ func run() -> void:
 	await settle()
 	var probe: Label = main.label("x", 14)
 	main.ui.add_child(probe)
-	var combining := "e\u0301e\u0301e\u0301e\u0301e\u0301e\u0301e\u0301e\u0301"
-	for width in range(20, 90, 3):
-		var fitted: String = main._fit_text(probe, combining, float(width))
-		var kept := fitted.trim_suffix("…")
-		check(kept.length() % 2 == 0, "fitting to %d px keeps every accent with its letter ('%s')" % [width, fitted])
+	var server := TextServerManager.get_primary_interface()
+	for sample in ["e\u0301e\u0301e\u0301e\u0301e\u0301e\u0301e\u0301e\u0301", "ผู้เล่นที่ดีที่สุดในสนาม", "क्षत्रिय योद्धा दल", "🇺🇸🇬🇧🇯🇵🇫🇷🇩🇪🇧🇷", "1️⃣2️⃣3️⃣4️⃣5️⃣"]:
+		var boundaries: Array = Array(server.string_get_character_breaks(sample))
+		boundaries.append(0)
+		for width in range(20, 120, 4):
+			var fitted: String = main._fit_text(probe, sample, float(width))
+			var kept := fitted.trim_suffix("…").length() if fitted.ends_with("…") else fitted.length()
+			check(boundaries.has(kept) or kept == sample.length(), "fitting '%s' to %d px cuts on a grapheme boundary (kept %d)" % [sample, width, kept])
 	probe.queue_free()
 	main.leave_match()
 	await settle()

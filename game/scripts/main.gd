@@ -825,20 +825,18 @@ func _kill_feed_name(actor: SBActor) -> Label:
 ## Longest prefix of text that fits width with an explicit trailing ellipsis,
 ## measured in the label's own font. Godot's built-in overrun can drop the
 ## ellipsis when the cut text exactly fills the width, so it is not relied on.
+## Cuts fall only on grapheme-cluster boundaries from the text server (ICU), so a
+## letter never loses its marks and no conjunct, flag or keycap is split.
 func _fit_text(node: Label, text: String, width: float) -> String:
 	if _text_width(node, text) <= width:
 		return text
 	var room := width - _text_width(node, "…")
-	var cut := text.length() - 1
-	while cut > 0:
-		# Never separate a base character from the marks that modify it.
-		if not _continues_cluster(text.unicode_at(cut)) and _text_width(node, text.left(cut)) <= room:
+	var cut := 0
+	for boundary: int in TextServerManager.get_primary_interface().string_get_character_breaks(text):
+		if boundary >= text.length() or _text_width(node, text.left(boundary)) > room:
 			break
-		cut -= 1
+		cut = boundary
 	return text.left(cut).strip_edges(false, true) + "…"
-
-static func _continues_cluster(code: int) -> bool:
-	return (code >= 0x0300 and code <= 0x036F) or (code >= 0x1AB0 and code <= 0x1AFF) or (code >= 0x1DC0 and code <= 0x1DFF) or (code >= 0x20D0 and code <= 0x20FF) or (code >= 0xFE00 and code <= 0xFE0F) or (code >= 0xFE20 and code <= 0xFE2F) or (code >= 0x1F3FB and code <= 0x1F3FF) or (code >= 0xE0100 and code <= 0xE01EF)
 
 func _kill_feed_style(involved: bool) -> StyleBoxFlat:
 	return Design.box(Color(Design.OBSIDIAN, 0.62), GOLD if involved else Color.TRANSPARENT, 1, Vector2(8, 3))
