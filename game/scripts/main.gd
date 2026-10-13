@@ -352,6 +352,7 @@ func setting_slider(parent: VBoxContainer, title: String, key: String, low: floa
 	slider.step = step
 	slider.value = float(profile.data.settings[key])
 	slider.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	slider.size_flags_vertical = Control.SIZE_SHRINK_CENTER
 	row.add_child(slider)
 	var value := label(str(slider.value), 16, GOLD)
 	value.custom_minimum_size.x = 90
@@ -515,7 +516,10 @@ func build_hud() -> void:
 	top.add_child(side)
 	action_label = wrapped_label("", 16, GOLD)
 	action_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	side.add_child(action_label)
+	var action_margin := MarginContainer.new()
+	action_margin.add_theme_constant_override("margin_right", 80 if uses_touch_controls() else 0)
+	side.add_child(action_margin)
+	action_margin.add_child(action_label)
 	var space := Control.new()
 	space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	space.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -537,6 +541,7 @@ func build_hud() -> void:
 	bottom.add_child(health_label)
 	var controls := wrapped_label("BUY  EQUIP     USE  OBJECTIVE     TEAM  ROSTER     II  MENU" if uses_touch_controls() else "B  BUY     E  OBJECTIVE     TAB  TEAM     ESC  MENU", 13, MUTED)
 	controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	controls.visible = not uses_touch_controls()
 	controls.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 	bottom.add_child(controls)
 	ammo_label = wrapped_label("12 / 36", 22)

@@ -26,10 +26,10 @@ const MOVE_DEADZONE := 0.12
 var movement := Vector2.ZERO
 var look_delta := Vector2.ZERO
 var actions: Dictionary = {}
-const DEFAULT_POSITIONS := {"fire": Vector2(0.89, 0.53), "jump": Vector2(0.91, 0.75),
+const DEFAULT_POSITIONS := {"fire": Vector2(0.89, 0.53), "jump": Vector2(0.91, 0.73),
 	"crouch": Vector2(0.79, 0.83), "reload": Vector2(0.76, 0.62),
-	"interact": Vector2(0.65, 0.72), "grenade": Vector2(0.61, 0.9),
-	"smoke": Vector2(0.69, 0.9), "buy": Vector2(0.19, 0.14), "pause": Vector2(0.96, 0.07), "switch": Vector2(0.91, 0.9), "score": Vector2(0.08, 0.14), "move": Vector2(0.13, 0.74)}
+	"interact": Vector2(0.65, 0.72), "grenade": Vector2(0.60, 0.81),
+	"smoke": Vector2(0.69, 0.81), "buy": Vector2(0.19, 0.14), "pause": Vector2(0.96, 0.07), "switch": Vector2(0.91, 0.84), "score": Vector2(0.08, 0.14), "move": Vector2(0.13, 0.74)}
 var positions: Dictionary = DEFAULT_POSITIONS.duplicate()
 const LABELS := {"fire": "FIRE", "jump": "JUMP", "crouch": "LOW", "reload": "LOAD",
 	"interact": "USE", "grenade": "FRAG", "smoke": "SMOKE", "buy": "BUY", "pause": "II", "switch": "SWAP", "score": "TEAM"}

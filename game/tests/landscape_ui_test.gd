@@ -31,6 +31,7 @@ func run() -> void:
 	var main = load("res://main.tscn").instantiate()
 	root.add_child(main)
 	main.profile.data.settings.touch_visible = true
+	main.profile.data.settings.hud_positions = {}
 	await settle()
 	for dimensions in [Vector2i(1280, 720), Vector2i(1600, 720), Vector2i(960, 720)]:
 		root.content_scale_size = dimensions
@@ -51,6 +52,14 @@ func run() -> void:
 		await settle()
 		check_horizontal(main.ui, str(dimensions) + " combat HUD")
 		await capture(main, "%dx%d-touch-hud" % [dimensions.x, dimensions.y])
+		for action in ["grenade", "smoke"]:
+			var point: Vector2 = main.touch.control_point(action)
+			var radius: float = main.touch.radius(action)
+			check(not Rect2(point - Vector2.ONE * radius, Vector2.ONE * radius * 2).intersects(main.status_label.get_global_rect()), action + " default button clears match instructions")
+		var swap_point: Vector2 = main.touch.control_point("switch")
+		check(swap_point.y + main.touch.radius("switch") < main.ammo_label.get_global_rect().position.y, "Swap button clears weapon/ammunition text")
+		var pause_point: Vector2 = main.touch.control_point("pause")
+		check(pause_point.x - main.touch.radius("pause") > main.action_label.get_global_rect().end.x, "Pause button clears device state text")
 		check("TAP BUY" in main.status_label.text, "Mobile buy prompt names actual touch control")
 		main.match_game.phase = "live"
 		main.status_label.set_meta("until", 0.0)
