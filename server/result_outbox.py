@@ -108,7 +108,8 @@ class Outbox:
                 continue # Producer atomically renamed a temporary file.
             if path.suffix == '.invalid':
                 if age > MAX_PENDING_AGE:
-                    path.unlink()
+                    try: path.unlink()
+                    except FileNotFoundError: continue
                     sync_directory(path.parent)
                 continue
             if path.suffix == '.tmp' and age < 10:
@@ -131,10 +132,13 @@ class Outbox:
             except (ValueError, TypeError, KeyError, RecursionError):
                 # Malformed/partial writes never mint rewards. Retain for diagnosis,
                 # then expire after one day; pending valid results are never pruned here.
-                if age > MAX_PENDING_AGE:
-                    path.unlink()
-                else:
-                    path.rename(path.with_suffix(path.suffix + '.invalid'))
+                try:
+                    if age > MAX_PENDING_AGE:
+                        path.unlink()
+                    else:
+                        path.rename(path.with_suffix(path.suffix + '.invalid'))
+                except FileNotFoundError:
+                    continue # Producer completed a previously partial write.
                 sync_directory(path.parent)
                 logging.getLogger('outbox').warning('OUTBOX_INVALID_SPOOL record=%s', path.name)
         return imported
