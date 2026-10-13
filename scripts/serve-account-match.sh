@@ -16,6 +16,7 @@ export SIGHTBREAK_RESULT_SPOOL="${SIGHTBREAK_RESULT_SPOOL:-$repo_dir/.local/serv
 result_db="${SIGHTBREAK_RESULT_DB:-$repo_dir/.local/server-results/results.sqlite}"
 worker_log="${SIGHTBREAK_RESULT_LOG:-$repo_dir/.local/server-results/startup.log}"
 mkdir -p "$(dirname "$worker_log")" "$SIGHTBREAK_RESULT_SPOOL"
+: >"$worker_log" # Clear a prior READY marker synchronously before background startup.
 python3 "$repo_dir/server/result_outbox.py" --database "$result_db" --spool "$SIGHTBREAK_RESULT_SPOOL" \
   "--backend=${SIGHTBREAK_ECONOMY_URL:-http://127.0.0.1:8080}" --log "$(dirname "$worker_log")/delivery.log" >"$worker_log" 2>&1 &
 sightbreak_worker_pid=$!

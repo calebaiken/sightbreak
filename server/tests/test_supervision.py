@@ -23,6 +23,9 @@ class SupervisionTests(unittest.TestCase):
             env = os.environ.copy()
             env.update(SIGHTBREAK_SERVER_KEY='fictional-test-key-' + 'x' * 32, SIGHTBREAK_ECONOMY_URL='http://127.0.0.1:8185', GAME_PID_FILE=str(root / 'game.pid'))
             for key in ('SIGHTBREAK_RESULT_SPOOL', 'SIGHTBREAK_RESULT_DB', 'SIGHTBREAK_RESULT_LOG'): env.pop(key, None)
+            startup = root / '.local/server-results/startup.log'
+            startup.parent.mkdir(parents=True)
+            startup.write_text('OUTBOX_READY\n') # Restart must not trust old readiness.
             with (root / 'launcher.log').open('w') as log:
                 process = subprocess.Popen(['bash', str(root / 'scripts/serve-account-match.sh')], env=env, stdout=log, stderr=subprocess.STDOUT)
                 try:
