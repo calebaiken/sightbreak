@@ -49,6 +49,12 @@ func _run() -> void:
 	actor.reload_remaining = 0
 	actor.tick_visual(0.016)
 	await shot("05-rifle-reseated")
+	var effects := SBCombatEffects.for_world(world)
+	effects.impact(actor.global_position + Vector3(0.25, 1.1, 2), Vector3(0, 0, -1), false)
+	effects.set_process(false)
+	effects._process(0.05)
+	await shot("05b-bullet-impact")
+	effects.set_process(true)
 	actor.camera.current = false
 	var camera := Camera3D.new()
 	world.add_child(camera)

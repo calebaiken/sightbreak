@@ -18,15 +18,15 @@ static func smoke_shader() -> Shader:
 	if _smoke_shader == null:
 		_smoke_shader = Shader.new()
 		_smoke_shader.code = """shader_type spatial;
-render_mode diffuse_burley;
+render_mode unshaded;
 uniform vec4 smoke_tint : source_color;
 varying float billow;
 void vertex() {
  billow = sin(VERTEX.x*3.8 + VERTEX.y*2.9) * sin(VERTEX.z*4.2-VERTEX.y*2.1);
- VERTEX += NORMAL * billow * 0.12;
+ VERTEX += NORMAL * billow * 0.22;
 }
 void fragment() {
- ALBEDO = smoke_tint.rgb * (0.94 + billow*0.055);
+ ALBEDO = smoke_tint.rgb * (0.90 + billow*0.035 + max(dot(NORMAL,vec3(0.3,0.8,0.4)),0.0)*0.1);
  ROUGHNESS = 1.0;
 }
 """
@@ -82,7 +82,7 @@ func _detonate() -> void:
 			puff.mesh = sphere
 			var material := ShaderMaterial.new()
 			material.shader = smoke_shader()
-			material.set_shader_parameter("smoke_tint", Color("7c898e").lightened(float(i % 3) * 0.04))
+			material.set_shader_parameter("smoke_tint", Color("677378").lightened(float(i % 3) * 0.015))
 			puff.material_override = material
 			puff.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 			add_child(puff)

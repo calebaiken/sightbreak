@@ -4,6 +4,7 @@ extends CharacterBody3D
 signal eliminated(victim_id: int, killer_id: int)
 signal damage_taken(victim_id: int, attacker_id: int, amount: float)
 signal shot_fired(actor_id: int, origin: Vector3, direction: Vector3)
+signal impact_created(at: Vector3, normal: Vector3, hit_actor: bool)
 signal hit_confirmed(attacker_id: int, headshot: bool, lethal: bool)
 signal utility_deployed(actor_id: int, at: Vector3, kind: String)
 
@@ -197,12 +198,8 @@ static func _synthesize_shot(id: String) -> AudioStreamWAV:
 
 func _part(parent: Node3D, at: Vector3, dimensions: Vector3, color: Color) -> MeshInstance3D:
 	var visual := MeshInstance3D.new()
-	var shape := BoxMesh.new()
-	shape.size = dimensions
-	visual.mesh = shape
-	var material := StandardMaterial3D.new()
-	material.albedo_color = color
-	material.roughness = 0.65
+	visual.mesh = WeaponModel.bevel_mesh(dimensions)
+	var material := _body_material(color)
 	visual.material_override = material
 	parent.add_child(visual)
 	visual.position = at
@@ -255,8 +252,9 @@ func _build_body() -> void:
 	_body_team = team
 	# Broad muted team fields retain target recognition at distance. Body volume
 	# remains entirely within the unchanged competitive capsule/headshot regions.
-	var uniform := Color("ae8061") if team == 0 else Color("597f94")
-	var dark := Color("273339")
+	var accent := Color("73513b") if team == 0 else Color("335969")
+	var uniform := Color("303531") if team == 0 else Color("29343b")
+	var dark := Color("182329")
 	_rounded(_body, Vector3(0, 1.08, 0), Vector3(0.59, 0.68, 0.34), uniform)
 	_rounded(_body, Vector3(0, 0.82, 0), Vector3(0.44, 0.27, 0.32), uniform.darkened(0.2))
 	var vest := _part(_body, Vector3(0, 1.10, -0.15), Vector3(0.42, 0.42, 0.16), dark)
@@ -276,8 +274,8 @@ func _build_body() -> void:
 		knee.position.y = -0.35
 		_knees.append(knee)
 		_limb(knee, Vector3.ZERO, Vector3(0, -0.34, 0), 0.088, uniform.darkened(0.22))
-		_rounded(knee, Vector3(0, -0.02, -0.084), Vector3(0.18, 0.22, 0.065), dark)
-		_rounded(knee, Vector3(0, -0.38, -0.065), Vector3(0.22, 0.22, 0.35), Color("192229"))
+		_rounded(knee, Vector3(0, -0.02, -0.084), Vector3(0.15, 0.17, 0.065), dark)
+		_rounded(knee, Vector3(0, -0.38, -0.065), Vector3(0.19, 0.17, 0.31), Color("192229"))
 		var arm := Node3D.new()
 		_body.add_child(arm)
 		arm.position = Vector3(x * 1.85, 1.31, 0)
@@ -285,12 +283,19 @@ func _build_body() -> void:
 		_limb(arm, Vector3.ZERO, Vector3(x * 0.16, -0.23, 0.015), 0.093, uniform)
 		_limb(arm, Vector3(x * 0.16, -0.23, 0.015), Vector3(-x * 0.45, -0.23, -0.29), 0.078, uniform)
 		_rounded(arm, Vector3(-x * 0.45, -0.23, -0.29), Vector3(0.13, 0.13, 0.16), dark)
-		_rounded(arm, Vector3(x * 0.15, -0.04, 0), Vector3(0.17, 0.20, 0.21), uniform.lightened(0.05))
+		_rounded(arm, Vector3(x * 0.15, -0.04, 0), Vector3(0.17, 0.20, 0.21), accent)
 	_head = _rounded(_body, Vector3(0, 1.56, 0), Vector3(0.32, 0.39, 0.33), dark)
 	# Helmet rim and smoke-tinted visor sit at root scale, not scaled head-local.
-	_rounded(_body, Vector3(0, 1.68, 0.005), Vector3(0.38, 0.28, 0.37), uniform.darkened(0.30))
-	var visor := _rounded(_body, Vector3(0, 1.585, -0.158), Vector3(0.28, 0.09, 0.05), Color("809997"))
-	visor.material_override = _body_material(Color("809997"), 0.24, 0.35)
+	_rounded(_body, Vector3(0, 1.68, 0.005), Vector3(0.35, 0.235, 0.36), dark.lightened(0.03))
+	var visor := _rounded(_body, Vector3(0, 1.585, -0.158), Vector3(0.26, 0.065, 0.05), Color("14232a"))
+	visor.material_override = _body_material(Color("14232a"), 0.48, 0.1)
+	visor.set_meta("separate_material", true)
+	_part(_body, Vector3(0, 1.705, -0.173), Vector3(0.19, 0.035, 0.018), accent)
+	_part(_body, Vector3(0, 1.18, -0.244), Vector3(0.21, 0.032, 0.01), accent)
+	for x in [-0.20, 0.20]:
+		_part(_body, Vector3(x, 1.20, -0.172), Vector3(0.052, 0.34, 0.035), dark.lightened(0.055))
+	for y in [1.06, 1.13]:
+		_part(_body, Vector3(0, y, -0.238), Vector3(0.34, 0.016, 0.012), Color("101a20"))
 	_part(_body, Vector3(0, 1.08, 0.19), Vector3(0.32, 0.35, 0.13), dark)
 	# A lightweight world proxy: first-person attachments need no tenfold overhead.
 	var rifle := _part(_body, Vector3(0.13, 1.12, -0.37), Vector3(0.075, 0.11, 0.44), Color("1b242b"))
@@ -309,6 +314,42 @@ func _build_body() -> void:
 	_body.add_child(_world_muzzle)
 	_world_muzzle.position = Vector3(0.13, 1.13, -0.765)
 	_world_muzzle.visible = false
+	_batch_body_visuals(_body)
+
+func _batch_body_visuals(parent: Node3D) -> void:
+	# Color-vertex batching keeps articulated operators at one draw per joint;
+	# static clothing/gear details do not multiply draw calls for ten players.
+	var builder := SurfaceTool.new()
+	builder.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var added := false
+	for child in parent.get_children():
+		if child is Node3D and not child is MeshInstance3D:
+			_batch_body_visuals(child)
+		if not child is MeshInstance3D or child == _head or child == _world_muzzle or child.has_meta("separate_material"):
+			continue
+		var source := MeshDataTool.new()
+		var arrays := ArrayMesh.new()
+		arrays.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, child.mesh.surface_get_arrays(0))
+		source.create_from_surface(arrays, 0)
+		var tint: Color = child.material_override.albedo_color
+		for face in range(source.get_face_count()):
+			for corner in range(3):
+				var index := source.get_face_vertex(face, corner)
+				builder.set_color(tint)
+				builder.set_normal((child.transform.basis.inverse().transposed() * source.get_vertex_normal(index)).normalized())
+				builder.add_vertex(child.transform * source.get_vertex(index))
+		parent.remove_child(child)
+		child.free()
+		added = true
+	if added:
+		var merged := MeshInstance3D.new()
+		merged.mesh = builder.commit()
+		var material := StandardMaterial3D.new()
+		material.vertex_color_use_as_albedo = true
+		material.vertex_color_is_srgb = true
+		material.roughness = 0.87
+		merged.material_override = material
+		parent.add_child(merged)
 
 func _build_gun() -> void:
 	for child in _gun.get_children():
@@ -329,7 +370,7 @@ func apply_cosmetic(metadata: Dictionary) -> void:
 	_cosmetic = metadata.duplicate(true)
 	_finish = CosmeticMaterial.finish(metadata)
 	if metadata.is_empty():
-		var paint := Color("35414a") if weapon_id == "sidearm" else _gun_color.darkened(0.48)
+		var paint := Color("26323b")
 		_finish.set_shader_parameter("base_paint", paint)
 	for part in _paint_parts:
 		part.material_override = _finish
@@ -517,6 +558,7 @@ func _fire() -> void:
 			show_hit_feedback(headshot, not target.alive)
 			hit_confirmed.emit(actor_id, headshot, not target.alive)
 		_impact(endpoint, hit["normal"], target is SBActor)
+		impact_created.emit(endpoint, hit["normal"], target is SBActor)
 	shot_fired.emit(actor_id, origin, direction)
 	play_shot_effect()
 	_shot_index += 1

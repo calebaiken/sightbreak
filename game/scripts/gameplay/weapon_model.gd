@@ -37,8 +37,19 @@ func _part(parent: Node3D, at: Vector3, dimensions: Vector3, color: Color) -> Me
 
 func _chamfer(at: Vector3, size: Vector3, tint: Color, painted: bool = false) -> MeshInstance3D:
 	var mesh := MeshInstance3D.new()
+	mesh.mesh = bevel_mesh(size)
+	var material := _material(tint, 0.48, 0.65)
+	mesh.material_override = material
+	_gun.add_child(mesh)
+	mesh.position = at
+	if painted:
+		_paint_parts.append(mesh)
+	return mesh
+
+static func bevel_mesh(size: Vector3) -> ArrayMesh:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	st.set_smooth_group(-1)
 	var x := size.x * 0.5
 	var y := size.y * 0.5
 	var z := size.z * 0.5
@@ -58,14 +69,8 @@ func _chamfer(at: Vector3, size: Vector3, tint: Color, painted: bool = false) ->
 			st.add_vertex(vertices[triangle + 2])
 			st.add_vertex(vertices[triangle + 1])
 	st.generate_normals()
-	mesh.mesh = st.commit()
-	var material := _material(tint, 0.48, 0.65)
-	mesh.material_override = material
-	_gun.add_child(mesh)
-	mesh.position = at
-	if painted:
-		_paint_parts.append(mesh)
-	return mesh
+	st.index()
+	return st.commit()
 
 func _material(tint: Color, roughness: float, metallic: float) -> StandardMaterial3D:
 	var key := "%s/%.2f/%.2f" % [tint.to_html(), roughness, metallic]
@@ -93,6 +98,13 @@ func _sleeve(from: Vector3, to: Vector3, tint: Color) -> void:
 	var cuff := _chamfer(to, Vector3(0.10, 0.045, 0.10), Color("19272d"))
 	cuff.quaternion = sleeve.quaternion
 	cuff.material_override = _material(Color("19272d"), 0.95, 0)
+	var seam_at := from.lerp(to, 0.42) + Vector3(-0.034, 0.038, 0)
+	var seam := _chamfer(seam_at, Vector3(0.008, 0.008, from.distance_to(to) * 0.48), tint.lightened(0.06))
+	seam.quaternion = Quaternion(Vector3.FORWARD, (to - from).normalized())
+	seam.material_override = _material(tint.lightened(0.06), 0.95, 0)
+	var panel := _chamfer(from.lerp(to, 0.65) + Vector3(0, 0.035, 0), Vector3(0.063, 0.02, 0.11), tint.darkened(0.18))
+	panel.quaternion = seam.quaternion
+	panel.material_override = _material(tint.darkened(0.18), 0.96, 0)
 
 func _glove(at: Vector3, support: bool = false) -> void:
 	var tint := Color("3c463f")
@@ -133,12 +145,32 @@ func _batch_static_parts() -> void:
 		if not node is MeshInstance3D or node == _magazine or node == _muzzle:
 			continue
 		var painted := _paint_parts.has(node)
-		var key := "paint" if painted else str(node.material_override.get_instance_id())
+		var key := "paint" if painted else ("fabric" if node.material_override.roughness > 0.8 else "metal")
 		if not groups.has(key):
 			var builder := SurfaceTool.new()
 			builder.begin(Mesh.PRIMITIVE_TRIANGLES)
-			groups[key] = {"surface": builder, "material": node.material_override, "painted": painted}
-		groups[key].surface.append_from(node.mesh, 0, node.transform)
+			var material: Material = node.material_override
+			if not painted:
+				var merged_material := StandardMaterial3D.new()
+				merged_material.vertex_color_use_as_albedo = true
+				merged_material.vertex_color_is_srgb = true
+				merged_material.roughness = 0.94 if key == "fabric" else 0.48
+				merged_material.metallic = 0.0 if key == "fabric" else 0.65
+				material = merged_material
+			groups[key] = {"surface": builder, "material": material, "painted": painted}
+		if painted:
+			groups[key].surface.append_from(node.mesh, 0, node.transform)
+		else:
+			var source := MeshDataTool.new()
+			var arrays := ArrayMesh.new()
+			arrays.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, node.mesh.surface_get_arrays(0))
+			source.create_from_surface(arrays, 0)
+			for face in range(source.get_face_count()):
+				for corner in range(3):
+					var index := source.get_face_vertex(face, corner)
+					groups[key].surface.set_color(node.material_override.albedo_color)
+					groups[key].surface.set_normal((node.transform.basis.inverse().transposed() * source.get_vertex_normal(index)).normalized())
+					groups[key].surface.add_vertex(node.transform * source.get_vertex(index))
 		_paint_parts.erase(node)
 		_gun.remove_child(node)
 		node.free()
@@ -173,8 +205,8 @@ func _build_gun() -> void:
 	_paint_parts.clear()
 	_magazine = null
 
-	var metal := Color("151c23")
-	var edge := Color("323e48")
+	var metal := Color("10161c")
+	var edge := Color("25303a")
 	var glove := Color("343c39")
 	var muzzle_z := -0.35
 	if weapon_id == "sidearm":
@@ -203,8 +235,8 @@ func _build_gun() -> void:
 			for i in range(3):
 				_chamfer(Vector3(0.059, -0.12 + i * 0.018, -0.005), Vector3(0.016, 0.014, 0.076), glove.lightened(0.045))
 	else:
-		_chamfer(Vector3(0, 0, -0.15), Vector3(0.104, 0.113, 0.30), edge, true)
-		_chamfer(Vector3(0, 0.007, -0.405), Vector3(0.092, 0.10, 0.23), edge, true)
+		_chamfer(Vector3(0, 0, -0.15), Vector3(0.088, 0.104, 0.30), edge, true)
+		_chamfer(Vector3(0, 0.007, -0.405), Vector3(0.082, 0.088, 0.23), edge, true)
 		_barrel(Vector3(0, 0.025, -0.59), 0.22, 0.023, metal)
 		_barrel(Vector3(0, 0.025, -0.72), 0.07, 0.031, edge)
 		_barrel(Vector3(0, 0.025, -0.758), 0.005, 0.021, Color("03070b"))
@@ -220,7 +252,7 @@ func _build_gun() -> void:
 		_magazine_rest = magazine.position
 		var grip := _chamfer(Vector3(0, -0.12, -0.034), Vector3(0.07, 0.15, 0.085), metal)
 		grip.rotation.x = -0.23
-		_chamfer(Vector3(0, -0.032, 0.085), Vector3(0.064, 0.088, 0.18), metal)
+		_chamfer(Vector3(0, -0.032, 0.085), Vector3(0.05, 0.068, 0.15), metal)
 		_chamfer(Vector3(0.052, 0.015, -0.105), Vector3(0.005, 0.041, 0.065), metal)
 		# Machined receiver controls, bolts, split handguard and magazine ribs.
 		_chamfer(Vector3(0.055, 0.02, -0.205), Vector3(0.011, 0.015, 0.052), Color("919a9a"))

@@ -53,6 +53,8 @@ func _run() -> void:
 	check(player.credits == 600, "purchase debits match currency")
 	check(not player.buy_weapon("rifle"), "duplicate purchase rejected")
 	check(player.ammo == 30 and player.reserve == 90, "rifle magazine and reserve")
+	var confirmed_impacts: Array = []
+	player.impact_created.connect(func(at: Vector3, normal: Vector3, hit_actor: bool) -> void: confirmed_impacts.append([at, normal, hit_actor]))
 	# A floor-stationary accurate head hit at six meters must be lethal.
 	for i in range(30):
 		player.input_state = {"look": Vector2(PI, 0), "move": Vector2.ZERO}
@@ -64,6 +66,9 @@ func _run() -> void:
 	check(player.ammo == 29, "shot consumes one bullet")
 	check(not enemy.alive and enemy.health == 0, "authoritative ray headshot eliminates enemy")
 	check(enemy.last_hit_headshot, "headshot identified by hit location")
+	check(confirmed_impacts.size() == 1 and confirmed_impacts[0][2], "authoritative ray hit emits one network impact event")
+	player._impact(enemy.global_position, Vector3.UP, true)
+	check(confirmed_impacts.size() == 1, "replayed cosmetic impact cannot re-emit authority event")
 	player.input_state = {"fire": true}
 	player.tick_authority(1.0 / 60.0)
 	check(player.ammo == 29, "fire interval rejects rapid duplicate shot")
@@ -185,7 +190,7 @@ func _run() -> void:
 	# real reload/equip transforms; these do not assert aesthetic quality.
 	check(player._knees.size() == 2 and player._arms.size() == 2, "operator has two articulated knees and weapon-support arms")
 	check(player._head.mesh is SphereMesh, "helmet silhouette uses curved geometry")
-	check(player._gun.get_child_count() <= 16, "static first-person attachments batch into at most sixteen draw nodes")
+	check(player._gun.get_child_count() <= 6, "static first-person attachments batch into at most six draw nodes")
 	check(player._paint_parts.size() == 2, "shared model retains separately animated magazine and batched finish")
 	check(player._magazine.get_child_count() == 1, "magazine ribs batch into one draw node following reload transform")
 	player.show_hit_feedback(true, true)
@@ -218,6 +223,9 @@ func _run() -> void:
 	var inspection: Dictionary = Actor.WeaponModel.build(model_root, "rifle", false)
 	check(inspection.paint.size() == 2 and model_root.get_child_count() < player._gun.get_child_count(), "inspection shares exact weapon geometry without hand meshes")
 	model_root.free()
+	player.apply_cosmetic({})
+	check(player._finish.get_shader_parameter("base_paint") == Color("26323b"), "default receiver retains matte graphite identity")
+	check(Actor.WeaponModel.bevel_mesh(Vector3.ONE).surface_get_array_len(0) > 0 and Actor.WeaponModel.bevel_mesh(Vector3.ONE).surface_get_array_index_len(0) > 0, "beveled models retain indexed geometry for safe batching")
 	player.reset_for_round(Vector3(0, 0.05, 20))
 	check(player.hit_feedback_remaining == 0 and player._equip_blend == 0, "round reset clears hit and equip presentation")
 	await create_timer(0.6).timeout
