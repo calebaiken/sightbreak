@@ -30,6 +30,9 @@ const RELAY_AR_HANDS_MATERIAL := "res://assets/weapons/relay_ar/relay_ar_hands.t
 static var relay_ar_scale := 1.0
 static var relay_ar_rotation := Vector3(0.06, 0.12, -0.30)
 static var relay_ar_offset := Vector3(-0.045, 0.065, 0.10) - Basis.from_euler(Vector3(0.06, 0.12, -0.30)) * Vector3(0.024, 0.031, -0.13)
+## Inspection and other hand-less builds keep the rifle upright, centred where the
+## procedural rifle's bounds were, so existing studio framing still applies.
+const RELAY_AR_UPRIGHT_OFFSET := Vector3(0, -0.015, -0.111)
 ## Captures switch this off for before/after comparisons; gameplay never reads it.
 static var use_authored := true
 
@@ -424,7 +427,7 @@ func _add_authored(part_name: String, mesh: Mesh, at: Transform3D, material: Mat
 
 ## Adds the authored rifle's meshes and hands; returns the muzzle position.
 func _build_authored_rifle() -> Vector3:
-	var placement := Transform3D(Basis.from_euler(relay_ar_rotation).scaled(Vector3.ONE * relay_ar_scale), relay_ar_offset)
+	var placement := Transform3D(Basis.from_euler(relay_ar_rotation).scaled(Vector3.ONE * relay_ar_scale), relay_ar_offset) if _hands else Transform3D(Basis.IDENTITY, RELAY_AR_UPRIGHT_OFFSET)
 	var rifle := _authored_nodes(RELAY_AR, placement)
 	var material: Material = load(RELAY_AR_MATERIAL)
 	for part_name in ["body", "paint_receiver", "paint_handguard", "magazine"]:

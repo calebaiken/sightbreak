@@ -72,6 +72,13 @@ func _run() -> void:
 	CosmeticMaterial.apply(plain, [])
 	check(plain.get_shader_parameter("detail") == null or plain.get_shader_parameter("detail") == 0.0, "finishes without authored parts leave detail at its 0 default")
 
+	var upright := Node3D.new()
+	root.add_child(upright)
+	var inspection: Dictionary = WeaponModel.build(upright, "rifle", false)
+	var body_node: MeshInstance3D = upright.get_node("body")
+	check(body_node.transform.basis.is_equal_approx(Basis.IDENTITY) and absf(inspection.muzzle.position.x) < 0.001, "inspection rifle is upright and on axis, without the viewmodel cant")
+	upright.queue_free()
+
 	# The procedural rifle remains a complete fallback.
 	WeaponModel.use_authored = false
 	var fallback := Node3D.new()
