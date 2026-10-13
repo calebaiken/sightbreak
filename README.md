@@ -1,6 +1,6 @@
 # SIGHTBREAK
 
-A native **Godot 4.7.2** tactical FPS development build for desktop, Android and future iOS export. Fight a 5v5 offline match in the original Relay Yard, or connect to a dedicated server. The separate PostgreSQL economy supports authenticated accounts, earned Credits, collectible rifle finishes, cases, two-sided trades and marketplace purchases.
+A native **Godot 4.7.2** tactical FPS development build for desktop, Android and unsigned iOS project export. Fight a 5v5 offline match in the original Relay Yard, or connect to a dedicated server. The separate PostgreSQL economy supports authenticated accounts, earned Credits, collectible rifle finishes, cases, two-sided trades and marketplace purchases.
 
 **No real-money transactions.** There are no payments, premium purchases, withdrawals, cryptocurrency or external marketplaces. Offline training progress never becomes tradable online value.
 
@@ -28,7 +28,25 @@ Choose **DEPLOY / OFFLINE 5 v 5**. No account or backend is needed. The first ro
 | Buy / roster | B / Tab | BUY / TEAM |
 | Menu | Escape | Pause button |
 
-Settings include sensitivity, FOV, frame cap, shadow quality, volume, crosshair size/color, gyro, controller input and reduced motion. During a match, the field menu opens the touch HUD editor. Drag button positions and press **SAVE TOUCH LAYOUT**; button scale is adjustable in settings. Physical gyro/controller behavior still needs device review.
+Settings include sensitivity, FOV, frame cap, shadow quality, volume, crosshair size/color, gyro, controller input and reduced motion. During a match, the field menu opens the touch HUD editor. Drag the joystick or action buttons and press **SAVE TOUCH LAYOUT**; use **RESET POSITIONS** to restore defaults. Button scale is adjustable in settings. Touch input is canceled on focus loss, and simulated mouse events cannot fire the weapon. Physical gyro/controller behavior still needs device review.
+
+## Current stabilization work
+
+- The two GL teardown errors were isolated with a standalone Godot sky-lifetime reproduction. Relay Yard now reuses one sky resource; actual rendering and repeated menu/match cycles pass with stable tracked texture allocations on the tested Linux software renderer. See [diagnostic and regression](docs/diagnostics/README.md).
+- Touch input, safe areas, editable joystick/buttons, scrollable landscape menus, recoil presentation, weapon sounds/animation, bot tactics and complete-match regression coverage have improved.
+- Case inspection/reveals share collection materials. A lost transaction response offers explicit retry with the original request/key; recovery remains in memory, so app-termination recovery is still outstanding. Backend probability boundaries and ownership/replay rules remain tested.
+- These checks do not certify physical-device feel, sustained FPS or public-server security. The [independent QA report](docs/reports/QA.md) identifies accepted scopes and unresolved quality gates.
+
+## Test on a connected Android phone
+
+```sh
+adb install -r builds/android/sightbreak-debug.apk
+adb shell am start -n com.sightbreak.game/com.godot.game.GodotAppLauncher
+# Optional: reach the host economy API over USB without exposing it on the LAN.
+adb reverse tcp:8080 tcp:8080
+```
+
+Start with **DEPLOY** offline. For USB economy testing, leave the phone's API address at `http://127.0.0.1:8080` and run the host API as described below. USB TCP reversal does not tunnel UDP game traffic; guest network play needs the dedicated server's reachable private LAN address. Record device/OS, build hash, settings, touch behavior, a full match and background/resume using the [device checklist](docs/DEVICE_TESTING.md). No physical device is attached to this cloud session.
 
 ## Accounts and dedicated play
 
@@ -64,16 +82,19 @@ This is local development infrastructure. ENet traffic is not encrypted and no p
 ```sh
 ./scripts/validate.sh                  # Native gameplay, UI, offline persistence and two-client LAN
 ./scripts/validate.sh --backend        # Also isolated PostgreSQL adversarial tests and simulation
-./scripts/test_render.sh               # Requires display; currently flags known GL teardown failure
+./scripts/test_render.sh               # Requires display; demo + repeated scene cleanup regression
 .venv/bin/python scripts/test_account_network.py  # Real account-ticket admission tests
 ./scripts/export.sh linux
 ./scripts/setup-android.sh
 ./scripts/export.sh android
+./scripts/export.sh ios                # Unsigned Xcode project; no IPA on Linux
+python3 scripts/verify_builds.py
+python3 scripts/build_manifest.py package
 ```
 
 Optional live native account checks: set `ECONOMY_UI_TEST_URL=http://127.0.0.1:8080` when running `game/tests/economy_ui_test.gd`. Tests use fictional accounts. `backend/bridge_fixture.py` and `scripts/test_reward_bridge.py` exercise the real reward adapter with an explicitly synthetic match fixture against an isolated database; this is not a ten-human match or mobile benchmark.
 
-Outputs are `builds/linux/sightbreak.x86_64` and `builds/android/sightbreak-debug.apk`. Android is a debug-signed development package, API 24+, target API 36. Export and signature verification do not establish device behavior. iOS export settings are included, but an installable iPhone build requires macOS, Xcode, Apple signing and physical testing. Detailed commands and provenance: [builds.md](docs/builds.md).
+Outputs are `builds/linux/sightbreak.x86_64` and `builds/android/sightbreak-debug.apk`. Android is a debug-signed development package, API 24+, target API 36. Export and signature verification do not establish device behavior. The unsigned Xcode project is exported to `builds/ios/sightbreak.xcodeproj`; an installable iPhone build requires macOS, Xcode, Apple signing and physical testing. Detailed commands and provenance: [builds.md](docs/builds.md).
 
 ## Continue development
 
