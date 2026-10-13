@@ -54,6 +54,7 @@ func _run() -> void:
 	await _specific_rays()
 	await _pass_through_and_ordering()
 	_tangent_rays()
+	_long_range_rays()
 	world.queue_free()
 	await process_frame
 	print("HIT_VOLUME_TEST checks=%d failures=%d" % [checks, failures.size()])
@@ -198,6 +199,57 @@ func _tangent_rays() -> void:
 	var hits := [
 		[Vector3(0.3099, 2.0, 0.0), Vector3.DOWN, "vertical ray 0.1 mm inside"],
 		[Vector3(-1.0, -0.899, 0.0), Vector3.RIGHT, "ray 1 mm into the rounded bottom"],
+		[Vector3(0.3097, 0.9976, -0.0698), Vector3(0, -0.9976, 0.0698).normalized(), "steep 86-degree ray 0.3 mm inside the wall"],
 	]
 	for case in hits:
 		check(Actor._capsule_entry(case[0], case[1], 0.31, 1.8, 0.48) >= 0.0, "%s hits" % case[2])
+
+
+## Exact distance (64-bit) between the ray's line and the capsule's axis segment.
+static func _axis_distance(o: Vector3, d: Vector3, half: float) -> float:
+	var dd := d.x * d.x + d.y * d.y + d.z * d.z
+	var k := -(o.x * d.x + o.y * d.y + o.z * d.z) / dd
+	var wx := -o.x - k * d.x
+	var wy := -o.y - k * d.y
+	var wz := -o.z - k * d.z
+	var m := d.y / dd
+	var ex := -m * d.x
+	var ey := 1.0 - m * d.y
+	var ez := -m * d.z
+	var ee := ex * ex + ey * ey + ez * ez
+	var u := 0.0 if ee < 0.000000000000000001 else clampf(-(wx * ex + wy * ey + wz * ez) / ee, -half, half)
+	var fx := wx + u * ex
+	var fy := wy + u * ey
+	var fz := wz + u * ez
+	return sqrt(fx * fx + fy * fy + fz * fz)
+
+func _long_range_rays() -> void:
+	# Marksman and rifle distances: rays aimed within 1.5 cm of the lower body's
+	# surface must agree with exact geometry wherever it is more than 0.05 mm away.
+	var rng := RandomNumberGenerator.new()
+	rng.seed = 3093
+	var radius := 0.31
+	var height := 1.8
+	var top := 0.48
+	var half := height * 0.5 - radius
+	var decided := 0
+	var extra := 0
+	var lost := 0
+	for i in range(4000):
+		var distance := rng.randf_range(40.0, 140.0)
+		var bearing := rng.randf_range(-PI, PI)
+		var around := rng.randf_range(-PI, PI)
+		var aim_radius := radius + rng.randf_range(-0.015, 0.015)
+		var aim := Vector3(cos(around) * aim_radius, rng.randf_range(-0.9, top - 0.06), sin(around) * aim_radius)
+		var origin := Vector3(cos(bearing) * distance, rng.randf_range(0.4, 1.0), sin(bearing) * distance)
+		var direction := (aim - origin).normalized()
+		var exact := _axis_distance(origin, direction, half)
+		if absf(exact - radius) < 0.00005:
+			continue
+		decided += 1
+		var hit: bool = Actor._capsule_entry(origin, direction, radius, height, top) >= 0.0
+		if hit and exact > radius:
+			extra += 1
+		elif not hit and exact < radius:
+			lost += 1
+	check(decided > 3000 and extra == 0 and lost == 0, "40-140 m rays match exact capsule geometry (%d extra, %d lost of %d)" % [extra, lost, decided])
