@@ -9,7 +9,7 @@ import struct
 import subprocess
 import zipfile
 
-from build_manifest import BUILDS, ROOT, source, write_json
+from build_manifest import BUILDS, ROOT, OUTPUTS, payload, source, write_json
 
 
 def packed_paths(path, embedded=False):
@@ -41,6 +41,14 @@ def no_test_harnesses(paths):
 
 
 def main():
+    build_source = source()
+    assert not build_source["source_game_dirty"], "Commit game changes before artifact verification"
+    for target in OUTPUTS:
+        record = json.loads((BUILDS / target / "source.json").read_text())
+        assert record["export_completed"] and not record["source_game_dirty"], f"{target}: incomplete or uncommitted export"
+        assert record["source_game_tree"] == build_source["source_game_tree"], f"{target}: stale game tree"
+        assert record["source_content_sha256"] == build_source["source_content_sha256"], f"{target}: stale source content"
+        assert record["payload"] == payload(target), f"{target}: artifact changed after export"
     logs = BUILDS / "verification"
     logs.mkdir(exist_ok=True)
     environment = dict(os.environ)
@@ -88,7 +96,8 @@ def main():
     assert all("Landscape" in value for value in plist["UISupportedInterfaceOrientations"])
     project = (ios / "sightbreak.xcodeproj/project.pbxproj").read_text()
     assert "UNSIGNED00" not in project and 'DEVELOPMENT_TEAM = "";' in project
-    report = {**source(), "passed": True, "linux_menu_smoke": True, "linux_demo_120_frames": True,
+    assert source()["source_content_sha256"] == build_source["source_content_sha256"], "Game changed during verification"
+    report = {**build_source, "passed": True, "linux_menu_smoke": True, "linux_demo_120_frames": True,
               "linux_pck_resources": len(linux_paths), "android_assets": len(android_paths), "ios_pck_resources": len(ios_paths),
               "test_harnesses_excluded": True, "android_signature_schemes": ["v2", "v3"],
               "android_version": "0.2.0-dev (2)", "android_min_sdk": 24, "android_target_sdk": 36,

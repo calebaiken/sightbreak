@@ -74,7 +74,9 @@ def package():
     for target in OUTPUTS:
         directory = BUILDS / target
         record = json.loads((directory / "source.json").read_text())
-        if not record["export_completed"] or record["source_content_sha256"] != current["source_content_sha256"]:
+        if (not record["export_completed"] or record["source_game_dirty"]
+                or record["source_game_tree"] != current["source_game_tree"]
+                or record["source_content_sha256"] != current["source_content_sha256"]):
             raise SystemExit(f"Stale or incomplete {target} export; rebuild all targets from current source.")
         if descriptor(BUILDS / OUTPUTS[target]) != record["artifact"] or payload(target) != record["payload"]:
             raise SystemExit(f"Changed {target} artifact; rebuild before packaging.")
