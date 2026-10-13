@@ -129,6 +129,10 @@ func run() -> void:
 	check(main.kill_feed.get_child_count() == main.KILL_FEED_ROWS, "kill feed keeps a bounded number of rows")
 	check("ATTACK" in main.squad_label.text, "HUD states the player's squad")
 	check("FRAG ×1" in main.utility_label.text and main.touch.counts.get("grenade") == 1, "utility counts are visible in HUD and on touch buttons")
+	var funds_rect: Rect2 = main.funds_label.get_global_rect()
+	var health_rect: Rect2 = main.health_label.get_global_rect()
+	check(main.funds_label.text.begins_with(str(me.credits) + " ") and not "FUNDS" in main.utility_label.text and not "FUNDS" in main.status_label.text, "match funds are one label, not repeated in the utility row or status line")
+	check(funds_rect.end.y <= health_rect.position.y + 1 and absf(funds_rect.position.x - health_rect.position.x) < 1, "the funds label sits directly above the health readout and bar, left aligned")
 	# Layouts saved under 0.3 store the old TEAM/BUY defaults, which the radar now covers.
 	main.touch.restore_layout({"buy": [0.19, 0.14], "score": [0.08000001, 0.14], "fire": [0.5, 0.5], "smoke": [0.3, 0.2]})
 	check(main.touch.positions.buy == main.touch.DEFAULT_POSITIONS.buy and main.touch.positions.score == main.touch.DEFAULT_POSITIONS.score, "saved layouts with untouched 0.3 TEAM/BUY positions move below the radar")

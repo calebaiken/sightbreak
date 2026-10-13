@@ -62,6 +62,12 @@ func run() -> void:
 			var point: Vector2 = main.touch.control_point(action)
 			var radius: float = main.touch.radius(action)
 			check(not Rect2(point - Vector2.ONE * radius, Vector2.ONE * radius * 2).intersects(main.status_label.get_global_rect()), action + " default button clears match instructions")
+		var funds_rect: Rect2 = main.funds_label.get_global_rect()
+		check(funds_rect.position.y >= 0 and funds_rect.end.y <= main.health_label.get_global_rect().position.y + 1, "Funds label sits on screen above the health readout")
+		for control_name in main.touch.positions:
+			var point: Vector2 = main.touch.control_point(control_name)
+			var radius: float = main.touch.radius(control_name)
+			check(not Rect2(point - Vector2.ONE * radius, Vector2.ONE * radius * 2).intersects(funds_rect), "Funds label clears the %s touch control" % control_name)
 		var swap_point: Vector2 = main.touch.control_point("switch")
 		check(swap_point.y + main.touch.radius("switch") < main.ammo_label.get_global_rect().position.y, "Swap button clears weapon/ammunition text")
 		var pause_point: Vector2 = main.touch.control_point("pause")
