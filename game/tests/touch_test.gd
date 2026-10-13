@@ -149,6 +149,18 @@ func run() -> void:
 	touch.size = Vector2(1920, 720)
 	touch.safe_rect = Rect2(70, 0, 1780, 720)
 	check(touch.control_point("pause").x + touch.radius("pause") <= 1850, "Ultrawide landscape HUD respects trailing notch inset")
+	touch.reset_layout()
+	touch.size = Vector2(960, 720)
+	touch.safe_rect = Rect2(Vector2.ZERO, touch.size)
+	touch.hud_scale = 1.5
+	var overlaps: Array[String] = []
+	var keys: Array = touch.positions.keys()
+	for index in keys.size():
+		for other in range(index + 1, keys.size()):
+			var a: String = keys[index]
+			var b: String = keys[other]
+			if touch.control_point(a).distance_to(touch.control_point(b)) < touch.radius(a) + touch.radius(b): overlaps.append(a + "/" + b)
+	check(overlaps.is_empty(), "Maximum-size default controls do not visually overlap on tablet landscape: " + str(overlaps))
 	restored.free()
 	save.queue_free()
 	touch.queue_free()

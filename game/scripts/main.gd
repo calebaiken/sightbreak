@@ -210,7 +210,7 @@ func show_menu() -> void:
 	var spring := Control.new()
 	spring.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	top.add_child(spring)
-	top.add_child(label("DEVELOPMENT BUILD   /   0.3", 14, MUTED))
+	top.add_child(label("DEVELOPMENT BUILD   /   0.3.0-dev", 14, MUTED))
 	var middle := HBoxContainer.new()
 	middle.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	rows.add_child(middle)
@@ -488,10 +488,10 @@ func build_hud() -> void:
 	fill(shade)
 	ui.add_child(shade)
 	shade.draw.connect(func():
-		for band in 24:
-			var fade := pow(1.0 - float(band) / 24.0, 1.6) * 0.8
-			shade.draw_rect(Rect2(0, band * 5, shade.size.x, 5), Color(0.018, 0.024, 0.032, fade))
-			shade.draw_rect(Rect2(0, shade.size.y - (band + 1) * 5, shade.size.x, 5), Color(0.018, 0.024, 0.032, fade))
+		var tint := Color(0.018, 0.024, 0.032, 0.82)
+		var clear := Color(0.018, 0.024, 0.032, 0.0)
+		shade.draw_polygon(PackedVector2Array([Vector2.ZERO, Vector2(shade.size.x, 0), Vector2(shade.size.x, 120), Vector2(0, 120)]), PackedColorArray([tint, tint, clear, clear]))
+		shade.draw_polygon(PackedVector2Array([Vector2(0, shade.size.y), shade.size, shade.size - Vector2(0, 120), Vector2(0, shade.size.y - 120)]), PackedColorArray([tint, tint, clear, clear]))
 	)
 	shade.resized.connect(shade.queue_redraw)
 	var margins := margin_frame(ui, 22)
