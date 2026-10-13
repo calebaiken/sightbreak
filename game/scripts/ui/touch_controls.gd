@@ -8,16 +8,28 @@ signal pause_pressed
 signal switch_pressed
 signal scoreboard_pressed
 
-var enabled := false
-var editing := false
-var hud_scale := 1.0
+var enabled := false:
+	set(value):
+		if enabled != value: reset_input()
+		enabled = value
+		queue_redraw()
+var editing := false:
+	set(value):
+		if editing != value: reset_input()
+		editing = value
+		queue_redraw()
+var hud_scale := 1.0:
+	set(value):
+		hud_scale = clampf(value, 0.7, 1.5) if is_finite(value) else 1.0
+		queue_redraw()
+const MOVE_DEADZONE := 0.12
 var movement := Vector2.ZERO
 var look_delta := Vector2.ZERO
 var actions: Dictionary = {}
 var positions := {"fire": Vector2(0.89, 0.53), "jump": Vector2(0.91, 0.75),
 	"crouch": Vector2(0.79, 0.83), "reload": Vector2(0.76, 0.62),
 	"interact": Vector2(0.65, 0.72), "grenade": Vector2(0.61, 0.9),
-	"smoke": Vector2(0.69, 0.9), "buy": Vector2(0.19, 0.14), "pause": Vector2(0.96, 0.07), "switch": Vector2(0.91, 0.9), "score": Vector2(0.08, 0.14)}
+	"smoke": Vector2(0.69, 0.9), "buy": Vector2(0.19, 0.14), "pause": Vector2(0.96, 0.07), "switch": Vector2(0.91, 0.9), "score": Vector2(0.08, 0.14), "move": Vector2(0.13, 0.74)}
 const LABELS := {"fire": "FIRE", "jump": "JUMP", "crouch": "LOW", "reload": "LOAD",
 	"interact": "USE", "grenade": "FRAG", "smoke": "SMOKE", "buy": "BUY", "pause": "II", "switch": "SWAP", "score": "TEAM"}
 var fingers: Dictionary = {}
@@ -29,16 +41,28 @@ func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	resized.connect(refresh_safe_area)
+	visibility_changed.connect(func():
+		if not is_visible_in_tree(): reset_input()
+	)
 	refresh_safe_area.call_deferred()
 
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
+		reset_input()
+
 func refresh_safe_area() -> void:
+	reset_input()
 	safe_rect = SafeArea.viewport_rect(size)
 	queue_redraw()
 
 func restore_layout(saved: Dictionary) -> void:
 	for key in saved:
 		if positions.has(key) and saved[key] is Array and saved[key].size() == 2:
-			positions[key] = Vector2(clampf(float(saved[key][0]), 0.05, 0.95), clampf(float(saved[key][1]), 0.06, 0.94))
+			var x: Variant = saved[key][0]
+			var y: Variant = saved[key][1]
+			if not (x is float or x is int) or not (y is float or y is int): continue
+			if not is_finite(float(x)) or not is_finite(float(y)): continue
+			positions[key] = Vector2(clampf(float(x), 0.0, 1.0), clampf(float(y), 0.0, 1.0))
 	queue_redraw()
 
 func exported_layout() -> Dictionary:
@@ -55,24 +79,42 @@ func reset_input() -> void:
 	queue_redraw()
 
 func radius(action: String) -> float:
-	return (40.0 if action == "fire" else 28.0) * hud_scale
+	return (65.0 if action == "move" else (40.0 if action == "fire" else 28.0)) * hud_scale
 
 func control_point(action: String) -> Vector2:
 	var rect := safe_rect if safe_rect.size.x > 0 else Rect2(Vector2.ZERO, size)
-	return rect.position + positions[action] * rect.size
+	var point: Vector2 = rect.position + positions[action] * rect.size
+	var inset := Vector2.ONE * (radius(action) + 8.0)
+	# Keep the entire touch target inside notches and gesture insets, even at maximum scale.
+	inset = inset.min(rect.size * 0.5)
+	return point.clamp(rect.position + inset, rect.end - inset)
+
+func action_at(point: Vector2) -> String:
+	var closest := ""
+	var best := INF
+	for key in positions:
+		if key == "move" and not editing: continue
+		var distance := point.distance_to(control_point(key)) / radius(key)
+		if distance <= 1.25 and distance < best:
+			closest = key
+			best = distance
+	return closest
+
+func joystick_vector(offset: Vector2) -> Vector2:
+	var stick := offset / radius("move")
+	var length := stick.length()
+	if length <= MOVE_DEADZONE: return Vector2.ZERO
+	# A radial deadzone suppresses resting-thumb drift without a jump in speed.
+	return stick.normalized() * clampf((length - MOVE_DEADZONE) / (1.0 - MOVE_DEADZONE), 0.0, 1.0) * Vector2(1, -1)
 
 func _input(event: InputEvent) -> void:
 	if not enabled or not is_visible_in_tree():
 		return
 	if event is InputEventScreenTouch:
-		if event.pressed:
-			var action := ""
-			for key in positions:
-				if event.position.distance_to(control_point(key)) <= radius(key) * 1.25:
-					action = key
-					break
+		if event.pressed and not event.canceled:
+			var action := action_at(event.position)
 			if editing:
-				if action.is_empty(): return
+				if action.is_empty() or fingers.values().has(action): return
 				fingers[event.index] = action
 			elif not action.is_empty():
 				fingers[event.index] = action
@@ -81,7 +123,7 @@ func _input(event: InputEvent) -> void:
 				if action == "pause": pause_pressed.emit()
 				if action == "switch": switch_pressed.emit()
 				if action == "score": scoreboard_pressed.emit()
-			elif event.position.x < size.x * 0.43 and event.position.y > size.y * 0.28 and not fingers.values().has("move"):
+			elif (event.position.distance_to(control_point("move")) < radius("move") * 1.8 or (event.position.x < size.x * 0.43 and event.position.y > size.y * 0.28)) and not fingers.values().has("move"):
 				fingers[event.index] = "move"
 				move_origin = event.position
 				move_position = event.position
@@ -99,12 +141,13 @@ func _input(event: InputEvent) -> void:
 	elif event is InputEventScreenDrag and fingers.has(event.index):
 		var action: String = fingers[event.index]
 		if editing and positions.has(action):
-			var normalized: Vector2 = (event.position - safe_rect.position) / safe_rect.size
-			positions[action] = Vector2(clampf(normalized.x, 0.05, 0.95), clampf(normalized.y, 0.08, 0.92))
+			var rect := safe_rect if safe_rect.size.x > 0 and safe_rect.size.y > 0 else Rect2(Vector2.ZERO, size)
+			if rect.size.x <= 0 or rect.size.y <= 0: return
+			var normalized: Vector2 = (event.position - rect.position) / rect.size
+			positions[action] = normalized.clamp(Vector2.ZERO, Vector2.ONE)
 		elif action == "move":
 			move_position = event.position
-			movement = ((event.position - move_origin) / (65.0 * hud_scale)).limit_length(1.0)
-			movement.y = -movement.y
+			movement = joystick_vector(event.position - move_origin)
 		elif action == "look" or action == "fire":
 			look_delta += event.relative
 		get_viewport().set_input_as_handled()
@@ -120,6 +163,7 @@ func _draw() -> void:
 		return
 	var font := ThemeDB.fallback_font
 	for key in positions:
+		if key == "move": continue
 		var point := control_point(key)
 		var r := radius(key)
 		draw_circle(point, r, Color(0.08, 0.1, 0.13, 0.65))
@@ -128,8 +172,8 @@ func _draw() -> void:
 		var label_text: String = LABELS[key]
 		var width := font.get_string_size(label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
 		draw_string(font, point + Vector2(-width / 2, 5), label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color.WHITE)
-	var origin := move_origin if fingers.values().has("move") else Vector2(size.x * 0.13, size.y * 0.74)
+	var origin := move_origin if not editing and fingers.values().has("move") else control_point("move")
 	draw_arc(origin, 65 * hud_scale, 0, TAU, 48, Color(0.8, 0.85, 0.9, 0.24), 2.0)
 	draw_circle(origin + Vector2(movement.x, -movement.y) * 40 * hud_scale, 23 * hud_scale, Color(0.8, 0.85, 0.9, 0.25))
 	if editing:
-		draw_string(font, Vector2(size.x * 0.30, size.y * 0.45), "DRAG BUTTONS  /  ESC TO SAVE", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color(0.9, 0.78, 0.5))
+		draw_string(font, Vector2(size.x * 0.30, size.y * 0.45), "DRAG CONTROLS  /  TAP SAVE ABOVE", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color(0.9, 0.78, 0.5))

@@ -5,7 +5,9 @@ static func scaled_rect(viewport_size: Vector2, window_size: Vector2, screen_saf
 	if window_size.x <= 0 or window_size.y <= 0: return Rect2(Vector2.ZERO, viewport_size)
 	var scale := viewport_size / window_size
 	var bounds := Rect2(Vector2.ZERO, viewport_size)
-	return Rect2(screen_safe.position * scale, screen_safe.size * scale).intersection(bounds)
+	var mapped := Rect2(screen_safe.position * scale, screen_safe.size * scale).intersection(bounds)
+	# Devices may return an empty/stale safe area during orientation changes.
+	return mapped if mapped.has_area() else bounds
 
 static func viewport_rect(viewport_size: Vector2) -> Rect2:
 	if OS.get_name() not in ["Android", "iOS"]:
