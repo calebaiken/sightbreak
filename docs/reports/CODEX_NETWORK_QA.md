@@ -34,3 +34,17 @@ The environment proxy currently prevents posting this report to PR #1. No commen
 ## Quality gates
 
 The 8.5/10 target remains required. No blanket passing score is assigned. Networking privacy, prediction, Internet security, sustained performance, mobile devices and final integration remain **UNVERIFIED / NOT ACCEPTED**. Passing baseline tests do not establish those gates. The reviewer is a separate AI agent; this is not an external security audit or human acceptance.
+
+## Phase B — bounded state privacy
+
+Implemented recipient-specific welcome/snapshots, explicit field authorization, static-cover relevance, conservative opaque-smoke filtering, dead-teammate viewpoints, private objective activity, scoped impacts and unattributed hidden gunfire. Client revocation removes cached geometry/collision and snaps reappearing actors to their first authorized position. Native smoke replication now applies authority age without competing growth tweens. Details and disclosure limits: [STATE_PRIVACY.md](../network/STATE_PRIVACY.md).
+
+- Maintained privacy suite: **55/55**; smoke presentation **26/26**; match rules **75/75**; two real ENet clients pass movement, reconnect, feedback and received-dictionary permission checks.
+- Independent reviewer: external first-spawn/reveal error **0 m**; visible feet through low cover preserved; silent hidden cloud absent; event-before-snapshot audio preserved; initial and updated mature-cloud scale correct. **494 malformed-field mutations: 55 accepted/applied safely, 439 rejected, no script errors**.
+- Native demo + match/cosmetic lifecycle rerun: passed, 11 + 19 checks; cosmetic texture bytes stable at 4,350,915. These are software-rendered observations.
+- Independent review accepts a bounded development commit subject to full regression results and the Claude dependency. It explicitly does not award initiative-wide 8.5 scores, production acceptance or merge authorization.
+- The first implementation failed independent low-opening, first-pose, malformed-crouch, smoke-rim and replica-age probes. Each was corrected and retested; this report does not suppress those intermediate defects.
+
+Tested Phase B implementation commit: `728e634f242a21ed5319f7917afda4aa721c4821` (subsequent documentation commits do not change implementation). Full aggregate rerun: all checks through HUD ran; exactly the same ten Unicode failures stopped the aggregate. Every later suite was executed separately: economy/native network passed, PostgreSQL 48 passed, native HTTP economy 14/14, conservation simulation and ten manifest tests passed. No test was removed or declared passed after failing.
+
+Independent evidence: `/workspace/reviews/competitive-independent/PHASE_B_REVIEW.md`, source hashes and probes beside it. Maintained logs: `/workspace/reviews/competitive-privacy.log`, `competitive-network.log`, `competitive-phaseb-render.log`, `competitive-phaseb-full.log`, `competitive-phaseb-remaining.log` and `competitive-phaseb-protocol-final.log`. The existing Unicode HUD failure remains an integration blocker.
