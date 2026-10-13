@@ -33,6 +33,8 @@ var _materials: Dictionary = {}
 var _box_visuals: Array[MeshInstance3D] = []
 var presentation_stats: Dictionary = {}
 var roof_equipment_bounds: Array[AABB] = []
+## Footprints of solids that stand on the yard floor, for contact occlusion.
+var contact_footprints: Array[Rect2] = []
 ## Thinner geometry, flat ground markings and text cannot cast a shadow that
 ## reads at shadow-map resolution, so they skip every shadow pass.
 const SHADOW_MIN_THICKNESS := 0.06
@@ -46,6 +48,7 @@ func _ready() -> void:
 	name = "RelayYard"
 	_build()
 	_batch_static_boxes()
+	_build_contact_occlusion()
 	_build_navigation()
 
 func _material(color: Color, roughness: float = 0.85, emission: bool = false, surface: String = "") -> StandardMaterial3D:
@@ -95,6 +98,8 @@ func _box(at: Vector3, size: Vector3, color: Color, solid: bool = true, nav_bloc
 		node.add_child(collision)
 		if nav_block:
 			_obstacles.append(AABB(at - size * 0.5, size).grow(0.55))
+		if absf(at.y - size.y * 0.5) < 0.05:
+			contact_footprints.append(Rect2(Vector2(at.x - size.x * 0.5, at.z - size.z * 0.5), Vector2(size.x, size.z)))
 	return node
 
 func _label(text: String, at: Vector3, color: Color, size: int = 110, turn: float = 0.0) -> void:
@@ -141,6 +146,16 @@ func _build() -> void:
 	env.ambient_light_color = Color("aabfcf")
 	env.ambient_light_energy = 0.41
 	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
+	# Depth-range haze only beyond the play space: the far hall and skyline gain
+	# separation while every sightline inside the 48 m yard keeps full contrast.
+	env.fog_enabled = true
+	env.fog_mode = Environment.FOG_MODE_DEPTH
+	env.fog_depth_begin = 34.0
+	env.fog_depth_end = 140.0
+	env.fog_depth_curve = 1.6
+	env.fog_density = 0.45
+	env.fog_light_color = Color("a3b2b9")
+	env.fog_sky_affect = 0.0
 	environment.environment = env
 	add_child(environment)
 	var sun := DirectionalLight3D.new()
@@ -357,6 +372,44 @@ static func casts_visible_shadow(size: Vector3, origin: Vector3) -> bool:
 		return false
 	# Resurfacing patches and lane paint lie on the ground and shadow nothing.
 	return not (size.y < 0.05 and origin.y < 0.1)
+
+## Soft darkening where solids meet the floor, one multiply-blended draw for the
+## whole yard. It grounds cargo and walls on every preset, including Low, which
+## has no sun shadows. It is presentation only: no collision or visibility change.
+func _build_contact_occlusion() -> void:
+	var builder := SurfaceTool.new()
+	builder.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var shades := [Color(0.6, 0.62, 0.64), Color(0.86, 0.87, 0.88), Color.WHITE]
+	for footprint in contact_footprints:
+		var margin := clampf(minf(footprint.size.x, footprint.size.y) * 0.25 + 0.35, 0.45, 0.9)
+		var rings := [footprint, footprint.grow(margin * 0.4), footprint.grow(margin)]
+		for ring in range(2):
+			var inner: Rect2 = rings[ring]
+			var outer: Rect2 = rings[ring + 1]
+			var a := [inner.position, Vector2(inner.end.x, inner.position.y), inner.end, Vector2(inner.position.x, inner.end.y)]
+			var b := [outer.position, Vector2(outer.end.x, outer.position.y), outer.end, Vector2(outer.position.x, outer.end.y)]
+			for side in range(4):
+				var next := (side + 1) % 4
+				var quad := [[a[side], shades[ring]], [b[side], shades[ring + 1]], [b[next], shades[ring + 1]], [a[side], shades[ring]], [b[next], shades[ring + 1]], [a[next], shades[ring]]]
+				for corner in quad:
+					builder.set_color(corner[1])
+					builder.set_normal(Vector3.UP)
+					builder.add_vertex(Vector3(corner[0].x, 0.036, corner[0].y))
+	var visual := MeshInstance3D.new()
+	visual.name = "ContactOcclusion"
+	visual.mesh = builder.commit()
+	var material := StandardMaterial3D.new()
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.blend_mode = BaseMaterial3D.BLEND_MODE_MUL
+	material.vertex_color_use_as_albedo = true
+	material.vertex_color_is_srgb = true
+	material.depth_draw_mode = BaseMaterial3D.DEPTH_DRAW_DISABLED
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	material.disable_fog = true
+	visual.material_override = material
+	visual.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add_child(visual)
+	presentation_stats["contact_footprints"] = contact_footprints.size()
 
 func _batch_static_boxes() -> void:
 	# Shared unit-cube mesh. Boxes that differ only in albedo share one vertex-color

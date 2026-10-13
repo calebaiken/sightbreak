@@ -61,6 +61,10 @@ func _run() -> void:
 	check(header != null and occluders == 0, "transfer hall header is in front of every column and rib (%d occluders)" % occluders)
 	var sun: DirectionalLight3D = arena.find_children("*", "DirectionalLight3D", true, false)[0]
 	check(sun.directional_shadow_mode == DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS and sun.directional_shadow_max_distance <= 60.0, "two shadow cascades cover the 48 m yard")
+	var contact: MeshInstance3D = arena.get_node("ContactOcclusion")
+	check(contact.cast_shadow == GeometryInstance3D.SHADOW_CASTING_SETTING_OFF and (contact.material_override as StandardMaterial3D).blend_mode == BaseMaterial3D.BLEND_MODE_MUL and stats.contact_footprints >= 20, "contact occlusion is one unshadowed multiply draw for every grounded solid")
+	var environment: Environment = arena.find_children("*", "WorldEnvironment", true, false)[0].environment
+	check(environment.fog_mode == Environment.FOG_MODE_DEPTH and environment.fog_depth_begin >= 30.0, "distance haze starts beyond in-yard sightlines")
 	var tinted := true
 	for child in arena.get_children():
 		if child is MultiMeshInstance3D:
