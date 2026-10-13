@@ -163,7 +163,7 @@ func snapshot(match_node: Node3D, recipient_id: int) -> Dictionary:
 		if child is SBUtility and utility_relevant(match_node, viewer, eye, child):
 			# No owner attribution or private inventory count.
 			utilities.append({"id": child.get_instance_id(), "kind": child.kind, "position": child.position, "detonated": child._detonated, "life": child._lifetime})
-	return {"actors": states, "utilities": utilities, "humans": match_node._peer_actors.values(),
+	return {"tick": match_node._simulation_tick, "epoch": match_node._snapshot_generation, "actors": states, "utilities": utilities, "humans": match_node._peer_actors.values(),
 		"contributions": match_node.objective_contributions.duplicate(), "reward_status": match_node.reward_status,
 		"phase": match_node.phase, "round": match_node.round_number, "attack": match_node.attack_score,
 		"defend": match_node.defend_score, "time": match_node.time_left,

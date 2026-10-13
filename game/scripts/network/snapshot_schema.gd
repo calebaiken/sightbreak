@@ -10,6 +10,9 @@ static func vector(value: Variant) -> bool:
 static func valid(data: Dictionary) -> bool:
 	if data.size() > 24 or not data.get("actors") is Array or data.actors.size() != 10:
 		return false
+	for field: String in ["tick", "epoch"]:
+		if not data.get(field) is int or data[field] < 0:
+			return false
 	if not data.get("phase") in ["waiting", "buy", "live", "post", "match_over"] or not data.get("objective") in ["unknown", "carried", "dropped", "planted", "defused", "detonated"]:
 		return false
 	for field: String in ["round", "attack", "defend", "time", "objective_timer", "carrier", "elapsed"]:

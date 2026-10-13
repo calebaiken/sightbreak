@@ -10,7 +10,7 @@ signal elimination_reported(killer_id: int, victim_id: int, headshot: bool)
 ## gameplay RPC. Godot routes RPCs by method index, so builds whose RPC methods,
 ## arguments or snapshot meaning differ must never be admitted together; they would
 ## stall silently. Bump this with any such change. 0.3.0 had no handshake.
-const PROTOCOL_VERSION := 3
+const PROTOCOL_VERSION := 4
 const HANDSHAKE_SECONDS := 5.0
 const JOIN_TIMEOUT_SECONDS := 20.0
 const HELLO_LIMIT := 512
@@ -48,6 +48,9 @@ var _damage_history: Dictionary = {}
 var _interactions: Dictionary = {}
 var _gate := SBInputGate.new()
 var _privacy := SBStatePrivacy.new()
+var _replica_buffer := SBSnapshotBuffer.new()
+var _simulation_tick := 0
+var _snapshot_generation := 0
 var _local_input: Dictionary = {"move": Vector2.ZERO, "look": Vector2.ZERO}
 var _snapshot_clock: float = 0.0
 var _input_clock: float = 0.0
@@ -86,6 +89,7 @@ var _rng := RandomNumberGenerator.new()
 
 func configure(settings: Dictionary) -> void:
 	options = settings.duplicate()
+	_replica_buffer.delay_seconds = clampf(float(options.get("interpolation_delay", 0.10)), 0.05, 0.20)
 	reconnect_token = str(options.get("reconnect_token", ""))
 
 func _ready() -> void:
@@ -195,7 +199,25 @@ func _physics_process(delta: float) -> void:
 	_update_spectator()
 	_update_device_visual(delta)
 
+func _process(delta: float) -> void:
+	if _authority or connection_state != "connected":
+		return
+	_replica_buffer.advance(delta)
+	for actor: SBActor in actors.values():
+		if actor.actor_id == local_id or not actor.visible:
+			continue
+		var pose := _replica_buffer.sample(actor.actor_id)
+		if pose.is_empty():
+			continue
+		actor.global_position = pose.position
+		actor.velocity = pose.velocity
+		actor.yaw = pose.yaw
+		actor.pitch = pose.pitch
+		actor.rotation.y = actor.yaw
+	_update_spectator()
+
 func _authority_tick(delta: float) -> void:
+	_simulation_tick += 1
 	if not _handshake_drops.is_empty():
 		_drop_rejected_peers()
 	_bot_clock -= delta
@@ -230,9 +252,9 @@ func _authority_tick(delta: float) -> void:
 				_end_round(1, "Time expired")
 			elif phase == "post":
 				_begin_round()
-	_snapshot_clock -= delta
-	if options.get("mode", "offline") == "server" and _snapshot_clock <= 0:
-		_snapshot_clock = 0.05
+	# 60 Hz physics / three ticks = exact 20 Hz. A float countdown previously
+	# retained a positive residue on tick three and actually replicated at 15 Hz.
+	if options.get("mode", "offline") == "server" and _simulation_tick % 3 == 0:
 		for peer_id: int in _active_peers():
 			var packed: PackedByteArray = var_to_bytes(_snapshot(int(_peer_actors[peer_id]))).compress(FileAccess.COMPRESSION_DEFLATE)
 			_snapshot_rpc.rpc_id(peer_id, packed)
@@ -241,6 +263,7 @@ func _is_bot(id: int) -> bool:
 	return id != local_id and not (_peer_actors.values() if _authority else _connected_actor_ids).has(id)
 
 func _begin_round() -> void:
+	_snapshot_generation += 1
 	for child: Node in get_children():
 		if child is SBUtility:
 			child.queue_free()
@@ -636,6 +659,7 @@ func _host() -> void:
 	print("SIGHTBREAK_SERVER_READY port=%d" % int(options.get("port", 27020)))
 
 func _connect_client() -> void:
+	_replica_buffer.clear()
 	connection_state = "connecting"
 	_state_clock = 0.0
 	var api := multiplayer as SceneMultiplayer
@@ -760,6 +784,7 @@ func _server_disconnected() -> void:
 	if connection_state == "failed":
 		return
 	connection_state = "reconnecting"
+	_replica_buffer.clear()
 	_reconnect_clock = 2
 	_reconnect_attempts = 0
 	notification.emit("Server disconnected. Attempting to reconnect…")
@@ -968,10 +993,13 @@ func _snapshot(recipient_id: int = 0) -> Dictionary:
 	var states: Array = []
 	for actor: SBActor in actors.values():
 		states.append(actor.snapshot())
-	return {"actors": states, "utilities": utilities, "humans": _peer_actors.values(), "contributions": objective_contributions, "reward_status": reward_status, "phase": phase, "round": round_number, "attack": attack_score, "defend": defend_score, "time": time_left, "objective": objective_state, "objective_timer": objective_timer, "objective_position": objective_position, "carrier": objective_carrier, "interactions": _interactions, "elapsed": _elapsed}
+	return {"tick": _simulation_tick, "epoch": _snapshot_generation, "actors": states, "utilities": utilities, "humans": _peer_actors.values(), "contributions": objective_contributions, "reward_status": reward_status, "phase": phase, "round": round_number, "attack": attack_score, "defend": defend_score, "time": time_left, "objective": objective_state, "objective_timer": objective_timer, "objective_position": objective_position, "carrier": objective_carrier, "interactions": _interactions, "elapsed": _elapsed}
 
 func _apply_snapshot(data: Dictionary) -> void:
 	if not SBSnapshotSchema.valid(data):
+		return
+	var discontinuity := int(data.epoch) != _replica_buffer.epoch
+	if not _authority and not _replica_buffer.push(int(data.tick), float(data.elapsed), int(data.epoch), data.actors):
 		return
 	reward_status = str(data.get("reward_status", "unranked"))
 	_connected_actor_ids = data.get("humans", [])
@@ -993,6 +1021,9 @@ func _apply_snapshot(data: Dictionary) -> void:
 		if not actors.has(id):
 			_spawn_actor(id, int(state.team), str(state.get("name", "Operator")))
 		var actor: SBActor = actors[id]
+		var previous_position := actor.global_position
+		var previous_yaw := actor.yaw
+		var previous_pitch := actor.pitch
 		var relevant: bool = state.get("relevant", true)
 		if not relevant:
 			# Erase cached spatial/private state on revocation. A modified client
@@ -1005,7 +1036,14 @@ func _apply_snapshot(data: Dictionary) -> void:
 					presentation[field] = 0
 			if not presentation.has("inventory"):
 				presentation.inventory = []
-			actor.apply_snapshot(presentation, 1.0 if newly_spawned or not actor.visible else 0.05)
+			var snap := newly_spawned or not actor.visible or discontinuity
+			actor.apply_snapshot(presentation, 1.0 if snap else 0.05)
+			if not _authority and id != local_id and not snap:
+				# Metadata is current; transforms advance only on the render timeline.
+				actor.global_position = previous_position
+				actor.yaw = previous_yaw
+				actor.pitch = previous_pitch
+				actor.rotation.y = previous_yaw
 		actor.display_name = state.name
 		actor.visible = relevant
 		actor.collision_layer = 2 if relevant else 0
@@ -1163,6 +1201,7 @@ func _reset_server_match() -> void:
 		if child is SBUtility:
 			child.queue_free()
 	actors.clear()
+	_snapshot_generation += 1
 	_gate = SBInputGate.new()
 	_bot_state.clear()
 	_account_ids.clear()
