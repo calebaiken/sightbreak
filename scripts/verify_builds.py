@@ -95,12 +95,13 @@ def main():
     no_test_harnesses(ios_paths)
     with (ios / "sightbreak/sightbreak-Info.plist").open("rb") as stream:
         plist = plistlib.load(stream)
-    assert plist["CFBundleIdentifier"] == "com.sightbreak.game"
+    assert plist["CFBundleIdentifier"] == "$(PRODUCT_BUNDLE_IDENTIFIER)"
     assert plist["NSLocalNetworkUsageDescription"]
     assert plist["UISupportedInterfaceOrientations"]
     assert all("Landscape" in value for value in plist["UISupportedInterfaceOrientations"])
     project = (ios / "sightbreak.xcodeproj/project.pbxproj").read_text()
     assert "UNSIGNED00" not in project and 'DEVELOPMENT_TEAM = "";' in project
+    assert "PRODUCT_BUNDLE_IDENTIFIER = com.sightbreak.game;" in project
     assert source()["source_content_sha256"] == build_source["source_content_sha256"], "Game changed during verification"
     report = {**build_source, "passed": True, "linux_menu_smoke": True, "linux_demo_120_frames": True,
               "linux_pck_resources": len(linux_paths), "android_assets": len(android_paths), "ios_pck_resources": len(ios_paths),
