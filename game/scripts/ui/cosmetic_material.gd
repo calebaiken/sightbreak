@@ -20,6 +20,8 @@ uniform int finish_family = 0;
 uniform float detail = 0.0;
 uniform sampler2D detail_orm : hint_default_white, filter_linear_mipmap;
 uniform sampler2D detail_normal : hint_normal, filter_linear_mipmap;
+// Without a skin (patterned = 0) an authored model shows its own baked surface.
+uniform sampler2D detail_albedo : source_color, hint_default_white, filter_linear_mipmap;
 varying vec3 local_position;
 void vertex() { local_position = VERTEX; }
 void fragment() {
@@ -41,19 +43,26 @@ void fragment() {
  ALBEDO = mix(paint, vec3(0.30,0.32,0.34), abrasion*wear*0.55);
  ROUGHNESS = 0.29 + wear*0.38 + abrasion*0.06;
  METALLIC = 0.66 - wear*0.14;
- float occlusion = mix(1.0, texture(detail_orm, UV).r, detail);
+ vec3 orm = texture(detail_orm, UV).rgb;
+ float occlusion = mix(1.0, orm.r, detail);
  ALBEDO *= mix(0.6, 1.0, occlusion);
+ float baked = detail * (1.0 - patterned);
+ ALBEDO = mix(ALBEDO, texture(detail_albedo, UV).rgb, baked);
+ ROUGHNESS = mix(ROUGHNESS, orm.g, baked);
+ METALLIC = mix(METALLIC, orm.b, baked);
  AO = occlusion;
  NORMAL_MAP = mix(vec3(0.5, 0.5, 1.0), texture(detail_normal, UV).rgb, detail);
 }"""
 
 ## Assigns one finish to every paint part, binding baked detail when the parts
-## carry it (authored models set detail_orm/detail_normal metadata).
+## carry it (authored models set detail_orm/detail_normal/detail_albedo metadata).
+## With no skin, the authored model keeps its baked albedo, roughness and metal.
 static func apply(material: ShaderMaterial, parts: Array) -> void:
 	for part: MeshInstance3D in parts:
 		if part.has_meta("detail_orm"):
 			material.set_shader_parameter("detail_orm", part.get_meta("detail_orm"))
 			material.set_shader_parameter("detail_normal", part.get_meta("detail_normal"))
+			material.set_shader_parameter("detail_albedo", part.get_meta("detail_albedo"))
 			material.set_shader_parameter("detail", 1.0)
 			break
 	for part: MeshInstance3D in parts:

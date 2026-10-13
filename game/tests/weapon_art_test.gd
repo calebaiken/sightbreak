@@ -73,6 +73,9 @@ func _run() -> void:
 	var plain := CosmeticMaterial.finish({})
 	CosmeticMaterial.apply(plain, [])
 	check(plain.get_shader_parameter("detail") == null or plain.get_shader_parameter("detail") == 0.0, "finishes without authored parts leave detail at its 0 default")
+	var unskinned := CosmeticMaterial.finish({})
+	CosmeticMaterial.apply(unskinned, parts.paint)
+	check(unskinned.get_shader_parameter("patterned") == 0.0 and unskinned.get_shader_parameter("detail_albedo") != null, "without a skin the authored receiver shows its baked surface")
 
 	var upright := Node3D.new()
 	root.add_child(upright)

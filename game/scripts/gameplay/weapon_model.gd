@@ -21,6 +21,7 @@ const RELAY_AR := "res://assets/weapons/relay_ar/relay_ar.glb"
 const RELAY_AR_MATERIAL := "res://assets/weapons/relay_ar/relay_ar_body.tres"
 const RELAY_AR_ORM := "res://assets/weapons/relay_ar/relay_ar_orm.png"
 const RELAY_AR_NORMAL := "res://assets/weapons/relay_ar/relay_ar_normal.png"
+const RELAY_AR_ALBEDO := "res://assets/weapons/relay_ar/relay_ar_albedo.png"
 ## Gloved hands and sleeves posed on this rifle (tools/art/relay_ar_hands.py).
 const RELAY_AR_HANDS := "res://assets/weapons/relay_ar/relay_ar_hands.glb"
 const RELAY_AR_HANDS_MATERIAL := "res://assets/weapons/relay_ar/relay_ar_hands.tres"
@@ -31,9 +32,9 @@ const RELAY_AR_HANDS_MATERIAL := "res://assets/weapons/relay_ar/relay_ar_hands.t
 static var relay_ar_scale := 1.0
 static var relay_ar_rotation := Vector3(0.06, 0.12, -0.30)
 static var relay_ar_offset := Vector3(-0.045, 0.065, 0.10) - Basis.from_euler(Vector3(0.06, 0.12, -0.30)) * Vector3(0.024, 0.031, -0.13)
-## Inspection and other hand-less builds keep the rifle upright, centred where the
-## procedural rifle's bounds were, so existing studio framing still applies.
-const RELAY_AR_UPRIGHT_OFFSET := Vector3(0, -0.015, -0.111)
+## Inspection and other hand-less builds keep the rifle upright, centred in the
+## existing studio framing (the studio's yaw brings the muzzle end nearer the camera).
+const RELAY_AR_UPRIGHT_OFFSET := Vector3(0, -0.015, -0.07)
 ## Captures switch this off for before/after comparisons; gameplay never reads it.
 static var use_authored := true
 
@@ -80,6 +81,7 @@ static func _pack(id: String, hands: bool) -> PackedScene:
 		for part in model._paint_parts:
 			part.set_meta("detail_orm", load(RELAY_AR_ORM))
 			part.set_meta("detail_normal", load(RELAY_AR_NORMAL))
+			part.set_meta("detail_albedo", load(RELAY_AR_ALBEDO))
 	model._muzzle.set_meta("weapon_role", "muzzle")
 	if model._ejection != Vector3.INF:
 		root.set_meta("ejection", model._ejection)
