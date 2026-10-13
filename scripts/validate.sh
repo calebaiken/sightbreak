@@ -25,6 +25,7 @@ run_godot touch --headless --script res://tests/touch_test.gd
 run_godot main --headless --script res://tests/main_test.gd
 run_godot landscape --headless --script res://tests/landscape_ui_test.gd
 run_godot ux-contract --headless --script res://tests/ux_contract_test.gd
+run_godot hud-overflow --headless --script res://tests/hud_overflow_test.gd
 run_godot economy-ui --headless --script res://tests/economy_ui_test.gd
 run_godot economy-recovery --headless --script res://tests/economy_recovery_test.gd
 run_godot cosmetics --headless --script res://tests/cosmetic_presentation_test.gd

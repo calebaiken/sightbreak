@@ -13,6 +13,8 @@ const GOLD := Design.GOLD
 const CRIMSON := Design.CRIMSON
 const KILL_FEED_SECONDS := 5.0
 const KILL_FEED_ROWS := 4
+const KILL_FEED_GAP := 3
+const KILL_FEED_SEPARATION := 6
 const TEXT_SCALES := [0.9, 1.0, 1.15, 1.3]
 const WEAPON_ROLES := {"sidearm": "SIDEARM", "smg": "SMG", "rifle": "RIFLE", "marksman": "MARKSMAN"}
 var profile = Profile.new()
@@ -41,6 +43,7 @@ var radar: Control
 var attack_pips: Control
 var defend_pips: Control
 var kill_feed: VBoxContainer
+var kill_feed_frame: Control
 var objective_bar: ProgressBar
 var score_panel: PanelContainer
 var overlay: Control
@@ -647,11 +650,26 @@ func build_hud() -> void:
 	action_label = wrapped_label("", Design.TYPE_BODY, GOLD)
 	action_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	side_stack.add_child(action_label)
+	# A plain Control, unlike a container, ignores its children's minimum size, so
+	# no display name can widen the HUD, move the score or push the ammunition
+	# off-screen. add_kill_feed() fits each row to this frame's width.
+	kill_feed_frame = Control.new()
+	kill_feed_frame.name = "KillFeedFrame"
+	kill_feed_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	kill_feed_frame.clip_contents = true
+	side_stack.add_child(kill_feed_frame)
+	# Height for exactly KILL_FEED_ROWS rows, measured in the tree at the current text size.
+	var probe := label("Ag", Design.TYPE_SMALL)
+	kill_feed_frame.add_child(probe)
+	var row_height := ceilf(probe.get_combined_minimum_size().y + _kill_feed_style(false).get_minimum_size().y)
+	probe.free()
+	kill_feed_frame.custom_minimum_size.y = KILL_FEED_ROWS * row_height + (KILL_FEED_ROWS - 1) * KILL_FEED_GAP
 	kill_feed = VBoxContainer.new()
 	kill_feed.name = "KillFeed"
 	kill_feed.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	kill_feed.add_theme_constant_override("separation", 3)
-	side_stack.add_child(kill_feed)
+	kill_feed.add_theme_constant_override("separation", KILL_FEED_GAP)
+	kill_feed.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	kill_feed_frame.add_child(kill_feed)
 	var space := Control.new()
 	space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	space.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -671,6 +689,7 @@ func build_hud() -> void:
 	var vitals := _hud_block(HORIZONTAL_ALIGNMENT_LEFT)
 	bottom.add_child(vitals)
 	health_label = wrapped_label("100  ·  HEALTH", 22)
+	health_label.name = "Health"
 	health_label.add_theme_font_override("font", Design.heading_font())
 	health_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.8))
 	health_label.add_theme_constant_override("shadow_offset_y", 2)
@@ -691,10 +710,12 @@ func build_hud() -> void:
 	var loadout := _hud_block(HORIZONTAL_ALIGNMENT_RIGHT)
 	bottom.add_child(loadout)
 	ammo_label = wrapped_label("12 / 36", 22)
+	ammo_label.name = "Ammo"
 	ammo_label.add_theme_font_override("font", Design.heading_font())
 	ammo_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	loadout.add_child(ammo_label)
 	utility_label = wrapped_label("", Design.TYPE_MICRO + 1, MUTED)
+	utility_label.name = "Utility"
 	utility_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	loadout.add_child(utility_label)
 	crosshair = Control.new()
@@ -751,22 +772,79 @@ func add_kill_feed(killer_id: int, victim_id: int, headshot: bool) -> void:
 	var entry := PanelContainer.new()
 	entry.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	entry.size_flags_horizontal = Control.SIZE_SHRINK_END
-	entry.add_theme_stylebox_override("panel", Design.box(Color(Design.OBSIDIAN, 0.62), GOLD if involved else Color.TRANSPARENT, 1, Vector2(8, 3)))
+	var style := _kill_feed_style(involved)
+	entry.add_theme_stylebox_override("panel", style)
 	var row := HBoxContainer.new()
 	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	row.add_theme_constant_override("separation", 6)
+	row.add_theme_constant_override("separation", KILL_FEED_SEPARATION)
 	entry.add_child(row)
-	# Display names are user supplied: plain labels only, never rich text.
+	# Display names are user supplied: plain one-line labels only, never rich text.
+	var names: Array[Label] = []
 	if killer != null and killer != victim:
-		row.add_child(label(killer.display_name.left(16), Design.TYPE_SMALL, Design.squad_color(killer.team)))
-	row.add_child(label("HEADSHOT" if headshot else "›", Design.TYPE_MICRO, GOLD if headshot else MUTED, headshot))
-	row.add_child(label(victim.display_name.left(16), Design.TYPE_SMALL, Design.squad_color(victim.team)))
+		names.append(_kill_feed_name(killer))
+		row.add_child(names[-1])
+	var marker := label("HEADSHOT" if headshot else "›", Design.TYPE_MICRO, GOLD if headshot else MUTED, headshot)
+	row.add_child(marker)
+	names.append(_kill_feed_name(victim))
+	row.add_child(names[-1])
 	entry.set_meta("born", elapsed)
 	kill_feed.add_child(entry)
+	# Fit the row to the frame: names keep their natural width when they fit and
+	# otherwise share the remaining space, ending in an ellipsis. When space is
+	# tight the headshot marker shortens to "HS" before any name is cut.
+	var frame_width := kill_feed_frame.size.x if kill_feed_frame.size.x > 1.0 else 220.0
+	var widths: Array[float] = []
+	for name_label in names:
+		widths.append(_text_width(name_label, name_label.text) + 1.0)
+	var fixed := KILL_FEED_SEPARATION * names.size() + style.get_minimum_size().x + 2.0
+	if headshot and widths.reduce(func(total, width): return total + width, 0.0) + _text_width(marker, marker.text) + fixed > frame_width:
+		marker.text = "HS"
+	var budget := maxf(0.0, frame_width - fixed - _text_width(marker, marker.text))
+	if names.size() == 2 and widths[0] + widths[1] > budget:
+		var share := budget * 0.5
+		if widths[0] < share: widths[1] = budget - widths[0]
+		elif widths[1] < share: widths[0] = budget - widths[1]
+		else: widths = [share, share]
+	elif names.size() == 1:
+		widths[0] = minf(widths[0], budget)
+	for index in range(names.size()):
+		var fitted := _fit_text(names[index], names[index].text, maxf(24.0, floorf(widths[index])))
+		names[index].text = fitted
+		names[index].custom_minimum_size.x = ceilf(_text_width(names[index], fitted))
 	while kill_feed.get_child_count() > KILL_FEED_ROWS:
 		var oldest := kill_feed.get_child(0)
 		kill_feed.remove_child(oldest)
 		oldest.queue_free()
+
+func _kill_feed_name(actor: SBActor) -> Label:
+	var full_name := Design.plain_line(actor.display_name, 24)
+	var name_label := label(full_name, Design.TYPE_SMALL, Design.squad_color(actor.team))
+	name_label.set_meta("full_name", full_name)
+	return name_label
+
+## Longest prefix of text that fits width with an explicit trailing ellipsis,
+## measured in the label's own font. Godot's built-in overrun can drop the
+## ellipsis when the cut text exactly fills the width, so it is not relied on.
+func _fit_text(node: Label, text: String, width: float) -> String:
+	if _text_width(node, text) <= width:
+		return text
+	var room := width - _text_width(node, "…")
+	var cut := text.length() - 1
+	while cut > 0:
+		# Never separate a base character from the marks that modify it.
+		if not _continues_cluster(text.unicode_at(cut)) and _text_width(node, text.left(cut)) <= room:
+			break
+		cut -= 1
+	return text.left(cut).strip_edges(false, true) + "…"
+
+static func _continues_cluster(code: int) -> bool:
+	return (code >= 0x0300 and code <= 0x036F) or (code >= 0x1AB0 and code <= 0x1AFF) or (code >= 0x1DC0 and code <= 0x1DFF) or (code >= 0x20D0 and code <= 0x20FF) or (code >= 0xFE00 and code <= 0xFE0F) or (code >= 0xFE20 and code <= 0xFE2F) or (code >= 0x1F3FB and code <= 0x1F3FF) or (code >= 0xE0100 and code <= 0xE01EF)
+
+func _kill_feed_style(involved: bool) -> StyleBoxFlat:
+	return Design.box(Color(Design.OBSIDIAN, 0.62), GOLD if involved else Color.TRANSPARENT, 1, Vector2(8, 3))
+
+func _text_width(node: Label, text: String) -> float:
+	return node.get_theme_font("font").get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, node.get_theme_font_size("font_size")).x
 
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
