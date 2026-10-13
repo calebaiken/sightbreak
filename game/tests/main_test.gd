@@ -15,6 +15,15 @@ func run() -> void:
 	root.add_child(main)
 	await frames(3)
 	check(main.screen == "menu" and main.menu_camera.current, "Native main menu and3D preview start")
+	var original_quality: int = int(main.profile.data.settings.graphics_quality)
+	main.profile.data.settings.graphics_quality = 0
+	main.apply_settings()
+	check(not SBUtility.high_quality_smoke, "Low graphics preset selects the lower transparent smoke-puff budget")
+	main.profile.data.settings.graphics_quality = 1
+	main.apply_settings()
+	check(SBUtility.high_quality_smoke, "Standard graphics preset restores full bounded smoke presentation")
+	main.profile.data.settings.graphics_quality = original_quality
+	main.apply_settings()
 	main.show_settings()
 	await frames(2)
 	check(main.screen == "settings", "Settings screen opens")

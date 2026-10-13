@@ -425,6 +425,7 @@ func apply_settings() -> void:
 	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(0.001, float(profile.data.settings.volume))))
 	if not is_inside_tree(): return
 	var high_quality := int(profile.data.settings.graphics_quality) > 0
+	SBUtility.high_quality_smoke = high_quality
 	get_viewport().msaa_3d = Viewport.MSAA_2X if high_quality else Viewport.MSAA_DISABLED
 	for light in find_children("*", "DirectionalLight3D", true, false): light.shadow_enabled = high_quality
 	for node in find_children("*", "Node3D", true, false):
