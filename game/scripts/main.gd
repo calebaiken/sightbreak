@@ -817,10 +817,26 @@ func add_kill_feed(killer_id: int, victim_id: int, headshot: bool) -> void:
 		oldest.queue_free()
 
 func _kill_feed_name(actor: SBActor) -> Label:
-	var full_name := Design.plain_line(actor.display_name, 24)
+	var full_name := _limit_stacked_marks(Design.plain_line(actor.display_name, 24))
 	var name_label := label(full_name, Design.TYPE_SMALL, Design.squad_color(actor.team))
 	name_label.set_meta("full_name", full_name)
 	return name_label
+
+## Generic combining diacritics can be stacked into a column several rows tall
+## ("zalgo" text), which would push other kill-feed rows out of the clipped frame.
+## At most two follow any character. Script-specific marks (Indic, Thai, Arabic)
+## lie outside these blocks and are untouched.
+static func _limit_stacked_marks(text: String) -> String:
+	var result := ""
+	var run := 0
+	for index in range(text.length()):
+		var code := text.unicode_at(index)
+		var stacking := (code >= 0x0300 and code <= 0x036F) or (code >= 0x1AB0 and code <= 0x1AFF) \
+			or (code >= 0x1DC0 and code <= 0x1DFF) or (code >= 0x20D0 and code <= 0x20FF) or (code >= 0xFE20 and code <= 0xFE2F)
+		run = run + 1 if stacking else 0
+		if run <= 2:
+			result += String.chr(code)
+	return result
 
 ## Longest prefix of text that fits width with an explicit trailing ellipsis,
 ## measured in the label's own font. Godot's built-in overrun can drop the
