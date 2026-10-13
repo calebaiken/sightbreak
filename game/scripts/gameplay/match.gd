@@ -53,6 +53,7 @@ var _simulation_tick := 0
 var _snapshot_generation := 0
 var _input_stream := SBInputStream.new()
 var _prediction := SBMovementPrediction.new()
+var _prediction_enabled := false
 var _pending_reconciliation: Dictionary = {}
 var _last_input_sequence: Dictionary = {}
 var _local_input: Dictionary = {"move": Vector2.ZERO, "look": Vector2.ZERO}
@@ -93,6 +94,7 @@ var _rng := RandomNumberGenerator.new()
 
 func configure(settings: Dictionary) -> void:
 	options = settings.duplicate()
+	_prediction_enabled = bool(options.get("prediction", OS.get_cmdline_user_args().has("--network-prediction")))
 	_replica_buffer.delay_seconds = clampf(float(options.get("interpolation_delay", 0.10)), 0.05, 0.20)
 	reconnect_token = str(options.get("reconnect_token", ""))
 
@@ -218,7 +220,7 @@ func _process(delta: float) -> void:
 		actor.yaw = pose.yaw
 		actor.pitch = pose.pitch
 		actor.rotation.y = actor.yaw
-	if local_actor() != null and local_actor().alive and bool(options.get("prediction", true)):
+	if local_actor() != null and local_actor().alive and _prediction_enabled:
 		_prediction.present(local_actor(), delta)
 	_update_spectator()
 
@@ -824,12 +826,12 @@ func _client_tick(delta: float) -> void:
 		if not _pending_reconciliation.is_empty():
 			var previous_position := actor.global_position
 			actor.apply_snapshot(_pending_reconciliation.state, 1.0)
-			_prediction.reconcile(actor, _pending_reconciliation.state, int(_pending_reconciliation.epoch), previous_position, bool(options.get("prediction", true)))
+			_prediction.reconcile(actor, _pending_reconciliation.state, int(_pending_reconciliation.epoch), previous_position, _prediction_enabled)
 			_pending_reconciliation.clear()
 		var controls := _local_input.duplicate()
 		if phase != "live" or not actor.alive:
 			controls = {"move": Vector2.ZERO, "look": controls.get("look", Vector2(actor.yaw, actor.pitch))}
-		_prediction.predict(actor, controls, _replica_buffer.epoch, bool(options.get("prediction", true)))
+		_prediction.predict(actor, controls, _replica_buffer.epoch, _prediction_enabled)
 	if actor and actor.alive:
 		var look: Vector2 = _local_input.get("look", Vector2(actor.yaw, actor.pitch))
 		# Aim responds locally; movement replays against server acknowledgments.

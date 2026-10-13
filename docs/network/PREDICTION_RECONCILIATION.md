@@ -10,7 +10,7 @@ Arrival-clock corrections are slewed with a bounded positive rate. A sustained l
 
 Privacy revocation takes effect immediately. This favors withholding fresh hidden state; a delayed visible model may disappear before visually reaching cover. Conservative relevance margins reduce this at corners, but dynamic peeking still needs human/mobile review. Client collision capsules share delayed remote poses; prediction must account for that discrepancy instead of claiming deterministic cross-machine physics.
 
-## Local prediction — protocol 5 development implementation
+## Local prediction — protocol 5, opt-in development implementation
 
 `SBMovementStep` shares the original fixed-step actor movement with a client-only replay path. It never fires, reloads, damages, buys or awards anything. Clients generate numbered commands at 60 Hz and submit up to 12 redundant commands at 30 Hz. Compressed input is capped at 1,100 bytes (8 KiB decode ceiling); the server validates types, finite vectors, epoch, sequence window and packet rate. It processes at most one command per authority physics tick. Packets and client timestamps cannot grant simulation time.
 
@@ -18,7 +18,7 @@ Owner-only snapshots acknowledge the consumed/discarded command prefix and inclu
 
 Held controls survive short packet gaps, preventing synthetic semi-auto/jump/utility presses. After 300 ms of silence, authority movement/actions stop while edge state is retained until a real release. A backlog above six commands discards stale intent and retains the newest two: transient loss cannot permanently add input delay. This may discard a brief jump/fire/reload action during burst loss. No extra combat ticks compensate for discarded commands.
 
-Visual correction is limited to 0.35 m, exponentially decays, and ray-clamps the camera against static cover. Corrections over 2 m snap. The server remains final for collision and all competitive state. Godot floor/contact state is not fully serializable; dynamic actors use delayed replica collision poses. Ordinary corner and player collisions can therefore cause correction. This implementation is a development feature, not an accepted professional-feel or 8.5/10 quality claim.
+Visual correction is limited to 0.35 m, exponentially decays, and ray-clamps the camera against static cover. Corrections over 2 m snap. The server remains final for collision and all competitive state. Godot floor/contact state is not fully serializable; dynamic actors use delayed replica collision poses. Ordinary corner and player collisions can therefore cause correction. Independent review requires this implementation to remain **opt-in**: pass `-- --network-prediction` when launching a native network client, or set the internal development match option `prediction: true`. The normal client keeps authoritative local movement; C1 remote interpolation remains enabled. Real-map p95 acknowledgment divergence around 0.6 m is substantial compared with the visual correction cap. Prediction feel and the 8.5/10 quality gate remain **UNVERIFIED / NOT ACCEPTED**.
 
 Maintained movement replay: 725 checks, maximum 0.075834 m discrepancy in a six-step delayed static-world fixture covering forward/strafe/diagonal/reversal, jumping, landing, crouch, walls, epoch and reconnect. Input-stream tests cover bounded queues, immutable sequence identities, malformed input and recovery after a 200 ms burst outage. Real-process measurements and independent review are reported separately.
 
