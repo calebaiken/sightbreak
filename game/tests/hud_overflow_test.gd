@@ -5,6 +5,7 @@ extends SceneTree
 var checks := 0
 var failures := 0
 var capture_dir := ""
+var taller_face: FontVariation
 const SIZES := [Vector2i(960, 720), Vector2i(1180, 820), Vector2i(1280, 720), Vector2i(1560, 720), Vector2i(1600, 720)]
 ## Longest permitted names: the server keeps 24 characters (offline names allow 20).
 const NAMES := {
@@ -35,16 +36,27 @@ func capture(filename: String) -> void:
 	await RenderingServer.frame_post_draw
 	check(root.get_texture().get_image().save_png(capture_dir.path_join(filename + ".png")) == OK, "native screenshot written: " + filename)
 
-func run() -> void:
-	for argument in OS.get_cmdline_user_args():
-		if argument.begins_with("--capture-dir="):
-			capture_dir = argument.trim_prefix("--capture-dir=")
-			DirAccess.make_dir_recursive_absolute(capture_dir)
-	var main = load("res://main.tscn").instantiate()
-	root.add_child(main)
-	main.profile.data.settings.touch_visible = true
-	main.profile.data.settings.hud_positions = {}
-	await settle()
+## Which face the system supplies for a script the default font lacks varies by
+## machine: WenQuanYi Zen Hei fits the Latin line height, Noto Sans CJK is 2 px
+## taller at 14 px. The second pass makes the system's CJK face 6 px taller on
+## purpose, so a frame sized from Latin metrics fails on any machine with a CJK face.
+func use_taller_fallback() -> bool:
+	var sample: String = NAMES.unicode[1]
+	for path in OS.get_system_font_path_for_text("sans-serif", sample):
+		var face := FontFile.new()
+		if face.load_dynamic_font(path) != OK or not face.has_char(sample.unicode_at(0)):
+			continue
+		taller_face = FontVariation.new()
+		taller_face.base_font = face
+		taller_face.set_spacing(TextServer.SPACING_TOP, 3)
+		taller_face.set_spacing(TextServer.SPACING_BOTTOM, 3)
+		ThemeDB.fallback_font.fallbacks = [taller_face]
+		return true
+	return false
+
+## One pass over every size, text scale and name set. face "taller" runs only the
+## Latin and CJK sets, after use_taller_fallback().
+func run_pass(main: Node, face: String) -> void:
 	for text_scale in [1.0, 1.3]:
 		main.profile.data.settings.ui_text_scale = text_scale
 		for dimensions: Vector2i in SIZES:
@@ -57,7 +69,12 @@ func run() -> void:
 			var game = main.match_game
 			game.set_physics_process(false)
 			var score_x: float = main.score_label.get_global_rect().get_center().x
+			var resting := {}
+			for critical in [main.ammo_label, main.utility_label, main.health_label, main.score_label, main.radar, main.status_label]:
+				resting[critical] = critical.get_global_rect()
 			for set_name: String in NAMES:
+				if face == "taller" and set_name not in ["ordinary", "unicode"]:
+					continue
 				var pair: Array = NAMES[set_name]
 				game.actors[2].display_name = pair[0]
 				game.actors[7].display_name = pair[1]
@@ -66,10 +83,12 @@ func run() -> void:
 					game.elimination_reported.emit(2 if i % 2 == 0 else 7, 8 if i % 2 == 0 else 2, i % 3 == 0)
 				main._process(0.016)
 				await settle()
-				var label := "%s %s" % [context, set_name]
+				var label := "%s %s%s" % [context, set_name, " (taller CJK face)" if face == "taller" else ""]
 				check(absf(main.score_label.get_global_rect().get_center().x - dimensions.x * 0.5) < 1.0 and absf(main.score_label.get_global_rect().get_center().x - score_x) < 1.0, label + ": score stays centred")
 				for critical in [main.ammo_label, main.utility_label, main.health_label, main.score_label, main.radar]:
 					check(inside(critical.get_global_rect(), screen), label + ": %s stays on screen %s" % [critical.name, critical.get_global_rect()])
+				for critical: Control in resting:
+					check(critical.get_global_rect().position.is_equal_approx(resting[critical].position), label + ": %s does not move when the feed fills or grows" % critical.name)
 				var feed_rect: Rect2 = main.kill_feed.get_parent().get_global_rect() if main.kill_feed.get_parent() is Control else main.kill_feed.get_global_rect()
 				check(inside(feed_rect, screen), label + ": kill feed stays on screen")
 				check(not feed_rect.intersects(main.score_label.get_global_rect()) and not feed_rect.intersects(main.radar.get_global_rect()), label + ": kill feed clears score and radar")
@@ -92,12 +111,31 @@ func run() -> void:
 							check(name_label.text.ends_with("…") and full.begins_with(kept) and not kept.is_empty(), label + ": '%s' is a prefix of '%s' ending in an ellipsis" % [name_label.text, full])
 				if set_name == "ordinary":
 					check(not truncated, label + ": ordinary names are never shortened")
-				if set_name == "max_ascii" and text_scale == 1.0:
+					check(is_equal_approx(main.kill_feed_frame.custom_minimum_size.y, main.kill_feed_reserve), label + ": Latin rows keep the reserved frame height")
+				if set_name == "unicode" and face == "taller":
+					check(main.kill_feed_frame.size.y > main.kill_feed_reserve + 4, label + ": the taller face is in use and the frame grew to it (%.0f px, reserve %.0f px)" % [main.kill_feed_frame.size.y, main.kill_feed_reserve])
+				if set_name == "max_ascii" and text_scale == 1.0 and face == "system":
 					await capture("%dx%d-killfeed-max" % [dimensions.x, dimensions.y])
 				if set_name == "unicode" and text_scale == 1.3 and dimensions == Vector2i(1560, 720):
-					await capture("%dx%d-killfeed-unicode-130" % [dimensions.x, dimensions.y])
+					await capture("%dx%d-killfeed-unicode-130%s" % [dimensions.x, dimensions.y, "-taller-face" if face == "taller" else ""])
 			main.leave_match()
 			await settle()
+
+func run() -> void:
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--capture-dir="):
+			capture_dir = argument.trim_prefix("--capture-dir=")
+			DirAccess.make_dir_recursive_absolute(capture_dir)
+	var main = load("res://main.tscn").instantiate()
+	root.add_child(main)
+	main.profile.data.settings.touch_visible = true
+	main.profile.data.settings.hud_positions = {}
+	await settle()
+	for face in ["system", "taller"]:
+		if face == "taller" and not use_taller_fallback():
+			print("HUD_OVERFLOW_TEST taller-fallback pass skipped: no system face covers the CJK sample")
+			continue
+		await run_pass(main, face)
 	main.profile.data.settings.ui_text_scale = 1.0
 	# Truncation never separates a base character from its combining marks.
 	main.start_match({"mode": "offline", "difficulty": "easy", "name": "Overflow QA"})
@@ -117,5 +155,6 @@ func run() -> void:
 	await settle()
 	main.queue_free()
 	await settle()
+	ThemeDB.fallback_font.fallbacks = []
 	print("HUD_OVERFLOW_TEST checks=%d failures=%d" % [checks, failures])
 	quit(1 if failures else 0)

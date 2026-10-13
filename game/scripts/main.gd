@@ -44,6 +44,7 @@ var attack_pips: Control
 var defend_pips: Control
 var kill_feed: VBoxContainer
 var kill_feed_frame: Control
+var kill_feed_reserve := 0.0
 var objective_bar: ProgressBar
 var score_panel: PanelContainer
 var overlay: Control
@@ -658,12 +659,14 @@ func build_hud() -> void:
 	kill_feed_frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	kill_feed_frame.clip_contents = true
 	side_stack.add_child(kill_feed_frame)
-	# Height for exactly KILL_FEED_ROWS rows, measured in the tree at the current text size.
+	# Reserve KILL_FEED_ROWS rows of the default Latin face at the current text size.
+	# Rows in other scripts can be taller; _fit_kill_feed_frame() grows the frame to them.
 	var probe := label("Ag", Design.TYPE_SMALL)
 	kill_feed_frame.add_child(probe)
 	var row_height := ceilf(probe.get_combined_minimum_size().y + _kill_feed_style(false).get_minimum_size().y)
 	probe.free()
-	kill_feed_frame.custom_minimum_size.y = KILL_FEED_ROWS * row_height + (KILL_FEED_ROWS - 1) * KILL_FEED_GAP
+	kill_feed_reserve = KILL_FEED_ROWS * row_height + (KILL_FEED_ROWS - 1) * KILL_FEED_GAP
+	kill_feed_frame.custom_minimum_size.y = kill_feed_reserve
 	kill_feed = VBoxContainer.new()
 	kill_feed.name = "KillFeed"
 	kill_feed.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -815,6 +818,22 @@ func add_kill_feed(killer_id: int, victim_id: int, headshot: bool) -> void:
 		var oldest := kill_feed.get_child(0)
 		kill_feed.remove_child(oldest)
 		oldest.queue_free()
+	_fit_kill_feed_frame()
+
+## A row is as tall as the tallest face its text is shaped with. A name in a script
+## the default font lacks is drawn in a system fallback face whose line height is
+## the OS's choice (Noto Sans CJK is 2 px taller than the Latin face at 14 px), so
+## the frame takes its height from the rendered rows, never less than the Latin
+## reserve. Only the height is set: the frame still ignores its rows' widths.
+func _fit_kill_feed_frame() -> void:
+	var rows := 0
+	var height := 0.0
+	for entry: Control in kill_feed.get_children():
+		if entry.is_queued_for_deletion(): continue
+		rows += 1
+		height += entry.get_combined_minimum_size().y
+	height += maxi(0, rows - 1) * KILL_FEED_GAP
+	kill_feed_frame.custom_minimum_size.y = maxf(kill_feed_reserve, ceilf(height))
 
 func _kill_feed_name(actor: SBActor) -> Label:
 	var full_name := _limit_stacked_marks(Design.plain_line(actor.display_name, 24))
@@ -985,11 +1004,14 @@ func _process(delta: float) -> void:
 		reward_label.text = "ACCOUNT REWARDS  /  " + str(match_game.reward_status).to_upper().replace("_", " ")
 	objective_bar.value = float(match_game.interaction_progress)
 	objective_bar.visible = objective_bar.value > 0
+	var expired := false
 	for entry in kill_feed.get_children():
 		var age := elapsed - float(entry.get_meta("born", elapsed))
 		entry.modulate.a = clampf((KILL_FEED_SECONDS - age) / 0.6, 0.0, 1.0)
-		if age > KILL_FEED_SECONDS:
+		if age > KILL_FEED_SECONDS and not entry.is_queued_for_deletion():
 			entry.queue_free()
+			expired = true
+	if expired: _fit_kill_feed_frame()
 	if is_instance_valid(radar): radar.queue_redraw()
 	if actor != null:
 		squad_label.text = "YOU  ·  " + Design.squad_name(actor.team)
