@@ -46,6 +46,49 @@ func run() -> void:
 	game.time_left = 0.01
 	await frames(3)
 	check(game.phase == "live", "Round starts from buy phase")
+	var mouse := InputEventMouseButton.new()
+	mouse.button_index = MOUSE_BUTTON_LEFT
+	mouse.pressed = true
+	mouse.device = InputEvent.DEVICE_ID_EMULATION
+	main._input(mouse)
+	main._physics_process(1.0 / 60.0)
+	check(not game._local_input.fire, "Touch-emulated mouse press never fires the weapon")
+	var emulated_motion := InputEventMouseMotion.new()
+	emulated_motion.device = InputEvent.DEVICE_ID_EMULATION
+	emulated_motion.relative = Vector2(100, 50)
+	main._input(emulated_motion)
+	check(main.mouse_delta == Vector2.ZERO, "Touch-emulated mouse motion cannot double-apply aim")
+	mouse.device = 0
+	main._input(mouse)
+	main._physics_process(1.0 / 60.0)
+	check(game._local_input.fire, "Physical desktop mouse still fires normally")
+	main._notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
+	main._physics_process(1.0 / 60.0)
+	check(not game._local_input.fire, "Application focus loss releases physical fire")
+	main.touch.enabled = true
+	main.touch.actions.fire = true
+	main._physics_process(1.0 / 60.0)
+	check(game._local_input.fire, "Dedicated touch fire button reaches authoritative input")
+	main.touch.reset_input()
+	main.touch.movement = Vector2(0.5, 0.5)
+	main._physics_process(1.0 / 60.0)
+	check(not game._local_input.fire and game._local_input.move == Vector2(0.5, 0.5), "Joystick movement alone cannot fire")
+	main.touch.reset_input()
+	var look_before: Vector2 = main.input_look
+	main.touch.look_delta = Vector2(10, 5)
+	main._physics_process(1.0 / 60.0)
+	var expected_look: Vector2 = look_before - Vector2(10, 5) * float(main.profile.data.settings.touch_sensitivity)
+	check(main.input_look.is_equal_approx(expected_look), "Touch aiming applies configured sensitivity exactly once")
+	main.open_touch_editor()
+	check(main.paused and main.touch.editing, "Mobile HUD editor opens without controlling character")
+	main.touch.positions.fire = Vector2(0.5, 0.5)
+	main.touch.reset_layout()
+	check(main.touch.positions.fire == main.Touch.DEFAULT_POSITIONS.fire, "Reset HUD restores original usable layout")
+	var escape := InputEventKey.new()
+	escape.keycode = KEY_ESCAPE
+	escape.pressed = true
+	main._input(escape)
+	check(not main.paused and not main.touch.editing, "Escape saves and fully closes HUD editor")
 	var before: Vector3 = actor.position
 	var key := InputEventKey.new()
 	key.physical_keycode = KEY_W

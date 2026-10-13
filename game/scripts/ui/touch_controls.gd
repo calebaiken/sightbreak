@@ -26,10 +26,11 @@ const MOVE_DEADZONE := 0.12
 var movement := Vector2.ZERO
 var look_delta := Vector2.ZERO
 var actions: Dictionary = {}
-var positions := {"fire": Vector2(0.89, 0.53), "jump": Vector2(0.91, 0.75),
+const DEFAULT_POSITIONS := {"fire": Vector2(0.89, 0.53), "jump": Vector2(0.91, 0.75),
 	"crouch": Vector2(0.79, 0.83), "reload": Vector2(0.76, 0.62),
 	"interact": Vector2(0.65, 0.72), "grenade": Vector2(0.61, 0.9),
 	"smoke": Vector2(0.69, 0.9), "buy": Vector2(0.19, 0.14), "pause": Vector2(0.96, 0.07), "switch": Vector2(0.91, 0.9), "score": Vector2(0.08, 0.14), "move": Vector2(0.13, 0.74)}
+var positions: Dictionary = DEFAULT_POSITIONS.duplicate()
 const LABELS := {"fire": "FIRE", "jump": "JUMP", "crouch": "LOW", "reload": "LOAD",
 	"interact": "USE", "grenade": "FRAG", "smoke": "SMOKE", "buy": "BUY", "pause": "II", "switch": "SWAP", "score": "TEAM"}
 var fingers: Dictionary = {}
@@ -63,6 +64,11 @@ func restore_layout(saved: Dictionary) -> void:
 			if not (x is float or x is int) or not (y is float or y is int): continue
 			if not is_finite(float(x)) or not is_finite(float(y)): continue
 			positions[key] = Vector2(clampf(float(x), 0.0, 1.0), clampf(float(y), 0.0, 1.0))
+	queue_redraw()
+
+func reset_layout() -> void:
+	reset_input()
+	positions = DEFAULT_POSITIONS.duplicate()
 	queue_redraw()
 
 func exported_layout() -> Dictionary:
