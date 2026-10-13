@@ -67,6 +67,13 @@ func run() -> void:
 	var early_progress: float = reel.progress
 	await create_timer(0.35).timeout
 	check(reel.progress > early_progress, "Case carousel continues in the same direction")
+	# Comparable deterministic native stage captures, after timing assertions.
+	if not capture_dir.is_empty():
+		reel.tween.pause()
+		reel.progress = 0.0
+		await capture("economy_case_closed")
+		reel.progress = 0.65
+		await capture("economy_case_half_open")
 	reel.skip()
 	reel.skip()
 	check(reel.revealed and reel.progress == 1.0, "Skip aligns and reveals the committed reward immediately")
@@ -101,6 +108,12 @@ func run() -> void:
 	model.zoom(-1.5)
 	await capture("economy_inspector")
 	inspector_popup.hide()
+	await process_frame
+	var knife_popup := ui._show_inspector_popup({"name": "K-4 / Field knife", "kind": "knife_reference", "collection": "Training reference"}, "REFERENCE MODEL • NOT OWNED")
+	for frame in 4:
+		await process_frame
+	await capture("economy_knife_reference")
+	knife_popup.hide()
 	await process_frame
 	ui.reduced_motion = true
 	var reduced_popup := ui._show_committed_reveal(first)

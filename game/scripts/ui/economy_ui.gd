@@ -28,6 +28,10 @@ var wallet: Label
 var dialog: ConfirmationDialog
 var pending_action := Callable()
 var market_filter := ""
+var inventory_filter := ""
+var inventory_available_only := false
+var market_sort := 0
+var market_mine_only := false
 var pending_transaction: Dictionary = {}
 var retry_button: Button
 var safe_margin: MarginContainer
@@ -401,18 +405,25 @@ func _inspect(parent: Node, item: Dictionary) -> void:
 	var inspector := INSPECTOR.new()
 	inspector.item = item
 	panel.add_child(inspector)
-	_text(panel, "Drag to rotate  •  Scroll or use + / − to zoom", 13, MUTED)
+	_text(panel, "Drag to rotate  •  Pinch, scroll or use + / − to zoom", 13, MUTED)
 	var zoom := HFlowContainer.new()
 	panel.add_child(zoom)
 	_button(zoom, "−", inspector.zoom.bind(0.3))
 	_button(zoom, "+", inspector.zoom.bind(-0.3))
 	_button(zoom, "RESET VIEW", inspector.reset_view)
 	_text(panel, "%s  •  %s\nPattern %s  /  Wear %.4f  /  %s" % [item.get("rarity", "Standard"), item.get("collection", "Training"), item.get("pattern_seed", 0), float(item.get("wear", 0)), item.get("variant", "Standard")], 15, MUTED)
-	if item.has("id"):
+	var owned := false
+	for instance in inventory:
+		if item.has("id") and instance.get("id") == item.id:
+			owned = true
+	if owned:
 		_text(panel, "Instance: " + str(item.id), 12, MUTED)
 		_text(panel, "Reserved for exchange" if item.get("reserved", false) else "Available in inventory", 14)
+	else:
+		_text(panel, "PREVIEW ONLY  •  Not in your inventory", 14, GOLD)
 
 func _inventory() -> void:
+	_button(content, "INSPECT FIELD KNIFE  /  REFERENCE", func(): _show_inspector_popup({"name": "K-4 / Field knife", "kind": "knife_reference", "collection": "Training reference"}, "REFERENCE MODEL • NOT OWNED"))
 	if api.token.is_empty():
 		_inspect(content, {"name": "AR-7 / Training graphite", "kind": "weapon_skin", "rarity": "Common", "pattern_seed": 44, "wear": 0.18})
 		_text(content, "Standard training equipment is available to everyone. This preview is local and cannot be traded.", 15, MUTED)
@@ -421,9 +432,43 @@ func _inventory() -> void:
 	_text(content, "%d owned instances  •  Cosmetics never change weapon statistics" % inventory.size(), 15, MUTED)
 	if inventory.is_empty():
 		_text(content, "Your collection starts here. Earn online Credits through validated matches, then visit Cases.", 18)
+	var filters := HFlowContainer.new()
+	content.add_child(filters)
+	var search := _field(filters, "Name, collection or rarity", inventory_filter)
+	search.custom_minimum_size.x = 240
+	_button(filters, "FILTER", func(): inventory_filter = search.text.strip_edges(); _render())
+	var available := CheckButton.new()
+	available.text = "AVAILABLE ONLY"
+	available.button_pressed = inventory_available_only
+	available.custom_minimum_size.y = 44
+	available.toggled.connect(func(value): inventory_available_only = value; _render())
+	filters.add_child(available)
+	var cards := HFlowContainer.new()
+	cards.add_theme_constant_override("h_separation", 10)
+	cards.add_theme_constant_override("v_separation", 10)
+	content.add_child(cards)
+	var visible_count := 0
 	for raw in inventory:
 		var item: Dictionary = raw
-		_button(content, "%s  /  %s%s" % [_item_name(item), item.get("rarity", ""), "  [RESERVED]" if item.get("reserved", false) else ""], func(): selected = item; _render())
+		if not _matches_filter(item, inventory_filter) or (inventory_available_only and item.get("reserved", false)):
+			continue
+		visible_count += 1
+		var rarity := str(item.get("rarity", "Supply"))
+		var card := _button(cards, "%s\n%s  /  %s\n%s" % [_item_name(item), rarity.to_upper(), item.get("collection", "SUPPLY"), "RESERVED" if item.get("reserved", false) else "INSPECT ITEM"], func(): selected = item; _render())
+		card.custom_minimum_size = Vector2(260, 104)
+		card.alignment = HORIZONTAL_ALIGNMENT_LEFT
+		var style := StyleBoxFlat.new()
+		style.bg_color = Color("18222b")
+		style.border_color = REVEAL.FINISH.rarity_color(rarity)
+		style.border_width_left = 4
+		style.set_corner_radius_all(4)
+		style.content_margin_left = 16
+		style.content_margin_right = 12
+		style.content_margin_top = 12
+		style.content_margin_bottom = 12
+		card.add_theme_stylebox_override("normal", style)
+	if visible_count == 0 and not inventory.is_empty():
+		_text(content, "No owned instances match these filters.", 16, MUTED)
 	if not selected.is_empty():
 		_inspect(content, selected)
 		var owned := false
@@ -501,7 +546,7 @@ func _show_committed_reveal(item: Dictionary) -> PopupPanel:
 	var scroll := _popup_scroll(popup)
 	scroll.add_child(box)
 	_text(box, "COLLECTION UNSEALED", 23, GOLD)
-	_text(box, "Your reward is already secured. Sealed panels are decoration; they do not represent other outcomes.", 14, MUTED)
+	_text(box, "Your reward is secured. Unsealing your collection finish…", 14, MUTED)
 	var reel := REVEAL.new()
 	reel.name = "CaseReel"
 	reel.committed_item = item.duplicate(true)
@@ -523,7 +568,7 @@ func _show_committed_reveal(item: Dictionary) -> PopupPanel:
 	box.add_child(actions)
 	_button(actions, "CLOSE", popup.hide)
 	popup.popup_hide.connect(popup.queue_free)
-	_present_popup(popup, Vector2i(mini(660, int(size.x) - 44), 400))
+	_present_popup(popup, Vector2i(mini(760, int(size.x) - 44), 480))
 	return popup
 
 func _show_inspector_popup(item: Dictionary, title := "ITEM INSPECTOR") -> PopupPanel:
@@ -603,21 +648,31 @@ func _market() -> void:
 	list_button.disabled = eligible.is_empty()
 	if eligible.is_empty():
 		_text(form, "You have no available weapon finishes to list.", 14, MUTED)
-	var filter_row := HBoxContainer.new()
+	var filter_row := HFlowContainer.new()
 	content.add_child(filter_row)
 	var search := _field(filter_row, "Filter name, rarity or collection", market_filter)
 	search.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	_button(filter_row, "FILTER", func(): market_filter = search.text.strip_edges(); _render())
+	var sort_options := OptionButton.new()
+	sort_options.custom_minimum_size.y = 44
+	for label in ["PRICE: LOW TO HIGH", "PRICE: HIGH TO LOW", "ITEM NAME"]:
+		sort_options.add_item(label)
+	sort_options.selected = market_sort
+	sort_options.item_selected.connect(func(index): market_sort = index; _render())
+	filter_row.add_child(sort_options)
+	var mine := CheckButton.new()
+	mine.text = "MY LISTINGS"
+	mine.custom_minimum_size.y = 44
+	mine.button_pressed = market_mine_only
+	mine.toggled.connect(func(value): market_mine_only = value; _render())
+	filter_row.add_child(mine)
 	var count := 0
-	for raw in listings:
-		var listing: Dictionary = raw
+	for listing in _filtered_listings():
 		var item: Dictionary = listing.get("item", {})
-		var terms := "%s %s %s" % [_item_name(item), item.get("rarity", ""), item.get("collection", "")]
-		if not market_filter.is_empty() and not market_filter.to_lower() in terms.to_lower():
-			continue
 		count += 1
 		var row := _panel(content)
 		_text(row, "%s  /  %s Credits" % [_item_name(item), listing.get("price", 0)], 18)
+		_text(row, "%s  •  %s  •  Wear %.3f" % [str(item.get("rarity", "Common")).to_upper(), item.get("collection", ""), float(item.get("wear", 0))], 14, REVEAL.FINISH.rarity_color(str(item.get("rarity", "Common"))))
 		_button(row, "INSPECT", _show_inspector_popup.bind(item))
 		if str(listing.get("seller_id")) == api.player_id:
 			_button(row, "CANCEL MY LISTING", func(): _perform("/market/%s/cancel" % listing.id, {}, "Listing cancelled; item returned."))
@@ -626,6 +681,20 @@ func _market() -> void:
 				_confirm("Buy %s for %s earned Credits?" % [_item_name(item), listing.get("price", 0)], func(): _perform("/market/%s/buy" % listing.id, {"idempotency_key": api.key()}, "Purchase confirmed.")))
 	if count == 0:
 		_text(content, "No matching active listings. Refresh to check for new offers.", 18, MUTED)
+
+func _matches_filter(item: Dictionary, query: String) -> bool:
+	var terms := "%s %s %s" % [_item_name(item), item.get("rarity", ""), item.get("collection", "")]
+	return query.is_empty() or query.to_lower() in terms.to_lower()
+
+func _filtered_listings() -> Array:
+	# Read-only presentation: never mutate canonical listing order or transaction IDs.
+	var result: Array = listings.filter(func(listing):
+		return _matches_filter(listing.get("item", {}), market_filter) and (not market_mine_only or str(listing.get("seller_id")) == api.player_id))
+	result.sort_custom(func(a, b):
+		if market_sort == 2:
+			return _item_name(a.get("item", {})).naturalnocasecmp_to(_item_name(b.get("item", {}))) < 0
+		return int(a.get("price", 0)) > int(b.get("price", 0)) if market_sort == 1 else int(a.get("price", 0)) < int(b.get("price", 0)))
+	return result
 
 func _trades() -> void:
 	if _needs_account():
