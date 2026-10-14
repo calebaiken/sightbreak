@@ -187,3 +187,150 @@ The reviewer's top next steps, in its order: lift the receiver and add rim/specu
 5. New captures, motion sequences and a fresh review.
 
 The scores above stay as the reviewer gave them until a new review re-scores the changed work.
+
+## Codex integration review of `64ec598`, and the work after it (2026-10-14)
+
+**Reviewer:** Codex, a different model family, reviewing an isolated integration build that combined PR #1, this branch and Codex's PRs 3–8. Evidence is in Codex's integration preview (PR #9, `docs/reports/integration-evidence/art-independent/`). It is an AI review, not human acceptance.
+
+**Verdict:** about **5.5/10** for the weapon and arms, against the 8.5 gate.
+
+| Area | Score |
+| --- | ---: |
+| Geometry | 6.0 |
+| Materials | 5.5 |
+| Lighting | 5.0 |
+| Animation | 5.5 |
+| Effects and cosmetics | 4.5 |
+| Identity | 5.5 |
+| Readability | 6.5 |
+
+**Main weaknesses it named:**
+- the ready and bore composition: the vanishing point is 124 px left and the rifle "reads as displayed sideways";
+- mitten-like gloves and regular sleeve rings;
+- shade contrast between receiver and arm, and over-bright backlit edges;
+- action cropped at 4:3 and leaving frame mid-swap;
+- a flat star muzzle flash, box casings and a simple cosmetic stripe.
+
+**Corrections it requested, and what was done:**
+
+| Finding | Status | Evidence |
+| --- | --- | --- |
+| Static fallback hands drawn with the world projection, detached from the rifle; the procedural gloves likewise | Fixed in `3934110`; contract assertions and native captures added | `docs/reports/media/art-v4/fallback-projection/` |
+| Online reload poses stepped at the 20 Hz snapshot rate (40 changes in 120 ticks) | Fixed: presentation clock, at least 115 changes in 119 ticks in a 20 Hz simulation | `art-v4/README.md` |
+| Arms packed scene not retained | Fixed | same |
+| Magazine framing margin of 2.8 px at 15 % | Fixed: an 11 cm lift; every vertex at least 1 % inside the frame at the grab and the seat | same |
+
+**Also since `64ec598`:** the arms rebuild (`144dc33`, `0087956`).
+- **Value separation:** glove 0.024 against sleeve about 0.08 linear.
+- **Anatomy:** slimmer thumbs, joint condyles and creases, and a lower knuckle guard.
+- **Grip:** a resolved grab hand and a trigger pad 4.4 mm from the trigger.
+- **Budget:** 7,828 triangles.
+
+**Still open (my observations, `art-v4/README.md`):**
+- the grip hand still reads as a mitten;
+- support fingertips crest the rail;
+- the sleeves are a near-uniform tube;
+- the bore vanishing point is unchanged;
+- shade contrast;
+- no draw or inspect clips;
+- the reload reseats the same magazine;
+- reduced motion is not reviewed.
+
+None of the five weaknesses behind the 5.5 is resolved by these fixes except glove value. The score stays at Codex's 5.5 until a new review re-scores the work.
+
+## Review of `b507205` (2026-10-14)
+
+**Reviewer:** a fresh Claude agent, read-only, given the `art-v4` evidence. It scored from the images and from frames it pulled out of the MP4s before reading any self-assessment. It is the same model family as the author, so this is **not independent acceptance**.
+
+**Verdict:** about **4.5/10**, below Codex's 5.5 for `64ec598`. The reviewer weights reload legibility and hands more heavily.
+
+| Area | Score |
+| --- | ---: |
+| Hand and glove anatomy | 3.5 |
+| Sleeves and forearms | 4.0 |
+| Magazine grab and reload legibility | 3.5 |
+| Clipping and contact | 5.0 |
+| Projection and composition | 5.5 |
+| Materials and value separation | 4.5 |
+| Rifle model | 5.0 |
+| Effects | 4.0 |
+
+**Top defects, in its order:**
+1. **Reload legibility:**
+   - at the grab and the seat the support forearm covers most of the magazine;
+   - in backlight the pulled magazine renders near black;
+   - the bright tan pistol grip is the most prominent object and reads as "the magazine".
+2. **Hands:** the grip hand is a mitten without thumb or knuckle read, and the support fingers fuse into a paddle on top of the rail.
+3. **Bore direction:** the rifle aims low-left and reads as held across the body.
+4. **Materials:**
+   - a saturated chartreuse sleeve in sun (sRGB 143, 150, 102);
+   - glove and receiver almost equal in shade;
+   - tan furniture in the same warm band as the sunlit gloves.
+5. **Effects:** a flat star muzzle flash and box casings.
+
+**Also seen:** the support hand opens in mid-air before the seat completes, with no push.
+
+**Against art-v3:**
+- **Better:** glove value is fixed (sunlit glove saturation 0.09 against 0.17), and the hand and magazine stay in frame at the grab.
+- **Mild regressions:** the sleeve is brighter and more saturated in sun, and its fold relief no longer reads.
+
+**On my claims:**
+- **Confirmed:**
+  - every magazine vertex is in frame at the grab and the seat;
+  - the gloves no longer read as skin;
+  - the fallback hands are attached.
+- **Overstated:** "in frame" is not "legible". The magazine is mostly covered, and in backlight black. Slimmer thumbs, condyles, creases and the lower guard are not visible at 1280 × 720.
+- **Wrong:** I described the static v2 fallback's sleeves as tan. They are slate grey with a tan cuff stripe, now corrected in both READMEs.
+- **Not acknowledged before:** the black magazine, the forearm covering it, the early hand opening and the sleeve saturation. All four are recorded here.
+
+**My verification of the black magazine (superseded by the correction below; this diagnosis was wrong):**
+- **Measured, not a texture fault:**
+  - the magazine region of backlit frame 60 has a median of sRGB (3, 3, 2), with 27 % pure black;
+  - its albedo, sampled at its UVs, is a normal tan-grey (0.10, 0.09, 0.06 linear);
+  - its baked AO is ordinary (mean 0.59).
+- **Cause:** the shadowed side gets only the flat ambient (energy 0.41) and the 0.08 × albedo emission floor. Both are about 0.01 linear, which the yard's Filmic tonemap toe crushes to black.
+- **Conclusion (wrong):** this is not a broken shading path. The viewmodel needs a real fill term; the current floor is too weak (the review of `5100b3e` said the same).
+
+**Next on this branch, in order:**
+1. A view-space fill for the viewmodel: shaped, AO-aware, in the existing shader, so no extra light pass.
+2. A less saturated sleeve and darker furniture.
+3. Reload staging with the support forearm below the magazine, and a push at the seat.
+4. Grip-hand finger separation and a visible thumb.
+5. Bore direction.
+
+The scores above stand until a new review re-scores the work.
+
+## Correction: the black magazine was a texture defect (2026-10-14)
+
+My entry above sampled the magazine's **albedo** and its **mean AO** over the whole mesh, concluded the texture was fine, and blamed the lighting. That measurement was too coarse. Rendering the shader's inputs over the *pulled* magazine's own visible pixels showed an albedo median of 109 (a normal tan) but a **baked occlusion median of 0**. The occlusion had been baked with the magazine seated in the magwell, so the faces that were inside the well were fully occluded and went black as soon as reload pulled the magazine out, in every lighting condition.
+
+- **Fix:** the magazine's occlusion was re-baked on its own and patched into `relay_ar_orm.png` (red channel, magazine islands only; the other textures and the GLB are byte-identical). Tools: `tools/art/rebake_part_ao.py`, `tools/art/patch_part_ao.py`.
+- **Result** (`docs/reports/media/art-v5/lighting/`): backlit mid-reload median luma **4 → 59**, shade 2 → 56, dark interior 2 → 33. No other part changed by more than 3 luma, and the inspection render differs by 1 pixel of 921,600. `weapon_art_test` now guards the occlusion (111 checks).
+- **The fill I was asked to investigate was built, swept and removed.** It bought 1–3 luma in the darkest scene and broke sunlit values above a gain of 0.4.
+- **Still open:** gloves in a nearly dark interior measure a median of 15–16, and the pulled magazine is now the brightest part in sun (warm tan beside a grey receiver).
+
+The review's scores above are unchanged: this fixes one of its defects (reload legibility's black magazine), not the occlusion of the magazine by the support forearm, the hand shapes, the bore direction or the sleeve material.
+
+## The reload, the support hand, the bore and the effects (2026-10-14, after `233df74`)
+
+Evidence: `docs/reports/media/art-v6/reload-hands-effects/`. This is my own measurement and says nothing about scores: the review's scores above stand until a reviewer who is not me or my subagents re-scores the frames.
+
+**What the review said, now with numbers.** I had none, so I wrote `game/tests/reload_legibility_probe.gd`, which renders the reload and counts the magazine's pixels with the arms hidden and shown. At `233df74` the arms covered up to 87 % of the magazine at the grasp and up to 91 % at the seat, the magazine left the frame mid-swap (11 % on screen), and the sleeve, not the glove, did the covering. The bore line passed 56 px below the crosshair (vanishing point 124 px left, 10.0°).
+
+**What the review's claims turned out to be:**
+- **"The support forearm obscures the magazine":** confirmed, and it was the sleeve. The v4 grasp put the palm on the left face, and from the camera's side the forearm lay along the line of sight. A grasp that cups the base from below fixes it; moving the elbow or the whole rifle did not (the pitched-rifle attempt scored well by putting a flat-ended sleeve stump across half the screen, which the arm-area column and the frames caught).
+- **"The hand opens before the seat completes":** the clip held the hand until 0.88 but the importer resampled it to 30 fps, so the seat was blurred by 3 to 4 mm; and the old magazine curve finished its travel before the hand's push. Both are fixed, and the order (seat, hold, let go) is now tested.
+- **"The barrel is 125 px left of the crosshair":** true as a vanishing point (124 px, 10.0°). The earlier "v4" layout that nearly zeroed it was rejected for foreshortening the handguard; I moved it to 3.5° (38 px left, 21 px above) with the bore line through the crosshair, and judged that the handguard and the support hand still read.
+- **"Saturated chartreuse sleeve in sun":** confirmed: its median luma was 146, the brightest part of the frame at twice the receiver's. It is 110 now and olive-drab. The cost: its value gap to the gloves in shade shrank from about 20 luma to about 6.
+- **"Star muzzle flash, box casings":** replaced (a layered additive flash that differs shot to shot; a lathed brass case that tumbles and bounces).
+- **"Mitten grip hand, fused support fingers":** not fixed. Only the cupped grasp's fingers were fanned.
+
+**Mistakes of mine found on the way:** a metric I could game (above); the 30 fps importer setting; a casing that re-bounced every frame; a flash that burned to a white ball and then showed an octagonal outline. All are in the evidence README.
+
+**Next on this branch, in order:**
+1. An independent review of `reload-after.jpg`, `support-hand-closeups.png` and the firing burst.
+2. The grip hand (mitten) and the support fingers cresting the rail at the handguard hold; a visible thumb.
+3. Gloves in a dark interior (15 to 17 against 20) and the sleeve-to-glove value gap in shade.
+4. The pistol grip's form (still a flat block), then the rest of the weapon materials: receiver surface response, optic, wear masks, a bolt or charging-handle animation.
+5. Draw and inspect animations.
+

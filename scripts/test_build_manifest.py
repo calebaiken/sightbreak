@@ -8,6 +8,18 @@ import unittest
 from unittest.mock import patch
 
 import build_manifest as manifest
+import native_log
+
+
+class NativeLogTests(unittest.TestCase):
+    def test_actual_engine_warning_and_errors_rejected(self):
+        for message in ('WARNING: 4 ObjectDB instances were leaked at exit (run with `--verbose` for details).',
+                        'WARNING: ObjectDB instances leaked at exit', 'Leaked instance: AudioStreamWAV',
+                        'ERROR: failed', 'SCRIPT ERROR: broken', 'Parse Error: invalid'):
+            with self.subTest(message=message): self.assertTrue(native_log.failed(message))
+
+    def test_normal_log_and_vsync_warning_allowed(self):
+        self.assertFalse(native_log.failed('Godot Engine v4.7.2\nWARNING: Could not set V-Sync mode'))
 
 
 class BuildManifestTests(unittest.TestCase):

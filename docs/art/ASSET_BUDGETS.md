@@ -15,14 +15,15 @@ The game exposes two quality settings (LOW and STANDARD) plus a render-scale sli
 
 ## First-person weapon (per equipped weapon)
 
-| Item | Budget | Relay AR v1 |
+| Item | Budget | Relay AR |
 | --- | --- | --- |
 | Triangles, weapon | ≤ 32,000 | 30,326 (25,194 in first person, which omits the stock) |
-| Triangles, hands and sleeves | ≤ 10,000 | 9,800 |
+| Triangles, hands and sleeves | ≤ 10,000 | Rigged arms (default): 7,828, both arms, 34 bones, one skinned mesh. v3 was 10,672 and over budget; the contract test allowed 12,000 and now allows 10,000. Static v2 hands (fallback): 9,800 |
+| Animation | 1 clip per weapon | `reload`, 1 s, sampled at 30 fps, seeked by reload progress |
 | Draw nodes in the viewmodel | ≤ 6 (asserted) | 6 |
-| Texture sets | 1 atlas per GLB | 2 (rifle, hands) |
+| Texture sets | 1 atlas per GLB | 2 in first person (rifle, arms); the v2 hands' set loads only when they are used as the fallback |
 | Texture size shipped | ≤ 1024² per map | 1024² albedo, ORM and normal for each |
-| Texture memory (VRAM-compressed, with mips) | ≤ 8 MB per weapon including hands | 5.59 MB measured from the imported S3TC/BPTC and ETC2 textures (all six maps) |
+| Texture memory (VRAM-compressed, with mips) | ≤ 8 MB per weapon including hands | 5.59 MB (rifle 2.80 MB plus arms 2.80 MB), measured from the imported S3TC/BPTC and ETC2 `.ctex` files |
 | Shadow casting | Off for the viewmodel | Off |
 | Materials | 1 `ORMMaterial3D` + 1 shared cosmetic shader | As budgeted |
 

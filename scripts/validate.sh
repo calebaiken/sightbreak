@@ -28,6 +28,12 @@ run_godot input-lifecycle --headless --script res://tests/input_lifecycle_test.g
 run_godot peer-lifecycle --headless --script res://tests/peer_lifecycle_test.gd
 run_godot result-outbox --headless --script res://tests/result_outbox_test.gd
 python3 -m unittest discover -s server/tests -v
+run_godot reconnect-policy --headless --script res://tests/reconnect_policy_test.gd
+run_godot reconnect-independent --headless --script res://tests/independent_reconnect_review_test.gd
+run_godot resume-admission --headless --script res://tests/independent_resume_admission_test.gd
+run_godot lost-welcome --headless --script res://tests/lost_welcome_test.gd
+run_godot resume-alias --headless --script res://tests/independent_resume_alias_test.gd
+run_godot resume-auth-loss --headless --script res://tests/resume_auth_loss_test.gd
 run_godot bots --headless --script res://tests/bot_match_test.gd
 run_godot bot-lifecycle --headless --script res://tests/bot_lifecycle_test.gd
 SIGHTBREAK_STATE_DIR="$validation_dir/profile-state" run_godot profile --headless --script res://tests/profile_test.gd
@@ -37,10 +43,12 @@ run_godot landscape --headless --script res://tests/landscape_ui_test.gd
 run_godot ux-contract --headless --script res://tests/ux_contract_test.gd
 run_godot hud-overflow --headless --script res://tests/hud_overflow_test.gd
 run_godot economy-ui --headless --script res://tests/economy_ui_test.gd
+run_godot armory-ui --headless --script res://tests/armory_ui_test.gd
 run_godot economy-recovery --headless --script res://tests/economy_recovery_test.gd
 run_godot cosmetics --headless --script res://tests/cosmetic_presentation_test.gd
 run_godot weapon-art --headless --script res://tests/weapon_art_test.gd
 run_godot integration-actor-lifecycle --headless --script res://tests/integration_actor_lifecycle_test.gd
+python3 scripts/test_account_network_output.py
 ./scripts/test_network.sh
 python3 scripts/test_connection_lifecycle.py --out "$validation_dir/connection-lifecycle"
 if [[ "${1:-}" == --backend ]]; then

@@ -24,22 +24,27 @@ if [[ ! -f "$release_dir/game/project.godot" ]]; then
   mkdir -p "$release_dir"
   git -C "$repo_dir" archive "$release_ref" | tar -x -C "$release_dir"
 fi
+# Actual prior published input/RPC contract, not just a synthetic version edit.
+previous_ref="89c0e997c9f706d91b02e5ac412853c4d35cd112"
+previous_dir="$out_dir/previous-${previous_ref:0:7}"
+mkdir -p "$previous_dir"
+git -C "$repo_dir" archive "$previous_ref" game | tar -x -C "$previous_dir"
 future_dir="$out_dir/future"
 rm -rf "$future_dir"; mkdir -p "$future_dir"
 (cd "$repo_dir" && tar --exclude=game/.godot -cf - game) | tar -xf - -C "$future_dir"
 current_protocol=$(sed -n 's/^const PROTOCOL_VERSION := \([0-9]*\)$/\1/p' "$repo_dir/game/scripts/gameplay/match.gd")
 sed -i "s/^const PROTOCOL_VERSION := .*/const PROTOCOL_VERSION := $((current_protocol + 1))/" "$future_dir/game/scripts/gameplay/match.gd"
-for build in release current future; do
-  case "$build" in release) project="$release_dir/game";; current) project="$repo_dir/game";; future) project="$future_dir/game";; esac
+for build in release previous current future; do
+  case "$build" in release) project="$release_dir/game";; previous) project="$previous_dir/game";; current) project="$repo_dir/game";; future) project="$future_dir/game";; esac
   (run_godot "$out_dir/state/import-$build" "$project" --import >/dev/null 2>&1)
 done
 # A fresh port range per run; a port still held by another process fails the combo.
 port=$(( 28200 + (RANDOM % 400) * 8 ))
-for combo in release:release current:current release:current current:release future:current current:future; do
+for combo in release:release current:current release:current current:release future:current current:future previous:current current:previous; do
   client="${combo%%:*}"; server="${combo##*:}"
   name="client-$client.server-$server"
-  case "$client" in release) client_project="$release_dir/game";; current) client_project="$repo_dir/game";; future) client_project="$future_dir/game";; esac
-  case "$server" in release) server_project="$release_dir/game";; current) server_project="$repo_dir/game";; future) server_project="$future_dir/game";; esac
+  case "$client" in release) client_project="$release_dir/game";; previous) client_project="$previous_dir/game";; current) client_project="$repo_dir/game";; future) client_project="$future_dir/game";; esac
+  case "$server" in release) server_project="$release_dir/game";; previous) server_project="$previous_dir/game";; current) server_project="$repo_dir/game";; future) server_project="$future_dir/game";; esac
   port=$((port + 1))
   (run_godot "$out_dir/state/$name-server" "$server_project" -- --server --port=$port > "$out_dir/$name.server.log" 2>&1) &
   server_pid=$!
@@ -62,6 +67,7 @@ expect = {
     'release:release': 'join', 'current:current': 'join',
     'release:current': 'server drops pre-handshake client', 'current:release': 'client reports missing handshake',
     'future:current': 'explicit mismatch', 'current:future': 'explicit mismatch',
+    'previous:current': 'explicit mismatch', 'current:previous': 'explicit mismatch',
 }
 rows, failures = [], []
 for combo, wanted in expect.items():
@@ -99,7 +105,7 @@ for combo, wanted in expect.items():
     if not ok:
         failures.append(f'{combo}: expected {wanted}, got {outcome}')
 lines = ['| Client | Server | Expected | Observed | Result | Last message shown to the player |', '| --- | --- | --- | --- | --- | --- |']
-label = {'release': '0.3.0 (e67f2c8)', 'current': f'this branch (protocol {protocol})', 'future': f'next build (protocol {protocol + 1})'}
+label = {'previous': 'published PR8 (protocol5,89c0e9)', 'release': '0.3.0 (e67f2c8)', 'current': f'this branch (protocol {protocol})', 'future': f'next build (protocol {protocol + 1})'}
 for combo, wanted, outcome, result, shown in rows:
     client, server = combo.split(':')
     lines.append(f'| {label[client]} | {label[server]} | {wanted} | {outcome} | {result} | {shown} |')

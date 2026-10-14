@@ -22,6 +22,9 @@ var selected: Dictionary = {}
 var equipped_loadout: Dictionary = {}
 var active_tab := "inventory"
 var busy := false
+## True while a refresh is in flight, and the last refresh's failure (empty when it worked).
+var is_loading := false
+var load_error := ""
 var reduced_motion := false
 var content: VBoxContainer
 var status: Label
@@ -171,7 +174,7 @@ func _render() -> void:
 	for node in content.get_children():
 		content.remove_child(node)
 		node.queue_free()
-	wallet.text = "ONLINE  •  %s  •  LEVEL %s  •  %s EARNED CREDITS" % [account.get("display_name", ""), account.get("level", 1), account.get("credits", 0)] if not api.token.is_empty() else "OFFLINE TRAINING  •  LOCAL PROGRESS ONLY"
+	wallet.text = _wallet_text()
 	for tab in tab_buttons:
 		var tab_button: Button = tab_buttons[tab]
 		tab_button.set_pressed_no_signal(tab == active_tab)
@@ -187,12 +190,30 @@ func _render() -> void:
 			tab_button.remove_theme_color_override("font_pressed_color")
 	var title := _text(content, active_tab.to_upper(), 28, GOLD)
 	title.add_theme_font_override("font", DESIGN.heading_font())
+	if active_tab != "profile" and not api.token.is_empty():
+		if not load_error.is_empty():
+			_state_card(content, "error", "The economy server did not answer as expected", load_error + "\nNothing on this screen was changed. Your inventory and Credits are held by the server.", "TRY AGAIN", func(): _refresh())
+			if account.is_empty():
+				return
+		elif is_loading and account.is_empty():
+			_state_card(content, "loading", "Loading your account", "Waiting for the economy server to confirm your inventory, Credits and the catalog. No action is available until it does.")
+			return
 	match active_tab:
 		"profile": _profile()
 		"inventory": _inventory()
 		"cases": _cases()
 		"market": _market()
 		"trades": _trades()
+
+## The line under the title: the signed-in account's name, level and earned Credits, only once
+## the server has said what they are; never a name or balance that was not received.
+func _wallet_text() -> String:
+	if api.token.is_empty():
+		return "OFFLINE TRAINING  •  LOCAL PROGRESS ONLY"
+	if account.is_empty():
+		return "ONLINE  •  ACCOUNT NOT LOADED"
+	var name := DESIGN.plain_line(str(account.get("display_name", "")))
+	return "ONLINE  •  %sLEVEL %s  •  %s EARNED CREDITS" % ["%s  •  " % name if not name.is_empty() else "", account.get("level", 1), credits_text(int(account.get("credits", 0)))]
 
 func _needs_account() -> bool:
 	if not api.token.is_empty():
@@ -287,42 +308,40 @@ func _refresh() -> bool:
 		_message("Sign in under PROFILE to connect to the online economy.")
 		return false
 	busy = true
+	is_loading = true
+	load_error = ""
+	if account.is_empty():
+		_render()
 	_message("Refreshing authoritative account data…")
 	var me := await api.request("/me")
-	if _failed(me):
-		busy = false
-		_render()
+	if _refresh_failed(me):
 		return false
 	account = me
 	var owned := await api.request("/inventory")
-	if _failed(owned):
-		busy = false
+	if _refresh_failed(owned):
 		return false
 	inventory = owned.get("items", [])
 	var definitions := await api.request("/catalog")
-	if _failed(definitions):
-		busy = false
+	if _refresh_failed(definitions):
 		return false
 	catalog = definitions
 	var loadout := await api.request("/loadout")
-	if _failed(loadout):
-		busy = false
+	if _refresh_failed(loadout):
 		return false
 	equipped_loadout = loadout.get("slots", {})
 	loadout_changed.emit(equipped_loadout.duplicate(true))
 	if active_tab == "market":
 		var market_data := await api.request("/market")
-		if _failed(market_data):
-			busy = false
+		if _refresh_failed(market_data):
 			return false
 		listings = market_data.get("listings", [])
 	if active_tab == "trades":
 		var trade_data := await api.request("/trades")
-		if _failed(trade_data):
-			busy = false
+		if _refresh_failed(trade_data):
 			return false
 		trades = trade_data.get("trades", [])
 	busy = false
+	is_loading = false
 	_render()
 	_message("Connected. Data confirmed by your economy server.")
 
@@ -331,6 +350,16 @@ func _refresh() -> bool:
 func _message(value: String, error := false) -> void:
 	status.text = value
 	status.add_theme_color_override("font_color", Color("f0a1aa") if error else MUTED)
+
+## A refresh step that failed: records why, stops the loading state and shows the error.
+func _refresh_failed(result: Dictionary) -> bool:
+	if not _failed(result):
+		return false
+	busy = false
+	is_loading = false
+	load_error = str(result.get("_error", "Unknown error"))
+	_render()
+	return true
 
 func _failed(result: Dictionary) -> bool:
 	if result.has("_error"):
@@ -388,6 +417,106 @@ func _perform(path: String, payload := {}, message := "Transaction confirmed.", 
 		_message("Transaction confirmed, but account refresh failed. Refresh before making another transaction.", true)
 	return result
 
+## Credits with thousands separators: 1250 -> "1,250".
+static func credits_text(value: int) -> String:
+	var digits := str(absi(value))
+	var out := ""
+	for index in digits.length():
+		if index > 0 and (digits.length() - index) % 3 == 0:
+			out += ","
+		out += digits[index]
+	return ("-" if value < 0 else "") + out
+
+## The fee the server keeps from a sale: price x basis points / 10,000, rounded down. This is
+## backend/app.py's own rule, shown so a seller sees exactly what a sale pays; the server
+## settles it.
+@warning_ignore("integer_division")
+func market_fee(price: int) -> int:
+	return price * int(catalog.get("market_fee_basis_points", 0)) / 10000
+
+## The market fee as a player reads it: "3%", or "2.5%" when the rate is not whole.
+func fee_percent_text() -> String:
+	var basis_points := int(catalog.get("market_fee_basis_points", 0))
+	return "%d%%" % (basis_points / 100) if basis_points % 100 == 0 else "%s%%" % str(float(basis_points) / 100.0)
+
+## How many finishes the catalog lists for a collection: what a case of it can hold.
+func collection_finish_count(collection: String) -> int:
+	var count := 0
+	for raw in catalog.get("definitions", []):
+		if raw is Dictionary and raw.get("kind") == "weapon_skin" and str(raw.get("collection", "")) == collection:
+			count += 1
+	return count
+
+## "Holds 3 finishes" for a case's collection; empty when the catalog lists none.
+func case_holds_text(collection: String) -> String:
+	var count := collection_finish_count(collection)
+	return "" if count == 0 else "Holds %d finish%s" % [count, "" if count == 1 else "es"]
+
+## A small picture of an item's finish: its collection's two paint colours, framed in
+## its rarity colour. Everything comes from the item's own metadata.
+func _swatch(item: Dictionary, edge: float = 44.0) -> Control:
+	var kind := str(item.get("kind", ""))
+	var accent: Color = REVEAL.FINISH.rarity_color(str(item.get("rarity", "Common"))) if kind == "weapon_skin" else DESIGN.STEEL
+	var palette: Array = REVEAL.FINISH.PALETTES.get(str(item.get("collection", "")), [DESIGN.GRAPHITE_HOVER, DESIGN.STEEL])
+	var swatch := Control.new()
+	swatch.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	swatch.custom_minimum_size = Vector2(edge, edge)
+	swatch.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	swatch.draw.connect(func():
+		var box := swatch.size
+		swatch.draw_rect(Rect2(Vector2.ZERO, box), palette[0])
+		if kind == "weapon_skin":
+			swatch.draw_colored_polygon(PackedVector2Array([Vector2(box.x * 0.45, 0), box * Vector2(1, 0), box * Vector2(1, 0.55), Vector2(0, box.y), Vector2(0, box.y * 0.45)]), palette[1])
+		else:
+			swatch.draw_rect(Rect2(box * 0.3, box * 0.4), palette[1])
+		swatch.draw_rect(Rect2(Vector2.ZERO, box), Color(accent, 0.9), false, 1.0)
+	)
+	return swatch
+
+## A supply crate drawn from flat shapes: body, lid seam, latch. A case's colour is its
+## collection's, so the crate matches the finishes it can hold.
+func _case_glyph(collection: String, edge: float = 56.0) -> Control:
+	var palette: Array = REVEAL.FINISH.PALETTES.get(collection, [DESIGN.GRAPHITE_HOVER, DESIGN.STEEL])
+	var glyph := Control.new()
+	glyph.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	glyph.custom_minimum_size = Vector2(edge, edge * 0.78)
+	glyph.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	glyph.draw.connect(func():
+		var box := glyph.size
+		glyph.draw_rect(Rect2(0, box.y * 0.22, box.x, box.y * 0.78), Color(DESIGN.GRAPHITE_RAISED, 1.0))
+		glyph.draw_rect(Rect2(0, box.y * 0.22, box.x, box.y * 0.78), DESIGN.LINE_STRONG, false, 1.0)
+		glyph.draw_rect(Rect2(0, 0, box.x, box.y * 0.26), Color(palette[0], 1.0))
+		glyph.draw_rect(Rect2(0, 0, box.x, box.y * 0.26), DESIGN.LINE_STRONG, false, 1.0)
+		glyph.draw_rect(Rect2(box.x * 0.40, box.y * 0.18, box.x * 0.20, box.y * 0.22), DESIGN.GOLD)
+		glyph.draw_rect(Rect2(box.x * 0.08, box.y * 0.50, box.x * 0.84, 2), Color(palette[1], 0.8))
+	)
+	return glyph
+
+## What stands in for content: an empty list, a load in progress, or a failed refresh.
+## The action, if any, does something real.
+func _state_card(parent: Node, kind: String, title: String, body: String, action_label := "", action := Callable()) -> PanelContainer:
+	var tone: Color = {"empty": DESIGN.STEEL, "loading": DESIGN.GOLD, "error": DESIGN.CRIMSON_BRIGHT}[kind]
+	var card := PanelContainer.new()
+	card.name = "State_" + kind
+	var style := DESIGN.box(Color(DESIGN.GRAPHITE, 0.9), Color(tone, 0.55), 1, Vector2(22, 18))
+	style.border_width_left = 4
+	style.border_color = tone
+	card.add_theme_stylebox_override("panel", style)
+	parent.add_child(card)
+	var stack := VBoxContainer.new()
+	stack.add_theme_constant_override("separation", 8)
+	card.add_child(stack)
+	var chip := _chip({"empty": "NOTHING HERE YET", "loading": "LOADING", "error": "CONNECTION PROBLEM"}[kind], tone)
+	chip.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+	stack.add_child(chip)
+	_text(stack, title, 20)
+	_text(stack, body, 15, MUTED)
+	if action.is_valid() and not action_label.is_empty():
+		var button := _button(stack, action_label, action)
+		button.name = "StateAction"
+		DESIGN.apply_button(button, "primary" if kind == "error" else "secondary")
+	return card
+
 func _item_name(item: Dictionary) -> String:
 	return str(item.get("name", item.get("definition_id", "Training rifle"))).replace("_", " ")
 
@@ -423,7 +552,7 @@ func _inventory() -> void:
 		return
 	_text(content, "%d owned instances  •  Cosmetics never change weapon statistics" % inventory.size(), 15, MUTED)
 	if inventory.is_empty():
-		_text(content, "Your collection starts here. Earn online Credits through validated matches, then visit Cases.", 18)
+		_state_card(content, "empty", "Your collection starts here", "Earn online Credits through validated matches, then open cases for finishes. Standard training equipment is always yours.", "BROWSE CASES", open_tab.bind("cases"))
 	var filters := HFlowContainer.new()
 	content.add_child(filters)
 	var search := _field(filters, "Name, collection or rarity", inventory_filter)
@@ -445,20 +574,7 @@ func _inventory() -> void:
 		if not _matches_filter(item, inventory_filter) or (inventory_available_only and item.get("reserved", false)):
 			continue
 		visible_count += 1
-		var rarity := str(item.get("rarity", "Supply"))
-		var card := _button(cards, "%s\n%s  /  %s\n%s" % [_item_name(item), rarity.to_upper(), item.get("collection", "SUPPLY"), "RESERVED" if item.get("reserved", false) else "INSPECT ITEM"], func(): selected = item; _render())
-		card.custom_minimum_size = Vector2(260, 104)
-		card.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		var style := StyleBoxFlat.new()
-		style.bg_color = Color("18222b")
-		style.border_color = REVEAL.FINISH.rarity_color(rarity)
-		style.border_width_left = 4
-		style.set_corner_radius_all(4)
-		style.content_margin_left = 16
-		style.content_margin_right = 12
-		style.content_margin_top = 12
-		style.content_margin_bottom = 12
-		card.add_theme_stylebox_override("normal", style)
+		_item_card(cards, item)
 	if visible_count == 0 and not inventory.is_empty():
 		_text(content, "No owned instances match these filters.", 16, MUTED)
 	if not selected.is_empty():
@@ -477,6 +593,119 @@ func _inventory() -> void:
 
 	_knife_reference_button()
 
+## One owned instance: a finish swatch from its collection's palette, name, rarity and
+## state chips and, for finishes, its wear. Everything shown comes from the instance.
+func _item_card(parent: Node, item: Dictionary) -> Button:
+	var rarity := str(item.get("rarity", "Supply"))
+	var kind := str(item.get("kind", ""))
+	var reserved: bool = item.get("reserved", false)
+	var is_selected: bool = not selected.is_empty() and selected.get("id", "") == item.get("id", "")
+	var equipped := false
+	for slot in equipped_loadout:
+		if equipped_loadout[slot] is Dictionary and equipped_loadout[slot].get("id", "") == item.get("id", "") and item.has("id"):
+			equipped = true
+	var card := _button(parent, "", func(): selected = item; _render())
+	card.name = "Item_" + str(item.get("id", _item_name(item)))
+	card.tooltip_text = "%s\n%s  /  %s\n%s" % [_item_name(item), rarity.to_upper(), item.get("collection", "SUPPLY"), "RESERVED" if reserved else "INSPECT ITEM"]
+	var accent: Color = REVEAL.FINISH.rarity_color(rarity) if kind == "weapon_skin" else DESIGN.STEEL
+	for state in ["normal", "hover", "pressed", "focus"]:
+		var style := DESIGN.box(DESIGN.GRAPHITE_HOVER if state == "hover" else DESIGN.GRAPHITE_RAISED, DESIGN.GOLD if is_selected or state == "focus" else DESIGN.LINE, 2 if is_selected else 1, Vector2(12, 10))
+		style.border_width_left = 4
+		style.border_color = DESIGN.GOLD if is_selected else accent
+		card.add_theme_stylebox_override(state, style)
+	var frame := MarginContainer.new()
+	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	for side in ["left", "right", "top", "bottom"]:
+		frame.add_theme_constant_override("margin_" + side, 12)
+	frame.add_theme_constant_override("margin_left", 16)
+	card.add_child(frame)
+	var row := HBoxContainer.new()
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_theme_constant_override("separation", 12)
+	frame.add_child(row)
+	var swatch: Control = _case_glyph(str(item.get("collection", "")), 44.0) if kind == "case" else (_key_glyph(44.0) if kind == "key" else _swatch(item, 44.0))
+	row.add_child(swatch)
+	var column := VBoxContainer.new()
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_theme_constant_override("separation", 4)
+	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(column)
+	var title := _label(_item_name(item), 16, DESIGN.TEXT)
+	title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	title.custom_minimum_size.x = 150
+	column.add_child(title)
+	column.add_child(_label(str(item.get("collection", "Collection supply")), 12, DESIGN.STEEL))
+	var chips := HBoxContainer.new()
+	chips.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	chips.add_theme_constant_override("separation", 6)
+	column.add_child(chips)
+	chips.add_child(_chip(rarity.to_upper() if kind == "weapon_skin" else kind.to_upper(), accent))
+	if equipped:
+		chips.add_child(_chip("EQUIPPED", DESIGN.GOLD))
+	if reserved:
+		chips.add_child(_chip("RESERVED", DESIGN.STEEL))
+	if kind == "weapon_skin" and item.has("wear"):
+		var wear_row := HBoxContainer.new()
+		wear_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		wear_row.add_theme_constant_override("separation", 6)
+		column.add_child(wear_row)
+		wear_row.add_child(_label("WEAR %.3f" % float(item.wear), 11, DESIGN.STEEL))
+		var meter := ProgressBar.new()
+		meter.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		meter.show_percentage = false
+		meter.max_value = 1.0
+		meter.value = clampf(float(item.wear), 0.0, 1.0)
+		meter.custom_minimum_size = Vector2(60, 4)
+		meter.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		meter.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		meter.add_theme_stylebox_override("background", DESIGN.box(DESIGN.OBSIDIAN, Color.TRANSPARENT, 0, Vector2.ZERO))
+		meter.add_theme_stylebox_override("fill", DESIGN.box(Color(DESIGN.STEEL_BRIGHT, 0.7), Color.TRANSPARENT, 0, Vector2.ZERO))
+		wear_row.add_child(meter)
+	# A button ignores its children's size; the card is already in the tree (theme fonts
+	# apply), so it takes its content's size now.
+	var content_size := frame.get_combined_minimum_size()
+	card.custom_minimum_size = Vector2(maxf(260, content_size.x), maxf(DESIGN.TOUCH_MIN, content_size.y))
+	return card
+
+func _chip(value: String, color: Color) -> PanelContainer:
+	var chip := PanelContainer.new()
+	chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	chip.add_theme_stylebox_override("panel", DESIGN.box(Color(color, 0.16), Color(color, 0.5), 1, Vector2(6, 1)))
+	chip.add_child(_label(value, 11, color.lightened(0.15)))
+	return chip
+
+## Published odds as a table: each rarity in its colour with a bar whose length is
+## linearly proportional to its probability, so rare outcomes look as rare as they are.
+func _odds_table(parent: Node, odds: Dictionary) -> void:
+	var grid := GridContainer.new()
+	grid.columns = 3
+	grid.add_theme_constant_override("h_separation", 12)
+	grid.add_theme_constant_override("v_separation", 6)
+	parent.add_child(grid)
+	var total := 0.0
+	for rarity in odds:
+		total += float(odds[rarity])
+	for rarity in odds:
+		var color: Color = REVEAL.FINISH.rarity_color(str(rarity))
+		var name_label := _label(str(rarity).to_upper(), 13, color.lightened(0.1))
+		name_label.custom_minimum_size.x = 110
+		grid.add_child(name_label)
+		var bar := ProgressBar.new()
+		bar.show_percentage = false
+		bar.max_value = maxf(total, 0.001)
+		bar.value = float(odds[rarity])
+		bar.custom_minimum_size = Vector2(220, 8)
+		bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		bar.add_theme_stylebox_override("background", DESIGN.box(DESIGN.OBSIDIAN, Color.TRANSPARENT, 0, Vector2.ZERO))
+		bar.add_theme_stylebox_override("fill", DESIGN.box(color, Color.TRANSPARENT, 0, Vector2.ZERO))
+		grid.add_child(bar)
+		var value := _label("%s %%" % str(odds[rarity]), 13, DESIGN.TEXT)
+		value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		value.custom_minimum_size.x = 64
+		grid.add_child(value)
+
 func _knife_reference_button() -> void:
 	var row := HFlowContainer.new()
 	content.add_child(row)
@@ -492,16 +721,33 @@ func _cases() -> void:
 	var probabilities: Array[String] = []
 	for rarity in odds:
 		probabilities.append("%s  %s%%" % [rarity, odds[rarity]])
-	_text(panel, "    ·    ".join(probabilities), 16)
+	_odds_table(panel, odds)
 	_text(panel, "One case + one collection key are consumed. The server commits the reward before its reveal. Skipping has no effect on the outcome.", 15, MUTED)
 	var store := _panel(content)
 	_text(store, "COLLECTION SUPPLIES", 20)
+	var have := int(account.get("credits", 0))
+	var supplies := 0
 	for raw in catalog.get("definitions", []):
 		var definition: Dictionary = raw
 		if definition.get("kind") in ["case", "key"]:
+			supplies += 1
 			var price := int(definition.get("price", 0))
-			_button(store, "%s  /  %d Credits" % [definition.get("name", definition.id), price], func():
-				_confirm("Buy %s for %d earned Credits?" % [definition.get("name", definition.id), price], func(): _perform("/store/buy", {"definition_id": definition.id, "idempotency_key": api.key()}, "Supply added to inventory.")))
+			var row := HFlowContainer.new()
+			row.add_theme_constant_override("h_separation", 14)
+			row.add_theme_constant_override("v_separation", 6)
+			store.add_child(row)
+			row.add_child(_case_glyph(str(definition.get("collection", "")), 52.0) if definition.get("kind") == "case" else _key_glyph(52.0))
+			var holds := case_holds_text(str(definition.get("collection", ""))) if definition.get("kind") == "case" else ""
+			var label := _label("%s\n%s earned Credits%s" % [definition.get("name", definition.id), credits_text(price), "\n" + holds if not holds.is_empty() else ""], 16)
+			label.custom_minimum_size.x = 230
+			row.add_child(label)
+			var buy := _button(row, "BUY" if have >= price else "NEED %s MORE" % credits_text(price - have), func():
+				_confirm("Buy %s for %s earned Credits? You have %s." % [definition.get("name", definition.id), credits_text(price), credits_text(have)], func(): _perform("/store/buy", {"definition_id": definition.id, "idempotency_key": api.key()}, "Supply added to inventory.")))
+			buy.name = "BuySupply_" + str(definition.id)
+			buy.disabled = have < price
+			DESIGN.apply_button(buy, "primary")
+	if supplies == 0:
+		_state_card(store, "empty", "No supplies are for sale", "The catalog lists no cases or keys right now.", "REFRESH", func(): _refresh())
 	var key_item: Dictionary = {}
 	for raw in inventory:
 		if raw.get("kind") == "key" and not raw.get("reserved", false):
@@ -514,19 +760,114 @@ func _cases() -> void:
 		if item.get("kind") != "case" or item.get("reserved", false):
 			continue
 		count += 1
-		var button := _button(cases, "OPEN  /  " + _item_name(item), func():
+		var row := HFlowContainer.new()
+		row.add_theme_constant_override("h_separation", 14)
+		row.add_theme_constant_override("v_separation", 6)
+		cases.add_child(row)
+		row.add_child(_case_glyph(str(item.get("collection", "")), 52.0))
+		var holds := case_holds_text(str(item.get("collection", "")))
+		var info := _label("%s\n%s%s" % [_item_name(item), "Ready: one key will be used" if not key_item.is_empty() else "Needs a collection key", "\n" + holds if not holds.is_empty() else ""], 16)
+		info.custom_minimum_size.x = 230
+		row.add_child(info)
+		var button := _button(row, "OPEN", func():
 			_confirm("Consume %s and one key?\n\n%s\n\nThese are the actual server probabilities. Results are final." % [_item_name(item), "  ·  ".join(probabilities)], _open_case.bind(item, key_item)))
+		button.name = "Open_" + str(item.get("id", ""))
 		button.disabled = key_item.is_empty() or odds.is_empty()
+		DESIGN.apply_button(button, "primary")
 	if count == 0:
-		_text(cases, "No available cases. Earn Credits in eligible online matches, then obtain supplies above.", 15, MUTED)
+		_state_card(cases, "empty", "No cases to open", "Earn Credits in eligible online matches, then buy a case and a collection key above.")
 	elif key_item.is_empty():
 		_text(cases, "A collection key is required. Obtain one with earned Credits above.", 15, GOLD)
-	var previews := _panel(content)
-	_text(previews, "COLLECTION FINISHES", 20)
+	_collection_browser(content)
+
+## The rarity order of the published odds, rarest last.
+const RARITY_ORDER := ["Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythic"]
+
+## What a case can hold, before it is opened: every finish in the catalog grouped by
+## collection and ordered by rarity, each opening the 3D inspector. This only shows the
+## catalog; the reward is committed by the server when a case is opened.
+func _collection_browser(parent: Node) -> void:
+	var panel := _panel(parent)
+	_text(panel, "COLLECTIONS", 20)
+	_text(panel, "Every finish a case can hold, by collection. Previews are not owned items.", 14, MUTED)
+	var groups := {}
 	for raw in catalog.get("definitions", []):
 		var definition: Dictionary = raw
 		if definition.get("kind") == "weapon_skin":
-			_button(previews, "%s  /  %s" % [definition.name, definition.rarity], func(): selected = definition; _show_inspector_popup(definition))
+			var collection := str(definition.get("collection", "Training"))
+			if not groups.has(collection):
+				groups[collection] = []
+			groups[collection].append(definition)
+	if groups.is_empty():
+		_state_card(panel, "empty", "No finishes are published", "The catalog lists no collections yet.", "REFRESH", func(): _refresh())
+		return
+	for collection in groups:
+		var finishes: Array = groups[collection]
+		finishes.sort_custom(func(a, b): return RARITY_ORDER.find(str(a.get("rarity", "Common"))) < RARITY_ORDER.find(str(b.get("rarity", "Common"))))
+		var palette: Array = REVEAL.FINISH.PALETTES.get(collection, [DESIGN.GRAPHITE_HOVER, DESIGN.STEEL])
+		var section := VBoxContainer.new()
+		section.name = "Collection_" + str(collection).replace(" ", "_")
+		section.add_theme_constant_override("separation", 8)
+		panel.add_child(section)
+		var heading := HBoxContainer.new()
+		heading.add_theme_constant_override("separation", 10)
+		section.add_child(heading)
+		for tone: Color in palette:
+			var chip := ColorRect.new()
+			chip.color = tone
+			chip.custom_minimum_size = Vector2(14, 28)
+			heading.add_child(chip)
+		var title := _label(str(collection).to_upper(), 16, GOLD)
+		title.add_theme_font_override("font", DESIGN.heading_font())
+		heading.add_child(title)
+		heading.add_child(_label("%d FINISH%s" % [finishes.size(), "" if finishes.size() == 1 else "ES"], 12, MUTED))
+		var flow := HFlowContainer.new()
+		flow.add_theme_constant_override("h_separation", 8)
+		flow.add_theme_constant_override("v_separation", 8)
+		section.add_child(flow)
+		for definition: Dictionary in finishes:
+			var rarity := str(definition.get("rarity", "Common"))
+			var accent: Color = REVEAL.FINISH.rarity_color(rarity)
+			var card := _button(flow, "", func(): selected = definition; _show_inspector_popup(definition))
+			card.name = "Finish_" + str(definition.get("id", ""))
+			card.tooltip_text = "%s  /  %s  /  preview" % [definition.get("name", ""), rarity]
+			for state in ["normal", "hover", "pressed", "focus"]:
+				var style := DESIGN.box(DESIGN.GRAPHITE_HOVER if state == "hover" else DESIGN.GRAPHITE_RAISED, DESIGN.GOLD if state == "focus" else DESIGN.LINE, 1, Vector2(10, 8))
+				style.border_width_left = 4
+				style.border_color = accent
+				card.add_theme_stylebox_override(state, style)
+			var frame := HBoxContainer.new()
+			frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			frame.offset_left = 14
+			frame.offset_right = -10
+			frame.add_theme_constant_override("separation", 10)
+			card.add_child(frame)
+			frame.add_child(_swatch(definition, 32.0))
+			var text := VBoxContainer.new()
+			text.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			text.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+			frame.add_child(text)
+			var short_name := str(definition.get("name", "")).get_slice(" / ", 1) if " / " in str(definition.get("name", "")) else str(definition.get("name", ""))
+			text.add_child(_label(short_name, 14))
+			text.add_child(_label(rarity.to_upper(), 11, accent.lightened(0.15)))
+			var content_size := frame.get_combined_minimum_size()
+			card.custom_minimum_size = Vector2(maxf(190, content_size.x + 24), maxf(DESIGN.TOUCH_MIN, content_size.y + 16))
+
+## A collection key: a bow and a toothed shaft, from flat shapes.
+func _key_glyph(edge: float = 52.0) -> Control:
+	var glyph := Control.new()
+	glyph.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	glyph.custom_minimum_size = Vector2(edge, edge * 0.78)
+	glyph.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	glyph.draw.connect(func():
+		var box := glyph.size
+		glyph.draw_arc(Vector2(box.x * 0.24, box.y * 0.5), box.y * 0.26, 0, TAU, 24, DESIGN.GOLD, 3.0)
+		glyph.draw_rect(Rect2(box.x * 0.40, box.y * 0.44, box.x * 0.52, box.y * 0.12), DESIGN.GOLD)
+		glyph.draw_rect(Rect2(box.x * 0.74, box.y * 0.52, box.x * 0.08, box.y * 0.22), DESIGN.GOLD)
+		glyph.draw_rect(Rect2(box.x * 0.86, box.y * 0.52, box.x * 0.06, box.y * 0.16), DESIGN.GOLD)
+	)
+	return glyph
 
 func _open_case(case_item: Dictionary, key_item: Dictionary) -> void:
 	var result := await _perform("/cases/open", {"case_id": case_item.id, "key_id": key_item.id, "idempotency_key": api.key()}, "Reward committed to your inventory.")
@@ -621,32 +962,6 @@ func _market() -> void:
 	if _needs_account():
 		return
 	_text(content, "Community listings use earned Credits only. Ownership and payment settle together on the server.", 15, MUTED)
-	var form := _panel(content)
-	_text(form, "LIST AN OWNED COSMETIC", 18, GOLD)
-	var fee_percent := float(catalog.get("market_fee_basis_points", 0)) / 100.0
-	_text(form, "Transaction fee: %s%% of the asking price, deducted from seller proceeds on sale." % fee_percent, 14, MUTED)
-	var options := OptionButton.new()
-	options.custom_minimum_size.y = 44
-	form.add_child(options)
-	var eligible: Array = []
-	for item in inventory:
-		if item.get("marketplace_eligible", not item.get("reserved", false)) and item.get("kind") == "weapon_skin":
-			eligible.append(item)
-			options.add_item(_item_name(item))
-	var price := SpinBox.new()
-	price.min_value = 1
-	price.max_value = 1000000
-	price.value = 100
-	price.prefix = "Credits "
-	price.custom_minimum_size.y = 44
-	form.add_child(price)
-	var list_button := _button(form, "CREATE LISTING", func():
-		if options.selected >= 0:
-			var item: Dictionary = eligible[options.selected]
-			_confirm("List %s for %d Credits? It will be reserved until sold or cancelled. A %s%% transaction fee is deducted from sale proceeds." % [_item_name(item), int(price.value), fee_percent], func(): _perform("/market/list", {"item_id": item.id, "price": int(price.value)}, "Listing created.")))
-	list_button.disabled = eligible.is_empty()
-	if eligible.is_empty():
-		_text(form, "You have no available weapon finishes to list.", 14, MUTED)
 	var filter_row := HFlowContainer.new()
 	content.add_child(filter_row)
 	var search := _field(filter_row, "Filter name, rarity or collection", market_filter)
@@ -667,19 +982,115 @@ func _market() -> void:
 	filter_row.add_child(mine)
 	var count := 0
 	for listing in _filtered_listings():
-		var item: Dictionary = listing.get("item", {})
 		count += 1
-		var row := _panel(content)
-		_text(row, "%s  /  %s Credits" % [_item_name(item), listing.get("price", 0)], 18)
-		_text(row, "%s  •  %s  •  Wear %.3f" % [str(item.get("rarity", "Common")).to_upper(), item.get("collection", ""), float(item.get("wear", 0))], 14, REVEAL.FINISH.rarity_color(str(item.get("rarity", "Common"))))
-		_button(row, "INSPECT", _show_inspector_popup.bind(item))
-		if str(listing.get("seller_id")) == api.player_id:
-			_button(row, "CANCEL MY LISTING", func(): _perform("/market/%s/cancel" % listing.id, {}, "Listing cancelled; item returned."))
-		else:
-			_button(row, "BUY WITH EARNED CREDITS", func():
-				_confirm("Buy this exact item for %s earned Credits?\n\n%s\n%s  ·  %s\nWear %.4f  ·  Pattern %s\n\nThe seller receives the price minus the market fee." % [listing.get("price", 0), _item_name(item), str(item.get("rarity", "")).to_upper(), item.get("collection", ""), float(item.get("wear", 0)), item.get("pattern_seed", "—")], func(): _perform("/market/%s/buy" % listing.id, {"idempotency_key": api.key()}, "Purchase confirmed.")))
+		_listing_card(listing)
 	if count == 0:
-		_text(content, "No matching active listings. Refresh to check for new offers.", 18, MUTED)
+		_state_card(content, "empty", "No matching active listings", "Nothing is listed that matches these filters right now. New offers appear when other players list finishes.", "REFRESH LISTINGS", func(): _refresh())
+	_listing_form()
+
+## Selling: an owned, unreserved finish and an asking price, in one row. The fee is stated
+## before the player commits, and again in the confirmation.
+func _listing_form() -> void:
+	var form := _panel(content)
+	_text(form, "SELL AN OWNED COSMETIC", 18, GOLD)
+	var fee_percent := fee_percent_text()
+	_text(form, "Transaction fee: %s of the asking price, deducted from seller proceeds on sale." % fee_percent, 14, MUTED)
+	var row := HFlowContainer.new()
+	row.add_theme_constant_override("h_separation", 10)
+	row.add_theme_constant_override("v_separation", 8)
+	form.add_child(row)
+	var options := OptionButton.new()
+	options.custom_minimum_size = Vector2(300, 44)
+	row.add_child(options)
+	var eligible: Array = []
+	for item in inventory:
+		if item.get("marketplace_eligible", not item.get("reserved", false)) and item.get("kind") == "weapon_skin":
+			eligible.append(item)
+			options.add_item(_item_name(item))
+	var price := SpinBox.new()
+	price.min_value = 1
+	price.max_value = 1000000
+	price.value = 100
+	price.prefix = "Credits "
+	price.custom_minimum_size = Vector2(200, 44)
+	row.add_child(price)
+	var list_button := _button(row, "CREATE LISTING", func():
+		if options.selected >= 0:
+			var item: Dictionary = eligible[options.selected]
+			var asking := int(price.value)
+			var fee := market_fee(asking)
+			_confirm("List %s for %s earned Credits?\n\nIt will be reserved until sold or cancelled.\nOn a sale the market fee is %s (%s), so you receive %s." % [_item_name(item), credits_text(asking), credits_text(fee), fee_percent, credits_text(asking - fee)], func(): _perform("/market/list", {"item_id": item.id, "price": asking}, "Listing created.")))
+	list_button.name = "CreateListing"
+	list_button.disabled = eligible.is_empty()
+	DESIGN.apply_button(list_button, "primary")
+	if eligible.is_empty():
+		_text(form, "You have no available weapon finishes to list.", 14, MUTED)
+
+## One community listing: the finish, its price in earned Credits and exactly what a sale pays
+## the seller, using the server's own fee rule. Buying and cancelling go through the same
+## confirmation and server calls as before.
+func _listing_card(listing: Dictionary) -> PanelContainer:
+	var item: Dictionary = listing.get("item", {})
+	var price := int(listing.get("price", 0))
+	var fee := market_fee(price)
+	var fee_percent := fee_percent_text()
+	var mine := str(listing.get("seller_id")) == api.player_id
+	var rarity := str(item.get("rarity", "Common"))
+	var accent: Color = REVEAL.FINISH.rarity_color(rarity)
+	var card := PanelContainer.new()
+	card.name = "Listing_" + str(listing.get("id", ""))
+	var style := DESIGN.box(DESIGN.GRAPHITE_RAISED, DESIGN.GOLD_DIM if mine else DESIGN.LINE, 1, Vector2(14, 12))
+	style.border_width_left = 4
+	style.border_color = accent
+	card.add_theme_stylebox_override("panel", style)
+	content.add_child(card)
+	var flow := HFlowContainer.new()
+	flow.add_theme_constant_override("h_separation", 18)
+	flow.add_theme_constant_override("v_separation", 10)
+	card.add_child(flow)
+	flow.add_child(_swatch(item, 56.0))
+	var identity := VBoxContainer.new()
+	identity.custom_minimum_size.x = 230
+	identity.add_theme_constant_override("separation", 4)
+	flow.add_child(identity)
+	identity.add_child(_label(_item_name(item), 18))
+	identity.add_child(_label(str(item.get("collection", "")), 13, MUTED))
+	var chips := HFlowContainer.new()
+	chips.add_theme_constant_override("h_separation", 6)
+	identity.add_child(chips)
+	chips.add_child(_chip(rarity.to_upper(), accent))
+	chips.add_child(_chip("WEAR %.3f" % float(item.get("wear", 0)), DESIGN.STEEL))
+	if mine:
+		chips.add_child(_chip("YOUR LISTING", DESIGN.GOLD))
+	var money := VBoxContainer.new()
+	money.custom_minimum_size.x = 210
+	money.add_theme_constant_override("separation", 3)
+	flow.add_child(money)
+	var price_label := _label("%s EARNED CREDITS" % credits_text(price), 20, GOLD)
+	price_label.name = "Price"
+	price_label.add_theme_font_override("font", DESIGN.heading_font())
+	money.add_child(price_label)
+	var terms := _label(("You receive %s after a fee of %s (%s)." if mine else "The seller receives %s after a fee of %s (%s).") % [credits_text(price - fee), credits_text(fee), fee_percent], 13, MUTED)
+	terms.name = "Terms"
+	terms.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	terms.custom_minimum_size.x = 210
+	money.add_child(terms)
+	var actions := HBoxContainer.new()
+	actions.add_theme_constant_override("separation", 8)
+	flow.add_child(actions)
+	var inspect := _button(actions, "INSPECT", _show_inspector_popup.bind(item))
+	inspect.name = "Inspect"
+	if mine:
+		var cancel := _button(actions, "CANCEL MY LISTING", func(): _perform("/market/%s/cancel" % listing.id, {}, "Listing cancelled; item returned."))
+		cancel.name = "Cancel"
+	else:
+		var have := int(account.get("credits", 0))
+		var buy := _button(actions, "BUY FOR %s" % credits_text(price) if have >= price else "NEED %s MORE" % credits_text(price - have), func():
+			_confirm("Buy this exact item for %s earned Credits?\n\n%s\n%s  ·  %s\nWear %.4f  ·  Pattern %s\n\nYou pay %s. The seller receives %s after a market fee of %s.\nYou have %s earned Credits." % [credits_text(price), _item_name(item), str(item.get("rarity", "")).to_upper(), item.get("collection", ""), float(item.get("wear", 0)), item.get("pattern_seed", "—"), credits_text(price), credits_text(price - fee), credits_text(fee), credits_text(have)], func(): _perform("/market/%s/buy" % listing.id, {"idempotency_key": api.key()}, "Purchase confirmed.")))
+		buy.name = "Buy"
+		buy.disabled = have < price
+		DESIGN.apply_button(buy, "primary")
+	return card
 
 func _matches_filter(item: Dictionary, query: String) -> bool:
 	var terms := "%s %s %s" % [_item_name(item), item.get("rarity", ""), item.get("collection", "")]
@@ -704,7 +1115,7 @@ func _trades() -> void:
 	var partner := _field(create, "Partner's player ID")
 	_button(create, "SEND TRADE REQUEST", func(): _perform("/trades", {"partner_id": partner.text.strip_edges()}, "Trade request created."))
 	if trades.is_empty():
-		_text(content, "No trades yet. Exchange player IDs with a friend to start.", 18, MUTED)
+		_state_card(content, "empty", "No trades yet", "Exchange player IDs with a friend, then send a request above. Both of you review the same revision before anything moves.", "SHOW MY PLAYER ID", open_tab.bind("profile"))
 	for raw in trades:
 		_trade_card(raw)
 
@@ -748,29 +1159,88 @@ func trade_confirmation_text(trade: Dictionary) -> String:
 	text += "\n\nThe exchange completes atomically when both players confirm this revision. Any later edit cancels both confirmations."
 	return text
 
+## One side of a trade: what that player gives, item by item, with a way to inspect each.
+func _trade_side(parent: Node, node_name: String, heading: String, items: Variant, tone: Color) -> PanelContainer:
+	var box := PanelContainer.new()
+	box.name = node_name
+	box.custom_minimum_size.x = 400
+	box.add_theme_stylebox_override("panel", DESIGN.box(DESIGN.OBSIDIAN, DESIGN.LINE, 1, Vector2(14, 10)))
+	parent.add_child(box)
+	var stack := VBoxContainer.new()
+	stack.add_theme_constant_override("separation", 6)
+	box.add_child(stack)
+	var accent_bar := ColorRect.new()
+	accent_bar.color = tone
+	accent_bar.custom_minimum_size.y = 3
+	stack.add_child(accent_bar)
+	var title := _label(heading, 15, tone)
+	title.add_theme_font_override("font", DESIGN.heading_font())
+	stack.add_child(title)
+	if not items is Array or (items as Array).is_empty():
+		var none := _label("Nothing", 14, MUTED)
+		none.name = "Nothing"
+		stack.add_child(none)
+		return box
+	for item in items:
+		if item is Dictionary:
+			var row := HBoxContainer.new()
+			row.add_theme_constant_override("separation", 10)
+			stack.add_child(row)
+			row.add_child(_swatch(item, 34.0))
+			var text := VBoxContainer.new()
+			text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+			row.add_child(text)
+			text.add_child(DESIGN.ellipsize(_label(_item_name(item), 15)))
+			text.add_child(_label("%s  ·  wear %.3f" % [str(item.get("rarity", "")).to_upper(), float(item.get("wear", 0))], 12, REVEAL.FINISH.rarity_color(str(item.get("rarity", "Common")))))
+			var look := _button(row, "INSPECT", _show_inspector_popup.bind(item))
+			look.custom_minimum_size.x = 0
+		else:
+			stack.add_child(_label("item " + str(item), 13, MUTED))
+	return box
+
 func _trade_card(trade: Dictionary) -> void:
 	var panel := _panel(content)
 	var trade_id := str(trade.get("id", ""))
 	var revision := int(trade.get("revision", 0))
-	_text(panel, "TRADE %s  /  REVISION %d" % [trade_id.left(8), revision], 18, GOLD)
-	_text(panel, "State: " + str(trade.get("state", "open")), 15)
 	var offers: Dictionary = trade.get("offers", {})
 	var offer_items: Dictionary = trade.get("offer_items", offers)
 	var partner := partner_label(trade)
-	_text(panel, "WITH  " + partner, 15)
-	for owner in offers:
-		_text(panel, ("YOU GIVE" if str(owner) == api.player_id else partner + " GIVES"), 15, GOLD)
-		var offered: Variant = offer_items.get(owner, offers[owner])
-		if offered is Array:
-			if offered.is_empty():
-				_text(panel, "No items offered", 14, MUTED)
-			for item in offered:
-				if item is Dictionary:
-					_button(panel, _item_name(item), _show_inspector_popup.bind(item))
-				else:
-					_text(panel, str(item), 13, MUTED)
+	var partner_id := _partner_id(trade)
+	var header := HFlowContainer.new()
+	header.add_theme_constant_override("h_separation", 8)
+	panel.add_child(header)
+	var title := _label("TRADE WITH " + partner, 18, GOLD)
+	title.name = "TradeTitle"
+	header.add_child(title)
+	header.add_child(_chip(str(trade.get("state", "open")).to_upper(), DESIGN.GOLD))
+	header.add_child(_chip("REVISION %d" % revision, DESIGN.STEEL))
+	var sides := HFlowContainer.new()
+	sides.add_theme_constant_override("h_separation", 14)
+	sides.add_theme_constant_override("v_separation", 10)
+	panel.add_child(sides)
+	var giving: Variant = offer_items.get(api.player_id, offers.get(api.player_id, []))
+	var receiving: Variant = offer_items.get(partner_id, offers.get(partner_id, []))
+	_trade_side(sides, "TradeGive", "YOU GIVE", giving, DESIGN.GOLD)
+	_trade_side(sides, "TradeReceive", "YOU RECEIVE", receiving, DESIGN.STEEL_BRIGHT)
+	var gives_something: bool = giving is Array and not (giving as Array).is_empty()
+	var gets_something: bool = receiving is Array and not (receiving as Array).is_empty()
+	if gives_something and not gets_something:
+		var gift := _chip("YOU RECEIVE NOTHING FOR THIS OFFER", DESIGN.CRIMSON_BRIGHT)
+		gift.name = "GiftWarning"
+		gift.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+		panel.add_child(gift)
 	var confirmations: Array = trade.get("confirmations", [])
-	_text(panel, "%d / 2 confirmations  •  %s" % [confirmations.size(), "You confirmed this revision" if api.player_id in confirmations else "You have not confirmed this revision"], 14, MUTED)
+	var confirmed := HFlowContainer.new()
+	confirmed.add_theme_constant_override("h_separation", 8)
+	panel.add_child(confirmed)
+	var you_confirmed: bool = api.player_id in confirmations
+	var they_confirmed: bool = not partner_id.is_empty() and partner_id in confirmations
+	var you_chip := _chip("YOU CONFIRMED THIS REVISION" if you_confirmed else "YOU HAVE NOT CONFIRMED THIS REVISION", DESIGN.GOLD if you_confirmed else DESIGN.STEEL)
+	you_chip.name = "ConfirmYou"
+	confirmed.add_child(you_chip)
+	var they_chip := _chip("THEY CONFIRMED" if they_confirmed else "THEY HAVE NOT CONFIRMED", DESIGN.GOLD if they_confirmed else DESIGN.STEEL)
+	they_chip.name = "ConfirmPartner"
+	confirmed.add_child(they_chip)
 	if str(trade.get("state", "open")) not in ["open", "pending"]:
 		return
 	var offer_ids: Array[String] = []

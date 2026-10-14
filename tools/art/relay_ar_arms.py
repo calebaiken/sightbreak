@@ -63,7 +63,7 @@ REST_CURL = (math.radians(10), math.radians(18), math.radians(10))
 THUMB_CMC = (-0.0215, 0.0215, -0.0075)
 THUMB_DIRS = ((-0.55, 0.78, -0.30), (-0.30, 0.90, -0.32), (-0.15, 0.95, -0.27))
 THUMB_LENGTHS = (0.042, 0.028, 0.022)
-THUMB_RADII = (0.0130, 0.0112, 0.0102, 0.0088)
+THUMB_RADII = (0.0122, 0.0100, 0.0089, 0.0076)
 THUMB_NAIL = (-0.75, 0.0, 0.66)       # the thumbnail faces out and up
 ELBOW = (0.002, -0.262, -0.010)
 FINGERS = ('index', 'middle', 'ring', 'pinky')
@@ -136,7 +136,9 @@ def glove_shapes():
         joints, ups = finger_chain(name)
         radii = RADII[name]
         for i in range(3):
-            adds.append((sdf.cone_shape(joints[i], joints[i + 1], radii[i], radii[i + 1], ups[i], FLAT, 'fabric'), 0.0025))
+            # Shafts are narrower than the joints at either end (the joints read as knuckles).
+            shaft = sdf.cone_shape(joints[i], joints[i + 1], radii[i] * 0.94, radii[i + 1] * 0.94, ups[i], FLAT, 'fabric')
+            adds.append((shaft, 0.0025))
             mid = (joints[i] + joints[i + 1]) / 2
             along = unit(joints[i + 1] - joints[i])
             pad_axes = np.stack((unit(np.cross(along, ups[i])), along, ups[i]))
@@ -144,6 +146,8 @@ def glove_shapes():
         for i in (1, 2):
             axes = np.stack((unit(np.cross(unit(joints[i + 1] - joints[i]), ups[i])), unit(joints[i + 1] - joints[i]), ups[i]))
             adds.append((sdf.ellipsoid_shape(joints[i] + ups[i] * radii[i] * 0.38, axes, (radii[i] * 0.78, radii[i] * 0.70, radii[i] * 0.62), 'fabric'), 0.0025))
+            # Joint condyles: the finger is widest across the joint.
+            adds.append((sdf.ellipsoid_shape(joints[i], axes, (radii[i] * 1.02, radii[i] * 0.62, radii[i] * 0.80), 'fabric'), 0.0020))
     # Thumb: metacarpal sunk into the thenar mass, then two phalanges. The first web
     # (adductor and first dorsal interosseous) ties its metacarpal to the index's.
     joints, ups = thumb_chain()
@@ -159,9 +163,9 @@ def glove_shapes():
     # Glove: moulded knuckle guard over the MCP line with a dome per knuckle.
     kn = _knuckle_axes()
     centre = (np.asarray(MCP['index']) + np.asarray(MCP['pinky'])) / 2 + np.array((0.0, -0.0035, 0.0115))
-    adds.append((sdf.box_shape(centre, kn, (0.0330, 0.0100, 0.0030), 0.0026, 'shell'), 0.0012))
+    adds.append((sdf.box_shape(centre, kn, (0.0330, 0.0100, 0.0024), 0.0034, 'shell'), 0.0020))
     for name in FINGERS:
-        adds.append((sdf.ellipsoid_shape(np.asarray(MCP[name]) + np.array((0, -0.001, RADII[name][0] * 1.22)), kn, (0.0072, 0.0064, 0.0034), 'shell'), 0.0015))
+        adds.append((sdf.ellipsoid_shape(np.asarray(MCP[name]) + np.array((0, -0.001, RADII[name][0] * 1.18)), kn, (0.0070, 0.0062, 0.0030), 'shell'), 0.0020))
         joints, ups = finger_chain(name)
         mid = joints[0] + (joints[1] - joints[0]) * 0.55
         along = unit(joints[1] - joints[0])
@@ -183,6 +187,16 @@ def glove_shapes():
                 b = joints[i + 1] + side * r1 * (0.92 if i == 2 else 1.0)
                 ext = unit(b - a) * 0.0025
                 subs.append((sdf.cone_shape(a - ext * (i > 0), b + ext * (i < 2), 0.00055, 0.00055), 0.0004))
+    # Palmar flexion creases at the base of each finger and across the PIP and DIP joints:
+    # short grooves across the palm side, where a glove folds when the finger bends.
+    for name in FINGERS:
+        joints, ups = finger_chain(name)
+        for i in (0, 1, 2):
+            along = unit(joints[i + 1] - joints[i]) if i < 3 else unit(joints[i] - joints[i - 1])
+            side = unit(np.cross(along, ups[i]))
+            r = RADII[name][i] * 0.94 + GLOVE
+            centre = joints[i] + along * (0.004 if i == 0 else 0.0) - ups[i] * r * 0.92
+            subs.append((sdf.cone_shape(centre - side * r * 0.62, centre + side * r * 0.62, 0.00065, 0.00065), 0.0005))
     for t in (0.09, 0.93):
         y = CUFF[0][1] + (CUFF[1][1] - CUFF[0][1]) * t
         r = CUFF_RADII[0] + (CUFF_RADII[1] - CUFF_RADII[0]) * t
@@ -239,8 +253,11 @@ def sleeve_radius(t, theta):
     hem = 0.0014 * np.exp(-((t - HEM_BAND * 0.5) / (HEM_BAND * 0.45)) ** 4)
     # Compression folds: bunched rings above the hem, diagonal folds up the forearm,
     # and a deeper set at the inside of the elbow (theta near -90 degrees, palm side).
-    bunch = np.exp(-((t - 0.030) / 0.020) ** 2) * 0.0023 * np.maximum(0, np.sin(t * 410 + 1.7 * theta + 0.6)) ** 3
-    diag = 0.0012 * np.clip((t - 0.040) / 0.03, 0, 1) * np.maximum(0, np.sin(t * 150 - 2.0 * theta + 1.1)) ** 4
+    # Phase and depth vary with angle and length, so no fold repeats evenly.
+    wobble = 1.9 * np.sin(2.3 * theta + 0.7) + 1.1 * np.sin(5.1 * theta + 2.0) + 0.9 * np.sin(t * 37 + 1.3 * theta)
+    depth = 0.55 + 0.45 * np.sin(1.7 * theta + t * 23 + 0.4) * np.sin(3.1 * theta - t * 41 + 1.9)
+    bunch = np.exp(-((t - 0.030) / 0.020) ** 2) * 0.0023 * depth * np.maximum(0, np.sin(t * 410 + 1.7 * theta + 0.6 + wobble)) ** 3
+    diag = 0.0012 * np.clip((t - 0.040) / 0.03, 0, 1) * depth * np.maximum(0, np.sin(t * 150 - 2.0 * theta + 1.1 + 0.8 * wobble + 1.4 * np.sin(t * 19))) ** 4
     elbow = 0.0030 * np.exp(-((t - 0.235) / 0.035) ** 2) * np.exp(-((((theta + math.pi / 2) + math.pi) % (2 * math.pi) - math.pi) / 0.9) ** 2) * np.maximum(0, np.sin(t * 260 + 0.4 * theta)) ** 2
     return base + hem + bunch + diag + elbow
 
@@ -276,16 +293,15 @@ def sleeve_bounds():
     return np.array((-0.068, SLEEVE_END - 0.012, -0.072)), np.array((0.068, SLEEVE_HEM + 0.010, 0.064))
 
 
-def sleeve_low_mesh(segments=24, rings=None):
+def sleeve_low_mesh(segments=24, ring_count=20):
     """Game mesh of the sleeve: a quad tube on the sleeve's own axis and section, with
     edge loops packed toward the hem (where the wrist bends) and an inset cap at each
     end. It follows the cloth without the small folds, which the bake carries."""
     R = _sleeve_frame()
     k = np.linalg.norm(np.asarray(ELBOW)) / abs(ELBOW[1])
     span = abs(SLEEVE_END - SLEEVE_HEM)
-    if rings is None:
-        u = np.linspace(0, 1, 20)
-        rings = list(span * u ** 1.6)
+    u = np.linspace(0, 1, ring_count)
+    rings = list(span * u ** 1.6)
     thetas = np.linspace(-math.pi, math.pi, segments, endpoint=False)
     verts, faces = [], []
 

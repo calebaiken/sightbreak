@@ -39,12 +39,16 @@ def main():
     parser.add_argument('--port', type=int, default=29400)
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--no-prediction', action='store_true')
+    parser.add_argument('--account-tickets', type=Path, help='Private fixture JSON with one ticket per client; never included in evidence')
     parser.add_argument('--render-client', type=int, default=-1, help='One native rendered client index; -1 keeps all headless (requires DISPLAY)')
     parser.add_argument('--blackout-at', type=float, default=-1, help='Seconds after shared measurement start; -1 disables')
     parser.add_argument('--blackout-seconds', type=float, default=0)
     parser.add_argument('--reconnect-at', type=float, default=-1, help='Explicitly close each connected client and exercise its resume token at this elapsed time')
     parser.add_argument('--reconnect-delay', type=float, default=2.0, help='Reconnect delay after explicit transport close; default matches the game; 0.7 reproduces the early stress fixture')
     args = parser.parse_args()
+    tickets = json.loads(args.account_tickets.read_text()) if args.account_tickets else []
+    if args.account_tickets and (not isinstance(tickets, list) or len(tickets) != args.clients or not all(isinstance(t, str) and len(t) <= 128 for t in tickets)):
+        parser.error('one bounded fixture ticket per client required')
     if not 0 <= args.reconnect_delay <= 10:
         parser.error('reconnect-delay must be between0 and10 seconds')
     if args.render_client < -1 or args.render_client >= args.clients:
@@ -86,7 +90,15 @@ def main():
             cmd.append('--no-prediction')
         if args.reconnect_at >= 0 and role == 'client':
             cmd.extend(['--reconnect-at=' + str(args.reconnect_at), '--reconnect-delay=' + str(args.reconnect_delay)])
-        process = subprocess.Popen(cmd, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
+        child_env = os.environ.copy()
+        if tickets:
+            cmd.append('--accounts')
+        if role == 'client':
+            child_env.pop('SIGHTBREAK_SERVER_KEY', None)
+            child_env.pop('SIGHTBREAK_RESULT_SPOOL', None)
+            if tickets:
+                child_env['SIGHTBREAK_JOIN_TICKET'] = tickets[int(name.split('-')[1])]
+        process = subprocess.Popen(cmd, cwd=ROOT, env=child_env, stdout=log, stderr=subprocess.STDOUT)
         processes.append((name, process))
         samples[name] = {'rss_peak_kib': 0, 'cpu_seconds': 0.0}
         return process
@@ -185,6 +197,16 @@ def main():
             if 'SCRIPT ERROR' in text or 'ERROR:' in text:
                 failures.append(name + ': logged error')
         server_report = json.loads((args.out / 'server.json').read_text()) if (args.out / 'server.json').exists() else {}
+        occupancy = server_report.get('occupancy', [])
+        for row in occupancy:
+            ids = [binding['actor'] for binding in row['bindings']]
+            if len(row['enet']) > 10 or len(ids) > 10 or len(set(ids)) != len(ids):
+                failures.append('server: capacity or duplicate actor authority')
+                break
+        if not occupancy or len(occupancy[-1]['bindings']) != args.clients:
+            failures.append('server: final actor authority count')
+        elif any(binding['idle_msec'] >= 750 or binding['input_ack'] < 10 for binding in occupancy[-1]['bindings']):
+            failures.append('server: restored input authority is not fresh')
         trajectories = {}
         for pose in server_report.get('poses', []):
             trajectories.setdefault(pose['id'], []).append(pose)
@@ -220,7 +242,7 @@ def main():
                 previous[pose['id']] = [pose[a] for a in ['x', 'y', 'z']]
         ticks = server_report.get('tick_usec', [])
         intervals = server_report.get('tick_intervals_usec', [])
-        report = {'conditions': {k: str(v) if isinstance(v, Path) else v for k, v in vars(args).items()},
+        report = {'conditions': {k: (bool(tickets) if k == 'account_tickets' else str(v) if isinstance(v, Path) else v) for k, v in vars(args).items()},
                   'scope': 'loopback real Godot processes; added RTT simulation; no device/cellular claim',
                   'source': source,
                   'traffic_window_seconds': time.monotonic() - start,
@@ -229,6 +251,8 @@ def main():
                   'startup_seconds': measurement_start-start if measurement_start else None,
                   'measurement_duration_seconds': args.seconds,
                   'shared_stop_reached': stop_written,
+                  'max_enet_occupancy': max((len(row['enet']) for row in occupancy), default=0),
+                  'final_authority': occupancy[-1]['bindings'] if occupancy else [],
                   'failures': failures, 'traffic': traffic, 'processes': samples,
                   'per_client_traffic': [route['traffic'] for route in routes], 'resource_peak_timeline': resource_timeline,
                   'skipped_commands': server_report.get('skipped_commands', 0),

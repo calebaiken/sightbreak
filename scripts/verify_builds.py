@@ -9,6 +9,7 @@ import struct
 import subprocess
 import zipfile
 
+from native_log import failed as native_log_failed
 from build_manifest import BUILDS, ROOT, OUTPUTS, VERSION, BUILD_NUMBER, IOS_VERSION, payload, source, write_json
 
 
@@ -47,7 +48,7 @@ def integrated_resources(paths):
     for basename in ("relay_ar_albedo.png-", "relay_ar_normal.png-", "relay_ar_orm.png-",
                      "relay_ar_arms_albedo.png-", "relay_ar_arms_normal.png-", "relay_ar_arms_orm.png-"):
         assert any(basename in path and path.endswith('.ctex') for path in paths), f"Missing imported texture: {basename}"
-    for basename in ("state_privacy", "snapshot_buffer", "movement_prediction", "peer_lifecycle", "result_outbox", "viewmodel_shading"):
+    for basename in ("state_privacy", "snapshot_buffer", "movement_prediction", "peer_lifecycle", "reconnect_policy", "result_outbox", "viewmodel_shading"):
         assert any(path.endswith('/' + basename + '.gdc') for path in paths), f"Missing compiled module: {basename}"
 
 
@@ -72,7 +73,7 @@ def main():
         result = subprocess.run(command, env=environment, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=120)
         (logs / f"{label}.log").write_text(result.stdout)
         assert result.returncode == 0, f"{label} failed; see {logs}"
-        assert not re.search(r"^(?:SCRIPT ERROR|ERROR:)|Parse Error", result.stdout, re.M), f"{label} emitted error; see {logs}"
+        assert not native_log_failed(result.stdout), f"{label} emitted error; see {logs}"
         return result.stdout
 
     executable = str(BUILDS / "linux/sightbreak.x86_64")

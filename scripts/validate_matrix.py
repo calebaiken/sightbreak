@@ -57,9 +57,11 @@ def main():
             run(match[1], [str(ROOT / 'scripts/godot.sh'), *shlex.split(match[2])])
         elif line.startswith('SIGHTBREAK_STATE_DIR=') and 'run_godot profile ' in line:
             run('profile', [str(ROOT / 'scripts/godot.sh'), '--headless', '--script', 'res://tests/profile_test.gd'], {'SIGHTBREAK_STATE_DIR': str(args.out / 'profile-state')})
+    run('account-output-unit', ['python3', 'scripts/test_account_network_output.py'])
     run('worker-unit', ['python3', '-m', 'unittest', 'discover', '-s', 'server/tests', '-v'])
     run('network', ['bash', 'scripts/test_network.sh'])
     run('network-soak', ['python3', 'scripts/test_network_soak.py', '--out', str(args.out / 'soak')])
+    run('network-soak-ten', ['python3', 'scripts/test_network_soak.py', '--clients', '10', '--port', '29840', '--out', str(args.out / 'soak-ten')])
     run('connection-lifecycle', ['python3', 'scripts/test_connection_lifecycle.py', '--out', str(args.out / 'connections')])
     run('bridge-transport', ['python3', 'scripts/test_bridge_transport.py'])
     run('build-manifest', ['python3', 'scripts/test_build_manifest.py'])
@@ -91,6 +93,7 @@ def main():
                 except Exception as error: unavailable('postgresql-cleanup', error)
         for label, script in [('account-protocol', 'test_account_isolated.py'), ('account-capacity', 'test_admission_capacity.py'), ('outbox-crash', 'test_result_outbox.py'), ('native-economy', 'test_native_economy.py')]:
             run(label, [str(ROOT / '.venv/bin/python'), 'scripts/' + script])
+        run('account-full-reconnect', [str(ROOT / '.venv/bin/python'), 'scripts/test_full_account_reconnect.py', '--out', str(args.out / 'account-full-reconnect')], timeout=180)
         run('economy-conservation', ['python3', 'backend/simulate.py'])
     if args.render:
         run('native-render-lifecycle', ['bash', 'scripts/test_render.sh'])
