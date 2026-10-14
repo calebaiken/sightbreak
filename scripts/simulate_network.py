@@ -122,7 +122,8 @@ def main():
                 if all((args.out / (name + '.json.ready')).exists() for name, _ in processes):
                     measurement_start = now + 1.0
                     measurement_epoch = time.time() + 1.0
-                    (barrier / 'start.json').write_text(json.dumps({'epoch': measurement_epoch}))
+                    (barrier / 'start.tmp').write_text(json.dumps({'epoch': measurement_epoch}))
+                    os.replace(barrier / 'start.tmp', barrier / 'start.json')
                     deadline = measurement_start + args.seconds + 20
                 elif now-start > 90 or any(p.poll() is not None for _, p in processes):
                     raise RuntimeError('shared measurement readiness failed; no successful trial claimed')

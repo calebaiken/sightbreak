@@ -128,7 +128,7 @@ func _process(delta: float) -> bool:
 			if start_epoch == 0 or Time.get_ticks_msec() < started_msec: return false
 			measuring = true
 			start_offset_seconds = (Time.get_ticks_msec()-started_msec)/1000.0
-			previous_frame_usec = Time.get_ticks_usec()
+			previous_frame_usec = 0
 			game.measuring = true
 			game.records.clear()
 			game.ticks.clear()
@@ -146,7 +146,7 @@ func _process(delta: float) -> bool:
 	elapsed += delta
 	wall_elapsed = (Time.get_ticks_msec()-started_msec)/1000.0
 	var frame_usec := Time.get_ticks_usec()
-	if DisplayServer.get_name() != "headless": render_frames.append((frame_usec-previous_frame_usec)/1000.0)
+	if DisplayServer.get_name() != "headless" and previous_frame_usec > 0: render_frames.append((frame_usec-previous_frame_usec)/1000.0)
 	previous_frame_usec = frame_usec
 	if game == null:
 		return false
