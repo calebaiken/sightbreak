@@ -69,7 +69,7 @@ def main():
             ticket_file.chmod(0o600)
             command = ['python3', 'scripts/simulate_network.py', '--clients', '10', '--seconds', '22',
                        '--port', '33600', '--rtt-ms', '100', '--blackout-at', '7.8', '--blackout-seconds', '1.5',
-                       '--reconnect-at', '8', '--account-tickets', str(ticket_file), '--out', str(out / 'network')]
+                       '--reconnect-at', '8', '--no-prediction', '--account-tickets', str(ticket_file), '--out', str(out / 'network')]
             with (out / 'network.log').open('w') as log:
                 result = subprocess.run(command, cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT, timeout=150)
             summary = json.loads((out / 'network/summary.json').read_text())
