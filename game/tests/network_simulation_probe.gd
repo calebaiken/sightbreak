@@ -54,6 +54,9 @@ var port := 29400
 var duration := 14.0
 var output := ""
 var elapsed := 0.0
+var started_msec := 0
+var previous_frame_usec := 0
+var wall_elapsed := 0.0
 var joined := false
 var origin := Vector3.ZERO
 var max_distance := 0.0
@@ -69,6 +72,8 @@ var initial_id := 0
 var notices: Array = []
 
 func _initialize() -> void:
+	started_msec = Time.get_ticks_msec()
+	previous_frame_usec = Time.get_ticks_usec()
 	for arg: String in OS.get_cmdline_user_args():
 		if arg.begins_with("--role="): role = arg.get_slice("=", 1)
 		elif arg.begins_with("--port="): port = int(arg.get_slice("=", 1))
@@ -81,7 +86,7 @@ func _initialize() -> void:
 
 func start() -> void:
 	game = MeasuredMatch.new()
-	game.notification.connect(func(message: String): notices.append({"seconds":elapsed,"state":game.connection_state,"message":message}))
+	game.notification.connect(func(message: String): notices.append({"seconds":wall_elapsed,"simulation_seconds":elapsed,"state":game.connection_state,"message":message}))
 	game.configure({"mode": role, "port": port, "address": "127.0.0.1", "name": "Simulation fixture", "prediction": prediction_enabled})
 	root.add_child(game)
 	if role == "server":
@@ -91,7 +96,10 @@ func start() -> void:
 
 func _process(delta: float) -> bool:
 	elapsed += delta
-	if DisplayServer.get_name() != "headless": render_frames.append(delta * 1000.0)
+	wall_elapsed = (Time.get_ticks_msec()-started_msec)/1000.0
+	var frame_usec := Time.get_ticks_usec()
+	if DisplayServer.get_name() != "headless": render_frames.append((frame_usec-previous_frame_usec)/1000.0)
+	previous_frame_usec = frame_usec
 	if game == null:
 		return false
 	if role != "server" and game.connection_state == "connected":
@@ -100,29 +108,29 @@ func _process(delta: float) -> bool:
 			joined = true
 			initial_id = game.local_id
 			origin = actor.position
-			first_input_time = elapsed
+			first_input_time = wall_elapsed
 		max_distance = maxf(max_distance, origin.distance_to(actor.position))
 		if first_movement_seconds < 0 and Vector2(actor.position.x - origin.x, actor.position.z - origin.z).length() > 0.01:
-			first_movement_seconds = elapsed - first_input_time
+			first_movement_seconds = wall_elapsed - first_input_time
 		var section := int(elapsed / 2) % 4
 		var move := [Vector2(0, 1), Vector2(1, 0), Vector2(0, -1), Vector2(-1, 0)][section] as Vector2
 		game.set_local_input({"move": move, "look": Vector2(PI, 0), "crouch": section == 2, "jump": section == 1 and fmod(elapsed, 2.0) < 0.2})
 		if reconnect_started:
 			reconnect_passed = game.local_id == initial_id
-		elif reconnect_at >= 0 and elapsed >= reconnect_at:
+		elif reconnect_at >= 0 and wall_elapsed >= reconnect_at:
 			reconnect_started = true
 			game.multiplayer.multiplayer_peer.close()
 			game._server_disconnected()
 			# Default exercises the real two-second client path; shorter stress delays
 			# remain explicit so early reconnect failures cannot be hidden by retiming.
 			game._reconnect_clock = reconnect_delay
-	if elapsed >= duration:
+	if wall_elapsed >= duration:
 		render_frames.sort()
 		var render_metrics := {"native": DisplayServer.get_name() != "headless", "renderer":RenderingServer.get_video_adapter_name(), "samples":render_frames.size(), "draw_calls":Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME), "primitives":Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME), "texture_bytes":RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TEXTURE_MEM_USED)}
 		if not render_frames.is_empty():
-			render_metrics["frame_delta_p50_ms"] = render_frames[render_frames.size()/2]
-			render_metrics["frame_delta_p95_ms"] = render_frames[mini(render_frames.size()-1, int(render_frames.size()*0.95))]
-		var report := {"role": role, "joined": joined, "state": game.connection_state, "notifications":notices, "elapsed_seconds": elapsed, "max_displacement": max_distance, "render_metrics":render_metrics,
+			render_metrics["wall_frame_interval_p50_ms"] = render_frames[render_frames.size()/2]
+			render_metrics["wall_frame_interval_p95_ms"] = render_frames[mini(render_frames.size()-1, int(render_frames.size()*0.95))]
+		var report := {"role": role, "joined": joined, "state": game.connection_state, "notifications":notices, "elapsed_seconds": elapsed, "wall_elapsed_seconds":wall_elapsed, "max_displacement": max_distance, "render_metrics":render_metrics,
 			"first_movement_seconds": first_movement_seconds, "prediction_enabled": prediction_enabled, "prediction_errors_m": game._prediction.error_samples,
 			"corrections": game._prediction.corrections, "hard_corrections": game._prediction.hard_corrections,
 			"reconnect_requested":reconnect_at >= 0,"reconnect_delay_seconds":reconnect_delay,"reconnect_passed":reconnect_passed,"initial_id":initial_id,"final_id":game.local_id,
