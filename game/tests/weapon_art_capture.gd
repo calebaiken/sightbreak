@@ -2,7 +2,9 @@ extends SceneTree
 ## Real-engine review captures of the first-person rifle. Fixture poses, not played
 ## matches; asserts nothing about visual quality or frame rate.
 ## --capture-dir=<dir> output folder; --procedural captures the procedural rifle
-## (the "before" model) instead of the authored one; --size=WxH sets the viewport
+## (the "before" model) instead of the authored one; --static-hands and
+## --procedural-hands put the hand fallbacks on the authored rifle instead of the rigged
+## arms; --size=WxH sets the viewport
 ## (default 1280x720). The window's --resolution does not change the captured
 ## viewport under this project's canvas_items stretch, so this sets root.size, as the
 ## landscape tests do, and prints the real image size.
@@ -40,6 +42,10 @@ func _run() -> void:
 			output = argument.trim_prefix("--capture-dir=")
 		elif argument == "--procedural":
 			WeaponModel.use_authored = false
+		elif argument == "--static-hands":
+			WeaponModel.use_rigged_arms = false
+		elif argument == "--procedural-hands":
+			WeaponModel.use_hand_assets = false
 		elif argument.begins_with("--size="):
 			var parts := argument.trim_prefix("--size=").split("x")
 			if parts.size() == 2:

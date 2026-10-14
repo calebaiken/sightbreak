@@ -89,9 +89,31 @@ void fragment() {
 }
 """
 
+## Vertex-coloured surface for procedural first-person parts merged into one mesh (the
+## gloves and sleeves drawn on the authored rifle when no hand asset is used). The colour
+## conversion matches StandardMaterial3D with vertex_color_is_srgb.
+const VERTEX_COLOUR := "shader_type spatial;\n" + UNIFORMS + """
+uniform float roughness = 1.0;
+uniform float metallic = 0.0;
+void vertex() {
+	if (!OUTPUT_IS_SRGB) {
+		COLOR.rgb = mix(pow((COLOR.rgb + vec3(0.055)) * (1.0 / (1.0 + 0.055)), vec3(2.4)), COLOR.rgb * (1.0 / 12.92), lessThan(COLOR.rgb, vec3(0.04045)));
+	}
+""" + PROJECT + """
+}
+void fragment() {
+	ALBEDO = COLOR.rgb;
+	ROUGHNESS = roughness;
+	METALLIC = metallic;
+""" + FILL + """
+}
+"""
+
 static var _surface_shader: Shader
 static var _surfaces: Dictionary = {}
 static var _flash_shader: Shader
+static var _vertex_colour_shader: Shader
+static var _vertex_colours: Dictionary = {}
 
 ## Unshaded muzzle flash drawn with the viewmodel projection, so it stays on the muzzle.
 static func flash(colour: Color) -> ShaderMaterial:
@@ -121,6 +143,21 @@ static func surface(prefix: String, gain: float = 1.0) -> ShaderMaterial:
 		enable(material)
 		_surfaces[key] = material
 	return _surfaces[key]
+
+## First-person vertex-coloured surface (shared per roughness and metallic).
+static func vertex_colour(roughness: float, metallic: float) -> ShaderMaterial:
+	var key := "%.2f|%.2f" % [roughness, metallic]
+	if not _vertex_colours.has(key):
+		if _vertex_colour_shader == null:
+			_vertex_colour_shader = Shader.new()
+			_vertex_colour_shader.code = VERTEX_COLOUR
+		var material := ShaderMaterial.new()
+		material.shader = _vertex_colour_shader
+		material.set_shader_parameter("roughness", roughness)
+		material.set_shader_parameter("metallic", metallic)
+		enable(material)
+		_vertex_colours[key] = material
+	return _vertex_colours[key]
 
 ## Switches a material using these snippets to first-person drawing.
 static func enable(material: ShaderMaterial) -> void:

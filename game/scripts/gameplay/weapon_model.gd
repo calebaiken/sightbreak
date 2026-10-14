@@ -16,6 +16,9 @@ var _ejection := Vector3.INF
 var _pivot := Vector3.ZERO
 var _arms_placement := Transform3D()
 var _rigged := false
+## Every mesh of this build draws with the viewmodel projection (the authored rifle in
+## first person, with whichever hands it has).
+var _viewmodel := false
 
 ## Authored first-person rifle built by tools/art (Blender, original geometry). Units
 ## are meters: receiver rear at the origin, bore at +Y 0.025, barrel along -Z. The
@@ -29,6 +32,7 @@ const RELAY_AR_ALBEDO := "res://assets/weapons/relay_ar/relay_ar_albedo.png"
 ## the fallback when the rigged arms are absent.
 const RELAY_AR_HANDS := "res://assets/weapons/relay_ar/relay_ar_hands.glb"
 const RELAY_AR_HANDS_MATERIAL := "res://assets/weapons/relay_ar/relay_ar_hands.tres"
+const RELAY_AR_HANDS_TEXTURES := "res://assets/weapons/relay_ar/relay_ar_hands"
 ## Rigged arms (tools/art/arms_build.py): both arms in one skinned mesh on a 34-bone
 ## skeleton, posed on this rifle in their bind pose, with a one-second "reload" clip
 ## that the actor seeks by reload progress. Same space as the rifle GLB.
@@ -56,6 +60,8 @@ const RELAY_AR_PIVOT := Vector3(0.0, 0.0, -0.19)
 ## Captures switch these off for before/after comparisons; gameplay never reads them.
 static var use_authored := true
 static var use_rigged_arms := true
+## Off: the authored rifle gets the procedural gloves, as when both hand assets are absent.
+static var use_hand_assets := true
 
 # One packed model per weapon/hands variant. Instances share every mesh and
 # material, so an equip costs node instantiation instead of geometry building.
@@ -65,7 +71,7 @@ static func build(parent: Node3D, id: String, hands: bool = false) -> Dictionary
 	for child in parent.get_children():
 		parent.remove_child(child)
 		child.queue_free()
-	var key := "%s|%s|%s|%s|%s|%s|%s" % [id, hands, use_authored, use_rigged_arms, relay_ar_scale, relay_ar_offset, relay_ar_rotation]
+	var key := "%s|%s|%s|%s|%s|%s|%s|%s" % [id, hands, use_authored, use_rigged_arms, use_hand_assets, relay_ar_scale, relay_ar_offset, relay_ar_rotation]
 	if not _packed.has(key):
 		_packed[key] = _pack(id, hands)
 	var instance: Node = (_packed[key] as PackedScene).instantiate()
@@ -283,7 +289,9 @@ func _batch_static_parts() -> void:
 			var builder := SurfaceTool.new()
 			builder.begin(Mesh.PRIMITIVE_TRIANGLES)
 			var material: Material = node.material_override
-			if not painted:
+			if not painted and _viewmodel:
+				material = ViewmodelShading.vertex_colour(0.94 if key == "fabric" else 0.48, 0.0 if key == "fabric" else 0.65)
+			elif not painted:
 				var merged_material := StandardMaterial3D.new()
 				merged_material.vertex_color_use_as_albedo = true
 				merged_material.vertex_color_is_srgb = true
@@ -489,6 +497,8 @@ func _build_authored_rifle() -> Vector3:
 	if _hands:
 		_pivot = placement * RELAY_AR_PIVOT
 		placement.origin -= _pivot
+	# The rifle and every hand variant share one projection, or the hands detach from it.
+	_viewmodel = _hands
 	var rifle := _authored_nodes(RELAY_AR, placement)
 	# First person draws with the viewmodel projection; inspection keeps the plain material.
 	var material: Material = ViewmodelShading.surface(RELAY_AR_TEXTURES, 0.86) if _hands else load(RELAY_AR_MATERIAL)
@@ -507,12 +517,12 @@ func _build_authored_rifle() -> Vector3:
 	rounds.material_override = material
 	rounds.transform = _magazine.transform.affine_inverse() * rifle.markers["magazine_rounds"]
 	_magazine.add_child(rounds)
-	if _hands and use_rigged_arms and ResourceLoader.exists(RELAY_AR_ARMS):
+	if _hands and use_hand_assets and use_rigged_arms and ResourceLoader.exists(RELAY_AR_ARMS):
 		_rigged = true
 		_arms_placement = placement
-	elif _hands and ResourceLoader.exists(RELAY_AR_HANDS):
+	elif _hands and use_hand_assets and ResourceLoader.exists(RELAY_AR_HANDS):
 		var hands := _authored_nodes(RELAY_AR_HANDS, placement)
-		_add_authored("hands", hands.meshes["hands"], hands.markers["hands"], load(RELAY_AR_HANDS_MATERIAL))
+		_add_authored("hands", hands.meshes["hands"], hands.markers["hands"], ViewmodelShading.surface(RELAY_AR_HANDS_TEXTURES))
 	elif _hands:
 		# Procedural gloves when the hand asset is absent; offsets are in rifle space.
 		var grip: Vector3 = rifle.anchors["grip_hand"]

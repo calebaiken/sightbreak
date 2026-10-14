@@ -53,6 +53,25 @@ func _vertex_overrides(node: Node) -> Array[String]:
 					found.append(String(mesh.name))
 	return found
 
+## Names of the meshes under node, split by the projection their material draws with.
+func _projections(node: Node) -> Dictionary:
+	var split := {"viewmodel": [] as Array[String], "camera": [] as Array[String]}
+	for mesh: MeshInstance3D in node.find_children("*", "MeshInstance3D", true, false):
+		var material := mesh.material_override
+		var fov = (material as ShaderMaterial).get_shader_parameter("viewmodel_fov") if material is ShaderMaterial else null
+		split["viewmodel" if fov != null and float(fov) > 0.0 else "camera"].append(String(mesh.name))
+	return split
+
+## Whether node holds the merged glove-and-sleeve mesh of the procedural hands.
+func _has_fabric(node: Node) -> bool:
+	for mesh: MeshInstance3D in node.find_children("*", "MeshInstance3D", true, false):
+		var material := mesh.material_override
+		if material is StandardMaterial3D and (material as StandardMaterial3D).vertex_color_use_as_albedo and (material as StandardMaterial3D).roughness > 0.9:
+			return true
+		if material is ShaderMaterial and float((material as ShaderMaterial).get_shader_parameter("roughness") if (material as ShaderMaterial).get_shader_parameter("roughness") != null else 0.0) > 0.9:
+			return true
+	return false
+
 ## A point as a fraction of a 16:9 frame through the viewmodel projection (the shipped
 ## "keep" aspect), independent of the test's window size.
 func _viewmodel_screen(camera: Camera3D, point: Vector3) -> Vector2:
@@ -117,6 +136,7 @@ func _run() -> void:
 	var body_node: MeshInstance3D = upright.get_node("body")
 	check(body_node.transform.basis.is_equal_approx(Basis.IDENTITY) and absf(inspection.muzzle.position.x) < 0.001, "inspection rifle is upright and on axis, without the viewmodel cant")
 	check(upright.has_node("stock") and not upright.has_node("hands"), "inspection keeps the buttstock and has no hands")
+	check(_projections(upright).viewmodel.is_empty(), "inspection draws every mesh with the camera's projection")
 	upright.queue_free()
 
 	# The procedural rifle remains a complete fallback.
@@ -250,6 +270,34 @@ func _run() -> void:
 	check(static_hands.has_node("hands") and not static_hands.has_node("arms") and fallback_hands.arms_player == null, "static hands remain the fallback without the rigged arms")
 	static_hands.queue_free()
 	WeaponModel.use_rigged_arms = true
+	# One projection per first-person build. The authored rifle and whichever hands it has
+	# (rigged arms, the static hands, or procedural gloves when no hand asset is used) draw
+	# with the viewmodel projection; procedural weapons and their gloves keep the camera's.
+	# The static hands once kept the camera's 82 degrees beside the rifle's 54 and drew
+	# detached from it (review of 64ec598).
+	for variant in [["rifle", true, true, true], ["rifle", true, false, true], ["rifle", true, true, false], ["rifle", false, true, true], ["sidearm", true, true, true], ["smg", true, true, true], ["marksman", true, true, true]]:
+		WeaponModel.use_authored = variant[1]
+		WeaponModel.use_rigged_arms = variant[2]
+		WeaponModel.use_hand_assets = variant[3]
+		var build_holder := Node3D.new()
+		root.add_child(build_holder)
+		var built: Dictionary = WeaponModel.build(build_holder, variant[0], true)
+		var split := _projections(build_holder)
+		var context := "first-person %s (authored %s, rigged arms %s, hand assets %s)" % variant
+		var authored_rifle: bool = variant[0] == "rifle" and variant[1]
+		check(built.viewmodel == authored_rifle, context + " reports its projection")
+		if authored_rifle:
+			check(split.camera.is_empty(), context + ": every mesh draws with the viewmodel projection (camera projection: %s)" % [split.camera])
+		else:
+			check(split.viewmodel.is_empty(), context + ": every mesh draws with the camera's projection (viewmodel: %s)" % [split.viewmodel])
+		var hands_drawn := _has_fabric(build_holder)
+		if authored_rifle and variant[3]:
+			hands_drawn = build_holder.has_node("arms") if variant[2] else build_holder.has_node("hands")
+		check(hands_drawn, context + " draws its hands")
+		build_holder.queue_free()
+	WeaponModel.use_authored = true
+	WeaponModel.use_rigged_arms = true
+	WeaponModel.use_hand_assets = true
 	holder.queue_free()
 	fallback.queue_free()
 	await process_frame
