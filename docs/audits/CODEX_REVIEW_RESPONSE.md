@@ -228,3 +228,29 @@ One environment note: when two native Godot windows ran at once on the same Xvfb
 
 Nothing is merged and no release readiness is claimed. Same-family review limits apply as above.
 
+## Follow-up: status text against touch controls at larger text sizes
+
+**Codex's recheck of `227d6c8`** confirmed the kill-feed fix and reported a pre-existing accessibility defect. At 130 % text size, the status line's glyphs overlap FRAG at 960, 1280, 1560 and 1600 × 720, and SMOKE at 960 in the buy phase. It is clear at 100 %, and the landscape test only covered 100 %.
+
+**Reproduced and widened.** A probe compares the drawn text block with every touch target (`status-touch/logs/status_touch_probe.gd.txt`):
+- **On `227d6c8`:** 15 of 24 size, scale and phase combinations overlap: 8 at 130 %, 7 at 115 %, and none at 100 % for the buy and objective prompts (`probe-227d6c8.log`).
+- **The longest real notification** ("Match complete; account reward submission failed…") also overlaps at 85 % and 100 %.
+
+**Cause.** The status line spans the full row and is centred, and the default FRAG and SMOKE targets sit at 60 % and 69 % of the width in the same band. Larger text, or a long notification, therefore reaches them. Players' custom layouts could cause the same collision at any text size.
+
+**Fix (`main.gd`, presentation only).** The status label sits in a row whose margins `_fit_status_line()` sets every frame:
+- **With touch controls**, it finds the stretches of that row that no drawn touch target occupies. The band is three lines tall, with an 8 px gap, and the move area is excluded because it is a region rather than a button.
+- **Placement:** it centres the text as near the screen centre as the chosen stretch allows, preferring the stretch that contains the centre and otherwise the widest one. It wraps only if the text is wider than that stretch.
+- **Custom layouts** are covered too, because it uses the controls' actual positions.
+- **Without touch controls** the row has no margins and nothing changes.
+
+**Tests (`landscape_ui_test.gd`, 196 → 325 checks).** At 85, 100, 115 and 130 % text, at all four sizes, for the buy, attack and defuse prompts and the longest notification:
+- the drawn text block clears every drawn touch control and stays on screen;
+- without touch controls, the 130 % line stays centred.
+
+The negative control is the same test on `227d6c8`'s `main.gd`: **34 failures** (85 %: 1, 100 %: 2, 115 %: 15, 130 %: 16; `landscape-test-on-227d6c8-main.log`). With the fix there are none.
+
+**Results.** The probe on the fix overlaps in 0 of 24 cases. `validate.sh` exits 0 (`validate-fixed.log`): landscape 325/325, HUD overflow 2,437, UX 32, touch 34, match 75/75, the 10-round bot match and two ENet clients. The native 130 % captures, before and after, are in `docs/reports/media/claude-v04/codex-review/status-touch/`.
+
+Same-family review limits apply. Nothing is merged and no release readiness is claimed.
+

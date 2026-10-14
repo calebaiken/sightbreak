@@ -14,6 +14,10 @@ const CRIMSON := Design.CRIMSON
 const KILL_FEED_SECONDS := 5.0
 const KILL_FEED_ROWS := 4
 const KILL_FEED_GAP := 3
+## Clearance between the status line and a touch target, and the status band's height in
+## lines (a notification can wrap to three lines at the largest text size).
+const STATUS_TOUCH_GAP := 8.0
+const STATUS_BAND_LINES := 3
 const KILL_FEED_SEPARATION := 6
 const TEXT_SCALES := [0.9, 1.0, 1.15, 1.3]
 const WEAPON_ROLES := {"sidearm": "SIDEARM", "smg": "SMG", "rifle": "RIFLE", "marksman": "MARKSMAN"}
@@ -30,6 +34,7 @@ var input_look := Vector2.ZERO
 var mouse_delta := Vector2.ZERO
 var physical_mouse_fire := false
 var status_label: Label
+var status_row: MarginContainer
 var score_label: Label
 var phase_label: Label
 var squad_label: Label
@@ -165,6 +170,7 @@ func clear_ui() -> void:
 		ui.remove_child(child)
 		child.queue_free()
 	status_label = null
+	status_row = null
 	overlay = null
 	touch = null
 	crosshair = null
@@ -678,9 +684,16 @@ func build_hud() -> void:
 	space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	space.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	rows.add_child(space)
+	# The status line sits in a row whose margins _fit_status_line() sets, so on touch
+	# layouts it keeps clear of the buttons at any text size.
+	status_row = MarginContainer.new()
+	status_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	for margin in ["margin_left", "margin_right", "margin_top", "margin_bottom"]:
+		status_row.add_theme_constant_override(margin, 0)
+	rows.add_child(status_row)
 	status_label = wrapped_label("BUY PHASE  /  " + ("Tap BUY to equip" if uses_touch_controls() else "Press B to equip"), Design.TYPE_BODY, GOLD)
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	rows.add_child(status_label)
+	status_row.add_child(status_label)
 	objective_bar = ProgressBar.new()
 	objective_bar.custom_minimum_size = Vector2(200, 8)
 	objective_bar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
@@ -1044,6 +1057,7 @@ func _process(delta: float) -> void:
 		if touch != null: touch.counts = {"grenade": actor.grenades, "smoke": actor.smokes}
 		if match_game.phase == "buy": status_label.text = "BUY PHASE   /   %s TO EQUIP" % ("TAP BUY" if uses_touch_controls() else "PRESS B")
 		elif match_game.phase != "waiting" and elapsed > float(status_label.get_meta("until", 0.0)): status_label.text = ("HOLD USE AT A SITE TO PLANT" if uses_touch_controls() else "HOLD E AT A SITE TO PLANT") if actor.team == 0 and str(match_game.objective_state) != "planted" else ("HOLD USE NEAR THE DEVICE TO DEFUSE" if uses_touch_controls() else "HOLD E NEAR THE DEVICE TO DEFUSE") if str(match_game.objective_state) == "planted" else "DEFEND THE TWO OBJECTIVE SITES"
+		_fit_status_line()
 		crosshair.visible = actor.alive and not paused
 		crosshair.queue_redraw()
 	if (Input.is_physical_key_pressed(KEY_TAB) or elapsed < touch_score_until) and not paused:
@@ -1051,6 +1065,54 @@ func _process(delta: float) -> void:
 	elif is_instance_valid(score_panel):
 		score_panel.queue_free()
 		score_panel = null
+
+## Centres the status line as near the screen centre as it can go without running under a
+## drawn touch control (the move stick is an area, not a button), wrapping only when the
+## free stretch of its row is narrower than the text. Without touch controls the line uses
+## the full row, as before.
+func _fit_status_line() -> void:
+	if not is_instance_valid(status_row) or not is_instance_valid(status_label):
+		return
+	var row := status_row.get_global_rect()
+	var span := Vector2(row.position.x, row.end.x)
+	if touch != null and touch.enabled:
+		var band_top := row.end.y - status_label.get_line_height() * STATUS_BAND_LINES - STATUS_TOUCH_GAP
+		var free: Array[Vector2] = [span]
+		for action in touch.positions:
+			if action == "move":
+				continue
+			var radius: float = touch.radius(action)
+			var point: Vector2 = touch.global_position + touch.control_point(action)
+			if point.y + radius < band_top or point.y - radius > row.end.y + STATUS_TOUCH_GAP:
+				continue
+			var cut := Vector2(point.x - radius - STATUS_TOUCH_GAP, point.x + radius + STATUS_TOUCH_GAP)
+			var kept: Array[Vector2] = []
+			for part in free:
+				if cut.y <= part.x or cut.x >= part.y:
+					kept.append(part)
+					continue
+				if cut.x > part.x: kept.append(Vector2(part.x, cut.x))
+				if cut.y < part.y: kept.append(Vector2(cut.y, part.y))
+			free = kept
+		var centre := row.get_center().x
+		var best := Vector2.ZERO
+		for part in free:
+			# The stretch holding the screen centre if there is one, else the widest.
+			var holds_centre := part.x <= centre and centre <= part.y
+			if best == Vector2.ZERO or (holds_centre and not (best.x <= centre and centre <= best.y)) or (holds_centre == (best.x <= centre and centre <= best.y) and part.y - part.x > best.y - best.x):
+				best = part
+		if best != Vector2.ZERO:
+			var font := status_label.get_theme_font("font")
+			var width := font.get_string_size(status_label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, status_label.get_theme_font_size("font_size")).x + 4.0
+			width = minf(width, best.y - best.x)
+			var left := clampf(centre - width * 0.5, best.x, best.y - width)
+			span = Vector2(left, left + width)
+	var margin_left := int(floor(span.x - row.position.x))
+	var margin_right := int(floor(row.end.x - span.y))
+	if status_row.get_theme_constant("margin_left") != margin_left:
+		status_row.add_theme_constant_override("margin_left", margin_left)
+	if status_row.get_theme_constant("margin_right") != margin_right:
+		status_row.add_theme_constant_override("margin_right", margin_right)
 
 func show_notification(message: String) -> void:
 	print("MATCH: ", message)
