@@ -40,6 +40,17 @@ def no_test_harnesses(paths):
     assert not any("tests/" in path or "_test.gdc" in path for path in paths), "Test harness shipped in artifact"
 
 
+def integrated_resources(paths):
+    """Check imported payloads, not just GLB references or source filenames."""
+    for basename in ("relay_ar.glb-", "relay_ar_arms.glb-", "relay_ar_hands.glb-"):
+        assert any(basename in path and path.endswith('.scn') for path in paths), f"Missing imported scene: {basename}"
+    for basename in ("relay_ar_albedo.png-", "relay_ar_normal.png-", "relay_ar_orm.png-",
+                     "relay_ar_arms_albedo.png-", "relay_ar_arms_normal.png-", "relay_ar_arms_orm.png-"):
+        assert any(basename in path and path.endswith('.ctex') for path in paths), f"Missing imported texture: {basename}"
+    for basename in ("state_privacy", "snapshot_buffer", "movement_prediction", "peer_lifecycle", "result_outbox", "viewmodel_shading"):
+        assert any(path.endswith('/' + basename + '.gdc') for path in paths), f"Missing compiled module: {basename}"
+
+
 def main():
     build_source = source()
     assert not build_source["source_game_dirty"], "Commit game changes before artifact verification"
@@ -70,6 +81,7 @@ def main():
     run("linux-demo", [executable, "--headless", "--quit-after", "120", "--", "--demo"])
     linux_paths = packed_paths(pathlib.Path(executable), embedded=True)
     no_test_harnesses(linux_paths)
+    integrated_resources(linux_paths)
     tools = pathlib.Path(os.environ.get("SIGHTBREAK_TOOLS_DIR", ROOT.parent / "tools"))
     sdk = pathlib.Path(os.environ.get("ANDROID_SDK_ROOT", tools / "android-sdk"))
     android_tools = sdk / "build-tools/36.0.0"
@@ -90,9 +102,11 @@ def main():
     with zipfile.ZipFile(apk) as archive:
         android_paths = [name for name in archive.namelist() if name.startswith("assets/")]
     no_test_harnesses(android_paths)
+    integrated_resources(android_paths)
     ios = BUILDS / "ios"
     ios_paths = packed_paths(ios / "sightbreak.pck")
     no_test_harnesses(ios_paths)
+    integrated_resources(ios_paths)
     with (ios / "sightbreak/sightbreak-Info.plist").open("rb") as stream:
         plist = plistlib.load(stream)
     assert plist["CFBundleIdentifier"] == "$(PRODUCT_BUNDLE_IDENTIFIER)"
@@ -108,6 +122,7 @@ def main():
     report = {**build_source, "passed": True, "linux_menu_smoke": True, "linux_demo_120_frames": True,
               "linux_pck_resources": len(linux_paths), "android_assets": len(android_paths), "ios_pck_resources": len(ios_paths),
               "test_harnesses_excluded": True, "android_signature_schemes": ["v2", "v3"],
+              "integrated_imported_rifle_arms_textures_network_modules": True,
               "android_version": f"{VERSION} ({BUILD_NUMBER})", "android_min_sdk": 24, "android_target_sdk": 36,
               "android_abis": ["arm64-v8a", "x86_64"], "android_landscape_manifest": True,
               "android_launcher_alias": "com.sightbreak.game/com.godot.game.GodotAppLauncher", "ios_project_plist_and_unsigned_team": True,
