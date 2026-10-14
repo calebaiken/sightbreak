@@ -53,6 +53,13 @@ func _vertex_overrides(node: Node) -> Array[String]:
 					found.append(String(mesh.name))
 	return found
 
+## A point as a fraction of a 16:9 frame through the viewmodel projection (the shipped
+## "keep" aspect), independent of the test's window size.
+func _viewmodel_screen(camera: Camera3D, point: Vector3) -> Vector2:
+	var q := camera.global_transform.affine_inverse() * point
+	var t := tan(deg_to_rad(ViewmodelShading.FOV) * 0.5)
+	return Vector2(0.5 + 0.5 * (q.x / -q.z) / (t * 16.0 / 9.0), 0.5 - 0.5 * (q.y / -q.z) / t)
+
 func _run() -> void:
 	for path in [WeaponModel.RELAY_AR, WeaponModel.RELAY_AR_HANDS, WeaponModel.RELAY_AR_MATERIAL, WeaponModel.RELAY_AR_HANDS_MATERIAL]:
 		check(ResourceLoader.exists(path), "authored asset present: " + path)
@@ -205,6 +212,17 @@ func _run() -> void:
 	check(low.y < hold.y - 0.15, "mid-reload the support hand is down with the magazine (%.2f m below the hold)" % (hold.y - low.y))
 	var magazine_drop: Vector3 = actor._magazine.position - actor._magazine_rest
 	check(magazine_drop.length() > 0.15 and absf((actor._magazine.basis.inverse() * magazine_drop).normalized().y + 1.0) < 0.001, "the magazine drops straight down its own well")
+	# Staging: the support hand and the whole magazine are in frame when the hand takes
+	# the magazine and when it seats it (they leave the frame only mid-swap).
+	var magazine_box: AABB = actor._magazine.mesh.get_aabb()
+	for progress in [0.14, 0.84]:
+		actor.reload_remaining = reload_time * (1.0 - progress)
+		actor.tick_visual(0.016)
+		var wrist := _viewmodel_screen(actor.camera, skeleton.global_transform * skeleton.get_bone_global_pose(hand).origin)
+		var bottom := _viewmodel_screen(actor.camera, actor._magazine.global_transform * Vector3(magazine_box.get_center().x, magazine_box.position.y, magazine_box.get_center().z))
+		check(wrist.x > 0.02 and wrist.x < 0.98 and wrist.y < 0.95 and bottom.x > 0.02 and bottom.x < 0.98 and bottom.y < 0.98, "at %d %% of the reload the support hand and magazine are in frame (wrist %s, magazine bottom %s)" % [roundi(progress * 100), wrist, bottom])
+		var tube_end := _viewmodel_screen(actor.camera, (actor._gun.get_node("body") as Node3D).global_transform * Vector3(0, 0.025, 0.205))
+		check(tube_end.x > 1.0 or tube_end.y > 1.0, "the buffer tube's end face stays out of frame at %d %% (%s)" % [roundi(progress * 100), tube_end])
 	actor.reload_remaining = 0
 	actor.tick_visual(0.016)
 	check(skeleton.get_bone_global_pose(hand).origin.distance_to(hold) < 0.001, "after the reload the support hand is back on the handguard")

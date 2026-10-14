@@ -39,6 +39,39 @@ Every image is a real render of commit `5100b3e` (rigged arms, viewmodel project
   - `validate-fixed.log`: `validate.sh` on the fix, exit 0. `weapon_art_test` is now 69 checks; its 5 new checks fail on the bug (negative control: 4 failures naming `paint_receiver`, `paint_handguard` and the sidearm's paint mesh).
 - **Not regenerated:** the other captures in this folder show `5100b3e`. Its first-person frames used the viewmodel variant, which the fix does not change; the pixel test measures the same 39,736 pixels for the first-person rifle before and after.
 
+## Reload staging after the review (`staged-reload/`)
+
+**What changed:** with the rigged arms the rifle now goes into a held reload pose before the support hand reaches the magazine. It lifts 9 cm, moves 5 cm toward the centre, tips the muzzle up 0.05 rad and rolls 0.45 rad clockwise. It holds that pose until the magazine is seated, then returns (`actor.gd`, `ARMS_RELOAD_OFFSET` and `ARMS_RELOAD_ROTATION`). The pose was chosen by projecting the magazine and the support wrist through the viewmodel projection across the reload. The fallback weapons keep their previous reload motion exactly.
+
+**What the evidence shows:**
+
+| Moment in the reload | `5100b3e` | Now |
+| --- | --- | --- |
+| 14 % (the grab) | Wrist at y = 1.01, magazine bottom at 1.19: below the frame | Wrist at 0.80 and the whole magazine in frame (bottom at 0.96) |
+| Mid-swap | Hand and magazine out of frame | Hand and magazine out of frame (unchanged) |
+| 84 % (the seat) | Below the frame | Both back in frame |
+
+- `sunlit-*` and `backlit-*` are motion sequences from `weapon_motion_capture.gd`: MP4, labelled sheet and per-frame CSV, plus a GIF for the sunlit view.
+- `03-*` and `03b-*` are the new reload stills.
+- `weapon_art_test.gd` (69 → 73) pins the staging: the wrist and the magazine bottom are inside a 16:9 frame at 14 % and 84 %, and the buffer tube's end face stays out of frame. With the old pose restored, the two framing checks fail (wrist y = 1.01 and 0.97, magazine bottom 1.19 and 1.15).
+- `validate-staged.log`: `validate.sh`, exit 0.
+
+**Still wrong in these frames:**
+- At the grab the support hand is an open palm in front of the magazine, not closed on it. The grab solve's thumb and pinky are unresolved; this is part of the arms rebuild.
+- The buffer tube's dark rear section runs off the right edge during the reload; only its end face is kept out of frame.
+- In backlight the magazine is near-black at the bottom left of the frame.
+
+## Placement evaluation (`placement-eval/`)
+
+The review measured the bore's vanishing point 125 px left of the crosshair and the support hand 0.88 m from the eye. I fitted alternatives with `viewmodel_fit.py --layout v4`, which weights the vanishing point and caps the reach, and rendered them in engine:
+- `v3-vs-reach-0.62.png`: shipped v3 against a 0.62 m reach cap. The rifle fills the right half and the optic blocks the view.
+- `v3-A-B-weapon-crops.png`:
+  - v3;
+  - candidate A, vanishing point 102 px left: nearly identical to v3;
+  - candidate B, vanishing point 9 px from the crosshair: the rifle points into the screen, the handguard foreshortens and the support hand sits at the muzzle.
+
+**Decision:** keep the v3 placement and record the vanishing point as a known trade-off. Uniformly scaling the viewmodel and its distance gives the same image, so the reach in metres is not visible by itself. The "locked arm" look comes from the forearm's angle in frame, which the arms rebuild addresses through the elbow direction. This is my judgement, not a reviewer's acceptance.
+
 ## What these images show that is still wrong
 
 These are my own observations of these frames. The independent review is separate (`docs/art/VISUAL_QA.md`).
