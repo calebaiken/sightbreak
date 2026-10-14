@@ -28,7 +28,7 @@ Choose **DEPLOY / OFFLINE 5 v 5**. No account or backend is needed. The first ro
 | Buy / roster | B / Tab | BUY / TEAM |
 | Menu | Escape | Pause button |
 
-Settings include sensitivity, FOV, frame cap, shadow quality, volume, crosshair size/color, gyro, controller input and reduced motion. During a match, the field menu opens the touch HUD editor. Drag the joystick or action buttons and press **SAVE TOUCH LAYOUT**; use **RESET POSITIONS** to restore defaults. Button scale is adjustable in settings. Touch input is canceled on focus loss, and simulated mouse events cannot fire the weapon. Physical gyro/controller behavior still needs device review.
+Settings include sensitivity, FOV, frame cap, shadow quality, 3D render scale (50–100 %; the HUD stays at native resolution), volume, crosshair size/color, interface text size, gyro, controller input and reduced motion. The offline field menu pauses training; network matches keep running. During a match, the field menu opens the touch HUD editor. Drag the joystick or action buttons and press **SAVE TOUCH LAYOUT**; use **RESET POSITIONS** to restore defaults. Button scale is adjustable in settings. Touch input is canceled on focus loss, and simulated mouse events cannot fire the weapon. Physical gyro/controller behavior still needs device review.
 
 ## 0.3 visual and mobile milestone
 

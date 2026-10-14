@@ -17,7 +17,7 @@ The default URL is `http://127.0.0.1:8080`; `/health` verifies a PostgreSQL conn
 
 For an existing PostgreSQL deployment, set `DATABASE_URL` before migration and launch. Keep DB credentials and `SIGHTBREAK_SERVER_KEY` on the server, never inside the game or export. Non-PostgreSQL connection strings fail immediately. Do not deploy the development password or superuser role. Outside loopback, TLS termination and firewall restrictions are mandatory deployment work; this repository does not provide a production deployment.
 
-Schema versions 1, 2 and 3 are applied explicitly by `backend/migrate.py`; `schema_migrations` records the applied revision. Its SQL migration adds immutable ledger/audit triggers and a partial uniqueness constraint for active listings. Migration 2 adds the game ticket table; migration 3 adds persistent cosmetic loadout slots. Neither recreates existing account/economy records. Future schema changes need forward versioned migrations, not automatic destructive recreation. API startup never mutates schema.
+Schema versions 1–4 are applied explicitly by `backend/migrate.py`; `schema_migrations` records the applied revision. Its SQL migration adds immutable ledger/audit triggers and a partial uniqueness constraint for active listings. Migration 2 adds the game ticket table; migration 3 adds persistent cosmetic loadout slots; migration 4 adds a partial index for active-listing price order. Neither recreates existing account/economy records. Future schema changes need forward versioned migrations, not automatic destructive recreation. API startup never mutates schema.
 
 ## Client contract
 
@@ -25,7 +25,7 @@ JSON requests reject extra fields. UUIDs are strings. Errors are non-2xx with `{
 
 | Method / route | Request / response |
 | --- | --- |
-| POST `/auth/register` | `{username,password,display_name}` → `{token,player_id,expires_at}`; password 12–128 characters; username 3–32 alphanumeric/underscore |
+| POST `/auth/register` | `{username,password,display_name}` → `{token,player_id,expires_at}`; password 12–128 characters; username 3–32 alphanumeric/underscore; display name 1–32 characters on one visible line (control, bidi-format and line/paragraph separator characters are rejected with 422) |
 | POST `/auth/login` | `{username,password}` → same session response |
 | POST `/auth/logout` | Auth; revokes current session and any unconsumed game tickets tied to it |
 | POST `/auth/game-ticket` | Auth; `{server_id}` → 201 `{ticket,server_id,expires_at}`; opaque, single-use, 60-second join credential |
@@ -37,7 +37,7 @@ JSON requests reject extra fields. UUIDs are strings. Errors are non-2xx with `{
 | GET `/catalog` | `{definitions:[Definition],case_tables:{version,probabilities,key_definition_id},prices:{case,key},market_fee_basis_points}` |
 | POST `/store/buy` | `{definition_id,idempotency_key}` → `{item,credits}`; only cases/keys are sold |
 | POST `/cases/open` | `{case_id,key_id,idempotency_key}` → `{item,table_version,roll}`; committed before response/reveal |
-| GET `/market` | Optional collection, rarity, max_price, weapon, finish query filters → `{listings:[{id,seller_id,price,item}]}`; up to 500 active rows |
+| GET `/market` | Optional collection, rarity, max_price, weapon, finish filters and `limit` (1–500, default 500) → `{listings:[{id,seller_id,price,item}]}`. Filters run in SQL before the limit; 120 reads/minute per source address |
 | POST `/market/list` | `{item_id,price}` → `{id,seller_id,price,item}` |
 | POST `/market/{id}/buy` | `{idempotency_key}` → `{item,credits,fee}` |
 | POST `/market/{id}/cancel` | `{}` → `{state:"cancelled"}` |
@@ -46,13 +46,13 @@ JSON requests reject extra fields. UUIDs are strings. Errors are non-2xx with `{
 | PUT `/trades/{id}/offer` | `{item_ids,revision}` → Trade with revision incremented and confirmations cleared |
 | POST `/trades/{id}/confirm` | `{revision}` → Trade; settles only when both confirm same revision |
 | POST `/trades/{id}/cancel` | `{}` → Trade, releases reservations |
-| GET `/history` | Up to 100 recent ledger entries and match reward records |
+| GET `/history` | Up to 100 recent ledger entries and match reward records, each newest first (matches ordered by their end instant, whatever UTC offset the server reported) |
 
 `idempotency_key` must be a freshly generated UUID for a new operation. Retain it across retries. Retrying returns the original committed response; reuse for a different payload is rejected. The key is scoped to authenticated player and operation/target. Listing creation is safely protected against duplication by its item reservation, but its creation route is not a response-replay API.
 
 Item: `{id,definition_id,rarity,pattern_seed,wear,variant,collection,kind,name,reserved,trade_eligible,marketplace_eligible,acquired_at}`. `wear` is 0–1. No cosmetic modifies combat statistics. Eligibility booleans describe current availability. Case/key definitions include a `price`. Skin definitions include `weapon` and `finish`. Catalog IDs include `key`, `obsidian_case`, `crimson_archive_case`, `spectral_circuit_case`, `blacksite_case`, and six skin definitions per collection. Only weapon skins, cases and keys are supplied in this initial catalog; other cosmetic categories remain roadmap work.
 
-Trade: `{id,a,b,revision,offers:{player_id:[item_id]},offer_items:{player_id:[Item]},confirmations:[player_id],state}` where state is `open`, `completed` or `cancelled`. Both sides must inspect the same revision. Any offer edit clears both confirmations. A completed-confirm retry does not transfer again. Gifts with one empty side are allowed; wholly empty exchanges are rejected. Players can cancel their own open trade. Reservations remain until cancel/settlement; expiration UX is future work.
+Trade: `{id,a,b,names:{player_id:display_name},revision,offers:{player_id:[item_id]},offer_items:{player_id:[Item]},confirmations:[player_id],state}` where state is `open`, `completed` or `cancelled`. Both sides must inspect the same revision. Any offer edit clears both confirmations. A completed-confirm retry does not transfer again. Gifts with one empty side are allowed; wholly empty exchanges are rejected. Players can cancel their own open trade. Reservations remain until cancel/settlement; expiration UX is future work.
 
 ## Trusted match rewards
 
@@ -80,7 +80,7 @@ Every value mutation executes under one PostgreSQL transaction advisory lock. Th
 
 Cases use `secrets.randbelow(10000)` against integer weights summing to exactly 10000. Pattern/wear seeds are server-generated. Audit records store the rolled value, version, consumed items and awarded item. Probabilities do not depend on engagement/account state. This is an auditable CSPRNG draw, not a client-verifiable randomness commitment scheme.
 
-The initial rate limiter stores per-minute source-IP buckets in PostgreSQL, ignores untrusted forwarded headers and survives process restarts. Auth: 15/minute; economic writes: 60/minute; trades: 20/minute plus a 30-second new-trade cooldown; server results: 120/minute. Shared NAT clients share limits. Production needs an edge limiter, request-size/time limits, carefully configured proxy identity, account-based limits and bucket/session cleanup. Global serialization limits throughput and needs measured replacement before high traffic. Reads and health checks are not currently rate limited.
+The initial rate limiter stores per-minute source-IP buckets in PostgreSQL with one atomic upsert (it does not take the economy write lock), ignores untrusted forwarded headers and survives process restarts. Auth: 15/minute; economic writes: 60/minute; trades: 20/minute plus a 30-second new-trade cooldown; marketplace reads: 120/minute; server results: 120/minute. Shared NAT clients share limits. Production needs an edge limiter, request-size/time limits, carefully configured proxy identity, account-based limits and bucket/session cleanup. Global serialization limits throughput and needs measured replacement before high traffic. Other reads and health checks are not currently rate limited.
 
 ## PostgreSQL adversarial tests
 

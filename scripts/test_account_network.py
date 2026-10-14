@@ -41,7 +41,7 @@ def main():
                 if server.poll() is not None:
                     raise RuntimeError('Account server exited during startup')
                 time.sleep(0.1)
-            for role in ('guest', 'client', 'replay', 'reclaim'):
+            for role in ('guest', 'mismatch', 'client', 'replay', 'reclaim'):
                 client_env = env.copy()
                 if role == 'reclaim':
                     ticket = post('/auth/game-ticket', {'server_id': 'local-relay'}, session['token'])['ticket']
@@ -51,7 +51,7 @@ def main():
                 if result.returncode or 'FAIL' in result.stdout or 'ERROR:' in result.stderr:
                     print(result.stderr)
                     raise RuntimeError('Account network assertion failed for ' + role)
-            print('ACCOUNT_NETWORK_TEST: guest rejection, authenticated identity, waiting roster, replay rejection, account reclaim passed')
+            print('ACCOUNT_NETWORK_TEST: guest rejection, incompatible-protocol rejection without ticket or slot use, authenticated identity, waiting roster, replay rejection, account reclaim passed')
         finally:
             server.terminate()
             server.wait(timeout=10)

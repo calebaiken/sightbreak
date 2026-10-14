@@ -14,6 +14,10 @@ run_godot import --headless --editor --import --quit
 run_godot actor --headless --script res://tests/actor_test.gd
 run_godot world --headless --script res://tests/world_test.gd
 run_godot hit-feedback --headless --script res://tests/hit_feedback_test.gd
+run_godot weapon-integrity --headless --script res://tests/weapon_integrity_test.gd
+run_godot hit-volume --headless --script res://tests/hit_volume_test.gd
+run_godot render-budget --headless --script res://tests/render_budget_test.gd
+run_godot smoke-presentation --headless --script res://tests/smoke_presentation_test.gd
 run_godot match --headless --script res://tests/match_test.gd
 run_godot bots --headless --script res://tests/bot_match_test.gd
 run_godot bot-lifecycle --headless --script res://tests/bot_lifecycle_test.gd
@@ -21,6 +25,8 @@ SIGHTBREAK_STATE_DIR="$validation_dir/profile-state" run_godot profile --headles
 run_godot touch --headless --script res://tests/touch_test.gd
 run_godot main --headless --script res://tests/main_test.gd
 run_godot landscape --headless --script res://tests/landscape_ui_test.gd
+run_godot ux-contract --headless --script res://tests/ux_contract_test.gd
+run_godot hud-overflow --headless --script res://tests/hud_overflow_test.gd
 run_godot economy-ui --headless --script res://tests/economy_ui_test.gd
 run_godot economy-recovery --headless --script res://tests/economy_recovery_test.gd
 run_godot cosmetics --headless --script res://tests/cosmetic_presentation_test.gd

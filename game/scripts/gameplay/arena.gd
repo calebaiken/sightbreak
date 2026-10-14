@@ -33,6 +33,12 @@ var _materials: Dictionary = {}
 var _box_visuals: Array[MeshInstance3D] = []
 var presentation_stats: Dictionary = {}
 var roof_equipment_bounds: Array[AABB] = []
+## Footprints of solids that stand on the yard floor, for contact occlusion.
+var contact_footprints: Array[Rect2] = []
+## Thinner geometry, flat ground markings and text cannot cast a shadow that
+## reads at shadow-map resolution, so they skip every shadow pass.
+const SHADOW_MIN_THICKNESS := 0.06
+const HALL_HEADER_Z := 23.78
 const INDUSTRIAL_STEEL := Color("344148")
 const WEATHERED_GOLD := Color("ae935c")
 const SAFETY_CRIMSON := Color("9c4344")
@@ -42,6 +48,7 @@ func _ready() -> void:
 	name = "RelayYard"
 	_build()
 	_batch_static_boxes()
+	_build_contact_occlusion()
 	_build_navigation()
 
 func _material(color: Color, roughness: float = 0.85, emission: bool = false, surface: String = "") -> StandardMaterial3D:
@@ -91,6 +98,8 @@ func _box(at: Vector3, size: Vector3, color: Color, solid: bool = true, nav_bloc
 		node.add_child(collision)
 		if nav_block:
 			_obstacles.append(AABB(at - size * 0.5, size).grow(0.55))
+		if absf(at.y - size.y * 0.5) < 0.05:
+			contact_footprints.append(Rect2(Vector2(at.x - size.x * 0.5, at.z - size.z * 0.5), Vector2(size.x, size.z)))
 	return node
 
 func _label(text: String, at: Vector3, color: Color, size: int = 110, turn: float = 0.0) -> void:
@@ -103,6 +112,7 @@ func _label(text: String, at: Vector3, color: Color, size: int = 110, turn: floa
 	label.outline_modulate = Color("1b262c")
 	label.shaded = true
 	label.no_depth_test = false
+	label.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(label)
 	label.position = at
 	label.rotation.y = turn
@@ -121,8 +131,10 @@ func _container(at: Vector3, color: Color, length: float = 7.0) -> void:
 			_box(at + Vector3(x, 1.1, z + end * 0.064), Vector3(0.18, 0.06, 0.035), Color("8b938d"), false)
 		_box(at + Vector3(0, 0.13, z), Vector3(2.9, 0.12, 0.08), Color("283339"), false)
 		_box(at + Vector3(0, 2.97, z), Vector3(2.9, 0.12, 0.08), color.darkened(0.35), false)
-	_label("RY / 07\nFREIGHT SYSTEMS", at + Vector3(-1.57, 2.1, 0), Color("c2c4af"), 39, -PI * 0.5)
-	_label("RY / 07\nFREIGHT SYSTEMS", at + Vector3(1.57, 2.1, 0), Color("c2c4af"), 39, PI * 0.5)
+	for side in [-1.0, 1.0]:
+		# A painted placard backs the stencil so the text never shares a plane with the ribs.
+		_box(at + Vector3(side * 1.585, 2.1, 0), Vector3(0.02, 0.62, 1.78), color.darkened(0.42), false)
+		_label("RY / 07\nFREIGHT SYSTEMS", at + Vector3(side * 1.605, 2.1, 0), Color("c2c4af"), 39, side * PI * 0.5)
 
 
 func _build() -> void:
@@ -134,6 +146,16 @@ func _build() -> void:
 	env.ambient_light_color = Color("aabfcf")
 	env.ambient_light_energy = 0.41
 	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
+	# Depth-range haze only beyond the play space: the far hall and skyline gain
+	# separation while every sightline inside the 48 m yard keeps full contrast.
+	env.fog_enabled = true
+	env.fog_mode = Environment.FOG_MODE_DEPTH
+	env.fog_depth_begin = 34.0
+	env.fog_depth_end = 140.0
+	env.fog_depth_curve = 1.6
+	env.fog_density = 0.45
+	env.fog_light_color = Color("a3b2b9")
+	env.fog_sky_affect = 0.0
 	environment.environment = env
 	add_child(environment)
 	var sun := DirectionalLight3D.new()
@@ -141,7 +163,11 @@ func _build() -> void:
 	sun.light_color = Color("ffe4bd")
 	sun.light_energy = 1.18
 	sun.shadow_enabled = true
-	sun.directional_shadow_max_distance = 70
+	# The yard is 48 m across: two cascades cover it, and each cascade re-renders
+	# every caster, so four splits nearly doubled shadow submission for no gain.
+	sun.directional_shadow_mode = DirectionalLight3D.SHADOW_PARALLEL_2_SPLITS
+	sun.directional_shadow_split_1 = 0.22
+	sun.directional_shadow_max_distance = 60
 	add_child(sun)
 	_box(Vector3(0, -0.3, 0), Vector3(48, 0.6, 48), Color("3c464d"), true, false, "asphalt")
 	_box(Vector3(-24, 3, 0), Vector3(1, 6, 49), Color("5a6a73"), true, true, "concrete")
@@ -261,6 +287,7 @@ func _floor_text(text: String, at: Vector3, tint: Color, size: int = 90) -> void
 	visual.pixel_size = 0.012
 	visual.modulate = tint
 	visual.outline_size = 0
+	visual.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 	add_child(visual)
 	visual.position = at
 	visual.rotation.x = -PI * 0.5
@@ -300,7 +327,9 @@ func _add_environment_detail() -> void:
 		_box(Vector3(x, 12.35, 32), Vector3(7.5, 0.8, 7), Color("788383"), false)
 		var roof := _box(Vector3(x, 12.9, 32), Vector3(8.1, 0.22, 7.5), Color("35454e"), false)
 		roof.rotation.z = -0.08
-	_label("R Y   /   TRANSFER STATION", Vector3(0, 10.55, 24.2), Color("bac5ba"), 135, PI)
+	# In front of the ribbed fascia (z=24.115) and the structural columns (front faces
+	# at z=23.86) so neither cuts the lettering.
+	_label("R Y   /   TRANSFER STATION", Vector3(0, 10.55, HALL_HEADER_Z), Color("bac5ba"), 135, PI)
 	# Side buildings and a water tower create an original industrial skyline.
 	_box(Vector3(-31, 6, -7), Vector3(12, 12, 29), Color("4b5b62"), false)
 	_box(Vector3(-31, 12.15, -7), Vector3(13, 0.3, 30), steel, false)
@@ -338,25 +367,77 @@ func _add_environment_detail() -> void:
 		screen_mesh.material_override = _material(tint.darkened(0.4), 0.7, true)
 		_label("LINK / 01" if i == 0 else "LINK / 02", sites[i] + Vector3(0, 0.70, 1.886), tint, 24, PI)
 
+static func casts_visible_shadow(size: Vector3, origin: Vector3) -> bool:
+	if minf(size.x, minf(size.y, size.z)) < SHADOW_MIN_THICKNESS:
+		return false
+	# Resurfacing patches and lane paint lie on the ground and shadow nothing.
+	return not (size.y < 0.05 and origin.y < 0.1)
+
+## Soft darkening where solids meet the floor, one multiply-blended draw for the
+## whole yard. It grounds cargo and walls on every preset, including Low, which
+## has no sun shadows. It is presentation only: no collision or visibility change.
+func _build_contact_occlusion() -> void:
+	var builder := SurfaceTool.new()
+	builder.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var shades := [Color(0.6, 0.62, 0.64), Color(0.86, 0.87, 0.88), Color.WHITE]
+	for footprint in contact_footprints:
+		var margin := clampf(minf(footprint.size.x, footprint.size.y) * 0.25 + 0.35, 0.45, 0.9)
+		var rings := [footprint, footprint.grow(margin * 0.4), footprint.grow(margin)]
+		for ring in range(2):
+			var inner: Rect2 = rings[ring]
+			var outer: Rect2 = rings[ring + 1]
+			var a := [inner.position, Vector2(inner.end.x, inner.position.y), inner.end, Vector2(inner.position.x, inner.end.y)]
+			var b := [outer.position, Vector2(outer.end.x, outer.position.y), outer.end, Vector2(outer.position.x, outer.end.y)]
+			for side in range(4):
+				var next := (side + 1) % 4
+				var quad := [[a[side], shades[ring]], [b[side], shades[ring + 1]], [b[next], shades[ring + 1]], [a[side], shades[ring]], [b[next], shades[ring + 1]], [a[next], shades[ring]]]
+				for corner in quad:
+					builder.set_color(corner[1])
+					builder.set_normal(Vector3.UP)
+					builder.add_vertex(Vector3(corner[0].x, 0.036, corner[0].y))
+	var visual := MeshInstance3D.new()
+	visual.name = "ContactOcclusion"
+	visual.mesh = builder.commit()
+	var material := StandardMaterial3D.new()
+	material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	material.blend_mode = BaseMaterial3D.BLEND_MODE_MUL
+	material.vertex_color_use_as_albedo = true
+	material.vertex_color_is_srgb = true
+	material.depth_draw_mode = BaseMaterial3D.DEPTH_DRAW_DISABLED
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	material.disable_fog = true
+	visual.material_override = material
+	visual.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	add_child(visual)
+	presentation_stats["contact_footprints"] = contact_footprints.size()
+
 func _batch_static_boxes() -> void:
-	# Shared unit-cube mesh and one instanced draw per material. Hundreds of repeated
-	# hardware pieces do not each submit a draw or retain an empty scene node.
+	# Shared unit-cube mesh. Boxes that differ only in albedo share one vertex-color
+	# material per surface family, with the albedo carried as an instance color, and
+	# are split by whether they can cast a visible shadow. Hundreds of repeated
+	# hardware pieces neither submit their own draws nor enter the shadow passes.
 	presentation_stats["box_instances"] = _box_visuals.size()
 	presentation_stats["static_batches"] = 0
+	presentation_stats["shadow_casting_instances"] = 0
 	# Physics bodies and route geometry stay intact.
 	var batches: Dictionary = {}
 	for visual in _box_visuals:
-		var material: Material = visual.material_override
-		if not batches.has(material):
-			batches[material] = []
-		batches[material].append(visual)
+		var source: StandardMaterial3D = visual.material_override
+		var shape := visual.mesh as BoxMesh
+		var casts := casts_visible_shadow(shape.size, visual.global_position)
+		var family := "emission:%d" % source.get_instance_id() if source.emission_enabled else str(_surface_materials.get(source, "plain"))
+		var key := "%s|%s" % [family, casts]
+		if not batches.has(key):
+			batches[key] = {"material": _batch_material(family, source), "casts": casts, "visuals": []}
+		batches[key].visuals.append(visual)
 	var cube := BoxMesh.new()
 	cube.size = Vector3.ONE
-	for material: Material in batches:
-		var visuals: Array = batches[material]
+	for key: String in batches:
+		var visuals: Array = batches[key].visuals
 		var batch := MultiMeshInstance3D.new()
 		var instances := MultiMesh.new()
 		instances.transform_format = MultiMesh.TRANSFORM_3D
+		instances.use_colors = true
 		instances.mesh = cube
 		instances.instance_count = visuals.size()
 		for i in range(visuals.size()):
@@ -365,15 +446,36 @@ func _batch_static_boxes() -> void:
 			var local := global_transform.affine_inverse() * visual.global_transform
 			local.basis = local.basis.scaled_local(shape.size)
 			instances.set_instance_transform(i, local)
+			instances.set_instance_color(i, (visual.material_override as StandardMaterial3D).albedo_color)
 			if visual.get_parent() is StaticBody3D:
 				visual.queue_free()
 			else:
 				visual.get_parent().queue_free()
 		batch.multimesh = instances
-		batch.material_override = material
+		batch.material_override = batches[key].material
+		batch.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_ON if batches[key].casts else GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 		add_child(batch)
 		presentation_stats["static_batches"] += 1
+		if batches[key].casts:
+			presentation_stats["shadow_casting_instances"] += visuals.size()
 	_box_visuals.clear()
+
+var _batch_materials: Dictionary = {}
+
+func _batch_material(family: String, source: StandardMaterial3D) -> StandardMaterial3D:
+	if family.begins_with("emission:"):
+		return source
+	if _batch_materials.has(family):
+		return _batch_materials[family]
+	# Same shading as the per-color source; only the albedo moves to the instance color.
+	var material: StandardMaterial3D = source.duplicate()
+	material.albedo_color = Color.WHITE
+	material.vertex_color_use_as_albedo = true
+	material.vertex_color_is_srgb = true
+	if _surface_materials.has(source):
+		_surface_materials[material] = _surface_materials[source]
+	_batch_materials[family] = material
+	return material
 
 func _beam_between(start: Vector3, finish: Vector3, width: float, depth: float, tint: Color) -> Node3D:
 	var beam := _box((start + finish) * 0.5, Vector3(width, start.distance_to(finish), depth), tint, false)

@@ -14,9 +14,22 @@ On another machine, launch the game and use the multiplayer screen to join the s
 
 Only the server advances movement, collision, ammunition, reloads, fire cadence, hit registration, grenade damage, objective progress, purchases, scores and round timers. A peer is assigned one actor ID by the server. Clients send movement and aiming intent at 30 Hz; they never send trusted positions, damage or balances. Input validation rejects non-finite and malformed vectors, clamps movement and pitch, and limits command frequency. The actor separately enforces inventory ownership, ammunition and fire intervals. Input older than 300 ms expires to neutral controls. Purchases are limited to the preparation phase and one request every 250 ms.
 
-The 60 Hz simulation sends compressed snapshots at 20 Hz. Remote actors interpolate snapshot positions. Local view rotation updates immediately; local movement is server corrected without movement prediction. Cosmetic shot effects and grenade/smoke replicas do not apply client damage. Reliable messages carry joining, notices and purchases. Input, snapshots and shot effects use separate ENet channels. Rounds have a 15-second equipment phase, 100-second live clock, three-second plant, five-second defuse and 35-second device timer. First to seven wins; a 6–6 match draws. Squads switch sides after six rounds.
+The 60 Hz simulation sends compressed snapshots at 20 Hz. Remote actors move 90 % of the way toward each snapshot when it arrives and hold position between snapshots; there is no timestamped interpolation buffer yet (CLAUDE_AUDIT_0.3 M-6). Local view rotation updates immediately; local movement snaps to the server position without movement prediction. Cosmetic shot effects and grenade/smoke replicas do not apply client damage. Reliable messages carry joining, notices and purchases. Input, snapshots and shot effects use separate ENet channels. Rounds have a 15-second equipment phase, 100-second live clock, three-second plant, five-second defuse and 35-second device timer. First to seven wins; a 6–6 match draws. Squads switch sides after six rounds.
 
 Empty slots run server bots. A disconnected player's bot inherits the actor state, preserving the ongoing round. A cryptographically generated reconnect bearer token can reclaim the actor for 60 seconds; successful reconnection rotates it. The current client retains the token in memory and attempts one automatic reconnection after a dropped established connection. Restarting the app loses it. New joins cannot steal a reserved slot. A full server rejects additional allocation. An account player can also reclaim their disconnected slot using a fresh authenticated one-use ticket; expired reservations release stale account bindings.
+
+## Version handshake
+
+Godot routes RPCs by method index, so a client and server whose RPC methods differ cannot exchange gameplay messages. Before this check existed, they connected and then sat in "joining" forever. Every connection now passes a version handshake in SceneMultiplayer's authentication stage, before any gameplay RPC:
+
+- The client sends a bounded JSON hello carrying `TacticalMatch.PROTOCOL_VERSION`. The server admits it only on an exact whole-number match, and only a peer's first hello counts: later hellos are ignored, so they cannot re-arm the drop timer, multiply replies or reverse the decision. Only after admission does the client send `_join_rpc`, so a rejected peer never consumes a join ticket or takes a slot.
+- **Mismatched protocol.** The server replies with the reason and drops the peer about 0.5 s later. The client shows "Version mismatch: …", stops, and does not retry.
+- **No hello within 5 s.** This covers 0.3.0 and earlier clients, which have no handshake, and non-SIGHTBREAK traffic. The server drops the peer at the authentication timeout. Unmodified 0.3.0 clients cannot display the new message and fall back to their own reconnect loop.
+- **Server never answers within 5 s.** The client reports that the server probably runs an older release and stops.
+- **Bounded waits.** Connecting, authenticating and joining together are limited to 20 s on the client.
+- **Server hangs up during the check.** The client reports that the server closed the connection during the version check. It does not claim which side is older, because ENet discards any queued reason with the connection.
+
+Bump `PROTOCOL_VERSION` whenever an RPC method is added, removed, renamed or changes its arguments, or when snapshot meaning changes. Protocol 2 is the first versioned protocol; 0.3.0 had none. `scripts/test_protocol_compat.sh` runs real dedicated-server and client processes for 0.3.0, this build and a protocol-bumped copy of it, in every pairing, and writes a matrix. `scripts/test_handshake_hardening.sh` points hostile clients at the real server (hello floods, fractional and overflowing protocol numbers, contradictory hellos) and hostile servers at the stock client (hang-ups, malformed answers).
 
 ## Optional account sessions
 
@@ -34,7 +47,7 @@ Run the integration probe with the local API already running:
 python3 scripts/test_account_network.py
 ```
 
-It creates one fictional account and tests real Godot → HTTP → PostgreSQL ticket consumption, guest rejection, authoritative names, waiting for the roster, replay rejection and account reclaim with a new ticket. It does not award rewards or claim that ten humans completed a full match. The deterministic match tests separately cover reward eligibility policy, result metadata, strict URL validation and redirect suppression.
+It creates one fictional account and tests real Godot → HTTP → PostgreSQL ticket consumption, guest rejection, an incompatible-protocol client presenting the ticket first (rejected, after which the same ticket still admits the real client to slot 1), authoritative names, waiting for the roster, replay rejection and account reclaim with a new ticket. It does not award rewards or claim that ten humans completed a full match. The deterministic match tests separately cover reward eligibility policy, result metadata, strict URL validation and redirect suppression.
 
 ## Automated checks
 

@@ -9,7 +9,7 @@ const DEFAULTS := {
 	"settings": {"sensitivity": 0.0028, "touch_sensitivity": 0.004, "fov": 78.0,
 		"volume": 0.65, "difficulty": 1, "gyro": false, "gyro_sensitivity": 1.2,
 		"touch_visible": false, "reduced_motion": false, "crosshair_color": "d9eac6",
-		"crosshair_size": 5.0, "fps_limit": 60, "graphics_quality": 1, "hud_scale": 1.0, "hud_positions": {}}
+		"crosshair_size": 5.0, "fps_limit": 60, "graphics_quality": 1, "render_scale": 1.0, "ui_text_scale": 1.0, "hud_scale": 1.0, "hud_positions": {}}
 }
 var data: Dictionary = DEFAULTS.duplicate(true)
 
@@ -43,6 +43,8 @@ func load_profile() -> void:
 		data.settings.touch_sensitivity = clampf(float(data.settings.touch_sensitivity), 0.001, 0.012)
 		data.settings.fov = clampf(float(data.settings.fov), 60.0, 100.0)
 		data.settings.volume = clampf(float(data.settings.volume), 0.0, 1.0)
+		data.settings.render_scale = clampf(float(data.settings.render_scale), 0.5, 1.0)
+		data.settings.ui_text_scale = clampf(float(data.settings.ui_text_scale), 0.85, 1.3)
 
 func save() -> Error:
 	var file := FileAccess.open(PATH + ".tmp", FileAccess.WRITE)
