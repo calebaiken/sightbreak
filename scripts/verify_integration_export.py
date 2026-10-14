@@ -4,8 +4,9 @@
 Requires Pillow, X11/XTest, a free 1280x720 Xvfb display, and the export templates.
 The exported template cannot execute external --script drivers. Only the source
 Godot process executes the fixture. This checks real exported menu/admission,
-mouse firing, replicated fixture-triggered reload and clean engine teardown.
-It does not establish desktop R-key input, offline matches or phone performance.
+mouse firing, reload and clean engine teardown. Keyboard mode requires the
+server to observe an R-key reload command; authority mode triggers reload in the
+source fixture and leaves keyboard input unverified. No phone performance claim.
 """
 import argparse
 import ctypes as C
@@ -39,10 +40,15 @@ class NativeUI:
         self.x.XGetGeometry.argtypes = [C.c_void_p, C.c_ulong, C.POINTER(C.c_ulong), C.POINTER(C.c_int), C.POINTER(C.c_int), C.POINTER(C.c_uint), C.POINTER(C.c_uint), C.POINTER(C.c_uint), C.POINTER(C.c_uint)]
         self.x.XSetInputFocus.argtypes = [C.c_void_p, C.c_ulong, C.c_int, C.c_ulong]
         self.x.XFlush.argtypes = [C.c_void_p]
+        self.x.XKeysymToKeycode.argtypes = [C.c_void_p, C.c_ulong]
+        self.x.XKeysymToKeycode.restype = C.c_uint
+        self.x.XStringToKeysym.argtypes = [C.c_char_p]
+        self.x.XStringToKeysym.restype = C.c_ulong
         self.x.XFree.argtypes = [C.c_void_p]
         self.x.XCloseDisplay.argtypes = [C.c_void_p]
         self.t.XTestFakeMotionEvent.argtypes = [C.c_void_p, C.c_int, C.c_int, C.c_int, C.c_ulong]
         self.t.XTestFakeButtonEvent.argtypes = [C.c_void_p, C.c_uint, C.c_int, C.c_ulong]
+        self.t.XTestFakeKeyEvent.argtypes = [C.c_void_p, C.c_uint, C.c_int, C.c_ulong]
         self.d = self.x.XOpenDisplay(display.encode())
         if not self.d:
             raise RuntimeError('Cannot open native display ' + display)
@@ -80,6 +86,13 @@ class NativeUI:
         self.t.XTestFakeButtonEvent(self.d, 1, int(down), 0)
         self.x.XFlush(self.d)
 
+    def key(self, name, down):
+        code = self.x.XKeysymToKeycode(self.d, self.x.XStringToKeysym(name.encode()))
+        if not code:
+            raise RuntimeError('No native keycode for ' + name)
+        self.t.XTestFakeKeyEvent(self.d, code, int(down), 0)
+        self.x.XFlush(self.d)
+
     def click(self, x, y):
         self.t.XTestFakeMotionEvent(self.d, 0, x, y, 0)
         self.button(True)
@@ -107,6 +120,7 @@ def main():
     parser.add_argument('--xvfb', default=os.environ.get('XVFB_BIN') or shutil.which('Xvfb'))
     parser.add_argument('--quit-after', type=int, default=300)
     parser.add_argument('--timeout', type=float, default=180)
+    parser.add_argument('--reload-mode', choices=('authority', 'keyboard'), default='authority')
     args = parser.parse_args()
     if not args.xvfb:
         parser.error('Set --xvfb or XVFB_BIN to the Xvfb executable')
@@ -160,7 +174,10 @@ def main():
             path = output / 'state' / directory
             path.mkdir(parents=True, exist_ok=True)
             env[name] = str(path)
-        server = launch('server', [str(ROOT / 'scripts/godot.sh'), '--headless', '--script', str(ROOT / 'scripts/fixtures/export_integration.gd'), '--', '--output=' + str(output)],
+        server_command = [str(ROOT / 'scripts/godot.sh'), '--headless', '--script', str(ROOT / 'scripts/fixtures/export_integration.gd'), '--', '--output=' + str(output)]
+        if args.reload_mode == 'authority':
+            server_command.append('--automatic-reload')
+        server = launch('server', server_command,
                         {**env, 'SIGHTBREAK_STATE_DIR': str(output / 'server-state')}, ROOT)
         wait_for(lambda: server_has('SIGHTBREAK_SERVER_READY'), 15, 'Authority readiness', server)
         client = launch('client', [str(executable), '--audio-driver', 'Dummy', '--quit-after', str(args.quit_after)], env)
@@ -182,9 +199,17 @@ def main():
         ui.button(False)
         time.sleep(.5)
         ui.capture(output / '05-after-fire-input.png')
-        wait_for(lambda: server_has('EXPORT_UI_RELOAD_STARTED'), 5, 'Fixture-triggered reload', client)
+        key_down = None
+        if args.reload_mode == 'keyboard':
+            ui.focus_game()
+            ui.key('r', True)
+            key_down = time.monotonic()
+        wait_for(lambda: server_has('EXPORT_UI_RELOAD_STARTED'), 10, 'Authority confirms reload start', client)
         time.sleep(.5)
         ui.capture(output / '06-after-authority-reload-start.png')
+        if key_down is not None:
+            time.sleep(max(0, 2.5 - (time.monotonic() - key_down)))
+            ui.key('r', False)
         wait_for(lambda: server_has('EXPORT_UI_RELOAD_COMPLETED'), 5, 'Authority reload completion', client)
         time.sleep(.5)
         ui.capture(output / '07-after-authority-reload-completion.png')
@@ -209,7 +234,8 @@ def main():
                   'client_exit': client.returncode, 'server_exit': server.returncode,
                   'capture_dimensions': [1280, 720], 'capture_method': 'raw X11 ImageGrab; no image edits',
                   'rendered_capture_stages': 'Require visual inspection; authority timing is not rendered timing',
-                  'reload_trigger': 'source authority fixture', 'desktop_R_key_input': 'UNVERIFIED',
+                  'reload_trigger': authority['reload_trigger'],
+                  'desktop_R_key_input': 'VERIFIED via server-observed reload command' if args.reload_mode == 'keyboard' else 'UNVERIFIED',
                   'exit_method': 'supported --quit-after ' + str(args.quit_after),
                   'scope': 'Actual exported Linux client through native UI; source Godot authority on loopback; llvmpipe software rendering; no physical-device performance claim'}
         (output / 'results.json').write_text(json.dumps(result, indent=2) + '\n')

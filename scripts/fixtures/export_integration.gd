@@ -15,10 +15,13 @@ var ack_reported := false
 var last_shot_time := -1.0
 var reload_started := false
 var output := ""
+var automatic_reload := false
+var reload_command_seen := false
 func _initialize() -> void: start.call_deferred()
 func start() -> void:
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--output="): output = arg.trim_prefix("--output=")
+		elif arg == "--automatic-reload": automatic_reload = true
 	if output.is_empty():
 		push_error("An external --output directory is required")
 		quit(2)
@@ -60,11 +63,18 @@ func _process(delta: float) -> bool:
 		if largest_ack > 10 and not ack_reported:
 			ack_reported = true
 			print("EXPORT_UI_ACK_READY actor=%d ack=%d ammo=%d" % [joined_id,largest_ack,actor.ammo])
-		if not reload_started and shots > 0 and elapsed-last_shot_time > 0.6 and not bool(actor.input_state.get("fire",false)):
+		if bool(actor.input_state.get("reload",false)) and not reload_command_seen:
+			reload_command_seen = true
+			print("EXPORT_UI_RELOAD_COMMAND actor=%d" % joined_id)
+		if automatic_reload and not reload_started and shots > 0 and elapsed-last_shot_time > 0.6 and not bool(actor.input_state.get("fire",false)):
 			reload_started = true
 			actor.start_reload()
 			print("EXPORT_UI_RELOAD_STARTED trigger=authority_fixture")
-		if actor.reload_remaining > 0: reload_seen = true
+		if actor.reload_remaining > 0:
+			reload_seen = true
+			if not reload_started:
+				reload_started = true
+				print("EXPORT_UI_RELOAD_STARTED trigger=native_client_input")
 		if reload_seen and not reload_completed and actor.reload_remaining <= 0 and actor.ammo == 30:
 			reload_completed = true
 			print("EXPORT_UI_RELOAD_COMPLETED ammo=%d" % actor.ammo)
@@ -74,8 +84,8 @@ func _process(delta: float) -> bool:
 		finish.call_deferred()
 	return false
 func write_report() -> Dictionary:
-	var report := {"scope":"source Godot authority fixture; client is actual exported Linux ELF driven through native UI; no rewards","joined_id":joined_id,"shots":shots,"lowest_ammo":lowest_ammo,"largest_ack":largest_ack,"reload_seen":reload_seen,"reload_completed":reload_completed,"reload_trigger":"authority fixture (desktop R-key injection unverified)","prediction_default":game._prediction_enabled,"protocol":TacticalMatch.PROTOCOL_VERSION}
-	report.passed = joined_id > 0 and shots > 0 and lowest_ammo < 30 and largest_ack > 10 and reload_seen and reload_completed
+	var report := {"scope":"source Godot authority fixture; client is actual exported Linux ELF driven through native UI; no rewards","joined_id":joined_id,"shots":shots,"lowest_ammo":lowest_ammo,"largest_ack":largest_ack,"reload_seen":reload_seen,"reload_completed":reload_completed,"reload_trigger":"authority fixture" if automatic_reload else "native client input", "reload_command_seen":reload_command_seen,"prediction_default":game._prediction_enabled,"protocol":TacticalMatch.PROTOCOL_VERSION}
+	report.passed = joined_id > 0 and shots > 0 and lowest_ammo < 30 and largest_ack > 10 and reload_seen and reload_completed and (automatic_reload or reload_command_seen)
 	var file := FileAccess.open(output.path_join("authority.json"),FileAccess.WRITE)
 	file.store_string(JSON.stringify(report,"\t"))
 	file.close()
