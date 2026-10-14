@@ -1,0 +1,9 @@
+| Client | Server | Expected | Observed | Result | Last message shown to the player |
+| --- | --- | --- | --- | --- | --- |
+| 0.3.0 (e67f2c8) | 0.3.0 (e67f2c8) | join | joined after 0.56 s | PASS | Round live. Secure Relay Yard. |
+| this branch (protocol 2) | this branch (protocol 2) | join | joined after 0.30 s | PASS | Round live. Secure Relay Yard. |
+| 0.3.0 (e67f2c8) | this branch (protocol 2) | server drops pre-handshake client | never admitted; dropped 3x by the server, first after 5.1 s; 0.3.0 client retries on its own | PASS | Connecting to Relay Yard… |
+| this branch (protocol 2) | 0.3.0 (e67f2c8) | client reports missing handshake | failed after 5.1 s, no retries | PASS | No version handshake from the server within 5 seconds. It is probably running an older SIGHTBREAK release (0.3.0 has no handshake) or is not a SIGHTBREAK server. Join a server running the same version as this client. |
+| next build (protocol 3) | this branch (protocol 2) | explicit mismatch | rejected after 0.1 s with the reason shown | PASS | Version mismatch: this client uses SIGHTBREAK network protocol 3. This server uses network protocol 2; this client sent protocol 3. Install the same SIGHTBREAK version as the server to join. |
+| this branch (protocol 2) | next build (protocol 3) | explicit mismatch | rejected after 0.1 s with the reason shown | PASS | Version mismatch: this client uses SIGHTBREAK network protocol 2. This server uses network protocol 3; this client sent protocol 2. Install the same SIGHTBREAK version as the server to join. |
+PROTOCOL_COMPAT PASS

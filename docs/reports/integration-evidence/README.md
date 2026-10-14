@@ -26,7 +26,7 @@ Images are actual native Godot captures; none substitute for in-engine geometry.
 
 ## Portable delivery
 
-GitHub **draft prerelease**, visible to repository collaborators: https://github.com/calebaiken/sightbreak/releases/tag/untagged-e823a7a6d70f480c54cb . **The draft exists but has no uploaded assets.** Both normal and approved upload attempts returned Forbidden from `uploads.github.com`. Build and raw-evidence packages are verified locally under `/workspace/sightbreak-integration/builds/`; curated evidence is committed here. See `delivery-assets.json` for the actual failure. The saved cloud configuration draft adds that hostname while retaining `api.github.com`; review/save/publish the environment configuration before retrying. Draft saving does not apply network policy.
+GitHub **draft prerelease**, visible to repository collaborators: https://github.com/calebaiken/sightbreak/releases/tag/untagged-3348e0960c9eaef0666e . **The draft exists but has no uploaded assets.** Both normal and approved upload attempts returned Forbidden from `uploads.github.com`. Build and raw-evidence packages are verified locally under `/workspace/sightbreak-integration/builds/`; curated evidence is committed here. See `delivery-assets.json` for the actual failure. The saved cloud configuration draft adds that hostname while retaining `api.github.com`; review/save/publish the environment configuration before retrying. Draft saving does not apply network policy.
 
 - `sightbreak-linux-debug.zip`, `sightbreak-android-debug.zip`, `sightbreak-ios-xcode-project.zip`; direct `sightbreak-debug.apk`.
 - `sightbreak-curated-evidence.tar.gz`: this indexed subset, reports and checksum manifest.
