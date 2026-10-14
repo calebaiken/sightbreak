@@ -10,7 +10,7 @@ const REVEAL = preload("res://scripts/ui/case_reveal.gd")
 const SKIN := {"id": "art-fixture", "kind": "weapon_skin", "collection": "Crimson Archive", "rarity": "Legendary", "pattern_seed": 897, "wear": 0.2}
 const RIFLE_TRIANGLES := 32000
 const HAND_TRIANGLES := 10000
-const ARMS_TRIANGLES := 12000
+const ARMS_TRIANGLES := 10000
 const ARMS_BONES := 34
 var checks := 0
 var failures: Array[String] = []
@@ -223,6 +223,11 @@ func _run() -> void:
 		check(wrist.x > 0.02 and wrist.x < 0.98 and wrist.y < 0.95 and bottom.x > 0.02 and bottom.x < 0.98 and bottom.y < 0.98, "at %d %% of the reload the support hand and magazine are in frame (wrist %s, magazine bottom %s)" % [roundi(progress * 100), wrist, bottom])
 		var tube_end := _viewmodel_screen(actor.camera, (actor._gun.get_node("body") as Node3D).global_transform * Vector3(0, 0.025, 0.205))
 		check(tube_end.x > 1.0 or tube_end.y > 1.0, "the buffer tube's end face stays out of frame at %d %% (%s)" % [roundi(progress * 100), tube_end])
+	# The held reload pose rises toward the centre but leaves the crosshair clear.
+	actor.reload_remaining = reload_time * 0.5
+	actor.tick_visual(0.016)
+	var held_muzzle := _viewmodel_screen(actor.camera, (actor._gun.get_node("body") as Node3D).global_transform * Vector3(0, 0.025, -0.676))
+	check(held_muzzle.x > 0.55, "mid-reload the muzzle stays right of the crosshair (%s)" % held_muzzle)
 	actor.reload_remaining = 0
 	actor.tick_visual(0.016)
 	check(skeleton.get_bone_global_pose(hand).origin.distance_to(hold) < 0.001, "after the reload the support hand is back on the handguard")
