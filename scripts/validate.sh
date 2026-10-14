@@ -25,6 +25,10 @@ run_godot input-stream --headless --script res://tests/input_stream_test.gd
 run_godot movement-replay --headless --script res://tests/movement_prediction_test.gd
 run_godot input-lifecycle --headless --script res://tests/input_lifecycle_test.gd
 run_godot peer-lifecycle --headless --script res://tests/peer_lifecycle_test.gd
+run_godot reconnect-policy --headless --script res://tests/reconnect_policy_test.gd
+run_godot reconnect-independent --headless --script res://tests/independent_reconnect_review_test.gd
+run_godot resume-admission --headless --script res://tests/independent_resume_admission_test.gd
+run_godot lost-welcome --headless --script res://tests/lost_welcome_test.gd
 run_godot bots --headless --script res://tests/bot_match_test.gd
 run_godot bot-lifecycle --headless --script res://tests/bot_lifecycle_test.gd
 SIGHTBREAK_STATE_DIR="$validation_dir/profile-state" run_godot profile --headless --script res://tests/profile_test.gd

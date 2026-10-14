@@ -10,7 +10,7 @@ signal elimination_reported(killer_id: int, victim_id: int, headshot: bool)
 ## gameplay RPC. Godot routes RPCs by method index, so builds whose RPC methods,
 ## arguments or snapshot meaning differ must never be admitted together; they would
 ## stall silently. Bump this with any such change. 0.3.0 had no handshake.
-const PROTOCOL_VERSION := 5
+const PROTOCOL_VERSION := 6
 const HANDSHAKE_SECONDS := 5.0
 const JOIN_TIMEOUT_SECONDS := 20.0
 const HELLO_LIMIT := 512
@@ -43,6 +43,9 @@ var _authority: bool = true
 var _bot_state: Dictionary = {}
 var _peer_actors: Dictionary = {}
 var _reservations: Dictionary = {}
+## One bounded previous credential per actor until welcome is confirmed by input.
+## Never authorizes eviction of a live peer or a second actor.
+var _resume_aliases: Dictionary = {}
 var _last_peer_input: Dictionary = {}
 var _damage_history: Dictionary = {}
 var _interactions: Dictionary = {}
@@ -65,7 +68,8 @@ var _spectator: Camera3D
 var _finished_emitted: bool = false
 var _elapsed: float = 0.0
 var _reconnect_clock: float = 0.0
-var _reconnect_attempts: int = 0
+var _recovery := SBReconnectPolicy.new()
+var _reconnect_at_msec := 0
 ## Seconds spent in the current pre-game client state (connecting, authenticating,
 ## joining); bounded by JOIN_TIMEOUT_SECONDS.
 var _state_clock: float = 0.0
@@ -692,6 +696,10 @@ func _host() -> void:
 	print("SIGHTBREAK_SERVER_READY port=%d" % int(options.get("port", 27020)))
 
 func _connect_client() -> void:
+	if _recovery.deadline > 0 and not _recovery.take_attempt(Time.get_ticks_msec()):
+		_fail_connection("Reconnect window expired. Join again to request a fresh session.")
+		return
+	_close_client()
 	_replica_buffer.clear()
 	_prediction.reset(true)
 	_pending_reconciliation.clear()
@@ -717,8 +725,9 @@ func _connection_failed() -> void:
 	# Keep a more specific reason (version mismatch, join timeout) already shown.
 	if connection_state == "failed":
 		return
-	connection_state = "failed"
-	notification.emit("Connection failed. Check the address and UDP port.")
+	if _retry_resume("Transport unavailable; retrying the reserved session…"):
+		return
+	_fail_connection("Connection failed. Check the address and UDP port.")
 
 ## The hello both sides exchange during SceneMultiplayer authentication.
 func _hello(accepted: bool, reason: String) -> PackedByteArray:
@@ -746,6 +755,12 @@ func _server_handshake(peer_id: int, data: PackedByteArray) -> void:
 	if _handshake_seen.has(peer_id):
 		return
 	_handshake_seen[peer_id] = true
+	# A lost close must not retain one of the ten ENet transports indefinitely.
+	# ENet ACK/ping health is separate from the 30-second gameplay-input idle rule.
+	var transport := multiplayer.multiplayer_peer as ENetMultiplayerPeer
+	var packet_peer := transport.get_peer(peer_id)
+	packet_peer.ping_interval(500)
+	packet_peer.set_timeout(32, 3000, 5000)
 	var api := multiplayer as SceneMultiplayer
 	var hello := _read_hello(data)
 	var protocol := _hello_protocol(hello)
@@ -787,6 +802,8 @@ func _handshake_failed(peer_id: int) -> void:
 		return
 	if connection_state == "failed":
 		return
+	if _recovery.deadline > 0 and _retry_resume("Version check interrupted; retrying the reserved session…"):
+		return
 	if _elapsed - _auth_started < HANDSHAKE_SECONDS - 0.5:
 		# The server hung up before the timeout; any reason it queued was discarded
 		# with the connection, so do not guess that it is the older side.
@@ -809,19 +826,47 @@ func _fail_connection(message: String) -> void:
 	connection_state = "failed"
 	notification.emit(message)
 	print("PROTOCOL_CLIENT_FAILED " + message)
-	_close_client.call_deferred()
+	_recovery.clear()
+	var retired := multiplayer.multiplayer_peer
+	_close_retired_client.call_deferred(retired)
+
+func _close_retired_client(retired: MultiplayerPeer) -> void:
+	# A queued failure must not close a later replacement transport.
+	if retired != null and retired == multiplayer.multiplayer_peer:
+		retired.close()
 
 func _close_client() -> void:
 	if multiplayer.multiplayer_peer != null and not (multiplayer.multiplayer_peer is OfflineMultiplayerPeer):
 		multiplayer.multiplayer_peer.close()
 
+func _retry_resume(message: String) -> bool:
+	if reconnect_token.length() != 64 or connection_state == "failed":
+		return false
+	_recovery.begin(Time.get_ticks_msec())
+	if not _recovery.available(Time.get_ticks_msec()):
+		_fail_connection("Reconnect window expired. Join again to request a fresh session.")
+		return true
+	if connection_state != "reconnecting":
+		connection_state = "reconnecting"
+		_replica_buffer.clear()
+		_reconnect_clock = _recovery.delay_seconds()
+		_reconnect_at_msec = 0
+		var retired := multiplayer.multiplayer_peer
+		_close_retired_client.call_deferred(retired)
+		notification.emit(message)
+	return true
+
 func _server_disconnected() -> void:
-	if connection_state == "failed":
+	if connection_state == "failed" or connection_state == "reconnecting":
 		return
+	if _retry_resume("Server disconnected. Attempting to reconnect…"):
+		return
+	# Preserve the initial disconnect notification for clients without a session;
+	# their next admission failure is terminal and has no automatic retry episode.
 	connection_state = "reconnecting"
 	_replica_buffer.clear()
 	_reconnect_clock = 2
-	_reconnect_attempts = 0
+	_reconnect_at_msec = 0
 	notification.emit("Server disconnected. Attempting to reconnect…")
 
 func _client_tick(delta: float) -> void:
@@ -845,10 +890,16 @@ func _client_tick(delta: float) -> void:
 			actor.rotation.y = look.x
 			actor.camera.rotation.x = clampf(look.y, -1.42, 1.42) + actor.recoil.y
 			actor.camera.rotation.y = actor.recoil.x
+	var now := Time.get_ticks_msec()
+	if _recovery.deadline > 0 and now >= _recovery.deadline:
+		_fail_connection("Reconnect window expired. Join again to request a fresh session.")
 	if connection_state == "reconnecting":
-		_reconnect_clock -= delta
-		if _reconnect_clock <= 0:
+		if _reconnect_at_msec == 0:
+			_reconnect_at_msec = now + int(_reconnect_clock * 1000)
+		if now >= _reconnect_at_msec:
 			_connect_client()
+	if connection_state == "connecting" and _recovery.deadline > 0 and now - _recovery.attempt_started >= SBReconnectPolicy.ATTEMPT_MSEC:
+		_retry_resume("Transport capacity has not recovered; retrying the reserved session…")
 	if connection_state in ["connecting", "authenticating", "joining"]:
 		_state_clock += delta
 		if _state_clock > JOIN_TIMEOUT_SECONDS:
@@ -923,10 +974,29 @@ func _join_rpc(player_name: String, token: String, join_ticket: String = "") -> 
 	_pending_joins[peer_id] = attempt
 	var account := ""
 	var id := 0
-	if token.length() == 64 and _reservations.has(token):
-		var record: Dictionary = _reservations[token]
-		if _elapsed < float(record.expires) and not _peer_actors.values().has(int(record.id)):
-			id = int(record.id)
+	if not token.is_empty():
+		# A resume credential never falls through to a new guest/account identity.
+		var reservation_token := token
+		if token.length() == 64 and not _reservations.has(token):
+			for alias: Dictionary in _resume_aliases.values():
+				if str(alias.token) == token and Time.get_ticks_msec() < int(alias.expires):
+					reservation_token = str(alias.current_token)
+					break
+		if token.length() != 64 or not _reservations.has(reservation_token):
+			_reject_join(peer_id, "Reconnect reservation is invalid or expired. Join again for a fresh session.")
+			return
+		var record: Dictionary = _reservations[reservation_token]
+		if _elapsed >= float(record.expires) or not actors.has(int(record.id)):
+			_reject_join(peer_id, "Reconnect reservation is invalid or expired. Join again for a fresh session.")
+			return
+		id = int(record.id)
+		if _peer_actors.values().has(id) or _join_slots.values().has(id):
+			# Valid reservation, but the old transport has not retired. Do not evict
+			# live authority, inspect/consume a ticket, or allocate another actor.
+			_pending_joins.erase(peer_id)
+			_peer_lifecycle.reject(peer_id, Time.get_ticks_msec())
+			_retry_join_rpc.rpc_id(peer_id)
+			return
 	var needs_ticket := bool(options.get("require_accounts", false)) and id == 0
 	if bool(options.get("require_accounts", false)):
 		if id != 0:
@@ -970,6 +1040,14 @@ func _join_rpc(player_name: String, token: String, join_ticket: String = "") -> 
 			_reservations.erase(old_token)
 	var new_token: String = Crypto.new().generate_random_bytes(32).hex_encode()
 	_reservations[new_token] = {"id": id, "expires": _elapsed + 86400.0}
+	if not token.is_empty():
+		var prior: Dictionary = _resume_aliases.get(id, {})
+		var expires := Time.get_ticks_msec() + SBReconnectPolicy.WINDOW_MSEC
+		if str(prior.get("token", "")) == token:
+			expires = int(prior.expires)
+		_resume_aliases[id] = {"token": token, "current_token": new_token, "peer": peer_id, "generation": attempt, "expires": expires}
+	else:
+		_resume_aliases.erase(id)
 	_peer_actors[peer_id] = id
 	_last_input_sequence[id] = 0
 	if not account.is_empty():
@@ -1022,6 +1100,11 @@ func _input_rpc(packed: PackedByteArray) -> void:
 	_peer_lifecycle.active(peer_id, Time.get_ticks_msec())
 	var clean: Dictionary = SBInputStream.sanitize(data.commands.back())
 	var id: int = int(_peer_actors[peer_id])
+	var alias: Dictionary = _resume_aliases.get(id, {})
+	if int(alias.get("peer", -1)) == peer_id and int(alias.get("generation", -1)) == int(_peer_lifecycle.peers[peer_id].generation):
+		# The stock client cannot send these inputs before processing its welcome.
+		# Retire the previous credential only after this generation proves delivery.
+		_resume_aliases.erase(id)
 	var old_look: Vector2 = actors[id].input_state.get("look", Vector2.ZERO)
 	var new_look: Vector2 = clean.look
 	if old_look.distance_to(new_look) > 0.004 or ((clean.move as Vector2).length() > 0.1 and actors[id].velocity.length() > 0.2) or (bool(clean.interact) and _interactions.has(id)):
@@ -1044,6 +1127,7 @@ func _welcome_rpc(id: int, token: String, data: Dictionary) -> void:
 	for actor: SBActor in actors.values():
 		actor.is_local = actor.actor_id == local_id
 	reconnect_token = token
+	_recovery.clear()
 	connection_state = "connected"
 	_apply_snapshot(data)
 	notification.emit("Connected • account session" if reward_status != "unranked" else "Connected • LAN practice session")
@@ -1083,10 +1167,13 @@ func _audible_shot_rpc(at: Vector3, weapon: String) -> void:
 	audio.play()
 
 @rpc("authority", "call_remote", "reliable")
+func _retry_join_rpc() -> void:
+	if not _retry_resume("Previous session is still retiring; retrying the reserved actor…"):
+		_fail_connection("No reconnect credential is available. Join again for a fresh session.")
+
+@rpc("authority", "call_remote", "reliable")
 func _rejected_rpc(message: String) -> void:
-	connection_state = "failed"
-	notification.emit(message)
-	multiplayer.multiplayer_peer.close()
+	_fail_connection(message)
 
 @rpc("authority", "call_remote", "reliable")
 func _notice_rpc(message: String) -> void:
@@ -1246,10 +1333,14 @@ func _submit_ranked_result() -> void:
 		_reset_server_match.call_deferred()
 
 func _expire_reservations() -> void:
+	for id: int in _resume_aliases.keys():
+		if Time.get_ticks_msec() >= int(_resume_aliases[id].expires):
+			_resume_aliases.erase(id)
 	for token: String in _reservations.keys():
 		var record: Dictionary = _reservations[token]
 		if _elapsed >= float(record.expires) and not _peer_actors.values().has(int(record.id)):
 			_account_ids.erase(int(record.id))
+			_resume_aliases.erase(int(record.id))
 			_reservations.erase(token)
 
 func _build_device_visual() -> void:
@@ -1331,6 +1422,7 @@ func _reset_server_match() -> void:
 	_join_slots.clear()
 	_join_accounts.clear()
 	_reservations.clear()
+	_resume_aliases.clear()
 	_activity_seconds.clear()
 	_last_activity.clear()
 	_last_peer_input.clear()
