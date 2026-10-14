@@ -13,12 +13,13 @@ import time
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
+API_URL = os.environ.get('SIGHTBREAK_TEST_ECONOMY_URL', 'http://127.0.0.1:8080')
 
 def post(path, data, token=None):
     headers = {'Content-Type': 'application/json'}
     if token:
         headers['Authorization'] = 'Bearer ' + token
-    request = urllib.request.Request('http://127.0.0.1:8080' + path, json.dumps(data).encode(), headers)
+    request = urllib.request.Request(API_URL + path, json.dumps(data).encode(), headers)
     with urllib.request.urlopen(request, timeout=10) as response:
         return json.load(response)
 
@@ -29,7 +30,7 @@ def main():
     env = os.environ.copy()
     env.pop('SIGHTBREAK_SERVER_KEY', None)
     server_env = env.copy()
-    server_env['SIGHTBREAK_SERVER_KEY'] = (ROOT / '.local/secrets/server.key').read_text().strip()
+    server_env['SIGHTBREAK_SERVER_KEY'] = os.environ.get('SIGHTBREAK_SERVER_KEY') or (ROOT / '.local/secrets/server.key').read_text().strip()
     command = [str(ROOT / 'scripts/godot.sh'), '--headless', '--script', 'res://tests/account_network_probe.gd', '--']
     with tempfile.TemporaryFile(mode='w+') as log:
         server = subprocess.Popen(command + ['--role=server'], cwd=ROOT, env=server_env, stdout=log, stderr=subprocess.STDOUT)

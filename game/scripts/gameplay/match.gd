@@ -10,7 +10,7 @@ signal elimination_reported(killer_id: int, victim_id: int, headshot: bool)
 ## gameplay RPC. Godot routes RPCs by method index, so builds whose RPC methods,
 ## arguments or snapshot meaning differ must never be admitted together; they would
 ## stall silently. Bump this with any such change. 0.3.0 had no handshake.
-const PROTOCOL_VERSION := 2
+const PROTOCOL_VERSION := 5
 const HANDSHAKE_SECONDS := 5.0
 const JOIN_TIMEOUT_SECONDS := 20.0
 const HELLO_LIMIT := 512
@@ -47,6 +47,16 @@ var _last_peer_input: Dictionary = {}
 var _damage_history: Dictionary = {}
 var _interactions: Dictionary = {}
 var _gate := SBInputGate.new()
+var _privacy := SBStatePrivacy.new()
+var _replica_buffer := SBSnapshotBuffer.new()
+var _simulation_tick := 0
+var _hit_history := SBHitHistory.new()
+var _snapshot_generation := 0
+var _input_stream := SBInputStream.new()
+var _prediction := SBMovementPrediction.new()
+var _prediction_enabled := false
+var _pending_reconciliation: Dictionary = {}
+var _last_input_sequence: Dictionary = {}
 var _local_input: Dictionary = {"move": Vector2.ZERO, "look": Vector2.ZERO}
 var _snapshot_clock: float = 0.0
 var _input_clock: float = 0.0
@@ -68,6 +78,9 @@ var reward_status: String = "unranked"
 var _bridge: SBEconomyBridge
 var _account_ids: Dictionary = {}
 var _pending_joins: Dictionary = {}
+var _join_slots: Dictionary = {}
+var _join_accounts: Dictionary = {}
+var _peer_lifecycle := SBPeerLifecycle.new()
 var _activity_seconds: Dictionary = {}
 var _last_activity: Dictionary = {}
 var _ranked_eligible: bool = false
@@ -85,6 +98,8 @@ var _rng := RandomNumberGenerator.new()
 
 func configure(settings: Dictionary) -> void:
 	options = settings.duplicate()
+	_prediction_enabled = bool(options.get("prediction", OS.get_cmdline_user_args().has("--network-prediction")))
+	_replica_buffer.delay_seconds = clampf(float(options.get("interpolation_delay", 0.10)), 0.05, 0.20)
 	reconnect_token = str(options.get("reconnect_token", ""))
 
 func _ready() -> void:
@@ -194,7 +209,38 @@ func _physics_process(delta: float) -> void:
 	_update_spectator()
 	_update_device_visual(delta)
 
+func _process(delta: float) -> void:
+	if _authority or connection_state != "connected":
+		return
+	_replica_buffer.advance(delta)
+	for actor: SBActor in actors.values():
+		if actor.actor_id == local_id or not actor.visible:
+			continue
+		var pose := _replica_buffer.sample(actor.actor_id)
+		if pose.is_empty():
+			continue
+		actor.global_position = pose.position
+		actor.velocity = pose.velocity
+		actor.yaw = pose.yaw
+		actor.pitch = pose.pitch
+		actor.rotation.y = actor.yaw
+	if local_actor() != null and local_actor().alive and _prediction_enabled:
+		_prediction.present(local_actor(), delta)
+	_update_spectator()
+
 func _authority_tick(delta: float) -> void:
+	_simulation_tick += 1
+	if options.get("mode", "offline") == "server":
+		_service_peers()
+	for peer_id: int in _peer_actors:
+		var id: int = _peer_actors[peer_id]
+		var command := _input_stream.pop(peer_id)
+		if not command.is_empty():
+			actors[id].input_state = command
+			_last_input_sequence[id] = int(command.sequence)
+		# On a short packet gap keep held controls, as before input sequencing.
+		# Neutralizing every gap invents new semi-auto/jump rising edges. The
+		# existing 300 ms silence guard below releases controls on sustained loss.
 	if not _handshake_drops.is_empty():
 		_drop_rejected_peers()
 	_bot_clock -= delta
@@ -206,15 +252,26 @@ func _authority_tick(delta: float) -> void:
 	if local_actor() != null:
 		local_actor().input_state = _local_input.duplicate()
 	for actor: SBActor in actors.values():
+		var suspended_edges: Array = []
 		if phase != "live":
 			actor.input_state = {"move": Vector2.ZERO, "look": actor.input_state.get("look", Vector2(actor.yaw, actor.pitch))}
 		elif not _is_bot(actor.actor_id) and actor.actor_id != local_id:
 			if _elapsed - float(_last_peer_input.get(actor.actor_id, -10.0)) > 0.3:
+				suspended_edges = [actor._fire_previous, actor._jump_previous, actor._grenade_previous, actor._smoke_previous]
 				actor.input_state = {"move": Vector2.ZERO, "look": Vector2(actor.yaw, actor.pitch)}
 		actor.tick_authority(delta)
+		if not suspended_edges.is_empty():
+			# Silence stops movement/actions, but is not a real button release.
+			actor._fire_previous = suspended_edges[0]
+			actor._jump_previous = suspended_edges[1]
+			actor._grenade_previous = suspended_edges[2]
+			actor._smoke_previous = suspended_edges[3]
 		if _ranked_started and phase != "match_over" and _peer_actors.values().has(actor.actor_id):
 			if _elapsed - float(_last_activity.get(actor.actor_id, -100)) <= 10:
 				_activity_seconds[actor.actor_id] = float(_activity_seconds.get(actor.actor_id, 0)) + delta
+	# Opt-in diagnostics only: no live shot ever consults historical state.
+	if options.get("mode", "offline") == "server" and bool(options.get("record_hit_history", false)):
+		_hit_history.record(_simulation_tick, _snapshot_generation, actors)
 	if phase == "live":
 		_objective_tick(delta)
 		_check_elimination()
@@ -229,17 +286,20 @@ func _authority_tick(delta: float) -> void:
 				_end_round(1, "Time expired")
 			elif phase == "post":
 				_begin_round()
-	_snapshot_clock -= delta
-	if options.get("mode", "offline") == "server" and _snapshot_clock <= 0:
-		_snapshot_clock = 0.05
-		var packed: PackedByteArray = var_to_bytes(_snapshot()).compress(FileAccess.COMPRESSION_DEFLATE)
+	# 60 Hz physics / three ticks = exact 20 Hz. A float countdown previously
+	# retained a positive residue on tick three and actually replicated at 15 Hz.
+	if options.get("mode", "offline") == "server" and _simulation_tick % 3 == 0:
 		for peer_id: int in _active_peers():
+			var packed: PackedByteArray = var_to_bytes(_snapshot(int(_peer_actors[peer_id]))).compress(FileAccess.COMPRESSION_DEFLATE)
 			_snapshot_rpc.rpc_id(peer_id, packed)
 
 func _is_bot(id: int) -> bool:
 	return id != local_id and not (_peer_actors.values() if _authority else _connected_actor_ids).has(id)
 
 func _begin_round() -> void:
+	_snapshot_generation += 1
+	_input_stream.reset_epoch()
+	_last_input_sequence.clear()
 	for child: Node in get_children():
 		if child is SBUtility:
 			child.queue_free()
@@ -293,7 +353,7 @@ func _objective_tick(delta: float) -> void:
 			if actor.alive and actor.team == 0 and actor.position.distance_to(objective_position) < 2:
 				objective_carrier = actor.actor_id
 				objective_state = "carried"
-				_announce("Relay device recovered")
+				_announce_team("Relay device recovered", 0)
 				break
 	for actor: SBActor in actors.values():
 		var eligible: bool = actor.alive and bool(actor.input_state.get("interact", false)) and (actor.input_state.get("move", Vector2.ZERO) as Vector2).length() < 0.2
@@ -397,7 +457,7 @@ func _eliminated(victim: int, killer: int) -> void:
 		objective_state = "dropped"
 		objective_position = killed.position
 		objective_carrier = 0
-		_announce("Relay device dropped")
+		_announce_team("Relay device dropped", 0)
 
 func _report_elimination(killer: int, victim: int, headshot: bool) -> void:
 	elimination_reported.emit(killer, victim, headshot)
@@ -416,7 +476,16 @@ func _shot(id: int, origin: Vector3, _direction: Vector3) -> void:
 	_last_activity[id] = _elapsed
 	if options.get("mode", "offline") == "server":
 		for peer_id: int in _active_peers():
-			_shot_rpc.rpc_id(peer_id, id)
+			var recipient: int = _peer_actors[peer_id]
+			var viewer := SBStatePrivacy.observer(self, recipient)
+			if viewer == null:
+				continue
+			if actors[recipient].team == actors[id].team or _privacy.observable(self, viewer, actors[id], SBStatePrivacy.viewpoint(self, recipient)):
+				_shot_rpc.rpc_id(peer_id, id, origin, actors[id].weapon_id)
+			elif viewer.global_position.distance_to(origin) <= 65:
+				# A sound supplies an approximate audible location, never a hidden ID
+				# or continuous tracking stream. Preserve the existing 65 m audio range.
+				_audible_shot_rpc.rpc_id(peer_id, origin.snapped(Vector3.ONE), actors[id].weapon_id)
 
 func _confirmed_hit(id: int, headshot: bool, lethal: bool) -> void:
 	# Emitted only after authority ray damage; never trust a client hit claim.
@@ -434,7 +503,9 @@ func _hit_feedback_rpc(id: int, headshot: bool, lethal: bool) -> void:
 func _confirmed_impact(at: Vector3, normal: Vector3, hit_actor: bool) -> void:
 	if not _authority or options.get("mode", "offline") != "server": return
 	for peer_id: int in _active_peers():
-		_impact_rpc.rpc_id(peer_id, at, normal, hit_actor)
+		var recipient: int = _peer_actors[peer_id]
+		if _privacy.point_visible(self, SBStatePrivacy.observer(self, recipient), at + normal * 0.02, SBStatePrivacy.viewpoint(self, recipient)):
+			_impact_rpc.rpc_id(peer_id, at, normal, hit_actor)
 
 @rpc("authority", "call_remote", "unreliable", 4)
 func _impact_rpc(at: Vector3, normal: Vector3, hit_actor: bool) -> void:
@@ -569,7 +640,7 @@ func _update_spectator() -> void:
 		if actor:
 			for teammate: SBActor in actors.values():
 				if teammate.alive and teammate.team == actor.team:
-					_spectator.global_position = teammate.global_position + Vector3(sin(teammate.yaw) * 3, 2.8, cos(teammate.yaw) * 3)
+					_spectator.global_position = SBStatePrivacy.spectator_position(get_world_3d(), teammate)
 					_spectator.look_at(teammate.global_position + Vector3(0, 1.3, 0))
 					break
 	elif actor.camera:
@@ -579,6 +650,15 @@ func _announce(message: String) -> void:
 	notification.emit(message)
 	if options.get("mode", "offline") == "server":
 		for peer_id: int in _active_peers():
+			_notice_rpc.rpc_id(peer_id, message)
+
+func _announce_team(message: String, team: int) -> void:
+	if options.get("mode", "offline") != "server":
+		if local_actor() != null and local_actor().team == team:
+			notification.emit(message)
+		return
+	for peer_id: int in _active_peers():
+		if actors[_peer_actors[peer_id]].team == team:
 			_notice_rpc.rpc_id(peer_id, message)
 
 func _active_peers() -> Array:
@@ -611,10 +691,14 @@ func _host() -> void:
 	api.peer_authentication_failed.connect(_handshake_failed)
 	multiplayer.multiplayer_peer = peer
 	multiplayer.peer_disconnected.connect(_peer_disconnected)
+	multiplayer.peer_connected.connect(_peer_connected)
 	connection_state = "hosting"
 	print("SIGHTBREAK_SERVER_READY port=%d" % int(options.get("port", 27020)))
 
 func _connect_client() -> void:
+	_replica_buffer.clear()
+	_prediction.reset(true)
+	_pending_reconciliation.clear()
 	connection_state = "connecting"
 	_state_clock = 0.0
 	var api := multiplayer as SceneMultiplayer
@@ -676,7 +760,7 @@ func _server_handshake(peer_id: int, data: PackedByteArray) -> void:
 	# Never admitted: no join, slot or account ticket is touched for this peer.
 	var reason := "This server uses network protocol %d; this client sent %s." % [PROTOCOL_VERSION, "protocol %d" % protocol if protocol >= 0 else "no readable protocol"]
 	api.send_auth(peer_id, _hello(false, reason))
-	_handshake_drops[peer_id] = _elapsed + 0.5
+	_handshake_drops[peer_id] = Time.get_ticks_msec() + 500
 	print("PROTOCOL_REJECTED peer=%d client_protocol=%d" % [peer_id, protocol])
 
 func _client_handshake(peer_id: int, data: PackedByteArray) -> void:
@@ -718,7 +802,7 @@ func _handshake_failed(peer_id: int) -> void:
 func _drop_rejected_peers() -> void:
 	var api := multiplayer as SceneMultiplayer
 	for peer_id: int in _handshake_drops.keys():
-		if _elapsed < float(_handshake_drops[peer_id]):
+		if Time.get_ticks_msec() < int(_handshake_drops[peer_id]):
 			continue
 		_handshake_drops.erase(peer_id)
 		if api.get_authenticating_peers().has(peer_id):
@@ -739,15 +823,28 @@ func _server_disconnected() -> void:
 	if connection_state == "failed":
 		return
 	connection_state = "reconnecting"
+	_replica_buffer.clear()
 	_reconnect_clock = 2
 	_reconnect_attempts = 0
 	notification.emit("Server disconnected. Attempting to reconnect…")
 
 func _client_tick(delta: float) -> void:
+	for utility: SBUtility in _remote_utilities.values():
+		utility.set_replica_lifetime(utility._lifetime - delta)
 	var actor: SBActor = local_actor()
+	if actor != null and connection_state == "connected":
+		if not _pending_reconciliation.is_empty():
+			var previous_position := actor.global_position
+			actor.apply_snapshot(_pending_reconciliation.state, 1.0)
+			_prediction.reconcile(actor, _pending_reconciliation.state, int(_pending_reconciliation.epoch), previous_position, _prediction_enabled)
+			_pending_reconciliation.clear()
+		var controls := _local_input.duplicate()
+		if phase != "live" or not actor.alive:
+			controls = {"move": Vector2.ZERO, "look": controls.get("look", Vector2(actor.yaw, actor.pitch))}
+		_prediction.predict(actor, controls, _replica_buffer.epoch, _prediction_enabled)
 	if actor and actor.alive:
 		var look: Vector2 = _local_input.get("look", Vector2(actor.yaw, actor.pitch))
-		# Predict view orientation only; movement and combat remain authoritative.
+		# Aim responds locally; movement replays against server acknowledgments.
 		if look.is_finite():
 			actor.rotation.y = look.x
 			actor.camera.rotation.x = clampf(look.y, -1.42, 1.42) + actor.recoil.y
@@ -763,60 +860,114 @@ func _client_tick(delta: float) -> void:
 	_input_clock -= delta
 	if connection_state == "connected" and _input_clock <= 0:
 		_input_clock = 1.0 / 30.0
-		_input_rpc.rpc_id(1, _local_input)
+		var packet := _prediction.packet()
+		if not packet.commands.is_empty():
+			var packed := var_to_bytes(packet).compress(FileAccess.COMPRESSION_DEFLATE)
+			if packed.size() > 1100:
+				packet.commands = [packet.commands.back()]
+				packed = var_to_bytes(packet).compress(FileAccess.COMPRESSION_DEFLATE)
+			_input_rpc.rpc_id(1, packed)
+
+func _peer_connected(peer_id: int) -> void:
+	if not _peer_lifecycle.connected(peer_id, Time.get_ticks_msec()):
+		(multiplayer as SceneMultiplayer).disconnect_peer(peer_id)
+
+func _service_peers() -> void:
+	for peer_id: int in _peer_lifecycle.expired(Time.get_ticks_msec()):
+		# Server enforces release even if a hostile client ignores rejection RPCs.
+		(multiplayer as SceneMultiplayer).disconnect_peer(peer_id)
+		_peer_disconnected(peer_id)
+
+func _reject_join(peer_id: int, reason: String) -> void:
+	_pending_joins.erase(peer_id)
+	_join_slots.erase(peer_id)
+	_join_accounts.erase(peer_id)
+	_peer_lifecycle.reject(peer_id, Time.get_ticks_msec())
+	if multiplayer.get_peers().has(peer_id):
+		_rejected_rpc.rpc_id(peer_id, reason)
+
+func _join_current(peer_id: int, attempt: int) -> bool:
+	return _peer_lifecycle.current(peer_id, attempt, Time.get_ticks_msec()) and int(_pending_joins.get(peer_id, -1)) == attempt and multiplayer.get_peers().has(peer_id)
+
+func _available_join_slot(account: String, reconnect_id: int) -> int:
+	if not account.is_empty():
+		if _join_accounts.values().has(account):
+			return 0
+		for account_actor: int in _account_ids:
+			if str(_account_ids[account_actor]) == account:
+				return 0 if _peer_actors.values().has(account_actor) or _join_slots.values().has(account_actor) else account_actor
+	if reconnect_id != 0:
+		return 0 if _peer_actors.values().has(reconnect_id) or _join_slots.values().has(reconnect_id) else reconnect_id
+	for candidate: int in actors:
+		if _peer_actors.values().has(candidate) or _join_slots.values().has(candidate):
+			continue
+		var reserved := false
+		for entry: Dictionary in _reservations.values():
+			if int(entry.id) == candidate and _elapsed < float(entry.expires):
+				reserved = true
+		if not reserved:
+			return candidate
+	return 0
 
 @rpc("any_peer", "call_remote", "reliable")
 func _join_rpc(player_name: String, token: String, join_ticket: String = "") -> void:
 	if not _authority or options.get("mode", "offline") != "server":
 		return
 	var peer_id: int = multiplayer.get_remote_sender_id()
-	if phase == "match_over":
-		_rejected_rpc.rpc_id(peer_id, "This match is complete. The next lobby opens when the remaining players leave.")
+	var attempt := _peer_lifecycle.begin_join(peer_id, Time.get_ticks_msec())
+	if attempt < 0 or _peer_actors.has(peer_id):
 		return
-	if _peer_actors.has(peer_id) or _pending_joins.has(peer_id):
+	if phase == "match_over":
+		_reject_join(peer_id, "This match is complete. The next lobby opens when the remaining players leave.")
+		return
+	if player_name.length() > 128 or token.length() > 128 or join_ticket.length() > 128:
+		_reject_join(peer_id, "Invalid admission data.")
 		return
 	_expire_reservations()
-	var account: String = ""
-	var id: int = 0
+	_pending_joins[peer_id] = attempt
+	var account := ""
+	var id := 0
 	if token.length() == 64 and _reservations.has(token):
 		var record: Dictionary = _reservations[token]
 		if _elapsed < float(record.expires) and not _peer_actors.values().has(int(record.id)):
 			id = int(record.id)
+	var needs_ticket := bool(options.get("require_accounts", false)) and id == 0
 	if bool(options.get("require_accounts", false)):
 		if id != 0:
 			account = str(_account_ids.get(id, ""))
 		else:
-			_pending_joins[peer_id] = true
-			var response: Dictionary = await _bridge.consume_ticket(join_ticket)
-			_pending_joins.erase(peer_id)
-			if not multiplayer.get_peers().has(peer_id):
+			var inspected: Dictionary = await _bridge.inspect_ticket(join_ticket)
+			if not _join_current(peer_id, attempt):
 				return
-			if not bool(response.get("ok", false)):
-				_rejected_rpc.rpc_id(peer_id, str(response.get("error", "Account verification failed.")))
+			if not bool(inspected.get("ok", false)):
+				_reject_join(peer_id, str(inspected.get("error", "Account verification failed.")))
 				return
-			account = str(response.data.get("player_id", ""))
-			player_name = str(response.data.get("display_name", "Operator"))
-			if account.is_empty():
-				_rejected_rpc.rpc_id(peer_id, "The account service returned an invalid identity.")
-				return
-			for account_actor: int in _account_ids:
-				if str(_account_ids[account_actor]) == account:
-					if _peer_actors.values().has(account_actor):
-						_rejected_rpc.rpc_id(peer_id, "This account is already connected to this server.")
-						return
-					id = account_actor
+			account = str(inspected.data.get("player_id", ""))
+			player_name = str(inspected.data.get("display_name", "Operator"))
+		if account.is_empty():
+			_reject_join(peer_id, "The account service returned an invalid identity.")
+			return
+	id = _available_join_slot(account, id)
 	if id == 0:
-		for candidate: int in actors:
-			var reserved: bool = false
-			for entry: Dictionary in _reservations.values():
-				if int(entry.id) == candidate and _elapsed < float(entry.expires):
-					reserved = true
-			if not _peer_actors.values().has(candidate) and not reserved:
-				id = candidate
-				break
-	if id == 0:
-		_rejected_rpc.rpc_id(peer_id, "Server is full; disconnected players retain their slots for 60 seconds.")
+		_reject_join(peer_id, "No slot is available for this account; disconnected players retain their slots for 60 seconds.")
 		return
+	# Reserve capacity before the irreversible one-use ticket consumption.
+	_join_slots[peer_id] = id
+	if not account.is_empty():
+		_join_accounts[peer_id] = account
+	if needs_ticket:
+		var response: Dictionary = await _bridge.consume_ticket(join_ticket)
+		if not _join_current(peer_id, attempt):
+			return
+		if not bool(response.get("ok", false)) or str(response.get("data", {}).get("player_id", "")) != account:
+			_reject_join(peer_id, "Account ticket consumption failed; request a fresh ticket.")
+			return
+	if phase == "match_over" or not _peer_lifecycle.admitted(peer_id, attempt, Time.get_ticks_msec()):
+		_reject_join(peer_id, "Admission expired; reconnect with a fresh ticket.")
+		return
+	_pending_joins.erase(peer_id)
+	_join_slots.erase(peer_id)
+	_join_accounts.erase(peer_id)
 	# Rotate reconnect credentials so a reused bearer token cannot claim two slots.
 	for old_token: String in _reservations.keys():
 		if int(_reservations[old_token].id) == id:
@@ -824,18 +975,26 @@ func _join_rpc(player_name: String, token: String, join_ticket: String = "") -> 
 	var new_token: String = Crypto.new().generate_random_bytes(32).hex_encode()
 	_reservations[new_token] = {"id": id, "expires": _elapsed + 86400.0}
 	_peer_actors[peer_id] = id
+	_last_input_sequence[id] = 0
 	if not account.is_empty():
 		_account_ids[id] = account
 	_last_activity[id] = _elapsed
 	var clean_name := SBDesign.plain_line(player_name, 24)
 	actors[id].display_name = clean_name if not clean_name.is_empty() else "Operator"
-	_welcome_rpc.rpc_id(peer_id, id, new_token, _snapshot())
+	_welcome_rpc.rpc_id(peer_id, id, new_token, _snapshot(id))
 	_announce(actors[id].display_name + " joined Relay Yard")
 	if phase == "waiting" and _peer_actors.size() == 10 and _account_ids.size() == 10:
 		_start_ranked_match()
 
 func _peer_disconnected(peer_id: int) -> void:
+	_peer_lifecycle.forget(peer_id)
+	_pending_joins.erase(peer_id)
+	_join_slots.erase(peer_id)
+	_join_accounts.erase(peer_id)
+	_handshake_drops.erase(peer_id)
+	_gate.forget(peer_id)
 	_handshake_seen.erase(peer_id)
+	_input_stream.forget(peer_id)
 	if not _peer_actors.has(peer_id):
 		return
 	var id: int = int(_peer_actors[peer_id])
@@ -852,21 +1011,25 @@ func _peer_disconnected(peer_id: int) -> void:
 		_reset_server_match.call_deferred()
 
 @rpc("any_peer", "call_remote", "unreliable_ordered", 1)
-func _input_rpc(data: Dictionary) -> void:
+func _input_rpc(packed: PackedByteArray) -> void:
 	if not _authority:
 		return
 	var peer_id: int = multiplayer.get_remote_sender_id()
-	if not _peer_actors.has(peer_id):
+	if not _peer_actors.has(peer_id) or not _peer_lifecycle.allow_input(peer_id, Time.get_ticks_msec()) or packed.is_empty() or packed.size() > 1100:
 		return
-	var clean: Dictionary = _gate.validate(peer_id, data, Time.get_ticks_msec())
-	if clean.is_empty():
+	var decoded: Variant = bytes_to_var(packed.decompress_dynamic(8192, FileAccess.COMPRESSION_DEFLATE))
+	if not decoded is Dictionary:
 		return
+	var data: Dictionary = decoded
+	if not _input_stream.accept(peer_id, data, _snapshot_generation, Time.get_ticks_msec()):
+		return
+	_peer_lifecycle.active(peer_id, Time.get_ticks_msec())
+	var clean: Dictionary = SBInputStream.sanitize(data.commands.back())
 	var id: int = int(_peer_actors[peer_id])
 	var old_look: Vector2 = actors[id].input_state.get("look", Vector2.ZERO)
 	var new_look: Vector2 = clean.look
 	if old_look.distance_to(new_look) > 0.004 or ((clean.move as Vector2).length() > 0.1 and actors[id].velocity.length() > 0.2) or (bool(clean.interact) and _interactions.has(id)):
 		_last_activity[id] = _elapsed
-	actors[id].input_state = clean
 	_last_peer_input[id] = _elapsed
 
 @rpc("any_peer", "call_remote", "reliable", 2)
@@ -891,15 +1054,37 @@ func _welcome_rpc(id: int, token: String, data: Dictionary) -> void:
 
 @rpc("authority", "call_remote", "unreliable_ordered", 3)
 func _snapshot_rpc(data: PackedByteArray) -> void:
-	if not _authority and data.size() < 32768:
+	if not _authority and connection_state == "connected" and data.size() < 32768:
 		var unpacked: Variant = bytes_to_var(data.decompress_dynamic(65536, FileAccess.COMPRESSION_DEFLATE))
 		if unpacked is Dictionary:
 			_apply_snapshot(unpacked)
 
 @rpc("authority", "call_remote", "unreliable", 4)
-func _shot_rpc(id: int) -> void:
-	if actors.has(id):
+func _shot_rpc(id: int, at: Vector3 = Vector3.ZERO, weapon: String = "") -> void:
+	if not _authority and actors.has(id) and actors[id].visible:
 		actors[id].play_shot_effect()
+	elif not _authority:
+		# Event and snapshot channels may arrive in either order at a corner.
+		# Preserve authorized audio without exposing or moving a hidden actor.
+		_audible_shot_rpc(at, weapon)
+
+@rpc("authority", "call_remote", "unreliable", 4)
+func _audible_shot_rpc(at: Vector3, weapon: String) -> void:
+	if _authority or not at.is_finite() or at.length() > 1024 or not SBWeapons.DATA.has(weapon):
+		return
+	# Bound transient audio nodes even when delayed unreliable packets bunch up.
+	if get_tree().get_nodes_in_group("network_shot_audio").size() >= 24:
+		return
+	var audio := AudioStreamPlayer3D.new()
+	audio.stream = SBActor._shot_streams.get(weapon)
+	audio.max_distance = 65
+	audio.unit_size = 9
+	audio.volume_db = -10
+	add_child(audio)
+	audio.add_to_group("network_shot_audio")
+	audio.position = at
+	audio.finished.connect(audio.queue_free)
+	audio.play()
 
 @rpc("authority", "call_remote", "reliable")
 func _rejected_rpc(message: String) -> void:
@@ -911,7 +1096,11 @@ func _rejected_rpc(message: String) -> void:
 func _notice_rpc(message: String) -> void:
 	notification.emit(message)
 
-func _snapshot() -> Dictionary:
+func _snapshot(recipient_id: int = 0) -> Dictionary:
+	if recipient_id != 0:
+		return _privacy.snapshot(self, recipient_id)
+	# Full state is retained solely for authority/offline rule tests. Both wire
+	# call sites always pass a server-bound recipient ID.
 	var utilities: Array = []
 	for child: Node in get_children():
 		if child is SBUtility:
@@ -919,9 +1108,14 @@ func _snapshot() -> Dictionary:
 	var states: Array = []
 	for actor: SBActor in actors.values():
 		states.append(actor.snapshot())
-	return {"actors": states, "utilities": utilities, "humans": _peer_actors.values(), "contributions": objective_contributions, "reward_status": reward_status, "phase": phase, "round": round_number, "attack": attack_score, "defend": defend_score, "time": time_left, "objective": objective_state, "objective_timer": objective_timer, "objective_position": objective_position, "carrier": objective_carrier, "interactions": _interactions, "elapsed": _elapsed}
+	return {"tick": _simulation_tick, "epoch": _snapshot_generation, "actors": states, "utilities": utilities, "humans": _peer_actors.values(), "contributions": objective_contributions, "reward_status": reward_status, "phase": phase, "round": round_number, "attack": attack_score, "defend": defend_score, "time": time_left, "objective": objective_state, "objective_timer": objective_timer, "objective_position": objective_position, "carrier": objective_carrier, "interactions": _interactions, "elapsed": _elapsed}
 
 func _apply_snapshot(data: Dictionary) -> void:
+	if not SBSnapshotSchema.valid(data):
+		return
+	var discontinuity := int(data.epoch) != _replica_buffer.epoch
+	if not _authority and not _replica_buffer.push(int(data.tick), float(data.elapsed), int(data.epoch), data.actors):
+		return
 	reward_status = str(data.get("reward_status", "unranked"))
 	_connected_actor_ids = data.get("humans", [])
 	phase = data.phase
@@ -938,9 +1132,44 @@ func _apply_snapshot(data: Dictionary) -> void:
 	interaction_progress = progress / (DEFUSE_SECONDS if objective_state == "planted" else PLANT_SECONDS)
 	for state: Dictionary in data.actors:
 		var id: int = int(state.get("id", state.get("actor_id", 0)))
+		var newly_spawned := not actors.has(id)
 		if not actors.has(id):
 			_spawn_actor(id, int(state.team), str(state.get("name", "Operator")))
-		actors[id].apply_snapshot(state, 0.05)
+		var actor: SBActor = actors[id]
+		var previous_position := actor.global_position
+		var previous_yaw := actor.yaw
+		var previous_pitch := actor.pitch
+		var relevant: bool = state.get("relevant", true)
+		if not relevant:
+			# Erase cached spatial/private state on revocation. A modified client
+			# can remember old observations, but receives no fresh hidden updates.
+			actor.apply_snapshot({"team": state.team, "alive": state.alive, "kills": state.kills, "deaths": state.deaths, "assists": state.assists, "position": Vector3.ZERO, "velocity": Vector3.ZERO, "health": 0, "credits": 0, "ammo": 0, "reserve": 0, "grenades": 0, "smokes": 0, "inventory": []}, 1.0)
+		else:
+			var presentation := state.duplicate()
+			for field: String in ["health", "credits", "ammo", "reserve", "grenades", "smokes", "reload"]:
+				if not presentation.has(field):
+					presentation[field] = 0
+			if not presentation.has("inventory"):
+				presentation.inventory = []
+			var snap := newly_spawned or not actor.visible or discontinuity
+			if not _authority and id == local_id:
+				# move_and_slide chooses its timestep from the current callback. Replay
+				# must run on the fixed physics callback, never the RPC/render callback.
+				_pending_reconciliation = {"state": presentation, "epoch": int(data.epoch)}
+				if snap:
+					actor.apply_snapshot(presentation, 1.0)
+			else:
+				actor.apply_snapshot(presentation, 1.0 if snap else 0.05)
+			if not _authority and id != local_id and not snap:
+				# Metadata is current; transforms advance only on the render timeline.
+				actor.global_position = previous_position
+				actor.yaw = previous_yaw
+				actor.pitch = previous_pitch
+				actor.rotation.y = previous_yaw
+		actor.display_name = state.name
+		actor.visible = relevant
+		actor.collision_layer = 2 if relevant else 0
+		actor.collision_mask = 3 if relevant else 0
 	objective_contributions = data.get("contributions", {}).duplicate()
 	_sync_utility_visuals(data.get("utilities", []))
 	if phase == "match_over":
@@ -961,13 +1190,14 @@ func _sync_utility_visuals(states: Array) -> void:
 		var visual: SBUtility = _remote_utilities[id]
 		visual.position = state.position
 		if bool(state.detonated) and not visual._detonated:
+			# A newly relevant mature cloud must not replay its birth animation.
+			if visual.kind == "smoke":
+				visual._cloud_elapsed = maxf(0, 12.0 - float(state.get("life", 12.0)))
 			visual._detonate()
 		# Replica physics is off, so the server's remaining lifetime drives the
 		# fade; visuals then thin exactly as the authoritative concealment shrinks.
 		if visual._detonated and state.has("life"):
-			visual._lifetime = float(state.life)
-			if visual.kind == "smoke":
-				visual._apply_dissipation()
+			visual.set_replica_lifetime(float(state.life))
 	for id: int in _remote_utilities.keys():
 		if not present.has(id):
 			_remote_utilities[id].queue_free()
@@ -1009,7 +1239,10 @@ func _submit_ranked_result() -> void:
 		return
 	reward_status = "submitting"
 	var response: Dictionary = await _bridge.submit_result(payload)
-	if bool(response.get("ok", false)):
+	if bool(response.get("ok", false)) and bool(response.get("queued", false)):
+		reward_status = "queued_for_delivery"
+		_announce("Match rewards queued for delivery; account balance updates after backend confirmation.")
+	elif bool(response.get("ok", false)):
 		reward_status = "committed"
 		_announce("Account match rewards committed by the economy service.")
 	else:
@@ -1093,10 +1326,17 @@ func _reset_server_match() -> void:
 		if child is SBUtility:
 			child.queue_free()
 	actors.clear()
+	_snapshot_generation += 1
+	_input_stream = SBInputStream.new()
+	_last_input_sequence.clear()
 	_gate = SBInputGate.new()
 	_bot_state.clear()
 	_account_ids.clear()
+	for peer_id: int in _pending_joins.keys():
+		_reject_join(peer_id, "The server lobby reset; reconnect with a fresh ticket.")
 	_pending_joins.clear()
+	_join_slots.clear()
+	_join_accounts.clear()
 	_reservations.clear()
 	_activity_seconds.clear()
 	_last_activity.clear()

@@ -384,7 +384,7 @@ def match_result(body:MatchResult,request:Request,x_server_key:Annotated[str|Non
     trusted_server(x_server_key)
     if not body.started_at.tzinfo or not body.ended_at.tzinfo: fail('UTC timestamps required',400)
     seconds=(body.ended_at-body.started_at).total_seconds()
-    if seconds<CONFIG['minimum_match_seconds'] or seconds>7200 or body.ended_at>now()+timedelta(seconds=30) or body.ended_at<now()-timedelta(minutes=15): fail('Ineligible match duration or timestamp',400)
+    if seconds<CONFIG['minimum_match_seconds'] or seconds>7200 or body.ended_at>now()+timedelta(seconds=30): fail('Ineligible match duration or timestamp',400)
     ids=[str(p.player_id) for p in body.participants]
     if len(set(ids))!=10 or sum(p.won for p in body.participants)!=5: fail('Requires ten unique humans and five winners',400)
     with transaction() as db:
@@ -392,6 +392,9 @@ def match_result(body:MatchResult,request:Request,x_server_key:Annotated[str|Non
         if old:
             if old.request_hash!=hashed: fail('Match ID reused with changed results')
             return old.response
+        # Old identical acknowledgments remain replayable after the freshness
+        # window; a new stale result still cannot create rewards.
+        if body.ended_at<now()-timedelta(minutes=15): fail('Ineligible match duration or timestamp',400)
         day=body.ended_at.astimezone(timezone.utc).date().isoformat(); rewards=[]
         for result in body.participants:
             p=db.get(Player,str(result.player_id))
@@ -441,24 +444,38 @@ def game_ticket(body: TicketRequest, request: Request, authorization: Auth = Non
         audit(db, p.id, 'game_ticket_issued', server_id=body.server_id)
         return {'ticket': token, 'server_id': body.server_id, 'expires_at': expiry.isoformat()}
 
+def valid_game_ticket(db, body: TicketConsume):
+    ticket = db.get(GameTicket, digest(body.ticket))
+    if not ticket or ticket.consumed_at is not None or ticket.expires_at <= now() or ticket.server_id != body.server_id:
+        fail('Join ticket is expired, consumed or invalid', 401)
+    session = db.get(Session, ticket.session_hash)
+    if not session or session.expires_at <= now() or session.player_id != ticket.player_id:
+        fail('Account session revoked or expired', 401)
+    player = db.get(Player, ticket.player_id)
+    if not player or not player.active:
+        fail('Account unavailable', 403)
+    return ticket, player
+
+@app.post('/server/tickets/inspect')
+def inspect_game_ticket(body: TicketConsume, request: Request,
+                        x_server_key: Annotated[str | None, Header()] = None):
+    # Trusted-server capacity preflight. It neither consumes nor extends a ticket.
+    rate(request, 'server_ticket_inspect', 120)
+    trusted_server(x_server_key, body.server_id)
+    with DBSession(engine) as db:
+        _, player = valid_game_ticket(db, body)
+        return {'player_id': player.id, 'display_name': player.display_name}
+
 @app.post('/server/tickets/consume')
 def consume_game_ticket(body: TicketConsume, request: Request,
                         x_server_key: Annotated[str | None, Header()] = None):
     rate(request, 'server_ticket', 120)
     trusted_server(x_server_key, body.server_id)
     with transaction() as db:
-        ticket = db.get(GameTicket, digest(body.ticket))
-        if not ticket or ticket.consumed_at is not None or ticket.expires_at <= now() or ticket.server_id != body.server_id:
-            fail('Join ticket is expired, consumed or invalid', 401)
-        session = db.get(Session, ticket.session_hash)
-        if not session or session.expires_at <= now() or session.player_id != ticket.player_id:
-            fail('Account session revoked or expired', 401)
-        p = db.get(Player, ticket.player_id)
-        if not p or not p.active:
-            fail('Account unavailable', 403)
+        ticket, player = valid_game_ticket(db, body)
         ticket.consumed_at = now()
-        audit(db, p.id, 'game_ticket_consumed', server_id=body.server_id)
-        return {'player_id': p.id, 'display_name': p.display_name}
+        audit(db, player.id, 'game_ticket_consumed', server_id=body.server_id)
+        return {'player_id': player.id, 'display_name': player.display_name}
 
 
 class EquipRequest(Strict):

@@ -15,7 +15,7 @@ func _start() -> void:
 		_start_mismatch()
 		return
 	match_node = TacticalMatch.new()
-	match_node.configure({"mode": "server" if role == "server" else "client", "port": 27992, "address": "127.0.0.1", "name": "Client forged label", "require_accounts": role == "server", "economy_url": "http://127.0.0.1:8080", "server_id": "local-relay", "join_ticket": OS.get_environment("SIGHTBREAK_JOIN_TICKET") if role != "guest" else ""})
+	match_node.configure({"mode": "server" if role == "server" else "client", "port": 27992, "address": "127.0.0.1", "name": "Client forged label", "require_accounts": role == "server", "economy_url": OS.get_environment("SIGHTBREAK_TEST_ECONOMY_URL") if OS.has_environment("SIGHTBREAK_TEST_ECONOMY_URL") else "http://127.0.0.1:8080", "server_id": "local-relay", "join_ticket": OS.get_environment("SIGHTBREAK_JOIN_TICKET") if role != "guest" else ""})
 	root.add_child(match_node)
 
 ## An incompatible build's client: completes only the version handshake (protocol 99),

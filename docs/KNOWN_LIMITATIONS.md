@@ -2,6 +2,12 @@
 
 SIGHTBREAK is a native development implementation. The full product described in [SPECIFICATION.md](SPECIFICATION.md) is not complete, and no milestone has earned the required independent 8.5/10 acceptance across all applicable categories. See the [0.3 independent QA review](reports/QA-0.3.md) and [historical review](reports/QA.md) for actual passing checks, reproduced defects and unverified gates.
 
+## Competitive engineering status
+
+The Codex stacked branches implement recipient snapshot authorization, remote interpolation, opt-in prediction, bounded lifecycle/admission and process-crash result recovery. These supersede the historical M-4/M-6/M-9/L-4 gaps below within their documented development scope. See [current QA](reports/CODEX_NETWORK_QA.md).
+
+Current blockers/limits: Claude PR1 still clips Unicode kill-feed rows in this environment; prediction remains opt-in (~0.4–0.6m p95 ack divergence in the recorded real-map fixture); ENet remains unencrypted; opaque-core visibility is conservative and modified clients can retain/infer legitimate information. Durable results cannot bypass15-minute new-result freshness after long outages. Hit history is disabled diagnostics only and needs possession-generation invalidation before live rewind. Short process simulations are not a long-term memory soak, ten physical phones or mobile GPU evidence. No applicable category is awarded8.5 solely from unit passes.
+
 ## Current 0.3 release blockers
 
 - **Visual target remains open: 8.1/10.** The independent seven-part native-image rubric remains below the requested 8.5. Architectural detail, HUD hierarchy and cosmetic framing improve, but broad surfaces/lighting, simplified operator/weapon forms, animation breadth and spherical smoke cores still limit commercial polish.

@@ -13,9 +13,9 @@ const CombatEffects = preload("res://scripts/gameplay/combat_effects.gd")
 const WeaponModel = preload("res://scripts/gameplay/weapon_model.gd")
 const Utility = preload("res://scripts/gameplay/utility.gd")
 const CosmeticMaterial = preload("res://scripts/ui/cosmetic_material.gd")
-const WALK_SPEED := 5.1
-const CROUCH_SPEED := 2.5
-const GRAVITY := 22.0
+const WALK_SPEED := SBMovementStep.WALK_SPEED
+const CROUCH_SPEED := SBMovementStep.CROUCH_SPEED
+const GRAVITY := SBMovementStep.GRAVITY
 const DEPLOY_SECONDS := 0.3
 const READY_EPSILON := 0.000001
 ## Shot volumes. Head: the rendered head and helmet ellipsoids (body space, before
@@ -490,35 +490,7 @@ func reset_for_round(spawn: Vector3) -> void:
 func tick_authority(delta: float) -> void:
 	if not alive:
 		return
-	var look: Vector2 = input_state.get("look", Vector2(yaw, pitch))
-	if is_finite(look.x) and is_finite(look.y):
-		yaw = wrapf(look.x, -PI, PI)
-		pitch = clampf(look.y, -1.42, 1.42)
-	rotation.y = yaw
-	var requested_crouch: bool = input_state.get("crouch", false)
-	# Standing requires room overhead; never expand the capsule into a solid ceiling.
-	if requested_crouch or not _crouching or _can_stand():
-		_crouching = requested_crouch
-	_collision.shape.height = 1.25 if _crouching else 1.8
-	_collision.position.y = 0.625 if _crouching else 0.9
-	head_height = 1.13 if _crouching else 1.62
-	_body.scale.y = 0.72 if _crouching else 1.0
-	var move: Vector2 = input_state.get("move", Vector2.ZERO)
-	if not is_finite(move.x) or not is_finite(move.y):
-		move = Vector2.ZERO
-	move = move.limit_length(1.0)
-	var direction := global_basis * Vector3(move.x, 0, -move.y)
-	var speed := CROUCH_SPEED if _crouching else WALK_SPEED
-	var acceleration := 28.0 if is_on_floor() else 7.0
-	velocity.x = move_toward(velocity.x, direction.x * speed, acceleration * delta)
-	velocity.z = move_toward(velocity.z, direction.z * speed, acceleration * delta)
-	if not is_on_floor():
-		velocity.y -= GRAVITY * delta
-	var jump: bool = input_state.get("jump", false)
-	if jump and not _jump_previous and is_on_floor() and not _crouching:
-		velocity.y = 6.4
-	_jump_previous = jump
-	move_and_slide()
+	SBMovementStep.advance(self, input_state, delta)
 	_deploy_remaining = maxf(0, _deploy_remaining - delta)
 	for id in _weapon_cooldowns:
 		_weapon_cooldowns[id] = float(_weapon_cooldowns[id]) - delta

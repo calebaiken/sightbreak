@@ -24,12 +24,20 @@ static func valid_origin(url: String) -> bool:
 		return false
 	return matched.get_string(1) == "https" or matched.get_string(2) in ["127.0.0.1", "localhost"]
 
+func inspect_ticket(ticket: String) -> Dictionary:
+	if ticket.length() < 32 or ticket.length() > 128:
+		return {"ok": false, "error": "A valid account join ticket is required."}
+	return await _post("/server/tickets/inspect", {"ticket": ticket, "server_id": server_id})
+
 func consume_ticket(ticket: String) -> Dictionary:
 	if ticket.length() < 20 or ticket.length() > 512:
 		return {"ok": false, "error": "A valid account join ticket is required."}
 	return await _post("/server/tickets/consume", {"ticket": ticket, "server_id": server_id})
 
 func submit_result(result: Dictionary) -> Dictionary:
+	var spool := OS.get_environment("SIGHTBREAK_RESULT_SPOOL")
+	if not spool.is_empty():
+		return SBResultOutbox.stage(result, spool)
 	var response: Dictionary = {}
 	# The immutable UUID and payload are reused: a lost response cannot mint twice.
 	for attempt in range(3):
