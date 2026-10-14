@@ -100,6 +100,11 @@ var _trigger_bones: Array[int] = []
 var _trigger_rest: Array[Quaternion] = []
 ## Magazine drop down its own well, in the rifle's space (metres at full extraction).
 const MAGAZINE_DROP := 0.23
+## With rigged arms the support hand performs the reload, so the weapon lifts, moves
+## toward the centre and rolls clockwise to keep the magazine and the hand in frame at the
+## grab and the seat (fitted through the viewmodel projection; weapon_art_test pins it).
+const ARMS_RELOAD_OFFSET := Vector3(-0.05, 0.09, 0.0)
+const ARMS_RELOAD_ROTATION := Vector3(0.05, 0.0, -0.45)
 var _legs: Array[Node3D] = []
 var _flash: float = 0.0
 var _crouching: bool = false
@@ -910,18 +915,20 @@ func tick_visual(delta: float) -> void:
 		if reduced_motion:
 			_sway = Vector2.ZERO
 		var reload_progress := 1.0 - clampf(reload_remaining / maxf(0.1, float(Weapons.get_weapon(weapon_id)["reload"])), 0, 1)
+		var rigged := is_instance_valid(_arms_player)
 		var reload_tilt := sin(reload_progress * PI) if reload_remaining > 0 else 0.0
+		if rigged and reload_remaining > 0:
+			# Into the reload pose before the hand reaches the magazine, held through the
+			# swap, and back after the seat.
+			reload_tilt = smoothstep(0.0, 0.16, reload_progress) * (1.0 - smoothstep(0.86, 1.0, reload_progress))
 		if reduced_motion:
 			reload_tilt *= 0.2
 		var bob_weight := 0.0 if reduced_motion else minf(speed / WALK_SPEED, 1.0)
 		var equip_motion := _equip_blend * (0.25 if reduced_motion else 1.0)
-		# With rigged arms the support hand performs the reload, so the weapon only cants
-		# toward the camera to show the magazine well instead of dropping out of view.
-		var drop := 0.05 if is_instance_valid(_arms_player) else 0.13
-		var tip := 0.22 if is_instance_valid(_arms_player) else 0.38
-		var cant := 0.30 if is_instance_valid(_arms_player) else 0.38
-		_gun.position = Vector3(_gun_rest.x + sin(_bob) * 0.006 * bob_weight - _sway.x, _gun_rest.y + absf(cos(_bob)) * 0.006 * bob_weight - reload_tilt * drop - _sway.y - equip_motion * 0.19, _gun_rest.z + _kick * (0.075 if weapon_id == "marksman" else 0.046) + equip_motion * 0.08)
-		_gun.rotation = Vector3(_kick * (0.13 if weapon_id == "sidearm" else 0.065) - reload_tilt * tip - equip_motion * 0.48, -_sway.x * 1.8, reload_tilt * cant - _sway.x)
+		var reload_offset := ARMS_RELOAD_OFFSET if rigged else Vector3(0, -0.13, 0)
+		var reload_rotation := ARMS_RELOAD_ROTATION if rigged else Vector3(-0.38, 0, 0.38)
+		_gun.position = Vector3(_gun_rest.x + sin(_bob) * 0.006 * bob_weight - _sway.x, _gun_rest.y + absf(cos(_bob)) * 0.006 * bob_weight - _sway.y - equip_motion * 0.19, _gun_rest.z + _kick * (0.075 if weapon_id == "marksman" else 0.046) + equip_motion * 0.08) + reload_offset * reload_tilt
+		_gun.rotation = Vector3(_kick * (0.13 if weapon_id == "sidearm" else 0.065) - equip_motion * 0.48, -_sway.x * 1.8, -_sway.x) + reload_rotation * reload_tilt
 		if is_instance_valid(_magazine):
 			# Pull down the well, seat the same magazine, then return to ready. Only
 			# visual. The rigged support hand's reload clip follows this curve.
