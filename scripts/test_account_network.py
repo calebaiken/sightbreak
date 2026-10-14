@@ -6,6 +6,7 @@ The server credential is read from the ignored local secret file and never logge
 from pathlib import Path
 import json
 import os
+import re
 import secrets
 import subprocess
 import tempfile
@@ -21,6 +22,26 @@ def post(path, data, token=None):
     request = urllib.request.Request('http://127.0.0.1:8080' + path, json.dumps(data).encode(), headers)
     with urllib.request.urlopen(request, timeout=10) as response:
         return json.load(response)
+
+
+
+def probe_passed(role, result):
+    """Expected terminal rejections are diagnostics, not failed assertions.
+
+    Require the role's explicit probe result as well as a clean process. Never
+    accept a generic substring such as PASS in a notice or suppress engine errors.
+    """
+    marker = {'guest': 'ACCOUNT_NETWORK_REJECT_PASS guest',
+              'replay': 'ACCOUNT_NETWORK_REJECT_PASS replay',
+              'mismatch': 'ACCOUNT_NETWORK_MISMATCH_PASS',
+              'client': 'ACCOUNT_NETWORK_BOUND_PASS',
+              'reclaim': 'ACCOUNT_NETWORK_BOUND_PASS'}[role]
+    combined = result.stdout + '\n' + result.stderr
+    return (result.returncode == 0
+            and re.search(r'^' + re.escape(marker) + r'(?: |$)', result.stdout, re.M) is not None
+            and re.search(r'\bACCOUNT_NETWORK_[A-Z_]*FAIL\b', combined) is None
+            and re.search(r'^(?:SCRIPT ERROR|ERROR:)|Parse Error', combined, re.M) is None
+            and (role in ('guest', 'replay') or 'PROTOCOL_CLIENT_FAILED' not in combined))
 
 
 def main():
@@ -48,7 +69,7 @@ def main():
                 client_env['SIGHTBREAK_JOIN_TICKET'] = ticket
                 result = subprocess.run(command + ['--role=' + ('client' if role == 'reclaim' else role)], cwd=ROOT, env=client_env, text=True, capture_output=True, timeout=18)
                 print(result.stdout, end='')
-                if result.returncode or 'FAIL' in result.stdout or 'ERROR:' in result.stderr:
+                if not probe_passed(role, result):
                     print(result.stderr)
                     raise RuntimeError('Account network assertion failed for ' + role)
             print('ACCOUNT_NETWORK_TEST: guest rejection, incompatible-protocol rejection without ticket or slot use, authenticated identity, waiting roster, replay rejection, account reclaim passed')
