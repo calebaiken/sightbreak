@@ -78,3 +78,19 @@ Recovery maximum11.602seconds under the harshest conditions. Clean source metada
 is false for dirty in all ten trials. Detailed metrics, retained earlier failures and
 independent reviewer evidence: [reconnect-evidence](../reports/reconnect-evidence/README.md).
 Full account-backed ten-client and combined-stack validation remain separate gates.
+
+## Account regression follow-up
+
+At `c5a0cc2b8a905258fb756ce13a9bd2c402588dba`, real Godot/HTTP/PostgreSQL
+guest rejection, incompatible admission without ticket use, authenticated identity,
+waiting roster, ticket replay rejection and fresh-ticket actor reclaim all pass.
+The inherited PR5 fixture expects loopback port8080 and an ignored local server
+key; the external isolated runner supplies only an ephemeral test key/database
+and removes them afterward. Attempts using the newer stack's random-port/env-key
+convention failed setup and are retained in the refreshed integration evidence.
+
+The terminal diagnostic `PROTOCOL_CLIENT_FAILED` exposed a broad `FAIL` substring
+check in the Python wrapper. The corrected parser requires role-specific result
+markers, exit0 and no explicit assertion/engine errors. Four unit methods retain
+missing/wrong marker, actual failure, engine error and nonzero-exit negative controls.
+This changes test interpretation, not authentication or gameplay.
