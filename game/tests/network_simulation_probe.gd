@@ -13,12 +13,14 @@ class MeasuredMatch extends TacticalMatch:
 	var accepted_tick_steps: Array = []
 	var tick_intervals: Array = []
 	var _last_tick_start := 0
+	var measuring := true
 	func _authority_tick(delta: float) -> void:
 		var start := Time.get_ticks_usec()
-		if _last_tick_start > 0:
+		if measuring and _last_tick_start > 0:
 			tick_intervals.append(start - _last_tick_start)
 		_last_tick_start = start
 		super._authority_tick(delta)
+		if not measuring: return
 		ticks.append(Time.get_ticks_usec() - start)
 		# Independent 60 Hz ground truth, not a copy of the 20 Hz send timeline.
 		for id: int in _peer_actors.values():
@@ -40,7 +42,7 @@ class MeasuredMatch extends TacticalMatch:
 			if previous_tick >= 0: accepted_tick_steps.append(_replica_buffer.last_tick - previous_tick)
 	func _process(delta: float) -> void:
 		super._process(delta)
-		if _authority or connection_state != "connected":
+		if not measuring or _authority or connection_state != "connected":
 			return
 		for id: int in _connected_actor_ids:
 			if id == local_id or not actors.has(id) or not actors[id].visible:
@@ -70,14 +72,24 @@ var reconnect_started := false
 var reconnect_passed := false
 var initial_id := 0
 var notices: Array = []
+var barrier := ""
+var barrier_ready := false
+var measuring := false
+var reported := false
+var passed := false
+var start_epoch := 0.0
+var start_offset_seconds := 0.0
+var startup_started_msec := 0
 
 func _initialize() -> void:
 	started_msec = Time.get_ticks_msec()
+	startup_started_msec = started_msec
 	previous_frame_usec = Time.get_ticks_usec()
 	for arg: String in OS.get_cmdline_user_args():
 		if arg.begins_with("--role="): role = arg.get_slice("=", 1)
 		elif arg.begins_with("--port="): port = int(arg.get_slice("=", 1))
 		elif arg.begins_with("--seconds="): duration = float(arg.get_slice("=", 1))
+		elif arg.begins_with("--barrier="): barrier = arg.trim_prefix("--barrier=")
 		elif arg.begins_with("--output="): output = arg.trim_prefix("--output=")
 		elif arg == "--no-prediction": prediction_enabled = false
 		elif arg.begins_with("--reconnect-at="): reconnect_at = float(arg.trim_prefix("--reconnect-at="))
@@ -86,6 +98,7 @@ func _initialize() -> void:
 
 func start() -> void:
 	game = MeasuredMatch.new()
+	game.measuring = barrier.is_empty()
 	game.notification.connect(func(message: String): notices.append({"seconds":wall_elapsed,"simulation_seconds":elapsed,"state":game.connection_state,"message":message}))
 	game.configure({"mode": role, "port": port, "address": "127.0.0.1", "name": "Simulation fixture", "prediction": prediction_enabled})
 	root.add_child(game)
@@ -95,6 +108,41 @@ func start() -> void:
 		game.time_left = 1000
 
 func _process(delta: float) -> bool:
+	if not barrier.is_empty():
+		if reported:
+			if FileAccess.file_exists(barrier.path_join("stop")):
+				game.queue_free()
+				quit(0 if passed else 1)
+			return false
+		if not measuring:
+			if game == null: return false
+			if not barrier_ready and (role == "server" or (game.connection_state == "connected" and game.accepted_snapshots > 0)):
+				barrier_ready = true
+				var ready := FileAccess.open(output + ".ready", FileAccess.WRITE)
+				ready.store_string("ready")
+				ready.close()
+			if start_epoch == 0 and FileAccess.file_exists(barrier.path_join("start.json")):
+				start_epoch = float(JSON.parse_string(FileAccess.get_file_as_string(barrier.path_join("start.json"))).epoch)
+				# Map one shared wall epoch to the local monotonic clock once.
+				started_msec = Time.get_ticks_msec() + int((start_epoch-Time.get_unix_time_from_system())*1000)
+			if start_epoch == 0 or Time.get_ticks_msec() < started_msec: return false
+			measuring = true
+			start_offset_seconds = (Time.get_ticks_msec()-started_msec)/1000.0
+			previous_frame_usec = Time.get_ticks_usec()
+			game.measuring = true
+			game.records.clear()
+			game.ticks.clear()
+			game.tick_intervals.clear()
+			game._last_tick_start = 0
+			game.accepted_tick_steps.clear()
+			game.accepted_snapshots = 0
+			game.received_snapshots = 0
+			game.received_payload_bytes = 0
+			game.snapshot_steps.clear()
+			game._prediction.error_samples.clear()
+			game._prediction.corrections = 0
+			game._prediction.hard_corrections = 0
+			game._prediction.large_corrections.clear()
 	elapsed += delta
 	wall_elapsed = (Time.get_ticks_msec()-started_msec)/1000.0
 	var frame_usec := Time.get_ticks_usec()
@@ -130,7 +178,7 @@ func _process(delta: float) -> bool:
 		if not render_frames.is_empty():
 			render_metrics["wall_frame_interval_p50_ms"] = render_frames[render_frames.size()/2]
 			render_metrics["wall_frame_interval_p95_ms"] = render_frames[mini(render_frames.size()-1, int(render_frames.size()*0.95))]
-		var report := {"role": role, "joined": joined, "state": game.connection_state, "notifications":notices, "elapsed_seconds": elapsed, "wall_elapsed_seconds":wall_elapsed, "max_displacement": max_distance, "render_metrics":render_metrics,
+		var report := {"measurement_stop_lateness_seconds":maxf(0,wall_elapsed-duration),"measurement_start_epoch":start_epoch,"measurement_start_offset_seconds":start_offset_seconds,"startup_seconds":(started_msec-startup_started_msec)/1000.0,"role": role, "joined": joined, "state": game.connection_state, "notifications":notices, "elapsed_seconds": elapsed, "wall_elapsed_seconds":wall_elapsed, "max_displacement": max_distance, "render_metrics":render_metrics,
 			"first_movement_seconds": first_movement_seconds, "prediction_enabled": prediction_enabled, "prediction_errors_m": game._prediction.error_samples,
 			"corrections": game._prediction.corrections, "hard_corrections": game._prediction.hard_corrections,
 			"reconnect_requested":reconnect_at >= 0,"reconnect_delay_seconds":reconnect_delay,"reconnect_passed":reconnect_passed,"initial_id":initial_id,"final_id":game.local_id,
@@ -139,13 +187,19 @@ func _process(delta: float) -> bool:
 			"accepted_snapshots":game.accepted_snapshots,"last_accepted_age_seconds":(Time.get_ticks_msec()-game.last_accepted_msec)/1000.0,"last_accepted_tick":game._replica_buffer.last_tick,"accepted_tick_gaps":game.accepted_tick_steps,
 			"skipped_commands": game._input_stream.skipped_commands, "tick_usec": game.ticks, "tick_intervals_usec": game.tick_intervals, "poses": game.records, "stale_snapshots": game._replica_buffer.stale_packets}
 		if not output.is_empty():
-			var file := FileAccess.open(output, FileAccess.WRITE)
+			var file := FileAccess.open(output + ".tmp", FileAccess.WRITE)
 			file.store_string(JSON.stringify(report))
 			file.close()
+			DirAccess.rename_absolute(output + ".tmp", output)
 		print("NETWORK_SIMULATION " + JSON.stringify({"role": role, "joined": joined, "last_snapshot_age_seconds": (Time.get_ticks_msec() - game.last_snapshot_msec) / 1000.0, "snapshots": game.received_snapshots, "max_displacement": max_distance}))
 		var success := role == "server" or (joined and game.connection_state == "connected" and Time.get_ticks_msec() - game.last_snapshot_msec < 750 and game.received_snapshots >= 10 and max_distance > 0.1)
 		if role != "server" and reconnect_at >= 0: success = success and reconnect_passed
 		if role != "server": success = success and game.accepted_snapshots >= 10 and Time.get_ticks_msec()-game.last_accepted_msec < 750
-		game.queue_free()
-		quit(0 if success else 1)
+		if barrier.is_empty():
+			game.queue_free()
+			quit(0 if success else 1)
+		else:
+			passed = success
+			reported = true
+			game.measuring = false
 	return false

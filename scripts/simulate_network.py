@@ -51,7 +51,15 @@ def main():
         parser.error('render-client must identify a launched client or be -1')
     if not (0 <= args.blackout_seconds <= 60 and -1 <= args.blackout_at <= args.seconds and -1 <= args.reconnect_at <= args.seconds and 0 <= args.loss < 1 and 0 <= args.reorder <= 1 and args.rtt_ms >= 0 and args.jitter_ms >= 0 and 5 <= args.seconds <= 600):
         parser.error('invalid impairment bounds')
+    args.out = args.out.resolve()
     args.out.mkdir(parents=True, exist_ok=True)
+    if any(args.out.glob('*.json')):
+        parser.error('output directory must not contain previous JSON evidence')
+    barrier = args.out / 'barrier'
+    barrier.mkdir()
+    measurement_start = None
+    measurement_epoch = None
+    stop_written = False
     rng = random.Random(args.seed)
     selector = selectors.DefaultSelector()
     routes, sockets, queue, processes, logs = [], [], [], [], []
@@ -65,7 +73,7 @@ def main():
               'platform': platform.platform(), 'python': platform.python_version()}
 
     def blackout(now):
-        return args.blackout_at >= 0 and args.blackout_at <= now - start < args.blackout_at + args.blackout_seconds
+        return measurement_start is not None and args.blackout_at >= 0 and args.blackout_at <= now - measurement_start < args.blackout_at + args.blackout_seconds
     serial = 0
 
     def launch(role, name, port, seconds):
@@ -73,7 +81,7 @@ def main():
         logs.append(log)
         display = ['--audio-driver', 'Dummy'] if name == 'client-' + str(args.render_client) else ['--headless']
         cmd = [str(ROOT / 'scripts/godot.sh'), *display, '--max-fps', '60', '--script', 'res://tests/network_simulation_probe.gd', '--',
-               '--role=' + role, '--port=' + str(port), '--seconds=' + str(seconds), '--output=' + str((args.out / (name + '.json')).resolve())]
+               '--role=' + role, '--port=' + str(port), '--seconds=' + str(seconds), '--output=' + str((args.out / (name + '.json')).resolve()), '--barrier=' + str(barrier)]
         if args.no_prediction:
             cmd.append('--no-prediction')
         if args.reconnect_at >= 0 and role == 'client':
@@ -84,7 +92,7 @@ def main():
         return process
 
     try:
-        server = launch('server', 'server', args.port, args.seconds + 3)
+        server = launch('server', 'server', args.port, args.seconds)
         for _ in range(200):
             if 'SIGHTBREAK_SERVER_READY' in (args.out / 'server.log').read_text():
                 break
@@ -107,9 +115,20 @@ def main():
                 sockets.append(sock)
             launch('client', 'client-' + str(index), args.port + index + 1, args.seconds)
         start = time.monotonic()
-        deadline = start + args.seconds + 15
+        deadline = start + 90 + args.seconds + 20
         while any(p.poll() is None for _, p in processes) and time.monotonic() < deadline:
             now = time.monotonic()
+            if measurement_start is None:
+                if all((args.out / (name + '.json.ready')).exists() for name, _ in processes):
+                    measurement_start = now + 1.0
+                    measurement_epoch = time.time() + 1.0
+                    (barrier / 'start.json').write_text(json.dumps({'epoch': measurement_epoch}))
+                    deadline = measurement_start + args.seconds + 20
+                elif now-start > 90 or any(p.poll() is not None for _, p in processes):
+                    raise RuntimeError('shared measurement readiness failed; no successful trial claimed')
+            if not stop_written and all((args.out / (name + '.json')).exists() for name, _ in processes):
+                (barrier / 'stop').write_text('all reports completed; release processes')
+                stop_written = True
             while queue and queue[0][0] <= now:
                 _, _, sock, destination, packet, direction, route = heapq.heappop(queue)
                 if blackout(now):
@@ -204,6 +223,11 @@ def main():
                   'scope': 'loopback real Godot processes; added RTT simulation; no device/cellular claim',
                   'source': source,
                   'traffic_window_seconds': time.monotonic() - start,
+                  'traffic_window_scope': 'whole proxy lifetime including startup, measurement and report/exit drain',
+                  'measurement_start_epoch': measurement_epoch,
+                  'startup_seconds': measurement_start-start if measurement_start else None,
+                  'measurement_duration_seconds': args.seconds,
+                  'shared_stop_reached': stop_written,
                   'failures': failures, 'traffic': traffic, 'processes': samples,
                   'per_client_traffic': [route['traffic'] for route in routes], 'resource_peak_timeline': resource_timeline,
                   'skipped_commands': server_report.get('skipped_commands', 0),
