@@ -230,5 +230,8 @@ func _run() -> void:
 	holder.queue_free()
 	fallback.queue_free()
 	await process_frame
+	# AudioServer releases stopped playback asynchronously. Let the final equip
+	# sounds drain after nodes are freed before checking process teardown.
+	await create_timer(0.2).timeout
 	print("WEAPON_ART_TEST checks=%d failures=%d" % [checks, failures.size()])
 	quit(0 if failures.is_empty() else 1)
