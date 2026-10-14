@@ -237,6 +237,33 @@ func ensure_menu_world() -> void:
 	menu_camera.fov = 61
 	apply_settings()
 
+## Menu text, by id, in one table so a translation can replace it (menu_labels).
+const MENU_LABELS := {
+	"deploy": "DEPLOY   ·   OFFLINE 5V5", "lan": "LOCAL NETWORK   ·   DIRECT CONNECT",
+	"inventory": "INVENTORY", "cases": "CASES", "market": "MARKET", "trades": "TRADES",
+	"record": "OPERATOR RECORD", "settings": "SETTINGS",
+	"tagline": "PRECISION · PRESSURE · PURPOSE", "operation": "CURRENT OPERATION",
+	"operation_note": "2 SITES  ·  3 ROUTES  ·  FIRST TO 7", "callsign": "CALLSIGN",
+	"policy": "EARNED IN PLAY  ·  NO REAL-MONEY PURCHASES",
+	"build": "DEVELOPMENT BUILD  ·  0.3.0-dev",
+	"record_title": "TRAINING RECORD  ·  THIS DEVICE", "level": "LEVEL", "xp_to": "XP TO LEVEL",
+	"credits": "TRAINING CREDITS", "matches": "MATCHES", "wins": "WINS",
+	"eliminations": "ELIMINATIONS", "deaths": "DEATHS", "online": "ONLINE", "earned": "EARNED CREDITS",
+}
+## Slack that side-by-side menu columns must keep; below it they stack instead.
+const MENU_SAFETY := 32.0
+const MENU_COLUMN_GAP := 24.0
+var menu_labels: Dictionary = {}
+var menu_layout := {}
+
+func menu_text(id: String) -> String:
+	return str(menu_labels.get(id, MENU_LABELS[id]))
+
+## Space the menu's content may use: the safe area less the frame's margins.
+func menu_region() -> Vector2:
+	var safe: Rect2 = SafeArea.viewport_rect(get_viewport().get_visible_rect().size)
+	return safe.size - Vector2.ONE * 72.0
+
 func show_menu() -> void:
 	if is_instance_valid(economy_panel): economy_panel.hide()
 	screen = "menu"
@@ -254,98 +281,170 @@ func show_menu() -> void:
 	rows.add_child(top)
 	top.add_child(label("S / B", Design.TYPE_SMALL, GOLD, true))
 	top.add_child(label("TACTICAL OPERATIONS", Design.TYPE_SMALL, MUTED, true))
-	var spring := Control.new()
-	spring.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	top.add_child(spring)
-	top.add_child(label("DEVELOPMENT BUILD  ·  0.3.0-dev", Design.TYPE_MICRO + 1, MUTED))
-	var middle := HBoxContainer.new()
+	# The build label takes the rest of the row, right-aligned: it truncates only if the
+	# row is too narrow for it, and never collapses.
+	var build := Design.ellipsize(label(menu_text("build"), Design.TYPE_MICRO + 1, MUTED))
+	build.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	top.add_child(build)
+	# The columns sit in a vertical scroller, so content taller than the screen scrolls
+	# instead of leaving it, and a horizontal scroller is never needed: the layout below
+	# chooses side-by-side or stacked from measured widths.
+	var scroll := ScrollContainer.new()
+	scroll.name = "MenuScroll"
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	scroll.follow_focus = true
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	rows.add_child(scroll)
+	var middle := BoxContainer.new()
+	middle.name = "MenuColumns"
+	middle.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	middle.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	rows.add_child(middle)
-	var left := VBoxContainer.new()
-	left.custom_minimum_size.x = 440
-	left.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	left.add_theme_constant_override("separation", Design.SPACE_M)
-	middle.add_child(left)
-	left.add_child(label("SIGHTBREAK", Design.TYPE_DISPLAY, Design.TEXT, true))
-	left.add_child(label("PRECISION · PRESSURE · PURPOSE", Design.TYPE_SMALL, GOLD, true))
-	left.add_child(divider(72))
-	var spacer := Control.new()
-	spacer.custom_minimum_size.y = Design.SPACE_XS
-	left.add_child(spacer)
-	var play := button("DEPLOY   ·   OFFLINE 5V5", func(): start_match({"mode": "offline", "difficulty": ["easy", "normal", "hard"][clampi(int(profile.data.settings.difficulty), 0, 2)], "name": profile.data.display_name}), 60, "primary")
-	play.add_theme_font_override("font", Design.heading_font())
-	left.add_child(play)
-	left.add_child(button("LOCAL NETWORK   ·   DIRECT CONNECT", show_connect))
-	# Armory, record and settings as one grid of full-size buttons; the armory is
-	# earned in play, which the footer states.
-	var economy_grid := GridContainer.new()
-	economy_grid.name = "ArmoryEntries"
-	economy_grid.columns = 2
-	economy_grid.add_theme_constant_override("h_separation", Design.SPACE_S)
-	economy_grid.add_theme_constant_override("v_separation", Design.SPACE_S)
-	left.add_child(economy_grid)
-	for tab in ["inventory", "cases", "market", "trades"]:
-		var tab_name: String = tab
-		var entry := button(tab_name.to_upper(), func(): open_economy(tab_name), Design.TOUCH_MIN)
-		entry.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		economy_grid.add_child(entry)
-	for entry in [button("OPERATOR RECORD", show_progress), button("SETTINGS", show_settings)]:
-		entry.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		economy_grid.add_child(entry)
-	var right := VBoxContainer.new()
-	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	right.size_flags_vertical = Control.SIZE_SHRINK_END
-	right.alignment = BoxContainer.ALIGNMENT_END
-	right.add_theme_constant_override("separation", Design.SPACE_XS)
-	middle.add_child(right)
-	right.add_child(menu_record_card())
-	var record_gap := Control.new()
-	record_gap.custom_minimum_size.y = Design.SPACE_L
-	right.add_child(record_gap)
-	var map_kicker := label("CURRENT OPERATION", Design.TYPE_MICRO, MUTED, true)
-	map_kicker.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	right.add_child(map_kicker)
-	var map_title := label("RELAY YARD", 36, Design.TEXT, true)
-	map_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	right.add_child(map_title)
-	var map_note := label("2 SITES  ·  3 ROUTES  ·  FIRST TO 7", Design.TYPE_SMALL, GOLD)
-	map_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	right.add_child(map_note)
+	middle.add_theme_constant_override("separation", int(MENU_COLUMN_GAP))
+	scroll.add_child(middle)
 	var footer := HBoxContainer.new()
 	rows.add_child(footer)
-	footer.add_child(wrapped_label("CALLSIGN   ·   %s" % Design.plain_line(str(profile.data.display_name)).to_upper(), Design.TYPE_SMALL, MUTED))
-	var gap := Control.new()
-	gap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	footer.add_child(gap)
-	footer.add_child(wrapped_label("EARNED IN PLAY  ·  NO REAL-MONEY PURCHASES", Design.TYPE_MICRO + 1, GOLD))
+	var callsign := Design.ellipsize(label("%s   ·   %s" % [menu_text("callsign"), Design.plain_line(str(profile.data.display_name)).to_upper()], Design.TYPE_SMALL, MUTED))
+	callsign.set_meta("user_text", true)
+	footer.add_child(callsign)
+	footer.add_child(label(menu_text("policy"), Design.TYPE_MICRO + 1, GOLD))
+	# Measure, then choose. Both columns are built, measured with the real theme and
+	# fonts, and only then placed: side by side if their widths and the safety slack fit
+	# the region, stacked if not; compact (no tagline, tighter spacing) if the full
+	# variant is taller than the room. Nothing here depends on the layout's own result.
+	var region := menu_region()
+	var compact := false
+	var columns := {}
+	var side_by_side := true
+	var content_height := 0.0
+	var room_height := 0.0
+	for attempt in 2:
+		columns = menu_columns(region, compact)
+		middle.add_child(columns.left)
+		middle.add_child(columns.right)
+		menu_fit_nav(columns.left, region)
+		var left_min: Vector2 = columns.left.get_combined_minimum_size()
+		var right_min: Vector2 = columns.right.get_combined_minimum_size()
+		side_by_side = left_min.x + right_min.x + MENU_COLUMN_GAP + MENU_SAFETY <= region.x
+		content_height = maxf(left_min.y, right_min.y) if side_by_side else left_min.y + MENU_COLUMN_GAP + right_min.y
+		room_height = region.y - top.get_combined_minimum_size().y - footer.get_combined_minimum_size().y - 2 * Design.SPACE_L
+		if compact or content_height <= room_height:
+			break
+		for column: Control in [columns.left, columns.right]:
+			middle.remove_child(column)
+			column.free()
+		compact = true
+	middle.vertical = not side_by_side
+	var right: Control = columns.right
+	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL if side_by_side else Control.SIZE_FILL
+	right.size_flags_vertical = Control.SIZE_SHRINK_END if side_by_side else Control.SIZE_SHRINK_BEGIN
+	for line: Control in right.get_children():
+		if line is Label:
+			line.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT if side_by_side else HORIZONTAL_ALIGNMENT_LEFT
+	menu_layout = {"side_by_side": side_by_side, "compact": compact, "content_height": content_height, "room_height": room_height, "region": region, "slack": region.x - (columns.left.get_combined_minimum_size().x + columns.right.get_combined_minimum_size().x + MENU_COLUMN_GAP) if side_by_side else INF}
 
-## The main menu's record: the offline training level with progress to the next level
-## (from Profile.level_for_xp), training credits and matches, and the online account
-## only while one is signed in. Nothing is shown that the profile or account does not
-## store; training credits and earned Credits stay on separate lines.
+## A navigation entry that cannot widen its column: its text truncates instead.
+func menu_entry(id: String, text: String, callback: Callable, height: float, variant := "secondary") -> Button:
+	var entry := button(text, callback, height, variant)
+	entry.name = "Menu_" + id
+	entry.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	entry.tooltip_text = text.replace("   ", " ")
+	return entry
+
+func menu_columns(region: Vector2, compact: bool) -> Dictionary:
+	var separation: int = Design.SPACE_S if compact else Design.SPACE_M
+	var left := VBoxContainer.new()
+	left.name = "MenuNav"
+	left.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	left.add_theme_constant_override("separation", separation)
+	var wordmark_size := Design.fit_font_size("SIGHTBREAK", Design.TYPE_DISPLAY, minf(440.0, region.x))
+	left.set_meta("wordmark_size", wordmark_size)
+	left.add_child(_wordmark(wordmark_size))
+	if not compact:
+		left.add_child(label(menu_text("tagline"), Design.TYPE_SMALL, GOLD, true))
+		left.add_child(divider(72))
+	var play := menu_entry("deploy", menu_text("deploy"), func(): start_match({"mode": "offline", "difficulty": ["easy", "normal", "hard"][clampi(int(profile.data.settings.difficulty), 0, 2)], "name": profile.data.display_name}), 60, "primary")
+	play.add_theme_font_override("font", Design.heading_font())
+	left.add_child(play)
+	left.add_child(menu_entry("lan", menu_text("lan"), show_connect, Design.TOUCH_MIN))
+	var grid := GridContainer.new()
+	grid.name = "ArmoryEntries"
+	grid.columns = 2
+	grid.add_theme_constant_override("h_separation", Design.SPACE_S)
+	grid.add_theme_constant_override("v_separation", Design.SPACE_S)
+	left.add_child(grid)
+	for tab in ["inventory", "cases", "market", "trades"]:
+		var tab_name: String = tab
+		grid.add_child(menu_entry(tab_name, menu_text(tab_name), func(): open_economy(tab_name), Design.TOUCH_MIN))
+	grid.add_child(menu_entry("record", menu_text("record"), show_progress, Design.TOUCH_MIN))
+	grid.add_child(menu_entry("settings", menu_text("settings"), show_settings, Design.TOUCH_MIN))
+	var right := VBoxContainer.new()
+	right.name = "MenuStatus"
+	right.alignment = BoxContainer.ALIGNMENT_END
+	right.add_theme_constant_override("separation", Design.SPACE_XS)
+	right.add_child(menu_record_card())
+	var record_gap := Control.new()
+	record_gap.custom_minimum_size.y = Design.SPACE_M if compact else Design.SPACE_L
+	right.add_child(record_gap)
+	if not compact:
+		var kicker := label(menu_text("operation"), Design.TYPE_MICRO, MUTED, true)
+		right.add_child(kicker)
+	right.add_child(label("RELAY YARD", 36, Design.TEXT, true))
+	right.add_child(label(menu_text("operation_note"), Design.TYPE_SMALL, GOLD))
+	return {"left": left, "right": right}
+
+## Sets the nav column's width from its entries' natural widths, measured once the
+## column is in the tree (so with the real theme and fonts), then lets every entry
+## truncate: a string longer than the column can no longer widen it.
+func menu_fit_nav(left: Control, region: Vector2) -> void:
+	var grid := left.find_child("ArmoryEntries", true, false) as GridContainer
+	var natural := wordmark_width(int(left.get_meta("wordmark_size")))
+	# Each entry keeps its own natural width as a floor (capped at what the region can
+	# give it) and only then may truncate; otherwise the grid would hand a cell less
+	# than its text needs.
+	for entry: Button in left.find_children("Menu_*", "Button", true, false):
+		var cap := (region.x - grid.get_theme_constant("h_separation")) * 0.5 if entry.get_parent() == grid else region.x
+		entry.custom_minimum_size.x = minf(entry.get_combined_minimum_size().x, cap)
+		entry.clip_text = true
+		entry.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		if entry.get_parent() != grid:
+			natural = maxf(natural, entry.custom_minimum_size.x)
+	natural = maxf(natural, grid.get_combined_minimum_size().x)
+	left.custom_minimum_size.x = minf(natural, region.x)
+
+## The wordmark: display type that does not scale with the text-size setting (it is a
+## headline, not body text) but is fitted to its column's width.
+func _wordmark(size: int) -> Label:
+	var node := Design.label("SIGHTBREAK", size, Design.TEXT, true)
+	node.name = "Wordmark"
+	return node
+
+func wordmark_width(size: int) -> float:
+	return Design.heading_font().get_string_size("SIGHTBREAK", HORIZONTAL_ALIGNMENT_LEFT, -1, size).x
+
+## The main menu's record: the offline training level with its distance to the next
+## level (Profile.xp_for_level), training credits, matches, wins, eliminations and
+## deaths, all from the profile, and the online identity and earned Credits only while
+## signed in. Training credits and earned Credits stay on separate lines; no statistic
+## appears that the profile or account does not store. Names truncate, never widen it.
 func menu_record_card() -> PanelContainer:
 	var card := PanelContainer.new()
 	card.name = "RecordCard"
 	card.add_theme_stylebox_override("panel", Design.box(Color(Design.GRAPHITE, 0.82), Design.LINE, 1, Vector2(Design.SPACE_L, Design.SPACE_M)))
-	card.size_flags_horizontal = Control.SIZE_SHRINK_END
+	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	card.custom_minimum_size.x = 260
 	var stack := VBoxContainer.new()
 	stack.add_theme_constant_override("separation", Design.SPACE_XS)
 	card.add_child(stack)
-	stack.add_child(label("TRAINING RECORD  ·  THIS DEVICE", Design.TYPE_MICRO, MUTED, true))
+	stack.add_child(Design.ellipsize(label(menu_text("record_title"), Design.TYPE_MICRO, MUTED, true)))
 	var xp := int(profile.data.xp)
 	var level := Profile.level_for_xp(xp)
-	var floor_xp := 150 * (level - 1) * (level - 1)
-	var next_xp := 150 * level * level
-	var level_row := HBoxContainer.new()
-	level_row.add_theme_constant_override("separation", Design.SPACE_M)
-	stack.add_child(level_row)
-	level_row.add_child(label("LEVEL %02d" % level, Design.TYPE_H3, Design.TEXT, true))
-	var to_next := label("%d / %d XP" % [xp, next_xp], Design.TYPE_SMALL, GOLD)
-	to_next.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	to_next.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	to_next.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	level_row.add_child(to_next)
+	var floor_xp := Profile.xp_for_level(level)
+	var next_xp := Profile.xp_for_level(level + 1)
+	stack.add_child(label("%s %02d" % [menu_text("level"), level], Design.TYPE_H3, Design.TEXT, true))
+	var to_next := Design.ellipsize(label("%d %s %02d" % [next_xp - xp, menu_text("xp_to"), level + 1], Design.TYPE_SMALL, GOLD))
+	to_next.name = "XPToNext"
+	stack.add_child(to_next)
 	var progress := ProgressBar.new()
 	progress.name = "LevelProgress"
 	progress.show_percentage = false
@@ -355,12 +454,16 @@ func menu_record_card() -> PanelContainer:
 	progress.add_theme_stylebox_override("background", Design.box(Design.OBSIDIAN, Color.TRANSPARENT, 0, Vector2.ZERO))
 	progress.add_theme_stylebox_override("fill", Design.box(Design.GOLD, Color.TRANSPARENT, 0, Vector2.ZERO))
 	stack.add_child(progress)
-	stack.add_child(label("%d TRAINING CREDITS" % int(profile.data.credits), Design.TYPE_MICRO + 1, Design.STEEL_BRIGHT))
-	stack.add_child(label("%d MATCHES   ·   %d WINS" % [int(profile.data.matches), int(profile.data.wins)], Design.TYPE_MICRO + 1, MUTED))
+	stack.add_child(Design.ellipsize(label("%d %s" % [int(profile.data.credits), menu_text("credits")], Design.TYPE_MICRO + 1, Design.STEEL_BRIGHT)))
+	stack.add_child(Design.ellipsize(label("%d %s   ·   %d %s" % [int(profile.data.matches), menu_text("matches"), int(profile.data.wins), menu_text("wins")], Design.TYPE_MICRO + 1, MUTED)))
+	stack.add_child(Design.ellipsize(label("%d %s   ·   %d %s" % [int(profile.data.kills), menu_text("eliminations"), int(profile.data.deaths), menu_text("deaths")], Design.TYPE_MICRO + 1, MUTED)))
 	if is_instance_valid(economy_panel) and not economy_panel.api.token.is_empty():
 		var account: Dictionary = economy_panel.account
-		stack.add_child(label("ONLINE  ·  " + Design.plain_line(str(account.get("display_name", "")), 20).to_upper(), Design.TYPE_MICRO + 1, GOLD))
-		stack.add_child(label("%s EARNED CREDITS" % account.get("credits", 0), Design.TYPE_MICRO + 1, GOLD))
+		var online := Design.ellipsize(label("%s   ·   %s" % [menu_text("online"), Design.plain_line(str(account.get("display_name", ""))).to_upper()], Design.TYPE_MICRO + 1, GOLD))
+		online.name = "OnlineIdentity"
+		online.set_meta("user_text", true)
+		stack.add_child(online)
+		stack.add_child(Design.ellipsize(label("%s %s" % [account.get("credits", 0), menu_text("earned")], Design.TYPE_MICRO + 1, GOLD)))
 	return card
 
 func panel_screen(title: String, subtitle: String, back: Callable = show_menu) -> VBoxContainer:

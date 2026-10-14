@@ -33,41 +33,7 @@ func run() -> void:
 			if node.is_visible_in_tree() and node.size.y < Design.TOUCH_MIN - 0.5:
 				small.append("%s:%s" % [page, node.text])
 	check(small.is_empty(), "menu touch targets are at least 48 px tall: " + str(small))
-	# Main menu at the smallest landscape sizes and every text scale: nothing leaves the
-	# screen, the record card shows the profile's real level and does not cover the
-	# armory entries, and every armory entry is a full touch target.
-	for text_size in [0.85, 1.0, 1.15, 1.3]:
-		main.profile.data.settings.ui_text_scale = text_size
-		main.ui.theme = main.build_theme()
-		for dimensions in [Vector2i(960, 720), Vector2i(1024, 768), Vector2i(1280, 720)]:
-			root.content_scale_size = dimensions
-			root.size = dimensions
-			main.show_menu()
-			await frames(3)
-			var context := "%d%% text at %s:" % [roundi(text_size * 100), dimensions]
-			var outside: Array[String] = []
-			for node: Control in main.ui.find_children("*", "Control", true, false):
-				if not node.is_visible_in_tree() or node is ScrollBar: continue
-				var rect := node.get_global_rect()
-				if rect.position.x < -1 or rect.position.y < -1 or rect.end.x > dimensions.x + 1 or rect.end.y > dimensions.y + 1:
-					outside.append("%s:%s" % [node.get_class(), rect])
-			check(outside.is_empty(), context + " every menu element is on screen " + str(outside.slice(0, 3)))
-			var record: Control = main.ui.find_child("RecordCard", true, false)
-			var entries: Control = main.ui.find_child("ArmoryEntries", true, false)
-			check(record != null and entries != null and not record.get_global_rect().intersects(entries.get_global_rect()), context + " the record card and the armory entries do not overlap")
-			var progress: ProgressBar = main.ui.find_child("LevelProgress", true, false)
-			var level: int = main.Profile.level_for_xp(int(main.profile.data.xp))
-			check(progress != null and is_equal_approx(progress.max_value, 150.0 * (level * level - (level - 1) * (level - 1))), context + " level progress spans the profile's real level")
-			var short: Array[String] = []
-			for entry: Button in buttons_in(entries):
-				if entry.size.y < Design.TOUCH_MIN - 0.5: short.append(entry.text)
-			check(buttons_in(entries).size() == 6 and short.is_empty(), context + " armory, record and settings entries, each a full touch target " + str(short))
-	main.profile.data.settings.ui_text_scale = 1.0
-	main.ui.theme = main.build_theme()
-	root.content_scale_size = Vector2i(1280, 720)
-	root.size = Vector2i(1280, 720)
-	main.show_menu()
-	await frames(2)
+	await menu_contracts(main)
 	# Accessibility: interface text size scales labels and the shared theme.
 	var probe: Label = main.label("x", 20)
 	var base_size: int = probe.get_theme_font_size("font_size")
@@ -199,3 +165,158 @@ func run() -> void:
 	await frames(3)
 	print("UX_CONTRACT_TEST checks=%d failures=%d" % [checks, failures])
 	quit(1 if failures else 0)
+
+
+const MENU_SIZES := [Vector2i(960, 720), Vector2i(1024, 768), Vector2i(1280, 720), Vector2i(1560, 720), Vector2i(1600, 720)]
+const MENU_SCALES := [0.85, 1.0, 1.15, 1.3]
+const MENU_ACTIONS := {"lan": "connect", "record": "progress", "settings": "settings", "inventory": "economy", "cases": "economy", "market": "economy", "trades": "economy"}
+## Names a player can really have (plain_line keeps 32 characters): short, long ASCII,
+## CJK with no spaces, and accents with combining marks.
+const MENU_NAMES := ["Operator", "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdef", "白雪・シラユキ・テスト・ネーム・ロング・名前・白雪・シラユキ", "Zoe\u0308 Ångström-Nguyễn Muñoz Çelik"]
+## A pseudo-translation: every string about 60 % longer, as German or Russian can be.
+func expanded_labels(main: Node) -> Dictionary:
+	var out := {}
+	for id in main.MENU_LABELS:
+		var text: String = main.MENU_LABELS[id]
+		out[id] = text + "   " + text.substr(0, int(text.length() * 0.6)) if id in ["deploy", "lan", "inventory", "cases", "market", "trades", "record", "settings", "policy", "build", "record_title", "xp_to", "credits", "online"] else text
+	return out
+
+## Controls that are not inside the menu's scroller, or that are, split out.
+func menu_controls(main: Node) -> Dictionary:
+	var scroll: ScrollContainer = main.ui.find_child("MenuScroll", true, false)
+	var fixed: Array[Control] = []
+	var scrolled: Array[Control] = []
+	for node: Control in main.ui.find_children("*", "Control", true, false):
+		if not node.is_visible_in_tree() or node is ScrollBar or node == scroll: continue
+		if node.get_parent() == main.ui: continue
+		(scrolled if scroll != null and scroll.is_ancestor_of(node) else fixed).append(node)
+	return {"scroll": scroll, "fixed": fixed, "scrolled": scrolled}
+
+func menu_case(main: Node, context: String, dimensions: Vector2i, signed_in: bool) -> String:
+	main.show_menu()
+	await frames(4)
+	var parts := menu_controls(main)
+	var scroll: ScrollContainer = parts.scroll
+	var layout: Dictionary = main.menu_layout
+	var outside: Array[String] = []
+	for node: Control in parts.fixed + parts.scrolled:
+		var rect := node.get_global_rect()
+		var horizontal_bad: bool = rect.position.x < -1 or rect.end.x > dimensions.x + 1
+		var vertical_bad: bool = parts.fixed.has(node) and (rect.position.y < -1 or rect.end.y > dimensions.y + 1)
+		if (horizontal_bad or vertical_bad) and rect.size.x > 0:
+			outside.append("%s:%s:%s" % [node.get_class(), node.name, rect])
+	check(outside.is_empty(), context + " no menu control leaves the screen " + str(outside.slice(0, 3)))
+	var bar := scroll.get_v_scroll_bar()
+	var scrolls: bool = bar.visible and bar.max_value > bar.page + 1
+	var nav: Control = main.ui.find_child("MenuNav", true, false)
+	var status: Control = main.ui.find_child("MenuStatus", true, false)
+	var record: Control = main.ui.find_child("RecordCard", true, false)
+	check(nav != null and status != null and record != null, context + " has its nav, status and record card")
+	if nav == null or status == null or record == null: return "missing"
+	check(not nav.get_global_rect().intersects(status.get_global_rect()), context + " the nav and status columns do not overlap")
+	# Robustness: columns share a row only with real slack (MENU_SAFETY) to spare, so a
+	# font with wider glyphs cannot tip the layout over; otherwise they stack.
+	if layout.side_by_side:
+		var slack: float = layout.region.x - (nav.get_combined_minimum_size().x + status.get_combined_minimum_size().x + main.MENU_COLUMN_GAP)
+		check(slack >= main.MENU_SAFETY - 0.5, context + " side-by-side columns keep %d px of slack (%.1f)" % [main.MENU_SAFETY, slack])
+	else:
+		check(nav.get_global_rect().end.y <= status.get_global_rect().position.y + 1, context + " stacked columns do not overlap")
+	check(scroll.get_h_scroll_bar().max_value <= scroll.get_h_scroll_bar().page + 1 or not scroll.get_h_scroll_bar().visible, context + " no horizontal scrolling")
+	# Every entry is a real touch target and, if the menu scrolls, reachable by scrolling.
+	var short: Array[String] = []
+	var unreachable: Array[String] = []
+	var entries: Array = main.ui.find_children("Menu_*", "Button", true, false)
+	check(entries.size() == 8, context + " eight menu actions (%d)" % entries.size())
+	for entry: Button in entries:
+		if entry.size.y < Design.TOUCH_MIN - 0.5 or entry.size.x < Design.TOUCH_MIN: short.append(entry.name)
+		scroll.ensure_control_visible(entry)
+	await frames(2)
+	for entry: Button in entries:
+		var rect := entry.get_global_rect()
+		var view := scroll.get_global_rect()
+		if rect.position.y < view.position.y - 1 or rect.end.y > view.end.y + 1: unreachable.append(entry.name)
+	# Text must fit its box. Only user-supplied names may truncate; with the real strings
+	# nothing else may, at any size or scale. A pseudo-translation is longer than the
+	# layout is designed for, so there truncation is the intended last resort.
+	var clipped: Array[String] = []
+	for node: Control in main.ui.find_children("*", "Label", true, false) + main.ui.find_children("*", "Button", true, false):
+		if not node.is_visible_in_tree() or node.get_meta("user_text", false): continue
+		var face: Font = node.get_theme_font("font")
+		var text_width := face.get_string_size(node.text, HORIZONTAL_ALIGNMENT_LEFT, -1, node.get_theme_font_size("font_size")).x
+		var room: float = node.size.x - (node.get_theme_stylebox("normal").get_minimum_size().x if node is Button else 0.0)
+		if text_width > room + 0.5 and node.text.length() > 0:
+			clipped.append("%s '%s' needs %d has %d" % [node.get_class(), node.text.left(24), text_width, room])
+	if not context.contains("pseudo"):
+		check(clipped.is_empty(), context + " no text is truncated or collapsed " + str(clipped.slice(0, 3)))
+	check(short.is_empty(), context + " every action is a full touch target " + str(short))
+	check(unreachable.is_empty(), context + " every action can be scrolled into view " + str(unreachable))
+	scroll.scroll_vertical = 0
+	# What the card says is what the profile and account store.
+	var xp: int = int(main.profile.data.xp)
+	var level: int = main.Profile.level_for_xp(xp)
+	var to_next: Label = main.ui.find_child("XPToNext", true, false)
+	check(to_next != null and to_next.text.begins_with(str(main.Profile.xp_for_level(level + 1) - xp) + " "), context + " XP to the next level comes from the profile's own rule (%s)" % (to_next.text if to_next else "none"))
+	check((main.ui.find_child("OnlineIdentity", true, false) != null) == signed_in, context + " the online identity shows only while signed in")
+	return "%s side_by_side=%s compact=%s scrolls=%s slack=%s" % [context, layout.side_by_side, layout.compact, scrolls, "%.0f" % layout.slack if layout.side_by_side else "stacked"]
+
+func menu_contracts(main: Node) -> void:
+	# Level curve: the card's rule is the profile's own, in both directions.
+	for level in range(1, 12):
+		var begins: int = main.Profile.xp_for_level(level)
+		check(main.Profile.level_for_xp(begins) == level and (level == 1 or main.Profile.level_for_xp(begins - 1) == level - 1), "level %d begins at %d XP" % [level, begins])
+	# Every action opens its screen. Deploy starts a match and leaving returns to the menu.
+	root.content_scale_size = Vector2i(1280, 720)
+	root.size = Vector2i(1280, 720)
+	main.profile.data.settings.ui_text_scale = 1.0
+	main.ui.theme = main.build_theme()
+	for id in MENU_ACTIONS:
+		main.show_menu()
+		await frames(3)
+		var entry: Button = main.ui.find_child("Menu_" + id, true, false)
+		check(entry != null and not entry.disabled, "menu action %s exists and is enabled" % id)
+		if entry == null: continue
+		entry.pressed.emit()
+		await frames(3)
+		check(main.screen == MENU_ACTIONS[id], "menu action %s opens the %s screen (%s)" % [id, MENU_ACTIONS[id], main.screen])
+		if MENU_ACTIONS[id] == "economy":
+			check(is_instance_valid(main.economy_panel) and main.economy_panel.active_tab == id, "menu action %s opens the %s tab" % [id, id])
+	main.show_menu()
+	await frames(3)
+	(main.ui.find_child("Menu_deploy", true, false) as Button).pressed.emit()
+	await frames(4)
+	check(main.screen == "game" and is_instance_valid(main.match_game), "menu action deploy starts an offline match")
+	main.leave_match()
+	await frames(3)
+	check(main.screen == "menu", "leaving the match returns to the menu")
+	# The matrix: sizes x text scales x names x account states, then a pseudo-translation.
+	var table: Array[String] = []
+	var panel = main.economy_panel
+	var original_name: String = main.profile.data.display_name
+	for dimensions in MENU_SIZES:
+		root.content_scale_size = dimensions
+		root.size = dimensions
+		for text_size in MENU_SCALES:
+			main.profile.data.settings.ui_text_scale = text_size
+			main.ui.theme = main.build_theme()
+			for signed_in in [false, true]:
+				panel.api.token = "fixture-render-only" if signed_in else ""
+				panel.account = {"display_name": MENU_NAMES[1] if signed_in else "", "credits": 1234567, "xp": 200, "level": 1}
+				for name_index in MENU_NAMES.size():
+					main.profile.data.display_name = MENU_NAMES[name_index]
+					main.menu_labels = {}
+					var context := "%s %d%% text, %s, name %d:" % [dimensions, roundi(text_size * 100), "signed in" if signed_in else "no account", name_index]
+					var line := await menu_case(main, context, dimensions, signed_in)
+					table.append(line)
+				main.menu_labels = expanded_labels(main)
+				table.append(await menu_case(main, "%s %d%% text, %s, pseudo-translation:" % [dimensions, roundi(text_size * 100), "signed in" if signed_in else "no account"], dimensions, signed_in))
+				main.menu_labels = {}
+	for line in table: print("MENU_LAYOUT ", line)
+	panel.api.token = ""
+	panel.account = {}
+	main.profile.data.display_name = original_name
+	main.profile.data.settings.ui_text_scale = 1.0
+	main.ui.theme = main.build_theme()
+	root.content_scale_size = Vector2i(1280, 720)
+	root.size = Vector2i(1280, 720)
+	main.show_menu()
+	await frames(2)
