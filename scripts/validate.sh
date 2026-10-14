@@ -42,6 +42,7 @@ run_godot hud-overflow --headless --script res://tests/hud_overflow_test.gd
 run_godot economy-ui --headless --script res://tests/economy_ui_test.gd
 run_godot economy-recovery --headless --script res://tests/economy_recovery_test.gd
 run_godot cosmetics --headless --script res://tests/cosmetic_presentation_test.gd
+python3 scripts/test_account_network_output.py
 ./scripts/test_network.sh
 python3 scripts/test_connection_lifecycle.py --out "$validation_dir/connection-lifecycle"
 if [[ "${1:-}" == --backend ]]; then
