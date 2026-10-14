@@ -271,9 +271,13 @@ func _detonate() -> void:
 			puff.position = layout[0]
 			_cloud_puffs.append(puff)
 		for puff in _cloud_puffs:
-			puff.scale = Vector3.ONE * 0.2
+			# Network replicas may first become relevant after the cloud has grown.
+			var age := clampf(_cloud_elapsed, 0, 0.8) if visual_only else 0.0
+			puff.scale = Vector3.ONE * lerpf(0.2, 1.0, age / 0.8)
+			if visual_only or age >= 0.8:
+				continue
 			var grow := puff.create_tween()
-			grow.tween_property(puff, "scale", Vector3.ONE, 0.8)
+			grow.tween_property(puff, "scale", Vector3.ONE, 0.8 - age)
 
 	else:
 		_lifetime = 0.45
@@ -302,3 +306,18 @@ func _detonate() -> void:
 		audio.unit_size = 12
 		add_child(audio)
 		audio.play()
+
+## Network presentation contract: authority age drives replica growth/fade.
+## Replicas never create growth tweens that could overwrite a newer snapshot.
+func set_replica_lifetime(remaining: float) -> void:
+	if not visual_only or not _detonated:
+		return
+	_lifetime = maxf(0, remaining)
+	if kind != "smoke":
+		return
+	_cloud_elapsed = maxf(0, 12.0 - _lifetime)
+	var growth := lerpf(0.2, 1.0, clampf(_cloud_elapsed / 0.8, 0, 1))
+	for i in range(_cloud_puffs.size()):
+		_cloud_puffs[i].scale = Vector3.ONE * growth
+		_cloud_puffs[i].rotation.y = _cloud_elapsed * (0.025 if i % 2 == 0 else -0.025)
+	_apply_dissipation()

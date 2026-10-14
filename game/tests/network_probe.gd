@@ -1,5 +1,18 @@
 extends SceneTree
 ## Run using scripts/test_network.sh: separate real ENet server and client processes.
+class InspectMatch extends TacticalMatch:
+	var privacy_packets := 0
+	var privacy_errors := 0
+	var payload_bytes := 0
+	func _apply_snapshot(data: Dictionary) -> void:
+		privacy_packets += 1
+		payload_bytes += var_to_bytes(data).compress(FileAccess.COMPRESSION_DEFLATE).size()
+		for actor: Dictionary in data.get("actors", []):
+			if int(actor.id) != local_id and (actor.has("inventory") or actor.has("ammo")):
+				privacy_errors += 1
+			if not bool(actor.get("relevant", true)) and actor.has("position"):
+				privacy_errors += 1
+		super._apply_snapshot(data)
 var match_node: TacticalMatch
 var elapsed: float = 0.0
 var role: String = "client"
@@ -20,7 +33,7 @@ func _initialize() -> void:
 	call_deferred("_start")
 
 func _start() -> void:
-	match_node = TacticalMatch.new()
+	match_node = InspectMatch.new()
 	match_node.configure({"mode": role, "name": "Network QA", "address": "127.0.0.1", "port": 27991})
 	root.add_child(match_node)
 	if role == "server":
@@ -47,7 +60,9 @@ func _process(delta: float) -> bool:
 			for peer_id in match_node._active_peers():
 				var id: int = match_node._peer_actors[peer_id]
 				match_node.actors[id].hit_confirmed.emit(id, true, false)
-			match_node._confirmed_impact(Vector3.ZERO, Vector3.UP, false)
+				# Place the synthetic event at a legitimately visible viewpoint;
+				# hidden world impacts are now deliberately filtered.
+				match_node._confirmed_impact(match_node.actors[id].position + Vector3.UP * 1.6, Vector3.UP, false)
 		if elapsed >= deadline:
 			print("NETWORK_SERVER_PASS")
 			quit(0)
@@ -74,6 +89,11 @@ func _process(delta: float) -> bool:
 		elif reconnect_started and elapsed > 4.0:
 			reconnect_passed = match_node.local_id == initial_id
 			if reconnect_passed and got_hit_feedback and got_impact:
+				if match_node.privacy_errors != 0 or match_node.privacy_packets < 10:
+					push_error("Wire snapshot authorization assertion failed")
+					quit(1)
+					return false
+				print("NETWORK_PRIVACY dictionaries=%d reencoded_compressed_bytes=%d" % [match_node.privacy_packets, match_node.payload_bytes])
 				print("NETWORK_CLIENT_PASS movement snapshots reconnect authority-hit-and-impact-feedback")
 				quit(0)
 			else:
