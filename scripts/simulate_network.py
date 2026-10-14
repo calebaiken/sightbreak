@@ -43,7 +43,10 @@ def main():
     parser.add_argument('--blackout-at', type=float, default=-1, help='Seconds after clients launch; -1 disables')
     parser.add_argument('--blackout-seconds', type=float, default=0)
     parser.add_argument('--reconnect-at', type=float, default=-1, help='Explicitly close each connected client and exercise its resume token at this elapsed time')
+    parser.add_argument('--reconnect-delay', type=float, default=2.0, help='Reconnect delay after explicit transport close; default matches the game; 0.7 reproduces the early stress fixture')
     args = parser.parse_args()
+    if not 0 <= args.reconnect_delay <= 10:
+        parser.error('reconnect-delay must be between0 and10 seconds')
     if args.render_client < -1 or args.render_client >= args.clients:
         parser.error('render-client must identify a launched client or be -1')
     if not (0 <= args.blackout_seconds <= 60 and -1 <= args.blackout_at <= args.seconds and -1 <= args.reconnect_at <= args.seconds and 0 <= args.loss < 1 and 0 <= args.reorder <= 1 and args.rtt_ms >= 0 and args.jitter_ms >= 0 and 5 <= args.seconds <= 600):
@@ -74,7 +77,7 @@ def main():
         if args.no_prediction:
             cmd.append('--no-prediction')
         if args.reconnect_at >= 0 and role == 'client':
-            cmd.append('--reconnect-at=' + str(args.reconnect_at))
+            cmd.extend(['--reconnect-at=' + str(args.reconnect_at), '--reconnect-delay=' + str(args.reconnect_delay)])
         process = subprocess.Popen(cmd, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
         processes.append((name, process))
         samples[name] = {'rss_peak_kib': 0, 'cpu_seconds': 0.0}

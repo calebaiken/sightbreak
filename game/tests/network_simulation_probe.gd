@@ -62,6 +62,7 @@ var first_input_time := -1.0
 var first_movement_seconds := -1.0
 var render_frames: Array[float] = []
 var reconnect_at := -1.0
+var reconnect_delay := 2.0
 var reconnect_started := false
 var reconnect_passed := false
 var initial_id := 0
@@ -75,6 +76,7 @@ func _initialize() -> void:
 		elif arg.begins_with("--output="): output = arg.trim_prefix("--output=")
 		elif arg == "--no-prediction": prediction_enabled = false
 		elif arg.begins_with("--reconnect-at="): reconnect_at = float(arg.trim_prefix("--reconnect-at="))
+		elif arg.begins_with("--reconnect-delay="): reconnect_delay = float(arg.trim_prefix("--reconnect-delay="))
 	call_deferred("start")
 
 func start() -> void:
@@ -110,8 +112,10 @@ func _process(delta: float) -> bool:
 		elif reconnect_at >= 0 and elapsed >= reconnect_at:
 			reconnect_started = true
 			game.multiplayer.multiplayer_peer.close()
-			game.connection_state = "reconnecting"
-			game._reconnect_clock = 0.7
+			game._server_disconnected()
+			# Default exercises the real two-second client path; shorter stress delays
+			# remain explicit so early reconnect failures cannot be hidden by retiming.
+			game._reconnect_clock = reconnect_delay
 	if elapsed >= duration:
 		render_frames.sort()
 		var render_metrics := {"native": DisplayServer.get_name() != "headless", "renderer":RenderingServer.get_video_adapter_name(), "samples":render_frames.size(), "draw_calls":Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME), "primitives":Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME), "texture_bytes":RenderingServer.get_rendering_info(RenderingServer.RENDERING_INFO_TEXTURE_MEM_USED)}
@@ -121,7 +125,7 @@ func _process(delta: float) -> bool:
 		var report := {"role": role, "joined": joined, "state": game.connection_state, "notifications":notices, "elapsed_seconds": elapsed, "max_displacement": max_distance, "render_metrics":render_metrics,
 			"first_movement_seconds": first_movement_seconds, "prediction_enabled": prediction_enabled, "prediction_errors_m": game._prediction.error_samples,
 			"corrections": game._prediction.corrections, "hard_corrections": game._prediction.hard_corrections,
-			"reconnect_requested":reconnect_at >= 0,"reconnect_passed":reconnect_passed,"initial_id":initial_id,"final_id":game.local_id,
+			"reconnect_requested":reconnect_at >= 0,"reconnect_delay_seconds":reconnect_delay,"reconnect_passed":reconnect_passed,"initial_id":initial_id,"final_id":game.local_id,
 			"pending_inputs": game._prediction.pending.size(), "large_corrections": game._prediction.large_corrections,
 			"last_snapshot_age_seconds": (Time.get_ticks_msec() - game.last_snapshot_msec) / 1000.0, "snapshots": game.received_snapshots, "snapshot_tick_gaps": game.snapshot_steps, "reencoded_snapshot_bytes": game.received_payload_bytes,
 			"accepted_snapshots":game.accepted_snapshots,"last_accepted_age_seconds":(Time.get_ticks_msec()-game.last_accepted_msec)/1000.0,"last_accepted_tick":game._replica_buffer.last_tick,"accepted_tick_gaps":game.accepted_tick_steps,
