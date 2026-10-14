@@ -1,5 +1,5 @@
 extends SceneTree
-## Real guest server/client fixture. No account credentials or rewards involved.
+## Real guest or isolated-account fixture. Credentials stay in process environment; no rewards claimed.
 class MeasuredMatch extends TacticalMatch:
 	var records: Array = []
 	var lifecycle_events: Array = []
@@ -79,6 +79,7 @@ class MeasuredMatch extends TacticalMatch:
 
 var game: MeasuredMatch
 var role := "client"
+var account_mode := false
 var port := 29400
 var duration := 14.0
 var output := ""
@@ -120,6 +121,7 @@ func _initialize() -> void:
 		elif arg.begins_with("--barrier="): barrier = arg.trim_prefix("--barrier=")
 		elif arg.begins_with("--output="): output = arg.trim_prefix("--output=")
 		elif arg == "--no-prediction": prediction_enabled = false
+		elif arg == "--accounts": account_mode = true
 		elif arg.begins_with("--reconnect-at="): reconnect_at = float(arg.trim_prefix("--reconnect-at="))
 		elif arg.begins_with("--reconnect-delay="): reconnect_delay = float(arg.trim_prefix("--reconnect-delay="))
 	call_deferred("start")
@@ -128,9 +130,9 @@ func start() -> void:
 	game = MeasuredMatch.new()
 	game.measuring = barrier.is_empty()
 	game.notification.connect(func(message: String): notices.append({"seconds":wall_elapsed,"simulation_seconds":elapsed,"state":game.connection_state,"message":message}))
-	game.configure({"mode": role, "port": port, "address": "127.0.0.1", "name": "Simulation fixture", "prediction": prediction_enabled})
+	game.configure({"mode": role, "port": port, "address": "127.0.0.1", "name": "Simulation fixture", "prediction": prediction_enabled, "require_accounts":account_mode and role == "server", "economy_url":OS.get_environment("SIGHTBREAK_TEST_ECONOMY_URL"), "server_id":"local-relay", "join_ticket":OS.get_environment("SIGHTBREAK_JOIN_TICKET")})
 	root.add_child(game)
-	if role == "server":
+	if role == "server" and not account_mode:
 		game._bot_clock = 1000
 		game.phase = "live"
 		game.time_left = 1000
@@ -155,6 +157,10 @@ func _process(delta: float) -> bool:
 				started_msec = Time.get_ticks_msec() + int((start_epoch-Time.get_unix_time_from_system())*1000)
 			if start_epoch == 0 or Time.get_ticks_msec() < started_msec: return false
 			measuring = true
+			if role == "server" and account_mode:
+				game.phase = "live"
+				game.time_left = 1000
+				game._bot_clock = 1000
 			start_offset_seconds = (Time.get_ticks_msec()-started_msec)/1000.0
 			previous_frame_usec = 0
 			game.measuring = true
@@ -209,7 +215,7 @@ func _process(delta: float) -> bool:
 		if not render_frames.is_empty():
 			render_metrics["wall_frame_interval_p50_ms"] = render_frames[render_frames.size()/2]
 			render_metrics["wall_frame_interval_p95_ms"] = render_frames[mini(render_frames.size()-1, int(render_frames.size()*0.95))]
-		var report := {"measurement_stop_lateness_seconds":maxf(0,wall_elapsed-duration),"measurement_start_epoch":start_epoch,"measurement_start_offset_seconds":start_offset_seconds,"startup_seconds":(started_msec-startup_started_msec)/1000.0,"lifecycle_events":game.lifecycle_events,"occupancy":game.occupancy,"role": role, "joined": joined, "state": game.connection_state, "notifications":notices, "elapsed_seconds": elapsed, "wall_elapsed_seconds":wall_elapsed, "max_displacement": max_distance, "render_metrics":render_metrics,
+		var report := {"measurement_stop_lateness_seconds":maxf(0,wall_elapsed-duration),"measurement_start_epoch":start_epoch,"measurement_start_offset_seconds":start_offset_seconds,"startup_seconds":(started_msec-startup_started_msec)/1000.0,"account_count":game._account_ids.size(),"account_ids":game._account_ids.values(),"ranked_started":game._ranked_started,"ranked_eligible":game._ranked_eligible,"reward_status":game.reward_status,"lifecycle_events":game.lifecycle_events,"occupancy":game.occupancy,"role": role, "joined": joined, "state": game.connection_state, "notifications":notices, "elapsed_seconds": elapsed, "wall_elapsed_seconds":wall_elapsed, "max_displacement": max_distance, "render_metrics":render_metrics,
 			"first_movement_seconds": first_movement_seconds, "prediction_enabled": prediction_enabled, "prediction_errors_m": game._prediction.error_samples,
 			"corrections": game._prediction.corrections, "hard_corrections": game._prediction.hard_corrections,
 			"recovered_at_seconds":recovered_at,"recovery_seconds":recovered_at-reconnect_at if recovered_at >= 0 else -1,"reconnect_requested":reconnect_at >= 0,"reconnect_delay_seconds":reconnect_delay,"reconnect_passed":reconnect_passed,"initial_id":initial_id,"final_id":game.local_id,
