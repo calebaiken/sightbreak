@@ -45,9 +45,14 @@ const ViewmodelShading = preload("res://scripts/gameplay/viewmodel_shading.gd")
 ## These values come from tools/art/viewmodel_fit.py: the muzzle near the crosshair,
 ## the reflex sight right of centre, the pistol grip at the lower right and the stock
 ## behind the camera, with about 6 degrees of roll so the left receiver face reads.
+## The bore is turned 6.9 degrees outward and 2.9 degrees up from the first fit (about the
+## balance point, RELAY_AR_PIVOT, so the rest pose of the hands and grip barely moves): the
+## first fit's bore converged 125 px left of the crosshair (10 degrees); this one converges 38 px
+## left and 21 px above (3.5 degrees) and its bore line passes through the crosshair, while the
+## handguard and the support hand read as before (reload_legibility_probe.gd measures it).
 static var relay_ar_scale := 1.0
-static var relay_ar_rotation := Vector3(-0.020, 0.174, -0.04)
-static var relay_ar_offset := Vector3(0.065, 0.074, -0.005)
+static var relay_ar_rotation := Vector3(0.0292, 0.0540, -0.0313)
+static var relay_ar_offset := Vector3(0.0424, 0.0646, -0.0025)
 ## Inspection and other hand-less builds keep the rifle upright, centred in the
 ## existing studio framing (the studio's yaw brings the muzzle end nearer the camera).
 const RELAY_AR_UPRIGHT_OFFSET := Vector3(0, -0.015, -0.07)
@@ -443,23 +448,19 @@ func _build_gun() -> void:
 			_glove(Vector3(-0.055, -0.075, -0.40), true)
 			_sleeve(Vector3(-0.26, -0.33, 0.12), Vector3(-0.055, -0.10, -0.33), Color("28353c"))
 	_muzzle = MeshInstance3D.new()
-	var flash_mesh := SurfaceTool.new()
-	flash_mesh.begin(Mesh.PRIMITIVE_TRIANGLES)
-	for i in range(6):
-		var angle := i * TAU / 6.0
-		var radial := Vector3(cos(angle), sin(angle), 0)
-		flash_mesh.add_vertex(radial * 0.014 + Vector3(0, 0, 0.025))
-		flash_mesh.add_vertex(radial * 0.045 + Vector3(0, 0, -0.035))
-		flash_mesh.add_vertex(Vector3(0, 0, -0.19 if i % 2 == 0 else -0.105))
-	flash_mesh.generate_normals()
-	_muzzle.mesh = flash_mesh.commit()
+	_muzzle.mesh = flash_mesh()
 	if _hands and not _authored.is_empty():
-		_muzzle.material_override = ViewmodelShading.flash(Color("ffde9c"))
+		_muzzle.material_override = ViewmodelShading.flash(Color.WHITE, 1.5)
 	else:
-		_muzzle.material_override = _material(Color("ffde9c"), 1, 0).duplicate()
-		var mat := _muzzle.material_override as StandardMaterial3D
-		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-		mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+		var flash_material := StandardMaterial3D.new()
+		flash_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		flash_material.cull_mode = BaseMaterial3D.CULL_DISABLED
+		flash_material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		flash_material.blend_mode = BaseMaterial3D.BLEND_MODE_ADD
+		flash_material.vertex_color_use_as_albedo = true
+		flash_material.no_depth_test = false
+		flash_material.disable_receive_shadows = true
+		_muzzle.material_override = flash_material
 	_gun.add_child(_muzzle)
 	_muzzle.position = Vector3(0, 0.025, muzzle_z) if muzzle_at == Vector3.INF else muzzle_at
 	_muzzle.visible = false
@@ -467,6 +468,72 @@ func _build_gun() -> void:
 	for child in _gun.get_children():
 		if child is MeshInstance3D:
 			child.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+
+static var _flash_mesh: ArrayMesh
+
+## The muzzle flash in one mesh, barrel along -Z from the muzzle: a hot teardrop core, a wider
+## soft bell round it, thin streaks that fan forward, short side flares like a flash hider's
+## ports, and a glow disc at the muzzle. Vertex colour is the hue and alpha the additive
+## weight, fading to nothing at every outer edge, so there is no hard silhouette to read as a
+## sticker. 213 triangles; shared by every build.
+static func flash_mesh() -> ArrayMesh:
+	if _flash_mesh != null:
+		return _flash_mesh
+	var tool := SurfaceTool.new()
+	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
+	# [z, radius, alpha] rings along the barrel axis.
+	# The widest ring of each lobe is fully transparent, so seen from behind (the player's view
+	# along the barrel) the lobe fades out at its rim instead of ending on a hard polygon edge.
+	_flash_lathe(tool, [[0.006, 0.004, 1.0], [-0.010, 0.014, 0.95], [-0.045, 0.034, 0.0], [-0.095, 0.018, 0.40], [-0.200, 0.0, 0.0]], Color(1.0, 0.86, 0.52), 12)
+	_flash_lathe(tool, [[0.008, 0.012, 0.45], [-0.020, 0.042, 0.40], [-0.065, 0.074, 0.0], [-0.130, 0.034, 0.16], [-0.280, 0.0, 0.0]], Color(1.0, 0.48, 0.14), 12)
+	for i in range(5):
+		var angle := i * TAU / 5.0 + 0.4
+		var out := Vector3(cos(angle), sin(angle), 0.0)
+		var across := Vector3(-sin(angle), cos(angle), 0.0)
+		var reach := 0.26 + 0.06 * (i % 3)
+		var lean := 0.030 + 0.015 * (i % 2)
+		_flash_triangle(tool, out * 0.010 + across * 0.0055 + Vector3(0, 0, -0.005), out * 0.010 - across * 0.0055 + Vector3(0, 0, -0.005), out * lean + Vector3(0, 0, -reach), Color(1.0, 0.78, 0.38))
+	for i in range(4):
+		var angle := i * TAU / 4.0 + 0.785
+		var out := Vector3(cos(angle), sin(angle), 0.0)
+		var across := Vector3(-sin(angle), cos(angle), 0.0)
+		_flash_triangle(tool, out * 0.014 + across * 0.0065, out * 0.014 - across * 0.0065, out * 0.115 + Vector3(0, 0, -0.045), Color(1.0, 0.66, 0.26))
+	# The glow disc at the muzzle.
+	for i in range(12):
+		var a := i * TAU / 12.0
+		var b := (i + 1) * TAU / 12.0
+		tool.set_color(Color(1.0, 0.62, 0.25, 0.7))
+		tool.add_vertex(Vector3(0, 0, 0.004))
+		tool.set_color(Color(1.0, 0.50, 0.18, 0.0))
+		tool.add_vertex(Vector3(cos(a), sin(a), 0) * 0.062 + Vector3(0, 0, 0.004))
+		tool.set_color(Color(1.0, 0.50, 0.18, 0.0))
+		tool.add_vertex(Vector3(cos(b), sin(b), 0) * 0.062 + Vector3(0, 0, 0.004))
+	_flash_mesh = tool.commit()
+	return _flash_mesh
+
+static func _flash_lathe(tool: SurfaceTool, rings: Array, hue: Color, sides: int) -> void:
+	for j in range(rings.size() - 1):
+		for k in range(sides):
+			var a0: float = TAU * k / sides
+			var a1: float = TAU * (k + 1) / sides
+			var near: Array = rings[j]
+			var far: Array = rings[j + 1]
+			var corners := [
+				[Vector3(cos(a0) * near[1], sin(a0) * near[1], near[0]), near[2]],
+				[Vector3(cos(a0) * far[1], sin(a0) * far[1], far[0]), far[2]],
+				[Vector3(cos(a1) * far[1], sin(a1) * far[1], far[0]), far[2]],
+				[Vector3(cos(a1) * near[1], sin(a1) * near[1], near[0]), near[2]]]
+			for index in [0, 1, 2, 0, 2, 3]:
+				tool.set_color(Color(hue.r, hue.g, hue.b, corners[index][1]))
+				tool.add_vertex(corners[index][0])
+
+static func _flash_triangle(tool: SurfaceTool, a: Vector3, b: Vector3, tip: Vector3, hue: Color) -> void:
+	tool.set_color(Color(hue.r, hue.g, hue.b, 0.9))
+	tool.add_vertex(a)
+	tool.set_color(Color(hue.r, hue.g, hue.b, 0.9))
+	tool.add_vertex(b)
+	tool.set_color(Color(hue.r, hue.g, hue.b, 0.0))
+	tool.add_vertex(tip)
 
 ## Reads an authored GLB: every node's transform in the viewmodel node (markers),
 ## its untransformed position in the rifle's own space (anchors) and its meshes.
@@ -506,7 +573,7 @@ func _build_authored_rifle() -> Vector3:
 	_viewmodel = _hands
 	var rifle := _authored_nodes(RELAY_AR, placement)
 	# First person draws with the viewmodel projection; inspection keeps the plain material.
-	var material: Material = ViewmodelShading.surface(RELAY_AR_TEXTURES, 0.86) if _hands else load(RELAY_AR_MATERIAL)
+	var material: Material = ViewmodelShading.surface(RELAY_AR_TEXTURES, 0.84, 0.60) if _hands else load(RELAY_AR_MATERIAL)
 	var part_names := ["body", "paint_receiver", "paint_handguard", "magazine"]
 	if not _hands and rifle.meshes.has("stock"):
 		part_names.append("stock")

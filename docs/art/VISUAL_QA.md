@@ -310,3 +310,27 @@ My entry above sampled the magazine's **albedo** and its **mean AO** over the wh
 - **Still open:** gloves in a nearly dark interior measure a median of 15–16, and the pulled magazine is now the brightest part in sun (warm tan beside a grey receiver).
 
 The review's scores above are unchanged: this fixes one of its defects (reload legibility's black magazine), not the occlusion of the magazine by the support forearm, the hand shapes, the bore direction or the sleeve material.
+
+## The reload, the support hand, the bore and the effects (2026-10-14, after `233df74`)
+
+Evidence: `docs/reports/media/art-v6/reload-hands-effects/`. This is my own measurement and says nothing about scores: the review's scores above stand until a reviewer who is not me or my subagents re-scores the frames.
+
+**What the review said, now with numbers.** I had none, so I wrote `game/tests/reload_legibility_probe.gd`, which renders the reload and counts the magazine's pixels with the arms hidden and shown. At `233df74` the arms covered up to 87 % of the magazine at the grasp and up to 91 % at the seat, the magazine left the frame mid-swap (11 % on screen), and the sleeve, not the glove, did the covering. The bore line passed 56 px below the crosshair (vanishing point 124 px left, 10.0°).
+
+**What the review's claims turned out to be:**
+- **"The support forearm obscures the magazine":** confirmed, and it was the sleeve. The v4 grasp put the palm on the left face, and from the camera's side the forearm lay along the line of sight. A grasp that cups the base from below fixes it; moving the elbow or the whole rifle did not (the pitched-rifle attempt scored well by putting a flat-ended sleeve stump across half the screen, which the arm-area column and the frames caught).
+- **"The hand opens before the seat completes":** the clip held the hand until 0.88 but the importer resampled it to 30 fps, so the seat was blurred by 3 to 4 mm; and the old magazine curve finished its travel before the hand's push. Both are fixed, and the order (seat, hold, let go) is now tested.
+- **"The barrel is 125 px left of the crosshair":** true as a vanishing point (124 px, 10.0°). The earlier "v4" layout that nearly zeroed it was rejected for foreshortening the handguard; I moved it to 3.5° (38 px left, 21 px above) with the bore line through the crosshair, and judged that the handguard and the support hand still read.
+- **"Saturated chartreuse sleeve in sun":** confirmed: its median luma was 146, the brightest part of the frame at twice the receiver's. It is 110 now and olive-drab. The cost: its value gap to the gloves in shade shrank from about 20 luma to about 6.
+- **"Star muzzle flash, box casings":** replaced (a layered additive flash that differs shot to shot; a lathed brass case that tumbles and bounces).
+- **"Mitten grip hand, fused support fingers":** not fixed. Only the cupped grasp's fingers were fanned.
+
+**Mistakes of mine found on the way:** a metric I could game (above); the 30 fps importer setting; a casing that re-bounced every frame; a flash that burned to a white ball and then showed an octagonal outline. All are in the evidence README.
+
+**Next on this branch, in order:**
+1. An independent review of `reload-after.jpg`, `support-hand-closeups.png` and the firing burst.
+2. The grip hand (mitten) and the support fingers cresting the rail at the handguard hold; a visible thumb.
+3. Gloves in a dark interior (15 to 17 against 20) and the sleeve-to-glove value gap in shade.
+4. The pistol grip's form (still a flat block), then the rest of the weapon materials: receiver surface response, optic, wear masks, a bolt or charging-handle animation.
+5. Draw and inspect animations.
+

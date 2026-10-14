@@ -32,7 +32,7 @@ generator.py ──► render_views.py   (Cycles review renders; nothing written
 | `relay_ar_hands.py` | Gloved hands and sleeves posed on the rifle: flattened ellipsoid phalanges through explicit joints (knuckles come from the overlaps), palm, heel and thenar masses, tapered oval sleeves with folds and a seam, flared cuffs and wrist straps. Hands are fused by a voxel remesh, smoothed and decimated |
 | `sdf.py` | Signed-distance modelling with NumPy only: rounded and capped cones, ellipsoids, rounded boxes, tori, smooth union and difference, bounded composition, material regions, and naive surface-nets meshing |
 | `relay_ar_arms.py` | Arms v3 anatomy. One right arm in a relaxed rest pose from landmarks: carpal block, arched metacarpals, thenar and hypothenar masses, three phalanges per finger with condyles and palmar creases, and the thumb. The glove adds a 1 mm dilation, knuckle guard, padded phalanges, seams, cuff and strap. A real-length jacket sleeve has a hem, a seam and irregular folds. It also defines the bone positions |
-| `arms_build.py` | Builds the rigged arms from `relay_ar_arms.py`: <ul><li>meshes the high-poly bake source and a QuadriFlow game mesh (after a voxel remesh and decimation);</li><li>builds a 34-bone skeleton with bone-heat weights and mirrors the left arm;</li><li>places both arms on the rifle and closes the fingers on its surface by contact (BVH), with a multi-start reach for the trigger finger;</li><li>bakes 2048² passes from high to low;</li><li>applies the hold as the bind pose, solves the magazine grab and keys the 1 s `reload` clip;</li><li>exports a skinned GLB.</li></ul> The log reports every finger's solved angles and any digit it could not close (`None`) |
+| `arms_build.py` | Builds the rigged arms from `relay_ar_arms.py`: <ul><li>meshes the high-poly bake source and a QuadriFlow game mesh (after a voxel remesh and decimation);</li><li>builds a 34-bone skeleton with bone-heat weights and mirrors the left arm;</li><li>places both arms on the rifle and closes the fingers on its surface by contact (BVH), with a multi-start reach for the trigger finger;</li><li>bakes 2048² passes from high to low;</li><li>applies the hold as the bind pose, solves the magazine grab and keys the 1 s `reload` clip;</li><li>exports a skinned GLB.</li></ul> The log reports every finger's solved angles and any digit it could not close (`None`)<br>The reload clip is 60 fps and performs a mechanical sequence (reach from below, cup the base, slide out along the well, lift out and show, line up, enter, push to the stop, hold, let go, return) on the phase boundaries `P_*`, which `Actor.RELOAD_*` repeats. `review_clip()` writes `clip_contact.csv`: at each frame, the deepest vertex of either arm inside the rifle and inside the moving magazine. `--no-bake` rebuilds only the rig, the clip and that review in about 13 s (the mesh is not the shipped one's), and `ARMS_GRAB_JSON` overrides entries of `GRAB` for one build |
 | `rebake_part_ao.py`, `patch_part_ao.py` | Fix the baked occlusion of a part that moves in game. `bake.py` bakes occlusion with every part in place, so a part baked while seated (the magazine, which reload pulls out of the magwell) comes out with its hidden faces fully occluded and black once it moves. `rebake_part_ao.py` re-bakes one object from the retained unwrapped `.blend` with everything else hidden, onto a black and a white canvas (the part's UV islands are the texels where they agree); `patch_part_ao.py` merges it into the full occlusion bake on those texels only. Check the provenance first: `textures.py` on the unpatched bake must reproduce the shipped textures exactly |
 | `render_arms.py` | Cycles review renders of the shipped rifle and arms GLBs with the shipped 1024² textures: ¾ views, both hands from both sides, the in-game eye at the viewmodel field of view, and two reload frames |
 | `motion_sheet.py` | Labelled contact sheet from a `game/tests/weapon_motion_capture.gd` frame sequence (frame, simulated time, phase, ammunition, clip time) |
@@ -64,6 +64,20 @@ cp $OUT/arms/relay_ar_arms.glb game/assets/weapons/relay_ar/
 python3 $T/textures.py $OUT/arms relay_ar_arms game/assets/weapons/relay_ar
 $B $T/render_arms.py <dir> --samples 32                                        # review renders of what ships
 ```
+
+### The reload review loop
+
+Motion is easiest to judge in the game. For one change to the grasp or the carry path:
+
+```sh
+$B $T/arms_build.py $OUT/arms --no-bake                  # about 13 s: rig, clip, contact review
+cp $OUT/arms/relay_ar_arms.glb game/assets/weapons/relay_ar/ && ./scripts/godot.sh --headless --editor --import --quit
+./scripts/godot.sh --script res://tests/reload_legibility_probe.gd -- --tag=x --ps=0.2,0.5,0.8   # native display
+```
+
+`reload_legibility_probe.gd` renders the reload and, at each progress, reports how much of the magazine is on screen, how much of it the arms cover (split into glove and sleeve by their authored albedo), and how much of the frame the arms take. It also reports where the bore points against the crosshair. **Read all of its columns together:** pitching the rifle so the forearm swept clear of the magazine scored well on "covered" while putting a flat-ended sleeve across half the screen (arm area 95k to 176k pixels); only the arm-area column and the frames caught it. A `--no-bake` GLB must never be committed: ship the full build and its textures.
+
+The importer resamples a clip to `animation/fps`. `relay_ar_arms.glb.import` is set to 60, matching the clip; at the default 30 the seat and the let-go were interpolated between frames and the hand drifted 3 to 4 mm while it should have held.
 
 `build_rig(..., preview=True)` in `arms_build.py` stops before baking, which takes about a minute. Use it to iterate on the hold and the grab, and read the per-finger report after every build.
 

@@ -8,11 +8,20 @@ Stages, all headless Blender (bpy module):
 4. Both arms are placed on the rifle (Blender rifle space: barrel +Y, Z up) and the
    fingers close on the grip, trigger and handguard: each joint flexes until its
    phalanx would touch the rifle's surface (a BVH of the rifle's own meshes).
-5. The posed arms become the bind pose; the reload clip moves the support hand from
-   the handguard to the magazine, follows the magazine down the well and back, slaps
-   it home and returns.
+5. The posed arms become the bind pose. The support hand then performs the reload on a
+   60 fps, one-second clip the game seeks by reload progress: it comes up to the seated
+   magazine from below, cups its base, slides it out along its well, lifts it out to the
+   rifle's left, brings it back, enters it and pushes it to its stop, stays closed on it until
+   it is seated and lets go only then (the phase boundaries are P_* below and Actor.RELOAD_*).
+   The magazine is not keyed here: the game poses it from the hand bone while the hand holds it.
+6. review_clip() measures, at every frame, how far the posed arms enter the rifle and the
+   moving magazine (clip_contact.csv); the build prints the deepest vertex.
 
-python arms_build.py <out_dir> [--preview] [--h-high 0.0005] [--rifle relay_ar.glb]
+python arms_build.py <out_dir> [--preview] [--no-bake] [--h-high 0.0005] [--rifle relay_ar.glb]
+
+--no-bake skips the high-poly bake and the textures (about 13 s instead of about 4 minutes); the
+clip, rig and contact review are the same, so motion can be reviewed in the game. That mesh is
+not the shipped one's and is never shipped. ARMS_GRAB_JSON overrides entries of GRAB for one build.
 """
 import math
 import os
@@ -93,23 +102,25 @@ def material(name, colour, rough):
 
 
 # Linear base colour and roughness. A charcoal glove with black moulded parts and a
-# slightly lighter suede palm; the olive jacket is about three times lighter, so glove,
-# sleeve, the graphite rifle and the tan magazine separate by value as well as hue.
-# (The v3 glove at 0.050 with strong tan wear read as bare skin; the review measured it
-# level with the sleeve.)
+# slightly lighter suede palm, and a muted olive-drab jacket. The v4 jacket (0.082, 0.092,
+# 0.052) measured a median luma of 141-146 in sun, twice the receiver's and the furniture's,
+# and read as chartreuse; this one is about half as bright in linear terms and far less
+# saturated (target about 110 in sun), and the gloves are about 25 % lighter (the v4 gloves
+# measured 15-16 in a dark interior). The v3 glove at 0.050 with strong tan wear read as bare
+# skin and measured level with the sleeve, so the glove stays well under the jacket.
 PALETTE = {
-    'fabric': ((0.024, 0.023, 0.022), 0.86), 'palm': ((0.034, 0.031, 0.028), 0.93),
-    'shell': ((0.011, 0.011, 0.012), 0.48), 'strap': ((0.018, 0.017, 0.016), 0.80),
-    'cuff': ((0.022, 0.021, 0.020), 0.88),
-    'sleeve': ((0.082, 0.092, 0.052), 0.90), 'hem': ((0.068, 0.076, 0.044), 0.88),
+    'fabric': ((0.030, 0.027, 0.024), 0.86), 'palm': ((0.042, 0.037, 0.032), 0.93),
+    'shell': ((0.012, 0.012, 0.013), 0.48), 'strap': ((0.022, 0.020, 0.018), 0.80),
+    'cuff': ((0.027, 0.025, 0.022), 0.88),
+    'sleeve': ((0.045, 0.051, 0.041), 0.90), 'hem': ((0.037, 0.042, 0.034), 0.88),
 }
 
 
 # Game-mesh density: about 8.3k triangles for both arms (v3 was 10,672; the documented
 # hands-and-sleeves budget is 10,000). The sleeve's folds are in the normal map.
 GLOVE_QUADS = 1800
-SLEEVE_SEGMENTS = 20
-SLEEVE_RINGS = 16
+SLEEVE_SEGMENTS = 32
+SLEEVE_RINGS = 20
 
 
 def right_arm_meshes(h_high, h_mid, glove_faces, sleeve_faces, high=True):
@@ -501,15 +512,20 @@ def build_rig(out_dir, rifle_glb, preview=False, h_high=0.0005, hold=HOLD, size=
     return rig, sides, rifle, parts, placements
 
 
-def build(out_dir, rifle_glb, glb_path, size=2048, samples=48, h_high=0.0005):
-    rig, sides, rifle, parts, placements = build_rig(out_dir, rifle_glb, False, h_high, HOLD, size, samples)
+def build(out_dir, rifle_glb, glb_path, size=2048, samples=48, h_high=0.0005, bake=True):
+    """`bake=False` skips the high-poly bake and textures: the clip, the rig and the mesh
+    export as usual, so motion can be reviewed in the game in about a minute. Its mesh is
+    not the shipped one's (the UVs may differ), so it is never shipped."""
+    rig, sides, rifle, parts, placements = build_rig(out_dir, rifle_glb, not bake, h_high, HOLD, size, samples)
     bpy.data.objects.remove(parts['arm_low'], do_unlink=True)
     arms_obj = bind_pose(rig, sides)
     select(rig)
     bpy.ops.object.mode_set(mode='POSE')
     magazine = next(o for o in rifle if o.name == 'magazine')
     grab = grab_pose(rig, arms_obj, placements['L'], magazine)
-    reload_clip(rig, grab)
+    axis, _ = well_axis(magazine)
+    reload_clip(rig, grab, axis)
+    review_clip(rig, arms_obj, rifle, axis, out_dir)
     bpy.ops.object.mode_set(mode='OBJECT')
     for obj in rifle:
         bpy.data.objects.remove(obj, do_unlink=True)
@@ -582,8 +598,8 @@ def detail_material(name, colour, rough, kind):
     base.inputs['B'].default_value = (*[c * 1.12 for c in colour], 1)
     links.new(tone.outputs['Fac'], base.inputs['Factor'])
     # Wear lightens only slightly: scuffed fabric, not a different colour.
-    wear_colour = {'fabric': (0.050, 0.047, 0.043), 'palm': (0.058, 0.053, 0.047), 'shell': (0.040, 0.040, 0.041),
-                   'strap': (0.036, 0.034, 0.032), 'cuff': (0.045, 0.043, 0.040), 'sleeve': (0.12, 0.13, 0.08), 'hem': (0.10, 0.11, 0.068)}[name]
+    wear_colour = {'fabric': (0.060, 0.055, 0.049), 'palm': (0.068, 0.061, 0.053), 'shell': (0.040, 0.040, 0.041),
+                   'strap': (0.036, 0.034, 0.032), 'cuff': (0.045, 0.043, 0.040), 'sleeve': (0.080, 0.088, 0.068), 'hem': (0.066, 0.072, 0.056)}[name]
     worn = nodes.new('ShaderNodeMix')
     worn.data_type = 'RGBA'
     worn.inputs['B'].default_value = (*wear_colour, 1)
@@ -769,13 +785,70 @@ def bind_pose(rig, sides):
     return arms_obj
 
 
-# The game moves the magazine straight down its well (rifle space) by 0.23 m times
-# extraction(p); see actor.gd. The clip follows the same curve.
-MAG_DROP = 0.23
+# The reload, as fractions of its length (the game seeks the clip by reload progress, and
+# actor.gd times the seat sound and the magazine's carry from the same numbers).
+#   0.00-0.14  the support hand leaves the handguard and comes up to the magazine from below
+#   0.14-0.20  the fingers close on it
+#   0.20-0.32  it slides out along its well and clears it
+#   0.32-0.50  it is lifted out to the rifle's left and shown (the replacement)
+#   0.50-0.69  it comes back and lines up under the well
+#   0.69-0.80  it enters and is pushed to its stop: seated at 0.80
+#   0.80-0.85  the hand stays closed on the seated magazine
+#   0.85-1.00  the fingers open and the hand returns to the handguard
+P_REACH, P_GRASP, P_SEAT, P_LETGO = 0.14, 0.20, 0.80, 0.85
+# The hand arrives at, and leaves, the magazine from below: it first goes to a point this far
+# under the grasp (rifle space) and only then comes up to the base, so it never crosses the
+# magazine on a straight line between the handguard and the grasp.
+APPROACH = Vector((-0.020, -0.010, -0.085))
+APPROACH_AT = 0.65
 
 
-def extraction(p):
-    return math.sin(min(1.0, max(0.0, (p - 0.12) / 0.72)) * math.pi)
+def well_axis(magazine):
+    """Unit vector from the magazine's top to its bottom, rifle space (the way it slides
+    out), and the centre of its top face."""
+    verts = [magazine.matrix_world @ v.co for v in magazine.data.vertices]
+    zs = [v.z for v in verts]
+    lo, hi = min(zs), max(zs)
+    top = sum((v for v in verts if v.z > hi - 0.01), Vector()) / sum(1 for v in verts if v.z > hi - 0.01)
+    bottom = sum((v for v in verts if v.z < lo + 0.01), Vector()) / sum(1 for v in verts if v.z < lo + 0.01)
+    return (bottom - top).normalized(), top
+
+
+# Path of the magazine relative to where it is seated: (progress, travel out of the well
+# in metres, offset in rifle space, turn in degrees about the rifle's X, Y and Z). The
+# magazine's top is 0.075 m inside the well, so it is clear at 0.09. Between keys the
+# motion eases, so a repeated key is a pause.
+WELL_DEPTH = 0.075
+MAG_KEYS = (
+    (0.00, 0.000, (0.00, 0.00, 0.00), (0, 0, 0)),
+    (0.20, 0.000, (0.00, 0.00, 0.00), (0, 0, 0)),
+    (0.24, 0.020, (0.00, 0.00, 0.00), (0, 0, 0)),     # the latch lets go; it starts to slide
+    (0.32, 0.098, (0.00, 0.00, 0.00), (0, 0, 0)),     # clear of the well
+    (0.43, 0.100, (-0.120, -0.040, 0.140), (-25, 0, 20)),   # lifted out to the rifle's left and shown
+    (0.50, 0.100, (-0.120, -0.040, 0.140), (-25, 0, 20)),
+    (0.61, 0.100, (-0.030, -0.010, 0.040), (-8, 0, 6)),     # coming back toward the well
+    (0.69, 0.088, (0.000, 0.000, 0.000), (-3, 0, 0)),       # lined up under it
+    (0.75, 0.030, (0.000, 0.000, 0.000), (-1, 0, 0)),       # entering
+    (0.80, 0.000, (0.000, 0.000, 0.000), (0, 0, 0)),        # pushed to its stop
+    (1.00, 0.000, (0.000, 0.000, 0.000), (0, 0, 0)),
+)
+MAG_PIVOT = Vector((0.0, 0.13, -0.08))   # about the middle of the part the hand holds
+
+
+def mag_path(p, axis):
+    """The magazine's rigid motion (rifle space) at progress p."""
+    keys = MAG_KEYS
+    for i in range(len(keys) - 1):
+        if keys[i][0] <= p <= keys[i + 1][0]:
+            a, b = keys[i], keys[i + 1]
+            t = smooth((p - a[0]) / max(b[0] - a[0], 1e-6)) if (a[1:] != b[1:]) else 0.0
+            travel = a[1] + (b[1] - a[1]) * t
+            offset = Vector(a[2]).lerp(Vector(b[2]), t)
+            turn = Vector(a[3]).lerp(Vector(b[3]), t)
+            rot = Matrix.Rotation(math.radians(turn.z), 4, 'Z') @ Matrix.Rotation(math.radians(turn.y), 4, 'Y') @ Matrix.Rotation(math.radians(turn.x), 4, 'X')
+            pivot = Matrix.Translation(MAG_PIVOT) @ rot @ Matrix.Translation(-MAG_PIVOT)
+            return Matrix.Translation(offset + axis * travel) @ pivot
+    return Matrix.Identity(4)
 
 
 def smooth(t):
@@ -783,15 +856,26 @@ def smooth(t):
     return t * t * (3 - 2 * t)
 
 
-# Palm on the magazine's left face with the knuckles just past its front edge, so the
-# fingers close round the front onto the right face; the thumb starts open and closes
-# on the left face. Rolled 10 degrees so the little finger clears the front corner.
-GRAB = {'distal': (0.0, 1.0, -0.35), 'dorsal': (-1.0, 0.0, 0.0), 'mcp': (-0.026, 0.170, -0.080), 'roll': -10,
-        'elbow_dir': (-0.60, -0.45, -0.66), 'curl': (25, 30, 20), 'thumb': (-40, -30, 0)}
+# The palm cups the magazine's base from below with the fingers pointing across it and
+# closing up its right face, the thumb on the front: the hand that pushes a magazine home.
+# The forearm then hangs below and behind the magazine, so it never lies between the eye
+# and the magazine (the v4 grasp, with the palm on the left face, put the sleeve over 55-90 %
+# of the magazine from the camera's side of the rifle; tools/art/README measures it).
+GRAB = {'distal': (1.0, 0.0, 0.0), 'dorsal': (0.0, 0.0, -1.0), 'mcp': (0.034, 0.150, -0.190), 'roll': 0,
+        'elbow_dir': (-0.60, -0.50, -0.60), 'curl': (25, 30, 20), 'thumb': (-40, -30, 0)}
 # Bones whose rest points must clear the magazine before the fingers close: the palm,
 # the first phalanges and the thumb's metacarpal (the v3 solve cleared only the palm, so
 # the thumb and little finger started inside the magazine and never closed).
+# Extra spread of each finger's first joint in the grasp (radians about its own Z): the index
+# and middle lean toward the thumb, the ring and little finger away from it.
+GRAB_FAN = {'index': -0.10, 'middle': -0.02, 'ring': 0.08, 'pinky': 0.18}
 GRAB_CLEAR = ('L_hand', 'L_index_1', 'L_middle_1', 'L_ring_1', 'L_pinky_1', 'L_thumb_1')
+# Exploration hook: ARMS_GRAB_JSON='{"elbow_dir": [x, y, z], "mcp": [x, y, z]}' overrides
+# entries of GRAB for one build, so a grasp can be tried without editing the file.
+if os.environ.get('ARMS_GRAB_JSON'):
+    import json
+    GRAB.update({k: tuple(v) if isinstance(v, list) else v for k, v in json.loads(os.environ['ARMS_GRAB_JSON']).items()})
+    print('GRAB overridden:', GRAB)
 
 
 def grab_pose(rig, arms_obj, placement_L, magazine, report=print):
@@ -840,14 +924,21 @@ def grab_pose(rig, arms_obj, placement_L, magazine, report=print):
         base = GRAB['thumb'] if name == 'thumb' else GRAB['curl']
         angles = close_chain(rig, chain, rest_points, obstacle, limits, RATIO, base=[math.radians(a) for a in base])
         report('grab', name, None if angles is None else [round(math.degrees(a)) for a in angles])
+        if name != 'thumb':
+            # Fan the fingers a little (the cupped hand is not a fist): this is what keeps
+            # them from fusing into one mass when the hand is seen from the side.
+            first = rig.pose.bones[chain[0]]
+            first.rotation_quaternion = Quaternion((0, 0, 1), GRAB_FAN[name]) @ first.rotation_quaternion
     pose = {'forearm': fore.matrix.copy(), 'hand': hand.matrix.copy(), 'T': T}
     pose['fingers'] = {pb.name: pb.rotation_quaternion.copy() for pb in rig.pose.bones
                        if pb.name.startswith('L_') and pb.name not in ('L_forearm', 'L_hand')}
     return pose
 
 
-def reload_clip(rig, grab, fps=30):
-    """Key the support arm over a one-second clip that the game seeks by reload progress."""
+def reload_clip(rig, grab, axis, fps=60):
+    """Key the support arm over a one-second clip that the game seeks by reload progress.
+    The hand reaches the seated magazine, closes on it, carries it along mag_path() and
+    lets go only after it is seated and a short hold has passed."""
     scene = bpy.context.scene
     scene.render.fps = fps
     rig.animation_data_create()
@@ -859,22 +950,36 @@ def reload_clip(rig, grab, fps=30):
     fingers = [rig.pose.bones[n] for n in grab['fingers']]
     for pb in [fore, hand] + fingers:
         pb.rotation_mode = 'QUATERNION'
+    grab_hand = grab['T'] @ rest_hand
+    grab_elbow = grab['forearm'].translation
+    rest_elbow = rest_fore.translation
     loc_r, rot_r, _ = rest_hand.decompose()
-    loc_g, rot_g, _ = (grab['T'] @ rest_hand).decompose()
+    loc_g, rot_g, _ = grab_hand.decompose()
+    loc_p = loc_g + APPROACH
+    elbow_p = grab_elbow + APPROACH * 0.5
+
+    def routed(w):
+        """Hand location, rotation and elbow between the handguard (w=0) and the grasp (w=1),
+        by way of the point below the grasp."""
+        if w <= APPROACH_AT:
+            t = smooth(w / APPROACH_AT)
+            return loc_r.lerp(loc_p, t), rot_r.slerp(rot_g, t), rest_elbow.lerp(elbow_p, t)
+        t = smooth((w - APPROACH_AT) / (1.0 - APPROACH_AT))
+        return loc_p.lerp(loc_g, t), rot_g, elbow_p.lerp(grab_elbow, t)
+
     for frame in range(fps + 1):
         p = frame / fps
-        # Reach the magazine by 0.11, hold it until 0.84 (it is seated again), seat it with
-        # a short push, then return to the handguard by 1.0.
-        w = smooth(p / 0.11) if p < 0.5 else 1.0 - smooth((p - 0.88) / 0.12)
-        drop = Vector((0, 0, -MAG_DROP * extraction(p)))
-        push = Vector((0, 0, 0.010 * math.sin(min(1.0, max(0.0, (p - 0.84) / 0.06)) * math.pi)))
-        loc = loc_r.lerp(loc_g, w) + (drop + push) * w
-        rot = rot_r.slerp(rot_g, w)
-        H = Matrix.LocRotScale(loc, rot, None)
+        M = mag_path(p, axis)
+        # Where the hand is between the handguard and the magazine: 0 on the handguard, 1 on
+        # the magazine. It rides the magazine from the grasp until the let-go.
+        reach = smooth(p / P_REACH) if p < P_GRASP else 1.0 - smooth((p - P_LETGO) / (1.0 - P_LETGO))
+        if P_GRASP <= p <= P_LETGO:
+            H = M @ grab_hand
+            elbow = grab_elbow + M.translation * 0.5
+        else:
+            loc, rot, elbow = routed(reach)
+            H = Matrix.LocRotScale(loc, rot, None)
         wrist = H.translation
-        grab_elbow = grab['forearm'].translation
-        rest_elbow = rest_fore.translation
-        elbow = rest_elbow.lerp(grab_elbow + (drop + push) * w * 0.6, w)
         new_y = (wrist - elbow).normalized()
         turn = (rest_fore.to_3x3() @ Vector((0, 1, 0))).rotation_difference(new_y)
         F = (turn.to_matrix() @ rest_fore.to_3x3()).to_4x4()
@@ -883,11 +988,14 @@ def reload_clip(rig, grab, fps=30):
         bpy.context.view_layer.update()
         hand.matrix = H
         bpy.context.view_layer.update()
-        # Fingers open in transit and close on arrival.
-        opening = math.sin(math.pi * w) * 0.35 if 0.0 < w < 1.0 else 0.0
+        # The fingers open in transit, close on the magazine between 0.12 and 0.20, stay
+        # closed until the let-go, and open only then.
+        closing = smooth((p - P_REACH) / (P_GRASP - P_REACH)) if p < P_GRASP else 1.0 - smooth((p - P_LETGO) / 0.05)
+        flare = math.sin(math.pi * min(1.0, max(0.0, p / P_REACH))) * 0.45 if p < P_REACH else 0.0
+        flare += math.sin(math.pi * min(1.0, max(0.0, (p - P_LETGO) / (1.0 - P_LETGO)))) * 0.25 if p > P_LETGO else 0.0
         for pb in fingers:
-            q = Quaternion().slerp(grab['fingers'][pb.name], w)
-            pb.rotation_quaternion = Quaternion((1, 0, 0), opening) @ q if pb.name[2:] not in ('thumb_1',) else q
+            q = Quaternion().slerp(grab['fingers'][pb.name], closing)
+            pb.rotation_quaternion = Quaternion((1, 0, 0), flare) @ q if pb.name[2:] not in ('thumb_1',) else q
         for pb in [fore, hand] + fingers:
             pb.keyframe_insert('location', frame=frame, group=pb.name)
             pb.keyframe_insert('rotation_quaternion', frame=frame, group=pb.name)
@@ -896,6 +1004,55 @@ def reload_clip(rig, grab, fps=30):
         pb.location = (0, 0, 0)
         pb.rotation_quaternion = (1, 0, 0, 0)
     return action
+
+
+def review_clip(rig, arms_obj, rifle, axis, out_dir, fps=60):
+    """Contact review of the reload clip: at every frame, how far the posed arms (both
+    sleeves and gloves) enter the rifle and the moving magazine. Writes clip_contact.csv."""
+    scene = bpy.context.scene
+    body = Obstacle([o for o in rifle if o.name not in ('stock', 'magazine', 'magazine_rounds')])
+    magazine = next(o for o in rifle if o.name == 'magazine')
+    mag_verts = [magazine.matrix_world @ v.co for v in magazine.data.vertices]
+    mag_polys = [list(p.vertices) for p in magazine.data.polygons]
+    rows = ['frame,progress,left_inside_body,left_depth_body_mm,left_inside_magazine,left_depth_magazine_mm,right_inside_body,right_depth_body_mm']
+    names = {g.index: g.name for g in arms_obj.vertex_groups}
+    for frame in range(fps + 1):
+        p = frame / fps
+        scene.frame_set(frame)
+        graph = bpy.context.evaluated_depsgraph_get()
+        evaluated = arms_obj.evaluated_get(graph)
+        mesh = evaluated.to_mesh()
+        M = mag_path(p, axis)
+        mag = BVHTree.FromPolygons([M @ v for v in mag_verts], mag_polys)
+        stats = {'L': [0, 0.0, 0, 0.0], 'R': [0, 0.0, 0, 0.0]}
+        for v, src in zip(mesh.vertices, arms_obj.data.vertices):
+            if not src.groups:
+                continue
+            side = names[max(src.groups, key=lambda g: g.weight).group][0]
+            if side not in stats:
+                continue
+            world = evaluated.matrix_world @ v.co
+            d = body.distance(world)
+            if d < -0.0005:
+                stats[side][0] += 1
+                stats[side][1] = max(stats[side][1], -d)
+            if side == 'L':
+                hit = mag.find_nearest(world, 0.05)
+                if hit[0] is not None:
+                    inside = (world - hit[0]).dot(hit[1]) < 0
+                    if inside and (world - hit[0]).length > 0.0005:
+                        stats['L'][2] += 1
+                        stats['L'][3] = max(stats['L'][3], (world - hit[0]).length)
+        evaluated.to_mesh_clear()
+        rows.append('%d,%.3f,%d,%.2f,%d,%.2f,%d,%.2f' % (frame, p, stats['L'][0], stats['L'][1] * 1000, stats['L'][2], stats['L'][3] * 1000, stats['R'][0], stats['R'][1] * 1000))
+    scene.frame_set(0)
+    path = os.path.join(out_dir, 'clip_contact.csv')
+    with open(path, 'w') as f:
+        f.write('\n'.join(rows) + '\n')
+    worst_body = max(float(r.split(',')[3]) for r in rows[1:])
+    worst_mag = max(float(r.split(',')[5]) for r in rows[1:])
+    worst_right = max(float(r.split(',')[7]) for r in rows[1:])
+    print('CLIP CONTACT: deepest left-arm vertex in the rifle %.1f mm, in the magazine %.1f mm; right arm in the rifle %.1f mm (%s)' % (worst_body, worst_mag, worst_right, path))
 
 
 def export(rig, arms_obj, path):
@@ -917,4 +1074,4 @@ if __name__ == '__main__':
     if '--preview' in argv:
         build_rig(out, rifle_glb, preview=True)
     else:
-        build(out, rifle_glb, glb, size, samples)
+        build(out, rifle_glb, glb, size, samples, bake='--no-bake' not in argv)

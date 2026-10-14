@@ -79,6 +79,100 @@ func _viewmodel_screen(camera: Camera3D, point: Vector3) -> Vector2:
 	var t := tan(deg_to_rad(ViewmodelShading.FOV) * 0.5)
 	return Vector2(0.5 + 0.5 * (q.x / -q.z) / (t * 16.0 / 9.0), 0.5 - 0.5 * (q.y / -q.z) / t)
 
+## Poses the actor at a reload progress from a clean start (the visual reload clock follows the
+## authoritative timer within a slack, so a jump needs a reset to land exactly).
+func _pose_reload(actor: SBActor, progress: float, reload_time: float) -> void:
+	actor.reload_remaining = 0.0
+	actor.tick_visual(0.016)
+	if progress > 0.0:
+		actor.reload_remaining = reload_time * (1.0 - progress)
+		actor.tick_visual(0.016)
+
+## Muzzle flash and spent casings: geometry, blending, per-shot variation, the 40 ms envelope,
+## and the casing's bounces. Presentation only; none of it reads or writes match state.
+func _effects(actor: SBActor) -> void:
+	var flash := SBWeaponModel.flash_mesh()
+	var flash_arrays := flash.surface_get_arrays(0)
+	var flash_vertices: PackedVector3Array = flash_arrays[Mesh.ARRAY_VERTEX]
+	var flash_colours: PackedColorArray = flash_arrays[Mesh.ARRAY_COLOR]
+	check(flash_vertices.size() / 3 <= 300 and flash_vertices.size() / 3 >= 100, "the muzzle flash is one small mesh (%d triangles)" % (flash_vertices.size() / 3))
+	check(flash_colours.size() == flash_vertices.size(), "the flash carries its gradient in vertex colour")
+	var hard_edge := 0
+	var reach := 0.0
+	var brightest := 0.0
+	for i in flash_vertices.size():
+		var radius := Vector2(flash_vertices[i].x, flash_vertices[i].y).length()
+		if radius > 0.05 and flash_colours[i].a > 0.05:
+			hard_edge += 1
+		reach = maxf(reach, -flash_vertices[i].z)
+		brightest = maxf(brightest, flash_colours[i].a)
+	check(hard_edge == 0, "the flash fades to nothing wherever it is wider than 5 cm (%d vertices end on an opaque edge)" % hard_edge)
+	check(reach > 0.25 and reach < 0.42, "the flash reaches %.0f cm ahead of the muzzle" % (reach * 100.0))
+	check(brightest > 0.8, "the flash has a hot core")
+	var flash_material := ViewmodelShading.flash(Color.WHITE)
+	check(flash_material.shader.code.contains("blend_add") and flash_material.shader.code.contains("depth_draw_never") and flash_material.shader.code.contains("COLOR"), "the first-person flash is additive, writes no depth and uses vertex colour")
+	check(actor._muzzle.mesh == flash and actor._muzzle.material_override is ShaderMaterial and actor._muzzle.material_override.shader.code.contains("blend_add"), "the actor's flash is the shared mesh with the additive shader")
+	var procedural := Node3D.new()
+	root.add_child(procedural)
+	var sidearm: Dictionary = WeaponModel.build(procedural, "sidearm", true)
+	check(sidearm.muzzle.mesh == flash and sidearm.muzzle.material_override is StandardMaterial3D and sidearm.muzzle.material_override.blend_mode == BaseMaterial3D.BLEND_MODE_ADD and sidearm.muzzle.material_override.vertex_color_use_as_albedo, "procedural weapons share the flash mesh with an additive material")
+	procedural.queue_free()
+	# Each shot differs, and the flash shrinks fast and is gone after 40 ms.
+	var scales := {}
+	for shot in 12:
+		actor.play_shot_effect()
+		scales[snappedf(actor._muzzle.scale.z, 0.001)] = true
+		check(actor._muzzle.scale.x > 0.8 and actor._muzzle.scale.x < 1.2 and actor._muzzle.scale.z > 0.75 and actor._muzzle.scale.z < 1.25, "a flash's size stays within 25 %% of the base (%s)" % [actor._muzzle.scale])
+		OS.delay_msec(3)
+	check(scales.size() >= 4, "consecutive flashes differ in length (%d distinct)" % scales.size())
+	actor.play_shot_effect()
+	actor.tick_visual(0.001)
+	var start_scale: Vector3 = actor._muzzle.scale
+	check(actor._muzzle.visible, "the flash is visible right after the shot")
+	actor.tick_visual(0.025)
+	check(actor._muzzle.visible and actor._muzzle.scale.z < start_scale.z * 0.8, "it has shrunk by 25 ms (%.2f of its first size)" % (actor._muzzle.scale.z / start_scale.z))
+	actor.tick_visual(0.02)
+	check(not actor._muzzle.visible, "it is gone after 40 ms")
+	# The brass case: a small lathed mesh, brass outside and dark inside the mouth.
+	var casing := SBCombatEffects.casing_mesh()
+	var case_arrays := casing.surface_get_arrays(0)
+	var case_vertices: PackedVector3Array = case_arrays[Mesh.ARRAY_VERTEX]
+	var case_box := casing.get_aabb()
+	check(case_vertices.size() / 3 <= 300, "the casing is %d triangles" % (case_vertices.size() / 3))
+	check(absf(case_box.size.y - 0.040) < 0.002 and absf(case_box.size.x - 0.0106) < 0.001 and absf(case_box.size.z - 0.0106) < 0.001, "the casing is a 40 mm case 10.6 mm across at the rim (%s)" % case_box.size)
+	var dark_inside := 0
+	for colour in case_arrays[Mesh.ARRAY_COLOR]:
+		if (colour as Color).v < 0.3:
+			dark_inside += 1
+	check(dark_inside > 0 and dark_inside < case_vertices.size() / 2, "the inside of the mouth is dark and the outside is not (%d dark vertices)" % dark_inside)
+	# Thrown from the port it tumbles, bounces off the floor and settles; without a floor it simply flies.
+	var effects := SBCombatEffects.new()
+	root.add_child(effects)
+	await process_frame
+	effects.set_process(false)
+	effects._random.seed = 7 # The throw is random; a fixed seed makes this a regression test.
+	effects.casing(Vector3(0, 1.3, 0), Vector3.RIGHT, 0.0)
+	var slot_index: int = effects._next.casings - 1
+	var slot: Dictionary = effects._pools.casings.slots[slot_index]
+	var lowest := INF
+	var first_basis: Basis = slot.basis
+	for step in 100:
+		effects._process(1.0 / 60.0)
+		lowest = minf(lowest, float(slot.at.y))
+	check(lowest >= 0.0, "the casing never goes through the floor (lowest %.3f m)" % lowest)
+	check(slot.bounces >= 1 and slot.bounces <= 4 and slot.resting, "it bounces off the floor and settles (%d bounces)" % slot.bounces)
+	check(not slot.basis.is_equal_approx(first_basis) and slot.basis.orthonormalized().is_equal_approx(slot.basis), "it tumbled and stayed a rotation")
+	check(slot.life > 0.0 and absf(slot.at.y - 0.005) < 0.0001, "after 1.7 s it lies on the floor (y %.4f, life left %.2f s)" % [slot.at.y, slot.life])
+	var resting_at: Vector3 = slot.at
+	var resting_bounces: int = slot.bounces
+	for step in 6:
+		effects._process(1.0 / 60.0)
+	check(slot.at.is_equal_approx(resting_at) and slot.bounces == resting_bounces, "a resting casing stays where it lies (no further bounces)")
+	effects._emit("sparks", Vector3.ZERO, Vector3.ZERO, 0.1)
+	effects.casing(Vector3.ZERO, Vector3.RIGHT)
+	check(effects._pools.casings.slots[effects._next.casings - 1].total == 0.65 and effects._pools.casings.slots.size() == 24, "a casing thrown with no floor keeps its short life and the pool stays at 24")
+	effects.queue_free()
+
 func _run() -> void:
 	for path in [WeaponModel.RELAY_AR, WeaponModel.RELAY_AR_HANDS, WeaponModel.RELAY_AR_MATERIAL, WeaponModel.RELAY_AR_HANDS_MATERIAL]:
 		check(ResourceLoader.exists(path), "authored asset present: " + path)
@@ -175,7 +269,7 @@ func _run() -> void:
 	check(actor._ejection_point != Vector3.INF, "actor ejects casings from the model's port")
 	actor.reload_remaining = 1.25
 	actor.tick_visual(0.016)
-	check(actor._magazine.position.y < actor._magazine_rest.y - 0.05, "reload extracts the authored magazine")
+	check(actor._magazine.position.distance_to(actor._magazine_rest) > 0.05, "reload takes the authored magazine out of its well")
 	actor.reload_remaining = 0
 	actor.tick_visual(0.016)
 	check(actor._magazine.position == actor._magazine_rest, "reload completion reseats it")
@@ -238,21 +332,116 @@ func _run() -> void:
 	var sidearm_paint: Array[String] = _vertex_overrides(sidearm._gun)
 	check(sidearm.weapon_id == "sidearm" and not sidearm._viewmodel and sidearm._paint_parts.size() > 0 and sidearm._finish.shader == CosmeticMaterial.shader() and sidearm_paint.is_empty(), "procedural first-person sidearm keeps the world finish %s" % [sidearm_paint])
 	sidearm.queue_free()
-	# The clip: the support hand leaves the handguard for the magazine, follows it down
-	# its well and returns exactly to the hold. Positions are in the skeleton's space.
+	# The reload as a mechanical sequence: leave the handguard, reach, grasp, slide the
+	# magazine out along its well, carry it into view, line it up, enter, push to the stop,
+	# keep hold until it is seated, then let go and return. The clip is keyed in
+	# tools/art/arms_build.py to the same fractions as Actor.RELOAD_*; the magazine rides the
+	# support hand between the grasp and the let-go (actor._pose_magazine).
 	var hand := skeleton.find_bone("L_hand")
 	var hold: Vector3 = skeleton.get_bone_global_pose(hand).origin
 	var reload_time: float = 2.25
-	actor.reload_remaining = reload_time * (1.0 - 0.45)
-	actor.tick_visual(0.016)
-	var low: Vector3 = skeleton.get_bone_global_pose(hand).origin
-	check(low.y < hold.y - 0.15, "mid-reload the support hand is down with the magazine (%.2f m below the hold)" % (hold.y - low.y))
-	var magazine_drop: Vector3 = actor._magazine.position - actor._magazine_rest
-	check(magazine_drop.length() > 0.15 and absf((actor._magazine.basis.inverse() * magazine_drop).normalized().y + 1.0) < 0.001, "the magazine drops straight down its own well")
+	check(is_equal_approx(Actor.RELOAD_GRASP, 0.20) and is_equal_approx(Actor.RELOAD_SEAT, 0.80) and is_equal_approx(Actor.RELOAD_LETGO, 0.85) and Actor.RELOAD_REACH < Actor.RELOAD_GRASP, "the reload's phase boundaries are the ones the clip is keyed to")
+	var rest_transform: Transform3D = actor._magazine_rest_transform
+	var magazine_box: AABB = actor._magazine.mesh.get_aabb()
+	var rest_centre: Vector3 = rest_transform * magazine_box.get_center()
+	var well_vertices: PackedVector3Array = actor._magazine.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+	var top_y := -INF
+	var bottom_y := INF
+	for vertex in well_vertices:
+		var in_gun: Vector3 = rest_transform * vertex
+		top_y = maxf(top_y, in_gun.y)
+		bottom_y = minf(bottom_y, in_gun.y)
+	var top_sum := Vector3.ZERO
+	var top_count := 0
+	var bottom_sum := Vector3.ZERO
+	var bottom_count := 0
+	for vertex in well_vertices:
+		var in_gun: Vector3 = rest_transform * vertex
+		if in_gun.y > top_y - 0.01:
+			top_sum += in_gun
+			top_count += 1
+		elif in_gun.y < bottom_y + 0.01:
+			bottom_sum += in_gun
+			bottom_count += 1
+	var well_axis := (bottom_sum / bottom_count - top_sum / top_count).normalized()
+	var moved := func(progress: float) -> Dictionary:
+		_pose_reload(actor, progress, reload_time)
+		var offset: Vector3 = actor._magazine.transform * magazine_box.get_center() - rest_centre
+		var along := offset.dot(well_axis)
+		return {"travel": along, "off_axis": (offset - well_axis * along).length(), "offset": offset, "hand": skeleton.get_bone_global_pose(hand).origin}
+	var index_2 := skeleton.find_bone("L_index_2")
+	var curl_at := func(progress: float) -> Quaternion:
+		_pose_reload(actor, progress, reload_time)
+		return skeleton.get_bone_pose_rotation(index_2)
+	# Before the grasp the magazine is seated; at the grasp the hand is on it.
+	var at_hold: Dictionary = moved.call(0.0)
+	check((at_hold.hand as Vector3).distance_to(hold) < 0.001 and (at_hold.offset as Vector3).length() < 0.0005, "at the start the hand is on the handguard and the magazine is seated")
+	var reaching: Dictionary = moved.call(0.08)
+	check((reaching.hand as Vector3).distance_to(hold) > 0.03 and (reaching.offset as Vector3).length() < 0.0005, "while the hand reaches the magazine the magazine has not moved")
+	var at_grasp: Dictionary = moved.call(Actor.RELOAD_GRASP)
+	check((at_grasp.offset as Vector3).length() < 0.0005, "at the grasp the magazine is still seated (%.1f mm)" % ((at_grasp.offset as Vector3).length() * 1000.0))
+	# It slides out along its own well and clears it.
+	for progress in [0.22, 0.26, 0.29, 0.32]:
+		var sliding: Dictionary = moved.call(progress)
+		check(absf(sliding.off_axis) < 0.004, "at %d %% the magazine is on its well's axis (%.1f mm off)" % [roundi(progress * 100), sliding.off_axis * 1000.0])
+	var cleared: Dictionary = moved.call(0.32)
+	check(cleared.travel > 0.085, "by 32 %% the magazine has cleared the well (%.0f mm out)" % (cleared.travel * 1000.0))
+	# Then it is carried out to the rifle's left and shown, away from the well.
+	var shown: Dictionary = moved.call(0.46)
+	check((shown.offset as Vector3).length() > 0.12 and (shown.offset as Vector3).x < -0.08, "mid-reload the replacement is carried out to the rifle's left (%s)" % [shown.offset])
+	check(shown.hand.y > hold.y - 0.15 and (shown.hand as Vector3).distance_to(hold) > 0.12, "the hand carries it: it is away from the handguard and not far below it")
+	# It comes back, lines up under the well, enters and is pushed to its stop.
+	var lined_up: Dictionary = moved.call(0.69)
+	check(lined_up.off_axis < 0.008 and lined_up.travel > 0.07, "at 69 %% it is lined up under the well, not yet in it (%.0f mm out, %.1f mm off)" % [lined_up.travel * 1000.0, lined_up.off_axis * 1000.0])
+	var entering: Dictionary = moved.call(0.75)
+	check(entering.travel > 0.01 and entering.travel < 0.06 and entering.off_axis < 0.004, "at 75 %% it is entering the well (%.0f mm out)" % (entering.travel * 1000.0))
+	var seated: Dictionary = moved.call(Actor.RELOAD_SEAT)
+	check((seated.offset as Vector3).length() < 0.0005, "at %d %% it is seated (%.2f mm from its place)" % [roundi(Actor.RELOAD_SEAT * 100), (seated.offset as Vector3).length() * 1000.0])
+	# The hand lets go only after it is seated: it stays on it, fingers closed, until the let-go.
+	var closed: Quaternion = curl_at.call(Actor.RELOAD_SEAT)
+	for progress in [0.81, 0.83, 0.845]:
+		var holding: Dictionary = moved.call(progress)
+		var curl: Quaternion = curl_at.call(progress)
+		check((holding.offset as Vector3).length() < 0.0005 and (holding.hand as Vector3).distance_to(seated.hand) < 0.0015 and closed.angle_to(curl) < deg_to_rad(1.0), "at %d %% the hand is still closed on the seated magazine (hand %.1f mm, fingers %.1f deg)" % [roundi(progress * 100), (holding.hand as Vector3).distance_to(seated.hand) * 1000.0, rad_to_deg(closed.angle_to(curl))])
+	var opening: Quaternion = curl_at.call(0.92)
+	var released: Dictionary = moved.call(0.92)
+	check(closed.angle_to(opening) > deg_to_rad(8.0) and (released.hand as Vector3).distance_to(seated.hand) > 0.02 and (released.offset as Vector3).length() < 0.0005, "after the let-go the fingers open and the hand leaves; the magazine stays seated (fingers %.0f deg, hand %.0f mm)" % [rad_to_deg(closed.angle_to(opening)), (released.hand as Vector3).distance_to(seated.hand) * 1000.0])
+	# Until the seat the fingers stay closed once they have closed on the magazine.
+	var firm: Quaternion = curl_at.call(0.22)
+	var worst_loosening := 0.0
+	for tick in range(0, 81):
+		var progress: float = 0.22 + float(tick) / 80.0 * (Actor.RELOAD_SEAT - 0.22)
+		worst_loosening = maxf(worst_loosening, firm.angle_to(curl_at.call(progress)))
+	check(worst_loosening < deg_to_rad(1.0), "from the grasp to the seat the fingers do not open (worst %.2f deg)" % rad_to_deg(worst_loosening))
+	# No teleports: at 240 Hz of reload progress the magazine and the hand move smoothly,
+	# including where the magazine is handed over to the hand at the grasp and back at the let-go.
+	var last_magazine := Vector3.INF
+	var last_hand := Vector3.INF
+	var worst_magazine := 0.0
+	var worst_hand := 0.0
+	var steps := 540
+	for tick in range(steps + 1):
+		_pose_reload(actor, float(tick) / steps, reload_time)
+		var magazine_now: Vector3 = actor._magazine.transform * magazine_box.get_center()
+		var hand_now: Vector3 = skeleton.get_bone_global_pose(hand).origin
+		if last_magazine != Vector3.INF:
+			worst_magazine = maxf(worst_magazine, magazine_now.distance_to(last_magazine))
+			worst_hand = maxf(worst_hand, hand_now.distance_to(last_hand))
+		last_magazine = magazine_now
+		last_hand = hand_now
+	var seconds_per_step := reload_time / steps
+	check(worst_magazine / seconds_per_step < 1.5 and worst_hand / seconds_per_step < 4.5, "the magazine never moves faster than 1.5 m/s and the hand 4.5 m/s (worst %.2f and %.2f m/s)" % [worst_magazine / seconds_per_step, worst_hand / seconds_per_step])
+	# The seat is heard when it happens, not before.
+	_pose_reload(actor, 0.5, reload_time)
+	_pose_reload(actor, Actor.RELOAD_SEAT - 0.02, reload_time)
+	actor.tick_visual(0.001)
+	check(not actor._reload_visual_seated, "the seat sound has not played before the magazine is seated")
+	_pose_reload(actor, Actor.RELOAD_SEAT + 0.01, reload_time)
+	actor.tick_visual(0.001)
+	check(actor._reload_visual_seated, "the seat sound plays once the magazine is seated")
 	# Staging: the support hand and the whole magazine are in frame when the hand takes
 	# the magazine and when it seats it (they leave the frame only mid-swap).
-	var magazine_box: AABB = actor._magazine.mesh.get_aabb()
-	for progress in [0.14, 0.84]:
+	for progress in [0.14, Actor.RELOAD_SEAT]:
 		actor.reload_remaining = reload_time * (1.0 - progress)
 		actor.tick_visual(0.016)
 		var wrist := _viewmodel_screen(actor.camera, skeleton.global_transform * skeleton.get_bone_global_pose(hand).origin)
@@ -264,7 +453,7 @@ func _run() -> void:
 	# grab and the seat, with a margin of 1 % of the frame (the review of 64ec598 measured
 	# 36 vertices 2.8 px below a 720 px frame at 15 %).
 	var magazine_vertices: PackedVector3Array = actor._magazine.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
-	for progress in [0.12, 0.13, 0.14, 0.15, 0.82, 0.84, 0.86, 0.88]:
+	for progress in [0.12, 0.13, 0.14, 0.15, 0.78, 0.80, 0.82, 0.84]:
 		actor.reload_remaining = 0
 		actor.tick_visual(0.016)
 		actor.reload_remaining = reload_time * (1.0 - progress)
@@ -317,6 +506,7 @@ func _run() -> void:
 	actor._kick = 0.0
 	actor.tick_visual(0.016)
 	check(rest_pose.angle_to(skeleton.get_bone_pose_rotation(index)) < 0.01, "the trigger finger returns to rest")
+	await _effects(actor)
 	actor.queue_free()
 	# Without the rigged arms the static hands remain the fallback.
 	WeaponModel.use_rigged_arms = false

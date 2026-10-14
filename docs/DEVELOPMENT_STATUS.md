@@ -9,7 +9,7 @@ Updated 2026-10-14 by Claude (cloud session). Read this first when resuming work
 | `main` | `e67f2c8` | 0.3.0-dev baseline |
 | `claude/independent-audit-visual-v04` (PR #1 → `main`) | `148760e` | <ul><li>Codex's blockers are fixed.</li><li>The Unicode kill-feed fix was accepted at `227d6c8`.</li><li>The status-line regression Codex found at `98ff57c` is fixed in `148760e` (`docs/audits/CODEX_REVIEW_RESPONSE.md`).</li><li>**Unmerged; waiting for Codex's re-review.** Not a release candidate.</li></ul> |
 | `claude/cs2-fidelity-art-production` (PR #2, stacked on PR #1) | this branch, `b507205` and later | <ul><li>Graphics slice: Relay AR, rigged arms, viewmodel projection.</li><li>Codex's four corrections from its review of `64ec598` are addressed.</li><li>Codex's visual score of 5.5/10 stands against the 8.5 gate.</li><li>Merge only after PR #1, as its own reviewed PR.</li></ul> |
-| `claude/native-ui-production-v1` (no PR yet) | based on PR #1 `148760e` | <ul><li>The UI and UX overhaul (`docs/ui/VISUAL_GAP_REVIEW.md` on that branch).</li><li>Independent of the art branch.</li></ul> |
+| `claude/native-ui-production-v1` (no PR yet) | `2b2731a`, based on PR #1 `148760e` | <ul><li>The UI and UX overhaul (`docs/ui/VISUAL_GAP_REVIEW.md` on that branch): a measured, adaptive main menu and an armory with empty, loading and error states, exact market and trade terms, and a collection browser.</li><li>Independent of the art branch.</li></ul> |
 | Codex branches and PRs #3–#9 | see GitHub | Networking, backend, economy integrity and integration. Integration preview PR #9 (`integration/sightbreak-network-art-preview`). Claude does not push to them |
 
 **Ownership** (Codex's `docs/engineering/PARALLEL_WORK.md`):
@@ -22,27 +22,30 @@ Updated 2026-10-14 by Claude (cloud session). Read this first when resuming work
 - **Asset pipeline:** `tools/art/`, with headless Blender (bpy 5.2.2): generators, signed-distance modelling, bake, export, texture packing, review renders and motion sheets. See `docs/art/ASSET_PIPELINE.md`.
 - **Relay AR rifle:** original and real scale. 30,326 triangles (25,194 in first person), with a 1024² baked PBR set.
 - **Rigged arms:**
-  - 7,828 triangles and 34 bones, with a contact-solved grip and a 1 s reload clip.
-  - Glove and sleeve are separated in value.
+  - 9,204 triangles and 34 bones, with a contact-solved grip and a 1 s, 60 fps reload clip.
+  - The reload is a mechanical sequence: the support hand comes up from below, cups the magazine's base, slides it out along its well, shows it, lines it up, enters it, pushes it to its stop (0.80), holds, and lets go only at 0.85. The magazine is posed from the hand while it holds it (`Actor._pose_magazine`). Measured: the magazine is at least 94 % on screen and at most 1 % covered throughout, and the arms enter neither the rifle nor the magazine (`docs/reports/media/art-v6/`).
+  - The sleeve is a muted olive-drab (median luma 110 in sun, was 146) with a finer hem; gloves are 25 % lighter.
   - A presentation-only reload clock keeps poses smooth at the 20 Hz snapshot rate.
-  - The reload is staged so the hand and the whole magazine are in frame at the grab and the seat.
+- **Bore:** the rifle's vanishing point is 38 px left and 21 px above the crosshair (3.5°, was 124 px left, 10.0°) and the bore line passes through the crosshair.
+- **Effects:** a layered additive muzzle flash (213 triangles; it differs shot to shot and lasts 40 ms) and a lathed brass casing that tumbles, bounces and settles. Presentation only.
 - **Viewmodel projection:** 54° with depth compression, applied to every first-person mesh of the authored rifle build, including both fallback hand variants.
-- **Tests:** `weapon_art_test.gd` (109 checks) runs in `validate.sh`. `paint_visibility_test.gd` (pixels) and `weapon_motion_capture.gd` (frame sequences) need a native display.
-- **Evidence:** `docs/reports/media/art-v1`, `art-v3`, `art-v4`.
+- **Tests:** `weapon_art_test.gd` (164 checks) runs in `validate.sh`; `reload_legibility_probe.gd` and `viewmodel_light_probe.gd` (native display) measure the reload and the per-part luma. `paint_visibility_test.gd` (pixels) and `weapon_motion_capture.gd` (frame sequences) need a native display.
+- **Evidence:** `docs/reports/media/art-v1`, `art-v3`, `art-v4`, `art-v5/lighting`, `art-v6/reload-hands-effects`.
 
 ## Not done (in priority order)
 
 The review record is in `docs/art/VISUAL_QA.md`. Codex scored the slice 5.5/10; the gate is 8.5.
 
-1. **Composition:** the bore's vanishing point is about 125 px left of the crosshair (the rifle reads as held sideways), and the action leaves the frame at 4:3.
+1. **Composition:** the bore is 3.5° off the crosshair (was 10°), not zero; at 4:3 the canvas shows more than ships (the project keeps 16:9).
 2. **Hands and sleeves:**
    - the grip hand reads as a mitten;
-   - support fingertips crest the rail;
-   - the sleeves are near-uniform tubes;
+   - support fingertips crest the rail at the handguard hold, and the thumb is not visible in the cupped grasp;
+   - gloves in a dark interior measure 15 to 17 (target 20) and the sleeve-to-glove value gap in shade is about 6 luma;
+   - the pistol grip is still a flat block;
    - the static v2 fallback hands are still the v2 asset.
 3. **Lighting:** shade contrast between receiver and arms; over-bright backlit rims.
-4. **Animation:** draw and inspect clips; a second magazine; reduced motion reviewed.
-5. **Effects:** muzzle flash and casings.
+4. **Animation:** draw and inspect clips; a second magazine mesh (the replacement is the same magazine re-seated); reduced motion reviewed.
+5. **Effects:** a bolt or charging-handle animation, a light for the flash (it is a mesh only), reload sound design.
 6. **The rifle:** a LOW-tier LOD and a UV repack.
 7. **Next weapons:** sidearm, SMG and marksman rifle through the same pipeline.
 8. **Environment:** one Relay Yard section at final quality.
