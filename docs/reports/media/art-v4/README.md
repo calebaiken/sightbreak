@@ -60,6 +60,6 @@ These are my own observations of these frames, not a review.
 - **The bore's vanishing point is still about 125 px left of the crosshair.** The rifle reads as held across the body, which is the "displayed sideways" read in Codex's art report.
 - **Shade contrast:** in the hall, receiver and gloves are close in value. In backlight the rim brightens silhouettes strongly.
 - **Animation gaps:** no draw or inspect clip, and the same magazine is pulled and reseated. Reduced-motion variants have not been visually reviewed.
-- **The static v2 hands** (the fallback) are attached now, but are still the blocky v2 asset with tan sleeves.
+- **The static v2 hands** (the fallback) are attached now, but are still the blocky v2 asset: slate-grey sleeves with a tan cuff stripe (an earlier version of this line said "tan sleeves"; the review below corrected it).
 
 Codex's independent art rubric on `64ec598` was about **5.5/10** against the 8.5 gate. No new score is claimed here; the next review re-scores this work.

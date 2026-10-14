@@ -237,3 +237,65 @@ The scores above stay as the reviewer gave them until a new review re-scores the
 - reduced motion is not reviewed.
 
 None of the five weaknesses behind the 5.5 is resolved by these fixes except glove value. The score stays at Codex's 5.5 until a new review re-scores the work.
+
+## Review of `b507205` (2026-10-14)
+
+**Reviewer:** a fresh Claude agent, read-only, given the `art-v4` evidence. It scored from the images and from frames it pulled out of the MP4s before reading any self-assessment. It is the same model family as the author, so this is **not independent acceptance**.
+
+**Verdict:** about **4.5/10**, below Codex's 5.5 for `64ec598`. The reviewer weights reload legibility and hands more heavily.
+
+| Area | Score |
+| --- | ---: |
+| Hand and glove anatomy | 3.5 |
+| Sleeves and forearms | 4.0 |
+| Magazine grab and reload legibility | 3.5 |
+| Clipping and contact | 5.0 |
+| Projection and composition | 5.5 |
+| Materials and value separation | 4.5 |
+| Rifle model | 5.0 |
+| Effects | 4.0 |
+
+**Top defects, in its order:**
+1. **Reload legibility:**
+   - at the grab and the seat the support forearm covers most of the magazine;
+   - in backlight the pulled magazine renders near black;
+   - the bright tan pistol grip is the most prominent object and reads as "the magazine".
+2. **Hands:** the grip hand is a mitten without thumb or knuckle read, and the support fingers fuse into a paddle on top of the rail.
+3. **Bore direction:** the rifle aims low-left and reads as held across the body.
+4. **Materials:**
+   - a saturated chartreuse sleeve in sun (sRGB 143, 150, 102);
+   - glove and receiver almost equal in shade;
+   - tan furniture in the same warm band as the sunlit gloves.
+5. **Effects:** a flat star muzzle flash and box casings.
+
+**Also seen:** the support hand opens in mid-air before the seat completes, with no push.
+
+**Against art-v3:**
+- **Better:** glove value is fixed (sunlit glove saturation 0.09 against 0.17), and the hand and magazine stay in frame at the grab.
+- **Mild regressions:** the sleeve is brighter and more saturated in sun, and its fold relief no longer reads.
+
+**On my claims:**
+- **Confirmed:**
+  - every magazine vertex is in frame at the grab and the seat;
+  - the gloves no longer read as skin;
+  - the fallback hands are attached.
+- **Overstated:** "in frame" is not "legible". The magazine is mostly covered, and in backlight black. Slimmer thumbs, condyles, creases and the lower guard are not visible at 1280 × 720.
+- **Wrong:** I described the static v2 fallback's sleeves as tan. They are slate grey with a tan cuff stripe, now corrected in both READMEs.
+- **Not acknowledged before:** the black magazine, the forearm covering it, the early hand opening and the sleeve saturation. All four are recorded here.
+
+**My verification of the black magazine:**
+- **Measured, not a texture fault:**
+  - the magazine region of backlit frame 60 has a median of sRGB (3, 3, 2), with 27 % pure black;
+  - its albedo, sampled at its UVs, is a normal tan-grey (0.10, 0.09, 0.06 linear);
+  - its baked AO is ordinary (mean 0.59).
+- **Cause:** the shadowed side gets only the flat ambient (energy 0.41) and the 0.08 × albedo emission floor. Both are about 0.01 linear, which the yard's Filmic tonemap toe crushes to black.
+- **Conclusion:** this is not a broken shading path. The viewmodel needs a real fill term; the current floor is too weak (the review of `5100b3e` said the same).
+
+**Next on this branch, in order:**
+1. A view-space fill for the viewmodel: shaped, AO-aware, in the existing shader, so no extra light pass.
+2. A less saturated sleeve and darker furniture.
+3. Reload staging with the support forearm below the magazine, and a push at the seat.
+4. Grip-hand finger separation and a visible thumb.
+5. Bore direction.
+
+The scores above stand until a new review re-scores the work.

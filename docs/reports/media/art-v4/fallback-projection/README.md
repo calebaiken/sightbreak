@@ -26,4 +26,4 @@ All captures are Godot 4.7.2 on Xvfb with Mesa llvmpipe, from `game/tests/weapon
 
 For each build the test checks three things: it reports the right projection; every mesh draws with that one projection; and its hands are drawn. The inspection build must also draw everything with the camera's projection.
 
-**Not addressed here.** This fix does not raise the v2 static hands to the rigged arms' standard. Their tan sleeves and blocky fingers are as reviewed in `VISUAL_QA.md`.
+**Not addressed here.** This fix does not raise the v2 static hands to the rigged arms' standard. Their blocky fingers and slate-grey sleeves with a tan cuff stripe are as reviewed in `VISUAL_QA.md`.
