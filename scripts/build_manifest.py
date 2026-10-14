@@ -100,7 +100,7 @@ def package():
                 **current, "exports": records, "artifacts": artifacts,
                 "limitations": ["Android debug signed; physical device installation and performance unverified.",
                                 "iOS unsigned Xcode project; macOS/Xcode compilation and signing unverified.",
-                                "See docs/reports/QA.md for independently measured functional and native rendering results."]}
+                                "See docs/reports/COMBINED_INTEGRATION_REPORT.md and CODEX_NETWORK_QA.md for measured results and open gates."]}
     write_json(BUILDS / "manifest.json", manifest)
     (BUILDS / "checksums.txt").write_text("".join(f"{a['sha256']}  {a['path']}\n" for a in artifacts))
     print(json.dumps(manifest, indent=2))
