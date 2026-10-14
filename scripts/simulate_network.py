@@ -40,7 +40,7 @@ def main():
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--no-prediction', action='store_true')
     parser.add_argument('--render-client', type=int, default=-1, help='One native rendered client index; -1 keeps all headless (requires DISPLAY)')
-    parser.add_argument('--blackout-at', type=float, default=-1, help='Seconds after clients launch; -1 disables')
+    parser.add_argument('--blackout-at', type=float, default=-1, help='Seconds after shared measurement start; -1 disables')
     parser.add_argument('--blackout-seconds', type=float, default=0)
     parser.add_argument('--reconnect-at', type=float, default=-1, help='Explicitly close each connected client and exercise its resume token at this elapsed time')
     parser.add_argument('--reconnect-delay', type=float, default=2.0, help='Reconnect delay after explicit transport close; default matches the game; 0.7 reproduces the early stress fixture')

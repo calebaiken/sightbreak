@@ -21,3 +21,7 @@ Relative to graphics8c18357, actor.gd changes only three movement aliases and re
 ## Integration policy
 
 This aggregate is for preview validation, not a shortcut around review of each constituent PR. Merge authorization remains with the owner. Preserve the stack order and protocol5/client-server parity; lifecycle needs its backend ticket-inspection route, and durable rewards need the worker/launcher/backend together. Prediction remains opt-in; combat-history recording remains diagnostic and live rewind is disabled. Claude owns all asset/material/animation corrections.
+
+## Refreshed heads
+
+Graphics64ec598 was merged atd084e500 with no content conflict. Foundation98ff57c was then merged with no conflict; it changes only main.gd status layout, tests and evidence. Its new custom-layout regression is deliberately reported rather than silently changing Claude's UI. Final matrix4ae4e5c and export60cf125 contain both refreshed heads. The actor diff against64ec598 still contains only movement constants/delegation. No source branch was modified.

@@ -1,24 +1,11 @@
 # Integration checkpoint — 2026-10-14
 
-Working branch: `integration/sightbreak-network-art-preview`; draft PR #9 targets PR #8 for validation only. No main/source PR branch was changed or merged. Published integration source d8a10ff; later harness commits do not change shipping runtime.
+Supersedes the earlier interrupted measurement checkpoint. Current validation branch: `integration/sightbreak-network-art-preview`, draft PR9. Exact tested/export source: `60cf125bb2c05606e71a4a68482d31ec26dc69bb`; later commits add reports/evidence and a test CLI help correction. Main and source PR branches remain untouched.
 
-## Verified inputs / incoming update
+Completed: refreshed foundation98ff57c + graphics64ec598 + network stack89c0e9;47/47 maintained matrix groups; independent321 authority checks; ten-client latency/loss/jitter/reconnect campaign; native ten-client shared-window test; fixed rendering/resource and ten-aspect comparisons; three exact-source exports; native Linux menu/join/fire/keyboard-reload/clean exit; source/payload/checksum checks.
 
-- Runtime d084e500 contains foundation227d6c8, network stack89c0e99 and graphics64ec598.
-- Full regression matrix:47/47 groups passed on clean d084e500.
-- New foundation98ff57c fixes the independently reported130% status/control overlap. It is fetched and under independent review, **not yet integrated/tested** at this checkpoint. After frozen performance measurements finish, merge it only into this isolated branch and run the full matrix again.
-- Graphics remains64ec598 at the latest GitHub check. Its static fallback projection defect is reported on PR #2; independent weapon/arms visual rubric5.5/10 does not meet8.5.
+Open: new98ff57c custom-status oscillation, full-capacity close-loss reconnect, static fallback projection, visual5.5/10, intermittent nested protocol ObjectDB warning. Prediction remains opt-in, live rewind disabled. No physical device, Xcode, production Internet or release acceptance.
 
-## Confirmed networking blocker
+Resume from [combined report](COMBINED_INTEGRATION_REPORT.md), [evidence index](integration-evidence/README.md), [parallel work](../engineering/PARALLEL_WORK.md) and GitHub PR9. Preserve failures; request owner corrections then rerun relevant and full regressions after dependencies advance. Do not restart the project or recreate PR3–8.
 
-Twelve-condition, ten-real-client campaign on85edf895:11/12 pass, one failed aggressive0.7s reconnect. Three impaired repeats/control pass; normal2s reconnect passes. A close-overlap blackout on47a350d clean (ten clients,100ms RTT,blackout7.8–9.3s,close8s,real2s retry) recovers only5/10:two terminal slot-reservation rejections and three still connecting at22s. This blocks robust reconnect acceptance. Attribution to foundation versus stack remains unverified. Preserve ownership/ticket/capacity protections; a safe bounded retry/old-binding follow-up is required. PR #5 comment: https://github.com/calebaiken/sightbreak/pull/5#issuecomment-6160142760 . Prediction remains opt-in, live rewind disabled.
-
-## Evidence and remaining work
-
-Workspace evidence: `/workspace/reviews/integration-20261013/`. Independent reports in `pr1-independent`, `art-independent`, `network-independent`; matrix47 logs in `matrix-final`; network campaign and follow-ups retain failures. Three scenario render runs, weapon cost and baseline render comparison are completing via `run_remaining_measurements.py`; outputs/logs enumerate exact progress. These software diagnostics are not device FPS.
-
-Native exported d084 Linux executable has actually joined/fired and displayed replicated rigged reload. Earlier --script verifier was invalid and is replaced by supported native UI automation. First timed-quit attempt timed out: clean export teardown remains pending. Final verifier needs a rebuilt binary and an optional held-R input mode prepared by the reviewer. Existing three exports are still d084 artifacts; **rebuild all after the incoming HUD merge**, verify hashes/content/native runtime, then package.
-
-Remaining: finish isolated rendering/native network/import measurements; independently verify98ff57c; merge and rerun47 groups; refreshed aspect captures; exact-source Android/Linux/unsigned iOS exports and independent artifact check; full evidence/checksum packaging; final QA/docs/PR descriptions and push verification. Do not mark mobile startup, Xcode compile/signing, production Internet security, human movement feel or overall8.5 acceptance as passed.
-
-Maintained entry points: `scripts/validate_matrix.py --render`, `scripts/run_network_campaign.py`, `scripts/simulate_network.py`, `scripts/profile_render.sh`, `scripts/export.sh`, `scripts/verify_builds.py`, `scripts/verify_integration_export.py`. Full runtime content SHA256 before incoming HUD change: `8eed24e4c284034afd1eb9d383c7f3e981eabb12b17cafb158b0452a7554e9f6`.
+Artifact delivery: GitHub draft release exists with zero assets; uploads.github.com is blocked. Both normal and approved attempts returned Forbidden. Verified packages/raw archives remain in builds/. Cloud network draft was saved with uploads.github.com plus api.github.com; applying/publishing configuration is required before retry, not another build. Never claim uploaded assets until remote verification succeeds.

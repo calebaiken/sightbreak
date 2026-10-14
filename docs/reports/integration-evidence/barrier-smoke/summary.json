@@ -1,0 +1,308 @@
+{
+  "conditions": {
+    "rtt_ms": 0,
+    "jitter_ms": 0,
+    "loss": 0,
+    "reorder": 0,
+    "clients": 2,
+    "seconds": 5.0,
+    "seed": 7301,
+    "port": 33000,
+    "out": "/workspace/reviews/integration-20261013/barrier-smoke",
+    "no_prediction": false,
+    "render_client": -1,
+    "blackout_at": -1,
+    "blackout_seconds": 0,
+    "reconnect_at": -1,
+    "reconnect_delay": 2.0
+  },
+  "scope": "loopback real Godot processes; added RTT simulation; no device/cellular claim",
+  "source": {
+    "commit": "b1facf42d9b698c28667dfa8640717d538f59159",
+    "dirty": true,
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.12.14"
+  },
+  "traffic_window_seconds": 7.311441214000297,
+  "traffic_window_scope": "whole proxy lifetime including startup, measurement and report/exit drain",
+  "measurement_start_epoch": 1791949339.7329586,
+  "startup_seconds": 2.1194727330002934,
+  "measurement_duration_seconds": 5.0,
+  "shared_stop_reached": true,
+  "failures": [],
+  "traffic": {
+    "up": {
+      "received_packets": 416,
+      "forwarded_packets": 416,
+      "dropped_packets": 0,
+      "udp_payload_bytes": 81408,
+      "max_datagram_bytes": 256,
+      "datagrams_over_1200": 0
+    },
+    "down": {
+      "received_packets": 229,
+      "forwarded_packets": 229,
+      "dropped_packets": 0,
+      "udp_payload_bytes": 136222,
+      "max_datagram_bytes": 1392,
+      "datagrams_over_1200": 9
+    }
+  },
+  "processes": {
+    "server": {
+      "rss_peak_kib": 187284,
+      "cpu_seconds": 1.15,
+      "rss_current_kib": 135628
+    },
+    "client-0": {
+      "rss_peak_kib": 188552,
+      "cpu_seconds": 1.07,
+      "rss_current_kib": 135976
+    },
+    "client-1": {
+      "rss_peak_kib": 188008,
+      "cpu_seconds": 1.12,
+      "rss_current_kib": 136064
+    }
+  },
+  "per_client_traffic": [
+    {
+      "up": {
+        "received_packets": 206,
+        "forwarded_packets": 206,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 41338,
+        "max_datagram_bytes": 256,
+        "datagrams_over_1200": 0
+      },
+      "down": {
+        "received_packets": 70,
+        "forwarded_packets": 70,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 32556,
+        "max_datagram_bytes": 1392,
+        "datagrams_over_1200": 6
+      }
+    },
+    {
+      "up": {
+        "received_packets": 210,
+        "forwarded_packets": 210,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 40070,
+        "max_datagram_bytes": 248,
+        "datagrams_over_1200": 0
+      },
+      "down": {
+        "received_packets": 159,
+        "forwarded_packets": 159,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 103666,
+        "max_datagram_bytes": 1392,
+        "datagrams_over_1200": 3
+      }
+    }
+  ],
+  "resource_peak_timeline": [
+    {
+      "seconds": 1.5653000446036458e-05,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 170416,
+          "cpu_seconds": 0.57,
+          "rss_current_kib": 170416
+        },
+        "client-0": {
+          "rss_peak_kib": 1528,
+          "cpu_seconds": 0.0,
+          "rss_current_kib": 1528
+        },
+        "client-1": {
+          "rss_peak_kib": 1176,
+          "cpu_seconds": 0.0,
+          "rss_current_kib": 1176
+        }
+      }
+    },
+    {
+      "seconds": 1.0045859790006944,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 186904,
+          "cpu_seconds": 0.65,
+          "rss_current_kib": 186904
+        },
+        "client-0": {
+          "rss_peak_kib": 187480,
+          "cpu_seconds": 0.68,
+          "rss_current_kib": 187480
+        },
+        "client-1": {
+          "rss_peak_kib": 186448,
+          "cpu_seconds": 0.65,
+          "rss_current_kib": 186448
+        }
+      }
+    },
+    {
+      "seconds": 2.0058789480008272,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 186968,
+          "cpu_seconds": 0.72,
+          "rss_current_kib": 186968
+        },
+        "client-0": {
+          "rss_peak_kib": 188420,
+          "cpu_seconds": 0.79,
+          "rss_current_kib": 188420
+        },
+        "client-1": {
+          "rss_peak_kib": 187880,
+          "cpu_seconds": 0.78,
+          "rss_current_kib": 187880
+        }
+      }
+    },
+    {
+      "seconds": 3.0071821740002633,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 186968,
+          "cpu_seconds": 0.79,
+          "rss_current_kib": 186968
+        },
+        "client-0": {
+          "rss_peak_kib": 188420,
+          "cpu_seconds": 0.85,
+          "rss_current_kib": 188420
+        },
+        "client-1": {
+          "rss_peak_kib": 187880,
+          "cpu_seconds": 0.84,
+          "rss_current_kib": 187880
+        }
+      }
+    },
+    {
+      "seconds": 4.009875576999548,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 186968,
+          "cpu_seconds": 0.87,
+          "rss_current_kib": 186968
+        },
+        "client-0": {
+          "rss_peak_kib": 188420,
+          "cpu_seconds": 0.9,
+          "rss_current_kib": 188420
+        },
+        "client-1": {
+          "rss_peak_kib": 187880,
+          "cpu_seconds": 0.89,
+          "rss_current_kib": 187880
+        }
+      }
+    },
+    {
+      "seconds": 5.011479816001156,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 186968,
+          "cpu_seconds": 0.93,
+          "rss_current_kib": 186968
+        },
+        "client-0": {
+          "rss_peak_kib": 188420,
+          "cpu_seconds": 0.94,
+          "rss_current_kib": 188420
+        },
+        "client-1": {
+          "rss_peak_kib": 187880,
+          "cpu_seconds": 0.94,
+          "rss_current_kib": 187880
+        }
+      }
+    },
+    {
+      "seconds": 6.011751992000427,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 186968,
+          "cpu_seconds": 1.01,
+          "rss_current_kib": 186968
+        },
+        "client-0": {
+          "rss_peak_kib": 188420,
+          "cpu_seconds": 0.98,
+          "rss_current_kib": 188420
+        },
+        "client-1": {
+          "rss_peak_kib": 187880,
+          "cpu_seconds": 1.01,
+          "rss_current_kib": 187880
+        }
+      }
+    },
+    {
+      "seconds": 7.012126978999731,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 186968,
+          "cpu_seconds": 1.1,
+          "rss_current_kib": 186968
+        },
+        "client-0": {
+          "rss_peak_kib": 188420,
+          "cpu_seconds": 1.02,
+          "rss_current_kib": 188420
+        },
+        "client-1": {
+          "rss_peak_kib": 187880,
+          "cpu_seconds": 1.07,
+          "rss_current_kib": 187880
+        }
+      }
+    }
+  ],
+  "skipped_commands": 5,
+  "tick_usec_p50": 448,
+  "tick_usec_p95": 1762,
+  "tick_usec_max": 6318,
+  "tick_interval_usec_p50": 16666,
+  "tick_interval_usec_p95": 30956,
+  "tick_interval_usec_max": 31500,
+  "received_tick_gap_median": 3.0,
+  "render_position_error_p50_m": 4.3415207784391896e-07,
+  "render_position_error_p95_m": 1.0199676292422222,
+  "prediction_error_at_ack_p50_m": 0.0,
+  "prediction_error_at_ack_p95_m": 0.27348667383194,
+  "first_movement_seconds": [
+    0.009,
+    0.017
+  ],
+  "final_client_states": [
+    {
+      "client": 0,
+      "state": "connected",
+      "last_snapshot_age_seconds": 0.031,
+      "accepted_snapshots": 24,
+      "last_accepted_age_seconds": 0.03,
+      "last_accepted_tick": 438,
+      "reconnect_passed": false
+    },
+    {
+      "client": 1,
+      "state": "connected",
+      "last_snapshot_age_seconds": 0.033,
+      "accepted_snapshots": 100,
+      "last_accepted_age_seconds": 0.032,
+      "last_accepted_tick": 438,
+      "reconnect_passed": false
+    }
+  ],
+  "corrections": 23,
+  "hard_corrections": 0,
+  "render_step_p95_m": 0.09260177612300069,
+  "render_samples_compared": 586
+}

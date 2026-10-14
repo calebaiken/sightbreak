@@ -1,5 +1,11 @@
 # Known limitations
 
+## Combined preview update — 2026-10-14
+
+The isolated combined branch includes PR1=98ff57c, PR2=64ec598 and Codex PR3–8=89c0e9. See [integration report](reports/COMBINED_INTEGRATION_REPORT.md) for exact source/build identities and evidence. Full maintained47-group matrix passes; new custom-HUD adversarial tests and full-capacity close-loss reconnect fail. Unicode feed clipping is fixed; older references below are historical. Default rig works, static fallback projection is defective, and the independent weapon/arms visual slice scores5.5/10 (not the historical whole-game8.1 rubric). Device performance, physical touch, Xcode and production Internet security remain unverified. Next priority: owner corrections for HUD/fallback, a separate bounded reconnect fix with hostile account/capacity tests, then refreshed combined verification. Prediction stays opt-in, live rewind disabled, earned-only economy unchanged.
+
+## Historical record (superseded where noted above)
+
 SIGHTBREAK is a native development implementation. The full product described in [SPECIFICATION.md](SPECIFICATION.md) is not complete, and no milestone has earned the required independent 8.5/10 acceptance across all applicable categories. See the [0.3 independent QA review](reports/QA-0.3.md) and [historical review](reports/QA.md) for actual passing checks, reproduced defects and unverified gates.
 
 ## Competitive engineering status

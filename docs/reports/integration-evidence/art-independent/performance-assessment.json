@@ -1,0 +1,230 @@
+{
+  "scope": "Independent review of supplied recordings; no new renders. Software-only wall frame times, not mobile GPU FPS or thermal/battery evidence.",
+  "source_inputs": {
+    "profile-pr1/summary.json": "985b22ab49f4701508c66c55cf4eb7adedc0d35d500eb17761c54fa1b9b11e76",
+    "profile-combined/summary.json": "92d52b124c1b7e4dede8a36d87fc693046054ebf88ffa222b2b7aed53dd5e381",
+    "weapon-cost.log": "659a74561482f2925a092b0a070115dd8a6e006ab94db65d2799f17e46e2ebb0",
+    "run_render_campaign.py": "3651fe8ac64e9f3f76526ee6a30a226510578ea013155269b8e6e678d2a1ed2c",
+    "scenario-profile/run-1/metrics.json": "c66f347dcfa04c85eae8dced96bac38a50df7c741c7da20a50e6cdb8171fdb89",
+    "scenario-profile/run-2/metrics.json": "5dc7510b91e81c3478e6e189fdd519872f8cf4ecbf13bea8b8bfff932da65776",
+    "scenario-profile/run-3/metrics.json": "fceff9ac81b850da447b47f01310f9e2481d87f7b43aa85db525734b918bf92c"
+  },
+  "fixed_view_comparison": [
+    {
+      "view": "approach",
+      "pr1_median_ms": 447.422,
+      "combined_median_ms": 558.426,
+      "delta_pct": 24.809687498603104,
+      "draw_delta": 2.0,
+      "primitives_delta": 33078.0,
+      "texture_bytes_delta": 5596608
+    },
+    {
+      "view": "site",
+      "pr1_median_ms": 401.768,
+      "combined_median_ms": 509.083,
+      "delta_pct": 26.71068875569982,
+      "draw_delta": 2.0,
+      "primitives_delta": 33078.0,
+      "texture_bytes_delta": 5596608
+    },
+    {
+      "view": "overview",
+      "pr1_median_ms": 388.768,
+      "combined_median_ms": 392.567,
+      "delta_pct": 0.9771894806156922,
+      "draw_delta": 0.0,
+      "primitives_delta": 0.0,
+      "texture_bytes_delta": 5596608
+    },
+    {
+      "view": "operators",
+      "pr1_median_ms": 428.248,
+      "combined_median_ms": 433.757,
+      "delta_pct": 1.2864041396573933,
+      "draw_delta": 0.0,
+      "primitives_delta": 0.0,
+      "texture_bytes_delta": 5596608
+    }
+  ],
+  "scenario_comparison": [
+    {
+      "scenario": "empty-yard",
+      "median_of_medians_ms": 285.572,
+      "run_median_range_ms": [
+        245.596,
+        505.766
+      ],
+      "p95_range_ms": [
+        250.286,
+        1430.273
+      ],
+      "run_median_ratio": 2.059341357351097,
+      "draw_calls": [
+        23
+      ],
+      "primitives": [
+        37452
+      ],
+      "texture_bytes": [
+        55942068
+      ]
+    },
+    {
+      "scenario": "authored-idle",
+      "median_of_medians_ms": 391.557,
+      "run_median_range_ms": [
+        382.442,
+        897.284
+      ],
+      "p95_range_ms": [
+        425.053,
+        1566.71
+      ],
+      "run_median_ratio": 2.3461962859727747,
+      "draw_calls": [
+        30
+      ],
+      "primitives": [
+        73554
+      ],
+      "texture_bytes": [
+        61538676
+      ]
+    },
+    {
+      "scenario": "reload-pose",
+      "median_of_medians_ms": 489.132,
+      "run_median_range_ms": [
+        364.299,
+        728.579
+      ],
+      "p95_range_ms": [
+        626.354,
+        1552.781
+      ],
+      "run_median_ratio": 1.999947845039377,
+      "draw_calls": [
+        30
+      ],
+      "primitives": [
+        73554
+      ],
+      "texture_bytes": [
+        61538676
+      ]
+    },
+    {
+      "scenario": "six-smoke-clouds",
+      "median_of_medians_ms": 1905.706,
+      "run_median_range_ms": [
+        1062.908,
+        2043.866
+      ],
+      "p95_range_ms": [
+        1829.181,
+        3776.205
+      ],
+      "run_median_ratio": 1.922900194560583,
+      "draw_calls": [
+        72
+      ],
+      "primitives": [
+        94506
+      ],
+      "texture_bytes": [
+        61560520
+      ]
+    },
+    {
+      "scenario": "live-ten-actor-bots",
+      "median_of_medians_ms": 703.358,
+      "run_median_range_ms": [
+        245.826,
+        725.146
+      ],
+      "p95_range_ms": [
+        618.088,
+        1383.235
+      ],
+      "run_median_ratio": 2.9498344357391,
+      "draw_calls": [
+        24,
+        25
+      ],
+      "primitives": [
+        38708,
+        39668
+      ],
+      "texture_bytes": [
+        61556424
+      ]
+    },
+    {
+      "scenario": "interactive-inspection",
+      "median_of_medians_ms": 58.896,
+      "run_median_range_ms": [
+        31.089,
+        164.331
+      ],
+      "p95_range_ms": [
+        34.196,
+        333.225
+      ],
+      "run_median_ratio": 5.285824568175238,
+      "draw_calls": [
+        8
+      ],
+      "primitives": [
+        20038
+      ],
+      "texture_bytes": [
+        62996424
+      ]
+    },
+    {
+      "scenario": "case-reveal-fixture",
+      "median_of_medians_ms": 20.164,
+      "run_median_range_ms": [
+        13.239,
+        50.412
+      ],
+      "p95_range_ms": [
+        36.074,
+        117.602
+      ],
+      "run_median_ratio": 3.8078404713346927,
+      "draw_calls": [
+        17
+      ],
+      "primitives": [
+        18112
+      ],
+      "texture_bytes": [
+        63054024
+      ]
+    },
+    {
+      "scenario": "market-20-fixture-listings",
+      "median_of_medians_ms": 29.888,
+      "run_median_range_ms": [
+        21.206,
+        43.895
+      ],
+      "p95_range_ms": [
+        23.88,
+        156.362
+      ],
+      "run_median_ratio": 2.069933037819485,
+      "draw_calls": [
+        48
+      ],
+      "primitives": [
+        6350
+      ],
+      "texture_bytes": [
+        62626230
+      ]
+    }
+  ]
+}

@@ -1,5 +1,17 @@
 # Parallel engineering work
 
+## Current integration checkpoint — 2026-10-14
+
+- Active Codex validation branch: `integration/sightbreak-network-art-preview`, draft [PR9](https://github.com/calebaiken/sightbreak/pull/9), base `codex/network-validation-builds`. Tested/export source60cf125; later documentation commits retain that identity.
+- Main remains e67f2c8. Dependencies: PR1=98ff57c, PR2=64ec598, PR3–8 stack tip89c0e9. Source PR branches and main are untouched by this work; no automatic merges or force pushes.
+- Initial actor constants conflict: keep ViewmodelShading plus SBMovementStep aliases/delegation. Later graphics and HUD refreshes merge cleanly. No art/model/material/Blender changes; shipping aspect policy unchanged.
+- Modified integration surfaces: actor constants only at merge; tests/validation, network simulation barrier/campaign, rendering/aspect probes, native export verifier, build manifests and documentation. Existing attachment/muzzle/rig/cosmetic contracts remain intact.
+- Full47-group suite passes with updated foundation; adversarial HUD and full-capacity reconnect still fail. Graphics fallback and5.5/10 visual gate remain open. See [combined report](../reports/COMBINED_INTEGRATION_REPORT.md) and [conflicts](INTEGRATION_CONFLICTS.md).
+- GitHub API works now; findings posted to PR1,PR2,PR5. This is actual GitHub coordination, not direct communication with Claude.
+- Correct/reverify PR1, reconcile PR3→8 in order, and independently accept PR2 before final integration. Lifecycle needs backend ticket inspection; outbox needs persistent launcher/worker/backend. Keep protocol5 matched, prediction off by default, live rewind disabled. PR9 must not bypass constituent review.
+
+## Historical record (superseded where noted above)
+
 ## Verified baseline — 2026-10-13
 
 - Main: `e67f2c86777d98d3cb3ad6bc7e851ef1826af26d`.
