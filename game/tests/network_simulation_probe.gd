@@ -65,6 +65,7 @@ var reconnect_at := -1.0
 var reconnect_started := false
 var reconnect_passed := false
 var initial_id := 0
+var notices: Array = []
 
 func _initialize() -> void:
 	for arg: String in OS.get_cmdline_user_args():
@@ -78,6 +79,7 @@ func _initialize() -> void:
 
 func start() -> void:
 	game = MeasuredMatch.new()
+	game.notification.connect(func(message: String): notices.append({"seconds":elapsed,"state":game.connection_state,"message":message}))
 	game.configure({"mode": role, "port": port, "address": "127.0.0.1", "name": "Simulation fixture", "prediction": prediction_enabled})
 	root.add_child(game)
 	if role == "server":
@@ -116,7 +118,7 @@ func _process(delta: float) -> bool:
 		if not render_frames.is_empty():
 			render_metrics["frame_delta_p50_ms"] = render_frames[render_frames.size()/2]
 			render_metrics["frame_delta_p95_ms"] = render_frames[mini(render_frames.size()-1, int(render_frames.size()*0.95))]
-		var report := {"role": role, "joined": joined, "state": game.connection_state, "elapsed_seconds": elapsed, "max_displacement": max_distance, "render_metrics":render_metrics,
+		var report := {"role": role, "joined": joined, "state": game.connection_state, "notifications":notices, "elapsed_seconds": elapsed, "max_displacement": max_distance, "render_metrics":render_metrics,
 			"first_movement_seconds": first_movement_seconds, "prediction_enabled": prediction_enabled, "prediction_errors_m": game._prediction.error_samples,
 			"corrections": game._prediction.corrections, "hard_corrections": game._prediction.hard_corrections,
 			"reconnect_requested":reconnect_at >= 0,"reconnect_passed":reconnect_passed,"initial_id":initial_id,"final_id":game.local_id,
