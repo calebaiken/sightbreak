@@ -9,6 +9,7 @@ import struct
 import subprocess
 import zipfile
 
+from native_log import failed as native_log_failed
 from build_manifest import BUILDS, ROOT, OUTPUTS, VERSION, BUILD_NUMBER, IOS_VERSION, payload, source, write_json
 
 
@@ -72,7 +73,7 @@ def main():
         result = subprocess.run(command, env=environment, text=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=120)
         (logs / f"{label}.log").write_text(result.stdout)
         assert result.returncode == 0, f"{label} failed; see {logs}"
-        assert not re.search(r"^(?:SCRIPT ERROR|ERROR:)|Parse Error", result.stdout, re.M), f"{label} emitted error; see {logs}"
+        assert not native_log_failed(result.stdout), f"{label} emitted error; see {logs}"
         return result.stdout
 
     executable = str(BUILDS / "linux/sightbreak.x86_64")

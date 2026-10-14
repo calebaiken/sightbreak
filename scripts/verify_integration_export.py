@@ -22,6 +22,7 @@ import time
 
 from PIL import ImageGrab
 from build_manifest import source
+from native_log import failed as native_log_failed
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -233,7 +234,7 @@ def main():
             raise RuntimeError('Native authority or clean-exit check failed')
         for name in ('client', 'server'):
             log_text = (output / (name + '.log')).read_text()
-            if re.search(r'^(?:SCRIPT ERROR|ERROR:)|Parse Error|ObjectDB instances leaked|Leaked instance', log_text, re.M):
+            if native_log_failed(log_text):
                 raise RuntimeError(name + ': error or resource leak; inspect log')
         if source()['source_content_sha256'] != source_before['source_content_sha256']:
             raise RuntimeError('Runtime source changed during verification')
