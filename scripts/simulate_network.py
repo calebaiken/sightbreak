@@ -176,11 +176,13 @@ def main():
                 continue
             data = json.loads(path.read_text())
             first_movement.append(data.get("first_movement_seconds"))
-            final_client_states.append({"client": index, "state": data.get("state"), "last_snapshot_age_seconds": data.get("last_snapshot_age_seconds")})
+            final_client_states.append({"client": index, "state": data.get("state"), "last_snapshot_age_seconds": data.get("last_snapshot_age_seconds"),
+                                        "accepted_snapshots": data.get('accepted_snapshots'), "last_accepted_age_seconds": data.get('last_accepted_age_seconds'),
+                                        "last_accepted_tick": data.get('last_accepted_tick'), "reconnect_passed": data.get('reconnect_passed')})
             prediction_errors.extend(data.get('prediction_errors_m', []))
             corrections += data.get('corrections', 0)
             hard_corrections += data.get('hard_corrections', 0)
-            gaps.extend(data['snapshot_tick_gaps'])
+            gaps.extend(data['accepted_tick_gaps'])
             previous = {}
             for pose in data['poses']:
                 trajectory = trajectories.get(pose['id'], [])

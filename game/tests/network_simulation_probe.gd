@@ -8,6 +8,9 @@ class MeasuredMatch extends TacticalMatch:
 	var last_snapshot_msec := 0
 	var snapshot_steps: Array = []
 	var last_received_tick := -1
+	var accepted_snapshots := 0
+	var last_accepted_msec := 0
+	var accepted_tick_steps: Array = []
 	var tick_intervals: Array = []
 	var _last_tick_start := 0
 	func _authority_tick(delta: float) -> void:
@@ -29,7 +32,12 @@ class MeasuredMatch extends TacticalMatch:
 		if last_received_tick >= 0:
 			snapshot_steps.append(int(data.tick) - last_received_tick)
 		last_received_tick = int(data.tick)
+		var previous_tick := _replica_buffer.last_tick
 		super._apply_snapshot(data)
+		if _replica_buffer.last_tick > previous_tick:
+			accepted_snapshots += 1
+			last_accepted_msec = Time.get_ticks_msec()
+			if previous_tick >= 0: accepted_tick_steps.append(_replica_buffer.last_tick - previous_tick)
 	func _process(delta: float) -> void:
 		super._process(delta)
 		if _authority or connection_state != "connected":
@@ -114,6 +122,7 @@ func _process(delta: float) -> bool:
 			"reconnect_requested":reconnect_at >= 0,"reconnect_passed":reconnect_passed,"initial_id":initial_id,"final_id":game.local_id,
 			"pending_inputs": game._prediction.pending.size(), "large_corrections": game._prediction.large_corrections,
 			"last_snapshot_age_seconds": (Time.get_ticks_msec() - game.last_snapshot_msec) / 1000.0, "snapshots": game.received_snapshots, "snapshot_tick_gaps": game.snapshot_steps, "reencoded_snapshot_bytes": game.received_payload_bytes,
+			"accepted_snapshots":game.accepted_snapshots,"last_accepted_age_seconds":(Time.get_ticks_msec()-game.last_accepted_msec)/1000.0,"last_accepted_tick":game._replica_buffer.last_tick,"accepted_tick_gaps":game.accepted_tick_steps,
 			"skipped_commands": game._input_stream.skipped_commands, "tick_usec": game.ticks, "tick_intervals_usec": game.tick_intervals, "poses": game.records, "stale_snapshots": game._replica_buffer.stale_packets}
 		if not output.is_empty():
 			var file := FileAccess.open(output, FileAccess.WRITE)
@@ -122,6 +131,7 @@ func _process(delta: float) -> bool:
 		print("NETWORK_SIMULATION " + JSON.stringify({"role": role, "joined": joined, "last_snapshot_age_seconds": (Time.get_ticks_msec() - game.last_snapshot_msec) / 1000.0, "snapshots": game.received_snapshots, "max_displacement": max_distance}))
 		var success := role == "server" or (joined and game.connection_state == "connected" and Time.get_ticks_msec() - game.last_snapshot_msec < 750 and game.received_snapshots >= 10 and max_distance > 0.1)
 		if role != "server" and reconnect_at >= 0: success = success and reconnect_passed
+		if role != "server": success = success and game.accepted_snapshots >= 10 and Time.get_ticks_msec()-game.last_accepted_msec < 750
 		game.queue_free()
 		quit(0 if success else 1)
 	return false

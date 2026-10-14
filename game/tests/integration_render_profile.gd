@@ -7,6 +7,7 @@ var rows: Array = []
 var actor: SBActor
 var animate := false
 var animate_usec: Array[float] = []
+var redraw := Callable()
 const ITEM := {"name":"Relay AR / Crimson Archive", "kind":"weapon_skin", "collection":"Crimson Archive", "rarity":"Legendary", "pattern_seed":897, "wear":0.2}
 
 func _initialize() -> void:
@@ -16,6 +17,7 @@ func _initialize() -> void:
 	_run.call_deferred()
 
 func _frame() -> void:
+	if redraw.is_valid(): redraw.call()
 	if animate and is_instance_valid(actor):
 		var start := Time.get_ticks_usec()
 		actor.tick_visual(1.0/60.0)
@@ -42,6 +44,7 @@ func _measure(label: String, construction_ms: float) -> void:
 func _clear(node: Node) -> void:
 	animate = false
 	actor = null
+	redraw = Callable()
 	node.queue_free()
 	for i in 5: await _frame()
 
@@ -109,13 +112,20 @@ func _run() -> void:
 	var inspector = load("res://scripts/ui/item_inspector.gd").new()
 	root.add_child(inspector)
 	inspector.show_item(ITEM)
-	await _measure("inspection",(Time.get_ticks_usec()-start)/1000.0)
+	redraw = func():
+		inspector.pivot.rotation.y += 0.01
+		inspector._request_render()
+	await _measure("interactive-inspection",(Time.get_ticks_usec()-start)/1000.0)
 	await _clear(inspector)
 	start = Time.get_ticks_usec()
 	var reveal = load("res://scripts/ui/case_reveal.gd").new()
 	reveal.committed_item = ITEM.duplicate()
 	root.add_child(reveal)
 	reveal.progress = 0.8
+	# Repeat opening progress to measure active reveal frames, not the idle cache
+	# after the short real-time tween has ended on a slow software renderer.
+	if reveal.tween: reveal.tween.kill()
+	redraw = func(): reveal.progress = fmod(reveal.progress + 0.025,1.0)
 	await _measure("case-reveal-fixture",(Time.get_ticks_usec()-start)/1000.0)
 	await _clear(reveal)
 	start = Time.get_ticks_usec()
