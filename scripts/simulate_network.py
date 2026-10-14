@@ -39,40 +39,60 @@ def main():
     parser.add_argument('--port', type=int, default=29400)
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--no-prediction', action='store_true')
-    parser.add_argument('--blackout-at', type=float, default=-1, help='Seconds after clients launch; -1 disables')
+    parser.add_argument('--render-client', type=int, default=-1, help='One native rendered client index; -1 keeps all headless (requires DISPLAY)')
+    parser.add_argument('--blackout-at', type=float, default=-1, help='Seconds after shared measurement start; -1 disables')
     parser.add_argument('--blackout-seconds', type=float, default=0)
+    parser.add_argument('--reconnect-at', type=float, default=-1, help='Explicitly close each connected client and exercise its resume token at this elapsed time')
+    parser.add_argument('--reconnect-delay', type=float, default=2.0, help='Reconnect delay after explicit transport close; default matches the game; 0.7 reproduces the early stress fixture')
     args = parser.parse_args()
-    if not (0 <= args.blackout_seconds <= 60 and -1 <= args.blackout_at <= args.seconds and 0 <= args.loss < 1 and 0 <= args.reorder <= 1 and args.rtt_ms >= 0 and args.jitter_ms >= 0 and 5 <= args.seconds <= 600):
+    if not 0 <= args.reconnect_delay <= 10:
+        parser.error('reconnect-delay must be between0 and10 seconds')
+    if args.render_client < -1 or args.render_client >= args.clients:
+        parser.error('render-client must identify a launched client or be -1')
+    if not (0 <= args.blackout_seconds <= 60 and -1 <= args.blackout_at <= args.seconds and -1 <= args.reconnect_at <= args.seconds and 0 <= args.loss < 1 and 0 <= args.reorder <= 1 and args.rtt_ms >= 0 and args.jitter_ms >= 0 and 5 <= args.seconds <= 600):
         parser.error('invalid impairment bounds')
+    args.out = args.out.resolve()
     args.out.mkdir(parents=True, exist_ok=True)
+    if any(args.out.glob('*.json')):
+        parser.error('output directory must not contain previous JSON evidence')
+    barrier = args.out / 'barrier'
+    barrier.mkdir()
+    measurement_start = None
+    measurement_epoch = None
+    stop_written = False
     rng = random.Random(args.seed)
     selector = selectors.DefaultSelector()
     routes, sockets, queue, processes, logs = [], [], [], [], []
     traffic = {'up': {'received_packets': 0, 'forwarded_packets': 0, 'dropped_packets': 0, 'udp_payload_bytes': 0, 'max_datagram_bytes': 0, 'datagrams_over_1200': 0},
                'down': {'received_packets': 0, 'forwarded_packets': 0, 'dropped_packets': 0, 'udp_payload_bytes': 0, 'max_datagram_bytes': 0, 'datagrams_over_1200': 0}}
     samples = {}
+    resource_timeline = []
+    last_resource_sample = 0.0
     source = {'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
               'dirty': bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip()),
               'platform': platform.platform(), 'python': platform.python_version()}
 
     def blackout(now):
-        return args.blackout_at >= 0 and args.blackout_at <= now - start < args.blackout_at + args.blackout_seconds
+        return measurement_start is not None and args.blackout_at >= 0 and args.blackout_at <= now - measurement_start < args.blackout_at + args.blackout_seconds
     serial = 0
 
     def launch(role, name, port, seconds):
         log = (args.out / (name + '.log')).open('w')
         logs.append(log)
-        cmd = [str(ROOT / 'scripts/godot.sh'), '--headless', '--max-fps', '60', '--script', 'res://tests/network_simulation_probe.gd', '--',
-               '--role=' + role, '--port=' + str(port), '--seconds=' + str(seconds), '--output=' + str((args.out / (name + '.json')).resolve())]
+        display = ['--audio-driver', 'Dummy'] if name == 'client-' + str(args.render_client) else ['--headless']
+        cmd = [str(ROOT / 'scripts/godot.sh'), *display, '--max-fps', '60', '--script', 'res://tests/network_simulation_probe.gd', '--',
+               '--role=' + role, '--port=' + str(port), '--seconds=' + str(seconds), '--output=' + str((args.out / (name + '.json')).resolve()), '--barrier=' + str(barrier)]
         if args.no_prediction:
             cmd.append('--no-prediction')
+        if args.reconnect_at >= 0 and role == 'client':
+            cmd.extend(['--reconnect-at=' + str(args.reconnect_at), '--reconnect-delay=' + str(args.reconnect_delay)])
         process = subprocess.Popen(cmd, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT)
         processes.append((name, process))
         samples[name] = {'rss_peak_kib': 0, 'cpu_seconds': 0.0}
         return process
 
     try:
-        server = launch('server', 'server', args.port, args.seconds + 3)
+        server = launch('server', 'server', args.port, args.seconds)
         for _ in range(200):
             if 'SIGHTBREAK_SERVER_READY' in (args.out / 'server.log').read_text():
                 break
@@ -86,7 +106,8 @@ def main():
             downstream.bind(('127.0.0.1', args.port + 1 + index))
             upstream = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             upstream.bind(('127.0.0.1', 0))
-            route = {'client': None, 'upstream': upstream, 'downstream': downstream}
+            route = {'client': None, 'upstream': upstream, 'downstream': downstream,
+                     'traffic': {direction: dict(values) for direction, values in traffic.items()}}
             routes.append(route)
             for sock, direction in [(downstream, 'up'), (upstream, 'down')]:
                 sock.setblocking(False)
@@ -94,13 +115,26 @@ def main():
                 sockets.append(sock)
             launch('client', 'client-' + str(index), args.port + index + 1, args.seconds)
         start = time.monotonic()
-        deadline = start + args.seconds + 15
+        deadline = start + 90 + args.seconds + 20
         while any(p.poll() is None for _, p in processes) and time.monotonic() < deadline:
             now = time.monotonic()
+            if measurement_start is None:
+                if all((args.out / (name + '.json.ready')).exists() for name, _ in processes):
+                    measurement_start = now + 1.0
+                    measurement_epoch = time.time() + 1.0
+                    (barrier / 'start.tmp').write_text(json.dumps({'epoch': measurement_epoch}))
+                    os.replace(barrier / 'start.tmp', barrier / 'start.json')
+                    deadline = measurement_start + args.seconds + 20
+                elif now-start > 90 or any(p.poll() is not None for _, p in processes):
+                    raise RuntimeError('shared measurement readiness failed; no successful trial claimed')
+            if not stop_written and all((args.out / (name + '.json')).exists() for name, _ in processes):
+                (barrier / 'stop').write_text('all reports completed; release processes')
+                stop_written = True
             while queue and queue[0][0] <= now:
-                _, _, sock, destination, packet, direction = heapq.heappop(queue)
+                _, _, sock, destination, packet, direction, route = heapq.heappop(queue)
                 if blackout(now):
                     traffic[direction]['dropped_packets'] += 1
+                    route['traffic'][direction]['dropped_packets'] += 1
                     continue
                 if destination is not None:
                     traffic[direction]['max_datagram_bytes'] = max(traffic[direction]['max_datagram_bytes'], len(packet))
@@ -108,14 +142,21 @@ def main():
                     sock.sendto(packet, destination)
                     traffic[direction]['forwarded_packets'] += 1
                     traffic[direction]['udp_payload_bytes'] += len(packet)
+                    per_client = route['traffic'][direction]
+                    per_client['max_datagram_bytes'] = max(per_client['max_datagram_bytes'], len(packet))
+                    per_client['datagrams_over_1200'] += int(len(packet) > 1200)
+                    per_client['forwarded_packets'] += 1
+                    per_client['udp_payload_bytes'] += len(packet)
             for key, _ in selector.select(.003):
                 route, direction = key.data
                 packet, address = key.fileobj.recvfrom(65536)
                 traffic[direction]['received_packets'] += 1
+                route['traffic'][direction]['received_packets'] += 1
                 if direction == 'up':
                     route['client'] = address
                 if blackout(now) or rng.random() < args.loss:
                     traffic[direction]['dropped_packets'] += 1
+                    route['traffic'][direction]['dropped_packets'] += 1
                     continue
                 delay = max(0, args.rtt_ms / 2 + rng.uniform(-args.jitter_ms, args.jitter_ms)) / 1000
                 if rng.random() < args.reorder:
@@ -123,7 +164,7 @@ def main():
                 sock = route['upstream'] if direction == 'up' else route['downstream']
                 destination = ('127.0.0.1', args.port) if direction == 'up' else route['client']
                 serial += 1
-                heapq.heappush(queue, (now + delay, serial, sock, destination, packet, direction))
+                heapq.heappush(queue, (now + delay, serial, sock, destination, packet, direction, route))
             for name, process in processes:
                 try:
                     status = Path(f'/proc/{process.pid}/status').read_text()
@@ -131,9 +172,13 @@ def main():
                     stat = Path(f'/proc/{process.pid}/stat').read_text().rsplit(')', 1)[1].split()
                     cpu = (int(stat[11]) + int(stat[12])) / os.sysconf('SC_CLK_TCK')
                     samples[name]['rss_peak_kib'] = max(samples[name]['rss_peak_kib'], rss)
+                    samples[name]['rss_current_kib'] = rss
                     samples[name]['cpu_seconds'] = max(samples[name]['cpu_seconds'], cpu)
                 except (OSError, StopIteration):
                     pass
+            if now - last_resource_sample >= 1:
+                resource_timeline.append({'seconds': now-start, 'peak_samples': {name: dict(row) for name, row in samples.items()}})
+                last_resource_sample = now
         failures = [name for name, process in processes if process.poll() != 0]
         for name, _ in processes:
             text = (args.out / (name + '.log')).read_text()
@@ -150,14 +195,17 @@ def main():
         for index in range(args.clients):
             path = args.out / f'client-{index}.json'
             if not path.exists():
+                failures.append('client-' + str(index) + ': missing report')
                 continue
             data = json.loads(path.read_text())
             first_movement.append(data.get("first_movement_seconds"))
-            final_client_states.append({"client": index, "state": data.get("state"), "last_snapshot_age_seconds": data.get("last_snapshot_age_seconds")})
+            final_client_states.append({"client": index, "state": data.get("state"), "last_snapshot_age_seconds": data.get("last_snapshot_age_seconds"),
+                                        "accepted_snapshots": data.get('accepted_snapshots'), "last_accepted_age_seconds": data.get('last_accepted_age_seconds'),
+                                        "last_accepted_tick": data.get('last_accepted_tick'), "reconnect_passed": data.get('reconnect_passed')})
             prediction_errors.extend(data.get('prediction_errors_m', []))
             corrections += data.get('corrections', 0)
             hard_corrections += data.get('hard_corrections', 0)
-            gaps.extend(data['snapshot_tick_gaps'])
+            gaps.extend(data['accepted_tick_gaps'])
             previous = {}
             for pose in data['poses']:
                 trajectory = trajectories.get(pose['id'], [])
@@ -176,7 +224,13 @@ def main():
                   'scope': 'loopback real Godot processes; added RTT simulation; no device/cellular claim',
                   'source': source,
                   'traffic_window_seconds': time.monotonic() - start,
+                  'traffic_window_scope': 'whole proxy lifetime including startup, measurement and report/exit drain',
+                  'measurement_start_epoch': measurement_epoch,
+                  'startup_seconds': measurement_start-start if measurement_start else None,
+                  'measurement_duration_seconds': args.seconds,
+                  'shared_stop_reached': stop_written,
                   'failures': failures, 'traffic': traffic, 'processes': samples,
+                  'per_client_traffic': [route['traffic'] for route in routes], 'resource_peak_timeline': resource_timeline,
                   'skipped_commands': server_report.get('skipped_commands', 0),
                   'tick_usec_p50': percentile(ticks, .5), 'tick_usec_p95': percentile(ticks, .95), 'tick_usec_max': max(ticks, default=0),
                   'tick_interval_usec_p50': percentile(intervals, .5), 'tick_interval_usec_p95': percentile(intervals, .95), 'tick_interval_usec_max': max(intervals, default=0),

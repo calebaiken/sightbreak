@@ -1,5 +1,15 @@
 # Codex competitive systems QA
 
+## Combined preview — 2026-10-14
+
+Source/runtime/build identities, exact tests and disposition are in [COMBINED_INTEGRATION_REPORT](COMBINED_INTEGRATION_REPORT.md). Final export source `60cf125bb2c05606e71a4a68482d31ec26dc69bb`; matrix4ae4e5c has identical runtime content. **47/47 maintained groups passed**, independent321 authority/privacy checks passed, native ten-client shared-window test10/10 passed, all ten default aspect configurations passed, all three artifact structure/source checks passed.
+
+**Request changes / defer overall integration:** new foundation98ff57c custom-status oscillation (54 checks /7 failures), full-capacity close-loss reconnect (5/10 recovered), PR2 static-hands projection mismatch and weapon/arms visual5.5/10. Existing Unicode kill-feed clipping is corrected at227d6c8 and remains corrected; older sections below report historical failures only. A suite pass does not override adversarial failures or8.5 gates. Prediction remains opt-in and live rewind disabled.
+
+Evidence: [index](integration-evidence/README.md), [refreshed matrix](integration-evidence/matrix-98/summary.json), [foundation regression review](integration-evidence/pr1-status-98ff57c/REVIEW.md), [graphics review](integration-evidence/art-independent/REPORT.md), [network review](integration-evidence/network-independent/REVIEW.md). Same-model independent reviewers are not an external security audit. Mobile hardware, Xcode, Internet security and human feel remain UNVERIFIED.
+
+## Historical record (superseded where noted above)
+
 ## Phase A baseline (2026-10-13)
 
 Tested source: corrected Claude PR #1, `cf9a630417fa1e50d76b59dd6f45ce8819de6ce8`. Main verified at `e67f2c86777d98d3cb3ad6bc7e851ef1826af26d`. Codex branch is stacked; no changes were merged.

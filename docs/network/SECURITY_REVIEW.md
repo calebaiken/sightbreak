@@ -20,7 +20,7 @@
 | Late HTTP response resurrecting peer | Fixed generation/deadline checks; independent real ENet delayed-bridge races pass |
 | Ticket consumed on full/duplicate rejection | Fixed preflight/claims; real PostgreSQL+HTTP+Godot capacity/reclaim test passes |
 | Prediction replay authority | Combat excluded, one server step per tick; independent tests pass; collision/feel gate remains unverified |
-| Unicode kill-feed clipping | Pre-existing Claude PR integration blocker, still reproduced on77e0433 |
+| Unicode kill-feed clipping | Corrected227d6c8; retained at98ff57c. New custom status-layout oscillation is separate |
 
 ## Remaining production concerns
 
@@ -31,3 +31,7 @@ Internet options need a separate transport prototype and audit: an authenticated
 Deadlines bound one process's tables; they do not defeat distributed handshake floods, many source addresses, compromised authenticated accounts, automation or aim assistance. Input activity is not proof of human participation. Visibility is conservative and modified clients can retain past positions and infer motion from legitimate sound/public events. There is no perfect anti-cheat claim.
 
 The current all-player reward eligibility rule voids a match after a disconnect or insufficient participation; it can penalize active teammates. This is an explicit unresolved product decision, unchanged by networking work. Durable reward recovery now has process-crash/outage evidence; long outages remain bounded by the existing freshness policy (see `RESULT_OUTBOX.md`). Bounded rewind remains a separate milestone. No blanket8.5 security/competitive acceptance, external audit or production-release approval is claimed.
+
+## Combined validation findings — 2026-10-14
+
+Refreshed47-group matrix passes protocol, account ticket preservation, privacy, economy and crash-recovery checks. This does not establish production Internet security. Full-capacity close-loss reconnect recovers only5/10 within22s; two receive terminal reservation rejection. Attribution to foundation vs lifecycle changes remains UNVERIFIED. Preserve token ownership, generation guards, bounded resources and ticket preflight when correcting transient old-session occupancy. Do not weaken those controls to make a reconnect test pass. New HUD oscillation is a separate gameplay/UI blocker. [Combined report](../reports/COMBINED_INTEGRATION_REPORT.md).

@@ -95,6 +95,7 @@ def main():
     if args.render:
         run('native-render-lifecycle', ['bash', 'scripts/test_render.sh'])
         run('native-hud-overflow', [str(ROOT / 'scripts/godot.sh'), '--audio-driver', 'Dummy', '--script', 'res://tests/hud_overflow_test.gd'])
+        run('native-paint-visibility', [str(ROOT / 'scripts/godot.sh'), '--audio-driver', 'Dummy', '--script', 'res://tests/paint_visibility_test.gd'])
     failed = [row['name'] for row in records if not row['passed']]
     print(json.dumps({'groups': len(records), 'failed': failed, 'report': str(args.out / 'summary.json')}, indent=2))
     return bool(failed)

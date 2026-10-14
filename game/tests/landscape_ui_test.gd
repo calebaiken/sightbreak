@@ -18,6 +18,16 @@ func check_horizontal(node: Control, context: String) -> void:
 		if rect.position.x < -1 or rect.end.x > node.size.x + 1:
 			overflowing.append("%s:%s" % [child.get_class(), rect])
 	check(overflowing.is_empty(), context + " stays inside landscape width: " + str(overflowing))
+## The drawn text block of a centred, wrapping label: its widest line and its lines'
+## total height, centred horizontally in the label's rect.
+func text_block(label: Label) -> Rect2:
+	var font := label.get_theme_font("font")
+	var rect := label.get_global_rect()
+	var block := font.get_multiline_string_size(label.text, HORIZONTAL_ALIGNMENT_CENTER, rect.size.x, label.get_theme_font_size("font_size"))
+	return Rect2(rect.position.x + (rect.size.x - block.x) * 0.5, rect.position.y, block.x, block.y)
+func touch_target(main: Node, action: String) -> Rect2:
+	var radius: float = main.touch.radius(action)
+	return Rect2(main.touch.global_position + main.touch.control_point(action) - Vector2.ONE * radius, Vector2.ONE * radius * 2)
 func capture(_main: Node, filename: String) -> void:
 	if capture_dir.is_empty() or DisplayServer.get_name() == "headless": return
 	await RenderingServer.frame_post_draw
@@ -62,6 +72,12 @@ func run() -> void:
 			var point: Vector2 = main.touch.control_point(action)
 			var radius: float = main.touch.radius(action)
 			check(not Rect2(point - Vector2.ONE * radius, Vector2.ONE * radius * 2).intersects(main.status_label.get_global_rect()), action + " default button clears match instructions")
+		var funds_rect: Rect2 = main.funds_label.get_global_rect()
+		check(funds_rect.position.y >= 0 and funds_rect.end.y <= main.health_label.get_global_rect().position.y + 1, "Funds label sits on screen above the health readout")
+		for control_name in main.touch.positions:
+			var point: Vector2 = main.touch.control_point(control_name)
+			var radius: float = main.touch.radius(control_name)
+			check(not Rect2(point - Vector2.ONE * radius, Vector2.ONE * radius * 2).intersects(funds_rect), "Funds label clears the %s touch control" % control_name)
 		var swap_point: Vector2 = main.touch.control_point("switch")
 		check(swap_point.y + main.touch.radius("switch") < main.ammo_label.get_global_rect().position.y, "Swap button clears weapon/ammunition text")
 		var pause_point: Vector2 = main.touch.control_point("pause")
@@ -87,6 +103,46 @@ func run() -> void:
 		main.finish_touch_editor()
 		main.leave_match()
 		await settle()
+	# Status text against every drawn touch control at each text size (the 100 % checks
+	# above miss that larger text reached FRAG and SMOKE), for the buy, attack and defuse
+	# prompts and the longest match notification.
+	var longest := "Match complete; account reward submission failed. Server logs identify the match for review."
+	for scale in [0.85, 1.0, 1.15, 1.3]:
+		main.profile.data.settings.ui_text_scale = scale
+		for dimensions in [Vector2i(1280, 720), Vector2i(1600, 720), Vector2i(960, 720), Vector2i(1560, 720)]:
+			root.content_scale_size = dimensions
+			root.size = dimensions
+			await settle()
+			main.start_match({"mode": "offline", "difficulty": "normal", "name": "Text scale QA"})
+			await settle()
+			for prompt in ["buy", "attack", "defuse", "notification"]:
+				main.match_game.phase = "buy" if prompt == "buy" else "live"
+				main.match_game.objective_state = "planted" if prompt == "defuse" else "carried"
+				main.status_label.set_meta("until", 0.0)
+				if prompt == "notification": main.show_notification(longest)
+				main._process(0.01)
+				await settle()
+				main._process(0.01)
+				await settle()
+				var block := text_block(main.status_label)
+				var hit: Array[String] = []
+				for action in main.touch.positions:
+					if action != "move" and touch_target(main, action).intersects(block): hit.append(action)
+				check(hit.is_empty(), "%d%% text at %s: the %s status text clears every touch control %s" % [roundi(scale * 100), dimensions, prompt, hit])
+				check(block.position.x >= 0 and block.end.x <= dimensions.x and block.position.y >= 0, "%d%% text at %s: the %s status text stays on screen" % [roundi(scale * 100), dimensions, prompt])
+			main.leave_match()
+			await settle()
+	# Without touch controls the status line keeps the full row and stays centred.
+	main.profile.data.settings.ui_text_scale = 1.3
+	main.profile.data.settings.touch_visible = false
+	main.start_match({"mode": "offline", "difficulty": "normal", "name": "Desktop text QA"})
+	await settle()
+	main._process(0.01)
+	await settle()
+	check(absf(text_block(main.status_label).get_center().x - main.ui.size.x * 0.5) < 2.0, "without touch controls the status text stays centred")
+	main.leave_match()
+	main.profile.data.settings.ui_text_scale = 1.0
+	main.profile.data.settings.touch_visible = true
 	main.queue_free()
 	await settle()
 	print("LANDSCAPE_UI_TEST checks=%d failures=%d" % [checks, failures])

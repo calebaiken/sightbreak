@@ -10,6 +10,20 @@ Captured on the same host as the rest of this branch's evidence: a 4 vCPU Linux 
   - the natural 10-round bot match;
   - two ENet clients with reconnect.
 
+## `hud-fallback/` — Codex follow-up at `77e0433`
+
+The CJK fallback-face row height defect.
+- **`compare-feed-crop-noto-cjk-130.png`:** the feed at 1560×720 and 130 % text with Noto Sans CJK as the CJK face. Before (`77e0433`) the fourth row is clipped; after (`7756e35`) the frame has grown to it.
+- **`before-*/after-*.png`:** the full captures:
+  - `after-taller-face-*` is the test's second pass, with the system's CJK face made 6 px taller on purpose;
+  - `after-system-fonts-*` uses this host's own WenQuanYi Zen Hei.
+- **`noto-cjk-fonts.conf`:** the fontconfig recipe that selects Noto Sans CJK without installing anything.
+- **`logs/`:**
+  - the unchanged test at `77e0433` under Noto: 1,325/10 headless, 1,331/10 native;
+  - the negative control (old frame, final test): 20 and 30 failures;
+  - the final head's headless and native runs.
+- **`../validate-7756e35.log`:** `scripts/validate.sh` on the final head, exit 0.
+
 ## `hud/` — blocker 1
 
 - **Sources:** `game/tests/hud_overflow_test.gd --capture-dir`.

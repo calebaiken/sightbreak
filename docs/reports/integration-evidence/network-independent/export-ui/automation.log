@@ -1,0 +1,11 @@
+XWINDOW 2097155 b'SIGHTBREAK (DEBUG)' 1280 720
+XWINDOW 2097155 b'SIGHTBREAK (DEBUG)' 1280 720
+Traceback (most recent call last):
+  File "/workspace/reviews/integration-20261013/network-independent/export-ui/run_ui.py", line 67, in <module>
+    client.wait(timeout=120)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 2045, in _wait
+    raise TimeoutExpired(self.args, timeout)
+subprocess.TimeoutExpired: Command '['/workspace/sightbreak-integration/builds/linux/sightbreak.x86_64', '--audio-driver', 'Dummy', '--quit-after', '1500']' timed out after 120 seconds
