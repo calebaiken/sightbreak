@@ -79,7 +79,7 @@ def main():
             with psycopg.connect(**{**connection, 'dbname': database}) as db:
                 ticket_count, consumed = db.execute('SELECT count(*), count(consumed_at) FROM game_tickets').fetchone()
                 rewards = db.execute('SELECT count(*) FROM rewards').fetchone()[0]
-                balances = db.execute('SELECT sum(credits) FROM players').fetchone()[0]
+                balances = int(db.execute('SELECT sum(credits) FROM players').fetchone()[0] or 0)
                 ledger = db.execute('SELECT count(*) FROM ledger').fetchone()[0]
             ownership_preserved = True
             for index, account_id in enumerate(expected_accounts):
@@ -97,6 +97,7 @@ def main():
             }
             report = {'source': summary['source'], 'checks': checks, 'ticket_rows': ticket_count,
                       'consumed_tickets': consumed, 'reward_rows': rewards, 'total_credits': balances,
+                      'expected_account_ids_by_client': {str(i): value for i, value in enumerate(expected_accounts)},
                       'scope': 'ten real Godot clients; local PostgreSQL/HTTP; synthetic100msRTT+lostclose; no devices'}
             (out / 'results.json').write_text(json.dumps(report, indent=2) + '\n')
             print(json.dumps(report, indent=2))

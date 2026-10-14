@@ -57,6 +57,7 @@ def main():
             run(match[1], [str(ROOT / 'scripts/godot.sh'), *shlex.split(match[2])])
         elif line.startswith('SIGHTBREAK_STATE_DIR=') and 'run_godot profile ' in line:
             run('profile', [str(ROOT / 'scripts/godot.sh'), '--headless', '--script', 'res://tests/profile_test.gd'], {'SIGHTBREAK_STATE_DIR': str(args.out / 'profile-state')})
+    run('account-output-unit', ['python3', 'scripts/test_account_network_output.py'])
     run('worker-unit', ['python3', '-m', 'unittest', 'discover', '-s', 'server/tests', '-v'])
     run('network', ['bash', 'scripts/test_network.sh'])
     run('network-soak', ['python3', 'scripts/test_network_soak.py', '--out', str(args.out / 'soak')])

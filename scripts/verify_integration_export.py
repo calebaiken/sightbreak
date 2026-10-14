@@ -106,7 +106,7 @@ class NativeUI:
         image.save(path)
 
     def menu_visible(self):
-        pixel = ImageGrab.grab(xdisplay=self.display).getpixel((100, 350))
+        pixel = ImageGrab.grab(xdisplay=self.display).getpixel((46, 299))
         return pixel[0] > 80 and pixel[0] > pixel[1] * 1.5
 
     def close(self):
@@ -120,6 +120,7 @@ def main():
     parser.add_argument('--xvfb', default=os.environ.get('XVFB_BIN') or shutil.which('Xvfb'))
     parser.add_argument('--quit-after', type=int, default=300)
     parser.add_argument('--timeout', type=float, default=180)
+    parser.add_argument('--visit-armory', action='store_true', help='Capture actual exported inventory navigation; screenshots require visual inspection')
     parser.add_argument('--reload-mode', choices=('authority', 'keyboard'), default='authority')
     args = parser.parse_args()
     if not args.xvfb:
@@ -186,7 +187,14 @@ def main():
         wait_for(ui.menu_visible, 60, 'Actual native menu readiness', client)
         ui.focus_game()
         ui.capture(output / '01-exported-menu.png')
-        ui.click(250, 419)
+        if args.visit_armory:
+            ui.click(140, 445)
+            time.sleep(2)
+            ui.capture(output / '01b-exported-inventory.png')
+            ui.click(1208, 46)
+            wait_for(ui.menu_visible, 15, 'Return from exported armory', client)
+            ui.capture(output / '01c-exported-menu-return.png')
+        ui.click(248, 385)
         time.sleep(1)
         ui.capture(output / '02-exported-connect.png')
         ui.click(640, 305)
@@ -235,6 +243,7 @@ def main():
                   'capture_dimensions': [1280, 720], 'capture_method': 'raw X11 ImageGrab; no image edits',
                   'rendered_capture_stages': 'Require visual inspection; authority timing is not rendered timing',
                   'reload_trigger': authority['reload_trigger'],
+                  'inventory_navigation_captured': args.visit_armory,
                   'desktop_R_key_input': 'VERIFIED via server-observed reload command' if args.reload_mode == 'keyboard' else 'UNVERIFIED',
                   'exit_method': 'supported --quit-after ' + str(args.quit_after),
                   'scope': 'Actual exported Linux client through native UI; source Godot authority on loopback; llvmpipe software rendering; no physical-device performance claim'}
