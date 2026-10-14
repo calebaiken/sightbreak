@@ -92,15 +92,24 @@ def material(name, colour, rough):
     return m
 
 
-# Linear base colour and roughness. A dark brown-grey glove with black moulded parts
-# and a lighter suede palm reads as a glove (a lighter coyote read as bare skin at game
-# distance); the olive jacket separates from both and from the graphite rifle.
+# Linear base colour and roughness. A charcoal glove with black moulded parts and a
+# slightly lighter suede palm; the olive jacket is about three times lighter, so glove,
+# sleeve, the graphite rifle and the tan magazine separate by value as well as hue.
+# (The v3 glove at 0.050 with strong tan wear read as bare skin; the review measured it
+# level with the sleeve.)
 PALETTE = {
-    'fabric': ((0.050, 0.044, 0.034), 0.86), 'palm': ((0.078, 0.066, 0.050), 0.93),
-    'shell': ((0.017, 0.017, 0.018), 0.48), 'strap': ((0.026, 0.024, 0.021), 0.80),
-    'cuff': ((0.044, 0.039, 0.030), 0.88),
-    'sleeve': ((0.056, 0.064, 0.040), 0.90), 'hem': ((0.044, 0.050, 0.032), 0.88),
+    'fabric': ((0.024, 0.023, 0.022), 0.86), 'palm': ((0.034, 0.031, 0.028), 0.93),
+    'shell': ((0.011, 0.011, 0.012), 0.48), 'strap': ((0.018, 0.017, 0.016), 0.80),
+    'cuff': ((0.022, 0.021, 0.020), 0.88),
+    'sleeve': ((0.082, 0.092, 0.052), 0.90), 'hem': ((0.068, 0.076, 0.044), 0.88),
 }
+
+
+# Game-mesh density: about 8.3k triangles for both arms (v3 was 10,672; the documented
+# hands-and-sleeves budget is 10,000). The sleeve's folds are in the normal map.
+GLOVE_QUADS = 1800
+SLEEVE_SEGMENTS = 20
+SLEEVE_RINGS = 16
 
 
 def right_arm_meshes(h_high, h_mid, glove_faces, sleeve_faces, high=True):
@@ -121,7 +130,7 @@ def right_arm_meshes(h_high, h_mid, glove_faces, sleeve_faces, high=True):
     plain = (shapes[0], [])
     v, q = sdf.mesh(lambda P: arms.glove_distance(P, plain), *arms.glove_bounds(), h_mid)
     glove = retopo(mesh_object('glove_low', v, q), glove_faces)
-    v, f = arms.sleeve_low_mesh()
+    v, f = arms.sleeve_low_mesh(SLEEVE_SEGMENTS, SLEEVE_RINGS)
     sleeve = mesh_object('sleeve_low', v, f)
     select(sleeve)
     bpy.ops.object.mode_set(mode='EDIT')
@@ -353,8 +362,8 @@ def close_chain(rig, chain, points, obstacle, limits, ratio, step=math.radians(1
 HOLD = {
     'R': {'distal': GRIP_NORMAL, 'dorsal': (1, 0, 0), 'roll': 0.0, 'mcp': (0.029, 0.013, -0.056),
           'elbow_dir': (0.30, -0.78, -0.55), 'mirror': False, 'curl': (30, 45, 25)},
-    'L': {'distal': (0.88, 0.06, 0.47), 'dorsal': (-0.45, 0.0, -0.89), 'roll': math.radians(0), 'mcp': (0.030, 0.430, 0.006),
-          'elbow_dir': (-0.72, -0.50, -0.48), 'mirror': True, 'curl': (20, 30, 15)},
+    'L': {'distal': (0.88, 0.06, 0.47), 'dorsal': (-0.45, 0.0, -0.89), 'roll': math.radians(0), 'mcp': (0.030, 0.430, -0.006),
+          'elbow_dir': (-0.62, -0.45, -0.64), 'mirror': True, 'curl': (20, 30, 15)},
 }
 # Per finger: (MCP, PIP, DIP) flexion limits and closing ratio.
 LIMITS = (math.radians(95), math.radians(105), math.radians(80))
@@ -411,18 +420,24 @@ def reach(rig, chain, points, obstacle, target, start=None, report=print):
             inside += sum(obstacle.distance(M @ p) < -0.0006 for p in points.get(name, [])[::2])
         return (pad - target).length + 0.004 * inside, inside
 
-    best, _ = cost(x)
-    for step in (0.14, 0.07, 0.035, 0.017):
-        improved = True
-        while improved:
-            improved = False
-            for i in range(4):
-                for sign in (1, -1):
-                    y = list(x)
-                    y[i] = min(bounds[i][1], max(bounds[i][0], y[i] + sign * step))
-                    c, _ = cost(y)
-                    if c < best - 1e-6:
-                        x, best, improved = y, c, True
+    def descend(x):
+        best, _ = cost(x)
+        for step in (0.14, 0.07, 0.035, 0.017, 0.008):
+            improved = True
+            while improved:
+                improved = False
+                for i in range(4):
+                    for sign in (1, -1):
+                        y = list(x)
+                        y[i] = min(bounds[i][1], max(bounds[i][0], y[i] + sign * step))
+                        c, _ = cost(y)
+                        if c < best - 1e-6:
+                            x, best, improved = y, c, True
+        return best, x
+
+    # Several starts: a single descent stalled about 10 mm short of the trigger.
+    starts = [x, [0.25, 0.0, 0.9, 0.5], [0.5, 0.15, 0.6, 0.4], [0.0, -0.1, 1.1, 0.7]]
+    best, x = min((descend(list(start)) for start in starts), key=lambda r: r[0])
     c, inside = cost(x)
     apply(x)
     report('trigger reach: pad %.1f mm from the trigger face, %d points inside' % ((c - 0.004 * inside) * 1000, inside), [round(math.degrees(a)) for a in x])
@@ -458,7 +473,7 @@ def build_rig(out_dir, rifle_glb, preview=False, h_high=0.0005, hold=HOLD, size=
     """Everything up to the solved hold. Without `preview` it also bakes the textures
     into `out_dir` (raw passes for textures.py)."""
     bpy.ops.wm.read_factory_settings(use_empty=True)
-    parts = right_arm_meshes(h_high, 0.0011, 2300, 520, high=not preview)
+    parts = right_arm_meshes(h_high, 0.0011, GLOVE_QUADS, 520, high=not preview)
     low = parts['arm_low']
     missing = auto_weights(low)
     print('weights: %d vertices without a bone' % len(missing))
@@ -566,15 +581,16 @@ def detail_material(name, colour, rough, kind):
     base.inputs['A'].default_value = (*[c * 0.82 for c in colour], 1)
     base.inputs['B'].default_value = (*[c * 1.12 for c in colour], 1)
     links.new(tone.outputs['Fac'], base.inputs['Factor'])
-    wear_colour = {'fabric': (0.21, 0.18, 0.13), 'palm': (0.12, 0.105, 0.085), 'shell': (0.075, 0.075, 0.072),
-                   'strap': (0.07, 0.065, 0.058), 'cuff': (0.16, 0.13, 0.095), 'sleeve': (0.10, 0.11, 0.08), 'hem': (0.08, 0.09, 0.065)}[name]
+    # Wear lightens only slightly: scuffed fabric, not a different colour.
+    wear_colour = {'fabric': (0.050, 0.047, 0.043), 'palm': (0.058, 0.053, 0.047), 'shell': (0.040, 0.040, 0.041),
+                   'strap': (0.036, 0.034, 0.032), 'cuff': (0.045, 0.043, 0.040), 'sleeve': (0.12, 0.13, 0.08), 'hem': (0.10, 0.11, 0.068)}[name]
     worn = nodes.new('ShaderNodeMix')
     worn.data_type = 'RGBA'
     worn.inputs['B'].default_value = (*wear_colour, 1)
     links.new(base.outputs['Result'], worn.inputs['A'])
     wear_amount = nodes.new('ShaderNodeMath')
     wear_amount.operation = 'MULTIPLY'
-    wear_amount.inputs[1].default_value = 0.55
+    wear_amount.inputs[1].default_value = 0.40
     links.new(ramp.outputs['Result'], wear_amount.inputs[0])
     links.new(wear_amount.outputs[0], worn.inputs['Factor'])
     links.new(worn.outputs['Result'], bsdf.inputs['Base Color'])
@@ -606,8 +622,61 @@ def detail_material(name, colour, rough, kind):
     return mat
 
 
+def _arm_part(low, sleeve, name):
+    """A copy of the low arm with only its sleeve faces (or only its glove faces)."""
+    obj = low.copy()
+    obj.data = low.data.copy()
+    obj.name = name
+    bpy.context.scene.collection.objects.link(obj)
+    bm = bmesh.new()
+    bm.from_mesh(obj.data)
+    flags = list(low['sleeve_faces'])
+    bmesh.ops.delete(bm, geom=[f for f, s in zip(bm.faces, flags) if bool(s) != sleeve], context='FACES')
+    bm.to_mesh(obj.data)
+    bm.free()
+    return obj
+
+
+def _uv_mask(low, sleeve, size, grow=0):
+    """Texels covered by the sleeve (or glove) faces' UV islands, grown by `grow` texels.
+    Rows run bottom to top, as in Blender's image pixels."""
+    mask = np.zeros((size, size), dtype=bool)
+    uv = low.data.uv_layers.active.data
+    flags = list(low['sleeve_faces'])
+    for poly, flag in zip(low.data.polygons, flags):
+        if bool(flag) != sleeve:
+            continue
+        pts = np.array([uv[i].uv[:] for i in poly.loop_indices]) * size - 0.5
+        for k in range(1, len(pts) - 1):
+            tri = pts[[0, k, k + 1]]
+            lo = np.maximum(np.floor(tri.min(0)).astype(int), 0)
+            hi = np.minimum(np.ceil(tri.max(0)).astype(int), size - 1)
+            if (hi < lo).any():
+                continue
+            xs, ys = np.meshgrid(np.arange(lo[0], hi[0] + 1), np.arange(lo[1], hi[1] + 1))
+            (x0, y0), (x1, y1), (x2, y2) = tri
+            den = (y1 - y2) * (x0 - x2) + (x2 - x1) * (y0 - y2)
+            if abs(den) < 1e-12:
+                continue
+            a = ((y1 - y2) * (xs - x2) + (x2 - x1) * (ys - y2)) / den
+            b = ((y2 - y0) * (xs - x2) + (x0 - x2) * (ys - y2)) / den
+            inside = (a >= -0.02) & (b >= -0.02) & (a + b <= 1.02)
+            mask[ys[inside], xs[inside]] = True
+    for _ in range(grow):
+        grown = mask.copy()
+        grown[1:] |= mask[:-1]
+        grown[:-1] |= mask[1:]
+        grown[:, 1:] |= mask[:, :-1]
+        grown[:, :-1] |= mask[:, 1:]
+        mask = grown
+    return mask
+
+
 def bake_arm(parts, out_dir, size=2048, samples=48):
-    """Bake the high-poly glove and sleeve onto the right arm's low-poly atlas."""
+    """Bake the high-poly glove and sleeve onto the right arm's low-poly atlas. The glove
+    faces bake only from the high glove and the sleeve faces only from the high sleeve
+    (the v3 bake let the cuff's rays reach the sleeve's hem), then the two are merged by
+    UV island. Occlusion still sees the whole arm."""
     low = parts['arm_low']
     for name, (colour, rough) in PALETTE.items():
         detail_material(name, colour, rough, 'ripstop' if name == 'sleeve' else 'fabric')
@@ -625,16 +694,39 @@ def bake_arm(parts, out_dir, size=2048, samples=48):
     scene.world.light_settings.distance = 0.012
     tex = target.node_tree.nodes.new('ShaderNodeTexImage')
     target.node_tree.nodes.active = tex
-    select(parts['glove_high'], parts['sleeve_high'], low, active=low)
     os.makedirs(out_dir, exist_ok=True)
+    glove_part, sleeve_part = _arm_part(low, False, 'bake_glove'), _arm_part(low, True, 'bake_sleeve')
+    margin = 8
+    glove_core = _uv_mask(low, False, size)
+    sleeve_core = _uv_mask(low, True, size)
+    sleeve_wide = _uv_mask(low, True, size, margin) & ~glove_core
 
-    def bake(kind, label, space, count, **kw):
-        img = bpy.data.images.new(f'relay_ar_arms_{label}', size, size, alpha=False)
+    def bake_part(high, part, kind, space, count, **kw):
+        img = bpy.data.images.new(f'bake_{part.name}', size, size, alpha=False)
         img.colorspace_settings.name = space
         tex.image = img
         scene.cycles.samples = count
-        bpy.ops.object.bake(type=kind, use_selected_to_active=True, cage_extrusion=0.003, max_ray_distance=0.008,
-                            margin=8, use_clear=True, target='IMAGE_TEXTURES', **kw)
+        # Only the high-poly surfaces may occlude: the other low copies sit inside them
+        # but poke out where the game mesh is smoother, and would blacken the AO.
+        for obj in (low, glove_part, sleeve_part):
+            obj.hide_render = obj is not part
+        select(high, part, active=part)
+        # The cage clears the 3 mm knuckle guard, so its rays reach the guard's top
+        # rather than grazing its sides (which tore its edge in the v3 bake).
+        bpy.ops.object.bake(type=kind, use_selected_to_active=True, cage_extrusion=0.005, max_ray_distance=0.012,
+                            margin=margin, use_clear=True, target='IMAGE_TEXTURES', **kw)
+        px = np.empty(size * size * 4, dtype=np.float32)
+        img.pixels.foreach_get(px)
+        bpy.data.images.remove(img)
+        return px.reshape(size, size, 4)
+
+    def bake(kind, label, space, count, **kw):
+        out = bake_part(parts['glove_high'], glove_part, kind, space, count, **kw)
+        sleeve = bake_part(parts['sleeve_high'], sleeve_part, kind, space, count, **kw)
+        out[sleeve_core | sleeve_wide] = sleeve[sleeve_core | sleeve_wide]
+        img = bpy.data.images.new(f'relay_ar_arms_{label}', size, size, alpha=False)
+        img.colorspace_settings.name = space
+        img.pixels.foreach_set(out.ravel())
         img.filepath_raw = os.path.join(out_dir, f'relay_ar_arms_{label}_raw.png')
         img.file_format = 'PNG'
         img.save()
@@ -650,7 +742,8 @@ def bake_arm(parts, out_dir, size=2048, samples=48):
     black.filepath_raw = os.path.join(out_dir, 'relay_ar_arms_metallic_raw.png')
     black.file_format = 'PNG'
     black.save()
-    for obj in (parts['glove_high'], parts['sleeve_high']):
+    low.hide_render = False
+    for obj in (parts['glove_high'], parts['sleeve_high'], glove_part, sleeve_part):
         bpy.data.objects.remove(obj, do_unlink=True)
 
 
@@ -690,8 +783,15 @@ def smooth(t):
     return t * t * (3 - 2 * t)
 
 
-GRAB = {'distal': (0.0, 1.0, -0.35), 'dorsal': (-1.0, 0.0, 0.0), 'mcp': (-0.030, 0.150, -0.080),
-        'elbow_dir': (-0.60, -0.45, -0.66), 'curl': (10, 15, 10)}
+# Palm on the magazine's left face with the knuckles just past its front edge, so the
+# fingers close round the front onto the right face; the thumb starts open and closes
+# on the left face. Rolled 10 degrees so the little finger clears the front corner.
+GRAB = {'distal': (0.0, 1.0, -0.35), 'dorsal': (-1.0, 0.0, 0.0), 'mcp': (-0.026, 0.170, -0.080), 'roll': -10,
+        'elbow_dir': (-0.60, -0.45, -0.66), 'curl': (25, 30, 20), 'thumb': (-40, -30, 0)}
+# Bones whose rest points must clear the magazine before the fingers close: the palm,
+# the first phalanges and the thumb's metacarpal (the v3 solve cleared only the palm, so
+# the thumb and little finger started inside the magazine and never closed).
+GRAB_CLEAR = ('L_hand', 'L_index_1', 'L_middle_1', 'L_ring_1', 'L_pinky_1', 'L_thumb_1')
 
 
 def grab_pose(rig, arms_obj, placement_L, magazine, report=print):
@@ -699,12 +799,12 @@ def grab_pose(rig, arms_obj, placement_L, magazine, report=print):
     matrices (forearm, hand) and local finger rotations."""
     obstacle = Obstacle([magazine])
     names = {g.index: g.name for g in arms_obj.vertex_groups}
-    grab = hand_frame(GRAB['distal'], GRAB['dorsal'], GRAB['mcp'], True)
+    grab = hand_frame(GRAB['distal'], GRAB['dorsal'], GRAB['mcp'], True, math.radians(GRAB.get('roll', 0.0)))
     # Rigid move of the whole left hand from its bind placement to the grab, then out
     # along the back of the hand until the palm clears the magazine.
     T = grab @ placement_L.inverted()
     palm = [v.co.copy() for v in arms_obj.data.vertices
-            if v.groups and names[max(v.groups, key=lambda g: g.weight).group] == 'L_hand'][::2]
+            if v.groups and names[max(v.groups, key=lambda g: g.weight).group] in GRAB_CLEAR][::2]
     dorsal = (grab.to_3x3() @ Vector((0, 0, 1))).normalized()
     for _ in range(80):
         if all(obstacle.distance(T @ p) >= 0.0008 for p in palm):
@@ -737,7 +837,8 @@ def grab_pose(rig, arms_obj, placement_L, magazine, report=print):
     for name in arms.FINGERS + ('thumb',):
         chain = [f'L_{name}_{i}' for i in (1, 2, 3)]
         limits = THUMB_LIMITS if name == 'thumb' else LIMITS
-        angles = close_chain(rig, chain, rest_points, obstacle, limits, RATIO, base=[math.radians(a) for a in GRAB['curl']])
+        base = GRAB['thumb'] if name == 'thumb' else GRAB['curl']
+        angles = close_chain(rig, chain, rest_points, obstacle, limits, RATIO, base=[math.radians(a) for a in base])
         report('grab', name, None if angles is None else [round(math.degrees(a)) for a in angles])
     pose = {'forearm': fore.matrix.copy(), 'hand': hand.matrix.copy(), 'T': T}
     pose['fingers'] = {pb.name: pb.rotation_quaternion.copy() for pb in rig.pose.bones
