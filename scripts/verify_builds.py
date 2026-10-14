@@ -86,11 +86,11 @@ def main():
     sdk = pathlib.Path(os.environ.get("ANDROID_SDK_ROOT", tools / "android-sdk"))
     android_tools = sdk / "build-tools/36.0.0"
     apk = str(BUILDS / "android/sightbreak-debug.apk")
-    signature = run("android-signature", [str(android_tools / "apksigner"), "verify", "--verbose", apk])
+    signature = run("android-signature", [str(android_tools / "apksigner"), "verify", "--verbose", "--print-certs", apk])
     assert "Verified using v2 scheme (APK Signature Scheme v2): true" in signature
     assert "Verified using v3 scheme (APK Signature Scheme v3): true" in signature
     badging = run("android-manifest", [str(android_tools / "aapt"), "dump", "badging", apk])
-    for expected in [f"versionCode='{BUILD_NUMBER}'", f"versionName='{VERSION}'", "sdkVersion:'24'", "targetSdkVersion:'36'", "'arm64-v8a'", "'x86_64'"]:
+    for expected in ["package: name='com.sightbreak.game'", f"versionCode='{BUILD_NUMBER}'", f"versionName='{VERSION}'", "sdkVersion:'24'", "targetSdkVersion:'36'", "'arm64-v8a'", "'x86_64'"]:
         assert expected in badging, f"Missing APK metadata: {expected}"
     android_manifest = run("android-layout", [str(android_tools / "aapt"), "dump", "xmltree", apk, "AndroidManifest.xml"])
     assert re.search(r"android:screenOrientation[^\n]*\(type 0x10\)0x0\b", android_manifest), "Android landscape orientation missing"
