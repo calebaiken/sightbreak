@@ -92,8 +92,12 @@ func run() -> void:
 	for node: Button in buttons_in(main.overlay):
 		if node.name.begins_with("Buy_"): cards[node.name.trim_prefix("Buy_")] = node
 	check(cards.size() == 4, "requisition offers every weapon")
-	check(cards.sidearm.disabled and "EQUIPPED" in cards.sidearm.text, "standard sidearm shows as equipped, not purchasable")
-	check(not cards.smg.disabled and cards.rifle.disabled and "NEED 900 MORE" in cards.rifle.text, "cards distinguish affordable weapons from the exact shortfall")
+	var chip := func(card: Button) -> String: return (card.find_child("State", true, false) as Label).text
+	check(cards.sidearm.disabled and chip.call(cards.sidearm) == "EQUIPPED" and "EQUIPPED" in cards.sidearm.tooltip_text, "standard sidearm shows as equipped, not purchasable")
+	check(not cards.smg.disabled and chip.call(cards.smg) == "BUY" and cards.rifle.disabled and chip.call(cards.rifle) == "NEED 900 MORE" and "NEED 900 MORE" in cards.rifle.tooltip_text, "cards distinguish affordable weapons from the exact shortfall")
+	for card: Button in cards.values():
+		var content := (card.get_child(0) as Control).get_combined_minimum_size()
+		check(card.size.y + 1 >= content.y and card.size.x + 1 >= content.x and card.size.y >= Design.TOUCH_MIN, "requisition card %s holds its content and is a full touch target (%s for %s)" % [card.name, card.size, content])
 	main.close_overlay()
 	game.phase = "live"
 	main.show_buy()

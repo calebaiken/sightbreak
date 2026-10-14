@@ -5,6 +5,7 @@ const Touch = preload("res://scripts/ui/touch_controls.gd")
 const SafeArea = preload("res://scripts/ui/safe_area.gd")
 const Design = preload("res://scripts/ui/design_tokens.gd")
 const Radar = preload("res://scripts/ui/radar.gd")
+const WeaponGlyph = preload("res://scripts/ui/weapon_glyph.gd")
 const Weapons = preload("res://scripts/gameplay/weapons.gd")
 const BG := Design.OBSIDIAN
 const PANEL := Design.GRAPHITE
@@ -705,6 +706,9 @@ func build_hud() -> void:
 	status_label = wrapped_label("BUY PHASE  /  " + ("Tap BUY to equip" if uses_touch_controls() else "Press B to equip"), Design.TYPE_BODY, GOLD)
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	status_label.max_lines_visible = STATUS_MAX_LINES
+	# The line floats over the 3D view and the weapon: a dark halo keeps it readable on
+	# the light sidearm, sky and concrete alike.
+	Design.legible(status_label)
 	status_row.add_child(status_label)
 	var line_probe := label("Ag", Design.TYPE_BODY)
 	status_row.add_child(line_probe)
@@ -1282,25 +1286,37 @@ func finish_touch_editor() -> void:
 	if not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 ## Buy state for one weapon: owned, affordable, or the shortfall.
+## Real availability of a weapon for the local player: what the card's chip says, and
+## the full sentence for its tooltip. Match funds only; Credits never appear here.
 func requisition_state(actor, key: String) -> Dictionary:
 	var spec: Dictionary = Weapons.get_weapon(key)
 	var funds := int(actor.credits) if actor != null else 0
 	var cost := int(spec.get("cost", 0))
 	var buy_phase: bool = is_instance_valid(match_game) and match_game.phase == "buy"
 	if actor != null and actor.inventory.has(key):
-		return {"available": false, "note": "EQUIPPED" if actor.weapon_id == key else "OWNED"}
+		var held := "EQUIPPED" if actor.weapon_id == key else "OWNED"
+		return {"available": false, "cost": cost, "chip": held, "tone": "held", "note": held}
 	if not buy_phase:
-		return {"available": false, "note": "%d  ·  PREPARATION ONLY" % cost}
+		return {"available": false, "cost": cost, "chip": "PREPARATION ONLY", "tone": "locked", "note": "%d  ·  PREPARATION ONLY" % cost}
 	if funds < cost:
-		return {"available": false, "note": "%d  ·  NEED %d MORE" % [cost, cost - funds]}
-	return {"available": true, "note": "%d" % cost}
+		return {"available": false, "cost": cost, "chip": "NEED %d MORE" % (cost - funds), "tone": "short", "note": "%d  ·  NEED %d MORE" % [cost, cost - funds]}
+	return {"available": true, "cost": cost, "chip": "BUY", "tone": "buy", "note": "%d" % cost}
 
 func show_buy() -> void:
 	if not is_instance_valid(match_game): return
 	var rows := make_overlay("REQUISITION")
 	var actor = match_game.local_actor()
 	var funds := int(actor.credits) if actor != null else 0
-	rows.add_child(wrapped_label("MATCH FUNDS  %d" % funds, Design.TYPE_H2, Design.TEXT))
+	var funds_row := HBoxContainer.new()
+	funds_row.add_theme_constant_override("separation", Design.SPACE_M)
+	funds_row.alignment = BoxContainer.ALIGNMENT_BEGIN
+	rows.add_child(funds_row)
+	var funds_kicker := label("MATCH FUNDS", Design.TYPE_SMALL, MUTED, true)
+	funds_kicker.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	funds_row.add_child(funds_kicker)
+	var funds_value := label(str(funds), Design.TYPE_H2, GOLD, true)
+	funds_value.name = "Funds"
+	funds_row.add_child(funds_value)
 	if match_game.phase != "buy":
 		rows.add_child(wrapped_label("Equipment can be requisitioned during the 15-second preparation phase.", Design.TYPE_SMALL, Design.CRIMSON_BRIGHT))
 	else:
@@ -1309,20 +1325,107 @@ func show_buy() -> void:
 	cards.add_theme_constant_override("h_separation", Design.SPACE_M)
 	cards.add_theme_constant_override("v_separation", Design.SPACE_M)
 	rows.add_child(cards)
+	# Stat meters are relative to the best weapon in each stat, from the same table the
+	# match uses.
+	var peak := {"damage": 0.0, "rate": 0.0, "magazine": 0.0}
+	for key in Weapons.DATA:
+		var data: Dictionary = Weapons.DATA[key]
+		peak.damage = maxf(peak.damage, float(data.damage))
+		peak.rate = maxf(peak.rate, 1.0 / float(data.interval))
+		peak.magazine = maxf(peak.magazine, float(data.magazine))
 	for key in Weapons.DATA:
 		var weapon_key: String = key
-		var spec: Dictionary = Weapons.DATA[key]
-		var state := requisition_state(actor, weapon_key)
-		var card := button("%s   ·   %s\n%d DMG   ·   %.1f RPS   ·   %d RND\n%s" % [str(spec.name).to_upper(), WEAPON_ROLES.get(weapon_key, ""), int(spec.damage), 1.0 / float(spec.interval), int(spec.magazine), state.note], func():
-			match_game.request_buy(weapon_key)
-			close_overlay()
-		, 92)
-		card.name = "Buy_" + weapon_key
-		card.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		card.custom_minimum_size.x = 260
-		card.disabled = not state.available
-		cards.add_child(card)
+		cards.add_child(requisition_card(weapon_key, requisition_state(actor, weapon_key), peak))
 	rows.add_child(button("BACK TO FIELD", close_overlay, Design.TOUCH_MIN, "ghost"))
+
+## One requisition card: a button (so availability is its disabled state) holding the
+## weapon's glyph, name, role, three stat meters, its price and a state chip.
+func requisition_card(key: String, state: Dictionary, peak: Dictionary) -> Button:
+	var spec: Dictionary = Weapons.get_weapon(key)
+	var card := Button.new()
+	card.name = "Buy_" + key
+	card.focus_mode = Control.FOCUS_ALL
+	card.disabled = not state.available
+	card.tooltip_text = "%s   ·   %s\n%d DMG   ·   %.1f RPS   ·   %d RND\n%s" % [str(spec.name).to_upper(), WEAPON_ROLES.get(key, ""), int(spec.damage), 1.0 / float(spec.interval), int(spec.magazine), state.note]
+	Design.apply_button(card)
+	var held: bool = state.tone == "held"
+	if held:
+		var held_style := Design.box(Design.GRAPHITE_RAISED, Design.GOLD_DIM)
+		card.add_theme_stylebox_override("disabled", held_style)
+	card.pressed.connect(func():
+		match_game.request_buy(key)
+		close_overlay()
+	)
+	var frame := MarginContainer.new()
+	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	for side in ["left", "right", "top", "bottom"]:
+		frame.add_theme_constant_override("margin_" + side, Design.SPACE_M)
+	card.add_child(frame)
+	var column := VBoxContainer.new()
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_theme_constant_override("separation", Design.SPACE_XS)
+	frame.add_child(column)
+	var dim: bool = not state.available and not held
+	var ink: Color = Design.TEXT if not dim else Design.STEEL
+	var name_label := label(str(spec.name).to_upper(), Design.TYPE_H3, ink, true)
+	column.add_child(name_label)
+	column.add_child(label(WEAPON_ROLES.get(key, ""), Design.TYPE_MICRO, MUTED, true))
+	var glyph := WeaponGlyph.new()
+	glyph.weapon_id = key
+	glyph.tint = Color(Design.GOLD if held else Design.STEEL_BRIGHT, 0.4 if dim else 0.9)
+	glyph.custom_minimum_size = Vector2(0, 40)
+	column.add_child(glyph)
+	for stat in [["DMG", float(spec.damage) / peak.damage, "%d" % int(spec.damage)], ["RATE", (1.0 / float(spec.interval)) / peak.rate, "%.1f/s" % (1.0 / float(spec.interval))], ["MAG", float(spec.magazine) / peak.magazine, "%d" % int(spec.magazine)]]:
+		column.add_child(_stat_meter(stat[0], stat[1], stat[2], dim))
+	var footer := HBoxContainer.new()
+	footer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(footer)
+	var price := label("FREE" if int(state.cost) == 0 else str(state.cost), Design.TYPE_H3, Design.GOLD if state.available else MUTED, true)
+	footer.add_child(price)
+	var spring := Control.new()
+	spring.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	spring.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	footer.add_child(spring)
+	var chip := PanelContainer.new()
+	chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var chip_fill: Color = {"buy": Design.CRIMSON, "held": Color(Design.GOLD, 0.16), "short": Color(Design.CRIMSON, 0.12), "locked": Color(Design.STEEL, 0.1)}[state.tone]
+	chip.add_theme_stylebox_override("panel", Design.box(chip_fill, Color.TRANSPARENT, 1, Vector2(8, 3)))
+	footer.add_child(chip)
+	var chip_label := label(state.chip, Design.TYPE_MICRO + 1, {"buy": Color.WHITE, "held": Design.GOLD, "short": Design.CRIMSON_BRIGHT, "locked": MUTED}[state.tone], true)
+	chip_label.name = "State"
+	chip.add_child(chip_label)
+	# A button ignores its children's size, so the card takes its content's once the
+	# theme's fonts apply (in the tree).
+	card.ready.connect(func():
+		var content := frame.get_combined_minimum_size()
+		card.custom_minimum_size = Vector2(maxf(272, content.x), content.y)
+	)
+	return card
+
+func _stat_meter(caption: String, fraction: float, value: String, dim: bool) -> HBoxContainer:
+	var row := HBoxContainer.new()
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_theme_constant_override("separation", Design.SPACE_S)
+	var name_label := label(caption, Design.TYPE_MICRO, MUTED, true)
+	name_label.custom_minimum_size.x = 40 * text_scale()
+	row.add_child(name_label)
+	var bar := ProgressBar.new()
+	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bar.show_percentage = false
+	bar.max_value = 1.0
+	bar.value = clampf(fraction, 0.0, 1.0)
+	bar.custom_minimum_size = Vector2(0, 5)
+	bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	bar.add_theme_stylebox_override("background", Design.box(Design.OBSIDIAN, Color.TRANSPARENT, 0, Vector2.ZERO))
+	bar.add_theme_stylebox_override("fill", Design.box(Color(Design.STEEL_BRIGHT, 0.45 if dim else 0.85), Color.TRANSPARENT, 0, Vector2.ZERO))
+	row.add_child(bar)
+	var value_label := label(value, Design.TYPE_MICRO, Design.STEEL_BRIGHT if not dim else MUTED)
+	value_label.custom_minimum_size.x = 44 * text_scale()
+	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	row.add_child(value_label)
+	return row
 
 func show_scoreboard() -> void:
 	score_panel = PanelContainer.new()

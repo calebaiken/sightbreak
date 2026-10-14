@@ -136,6 +136,15 @@ static func panel(variant: String = "panel") -> StyleBoxFlat:
 		"overlay": return box(Color(GRAPHITE, 0.96), LINE_STRONG, 1, Vector2(22, 18))
 	return box(GRAPHITE, LINE, 1, Vector2(18, 16))
 
+## Text drawn straight over the 3D view (not on a panel): a soft dark outline and a
+## shadow keep it readable on bright and dark scenery alike. Neither changes the label's
+## size, so layout is unaffected.
+static func legible(label: Label) -> void:
+	label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	label.add_theme_constant_override("outline_size", 4)
+	label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.8))
+	label.add_theme_constant_override("shadow_offset_y", 1)
+
 static func label(text: String, size: int = TYPE_BODY, color: Color = TEXT, heading := false) -> Label:
 	var node := Label.new()
 	node.text = text

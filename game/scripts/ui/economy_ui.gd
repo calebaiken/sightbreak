@@ -445,20 +445,7 @@ func _inventory() -> void:
 		if not _matches_filter(item, inventory_filter) or (inventory_available_only and item.get("reserved", false)):
 			continue
 		visible_count += 1
-		var rarity := str(item.get("rarity", "Supply"))
-		var card := _button(cards, "%s\n%s  /  %s\n%s" % [_item_name(item), rarity.to_upper(), item.get("collection", "SUPPLY"), "RESERVED" if item.get("reserved", false) else "INSPECT ITEM"], func(): selected = item; _render())
-		card.custom_minimum_size = Vector2(260, 104)
-		card.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		var style := StyleBoxFlat.new()
-		style.bg_color = Color("18222b")
-		style.border_color = REVEAL.FINISH.rarity_color(rarity)
-		style.border_width_left = 4
-		style.set_corner_radius_all(4)
-		style.content_margin_left = 16
-		style.content_margin_right = 12
-		style.content_margin_top = 12
-		style.content_margin_bottom = 12
-		card.add_theme_stylebox_override("normal", style)
+		_item_card(cards, item)
 	if visible_count == 0 and not inventory.is_empty():
 		_text(content, "No owned instances match these filters.", 16, MUTED)
 	if not selected.is_empty():
@@ -477,6 +464,132 @@ func _inventory() -> void:
 
 	_knife_reference_button()
 
+## One owned instance: a finish swatch from its collection's palette, name, rarity and
+## state chips and, for finishes, its wear. Everything shown comes from the instance.
+func _item_card(parent: Node, item: Dictionary) -> Button:
+	var rarity := str(item.get("rarity", "Supply"))
+	var kind := str(item.get("kind", ""))
+	var reserved: bool = item.get("reserved", false)
+	var is_selected: bool = not selected.is_empty() and selected.get("id", "") == item.get("id", "")
+	var equipped := false
+	for slot in equipped_loadout:
+		if equipped_loadout[slot] is Dictionary and equipped_loadout[slot].get("id", "") == item.get("id", "") and item.has("id"):
+			equipped = true
+	var card := _button(parent, "", func(): selected = item; _render())
+	card.name = "Item_" + str(item.get("id", _item_name(item)))
+	card.tooltip_text = "%s\n%s  /  %s\n%s" % [_item_name(item), rarity.to_upper(), item.get("collection", "SUPPLY"), "RESERVED" if reserved else "INSPECT ITEM"]
+	var accent: Color = REVEAL.FINISH.rarity_color(rarity) if kind == "weapon_skin" else DESIGN.STEEL
+	for state in ["normal", "hover", "pressed", "focus"]:
+		var style := DESIGN.box(DESIGN.GRAPHITE_HOVER if state == "hover" else DESIGN.GRAPHITE_RAISED, DESIGN.GOLD if is_selected or state == "focus" else DESIGN.LINE, 2 if is_selected else 1, Vector2(12, 10))
+		style.border_width_left = 4
+		style.border_color = DESIGN.GOLD if is_selected else accent
+		card.add_theme_stylebox_override(state, style)
+	var frame := MarginContainer.new()
+	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	for side in ["left", "right", "top", "bottom"]:
+		frame.add_theme_constant_override("margin_" + side, 12)
+	frame.add_theme_constant_override("margin_left", 16)
+	card.add_child(frame)
+	var row := HBoxContainer.new()
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_theme_constant_override("separation", 12)
+	frame.add_child(row)
+	var swatch := Control.new()
+	swatch.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	swatch.custom_minimum_size = Vector2(44, 44)
+	swatch.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	var palette: Array = REVEAL.FINISH.PALETTES.get(str(item.get("collection", "")), [DESIGN.GRAPHITE_HOVER, DESIGN.STEEL])
+	swatch.draw.connect(func():
+		var s := swatch.size
+		swatch.draw_rect(Rect2(Vector2.ZERO, s), palette[0])
+		if kind == "weapon_skin":
+			swatch.draw_colored_polygon(PackedVector2Array([Vector2(s.x * 0.45, 0), s * Vector2(1, 0), s * Vector2(1, 0.55), Vector2(0, s.y), Vector2(0, s.y * 0.45)]), palette[1])
+		else:
+			swatch.draw_rect(Rect2(s * 0.3, s * 0.4), palette[1])
+		swatch.draw_rect(Rect2(Vector2.ZERO, s), Color(accent, 0.9), false, 1.0)
+	)
+	row.add_child(swatch)
+	var column := VBoxContainer.new()
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_theme_constant_override("separation", 4)
+	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	row.add_child(column)
+	var title := _label(_item_name(item), 16, DESIGN.TEXT)
+	title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	title.custom_minimum_size.x = 150
+	column.add_child(title)
+	column.add_child(_label(str(item.get("collection", "Collection supply")), 12, DESIGN.STEEL))
+	var chips := HBoxContainer.new()
+	chips.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	chips.add_theme_constant_override("separation", 6)
+	column.add_child(chips)
+	chips.add_child(_chip(rarity.to_upper() if kind == "weapon_skin" else kind.to_upper(), accent))
+	if equipped:
+		chips.add_child(_chip("EQUIPPED", DESIGN.GOLD))
+	if reserved:
+		chips.add_child(_chip("RESERVED", DESIGN.STEEL))
+	if kind == "weapon_skin" and item.has("wear"):
+		var wear_row := HBoxContainer.new()
+		wear_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		wear_row.add_theme_constant_override("separation", 6)
+		column.add_child(wear_row)
+		wear_row.add_child(_label("WEAR %.3f" % float(item.wear), 11, DESIGN.STEEL))
+		var meter := ProgressBar.new()
+		meter.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		meter.show_percentage = false
+		meter.max_value = 1.0
+		meter.value = clampf(float(item.wear), 0.0, 1.0)
+		meter.custom_minimum_size = Vector2(60, 4)
+		meter.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		meter.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		meter.add_theme_stylebox_override("background", DESIGN.box(DESIGN.OBSIDIAN, Color.TRANSPARENT, 0, Vector2.ZERO))
+		meter.add_theme_stylebox_override("fill", DESIGN.box(Color(DESIGN.STEEL_BRIGHT, 0.7), Color.TRANSPARENT, 0, Vector2.ZERO))
+		wear_row.add_child(meter)
+	# A button ignores its children's size; the card is already in the tree (theme fonts
+	# apply), so it takes its content's size now.
+	var content_size := frame.get_combined_minimum_size()
+	card.custom_minimum_size = Vector2(maxf(260, content_size.x), maxf(DESIGN.TOUCH_MIN, content_size.y))
+	return card
+
+func _chip(value: String, color: Color) -> PanelContainer:
+	var chip := PanelContainer.new()
+	chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	chip.add_theme_stylebox_override("panel", DESIGN.box(Color(color, 0.16), Color(color, 0.5), 1, Vector2(6, 1)))
+	chip.add_child(_label(value, 11, color.lightened(0.15)))
+	return chip
+
+## Published odds as a table: each rarity in its colour with a bar whose length is
+## linearly proportional to its probability, so rare outcomes look as rare as they are.
+func _odds_table(parent: Node, odds: Dictionary) -> void:
+	var grid := GridContainer.new()
+	grid.columns = 3
+	grid.add_theme_constant_override("h_separation", 12)
+	grid.add_theme_constant_override("v_separation", 6)
+	parent.add_child(grid)
+	var total := 0.0
+	for rarity in odds:
+		total += float(odds[rarity])
+	for rarity in odds:
+		var color: Color = REVEAL.FINISH.rarity_color(str(rarity))
+		var name_label := _label(str(rarity).to_upper(), 13, color.lightened(0.1))
+		name_label.custom_minimum_size.x = 110
+		grid.add_child(name_label)
+		var bar := ProgressBar.new()
+		bar.show_percentage = false
+		bar.max_value = maxf(total, 0.001)
+		bar.value = float(odds[rarity])
+		bar.custom_minimum_size = Vector2(220, 8)
+		bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+		bar.add_theme_stylebox_override("background", DESIGN.box(DESIGN.OBSIDIAN, Color.TRANSPARENT, 0, Vector2.ZERO))
+		bar.add_theme_stylebox_override("fill", DESIGN.box(color, Color.TRANSPARENT, 0, Vector2.ZERO))
+		grid.add_child(bar)
+		var value := _label("%s %%" % str(odds[rarity]), 13, DESIGN.TEXT)
+		value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+		value.custom_minimum_size.x = 64
+		grid.add_child(value)
+
 func _knife_reference_button() -> void:
 	var row := HFlowContainer.new()
 	content.add_child(row)
@@ -492,7 +605,7 @@ func _cases() -> void:
 	var probabilities: Array[String] = []
 	for rarity in odds:
 		probabilities.append("%s  %s%%" % [rarity, odds[rarity]])
-	_text(panel, "    ·    ".join(probabilities), 16)
+	_odds_table(panel, odds)
 	_text(panel, "One case + one collection key are consumed. The server commits the reward before its reveal. Skipping has no effect on the outcome.", 15, MUTED)
 	var store := _panel(content)
 	_text(store, "COLLECTION SUPPLIES", 20)
