@@ -283,13 +283,13 @@ None of the five weaknesses behind the 5.5 is resolved by these fixes except glo
 - **Wrong:** I described the static v2 fallback's sleeves as tan. They are slate grey with a tan cuff stripe, now corrected in both READMEs.
 - **Not acknowledged before:** the black magazine, the forearm covering it, the early hand opening and the sleeve saturation. All four are recorded here.
 
-**My verification of the black magazine:**
+**My verification of the black magazine (superseded by the correction below; this diagnosis was wrong):**
 - **Measured, not a texture fault:**
   - the magazine region of backlit frame 60 has a median of sRGB (3, 3, 2), with 27 % pure black;
   - its albedo, sampled at its UVs, is a normal tan-grey (0.10, 0.09, 0.06 linear);
   - its baked AO is ordinary (mean 0.59).
 - **Cause:** the shadowed side gets only the flat ambient (energy 0.41) and the 0.08 × albedo emission floor. Both are about 0.01 linear, which the yard's Filmic tonemap toe crushes to black.
-- **Conclusion:** this is not a broken shading path. The viewmodel needs a real fill term; the current floor is too weak (the review of `5100b3e` said the same).
+- **Conclusion (wrong):** this is not a broken shading path. The viewmodel needs a real fill term; the current floor is too weak (the review of `5100b3e` said the same).
 
 **Next on this branch, in order:**
 1. A view-space fill for the viewmodel: shaped, AO-aware, in the existing shader, so no extra light pass.
@@ -299,3 +299,14 @@ None of the five weaknesses behind the 5.5 is resolved by these fixes except glo
 5. Bore direction.
 
 The scores above stand until a new review re-scores the work.
+
+## Correction: the black magazine was a texture defect (2026-10-14)
+
+My entry above sampled the magazine's **albedo** and its **mean AO** over the whole mesh, concluded the texture was fine, and blamed the lighting. That measurement was too coarse. Rendering the shader's inputs over the *pulled* magazine's own visible pixels showed an albedo median of 109 (a normal tan) but a **baked occlusion median of 0**. The occlusion had been baked with the magazine seated in the magwell, so the faces that were inside the well were fully occluded and went black as soon as reload pulled the magazine out, in every lighting condition.
+
+- **Fix:** the magazine's occlusion was re-baked on its own and patched into `relay_ar_orm.png` (red channel, magazine islands only; the other textures and the GLB are byte-identical). Tools: `tools/art/rebake_part_ao.py`, `tools/art/patch_part_ao.py`.
+- **Result** (`docs/reports/media/art-v5/lighting/`): backlit mid-reload median luma **4 → 59**, shade 2 → 56, dark interior 2 → 33. No other part changed by more than 3 luma, and the inspection render differs by 1 pixel of 921,600. `weapon_art_test` now guards the occlusion (111 checks).
+- **The fill I was asked to investigate was built, swept and removed.** It bought 1–3 luma in the darkest scene and broke sunlit values above a gain of 0.4.
+- **Still open:** gloves in a nearly dark interior measure a median of 15–16, and the pulled magazine is now the brightest part in sun (warm tan beside a grey receiver).
+
+The review's scores above are unchanged: this fixes one of its defects (reload legibility's black magazine), not the occlusion of the magazine by the support forearm, the hand shapes, the bore direction or the sleeve material.
