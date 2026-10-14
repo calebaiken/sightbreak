@@ -54,7 +54,7 @@ Eight-scenario profiling ran three times with 24 samples after 8warmups: empty y
 
 Three-round weapon benchmark: no weapon23 draws/37,452 primitives, procedural28/40,476, static hands30/72,682, rig30/73,554. Static hands have a confirmed projection defect, so their timing is not equal-quality evidence. Raw per-round medians are retained (original tool sorted them; chronological round identity is unavailable).
 
-Fresh empty `.godot` import at 6c34758:7.141 s wall,779,052 KiB peak child RSS,53imported files. Existing toolchain/global caches remain; this does not measure native shader compilation, device load time or asset streaming.
+Original6c34758 import:7.141 s,779,052 KiB,53 files,exit0 but editor-settings save errors; not a clean pass. Preserved logs expose the error. Maintained `scripts/profile_import.py` uses writable isolated XDG and explicit error-log rejection. Exact60cf125 archived source now passes:4.081 s,787,824 KiB peak child RSS,53 files,exit0/no errors. Global OS/toolchain caches remain; no native shader/device-load claim.
 
 ## Native ten-client timing correction
 

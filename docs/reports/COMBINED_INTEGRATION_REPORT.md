@@ -22,7 +22,7 @@ The initial actor.gd conflict was resolved by retaining both Claude's ViewmodelS
 - Recipient-authorized state, continuous remote interpolation, opt-in movement prediction, bounded lifecycle/admission, durable server result outbox and disabled combat-history diagnostics remain intact. Prediction is **off by default**; live rewind is **disabled**; protocol 5 requires matched builds.
 - Authored Relay AR, rigged arms, skeletal reload and independent viewmodel projection operate alongside the network stack. No Claude asset, material, Blender pipeline or visual-design file was edited by Codex.
 - Added reproducible cross-branch actor/lifecycle checks, aspect probes, active rendering fixtures, a ten-client campaign runner and source-bound export checks.
-- Corrected test-only defects: asynchronous audio teardown needed a200 ms drain; exported Godot templates cannot execute editor-only external `--script` drivers; staggered renderer startup required a common measurement start and retaining peers until all reports finish. Failed attempts remain in the evidence.
+- Corrected test-only defects: asynchronous audio teardown needed a200 ms drain; exported Godot templates cannot execute editor-only external `--script` drivers; staggered renderer startup required a common measurement start and retaining peers until all reports finish. Failed attempts remain in the evidence. The original fresh-import probe also missed editor-settings errors on exit0; a maintained isolated-XDG/error-checking rerun passes on exact60cf125 (53 files,4.081 s).
 
 ## Regression results
 

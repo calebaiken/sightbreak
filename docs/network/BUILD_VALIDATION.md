@@ -18,3 +18,5 @@ python3 scripts/build_manifest.py package
 ```
 
 Requires Pillow, X11/XTest and Xvfb. Keyboard mode requires the server to observe actual client reload input; authority mode explicitly leaves that input unverified. Capture timestamps can lag authority events under software rendering; inspect images before captioning them. The verifier requires supported timed engine exit and fails on errors/leaks. Source SHA, runtime content hash, ELF SHA and authority evidence are retained. APK format/signature verification is not Android startup, and an unsigned iOS project is not a compiled/signed app. The cloud session used Java21.0.12.1; Java17 is the documented minimum.
+
+Fresh import diagnostic: `python3 scripts/profile_import.py --ref <exact commit> --out <new empty directory>`. The runner archives only that committed game tree, isolates import/XDG caches and rejects logged engine errors even if Godot exits0. It records wall time/RSS and retains logs; existing OS/toolchain caches remain, and this is not shader compilation or device load-time evidence.

@@ -11,7 +11,7 @@ Exact export/runtime source: `60cf125bb2c05606e71a4a68482d31ec26dc69bb`. Matrix 
 - [Independent graphics review](art-independent/REPORT.md) and [performance assessment](art-independent/performance-assessment.json).
 - [Original ten-client conditions](network-campaign/campaign.json), reconnect follow-ups and close-loss failure. Terminal-blackout failures are intentional negative controls; the close-loss failure is a real unmet gate.
 - [Fresh native+9 headless trial](network-native-shared/summary.json), [actual final exported Linux run](final-native-ui/results.json), [artifact manifest](build/manifest.json), [package checksums](build/checksums.txt), [toolchain](build/toolchain.json).
-- [Default aspect metrics](aspect-98/metrics.json), matched profiles in `profile-pr1`/`profile-combined`, three scenario metrics and weapon-cost log. Software-render diagnostics do not establish phone performance.
+- [Default aspect metrics](aspect-98/metrics.json), matched profiles in `profile-pr1`/`profile-combined`, three scenario metrics and weapon-cost log. Software-render diagnostics do not establish phone performance. `fresh-import` retains an exit0 run with editor-settings errors; `fresh-import-final` is the corrected exact60cf125 run with isolated writable XDG and explicit error-log checks.
 
 ## Comparable native images
 
