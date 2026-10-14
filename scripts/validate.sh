@@ -28,6 +28,12 @@ run_godot input-lifecycle --headless --script res://tests/input_lifecycle_test.g
 run_godot peer-lifecycle --headless --script res://tests/peer_lifecycle_test.gd
 run_godot result-outbox --headless --script res://tests/result_outbox_test.gd
 python3 -m unittest discover -s server/tests -v
+run_godot reconnect-policy --headless --script res://tests/reconnect_policy_test.gd
+run_godot reconnect-independent --headless --script res://tests/independent_reconnect_review_test.gd
+run_godot resume-admission --headless --script res://tests/independent_resume_admission_test.gd
+run_godot lost-welcome --headless --script res://tests/lost_welcome_test.gd
+run_godot resume-alias --headless --script res://tests/independent_resume_alias_test.gd
+run_godot resume-auth-loss --headless --script res://tests/resume_auth_loss_test.gd
 run_godot bots --headless --script res://tests/bot_match_test.gd
 run_godot bot-lifecycle --headless --script res://tests/bot_lifecycle_test.gd
 SIGHTBREAK_STATE_DIR="$validation_dir/profile-state" run_godot profile --headless --script res://tests/profile_test.gd

@@ -185,6 +185,16 @@ def main():
             if 'SCRIPT ERROR' in text or 'ERROR:' in text:
                 failures.append(name + ': logged error')
         server_report = json.loads((args.out / 'server.json').read_text()) if (args.out / 'server.json').exists() else {}
+        occupancy = server_report.get('occupancy', [])
+        for row in occupancy:
+            ids = [binding['actor'] for binding in row['bindings']]
+            if len(row['enet']) > 10 or len(ids) > 10 or len(set(ids)) != len(ids):
+                failures.append('server: capacity or duplicate actor authority')
+                break
+        if not occupancy or len(occupancy[-1]['bindings']) != args.clients:
+            failures.append('server: final actor authority count')
+        elif any(binding['idle_msec'] >= 750 or binding['input_ack'] < 10 for binding in occupancy[-1]['bindings']):
+            failures.append('server: restored input authority is not fresh')
         trajectories = {}
         for pose in server_report.get('poses', []):
             trajectories.setdefault(pose['id'], []).append(pose)
@@ -229,6 +239,8 @@ def main():
                   'startup_seconds': measurement_start-start if measurement_start else None,
                   'measurement_duration_seconds': args.seconds,
                   'shared_stop_reached': stop_written,
+                  'max_enet_occupancy': max((len(row['enet']) for row in occupancy), default=0),
+                  'final_authority': occupancy[-1]['bindings'] if occupancy else [],
                   'failures': failures, 'traffic': traffic, 'processes': samples,
                   'per_client_traffic': [route['traffic'] for route in routes], 'resource_peak_timeline': resource_timeline,
                   'skipped_commands': server_report.get('skipped_commands', 0),
