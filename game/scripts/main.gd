@@ -14,6 +14,18 @@ const CRIMSON := Design.CRIMSON
 const KILL_FEED_SECONDS := 5.0
 const KILL_FEED_ROWS := 4
 const KILL_FEED_GAP := 3
+## Clearance between the status line and a touch target, and the status band's height in
+## lines (a notification can wrap to three lines at the largest text size).
+## Clearance between the status line and anything it must not cover.
+const STATUS_TOUCH_GAP := 8.0
+## The status line wraps to at most this many lines.
+const STATUS_MAX_LINES := 3
+## Each extra line costs as much as this fraction of the row's width of distance from
+## the centre, so the line wraps rather than moving far aside, but not into a column.
+const STATUS_LINE_COST := 0.25
+## When no stretch of its row is clear, the line rises, but its top stays below this
+## fraction of the HUD's height (the reticle is at 0.5).
+const STATUS_RISE_LIMIT := 0.58
 const KILL_FEED_SEPARATION := 6
 const TEXT_SCALES := [0.9, 1.0, 1.15, 1.3]
 const WEAPON_ROLES := {"sidearm": "SIDEARM", "smg": "SMG", "rifle": "RIFLE", "marksman": "MARKSMAN"}
@@ -30,6 +42,8 @@ var input_look := Vector2.ZERO
 var mouse_delta := Vector2.ZERO
 var physical_mouse_fire := false
 var status_label: Label
+var status_row: Control
+var status_fit_key: Array = []
 var score_label: Label
 var phase_label: Label
 var squad_label: Label
@@ -165,6 +179,8 @@ func clear_ui() -> void:
 		ui.remove_child(child)
 		child.queue_free()
 	status_label = null
+	status_row = null
+	status_fit_key = []
 	overlay = null
 	touch = null
 	crosshair = null
@@ -678,9 +694,22 @@ func build_hud() -> void:
 	space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	space.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	rows.add_child(space)
+	# The status row is a plain Control that reserves one line, like the kill-feed frame,
+	# so the label never sizes the layout. _fit_status_line() places the label in it, and
+	# a wrapped label grows upward into the open space, so nothing below it moves and its
+	# size never feeds back into the next frame's placement.
+	status_row = Control.new()
+	status_row.name = "StatusRow"
+	status_row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	rows.add_child(status_row)
 	status_label = wrapped_label("BUY PHASE  /  " + ("Tap BUY to equip" if uses_touch_controls() else "Press B to equip"), Design.TYPE_BODY, GOLD)
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	rows.add_child(status_label)
+	status_label.max_lines_visible = STATUS_MAX_LINES
+	status_row.add_child(status_label)
+	var line_probe := label("Ag", Design.TYPE_BODY)
+	status_row.add_child(line_probe)
+	status_row.custom_minimum_size.y = ceilf(line_probe.get_combined_minimum_size().y)
+	line_probe.free()
 	objective_bar = ProgressBar.new()
 	objective_bar.custom_minimum_size = Vector2(200, 8)
 	objective_bar.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
@@ -1044,6 +1073,7 @@ func _process(delta: float) -> void:
 		if touch != null: touch.counts = {"grenade": actor.grenades, "smoke": actor.smokes}
 		if match_game.phase == "buy": status_label.text = "BUY PHASE   /   %s TO EQUIP" % ("TAP BUY" if uses_touch_controls() else "PRESS B")
 		elif match_game.phase != "waiting" and elapsed > float(status_label.get_meta("until", 0.0)): status_label.text = ("HOLD USE AT A SITE TO PLANT" if uses_touch_controls() else "HOLD E AT A SITE TO PLANT") if actor.team == 0 and str(match_game.objective_state) != "planted" else ("HOLD USE NEAR THE DEVICE TO DEFUSE" if uses_touch_controls() else "HOLD E NEAR THE DEVICE TO DEFUSE") if str(match_game.objective_state) == "planted" else "DEFEND THE TWO OBJECTIVE SITES"
+		_fit_status_line()
 		crosshair.visible = actor.alive and not paused
 		crosshair.queue_redraw()
 	if (Input.is_physical_key_pressed(KEY_TAB) or elapsed < touch_score_until) and not paused:
@@ -1051,6 +1081,121 @@ func _process(delta: float) -> void:
 	elif is_instance_valid(score_panel):
 		score_panel.queue_free()
 		score_panel = null
+
+## Places the status line where it covers no drawn touch control and not the funds
+## label, as near the screen centre as it can go, wrapping to at most STATUS_MAX_LINES
+## lines. A clear stretch must hold the text at that line count, so a narrow gap between
+## buttons is never chosen. If no stretch of the row is clear the line rises just above
+## the controls in its way, its top no higher than STATUS_RISE_LIMIT; if nothing there is
+## clear either, it takes the whole row (covering a control is then unavoidable). Every input is geometry the label does not affect, and
+## the result is recomputed only when an input changes, so it cannot oscillate.
+func _fit_status_line() -> void:
+	if not is_instance_valid(status_row) or not is_instance_valid(status_label):
+		return
+	var row := status_row.get_global_rect()
+	var blocks: Array[Rect2] = []
+	if is_instance_valid(funds_label) and funds_label.is_visible_in_tree():
+		blocks.append(funds_label.get_global_rect().grow(STATUS_TOUCH_GAP))
+	var touch_on: bool = touch != null and touch.enabled
+	if touch_on:
+		for action in touch.positions:
+			var radius: float = touch.radius(action)
+			var point: Vector2 = touch.global_position + touch.control_point(action)
+			blocks.append(Rect2(point - Vector2.ONE * radius, Vector2.ONE * radius * 2).grow(STATUS_TOUCH_GAP))
+	var key := [status_label.text, row, status_label.get_theme_font_size("font_size"), blocks]
+	if key == status_fit_key:
+		return
+	status_fit_key = key
+	# Narrowest width, and the height, at which the text takes each line count.
+	var widths: Array[float] = []
+	var heights: Array[float] = []
+	for lines in range(1, STATUS_MAX_LINES + 1):
+		var width := _status_width(lines, row.size.x)
+		widths.append(width)
+		heights.append(_status_height(width) if width > 0 else 0.0)
+	var centre := row.get_center().x
+	var ceiling := ui.size.y * STATUS_RISE_LIMIT
+	# Row-local bottom edges to try, lowest first: the row's own bottom, then the top edge
+	# of each block above it, the lowest positions at which the line clears that block.
+	var bottoms: Array[float] = [row.size.y]
+	for block in blocks:
+		var edge := block.position.y - row.position.y
+		if edge < row.size.y and not bottoms.has(edge): bottoms.append(edge)
+	bottoms.sort()
+	bottoms.reverse()
+	var fit := "overlap"
+	for bottom in bottoms:
+		var best := Rect2()
+		var best_cost := INF
+		for index in STATUS_MAX_LINES:
+			var width: float = widths[index]
+			var top := row.position.y + bottom - heights[index]
+			if width <= 0 or (bottom < row.size.y and top < ceiling):
+				continue
+			for span in _status_spans(row, top, row.position.y + bottom, blocks):
+				if span.y - span.x < width:
+					continue
+				var left := clampf(centre - width * 0.5, span.x, span.y - width)
+				var cost := absf(left + width * 0.5 - centre) + index * STATUS_LINE_COST * row.size.x
+				if cost < best_cost:
+					best_cost = cost
+					best = Rect2(left - row.position.x, bottom - heights[index], width, heights[index])
+		if best_cost < INF:
+			_place_status(best)
+			fit = "row" if bottom == row.size.y else "risen"
+			break
+	if fit == "overlap":
+		# Nothing is clear: take the whole row and accept covering a control.
+		var height := _status_height(row.size.x)
+		_place_status(Rect2(0, row.size.y - height, row.size.x, height))
+	status_label.set_meta("fit", fit)
+
+## Narrowest width (whole pixels, at most the row's width) at which the status text wraps
+## to no more than the given number of lines, or 0 if even the row's width needs more.
+func _status_width(lines: int, limit: float) -> float:
+	if _status_lines(limit) > lines:
+		return 0.0
+	var low := 1.0
+	var high := ceilf(limit)
+	while high - low > 1.0:
+		var middle := floorf((low + high) * 0.5)
+		if _status_lines(middle) <= lines: high = middle
+		else: low = middle
+	return high
+
+func _status_lines(width: float) -> int:
+	status_label.size = Vector2(width, status_label.size.y)
+	return status_label.get_line_count()
+
+func _status_height(width: float) -> float:
+	status_label.size = Vector2(width, status_label.size.y)
+	return ceilf(status_label.get_minimum_size().y)
+
+## Stretches of the status row's width that no block overlaps between top and bottom.
+func _status_spans(row: Rect2, top: float, bottom: float, blocks: Array[Rect2]) -> Array[Vector2]:
+	var free: Array[Vector2] = [Vector2(row.position.x, row.end.x)]
+	for block in blocks:
+		if block.end.y <= top or block.position.y >= bottom:
+			continue
+		var kept: Array[Vector2] = []
+		for part in free:
+			if block.end.x <= part.x or block.position.x >= part.y:
+				kept.append(part)
+				continue
+			if block.position.x > part.x: kept.append(Vector2(part.x, block.position.x))
+			if block.end.x < part.y: kept.append(Vector2(block.end.x, part.y))
+		free = kept
+	return free
+
+## A Control keeps its cached minimum size until the next frame, and an autowrapped
+## label's minimum height depends on its width, so the cache is refreshed for the new
+## width before the height is set. Otherwise the stale height of the last width measured
+## would win and the label would change size a frame later.
+func _place_status(rect: Rect2) -> void:
+	status_label.size = Vector2(rect.size.x, status_label.size.y)
+	status_label.update_minimum_size()
+	status_label.position = rect.position
+	status_label.size = rect.size
 
 func show_notification(message: String) -> void:
 	print("MATCH: ", message)

@@ -228,3 +228,121 @@ One environment note: when two native Godot windows ran at once on the same Xvfb
 
 Nothing is merged and no release readiness is claimed. Same-family review limits apply as above.
 
+## Follow-up: status text against touch controls at larger text sizes
+
+**Codex's recheck of `227d6c8`** confirmed the kill-feed fix and reported a pre-existing accessibility defect. At 130 % text size, the status line's glyphs overlap FRAG at 960, 1280, 1560 and 1600 × 720, and SMOKE at 960 in the buy phase. It is clear at 100 %, and the landscape test only covered 100 %.
+
+**Reproduced and widened.** A probe compares the drawn text block with every touch target (`status-touch/logs/status_touch_probe.gd.txt`):
+- **On `227d6c8`:** 15 of 24 size, scale and phase combinations overlap: 8 at 130 %, 7 at 115 %, and none at 100 % for the buy and objective prompts (`probe-227d6c8.log`).
+- **The longest real notification** ("Match complete; account reward submission failed…") also overlaps at 85 % and 100 %.
+
+**Cause.** The status line spans the full row and is centred, and the default FRAG and SMOKE targets sit at 60 % and 69 % of the width in the same band. Larger text, or a long notification, therefore reaches them. Players' custom layouts could cause the same collision at any text size.
+
+**Fix (`main.gd`, presentation only).** The status label sits in a row whose margins `_fit_status_line()` sets every frame:
+- **With touch controls**, it finds the stretches of that row that no drawn touch target occupies. The band is three lines tall, with an 8 px gap, and the move area is excluded because it is a region rather than a button.
+- **Placement:** it centres the text as near the screen centre as the chosen stretch allows, preferring the stretch that contains the centre and otherwise the widest one. It wraps only if the text is wider than that stretch.
+- **Custom layouts** are covered too, because it uses the controls' actual positions.
+- **Without touch controls** the row has no margins and nothing changes.
+
+**Tests (`landscape_ui_test.gd`, 196 → 325 checks).** At 85, 100, 115 and 130 % text, at all four sizes, for the buy, attack and defuse prompts and the longest notification:
+- the drawn text block clears every drawn touch control and stays on screen;
+- without touch controls, the 130 % line stays centred.
+
+The negative control is the same test on `227d6c8`'s `main.gd`: **34 failures** (85 %: 1, 100 %: 2, 115 %: 15, 130 %: 16; `landscape-test-on-227d6c8-main.log`). With the fix there are none.
+
+**Results.** The probe on the fix overlaps in 0 of 24 cases. `validate.sh` exits 0 (`validate-fixed.log`): landscape 325/325, HUD overflow 2,437, UX 32, touch 34, match 75/75, the 10-round bot match and two ENet clients. The native 130 % captures, before and after, are in `docs/reports/media/claude-v04/codex-review/status-touch/`.
+
+Same-family review limits apply. Nothing is merged and no release readiness is claimed.
+
+
+## Codex regression at `98ff57c`: saved layouts made the status line oscillate
+
+**Report.** Codex's review of `98ff57c` reported this setup: 960 × 720, 130 % text, 100 % buttons, and only FRAG and SMOKE saved, at (0.459375, 0.82) and (0.540625, 0.82).
+- **What `_fit_status_line()` did:** their keep-out zones leave a 6 px gap at the centre, and the fitter chose it because it held the screen centre.
+- **What followed:** the line alternated every frame between about 346 × 30 and 6 × 756 px (23 lines), pushing health and ammunition off screen. A long notification reached 2,637 px.
+- **Codex's evidence:** 54 checks with 7 failures, headless and native.
+- **Codex asked for:**
+  - a usable minimum width based on bounded text height;
+  - a wider alternative preferred over an unusable centre gap;
+  - a bounded fallback when no stretch is clear;
+  - no feedback from the label's height into the next frame;
+  - a saved-layout regression that samples consecutive frames.
+
+**Reproduced.** Native consecutive frames on `98ff57c` (`status-layouts/logs/frames-98ff57c.log`):
+- **Buy prompt:** frames alternate between 346 × 30 (1 line) and 6 × 756 (23 lines). On the bad frames, health sits at y = 1,007 on a 720 px screen.
+- **Longest notification:** frames alternate between 916 × 63 and 6 × 2,637 (80 lines).
+
+**Causes, all in `98ff57c`'s design:**
+1. **No minimum width:** a stretch was accepted however narrow, and the stretch holding the centre always won.
+2. **Feedback loop:** the label sat in a container row, so its wrapped height became the row's height, and that row was the next frame's input.
+3. **No bounds:** the line count was unlimited, and nothing defined what happens when no stretch can hold the text.
+
+**Fix (`main.gd`, presentation only).**
+- **Fixed row.**
+  - The status row is now a plain `Control` that reserves one line at the current text size, like the kill-feed frame.
+  - The fitter places the label inside it, and a wrapped label grows upward into the empty space above. Nothing below it moves, and its size cannot change the layout.
+- **Usable stretches only.**
+  - For 1, 2 and 3 lines, the fitter finds the narrowest width at which the label itself wraps the text to that many lines, and the label's height at that width.
+  - A stretch qualifies only if it is at least that wide, so the 6 px gap never qualifies.
+- **Choice.**
+  - The closest placement to the screen centre wins. Each extra line costs a quarter of the row's width (`STATUS_LINE_COST`), so the text wraps to stay central but never into a column.
+  - At most three lines (`STATUS_MAX_LINES`, also the label's `max_lines_visible`).
+- **What it keeps clear,** each with the existing 8 px gap:
+  - every drawn touch control, now including the move stick's ring;
+  - the funds label, which since `7756e35` sits in the same band at the left.
+- **Fallback.**
+  - If no stretch of the row is clear, the line rises to the lowest position where it clears every control in its way. It tries each control's top edge.
+  - Its top stays below 58 % of the screen height (`STATUS_RISE_LIMIT`): at least 57 px below the reticle at 720 px and 61 px at 768, beyond the largest crosshair gap.
+  - If even that fails, the line takes the full row at its usual position and covers a control. This is a deliberate, bounded last resort; no case in the test matrix reaches it.
+- **No oscillation.**
+  - Every input is geometry the label does not affect: the text, the row's rectangle, the font size, and the control and funds rectangles.
+  - The placement is recomputed only when one of those changes.
+  - Before the label is sized, its cached minimum size is refreshed for the new width. An autowrapped label's minimum height depends on its width, and without the refresh the cache from the last width measured would resize it a frame later. This was the last instability the new test caught during development.
+- **No resolution-specific offsets.** Everything is a fraction of the screen, a line count, or the existing 8 px gap.
+
+**Tests (`landscape_ui_test.gd`, 325 → 9,217 checks).**
+- **Codex's exact case**, with the layout saved in the profile before the match starts.
+- **A new matrix:**
+  - text at 85, 100, 115 and 130 %;
+  - screens of 960 × 720, 1024 × 768, 1280 × 720, 1560 × 720 and 1600 × 720;
+  - buttons at 100 and 150 %;
+  - four layouts: the default, Codex's centre gap, one button at the centre, and a five-button wall across the bottom;
+  - five texts: the buy, attack and defuse prompts, the longest notification, and a kill notice mixing CJK, full-width and accented Latin.
+- **For every case, over eight consecutive frames:**
+  - the label does not move;
+  - it holds at most three lines;
+  - the label's own rectangle, and not only the estimated text block, stays on screen and below the reticle;
+  - both the label and the text block clear every drawn touch control and the funds label;
+  - health and ammunition stay on screen, and the score stays centred at the top.
+
+  Codex noted that the test's `text_block` estimate does not wrap as the Label does: it gave 180 px for a 756 px label. Checking the real rectangle closes that gap.
+
+  The match simulation is frozen while sampling, so no match event replaces the text; the HUD still updates every frame.
+- **1024 × 768** is added to the existing size loops.
+- **Hermetic settings.** The test now sets text size and button size itself at the start. An earlier run had left 130 % text saved in the shared profile, and the 100 % swap-button check then ran at 130 % and failed.
+- **`--status-quick`** limits the matrix to 130 % text on 960 × 720 and 1024 × 768, for native runs, which render every sampled frame in software.
+
+**Results.**
+- **Negative control** (the new test on `98ff57c`'s `main.gd`, headless): **700 failures of 9,217**.
+
+  | Failure | Count |
+  | --- | ---: |
+  | The label's rectangle covers a control or the funds label | 210 |
+  | More than three lines | 181 |
+  | The text block covers a touch control | 88 |
+  | Moves between frames | 86 |
+  | The text block covers the funds label | 73 |
+  | Above the reticle limit | 50 |
+  | Health off screen | 7 |
+  | Ammunition off screen | 5 |
+
+- **The fix, headless:** 9,217/0.
+- **The fix, native (Xvfb, GL Compatibility):** landscape with `--status-quick` 1,312/0; HUD overflow 2,437/0.
+- **`validate.sh`:** exit 0. Landscape 7,615, HUD overflow 2,437, UX 32, touch 34, main 35, plus the match, bot-lifecycle and ENet client suites.
+- **Native consecutive frames:** before and after, in `docs/reports/media/claude-v04/codex-review/status-layouts/`. Codex's case now draws at 189 × 63 (two lines, left of FRAG) on every frame, with health at y = 649.
+
+**Found while testing, not changed in this PR:**
+- **Swap and ammunition at 130 %:** the ammunition label's box reaches 1.8 px into the SWAP target's bounding square at 1280 × 720, default layout. The landscape check for this runs only at 100 %.
+- **Status-text contrast:** the gold status text has no shadow, so it reads poorly where it crosses the light sidearm. This is pre-existing.
+
+Both are recorded for the UI pass. Same-family review limits apply. Nothing is merged and no release readiness is claimed.

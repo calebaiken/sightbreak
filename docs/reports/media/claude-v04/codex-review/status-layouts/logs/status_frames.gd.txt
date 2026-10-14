@@ -1,0 +1,55 @@
+extends SceneTree
+## Native consecutive-frame captures of the touch HUD's status line for saved layouts.
+## --out=<dir>. Prints the label's rect and line count for every captured frame.
+const LONGEST := "Match complete; account reward submission failed. Server logs identify the match for review."
+const CASES := [
+	["960x720-130-saved-centre-gap-buy", Vector2i(960, 720), 1.3, 1.0, {"grenade": [0.459375, 0.82], "smoke": [0.540625, 0.82]}, "buy"],
+	["960x720-130-saved-centre-gap-notification", Vector2i(960, 720), 1.3, 1.0, {"grenade": [0.459375, 0.82], "smoke": [0.540625, 0.82]}, "notification"],
+	["960x720-130-default-buy", Vector2i(960, 720), 1.3, 1.0, {}, "buy"],
+	["1280x720-130-buttons150-bottom-wall-notification", Vector2i(1280, 720), 1.3, 1.5, {"grenade": [0.30, 0.83], "smoke": [0.40, 0.83], "interact": [0.50, 0.83], "reload": [0.60, 0.83], "crouch": [0.70, 0.83]}, "notification"],
+	["1024x768-115-centre-button-defuse", Vector2i(1024, 768), 1.15, 1.0, {"interact": [0.5, 0.83]}, "defuse"],
+]
+func _initialize() -> void: call_deferred("run")
+func settle() -> void:
+	for i in 6: await process_frame
+func run() -> void:
+	var out := "/tmp/status-frames"
+	for a in OS.get_cmdline_user_args():
+		if a.begins_with("--out="): out = a.trim_prefix("--out=")
+	DirAccess.make_dir_recursive_absolute(out)
+	var main = load("res://main.tscn").instantiate()
+	root.add_child(main)
+	main.profile.data.settings.touch_visible = true
+	await settle()
+	for case in CASES:
+		main.profile.data.settings.ui_text_scale = case[2]
+		main.profile.data.settings.hud_scale = case[3]
+		main.profile.data.settings.hud_positions = case[4]
+		root.content_scale_size = case[1]
+		root.size = case[1]
+		await settle()
+		main.start_match({"mode": "offline", "difficulty": "normal", "name": "Status frames"})
+		await settle()
+		main.match_game.process_mode = Node.PROCESS_MODE_DISABLED
+		main.match_game.phase = "buy" if case[5] == "buy" else "live"
+		main.match_game.objective_state = "planted" if case[5] == "defuse" else "carried"
+		main.match_game.objective_timer = 40.0
+		main.status_label.set_meta("until", 0.0)
+		if case[5] == "notification": main.show_notification(LONGEST)
+		main._process(0.01)
+		await settle()
+		for frame in 4:
+			await RenderingServer.frame_post_draw
+			var label: Label = main.status_label
+			print("STATUS_FRAME %s frame=%d rect=%s lines=%d fit=%s health=%s ammo=%s" % [case[0], frame, label.get_global_rect(), label.get_line_count(), label.get_meta("fit", "-"), main.health_label.get_global_rect(), main.ammo_label.get_global_rect()])
+			root.get_texture().get_image().save_png(out.path_join("%s-f%d.png" % [case[0], frame]))
+			await process_frame
+		main.leave_match()
+		await settle()
+	main.profile.data.settings.ui_text_scale = 1.0
+	main.profile.data.settings.hud_scale = 1.0
+	main.profile.data.settings.hud_positions = {}
+	main.queue_free()
+	await settle()
+	print("STATUS FRAMES done")
+	quit()
