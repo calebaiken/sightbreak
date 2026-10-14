@@ -11,6 +11,51 @@ var _gun_color := Color("59616a")
 var weapon_id := "rifle"
 var _hands := false
 var _materials: Dictionary = {}
+var _authored: Array[MeshInstance3D] = []
+var _ejection := Vector3.INF
+var _pivot := Vector3.ZERO
+var _arms_placement := Transform3D()
+var _rigged := false
+
+## Authored first-person rifle built by tools/art (Blender, original geometry). Units
+## are meters: receiver rear at the origin, bore at +Y 0.025, barrel along -Z. The
+## procedural rifle remains the fallback when the asset is missing.
+const RELAY_AR := "res://assets/weapons/relay_ar/relay_ar.glb"
+const RELAY_AR_MATERIAL := "res://assets/weapons/relay_ar/relay_ar_body.tres"
+const RELAY_AR_ORM := "res://assets/weapons/relay_ar/relay_ar_orm.png"
+const RELAY_AR_NORMAL := "res://assets/weapons/relay_ar/relay_ar_normal.png"
+const RELAY_AR_ALBEDO := "res://assets/weapons/relay_ar/relay_ar_albedo.png"
+## Gloved hands and sleeves posed on this rifle (tools/art/relay_ar_hands.py); static,
+## the fallback when the rigged arms are absent.
+const RELAY_AR_HANDS := "res://assets/weapons/relay_ar/relay_ar_hands.glb"
+const RELAY_AR_HANDS_MATERIAL := "res://assets/weapons/relay_ar/relay_ar_hands.tres"
+## Rigged arms (tools/art/arms_build.py): both arms in one skinned mesh on a 34-bone
+## skeleton, posed on this rifle in their bind pose, with a one-second "reload" clip
+## that the actor seeks by reload progress. Same space as the rifle GLB.
+const RELAY_AR_ARMS := "res://assets/weapons/relay_ar/relay_ar_arms.glb"
+const RELAY_AR_TEXTURES := "res://assets/weapons/relay_ar/relay_ar"
+const RELAY_AR_ARMS_TEXTURES := "res://assets/weapons/relay_ar/relay_ar_arms"
+const ViewmodelShading = preload("res://scripts/gameplay/viewmodel_shading.gd")
+## Viewmodel placement inside the camera-attached weapon node (presentation only).
+## The weapon node rests 0.235 m right, 0.235 m down and 0.42 m ahead of the eye.
+## These values come from tools/art/viewmodel_fit.py: the muzzle near the crosshair,
+## the reflex sight right of centre, the pistol grip at the lower right and the stock
+## behind the camera, with about 6 degrees of roll so the left receiver face reads.
+static var relay_ar_scale := 1.0
+static var relay_ar_rotation := Vector3(-0.020, 0.174, -0.04)
+static var relay_ar_offset := Vector3(0.065, 0.074, -0.005)
+## Inspection and other hand-less builds keep the rifle upright, centred in the
+## existing studio framing (the studio's yaw brings the muzzle end nearer the camera).
+const RELAY_AR_UPRIGHT_OFFSET := Vector3(0, -0.015, -0.07)
+## Balance point between the two hands, in the GLB's axes (barrel along -Z). First-person
+## builds move the weapon node's origin here, so reload and equip tilts turn the rifle
+## about its middle instead of sweeping the stock through the view. The rest pose is
+## unchanged: the actor adds the pivot to the node's rest position and the models are
+## offset by the same amount.
+const RELAY_AR_PIVOT := Vector3(0.0, 0.0, -0.19)
+## Captures switch these off for before/after comparisons; gameplay never reads them.
+static var use_authored := true
+static var use_rigged_arms := true
 
 # One packed model per weapon/hands variant. Instances share every mesh and
 # material, so an equip costs node instantiation instead of geometry building.
@@ -20,11 +65,12 @@ static func build(parent: Node3D, id: String, hands: bool = false) -> Dictionary
 	for child in parent.get_children():
 		parent.remove_child(child)
 		child.queue_free()
-	var key := "%s|%s" % [id, hands]
+	var key := "%s|%s|%s|%s|%s|%s|%s" % [id, hands, use_authored, use_rigged_arms, relay_ar_scale, relay_ar_offset, relay_ar_rotation]
 	if not _packed.has(key):
 		_packed[key] = _pack(id, hands)
 	var instance: Node = (_packed[key] as PackedScene).instantiate()
-	var result := {"paint": [] as Array[MeshInstance3D], "magazine": null, "muzzle": null}
+	var result := {"paint": [] as Array[MeshInstance3D], "magazine": null, "muzzle": null, "ejection": instance.get_meta("ejection", Vector3.INF), "pivot": instance.get_meta("pivot", Vector3.ZERO),
+		"viewmodel": instance.get_meta("viewmodel", false), "arms": null, "arms_player": null, "arms_skeleton": null}
 	for child in instance.get_children():
 		instance.remove_child(child)
 		release_owner(child)
@@ -34,8 +80,32 @@ static func build(parent: Node3D, id: String, hands: bool = false) -> Dictionary
 		match str(child.get_meta("weapon_role", "")):
 			"magazine": result.magazine = child
 			"muzzle": result.muzzle = child
+	if instance.has_meta("arms_placement"):
+		_add_arms(parent, instance.get_meta("arms_placement"), result)
 	instance.free()
 	return result
+
+## The rigged arms are instanced per build rather than packed, so their skeleton and
+## animation player stay intact; the GLB's packed scene is cached by the loader.
+static func _add_arms(parent: Node3D, placement: Transform3D, result: Dictionary) -> void:
+	var arms: Node3D = (load(RELAY_AR_ARMS) as PackedScene).instantiate()
+	arms.name = "arms"
+	arms.transform = placement
+	arms.set_meta("weapon_role", "arms")
+	var material := ViewmodelShading.surface(RELAY_AR_ARMS_TEXTURES)
+	for mesh: MeshInstance3D in arms.find_children("*", "MeshInstance3D", true, false):
+		mesh.material_override = material
+		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	parent.add_child(arms)
+	result.arms = arms
+	result.arms_skeleton = arms.find_children("*", "Skeleton3D", true, false).front()
+	var players := arms.find_children("*", "AnimationPlayer", true, false)
+	if not players.is_empty():
+		var player: AnimationPlayer = players.front()
+		player.callback_mode_process = AnimationMixer.ANIMATION_CALLBACK_MODE_PROCESS_MANUAL
+		player.assigned_animation = "reload"
+		player.seek(0.0, true)
+		result.arms_player = player
 
 static func _pack(id: String, hands: bool) -> PackedScene:
 	var root := Node3D.new()
@@ -50,7 +120,21 @@ static func _pack(id: String, hands: bool) -> PackedScene:
 		part.set_meta("weapon_paint", true)
 	if model._magazine != null:
 		model._magazine.set_meta("weapon_role", "magazine")
+	if not model._authored.is_empty():
+		# Baked occlusion and surface normals survive any cosmetic finish.
+		for part in model._paint_parts:
+			part.set_meta("detail_orm", load(RELAY_AR_ORM))
+			part.set_meta("detail_normal", load(RELAY_AR_NORMAL))
+			part.set_meta("detail_albedo", load(RELAY_AR_ALBEDO))
 	model._muzzle.set_meta("weapon_role", "muzzle")
+	if model._ejection != Vector3.INF:
+		root.set_meta("ejection", model._ejection)
+	if model._pivot != Vector3.ZERO:
+		root.set_meta("pivot", model._pivot)
+	if model._rigged:
+		root.set_meta("arms_placement", model._arms_placement)
+	if model._hands and not model._authored.is_empty():
+		root.set_meta("viewmodel", true)
 	return pack_children(root)
 
 ## Packs a procedurally built hierarchy, then frees the source nodes.
@@ -170,7 +254,7 @@ func _glove(at: Vector3, support: bool = false) -> void:
 	knuckle.material_override = _material(Color("24312e"), 0.85, 0)
 
 func _batch_magazine() -> void:
-	if _magazine == null or _magazine.get_child_count() == 0:
+	if _magazine == null or _magazine.get_child_count() == 0 or _authored.has(_magazine):
 		return
 	var builder := SurfaceTool.new()
 	builder.begin(Mesh.PRIMITIVE_TRIANGLES)
@@ -191,7 +275,7 @@ func _batch_static_parts() -> void:
 	# transforms; fixed attachments do not each consume a mobile draw call.
 	var groups: Dictionary = {}
 	for node in _gun.get_children():
-		if not node is MeshInstance3D or node == _magazine or node == _muzzle:
+		if not node is MeshInstance3D or node == _magazine or node == _muzzle or _authored.has(node):
 			continue
 		var painted := _paint_parts.has(node)
 		var key := "paint" if painted else ("fabric" if node.material_override.roughness > 0.8 else "metal")
@@ -258,7 +342,10 @@ func _build_gun() -> void:
 	var edge := Color("25303a")
 	var glove := Color("343c39")
 	var muzzle_z := -0.35
-	if weapon_id == "sidearm":
+	var muzzle_at := Vector3.INF
+	if weapon_id == "rifle" and use_authored and ResourceLoader.exists(RELAY_AR):
+		muzzle_at = _build_authored_rifle()
+	elif weapon_id == "sidearm":
 		_chamfer(Vector3(0, 0.022, -0.16), Vector3(0.085, 0.075, 0.31), edge, true)
 		_chamfer(Vector3(0, -0.023, -0.12), Vector3(0.074, 0.052, 0.26), metal)
 		var grip := _chamfer(Vector3(0, -0.105, -0.017), Vector3(0.066, 0.16, 0.09), metal)
@@ -353,16 +440,86 @@ func _build_gun() -> void:
 		flash_mesh.add_vertex(Vector3(0, 0, -0.19 if i % 2 == 0 else -0.105))
 	flash_mesh.generate_normals()
 	_muzzle.mesh = flash_mesh.commit()
-	_muzzle.material_override = _material(Color("ffde9c"), 1, 0).duplicate()
-	var mat := _muzzle.material_override as StandardMaterial3D
-	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
-	mat.cull_mode = BaseMaterial3D.CULL_DISABLED
+	if _hands and not _authored.is_empty():
+		_muzzle.material_override = ViewmodelShading.flash(Color("ffde9c"))
+	else:
+		_muzzle.material_override = _material(Color("ffde9c"), 1, 0).duplicate()
+		var mat := _muzzle.material_override as StandardMaterial3D
+		mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		mat.cull_mode = BaseMaterial3D.CULL_DISABLED
 	_gun.add_child(_muzzle)
-	_muzzle.position = Vector3(0, 0.025, muzzle_z)
+	_muzzle.position = Vector3(0, 0.025, muzzle_z) if muzzle_at == Vector3.INF else muzzle_at
 	_muzzle.visible = false
 
 	for child in _gun.get_children():
 		if child is MeshInstance3D:
 			child.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
+## Reads an authored GLB: every node's transform in the viewmodel node (markers),
+## its untransformed position in the rifle's own space (anchors) and its meshes.
+static func _authored_nodes(path: String, placement: Transform3D) -> Dictionary:
+	var source: Node = (load(path) as PackedScene).instantiate()
+	var result := {"markers": {}, "anchors": {}, "meshes": {}}
+	for node in source.find_children("*", "Node3D", true, false):
+		var local := Transform3D.IDENTITY
+		var walk: Node = node
+		while walk != source:
+			local = (walk as Node3D).transform * local
+			walk = walk.get_parent()
+		result.markers[str(node.name)] = placement * local
+		result.anchors[str(node.name)] = local.origin
+		if node is MeshInstance3D:
+			result.meshes[str(node.name)] = (node as MeshInstance3D).mesh
+	source.free()
+	return result
 
+func _add_authored(part_name: String, mesh: Mesh, at: Transform3D, material: Material) -> MeshInstance3D:
+	var part := MeshInstance3D.new()
+	part.name = part_name
+	part.mesh = mesh
+	part.material_override = material
+	part.transform = at
+	_gun.add_child(part)
+	_authored.append(part)
+	return part
+
+## Adds the authored rifle's meshes and hands; returns the muzzle position.
+func _build_authored_rifle() -> Vector3:
+	var placement := Transform3D(Basis.from_euler(relay_ar_rotation).scaled(Vector3.ONE * relay_ar_scale), relay_ar_offset) if _hands else Transform3D(Basis.IDENTITY, RELAY_AR_UPRIGHT_OFFSET)
+	if _hands:
+		_pivot = placement * RELAY_AR_PIVOT
+		placement.origin -= _pivot
+	var rifle := _authored_nodes(RELAY_AR, placement)
+	# First person draws with the viewmodel projection; inspection keeps the plain material.
+	var material: Material = ViewmodelShading.surface(RELAY_AR_TEXTURES, 0.86) if _hands else load(RELAY_AR_MATERIAL)
+	var part_names := ["body", "paint_receiver", "paint_handguard", "magazine"]
+	if not _hands and rifle.meshes.has("stock"):
+		part_names.append("stock")
+	for part_name in part_names:
+		var part := _add_authored(part_name, rifle.meshes[part_name], rifle.markers[part_name], material)
+		if part_name.begins_with("paint_"):
+			_paint_parts.append(part)
+	_magazine = _gun.get_node("magazine")
+	_magazine_rest = _magazine.position
+	var rounds := MeshInstance3D.new()
+	rounds.name = "magazine_rounds"
+	rounds.mesh = rifle.meshes["magazine_rounds"]
+	rounds.material_override = material
+	rounds.transform = _magazine.transform.affine_inverse() * rifle.markers["magazine_rounds"]
+	_magazine.add_child(rounds)
+	if _hands and use_rigged_arms and ResourceLoader.exists(RELAY_AR_ARMS):
+		_rigged = true
+		_arms_placement = placement
+	elif _hands and ResourceLoader.exists(RELAY_AR_HANDS):
+		var hands := _authored_nodes(RELAY_AR_HANDS, placement)
+		_add_authored("hands", hands.meshes["hands"], hands.markers["hands"], load(RELAY_AR_HANDS_MATERIAL))
+	elif _hands:
+		# Procedural gloves when the hand asset is absent; offsets are in rifle space.
+		var grip: Vector3 = rifle.anchors["grip_hand"]
+		var support: Vector3 = rifle.anchors["support_hand"]
+		_glove(placement * (grip + Vector3(0.012, -0.004, 0.010)))
+		_sleeve(Vector3(0.16, -0.36, 0.43), placement * (grip + Vector3(0.020, -0.040, 0.075)), Color("28353c"))
+		_glove(placement * (support + Vector3(-0.012, -0.022, 0.0)), true)
+		_sleeve(Vector3(-0.26, -0.33, 0.12), placement * (support + Vector3(-0.030, -0.070, 0.070)), Color("28353c"))
+	_ejection = rifle.markers["ejection"].origin
+	return rifle.markers["muzzle"].origin

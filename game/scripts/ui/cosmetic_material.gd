@@ -8,17 +8,25 @@ const PALETTES := {
 	"Spectral Circuit": [Color("243c57"), Color("62cec7")],
 	"Blacksite": [Color("394536"), Color("c7b779")]
 }
-const CODE := """shader_type spatial;
-uniform vec4 base_paint : source_color;
+const ViewmodelShading = preload("res://scripts/gameplay/viewmodel_shading.gd")
+const PARAMETERS := """uniform vec4 base_paint : source_color;
 uniform vec4 accent_paint : source_color;
 uniform float pattern_seed = 1.0;
 uniform float wear = 0.0;
 uniform float patterned = 1.0;
 uniform int finish_family = 0;
-varying vec3 local_position;
-void vertex() { local_position = VERTEX; }
-void fragment() {
- vec3 p = local_position;
+// Baked occlusion (R) and tangent normals from authored models; 0 leaves meshes
+// without UVs (procedural weapons) exactly as before.
+uniform float detail = 0.0;
+uniform sampler2D detail_orm : hint_default_white, filter_linear_mipmap;
+uniform sampler2D detail_normal : hint_normal, filter_linear_mipmap;
+// Without a skin (patterned = 0) an authored model shows its own baked surface.
+uniform sampler2D detail_albedo : source_color, hint_default_white, filter_linear_mipmap;
+// Linear gain on the baked albedo, matching relay_ar_body.tres, so the unskinned parts and
+// the rest of the model read as one graphite finish.
+uniform float detail_gain = 0.70;
+varying vec3 local_position;"""
+const SURFACE := """ vec3 p = local_position;
  float phase = pattern_seed * 0.017;
  float diagonal = smoothstep(0.34, 0.40, sin(p.x*18.0 + p.z*23.0 + phase));
  float hexgrain = sin(p.x*32.0+phase) * sin(p.y*38.0+p.z*24.0);
@@ -36,23 +44,59 @@ void fragment() {
  ALBEDO = mix(paint, vec3(0.30,0.32,0.34), abrasion*wear*0.55);
  ROUGHNESS = 0.29 + wear*0.38 + abrasion*0.06;
  METALLIC = 0.66 - wear*0.14;
-}"""
+ vec3 orm = texture(detail_orm, UV).rgb;
+ float occlusion = mix(1.0, orm.r, detail);
+ ALBEDO *= mix(0.6, 1.0, occlusion);
+ float baked = detail * (1.0 - patterned);
+ ALBEDO = mix(ALBEDO, texture(detail_albedo, UV).rgb * detail_gain, baked);
+ ROUGHNESS = mix(ROUGHNESS, orm.g, baked);
+ METALLIC = mix(METALLIC, orm.b, baked);
+ AO = occlusion;
+ NORMAL_MAP = mix(vec3(0.5, 0.5, 1.0), texture(detail_normal, UV).rgb, detail);"""
+# Inspection, third person and procedural weapons: the engine's own vertex transform.
+const CODE := "shader_type spatial;\n" + PARAMETERS + "\nvoid vertex() { local_position = VERTEX; }\nvoid fragment() {\n" + SURFACE + "\n}"
+# First person only: the viewmodel projection, depth and fill (see SBViewmodelShading).
+const VIEWMODEL_CODE := "shader_type spatial;\n" + ViewmodelShading.UNIFORMS + PARAMETERS + "\nvoid vertex() {\n local_position = VERTEX;\n" + ViewmodelShading.PROJECT + "}\nvoid fragment() {\n" + SURFACE + "\n" + ViewmodelShading.FILL + "}"
+
+## Assigns one finish to every paint part, binding baked detail when the parts
+## carry it (authored models set detail_orm/detail_normal/detail_albedo metadata).
+## With no skin, the authored model keeps its baked albedo, roughness and metal.
+static func apply(material: ShaderMaterial, parts: Array) -> void:
+	for part: MeshInstance3D in parts:
+		if part.has_meta("detail_orm"):
+			material.set_shader_parameter("detail_orm", part.get_meta("detail_orm"))
+			material.set_shader_parameter("detail_normal", part.get_meta("detail_normal"))
+			material.set_shader_parameter("detail_albedo", part.get_meta("detail_albedo"))
+			material.set_shader_parameter("detail", 1.0)
+			break
+	for part: MeshInstance3D in parts:
+		part.material_override = material
 
 static func rarity_color(rarity: String) -> Color:
 	return RARITIES.get(rarity.capitalize(), RARITIES.Common)
 
-# One compiled program for every finish; materials differ only in parameters.
+# One compiled program per use (world or first person); materials differ only in
+# parameters.
 static var _shader: Shader
+static var _viewmodel_shader: Shader
 
-static func shader() -> Shader:
+static func shader(viewmodel: bool = false) -> Shader:
+	if viewmodel:
+		if _viewmodel_shader == null:
+			_viewmodel_shader = Shader.new()
+			_viewmodel_shader.code = VIEWMODEL_CODE
+		return _viewmodel_shader
 	if _shader == null:
 		_shader = Shader.new()
 		_shader.code = CODE
 	return _shader
 
-static func finish(metadata: Dictionary) -> ShaderMaterial:
+## viewmodel = true only for a first-person model drawn with SBViewmodelShading.
+static func finish(metadata: Dictionary, viewmodel: bool = false) -> ShaderMaterial:
 	var material := ShaderMaterial.new()
-	material.shader = shader()
+	material.shader = shader(viewmodel)
+	if viewmodel:
+		ViewmodelShading.enable(material)
 	var collection := str(metadata.get("collection", ""))
 	var definition := str(metadata.get("definition_id", metadata.get("id", ""))).to_lower()
 	if collection.is_empty():
