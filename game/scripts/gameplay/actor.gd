@@ -455,12 +455,10 @@ func _build_gun() -> void:
 func apply_cosmetic(metadata: Dictionary) -> void:
 	# Shared inspection/in-match material. Appearance never changes match state.
 	_cosmetic = metadata.duplicate(true)
-	_finish = CosmeticMaterial.finish(metadata)
+	_finish = CosmeticMaterial.finish(metadata, _viewmodel)
 	if metadata.is_empty():
 		var paint := Color("26323b")
 		_finish.set_shader_parameter("base_paint", paint)
-	if _viewmodel:
-		ViewmodelShading.enable(_finish)
 	CosmeticMaterial.apply(_finish, _paint_parts)
 
 func _exit_tree() -> void:

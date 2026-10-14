@@ -5,6 +5,9 @@ const Actor = preload("res://scripts/gameplay/actor.gd")
 const WeaponModel = preload("res://scripts/gameplay/weapon_model.gd")
 const CosmeticMaterial = preload("res://scripts/ui/cosmetic_material.gd")
 const ViewmodelShading = preload("res://scripts/gameplay/viewmodel_shading.gd")
+const INSPECTOR = preload("res://scripts/ui/item_inspector.gd")
+const REVEAL = preload("res://scripts/ui/case_reveal.gd")
+const SKIN := {"id": "art-fixture", "kind": "weapon_skin", "collection": "Crimson Archive", "rarity": "Legendary", "pattern_seed": 897, "wear": 0.2}
 const RIFLE_TRIANGLES := 32000
 const HAND_TRIANGLES := 10000
 const ARMS_TRIANGLES := 12000
@@ -31,6 +34,24 @@ func _triangles(mesh: Mesh) -> int:
 func _texture_ok(path: String, limit: int) -> bool:
 	var texture: Texture2D = load(path)
 	return texture != null and texture.get_width() <= limit and texture.get_width() == texture.get_height() and is_equal_approx(log(texture.get_width()) / log(2.0), roundf(log(texture.get_width()) / log(2.0)))
+
+## Meshes under node whose shader writes POSITION without the viewmodel projection set.
+## Writing POSITION makes the engine skip its own vertex transform, so such a mesh is
+## drawn wrongly or not at all; only first-person materials may do it.
+func _vertex_overrides(node: Node) -> Array[String]:
+	var found: Array[String] = []
+	for mesh: MeshInstance3D in node.find_children("*", "MeshInstance3D", true, false):
+		var materials: Array[Material] = [mesh.material_override]
+		for surface in range(mesh.get_surface_override_material_count()):
+			materials.append(mesh.get_surface_override_material(surface))
+			if mesh.mesh != null:
+				materials.append(mesh.mesh.surface_get_material(surface))
+		for material in materials:
+			if material is ShaderMaterial and (material as ShaderMaterial).shader != null and (material as ShaderMaterial).shader.code.contains("POSITION"):
+				var fov = (material as ShaderMaterial).get_shader_parameter("viewmodel_fov")
+				if fov == null or float(fov) <= 0.0:
+					found.append(String(mesh.name))
+	return found
 
 func _run() -> void:
 	for path in [WeaponModel.RELAY_AR, WeaponModel.RELAY_AR_HANDS, WeaponModel.RELAY_AR_MATERIAL, WeaponModel.RELAY_AR_HANDS_MATERIAL]:
@@ -147,6 +168,32 @@ func _run() -> void:
 	WeaponModel.build(inspected, "rifle", false)
 	check((inspected.get_node("body") as MeshInstance3D).material_override is ORMMaterial3D, "inspection keeps the plain material and the world projection")
 	inspected.queue_free()
+	# The shared cosmetic finish: inspection, the case reveal and procedural first-person
+	# weapons use the world variant, which leaves the vertex transform to the engine.
+	check(not CosmeticMaterial.shader().code.contains("POSITION") and CosmeticMaterial.shader(true).code.contains("POSITION"), "only the first-person cosmetic variant overrides the vertex position")
+	check(actor._finish.shader == CosmeticMaterial.shader(true) and _vertex_overrides(actor._gun).is_empty(), "first-person rifle: every position override has the viewmodel projection")
+	var inspector := INSPECTOR.new()
+	root.add_child(inspector)
+	inspector.show_item(SKIN)
+	var inspector_paint: Array[String] = _vertex_overrides(inspector)
+	check(inspector.finish_material.shader == CosmeticMaterial.shader() and inspector_paint.is_empty(), "inspection draws its paint parts with the engine's transform %s" % [inspector_paint])
+	inspector.queue_free()
+	var reveal := REVEAL.new()
+	reveal.committed_item = SKIN.duplicate(true)
+	root.add_child(reveal)
+	await process_frame
+	reveal.skip()
+	var reveal_paint: Array[String] = _vertex_overrides(reveal)
+	check(reveal_paint.is_empty(), "the case reveal draws its reward with the engine's transform %s" % [reveal_paint])
+	reveal.queue_free()
+	var sidearm := Actor.new()
+	sidearm.configure(8, 0, "Procedural fixture", true)
+	root.add_child(sidearm)
+	sidearm.reset_for_round(Vector3(4, 0, 0))
+	sidearm.apply_cosmetic(SKIN)
+	var sidearm_paint: Array[String] = _vertex_overrides(sidearm._gun)
+	check(sidearm.weapon_id == "sidearm" and not sidearm._viewmodel and sidearm._paint_parts.size() > 0 and sidearm._finish.shader == CosmeticMaterial.shader() and sidearm_paint.is_empty(), "procedural first-person sidearm keeps the world finish %s" % [sidearm_paint])
+	sidearm.queue_free()
 	# The clip: the support hand leaves the handguard for the magazine, follows it down
 	# its well and returns exactly to the hold. Positions are in the skeleton's space.
 	var hand := skeleton.find_bone("L_hand")

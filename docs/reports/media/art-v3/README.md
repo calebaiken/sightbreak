@@ -15,6 +15,30 @@ Every image is a real render of commit `5100b3e` (rigged arms, viewmodel project
 | `motion/` | `5100b3e-sunlit-fire-reload.mp4` (H.264, 1280×720, 115 frames, 3.8 s) and `.gif` (640 px, 15 fps); `5100b3e-sunlit-sheet.png` (16 labelled frames from `tools/art/motion_sheet.py`); `5100b3e-sunlit-frames.csv` (per frame: time, phase, ammunition, reload remaining, clip time, magazine offset, kick) |
 | `logs/` | `arms-build.log` (bake, placement and grip-solve report from `tools/art/arms_build.py`), `validate-5100b3e.log` (the first `validate.sh` run, summary) and `validate-5100b3e-rerun-full.log` (the full re-run before publishing: exit 0, 3,144 counted native assertions, the 10-round bot lifecycle match and two ENet clients), `benchmark-5100b3e.log` (software-render relative cost; see `docs/art/PERFORMANCE_REPORT.md`) |
 
+## Blocking regression in `5100b3e`, found by the review and fixed
+
+**`captures/07-inspection-skin.png` shows a rifle without its receiver and handguard.** I published that frame without noticing. The v3 review caught it.
+
+- **Cause:** `5100b3e` put the viewmodel projection snippet into the shared cosmetic shader. That snippet wrote `POSITION` only when `viewmodel_fov > 0`. A shader that writes `POSITION` anywhere makes Godot skip its own vertex transform and start from `vec4(1.0)`, so with the field of view at 0 every vertex of a painted part collapsed to one point.
+- **Where it hit:**
+  - the inspection studio (inventory and marketplace previews);
+  - the case reveal's reward;
+  - the painted parts of the procedural sidearm, SMG and marksman rifle in first person.
+- **Fix:** the world and inspection finish is again the exact pre-v3 shader, and only a separate first-person variant carries the projection. The projection snippet also falls back to the camera's own projection if the field of view is ever unset.
+- **Evidence (`fix-position/`):**
+  - `07-inspection-skin-5100b3e.png` against `07-inspection-skin-fixed.png`.
+  - `paint-visibility-*.log`: `game/tests/paint_visibility_test.gd`, a native-display pixel test, renders each case, hides the paint parts, renders again and counts the changed pixels.
+
+    | Case | `5100b3e` | Fixed |
+    | --- | ---: | ---: |
+    | Inspection with the skin | **0** | 59,824 |
+    | Inspection with the default finish | **0** | 56,548 |
+    | Procedural first-person sidearm | **0** | 11,716 |
+    | Authored first-person rifle | 39,736 | 39,736 |
+
+  - `validate-fixed.log`: `validate.sh` on the fix, exit 0. `weapon_art_test` is now 69 checks; its 5 new checks fail on the bug (negative control: 4 failures naming `paint_receiver`, `paint_handguard` and the sidearm's paint mesh).
+- **Not regenerated:** the other captures in this folder show `5100b3e`. Its first-person frames used the viewmodel variant, which the fix does not change; the pixel test measures the same 39,736 pixels for the first-person rifle before and after.
+
 ## What these images show that is still wrong
 
 These are my own observations of these frames. The independent review is separate (`docs/art/VISUAL_QA.md`).

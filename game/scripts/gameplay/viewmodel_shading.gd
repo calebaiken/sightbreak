@@ -8,8 +8,10 @@ extends RefCounted
 ## is compressed toward the near plane, so it never clips into walls the player stands
 ## against, but it keeps its own ordering. An ambient floor and a view rim keep it
 ## readable in shade and against a bright sky without an extra light pass.
-## Every snippet is a no-op while viewmodel_fov is 0, which is how inspection and
-## third-person models use the shared cosmetic finish.
+## Only first-person materials may contain these snippets. Writing POSITION anywhere in
+## a shader makes the engine skip its own vertex transform for every draw of it, so a
+## shader shared with inspection or third person must not include PROJECT at all
+## (CosmeticMaterial keeps a separate first-person variant for this reason).
 
 ## Vertical field of view of the viewmodel, in degrees (about 68 horizontal at 4:3).
 const FOV := 54.0
@@ -31,16 +33,21 @@ uniform vec3 viewmodel_rim_color : source_color = vec3(0.80, 0.84, 0.88);
 ## Inside vertex(). Scales the camera's projection to the viewmodel field of view,
 ## keeping its aspect ratio and signs (the Compatibility renderer flips Y when drawing
 ## into a viewport texture). Clip space is reversed-Z, so the near plane is z = w and
-## depth is pulled toward it. Lighting still uses the true VERTEX.
+## depth is pulled toward it. Lighting still uses the true VERTEX. Once a shader writes
+## POSITION the engine starts it at vec4(1.0), so with no field of view set this falls
+## back to the camera's own projection rather than collapsing every vertex to a point.
 const PROJECT := """
+	vec4 view_position = MODELVIEW_MATRIX * vec4(VERTEX, 1.0);
 	if (viewmodel_fov > 0.0) {
 		mat4 projection = PROJECTION_MATRIX;
 		float zoom = 1.0 / (tan(radians(viewmodel_fov) * 0.5) * abs(PROJECTION_MATRIX[1][1]));
 		projection[0][0] *= zoom;
 		projection[1][1] *= zoom;
-		vec4 clip = projection * (MODELVIEW_MATRIX * vec4(VERTEX, 1.0));
+		vec4 clip = projection * view_position;
 		clip.z = clip.w - (clip.w - clip.z) * viewmodel_depth;
 		POSITION = clip;
+	} else {
+		POSITION = PROJECTION_MATRIX * view_position;
 	}
 """
 
