@@ -66,3 +66,15 @@ live-owner safety, stale deferred cleanup and lost welcome. Process harness reco
 ENet occupancy, actor bindings and accepted input acknowledgments as well as client
 snapshot freshness. Final post-commit campaign and full integration matrix must be
 reported separately; these initial results are not a complete quality acceptance.
+
+## Verified clean campaign
+
+Exact headc14dbc053dabd3d75950db81533dc7e5ebb58ce5 (runtime6c03dc8) passes all ten
+fresh isolated trials:10clients at0/50/100/150/200msRTT; three22second lost-close
+seeds7401–7403;200msRTT,50msjitter,3%loss,15%reorder with blackout/close;8second
+late retry. Every snapshot freshness cutoff passes, all ten original actors recover,
+server inputACKs advance, sampled authority remains unique, transport occupancy≤10.
+Recovery maximum11.602seconds under the harshest conditions. Clean source metadata
+is false for dirty in all ten trials. Detailed metrics, retained earlier failures and
+independent reviewer evidence: [reconnect-evidence](../reports/reconnect-evidence/README.md).
+Full account-backed ten-client and combined-stack validation remain separate gates.
