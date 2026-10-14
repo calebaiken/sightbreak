@@ -1,0 +1,35 @@
+extends SceneTree
+func _initialize() -> void: _run.call_deferred()
+func stats(orm: Image, uvs: PackedVector2Array, indices: PackedInt32Array) -> String:
+	var dark := 0
+	var total := 0.0
+	var seen := {}
+	var lows := 0
+	var n := 0
+	for i in indices:
+		if seen.has(i): continue
+		seen[i] = true
+		var uv := uvs[i]
+		var o := orm.get_pixelv(Vector2i(clampi(int(uv.x * orm.get_width()), 0, orm.get_width() - 1), clampi(int(uv.y * orm.get_height()), 0, orm.get_height() - 1))).r
+		total += o
+		n += 1
+		if o < 0.1: dark += 1
+		if o < 0.25: lows += 1
+	return "vertices %d mean AO %.3f, AO<0.1 at %.1f%%, AO<0.25 at %.1f%%" % [n, total / n, 100.0 * dark / n, 100.0 * lows / n]
+func _run() -> void:
+	var nodes := SBWeaponModel._authored_nodes(SBWeaponModel.RELAY_AR, Transform3D.IDENTITY)
+	var mesh: Mesh = nodes.meshes["magazine"]
+	var arrays := mesh.surface_get_arrays(0)
+	var uvs: PackedVector2Array = arrays[Mesh.ARRAY_TEX_UV]
+	var idx: PackedInt32Array = arrays[Mesh.ARRAY_INDEX] if arrays[Mesh.ARRAY_INDEX] != null else PackedInt32Array()
+	if idx.is_empty():
+		for i in uvs.size(): idx.append(i)
+	for item in [["before", OS.get_cmdline_user_args()[0]], ["after", "res://assets/weapons/relay_ar/relay_ar_orm.png"]]:
+		var image := Image.new()
+		if item[1].begins_with("res://"):
+			image = (load(item[1]) as Texture2D).get_image()
+			if image.is_compressed(): image.decompress()
+		else:
+			image.load(item[1])
+		print("MAGAO %s: %s" % [item[0], stats(image, uvs, idx)])
+	quit()

@@ -1,13 +1,19 @@
 # Animation standards
 
-**Status:** the first-person motion is still transform-driven in `actor.gd` and is unchanged by the authored rifle:
-- recoil kick;
-- sway;
-- walk bob;
-- equip dip;
-- reload tilt with the magazine dropping 0.24 m and reseating.
+**Status:**
+- **Relay AR with the rigged arms (default on this branch):** the support hand performs the reload. The 1 s `reload` clip in `relay_ar_arms.glb` is seeked by reload progress, and frame 0 is the hold.
+  - The hand leaves the handguard, takes the magazine, follows it down its well and back, seats it with a short push and returns.
+  - The weapon moves into a held reload pose (an 11 cm lift, 5 cm toward the centre, a clockwise roll) so the hand and the whole magazine are in frame at the grab and the seat.
+  - Online clients receive the reload timer at the snapshot rate (20 Hz). The pose follows a presentation clock in `actor.gd` (`_reload_clock`): it advances every visual tick and stays within 0.1 s below the authoritative timer, and it snaps to a new reload or an upward correction. It never writes the timer, ammunition or any gameplay state. At 20 Hz the clip time now changes on every visual tick, where before it changed on 1 tick in 3.
+  - The trigger finger curls with the recoil kick.
+- **Still transform-driven:** recoil kick, sway, walk bob, the equip dip, and every other weapon's reload (tilt plus a 0.23 m magazine drop and reseat).
+- **Not authored yet:** draw, inspect, bolt release and a second magazine. The same magazine is pulled and reseated.
 
-No skeletal or authored clip animation exists yet.
+Evidence is under `docs/reports/media/art-v3/`:
+- `motion/`: `5100b3e`, the hand and magazine below the frame;
+- `staged-reload/`: the current staging.
+
+Each sequence is a frame-by-frame capture from `game/tests/weapon_motion_capture.gd`.
 
 ## Rules
 
@@ -24,4 +30,7 @@ No skeletal or authored clip animation exists yet.
 
 ## Next
 
-An articulated hand rig with finger chains matching `relay_ar_hands.py`'s joints, used for reload (magazine swap with the support hand) and inspect. It is played by a small clip player that reads `reload_remaining` and `_deploy_remaining` and never writes them.
+1. Draw and inspect clips on the same rig. The game already seeks clips by state (`_deploy_remaining` for draw), and a clip never writes the state it reads.
+2. A second magazine, so the reload is a swap rather than a reseat.
+3. A bolt release on empty reloads. It needs the empty or tactical distinction the authoritative actor already has (`ammo == 0` when the reload starts); presentation only.
+4. Reduced motion: the reload pose is scaled by 0.2 like the old tilt. Check that the hand still reads with it.

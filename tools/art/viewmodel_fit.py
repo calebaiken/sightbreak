@@ -12,6 +12,12 @@ frame. Roll and scale are fixed per run. Prints the screen position of every lan
 so the layout can be checked, then confirm in engine with tests/weapon_art_capture.gd.
 Needs NumPy only. Re-run after changing the generator's proportions.
 
+The shipped constants in weapon_model.gd are the v3 fit turned 6.9 degrees outward and 2.9 degrees up
+about the balance point (RELAY_AR_PIVOT): the bore's vanishing point moved from 124 px left of the
+crosshair (10.0 degrees) to 38 px left and 21 px above (3.5 degrees) and the bore line passes through
+the crosshair, with the handguard and the support hand reading as before. That is a smaller step
+than "v4" below. game/tests/reload_legibility_probe.gd prints these numbers from the real frame.
+
 Layouts: "v3" (default) is the shipped fit; the v3 review measured its bore vanishing
 point 125 px left of the crosshair. "v4" was evaluated in response and not adopted
 (docs/reports/media/art-v3/placement-eval/): it weights the vanishing point (--vp-weight),

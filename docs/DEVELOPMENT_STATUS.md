@@ -1,60 +1,67 @@
 # Development status
 
-## Combined preview update — 2026-10-14
+## Historical combined preview a6b913c — 2026-10-14
 
 The isolated combined branch includes PR1=98ff57c, PR2=64ec598 and Codex PR3–8=89c0e9. See [integration report](reports/COMBINED_INTEGRATION_REPORT.md) for exact source/build identities and evidence. Full maintained47-group matrix passes; new custom-HUD adversarial tests and full-capacity close-loss reconnect fail. Unicode feed clipping is fixed; older references below are historical. Default rig works, static fallback projection is defective, and the independent weapon/arms visual slice scores5.5/10 (not the historical whole-game8.1 rubric). Device performance, physical touch, Xcode and production Internet security remain unverified. Next priority: owner corrections for HUD/fallback, a separate bounded reconnect fix with hostile account/capacity tests, then refreshed combined verification. Prediction stays opt-in, live rewind disabled, earned-only economy unchanged.
 
 ## Historical record (superseded where noted above)
 
-Updated 2026-10-13 by Claude (cloud session). Read this first when resuming work.
+Updated 2026-10-14 by Claude (cloud session). Read this first when resuming work.
 
 ## Branches and pull requests
 
 | Branch | Head | State |
 | --- | --- | --- |
 | `main` | `e67f2c8` | 0.3.0-dev baseline |
-| `claude/independent-audit-visual-v04` (PR #1 → `main`) | `227d6c8` | Codex's three blockers, the second review's findings and Codex's follow-up (CJK fallback rows, `8803029`) are fixed; owner-requested funds label (`7756e35`). **Unmerged; waiting for Codex review.** Not a release candidate. |
-| `claude/cs2-fidelity-art-production` (stacked on PR #1) | this branch | First vertical slice of the graphics initiative. Merge only after PR #1, as its own reviewed PR. |
-| `codex/competitive-network-systems` (Codex) | `acfa704` | Network privacy (protocol 3), stacked on PR #1's earlier head `cf9a630`. A local trial merge onto `77e0433` was clean. |
+| `claude/independent-audit-visual-v04` (PR #1 → `main`) | `148760e` | <ul><li>Codex's blockers are fixed.</li><li>The Unicode kill-feed fix was accepted at `227d6c8`.</li><li>The status-line regression Codex found at `98ff57c` is fixed in `148760e` (`docs/audits/CODEX_REVIEW_RESPONSE.md`).</li><li>**Unmerged; waiting for Codex's re-review.** Not a release candidate.</li></ul> |
+| `claude/cs2-fidelity-art-production` (PR #2, stacked on PR #1) | this branch, `b507205` and later | <ul><li>Graphics slice: Relay AR, rigged arms, viewmodel projection.</li><li>Codex's four corrections from its review of `64ec598` are addressed.</li><li>Codex's visual score of 5.5/10 stands against the 8.5 gate.</li><li>Merge only after PR #1, as its own reviewed PR.</li></ul> |
+| `claude/native-ui-production-v1` (no PR yet) | `2b2731a`, based on PR #1 `148760e` | <ul><li>The UI and UX overhaul (`docs/ui/VISUAL_GAP_REVIEW.md` on that branch): a measured, adaptive main menu and an armory with empty, loading and error states, exact market and trade terms, and a collection browser.</li><li>Independent of the art branch.</li></ul> |
+| Codex branches and PRs #3–#9 | see GitHub | Networking, backend, economy integrity and integration. Integration preview PR #9 (`integration/sightbreak-network-art-preview`). Claude does not push to them |
 
-Ownership (from Codex's `docs/engineering/PARALLEL_WORK.md`):
+**Ownership** (Codex's `docs/engineering/PARALLEL_WORK.md`):
 - **Codex:** networking, server lifecycle, backend, measurement and build tooling.
 - **Claude:** meshes, materials, shaders, visual UI, animation and art production.
-- **Shared:** `match.gd` changes must be small integration commits.
+- **Shared files:** changes to `match.gd` and actor presentation must be small. When this branch meets Codex's movement PR, keep both the `ViewmodelShading` preload and the `SBMovementStep` aliases and delegation in `actor.gd`.
 
-## Done on the art branch
+## Done on this branch
 
-- **Asset pipeline:** `tools/art/` with headless Blender (bpy 5.2.2): generators, bake, export, texture packing and review renders. See `docs/art/ASSET_PIPELINE.md`.
-- **Relay AR rifle:** original, real scale, 30,326 triangles (25,194 in first person, which omits the buttstock), 1024² baked PBR set.
-- **First-person hands (v2, being replaced):** static gloved hands and sleeves, 9,800 triangles, fitted with `tools/art/viewmodel_fit.py`. First-person tilts turn about a model-declared pivot. The `2bba519` review scored the whole viewmodel about 4.5/10 (`docs/art/VISUAL_QA.md`).
-- **Arms v3 (in progress):** `tools/art/sdf.py` (signed-distance modelling and surface nets), `relay_ar_arms.py` (anatomy, glove, sleeve) and `arms_build.py` (retopology, bones, weights, contact-solved grip, reload clip). Not yet exported or integrated.
-- **Integration:**
-  - the authored rifle in first person and inspection, with the weapon contract unchanged (`docs/art/WEAPON_PRODUCTION.md`);
-  - casings leave from the authored ejection port;
-  - cosmetic finishes keep the baked occlusion and normals, and with no skin the rifle shows its baked surface;
-  - the procedural rifle remains the fallback.
-- **Tests:**
-  - `weapon_art_test.gd` (48 checks) runs in `validate.sh`;
-  - `weapon_art_capture.gd` takes the in-engine captures;
-  - `weapon_render_benchmark.gd` measures relative cost.
-- **Docs:** `docs/art/` (gap analysis with reference-access limits, direction, pipeline, budgets, weapon, character, environment, animation, rendering, visual QA, performance).
+- **Asset pipeline:** `tools/art/`, with headless Blender (bpy 5.2.2): generators, signed-distance modelling, bake, export, texture packing, review renders and motion sheets. See `docs/art/ASSET_PIPELINE.md`.
+- **Relay AR rifle:** original and real scale. 30,326 triangles (25,194 in first person), with a 1024² baked PBR set.
+- **Rigged arms:**
+  - 9,204 triangles and 34 bones, with a contact-solved grip and a 1 s, 60 fps reload clip.
+  - The reload is a mechanical sequence: the support hand comes up from below, cups the magazine's base, slides it out along its well, shows it, lines it up, enters it, pushes it to its stop (0.80), holds, and lets go only at 0.85. The magazine is posed from the hand while it holds it (`Actor._pose_magazine`). Measured: the magazine is at least 94 % on screen and at most 1 % covered throughout, and the arms enter neither the rifle nor the magazine (`docs/reports/media/art-v6/`).
+  - The sleeve is a muted olive-drab (median luma 110 in sun, was 146) with a finer hem; gloves are 25 % lighter.
+  - A presentation-only reload clock keeps poses smooth at the 20 Hz snapshot rate.
+- **Bore:** the rifle's vanishing point is 38 px left and 21 px above the crosshair (3.5°, was 124 px left, 10.0°) and the bore line passes through the crosshair.
+- **Effects:** a layered additive muzzle flash (213 triangles; it differs shot to shot and lasts 40 ms) and a lathed brass casing that tumbles, bounces and settles. Presentation only.
+- **Viewmodel projection:** 54° with depth compression, applied to every first-person mesh of the authored rifle build, including both fallback hand variants.
+- **Tests:** `weapon_art_test.gd` (164 checks) runs in `validate.sh`; `reload_legibility_probe.gd` and `viewmodel_light_probe.gd` (native display) measure the reload and the per-part luma. `paint_visibility_test.gd` (pixels) and `weapon_motion_capture.gd` (frame sequences) need a native display.
+- **Evidence:** `docs/reports/media/art-v1`, `art-v3`, `art-v4`, `art-v5/lighting`, `art-v6/reload-hands-effects`.
 
 ## Not done (in priority order)
 
-Latest visual review (`2bba519`, same model family; see `docs/art/VISUAL_QA.md`): about 4.5/10 against a CS2-class bar of about 9. The rifle is at coherent alpha; hands, sleeves, motion, composition and lighting are at blockout level.
+The review record is in `docs/art/VISUAL_QA.md`. Codex scored the slice 5.5/10; the gate is 8.5.
 
-1. Arms v3: rigged anatomical gloves and real-length sleeves, skeletal reload and trigger, a viewmodel projection (about 50° vertical) with anti-clip, a viewmodel light, and value separation between glove, sleeve and receiver.
-2. **Decision needed (owner and Codex):** the project ships `canvas_items` stretch with the default "keep" aspect, so 20:9 and 4:3 screens get bars. The 20:9/4:3 art captures, and the landscape UI tests' wide sizes, show an "expand" setup instead.
-3. The rifle's LOW-tier hook and a UV repack (no stock in the first-person atlas) (mip bias or LOD), and weapon lighting checked on real GPUs.
-4. Skins built on the UVs with wear masks instead of model-space bands.
-5. The sidearm, SMG and marksman rifle through the same pipeline.
-6. One environment section at final quality (`docs/art/ENVIRONMENT_PRODUCTION.md`).
-7. An authored operator (`docs/art/CHARACTER_PRODUCTION.md`).
-8. Desktop-showcase and flagship tier definitions.
+1. **Composition:** the bore is 3.5° off the crosshair (was 10°), not zero; at 4:3 the canvas shows more than ships (the project keeps 16:9).
+2. **Hands and sleeves:**
+   - the grip hand reads as a mitten;
+   - support fingertips crest the rail at the handguard hold, and the thumb is not visible in the cupped grasp;
+   - gloves in a dark interior measure 15 to 17 (target 20) and the sleeve-to-glove value gap in shade is about 6 luma;
+   - the pistol grip is still a flat block;
+   - the static v2 fallback hands are still the v2 asset.
+3. **Lighting:** shade contrast between receiver and arms; over-bright backlit rims.
+4. **Animation:** draw and inspect clips; a second magazine mesh (the replacement is the same magazine re-seated); reduced motion reviewed.
+5. **Effects:** a bolt or charging-handle animation, a light for the flash (it is a mesh only), reload sound design.
+6. **The rifle:** a LOW-tier LOD and a UV repack.
+7. **Next weapons:** sidearm, SMG and marksman rifle through the same pipeline.
+8. **Environment:** one Relay Yard section at final quality.
+9. **Characters:** an authored operator.
+
+**Stretch aspect:** stays "keep" until the owner approves a competitive field-of-view policy (Codex's `MOBILE_ASPECT_REVIEW.md` on PR #9).
 
 ## Unverified
 
-Physical Android/iOS frame time, thermals and touch feel, for every change on both branches. Every timing in this repository comes from Mesa llvmpipe software rendering and is relative only.
+Physical Android and iOS frame time, thermals and touch feel, for every change on every branch. Every timing in this repository comes from Mesa llvmpipe software rendering and is relative only.
 
 ## Resume commands
 
@@ -62,5 +69,6 @@ Physical Android/iOS frame time, thermals and touch feel, for every change on bo
 git fetch origin && git worktree list
 SIGHTBREAK_TOOLS_DIR=<tools> ./scripts/validate.sh
 SIGHTBREAK_TOOLS_DIR=<tools> ./scripts/godot.sh --headless --script res://tests/weapon_art_test.gd
-DISPLAY=:99 ./scripts/godot.sh --audio-driver Dummy --resolution 1280x720 --script res://tests/weapon_art_capture.gd -- --capture-dir=<out> [--procedural]
+DISPLAY=:99 ./scripts/godot.sh --audio-driver Dummy --resolution 1280x720 --script res://tests/weapon_art_capture.gd -- --capture-dir=<out> [--procedural | --static-hands | --procedural-hands]
+DISPLAY=:99 ./scripts/godot.sh --audio-driver Dummy --resolution 1280x720 --fixed-fps 30 --script res://tests/weapon_motion_capture.gd -- --capture-dir=<out> --view=sunlit
 ```

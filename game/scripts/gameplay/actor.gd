@@ -98,15 +98,34 @@ var _arms_skeleton: Skeleton3D
 var _arms_time := 0.0
 var _trigger_bones: Array[int] = []
 var _trigger_rest: Array[Quaternion] = []
-## Magazine drop down its own well, in the rifle's space (metres at full extraction).
+## Magazine drop down its own well, in the rifle's space (metres at full extraction), for
+## builds without the rigged arms.
 const MAGAZINE_DROP := 0.23
+## The authored reload, as fractions of its length. tools/art/arms_build.py keys the arms'
+## clip to the same numbers (weapon_art_test pins them): the hand reaches the seated
+## magazine by RELOAD_REACH, has closed on it by RELOAD_GRASP, carries it until the
+## magazine is seated at RELOAD_SEAT, stays closed until RELOAD_LETGO and then returns.
+## While the hand holds the magazine (RELOAD_GRASP to RELOAD_LETGO) the magazine is posed
+## from the hand bone, so the two cannot drift apart; outside it, it sits in the well.
+const RELOAD_REACH := 0.12
+const RELOAD_GRASP := 0.20
+const RELOAD_SEAT := 0.80
+const RELOAD_LETGO := 0.85
+var _magazine_rest_transform := Transform3D.IDENTITY
+## The magazine's transform in the hand bone's frame while it is held (measured once, at the
+## grasp, when the magazine is still in the well).
+var _grip_offset := Transform3D.IDENTITY
+var _grip_measured := false
+var _hand_bone := -1
 ## With rigged arms the support hand performs the reload, so the weapon lifts, moves
 ## toward the centre and rolls clockwise to keep the magazine and the hand in frame at the
 ## grab and the seat (fitted through the viewmodel projection; weapon_art_test pins it).
-const ARMS_RELOAD_OFFSET := Vector3(-0.05, 0.09, 0.0)
+const ARMS_RELOAD_OFFSET := Vector3(-0.05, 0.11, 0.0)
 const ARMS_RELOAD_ROTATION := Vector3(0.05, 0.0, -0.45)
 var _legs: Array[Node3D] = []
 var _flash: float = 0.0
+const FLASH_SECONDS := 0.040
+var _flash_variation := Vector3.ONE
 var _crouching: bool = false
 var _gun_color := Color("9aabb5")
 var _paint_parts: Array[MeshInstance3D] = []
@@ -118,6 +137,13 @@ var _hurt_audio: AudioStreamPlayer3D
 var _mechanical_audio: AudioStreamPlayer3D
 var _reload_visual_active := false
 var _reload_visual_seated := false
+## Presentation-only reload clock. Online clients receive reload_remaining at the
+## snapshot rate, so posing the weapon from it directly steps the reload clip. This
+## clock counts down every visual tick and stays within RELOAD_VISUAL_SLACK seconds below
+## the authoritative value. Nothing reads it but the viewmodel pose; it never writes
+## reload_remaining, ammunition or any other gameplay state.
+const RELOAD_VISUAL_SLACK := 0.1
+var _reload_clock := 0.0
 static var _shot_streams: Dictionary = {}
 static var _hurt_stream: AudioStreamWAV
 static var _reload_release: AudioStreamWAV
@@ -438,12 +464,15 @@ func _build_gun() -> void:
 	_magazine = model.magazine
 	if is_instance_valid(_magazine):
 		_magazine_rest = _magazine.position
+		_magazine_rest_transform = _magazine.transform
 	_muzzle = model.muzzle
 	_ejection_point = model.get("ejection", Vector3.INF)
 	_viewmodel = model.get("viewmodel", false)
 	_arms_player = model.get("arms_player")
 	_arms_skeleton = model.get("arms_skeleton")
 	_arms_time = 0.0
+	_grip_measured = false
+	_hand_bone = -1
 	_trigger_bones.clear()
 	_trigger_rest.clear()
 	if is_instance_valid(_arms_skeleton):
@@ -506,6 +535,7 @@ func reset_for_round(spawn: Vector3) -> void:
 	_equip_blend = 0.0
 	_reload_visual_active = false
 	_reload_visual_seated = false
+	_reload_clock = 0.0
 	hit_feedback_remaining = 0.0
 	_flash = 0.0
 	_bob = 0.0
@@ -813,13 +843,18 @@ func show_hit_feedback(headshot: bool, lethal: bool) -> void:
 
 func play_shot_effect() -> void:
 	_kick = 1
-	_flash = 0.040
-	_muzzle.rotation.z = float(Time.get_ticks_msec() % 29) * 0.22
+	_flash = FLASH_SECONDS
+	# Each shot's flash differs a little in turn, length and width; the cosmetic variation
+	# comes from the clock, apart from the authoritative RNG.
+	var ticks := Time.get_ticks_msec()
+	_muzzle.rotation.z = float(ticks % 29) * 0.22
+	_flash_variation = Vector3(0.85 + float(ticks % 17) * 0.015, 0.85 + float(ticks % 13) * 0.02, 0.78 + float(ticks % 23) * 0.02)
+	_muzzle.scale = _flash_variation
 	if is_local:
 		var port: Vector3 = _gun.global_transform * _ejection_point if _ejection_point != Vector3.INF else _gun.global_position + global_basis * Vector3(0.065, 0.02, -0.11)
 		if _viewmodel:
 			port = _viewmodel_to_world(port)
-		CombatEffects.for_world(get_parent()).casing(port, global_basis.x)
+		CombatEffects.for_world(get_parent()).casing(port, global_basis.x, global_position.y)
 	if _shot_audio != null:
 		if _shot_audio.stream != _shot_streams[weapon_id]:
 			_shot_audio.stream = _shot_streams[weapon_id]
@@ -882,16 +917,26 @@ func tick_visual(delta: float) -> void:
 		_reload_visual_seated = false
 		_mechanical_audio.stream = _reload_release
 		_mechanical_audio.play()
-	elif reloading and reload_fraction > 0.78 and not _reload_visual_seated:
+	elif reloading and reload_fraction >= RELOAD_SEAT and not _reload_visual_seated:
 		_reload_visual_seated = true
 		_mechanical_audio.stream = _reload_seat
 		_mechanical_audio.play()
 	_reload_visual_active = reloading
+	if not reloading:
+		_reload_clock = 0.0
+	elif _reload_clock <= 0.0 or reload_remaining - _reload_clock > RELOAD_VISUAL_SLACK:
+		# A new reload, or an authoritative correction upward: follow it at once.
+		_reload_clock = reload_remaining
+	else:
+		_reload_clock = clampf(_reload_clock - delta, reload_remaining - RELOAD_VISUAL_SLACK, reload_remaining)
 	var speed := Vector2(velocity.x, velocity.z).length()
 	_bob += delta * speed * 1.8
 	# Exponential return has the same response at 30, 60 and 120 Hz.
 	_kick *= exp(-delta * 20.0)
 	_flash = maxf(0, _flash - delta)
+	if _flash > 0.0:
+		# A flash is brightest and widest at the start and shrinks fast over its 40 ms.
+		_muzzle.scale = _flash_variation * (0.5 + 0.5 * _flash / FLASH_SECONDS)
 	hit_feedback_remaining = maxf(0, hit_feedback_remaining - delta)
 	_equip_blend *= exp(-delta * 14.0)
 	_muzzle.visible = _flash > 0 and alive
@@ -914,13 +959,13 @@ func tick_visual(delta: float) -> void:
 		_sway = _sway.limit_length(0.04)
 		if reduced_motion:
 			_sway = Vector2.ZERO
-		var reload_progress := 1.0 - clampf(reload_remaining / maxf(0.1, float(Weapons.get_weapon(weapon_id)["reload"])), 0, 1)
+		var reload_progress := 1.0 - clampf(_reload_clock / maxf(0.1, float(Weapons.get_weapon(weapon_id)["reload"])), 0, 1)
 		var rigged := is_instance_valid(_arms_player)
 		var reload_tilt := sin(reload_progress * PI) if reload_remaining > 0 else 0.0
 		if rigged and reload_remaining > 0:
 			# Into the reload pose before the hand reaches the magazine, held through the
 			# swap, and back after the seat.
-			reload_tilt = smoothstep(0.0, 0.16, reload_progress) * (1.0 - smoothstep(0.86, 1.0, reload_progress))
+			reload_tilt = smoothstep(0.0, 0.16, reload_progress) * (1.0 - smoothstep(RELOAD_LETGO, 1.0, reload_progress))
 		if reduced_motion:
 			reload_tilt *= 0.2
 		var bob_weight := 0.0 if reduced_motion else minf(speed / WALK_SPEED, 1.0)
@@ -929,21 +974,49 @@ func tick_visual(delta: float) -> void:
 		var reload_rotation := ARMS_RELOAD_ROTATION if rigged else Vector3(-0.38, 0, 0.38)
 		_gun.position = Vector3(_gun_rest.x + sin(_bob) * 0.006 * bob_weight - _sway.x, _gun_rest.y + absf(cos(_bob)) * 0.006 * bob_weight - _sway.y - equip_motion * 0.19, _gun_rest.z + _kick * (0.075 if weapon_id == "marksman" else 0.046) + equip_motion * 0.08) + reload_offset * reload_tilt
 		_gun.rotation = Vector3(_kick * (0.13 if weapon_id == "sidearm" else 0.065) - equip_motion * 0.48, -_sway.x * 1.8, -_sway.x) + reload_rotation * reload_tilt
-		if is_instance_valid(_magazine):
-			# Pull down the well, seat the same magazine, then return to ready. Only
-			# visual. The rigged support hand's reload clip follows this curve.
-			var extraction := sin(clampf((reload_progress - 0.12) / 0.72, 0, 1) * PI) if reload_remaining > 0 else 0.0
-			_magazine.position = _magazine_rest + _magazine.basis * Vector3(0, -extraction * MAGAZINE_DROP, 0)
 		if is_instance_valid(_arms_player):
 			# The clip's first frame is the hold, so 0 returns the hands to the rifle.
 			var clip_time := reload_progress if reload_remaining > 0 else 0.0
 			if clip_time != _arms_time:
 				_arms_time = clip_time
 				_arms_player.seek(clip_time, true)
+		if is_instance_valid(_magazine):
+			_pose_magazine(reload_progress if reload_remaining > 0 else 0.0)
 		if is_instance_valid(_arms_skeleton):
 			var pull := clampf(_kick * 1.5, 0.0, 1.0) * 0.32
 			for i in range(_trigger_bones.size()):
 				_arms_skeleton.set_bone_pose_rotation(_trigger_bones[i], _trigger_rest[i] * Quaternion(Vector3.RIGHT, -pull * (1.0 if i == 0 else 0.6)))
+
+## Where the magazine is for a reload progress. With the rigged arms it rides the support
+## hand between the grasp and the let-go (the clip took it out of the well, showed it and
+## put it back, and the hand is on it the whole time); otherwise, and outside that span, it
+## is in the well, or follows the older drop curve when there are no rigged arms.
+func _pose_magazine(progress: float) -> void:
+	if not is_instance_valid(_arms_skeleton) or not is_instance_valid(_arms_player):
+		var extraction := sin(clampf((progress - 0.12) / 0.72, 0, 1) * PI) if reload_remaining > 0 else 0.0
+		_magazine.position = _magazine_rest + _magazine.basis * Vector3(0, -extraction * MAGAZINE_DROP, 0)
+		return
+	if _hand_bone < 0:
+		_hand_bone = _arms_skeleton.find_bone("L_hand")
+	if not _grip_measured:
+		# Measure the magazine in the hand's frame at the grasp, where the clip has the hand
+		# closed on the seated magazine, then put the clip back where it was.
+		var was := _arms_time
+		_arms_player.seek(RELOAD_GRASP, true)
+		_grip_offset = _hand_in_gun().affine_inverse() * _magazine_rest_transform
+		_arms_player.seek(was, true)
+		_grip_measured = true
+	var holding := reload_remaining > 0 and progress >= RELOAD_GRASP and progress <= RELOAD_LETGO
+	_magazine.transform = _hand_in_gun() * _grip_offset if holding else _magazine_rest_transform
+
+## The support hand's transform in the weapon node's space, from the skeleton's current pose.
+func _hand_in_gun() -> Transform3D:
+	var chain := Transform3D.IDENTITY
+	var node: Node = _arms_skeleton
+	while node != null and node != _gun:
+		chain = (node as Node3D).transform * chain
+		node = node.get_parent()
+	return chain * _arms_skeleton.get_bone_global_pose(_hand_bone)
 
 ## A point of the viewmodel moved to where it appears on screen under the world
 ## camera's projection (the viewmodel draws with a narrower one), at the same depth.
