@@ -12,6 +12,12 @@ def main():
     parser.add_argument('--out', type=Path, required=True); parser.add_argument('--port', type=int, default=29830)
     parser.add_argument('--clients', type=int, choices=range(2, 11), default=2)
     args = parser.parse_args(); args.out = args.out.resolve(); args.out.mkdir(parents=True, exist_ok=True)
+    if any(args.out.glob('*.json')):
+        parser.error('refusing to overwrite earlier soak evidence')
+    def source():
+        return {'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
+                'dirty': bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip())}
+    source_before = source()
     processes = []; logs = []
     try:
         for name in ['server', *['client-' + str(i) for i in range(args.clients)]]:
@@ -32,7 +38,8 @@ def main():
             report = json.loads((args.out / (name + '.json')).read_text())
             assert code == 0 and 'ERROR:' not in text and report['passed'], name + ' failed'
             results.append(report)
-        summary = {'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(), 'processes': results}
+        assert source() == source_before, 'source changed during soak'
+        summary = {'source': source_before, 'processes': results}
         (args.out / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
         print(json.dumps(summary, indent=2))
     finally:

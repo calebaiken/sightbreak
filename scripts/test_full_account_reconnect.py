@@ -60,9 +60,11 @@ def main():
                     raise RuntimeError('isolated backend startup failed')
                 time.sleep(.05)
             tickets = []
+            expected_accounts = []
             for index in range(10):
                 account = post('/auth/register', {'username': 'reconnect_' + secrets.token_hex(6),
                                'password': secrets.token_urlsafe(24), 'display_name': 'Account fixture ' + str(index)})
+                expected_accounts.append(account['player_id'])
                 tickets.append(post('/auth/game-ticket', {'server_id': 'local-relay'}, account['token'])['ticket'])
             ticket_file = Path(private) / 'tickets.json'
             ticket_file.write_text(json.dumps(tickets))
@@ -79,12 +81,18 @@ def main():
                 rewards = db.execute('SELECT count(*) FROM rewards').fetchone()[0]
                 balances = db.execute('SELECT sum(credits) FROM players').fetchone()[0]
                 ledger = db.execute('SELECT count(*) FROM ledger').fetchone()[0]
+            ownership_preserved = True
+            for index, account_id in enumerate(expected_accounts):
+                client = json.loads((out / f'network/client-{index}.json').read_text())
+                ownership_preserved &= server['initial_accounts'].get(str(client['initial_id'])) == account_id
+                ownership_preserved &= server['final_accounts'].get(str(client['final_id'])) == account_id
             checks = {
+                'each_ticket_retains_its_exact_account_and_actor': ownership_preserved,
                 'all_ten_recovered_with_fresh_authority': result.returncode == 0 and not summary['failures'],
                 'ten_distinct_account_bindings': server['account_count'] == 10 and len(set(server['account_ids'])) == 10,
                 'one_ticket_per_initial_admission': ticket_count == 10 and consumed == 10,
                 'ranked_disconnect_policy_preserved': server['ranked_started'] and not server['ranked_eligible'] and server['reward_status'] == 'ineligible_disconnect',
-                'no_duplicate_or_ineligible_rewards': rewards == 0 and balances == 0 and ledger == 0,
+                'no_unexpected_issuance_during_recovery': rewards == 0 and balances == 0 and ledger == 0,
                 'bounded_transports': summary['max_enet_occupancy'] <= 10,
             }
             report = {'source': summary['source'], 'checks': checks, 'ticket_rows': ticket_count,
