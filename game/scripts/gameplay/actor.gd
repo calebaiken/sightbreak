@@ -103,7 +103,7 @@ const MAGAZINE_DROP := 0.23
 ## With rigged arms the support hand performs the reload, so the weapon lifts, moves
 ## toward the centre and rolls clockwise to keep the magazine and the hand in frame at the
 ## grab and the seat (fitted through the viewmodel projection; weapon_art_test pins it).
-const ARMS_RELOAD_OFFSET := Vector3(-0.05, 0.09, 0.0)
+const ARMS_RELOAD_OFFSET := Vector3(-0.05, 0.11, 0.0)
 const ARMS_RELOAD_ROTATION := Vector3(0.05, 0.0, -0.45)
 var _legs: Array[Node3D] = []
 var _flash: float = 0.0
@@ -118,6 +118,13 @@ var _hurt_audio: AudioStreamPlayer3D
 var _mechanical_audio: AudioStreamPlayer3D
 var _reload_visual_active := false
 var _reload_visual_seated := false
+## Presentation-only reload clock. Online clients receive reload_remaining at the
+## snapshot rate, so posing the weapon from it directly steps the reload clip. This
+## clock counts down every visual tick and stays within RELOAD_VISUAL_SLACK seconds below
+## the authoritative value. Nothing reads it but the viewmodel pose; it never writes
+## reload_remaining, ammunition or any other gameplay state.
+const RELOAD_VISUAL_SLACK := 0.1
+var _reload_clock := 0.0
 static var _shot_streams: Dictionary = {}
 static var _hurt_stream: AudioStreamWAV
 static var _reload_release: AudioStreamWAV
@@ -506,6 +513,7 @@ func reset_for_round(spawn: Vector3) -> void:
 	_equip_blend = 0.0
 	_reload_visual_active = false
 	_reload_visual_seated = false
+	_reload_clock = 0.0
 	hit_feedback_remaining = 0.0
 	_flash = 0.0
 	_bob = 0.0
@@ -915,6 +923,13 @@ func tick_visual(delta: float) -> void:
 		_mechanical_audio.stream = _reload_seat
 		_mechanical_audio.play()
 	_reload_visual_active = reloading
+	if not reloading:
+		_reload_clock = 0.0
+	elif _reload_clock <= 0.0 or reload_remaining - _reload_clock > RELOAD_VISUAL_SLACK:
+		# A new reload, or an authoritative correction upward: follow it at once.
+		_reload_clock = reload_remaining
+	else:
+		_reload_clock = clampf(_reload_clock - delta, reload_remaining - RELOAD_VISUAL_SLACK, reload_remaining)
 	var speed := Vector2(velocity.x, velocity.z).length()
 	_bob += delta * speed * 1.8
 	# Exponential return has the same response at 30, 60 and 120 Hz.
@@ -942,7 +957,7 @@ func tick_visual(delta: float) -> void:
 		_sway = _sway.limit_length(0.04)
 		if reduced_motion:
 			_sway = Vector2.ZERO
-		var reload_progress := 1.0 - clampf(reload_remaining / maxf(0.1, float(Weapons.get_weapon(weapon_id)["reload"])), 0, 1)
+		var reload_progress := 1.0 - clampf(_reload_clock / maxf(0.1, float(Weapons.get_weapon(weapon_id)["reload"])), 0, 1)
 		var rigged := is_instance_valid(_arms_player)
 		var reload_tilt := sin(reload_progress * PI) if reload_remaining > 0 else 0.0
 		if rigged and reload_remaining > 0:

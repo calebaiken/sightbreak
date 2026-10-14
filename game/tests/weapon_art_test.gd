@@ -243,6 +243,19 @@ func _run() -> void:
 		check(wrist.x > 0.02 and wrist.x < 0.98 and wrist.y < 0.95 and bottom.x > 0.02 and bottom.x < 0.98 and bottom.y < 0.98, "at %d %% of the reload the support hand and magazine are in frame (wrist %s, magazine bottom %s)" % [roundi(progress * 100), wrist, bottom])
 		var tube_end := _viewmodel_screen(actor.camera, (actor._gun.get_node("body") as Node3D).global_transform * Vector3(0, 0.025, 0.205))
 		check(tube_end.x > 1.0 or tube_end.y > 1.0, "the buffer tube's end face stays out of frame at %d %% (%s)" % [roundi(progress * 100), tube_end])
+	# Every vertex of the magazine, not just its bottom centre, stays in frame through the
+	# grab and the seat, with a margin of 1 % of the frame (the review of 64ec598 measured
+	# 36 vertices 2.8 px below a 720 px frame at 15 %).
+	var magazine_vertices: PackedVector3Array = actor._magazine.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+	for progress in [0.12, 0.13, 0.14, 0.15, 0.82, 0.84, 0.86, 0.88]:
+		actor.reload_remaining = 0
+		actor.tick_visual(0.016)
+		actor.reload_remaining = reload_time * (1.0 - progress)
+		actor.tick_visual(0.016)
+		var extent := Rect2(_viewmodel_screen(actor.camera, actor._magazine.global_transform * magazine_vertices[0]), Vector2.ZERO)
+		for vertex in magazine_vertices:
+			extent = extent.expand(_viewmodel_screen(actor.camera, actor._magazine.global_transform * vertex))
+		check(extent.position.x > 0.01 and extent.end.x < 0.99 and extent.end.y < 0.99, "at %d %% of the reload every magazine vertex is in frame (%s)" % [roundi(progress * 100), extent])
 	# The held reload pose rises toward the centre but leaves the crosshair clear.
 	actor.reload_remaining = reload_time * 0.5
 	actor.tick_visual(0.016)
@@ -251,6 +264,32 @@ func _run() -> void:
 	actor.reload_remaining = 0
 	actor.tick_visual(0.016)
 	check(skeleton.get_bone_global_pose(hand).origin.distance_to(hold) < 0.001, "after the reload the support hand is back on the handguard")
+	# Online clients receive the reload timer at the snapshot rate (20 Hz). The pose follows
+	# a presentation clock that moves every visual tick and stays within one slack of the
+	# authoritative timer, which it never writes.
+	var clip_times: Array[float] = []
+	var authoritative := reload_time
+	var worst_gap := 0.0
+	for tick in 120:
+		if tick % 3 == 0:
+			authoritative = maxf(0.0, reload_time - tick / 60.0)
+		actor.reload_remaining = authoritative
+		actor.tick_visual(1.0 / 60.0)
+		if tick == 60:
+			check(actor.reload_remaining == authoritative, "the reload pose never writes the authoritative timer")
+		clip_times.append(actor._arms_time)
+		worst_gap = maxf(worst_gap, absf(actor._reload_clock - authoritative))
+	var changes := 0
+	var backwards := 0
+	for i in range(1, clip_times.size()):
+		if clip_times[i] != clip_times[i - 1]: changes += 1
+		if clip_times[i] < clip_times[i - 1]: backwards += 1
+	check(changes >= 115 and backwards == 0, "at a 20 Hz snapshot rate the reload pose advances every visual tick (%d changes in 119 ticks, %d backwards)" % [changes, backwards])
+	check(worst_gap <= actor.RELOAD_VISUAL_SLACK + 0.0001, "the pose clock stays within %.2f s of the authoritative timer (worst %.3f s)" % [actor.RELOAD_VISUAL_SLACK, worst_gap])
+	actor.reload_remaining = 0
+	actor.tick_visual(1.0 / 60.0)
+	check(actor._arms_time == 0.0, "a cancelled reload returns the hands to the hold at once")
+	check(ResourceLoader.has_cached(WeaponModel.RELAY_AR_ARMS), "the rigged arms scene stays loaded between equips")
 	# Trigger: the index finger curls with the kick and relaxes after it.
 	var index := skeleton.find_bone("R_index_2")
 	var rest_pose: Quaternion = skeleton.get_bone_pose_rotation(index)

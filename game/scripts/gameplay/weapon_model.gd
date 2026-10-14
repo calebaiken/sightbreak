@@ -66,6 +66,9 @@ static var use_hand_assets := true
 # One packed model per weapon/hands variant. Instances share every mesh and
 # material, so an equip costs node instantiation instead of geometry building.
 static var _packed: Dictionary = {}
+# The loader's cache holds a resource only while something references it, so the
+# arms scene is kept here; otherwise every equip would load the GLB again.
+static var _arms_scene: PackedScene
 
 static func build(parent: Node3D, id: String, hands: bool = false) -> Dictionary:
 	for child in parent.get_children():
@@ -92,9 +95,11 @@ static func build(parent: Node3D, id: String, hands: bool = false) -> Dictionary
 	return result
 
 ## The rigged arms are instanced per build rather than packed, so their skeleton and
-## animation player stay intact; the GLB's packed scene is cached by the loader.
+## animation player stay intact; the GLB's packed scene is loaded once and kept.
 static func _add_arms(parent: Node3D, placement: Transform3D, result: Dictionary) -> void:
-	var arms: Node3D = (load(RELAY_AR_ARMS) as PackedScene).instantiate()
+	if _arms_scene == null:
+		_arms_scene = load(RELAY_AR_ARMS)
+	var arms: Node3D = _arms_scene.instantiate()
 	arms.name = "arms"
 	arms.transform = placement
 	arms.set_meta("weapon_role", "arms")
