@@ -37,6 +37,7 @@ run_godot landscape --headless --script res://tests/landscape_ui_test.gd
 run_godot ux-contract --headless --script res://tests/ux_contract_test.gd
 run_godot hud-overflow --headless --script res://tests/hud_overflow_test.gd
 run_godot economy-ui --headless --script res://tests/economy_ui_test.gd
+run_godot armory-ui --headless --script res://tests/armory_ui_test.gd
 run_godot economy-recovery --headless --script res://tests/economy_recovery_test.gd
 run_godot cosmetics --headless --script res://tests/cosmetic_presentation_test.gd
 run_godot weapon-art --headless --script res://tests/weapon_art_test.gd

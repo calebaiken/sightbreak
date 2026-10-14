@@ -57,6 +57,10 @@ func save() -> Error:
 static func level_for_xp(xp: int) -> int:
 	return 1 + int(sqrt(float(maxi(xp, 0)) / 150.0))
 
+## Experience at which a level begins; the inverse of level_for_xp. Level 1 begins at 0.
+static func xp_for_level(level: int) -> int:
+	return 150 * (maxi(level, 1) - 1) * (maxi(level, 1) - 1)
+
 func record_match(summary: Dictionary) -> Dictionary:
 	# Only local training progress. Never serialized into economy API requests.
 	var victory := bool(summary.get("won", false))

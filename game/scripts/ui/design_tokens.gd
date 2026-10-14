@@ -58,6 +58,24 @@ static func plain_line(text: String, limit: int = 32) -> String:
 		cleaned = cleaned.replace("  ", " ")
 	return cleaned.strip_edges().left(limit)
 
+## Largest size, at most max_size and at least min_size, at which text in the heading
+## face is no wider than width. Measured with the real face (and its fallbacks), so it
+## holds for any script; decorative display type uses this instead of the text-scale
+## multiplier, which would otherwise decide how wide a screen's layout must be.
+static func fit_font_size(text: String, max_size: int, width: float, min_size: int = 24) -> int:
+	var face := heading_font()
+	var size := max_size
+	while size > min_size and face.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x > width:
+		size -= 1
+	return size
+
+## Keeps a label to its column: it truncates with an ellipsis instead of widening it.
+static func ellipsize(label: Label) -> Label:
+	label.clip_text = true
+	label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	return label
+
 static func squad_color(team: int) -> Color:
 	return ATTACK if team == 0 else DEFEND
 
@@ -135,6 +153,15 @@ static func panel(variant: String = "panel") -> StyleBoxFlat:
 		"inset": return box(OBSIDIAN, LINE, 1, Vector2(14, 10))
 		"overlay": return box(Color(GRAPHITE, 0.96), LINE_STRONG, 1, Vector2(22, 18))
 	return box(GRAPHITE, LINE, 1, Vector2(18, 16))
+
+## Text drawn straight over the 3D view (not on a panel): a soft dark outline and a
+## shadow keep it readable on bright and dark scenery alike. Neither changes the label's
+## size, so layout is unaffected.
+static func legible(label: Label) -> void:
+	label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 0.55))
+	label.add_theme_constant_override("outline_size", 4)
+	label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.8))
+	label.add_theme_constant_override("shadow_offset_y", 1)
 
 static func label(text: String, size: int = TYPE_BODY, color: Color = TEXT, heading := false) -> Label:
 	var node := Label.new()
