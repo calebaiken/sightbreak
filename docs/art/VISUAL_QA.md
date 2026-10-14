@@ -142,3 +142,48 @@ The reviewer's top next steps, in its order: lift the receiver and add rim/specu
 
 **Response:** the hands, sleeves and motion are being rebuilt rather than patched (arms v3: signed-distance anatomy with three phalanges per finger, a glove with a knuckle guard, padded phalanges, seams, cuff and strap, a jacket sleeve of real length, a skeleton with automatic weights, fingers closed on the rifle by contact, and a skeletal reload driven by the existing reload timer). The stretch-aspect question is a product decision, "keep" (every player sees the same field of view) or "expand" (fill the screen), and it is left to the project owner and Codex.
 
+
+## Review of arms v3, `5100b3e` (2026-10-14)
+
+**Reviewer:** a fresh Claude agent, read-only, given the evidence (`docs/reports/media/art-v3/`) and the code. It formed its findings before reading my self-assessment. It is the same model family as the author, so this is **not independent acceptance**. It had stills, llvmpipe captures and Cycles renders only: no motion (the motion sequence was captured after the review started), no device and no CS2 reference images.
+
+**Verdict:** **4.5/10** overall against a CS2-class bar of about 9. That is the same as the review of `2bba519`: the rig, the separate projection and the depth handling are structural progress, offset by an unreadable reload, lighter skin-like gloves, a still misaimed bore and a blocking shader regression.
+
+| Area | Score | Main defects (abridged) |
+| --- | ---: | --- |
+| Hand and glove anatomy | 5.0 | Proportions are sound on paper, but fingers are parallel sausages without joint creases, the grab hand is a mitten with a bulbous thumb, the index tip reads as a ball in the trigger guard, the knuckle-guard bake edge is jagged, and the palm crumples at the index base. Seams, guard and cuff are invisible at 1280×720. |
+| Sleeves and forearms | 4.0 | A straight, thin olive tube. The fold normals read as regular helical stripes and the hem as evenly spaced rings. No elbow or upper arm. The right forearm is never visible. The support hand sits about 0.84 m from the eye, beyond human reach, so the arm looks locked. |
+| Magazine grab | 2.5 | In 03 (44 % through the reload) neither the hand nor the magazine is on screen, and in 03b only a glove top shows at the bottom edge. The magazine is below the frame even at rest. The grab solve left the thumb and pinky unresolved and the ring finger hyper-extended. The same magazine is pulled 23 cm and pushed back. |
+| Clipping | 6.0 | No gross penetration at rest. Support fingertips crest the top rail. The trigger pad floats 11.6 mm off the trigger. The thumb tip butts the hand stop. |
+| Projection and composition | 4.0 | The 54° projection removes the edge stretch and the depth handling is correct. But the bore's vanishing point is about 124 px left of the crosshair (no better than v2's 115 px), the 1.7× magnification crops the magazine and firing hand, and the buffer tube's cut end shows during reload. |
+| Materials | 4.0 | Glove and sleeve albedos have nearly the same value. The v3 glove is about 2.6× brighter (linear) than v2's, which is the main reason it reads as skin. The firing glove merges with the magazine in sun. In shade the receiver is 19–27/255; the 0.08 × albedo floor is negligible. |
+| Rifle | 5.0 | Unchanged from slice 1 (5.5 on its own), crushed in backlight and shade, −0.5 for the broken inspection. |
+| Rendering cost | 5.5 | No regression against the static v2 hands (166.9 against 168.5 ms on llvmpipe, relative only). The arms are 10,672 triangles, twice the suggested 5k. The off-screen right arm and 40 cm sleeves are still skinned and drawn. |
+
+**My verification of its factual claims:**
+
+| Claim | Verified how | Result |
+| --- | --- | --- |
+| **Blocking:** inspection loses the receiver and handguard; procedural first-person weapons are likely hit too | The frame itself, then a native pixel test (`paint_visibility_test.gd`) on `5100b3e` | **True, and wider than stated.** The paint parts changed 0 pixels in inspection (skin and default) and on the procedural sidearm. The case reveal uses the same finish. **Fixed in `9ebe724`** (separate first-person shader variant; five new contract checks with a negative control; pixel test 59,824 / 56,548 / 11,716 px) |
+| Vanishing point about 124 px left | Bore direction through the viewmodel projection in engine | True: (515, 374), 125 px left |
+| Support hand about 0.84 m from the eye | `L_hand` bone distance in engine | True: 0.88 m to the wrist bone |
+| Magazine and support hand off-screen during the reload | Motion sequence (`art-v3/motion/`) | True: the hand is below the frame for clip times 0.16–0.81, and the magazine is never visible |
+| Glove about 2.6× brighter than v2, about the same value as the sleeve | Mean of the shipped albedo textures | True in direction: by hue, glove sRGB ≈ 68 against ≈ 50 for v2, and glove 0.052 against sleeve 0.055 linear. The cause is in `arms_build.py`: the convexity wear blends fingers and knuckles up to 55 % toward a light tan, `(0.21, 0.18, 0.13)` linear |
+| Capture 03 is at 44 %, not 30 % | `weapon_art_capture.gd` sets 1.25 s left of 2.25 s | True; my README was wrong and is corrected |
+
+**Order of work in response:**
+1. The shader regression (done).
+2. Placement re-fit: the vanishing point near the crosshair, reach about 0.6 m, magazine well and firing knuckles in frame, buffer-tube end off-screen.
+3. Reload staging that keeps the hand and magazine on screen at the grab and the insertion.
+4. An arms rebuild:
+   - value separation: charcoal glove, distinct sleeve, subtle wear;
+   - slimmer thumbs and finger creases;
+   - the knuckle-guard bake edge;
+   - fingertips off the rail;
+   - the trigger pad;
+   - the grab thumb and pinky;
+   - irregular sleeve folds;
+   - fewer off-screen triangles.
+5. New captures, motion sequences and a fresh review.
+
+The scores above stay as the reviewer gave them until a new review re-scores the changed work.

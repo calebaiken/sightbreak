@@ -8,7 +8,7 @@ Every image is a real render of commit `5100b3e` (rigged arms, viewmodel project
 
 | Folder | Contents |
 | --- | --- |
-| `captures/` | 1280×720: backlit yard ready (01), firing (02), reload at 30 % (03), reload at the support-hand grab (03b); sunlit yard (04); transfer-hall shade (05); sunlit with the Crimson Archive skin (06); the inspection studio with the skin (07) |
+| `captures/` | 1280×720: backlit yard ready (01), firing (02), reload at 44 % (03), reload at the support-hand grab (03b); sunlit yard (04); transfer-hall shade (05); sunlit with the Crimson Archive skin (06); the inspection studio with the skin (07) |
 | `aspect/` | 01, 03b and 05 at 1600×720 (20:9) and 1024×768 (4:3). The capture sets the root viewport to that size, so these show what a wider or taller canvas would frame. **They are not what ships:** `project.godot` uses `canvas_items` stretch with the default "keep" aspect, so a 20:9 or 4:3 screen shows the 16:9 frame with bars. Whether to switch to "expand" is an open decision for the project owner and Codex. |
 | `compare/` | Half-scale before/after sheets: left is `2bba519` (static v2 hands, world projection), right is `5100b3e` |
 | `renders/` | Cycles, JPEG quality 92: `eye_54` (the in-game camera at the 54° viewmodel field of view, grey studio), `right_34`, `left_34`, `firing_hand`, `firing_hand_left`, `support_hand`, `support_hand_right`, and two reload frames (`reload_grab` at 14 %, `reload_down` at 45 %) with the magazine on the game's drop curve |
