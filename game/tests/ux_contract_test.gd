@@ -33,6 +33,41 @@ func run() -> void:
 			if node.is_visible_in_tree() and node.size.y < Design.TOUCH_MIN - 0.5:
 				small.append("%s:%s" % [page, node.text])
 	check(small.is_empty(), "menu touch targets are at least 48 px tall: " + str(small))
+	# Main menu at the smallest landscape sizes and every text scale: nothing leaves the
+	# screen, the record card shows the profile's real level and does not cover the
+	# armory entries, and every armory entry is a full touch target.
+	for text_size in [0.85, 1.0, 1.15, 1.3]:
+		main.profile.data.settings.ui_text_scale = text_size
+		main.ui.theme = main.build_theme()
+		for dimensions in [Vector2i(960, 720), Vector2i(1024, 768), Vector2i(1280, 720)]:
+			root.content_scale_size = dimensions
+			root.size = dimensions
+			main.show_menu()
+			await frames(3)
+			var context := "%d%% text at %s:" % [roundi(text_size * 100), dimensions]
+			var outside: Array[String] = []
+			for node: Control in main.ui.find_children("*", "Control", true, false):
+				if not node.is_visible_in_tree() or node is ScrollBar: continue
+				var rect := node.get_global_rect()
+				if rect.position.x < -1 or rect.position.y < -1 or rect.end.x > dimensions.x + 1 or rect.end.y > dimensions.y + 1:
+					outside.append("%s:%s" % [node.get_class(), rect])
+			check(outside.is_empty(), context + " every menu element is on screen " + str(outside.slice(0, 3)))
+			var record: Control = main.ui.find_child("RecordCard", true, false)
+			var entries: Control = main.ui.find_child("ArmoryEntries", true, false)
+			check(record != null and entries != null and not record.get_global_rect().intersects(entries.get_global_rect()), context + " the record card and the armory entries do not overlap")
+			var progress: ProgressBar = main.ui.find_child("LevelProgress", true, false)
+			var level: int = main.Profile.level_for_xp(int(main.profile.data.xp))
+			check(progress != null and is_equal_approx(progress.max_value, 150.0 * (level * level - (level - 1) * (level - 1))), context + " level progress spans the profile's real level")
+			var short: Array[String] = []
+			for entry: Button in buttons_in(entries):
+				if entry.size.y < Design.TOUCH_MIN - 0.5: short.append(entry.text)
+			check(buttons_in(entries).size() == 6 and short.is_empty(), context + " armory, record and settings entries, each a full touch target " + str(short))
+	main.profile.data.settings.ui_text_scale = 1.0
+	main.ui.theme = main.build_theme()
+	root.content_scale_size = Vector2i(1280, 720)
+	root.size = Vector2i(1280, 720)
+	main.show_menu()
+	await frames(2)
 	# Accessibility: interface text size scales labels and the shared theme.
 	var probe: Label = main.label("x", 20)
 	var base_size: int = probe.get_theme_font_size("font_size")

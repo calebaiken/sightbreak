@@ -276,27 +276,32 @@ func show_menu() -> void:
 	play.add_theme_font_override("font", Design.heading_font())
 	left.add_child(play)
 	left.add_child(button("LOCAL NETWORK   ·   DIRECT CONNECT", show_connect))
-	var economy_row := HBoxContainer.new()
-	economy_row.add_theme_constant_override("separation", Design.SPACE_S)
-	left.add_child(economy_row)
+	# Armory, record and settings as one grid of full-size buttons; the armory is
+	# earned in play, which the footer states.
+	var economy_grid := GridContainer.new()
+	economy_grid.name = "ArmoryEntries"
+	economy_grid.columns = 2
+	economy_grid.add_theme_constant_override("h_separation", Design.SPACE_S)
+	economy_grid.add_theme_constant_override("v_separation", Design.SPACE_S)
+	left.add_child(economy_grid)
 	for tab in ["inventory", "cases", "market", "trades"]:
 		var tab_name: String = tab
 		var entry := button(tab_name.to_upper(), func(): open_economy(tab_name), Design.TOUCH_MIN)
-		entry.add_theme_font_size_override("font_size", int(round(Design.TYPE_MICRO * text_scale())) + 1)
 		entry.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		economy_row.add_child(entry)
-	var account_row := HBoxContainer.new()
-	account_row.add_theme_constant_override("separation", Design.SPACE_S)
-	left.add_child(account_row)
+		economy_grid.add_child(entry)
 	for entry in [button("OPERATOR RECORD", show_progress), button("SETTINGS", show_settings)]:
 		entry.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		account_row.add_child(entry)
+		economy_grid.add_child(entry)
 	var right := VBoxContainer.new()
 	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	right.size_flags_vertical = Control.SIZE_SHRINK_END
 	right.alignment = BoxContainer.ALIGNMENT_END
 	right.add_theme_constant_override("separation", Design.SPACE_XS)
 	middle.add_child(right)
+	right.add_child(menu_record_card())
+	var record_gap := Control.new()
+	record_gap.custom_minimum_size.y = Design.SPACE_L
+	right.add_child(record_gap)
 	var map_kicker := label("CURRENT OPERATION", Design.TYPE_MICRO, MUTED, true)
 	map_kicker.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	right.add_child(map_kicker)
@@ -308,11 +313,55 @@ func show_menu() -> void:
 	right.add_child(map_note)
 	var footer := HBoxContainer.new()
 	rows.add_child(footer)
-	footer.add_child(wrapped_label("LEVEL %02d   ·   %s   ·   TRAINING" % [profile.data.level, str(profile.data.display_name).to_upper()], Design.TYPE_SMALL, MUTED))
+	footer.add_child(wrapped_label("CALLSIGN   ·   %s" % Design.plain_line(str(profile.data.display_name)).to_upper(), Design.TYPE_SMALL, MUTED))
 	var gap := Control.new()
 	gap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	footer.add_child(gap)
 	footer.add_child(wrapped_label("EARNED IN PLAY  ·  NO REAL-MONEY PURCHASES", Design.TYPE_MICRO + 1, GOLD))
+
+## The main menu's record: the offline training level with progress to the next level
+## (from Profile.level_for_xp), training credits and matches, and the online account
+## only while one is signed in. Nothing is shown that the profile or account does not
+## store; training credits and earned Credits stay on separate lines.
+func menu_record_card() -> PanelContainer:
+	var card := PanelContainer.new()
+	card.name = "RecordCard"
+	card.add_theme_stylebox_override("panel", Design.box(Color(Design.GRAPHITE, 0.82), Design.LINE, 1, Vector2(Design.SPACE_L, Design.SPACE_M)))
+	card.size_flags_horizontal = Control.SIZE_SHRINK_END
+	card.custom_minimum_size.x = 260
+	var stack := VBoxContainer.new()
+	stack.add_theme_constant_override("separation", Design.SPACE_XS)
+	card.add_child(stack)
+	stack.add_child(label("TRAINING RECORD  ·  THIS DEVICE", Design.TYPE_MICRO, MUTED, true))
+	var xp := int(profile.data.xp)
+	var level := Profile.level_for_xp(xp)
+	var floor_xp := 150 * (level - 1) * (level - 1)
+	var next_xp := 150 * level * level
+	var level_row := HBoxContainer.new()
+	level_row.add_theme_constant_override("separation", Design.SPACE_M)
+	stack.add_child(level_row)
+	level_row.add_child(label("LEVEL %02d" % level, Design.TYPE_H3, Design.TEXT, true))
+	var to_next := label("%d / %d XP" % [xp, next_xp], Design.TYPE_SMALL, GOLD)
+	to_next.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	to_next.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	to_next.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	level_row.add_child(to_next)
+	var progress := ProgressBar.new()
+	progress.name = "LevelProgress"
+	progress.show_percentage = false
+	progress.max_value = float(next_xp - floor_xp)
+	progress.value = float(xp - floor_xp)
+	progress.custom_minimum_size.y = 5
+	progress.add_theme_stylebox_override("background", Design.box(Design.OBSIDIAN, Color.TRANSPARENT, 0, Vector2.ZERO))
+	progress.add_theme_stylebox_override("fill", Design.box(Design.GOLD, Color.TRANSPARENT, 0, Vector2.ZERO))
+	stack.add_child(progress)
+	stack.add_child(label("%d TRAINING CREDITS" % int(profile.data.credits), Design.TYPE_MICRO + 1, Design.STEEL_BRIGHT))
+	stack.add_child(label("%d MATCHES   ·   %d WINS" % [int(profile.data.matches), int(profile.data.wins)], Design.TYPE_MICRO + 1, MUTED))
+	if is_instance_valid(economy_panel) and not economy_panel.api.token.is_empty():
+		var account: Dictionary = economy_panel.account
+		stack.add_child(label("ONLINE  ·  " + Design.plain_line(str(account.get("display_name", "")), 20).to_upper(), Design.TYPE_MICRO + 1, GOLD))
+		stack.add_child(label("%s EARNED CREDITS" % account.get("credits", 0), Design.TYPE_MICRO + 1, GOLD))
+	return card
 
 func panel_screen(title: String, subtitle: String, back: Callable = show_menu) -> VBoxContainer:
 	clear_ui()
