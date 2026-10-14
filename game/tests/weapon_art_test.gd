@@ -101,6 +101,23 @@ func _run() -> void:
 	for prefix in ["relay_ar", "relay_ar_hands"]:
 		for map in ["albedo", "orm", "normal"]:
 			check(_texture_ok("res://assets/weapons/relay_ar/%s_%s.png" % [prefix, map], 1024), "%s %s is square, power of two, at most 1024" % [prefix, map])
+	# The magazine is pulled out of the magwell by reload, so the occlusion on its faces must be
+	# its own: baked with it seated, the faces that were inside the well were fully occluded and
+	# were black as soon as it came out (23 % of its vertices had occlusion below 0.1).
+	var orm_image: Image = (load(WeaponModel.RELAY_AR_ORM) as Texture2D).get_image()
+	if orm_image.is_compressed():
+		orm_image.decompress()
+	var magazine_arrays: Array = (rifle.meshes["magazine"] as Mesh).surface_get_arrays(0)
+	var magazine_uvs: PackedVector2Array = magazine_arrays[Mesh.ARRAY_TEX_UV]
+	var occluded := 0
+	var occlusion_total := 0.0
+	for uv in magazine_uvs:
+		var texel := orm_image.get_pixelv(Vector2i(clampi(int(uv.x * orm_image.get_width()), 0, orm_image.get_width() - 1), clampi(int(uv.y * orm_image.get_height()), 0, orm_image.get_height() - 1)))
+		occlusion_total += texel.r
+		if texel.r < 0.1:
+			occluded += 1
+	check(float(occluded) / magazine_uvs.size() <= 0.10, "the magazine's baked occlusion is its own: %.1f %% of its vertices are almost fully occluded (limit 10 %%)" % (100.0 * occluded / magazine_uvs.size()))
+	check(occlusion_total / magazine_uvs.size() >= 0.70, "the magazine's mean baked occlusion is at least 0.70 (%.3f)" % (occlusion_total / magazine_uvs.size()))
 	var material: ORMMaterial3D = load(WeaponModel.RELAY_AR_MATERIAL)
 	check(material.albedo_texture != null and material.orm_texture != null and material.normal_enabled and material.normal_texture != null, "rifle material binds albedo, ORM and normal maps")
 
