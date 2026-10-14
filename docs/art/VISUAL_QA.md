@@ -187,3 +187,53 @@ The reviewer's top next steps, in its order: lift the receiver and add rim/specu
 5. New captures, motion sequences and a fresh review.
 
 The scores above stay as the reviewer gave them until a new review re-scores the changed work.
+
+## Codex integration review of `64ec598`, and the work after it (2026-10-14)
+
+**Reviewer:** Codex, a different model family, reviewing an isolated integration build that combined PR #1, this branch and Codex's PRs 3–8. Evidence is in Codex's integration preview (PR #9, `docs/reports/integration-evidence/art-independent/`). It is an AI review, not human acceptance.
+
+**Verdict:** about **5.5/10** for the weapon and arms, against the 8.5 gate.
+
+| Area | Score |
+| --- | ---: |
+| Geometry | 6.0 |
+| Materials | 5.5 |
+| Lighting | 5.0 |
+| Animation | 5.5 |
+| Effects and cosmetics | 4.5 |
+| Identity | 5.5 |
+| Readability | 6.5 |
+
+**Main weaknesses it named:**
+- the ready and bore composition: the vanishing point is 124 px left and the rifle "reads as displayed sideways";
+- mitten-like gloves and regular sleeve rings;
+- shade contrast between receiver and arm, and over-bright backlit edges;
+- action cropped at 4:3 and leaving frame mid-swap;
+- a flat star muzzle flash, box casings and a simple cosmetic stripe.
+
+**Corrections it requested, and what was done:**
+
+| Finding | Status | Evidence |
+| --- | --- | --- |
+| Static fallback hands drawn with the world projection, detached from the rifle; the procedural gloves likewise | Fixed in `3934110`; contract assertions and native captures added | `docs/reports/media/art-v4/fallback-projection/` |
+| Online reload poses stepped at the 20 Hz snapshot rate (40 changes in 120 ticks) | Fixed: presentation clock, at least 115 changes in 119 ticks in a 20 Hz simulation | `art-v4/README.md` |
+| Arms packed scene not retained | Fixed | same |
+| Magazine framing margin of 2.8 px at 15 % | Fixed: an 11 cm lift; every vertex at least 1 % inside the frame at the grab and the seat | same |
+
+**Also since `64ec598`:** the arms rebuild (`144dc33`, `0087956`).
+- **Value separation:** glove 0.024 against sleeve about 0.08 linear.
+- **Anatomy:** slimmer thumbs, joint condyles and creases, and a lower knuckle guard.
+- **Grip:** a resolved grab hand and a trigger pad 4.4 mm from the trigger.
+- **Budget:** 7,828 triangles.
+
+**Still open (my observations, `art-v4/README.md`):**
+- the grip hand still reads as a mitten;
+- support fingertips crest the rail;
+- the sleeves are a near-uniform tube;
+- the bore vanishing point is unchanged;
+- shade contrast;
+- no draw or inspect clips;
+- the reload reseats the same magazine;
+- reduced motion is not reviewed.
+
+None of the five weaknesses behind the 5.5 is resolved by these fixes except glove value. The score stays at Codex's 5.5 until a new review re-scores the work.
