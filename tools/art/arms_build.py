@@ -110,9 +110,11 @@ def material(name, colour, rough):
 # measured 15-16 in a dark interior). The v3 glove at 0.050 with strong tan wear read as bare
 # skin and measured level with the sleeve, so the glove stays well under the jacket.
 PALETTE = {
-    'fabric': ((0.030, 0.027, 0.024), 0.86), 'palm': ((0.042, 0.037, 0.032), 0.93),
-    'shell': ((0.012, 0.012, 0.013), 0.48), 'strap': ((0.022, 0.020, 0.018), 0.80),
-    'cuff': ((0.027, 0.025, 0.022), 0.88),
+    # v8: the gloves are a cool graphite (they were a warm charcoal): lit by the sun that reads as tan, and the review found the right glove
+    # read as bare skin beside the left, which stands in shade. A blue-grey glove stays a glove in warm light, and is still well below the sleeve.
+    'fabric': ((0.025, 0.027, 0.033), 0.86), 'palm': ((0.036, 0.038, 0.044), 0.93),
+    'shell': ((0.012, 0.012, 0.013), 0.48), 'strap': ((0.020, 0.020, 0.022), 0.80),
+    'cuff': ((0.023, 0.025, 0.030), 0.88),
     'sleeve': ((0.045, 0.051, 0.041), 0.90), 'hem': ((0.037, 0.042, 0.034), 0.88),
 }
 
@@ -618,8 +620,8 @@ def detail_material(name, colour, rough, kind):
     base.inputs['B'].default_value = (*[c * 1.12 for c in colour], 1)
     links.new(tone.outputs['Fac'], base.inputs['Factor'])
     # Wear lightens only slightly: scuffed fabric, not a different colour.
-    wear_colour = {'fabric': (0.060, 0.055, 0.049), 'palm': (0.068, 0.061, 0.053), 'shell': (0.040, 0.040, 0.041),
-                   'strap': (0.036, 0.034, 0.032), 'cuff': (0.045, 0.043, 0.040), 'sleeve': (0.080, 0.088, 0.068), 'hem': (0.066, 0.072, 0.056)}[name]
+    wear_colour = {'fabric': (0.050, 0.054, 0.064), 'palm': (0.058, 0.062, 0.072), 'shell': (0.040, 0.040, 0.041),
+                   'strap': (0.034, 0.034, 0.037), 'cuff': (0.040, 0.043, 0.050), 'sleeve': (0.080, 0.088, 0.068), 'hem': (0.066, 0.072, 0.056)}[name]
     worn = nodes.new('ShaderNodeMix')
     worn.data_type = 'RGBA'
     worn.inputs['B'].default_value = (*wear_colour, 1)
@@ -874,7 +876,7 @@ ZERO3 = (0.0, 0.0, 0.0)
 # Exploration hook (like ARMS_GRAB_JSON): ARMS_PATH_JSON='{"swing": [x, y, z], "pouch": [x, y, z], "mid": [x, y, z]}'
 # overrides where the old magazine is let go, where the replacement waits and its midway point, for one build.
 _PATH = {'swing': (-0.070, 0.020, 0.004), 'hip': (-0.200, 0.040, -0.360), 'carry': (-0.115, 0.050, -0.110), 'hip_turn': (-28, 0, 22),
-         'rock': (-15, -9, -3), 'elbow_hip': (-0.14, 0.0, 0.14)}
+         'rock': (-15, -9, -3), 'elbow_hip': (-0.10, 0.0, 0.07)}
 if os.environ.get('ARMS_PATH_JSON'):
     import json
     _PATH.update({k: tuple(v) for k, v in json.loads(os.environ['ARMS_PATH_JSON']).items()})
@@ -1175,7 +1177,10 @@ def reload_clip(rig, grab, axis, fps=60):
         elif p <= P_LETGO:
             closing = 1.0
         else:
-            closing = 1.0 - smooth((p - P_LETGO) / 0.05)
+            # The fingers open off the seated magazine, then stay part-curled (about a third) on the way back and close on the handguard at
+            # the end, as a hand does that is about to grip; the first version let them go flat, palm up, for the whole return (a "wave").
+            settle = 1.0 - smooth((p - (P_LETGO + 0.07)) / (1.0 - P_LETGO - 0.07))
+            closing = max(1.0 - smooth((p - P_LETGO) / 0.05), 0.32 * settle)
         flare = math.sin(math.pi * min(1.0, max(0.0, p / P_REACH))) * 0.45 if p < P_REACH else 0.0
         flare += math.sin(math.pi * min(1.0, max(0.0, (p - P_LETGO) / (1.0 - P_LETGO)))) * 0.40 if p > P_LETGO else 0.0
         if P_DROP < p < P_ACQUIRE:

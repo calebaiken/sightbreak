@@ -21,7 +21,7 @@ extends SceneTree
 ##   - the thumb and at least three of the four fingertips show at least TIP_MIN pixels each
 ##     while the hand is on a magazine
 ##   - the magazine the hand holds shows at least MAGAZINE_MIN pixels and is at least 85 % inside the frame
-##   - at the hip the sleeve shows at least SLEEVE_MIN pixels; on the rise from it the hand shows at least RISE_HAND_MIN
+##   - at the hip the arm is out of the picture for at most ARM_OUT_SHARE of the reload and no magazine is drawn without its arm; on the rise from it the hand shows at least RISE_HAND_MIN
 ##     pixels, with the thumb and RISE_FINGERS fingertips drawn and the magazine in full view
 ##   - no part of the action that matters (the old magazine leaving the well, the replacement entering it)
 ##     happens with its magazine out of the frame
@@ -32,18 +32,25 @@ const RELOAD_SECONDS := 2.25
 const HAND_MIN := 10000
 const TIP_MIN := 100
 const MAGAZINE_MIN := 3000
-## At the hip pouch (HIP_OUT to HIP_IN in reload_phases.gd) the hand is below the frame by design: what must show is the
-## sleeve it hangs from, so the retrieval reads as an arm reaching down and not as a hand that vanished.
-const SLEEVE_MIN := 8000
+## At the hip pouch (HIP_OUT to HIP_IN in reload_phases.gd) the hand is below the frame by design. Two rules keep that from reading as
+## a hand that vanished: the whole left arm may be out of the picture (under ARM_OUT_PX pixels) for no more than ARM_OUT_SHARE of the
+## reload, and a replacement magazine is never drawn (MAGAZINE_MIN pixels or more) with less than ARM_WITH_MAGAZINE pixels of the arm
+## that holds it in the frame (no disembodied magazine). The first version asked for 8,000 px of arm at every pose of the hip; an
+## independent review found that this kept a huge cut-ended sleeve across the corner of the frame (worse than a hand out of the picture).
+const ARM_OUT_PX := 1000
+const ARM_OUT_SHARE := 0.10
+const ARM_WITH_MAGAZINE := 3000
 ## Rising from the hip to the lined-up position (HIP_IN to just after ALIGN) the wrist is still crossing the bottom edge: the hand
 ## shows less than on the handguard, the thumb and two fingertips are drawn, and the magazine it carries is in full view.
 const RISE_HAND_MIN := 6000
 const RISE_FINGERS := 2
+## Half the side, in pixels at 1280 x 720, of the box round the crosshair that is measured for cover (the crosshair is about 24 px).
+const CENTRE_BOX := 40
 const TIPS := ["L_thumb_3", "L_index_3", "L_middle_3", "L_ring_3", "L_pinky_3"]
 const PALETTE := {
 	"thumb": Color(1, 0, 0), "index": Color(0, 1, 0), "middle": Color(0, 0, 1),
 	"ring": Color(1, 1, 0), "pinky": Color(1, 0, 1),
-	"left": Color(0, 1, 1), "right": Color(1, 0.5, 0), "magazine": Color(1, 1, 1),
+	"left": Color(0, 1, 1), "right": Color(1, 0.5, 0), "magazine": Color(1, 1, 1), "rifle": Color(0.635, 0.31, 0.0), # what ALBEDO (0.5, 0.25, 0) comes out as in the capture (the output is not a plain copy)
 }
 const VIEWS := {
 	"sunlit": [Vector3(3, 0.05, -12), 0.35],
@@ -69,6 +76,7 @@ var lit_material: Material
 var id_material: ShaderMaterial
 var mask_material: ShaderMaterial
 var white_material: ShaderMaterial
+var rifle_material: ShaderMaterial
 var others: Array[MeshInstance3D] = []
 var others_material: Dictionary = {}
 var rows: Array[String] = []
@@ -158,7 +166,11 @@ func _set_pose(progress: float) -> void:
 		actor.tick_visual(0.016)
 
 func _classify(image: Image) -> Dictionary:
-	var counts := {"thumb": 0, "index": 0, "middle": 0, "ring": 0, "pinky": 0, "left": 0, "right": 0, "magazine": 0}
+	var counts := {"thumb": 0, "index": 0, "middle": 0, "ring": 0, "pinky": 0, "left": 0, "right": 0, "magazine": 0, "rifle": 0, "centre": 0}
+	# Anything of the rifle, the arms or a magazine inside the box round the crosshair (the middle of the frame) is counted as it
+	# is classified below.
+	var cx := image.get_width() / 2
+	var cy := image.get_height() / 2
 	for y in range(0, image.get_height(), 1):
 		for x in range(0, image.get_width(), 1):
 			var pixel := image.get_pixel(x, y)
@@ -168,6 +180,8 @@ func _classify(image: Image) -> Dictionary:
 				var target: Color = PALETTE[key]
 				if absf(pixel.r - target.r) + absf(pixel.g - target.g) + absf(pixel.b - target.b) < 0.18:
 					counts[key] += 1
+					if absi(x - cx) < CENTRE_BOX and absi(y - cy) < CENTRE_BOX:
+						counts["centre"] += 1
 					break
 	return counts
 
@@ -177,7 +191,7 @@ func _set_identification(on: bool) -> void:
 	arena.visible = not on
 	for node in others:
 		if on:
-			node.material_override = white_material if node.name.begins_with("magazine") else mask_material
+			node.material_override = white_material if node.name.begins_with("magazine") else rifle_material
 		else:
 			node.material_override = others_material.get(node)
 
@@ -235,11 +249,12 @@ func _run() -> void:
 	id_material = _flat_shader("void fragment() { ALBEDO = COLOR.rgb; }\n")
 	mask_material = _flat_shader("void fragment() { ALBEDO = vec3(0.0); }\n")
 	white_material = _flat_shader("void fragment() { ALBEDO = vec3(1.0); }\n")
+	rifle_material = _flat_shader("void fragment() { ALBEDO = vec3(0.5, 0.25, 0.0); }\n")
 	for node: MeshInstance3D in actor._gun.find_children("*", "MeshInstance3D", true, false):
 		if node != arms_mesh:
 			others.append(node)
 			others_material[node] = node.material_override
-	rows.append("progress,held,thumb_px,index_px,middle_px,ring_px,pinky_px,left_px,right_px,magazine_px")
+	rows.append("progress,held,thumb_px,index_px,middle_px,ring_px,pinky_px,left_px,right_px,magazine_px,centre_px,rifle_px")
 	var progresses: Array[float] = []
 	for hundredth in range(0, 101, step):
 		progresses.append(float(hundredth) / 100.0)
@@ -262,7 +277,7 @@ func _run() -> void:
 		counts["progress"] = progress
 		counts["held"] = held
 		results.append(counts)
-		rows.append("%.2f,%s,%d,%d,%d,%d,%d,%d,%d,%d" % [progress, held, counts.thumb, counts.index, counts.middle, counts.ring, counts.pinky, counts.left, counts.right, counts.magazine])
+		rows.append("%.2f,%s,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d" % [progress, held, counts.thumb, counts.index, counts.middle, counts.ring, counts.pinky, counts.left, counts.right, counts.magazine, counts.centre, counts.rifle])
 	if not csv_path.is_empty():
 		var file := FileAccess.open(csv_path, FileAccess.WRITE)
 		if file == null:
@@ -294,8 +309,8 @@ func _evaluate(results: Array[Dictionary]) -> void:
 	var worst_hand := 1 << 30
 	var worst_hand_at := 0.0
 	var hip_frames := 0
-	var worst_sleeve := 1 << 30
-	var worst_sleeve_at := 0.0
+	var arm_out_poses := 0
+	var step_share := float(step) / 100.0
 	var worst_rise_hand := 1 << 30
 	var worst_rise_hand_at := 0.0
 	var worst_rise_fingers := 4
@@ -307,9 +322,8 @@ func _evaluate(results: Array[Dictionary]) -> void:
 		var hand := _hand_px(r)
 		if _in_hip(p):
 			hip_frames += 1
-			if p >= SBReloadPhases.HIP_OUT + 0.03 and r.left < worst_sleeve:
-				worst_sleeve = r.left
-				worst_sleeve_at = p
+			if hand < ARM_OUT_PX:
+				arm_out_poses += 1
 		elif _in_rise(p):
 			rise_frames += 1
 			if hand < worst_rise_hand:
@@ -327,7 +341,14 @@ func _evaluate(results: Array[Dictionary]) -> void:
 			worst_hand_at = p
 	check(hip_frames >= 6 and rise_frames >= 2, "the hip window has %d frames and the rise from it %d in this run" % [hip_frames, rise_frames])
 	check(worst_hand >= HAND_MIN, "the support hand shows at least %d pixels in every frame outside the hip and the rise from it (worst %d at %.2f)" % [HAND_MIN, worst_hand, worst_hand_at])
-	check(worst_sleeve >= SLEEVE_MIN, "at the hip the sleeve shows at least %d pixels in every frame (worst %d at %.2f)" % [SLEEVE_MIN, worst_sleeve, worst_sleeve_at])
+	check(float(arm_out_poses) * step_share <= ARM_OUT_SHARE, "at the hip the whole left arm is out of the picture (under %d px) for at most %.0f %% of the reload (%d of %d poses, %.0f %%)" % [ARM_OUT_PX, ARM_OUT_SHARE * 100.0, arm_out_poses, hip_frames, float(arm_out_poses) * step_share * 100.0])
+	var disembodied := 0
+	var disembodied_at := 0.0
+	for r in window:
+		if r.held == "magazine_spare" and r.magazine >= MAGAZINE_MIN and _hand_px(r) < ARM_WITH_MAGAZINE:
+			disembodied += 1
+			disembodied_at = r.progress
+	check(disembodied == 0, "no replacement magazine is drawn (%d px or more) with less than %d px of its arm in the frame (%d poses; last at %.2f)" % [MAGAZINE_MIN, ARM_WITH_MAGAZINE, disembodied, disembodied_at])
 	check(worst_rise_hand >= RISE_HAND_MIN, "on the rise from the hip the hand shows at least %d pixels (worst %d at %.2f)" % [RISE_HAND_MIN, worst_rise_hand, worst_rise_hand_at])
 	check(worst_rise_thumb >= TIP_MIN and worst_rise_fingers >= RISE_FINGERS, "and the thumb (%d px) and at least %d fingertips (worst %d) show at least %d pixels" % [worst_rise_thumb, RISE_FINGERS, worst_rise_fingers, TIP_MIN])
 	check(worst_rise_magazine >= MAGAZINE_MIN, "and the magazine it carries shows at least %d pixels (worst %d)" % [MAGAZINE_MIN, worst_rise_magazine])
@@ -388,3 +409,12 @@ func _evaluate(results: Array[Dictionary]) -> void:
 				worst_action = r.magazine
 				worst_action_at = p
 	check(worst_action >= MAGAZINE_MIN, "the magazine is drawn (at least %d pixels) throughout the extraction and the insertion (worst %d at %.2f)" % [MAGAZINE_MIN, worst_action, worst_action_at])
+	# The crosshair is never covered: no pixel of the rifle, the arms or a magazine is inside the box round the middle of the frame
+	# in any pose. A design requirement (a player has to see what is under the crosshair during a reload), not a number fitted to the clip.
+	var worst_centre := 0
+	var worst_centre_at := 0.0
+	for r in results:
+		if r.centre > worst_centre:
+			worst_centre = r.centre
+			worst_centre_at = r.progress
+	check(worst_centre == 0, "the box round the crosshair (%d px square) is clear of the rifle, the arms and both magazines in every pose (worst %d px at %.2f)" % [CENTRE_BOX * 2, worst_centre, worst_centre_at])

@@ -460,7 +460,7 @@ func _build_gun() -> void:
 	_muzzle = MeshInstance3D.new()
 	_muzzle.mesh = flash_mesh()
 	if _hands and not _authored.is_empty():
-		_muzzle.material_override = ViewmodelShading.flash(Color.WHITE, 1.5)
+		_muzzle.material_override = ViewmodelShading.flash(Color.WHITE, 2.0)
 	else:
 		var flash_material := StandardMaterial3D.new()
 		flash_material.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
@@ -474,15 +474,16 @@ func _build_gun() -> void:
 	_gun.add_child(_muzzle)
 	_muzzle.position = Vector3(0, 0.025, muzzle_z) if muzzle_at == Vector3.INF else muzzle_at
 	_muzzle.visible = false
-	# The flash lights what is round it for its 40 ms: the hands, the rail and the ground in front of the muzzle.
-	var flash_light := OmniLight3D.new()
-	flash_light.name = "flash_light"
-	flash_light.light_color = Color(1.0, 0.68, 0.34)
-	flash_light.light_energy = 1.6
-	flash_light.omni_range = 3.0
-	flash_light.shadow_enabled = false
-	flash_light.position = Vector3(0, 0, -0.05)
-	_muzzle.add_child(flash_light)
+	if _hands:
+		# The flash lights what is round it for its 40 ms: the hands, the rail and the ground in front of the muzzle.
+		var flash_light := OmniLight3D.new()
+		flash_light.name = "flash_light"
+		flash_light.light_color = Color(1.0, 0.68, 0.34)
+		flash_light.light_energy = 1.6
+		flash_light.omni_range = 3.0
+		flash_light.shadow_enabled = false
+		flash_light.position = Vector3(0, 0, -0.05)
+		_muzzle.add_child(flash_light)
 
 	for child in _gun.get_children():
 		if child is MeshInstance3D:
@@ -503,19 +504,14 @@ static func flash_mesh() -> ArrayMesh:
 	# [z, radius, alpha] rings along the barrel axis.
 	# The widest ring of each lobe is fully transparent, so seen from behind (the player's view
 	# along the barrel) the lobe fades out at its rim instead of ending on a hard polygon edge.
-	_flash_lathe(tool, [[0.006, 0.004, 1.0], [-0.010, 0.014, 0.95], [-0.045, 0.034, 0.0], [-0.095, 0.018, 0.40], [-0.200, 0.0, 0.0]], Color(1.0, 0.86, 0.52), 12)
-	_flash_lathe(tool, [[0.008, 0.012, 0.45], [-0.020, 0.042, 0.40], [-0.065, 0.074, 0.0], [-0.130, 0.034, 0.16], [-0.280, 0.0, 0.0]], Color(1.0, 0.48, 0.14), 12)
-	# Blast petals out to each side of the muzzle, short, wide and swept a little back (what a compensator's ports
-	# throw), each an outer orange fan and an inner yellow one. They replace the thin straight spikes of the first
-	# version, which drew the flash as a star.
-	for side in [-1.0, 1.0]:
-		for layer in 2:
-			var reach := 0.095 - 0.030 * layer
-			var half := 0.020 - 0.008 * layer
-			var hue := Color(1.0, 0.58, 0.20) if layer == 0 else Color(1.0, 0.84, 0.50)
-			_flash_triangle(tool, Vector3(side * 0.012, half, -0.004), Vector3(side * 0.012, -half, -0.004), Vector3(side * reach, 0.0, -0.030 - 0.012 * layer), hue, 0.75)
-	# A thin upward fan, shorter: the blast that goes over the top of a flash hider.
-	_flash_triangle(tool, Vector3(0.011, 0.012, -0.004), Vector3(-0.011, 0.012, -0.004), Vector3(0.0, 0.060, -0.030), Color(1.0, 0.62, 0.24), 0.6)
+	_flash_lathe(tool, [[0.006, 0.004, 1.0], [-0.010, 0.014, 0.95], [-0.045, 0.034, 0.0], [-0.095, 0.018, 0.40], [-0.200, 0.0, 0.0]], Color(1.0, 0.86, 0.52), 10)
+	_flash_lathe(tool, [[0.008, 0.012, 0.45], [-0.020, 0.042, 0.40], [-0.065, 0.074, 0.0], [-0.130, 0.034, 0.16], [-0.280, 0.0, 0.0]], Color(1.0, 0.48, 0.14), 10)
+	# Blast lobes out to each side of the muzzle and over the top, short soft bells swept back a little (what a compensator's ports throw),
+	# each an outer orange and an inner yellow one with the widest ring transparent. They replace the thin straight spikes of the first
+	# version, which drew the flash as a star, and the flat triangular petals of the second, which did the same.
+	for yaw in [-1.15, 1.15]:
+		_flash_lathe(tool, [[0.0, 0.006, 0.80], [-0.030, 0.026, 0.45], [-0.075, 0.034, 0.0], [-0.150, 0.0, 0.0]], Color(1.0, 0.60, 0.22), 6, Basis(Vector3.UP, yaw))
+	_flash_lathe(tool, [[0.0, 0.006, 0.70], [-0.028, 0.022, 0.40], [-0.070, 0.028, 0.0], [-0.130, 0.0, 0.0]], Color(1.0, 0.64, 0.26), 6, Basis(Vector3.RIGHT, 1.05))
 	# The glow disc at the muzzle.
 	for i in range(12):
 		var a := i * TAU / 12.0
@@ -539,7 +535,7 @@ static func smoke_mesh() -> ArrayMesh:
 	var tool := SurfaceTool.new()
 	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
 	var hue := Color(0.66, 0.68, 0.70)
-	for offset in [[0.0, 0.034, 0.60], [-0.045, 0.040, 0.48], [-0.095, 0.030, 0.34]]:
+	for offset in [[0.0, 0.046, 0.70], [-0.055, 0.054, 0.58], [-0.115, 0.042, 0.42]]:
 		var z: float = offset[0]
 		var r: float = offset[1]
 		var density: float = offset[2]
@@ -547,7 +543,7 @@ static func smoke_mesh() -> ArrayMesh:
 	_smoke_mesh = tool.commit()
 	return _smoke_mesh
 
-static func _flash_lathe(tool: SurfaceTool, rings: Array, hue: Color, sides: int) -> void:
+static func _flash_lathe(tool: SurfaceTool, rings: Array, hue: Color, sides: int, turn := Basis.IDENTITY) -> void:
 	for j in range(rings.size() - 1):
 		for k in range(sides):
 			var a0: float = TAU * k / sides
@@ -555,21 +551,13 @@ static func _flash_lathe(tool: SurfaceTool, rings: Array, hue: Color, sides: int
 			var near: Array = rings[j]
 			var far: Array = rings[j + 1]
 			var corners := [
-				[Vector3(cos(a0) * near[1], sin(a0) * near[1], near[0]), near[2]],
-				[Vector3(cos(a0) * far[1], sin(a0) * far[1], far[0]), far[2]],
-				[Vector3(cos(a1) * far[1], sin(a1) * far[1], far[0]), far[2]],
-				[Vector3(cos(a1) * near[1], sin(a1) * near[1], near[0]), near[2]]]
+				[turn * Vector3(cos(a0) * near[1], sin(a0) * near[1], near[0]), near[2]],
+				[turn * Vector3(cos(a0) * far[1], sin(a0) * far[1], far[0]), far[2]],
+				[turn * Vector3(cos(a1) * far[1], sin(a1) * far[1], far[0]), far[2]],
+				[turn * Vector3(cos(a1) * near[1], sin(a1) * near[1], near[0]), near[2]]]
 			for index in [0, 1, 2, 0, 2, 3]:
 				tool.set_color(Color(hue.r, hue.g, hue.b, corners[index][1]))
 				tool.add_vertex(corners[index][0])
-
-static func _flash_triangle(tool: SurfaceTool, a: Vector3, b: Vector3, tip: Vector3, hue: Color, weight := 0.9) -> void:
-	tool.set_color(Color(hue.r, hue.g, hue.b, weight))
-	tool.add_vertex(a)
-	tool.set_color(Color(hue.r, hue.g, hue.b, weight))
-	tool.add_vertex(b)
-	tool.set_color(Color(hue.r, hue.g, hue.b, 0.0))
-	tool.add_vertex(tip)
 
 ## Reads an authored GLB: every node's transform in the viewmodel node (markers),
 ## its untransformed position in the rifle's own space (anchors) and its meshes.

@@ -1073,7 +1073,7 @@ func tick_visual(delta: float) -> void:
 			var grow := 0.55 + 1.25 * life
 			_smoke_node.scale = Vector3(grow, grow, 1.0 + 1.5 * life)
 			_smoke_node.position = _muzzle.position + Vector3(0.0, 0.012 * life, -0.14 * life)
-			_smoke_material.set_shader_parameter("fade", pow(1.0 - life, 1.6) * (0.35 if reduced_motion else 0.55))
+			_smoke_material.set_shader_parameter("fade", pow(1.0 - life, 1.6) * (0.5 if reduced_motion else 0.85))
 	_world_muzzle.visible = _flash > 0 and alive and not is_local
 	var gait := minf(speed / WALK_SPEED, 1.0) * (0.15 if _crouching else 0.35)
 	for i in range(_legs.size()):
