@@ -3,12 +3,15 @@ extends Control
 ## Authoritative account views. Offline progress never enters an API payload.
 signal closed
 signal loadout_changed(slots: Dictionary)
+## The account, its balance or the way it is loading changed; the menu's record card follows.
+signal account_changed
 
 const API = preload("res://scripts/ui/economy_api.gd")
 const INSPECTOR = preload("res://scripts/ui/item_inspector.gd")
 const REVEAL = preload("res://scripts/ui/case_reveal.gd")
 const SAFE_AREA = preload("res://scripts/ui/safe_area.gd")
 const DESIGN = preload("res://scripts/ui/design_tokens.gd")
+const CONFIRM = preload("res://scripts/ui/confirm_sheet.gd")
 const GOLD := DESIGN.GOLD
 const MUTED := DESIGN.STEEL
 var api: EconomyAPI
@@ -25,11 +28,16 @@ var busy := false
 ## True while a refresh is in flight, and the last refresh's failure (empty when it worked).
 var is_loading := false
 var load_error := ""
+## How the last failed request failed (see EconomyAPI.request) and whether the server ended the session.
+var load_outcome := ""
+var session_expired := false
 var reduced_motion := false
+## The player's text-size setting (0.85 to 1.4): every label here follows it, as buttons do through the theme.
+var text_scale := 1.0
 var content: VBoxContainer
 var status: Label
 var wallet: Label
-var dialog: ConfirmationDialog
+var dialog: ConfirmSheet
 var pending_action := Callable()
 var market_filter := ""
 var inventory_filter := ""
@@ -40,10 +48,16 @@ var pending_transaction: Dictionary = {}
 var retry_button: Button
 var safe_margin: MarginContainer
 var tab_buttons: Dictionary = {}
+var brand_label: Label
+## The finish to preselect in the sell form, set by "SELL THIS FINISH".
+var sell_preselect := ""
 
 func configure(profile: Dictionary) -> void:
 	offline_profile = profile.duplicate(true)
 	reduced_motion = bool(offline_profile.get("settings", {}).get("reduced_motion", false))
+	text_scale = clampf(float(offline_profile.get("settings", {}).get("ui_text_scale", 1.0)), 0.85, 1.4)
+	if is_node_ready():
+		_restyle_shell()
 
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
@@ -78,6 +92,7 @@ func _build_shell() -> void:
 	var header := HBoxContainer.new()
 	body.add_child(header)
 	var brand := _label("SIGHTBREAK  /  ARMORY", 24, GOLD)
+	brand_label = brand
 	brand.add_theme_font_override("font", DESIGN.heading_font())
 	brand.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	header.add_child(brand)
@@ -109,14 +124,23 @@ func _build_shell() -> void:
 	content.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	content.add_theme_constant_override("separation", 14)
 	scroll.add_child(content)
-	dialog = ConfirmationDialog.new()
-	dialog.title = "CONFIRM TRANSACTION"
-	dialog.confirmed.connect(func():
-		if pending_action.is_valid():
-			pending_action.call()
-		pending_action = Callable())
+	dialog = CONFIRM.new()
+	dialog.accepted.connect(func():
+		var action := pending_action
+		pending_action = Callable()
+		if action.is_valid():
+			action.call())
+	dialog.cancelled.connect(func(): pending_action = Callable())
 	add_child(dialog)
-	theme = DESIGN.build_theme(float(offline_profile.get("settings", {}).get("ui_text_scale", 1.0)))
+	theme = DESIGN.build_theme(text_scale)
+	_restyle_shell()
+
+## The header's labels are built once; they are resized when the text-size setting changes.
+func _restyle_shell() -> void:
+	for pair in [[brand_label, 24], [wallet, 15], [status, 14]]:
+		var node: Label = pair[0]
+		if is_instance_valid(node):
+			node.add_theme_font_size_override("font_size", DESIGN.scaled_size(pair[1], text_scale))
 
 func _update_safe_margins() -> void:
 	if not is_instance_valid(safe_margin):
@@ -131,7 +155,7 @@ func _update_safe_margins() -> void:
 func _label(value: String, font_size := 16, color := DESIGN.TEXT) -> Label:
 	var node := Label.new()
 	node.text = value
-	node.add_theme_font_size_override("font_size", font_size)
+	node.add_theme_font_size_override("font_size", DESIGN.scaled_size(font_size, text_scale))
 	node.add_theme_color_override("font_color", color)
 	return node
 
@@ -190,9 +214,12 @@ func _render() -> void:
 			tab_button.remove_theme_color_override("font_pressed_color")
 	var title := _text(content, active_tab.to_upper(), 28, GOLD)
 	title.add_theme_font_override("font", DESIGN.heading_font())
+	if active_tab != "profile" and api.token.is_empty() and session_expired:
+		_state_card(content, "error", "Your session ended", "The server no longer accepts this session, so nothing here is confirmed any more: your inventory and Credits are held by the server, and are unchanged. Sign in again to see them.", "SIGN IN AGAIN", open_tab.bind("profile"), "SESSION ENDED")
 	if active_tab != "profile" and not api.token.is_empty():
 		if not load_error.is_empty():
-			_state_card(content, "error", "The economy server did not answer as expected", load_error + "\nNothing on this screen was changed. Your inventory and Credits are held by the server.", "TRY AGAIN", func(): _refresh())
+			var titles := {"not_reached": "Cannot reach the economy server", "not_sent": "The request was not sent", "rejected": "The economy server refused the request", "unknown": "The economy server's answer was lost"}
+			_state_card(content, "error", titles.get(load_outcome, "The economy server did not answer as expected"), load_error + "\nNothing on this screen was changed. Your inventory and Credits are held by the server.", "TRY AGAIN", func(): _refresh())
 			if account.is_empty():
 				return
 		elif is_loading and account.is_empty():
@@ -205,15 +232,66 @@ func _render() -> void:
 		"market": _market()
 		"trades": _trades()
 
+## What is known about the online account, for every place that shows it (this screen's
+## header, its profile and the menu's record card). "state" is one of:
+##   signed_out  no session; only the local training record exists
+##   expired     the server ended the session (401); sign in again
+##   loading     a session exists and the server has not answered yet
+##   unavailable a session exists and the last request failed before any account arrived
+##   stale       an earlier answer is held, but the latest refresh failed
+##   ready       the server's latest answer is in hand
+## "credits" is the earned balance as text only when the server has stated one ("" otherwise):
+## an unknown balance is never shown as zero.
+func account_summary() -> Dictionary:
+	var has_balance := account.has("credits") and (account.credits is int or account.credits is float)
+	var state := "ready"
+	if api.token.is_empty():
+		state = "expired" if session_expired else "signed_out"
+	elif is_loading:
+		state = "loading"
+	elif account.is_empty():
+		state = "unavailable"
+	elif not load_error.is_empty():
+		state = "stale"
+	return {
+		"state": state,
+		"name": DESIGN.plain_line(str(account.get("display_name", ""))),
+		"level": int(account.get("level", 1)) if account.has("level") else -1,
+		"credits": credits_text(int(account.credits)) if has_balance and state in ["ready", "stale"] else "",
+		"balance_verified": has_balance and state == "ready",
+	}
+
 ## The line under the title: the signed-in account's name, level and earned Credits, only once
 ## the server has said what they are; never a name or balance that was not received.
 func _wallet_text() -> String:
-	if api.token.is_empty():
-		return "OFFLINE TRAINING  •  LOCAL PROGRESS ONLY"
-	if account.is_empty():
-		return "ONLINE  •  ACCOUNT NOT LOADED"
-	var name := DESIGN.plain_line(str(account.get("display_name", "")))
-	return "ONLINE  •  %sLEVEL %s  •  %s EARNED CREDITS" % ["%s  •  " % name if not name.is_empty() else "", account.get("level", 1), credits_text(int(account.get("credits", 0)))]
+	var summary := account_summary()
+	match summary.state:
+		"signed_out":
+			return "OFFLINE TRAINING  •  LOCAL PROGRESS ONLY"
+		"expired":
+			return "SESSION ENDED  •  SIGN IN AGAIN UNDER PROFILE"
+		"loading":
+			return "ONLINE  •  LOADING ACCOUNT…"
+		"unavailable":
+			return "ONLINE  •  ACCOUNT NOT LOADED  •  BALANCE UNAVAILABLE"
+	var identity: String = "%s  •  " % summary.name if not str(summary.name).is_empty() else ""
+	var level_text: String = "LEVEL %d  •  " % summary.level if summary.level >= 0 else ""
+	var credits: String = ("%s EARNED CREDITS" % summary.credits) if not str(summary.credits).is_empty() else "EARNED CREDITS UNAVAILABLE"
+	return "ONLINE  •  %s%s%s%s" % [identity, level_text, credits, "  (LAST CONFIRMED  •  REFRESH FAILED)" if summary.state == "stale" else ""]
+
+## A whole number from the server as text. JSON has one number type and Godot reads every one of
+## them as a float, so a seed of 1840233 would print as "1840233.0"; anything else prints as is.
+static func whole(value: Variant) -> String:
+	return str(int(value)) if (value is float or value is int) else str(value)
+
+## Earned Credits for a sentence: the balance with separators, or "unavailable". Never "0" for
+## a balance the server has not stated.
+func balance_text() -> String:
+	var summary := account_summary()
+	return summary.credits if not str(summary.credits).is_empty() else "unavailable"
+
+func _announce_account() -> void:
+	account_changed.emit()
 
 func _needs_account() -> bool:
 	if not api.token.is_empty():
@@ -230,10 +308,18 @@ func _profile() -> void:
 	_text(local, "XP: %s  •  Training credits: %s\nThis device only. No conversion to online Credits." % [offline_profile.get("xp", 0), offline_profile.get("credits", 0)], 16, MUTED)
 	if not api.token.is_empty():
 		var online := _panel(content)
-		_text(online, "ONLINE ACCOUNT  /  " + str(account.get("display_name", "")), 22)
-		var identity := _field(online, "Player ID", api.player_id)
+		_text(online, "ONLINE ACCOUNT  /  " + DESIGN.plain_line(str(account.get("display_name", ""))), 22)
+		var identity_row := HFlowContainer.new()
+		online.add_child(identity_row)
+		var identity := _field(identity_row, "Player ID", api.player_id)
 		identity.editable = false
-		_text(online, "XP: %s  •  Level: %s  •  Earned Credits: %s" % [account.get("xp", 0), account.get("level", 1), account.get("credits", 0)])
+		identity.custom_minimum_size.x = 320
+		var copy_id := _button(identity_row, "COPY PLAYER ID", func():
+			DisplayServer.clipboard_set(api.player_id)
+			_message("Player ID copied. Send it to the player you want to trade with."))
+		copy_id.name = "CopyPlayerID"
+		var known := not account.is_empty()
+		_text(online, "XP: %s  •  Level: %s  •  Earned Credits: %s" % [whole(account.get("xp", "—")) if known else "—", whole(account.get("level", "—")) if known else "—", balance_text()])
 		_text(online, "New accounts start with zero. Only the trusted match service can award online rewards after a validated 5v5 match with ten human players. Small LAN sessions, bots and offline matches cannot grant online items or Credits.", 15, MUTED)
 		_text(online, "Session held in memory. Closing the game clears it. Share your player ID to arrange a trade.", 14, MUTED)
 		_button(online, "SIGN OUT", _logout)
@@ -280,6 +366,9 @@ func _authenticate(url: String, username: String, password: String, display_name
 		_message("The server did not issue a session.", true)
 		return
 	selected = {}
+	session_expired = false
+	load_error = ""
+	load_outcome = ""
 	await _refresh()
 
 func _logout() -> void:
@@ -296,9 +385,14 @@ func _logout() -> void:
 	listings = []
 	trades = []
 	equipped_loadout = {}
+	session_expired = false
+	load_error = ""
+	load_outcome = ""
+	is_loading = false
 	loadout_changed.emit(equipped_loadout)
 	busy = false
 	_render()
+	_announce_account()
 	_message("Signed out. Local session cleared." if not result.has("_error") else "Local session cleared. Server revocation could not be confirmed; the remote session will expire.")
 
 func _refresh() -> bool:
@@ -310,8 +404,10 @@ func _refresh() -> bool:
 	busy = true
 	is_loading = true
 	load_error = ""
+	load_outcome = ""
 	if account.is_empty():
 		_render()
+	_announce_account()
 	_message("Refreshing authoritative account data…")
 	var me := await api.request("/me")
 	if _refresh_failed(me):
@@ -343,8 +439,8 @@ func _refresh() -> bool:
 	busy = false
 	is_loading = false
 	_render()
+	_announce_account()
 	_message("Connected. Data confirmed by your economy server.")
-
 	return true
 
 func _message(value: String, error := false) -> void:
@@ -357,29 +453,44 @@ func _refresh_failed(result: Dictionary) -> bool:
 		return false
 	busy = false
 	is_loading = false
+	if session_expired:
+		return true
 	load_error = str(result.get("_error", "Unknown error"))
+	load_outcome = str(result.get("_outcome", ""))
 	_render()
+	_announce_account()
 	return true
 
 func _failed(result: Dictionary) -> bool:
 	if result.has("_error"):
 		if int(result.get("_status", 0)) == 401:
+			# The server ended the session: what was held is no longer confirmed by anyone.
+			session_expired = true
+			api.logout()
 			account = {}
 			inventory = []
 			selected = {}
 			equipped_loadout = {}
+			listings = []
+			trades = []
+			is_loading = false
 			loadout_changed.emit({})
 			_render()
+			_announce_account()
+			_message("Your session ended (the server did not accept it). Sign in again under PROFILE. Nothing was changed.", true)
+			return true
 		_message(str(result["_error"]), true)
 		return true
 	return false
 
-func _confirm(message: String, action: Callable) -> void:
+## Opens the bounded confirmation. `accept_label` says what pressing it does ("BUY FOR 150
+## CREDITS"), never just "OK"; `summary` is the pinned line of what is given and received;
+## `danger` marks an act that gives something away for nothing.
+func _confirm(message: String, action: Callable, accept_label := "CONFIRM", summary := "", danger := false, title := "CONFIRM TRANSACTION") -> void:
 	if busy:
 		return
-	dialog.dialog_text = message
 	pending_action = action
-	dialog.popup_centered(Vector2i(mini(560, int(size.x) - 40), 220))
+	dialog.present(title, message, accept_label, summary, danger, text_scale)
 
 func _retry_pending() -> Dictionary:
 	if busy or pending_transaction.is_empty():
@@ -409,6 +520,8 @@ func _perform(path: String, payload := {}, message := "Transaction confirmed.", 
 		pending_transaction = {"path": path, "payload": payload.duplicate(true), "message": message, "method": method, "owner": api.player_id, "server": api.base_url}
 	retry_button.visible = not pending_transaction.is_empty()
 	if _failed(result):
+		if result.has("_error") and int(result.get("_status", 0)) != 401:
+			_message(failure_text(result, not pending_transaction.is_empty()), true)
 		return result
 	var refreshed := await _refresh()
 	if refreshed:
@@ -416,6 +529,22 @@ func _perform(path: String, payload := {}, message := "Transaction confirmed.", 
 	else:
 		_message("Transaction confirmed, but account refresh failed. Refresh before making another transaction.", true)
 	return result
+
+## What a failed request means for the player, by what is known (EconomyAPI.request's
+## "_outcome"). Only an unknown outcome of a transaction that holds a receipt identifier
+## mentions retrying: a retry resends that identifier, so it can never charge twice.
+func failure_text(result: Dictionary, retry_possible: bool) -> String:
+	var error := str(result.get("_error", "The request failed."))
+	match str(result.get("_outcome", "")):
+		"not_sent", "not_reached":
+			return error + " Nothing was charged and nothing changed. Try again when you are connected."
+		"rejected":
+			return error + " The server refused it; nothing changed."
+		"unknown":
+			if retry_possible:
+				return error + " Nothing is shown as done. Press RETRY PENDING TRANSACTION to find out safely: it reuses this transaction's receipt identifier, so it cannot be applied twice."
+			return error + " Refresh to see what the server holds before you try again."
+	return error
 
 ## Credits with thousands separators: 1250 -> "1,250".
 static func credits_text(value: int) -> String:
@@ -494,7 +623,7 @@ func _case_glyph(collection: String, edge: float = 56.0) -> Control:
 
 ## What stands in for content: an empty list, a load in progress, or a failed refresh.
 ## The action, if any, does something real.
-func _state_card(parent: Node, kind: String, title: String, body: String, action_label := "", action := Callable()) -> PanelContainer:
+func _state_card(parent: Node, kind: String, title: String, body: String, action_label := "", action := Callable(), chip_text := "") -> PanelContainer:
 	var tone: Color = {"empty": DESIGN.STEEL, "loading": DESIGN.GOLD, "error": DESIGN.CRIMSON_BRIGHT}[kind]
 	var card := PanelContainer.new()
 	card.name = "State_" + kind
@@ -506,11 +635,18 @@ func _state_card(parent: Node, kind: String, title: String, body: String, action
 	var stack := VBoxContainer.new()
 	stack.add_theme_constant_override("separation", 8)
 	card.add_child(stack)
-	var chip := _chip({"empty": "NOTHING HERE YET", "loading": "LOADING", "error": "CONNECTION PROBLEM"}[kind], tone)
+	var chip := _chip(chip_text if not chip_text.is_empty() else {"empty": "NOTHING HERE YET", "loading": "LOADING", "error": "CONNECTION PROBLEM"}[kind], tone)
 	chip.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 	stack.add_child(chip)
 	_text(stack, title, 20)
 	_text(stack, body, 15, MUTED)
+	if kind == "loading" and not reduced_motion:
+		var bar := ProgressBar.new()
+		bar.name = "LoadingBar"
+		bar.indeterminate = true
+		bar.show_percentage = false
+		bar.custom_minimum_size = Vector2(240, 6)
+		stack.add_child(bar)
 	if action.is_valid() and not action_label.is_empty():
 		var button := _button(stack, action_label, action)
 		button.name = "StateAction"
@@ -520,8 +656,32 @@ func _state_card(parent: Node, kind: String, title: String, body: String, action
 func _item_name(item: Dictionary) -> String:
 	return str(item.get("name", item.get("definition_id", "Training rifle"))).replace("_", " ")
 
+## The finish's own name ("Graphite" of "Obsidian / Graphite"): what tells two cards apart,
+## so it leads a card and the collection sits beneath it instead of eating its width.
+func _finish_name(item: Dictionary) -> String:
+	var full := _item_name(item)
+	return full.get_slice(" / ", 1) if " / " in full else full
+
+## After choosing an item, the list re-renders and the inspector sits below all the cards;
+## bring it to the top of the view so the choice visibly did something.
+func _reveal_inspector() -> void:
+	_reveal("SelectedInspector")
+
+## Scrolls the tab so the named panel starts at the top of the view, once layout has settled.
+func _reveal(node_name: String) -> void:
+	await get_tree().process_frame
+	await get_tree().process_frame
+	if not is_instance_valid(content):
+		return
+	var target := content.get_node_or_null(node_name) as Control
+	var scroller := content.get_parent() as ScrollContainer
+	if target != null and scroller != null:
+		scroller.scroll_vertical = maxi(0, int(target.position.y) - 8)
+
 func _inspect(parent: Node, item: Dictionary) -> void:
 	var panel := _panel(parent)
+	if parent == content:
+		panel.get_parent().name = "SelectedInspector"
 	_text(panel, _item_name(item), 23, GOLD)
 	var inspector := INSPECTOR.new()
 	inspector.item = item
@@ -532,7 +692,7 @@ func _inspect(parent: Node, item: Dictionary) -> void:
 	_button(zoom, "−", inspector.zoom.bind(0.3))
 	_button(zoom, "+", inspector.zoom.bind(-0.3))
 	_button(zoom, "RESET VIEW", inspector.reset_view)
-	_text(panel, "%s  •  %s\nPattern %s  /  Wear %.4f  /  %s" % [item.get("rarity", "Standard"), item.get("collection", "Training"), item.get("pattern_seed", 0), float(item.get("wear", 0)), item.get("variant", "Standard")], 15, MUTED)
+	_text(panel, "%s  •  %s\nPattern %s  /  Wear %.4f  /  %s" % [item.get("rarity", "Standard"), item.get("collection", "Training"), whole(item.get("pattern_seed", 0)), float(item.get("wear", 0)), item.get("variant", "Standard")], 15, MUTED)
 	var owned := false
 	for instance in inventory:
 		if item.has("id") and instance.get("id") == item.id:
@@ -590,8 +750,11 @@ func _inventory() -> void:
 			var equip := _button(content, "UNEQUIP RIFLE FINISH" if is_equipped else "EQUIP RIFLE FINISH", func():
 				_perform("/loadout", {"slot": "rifle", "item_id": null if is_equipped else selected.id}, "Rifle cosmetic loadout saved.", HTTPClient.METHOD_PUT))
 			equip.disabled = selected.get("reserved", false) and not is_equipped
-
-	_knife_reference_button()
+			if not selected.get("reserved", false) and selected.get("marketplace_eligible", true):
+				var sell := _button(content, "SELL THIS FINISH", func():
+					sell_preselect = str(selected.get("id", ""))
+					open_tab("market"))
+				sell.name = "SellSelected"
 
 ## One owned instance: a finish swatch from its collection's palette, name, rarity and
 ## state chips and, for finishes, its wear. Everything shown comes from the instance.
@@ -604,7 +767,7 @@ func _item_card(parent: Node, item: Dictionary) -> Button:
 	for slot in equipped_loadout:
 		if equipped_loadout[slot] is Dictionary and equipped_loadout[slot].get("id", "") == item.get("id", "") and item.has("id"):
 			equipped = true
-	var card := _button(parent, "", func(): selected = item; _render())
+	var card := _button(parent, "", func(): selected = item; _render(); _reveal_inspector())
 	card.name = "Item_" + str(item.get("id", _item_name(item)))
 	card.tooltip_text = "%s\n%s  /  %s\n%s" % [_item_name(item), rarity.to_upper(), item.get("collection", "SUPPLY"), "RESERVED" if reserved else "INSPECT ITEM"]
 	var accent: Color = REVEAL.FINISH.rarity_color(rarity) if kind == "weapon_skin" else DESIGN.STEEL
@@ -631,7 +794,8 @@ func _item_card(parent: Node, item: Dictionary) -> Button:
 	column.add_theme_constant_override("separation", 4)
 	column.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	row.add_child(column)
-	var title := _label(_item_name(item), 16, DESIGN.TEXT)
+	var title := _label(_finish_name(item) if kind == "weapon_skin" else _item_name(item), 16, DESIGN.TEXT)
+	title.tooltip_text = _item_name(item)
 	title.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	title.custom_minimum_size.x = 150
 	column.add_child(title)
@@ -686,7 +850,7 @@ func _odds_table(parent: Node, odds: Dictionary) -> void:
 	var total := 0.0
 	for rarity in odds:
 		total += float(odds[rarity])
-	for rarity in odds:
+	for rarity in rarities_in_order(odds):
 		var color: Color = REVEAL.FINISH.rarity_color(str(rarity))
 		var name_label := _label(str(rarity).to_upper(), 13, color.lightened(0.1))
 		name_label.custom_minimum_size.x = 110
@@ -701,7 +865,7 @@ func _odds_table(parent: Node, odds: Dictionary) -> void:
 		bar.add_theme_stylebox_override("background", DESIGN.box(DESIGN.OBSIDIAN, Color.TRANSPARENT, 0, Vector2.ZERO))
 		bar.add_theme_stylebox_override("fill", DESIGN.box(color, Color.TRANSPARENT, 0, Vector2.ZERO))
 		grid.add_child(bar)
-		var value := _label("%s %%" % str(odds[rarity]), 13, DESIGN.TEXT)
+		var value := _label(percent_text(float(odds[rarity])), 13, DESIGN.TEXT)
 		value.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		value.custom_minimum_size.x = 64
 		grid.add_child(value)
@@ -716,42 +880,14 @@ func _cases() -> void:
 		return
 	var table: Dictionary = catalog.get("case_tables", {})
 	var odds: Dictionary = table.get("probabilities", {})
-	var panel := _panel(content)
-	_text(panel, "PUBLISHED PROBABILITIES  /  v" + str(table.get("version", "—")), 18, GOLD)
 	var probabilities: Array[String] = []
-	for rarity in odds:
-		probabilities.append("%s  %s%%" % [rarity, odds[rarity]])
-	_odds_table(panel, odds)
-	_text(panel, "One case + one collection key are consumed. The server commits the reward before its reveal. Skipping has no effect on the outcome.", 15, MUTED)
-	var store := _panel(content)
-	_text(store, "COLLECTION SUPPLIES", 20)
-	var have := int(account.get("credits", 0))
-	var supplies := 0
-	for raw in catalog.get("definitions", []):
-		var definition: Dictionary = raw
-		if definition.get("kind") in ["case", "key"]:
-			supplies += 1
-			var price := int(definition.get("price", 0))
-			var row := HFlowContainer.new()
-			row.add_theme_constant_override("h_separation", 14)
-			row.add_theme_constant_override("v_separation", 6)
-			store.add_child(row)
-			row.add_child(_case_glyph(str(definition.get("collection", "")), 52.0) if definition.get("kind") == "case" else _key_glyph(52.0))
-			var holds := case_holds_text(str(definition.get("collection", ""))) if definition.get("kind") == "case" else ""
-			var label := _label("%s\n%s earned Credits%s" % [definition.get("name", definition.id), credits_text(price), "\n" + holds if not holds.is_empty() else ""], 16)
-			label.custom_minimum_size.x = 230
-			row.add_child(label)
-			var buy := _button(row, "BUY" if have >= price else "NEED %s MORE" % credits_text(price - have), func():
-				_confirm("Buy %s for %s earned Credits? You have %s." % [definition.get("name", definition.id), credits_text(price), credits_text(have)], func(): _perform("/store/buy", {"definition_id": definition.id, "idempotency_key": api.key()}, "Supply added to inventory.")))
-			buy.name = "BuySupply_" + str(definition.id)
-			buy.disabled = have < price
-			DESIGN.apply_button(buy, "primary")
-	if supplies == 0:
-		_state_card(store, "empty", "No supplies are for sale", "The catalog lists no cases or keys right now.", "REFRESH", func(): _refresh())
+	for rarity in rarities_in_order(odds):
+		probabilities.append("%s  %s" % [rarity, percent_text(float(odds[rarity]))])
 	var key_item: Dictionary = {}
 	for raw in inventory:
 		if raw.get("kind") == "key" and not raw.get("reserved", false):
 			key_item = raw
+	# What the player can act on first: the cases they hold; then how the odds work; then the shop.
 	var cases := _panel(content)
 	_text(cases, "YOUR CASES", 20)
 	var count := 0
@@ -770,18 +906,69 @@ func _cases() -> void:
 		info.custom_minimum_size.x = 230
 		row.add_child(info)
 		var button := _button(row, "OPEN", func():
-			_confirm("Consume %s and one key?\n\n%s\n\nThese are the actual server probabilities. Results are final." % [_item_name(item), "  ·  ".join(probabilities)], _open_case.bind(item, key_item)))
+			_confirm("Consume %s and one key?\n\n%s\n\nThese are the actual server probabilities. Results are final." % [_item_name(item), "  ·  ".join(probabilities)], _open_case.bind(item, key_item), "OPEN CASE  (FINAL)", "Uses 1 case and 1 key", false, "OPEN " + _item_name(item).to_upper()))
 		button.name = "Open_" + str(item.get("id", ""))
 		button.disabled = key_item.is_empty() or odds.is_empty()
+		button.custom_minimum_size.y = DESIGN.TOUCH_COMFORT
 		DESIGN.apply_button(button, "primary")
 	if count == 0:
-		_state_card(cases, "empty", "No cases to open", "Earn Credits in eligible online matches, then buy a case and a collection key above.")
+		_state_card(cases, "empty", "No cases to open", "Earn Credits in eligible online matches, then buy a case and a collection key below.")
 	elif key_item.is_empty():
-		_text(cases, "A collection key is required. Obtain one with earned Credits above.", 15, GOLD)
+		_text(cases, "A collection key is required. Obtain one with earned Credits below.", 15, GOLD)
+	var panel := _panel(content)
+	_text(panel, "PUBLISHED PROBABILITIES  /  v" + str(table.get("version", "—")), 18, GOLD)
+	_odds_table(panel, odds)
+	_text(panel, "Each case rolls one rarity with these odds, and gives the finish of that rarity in its own collection. One case + one collection key are consumed. The server commits the reward before its reveal. Skipping has no effect on the outcome.", 15, MUTED)
+	var store := _panel(content)
+	_text(store, "COLLECTION SUPPLIES", 20)
+	var verified: bool = account_summary().balance_verified
+	var have := int(account.get("credits", 0)) if verified else 0
+	if not verified:
+		_text(store, "Your balance is not confirmed right now, so purchases are paused. Refresh to confirm it.", 15, GOLD)
+	var supplies := 0
+	for raw in catalog.get("definitions", []):
+		var definition: Dictionary = raw
+		if definition.get("kind") in ["case", "key"]:
+			supplies += 1
+			var price := int(definition.get("price", 0))
+			var row := HFlowContainer.new()
+			row.add_theme_constant_override("h_separation", 14)
+			row.add_theme_constant_override("v_separation", 6)
+			store.add_child(row)
+			row.add_child(_case_glyph(str(definition.get("collection", "")), 52.0) if definition.get("kind") == "case" else _key_glyph(52.0))
+			var holds := case_holds_text(str(definition.get("collection", ""))) if definition.get("kind") == "case" else ""
+			var label := _label("%s\n%s earned Credits%s" % [definition.get("name", definition.id), credits_text(price), "\n" + holds if not holds.is_empty() else ""], 16)
+			label.custom_minimum_size.x = 230
+			row.add_child(label)
+			var buy := _button(row, ("BUY" if have >= price else "NEED %s MORE" % credits_text(price - have)) if verified else "BALANCE UNAVAILABLE", func():
+				_confirm("Buy %s for %s earned Credits? You have %s." % [definition.get("name", definition.id), credits_text(price), credits_text(have)], func(): _perform("/store/buy", {"definition_id": definition.id, "idempotency_key": api.key()}, "Supply added to inventory."), "BUY FOR %s CREDITS" % credits_text(price), "Cost: %s earned Credits" % credits_text(price), false, "BUY " + str(definition.get("name", definition.id)).to_upper()))
+			buy.name = "BuySupply_" + str(definition.id)
+			buy.disabled = not verified or have < price
+			buy.custom_minimum_size.y = DESIGN.TOUCH_COMFORT
+			DESIGN.apply_button(buy, "primary")
+	if supplies == 0:
+		_state_card(store, "empty", "No supplies are for sale", "The catalog lists no cases or keys right now.", "REFRESH", func(): _refresh())
 	_collection_browser(content)
+
+## A published probability as a player reads it: "58%", "0.1%". The server states them as
+## percentages that are floats in JSON, so a whole number must not print as "58.0".
+static func percent_text(value: float) -> String:
+	return "%d%%" % int(round(value)) if is_equal_approx(value, round(value)) else "%s%%" % String.num(value, 2)
 
 ## The rarity order of the published odds, rarest last.
 const RARITY_ORDER := ["Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythic"]
+
+## The rarities of a table of odds, commonest first, whatever order the server's JSON listed
+## them in; a rarity this build does not know goes last.
+func rarities_in_order(odds: Dictionary) -> Array:
+	var keys: Array = odds.keys()
+	keys.sort_custom(func(a, b):
+		var ia := RARITY_ORDER.find(str(a))
+		var ib := RARITY_ORDER.find(str(b))
+		ia = RARITY_ORDER.size() if ia < 0 else ia
+		ib = RARITY_ORDER.size() if ib < 0 else ib
+		return ia < ib if ia != ib else str(a) < str(b))
+	return keys
 
 ## What a case can hold, before it is opened: every finish in the catalog grouped by
 ## collection and ordered by rarity, each opening the 3D inspector. This only shows the
@@ -789,7 +976,7 @@ const RARITY_ORDER := ["Common", "Uncommon", "Rare", "Epic", "Legendary", "Mythi
 func _collection_browser(parent: Node) -> void:
 	var panel := _panel(parent)
 	_text(panel, "COLLECTIONS", 20)
-	_text(panel, "Every finish a case can hold, by collection. Previews are not owned items.", 14, MUTED)
+	_text(panel, "Every finish a case can hold, by collection, with the chance a case of that collection gives it. Previews are not owned items.", 14, MUTED)
 	var groups := {}
 	for raw in catalog.get("definitions", []):
 		var definition: Dictionary = raw
@@ -850,7 +1037,11 @@ func _collection_browser(parent: Node) -> void:
 			frame.add_child(text)
 			var short_name := str(definition.get("name", "")).get_slice(" / ", 1) if " / " in str(definition.get("name", "")) else str(definition.get("name", ""))
 			text.add_child(_label(short_name, 14))
-			text.add_child(_label(rarity.to_upper(), 11, accent.lightened(0.15)))
+			var chance := ""
+			var published: Dictionary = catalog.get("case_tables", {}).get("probabilities", {})
+			if published.has(rarity):
+				chance = "  ·  " + percent_text(float(published[rarity]))
+			text.add_child(_label(rarity.to_upper() + chance, 11, accent.lightened(0.15)))
 			var content_size := frame.get_combined_minimum_size()
 			card.custom_minimum_size = Vector2(maxf(190, content_size.x + 24), maxf(DESIGN.TOUCH_MIN, content_size.y + 16))
 
@@ -987,11 +1178,14 @@ func _market() -> void:
 	if count == 0:
 		_state_card(content, "empty", "No matching active listings", "Nothing is listed that matches these filters right now. New offers appear when other players list finishes.", "REFRESH LISTINGS", func(): _refresh())
 	_listing_form()
+	if not sell_preselect.is_empty():
+		_reveal("SellForm")
 
 ## Selling: an owned, unreserved finish and an asking price, in one row. The fee is stated
 ## before the player commits, and again in the confirmation.
 func _listing_form() -> void:
 	var form := _panel(content)
+	form.get_parent().name = "SellForm"
 	_text(form, "SELL AN OWNED COSMETIC", 18, GOLD)
 	var fee_percent := fee_percent_text()
 	_text(form, "Transaction fee: %s of the asking price, deducted from seller proceeds on sale." % fee_percent, 14, MUTED)
@@ -1007,6 +1201,8 @@ func _listing_form() -> void:
 		if item.get("marketplace_eligible", not item.get("reserved", false)) and item.get("kind") == "weapon_skin":
 			eligible.append(item)
 			options.add_item(_item_name(item))
+			if str(item.get("id", "")) == sell_preselect and not sell_preselect.is_empty():
+				options.selected = options.item_count - 1
 	var price := SpinBox.new()
 	price.min_value = 1
 	price.max_value = 1000000
@@ -1019,7 +1215,7 @@ func _listing_form() -> void:
 			var item: Dictionary = eligible[options.selected]
 			var asking := int(price.value)
 			var fee := market_fee(asking)
-			_confirm("List %s for %s earned Credits?\n\nIt will be reserved until sold or cancelled.\nOn a sale the market fee is %s (%s), so you receive %s." % [_item_name(item), credits_text(asking), credits_text(fee), fee_percent, credits_text(asking - fee)], func(): _perform("/market/list", {"item_id": item.id, "price": asking}, "Listing created.")))
+			_confirm("List %s for %s earned Credits?\n\nIt will be reserved until sold or cancelled.\nOn a sale the market fee is %s (%s), so you receive %s." % [_item_name(item), credits_text(asking), credits_text(fee), fee_percent, credits_text(asking - fee)], func(): _perform("/market/list", {"item_id": item.id, "price": asking}, "Listing created."), "LIST FOR %s CREDITS" % credits_text(asking), "You will receive %s after the fee" % credits_text(asking - fee), false, "LIST " + _item_name(item).to_upper()))
 	list_button.name = "CreateListing"
 	list_button.disabled = eligible.is_empty()
 	DESIGN.apply_button(list_button, "primary")
@@ -1053,8 +1249,10 @@ func _listing_card(listing: Dictionary) -> PanelContainer:
 	identity.custom_minimum_size.x = 230
 	identity.add_theme_constant_override("separation", 4)
 	flow.add_child(identity)
-	identity.add_child(_label(_item_name(item), 18))
-	identity.add_child(_label(str(item.get("collection", "")), 13, MUTED))
+	var listing_title := DESIGN.ellipsize(_label(_finish_name(item), 18))
+	listing_title.tooltip_text = _item_name(item)
+	identity.add_child(listing_title)
+	identity.add_child(DESIGN.ellipsize(_label(str(item.get("collection", "")), 13, MUTED)))
 	var chips := HFlowContainer.new()
 	chips.add_theme_constant_override("h_separation", 6)
 	identity.add_child(chips)
@@ -1070,7 +1268,10 @@ func _listing_card(listing: Dictionary) -> PanelContainer:
 	price_label.name = "Price"
 	price_label.add_theme_font_override("font", DESIGN.heading_font())
 	money.add_child(price_label)
-	var terms := _label(("You receive %s after a fee of %s (%s)." if mine else "The seller receives %s after a fee of %s (%s).") % [credits_text(price - fee), credits_text(fee), fee_percent], 13, MUTED)
+	var terms_text := ("You receive %s after a fee of %s (%s)." if mine else "The seller receives %s after a fee of %s (%s).") % [credits_text(price - fee), credits_text(fee), fee_percent]
+	if fee == 0:
+		terms_text = ("You receive all %s: at this price the %s fee rounds down to 0." if mine else "The seller receives all %s: at this price the %s fee rounds down to 0.") % [credits_text(price), fee_percent]
+	var terms := _label(terms_text, 13, MUTED)
 	terms.name = "Terms"
 	terms.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	terms.custom_minimum_size.x = 210
@@ -1084,11 +1285,13 @@ func _listing_card(listing: Dictionary) -> PanelContainer:
 		var cancel := _button(actions, "CANCEL MY LISTING", func(): _perform("/market/%s/cancel" % listing.id, {}, "Listing cancelled; item returned."))
 		cancel.name = "Cancel"
 	else:
-		var have := int(account.get("credits", 0))
-		var buy := _button(actions, "BUY FOR %s" % credits_text(price) if have >= price else "NEED %s MORE" % credits_text(price - have), func():
-			_confirm("Buy this exact item for %s earned Credits?\n\n%s\n%s  ·  %s\nWear %.4f  ·  Pattern %s\n\nYou pay %s. The seller receives %s after a market fee of %s.\nYou have %s earned Credits." % [credits_text(price), _item_name(item), str(item.get("rarity", "")).to_upper(), item.get("collection", ""), float(item.get("wear", 0)), item.get("pattern_seed", "—"), credits_text(price), credits_text(price - fee), credits_text(fee), credits_text(have)], func(): _perform("/market/%s/buy" % listing.id, {"idempotency_key": api.key()}, "Purchase confirmed.")))
+		var verified: bool = account_summary().balance_verified
+		var have := int(account.get("credits", 0)) if verified else 0
+		var buy := _button(actions, ("BUY FOR %s" % credits_text(price) if have >= price else "NEED %s MORE" % credits_text(price - have)) if verified else "BALANCE UNAVAILABLE", func():
+			_confirm("Buy this exact item for %s earned Credits?\n\n%s\n%s  ·  %s\nWear %.4f  ·  Pattern %s\n\nYou pay %s. The seller receives %s after a market fee of %s.\nYou have %s earned Credits." % [credits_text(price), _item_name(item), str(item.get("rarity", "")).to_upper(), item.get("collection", ""), float(item.get("wear", 0)), whole(item.get("pattern_seed", "—")), credits_text(price), credits_text(price - fee), credits_text(fee), credits_text(have)], func(): _perform("/market/%s/buy" % listing.id, {"idempotency_key": api.key()}, "Purchase confirmed."), "BUY FOR %s CREDITS" % credits_text(price), "You pay %s earned Credits" % credits_text(price), false, "BUY " + _item_name(item).to_upper()))
 		buy.name = "Buy"
-		buy.disabled = have < price
+		buy.disabled = not verified or have < price
+		buy.custom_minimum_size.y = DESIGN.TOUCH_COMFORT
 		DESIGN.apply_button(buy, "primary")
 	return card
 
@@ -1141,10 +1344,16 @@ func _offer_lines(items: Variant) -> String:
 	var lines: Array[String] = []
 	for item in items:
 		if item is Dictionary:
-			lines.append("    %s  ·  %s  ·  wear %.4f  ·  pattern %s" % [_item_name(item), str(item.get("rarity", "")).to_upper(), float(item.get("wear", 0)), item.get("pattern_seed", "—")])
+			lines.append("    %s  ·  %s  ·  wear %.4f  ·  pattern %s" % [_item_name(item), str(item.get("rarity", "")).to_upper(), float(item.get("wear", 0)), whole(item.get("pattern_seed", "—"))])
 		else:
 			lines.append("    item " + str(item))
 	return "\n".join(lines)
+
+func _offer_count(items: Variant) -> int:
+	return (items as Array).size() if items is Array else 0
+
+func _plural(count: int, noun: String) -> String:
+	return "%d %s%s" % [count, noun, "" if count == 1 else "s"]
 
 ## The exact terms of the displayed revision, stated at the moment of commitment.
 func trade_confirmation_text(trade: Dictionary) -> String:
@@ -1190,8 +1399,10 @@ func _trade_side(parent: Node, node_name: String, heading: String, items: Varian
 			var text := VBoxContainer.new()
 			text.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 			row.add_child(text)
-			text.add_child(DESIGN.ellipsize(_label(_item_name(item), 15)))
-			text.add_child(_label("%s  ·  wear %.3f" % [str(item.get("rarity", "")).to_upper(), float(item.get("wear", 0))], 12, REVEAL.FINISH.rarity_color(str(item.get("rarity", "Common")))))
+			var side_title := DESIGN.ellipsize(_label(_finish_name(item), 15))
+			side_title.tooltip_text = _item_name(item)
+			text.add_child(side_title)
+			text.add_child(DESIGN.ellipsize(_label("%s  ·  %s  ·  wear %.3f" % [str(item.get("collection", "")).to_upper(), str(item.get("rarity", "")).to_upper(), float(item.get("wear", 0))], 12, REVEAL.FINISH.rarity_color(str(item.get("rarity", "Common"))))))
 			var look := _button(row, "INSPECT", _show_inspector_popup.bind(item))
 			look.custom_minimum_size.x = 0
 		else:
@@ -1271,5 +1482,9 @@ func _trade_card(trade: Dictionary) -> void:
 		if proposed != original_ids:
 			_message("Your selection contains unsaved edits. Save your offer first, then review and confirm the new revision.", true)
 			return
-		_confirm(trade_confirmation_text(trade), func(): _perform("/trades/%s/confirm" % trade_id, {"revision": revision}, "Confirmation recorded by server.")))
+		var gives_n := _offer_count(giving)
+		var gets_n := _offer_count(receiving)
+		var gift: bool = gets_n == 0
+		_confirm(trade_confirmation_text(trade), func(): _perform("/trades/%s/confirm" % trade_id, {"revision": revision}, "Confirmation recorded by server."),
+			"CONFIRM GIFT  (RECEIVE NOTHING)" if gift else "CONFIRM THIS REVISION", "YOU GIVE %s   ·   YOU RECEIVE %s" % [_plural(gives_n, "item"), _plural(gets_n, "item")] + ("   ·   NOTHING IN RETURN" if gift else ""), gift, "CONFIRM TRADE  ·  REVISION %d" % revision))
 	_button(panel, "CANCEL TRADE", func(): _perform("/trades/%s/cancel" % trade_id, {}, "Trade cancelled; reservations released."))

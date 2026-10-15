@@ -62,3 +62,14 @@ Backend contracts are unchanged: the same endpoints, payloads, idempotency keys 
 - **Live-server behaviour** (a real purchase, listing or trade) is exercised by the backend and native-economy suites, not by these fixtures. This increment was not run against a live backend.
 - **Phone rendering** of these screens is not measured; physical-device performance is UNVERIFIED.
 - Item names that do not fit a card are clipped with an ellipsis (`Crimson Archive / Iri...` in a 260 px inventory card). The inspector shows the full name.
+
+## Errata (added in round 2, after independent review)
+
+Review of `2b2731a` found these statements here wrong or incomplete; the fixes and their evidence are in `../increment-4/README.md`.
+
+- **`logs/validate-increment-3.log` is stale.** It was copied before the final run: it records 2,288 armory checks, while this README says 2,292. The 2,292 figure is from the final run; the log in this folder is not.
+- **The header claim "no balance until the server answers" was only true of the armory.** The main menu's record card still printed a blank `ONLINE` and `0 EARNED CREDITS` after a failed `/me`. Fixed in round 2 and tested on the real menu.
+- **"Text scales from 85 to 130 %" was not true of the armory's labels**, which set their own font sizes. The layout sweep passed because the labels did not grow. Fixed in round 2; the sweep now runs with genuinely larger text.
+- **The wide captures (1600 x 720)** are a hypothetical canvas; the shipped build keeps the 16:9 frame with bars. They were not labelled as such.
+- **The fixtures were hand-typed**, with integers where the server sends floats; that hid `1840233.0` and `58.0%` on screen. Round 2 builds them from the backend's own serializers.
+- The trades captures show a red "unsaved edits" banner that the test provokes on purpose (it toggles an offer item and presses CONFIRM to prove the refusal); it is not a state a player sees on opening the screen.
