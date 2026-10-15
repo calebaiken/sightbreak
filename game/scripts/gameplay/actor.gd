@@ -130,7 +130,16 @@ var _hand_bone := -1
 ## for players with vestibular sensitivity) to make, not something this build decides; the variants exist so it can be
 ## made from comparative sequences (docs/reports/media/art-v8/reduced-motion). The hand's own motion in the clip is
 ## unaffected by all of them (it is part of the reload), and so are the timing, the sounds and the ammunition.
-const REDUCED_RELOAD_VARIANTS := {"current": Vector2(1.0, 1.0), "calm": Vector2(0.4, 1.3), "still": Vector2(0.0, 1.6)}
+## Each variant sets the components of the reload's presentation separately: `roll` and `lift` scale the rifle's whole-weapon
+## staging (ARMS_RELOAD_ROTATION and ARMS_RELOAD_OFFSET), `recoil` the muzzle climb of a shot, and `clip` is the support hand's
+## animation: "reload" is the default clip and "reload_calm" the same phases with a shallower reach to the pouch (14 cm down, not
+## 22), so that with less staging of the rifle the hand and the forearm are still in the frame at the pickup. Presentation only:
+## the timing, the sounds, the ammunition and the authoritative reload are the same in all of them.
+const REDUCED_RELOAD_VARIANTS := {
+	"current": {"roll": 1.0, "lift": 1.0, "recoil": 1.0, "clip": "reload"},
+	"calm": {"roll": 0.4, "lift": 1.3, "recoil": 0.6, "clip": "reload_calm"},
+	"still": {"roll": 0.0, "lift": 1.8, "recoil": 0.4, "clip": "reload_calm"},
+}
 var reduced_variant := "current"
 ## With rigged arms the support hand performs the reload, so the weapon lifts, moves
 ## toward the centre and rolls clockwise to keep the magazine and the hand in frame at the
@@ -1109,15 +1118,21 @@ func tick_visual(delta: float) -> void:
 		var equip_motion := _equip_blend * (0.25 if reduced_motion else 1.0)
 		var reload_offset := ARMS_RELOAD_OFFSET if rigged else Vector3(0, -0.13, 0)
 		var reload_rotation := ARMS_RELOAD_ROTATION if rigged else Vector3(-0.38, 0, 0.38)
+		var profile: Dictionary = REDUCED_RELOAD_VARIANTS["current"]
 		if reduced_motion and rigged:
-			var scales: Vector2 = REDUCED_RELOAD_VARIANTS.get(reduced_variant, Vector2.ONE)
-			reload_rotation *= scales.x
-			reload_offset *= scales.y
-		_gun.position = Vector3(_gun_rest.x + sin(_bob) * 0.006 * bob_weight - _sway.x, _gun_rest.y + absf(cos(_bob)) * 0.006 * bob_weight - _sway.y - equip_motion * 0.19, _gun_rest.z + _kick * (0.075 if weapon_id == "marksman" else 0.046) + equip_motion * 0.08) + reload_offset * reload_tilt + SEAT_KICK_OFFSET * _seat_kick * (0.25 if reduced_motion else 1.0)
-		_gun.rotation = Vector3(_kick * (0.13 if weapon_id == "sidearm" else 0.065) - equip_motion * 0.48, -_sway.x * 1.8, -_sway.x) + reload_rotation * reload_tilt + SEAT_KICK_TURN * _seat_kick * (0.25 if reduced_motion else 1.0)
+			profile = REDUCED_RELOAD_VARIANTS.get(reduced_variant, REDUCED_RELOAD_VARIANTS["current"])
+			reload_rotation *= float(profile.roll)
+			reload_offset *= float(profile.lift)
+		var kick := _kick * (float(profile.recoil) if reduced_motion and rigged else 1.0)
+		_gun.position = Vector3(_gun_rest.x + sin(_bob) * 0.006 * bob_weight - _sway.x, _gun_rest.y + absf(cos(_bob)) * 0.006 * bob_weight - _sway.y - equip_motion * 0.19, _gun_rest.z + kick * (0.075 if weapon_id == "marksman" else 0.046) + equip_motion * 0.08) + reload_offset * reload_tilt + SEAT_KICK_OFFSET * _seat_kick * (0.25 if reduced_motion else 1.0)
+		_gun.rotation = Vector3(kick * (0.13 if weapon_id == "sidearm" else 0.065) - equip_motion * 0.48, -_sway.x * 1.8, -_sway.x) + reload_rotation * reload_tilt + SEAT_KICK_TURN * _seat_kick * (0.25 if reduced_motion else 1.0)
 		if is_instance_valid(_arms_player):
 			# The clip's first frame is the hold, so 0 returns the hands to the rifle.
 			var clip_time := reload_progress if reload_remaining > 0 else 0.0
+			var clip_name := str(profile.clip) if _arms_player.has_animation(str(profile.clip)) else "reload"
+			if _arms_player.assigned_animation != clip_name:
+				_arms_player.assigned_animation = clip_name
+				_arms_time = -1.0
 			if clip_time != _arms_time:
 				_arms_time = clip_time
 				_arms_player.seek(clip_time, true)

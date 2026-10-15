@@ -299,6 +299,17 @@ func _run() -> void:
 	for map in ["albedo", "orm", "normal"]:
 		check(_texture_ok("res://assets/weapons/relay_ar/relay_ar_arms_%s.png" % map, 1024), "arms %s is square, power of two, at most 1024" % map)
 	check(player != null and player.has_animation("reload") and is_equal_approx(player.get_animation("reload").length, 1.0), "the reload clip is one second long, seeked by reload progress")
+	# The reduced-motion variants (Actor.REDUCED_RELOAD_VARIANTS): every clip they name exists and is seeked like the default one,
+	# and the profiles only scale presentation (the default profile is the unscaled one, the calmer ones roll less).
+	var variants: Dictionary = Actor.REDUCED_RELOAD_VARIANTS
+	check(variants.has("current") and variants.has("calm") and variants.has("still"), "the reduced-motion variants current, calm and still exist")
+	var variant_clips_ok := true
+	for variant_name in variants:
+		var clip_name: String = variants[variant_name].clip
+		variant_clips_ok = variant_clips_ok and player != null and player.has_animation(clip_name) and is_equal_approx(player.get_animation(clip_name).length, 1.0)
+	check(variant_clips_ok, "every reduced-motion variant's clip exists and is one second long")
+	check(variants.current.roll == 1.0 and variants.current.lift == 1.0 and variants.current.recoil == 1.0 and variants.current.clip == "reload", "the 'current' variant is the unscaled default")
+	check(variants.calm.roll < variants.current.roll and variants.still.roll < variants.calm.roll and variants.still.recoil < variants.calm.recoil, "calm rolls and kicks less than current and still less than calm")
 	# Viewmodel drawing: first person uses the narrower projection, inspection does not.
 	check(arms_mesh.material_override is ShaderMaterial and arms_mesh.material_override.get_shader_parameter("viewmodel_fov") == ViewmodelShading.FOV, "arms draw with the viewmodel projection")
 	check((actor._gun.get_node("body") as MeshInstance3D).material_override.get_shader_parameter("viewmodel_fov") == ViewmodelShading.FOV and actor._finish.get_shader_parameter("viewmodel_fov") == ViewmodelShading.FOV, "rifle body and finish draw with the viewmodel projection in first person")

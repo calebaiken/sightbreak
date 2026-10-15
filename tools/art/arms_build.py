@@ -558,8 +558,14 @@ def build(out_dir, rifle_glb, glb_path, size=2048, samples=48, h_high=0.0005, ba
     axis, top = well_axis(magazine)
     global SEATED_TOP
     SEATED_TOP = Vector(top)
-    reload_clip(rig, grab, axis)
+    default_action = reload_clip(rig, grab, axis)
     review_clip(rig, arms_obj, rifle, axis, out_dir)
+    # The reduced-motion clip: the same phases with a shallower reach (use_path), reviewed for contact too, then back to the default.
+    use_path(_PATH_CALM)
+    calm_action = reload_clip(rig, grab, axis, name='reload_calm')
+    review_clip(rig, arms_obj, rifle, axis, out_dir, csv_name='clip_contact_calm.csv')
+    use_path()
+    rig.animation_data.action = default_action
     bpy.ops.object.mode_set(mode='OBJECT')
     for obj in rifle:
         bpy.data.objects.remove(obj, do_unlink=True)
@@ -900,37 +906,66 @@ ZERO3 = (0.0, 0.0, 0.0)
 # where the fingers open and let it go (it falls; the game drops it, nothing here needs it after).
 # Exploration hook (like ARMS_GRAB_JSON): ARMS_PATH_JSON='{"swing": [x, y, z], "pouch": [x, y, z], "mid": [x, y, z]}'
 # overrides where the old magazine is let go, where the replacement waits and its midway point, for one build.
-_PATH = {'swing': (-0.070, 0.020, 0.004), 'hip': (-0.200, 0.040, -0.360), 'carry': (-0.115, 0.050, -0.110), 'hip_turn': (-28, 0, 22),
+# v9: the hip is 31 cm below the well (it was 36): the hand reaches down to the lower edge of the frame, so the open hand and the forearm
+# are seen on the way down (at 36 cm only a sliver of sleeve showed and the hand left the picture for 0.4 s). At 22 cm the replacement
+# was first drawn with 56 % of it inside the frame, a visible pop beside a visible hand, and a pouch drawn to show its source looked like
+# a floating box (docs/reports/media/art-v9/reload-retrieval).
+_PATH = {'swing': (-0.070, 0.020, 0.004), 'hip': (-0.200, 0.040, -0.310), 'carry': (-0.115, 0.050, -0.090), 'hip_turn': (-28, 0, 22),
          'rock': (-15, -9, -3), 'elbow_hip': (-0.10, 0.0, 0.07)}
-if os.environ.get('ARMS_PATH_JSON'):
+# The reduced-motion clip ("reload_calm"): the rifle's staging is smaller there (less roll and lift), so the hand has less room: it goes
+# down 11 cm, turns less, and the elbow swings out as far as in the default so the forearm stays in the picture. Same phases, same timing,
+# same keys; only the hand's reach differs. The pickup is therefore in view, at the lower edge: the replacement is first drawn in a visible
+# hand (documented as the price of keeping the hand on screen; docs/reports/media/art-v9/reduced-motion). Found by scanning the reach
+# (ARMS_CALM_JSON) against reload_visibility_test for both reduced variants; 14 cm and deeper left the arm below the frame while the
+# magazine was in view.
+_PATH_CALM = {'hip': (-0.190, 0.040, -0.110), 'carry': (-0.115, 0.050, -0.050), 'hip_turn': (-14, 0, 10), 'elbow_hip': (-0.12, 0.0, 0.10)}
+if os.environ.get('ARMS_CALM_JSON'):   # review hook: the calm clip's overrides for one build
     import json
-    _PATH.update({k: tuple(v) for k, v in json.loads(os.environ['ARMS_PATH_JSON']).items()})
+    _PATH_CALM.update({k: tuple(v) for k, v in json.loads(os.environ['ARMS_CALM_JSON']).items()})
+_PATH_DEFAULT = dict(_PATH)   # with any override of this run (the negative controls use it): use_path() returns to it
 # Key = (progress, travel out of the well, offset, turn[, 'hold']). Between keys the motion is a cubic through
 # every key with a velocity that is continuous (Catmull-Rom), so nothing starts or stops at a key; a key marked
 # 'hold' has zero velocity there (a pause: the grab, the let-go, the seat).
-MAG_KEYS_OLD = (
-    (0.00, 0.000, ZERO3, (0, 0, 0), 'hold'),
-    (P_GRASP, 0.000, ZERO3, (0, 0, 0), 'hold'),
-    (P_UNLATCH, 0.000, ZERO3, (0, 0, 0), 'hold'),                          # seated until the latch lets go (the click), then it breaks free
-    (P_UNLATCH + 0.030, 0.014, (0.0, 0.0, 0.0), (0, 0, 0)),                # the first millimetres: friction, then it frees
-    (P_CLEAR, 0.098, ZERO3, (0, 0, 0)),                                   # clear of the well, still square to it (the turn comes after, to the drop)
-    (P_DROP, 0.100, _PATH['swing'], (-10, 0, 12)),                         # swung out to the left; let go
-)
-# The replacement is taken from a magazine pouch at the hip, below the bottom of the frame: the hand goes
-# down and out of the picture (the sleeve stays in it), closes on the pouch's magazine, and brings it back up
-# and across, tilted, to the well.
-POUCH_OFFSET = _PATH['hip']
-POUCH_TURN = _PATH['hip_turn']
-ROCK = _PATH['rock']
-MAG_KEYS_NEW = (
-    (P_ACQUIRE, 0.100, POUCH_OFFSET, POUCH_TURN, 'hold'),                  # in the hand at the pouch, out of the frame
-    (P_ACQUIRE + (P_ALIGN - P_ACQUIRE) * 0.50, 0.100, _PATH['carry'], (-22, 0, 14)),   # coming up into view, wrist turning
-    (P_ALIGN, 0.088, ZERO3, (ROCK[0], 0, 0)),                              # under the well, tipped so its front lip goes in first
-    (P_ENTER, 0.030, ZERO3, (ROCK[1], 0, 0)),                              # entering, rocking upright
-    (P_ENTER + (P_SEAT - P_ENTER) * 0.60, 0.008, ZERO3, (ROCK[2], 0, 0)),
-    (P_SEAT, 0.000, ZERO3, (0, 0, 0), 'hold'),                             # pushed to its stop
-    (1.00, 0.000, ZERO3, (0, 0, 0), 'hold'),
-)
+def _keys():
+    """The two magazines' key tables from the active `_PATH` (the default clip, or the reduced-motion one: use_path)."""
+    swing, hip, hip_turn, carry, rock = _PATH['swing'], _PATH['hip'], _PATH['hip_turn'], _PATH['carry'], _PATH['rock']
+    old = (
+        (0.00, 0.000, ZERO3, (0, 0, 0), 'hold'),
+        (P_GRASP, 0.000, ZERO3, (0, 0, 0), 'hold'),
+        (P_UNLATCH, 0.000, ZERO3, (0, 0, 0), 'hold'),                          # seated until the latch lets go (the click), then it breaks free
+        (P_UNLATCH + 0.030, 0.014, (0.0, 0.0, 0.0), (0, 0, 0)),                # the first millimetres: friction, then it frees
+        (P_CLEAR, 0.098, ZERO3, (0, 0, 0)),                                   # clear of the well, still square to it (the turn comes after, to the drop)
+        (P_DROP, 0.100, swing, (-10, 0, 12)),                                  # swung out to the left; let go
+    )
+    # The replacement is taken from a magazine pouch at the hip, at the bottom edge of the frame: the hand goes
+    # down to it (the forearm stays in the picture), closes on its magazine, and brings it back up
+    # and across, tilted, to the well.
+    new = (
+        (P_ACQUIRE, 0.100, hip, hip_turn, 'hold'),                             # in the hand at the pouch, at the bottom edge of the frame
+        (P_ACQUIRE + (P_ALIGN - P_ACQUIRE) * 0.50, 0.100, carry, (-22, 0, 14)),   # coming up into view, wrist turning
+        (P_ALIGN, 0.088, ZERO3, (rock[0], 0, 0)),                              # under the well, tipped so its front lip goes in first
+        (P_ENTER, 0.030, ZERO3, (rock[1], 0, 0)),                              # entering, rocking upright
+        (P_ENTER + (P_SEAT - P_ENTER) * 0.60, 0.008, ZERO3, (rock[2], 0, 0)),
+        (P_SEAT, 0.000, ZERO3, (0, 0, 0), 'hold'),                             # pushed to its stop
+        (1.00, 0.000, ZERO3, (0, 0, 0), 'hold'),
+    )
+    return old, new
+
+
+MAG_KEYS_OLD, MAG_KEYS_NEW = _keys()
+
+
+def use_path(overrides=None):
+    """Select the hand's reach for the next clip: the default path, or the default with `overrides` (the calm clip). Rebuilds the
+    magazines' key tables; the phases are the same either way."""
+    global MAG_KEYS_OLD, MAG_KEYS_NEW
+    _PATH.clear()
+    _PATH.update(_PATH_DEFAULT)
+    if overrides:
+        _PATH.update({k: tuple(v) for k, v in overrides.items()})
+    MAG_KEYS_OLD, MAG_KEYS_NEW = _keys()
+
+
 MAG_PIVOT = Vector((0.0, 0.13, -0.08))   # about the middle of the part the hand holds
 SEATED_TOP = None                        # the seated magazine's top end (rifle space), set by build(): the pivot of the rock-in
 
@@ -1089,7 +1124,7 @@ def grab_pose(rig, arms_obj, placement_L, magazine, report=print):
     return pose
 
 
-def reload_clip(rig, grab, axis, fps=60):
+def reload_clip(rig, grab, axis, fps=60, name='reload'):
     """Key the support arm over a one-second clip that the game seeks by reload progress.
     The hand reaches the seated magazine, closes on it, carries it out and lets it go; goes
     empty to the pouch, closes on the replacement and carries it to the well; lets go only
@@ -1097,7 +1132,8 @@ def reload_clip(rig, grab, axis, fps=60):
     scene = bpy.context.scene
     scene.render.fps = fps
     rig.animation_data_create()
-    action = bpy.data.actions.new('reload')
+    action = bpy.data.actions.new(name)
+    action.use_fake_user = True   # both clips are exported
     rig.animation_data.action = action
     fore, hand = rig.pose.bones['L_forearm'], rig.pose.bones['L_hand']
     rest_fore = rig.data.bones['L_forearm'].matrix_local
@@ -1226,7 +1262,7 @@ def reload_clip(rig, grab, axis, fps=60):
 INF_GAP = 1e9
 
 
-def review_clip(rig, arms_obj, rifle, axis, out_dir, fps=60):
+def review_clip(rig, arms_obj, rifle, axis, out_dir, fps=60, csv_name='clip_contact.csv'):
     """Contact review of the reload clip: at every frame, how far the posed arms (both
     sleeves and gloves) enter the rifle and the moving magazine. Writes clip_contact.csv."""
     scene = bpy.context.scene
@@ -1319,7 +1355,7 @@ def review_clip(rig, arms_obj, rifle, axis, out_dir, fps=60):
         gap_mm = ','.join(('%.2f' % (gap[d] * 1000)) if gap[d] != INF_GAP else 'nan' for d in digits + ('palm',))
         rows.append('%d,%.3f,%d,%.2f,%d,%.2f,%d,%.2f,%s,%s,%.1f' % (frame, p, stats['L'][0], stats['L'][1] * 1000, stats['L'][2], stats['L'][3] * 1000, stats['R'][0], stats['R'][1] * 1000, which or '-', gap_mm, opposition))
     scene.frame_set(0)
-    path = os.path.join(out_dir, 'clip_contact.csv')
+    path = os.path.join(out_dir, csv_name)
     with open(path, 'w') as f:
         f.write('\n'.join(rows) + '\n')
     worst_body = max(float(r.split(',')[3]) for r in rows[1:])
