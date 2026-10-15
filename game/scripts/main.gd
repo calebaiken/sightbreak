@@ -5,6 +5,7 @@ const Touch = preload("res://scripts/ui/touch_controls.gd")
 const SafeArea = preload("res://scripts/ui/safe_area.gd")
 const Design = preload("res://scripts/ui/design_tokens.gd")
 const Radar = preload("res://scripts/ui/radar.gd")
+const WeaponGlyph = preload("res://scripts/ui/weapon_glyph.gd")
 const Weapons = preload("res://scripts/gameplay/weapons.gd")
 const BG := Design.OBSIDIAN
 const PANEL := Design.GRAPHITE
@@ -220,6 +221,24 @@ func scrim(strength_left: float, strength_right: float) -> Control:
 	shade.resized.connect(shade.queue_redraw)
 	return shade
 
+## Darkening along the top and bottom edges of the menu, under the build line, the operation
+## notes and the footer, which sit straight on the lit yard. Measured: with only the left-to-right
+## scrim those lines read at a contrast of 1.3 to 2.9 (WCAG asks 4.5); see menu_contrast_probe.gd.
+func menu_bands(strength: float) -> Control:
+	var bands := Control.new()
+	bands.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fill(bands)
+	bands.draw.connect(func():
+		var dark := Color(BG, strength)
+		var clear := Color(BG, 0.0)
+		var top := minf(150.0, bands.size.y * 0.25)
+		var bottom := minf(190.0, bands.size.y * 0.3)
+		bands.draw_polygon(PackedVector2Array([Vector2.ZERO, Vector2(bands.size.x, 0), Vector2(bands.size.x, top), Vector2(0, top)]), PackedColorArray([dark, dark, clear, clear]))
+		bands.draw_polygon(PackedVector2Array([Vector2(0, bands.size.y - bottom), Vector2(bands.size.x, bands.size.y - bottom), bands.size, Vector2(0, bands.size.y)]), PackedColorArray([clear, clear, dark, dark]))
+	)
+	bands.resized.connect(bands.queue_redraw)
+	return bands
+
 func ensure_menu_world() -> void:
 	if is_instance_valid(menu_world): return
 	menu_world = Node3D.new()
@@ -236,6 +255,36 @@ func ensure_menu_world() -> void:
 	menu_camera.fov = 61
 	apply_settings()
 
+## Menu text, by id, in one table so a translation can replace it (menu_labels).
+const MENU_LABELS := {
+	"deploy": "DEPLOY   ·   OFFLINE 5V5", "lan": "LOCAL NETWORK   ·   DIRECT CONNECT",
+	"inventory": "INVENTORY", "cases": "CASES", "market": "MARKET", "trades": "TRADES",
+	"record": "OPERATOR RECORD", "settings": "SETTINGS",
+	"tagline": "PRECISION · PRESSURE · PURPOSE", "operation": "CURRENT OPERATION",
+	"operation_note": "2 SITES  ·  3 ROUTES  ·  FIRST TO 7", "callsign": "CALLSIGN",
+	"policy": "EARNED IN PLAY  ·  NO REAL-MONEY PURCHASES",
+	"build": "DEVELOPMENT BUILD  ·  0.3.0-dev",
+	"record_title": "TRAINING RECORD  ·  THIS DEVICE", "level": "LEVEL", "xp_to": "XP TO LEVEL",
+	"credits": "TRAINING CREDITS", "matches": "MATCHES", "wins": "WINS",
+	"eliminations": "ELIMINATIONS", "deaths": "DEATHS", "online": "ONLINE", "earned": "EARNED CREDITS",
+	"account_loading": "LOADING ACCOUNT…", "account_unloaded": "ACCOUNT NOT LOADED",
+	"credits_unavailable": "EARNED CREDITS UNAVAILABLE", "session_ended": "SESSION ENDED",
+	"sign_in_again": "SIGN IN AGAIN IN THE ARMORY", "last_confirmed": "LAST CONFIRMED",
+}
+## Slack that side-by-side menu columns must keep; below it they stack instead.
+const MENU_SAFETY := 32.0
+const MENU_COLUMN_GAP := 24.0
+var menu_labels: Dictionary = {}
+var menu_layout := {}
+
+func menu_text(id: String) -> String:
+	return str(menu_labels.get(id, MENU_LABELS[id]))
+
+## Space the menu's content may use: the safe area less the frame's margins.
+func menu_region() -> Vector2:
+	var safe: Rect2 = SafeArea.viewport_rect(get_viewport().get_visible_rect().size)
+	return safe.size - Vector2.ONE * 72.0
+
 func show_menu() -> void:
 	if is_instance_valid(economy_panel): economy_panel.hide()
 	screen = "menu"
@@ -244,7 +293,8 @@ func show_menu() -> void:
 	clear_ui()
 	ensure_menu_world()
 	menu_world.show()
-	ui.add_child(scrim(0.94, 0.38))
+	ui.add_child(scrim(0.94, 0.62))
+	ui.add_child(menu_bands(0.86))
 	var margins := margin_frame(ui)
 	var rows := VBoxContainer.new()
 	rows.add_theme_constant_override("separation", Design.SPACE_L)
@@ -253,65 +303,212 @@ func show_menu() -> void:
 	rows.add_child(top)
 	top.add_child(label("S / B", Design.TYPE_SMALL, GOLD, true))
 	top.add_child(label("TACTICAL OPERATIONS", Design.TYPE_SMALL, MUTED, true))
-	var spring := Control.new()
-	spring.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	top.add_child(spring)
-	top.add_child(label("DEVELOPMENT BUILD  ·  0.3.0-dev", Design.TYPE_MICRO + 1, MUTED))
-	var middle := HBoxContainer.new()
+	# The build label takes the rest of the row, right-aligned: it truncates only if the
+	# row is too narrow for it, and never collapses.
+	var build := Design.ellipsize(label(menu_text("build"), Design.TYPE_MICRO + 1, MUTED))
+	build.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	top.add_child(build)
+	# The columns sit in a vertical scroller, so content taller than the screen scrolls
+	# instead of leaving it, and a horizontal scroller is never needed: the layout below
+	# chooses side-by-side or stacked from measured widths.
+	var scroll := ScrollContainer.new()
+	scroll.name = "MenuScroll"
+	scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
+	scroll.vertical_scroll_mode = ScrollContainer.SCROLL_MODE_AUTO
+	scroll.follow_focus = true
+	scroll.size_flags_vertical = Control.SIZE_EXPAND_FILL
+	rows.add_child(scroll)
+	var middle := BoxContainer.new()
+	middle.name = "MenuColumns"
+	middle.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	middle.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	rows.add_child(middle)
-	var left := VBoxContainer.new()
-	left.custom_minimum_size.x = 440
-	left.size_flags_vertical = Control.SIZE_SHRINK_CENTER
-	left.add_theme_constant_override("separation", Design.SPACE_M)
-	middle.add_child(left)
-	left.add_child(label("SIGHTBREAK", Design.TYPE_DISPLAY, Design.TEXT, true))
-	left.add_child(label("PRECISION · PRESSURE · PURPOSE", Design.TYPE_SMALL, GOLD, true))
-	left.add_child(divider(72))
-	var spacer := Control.new()
-	spacer.custom_minimum_size.y = Design.SPACE_XS
-	left.add_child(spacer)
-	var play := button("DEPLOY   ·   OFFLINE 5V5", func(): start_match({"mode": "offline", "difficulty": ["easy", "normal", "hard"][clampi(int(profile.data.settings.difficulty), 0, 2)], "name": profile.data.display_name}), 60, "primary")
-	play.add_theme_font_override("font", Design.heading_font())
-	left.add_child(play)
-	left.add_child(button("LOCAL NETWORK   ·   DIRECT CONNECT", show_connect))
-	var economy_row := HBoxContainer.new()
-	economy_row.add_theme_constant_override("separation", Design.SPACE_S)
-	left.add_child(economy_row)
-	for tab in ["inventory", "cases", "market", "trades"]:
-		var tab_name: String = tab
-		var entry := button(tab_name.to_upper(), func(): open_economy(tab_name), Design.TOUCH_MIN)
-		entry.add_theme_font_size_override("font_size", int(round(Design.TYPE_MICRO * text_scale())) + 1)
-		entry.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		economy_row.add_child(entry)
-	var account_row := HBoxContainer.new()
-	account_row.add_theme_constant_override("separation", Design.SPACE_S)
-	left.add_child(account_row)
-	for entry in [button("OPERATOR RECORD", show_progress), button("SETTINGS", show_settings)]:
-		entry.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-		account_row.add_child(entry)
-	var right := VBoxContainer.new()
-	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	right.size_flags_vertical = Control.SIZE_SHRINK_END
-	right.alignment = BoxContainer.ALIGNMENT_END
-	right.add_theme_constant_override("separation", Design.SPACE_XS)
-	middle.add_child(right)
-	var map_kicker := label("CURRENT OPERATION", Design.TYPE_MICRO, MUTED, true)
-	map_kicker.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	right.add_child(map_kicker)
-	var map_title := label("RELAY YARD", 36, Design.TEXT, true)
-	map_title.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	right.add_child(map_title)
-	var map_note := label("2 SITES  ·  3 ROUTES  ·  FIRST TO 7", Design.TYPE_SMALL, GOLD)
-	map_note.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
-	right.add_child(map_note)
+	middle.add_theme_constant_override("separation", int(MENU_COLUMN_GAP))
+	scroll.add_child(middle)
 	var footer := HBoxContainer.new()
 	rows.add_child(footer)
-	footer.add_child(wrapped_label("LEVEL %02d   ·   %s   ·   TRAINING" % [profile.data.level, str(profile.data.display_name).to_upper()], Design.TYPE_SMALL, MUTED))
-	var gap := Control.new()
-	gap.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	footer.add_child(gap)
-	footer.add_child(wrapped_label("EARNED IN PLAY  ·  NO REAL-MONEY PURCHASES", Design.TYPE_MICRO + 1, GOLD))
+	var callsign := Design.ellipsize(label("%s   ·   %s" % [menu_text("callsign"), Design.plain_line(str(profile.data.display_name)).to_upper()], Design.TYPE_SMALL, MUTED))
+	callsign.set_meta("user_text", true)
+	footer.add_child(callsign)
+	footer.add_child(label(menu_text("policy"), Design.TYPE_MICRO + 1, GOLD))
+	# Measure, then choose. Both columns are built, measured with the real theme and
+	# fonts, and only then placed: side by side if their widths and the safety slack fit
+	# the region, stacked if not; compact (no tagline, tighter spacing) if the full
+	# variant is taller than the room. Nothing here depends on the layout's own result.
+	var region := menu_region()
+	var compact := false
+	var columns := {}
+	var side_by_side := true
+	var content_height := 0.0
+	var room_height := 0.0
+	for attempt in 2:
+		columns = menu_columns(region, compact)
+		middle.add_child(columns.left)
+		middle.add_child(columns.right)
+		menu_fit_nav(columns.left, region)
+		var left_min: Vector2 = columns.left.get_combined_minimum_size()
+		var right_min: Vector2 = columns.right.get_combined_minimum_size()
+		side_by_side = left_min.x + right_min.x + MENU_COLUMN_GAP + MENU_SAFETY <= region.x
+		content_height = maxf(left_min.y, right_min.y) if side_by_side else left_min.y + MENU_COLUMN_GAP + right_min.y
+		room_height = region.y - top.get_combined_minimum_size().y - footer.get_combined_minimum_size().y - 2 * Design.SPACE_L
+		if compact or content_height <= room_height:
+			break
+		for column: Control in [columns.left, columns.right]:
+			middle.remove_child(column)
+			column.free()
+		compact = true
+	middle.vertical = not side_by_side
+	var right: Control = columns.right
+	right.size_flags_horizontal = Control.SIZE_EXPAND_FILL if side_by_side else Control.SIZE_FILL
+	right.size_flags_vertical = Control.SIZE_SHRINK_END if side_by_side else Control.SIZE_SHRINK_BEGIN
+	for line: Control in right.get_children():
+		if line is Label:
+			line.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT if side_by_side else HORIZONTAL_ALIGNMENT_LEFT
+	menu_layout = {"side_by_side": side_by_side, "compact": compact, "content_height": content_height, "room_height": room_height, "region": region, "slack": region.x - (columns.left.get_combined_minimum_size().x + columns.right.get_combined_minimum_size().x + MENU_COLUMN_GAP) if side_by_side else INF}
+
+## A navigation entry that cannot widen its column: its text truncates instead.
+func menu_entry(id: String, text: String, callback: Callable, height: float, variant := "secondary") -> Button:
+	var entry := button(text, callback, height, variant)
+	entry.name = "Menu_" + id
+	entry.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	entry.tooltip_text = text.replace("   ", " ")
+	return entry
+
+func menu_columns(region: Vector2, compact: bool) -> Dictionary:
+	var separation: int = Design.SPACE_S if compact else Design.SPACE_M
+	var left := VBoxContainer.new()
+	left.name = "MenuNav"
+	left.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	left.add_theme_constant_override("separation", separation)
+	var wordmark_size := Design.fit_font_size("SIGHTBREAK", Design.TYPE_DISPLAY, minf(440.0, region.x))
+	left.set_meta("wordmark_size", wordmark_size)
+	left.add_child(_wordmark(wordmark_size))
+	if not compact:
+		left.add_child(label(menu_text("tagline"), Design.TYPE_SMALL, GOLD, true))
+		left.add_child(divider(72))
+	var play := menu_entry("deploy", menu_text("deploy"), func(): start_match({"mode": "offline", "difficulty": ["easy", "normal", "hard"][clampi(int(profile.data.settings.difficulty), 0, 2)], "name": profile.data.display_name}), 60, "primary")
+	play.add_theme_font_override("font", Design.heading_font())
+	left.add_child(play)
+	left.add_child(menu_entry("lan", menu_text("lan"), show_connect, Design.TOUCH_MIN))
+	var grid := GridContainer.new()
+	grid.name = "ArmoryEntries"
+	grid.columns = 2
+	grid.add_theme_constant_override("h_separation", Design.SPACE_S)
+	grid.add_theme_constant_override("v_separation", Design.SPACE_S)
+	left.add_child(grid)
+	for tab in ["inventory", "cases", "market", "trades"]:
+		var tab_name: String = tab
+		grid.add_child(menu_entry(tab_name, menu_text(tab_name), func(): open_economy(tab_name), Design.TOUCH_MIN))
+	grid.add_child(menu_entry("record", menu_text("record"), show_progress, Design.TOUCH_MIN))
+	grid.add_child(menu_entry("settings", menu_text("settings"), show_settings, Design.TOUCH_MIN))
+	var right := VBoxContainer.new()
+	right.name = "MenuStatus"
+	right.alignment = BoxContainer.ALIGNMENT_END
+	right.add_theme_constant_override("separation", Design.SPACE_XS)
+	right.add_child(menu_record_card())
+	var record_gap := Control.new()
+	record_gap.custom_minimum_size.y = Design.SPACE_M if compact else Design.SPACE_L
+	right.add_child(record_gap)
+	if not compact:
+		var kicker := label(menu_text("operation"), Design.TYPE_SMALL, Design.STEEL_BRIGHT, true)
+		right.add_child(kicker)
+	right.add_child(label("RELAY YARD", 36, Design.TEXT, true))
+	right.add_child(label(menu_text("operation_note"), Design.TYPE_SMALL, GOLD))
+	return {"left": left, "right": right}
+
+## Sets the nav column's width from its entries' natural widths, measured once the
+## column is in the tree (so with the real theme and fonts), then lets every entry
+## truncate: a string longer than the column can no longer widen it.
+func menu_fit_nav(left: Control, region: Vector2) -> void:
+	var grid := left.find_child("ArmoryEntries", true, false) as GridContainer
+	var natural := wordmark_width(int(left.get_meta("wordmark_size")))
+	# Each entry keeps its own natural width as a floor (capped at what the region can
+	# give it) and only then may truncate; otherwise the grid would hand a cell less
+	# than its text needs.
+	for entry: Button in left.find_children("Menu_*", "Button", true, false):
+		var cap := (region.x - grid.get_theme_constant("h_separation")) * 0.5 if entry.get_parent() == grid else region.x
+		entry.custom_minimum_size.x = minf(entry.get_combined_minimum_size().x, cap)
+		entry.clip_text = true
+		entry.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
+		if entry.get_parent() != grid:
+			natural = maxf(natural, entry.custom_minimum_size.x)
+	natural = maxf(natural, grid.get_combined_minimum_size().x)
+	left.custom_minimum_size.x = minf(natural, region.x)
+
+## The wordmark: display type that does not scale with the text-size setting (it is a
+## headline, not body text) but is fitted to its column's width.
+func _wordmark(size: int) -> Label:
+	var node := Design.label("SIGHTBREAK", size, Design.TEXT, true)
+	node.name = "Wordmark"
+	return node
+
+func wordmark_width(size: int) -> float:
+	return Design.heading_font().get_string_size("SIGHTBREAK", HORIZONTAL_ALIGNMENT_LEFT, -1, size).x
+
+## The main menu's record: the offline training level with its distance to the next
+## level (Profile.xp_for_level), training credits, matches, wins, eliminations and
+## deaths, all from the profile, and the online identity and earned Credits only while
+## signed in. Training credits and earned Credits stay on separate lines; no statistic
+## appears that the profile or account does not store. Names truncate, never widen it.
+func menu_record_card() -> PanelContainer:
+	var card := PanelContainer.new()
+	card.name = "RecordCard"
+	card.add_theme_stylebox_override("panel", Design.box(Color(Design.GRAPHITE, 0.82), Design.LINE, 1, Vector2(Design.SPACE_L, Design.SPACE_M)))
+	card.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	card.custom_minimum_size.x = 260
+	var stack := VBoxContainer.new()
+	stack.add_theme_constant_override("separation", Design.SPACE_XS)
+	card.add_child(stack)
+	stack.add_child(Design.ellipsize(label(menu_text("record_title"), Design.TYPE_MICRO, MUTED, true)))
+	var xp := int(profile.data.xp)
+	var level := Profile.level_for_xp(xp)
+	var floor_xp := Profile.xp_for_level(level)
+	var next_xp := Profile.xp_for_level(level + 1)
+	stack.add_child(label("%s %02d" % [menu_text("level"), level], Design.TYPE_H3, Design.TEXT, true))
+	var to_next := Design.ellipsize(label("%d %s %02d" % [next_xp - xp, menu_text("xp_to"), level + 1], Design.TYPE_SMALL, GOLD))
+	to_next.name = "XPToNext"
+	stack.add_child(to_next)
+	var progress := ProgressBar.new()
+	progress.name = "LevelProgress"
+	progress.show_percentage = false
+	progress.max_value = float(next_xp - floor_xp)
+	progress.value = float(xp - floor_xp)
+	progress.custom_minimum_size.y = 5
+	progress.add_theme_stylebox_override("background", Design.box(Design.OBSIDIAN, Color.TRANSPARENT, 0, Vector2.ZERO))
+	progress.add_theme_stylebox_override("fill", Design.box(Design.GOLD, Color.TRANSPARENT, 0, Vector2.ZERO))
+	stack.add_child(progress)
+	stack.add_child(Design.ellipsize(label("%d %s" % [int(profile.data.credits), menu_text("credits")], Design.TYPE_MICRO + 1, Design.STEEL_BRIGHT)))
+	stack.add_child(Design.ellipsize(label("%d %s   ·   %d %s" % [int(profile.data.matches), menu_text("matches"), int(profile.data.wins), menu_text("wins")], Design.TYPE_MICRO + 1, MUTED)))
+	stack.add_child(Design.ellipsize(label("%d %s   ·   %d %s" % [int(profile.data.kills), menu_text("eliminations"), int(profile.data.deaths), menu_text("deaths")], Design.TYPE_MICRO + 1, MUTED)))
+	if is_instance_valid(economy_panel):
+		# Only what the server has said: an account that has not loaded has no name and no
+		# balance here, and a balance is never shown as 0 because it is missing.
+		var summary: Dictionary = economy_panel.account_summary()
+		if summary.state != "signed_out":
+			var who: String = Design.plain_line(str(summary.name)).to_upper()
+			var identity_line := menu_text("online")
+			var credits_line := menu_text("credits_unavailable")
+			match summary.state:
+				"expired":
+					identity_line = menu_text("session_ended")
+					credits_line = menu_text("sign_in_again")
+				"loading":
+					identity_line += "   ·   " + menu_text("account_loading")
+				"unavailable":
+					identity_line += "   ·   " + menu_text("account_unloaded")
+				_:
+					identity_line += "   ·   " + who if not who.is_empty() else ""
+					if not str(summary.credits).is_empty():
+						credits_line = "%s %s" % [summary.credits, menu_text("earned")]
+						if summary.state == "stale":
+							credits_line += "   ·   " + menu_text("last_confirmed")
+			var online := Design.ellipsize(label(identity_line, Design.TYPE_MICRO + 1, GOLD))
+			online.name = "OnlineIdentity"
+			online.set_meta("user_text", true)
+			stack.add_child(online)
+			var online_credits := Design.ellipsize(label(credits_line, Design.TYPE_MICRO + 1, GOLD))
+			online_credits.name = "OnlineCredits"
+			stack.add_child(online_credits)
+	return card
 
 func panel_screen(title: String, subtitle: String, back: Callable = show_menu) -> VBoxContainer:
 	clear_ui()
@@ -522,6 +719,8 @@ func open_economy(tab: String) -> void:
 		canvas.add_child(economy_panel)
 		economy_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		economy_panel.closed.connect(show_menu)
+		economy_panel.account_changed.connect(func():
+			if screen == "menu": show_menu())
 		if economy_panel.has_signal("loadout_changed"):
 			economy_panel.loadout_changed.connect(func(slots: Dictionary):
 				current_loadout = slots.duplicate(true)
@@ -705,6 +904,9 @@ func build_hud() -> void:
 	status_label = wrapped_label("BUY PHASE  /  " + ("Tap BUY to equip" if uses_touch_controls() else "Press B to equip"), Design.TYPE_BODY, GOLD)
 	status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	status_label.max_lines_visible = STATUS_MAX_LINES
+	# The line floats over the 3D view and the weapon: a dark halo keeps it readable on
+	# the light sidearm, sky and concrete alike.
+	Design.legible(status_label)
 	status_row.add_child(status_label)
 	var line_probe := label("Ag", Design.TYPE_BODY)
 	status_row.add_child(line_probe)
@@ -1001,6 +1203,11 @@ func touch_action(action: String) -> bool:
 func _process(delta: float) -> void:
 	elapsed += delta
 	if server_mode: return
+	# The menu measures the room it has when it is built. When that room changes (a window
+	# resize, a rotation, the device's safe area) it is built again, so a layout chosen for
+	# a wide screen is never kept on a narrow one.
+	if screen == "menu" and menu_layout.has("region") and menu_region() != menu_layout.region:
+		show_menu()
 	if is_instance_valid(menu_camera) and menu_camera.is_inside_tree() and menu_camera.is_visible_in_tree():
 		menu_camera.position = Vector3(27 + sin(elapsed * 0.07) * 4, 18, 30)
 		menu_camera.look_at(Vector3.ZERO)
@@ -1282,25 +1489,37 @@ func finish_touch_editor() -> void:
 	if not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 ## Buy state for one weapon: owned, affordable, or the shortfall.
+## Real availability of a weapon for the local player: what the card's chip says, and
+## the full sentence for its tooltip. Match funds only; Credits never appear here.
 func requisition_state(actor, key: String) -> Dictionary:
 	var spec: Dictionary = Weapons.get_weapon(key)
 	var funds := int(actor.credits) if actor != null else 0
 	var cost := int(spec.get("cost", 0))
 	var buy_phase: bool = is_instance_valid(match_game) and match_game.phase == "buy"
 	if actor != null and actor.inventory.has(key):
-		return {"available": false, "note": "EQUIPPED" if actor.weapon_id == key else "OWNED"}
+		var held := "EQUIPPED" if actor.weapon_id == key else "OWNED"
+		return {"available": false, "cost": cost, "chip": held, "tone": "held", "note": held}
 	if not buy_phase:
-		return {"available": false, "note": "%d  ·  PREPARATION ONLY" % cost}
+		return {"available": false, "cost": cost, "chip": "PREPARATION ONLY", "tone": "locked", "note": "%d  ·  PREPARATION ONLY" % cost}
 	if funds < cost:
-		return {"available": false, "note": "%d  ·  NEED %d MORE" % [cost, cost - funds]}
-	return {"available": true, "note": "%d" % cost}
+		return {"available": false, "cost": cost, "chip": "NEED %d MORE" % (cost - funds), "tone": "short", "note": "%d  ·  NEED %d MORE" % [cost, cost - funds]}
+	return {"available": true, "cost": cost, "chip": "BUY", "tone": "buy", "note": "%d" % cost}
 
 func show_buy() -> void:
 	if not is_instance_valid(match_game): return
 	var rows := make_overlay("REQUISITION")
 	var actor = match_game.local_actor()
 	var funds := int(actor.credits) if actor != null else 0
-	rows.add_child(wrapped_label("MATCH FUNDS  %d" % funds, Design.TYPE_H2, Design.TEXT))
+	var funds_row := HBoxContainer.new()
+	funds_row.add_theme_constant_override("separation", Design.SPACE_M)
+	funds_row.alignment = BoxContainer.ALIGNMENT_BEGIN
+	rows.add_child(funds_row)
+	var funds_kicker := label("MATCH FUNDS", Design.TYPE_SMALL, MUTED, true)
+	funds_kicker.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	funds_row.add_child(funds_kicker)
+	var funds_value := label(str(funds), Design.TYPE_H2, GOLD, true)
+	funds_value.name = "Funds"
+	funds_row.add_child(funds_value)
 	if match_game.phase != "buy":
 		rows.add_child(wrapped_label("Equipment can be requisitioned during the 15-second preparation phase.", Design.TYPE_SMALL, Design.CRIMSON_BRIGHT))
 	else:
@@ -1309,20 +1528,107 @@ func show_buy() -> void:
 	cards.add_theme_constant_override("h_separation", Design.SPACE_M)
 	cards.add_theme_constant_override("v_separation", Design.SPACE_M)
 	rows.add_child(cards)
+	# Stat meters are relative to the best weapon in each stat, from the same table the
+	# match uses.
+	var peak := {"damage": 0.0, "rate": 0.0, "magazine": 0.0}
+	for key in Weapons.DATA:
+		var data: Dictionary = Weapons.DATA[key]
+		peak.damage = maxf(peak.damage, float(data.damage))
+		peak.rate = maxf(peak.rate, 1.0 / float(data.interval))
+		peak.magazine = maxf(peak.magazine, float(data.magazine))
 	for key in Weapons.DATA:
 		var weapon_key: String = key
-		var spec: Dictionary = Weapons.DATA[key]
-		var state := requisition_state(actor, weapon_key)
-		var card := button("%s   ·   %s\n%d DMG   ·   %.1f RPS   ·   %d RND\n%s" % [str(spec.name).to_upper(), WEAPON_ROLES.get(weapon_key, ""), int(spec.damage), 1.0 / float(spec.interval), int(spec.magazine), state.note], func():
-			match_game.request_buy(weapon_key)
-			close_overlay()
-		, 92)
-		card.name = "Buy_" + weapon_key
-		card.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		card.custom_minimum_size.x = 260
-		card.disabled = not state.available
-		cards.add_child(card)
+		cards.add_child(requisition_card(weapon_key, requisition_state(actor, weapon_key), peak))
 	rows.add_child(button("BACK TO FIELD", close_overlay, Design.TOUCH_MIN, "ghost"))
+
+## One requisition card: a button (so availability is its disabled state) holding the
+## weapon's glyph, name, role, three stat meters, its price and a state chip.
+func requisition_card(key: String, state: Dictionary, peak: Dictionary) -> Button:
+	var spec: Dictionary = Weapons.get_weapon(key)
+	var card := Button.new()
+	card.name = "Buy_" + key
+	card.focus_mode = Control.FOCUS_ALL
+	card.disabled = not state.available
+	card.tooltip_text = "%s   ·   %s\n%d DMG   ·   %.1f RPS   ·   %d RND\n%s" % [str(spec.name).to_upper(), WEAPON_ROLES.get(key, ""), int(spec.damage), 1.0 / float(spec.interval), int(spec.magazine), state.note]
+	Design.apply_button(card)
+	var held: bool = state.tone == "held"
+	if held:
+		var held_style := Design.box(Design.GRAPHITE_RAISED, Design.GOLD_DIM)
+		card.add_theme_stylebox_override("disabled", held_style)
+	card.pressed.connect(func():
+		match_game.request_buy(key)
+		close_overlay()
+	)
+	var frame := MarginContainer.new()
+	frame.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	frame.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	for side in ["left", "right", "top", "bottom"]:
+		frame.add_theme_constant_override("margin_" + side, Design.SPACE_M)
+	card.add_child(frame)
+	var column := VBoxContainer.new()
+	column.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_theme_constant_override("separation", Design.SPACE_XS)
+	frame.add_child(column)
+	var dim: bool = not state.available and not held
+	var ink: Color = Design.TEXT if not dim else Design.STEEL
+	var name_label := label(str(spec.name).to_upper(), Design.TYPE_H3, ink, true)
+	column.add_child(name_label)
+	column.add_child(label(WEAPON_ROLES.get(key, ""), Design.TYPE_MICRO, MUTED, true))
+	var glyph := WeaponGlyph.new()
+	glyph.weapon_id = key
+	glyph.tint = Color(Design.GOLD if held else Design.STEEL_BRIGHT, 0.4 if dim else 0.9)
+	glyph.custom_minimum_size = Vector2(0, 40)
+	column.add_child(glyph)
+	for stat in [["DMG", float(spec.damage) / peak.damage, "%d" % int(spec.damage)], ["RATE", (1.0 / float(spec.interval)) / peak.rate, "%.1f/s" % (1.0 / float(spec.interval))], ["MAG", float(spec.magazine) / peak.magazine, "%d" % int(spec.magazine)]]:
+		column.add_child(_stat_meter(stat[0], stat[1], stat[2], dim))
+	var footer := HBoxContainer.new()
+	footer.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	column.add_child(footer)
+	var price := label("FREE" if int(state.cost) == 0 else str(state.cost), Design.TYPE_H3, Design.GOLD if state.available else MUTED, true)
+	footer.add_child(price)
+	var spring := Control.new()
+	spring.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	spring.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	footer.add_child(spring)
+	var chip := PanelContainer.new()
+	chip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var chip_fill: Color = {"buy": Design.CRIMSON, "held": Color(Design.GOLD, 0.16), "short": Color(Design.CRIMSON, 0.12), "locked": Color(Design.STEEL, 0.1)}[state.tone]
+	chip.add_theme_stylebox_override("panel", Design.box(chip_fill, Color.TRANSPARENT, 1, Vector2(8, 3)))
+	footer.add_child(chip)
+	var chip_label := label(state.chip, Design.TYPE_MICRO + 1, {"buy": Color.WHITE, "held": Design.GOLD, "short": Design.CRIMSON_BRIGHT, "locked": MUTED}[state.tone], true)
+	chip_label.name = "State"
+	chip.add_child(chip_label)
+	# A button ignores its children's size, so the card takes its content's once the
+	# theme's fonts apply (in the tree).
+	card.ready.connect(func():
+		var content := frame.get_combined_minimum_size()
+		card.custom_minimum_size = Vector2(maxf(272, content.x), content.y)
+	)
+	return card
+
+func _stat_meter(caption: String, fraction: float, value: String, dim: bool) -> HBoxContainer:
+	var row := HBoxContainer.new()
+	row.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	row.add_theme_constant_override("separation", Design.SPACE_S)
+	var name_label := label(caption, Design.TYPE_MICRO, MUTED, true)
+	name_label.custom_minimum_size.x = 40 * text_scale()
+	row.add_child(name_label)
+	var bar := ProgressBar.new()
+	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	bar.show_percentage = false
+	bar.max_value = 1.0
+	bar.value = clampf(fraction, 0.0, 1.0)
+	bar.custom_minimum_size = Vector2(0, 5)
+	bar.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	bar.size_flags_vertical = Control.SIZE_SHRINK_CENTER
+	bar.add_theme_stylebox_override("background", Design.box(Design.OBSIDIAN, Color.TRANSPARENT, 0, Vector2.ZERO))
+	bar.add_theme_stylebox_override("fill", Design.box(Color(Design.STEEL_BRIGHT, 0.45 if dim else 0.85), Color.TRANSPARENT, 0, Vector2.ZERO))
+	row.add_child(bar)
+	var value_label := label(value, Design.TYPE_MICRO, Design.STEEL_BRIGHT if not dim else MUTED)
+	value_label.custom_minimum_size.x = 44 * text_scale()
+	value_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	row.add_child(value_label)
+	return row
 
 func show_scoreboard() -> void:
 	score_panel = PanelContainer.new()
