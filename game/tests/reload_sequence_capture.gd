@@ -5,7 +5,8 @@ extends SceneTree
 ## they fired on). Needs a native display. Presentation only.
 ##
 ##   --out=<dir>      where the PNGs (000.png ...) and frames.csv go (required)
-##   --view=sunlit|backlight|shade
+##   --view=sunlit|backlight|shade|dark   (dark: the shade view with the sun at 8 % and the ambient light at 30 %, standing in
+##                    for a dark interior, the way viewmodel_light_probe.gd does)
 ##   --reduced        reduced motion on
 ##   --variant=<name> with --reduced: current (default), calm or still (Actor.REDUCED_RELOAD_VARIANTS)
 ##   --size=WxH       viewport (default 1280x720)
@@ -22,6 +23,7 @@ const VIEWS := {
 	"sunlit": [Vector3(3, 0.05, -12), 0.35],
 	"backlight": [Vector3(0, 0.05, -19), PI - 0.08],
 	"shade": [Vector3(0, 0.05, 20.5), 0.1],
+	"dark": [Vector3(0, 0.05, 20.5), 0.1],
 }
 
 func _initialize() -> void:
@@ -76,6 +78,12 @@ func _run() -> void:
 	actor.configure(1, 0, "Reload capture", true)
 	world.add_child(actor)
 	var place: Array = VIEWS[view]
+	if view == "dark":
+		for node in world.find_children("*", "DirectionalLight3D", true, false):
+			(node as DirectionalLight3D).light_energy *= 0.08
+		for node in world.find_children("*", "WorldEnvironment", true, false):
+			var environment := (node as WorldEnvironment).environment
+			environment.ambient_light_energy *= 0.3
 	actor.reset_for_round(place[0])
 	actor.credits = 5000
 	actor.buy_weapon("rifle")
@@ -96,6 +104,11 @@ func _run() -> void:
 	actor.reload_cue.connect(func(event: String, progress: float): cues.append("%s@%.3f" % [event, progress]))
 	var old_node: MeshInstance3D = actor._magazine
 	var new_node: MeshInstance3D = actor._magazine_spare
+	# The viewport the PNGs really have (a request for a size is not the size): recorded next to them.
+	var actual := root.get_texture().get_size()
+	var info := FileAccess.open(output.path_join("viewport.txt"), FileAccess.WRITE)
+	info.store_string("requested %dx%d, actual %dx%d, aspect %.4f, view %s, reduced %s%s\n" % [size.x, size.y, int(actual.x), int(actual.y), actual.x / actual.y, view, reduced, " (variant %s)" % variant if reduced else ""])
+	info.close()
 	var rows: Array[String] = ["frame,time_s,phase,ammo,clip_time_s,remaining_s,progress,held,old_drawn,new_drawn,cues"]
 	actor.start_reload()
 	var held_remaining := actor.reload_remaining

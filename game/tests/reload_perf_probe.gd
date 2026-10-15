@@ -3,7 +3,7 @@ extends SceneTree
 ## the triangle counts of everything the first-person weapon draws, draw calls and primitives per frame in four states
 ## (ready, mid-reload, a muzzle flash, the smoke after it), the CPU time of Actor.tick_visual per tick through a whole
 ## reload (the animation's own cost: skeleton seek, magazine poses, audio scheduling, without any drawing), and the size
-## of the textures the viewmodel keeps resident (the imported, VRAM-compressed files). Relative numbers on one host only:
+## of the textures the viewmodel keeps resident (the imported S3TC files; the ETC2 files are the same size). Relative numbers on one host only:
 ## llvmpipe's cost is dominated by the CPU's rasteriser and says nothing about a phone's GPU, battery or heat.
 ## Needs a native display.   --samples=N frames per state (default 30)   --size=WxH (default 1280x720)
 const Actor = preload("res://scripts/gameplay/actor.gd")
@@ -118,7 +118,7 @@ func _run() -> void:
 	var texture_bytes := 0
 	for name in ["relay_ar_albedo", "relay_ar_orm", "relay_ar_normal", "relay_ar_arms_albedo", "relay_ar_arms_orm", "relay_ar_arms_normal"]:
 		var path := "res://assets/weapons/relay_ar/%s.png" % name
-		var imported := ProjectSettings.globalize_path("res://.godot/imported/%s.png-%s.ctex" % [name, path.md5_text()])
+		var imported := ProjectSettings.globalize_path("res://.godot/imported/%s.png-%s.s3tc.ctex" % [name, path.md5_text()])
 		var bytes := FileAccess.get_file_as_bytes(imported).size() if FileAccess.file_exists(imported) else -1
 		textures[name] = bytes
 		texture_bytes += maxi(bytes, 0)

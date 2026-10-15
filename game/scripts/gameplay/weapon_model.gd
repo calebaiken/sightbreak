@@ -28,7 +28,10 @@ const RELAY_AR := "res://assets/weapons/relay_ar/relay_ar.glb"
 const GRIP_DARKEN := 0.3
 ## The fill's albedo floor for the arms (ViewmodelShading.LIFT is the rifle's): higher, so the near-black gloves are
 ## not left in a dark interior with nothing to read; the grip gets none, so it stays the darkest thing in the hand.
-const ARMS_LIFT := 0.55
+const ARMS_LIFT := 0.35
+## Rim light on the arms (ViewmodelShading.RIM is the rifle's): a pale edge on the silhouette so a dark forearm is an outline
+## against a dark floor.
+const ARMS_RIM := 0.40
 const RELAY_AR_MATERIAL := "res://assets/weapons/relay_ar/relay_ar_body.tres"
 const RELAY_AR_ORM := "res://assets/weapons/relay_ar/relay_ar_orm.png"
 const RELAY_AR_NORMAL := "res://assets/weapons/relay_ar/relay_ar_normal.png"
@@ -115,6 +118,7 @@ static func _add_arms(parent: Node3D, placement: Transform3D, result: Dictionary
 	arms.set_meta("weapon_role", "arms")
 	var material := ViewmodelShading.surface(RELAY_AR_ARMS_TEXTURES)
 	material.set_shader_parameter("viewmodel_lift", ARMS_LIFT) # the arms' fill floor: charcoal gloves keep some form in shade
+	material.set_shader_parameter("viewmodel_rim", ARMS_RIM)
 	for mesh: MeshInstance3D in arms.find_children("*", "MeshInstance3D", true, false):
 		mesh.material_override = material
 		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
