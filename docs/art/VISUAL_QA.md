@@ -350,3 +350,21 @@ Evidence: `docs/reports/media/art-v7/reload-two-magazines/` (the README there ha
 2. The grip hand's anatomy (it is a glove fist), and value separation of the hand, grip and magazine in shade and backlight, which nobody has measured on this reload.
 3. The tan magazine beside the tan pistol grip.
 4. A human review of the frame sequences, a listening review of the two clicks, a decision on reduced motion for the rifle's roll, and any look at all on a phone.
+
+
+## The reload, round 3: hip retrieval, handling, sounds, grip, flash (2026-10-15, after `fceefa1`)
+
+Evidence: `docs/reports/media/art-v8/reload-hip-retrieval/` and `docs/reports/media/art-v8/reduced-motion/` (the READMEs there have every measurement, what each does not show, the defects I found in my own work, and the remaining list). **This is my own measurement plus one read-only review by an agent of my own model family; no human has looked at it, nobody has listened to the sounds, and nothing has been seen on a phone. The review scored every category 5.5 to 6.5 against the 8.5 target; I have not re-scored after the fixes and I do not claim the target is met. The scores above stand.**
+
+**What changed.** The replacement magazine now comes from a pouch at the hip below the frame (the hand is out of the picture 0.41 to 0.60 of the reload; the replacement is first drawn in the hand at the pickup). Every path through the clip is a velocity-continuous spline; the replacement rocks into the well about its front lip and the seat kicks the rifle. Six reload sounds on four separate voices, each once per reload, stopped by a cancel. A separate graphite pistol grip with finger grooves; cooler graphite gloves; a rebuilt muzzle flash (soft lobes, a short first-person light, smoke); three reduced-motion variants of the rifle's roll and lift, **compared and not chosen**.
+
+**How it was checked.** 167 weapon-art checks, 92 sequence checks, 29 audio checks, three real-time audio captures through `AudioEffectCapture` on the Dummy driver, 24 contact checks on the Blender clip, a native pixel-count test run in four views (sunlit, backlight, shade, reduced; 15 rules; the crosshair box and the "arm in frame" rules were added after the review), a luma probe in four lightings, a perf probe, nine real-time 60 Hz sequences (three lightings plus a simulated dark interior, 20:9 and 4:3 viewports with their real sizes recorded, three reduced-motion variants) with normal and quarter-speed clips, and 29 injected defects (final run in `logs/negative-controls.txt`). `scripts/validate.sh` passed on `bd6db8a`.
+
+**What the review found that I confirmed and fixed (partly):** the elbow bias at the hip looked like a cut tube (reduced); the gloves and sleeve sat in the same band (hue separated, value not); the return hand was flat and palm-up (a partial curl kept; still palm-up in the frames); the flash read as a star with a hard smoke puff (rebuilt, softer); the visibility rules were circular (replaced by arm-in-frame and crosshair-box rules whose thresholds I still set after seeing the clip).
+
+**Still open, in the order I would take them:**
+1. The hands: sausage fingers without joints, a grip hand of three blobs; the whole arms loop again.
+2. A visible pouch or sleeve for the whole hip trip (the arm is out of the picture in 1 of 10 hip poses by default).
+3. Glove-to-sleeve value gap in shade and the dark (0.82 and 0.89), the near-black grip against the near-black rifle, and the beige cast of the rifle at ticks 120 to 134 (cause not found).
+4. A human look at the sequences, a listening review of the sounds, and any look on a phone.
+5. A decision on reduced motion: `current` keeps the 26° roll and the arm in the picture; `calm` and `still` drop the roll and lose the arm at the hip (9 and 8 of 10 poses), and `calm` loses the hand on the rise as well.

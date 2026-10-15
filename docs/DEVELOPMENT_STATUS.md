@@ -1,6 +1,6 @@
 # Development status
 
-Updated 2026-10-14 by Claude (cloud session). Read this first when resuming work.
+Updated 2026-10-15 by Claude (cloud session). Read this first when resuming work.
 
 ## Branches and pull requests
 
@@ -26,10 +26,11 @@ Updated 2026-10-14 by Claude (cloud session). Read this first when resuming work
   - The reload uses **two magazine nodes**: the support hand takes the old one out along its well at the release click (0.24), lets it go (it falls), fetches the second (it rises out of the closing hand, held from 0.56), brings it up, lines it up, enters it and seats it at 0.80 with the seat click, holds to 0.85 and returns; the nodes swap roles when it ends. Phases are one list (`reload_phases.gd`) that the Blender build and the actor share. Measured, with what each measurement does not show, in `docs/reports/media/art-v7/reload-two-magazines/`: the left arm is 0.0 mm into the rifle and 0.9 mm into the magazine, the right arm 1.3 mm into the trigger; the support hand is at least 13,984 px in every frame and the thumb at least 237 px and three fingertips at least 100 px whenever it holds a magazine (a floor against hiding them, not a legibility measure). **The animation is not finished**: the replacement has no visible source, the hand is still a glove fist, nothing measures how it reads in shade, the tan magazine and grip are alike, and nothing has been seen on a phone or by a person (the README lists ten).
   - The sleeve is a muted olive-drab (median luma 110 in sun, was 146) with a finer hem; gloves are 25 % lighter.
   - A presentation-only reload clock keeps poses smooth at the 20 Hz snapshot rate.
+- **Reload round 3** (`docs/reports/media/art-v8/`): the replacement magazine is taken from a hip pouch below the frame (not drawn; the hand is out of the picture for 19 % of the reload); spline-smooth, weighted handling; six reload sounds on four voices with a capture test and a cancel test; a graphite pistol grip with finger grooves; a rebuilt muzzle flash with a first-person light and smoke; three reduced-motion variants of the rifle's roll and lift, **compared and not chosen (the default stays the 26° roll)**. 167 + 92 + 29 + 24 checks, three audio captures, a four-view pixel test, 29 injected defects, nine 60 Hz sequences. **A same-family review scored it 5.5 to 6.5 per category against the 8.5 gate; no human has seen it, nobody has heard the sounds, nothing has run on a phone.** The README in `reload-hip-retrieval/` lists what is unresolved: the hands are still sausage-like, the hip trip has no visible pouch, glove and sleeve share a value in shade and the dark.
 - **Bore:** the rifle's vanishing point is 38 px left and 21 px above the crosshair (3.5°, was 124 px left, 10.0°) and the bore line passes through the crosshair.
 - **Effects:** a layered additive muzzle flash (213 triangles; it differs shot to shot and lasts 40 ms) and a lathed brass casing that tumbles, bounces and settles. Presentation only.
 - **Viewmodel projection:** 54° with depth compression, applied to every first-person mesh of the authored rifle build, including both fallback hand variants.
-- **Tests:** `weapon_art_test.gd` (164 checks) runs in `validate.sh`; `reload_legibility_probe.gd` and `viewmodel_light_probe.gd` (native display) measure the reload and the per-part luma. `paint_visibility_test.gd` (pixels) and `weapon_motion_capture.gd` (frame sequences) need a native display.
+- **Tests:** `weapon_art_test.gd` (167 checks) runs in `validate.sh`; `reload_legibility_probe.gd` and `viewmodel_light_probe.gd` (native display) measure the reload and the per-part luma. `paint_visibility_test.gd` (pixels) and `weapon_motion_capture.gd` (frame sequences) need a native display.
 - **Evidence:** `docs/reports/media/art-v1`, `art-v3`, `art-v4`, `art-v5/lighting`, `art-v6/reload-hands-effects`.
 
 ## Not done (in priority order)
@@ -44,8 +45,8 @@ The review record is in `docs/art/VISUAL_QA.md`. Codex scored the slice 5.5/10; 
    - the pistol grip is still a flat block;
    - the static v2 fallback hands are still the v2 asset.
 3. **Lighting:** shade contrast between receiver and arms; over-bright backlit rims.
-4. **Animation:** draw and inspect clips; a visible source for the replacement magazine; the grip hand's anatomy; reduced motion for the rifle's roll reviewed by someone who uses the setting.
-5. **Effects:** a bolt or charging-handle animation, a light for the flash (it is a mesh only), reload sound design.
+4. **Animation:** draw and inspect clips; a visible pouch (the replacement now comes from off-screen); the hands' anatomy; reduced motion for the rifle's roll reviewed by someone who uses the setting (variants exist, no policy); a listening review of the reload sounds.
+5. **Effects:** a bolt or charging-handle animation, a listening review of the reload sounds (synthesized, never heard by a person).
 6. **The rifle:** a LOW-tier LOD and a UV repack.
 7. **Next weapons:** sidearm, SMG and marksman rifle through the same pipeline.
 8. **Environment:** one Relay Yard section at final quality.

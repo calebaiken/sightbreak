@@ -12,24 +12,26 @@ With reduced motion on, sway, walk bob and the equip swing are attenuated (as be
 | `calm` | 10.3° | 18 cm up, 6.5 cm left | less than half the roll, a bigger lift to compensate |
 | `still` | 0° | 22 cm up, 8 cm left | no roll at all; the weapon only rises |
 
-## What each costs (measured, `reload_visibility_test.gd --reduced --variant=<name>`, 51 poses, 1280 × 720)
+## What each costs (measured on the final build, `reload_visibility_test.gd --reduced --variant=<name>`, 51 poses, 1280 × 720)
 
 Pixels each part really draws (a flat-colour identification pass; lighting-independent). The hip is the span 0.41 to 0.60 of the reload in which the hand is below the frame by design.
 
 | | `current` | `calm` | `still` |
 | --- | ---: | ---: | ---: |
-| Support hand, least pixels outside the hip and the rise from it | 13,797 | **7,972** | 10,625 |
-| Sleeve (the arm) in the frame at the hip, least pixels over the hip's frames | 9,903 | **0** (2 of 10 frames) | **0** (7 of 10 frames) |
-| Hand on the rise from the hip, least pixels | 7,673 | **2,933** | 7,294 |
-| Rules of the test that fail | none | 4 of 13 | 1 of 13 |
+| Support hand, least pixels outside the hip and the rise from it | 13,797 | **7,954** (at 0.40) | 10,621 (at 0.40) |
+| Left arm out of the picture (under 1,000 px) at the hip, poses of 10 | 1 | **9** | **8** |
+| Hand on the rise from the hip, least pixels | 7,150 | **2,921** | 7,166 |
+| A replacement magazine drawn with under 3,000 px of its arm in the frame | 0 poses | 4 poses (last at 0.62) | 3 poses (last at 0.60) |
+| Crosshair box (80 px square) free of rifle, arms and magazines | all poses | all poses | all poses |
+| Rules of the test that fail | none of 15 | 5 of 15 | 2 of 15 |
 
-`logs/visibility-<variant>.csv` has every pose and `logs/visibility-<variant>-report.txt` every rule's result. The frames: `compare-stages.jpg` (the same six ticks of all three), and the full sequences in `../reload-hip-retrieval/sheets/reduced-*.jpg` and `clips/reduced-*.mp4` (normal and quarter speed).
+`logs/visibility-<variant>.csv` has every pose and `logs/visibility-<variant>-report.txt` every rule's result. The frames: `compare-stages.jpg` (the same six ticks of all three, made by `tools/art/compare_stages.py`), and the full sequences in `../reload-hip-retrieval/sheets/reduced-*.jpg` and `clips/reduced-*.mp4` (normal and quarter speed). The rules were written after the hip existed and their thresholds are mine; a failure is a measured fact about the frame, but where the line sits is a judgment.
 
 ## What the numbers do not say, and what the pictures show
 
-- **`current` keeps the arm in the picture while the hand is at the hip; the other two do not.** With less roll the sleeve that goes down to the pouch leaves the frame (0 px in 7 of the 10 frames for `still`), so for about 0.3 s the player sees no part of the left arm: the retrieval reads as the hand vanishing and a magazine appearing, which is the failure the hip staging was built to avoid.
-- **`still` keeps the hand visible everywhere else (the least pixel count is higher than `calm`'s) but puts the rifle high and level across the middle of the screen** for the whole reload: in `compare-stages.jpg` its barrel crosses the upper half of the frame from edge to edge at tick 36 and later. The crosshair area is more covered than in `current` (not measured: I have no measure of that yet, only the pictures).
-- **`calm` is the worst on the measures**: the roll is too small to keep the arm in and the lift is too small to keep the hand in, on the rise from the hip the hand is mostly outside the frame (2,933 px).
+- **`current` keeps the arm in the picture while the hand is at the hip, with one pose out; the other two do not.** With less roll the sleeve that goes down to the pouch leaves the frame (8 of 10 poses for `still`, 9 of 10 for `calm`), so for about 0.3 s the player sees no part of the left arm: the retrieval reads as the hand vanishing and a magazine appearing, which is the failure the hip staging was built to avoid.
+- **`still` keeps the hand visible everywhere else (its least pixel count, 10,621, is above `calm`'s) but puts the rifle high and level across the middle of the screen** for the whole reload: in `compare-stages.jpg` its barrel crosses the upper half of the frame from edge to edge at tick 36 and later. **The crosshair box is clear in all three variants (the measure is 80 px square, so it says the exact centre is free and nothing about the sightline)**, and the rifle's pixel count is 61,500 to 73,216 in `current`, 72,647 at most in `still`: the whole rifle is not covering more of the frame, it is covering a different part of it.
+- **`calm` is the worst on the measures**: the roll is too small to keep the arm in and the lift is too small to keep the hand in; on the rise from the hip the hand is mostly outside the frame (2,921 px).
 - **What a person with vestibular sensitivity would find acceptable is unknown.** Roll is the usual trigger for the concern; `still` removes it, at a cost in readability. Whether the whole-weapon lift (a vertical translation, 14 to 22 cm over 0.14 of the reload) matters at all is also unknown.
 - Nothing here was seen by a person who uses the setting, and the sequences are llvmpipe captures at a desktop size, not a phone.
 
