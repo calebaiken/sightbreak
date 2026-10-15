@@ -71,3 +71,7 @@ I tried and rejected, with numbers (`logs/experiments-*.csv`, `logs/studio-*.csv
 - The ready-pose look changed slightly (above); I judged it from the crops, and no one else has.
 - The furniture's own pose-dependence (it gets darker, ratio 1.45 in sun) is not corrected: a roughness floor on it helps in sun (1.22) and makes it worse in shade (1.49), so I left it.
 - The negative controls cover this fix only; the full control suite (29 earlier controls) was not re-run for this checkpoint.
+
+## Addendum (Checkpoint C): the finish today
+
+Checkpoint C added a fill floor of 0.26 to the painted metal (`ViewmodelShading.METAL_FLOOR`), because the roughness floor had taken the sheen that kept the rifle visible in shade and the dark. The stability test measures the shipped finish, and with it the highest-over-lowest median luma through the reload is: receiver 1.18 (sun), 1.14 (shade), 1.18 (skin); handguard 1.18, 1.16, 1.12. (The tables above are the state at Checkpoint A, with the floor at 0.10.) The probe's "base" condition had been resetting the floor to 0.10, so for a while it was not measuring the shipped finish; it now sets `METAL_FLOOR`.

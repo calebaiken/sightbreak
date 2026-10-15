@@ -280,7 +280,7 @@ func _run() -> void:
 			sun.light_energy = sun_energy
 			environment.ambient_light_energy = ambient_energy
 			environment.reflected_light_source = reflected
-			finish.set_shader_parameter("viewmodel_floor", ViewmodelShading.FLOOR)
+			finish.set_shader_parameter("viewmodel_floor", ViewmodelShading.METAL_FLOOR)
 			finish.set_shader_parameter("viewmodel_rim", ViewmodelShading.RIM)
 			if SBWeaponModel.use_authored:
 				(_node("furniture") as MeshInstance3D).material_override = body_original
