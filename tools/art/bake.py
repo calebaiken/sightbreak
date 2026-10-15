@@ -56,6 +56,9 @@ SURFACES = {
     'anodized': ((0.085, 0.090, 0.098), 0.45, 0.46, (0.36, 0.37, 0.38), 1.0, 0.30, 0.15, 0.0),
     'steel': ((0.060, 0.062, 0.066), 0.65, 0.45, (0.30, 0.30, 0.31), 1.0, 0.26, 0.10, 0.0),
     'polymer': ((0.105, 0.088, 0.064), 0.0, 0.64, (0.15, 0.13, 0.10), 0.0, 0.48, 0.20, 0.0),
+    # Graphite furniture (the grip, the stock, the hand stop): darker than the tan magazine and the olive gloves, with the
+    # blue-grey of the receiver's paint, so a glove on the grip has an edge against it.
+    'grip_polymer': ((0.046, 0.047, 0.052), 0.0, 0.74, (0.090, 0.092, 0.098), 0.0, 0.56, 0.20, 0.0),
     'rubber': ((0.020, 0.020, 0.021), 0.0, 0.88, (0.035, 0.035, 0.036), 0.0, 0.80, 0.25, 0.6),
     'glass': ((0.012, 0.025, 0.022), 0.0, 0.05, (0.012, 0.025, 0.022), 0.0, 0.05, 0.0, 0.0),
     'brass': ((0.42, 0.27, 0.08), 1.0, 0.32, (0.55, 0.40, 0.16), 1.0, 0.22, 0.05, 0.0),
@@ -188,12 +191,20 @@ def build_surface(mat_name, stippled):
     height.inputs[1].default_value = micro
     t.links.new(grain.outputs['Fac'], height.inputs[0])
     if stip > 0:
+        # Raised dots on a flat ground (about 2.6 mm apart, so they read as a stipple at the grip's size on screen), not
+        # the smooth cellular relief the first version baked, which read as rock.
         vor = node(t, 'ShaderNodeTexVoronoi', feature='F1')
-        vor.inputs['Scale'].default_value = 600.0
+        vor.inputs['Scale'].default_value = 380.0
         t.links.new(coords.outputs['Object'], vor.inputs['Vector'])
+        dots = node(t, 'ShaderNodeMapRange', clamp=True)
+        dots.inputs['From Min'].default_value = 0.20
+        dots.inputs['From Max'].default_value = 0.34
+        dots.inputs['To Min'].default_value = 1.0
+        dots.inputs['To Max'].default_value = 0.0
+        t.links.new(vor.outputs['Distance'], dots.inputs['Value'])
         pits = node(t, 'ShaderNodeMath', operation='MULTIPLY_ADD')
-        t.links.new(vor.outputs['Distance'], pits.inputs[0])
-        pits.inputs[1].default_value = stip
+        t.links.new(dots.outputs['Result'], pits.inputs[0])
+        pits.inputs[1].default_value = 0.8
         t.links.new(height.outputs['Value'], pits.inputs[2])
         height = pits
     bump = node(t, 'ShaderNodeBump')
@@ -214,7 +225,7 @@ bake_mats = {}
 for o in meshes:
     for slot in o.material_slots:
         source = slot.material.name.split('.')[0]
-        stippled = o.name in STIPPLED and source in ('polymer', 'rubber')
+        stippled = o.name in STIPPLED and source in ('polymer', 'grip_polymer', 'rubber')
         key = (source, stippled)
         if key not in bake_mats:
             bake_mats[key] = build_surface(source, stippled)

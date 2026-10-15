@@ -34,6 +34,9 @@ GROUPS = {
     'paint_receiver': ('paint_upper', 'paint_lower', 'paint_rail_upper'),
     'paint_handguard': ('paint_handguard', 'paint_rail_handguard'),
     'magazine': ('magazine',),
+    # The pistol grip is its own mesh (one more draw): it can be measured, and tinted, apart from the receiver it
+    # joins, and it is graphite where the magazine is tan so a hand on the grip does not blend into either.
+    'grip': ('grip',),
     # The buttstock sits behind the camera in first person, so it is its own mesh and the
     # viewmodel leaves it out (inspection includes it).
     'stock': ('stock_body', 'stock_lever', 'butt_pad'),
@@ -138,7 +141,7 @@ def handguard():
     # Angled hand stop under the front of the handguard.
     stop = hs.silhouette('hand_stop', hs.fillet([(0.500, BORE - 0.0205), (0.546, BORE - 0.0205), (0.546, BORE - 0.026), (0.536, BORE - 0.041), (0.528, BORE - 0.041)],
                                                 [0.0, 0.0, 0.003, 0.003, 0.004]),
-                         hs.fillet([(-0.0085, 0.49), (0.0085, 0.49), (0.0085, 0.56), (-0.0085, 0.56)], 0.003), 'polymer')
+                         hs.fillet([(-0.0085, 0.49), (0.0085, 0.49), (0.0085, 0.56), (-0.0085, 0.56)], 0.003), 'grip_polymer')
     hs.finish(stop, 0.0010, 2, 40)
     return [guard, rail, cup, stop] + screws
 
@@ -184,13 +187,29 @@ def lower_receiver():
     hs.finish(guard, 0.0006, 2)
     trigger = hs.extrude_profile('trigger', hs.fillet([(0.049, SPLIT - 0.026), (0.055, SPLIT - 0.026), (0.054, -0.024), (0.050, -0.033), (0.045, -0.035), (0.047, -0.029), (0.049, -0.022)], 0.001), 0.0055, 'steel', 'X')
     hs.finish(trigger, 0.0003, 1)
-    # Pistol grip: raked, palm swell from the plan view, front finger ridge.
-    grip_side = hs.fillet([(-0.006, SPLIT - 0.024), (0.026, SPLIT - 0.024), (0.022, -0.030), (0.012, -0.060), (0.010, -0.075), (0.006, -0.090),
-                           (-0.002, -0.118), (-0.036, -0.121), (-0.038, -0.112), (-0.024, -0.060)],
-                          [0.002, 0.004, 0.006, 0.006, 0.006, 0.006, 0.006, 0.006, 0.006, 0.01])
-    grip_plan = hs.fillet([(-0.0135, -0.05), (0.0135, -0.05), (0.0155, -0.01), (0.0135, 0.03), (-0.0135, 0.03), (-0.0155, -0.01)], 0.006)
-    grip = hs.silhouette('grip', grip_side, grip_plan, 'polymer')
+    # Pistol grip (graphite furniture, 'grip_polymer'): raked about 17 degrees, a palm swell low on the backstrap and a flared base, three finger grooves on the
+    # frontstrap, a plan that is widest at the palm, and a recessed stippled panel on each side that frames the texture
+    # and catches the light as a step. The grip is its own mesh (GROUPS) so it can be tinted apart from the magazine.
+    grip_side = hs.fillet([(-0.008, SPLIT - 0.024), (0.027, SPLIT - 0.024), (0.0245, -0.030), (0.0160, -0.052), (0.0128, -0.080),
+                           (0.0078, -0.104), (-0.0005, -0.1225), (-0.0385, -0.1265), (-0.0435, -0.1120), (-0.0390, -0.0860),
+                           (-0.0335, -0.0600), (-0.0205, -0.0300), (-0.0125, -0.0160)],
+                          [0.002, 0.004, 0.008, 0.010, 0.010, 0.008, 0.004, 0.003, 0.008, 0.012, 0.014, 0.010, 0.006])
+    grip_plan = hs.fillet([(-0.0125, -0.050), (0.0125, -0.050), (0.0158, -0.030), (0.0162, -0.006), (0.0148, 0.016), (0.0128, 0.030), (-0.0128, 0.030),
+                           (-0.0148, 0.016), (-0.0162, -0.006), (-0.0158, -0.030)], 0.005)
+    grip = hs.silhouette('grip', grip_side, grip_plan, 'grip_polymer')
     hs.finish(grip, 0.0018, 3, 40)
+    for z in (-0.040, -0.0625, -0.085):
+        # y of the frontstrap at this height, from the profile above, then a cylinder across the grip, sunk 2.6 mm
+        pts = [(-0.030, 0.0245), (-0.052, 0.0160), (-0.080, 0.0128), (-0.104, 0.0078)]
+        front = next(y0 + (y1 - y0) * (z - z0) / (z1 - z0) for (z0, y0), (z1, y1) in zip(pts, pts[1:]) if z1 <= z <= z0)
+        groove = hs.cylinder('finger_groove', (-0.02, front + 0.0030, z), (0.02, front + 0.0030, z), 0.0056, 'polymer', 28)
+        hs.boolean(grip, groove)
+    for side in (-1, 1):
+        # A slab that reaches 1.2 mm into the widest part of each side: what it leaves is a flat panel framed by the
+        # grip's own curve.
+        recess = hs.box('grip_recess', (side * 0.0165, -0.040, -0.078), (0.0030, 0.052, 0.080), 'polymer')
+        hs.boolean(grip, recess)
+    hs.finish(grip, 0.0004, 1, 40)
     # Controls: rotary selector (left), magazine release with fence (right), bolt catch, pins.
     selector = hs.silhouette('selector', hs.fillet([(0.018, -0.006), (0.034, -0.009), (0.035, -0.004), (0.020, 0.001)], 0.002),
                              [(-0.0198, 0.0), (-0.0172, 0.0), (-0.0172, 0.04), (-0.0198, 0.04)], 'steel')
@@ -225,7 +244,7 @@ def stock():
                           [0.004, 0.006, 0.006, 0.003, 0.003, 0.008, 0.02, 0.006, 0.004])
     body_plan = hs.fillet([(-0.021, -0.27), (0.021, -0.27), (0.0215, -0.21), (0.0185, -0.12), (0.0175, -0.09),
                            (-0.0175, -0.09), (-0.0185, -0.12), (-0.0215, -0.21)], 0.004)
-    body = hs.silhouette('stock_body', body_side, body_plan, 'polymer')
+    body = hs.silhouette('stock_body', body_side, body_plan, 'grip_polymer')
     # Triangular lightening window under the tube sleeve leaves a rear frame and a diagonal strut.
     window = hs.extrude_profile('stock_window', hs.fillet([(-0.241, BORE - 0.053), (-0.241, BORE - 0.024), (-0.142, BORE - 0.024)],
                                                           [0.006, 0.006, 0.004]), 0.06, 'polymer', 'X')

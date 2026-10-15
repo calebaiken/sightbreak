@@ -125,6 +125,13 @@ def glove_shapes():
         r = RADII[name][0]
         adds.append((sdf.cone_shape(CARPAL[name], MCP[name], r * 1.05, r, flat=0.80, region='fabric'), 0.010))
     adds.append((sdf.box_shape((0.0030, 0.0520, -0.0040), np.eye(3), (0.0330, 0.0330, 0.0100), 0.0090, 'palm'), 0.008))
+    # Extensor tendons: a raised cord along the back of each metacarpal, from the carpus to under the knuckle's dome,
+    # so the back of the hand reads as tendons over bone and not as a smooth slab (the glove's fabric follows them).
+    for name in FINGERS:
+        r = RADII[name][0]
+        a = np.asarray(CARPAL[name]) + np.array((0.0, 0.004, r * 0.74))
+        b = np.asarray(MCP[name]) + np.array((0.0, -0.004, r * 0.80))
+        adds.append((sdf.cone_shape(a, b, 0.0027, 0.0025, flat=0.75, region='fabric'), 0.0040))
     thumb_axis = unit(THUMB_DIRS[0])
     thenar_axes = np.stack((unit(np.cross(thumb_axis, Z)), thumb_axis, unit(np.cross(np.cross(thumb_axis, Z), thumb_axis))))
     adds.append((sdf.ellipsoid_shape((-0.0215, 0.0400, -0.0085), thenar_axes, (0.0150, 0.0270, 0.0125), 'palm'), 0.010))
