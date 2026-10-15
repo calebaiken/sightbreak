@@ -1,6 +1,6 @@
 # Development status
 
-Updated 2026-10-15 by Claude (cloud session). Read this first when resuming work.
+Updated 2026-10-15 (art-v9 round) by Claude (cloud session). Read this first when resuming work.
 
 ## Branches and pull requests
 
@@ -27,6 +27,7 @@ Updated 2026-10-15 by Claude (cloud session). Read this first when resuming work
   - The sleeve is a muted olive-drab (median luma 110 in sun, was 146) with a finer hem; gloves are 25 % lighter.
   - A presentation-only reload clock keeps poses smooth at the 20 Hz snapshot rate.
 - **Reload round 3** (`docs/reports/media/art-v8/`): the replacement magazine is taken from a hip pouch below the frame (not drawn; the hand is out of the picture for 19 % of the reload); spline-smooth, weighted handling; six reload sounds on four voices with a capture test and a cancel test; a graphite pistol grip with finger grooves; a rebuilt muzzle flash with a first-person light and smoke; three reduced-motion variants of the rifle's roll and lift, **compared and not chosen (the default stays the 26° roll)**. 167 + 92 + 29 + 24 checks, three audio captures, a four-view pixel test, 29 injected defects, nine 60 Hz sequences. **A same-family review scored it 5.5 to 6.5 per category against the 8.5 gate; no human has seen it, nobody has heard the sounds, nothing has run on a phone.** The README in `reload-hip-retrieval/` lists what is unresolved: the hands are still sausage-like, the hip trip has no visible pouch, glove and sleeve share a value in shade and the dark.
+- **Art-v9 round** (`docs/reports/media/art-v9/`, `docs/art/VISUAL_QA.md`): the rifle's pale reload frames are root-caused to the sky reflection on the baked metal and corrected with a roughness floor and a metal fill floor (stability test, sun/shade/skin, with controls); the gloves have seams, tips, a taller guard, a pad and knit grain (contact 0.8 mm, 9,268 triangles); the grip, gloves and metal are separated by value in sun (a light-separation test); the replacement is still fetched off-screen (a drawn pouch was rejected) with the hip at 31 cm; reduced motion has separate roll, lift, recoil and hand-clip controls with `current`, `calm` and `still` variants (`Actor.REDUCED_RELOAD_VARIANTS`; the default is unchanged) and a second `reload_calm` clip. 175 weapon-art checks, 92 sequence, 24 contact, 15 visibility rules in four variants, 35 negative controls, a same-model read-only review. **The 8.5 gate is not met**; the reviewer scored materials, lighting and hands/reload at 5.0 (scope: weapon and hands, stills).
 - **Bore:** the rifle's vanishing point is 38 px left and 21 px above the crosshair (3.5°, was 124 px left, 10.0°) and the bore line passes through the crosshair.
 - **Effects:** a layered additive muzzle flash (213 triangles; it differs shot to shot and lasts 40 ms) and a lathed brass casing that tumbles, bounces and settles. Presentation only.
 - **Viewmodel projection:** 54° with depth compression, applied to every first-person mesh of the authored rifle build, including both fallback hand variants.
@@ -39,13 +40,13 @@ The review record is in `docs/art/VISUAL_QA.md`. Codex scored the slice 5.5/10; 
 
 1. **Composition:** the bore is 3.5° off the crosshair (was 10°), not zero; at 4:3 the canvas shows more than ships (the project keeps 16:9).
 2. **Hands and sleeves:**
-   - the grip hand reads as a mitten;
-   - support fingertips crest the rail at the handguard hold, and the thumb is not visible in the cupped grasp;
-   - gloves in a dark interior measure 15 to 17 (target 20) and the sleeve-to-glove value gap in shade is about 6 luma;
-   - the pistol grip is still a flat block;
+   - the hands are SDF-built and modest at gameplay size (art-v9); a sculpted, hand-authored glove is the next step and needs a modelling session outside this container;
+   - the grip hand still reads pale and skin-like in sun, the grip hand's fingers read as blobs, the open return pose shows thin flat fingers;
+   - glove-to-sleeve and grip-to-receiver separation in shade, backlight and the dark did not improve (near-black on near-black);
+   - the near-black underside of the support forearm at the hip;
    - the static v2 fallback hands are still the v2 asset.
-3. **Lighting:** shade contrast between receiver and arms; over-bright backlit rims.
-4. **Animation:** draw and inspect clips; a visible pouch (the replacement now comes from off-screen); the hands' anatomy; reduced motion for the rifle's roll reviewed by someone who uses the setting (variants exist, no policy); a listening review of the reload sounds.
+3. **Lighting and finish:** the painted metal lost its sheen to the roughness floor (receiver and handguard are level in value and read drab olive-grey at rest); a fixed viewmodel environment would restore a highlight without the sky-band swing; shade contrast between receiver and arms; over-bright backlit rims.
+4. **Animation:** draw and inspect clips; the hip pop (20 % of the replacement is in the frame when first drawn, was under 5 %; the first-draw bound is now 25 %); reduced motion: `calm` is the recommended candidate but unadopted, to be reviewed by someone who uses the setting (no policy, no comfort claim); a listening review of the reload sounds.
 5. **Effects:** a bolt or charging-handle animation, a listening review of the reload sounds (synthesized, never heard by a person).
 6. **The rifle:** a LOW-tier LOD and a UV repack.
 7. **Next weapons:** sidearm, SMG and marksman rifle through the same pipeline.

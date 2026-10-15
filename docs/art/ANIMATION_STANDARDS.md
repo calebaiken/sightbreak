@@ -37,3 +37,7 @@ Each sequence is a frame-by-frame capture from `game/tests/weapon_motion_capture
 2. A visible pouch. The replacement now comes from the hip, below the frame, with the sleeve going down to it; nothing in the picture shows the pouch itself.
 3. A bolt release on empty reloads. It needs the empty or tactical distinction the authoritative actor already has (`ammo == 0` when the reload starts); presentation only.
 4. Reduced motion: the rifle's reload staging is no longer scaled (at 0.2 the hand fell out of the frame); the procedural weapons' dip still is. `Actor.REDUCED_RELOAD_VARIANTS` holds three alternatives (`current`: the roll of about 26 degrees, the default; `calm`; `still`) and `docs/reports/media/art-v8/reduced-motion/README.md` compares them. **Which one ships is undecided**: it needs a person who uses the setting.
+
+## Reduced motion (art-v9)
+
+`Actor.REDUCED_RELOAD_VARIANTS` holds per-variant presentation profiles with separate controls: weapon `roll`, `lift` (translation), `recoil`, and the support hand's `clip` (`reload` or `reload_calm`). Camera shake is not used by the reload. The default is `current` (unchanged); `calm` (roll 0.4, lift 1.3, recoil 0.6, calm clip) and `still` (roll 0, lift 1.8, recoil 0.4, calm clip) pass all 15 visibility rules, `still` with thin margins. Timing, sounds, ammunition and authoritative state are identical in all variants. These are candidates for a human review; there is no comfort evidence. See `docs/reports/media/art-v9/reduced-motion/README.md`.

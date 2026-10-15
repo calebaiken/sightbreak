@@ -39,6 +39,13 @@ var failed := false
 ## reload ticks and the roll/lift sweep. Before the fix the receiver ranged 1.52 and the handguard 1.42 (sun), 1.75 and 1.48 (shade); after it
 ## the worst measured is 1.22. The bound is set from those measurements, not from a visual standard.
 const RATIO_MAX := 1.25
+## The receiver's blue-to-red balance, (r - b) / luma, may move this far from its value at the first probed tick. The luma bound cannot
+## see a hue shift: at 57f6464 the receiver went from (53, 55, 54) at the ready to (74, 82, 83) in the hold, a swing of 0.09 in this number
+## (towards blue); the shipped finish moves it by at most 0.034 over the reload in sun (0.015 with a skin). 0.06 is between them, derived
+## from that data, not from a visual standard. Only the sunlit view is asserted: in shade the receiver is lit by the sky and its balance
+## moves by 0.08 to 0.09 after the fix as well as before it (it turns bluer as it faces the sky), so the number does not separate the
+## defect from ordinary lighting there and a bound would be arbitrary.
+const CHROMA_SHIFT_MAX := 0.06
 
 func _initialize() -> void:
 	_run.call_deferred()
@@ -340,8 +347,9 @@ func _run() -> void:
 			rows.append(line)
 			print("DISCOLOUR ", line)
 			if not series.has(condition):
-				series[condition] = {"receiver": [], "handguard": []}
+				series[condition] = {"receiver": [], "handguard": [], "chroma": []}
 			series[condition].receiver.append(_luma(r))
+			series[condition].chroma.append((r.r - r.b) / maxf(_luma(r) / 255.0, 0.001))
 			series[condition].handguard.append(_luma(m.handguard))
 	sun.light_energy = sun_energy
 	environment.ambient_light_energy = ambient_energy
@@ -363,6 +371,18 @@ func _run() -> void:
 			print("%s the %s median luma stays within %.2f of its lowest through the reload (%.1f to %.1f, ratio %.2f, %d cases)" % ["ok  " if ok else "FAIL", part, RATIO_MAX, low, high, high / low, values.size()])
 			if not ok:
 				push_error("%s luma ratio %.2f exceeds %.2f" % [part, high / low, RATIO_MAX])
+		var chroma: Array = series["base"].chroma
+		var shift := 0.0
+		for value in chroma:
+			shift = maxf(shift, absf(value - chroma[0]))
+		var chroma_ok := shift <= CHROMA_SHIFT_MAX or view != "sunlit"
+		if view == "sunlit":
+			checks += 1
+			failures += 0 if chroma_ok else 1
+		if view == "sunlit":
+			print("%s the receiver's (r - b) / luma stays within %.2f of its first value through the reload (largest shift %.3f, from %.3f, %d cases)" % ["ok  " if chroma_ok else "FAIL", CHROMA_SHIFT_MAX, shift, chroma[0], chroma.size()])
+			if not chroma_ok:
+				push_error("receiver chroma shift %.3f exceeds %.2f" % [shift, CHROMA_SHIFT_MAX])
 		print("RELOAD_DISCOLOUR_TEST view=%s skin=%s authored=%s sweep=%s checks=%d failures=%d" % [view, skin, SBWeaponModel.use_authored, sweep, checks, failures])
 		failed = failures > 0
 	if not csv.is_empty():

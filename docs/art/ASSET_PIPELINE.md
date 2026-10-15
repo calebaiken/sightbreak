@@ -121,3 +121,9 @@ Review renders: `$B $T/render_views.py $T/relay_ar.py <dir> [view ...] --samples
 | `scripts/reload_negative_controls.py` | Injects each defect it lists, one at a time, and requires the named tests to fail cleanly |
 
 Rebuilding the rifle changes the grip solve, so run `arms_build.py` again afterwards, and refresh `clip_contact.csv` and its `.glb.sha256` (`scripts/test_reload_contact.py` checks the CSV against the shipped GLB's hash). A `--no-bake` GLB must never be committed.
+
+### art-v9 additions
+
+- `relay_ar_arms.py` glove regions `tip`, `seam`, `pad` (palette and nearest-surface rule in `arms_build.py`; palm and pad take only faces whose normal points to the palm side). `tools/art/preview_glove.py <out>` renders the source glove SDF from four views with flat region colours in about a minute (Cycles, CPU) for shape review; it is not the shipped mesh.
+- `arms_build.py` exports **two clips**, `reload` and `reload_calm` (`_PATH` and `_PATH_CALM`; same keys, phases and timing, a shallower reach to the hip in the calm one) and writes a contact CSV for each. Environment hooks for one build: `ARMS_PATH_JSON` (default clip's hip/carry/swing keys), `ARMS_CALM_JSON` (calm clip), `ARMS_GRAB_JSON`, `ARMS_APPROACH`, `ARMS_LINEAR_PATHS`; the negative controls N15 to N18, N23 and N24 use them, so renaming a key silently turns a control into a no-op (this happened once; run `scripts/reload_negative_controls.py` after touching the path tables).
+- The rifle's pose-dependent finish is guarded by `game/tests/reload_discolour_probe.gd --assert` (luma ratio, and in sun the receiver's blue-to-red balance) and `viewmodel_light_probe.gd --assert` (part separation in four lightings); `tools/art/compare_stages.py` builds labelled before/after sheets from capture directories. Both thresholds are derived from measured output, documented in the files.
