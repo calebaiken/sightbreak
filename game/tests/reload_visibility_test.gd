@@ -26,7 +26,7 @@ const Actor = preload("res://scripts/gameplay/actor.gd")
 const Arena = preload("res://scripts/gameplay/arena.gd")
 const ViewmodelShading = preload("res://scripts/gameplay/viewmodel_shading.gd")
 const RELOAD_SECONDS := 2.25
-const HAND_MIN := 5000
+const HAND_MIN := 10000
 const TIP_MIN := 100
 const MAGAZINE_MIN := 3000
 const TIPS := ["L_thumb_3", "L_index_3", "L_middle_3", "L_ring_3", "L_pinky_3"]
@@ -297,7 +297,14 @@ func _evaluate(results: Array[Dictionary]) -> void:
 		if r.magazine < worst_magazine:
 			worst_magazine = r.magazine
 			worst_magazine_at = r.progress
-	check(holding_frames >= 10, "%d frames with a hand on a magazine" % holding_frames)
+	var held_old := 0
+	var held_new := 0
+	for r in window:
+		if r.held == "magazine_spare":
+			held_new += 1
+		elif r.held != "-":
+			held_old += 1
+	check(held_old >= 4 and held_new >= 4, "frames with a hand on a magazine: %d on the old one and %d on the replacement (each must be measured, or the checks below skip it)" % [held_old, held_new])
 	check(worst_thumb >= TIP_MIN, "the thumb's tip shows at least %d pixels whenever the hand is on a magazine (worst %d at %.2f)" % [TIP_MIN, worst_thumb, worst_thumb_at])
 	check(worst_fingers >= 3, "at least three of the four fingertips show at least %d pixels whenever the hand is on a magazine (worst %d at %.2f)" % [TIP_MIN, worst_fingers, worst_fingers_at])
 	check(worst_magazine >= MAGAZINE_MIN, "the magazine in the hand shows at least %d pixels in every such frame (worst %d at %.2f)" % [MAGAZINE_MIN, worst_magazine, worst_magazine_at])

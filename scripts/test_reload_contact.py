@@ -43,8 +43,25 @@ def phases():
         return {m.group(1): float(m.group(2)) for m in re.finditer(r'^const ([A-Z_]+) := ([0-9.]+)\s*$', f.read(), re.M)}
 
 
+GLB = os.path.join(HERE, '..', 'game', 'assets', 'weapons', 'relay_ar', 'relay_ar_arms.glb')
+
+
+def glb_hash():
+    import hashlib
+    with open(GLB, 'rb') as f:
+        return hashlib.sha256(f.read()).hexdigest()
+
+
 def main(path):
     P = phases()
+    # The numbers are only about the shipped clip if the CSV was produced for THIS GLB: the build's log
+    # records the hash of the GLB it exported next to the CSV (clip_contact.glb.sha256). A rebuild that
+    # is not followed by refreshing both leaves the test failing rather than passing on a stale CSV.
+    stamp = os.path.join(os.path.dirname(path), 'clip_contact.glb.sha256')
+    if os.path.exists(stamp):
+        check(open(stamp).read().split()[0] == glb_hash(), 'clip_contact.csv was made for the GLB in game/assets (hash %s...)' % glb_hash()[:12])
+    elif os.path.abspath(path).startswith(os.path.abspath(os.path.join(HERE, '..', 'docs'))):
+        check(False, 'clip_contact.glb.sha256 is missing next to the committed CSV')
     rows = list(csv.DictReader(open(path)))
     check(len(rows) == 61, 'the clip has 61 frames at 60 fps (%d)' % len(rows))
     eps = 0.5 / 60

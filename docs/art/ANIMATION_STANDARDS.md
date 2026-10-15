@@ -7,7 +7,8 @@
   - Online clients receive the reload timer at the snapshot rate (20 Hz). The pose follows a presentation clock in `actor.gd` (`_reload_clock`): it advances every visual tick and stays within 0.1 s below the authoritative timer, and it snaps to a new reload or an upward correction. It never writes the timer, ammunition or any gameplay state. At 20 Hz the clip time now changes on every visual tick, where before it changed on 1 tick in 3.
   - The trigger finger curls with the recoil kick.
 - **Still transform-driven:** recoil kick, sway, walk bob, the equip dip, and every other weapon's reload (tilt plus a 0.23 m magazine drop and reseat).
-- **Not authored yet:** draw, inspect, bolt release and a second magazine. The same magazine is pulled and reseated.
+- **A second magazine (rifle only):** the reload swaps two separate magazine nodes; see `docs/reports/media/art-v7/reload-two-magazines/README.md` for what it does, what was measured and what is still wrong with it. The other weapons' reloads are still procedural.
+- **Not authored yet:** draw, inspect and bolt release.
 
 Evidence is under `docs/reports/media/art-v3/`:
 - `motion/`: `5100b3e`, the hand and magazine below the frame;
@@ -31,6 +32,6 @@ Each sequence is a frame-by-frame capture from `game/tests/weapon_motion_capture
 ## Next
 
 1. Draw and inspect clips on the same rig. The game already seeks clips by state (`_deploy_remaining` for draw), and a clip never writes the state it reads.
-2. A second magazine, so the reload is a swap rather than a reseat.
+2. A visible source for the replacement (a pouch or rig); it now rises out of the closing hand because there is none.
 3. A bolt release on empty reloads. It needs the empty or tactical distinction the authoritative actor already has (`ammo == 0` when the reload starts); presentation only.
-4. Reduced motion: the reload pose is scaled by 0.2 like the old tilt. Check that the hand still reads with it.
+4. Reduced motion: the rifle's reload staging is no longer scaled (at 0.2 the hand fell out of the frame); the procedural weapons' dip still is. Decide whether the rifle's roll of about 26 degrees is acceptable with the setting on.

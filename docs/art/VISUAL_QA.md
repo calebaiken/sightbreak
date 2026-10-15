@@ -233,7 +233,7 @@ The scores above stay as the reviewer gave them until a new review re-scores the
 - the bore vanishing point is unchanged;
 - shade contrast;
 - no draw or inspect clips;
-- the reload reseats the same magazine;
+- the reload reseated the same magazine (a second magazine now exists; see the last section);
 - reduced motion is not reviewed.
 
 None of the five weaknesses behind the 5.5 is resolved by these fixes except glove value. The score stays at Codex's 5.5 until a new review re-scores the work.
@@ -334,3 +334,19 @@ Evidence: `docs/reports/media/art-v6/reload-hands-effects/`. This is my own meas
 4. The pistol grip's form (still a flat block), then the rest of the weapon materials: receiver surface response, optic, wear masks, a bolt or charging-handle animation.
 5. Draw and inspect animations.
 
+
+## The reload with a second magazine (2026-10-15, after `d805a90`)
+
+Evidence: `docs/reports/media/art-v7/reload-two-magazines/` (the README there has the measurements, what each does not show, every defect found, and the remaining list). **This is my own measurement plus one independent read-only review by an agent that is not a human and shares a model family with me; it re-scores nothing. The scores above stand.** I do not claim the reload is complete.
+
+**What changed.** Two separate magazine nodes (the old one is extracted at the release click and falls; the replacement rises out of the closing hand, is held from 0.56 and is seated at 0.80 with the seat click; the nodes swap roles at the end). The hand approaches from the left instead of below the frame, the grasp was chosen by counting drawn pixels so the thumb and three fingertips show, the lift is 14 cm, reduced motion no longer shrinks the rifle's staging, and brass lands on the floor under the port.
+
+**How it was checked.** 92 headless checks on identity, paths, grip, click timing under three kinds of timer, reduced motion, authority, edge paths (cancel, reset, restart, weapon swap, remote actor, the SMG) and brass; a native test that counts the pixels each part draws (hand at least 13,984, thumb at least 237, three fingertips at least 100 whenever a magazine is held; **it is lighting-independent and says nothing about contrast**); a contact test on the Blender clip (tips 0 to 4 mm from the magazine, 0.9 mm of the left arm in it); and 22 injected defects, all caught. `scripts/validate.sh` passed. Full real-time frame sequences (153 ticks at 60 Hz) in five views are in the evidence folder.
+
+**What the independent review said, as opinion.** The replacement popped into an empty hand (answered by the rise out of the hand, not re-reviewed); the grasp reads as a carried stick more than a wrap or a pinch (not changed); in backlight and shade the hand, grip and magazine are close in value (not measured, not changed); the discard is readable but timid. It also found real defects, listed in the README with what was done.
+
+**Still open, in the order I would take them:**
+1. A visible source for the replacement magazine, then an independent look at whether it still reads as a trick.
+2. The grip hand's anatomy (it is a glove fist), and value separation of the hand, grip and magazine in shade and backlight, which nobody has measured on this reload.
+3. The tan magazine beside the tan pistol grip.
+4. A human review of the frame sequences, a listening review of the two clicks, a decision on reduced motion for the rifle's roll, and any look at all on a phone.

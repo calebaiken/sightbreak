@@ -11,7 +11,9 @@ extends RefCounted
 ##   GRASP - UNLATCH  the hand takes the weight; at UNLATCH the latch lets go (release click)
 ##   UNLATCH - CLEAR  the old magazine slides out along its own well and clears it
 ##   CLEAR - DROP     it swings out to the left; at DROP the fingers open and it is let go
-##   DROP - ACQUIRE   the empty hand goes down and left to the pouch, out of the main view
+##   DROP - ACQUIRE   the empty hand goes to the left and a little down (it stays in the frame); there is
+##                    no pouch to show, so the replacement comes up out of the closing hand (below)
+##   ACQUIRE - FETCH  from FETCH before ACQUIRE the replacement rises out of the palm as the fingers close
 ##   at ACQUIRE       the fingers close on the REPLACEMENT magazine (a second mesh)
 ##   ACQUIRE - ALIGN  the replacement is brought up into view and lined up under the well
 ##   ALIGN - ENTER    its top enters the well
@@ -29,6 +31,8 @@ const ALIGN := 0.68
 const ENTER := 0.74
 const SEAT := 0.80
 const LETGO := 0.85
+## How long before ACQUIRE the replacement starts to come up out of the hand.
+const FETCH := 0.08
 
 ## Presentation events, in order, and the phase each fires at. The audio follows the VISIBLE
 ## animation (the presentation clock), so a click lands on the frame the part moves.

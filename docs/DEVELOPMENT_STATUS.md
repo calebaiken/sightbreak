@@ -23,7 +23,7 @@ Updated 2026-10-14 by Claude (cloud session). Read this first when resuming work
 - **Relay AR rifle:** original and real scale. 30,326 triangles (25,194 in first person), with a 1024² baked PBR set.
 - **Rigged arms:**
   - 9,204 triangles and 34 bones, with a contact-solved grip and a 1 s, 60 fps reload clip.
-  - The reload is a mechanical sequence: the support hand comes up from below, cups the magazine's base, slides it out along its well, shows it, lines it up, enters it, pushes it to its stop (0.80), holds, and lets go only at 0.85. The magazine is posed from the hand while it holds it (`Actor._pose_magazine`). Measured: the magazine is at least 94 % on screen and at most 1 % covered throughout, and the arms enter neither the rifle nor the magazine (`docs/reports/media/art-v6/`).
+  - The reload uses **two magazine nodes**: the support hand takes the old one out along its well at the release click (0.24), lets it go (it falls), fetches the second (it rises out of the closing hand, held from 0.56), brings it up, lines it up, enters it and seats it at 0.80 with the seat click, holds to 0.85 and returns; the nodes swap roles when it ends. Phases are one list (`reload_phases.gd`) that the Blender build and the actor share. Measured, with what each measurement does not show, in `docs/reports/media/art-v7/reload-two-magazines/`: the left arm is 0.0 mm into the rifle and 0.9 mm into the magazine, the right arm 1.3 mm into the trigger; the support hand is at least 13,984 px in every frame and the thumb at least 237 px and three fingertips at least 100 px whenever it holds a magazine (a floor against hiding them, not a legibility measure). **The animation is not finished**: the replacement has no visible source, the hand is still a glove fist, nothing measures how it reads in shade, the tan magazine and grip are alike, and nothing has been seen on a phone or by a person (the README lists ten).
   - The sleeve is a muted olive-drab (median luma 110 in sun, was 146) with a finer hem; gloves are 25 % lighter.
   - A presentation-only reload clock keeps poses smooth at the 20 Hz snapshot rate.
 - **Bore:** the rifle's vanishing point is 38 px left and 21 px above the crosshair (3.5°, was 124 px left, 10.0°) and the bore line passes through the crosshair.
@@ -44,7 +44,7 @@ The review record is in `docs/art/VISUAL_QA.md`. Codex scored the slice 5.5/10; 
    - the pistol grip is still a flat block;
    - the static v2 fallback hands are still the v2 asset.
 3. **Lighting:** shade contrast between receiver and arms; over-bright backlit rims.
-4. **Animation:** draw and inspect clips; a second magazine mesh (the replacement is the same magazine re-seated); reduced motion reviewed.
+4. **Animation:** draw and inspect clips; a visible source for the replacement magazine; the grip hand's anatomy; reduced motion for the rifle's roll reviewed by someone who uses the setting.
 5. **Effects:** a bolt or charging-handle animation, a light for the flash (it is a mesh only), reload sound design.
 6. **The rifle:** a LOW-tier LOD and a UV repack.
 7. **Next weapons:** sidearm, SMG and marksman rifle through the same pipeline.

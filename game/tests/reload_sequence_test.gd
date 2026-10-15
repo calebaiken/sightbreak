@@ -238,6 +238,7 @@ func _run() -> void:
 	await _visibility()
 	await _authority()
 	await _casings()
+	await _edges()
 	print("RELOAD_SEQUENCE_TEST checks=%d failures=%d" % [checks, failures.size()])
 	quit(1 if not failures.is_empty() else 0)
 
@@ -264,7 +265,11 @@ func _identity() -> void:
 	# At the acquisition: two magazines exist at once, a hand's reach apart.
 	var both := timeline[_first(timeline, func(t): return t.old_visible and t.new_visible)]
 	check(both.old_visible and both.new_visible and (both.old_pos as Vector3).distance_to(both.new_pos) > 0.08, "for a moment both magazines are drawn, %.0f mm apart: two separate objects" % (((both.old_pos as Vector3).distance_to(both.new_pos)) * 1000.0))
-	check(both.in_hand == 1, "when both are drawn the hand holds the replacement")
+	var acquired := timeline[_first(timeline, func(t): return t.progress >= SBReloadPhases.ACQUIRE + 0.01)]
+	check(acquired.in_hand == 1 and acquired.new_visible, "from the acquisition the hand holds the replacement")
+	# Before that the replacement is drawn only while it rises out of the closing hand, never before.
+	var first_drawn := timeline[_first(timeline, func(t): return t.new_visible)]
+	check(first_drawn.progress >= SBReloadPhases.ACQUIRE - SBReloadPhases.FETCH - 0.01 and first_drawn.in_hand != 1, "the replacement is first drawn %.2f of the reload before the acquisition, rising out of the hand, not held yet" % (SBReloadPhases.ACQUIRE - first_drawn.progress))
 	# The old one never comes back to the well, and is gone before the end.
 	var came_back := false
 	for t in timeline:
@@ -575,3 +580,132 @@ func _casings() -> void:
 	await physics_frame
 	var through: float = shooter._cosmetic_floor(shooter.global_position + Vector3(0, 1.6, 0))
 	check(absf(through) < 0.01, "the shooter's own capsule is not the floor under the port (%.3f)" % through)
+
+## The paths a match actually takes besides a clean reload: cancelled before and after the seat, with the
+## replacement in hand, a round reset, a weapon swap, a restart with no idle frame between, a remote actor,
+## and the procedural weapons (which keep their older click timing and 20 % reduced-motion dip).
+func _edges() -> void:
+	var shown := func(a: SBActor) -> int:
+		var n := 0
+		for node in [a._magazine, a._magazine_spare]:
+			if node != null and node.visible:
+				n += 1
+		return n
+	# Cancel with the replacement in the hand: the first magazine goes back in the well, nothing swaps.
+	_drive(actor, 0.65)
+	var first: MeshInstance3D = actor._magazine
+	var second: MeshInstance3D = actor._magazine_spare
+	check(actor._magazine_in_hand == second, "mid-reload with the replacement in hand")
+	actor.reload_remaining = 0.0
+	actor.tick_visual(TICK)
+	check(actor._magazine == first and actor._magazine_spare == second and shown.call(actor) == 1 and first.visible and _offset(first).length() < 0.0005, "a reload cancelled with the replacement in the hand puts the first magazine back and swaps nothing")
+	# Cancel after the seat: the replacement is what sits in the well, once.
+	_drive(actor, SBReloadPhases.SEAT + 0.03)
+	var before_first: MeshInstance3D = actor._magazine
+	var before_second: MeshInstance3D = actor._magazine_spare
+	actor.reload_remaining = 0.0
+	actor.tick_visual(TICK)
+	check(actor._magazine == before_second and actor._magazine_spare == before_first and shown.call(actor) == 1 and _offset(actor._magazine).length() < 0.0005, "a reload cancelled after the seat leaves the replacement seated in the well, one magazine drawn")
+	# A round reset mid-reload: one magazine, and the next reload clicks again.
+	_drive(actor, 0.5)
+	actor.reset_for_round(Vector3.ZERO)
+	actor.tick_visual(TICK)
+	check(shown.call(actor) == 1 and actor._magazine.visible and actor._magazine_in_hand == null and not actor._magazine_swap_pending, "a round reset mid-reload leaves one magazine in the well and no pending swap")
+	actor.ammo = 10
+	actor.reserve = 90
+	var cues: Array[String] = []
+	var listener := func(event: String, _p: float): cues.append(event)
+	actor.reload_cue.connect(listener)
+	_drive(actor, 0.95)
+	actor.reload_cue.disconnect(listener)
+	check(cues == ["unlatch", "seat"], "and the reload after it clicks both times (%s)" % [cues])
+	# Back to back with no idle frame between: the second reload clicks again and swaps once.
+	actor.reload_remaining = 0.0
+	actor.tick_visual(TICK)
+	var node_a: MeshInstance3D = actor._magazine
+	var node_b: MeshInstance3D = actor._magazine_spare
+	var again: Array[String] = []
+	var listener2 := func(event: String, _p: float): again.append(event)
+	actor.reload_cue.connect(listener2)
+	_drive(actor, 0.9, false)  # first reload to its end, reload_remaining still above zero
+	actor.reload_remaining = reload_seconds  # the timer restarts (a new reload) with no zero frame
+	for tick in int(reload_seconds / TICK) + 3:
+		actor.reload_remaining = maxf(0.001, reload_seconds - float(tick) * TICK)
+		actor.tick_visual(TICK)
+	actor.reload_cue.disconnect(listener2)
+	check(again.count("unlatch") == 2 and again.count("seat") == 2, "a reload restarted with no idle frame between clicks both times again (%s)" % [again])
+	actor.reload_remaining = 0.0
+	actor.tick_visual(TICK)
+	check(shown.call(actor) == 1 and (actor._magazine == node_a or actor._magazine == node_b), "and ends with one magazine drawn")
+	# A weapon swap mid-reload and back: no stale state, one magazine each time.
+	actor.ammo = 10
+	_drive(actor, 0.6)
+	actor.input_state = {"weapon": "sidearm"}
+	actor.tick_authority(TICK)
+	actor.input_state = {}
+	actor.tick_visual(TICK)
+	check(actor.weapon_id == "sidearm" and actor._magazine_in_hand == null and not actor._magazine_swap_pending and (actor._magazine == null or actor._magazine.visible), "swapping weapons mid-reload clears the reload's presentation state (weapon %s, in hand %s, pending %s)" % [actor.weapon_id, actor._magazine_in_hand, actor._magazine_swap_pending])
+	actor.input_state = {"weapon": "rifle"}
+	actor.tick_authority(TICK)
+	actor.input_state = {}
+	actor.reload_remaining = 0.0
+	actor.tick_visual(TICK)
+	check(actor.weapon_id == "rifle" and shown.call(actor) == 1, "and swapping back leaves one magazine drawn")
+	# A remote actor (no camera, never drawn in first person) is not touched by any of it.
+	var remote := Actor.new()
+	remote.configure(61, 1, "Remote", false)
+	world.add_child(remote)
+	remote.reset_for_round(Vector3(9, 0, 9))
+	remote.credits = 5000
+	remote.buy_weapon("rifle")
+	remote.ammo = 10
+	remote.reserve = 90
+	remote.start_reload()
+	for tick in int((reload_seconds + 0.3) / TICK):
+		remote.tick_authority(TICK)
+		remote.tick_visual(TICK)
+	check(remote.ammo == 30 and remote.reserve == 70 and remote.reload_remaining == 0.0, "a remote actor completes its authoritative reload unchanged (%d/%d)" % [remote.ammo, remote.reserve])
+	remote.queue_free()
+	# The procedural weapons keep their click timing (the release at the start, the seat at 0.80) and their calmed dip.
+	var procedural := _new_actor(62)
+	procedural.global_position = Vector3(-8, 0, 3)
+	procedural.buy_weapon("smg")
+	procedural.ammo = 5
+	procedural.reserve = 40
+	await physics_frame
+	check(not is_instance_valid(procedural._arms_player), "the SMG has no rigged hands")
+	var smg_seconds := float(Weapons.get_weapon("smg")["reload"])
+	var smg_cues: Array = []
+	var smg_listener := func(event: String, p: float): smg_cues.append([event, p])
+	procedural.reload_cue.connect(smg_listener)
+	var normal_dip := 0.0
+	var calm_dip := 0.0
+	for pass_index in 2:
+		procedural.reduced_motion = pass_index == 1
+		procedural.reload_remaining = 0.0
+		procedural.tick_visual(TICK)
+		var rest_position: Vector3 = procedural._gun.position
+		smg_cues.clear()
+		var peak := 0.0
+		for tick in int(smg_seconds / TICK) + 2:
+			procedural.reload_remaining = maxf(0.001, smg_seconds - float(tick) * TICK)
+			procedural.tick_visual(TICK)
+			peak = maxf(peak, procedural._gun.position.distance_to(rest_position))
+		if pass_index == 0:
+			normal_dip = peak
+			check(smg_cues.size() == 2 and smg_cues[0][0] == "unlatch" and float(smg_cues[0][1]) < 0.05 and smg_cues[1][0] == "seat" and absf(float(smg_cues[1][1]) - SBReloadPhases.SEAT) < 0.02, "the SMG's release click is at the start and its seat click at the seat, once each (%s)" % [smg_cues])
+		else:
+			calm_dip = peak
+	procedural.reload_cue.disconnect(smg_listener)
+	check(normal_dip > 0.05 and calm_dip < normal_dip * 0.3 and calm_dip > normal_dip * 0.1, "with reduced motion the SMG's reload dip is about a fifth of the normal one (%.0f mm against %.0f mm)" % [calm_dip * 1000.0, normal_dip * 1000.0])
+
+## Drives the actor's reload from a clean start to `progress` at 60 Hz with the authoritative timer assigned as a
+## client would; `finish` false leaves the reload still running.
+func _drive(a: SBActor, progress: float, _finish := true) -> void:
+	a.reload_remaining = 0.0
+	a.tick_visual(TICK)
+	a.ammo = 10
+	var steps := int(progress * reload_seconds / TICK) + 1
+	for tick in steps:
+		a.reload_remaining = maxf(0.001, reload_seconds - float(tick) * TICK)
+		a.tick_visual(TICK)

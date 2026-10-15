@@ -148,6 +148,12 @@ var _reload_visual_unlatched := false
 ## A reload that has reached the seat swaps the two magazine nodes when it ends, so the replacement
 ## really is the magazine in the well afterwards and the next reload takes THAT one out.
 var _magazine_swap_pending := false
+## The direction (in the gun's space) from the seated magazine's top, in the well, to its base, and its
+## length along it: measured once from the mesh, used to bring the replacement up out of the closing hand.
+var _mag_out_axis := Vector3.DOWN
+var _mag_length := 0.2
+## How much of its length the replacement is sunk into the palm when it first shows (it rises out of it).
+const FETCH_SINK := 1.0
 ## The magazine node a hand is holding right now (null when neither is), for the tests and probes.
 var _magazine_in_hand: MeshInstance3D
 ## Emitted when the presentation clock crosses a reload event ("unlatch", "seat"), on the tick
@@ -485,6 +491,7 @@ func _build_gun() -> void:
 	if is_instance_valid(_magazine):
 		_magazine_rest = _magazine.position
 		_magazine_rest_transform = _magazine.transform
+		_measure_magazine_axis()
 		if _viewmodel and _magazine.get_parent() != null:
 			# The replacement: its own instance of the same mesh, hidden until the hand takes it.
 			_magazine_spare = _magazine.duplicate() as MeshInstance3D
@@ -500,6 +507,10 @@ func _build_gun() -> void:
 	_grip_measured = false
 	_hand_bone = -1
 	_drop_velocity = Vector3.ZERO
+	_magazine_swap_pending = false
+	_reload_visual_seated = false
+	_reload_visual_unlatched = false
+	_magazine_in_hand = null
 	_trigger_bones.clear()
 	_trigger_rest.clear()
 	if is_instance_valid(_arms_skeleton):
@@ -986,6 +997,11 @@ func tick_visual(delta: float) -> void:
 	# The presentation clock first (see RELOAD_VISUAL_SLACK), then everything the player sees and
 	# hears of the reload follows IT, not the authoritative fraction: the click lands on the frame
 	# the part moves, whatever the snapshot jitter.
+	if reloading and _reload_visual_active and reload_remaining - _reload_clock > reload_duration * 0.5:
+		# The timer went up by more than half a reload: this is a NEW reload that never showed an idle
+		# frame in between (a reload restarted at once). Close the old one the way an idle frame would.
+		_swap_magazines_if_seated()
+		_reload_visual_active = false
 	if not reloading:
 		_reload_clock = 0.0
 	elif not _reload_visual_active or _reload_clock <= 0.0 or reload_remaining - _reload_clock > RELOAD_VISUAL_SLACK:
@@ -998,20 +1014,15 @@ func tick_visual(delta: float) -> void:
 		_reload_visual_seated = false
 		_reload_visual_unlatched = false
 		_reload_visual_previous = visual_progress
+		if not is_instance_valid(_arms_player):
+			# Procedural magazines start to drop at once, so their release click is the start (as it always was).
+			_fire_reload_cue("unlatch", visual_progress)
 	if reloading:
 		for event in SBReloadPhases.crossed(_reload_visual_previous, visual_progress):
-			# Each click once per reload, even if a correction takes the clock back over it.
-			if event == "unlatch" and not _reload_visual_unlatched:
-				_reload_visual_unlatched = true
-				_mechanical_audio.stream = _reload_release
-				_mechanical_audio.play()
-				reload_cue.emit(event, visual_progress)
-			elif event == "seat" and not _reload_visual_seated:
-				_reload_visual_seated = true
-				_magazine_swap_pending = true
-				_mechanical_audio.stream = _reload_seat
-				_mechanical_audio.play()
-				reload_cue.emit(event, visual_progress)
+			# The rigged hand's release click is at the latch; the procedural magazines' was at the start.
+			if event == "unlatch" and not is_instance_valid(_arms_player):
+				continue
+			_fire_reload_cue(event, visual_progress)
 		_reload_visual_previous = visual_progress
 	_reload_visual_active = reloading
 	var speed := Vector2(velocity.x, velocity.z).length()
@@ -1051,7 +1062,9 @@ func tick_visual(delta: float) -> void:
 			# Into the reload pose before the hand reaches the magazine, held through the
 			# swap, and back after the seat.
 			reload_tilt = smoothstep(0.0, 0.16, reload_progress) * (1.0 - smoothstep(SBReloadPhases.LETGO, 1.0, reload_progress))
-		# Reduced motion calms sway, bob and the equip swing; it does NOT shrink the reload's staging
+		if reduced_motion and not rigged:
+			reload_tilt *= 0.2 # the procedural weapons' dip is plain motion: still calmed
+		# Reduced motion calms sway, bob and the equip swing; it does NOT shrink the rigged reload's staging
 		# lift, which is what keeps the hand and the magazine on screen for the swap (at 20 % of the
 		# lift the support hand fell below the frame). The pose is reached by the same smooth ramp.
 		var bob_weight := 0.0 if reduced_motion else minf(speed / WALK_SPEED, 1.0)
@@ -1073,6 +1086,30 @@ func tick_visual(delta: float) -> void:
 			for i in range(_trigger_bones.size()):
 				_arms_skeleton.set_bone_pose_rotation(_trigger_bones[i], _trigger_rest[i] * Quaternion(Vector3.RIGHT, -pull * (1.0 if i == 0 else 0.6)))
 
+## Plays and announces a reload click, once per reload (a correction that takes the clock back over it
+## does not click it again).
+func _fire_reload_cue(event: String, progress: float) -> void:
+	if event == "unlatch" and not _reload_visual_unlatched:
+		_reload_visual_unlatched = true
+		_mechanical_audio.stream = _reload_release
+		_mechanical_audio.play()
+		reload_cue.emit(event, progress)
+	elif event == "seat" and not _reload_visual_seated:
+		_reload_visual_seated = true
+		_magazine_swap_pending = true
+		_mechanical_audio.stream = _reload_seat
+		_mechanical_audio.play()
+		reload_cue.emit(event, progress)
+
+## The reload reached the seat: the replacement is the magazine in the well from now on, and the one that
+## fell is the spare for the next reload (two real nodes, alternating).
+func _swap_magazines_if_seated() -> void:
+	if _magazine_swap_pending and is_instance_valid(_magazine_spare) and is_instance_valid(_magazine):
+		var seated := _magazine_spare
+		_magazine_spare = _magazine
+		_magazine = seated
+	_magazine_swap_pending = false
+
 ## Where the magazines are for a reload progress. With the rigged arms the old magazine rides the
 ## support hand from the grasp to the drop (the clip took it out of the well and swung it out), then
 ## falls; the replacement, a second mesh, appears in the hand at the acquisition, is carried to the
@@ -1090,13 +1127,7 @@ func _pose_magazines(progress: float) -> void:
 		_measure_hold()
 	var reloading := reload_remaining > 0
 	if not reloading:
-		if _magazine_swap_pending and is_instance_valid(_magazine_spare):
-			# The reload reached the seat: the replacement is the magazine in the well from now on,
-			# and the one that fell is the spare for the next reload (two real nodes, alternating).
-			var seated := _magazine_spare
-			_magazine_spare = _magazine
-			_magazine = seated
-		_magazine_swap_pending = false
+		_swap_magazines_if_seated()
 		_magazine.visible = true
 		_magazine.transform = _magazine_rest_transform
 		if is_instance_valid(_magazine_spare):
@@ -1119,10 +1150,47 @@ func _pose_magazines(progress: float) -> void:
 		_magazine.transform = _dropped_transform(fall)
 	# The replacement.
 	if is_instance_valid(_magazine_spare):
-		_magazine_spare.visible = progress >= SBReloadPhases.ACQUIRE
-		_magazine_spare.transform = in_hand if progress <= SBReloadPhases.LETGO else _magazine_rest_transform
-		if _magazine_spare.visible and progress <= SBReloadPhases.LETGO:
-			_magazine_in_hand = _magazine_spare
+		# It comes up out of the closing hand over FETCH before the acquisition (a magazine that is simply
+		# there when the fingers close reads as a magic trick): sunk toward the palm, which hides it, then raised.
+		var fetch_start := SBReloadPhases.ACQUIRE - SBReloadPhases.FETCH
+		_magazine_spare.visible = progress >= fetch_start
+		if progress > SBReloadPhases.LETGO:
+			_magazine_spare.transform = _magazine_rest_transform
+		elif progress < SBReloadPhases.ACQUIRE:
+			var t := clampf((progress - fetch_start) / SBReloadPhases.FETCH, 0.0, 1.0)
+			var raised := t * t * (3.0 - 2.0 * t)
+			var out_axis_held := in_hand.basis * (_magazine_rest_transform.basis.inverse() * _mag_out_axis)
+			_magazine_spare.transform = Transform3D(in_hand.basis, in_hand.origin + out_axis_held * _mag_length * FETCH_SINK * (1.0 - raised))
+		else:
+			_magazine_spare.transform = in_hand
+		if progress >= SBReloadPhases.ACQUIRE and progress <= SBReloadPhases.LETGO:
+			_magazine_in_hand = _magazine_spare # held from the acquisition; before it, it is rising out of the closing hand
+
+## Measures the seated magazine's long axis (top, in the well, to base) and length from its own mesh.
+func _measure_magazine_axis() -> void:
+	var vertices: PackedVector3Array = _magazine.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+	var top_y := -INF
+	var bottom_y := INF
+	for vertex in vertices:
+		var in_gun: Vector3 = _magazine_rest_transform * vertex
+		top_y = maxf(top_y, in_gun.y)
+		bottom_y = minf(bottom_y, in_gun.y)
+	var top := Vector3.ZERO
+	var top_count := 0
+	var bottom := Vector3.ZERO
+	var bottom_count := 0
+	for vertex in vertices:
+		var in_gun: Vector3 = _magazine_rest_transform * vertex
+		if in_gun.y > top_y - 0.01:
+			top += in_gun
+			top_count += 1
+		elif in_gun.y < bottom_y + 0.01:
+			bottom += in_gun
+			bottom_count += 1
+	if top_count > 0 and bottom_count > 0:
+		var span := bottom / bottom_count - top / top_count
+		_mag_length = span.length()
+		_mag_out_axis = span.normalized()
 
 ## The old magazine `fall` seconds after the hand lets go: it leaves with a share of the hand's
 ## speed and falls under gravity (pointing down in the world, whatever the rifle's roll), tumbling

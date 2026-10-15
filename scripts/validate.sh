@@ -33,6 +33,12 @@ run_godot cosmetics --headless --script res://tests/cosmetic_presentation_test.g
 run_godot weapon-art --headless --script res://tests/weapon_art_test.gd
 run_godot reload-sequence --headless --script res://tests/reload_sequence_test.gd
 python3 scripts/test_reload_contact.py | tee "$validation_dir/reload-contact.log"
+if [[ -n "${DISPLAY:-}" ]]; then
+  # Counts the pixels each part of the reload really draws; needs a rendering display (Xvfb is enough).
+  run_godot reload-visibility --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_visibility_test.gd -- --step=2
+else
+  printf 'reload-visibility skipped: no DISPLAY (needs a native rendering display)\n'
+fi
 ./scripts/test_network.sh
 if [[ "${1:-}" == --backend ]]; then
   backend/dev-db.sh

@@ -41,8 +41,8 @@ VIS_REDUCED = ('visibility (reduced motion)', VIS[1] + ['--reduced'])
 # (id, what, [(file, old, new)], build_env or None, tests that must fail)
 SOURCE = [
     ('N1', 'the replacement is the first magazine again (one node, not two)', [(ACTOR, '_magazine_spare = _magazine.duplicate() as MeshInstance3D', '_magazine_spare = _magazine')], None, [SEQ]),
-    ('N2', 'the replacement is never drawn', [(ACTOR, '_magazine_spare.visible = progress >= SBReloadPhases.ACQUIRE', '_magazine_spare.visible = false')], None, [SEQ]),
-    ('N3', 'the nodes do not swap when the reload ends', [(ACTOR, '\t\t\t\t_magazine_swap_pending = true\n', '')], None, [SEQ]),
+    ('N2', 'the replacement is never drawn', [(ACTOR, '_magazine_spare.visible = progress >= fetch_start', '_magazine_spare.visible = false')], None, [SEQ]),
+    ('N3', 'the nodes do not swap when the reload ends', [(ACTOR, '\t\t_magazine_swap_pending = true\n\t\t_mechanical_audio.stream = _reload_seat', '\t\t_mechanical_audio.stream = _reload_seat')], None, [SEQ]),
     ('N4', 'the magazine is held 30 mm from where the hand grips it', [(ACTOR, '\t_grip_offset = _hand_in_gun().affine_inverse() * _magazine_rest_transform\n', '\t_grip_offset = _hand_in_gun().affine_inverse() * _magazine_rest_transform\n\t_grip_offset.origin += Vector3(0.0, 0.0, 0.030)\n')], None, [SEQ]),
     ('N5', 'the old magazine comes back to the well while the replacement is drawn', [(ACTOR, '\t\t_magazine.transform = _dropped_transform(fall)\n', '\t\t_magazine.transform = _magazine_rest_transform\n')], None, [SEQ]),
     ('N6', 'reduced motion shrinks the reload staging to a fifth', [(ACTOR, '\t\tvar bob_weight := 0.0 if reduced_motion', '\t\tif reduced_motion:\n\t\t\treload_tilt *= 0.2\n\t\tvar bob_weight := 0.0 if reduced_motion')], None, [SEQ, VIS_REDUCED]),
@@ -50,9 +50,13 @@ SOURCE = [
     ('N8', 'the seat click fires 0.05 of the reload early', [(PHASES, '["seat", SEAT]', '["seat", SEAT - 0.05]')], None, [SEQ]),
     ('N9', 'the seat click fires at the let-go instead of the seat', [(PHASES, '["seat", SEAT]', '["seat", LETGO]')], None, [SEQ]),
     ('N10', 'a clock correction that goes back over the seat clicks it twice', [(ACTOR, 'elif event == "seat" and not _reload_visual_seated:', 'elif event == "seat":')], None, [SEQ]),
-    ('N11', 'the seat click plays the release sound', [(ACTOR, '\t\t\t\t_mechanical_audio.stream = _reload_seat\n', '\t\t\t\t_mechanical_audio.stream = _reload_release\n')], None, [SEQ]),
+    ('N11', 'the seat click plays the release sound', [(ACTOR, '_mechanical_audio.stream = _reload_seat\n', '_mechanical_audio.stream = _reload_release\n')], None, [SEQ]),
     ('N12', 'brass lands at the shooter\'s feet again', [(ACTOR, '.casing(port, global_basis.x, _cosmetic_floor(port))', '.casing(port, global_basis.x, global_position.y)')], None, [SEQ]),
-    ('N13', 'the animation completes the reload by writing the timer', [(ACTOR, '\t\t\t\t_magazine_swap_pending = true\n', '\t\t\t\t_magazine_swap_pending = true\n\t\t\t\treload_remaining = 0.0\n')], None, [SEQ]),
+    ('N13', 'the animation completes the reload by writing the timer', [(ACTOR, '\t\t_magazine_swap_pending = true\n\t\t_mechanical_audio.stream = _reload_seat', '\t\t_magazine_swap_pending = true\n\t\treload_remaining = 0.0\n\t\t_mechanical_audio.stream = _reload_seat')], None, [SEQ]),
+    ('N19', 'the SMG\'s release click moves to the rifle\'s latch phase', [(ACTOR, '\t\t\t_fire_reload_cue("unlatch", visual_progress)\n', '\t\t\tpass\n'), (ACTOR, 'if event == "unlatch" and not is_instance_valid(_arms_player):\n\t\t\t\tcontinue', 'if false:\n\t\t\t\tcontinue')], None, [SEQ]),
+    ('N20', 'reduced motion no longer calms the procedural weapons\' reload dip', [(ACTOR, '\t\t\treload_tilt *= 0.2 # the procedural weapons\' dip is plain motion: still calmed\n', '\t\t\tpass\n')], None, [SEQ]),
+    ('N21', 'a reload restarted with no idle frame between does not reset its clicks', [(ACTOR, 'if reloading and _reload_visual_active and reload_remaining - _reload_clock > reload_duration * 0.5:', 'if false:')], None, [SEQ]),
+    ('N22', 'the replacement is simply there when the fingers close (no rise out of the hand)', [(ACTOR, '_magazine_spare.visible = progress >= fetch_start', '_magazine_spare.visible = progress >= SBReloadPhases.ACQUIRE')], None, [SEQ]),
     ('N14', 'the seat phase is changed in reload_phases.gd without rebuilding the clip', [(PHASES, 'const SEAT := 0.80', 'const SEAT := 0.78')], None, [ART, SEQ]),
 ]
 CLIPS = [
@@ -79,6 +83,9 @@ def run_test(test):
         return name, 'CRASHED', ['no summary line (exit %d)' % code]
     failures = int(m[-1].group(3))
     errors = [e for e in ERRORS.findall(out)][:3]
+    script_errors = re.findall(r'^SCRIPT ERROR: .*$', out, re.M)
+    if script_errors:  # a script error aborts a check mid-way even when the summary line says failures=0
+        return name, 'FAILED', ['(script error) ' + script_errors[0]] + errors
     return name, ('FAILED' if failures else 'passed'), errors
 
 
