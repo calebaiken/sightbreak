@@ -112,18 +112,21 @@ def material(name, colour, rough):
 PALETTE = {
     # v8: the gloves are a cool graphite (they were a warm charcoal): lit by the sun that reads as tan, and the review found the right glove
     # read as bare skin beside the left, which stands in shade. A blue-grey glove stays a glove in warm light, and is still well below the sleeve.
-    'fabric': ((0.025, 0.027, 0.033), 0.86), 'palm': ((0.036, 0.038, 0.044), 0.93),
-    'shell': ((0.012, 0.012, 0.013), 0.48), 'strap': ((0.020, 0.020, 0.022), 0.80),
-    'cuff': ((0.023, 0.025, 0.030), 0.88),
+    'fabric': ((0.025, 0.027, 0.033), 0.86), 'palm': ((0.040, 0.042, 0.050), 0.93),
+    'shell': ((0.009, 0.009, 0.010), 0.46), 'strap': ((0.030, 0.030, 0.033), 0.80),
+    'cuff': ((0.026, 0.028, 0.034), 0.88),
+    # v9: construction you can read at 1280 x 720: suede fingertips and palm lighter than the knit back of the hand, a near-black
+    # moulded guard, a darker rubber palm pad, and thread-coloured piping that outlines the fingers
+    'seam': ((0.060, 0.064, 0.074), 0.90), 'tip': ((0.034, 0.036, 0.044), 0.94), 'pad': ((0.014, 0.015, 0.018), 0.70),
     'sleeve': ((0.045, 0.051, 0.041), 0.90), 'hem': ((0.037, 0.042, 0.034), 0.88),
 }
 
 
 # Game-mesh density: about 8.3k triangles for both arms (v3 was 10,672; the documented
 # hands-and-sleeves budget is 10,000). The sleeve's folds are in the normal map.
-GLOVE_QUADS = 1800
-SLEEVE_SEGMENTS = 32
-SLEEVE_RINGS = 20
+GLOVE_QUADS = 2100
+SLEEVE_SEGMENTS = 28
+SLEEVE_RINGS = 16
 
 
 def right_arm_meshes(h_high, h_mid, glove_faces, sleeve_faces, high=True):
@@ -136,12 +139,21 @@ def right_arm_meshes(h_high, h_mid, glove_faces, sleeve_faces, high=True):
         centres = (v[q[:, 0]] + v[q[:, 2]]) / 2
         reg = sdf.nearest_region(centres, [s for s, k in shapes[0]], 'fabric')
         reg = np.where(reg == None, 'fabric', reg)  # noqa: E711
-        glove_regions = ('fabric', 'palm', 'shell', 'strap', 'cuff')
+        # The palm filler and the heel pad are volumes inside the hand: where the back of the hand is thin their surface comes
+        # as near the skin as the fabric does, and the nearest-surface rule painted stray patches on the back of the hand
+        # and the wrist (seen in v9's first build). Palm and pad colours belong to surfaces that face the palm side only.
+        normals = np.cross(v[q[:, 1]] - v[q[:, 0]], v[q[:, 3]] - v[q[:, 0]])
+        normals /= np.maximum(np.linalg.norm(normals, axis=1, keepdims=True), 1e-12)
+        if (normals * (centres - v.mean(axis=0))).sum() < 0:
+            normals = -normals
+        palmar = normals[:, 2] < -0.35
+        reg = np.where(np.isin(reg, ('palm', 'pad')) & ~palmar, 'fabric', reg)
+        glove_regions = ('fabric', 'palm', 'shell', 'strap', 'cuff', 'seam', 'tip', 'pad')
         parts['glove_high'] = mesh_object('glove_high', v, q, [mats[r] for r in glove_regions], reg)
         v, q = sdf.mesh(arms.sleeve_distance, *arms.sleeve_bounds(), h_high * 1.4)
         centres = (v[q[:, 0]] + v[q[:, 2]]) / 2
         parts['sleeve_high'] = mesh_object('sleeve_high', v, q, [mats['sleeve'], mats['hem']], arms.sleeve_region(centres))
-    plain = (shapes[0], [])
+    plain = ([(shape, k) for shape, k in shapes[0] if shape.region != 'seam'], [])   # the piping is bake detail, not game mesh
     v, q = sdf.mesh(lambda P: arms.glove_distance(P, plain), *arms.glove_bounds(), h_mid)
     glove = retopo(mesh_object('glove_low', v, q), glove_faces)
     v, f = arms.sleeve_low_mesh(SLEEVE_SEGMENTS, SLEEVE_RINGS)
@@ -620,8 +632,9 @@ def detail_material(name, colour, rough, kind):
     base.inputs['B'].default_value = (*[c * 1.12 for c in colour], 1)
     links.new(tone.outputs['Fac'], base.inputs['Factor'])
     # Wear lightens only slightly: scuffed fabric, not a different colour.
-    wear_colour = {'fabric': (0.050, 0.054, 0.064), 'palm': (0.058, 0.062, 0.072), 'shell': (0.040, 0.040, 0.041),
-                   'strap': (0.034, 0.034, 0.037), 'cuff': (0.040, 0.043, 0.050), 'sleeve': (0.080, 0.088, 0.068), 'hem': (0.066, 0.072, 0.056)}[name]
+    wear_colour = {'fabric': (0.050, 0.054, 0.064), 'palm': (0.062, 0.064, 0.074), 'shell': (0.034, 0.034, 0.036),
+                   'seam': (0.085, 0.090, 0.104), 'tip': (0.058, 0.060, 0.070), 'pad': (0.032, 0.034, 0.040),
+                   'strap': (0.046, 0.046, 0.050), 'cuff': (0.040, 0.043, 0.050), 'sleeve': (0.080, 0.088, 0.068), 'hem': (0.066, 0.072, 0.056)}[name]
     worn = nodes.new('ShaderNodeMix')
     worn.data_type = 'RGBA'
     worn.inputs['B'].default_value = (*wear_colour, 1)
@@ -648,6 +661,18 @@ def detail_material(name, colour, rough, kind):
         grid.squash = 1.0
         links.new(coord.outputs['Object'], grid.inputs['Vector'])
         bump.inputs['Strength'].default_value = 0.35
+        links.new(grid.outputs['Fac'], bump.inputs['Height'])
+    elif kind == 'knit' and name in ('fabric', 'cuff', 'tip', 'palm'):
+        # v9: a knit rib you can see at gameplay size (a 4 to 5 mm cell, three or four texels of the 1024 atlas), not the
+        # sub-millimetre grain that disappeared there. Palm and tips take a finer, flatter version (suede grain).
+        grid = nodes.new('ShaderNodeTexBrick')
+        grid.inputs['Scale'].default_value = 230.0 if name in ('fabric', 'cuff') else 420.0
+        grid.inputs['Mortar Size'].default_value = 0.14
+        grid.offset = 0.5
+        grid.squash = 1.0
+        links.new(coord.outputs['Object'], grid.inputs['Vector'])
+        bump.inputs['Distance'].default_value = 0.0006
+        bump.inputs['Strength'].default_value = 0.45 if name in ('fabric', 'cuff') else 0.25
         links.new(grid.outputs['Fac'], bump.inputs['Height'])
     else:
         weave = nodes.new('ShaderNodeTexNoise')
@@ -717,7 +742,7 @@ def bake_arm(parts, out_dir, size=2048, samples=48):
     UV island. Occlusion still sees the whole arm."""
     low = parts['arm_low']
     for name, (colour, rough) in PALETTE.items():
-        detail_material(name, colour, rough, 'ripstop' if name == 'sleeve' else 'fabric')
+        detail_material(name, colour, rough, 'ripstop' if name == 'sleeve' else 'knit')
     target = bpy.data.materials.new('arms')
     target.use_nodes = True
     sleeve_faces = [p.material_index == low.data.materials.find('sleeve') for p in low.data.polygons]
@@ -1255,7 +1280,7 @@ def review_clip(rig, arms_obj, rifle, axis, out_dir, fps=60):
             world = evaluated.matrix_world @ v.co
             d = body.distance(world)
             if d < -0.0005:
-                if os.environ.get('ARMS_DEBUG_DEEP') and side == 'L' and -d > 0.0009:
+                if os.environ.get('ARMS_DEBUG_DEEP') and -d > 0.0009:
                     print('DEEP', frame, group, round(-d * 1000, 2), tuple(round(c, 3) for c in world))
                     if os.environ.get('ARMS_DEBUG_DEEP') == '2':
                         for o in rifle:

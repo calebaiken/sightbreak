@@ -22,7 +22,7 @@ const ViewmodelShading = preload("res://scripts/gameplay/viewmodel_shading.gd")
 const RELOAD_SECONDS := 2.25
 const TICK := 1.0 / 60.0
 const VIEWS := {"sunlit": [Vector3(3, 0.05, -12), 0.35], "shade": [Vector3(0, 0.05, 20.5), 0.1]}
-const PARTS := ["receiver", "handguard", "furniture"]
+const PARTS := ["receiver", "handguard", "furniture", "arms"]
 var world: Node3D
 var actor: SBActor
 var sun: DirectionalLight3D
@@ -55,6 +55,7 @@ func _node(part: String) -> Node3D:
 	match part:
 		"receiver": return actor._gun.get_node("paint_receiver")
 		"handguard": return actor._gun.get_node("paint_handguard")
+		"arms": return actor._gun.get_node("arms")
 		_: return actor._gun.get_node("body")
 
 func _mask(shown: Image, hidden: Image) -> PackedInt32Array:
@@ -117,6 +118,13 @@ func _studio(finish: ShaderMaterial, strength: float, gradient: float) -> Shader
 	var material := _patched(finish, line)
 	material.shader.code = material.shader.code.replace("shader_type spatial;", "shader_type spatial;\nrender_mode ambient_light_disabled;")
 	return material
+
+## The rigged arms' shader material (null for the procedural rifle).
+func _arms_material() -> ShaderMaterial:
+	if not SBWeaponModel.use_authored:
+		return null
+	var meshes: Array[Node] = (_node("arms") as Node3D).find_children("*", "MeshInstance3D", true, false)
+	return (meshes[0] as MeshInstance3D).material_override as ShaderMaterial if not meshes.is_empty() else null
 
 func _pose(tick: int) -> void:
 	actor._equip_blend = 0.0
@@ -230,7 +238,7 @@ func _run() -> void:
 	var ambient_energy := environment.ambient_light_energy
 	var reflected := environment.reflected_light_source
 	var finish: ShaderMaterial = actor._finish
-	var rows: PackedStringArray = ["tick,condition,receiver_r,receiver_g,receiver_b,receiver_luma,handguard_luma,furniture_luma,pose,audit"]
+	var rows: PackedStringArray = ["tick,condition,receiver_r,receiver_g,receiver_b,receiver_luma,handguard_luma,furniture_luma,arms_luma,pose,audit"]
 	var conditions := ["base", "noreflect", "nosun", "noambient", "nofill", "matte"]
 	if not extra_conditions.is_empty():
 		conditions = Array(extra_conditions)
@@ -297,6 +305,14 @@ func _run() -> void:
 					_node(part).material_override = _patched(finish, experiments[condition])
 			if ground_skies.has(condition):
 				environment.sky = ground_skies[condition]
+			var arms_material := _arms_material()
+			var arms_saved := []
+			if arms_material != null:
+				arms_saved = [arms_material.get_shader_parameter("viewmodel_rim"), arms_material.get_shader_parameter("viewmodel_floor"), arms_material.get_shader_parameter("viewmodel_lift")]
+				if condition == "armsnorim" or condition == "armsnofill":
+					arms_material.set_shader_parameter("viewmodel_rim", 0.0)
+				if condition == "armsnofill":
+					arms_material.set_shader_parameter("viewmodel_floor", 0.0)
 			match condition:
 				"flatsky": environment.sky = flat_sky
 				"noreflect": environment.reflected_light_source = Environment.REFLECTION_SOURCE_DISABLED
@@ -315,8 +331,12 @@ func _run() -> void:
 			var m := await _measure("%s_%s" % [case.label, condition])
 			for part in saved:
 				_node(part).material_override = saved[part]
+			if arms_material != null:
+				arms_material.set_shader_parameter("viewmodel_rim", arms_saved[0])
+				arms_material.set_shader_parameter("viewmodel_floor", arms_saved[1])
+				arms_material.set_shader_parameter("viewmodel_lift", arms_saved[2])
 			var r: Color = m.receiver
-			var line := "%s,%s,%.0f,%.0f,%.0f,%.1f,%.1f,%.1f,%s,%s" % [case.label, condition, r.r * 255, r.g * 255, r.b * 255, _luma(r), _luma(m.handguard), _luma(m.furniture), pose, audit]
+			var line := "%s,%s,%.0f,%.0f,%.0f,%.1f,%.1f,%.1f,%.1f,%s,%s" % [case.label, condition, r.r * 255, r.g * 255, r.b * 255, _luma(r), _luma(m.handguard), _luma(m.furniture), _luma(m.arms), pose, audit]
 			rows.append(line)
 			print("DISCOLOUR ", line)
 			if not series.has(condition):

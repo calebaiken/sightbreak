@@ -143,7 +143,7 @@ def main():
         if '--no-baseline' in args:
             say('  (skipped by --no-baseline: run it once without, for the record)')
         base = [] if '--no-baseline' in args else [run_test(t) for t in (SEQ, ART, AUD, CAP, CAP_CANCEL)] + [run_test(VIS), run_test(VIS_REDUCED), run_test(DISC)]
-        csv_good = os.path.join(REPO, 'docs', 'reports', 'media', 'art-v8', 'reload-hip-retrieval', 'logs', 'clip_contact.csv')
+        csv_good = os.path.join(REPO, 'docs', 'reports', 'media', 'art-v9', 'hands', 'logs', 'clip_contact.csv')
         if os.path.exists(csv_good) and '--no-baseline' not in args:
             base.append(run_contact(csv_good))
         for name, state, errs in base:
