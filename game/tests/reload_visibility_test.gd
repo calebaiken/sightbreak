@@ -265,7 +265,10 @@ func _run() -> void:
 		rows.append("%.2f,%s,%d,%d,%d,%d,%d,%d,%d,%d" % [progress, held, counts.thumb, counts.index, counts.middle, counts.ring, counts.pinky, counts.left, counts.right, counts.magazine])
 	if not csv_path.is_empty():
 		var file := FileAccess.open(csv_path, FileAccess.WRITE)
-		file.store_string("\n".join(rows) + "\n")
+		if file == null:
+			push_error("cannot write %s (a relative path is relative to the game/ folder; use an absolute one)" % csv_path)
+		else:
+			file.store_string("\n".join(rows) + "\n")
 	if only.is_empty():
 		_evaluate(results)
 	print("RELOAD_VISIBILITY_TEST view=%s reduced=%s frames=%d checks=%d failures=%d" % [view, reduced, results.size(), checks, failures.size()])

@@ -21,9 +21,10 @@ const ONSET_LEVEL := 0.012      # the first sample above this, on the voice's ow
 ## about 46 ms (2048 frames at 44.1 kHz) and a sound starts at the next chunk boundary, so which of two sounds
 ## lands early or late in the mix is decided by where play() fell in a chunk (the same each run, as the events fall
 ## at the same time: onsets measured at 12 to 18 ms after play() on two voices and 61 to 71 ms on the other two, in
-## both runs). This bound checks each sound is on its voice at its time to that accuracy; it says nothing about the
+## both runs; the spread over the eight runs made was 103 ms, so the bound is two chunks, 90 ms, either side of the run's
+## typical offset). This bound checks each sound is on its voice at its time to that accuracy; it says nothing about the
 ## latency of a phone's audio output.
-const TOLERANCE_MS := 75.0
+const TOLERANCE_MS := 90.0
 const SILENT := 0.0008          # below this, a bus is silent
 ## The cancel scenario's weapon change comes at this fraction of the reload: 90 ms into the landing sound, whose second bounce
 ## comes 190 ms after it starts, so a build that never stops its voices is heard bouncing 100 ms after the cancel while a

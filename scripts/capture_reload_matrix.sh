@@ -35,7 +35,7 @@ for entry in "${configs[@]}"; do
   ffmpeg -y -loglevel error -framerate 60 -i "$dir/%03d.png" -c:v libx264 -pix_fmt yuv420p -crf 22 "$out/clips/$name.mp4"
   ffmpeg -y -loglevel error -framerate 15 -i "$dir/%03d.png" -c:v libx264 -pix_fmt yuv420p -crf 22 "$out/clips/$name-quarter-speed.mp4"
   for tick in 0 36 52 68 96 104 118 137; do
-    [ -f "$dir/$(printf %03d $tick).png" ] && cp "$dir/$(printf %03d $tick).png" "$out/frames/$name-$(printf %03d $tick).png"
+    [ -f "$dir/$(printf %03d $tick).png" ] && python3 -c "from PIL import Image; Image.open(\"$dir/$(printf %03d $tick).png\").convert(\"RGB\").save(\"$out/frames/$name-$(printf %03d $tick).jpg\", quality=88, optimize=True)"
   done
   echo "done $name ($last ticks)"
 done
