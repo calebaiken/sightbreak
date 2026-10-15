@@ -1,0 +1,190 @@
+#!/usr/bin/env python3
+"""Negative controls for the reload tests: inject one defect at a time and check that the test that is
+meant to catch it fails, cleanly (a summary line with failures, not a crash). Restores every file it
+touches. Needs the Godot and Blender tools of scripts/setup.sh, and a native display for the visibility
+controls (Xvfb on :99 is what the logs were made with).
+
+    python3 scripts/reload_negative_controls.py [--only N5,N7] [--log path]
+
+Each control is a defect the reload could really have had, not an arbitrary edit:
+  actor / phases source edits   the single-node replacement, the unseen replacement, no node swap, a grip
+                                offset, reduced motion shrinking the staging, clicks from the authoritative
+                                fraction, an early click, a click at the let-go, a double click on a rewind,
+                                brass at the shooter's feet, the animation writing the timer, a drifted
+                                phase constant, the old magazine returning to the well, the wrong sound
+  rebuilt clips (Blender)       a hand that does not reach the magazine, the old grasp that hides the thumb,
+                                the old approach from below the frame, a replacement fetched from below the frame
+"""
+import os
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+import time
+
+REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+GAME = os.path.join(REPO, 'game')
+ACTOR = os.path.join(GAME, 'scripts', 'gameplay', 'actor.gd')
+PHASES = os.path.join(GAME, 'scripts', 'gameplay', 'reload_phases.gd')
+GLB = os.path.join(GAME, 'assets', 'weapons', 'relay_ar', 'relay_ar_arms.glb')
+BPY = os.environ.get('BPY', os.path.join(os.path.dirname(REPO), 'tools', 'bpy-venv', 'bin', 'python'))
+RIFLE = os.path.join(GAME, 'assets', 'weapons', 'relay_ar', 'relay_ar.glb')
+SUMMARY = re.compile(r'^(RELOAD_SEQUENCE_TEST|WEAPON_ART_TEST|RELOAD_VISIBILITY_TEST)\b.*?(?:checks=(\d+))?.*?failures=(\d+)', re.M)
+ERRORS = re.compile(r'^ERROR: (?!.*(?:ObjectDB|leaked)).*$', re.M)
+
+SEQ = ('sequence', ['--headless', '--script', 'res://tests/reload_sequence_test.gd'])
+ART = ('weapon-art', ['--headless', '--script', 'res://tests/weapon_art_test.gd'])
+VIS = ('visibility', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_visibility_test.gd', '--', '--step=4'])
+VIS_REDUCED = ('visibility (reduced motion)', VIS[1] + ['--reduced'])
+
+# (id, what, [(file, old, new)], build_env or None, tests that must fail)
+SOURCE = [
+    ('N1', 'the replacement is the first magazine again (one node, not two)', [(ACTOR, '_magazine_spare = _magazine.duplicate() as MeshInstance3D', '_magazine_spare = _magazine')], None, [SEQ]),
+    ('N2', 'the replacement is never drawn', [(ACTOR, '_magazine_spare.visible = progress >= SBReloadPhases.ACQUIRE', '_magazine_spare.visible = false')], None, [SEQ]),
+    ('N3', 'the nodes do not swap when the reload ends', [(ACTOR, '\t\t\t\t_magazine_swap_pending = true\n', '')], None, [SEQ]),
+    ('N4', 'the magazine is held 30 mm from where the hand grips it', [(ACTOR, '\t_grip_offset = _hand_in_gun().affine_inverse() * _magazine_rest_transform\n', '\t_grip_offset = _hand_in_gun().affine_inverse() * _magazine_rest_transform\n\t_grip_offset.origin += Vector3(0.0, 0.0, 0.030)\n')], None, [SEQ]),
+    ('N5', 'the old magazine comes back to the well while the replacement is drawn', [(ACTOR, '\t\t_magazine.transform = _dropped_transform(fall)\n', '\t\t_magazine.transform = _magazine_rest_transform\n')], None, [SEQ]),
+    ('N6', 'reduced motion shrinks the reload staging to a fifth', [(ACTOR, '\t\tvar bob_weight := 0.0 if reduced_motion', '\t\tif reduced_motion:\n\t\t\treload_tilt *= 0.2\n\t\tvar bob_weight := 0.0 if reduced_motion')], None, [SEQ, VIS_REDUCED]),
+    ('N7', 'the clicks follow the authoritative fraction instead of the visible reload', [(ACTOR, 'SBReloadPhases.crossed(_reload_visual_previous, visual_progress)', 'SBReloadPhases.crossed(_reload_visual_previous, SBReloadPhases.progress(reload_remaining, reload_duration))'), (ACTOR, '\t\t_reload_visual_previous = visual_progress\n\t_reload_visual_active = reloading', '\t\t_reload_visual_previous = SBReloadPhases.progress(reload_remaining, reload_duration)\n\t_reload_visual_active = reloading')], None, [SEQ]),
+    ('N8', 'the seat click fires 0.05 of the reload early', [(PHASES, '["seat", SEAT]', '["seat", SEAT - 0.05]')], None, [SEQ]),
+    ('N9', 'the seat click fires at the let-go instead of the seat', [(PHASES, '["seat", SEAT]', '["seat", LETGO]')], None, [SEQ]),
+    ('N10', 'a clock correction that goes back over the seat clicks it twice', [(ACTOR, 'elif event == "seat" and not _reload_visual_seated:', 'elif event == "seat":')], None, [SEQ]),
+    ('N11', 'the seat click plays the release sound', [(ACTOR, '\t\t\t\t_mechanical_audio.stream = _reload_seat\n', '\t\t\t\t_mechanical_audio.stream = _reload_release\n')], None, [SEQ]),
+    ('N12', 'brass lands at the shooter\'s feet again', [(ACTOR, '.casing(port, global_basis.x, _cosmetic_floor(port))', '.casing(port, global_basis.x, global_position.y)')], None, [SEQ]),
+    ('N13', 'the animation completes the reload by writing the timer', [(ACTOR, '\t\t\t\t_magazine_swap_pending = true\n', '\t\t\t\t_magazine_swap_pending = true\n\t\t\t\treload_remaining = 0.0\n')], None, [SEQ]),
+    ('N14', 'the seat phase is changed in reload_phases.gd without rebuilding the clip', [(PHASES, 'const SEAT := 0.80', 'const SEAT := 0.78')], None, [ART, SEQ]),
+]
+CLIPS = [
+    ('N15', 'a hand that does not reach the magazine (knuckle 50 mm off)', {'ARMS_GRAB_JSON': '{"mcp": [0.064, 0.15, -0.19]}'}, ['contact']),
+    ('N16', 'the previous grasp, which hides the thumb behind the magazine', {'ARMS_GRAB_JSON': '{"distal": [1.0, 0.0, 0.0], "mcp": [0.034, 0.15, -0.19], "roll": 0}'}, [VIS]),
+    ('N17', 'the previous approach from below the frame (the hand leaves the picture)', {'ARMS_APPROACH': '-0.020,-0.010,-0.085'}, [VIS]),
+    ('N18', 'the replacement fetched from far below the frame', {'ARMS_PATH_JSON': '{"swing": [-0.06, -0.02, -0.03], "pouch": [-0.15, -0.06, -0.15], "mid": [-0.06, -0.025, -0.06]}'}, [VIS, SEQ]),
+]
+
+
+def godot(args, display=True, timeout=900):
+    env = dict(os.environ)
+    if display:
+        env.setdefault('DISPLAY', ':99')
+    r = subprocess.run([os.path.join(REPO, 'scripts', 'godot.sh')] + args, capture_output=True, text=True, env=env, timeout=timeout)
+    return r.returncode, r.stdout + r.stderr
+
+
+def run_test(test):
+    name, args = test
+    code, out = godot(args)
+    m = list(SUMMARY.finditer(out))
+    if not m:
+        return name, 'CRASHED', ['no summary line (exit %d)' % code]
+    failures = int(m[-1].group(3))
+    errors = [e for e in ERRORS.findall(out)][:3]
+    return name, ('FAILED' if failures else 'passed'), errors
+
+
+def run_contact(csv_path):
+    r = subprocess.run([sys.executable, os.path.join(REPO, 'scripts', 'test_reload_contact.py'), csv_path], capture_output=True, text=True)
+    fails = [l[5:] for l in r.stdout.splitlines() if l.startswith('FAIL ')]
+    return 'contact', ('FAILED' if r.returncode else 'passed'), fails[:3]
+
+
+def build(env_extra, out):
+    env = dict(os.environ, **env_extra)
+    r = subprocess.run([BPY, os.path.join(REPO, 'tools', 'art', 'arms_build.py'), out, '--no-bake', '--rifle', RIFLE], capture_output=True, text=True, env=env, timeout=600)
+    return r.returncode == 0
+
+
+def main():
+    only = None
+    log = None
+    args = sys.argv[1:]
+    if '--only' in args:
+        only = set(args[args.index('--only') + 1].split(','))
+    if '--log' in args:
+        log = open(args[args.index('--log') + 1], 'w')
+
+    def say(text=''):
+        print(text, flush=True)
+        if log:
+            log.write(text + '\n')
+            log.flush()
+
+    originals = {p: open(p).read() for p in (ACTOR, PHASES)}
+    glb_backup = open(GLB, 'rb').read()
+    results = []
+    try:
+        say('# Baseline (no defect injected): every test passes')
+        base = [run_test(t) for t in (SEQ, ART)] + [run_test(VIS), run_test(VIS_REDUCED)]
+        csv_good = os.path.join(REPO, 'docs', 'reports', 'media', 'art-v7', 'reload-two-magazines', 'logs', 'clip_contact.csv')
+        if os.path.exists(csv_good):
+            base.append(run_contact(csv_good))
+        for name, state, errs in base:
+            say('  %-30s %s' % (name, state))
+        if any(s != 'passed' for _, s, _ in base):
+            say('BASELINE FAILS: the controls below mean nothing until it passes')
+            return 2
+        for cid, what, edits, _, tests in [(c[0], c[1], c[2], c[3], c[4]) for c in SOURCE]:
+            if only and cid not in only:
+                continue
+            say('')
+            say('## %s: %s' % (cid, what))
+            try:
+                for path, old, new in edits:
+                    text = open(path).read()
+                    if old not in text:
+                        say('  INVALID CONTROL: the text to change is not in %s: %r' % (os.path.basename(path), old[:60]))
+                        results.append((cid, 'invalid'))
+                        break
+                    open(path, 'w').write(text.replace(old, new, 1))
+                else:
+                    states = [run_test(t) for t in tests]
+                    for name, state, errs in states:
+                        say('  %-30s %s' % (name, state))
+                        for e in errs:
+                            say('      ' + e[:200])
+                    results.append((cid, 'caught' if all(s == 'FAILED' for _, s, _ in states) else ('crashed' if any(s == 'CRASHED' for _, s, _ in states) else 'MISSED')))
+            finally:
+                for path, text in originals.items():
+                    open(path, 'w').write(text)
+        for cid, what, env_extra, tests in CLIPS:
+            if only and cid not in only:
+                continue
+            say('')
+            say('## %s: %s' % (cid, what))
+            tmp = tempfile.mkdtemp(prefix='nc-')
+            try:
+                if not build(env_extra, tmp):
+                    say('  the Blender build failed')
+                    results.append((cid, 'invalid'))
+                    continue
+                states = []
+                for t in tests:
+                    if t == 'contact':
+                        states.append(run_contact(os.path.join(tmp, 'clip_contact.csv')))
+                    else:
+                        shutil.copy(os.path.join(tmp, 'relay_ar_arms.glb'), GLB)
+                        godot(['--headless', '--editor', '--import', '--quit'], display=False)
+                        states.append(run_test(t))
+                for name, state, errs in states:
+                    say('  %-30s %s' % (name, state))
+                    for e in errs:
+                        say('      ' + e[:200])
+                results.append((cid, 'caught' if all(s == 'FAILED' for _, s, _ in states) else ('crashed' if any(s == 'CRASHED' for _, s, _ in states) else 'MISSED')))
+            finally:
+                open(GLB, 'wb').write(glb_backup)
+                shutil.rmtree(tmp, ignore_errors=True)
+        godot(['--headless', '--editor', '--import', '--quit'], display=False)
+        say('')
+        say('# Summary')
+        for cid, state in results:
+            say('  %-4s %s' % (cid, state))
+        say('  %d controls: %d caught, %d crashed, %d missed, %d invalid' % (len(results), sum(s == 'caught' for _, s in results), sum(s == 'crashed' for _, s in results), sum(s == 'MISSED' for _, s in results), sum(s == 'invalid' for _, s in results)))
+        return 0 if all(s == 'caught' for _, s in results) else 1
+    finally:
+        for path, text in originals.items():
+            open(path, 'w').write(text)
+        open(GLB, 'wb').write(glb_backup)
+
+
+if __name__ == '__main__':
+    sys.exit(main())

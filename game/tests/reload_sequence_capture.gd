@@ -1,0 +1,116 @@
+extends SceneTree
+## Captures a whole reload as it plays: the real tick_authority / tick_visual loop at 60 Hz, one PNG per
+## tick, and a frames.csv with what the actor was doing on that tick (the authoritative timer, the visual
+## progress, which magazine the hand holds, which magazines are drawn, and the click cues with the tick
+## they fired on). Needs a native display. Presentation only.
+##
+##   --out=<dir>      where the PNGs (000.png ...) and frames.csv go (required)
+##   --view=sunlit|backlight|shade
+##   --reduced        reduced motion on
+##   --size=WxH       viewport (default 1280x720)
+##   --authority=local|snapshot   how the timer reaches the actor (default local)
+##   --tail=<s>       seconds to keep recording after the reload ends (default 0.3)
+## tools/art/motion_sheet.py turns the directory into a labelled contact sheet; ffmpeg turns the PNGs into a clip.
+const Actor = preload("res://scripts/gameplay/actor.gd")
+const Arena = preload("res://scripts/gameplay/arena.gd")
+const Weapons = preload("res://scripts/gameplay/weapons.gd")
+const TICK := 1.0 / 60.0
+const VIEWS := {
+	"sunlit": [Vector3(3, 0.05, -12), 0.35],
+	"backlight": [Vector3(0, 0.05, -19), PI - 0.08],
+	"shade": [Vector3(0, 0.05, 20.5), 0.1],
+}
+
+func _initialize() -> void:
+	_run.call_deferred()
+
+func _run() -> void:
+	if DisplayServer.get_name() == "headless":
+		push_error("A native rendering display is required")
+		quit(2)
+		return
+	var output := ""
+	var view := "sunlit"
+	var reduced := false
+	var size := Vector2i(1280, 720)
+	var authority := "local"
+	var tail := 0.3
+	for argument in OS.get_cmdline_user_args():
+		if argument.begins_with("--out="):
+			output = argument.trim_prefix("--out=")
+		elif argument.begins_with("--view="):
+			view = argument.trim_prefix("--view=")
+		elif argument == "--reduced":
+			reduced = true
+		elif argument.begins_with("--authority="):
+			authority = argument.trim_prefix("--authority=")
+		elif argument.begins_with("--tail="):
+			tail = float(argument.trim_prefix("--tail="))
+		elif argument.begins_with("--size="):
+			var parts := argument.trim_prefix("--size=").split("x")
+			size = Vector2i(int(parts[0]), int(parts[1]))
+	if output.is_empty():
+		push_error("--out=<dir> is required")
+		quit(2)
+		return
+	DirAccess.make_dir_recursive_absolute(output)
+	root.content_scale_size = size
+	root.size = size
+	var world := Node3D.new()
+	root.add_child(world)
+	world.add_child(Arena.new())
+	var actor := Actor.new()
+	actor.configure(1, 0, "Reload capture", true)
+	world.add_child(actor)
+	var place: Array = VIEWS[view]
+	actor.reset_for_round(place[0])
+	actor.credits = 5000
+	actor.buy_weapon("rifle")
+	actor._equip_blend = 0
+	actor.apply_cosmetic({})
+	actor.reduced_motion = reduced
+	actor.global_position = place[0]
+	actor.yaw = place[1]
+	actor.rotation.y = place[1]
+	actor.camera.rotation.x = -0.025
+	actor.ammo = 10
+	actor.reserve = 90
+	for i in 6:
+		await process_frame
+	var duration := float(Weapons.get_weapon("rifle")["reload"])
+	var cues: Array[String] = []
+	actor.reload_cue.connect(func(event: String, progress: float): cues.append("%s@%.3f" % [event, progress]))
+	var old_node: MeshInstance3D = actor._magazine
+	var new_node: MeshInstance3D = actor._magazine_spare
+	var rows: Array[String] = ["frame,time_s,phase,ammo,clip_time_s,remaining_s,progress,held,old_drawn,new_drawn,cues"]
+	actor.start_reload()
+	var held_remaining := actor.reload_remaining
+	var ticks := int((duration + tail) / TICK)
+	var started_at := -1
+	for tick in ticks:
+		if authority == "snapshot":
+			actor.tick_authority(TICK) # the owner's machine keeps the true timer
+			if tick % 3 == 0:
+				held_remaining = actor.reload_remaining
+			var true_remaining := actor.reload_remaining
+			actor.reload_remaining = held_remaining if true_remaining > 0.0 else 0.0
+			actor.tick_visual(TICK)
+			actor.reload_remaining = true_remaining
+		else:
+			actor.tick_authority(TICK)
+			actor.tick_visual(TICK)
+		await process_frame
+		await RenderingServer.frame_post_draw
+		root.get_texture().get_image().save_png(output.path_join("%03d.png" % tick))
+		var reloading := actor.reload_remaining > 0.0
+		var phase := "reload" if reloading else ("ready" if started_at < 0 or tick * TICK < duration else "done")
+		var progress := SBReloadPhases.progress(actor._reload_clock, duration) if reloading else 0.0
+		var held := "-"
+		if actor._magazine_in_hand != null:
+			held = "old" if actor._magazine_in_hand == old_node else "replacement"
+		rows.append("%d,%.4f,%s,%d,%.4f,%.4f,%.4f,%s,%d,%d,%s" % [tick, tick * TICK, phase, actor.ammo, progress, actor.reload_remaining, progress, held, 1 if old_node.visible else 0, 1 if new_node.visible else 0, "|".join(cues)])
+		cues.clear()
+	var file := FileAccess.open(output.path_join("frames.csv"), FileAccess.WRITE)
+	file.store_string("\n".join(rows) + "\n")
+	print("RELOAD_SEQUENCE_CAPTURE view=%s reduced=%s authority=%s frames=%d ammo=%d/%d" % [view, reduced, authority, ticks, actor.ammo, actor.reserve])
+	quit()
