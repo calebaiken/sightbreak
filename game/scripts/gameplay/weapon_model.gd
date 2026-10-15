@@ -25,13 +25,19 @@ var _viewmodel := false
 ## procedural rifle remains the fallback when the asset is missing.
 const RELAY_AR := "res://assets/weapons/relay_ar/relay_ar.glb"
 ## Albedo factor of the pistol grip over its baked colour (measured against the gloves; see _build_authored_rifle).
-const GRIP_DARKEN := 0.3
+const GRIP_DARKEN := 0.24
 ## The fill's albedo floor for the arms (ViewmodelShading.LIFT is the rifle's): higher, so the near-black gloves are
 ## not left in a dark interior with nothing to read; the grip gets none, so it stays the darkest thing in the hand.
-const ARMS_LIFT := 0.35
+const ARMS_LIFT := 0.50
+## The arms' fill strength (ViewmodelShading.FLOOR is the rifle's), the dielectric specular of their fabric (the engine's default
+## 0.5 put a pale sheen on the dark gloves in sun, the "bare skin" look: a glove's median luma in sun was 89, about a third of it
+## additive) and their rim. The specular and the rim came down and the fill went up so that the gloves are darker in sun and
+## no darker in shade or a dark interior (measured with viewmodel_light_probe.gd; art-v9/materials).
+const ARMS_FLOOR := 0.14
+const ARMS_SPECULAR := 0.25
 ## Rim light on the arms (ViewmodelShading.RIM is the rifle's): a pale edge on the silhouette so a dark forearm is an outline
 ## against a dark floor.
-const ARMS_RIM := 0.40
+const ARMS_RIM := 0.25
 const RELAY_AR_MATERIAL := "res://assets/weapons/relay_ar/relay_ar_body.tres"
 const RELAY_AR_ORM := "res://assets/weapons/relay_ar/relay_ar_orm.png"
 const RELAY_AR_NORMAL := "res://assets/weapons/relay_ar/relay_ar_normal.png"
@@ -119,6 +125,8 @@ static func _add_arms(parent: Node3D, placement: Transform3D, result: Dictionary
 	var material := ViewmodelShading.surface(RELAY_AR_ARMS_TEXTURES)
 	material.set_shader_parameter("viewmodel_lift", ARMS_LIFT) # the arms' fill floor: charcoal gloves keep some form in shade
 	material.set_shader_parameter("viewmodel_rim", ARMS_RIM)
+	material.set_shader_parameter("viewmodel_floor", ARMS_FLOOR)
+	material.set_shader_parameter("viewmodel_specular", ARMS_SPECULAR)
 	for mesh: MeshInstance3D in arms.find_children("*", "MeshInstance3D", true, false):
 		mesh.material_override = material
 		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF

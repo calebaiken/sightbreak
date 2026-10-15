@@ -305,6 +305,8 @@ func _run() -> void:
 	# The painted metal's roughness floor (the rifle turned pale as the reload rolled it, reflecting the sky's horizon band):
 	# first person sets it, the code that applies it is in the shader, and inspection (the engine's own lighting) has none.
 	check(actor._finish.get_shader_parameter("viewmodel_roughness") == ViewmodelShading.METAL_ROUGHNESS and ViewmodelShading.METAL_ROUGHNESS >= 0.7, "first-person painted metal has a roughness floor of at least 0.7 (%s)" % actor._finish.get_shader_parameter("viewmodel_roughness"))
+	check(actor._finish.get_shader_parameter("viewmodel_floor") == ViewmodelShading.METAL_FLOOR and ViewmodelShading.METAL_FLOOR > ViewmodelShading.FLOOR, "the painted metal's fill floor (%s) is above the rest of the viewmodel's (%s): it replaces the sheen the roughness floor removed" % [ViewmodelShading.METAL_FLOOR, ViewmodelShading.FLOOR])
+	check(arms_mesh.material_override.get_shader_parameter("viewmodel_specular") == WeaponModel.ARMS_SPECULAR and WeaponModel.ARMS_SPECULAR >= 0.0 and WeaponModel.ARMS_SPECULAR < 0.5 and arms_mesh.material_override.get_shader_parameter("viewmodel_floor") == WeaponModel.ARMS_FLOOR, "the arms carry a dielectric specular below the engine's default (%s) and their own fill (%s)" % [WeaponModel.ARMS_SPECULAR, WeaponModel.ARMS_FLOOR])
 	check(CosmeticMaterial.shader(true).code.contains("ROUGHNESS = max(ROUGHNESS, viewmodel_roughness)") and not CosmeticMaterial.shader().code.contains("viewmodel_roughness"), "only the first-person cosmetic shader applies the roughness floor")
 	var inspected := Node3D.new()
 	root.add_child(inspected)

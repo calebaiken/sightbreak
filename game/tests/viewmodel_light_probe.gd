@@ -7,6 +7,8 @@ extends SceneTree
 ## the receiver's value" are numbers. Needs a native display. Presentation only.
 ##   --out=<dir>   also saves the base frame of every case
 ##   --tag=<name>  label printed on every line (before / after)
+##   --assert  a test: separation bounds over the lightings and poses measured (see _assert_separation); exit 1 on a failure
+##   --arms-specular=x  set the arms' dielectric specular (viewmodel_specular) for the run   --arms-rim=x  likewise the rim
 ##   --scenarios=a,b  only these scenarios (sun, backlight, shade, dark interior)   --poses=a,b  only these poses
 const Actor = preload("res://scripts/gameplay/actor.gd")
 const Arena = preload("res://scripts/gameplay/arena.gd")
@@ -26,6 +28,16 @@ const PARTS := ["magazine", "receiver", "handguard", "furniture", "grip", "glove
 var output := ""
 var tag := "probe"
 var only_scenarios: PackedStringArray = []
+var arms_specular := -1.0
+var arms_rim := -1.0
+var arms_lift := -1.0
+var arms_floor := -1.0
+var finish_floor := -1.0
+var assert_mode := false
+var medians := {}
+var finish_lift := -1.0
+var grip_rim := -1.0
+var grip_lift := -1.0
 var only_poses: PackedStringArray = []
 var world: Node3D
 var actor: SBActor
@@ -116,6 +128,24 @@ func _run() -> void:
 			DirAccess.make_dir_recursive_absolute(output)
 		elif argument.begins_with("--tag="):
 			tag = argument.trim_prefix("--tag=")
+		elif argument.begins_with("--arms-specular="):
+			arms_specular = float(argument.trim_prefix("--arms-specular="))
+		elif argument.begins_with("--arms-rim="):
+			arms_rim = float(argument.trim_prefix("--arms-rim="))
+		elif argument == "--assert":
+			assert_mode = true
+		elif argument.begins_with("--finish-floor="):
+			finish_floor = float(argument.trim_prefix("--finish-floor="))
+		elif argument.begins_with("--finish-lift="):
+			finish_lift = float(argument.trim_prefix("--finish-lift="))
+		elif argument.begins_with("--arms-floor="):
+			arms_floor = float(argument.trim_prefix("--arms-floor="))
+		elif argument.begins_with("--arms-lift="):
+			arms_lift = float(argument.trim_prefix("--arms-lift="))
+		elif argument.begins_with("--grip-rim="):
+			grip_rim = float(argument.trim_prefix("--grip-rim="))
+		elif argument.begins_with("--grip-lift="):
+			grip_lift = float(argument.trim_prefix("--grip-lift="))
 		elif argument.begins_with("--scenarios="):
 			only_scenarios = argument.trim_prefix("--scenarios=").split(",")
 		elif argument.begins_with("--poses="):
@@ -141,6 +171,24 @@ func _run() -> void:
 	actor.apply_cosmetic({})
 	_debug_arms()
 	var arms_mesh: MeshInstance3D = actor._gun.get_node("arms").find_children("*", "MeshInstance3D", true, false).front()
+	if arms_specular >= 0.0:
+		(arms_mesh.material_override as ShaderMaterial).set_shader_parameter("viewmodel_specular", arms_specular)
+	if arms_rim >= 0.0:
+		(arms_mesh.material_override as ShaderMaterial).set_shader_parameter("viewmodel_rim", arms_rim)
+	if finish_floor >= 0.0:
+		actor._finish.set_shader_parameter("viewmodel_floor", finish_floor)
+	if finish_lift >= 0.0:
+		actor._finish.set_shader_parameter("viewmodel_lift", finish_lift)
+	if arms_floor >= 0.0:
+		(arms_mesh.material_override as ShaderMaterial).set_shader_parameter("viewmodel_floor", arms_floor)
+	if arms_lift >= 0.0:
+		(arms_mesh.material_override as ShaderMaterial).set_shader_parameter("viewmodel_lift", arms_lift)
+	var grip_node: MeshInstance3D = actor._gun.get_node_or_null("grip")
+	if grip_node != null and grip_node.material_override is ShaderMaterial:
+		if grip_rim >= 0.0:
+			(grip_node.material_override as ShaderMaterial).set_shader_parameter("viewmodel_rim", grip_rim)
+		if grip_lift >= 0.0:
+			(grip_node.material_override as ShaderMaterial).set_shader_parameter("viewmodel_lift", grip_lift)
 	for scenario in SCENARIOS:
 		if not only_scenarios.is_empty() and not only_scenarios.has(scenario):
 			continue
@@ -190,10 +238,54 @@ func _run() -> void:
 			masks["sleeves"] = sleeve
 			for part in PARTS:
 				var s := _stats(base, masks[part])
+				if s.n >= 48:
+					if not medians.has(scenario + "|" + pose):
+						medians[scenario + "|" + pose] = {}
+					medians[scenario + "|" + pose][part] = s.median
 				if s.n < 48:
 					print("LIGHT %s | %s | %s | %s | n=%d (not visible)" % [tag, scenario, pose, part, s.n])
 				else:
 					print("LIGHT %s | %s | %s | %s | n=%d median=%.1f p10=%.1f p90=%.1f detail=%.2f" % [tag, scenario, pose, part, s.n, s.median, s.p10, s.p90, s.detail])
 	sun.light_energy = sun_energy
 	environment.ambient_light_energy = ambient_energy
+	if assert_mode:
+		quit(_assert_separation())
+		return
 	quit()
+
+## Bounds on how the parts separate (median luma, 0 to 255). They are set from the measurements of this round (the values before it
+## are in docs/reports/media/art-v8/reload-hip-retrieval/logs/light-probe-after.txt, the values after in art-v9/materials/logs),
+## so each is a regression guard around a measured state, not a visual standard:
+##   grip / receiver <= 0.85   the grip is distinctly darker than the receiver in every lighting and pose (before: 1.00 in sun at ready,
+##                             0.94 in shade at ready; after: 0.56 to 0.76)
+##   gloves / sleeves <= 0.78 in sun   the gloves are not a pale veil beside the sleeve (before: 0.79 to 0.81; after: 0.73 to 0.76)
+##   receiver and handguard >= 22 in the dark interior   the rifle does not dissolve into it (before the fill: 17 and 18; after: 25 and 28)
+func _assert_separation() -> int:
+	var checks := 0
+	var failures := 0
+	for key in medians:
+		var v: Dictionary = medians[key]
+		var parts := str(key).split("|")
+		if v.has("grip") and v.has("receiver"):
+			var ratio: float = v.grip / v.receiver
+			checks += 1
+			var ok := ratio <= 0.85
+			failures += 0 if ok else 1
+			print("%s %s: grip %.1f / receiver %.1f = %.2f (at most 0.85)" % ["ok  " if ok else "FAIL", key, v.grip, v.receiver, ratio])
+		if parts[0] == "sun" and v.has("gloves") and v.has("sleeves"):
+			var ratio: float = v.gloves / v.sleeves
+			checks += 1
+			var ok := ratio <= 0.78
+			failures += 0 if ok else 1
+			print("%s %s: gloves %.1f / sleeves %.1f = %.2f (at most 0.78)" % ["ok  " if ok else "FAIL", key, v.gloves, v.sleeves, ratio])
+		if parts[0] == "dark interior" and v.has("receiver") and v.has("handguard"):
+			checks += 1
+			var ok: bool = v.receiver >= 22.0 and v.handguard >= 22.0
+			failures += 0 if ok else 1
+			print("%s %s: receiver %.1f and handguard %.1f in the dark interior (at least 22)" % ["ok  " if ok else "FAIL", key, v.receiver, v.handguard])
+	print("VIEWMODEL_LIGHT_TEST checks=%d failures=%d" % [checks, failures])
+	for key in medians:
+		pass
+	if failures > 0:
+		push_error("%d separation checks failed" % failures)
+	return 1 if failures > 0 else 0

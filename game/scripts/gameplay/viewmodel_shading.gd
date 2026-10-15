@@ -29,6 +29,11 @@ const RIM := 0.22
 ## and lifts the weapon (a few degrees are enough), and the receiver went from 54 to 83 median luma and from graphite to pale
 ## blue-grey (docs/reports/media/art-v9/rifle-discolouration). A rougher lobe averages the sky over the band and holds the finish.
 const METAL_ROUGHNESS := 0.80
+## The painted metal's own fill strength (FLOOR is the rest of the viewmodel's). The roughness floor above takes the sheen the
+## sky's reflection gave the receiver and handguard, which was most of their value in shade and a dark interior (median luma
+## 45 and 69 in the dark interior before it, 20 and 22 after): this puts it back as a constant fill instead of a reflection of
+## whatever the pose faces.
+const METAL_FLOOR := 0.26
 
 const UNIFORMS := """
 uniform float viewmodel_fov = 0.0;
@@ -37,6 +42,7 @@ uniform float viewmodel_floor = 0.0;
 uniform float viewmodel_lift = 0.0;
 uniform float viewmodel_rim = 0.0;
 uniform float viewmodel_roughness = 0.0;
+uniform float viewmodel_specular = -1.0;
 uniform vec3 viewmodel_rim_color : source_color = vec3(0.80, 0.84, 0.88);
 """
 
@@ -65,6 +71,9 @@ const PROJECT := """
 const FILL := """
 	if (viewmodel_fov > 0.0) {
 		ROUGHNESS = max(ROUGHNESS, viewmodel_roughness);
+		if (viewmodel_specular >= 0.0) {
+			SPECULAR = viewmodel_specular;
+		}
 		float facing = clamp(dot(NORMAL, VIEW), 0.0, 1.0);
 		// Form: the fill is brighter on surfaces that face up and dimmer on those that face down (view space, the
 		// camera is upright), so a fist or a forearm has a lit top and a darker underside even in shade.

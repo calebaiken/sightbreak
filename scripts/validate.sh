@@ -43,6 +43,9 @@ if [[ -n "${DISPLAY:-}" ]]; then
   # The rifle's painted metal keeps its finish through the reload (it turned pale as the reload rolled it): sun, shade, a skin.
   run_godot reload-finish-sunlit --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base
   run_godot reload-finish-shade --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --view=shade
+  # The parts separate in four lightings (the grip is darker than the receiver, the gloves are not a pale veil beside the sleeve,
+  # the rifle does not dissolve in a dark interior): bounds set from this round's measurements, see viewmodel_light_probe.gd.
+  run_godot viewmodel-light --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/viewmodel_light_probe.gd -- --assert --poses=ready,grab
   run_godot reload-finish-skin --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --skin
 else
   printf 'reload-visibility skipped: no DISPLAY (needs a native rendering display)\n'

@@ -31,9 +31,10 @@ AUDIO = os.path.join(GAME, 'scripts', 'gameplay', 'reload_audio.gd')
 GLB = os.path.join(GAME, 'assets', 'weapons', 'relay_ar', 'relay_ar_arms.glb')
 SHADING = os.path.join(GAME, 'scripts', 'gameplay', 'viewmodel_shading.gd')
 COSMETIC = os.path.join(GAME, 'scripts', 'ui', 'cosmetic_material.gd')
+WEAPON_MODEL = os.path.join(GAME, 'scripts', 'gameplay', 'weapon_model.gd')
 BPY = os.environ.get('BPY', os.path.join(os.path.dirname(REPO), 'tools', 'bpy-venv', 'bin', 'python'))
 RIFLE = os.path.join(GAME, 'assets', 'weapons', 'relay_ar', 'relay_ar.glb')
-SUMMARY = re.compile(r'^(RELOAD_SEQUENCE_TEST|WEAPON_ART_TEST|RELOAD_VISIBILITY_TEST|RELOAD_AUDIO_TEST|RELOAD_AUDIO_CAPTURE|RELOAD_DISCOLOUR_TEST)\b.*?(?:checks=(\d+))?.*?failures=(\d+)', re.M)
+SUMMARY = re.compile(r'^(RELOAD_SEQUENCE_TEST|WEAPON_ART_TEST|RELOAD_VISIBILITY_TEST|RELOAD_AUDIO_TEST|RELOAD_AUDIO_CAPTURE|RELOAD_DISCOLOUR_TEST|VIEWMODEL_LIGHT_TEST)\b.*?(?:checks=(\d+))?.*?failures=(\d+)', re.M)
 ERRORS = re.compile(r'^ERROR: (?!.*(?:ObjectDB|leaked)).*$', re.M)
 
 SEQ = ('sequence', ['--headless', '--script', 'res://tests/reload_sequence_test.gd'])
@@ -43,6 +44,8 @@ CAP = ('audio capture', ['--headless', '--audio-driver', 'Dummy', '--script', 'r
 CAP_CANCEL = ('audio capture (cancel)', ['--headless', '--audio-driver', 'Dummy', '--script', 'res://tests/reload_audio_capture.gd', '--', '--scenario=cancel'])
 VIS = ('visibility', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_visibility_test.gd', '--', '--step=2'])
 VIS_REDUCED = ('visibility (reduced motion)', VIS[1] + ['--reduced'])
+# The parts separate in the lightings (sun and a dark interior at the ready pose: the quick form of the validate.sh run).
+LIGHT = ('light separation', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/viewmodel_light_probe.gd', '--', '--assert', '--poses=ready', '--scenarios=sun,dark interior'])
 # The rifle's painted metal holds its finish through the reload (native: it renders the receiver and handguard at reload ticks).
 DISC = ('finish stability', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_discolour_probe.gd', '--', '--assert', '--conditions=base', '--ticks=0,40,122,126,130,134'])
 
@@ -67,6 +70,9 @@ SOURCE = [
     ('N25', 'the painted metal loses its roughness floor (the finish reflects the sky\'s horizon band again and the rifle turns pale in the reload)', [(SHADING, 'const METAL_ROUGHNESS := 0.80', 'const METAL_ROUGHNESS := 0.0')], None, [ART, DISC]),
     ('N26', 'the cosmetic finish no longer receives the roughness floor', [(COSMETIC, '\t\tmaterial.set_shader_parameter("viewmodel_roughness", ViewmodelShading.METAL_ROUGHNESS)\n', '')], None, [ART, DISC]),
     ('N27', 'the shader ignores the roughness floor (it is set but never applied)', [(SHADING, '\t\tROUGHNESS = max(ROUGHNESS, viewmodel_roughness);\n', '')], None, [ART, DISC]),
+    ('N28', 'the grip is not darkened over its baked graphite (it was level with the receiver and the gloves)', [(WEAPON_MODEL, 'const GRIP_DARKEN := 0.24', 'const GRIP_DARKEN := 1.0')], None, [LIGHT]),
+    ('N29', 'the painted metal has no fill floor of its own (the rifle dissolves in a dark interior once the sheen is gone)', [(SHADING, 'const METAL_FLOOR := 0.26', 'const METAL_FLOOR := 0.0')], None, [ART, LIGHT]),
+    ('N30', 'the arms keep the engine\'s default specular (the gloves read as a pale veil in sun)', [(WEAPON_MODEL, 'const ARMS_SPECULAR := 0.25', 'const ARMS_SPECULAR := 0.5')], None, [ART, LIGHT]),
     ('N22', 'the replacement is drawn from the start of the hip trip: it floats in view with no hand on it', [(ACTOR, '_magazine_spare.visible = progress >= SBReloadPhases.ACQUIRE', '_magazine_spare.visible = progress >= SBReloadPhases.DROP')], None, [SEQ]),
     ('N14', 'the seat phase is changed in reload_phases.gd without rebuilding the clip', [(PHASES, 'const SEAT := 0.80', 'const SEAT := 0.78')], None, [ART, SEQ]),
     ('A1', 'a reload cut short leaves its sounds playing', [(ACTOR, '\telif _reload_visual_active and not _reload_fired.has("seat"):\n\t\t_reload_audio.stop_all() # cancelled before the seat: the sounds that were playing stop with it\n', '')], None, [AUD]),
@@ -142,7 +148,7 @@ def main():
         say('# Baseline (no defect injected): every test passes')
         if '--no-baseline' in args:
             say('  (skipped by --no-baseline: run it once without, for the record)')
-        base = [] if '--no-baseline' in args else [run_test(t) for t in (SEQ, ART, AUD, CAP, CAP_CANCEL)] + [run_test(VIS), run_test(VIS_REDUCED), run_test(DISC)]
+        base = [] if '--no-baseline' in args else [run_test(t) for t in (SEQ, ART, AUD, CAP, CAP_CANCEL)] + [run_test(VIS), run_test(VIS_REDUCED), run_test(DISC), run_test(LIGHT)]
         csv_good = os.path.join(REPO, 'docs', 'reports', 'media', 'art-v9', 'hands', 'logs', 'clip_contact.csv')
         if os.path.exists(csv_good) and '--no-baseline' not in args:
             base.append(run_contact(csv_good))
