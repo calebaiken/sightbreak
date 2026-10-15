@@ -16,7 +16,7 @@ import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DEFAULT = os.path.join(HERE, '..', 'docs', 'reports', 'media', 'art-v7', 'reload-two-magazines', 'logs', 'clip_contact.csv')
+DEFAULT = os.path.join(HERE, '..', 'docs', 'reports', 'media', 'art-v8', 'reload-hip-retrieval', 'logs', 'clip_contact.csv')
 PHASES = os.path.join(HERE, '..', 'game', 'scripts', 'gameplay', 'reload_phases.gd')
 DIGITS = ('thumb', 'index', 'middle', 'ring', 'pinky')
 # What "on the magazine" means, in millimetres from its surface (negative: inside it).

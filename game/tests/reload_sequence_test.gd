@@ -22,6 +22,8 @@ var reload_seconds := 2.25
 var well_axis := Vector3.DOWN
 var rest_centre := Vector3.ZERO
 var box: AABB
+var top_local := Vector3.ZERO  # the seated magazine's top face centre, in the magazine's own space
+var top_rest := Vector3.ZERO   # and in the gun's space when seated
 
 func _initialize() -> void:
 	_run.call_deferred()
@@ -72,9 +74,21 @@ func _measure_well() -> void:
 			bottom += in_gun
 			bottom_count += 1
 	well_axis = (bottom / bottom_count - top / top_count).normalized()
+	top_rest = top / top_count
+	top_local = rest.affine_inverse() * top_rest
 
 func _offset(node: MeshInstance3D) -> Vector3:
 	return node.transform * box.get_center() - rest_centre
+
+## How far the magazine's top face is from the well's axis: the end that goes into the well, which is what
+## has to line up, whatever the tilt of the rest of it.
+func _tip_off(node: MeshInstance3D) -> float:
+	var delta: Vector3 = node.transform * top_local - top_rest
+	return (delta - well_axis * delta.dot(well_axis)).length()
+
+## Degrees between the magazine's orientation and its seated one.
+func _tilt(node: MeshInstance3D) -> float:
+	return rad_to_deg(node.transform.basis.get_rotation_quaternion().angle_to(actor._magazine_rest_transform.basis.get_rotation_quaternion()))
 
 func _travel(node: MeshInstance3D) -> float:
 	return _offset(node).dot(well_axis)
@@ -167,7 +181,9 @@ func _play(authority: String, reduced := false, hold_after := 0.4) -> Array[Dict
 				if float(tick) * TICK >= reload_seconds:
 					actor.reload_remaining = 0.0
 		cues.clear()
+		var serial_before: int = actor._reload_audio.serial
 		actor.tick_visual(TICK)
+		var heard: Array[String] = actor._reload_audio.heard_since(serial_before)
 		if authoritative_end < 0 and actor.reload_remaining <= 0.0 and tick > 0:
 			authoritative_end = tick
 		timeline.append({
@@ -179,12 +195,12 @@ func _play(authority: String, reduced := false, hold_after := 0.4) -> Array[Dict
 			"old_travel": _travel(old_node), "new_travel": _travel(new_node),
 			"old_offset": _offset(old_node), "new_offset": _offset(new_node),
 			"old_off_axis": _off_axis(old_node), "new_off_axis": _off_axis(new_node),
+			"new_tip_off": _tip_off(new_node), "new_tilt": _tilt(new_node), "old_tilt": _tilt(old_node), "old_tip_off": _tip_off(old_node),
 			"old_pos": old_node.transform.origin, "new_pos": new_node.transform.origin,
 			"old_basis": old_node.transform.basis, "new_basis": new_node.transform.basis,
 			"in_hand": -1 if actor._magazine_in_hand == null else (0 if actor._magazine_in_hand == old_node else 1),
 			"gun": actor._gun.transform, "wrist": _joint("L_hand"),
-			"seat_sound": actor._mechanical_audio.stream == actor._reload_seat,
-			"release_sound": actor._mechanical_audio.stream == actor._reload_release,
+			"heard": heard,
 			"ammo": actor.ammo, "reserve": actor.reserve, "remaining": actor.reload_remaining,
 			"old_share": _onscreen_share(old_node) if old_node.visible else -1.0,
 			"new_share": _onscreen_share(new_node) if new_node.visible else -1.0,
@@ -267,9 +283,9 @@ func _identity() -> void:
 	check(both.old_visible and both.new_visible and (both.old_pos as Vector3).distance_to(both.new_pos) > 0.08, "for a moment both magazines are drawn, %.0f mm apart: two separate objects" % (((both.old_pos as Vector3).distance_to(both.new_pos)) * 1000.0))
 	var acquired := timeline[_first(timeline, func(t): return t.progress >= SBReloadPhases.ACQUIRE + 0.01)]
 	check(acquired.in_hand == 1 and acquired.new_visible, "from the acquisition the hand holds the replacement")
-	# Before that the replacement is drawn only while it rises out of the closing hand, never before.
+	# The replacement is first drawn already in the hand, below the frame: it does not appear in view.
 	var first_drawn := timeline[_first(timeline, func(t): return t.new_visible)]
-	check(first_drawn.progress >= SBReloadPhases.ACQUIRE - SBReloadPhases.FETCH - 0.01 and first_drawn.in_hand != 1, "the replacement is first drawn %.2f of the reload before the acquisition, rising out of the hand, not held yet" % (SBReloadPhases.ACQUIRE - first_drawn.progress))
+	check(first_drawn.in_hand == 1 and first_drawn.new_share < 0.05, "the replacement is first drawn in the hand at the pouch with %.0f %% of it inside the frame (it is not seen to appear)" % (maxf(first_drawn.new_share, 0.0) * 100.0))
 	# The old one never comes back to the well, and is gone before the end.
 	var came_back := false
 	for t in timeline:
@@ -311,6 +327,8 @@ func _paths() -> void:
 	# Extraction: from the latch to clear of the well, only ever outward.
 	var worst_back := 0.0
 	var worst_off := 0.0
+	var worst_excess := 0.0
+	var worst_tilt := 0.0
 	var last := -INF
 	for t in timeline:
 		if t.reloading and t.progress >= SBReloadPhases.UNLATCH and t.progress <= SBReloadPhases.CLEAR:
@@ -318,13 +336,23 @@ func _paths() -> void:
 				worst_back = maxf(worst_back, last - t.old_travel)
 			last = t.old_travel
 			worst_off = maxf(worst_off, t.old_off_axis)
+			worst_tilt = maxf(worst_tilt, t.old_tilt)
+			# While the top of it is still in the well (the first 32 mm, the mirror of where the replacement enters) it
+			# cannot tip: the top face stays on the axis. The wrist turns it only as it clears.
+			if t.old_travel <= 0.032:
+				worst_excess = maxf(worst_excess, t.old_tip_off)
 	check(worst_back < 0.0005 and last > 0.085, "the old magazine only moves outward from the latch to clear (backtrack %.2f mm, %.0f mm out)" % [worst_back * 1000.0, last * 1000.0])
-	check(worst_off < 0.004, "and stays on the well's axis while it does (worst %.1f mm off)" % (worst_off * 1000.0))
-	# Insertion: from lined up under the well to the stop, only ever inward, on axis, ending seated.
+	check(worst_excess < 0.0025 and worst_off < 0.005 and worst_tilt < 5.0, "and stays on the well's axis while it does: top face within 2.5 mm of it while in the well (%.1f mm), middle within 5 mm (%.1f mm), turned under 5 degrees (%.1f)" % [worst_excess * 1000.0, worst_off * 1000.0, worst_tilt])
+	# Insertion: from lined up under the well to the stop, only ever inward, ending seated. It is tipped (its front lip
+	# goes in first) and rocks upright as it enters; what has to line up with the well is the end that goes into it.
 	worst_back = 0.0
-	worst_off = 0.0
+	var worst_tip := 0.0
+	var worst_tip_in := 0.0
+	var worst_tilt_rise := 0.0
+	var last_tilt := INF
 	last = INF
 	var first_travel := -1.0
+	var tilt_at_enter := 0.0
 	for t in timeline:
 		if t.reloading and t.progress >= SBReloadPhases.ALIGN and t.progress <= SBReloadPhases.SEAT:
 			if first_travel < 0.0:
@@ -332,14 +360,18 @@ func _paths() -> void:
 			if last < INF:
 				worst_back = maxf(worst_back, t.new_travel - last)
 			last = t.new_travel
-			worst_off = maxf(worst_off, t.new_off_axis)
+			worst_tip = maxf(worst_tip, t.new_tip_off)
+			if t.progress >= SBReloadPhases.ENTER:
+				worst_tip_in = maxf(worst_tip_in, t.new_tip_off)
+				if tilt_at_enter == 0.0:
+					tilt_at_enter = t.new_tilt
+			if last_tilt < INF:
+				worst_tilt_rise = maxf(worst_tilt_rise, t.new_tilt - last_tilt)
+			last_tilt = t.new_tilt
 	check(worst_back < 0.0005 and first_travel > 0.07 and absf(last) < 0.001, "the replacement only moves inward from lined up to the stop (%.0f mm out at the start, %.2f mm at the end, backtrack %.2f mm)" % [first_travel * 1000.0, last * 1000.0, worst_back * 1000.0])
-	check(worst_off < 0.004, "and stays on the axis while it does (worst %.1f mm off)" % (worst_off * 1000.0))
-	# Upright at the mouth of the well: no more than 4 degrees off its seated orientation when it enters.
-	var rest_basis: Basis = actor._magazine_rest_transform.basis
-	var entering := timeline[_first(timeline, func(t): return t.progress >= SBReloadPhases.ENTER)]
-	var tilt := rad_to_deg((entering.new_basis as Basis).get_rotation_quaternion().angle_to(rest_basis.get_rotation_quaternion()))
-	check(tilt < 4.0, "the replacement is square to the well when it enters (%.1f degrees off)" % tilt)
+	check(worst_tip_in < 0.004, "its top end is within 4 mm of the well's axis from the moment it enters (worst %.1f mm; %.1f mm while still lining up)" % [worst_tip_in * 1000.0, worst_tip * 1000.0])
+	# The rock: tipped by 6 to 12 degrees as it enters, never tipping further, upright (under 0.5 degrees) at the stop.
+	check(tilt_at_enter > 6.0 and tilt_at_enter < 12.0 and worst_tilt_rise < 0.5 and last_tilt < 0.5, "it is tipped %.1f degrees as it enters, only ever rocks upright, and is square at the stop (%.2f degrees)" % [tilt_at_enter, last_tilt])
 	# The old one is let go at the drop, and then falls; it never goes up.
 	var drop_index := _first(timeline, func(t): return t.progress >= SBReloadPhases.DROP + 0.002)
 	var height_before := (timeline[drop_index].old_pos as Vector3).y
@@ -412,13 +444,25 @@ func _sync() -> void:
 		var timeline := _play(authority)
 		var nodes: Array = timeline.pop_back().nodes
 		var cue_ticks := {}
-		var counts := {"unlatch": 0, "seat": 0}
+		var counts := {}
+		var order: Array[String] = []
+		var heard_order: Array[String] = []
+		for event in SBReloadPhases.EVENTS:
+			counts[event[0]] = 0
 		for t in timeline:
 			for cue in t.cues:
 				counts[cue.event] += 1
 				cue_ticks[cue.event] = t.tick
-		check(counts.unlatch == 1 and counts.seat == 1, "%s authority: each click is cued exactly once (%s)" % [authority, counts])
-		check(cue_ticks.get("unlatch", 1 << 30) < cue_ticks.get("seat", -1), "%s authority: the release comes before the seat" % authority)
+				order.append(cue.event)
+			heard_order.append_array(t.heard)
+		var every_once := true
+		for key in counts:
+			every_once = every_once and counts[key] == 1
+		check(every_once, "%s authority: each reload event is cued exactly once (%s)" % [authority, counts])
+		var expected: Array[String] = []
+		for event in SBReloadPhases.EVENTS:
+			expected.append(event[0])
+		check(order == expected and heard_order == expected, "%s authority: the events are cued, and sound, in the authored order (%s / %s)" % [authority, order, heard_order])
 		# The tick the old magazine first leaves its well (the latch lets go), and the tick the replacement arrives at the stop.
 		var left_well := _first(timeline, func(t): return t.reloading and t.old_travel > 0.0005)
 		var arrived := _first(timeline, func(t): return t.reloading and t.progress >= SBReloadPhases.ENTER and t.new_travel < 0.001)
@@ -438,9 +482,9 @@ func _sync() -> void:
 			check(timeline[unlatch_tick - 1].old_travel < 0.0025 and timeline[unlatch_tick + 4].old_travel > 0.004, "%s authority: the old magazine is %.1f mm out a tick before the release click and %.1f mm out four ticks after it" % [authority, timeline[unlatch_tick - 1].old_travel * 1000.0, timeline[unlatch_tick + 4].old_travel * 1000.0])
 		# The sound that played is the one for the event.
 		if seat_tick >= 0 and seat_tick < timeline.size():
-			check(timeline[seat_tick].seat_sound, "%s authority: the seat click plays the seat sound" % authority)
+			check(timeline[seat_tick].heard == ["seat"], "%s authority: the seat cue plays the seat sound, and only it (%s)" % [authority, timeline[seat_tick].heard])
 		if unlatch_tick >= 0 and unlatch_tick < timeline.size():
-			check(timeline[unlatch_tick].release_sound, "%s authority: the release click plays the release sound" % authority)
+			check(timeline[unlatch_tick].heard == ["unlatch"], "%s authority: the release cue plays the release sound, and only it (%s)" % [authority, timeline[unlatch_tick].heard])
 	# What the old way did, for the record of why the cue is on the visual clock: the authoritative fraction
 	# reaches the seat up to a slack before the visible reload does.
 	var lead_ticks := int(ceil(actor.RELOAD_VISUAL_SLACK / TICK))
@@ -456,7 +500,8 @@ func _reduced_motion() -> void:
 	var worst_hand := 0.0
 	var worst_turn := 0.0
 	for i in mini(normal.size(), calm.size()):
-		if normal[i].reloading and calm[i].reloading:
+		var in_kick: bool = normal[i].progress >= SBReloadPhases.SEAT - 0.001 and normal[i].progress <= SBReloadPhases.SEAT + 0.16  # the seat's shudder is calmer by design
+		if normal[i].reloading and calm[i].reloading and not in_kick:
 			worst_gun = maxf(worst_gun, ((normal[i].gun as Transform3D).origin).distance_to((calm[i].gun as Transform3D).origin))
 			worst_turn = maxf(worst_turn, ((normal[i].gun as Transform3D).basis.get_rotation_quaternion()).angle_to((calm[i].gun as Transform3D).basis.get_rotation_quaternion()))
 			worst_hand = maxf(worst_hand, (normal[i].wrist as Vector3).distance_to(calm[i].wrist))
@@ -484,10 +529,16 @@ func _visibility() -> void:
 		var worst_digits := 5
 		var worst_digits_at := 0.0
 		var thumb_out := 0
+		var in_hip := 0
 		var frames := 0
 		for t in timeline:
 			if not t.reloading or t.progress < 0.02 or t.progress > 0.98:
 				continue
+			if t.progress >= SBReloadPhases.HIP_OUT and t.progress <= SBReloadPhases.HIP_IN:
+				in_hip += 1
+				continue # at the hip pouch, below the frame, by design: checked by reload_visibility_test.gd (sleeve in frame)
+			if OS.get_environment("RELOAD_TEST_VERBOSE") != "" and not reduced:
+				print("VIS %.3f over=%.3f digits=%d thumb=%s" % [t.progress, t.wrist_overshoot, t.digits_in_frame, t.thumb_in_frame])
 			frames += 1
 			worst_overshoot = maxf(worst_overshoot, t.wrist_overshoot)
 			if not t.thumb_in_frame:
@@ -501,7 +552,7 @@ func _visibility() -> void:
 					worst_magazine = share
 					worst_magazine_at = t.progress
 		var label := "reduced motion" if reduced else "normal motion"
-		check(frames > 120, "%s: %d ticks from just after the start to just before the end" % [label, frames])
+		check(frames > 90 and in_hip > 10 and float(in_hip) / 135.0 < 0.20, "%s: %d ticks checked, and %d ticks (%.2f of the reload) are the hip retrieval, below the frame by design" % [label, frames, in_hip, float(in_hip) / 135.0])
 		# The wrist is a bone under the cuff: it may sit a little below the frame's edge with the hand in
 		# view (reload_visibility_test.gd counts the hand's pixels); this bound only stops it going far.
 		check(worst_overshoot <= 0.06, "%s: the support wrist is never more than 6 %% of the frame outside it (worst %.1f %%)" % [label, worst_overshoot * 100.0])
@@ -618,7 +669,7 @@ func _edges() -> void:
 	actor.reload_cue.connect(listener)
 	_drive(actor, 0.95)
 	actor.reload_cue.disconnect(listener)
-	check(cues == ["unlatch", "seat"], "and the reload after it clicks both times (%s)" % [cues])
+	check(cues == SBReloadPhases.EVENTS.map(func(e): return e[0]), "and the reload after it plays every event once (%s)" % [cues])
 	# Back to back with no idle frame between: the second reload clicks again and swaps once.
 	actor.reload_remaining = 0.0
 	actor.tick_visual(TICK)
@@ -633,7 +684,10 @@ func _edges() -> void:
 		actor.reload_remaining = maxf(0.001, reload_seconds - float(tick) * TICK)
 		actor.tick_visual(TICK)
 	actor.reload_cue.disconnect(listener2)
-	check(again.count("unlatch") == 2 and again.count("seat") == 2, "a reload restarted with no idle frame between clicks both times again (%s)" % [again])
+	var every_twice := true
+	for event in SBReloadPhases.EVENTS:
+		every_twice = every_twice and again.count(event[0]) == 2
+	check(every_twice, "a reload restarted with no idle frame between plays every event again, once each (%s)" % [again])
 	actor.reload_remaining = 0.0
 	actor.tick_visual(TICK)
 	check(shown.call(actor) == 1 and (actor._magazine == node_a or actor._magazine == node_b), "and ends with one magazine drawn")

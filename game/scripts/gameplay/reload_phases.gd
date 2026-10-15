@@ -11,9 +11,8 @@ extends RefCounted
 ##   GRASP - UNLATCH  the hand takes the weight; at UNLATCH the latch lets go (release click)
 ##   UNLATCH - CLEAR  the old magazine slides out along its own well and clears it
 ##   CLEAR - DROP     it swings out to the left; at DROP the fingers open and it is let go
-##   DROP - ACQUIRE   the empty hand goes to the left and a little down (it stays in the frame); there is
-##                    no pouch to show, so the replacement comes up out of the closing hand (below)
-##   ACQUIRE - FETCH  from FETCH before ACQUIRE the replacement rises out of the palm as the fingers close
+##   DROP - ACQUIRE   the empty hand goes down and to the left to the magazine pouch at the hip, out of the
+##                    bottom of the frame (the sleeve stays in it)
 ##   at ACQUIRE       the fingers close on the REPLACEMENT magazine (a second mesh)
 ##   ACQUIRE - ALIGN  the replacement is brought up into view and lined up under the well
 ##   ALIGN - ENTER    its top enters the well
@@ -25,18 +24,31 @@ const REACH := 0.14
 const GRASP := 0.20
 const UNLATCH := 0.24
 const CLEAR := 0.32
-const DROP := 0.38
-const ACQUIRE := 0.56
-const ALIGN := 0.68
+const DROP := 0.37
+const ACQUIRE := 0.50
+const ALIGN := 0.67
 const ENTER := 0.74
 const SEAT := 0.80
 const LETGO := 0.85
-## How long before ACQUIRE the replacement starts to come up out of the hand.
-const FETCH := 0.08
+## The span in which the support hand is below the frame, at the magazine pouch on the hip: it leaves the
+## picture at HIP_OUT and is back in it at HIP_IN. The sleeve stays in the frame throughout, and the replacement
+## is first drawn inside this span, in the hand, with none of it in the picture. Everything outside it is held
+## to the stricter rules of reload_visibility_test.gd.
+const HIP_OUT := 0.41
+const HIP_IN := 0.60
 
+## The old magazine hits the floor this long after it is let go (the fall from the hand to the ground at 1 g, about
+## 0.50 s, which is 0.22 of a 2.25 s reload): its landing is an event of the same clock, so cancelling the reload
+## cancels the sound with it.
+const LAND := 0.59
 ## Presentation events, in order, and the phase each fires at. The audio follows the VISIBLE
-## animation (the presentation clock), so a click lands on the frame the part moves.
-const EVENTS := [["unlatch", UNLATCH], ["seat", SEAT]]
+## animation (the presentation clock), so a sound lands on the frame the part moves. The slide-out starts a hair
+## after the latch lets go; the pouch rustle is the hand closing on the replacement; the slide-in is the top
+## entering the well.
+const EVENTS := [["unlatch", UNLATCH], ["extract", 0.265], ["pouch", ACQUIRE], ["land", LAND], ["enter", ENTER], ["seat", SEAT]]
+## The procedural weapons (no rigged hands) have only a release at the start and a seat: their magazine just
+## drops and comes back.
+const PROCEDURAL_EVENTS := ["unlatch", "seat"]
 
 ## The visual progress (0 to 1) of a reload from the presentation clock's remaining seconds.
 static func progress(remaining: float, duration: float) -> float:

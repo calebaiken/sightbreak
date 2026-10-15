@@ -27,42 +27,54 @@ REPO = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 GAME = os.path.join(REPO, 'game')
 ACTOR = os.path.join(GAME, 'scripts', 'gameplay', 'actor.gd')
 PHASES = os.path.join(GAME, 'scripts', 'gameplay', 'reload_phases.gd')
+AUDIO = os.path.join(GAME, 'scripts', 'gameplay', 'reload_audio.gd')
 GLB = os.path.join(GAME, 'assets', 'weapons', 'relay_ar', 'relay_ar_arms.glb')
 BPY = os.environ.get('BPY', os.path.join(os.path.dirname(REPO), 'tools', 'bpy-venv', 'bin', 'python'))
 RIFLE = os.path.join(GAME, 'assets', 'weapons', 'relay_ar', 'relay_ar.glb')
-SUMMARY = re.compile(r'^(RELOAD_SEQUENCE_TEST|WEAPON_ART_TEST|RELOAD_VISIBILITY_TEST)\b.*?(?:checks=(\d+))?.*?failures=(\d+)', re.M)
+SUMMARY = re.compile(r'^(RELOAD_SEQUENCE_TEST|WEAPON_ART_TEST|RELOAD_VISIBILITY_TEST|RELOAD_AUDIO_TEST|RELOAD_AUDIO_CAPTURE)\b.*?(?:checks=(\d+))?.*?failures=(\d+)', re.M)
 ERRORS = re.compile(r'^ERROR: (?!.*(?:ObjectDB|leaked)).*$', re.M)
 
 SEQ = ('sequence', ['--headless', '--script', 'res://tests/reload_sequence_test.gd'])
 ART = ('weapon-art', ['--headless', '--script', 'res://tests/weapon_art_test.gd'])
+AUD = ('audio', ['--headless', '--script', 'res://tests/reload_audio_test.gd'])
+CAP = ('audio capture', ['--headless', '--audio-driver', 'Dummy', '--script', 'res://tests/reload_audio_capture.gd', '--', '--scenario=reload'])
+CAP_CANCEL = ('audio capture (cancel)', ['--headless', '--audio-driver', 'Dummy', '--script', 'res://tests/reload_audio_capture.gd', '--', '--scenario=cancel'])
 VIS = ('visibility', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_visibility_test.gd', '--', '--step=4'])
 VIS_REDUCED = ('visibility (reduced motion)', VIS[1] + ['--reduced'])
 
 # (id, what, [(file, old, new)], build_env or None, tests that must fail)
 SOURCE = [
     ('N1', 'the replacement is the first magazine again (one node, not two)', [(ACTOR, '_magazine_spare = _magazine.duplicate() as MeshInstance3D', '_magazine_spare = _magazine')], None, [SEQ]),
-    ('N2', 'the replacement is never drawn', [(ACTOR, '_magazine_spare.visible = progress >= fetch_start', '_magazine_spare.visible = false')], None, [SEQ]),
-    ('N3', 'the nodes do not swap when the reload ends', [(ACTOR, '\t\t_magazine_swap_pending = true\n\t\t_mechanical_audio.stream = _reload_seat', '\t\t_mechanical_audio.stream = _reload_seat')], None, [SEQ]),
+    ('N2', 'the replacement is never drawn', [(ACTOR, '_magazine_spare.visible = progress >= SBReloadPhases.ACQUIRE', '_magazine_spare.visible = false')], None, [SEQ]),
+    ('N3', 'the nodes do not swap when the reload ends', [(ACTOR, '\t\t_magazine_swap_pending = true\n\t\t_seat_kick = 1.0', '\t\t_seat_kick = 1.0')], None, [SEQ]),
     ('N4', 'the magazine is held 30 mm from where the hand grips it', [(ACTOR, '\t_grip_offset = _hand_in_gun().affine_inverse() * _magazine_rest_transform\n', '\t_grip_offset = _hand_in_gun().affine_inverse() * _magazine_rest_transform\n\t_grip_offset.origin += Vector3(0.0, 0.0, 0.030)\n')], None, [SEQ]),
     ('N5', 'the old magazine comes back to the well while the replacement is drawn', [(ACTOR, '\t\t_magazine.transform = _dropped_transform(fall)\n', '\t\t_magazine.transform = _magazine_rest_transform\n')], None, [SEQ]),
     ('N6', 'reduced motion shrinks the reload staging to a fifth', [(ACTOR, '\t\tvar bob_weight := 0.0 if reduced_motion', '\t\tif reduced_motion:\n\t\t\treload_tilt *= 0.2\n\t\tvar bob_weight := 0.0 if reduced_motion')], None, [SEQ, VIS_REDUCED]),
-    ('N7', 'the clicks follow the authoritative fraction instead of the visible reload', [(ACTOR, 'SBReloadPhases.crossed(_reload_visual_previous, visual_progress)', 'SBReloadPhases.crossed(_reload_visual_previous, SBReloadPhases.progress(reload_remaining, reload_duration))'), (ACTOR, '\t\t_reload_visual_previous = visual_progress\n\t_reload_visual_active = reloading', '\t\t_reload_visual_previous = SBReloadPhases.progress(reload_remaining, reload_duration)\n\t_reload_visual_active = reloading')], None, [SEQ]),
-    ('N8', 'the seat click fires 0.05 of the reload early', [(PHASES, '["seat", SEAT]', '["seat", SEAT - 0.05]')], None, [SEQ]),
-    ('N9', 'the seat click fires at the let-go instead of the seat', [(PHASES, '["seat", SEAT]', '["seat", LETGO]')], None, [SEQ]),
-    ('N10', 'a clock correction that goes back over the seat clicks it twice', [(ACTOR, 'elif event == "seat" and not _reload_visual_seated:', 'elif event == "seat":')], None, [SEQ]),
-    ('N11', 'the seat click plays the release sound', [(ACTOR, '_mechanical_audio.stream = _reload_seat\n', '_mechanical_audio.stream = _reload_release\n')], None, [SEQ]),
+    ('N7', 'the clicks follow the authoritative fraction instead of the visible reload', [(ACTOR, 'SBReloadPhases.crossed(_reload_visual_previous, visual_progress)', 'SBReloadPhases.crossed(_reload_visual_previous, SBReloadPhases.progress(reload_remaining, reload_duration))'), (ACTOR, '\t\t_reload_visual_previous = visual_progress\n\telif _reload_visual_active', '\t\t_reload_visual_previous = SBReloadPhases.progress(reload_remaining, reload_duration)\n\telif _reload_visual_active')], None, [SEQ, AUD]),
+    ('N8', 'the seat click fires 0.05 of the reload early', [(PHASES, '["seat", SEAT]', '["seat", SEAT - 0.05]')], None, [SEQ, AUD]),
+    ('N9', 'the seat click fires at the let-go instead of the seat', [(PHASES, '["seat", SEAT]', '["seat", LETGO]')], None, [SEQ, AUD]),
+    ('N10', 'a clock correction that goes back over events plays them twice', [(ACTOR, '\tif _reload_fired.has(event):\n\t\treturn\n', '')], None, [SEQ, AUD]),
+    ('N11', 'the seat click plays the release sound', [(ACTOR, '\t_reload_audio.play(event, progress, head_height)', '\t_reload_audio.play("unlatch" if event == "seat" else event, progress, head_height)')], None, [SEQ, AUD]),
     ('N12', 'brass lands at the shooter\'s feet again', [(ACTOR, '.casing(port, global_basis.x, _cosmetic_floor(port))', '.casing(port, global_basis.x, global_position.y)')], None, [SEQ]),
-    ('N13', 'the animation completes the reload by writing the timer', [(ACTOR, '\t\t_magazine_swap_pending = true\n\t\t_mechanical_audio.stream = _reload_seat', '\t\t_magazine_swap_pending = true\n\t\treload_remaining = 0.0\n\t\t_mechanical_audio.stream = _reload_seat')], None, [SEQ]),
-    ('N19', 'the SMG\'s release click moves to the rifle\'s latch phase', [(ACTOR, '\t\t\t_fire_reload_cue("unlatch", visual_progress)\n', '\t\t\tpass\n'), (ACTOR, 'if event == "unlatch" and not is_instance_valid(_arms_player):\n\t\t\t\tcontinue', 'if false:\n\t\t\t\tcontinue')], None, [SEQ]),
+    ('N13', 'the animation completes the reload by writing the timer', [(ACTOR, '\t\t_magazine_swap_pending = true\n\t\t_seat_kick = 1.0', '\t\t_magazine_swap_pending = true\n\t\treload_remaining = 0.0\n\t\t_seat_kick = 1.0')], None, [SEQ]),
+    ('N19', 'the SMG plays the rigged hand\'s whole set of sounds', [(ACTOR, 'if not rigged_events and (event == "unlatch" or not SBReloadPhases.PROCEDURAL_EVENTS.has(event)):', 'if false:')], None, [SEQ, AUD]),
     ('N20', 'reduced motion no longer calms the procedural weapons\' reload dip', [(ACTOR, '\t\t\treload_tilt *= 0.2 # the procedural weapons\' dip is plain motion: still calmed\n', '\t\t\tpass\n')], None, [SEQ]),
-    ('N21', 'a reload restarted with no idle frame between does not reset its clicks', [(ACTOR, 'if reloading and _reload_visual_active and reload_remaining - _reload_clock > reload_duration * 0.5:', 'if false:')], None, [SEQ]),
-    ('N22', 'the replacement is simply there when the fingers close (no rise out of the hand)', [(ACTOR, '_magazine_spare.visible = progress >= fetch_start', '_magazine_spare.visible = progress >= SBReloadPhases.ACQUIRE')], None, [SEQ]),
+    ('N21', 'a reload restarted with no idle frame between does not reset its events', [(ACTOR, 'if reloading and _reload_visual_active and reload_remaining - _reload_clock > reload_duration * 0.5:', 'if false:')], None, [SEQ, AUD]),
+    ('N22', 'the replacement is drawn from the start of the hip trip: it floats in view with no hand on it', [(ACTOR, '_magazine_spare.visible = progress >= SBReloadPhases.ACQUIRE', '_magazine_spare.visible = progress >= SBReloadPhases.DROP')], None, [SEQ]),
     ('N14', 'the seat phase is changed in reload_phases.gd without rebuilding the clip', [(PHASES, 'const SEAT := 0.80', 'const SEAT := 0.78')], None, [ART, SEQ]),
+    ('A1', 'a reload cut short leaves its sounds playing', [(ACTOR, '\telif _reload_visual_active and not _reload_fired.has("seat"):\n\t\t_reload_audio.stop_all() # cancelled before the seat: the sounds that were playing stop with it\n', '')], None, [AUD]),
+    ('A2', 'every reload sound uses the same voice, so each cuts the one before', [(AUDIO, '\tvar index := _free_voice()', '\tvar index := 0')], None, [AUD]),
+    ('A3', 'a weapon change leaves the reload sounds playing', [(ACTOR, '\t\t_reload_audio.stop_all() # a weapon change cancels a reload: nothing of it keeps sounding', '\t\tpass')], None, [AUD]),
+    ('A4', 'the slide-out has no sound', [(AUDIO, '\t\t_add("extract", _slide(0.17, 1700.0 * shift, 900.0 * shift, 105.0, seed_base + 2, false))\n', '')], None, [AUD]),
+    ('A5', 'the reload sounds play 80 dB down (the voices are muted)', [(AUDIO, '\tvoice.volume_db = -15.0 + float(LEVELS.get(event, 0.0))', '\tvoice.volume_db = -95.0')], None, [CAP]),
+    ('A6', 'a cancelled reload does not stop its voices (real audio)', [(ACTOR, '\t_reload_audio.stop_all() # a weapon change cancels a reload: nothing of it keeps sounding', '\tpass'), (ACTOR, '\telif _reload_visual_active and not _reload_fired.has("seat"):\n\t\t_reload_audio.stop_all() # cancelled before the seat: the sounds that were playing stop with it\n', '')], None, [CAP_CANCEL]),
 ]
 CLIPS = [
     ('N15', 'a hand that does not reach the magazine (knuckle 50 mm off)', {'ARMS_GRAB_JSON': '{"mcp": [0.064, 0.15, -0.19]}'}, ['contact']),
     ('N16', 'the previous grasp, which hides the thumb behind the magazine', {'ARMS_GRAB_JSON': '{"distal": [1.0, 0.0, 0.0], "mcp": [0.034, 0.15, -0.19], "roll": 0}'}, [VIS]),
     ('N17', 'the previous approach from below the frame (the hand leaves the picture)', {'ARMS_APPROACH': '-0.020,-0.010,-0.085'}, [VIS]),
+    ('N23', 'the replacement taken from just under the well, in view: it appears in the picture before the hand has it', {'ARMS_PATH_JSON': '{"hip": [-0.05, 0.03, -0.07], "carry": [-0.03, 0.04, -0.05]}'}, [VIS, SEQ]),
+    ('N24', 'the magazine and hand move in straight lines between keys (robotic, with velocity jumps)', {'ARMS_LINEAR_PATHS': '1'}, [ART, SEQ]),
     ('N18', 'the replacement fetched from far below the frame', {'ARMS_PATH_JSON': '{"swing": [-0.06, -0.02, -0.03], "pouch": [-0.15, -0.06, -0.15], "mid": [-0.06, -0.025, -0.06]}'}, [VIS, SEQ]),
 ]
 
@@ -116,13 +128,13 @@ def main():
             log.write(text + '\n')
             log.flush()
 
-    originals = {p: open(p).read() for p in (ACTOR, PHASES)}
+    originals = {p: open(p).read() for p in (ACTOR, PHASES, AUDIO)}
     glb_backup = open(GLB, 'rb').read()
     results = []
     try:
         say('# Baseline (no defect injected): every test passes')
-        base = [run_test(t) for t in (SEQ, ART)] + [run_test(VIS), run_test(VIS_REDUCED)]
-        csv_good = os.path.join(REPO, 'docs', 'reports', 'media', 'art-v7', 'reload-two-magazines', 'logs', 'clip_contact.csv')
+        base = [run_test(t) for t in (SEQ, ART, AUD, CAP, CAP_CANCEL)] + [run_test(VIS), run_test(VIS_REDUCED)]
+        csv_good = os.path.join(REPO, 'docs', 'reports', 'media', 'art-v8', 'reload-hip-retrieval', 'logs', 'clip_contact.csv')
         if os.path.exists(csv_good):
             base.append(run_contact(csv_good))
         for name, state, errs in base:

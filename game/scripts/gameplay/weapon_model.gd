@@ -24,6 +24,11 @@ var _viewmodel := false
 ## are meters: receiver rear at the origin, bore at +Y 0.025, barrel along -Z. The
 ## procedural rifle remains the fallback when the asset is missing.
 const RELAY_AR := "res://assets/weapons/relay_ar/relay_ar.glb"
+## Albedo factor of the pistol grip over its baked colour (measured against the gloves; see _build_authored_rifle).
+const GRIP_DARKEN := 0.3
+## The fill's albedo floor for the arms (ViewmodelShading.LIFT is the rifle's): higher, so the near-black gloves are
+## not left in a dark interior with nothing to read; the grip gets none, so it stays the darkest thing in the hand.
+const ARMS_LIFT := 0.55
 const RELAY_AR_MATERIAL := "res://assets/weapons/relay_ar/relay_ar_body.tres"
 const RELAY_AR_ORM := "res://assets/weapons/relay_ar/relay_ar_orm.png"
 const RELAY_AR_NORMAL := "res://assets/weapons/relay_ar/relay_ar_normal.png"
@@ -109,6 +114,7 @@ static func _add_arms(parent: Node3D, placement: Transform3D, result: Dictionary
 	arms.transform = placement
 	arms.set_meta("weapon_role", "arms")
 	var material := ViewmodelShading.surface(RELAY_AR_ARMS_TEXTURES)
+	material.set_shader_parameter("viewmodel_lift", ARMS_LIFT) # the arms' fill floor: charcoal gloves keep some form in shade
 	for mesh: MeshInstance3D in arms.find_children("*", "MeshInstance3D", true, false):
 		mesh.material_override = material
 		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
@@ -464,6 +470,15 @@ func _build_gun() -> void:
 	_gun.add_child(_muzzle)
 	_muzzle.position = Vector3(0, 0.025, muzzle_z) if muzzle_at == Vector3.INF else muzzle_at
 	_muzzle.visible = false
+	# The flash lights what is round it for its 40 ms: the hands, the rail and the ground in front of the muzzle.
+	var flash_light := OmniLight3D.new()
+	flash_light.name = "flash_light"
+	flash_light.light_color = Color(1.0, 0.68, 0.34)
+	flash_light.light_energy = 1.6
+	flash_light.omni_range = 3.0
+	flash_light.shadow_enabled = false
+	flash_light.position = Vector3(0, 0, -0.05)
+	_muzzle.add_child(flash_light)
 
 	for child in _gun.get_children():
 		if child is MeshInstance3D:
@@ -472,7 +487,7 @@ func _build_gun() -> void:
 static var _flash_mesh: ArrayMesh
 
 ## The muzzle flash in one mesh, barrel along -Z from the muzzle: a hot teardrop core, a wider
-## soft bell round it, thin streaks that fan forward, short side flares like a flash hider's
+## soft bell round it, short blast petals to each side and over the top like a flash hider's
 ## ports, and a glow disc at the muzzle. Vertex colour is the hue and alpha the additive
 ## weight, fading to nothing at every outer edge, so there is no hard silhouette to read as a
 ## sticker. 213 triangles; shared by every build.
@@ -486,18 +501,17 @@ static func flash_mesh() -> ArrayMesh:
 	# along the barrel) the lobe fades out at its rim instead of ending on a hard polygon edge.
 	_flash_lathe(tool, [[0.006, 0.004, 1.0], [-0.010, 0.014, 0.95], [-0.045, 0.034, 0.0], [-0.095, 0.018, 0.40], [-0.200, 0.0, 0.0]], Color(1.0, 0.86, 0.52), 12)
 	_flash_lathe(tool, [[0.008, 0.012, 0.45], [-0.020, 0.042, 0.40], [-0.065, 0.074, 0.0], [-0.130, 0.034, 0.16], [-0.280, 0.0, 0.0]], Color(1.0, 0.48, 0.14), 12)
-	for i in range(5):
-		var angle := i * TAU / 5.0 + 0.4
-		var out := Vector3(cos(angle), sin(angle), 0.0)
-		var across := Vector3(-sin(angle), cos(angle), 0.0)
-		var reach := 0.26 + 0.06 * (i % 3)
-		var lean := 0.030 + 0.015 * (i % 2)
-		_flash_triangle(tool, out * 0.010 + across * 0.0055 + Vector3(0, 0, -0.005), out * 0.010 - across * 0.0055 + Vector3(0, 0, -0.005), out * lean + Vector3(0, 0, -reach), Color(1.0, 0.78, 0.38))
-	for i in range(4):
-		var angle := i * TAU / 4.0 + 0.785
-		var out := Vector3(cos(angle), sin(angle), 0.0)
-		var across := Vector3(-sin(angle), cos(angle), 0.0)
-		_flash_triangle(tool, out * 0.014 + across * 0.0065, out * 0.014 - across * 0.0065, out * 0.115 + Vector3(0, 0, -0.045), Color(1.0, 0.66, 0.26))
+	# Blast petals out to each side of the muzzle, short, wide and swept a little back (what a compensator's ports
+	# throw), each an outer orange fan and an inner yellow one. They replace the thin straight spikes of the first
+	# version, which drew the flash as a star.
+	for side in [-1.0, 1.0]:
+		for layer in 2:
+			var reach := 0.095 - 0.030 * layer
+			var half := 0.020 - 0.008 * layer
+			var hue := Color(1.0, 0.58, 0.20) if layer == 0 else Color(1.0, 0.84, 0.50)
+			_flash_triangle(tool, Vector3(side * 0.012, half, -0.004), Vector3(side * 0.012, -half, -0.004), Vector3(side * reach, 0.0, -0.030 - 0.012 * layer), hue, 0.75)
+	# A thin upward fan, shorter: the blast that goes over the top of a flash hider.
+	_flash_triangle(tool, Vector3(0.011, 0.012, -0.004), Vector3(-0.011, 0.012, -0.004), Vector3(0.0, 0.060, -0.030), Color(1.0, 0.62, 0.24), 0.6)
 	# The glow disc at the muzzle.
 	for i in range(12):
 		var a := i * TAU / 12.0
@@ -510,6 +524,24 @@ static func flash_mesh() -> ArrayMesh:
 		tool.add_vertex(Vector3(cos(b), sin(b), 0) * 0.062 + Vector3(0, 0, 0.004))
 	_flash_mesh = tool.commit()
 	return _flash_mesh
+
+static var _smoke_mesh: ArrayMesh
+
+## A soft puff for the muzzle smoke: three overlapping stretched blobs along the barrel axis, grey, densest along the axis
+## and zero at the widest ring (vertex alpha), so no outline shows. About 150 triangles, shared.
+static func smoke_mesh() -> ArrayMesh:
+	if _smoke_mesh != null:
+		return _smoke_mesh
+	var tool := SurfaceTool.new()
+	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
+	var hue := Color(0.66, 0.68, 0.70)
+	for offset in [[0.0, 0.034, 0.60], [-0.045, 0.040, 0.48], [-0.095, 0.030, 0.34]]:
+		var z: float = offset[0]
+		var r: float = offset[1]
+		var density: float = offset[2]
+		_flash_lathe(tool, [[z + 0.030, 0.0, density * 0.5], [z + 0.010, r * 0.75, density * 0.3], [z - 0.010, r, 0.0], [z - 0.035, r * 0.7, density * 0.25], [z - 0.055, 0.0, density * 0.5]], hue, 10)
+	_smoke_mesh = tool.commit()
+	return _smoke_mesh
 
 static func _flash_lathe(tool: SurfaceTool, rings: Array, hue: Color, sides: int) -> void:
 	for j in range(rings.size() - 1):
@@ -527,10 +559,10 @@ static func _flash_lathe(tool: SurfaceTool, rings: Array, hue: Color, sides: int
 				tool.set_color(Color(hue.r, hue.g, hue.b, corners[index][1]))
 				tool.add_vertex(corners[index][0])
 
-static func _flash_triangle(tool: SurfaceTool, a: Vector3, b: Vector3, tip: Vector3, hue: Color) -> void:
-	tool.set_color(Color(hue.r, hue.g, hue.b, 0.9))
+static func _flash_triangle(tool: SurfaceTool, a: Vector3, b: Vector3, tip: Vector3, hue: Color, weight := 0.9) -> void:
+	tool.set_color(Color(hue.r, hue.g, hue.b, weight))
 	tool.add_vertex(a)
-	tool.set_color(Color(hue.r, hue.g, hue.b, 0.9))
+	tool.set_color(Color(hue.r, hue.g, hue.b, weight))
 	tool.add_vertex(b)
 	tool.set_color(Color(hue.r, hue.g, hue.b, 0.0))
 	tool.add_vertex(tip)
@@ -575,10 +607,21 @@ func _build_authored_rifle() -> Vector3:
 	# First person draws with the viewmodel projection; inspection keeps the plain material.
 	var material: Material = ViewmodelShading.surface(RELAY_AR_TEXTURES, 0.84, 0.60) if _hands else load(RELAY_AR_MATERIAL)
 	var part_names := ["body", "paint_receiver", "paint_handguard", "magazine"]
+	if rifle.meshes.has("grip"):
+		part_names.append("grip") # graphite furniture, its own draw so it can be told apart from the tan magazine
 	if not _hands and rifle.meshes.has("stock"):
 		part_names.append("stock")
+	# The grip is graphite, and darker again than the baked graphite, so a glove on it has an edge: measured in sun the
+	# glove and the baked grip had the same median luma (89 and 91). The same factor in inspection, as an albedo colour.
+	var grip_material: Material = material
+	if _hands:
+		grip_material = ViewmodelShading.surface(RELAY_AR_TEXTURES, 0.84 * GRIP_DARKEN, 0.60)
+		(grip_material as ShaderMaterial).set_shader_parameter("viewmodel_lift", 0.0) # no readability floor: it is meant to be the darkest thing in the hand
+	else:
+		grip_material = (load(RELAY_AR_MATERIAL) as BaseMaterial3D).duplicate()
+		(grip_material as BaseMaterial3D).albedo_color = Color(0.86 * GRIP_DARKEN, 0.86 * GRIP_DARKEN, 0.86 * GRIP_DARKEN)
 	for part_name in part_names:
-		var part := _add_authored(part_name, rifle.meshes[part_name], rifle.markers[part_name], material)
+		var part := _add_authored(part_name, rifle.meshes[part_name], rifle.markers[part_name], grip_material if part_name == "grip" else material)
 		if part_name.begins_with("paint_"):
 			_paint_parts.append(part)
 	_magazine = _gun.get_node("magazine")

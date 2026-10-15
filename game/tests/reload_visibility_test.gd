@@ -10,6 +10,7 @@ extends SceneTree
 ##   --ps=a,b,c       only these progresses (for trying a grasp quickly; the pass criteria need the full run)
 ##   --view=<name>    sunlit (default), backlight, shade
 ##   --reduced        reduced motion on
+##   --variant=<name> with --reduced: current (default), calm or still (Actor.REDUCED_RELOAD_VARIANTS)
 ##   --csv=<path>     write the per-frame numbers
 ##   --report         print every frame's numbers (no thresholds fail the run)
 ##
@@ -20,6 +21,8 @@ extends SceneTree
 ##   - the thumb and at least three of the four fingertips show at least TIP_MIN pixels each
 ##     while the hand is on a magazine
 ##   - the magazine the hand holds shows at least MAGAZINE_MIN pixels and is at least 85 % inside the frame
+##   - at the hip the sleeve shows at least SLEEVE_MIN pixels; on the rise from it the hand shows at least RISE_HAND_MIN
+##     pixels, with the thumb and RISE_FINGERS fingertips drawn and the magazine in full view
 ##   - no part of the action that matters (the old magazine leaving the well, the replacement entering it)
 ##     happens with its magazine out of the frame
 const Actor = preload("res://scripts/gameplay/actor.gd")
@@ -29,6 +32,13 @@ const RELOAD_SECONDS := 2.25
 const HAND_MIN := 10000
 const TIP_MIN := 100
 const MAGAZINE_MIN := 3000
+## At the hip pouch (HIP_OUT to HIP_IN in reload_phases.gd) the hand is below the frame by design: what must show is the
+## sleeve it hangs from, so the retrieval reads as an arm reaching down and not as a hand that vanished.
+const SLEEVE_MIN := 8000
+## Rising from the hip to the lined-up position (HIP_IN to just after ALIGN) the wrist is still crossing the bottom edge: the hand
+## shows less than on the handguard, the thumb and two fingertips are drawn, and the magazine it carries is in full view.
+const RISE_HAND_MIN := 6000
+const RISE_FINGERS := 2
 const TIPS := ["L_thumb_3", "L_index_3", "L_middle_3", "L_ring_3", "L_pinky_3"]
 const PALETTE := {
 	"thumb": Color(1, 0, 0), "index": Color(0, 1, 0), "middle": Color(0, 0, 1),
@@ -48,6 +58,7 @@ var view := "sunlit"
 var step := 2
 var only: Array[float] = []
 var reduced := false
+var variant := "current"
 var report := false
 var actor: SBActor
 var arena: Node3D
@@ -189,6 +200,8 @@ func _run() -> void:
 		elif argument.begins_with("--ps="):
 			for part in argument.trim_prefix("--ps=").split(","):
 				only.append(float(part))
+		elif argument.begins_with("--variant="):
+			variant = argument.trim_prefix("--variant=")
 		elif argument == "--reduced":
 			reduced = true
 		elif argument == "--report":
@@ -209,6 +222,7 @@ func _run() -> void:
 	actor._equip_blend = 0
 	actor.apply_cosmetic({})
 	actor.reduced_motion = reduced
+	actor.reduced_variant = variant
 	actor.global_position = place[0]
 	actor.yaw = place[1]
 	actor.rotation.y = place[1]
@@ -257,8 +271,18 @@ func _run() -> void:
 	print("RELOAD_VISIBILITY_TEST view=%s reduced=%s frames=%d checks=%d failures=%d" % [view, reduced, results.size(), checks, failures.size()])
 	quit(1 if not failures.is_empty() else 0)
 
+func _in_hip(p: float) -> bool:
+	return p >= SBReloadPhases.HIP_OUT and p <= SBReloadPhases.HIP_IN
+
+func _in_rise(p: float) -> bool:
+	return p > SBReloadPhases.HIP_IN and p < SBReloadPhases.ALIGN + 0.025 # the last digit swings round the base after the lined-up position
+
+func _hand_px(r: Dictionary) -> int:
+	return r.left + r.thumb + r.index + r.middle + r.ring + r.pinky
+
 func _evaluate(results: Array[Dictionary]) -> void:
-	# The hand is on the handguard (and behind the rifle) at 0 and 1; everything between must show it.
+	# The hand is on the handguard (and behind the rifle) at 0 and 1; everything between must show it, except
+	# at the hip pouch and on the way up from it (named and measured separately below).
 	var window: Array[Dictionary] = []
 	for r in results:
 		if r.progress >= 0.02 and r.progress <= 0.98:
@@ -266,24 +290,55 @@ func _evaluate(results: Array[Dictionary]) -> void:
 	check(window.size() >= 20, "%d frames from just after the start to just before the end" % window.size())
 	var worst_hand := 1 << 30
 	var worst_hand_at := 0.0
+	var hip_frames := 0
+	var worst_sleeve := 1 << 30
+	var worst_sleeve_at := 0.0
+	var worst_rise_hand := 1 << 30
+	var worst_rise_hand_at := 0.0
+	var worst_rise_fingers := 4
+	var worst_rise_thumb := 1 << 30
+	var worst_rise_magazine := 1 << 30
+	var rise_frames := 0
 	for r in window:
-		var hand: int = r.left + r.thumb + r.index + r.middle + r.ring + r.pinky
-		if hand < worst_hand:
+		var p: float = r.progress
+		var hand := _hand_px(r)
+		if _in_hip(p):
+			hip_frames += 1
+			if p >= SBReloadPhases.HIP_OUT + 0.03 and r.left < worst_sleeve:
+				worst_sleeve = r.left
+				worst_sleeve_at = p
+		elif _in_rise(p):
+			rise_frames += 1
+			if hand < worst_rise_hand:
+				worst_rise_hand = hand
+				worst_rise_hand_at = p
+			var visible := 0
+			for finger in ["index", "middle", "ring", "pinky"]:
+				if int(r[finger]) >= TIP_MIN:
+					visible += 1
+			worst_rise_fingers = mini(worst_rise_fingers, visible)
+			worst_rise_thumb = mini(worst_rise_thumb, r.thumb)
+			worst_rise_magazine = mini(worst_rise_magazine, r.magazine)
+		elif hand < worst_hand:
 			worst_hand = hand
-			worst_hand_at = r.progress
-	check(worst_hand >= HAND_MIN, "the support hand shows at least %d pixels in every frame of the reload (worst %d at %.2f)" % [HAND_MIN, worst_hand, worst_hand_at])
-	# While the hand is on a magazine: the thumb and three of the four fingertips are drawn, and so is the magazine.
+			worst_hand_at = p
+	check(hip_frames >= 6 and rise_frames >= 2, "the hip window has %d frames and the rise from it %d in this run" % [hip_frames, rise_frames])
+	check(worst_hand >= HAND_MIN, "the support hand shows at least %d pixels in every frame outside the hip and the rise from it (worst %d at %.2f)" % [HAND_MIN, worst_hand, worst_hand_at])
+	check(worst_sleeve >= SLEEVE_MIN, "at the hip the sleeve shows at least %d pixels in every frame (worst %d at %.2f)" % [SLEEVE_MIN, worst_sleeve, worst_sleeve_at])
+	check(worst_rise_hand >= RISE_HAND_MIN, "on the rise from the hip the hand shows at least %d pixels (worst %d at %.2f)" % [RISE_HAND_MIN, worst_rise_hand, worst_rise_hand_at])
+	check(worst_rise_thumb >= TIP_MIN and worst_rise_fingers >= RISE_FINGERS, "and the thumb (%d px) and at least %d fingertips (worst %d) show at least %d pixels" % [worst_rise_thumb, RISE_FINGERS, worst_rise_fingers, TIP_MIN])
+	check(worst_rise_magazine >= MAGAZINE_MIN, "and the magazine it carries shows at least %d pixels (worst %d)" % [MAGAZINE_MIN, worst_rise_magazine])
+	# While the hand is on a magazine outside the hip and the rise: the thumb and three of the four fingertips are
+	# drawn, and so is the magazine.
 	var worst_thumb := 1 << 30
 	var worst_thumb_at := 0.0
 	var worst_fingers := 4
 	var worst_fingers_at := 0.0
 	var worst_magazine := 1 << 30
 	var worst_magazine_at := 0.0
-	var holding_frames := 0
 	for r in window:
-		if r.held == "-":
+		if r.held == "-" or _in_hip(r.progress) or _in_rise(r.progress):
 			continue
-		holding_frames += 1
 		if r.thumb < worst_thumb:
 			worst_thumb = r.thumb
 			worst_thumb_at = r.progress
@@ -308,20 +363,18 @@ func _evaluate(results: Array[Dictionary]) -> void:
 	check(worst_thumb >= TIP_MIN, "the thumb's tip shows at least %d pixels whenever the hand is on a magazine (worst %d at %.2f)" % [TIP_MIN, worst_thumb, worst_thumb_at])
 	check(worst_fingers >= 3, "at least three of the four fingertips show at least %d pixels whenever the hand is on a magazine (worst %d at %.2f)" % [TIP_MIN, worst_fingers, worst_fingers_at])
 	check(worst_magazine >= MAGAZINE_MIN, "the magazine in the hand shows at least %d pixels in every such frame (worst %d at %.2f)" % [MAGAZINE_MIN, worst_magazine, worst_magazine_at])
-	# The empty hand's trip to the replacement stays in the picture: the hand shows, a magazine is not
-	# held, and the replacement is not "floating": when it first appears, the hand is already in the frame.
-	var transit: Array[Dictionary] = []
-	for r in results:
-		if r.progress > SBReloadPhases.DROP and r.progress < SBReloadPhases.ACQUIRE:
-			transit.append(r)
+	# The empty hand's trip to the hip stays in the picture until it dips: the hand shows while no magazine is held.
 	var worst_transit := 1 << 30
 	var worst_transit_at := 0.0
-	for r in transit:
-		var hand: int = r.left + r.thumb + r.index + r.middle + r.ring + r.pinky
-		if hand < worst_transit:
-			worst_transit = hand
-			worst_transit_at = r.progress
-	check(transit.is_empty() or worst_transit >= HAND_MIN, "while the empty hand goes for the replacement it shows at least %d pixels (worst %d at %.2f)" % [HAND_MIN, worst_transit, worst_transit_at])
+	var transit_frames := 0
+	for r in results:
+		if r.progress > SBReloadPhases.DROP and r.progress < SBReloadPhases.HIP_OUT:
+			transit_frames += 1
+			var hand := _hand_px(r)
+			if hand < worst_transit:
+				worst_transit = hand
+				worst_transit_at = r.progress
+	check(transit_frames >= 1 and worst_transit >= HAND_MIN, "while the empty hand goes for the replacement, until it dips, it shows at least %d pixels (%d frames, worst %d at %.2f)" % [HAND_MIN, transit_frames, worst_transit, worst_transit_at])
 	# The extraction and the insertion are in the frame: the magazine shows while it leaves and enters the well.
 	var worst_action := 1 << 30
 	var worst_action_at := 0.0

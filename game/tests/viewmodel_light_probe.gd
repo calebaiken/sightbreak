@@ -7,6 +7,7 @@ extends SceneTree
 ## the receiver's value" are numbers. Needs a native display. Presentation only.
 ##   --out=<dir>   also saves the base frame of every case
 ##   --tag=<name>  label printed on every line (before / after)
+##   --scenarios=a,b  only these scenarios (sun, backlight, shade, dark interior)   --poses=a,b  only these poses
 const Actor = preload("res://scripts/gameplay/actor.gd")
 const Arena = preload("res://scripts/gameplay/arena.gd")
 const ViewmodelShading = preload("res://scripts/gameplay/viewmodel_shading.gd")
@@ -21,9 +22,11 @@ const SCENARIOS := {
 }
 ## Reload progress per pose; -1 is the ready pose.
 const POSES := {"ready": -1.0, "grab": 0.15, "mid reload": 0.5, "seat": 0.84}
-const PARTS := ["magazine", "receiver", "handguard", "furniture", "gloves", "sleeves"]
+const PARTS := ["magazine", "receiver", "handguard", "furniture", "grip", "gloves", "sleeves"]
 var output := ""
 var tag := "probe"
+var only_scenarios: PackedStringArray = []
+var only_poses: PackedStringArray = []
 var world: Node3D
 var actor: SBActor
 var sun: DirectionalLight3D
@@ -76,6 +79,7 @@ func _part_node(part: String) -> Node3D:
 		"receiver": return actor._gun.get_node("paint_receiver")
 		"handguard": return actor._gun.get_node("paint_handguard")
 		"furniture": return actor._gun.get_node("body")
+		"grip": return actor._gun.get_node_or_null("grip")
 		_: return actor._gun.get_node("arms")
 
 func _set_pose(progress: float) -> void:
@@ -112,6 +116,10 @@ func _run() -> void:
 			DirAccess.make_dir_recursive_absolute(output)
 		elif argument.begins_with("--tag="):
 			tag = argument.trim_prefix("--tag=")
+		elif argument.begins_with("--scenarios="):
+			only_scenarios = argument.trim_prefix("--scenarios=").split(",")
+		elif argument.begins_with("--poses="):
+			only_poses = argument.trim_prefix("--poses=").split(",")
 	root.content_scale_size = Vector2i(1280, 720)
 	root.size = Vector2i(1280, 720)
 	world = Node3D.new()
@@ -134,6 +142,8 @@ func _run() -> void:
 	_debug_arms()
 	var arms_mesh: MeshInstance3D = actor._gun.get_node("arms").find_children("*", "MeshInstance3D", true, false).front()
 	for scenario in SCENARIOS:
+		if not only_scenarios.is_empty() and not only_scenarios.has(scenario):
+			continue
 		var setup: Dictionary = SCENARIOS[scenario]
 		sun.light_energy = sun_energy * float(setup.sun)
 		environment.ambient_light_energy = ambient_energy * float(setup.ambient)
@@ -142,6 +152,8 @@ func _run() -> void:
 		actor.rotation.y = setup.yaw
 		actor.camera.rotation.x = -0.025
 		for pose in POSES:
+			if not only_poses.is_empty() and not only_poses.has(pose):
+				continue
 			_set_pose(POSES[pose])
 			var base := await _frame()
 			if not output.is_empty():
@@ -152,6 +164,9 @@ func _run() -> void:
 				if part == "gloves" or part == "sleeves":
 					continue
 				var node := _part_node(part)
+				if node == null:
+					masks[part] = PackedInt32Array()
+					continue
 				node.visible = false
 				var hidden := await _frame()
 				node.visible = true

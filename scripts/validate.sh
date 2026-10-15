@@ -32,6 +32,10 @@ run_godot economy-recovery --headless --script res://tests/economy_recovery_test
 run_godot cosmetics --headless --script res://tests/cosmetic_presentation_test.gd
 run_godot weapon-art --headless --script res://tests/weapon_art_test.gd
 run_godot reload-sequence --headless --script res://tests/reload_sequence_test.gd
+run_godot reload-audio --headless --script res://tests/reload_audio_test.gd
+# The real mix of a real-time reload through an AudioEffectCapture on the Dummy driver (it mixes in real time, no speaker).
+run_godot reload-audio-capture --headless --audio-driver Dummy --script res://tests/reload_audio_capture.gd -- --scenario=reload
+run_godot reload-audio-cancel --headless --audio-driver Dummy --script res://tests/reload_audio_capture.gd -- --scenario=cancel
 python3 scripts/test_reload_contact.py | tee "$validation_dir/reload-contact.log"
 if [[ -n "${DISPLAY:-}" ]]; then
   # Counts the pixels each part of the reload really draws; needs a rendering display (Xvfb is enough).

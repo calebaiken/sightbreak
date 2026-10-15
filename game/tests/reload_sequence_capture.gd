@@ -7,9 +7,12 @@ extends SceneTree
 ##   --out=<dir>      where the PNGs (000.png ...) and frames.csv go (required)
 ##   --view=sunlit|backlight|shade
 ##   --reduced        reduced motion on
+##   --variant=<name> with --reduced: current (default), calm or still (Actor.REDUCED_RELOAD_VARIANTS)
 ##   --size=WxH       viewport (default 1280x720)
 ##   --authority=local|snapshot   how the timer reaches the actor (default local)
 ##   --tail=<s>       seconds to keep recording after the reload ends (default 0.3)
+##   --only=a,b,c     save only these ticks' PNGs (the simulation still runs every tick), for close-ups at a large --size
+##   --fire           after the reload ends, hold the trigger for the first shots and record them (needs --tail >= 0.4)
 ## tools/art/motion_sheet.py turns the directory into a labelled contact sheet; ffmpeg turns the PNGs into a clip.
 const Actor = preload("res://scripts/gameplay/actor.gd")
 const Arena = preload("res://scripts/gameplay/arena.gd")
@@ -35,6 +38,9 @@ func _run() -> void:
 	var size := Vector2i(1280, 720)
 	var authority := "local"
 	var tail := 0.3
+	var only: Array[int] = []
+	var fire := false
+	var variant := "current"
 	for argument in OS.get_cmdline_user_args():
 		if argument.begins_with("--out="):
 			output = argument.trim_prefix("--out=")
@@ -46,6 +52,13 @@ func _run() -> void:
 			authority = argument.trim_prefix("--authority=")
 		elif argument.begins_with("--tail="):
 			tail = float(argument.trim_prefix("--tail="))
+		elif argument.begins_with("--only="):
+			for part in argument.trim_prefix("--only=").split(","):
+				only.append(int(part))
+		elif argument.begins_with("--variant="):
+			variant = argument.trim_prefix("--variant=")
+		elif argument == "--fire":
+			fire = true
 		elif argument.begins_with("--size="):
 			var parts := argument.trim_prefix("--size=").split("x")
 			size = Vector2i(int(parts[0]), int(parts[1]))
@@ -69,6 +82,7 @@ func _run() -> void:
 	actor._equip_blend = 0
 	actor.apply_cosmetic({})
 	actor.reduced_motion = reduced
+	actor.reduced_variant = variant
 	actor.global_position = place[0]
 	actor.yaw = place[1]
 	actor.rotation.y = place[1]
@@ -97,11 +111,14 @@ func _run() -> void:
 			actor.tick_visual(TICK)
 			actor.reload_remaining = true_remaining
 		else:
+			if fire and actor.reload_remaining <= 0.0 and tick * TICK >= duration:
+				actor.input_state = {"fire": true, "look": Vector2(actor.yaw, 0.0)} # the first shots after the reload
 			actor.tick_authority(TICK)
 			actor.tick_visual(TICK)
 		await process_frame
 		await RenderingServer.frame_post_draw
-		root.get_texture().get_image().save_png(output.path_join("%03d.png" % tick))
+		if only.is_empty() or tick in only:
+			root.get_texture().get_image().save_png(output.path_join("%03d.png" % tick))
 		var reloading := actor.reload_remaining > 0.0
 		var phase := "reload" if reloading else ("ready" if started_at < 0 or tick * TICK < duration else "done")
 		var progress := SBReloadPhases.progress(actor._reload_clock, duration) if reloading else 0.0
