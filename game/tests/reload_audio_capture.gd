@@ -10,7 +10,7 @@ extends SceneTree
 ## for the sound's onset: it must be there, not before the event, and within the mixer's latency of it.
 ##
 ##   --out=<dir>        write mix.wav (the five buses summed, mono), voices.csv (per-event onset and peak) and report.txt
-##   --scenario=<name>  reload (default), cancel (a weapon change at 55 % of the reload), shot (a shot fired on the tick
+##   --scenario=<name>  reload (default), cancel (a weapon change at 63 % of the reload, 90 ms into the landing), shot (a shot fired on the tick
 ##                      of the seat)
 ##   --reduced          reduced motion on
 ## It cannot say what any of it sounds like; nobody has listened to it.
@@ -25,6 +25,11 @@ const ONSET_LEVEL := 0.012      # the first sample above this, on the voice's ow
 ## latency of a phone's audio output.
 const TOLERANCE_MS := 75.0
 const SILENT := 0.0008          # below this, a bus is silent
+## The cancel scenario's weapon change comes at this fraction of the reload: 90 ms into the landing sound, whose second bounce
+## comes 190 ms after it starts, so a build that never stops its voices is heard bouncing 100 ms after the cancel while a
+## real cancel (the mixer stops a voice within about 65 ms) is silent by then. The first version cancelled at 0.55, when
+## every sound was nearly over, and such a build passed: negative control A6.
+const CANCEL_AT := 0.63
 const MAX_LATENCY := 0.120      # seconds from the actor's play() to the mixer's clock reading it
 var checks := 0
 var failures: Array[String] = []
@@ -117,7 +122,7 @@ func _run() -> void:
 		var delta := float(now - last) / 1e6
 		last = now
 		var elapsed := float(now - started) / 1e6
-		if scenario == "cancel" and cancel_msec < 0 and elapsed >= seconds * 0.55:
+		if scenario == "cancel" and cancel_msec < 0 and elapsed >= seconds * CANCEL_AT:
 			cancel_msec = Time.get_ticks_msec()
 			actor.credits = 5000
 			actor.inventory.append("smg")
@@ -170,8 +175,8 @@ func _run() -> void:
 	for event in SBReloadPhases.EVENTS:
 		expected.append(event[0])
 	if scenario == "cancel":
-		# Cancelled at 55 %: the unlatch, extract and pouch have played; the rest never does.
-		check(played_events == ["unlatch", "extract", "pouch"], "the cancelled reload logged only what came before the cancel (%s)" % [played_events])
+		# Cancelled just after the landing: the unlatch, extract, pouch and land have played; the entry and the seat never do.
+		check(played_events == ["unlatch", "extract", "pouch", "land"], "the cancelled reload logged only what came before the cancel (%s)" % [played_events])
 	else:
 		check(played_events == expected, "the reload logged every event once, in order (%s)" % [played_events])
 	# Where in the capture each logged sound starts. The capture's clock is the mixer's, which runs a little ahead

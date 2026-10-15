@@ -135,7 +135,7 @@ static func _build_streams() -> void:
 		_add("unlatch", _click(0.075, 1900.0 * shift, 760.0 * shift, seed_base + 1))
 		_add("extract", _slide(0.17, 1700.0 * shift, 900.0 * shift, 105.0, seed_base + 2, false))
 		_add("pouch", _rustle(0.23, seed_base + 3))
-		_add("land", _thud(0.30, 125.0 * shift, seed_base + 4))
+		_add("land", _thud(0.36, 125.0 * shift, seed_base + 4))
 		_add("enter", _slide(0.14, 800.0 * shift, 1500.0 * shift, 140.0, seed_base + 5, true))
 		_add("seat", _clunk(0.20, 190.0 * shift, 2400.0 * shift, seed_base + 6))
 
@@ -247,7 +247,7 @@ static func _thud(duration: float, body_hz: float, seed_value: int) -> AudioStre
 		var body := sin(phase) * exp(-t * 26.0)
 		var crack := _bandpass(rng.randf_range(-1.0, 1.0), state, 2100.0, 1.0) * exp(-t * 190.0)
 		var bounce := 0.0
-		var tb := t - 0.115
+		var tb := t - 0.19
 		if tb >= 0.0:
 			bounce = (sin(TAU * body_hz * 1.7 * tb) * exp(-tb * 45.0) + rng.randf_range(-0.3, 0.3) * exp(-tb * 260.0)) * 0.42
 		out[i] = body * 0.9 + crack * 0.7 + bounce

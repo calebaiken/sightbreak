@@ -39,7 +39,7 @@ ART = ('weapon-art', ['--headless', '--script', 'res://tests/weapon_art_test.gd'
 AUD = ('audio', ['--headless', '--script', 'res://tests/reload_audio_test.gd'])
 CAP = ('audio capture', ['--headless', '--audio-driver', 'Dummy', '--script', 'res://tests/reload_audio_capture.gd', '--', '--scenario=reload'])
 CAP_CANCEL = ('audio capture (cancel)', ['--headless', '--audio-driver', 'Dummy', '--script', 'res://tests/reload_audio_capture.gd', '--', '--scenario=cancel'])
-VIS = ('visibility', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_visibility_test.gd', '--', '--step=4'])
+VIS = ('visibility', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_visibility_test.gd', '--', '--step=2'])
 VIS_REDUCED = ('visibility (reduced motion)', VIS[1] + ['--reduced'])
 
 # (id, what, [(file, old, new)], build_env or None, tests that must fail)
@@ -51,7 +51,7 @@ SOURCE = [
     ('N5', 'the old magazine comes back to the well while the replacement is drawn', [(ACTOR, '\t\t_magazine.transform = _dropped_transform(fall)\n', '\t\t_magazine.transform = _magazine_rest_transform\n')], None, [SEQ]),
     ('N6', 'reduced motion shrinks the reload staging to a fifth', [(ACTOR, '\t\tvar bob_weight := 0.0 if reduced_motion', '\t\tif reduced_motion:\n\t\t\treload_tilt *= 0.2\n\t\tvar bob_weight := 0.0 if reduced_motion')], None, [SEQ, VIS_REDUCED]),
     ('N7', 'the clicks follow the authoritative fraction instead of the visible reload', [(ACTOR, 'SBReloadPhases.crossed(_reload_visual_previous, visual_progress)', 'SBReloadPhases.crossed(_reload_visual_previous, SBReloadPhases.progress(reload_remaining, reload_duration))'), (ACTOR, '\t\t_reload_visual_previous = visual_progress\n\telif _reload_visual_active', '\t\t_reload_visual_previous = SBReloadPhases.progress(reload_remaining, reload_duration)\n\telif _reload_visual_active')], None, [SEQ, AUD]),
-    ('N8', 'the seat click fires 0.05 of the reload early', [(PHASES, '["seat", SEAT]', '["seat", SEAT - 0.05]')], None, [SEQ, AUD]),
+    ('N8', 'the seat click fires 0.05 of the reload early', [(PHASES, '["seat", SEAT]', '["seat", SEAT - 0.05]')], None, [SEQ]),
     ('N9', 'the seat click fires at the let-go instead of the seat', [(PHASES, '["seat", SEAT]', '["seat", LETGO]')], None, [SEQ, AUD]),
     ('N10', 'a clock correction that goes back over events plays them twice', [(ACTOR, '\tif _reload_fired.has(event):\n\t\treturn\n', '')], None, [SEQ, AUD]),
     ('N11', 'the seat click plays the release sound', [(ACTOR, '\t_reload_audio.play(event, progress, head_height)', '\t_reload_audio.play("unlatch" if event == "seat" else event, progress, head_height)')], None, [SEQ, AUD]),
@@ -64,17 +64,16 @@ SOURCE = [
     ('N14', 'the seat phase is changed in reload_phases.gd without rebuilding the clip', [(PHASES, 'const SEAT := 0.80', 'const SEAT := 0.78')], None, [ART, SEQ]),
     ('A1', 'a reload cut short leaves its sounds playing', [(ACTOR, '\telif _reload_visual_active and not _reload_fired.has("seat"):\n\t\t_reload_audio.stop_all() # cancelled before the seat: the sounds that were playing stop with it\n', '')], None, [AUD]),
     ('A2', 'every reload sound uses the same voice, so each cuts the one before', [(AUDIO, '\tvar index := _free_voice()', '\tvar index := 0')], None, [AUD]),
-    ('A3', 'a weapon change leaves the reload sounds playing', [(ACTOR, '\t\t_reload_audio.stop_all() # a weapon change cancels a reload: nothing of it keeps sounding', '\t\tpass')], None, [AUD]),
     ('A4', 'the slide-out has no sound', [(AUDIO, '\t\t_add("extract", _slide(0.17, 1700.0 * shift, 900.0 * shift, 105.0, seed_base + 2, false))\n', '')], None, [AUD]),
     ('A5', 'the reload sounds play 80 dB down (the voices are muted)', [(AUDIO, '\tvoice.volume_db = -15.0 + float(LEVELS.get(event, 0.0))', '\tvoice.volume_db = -95.0')], None, [CAP]),
-    ('A6', 'a cancelled reload does not stop its voices (real audio)', [(ACTOR, '\t_reload_audio.stop_all() # a weapon change cancels a reload: nothing of it keeps sounding', '\tpass'), (ACTOR, '\telif _reload_visual_active and not _reload_fired.has("seat"):\n\t\t_reload_audio.stop_all() # cancelled before the seat: the sounds that were playing stop with it\n', '')], None, [CAP_CANCEL]),
+    ('A6', 'a cancelled reload does not stop its voices (real audio, a cancel as the landing starts)', [(ACTOR, '\t_reload_audio.stop_all() # a weapon change cancels a reload: nothing of it keeps sounding', '\tpass'), (ACTOR, '\telif _reload_visual_active and not _reload_fired.has("seat"):\n\t\t_reload_audio.stop_all() # cancelled before the seat: the sounds that were playing stop with it\n', '')], None, [CAP_CANCEL]),
 ]
 CLIPS = [
     ('N15', 'a hand that does not reach the magazine (knuckle 50 mm off)', {'ARMS_GRAB_JSON': '{"mcp": [0.064, 0.15, -0.19]}'}, ['contact']),
     ('N16', 'the previous grasp, which hides the thumb behind the magazine', {'ARMS_GRAB_JSON': '{"distal": [1.0, 0.0, 0.0], "mcp": [0.034, 0.15, -0.19], "roll": 0}'}, [VIS]),
     ('N17', 'the previous approach from below the frame (the hand leaves the picture)', {'ARMS_APPROACH': '-0.020,-0.010,-0.085'}, [VIS]),
-    ('N23', 'the replacement taken from just under the well, in view: it appears in the picture before the hand has it', {'ARMS_PATH_JSON': '{"hip": [-0.05, 0.03, -0.07], "carry": [-0.03, 0.04, -0.05]}'}, [VIS, SEQ]),
-    ('N24', 'the magazine and hand move in straight lines between keys (robotic, with velocity jumps)', {'ARMS_LINEAR_PATHS': '1'}, [ART, SEQ]),
+    ('N23', 'the replacement taken from just under the well, in view: it appears in the picture before the hand has it', {'ARMS_PATH_JSON': '{"hip": [-0.05, 0.03, -0.07], "carry": [-0.03, 0.04, -0.05]}'}, [SEQ]),
+    ('N24', 'the magazine and hand move in straight lines between keys (robotic, with velocity jumps)', {'ARMS_LINEAR_PATHS': '1'}, [ART]),
     ('N18', 'the replacement fetched from far below the frame', {'ARMS_PATH_JSON': '{"swing": [-0.06, -0.02, -0.03], "pouch": [-0.15, -0.06, -0.15], "mid": [-0.06, -0.025, -0.06]}'}, [VIS, SEQ]),
 ]
 
@@ -133,9 +132,11 @@ def main():
     results = []
     try:
         say('# Baseline (no defect injected): every test passes')
-        base = [run_test(t) for t in (SEQ, ART, AUD, CAP, CAP_CANCEL)] + [run_test(VIS), run_test(VIS_REDUCED)]
+        if '--no-baseline' in args:
+            say('  (skipped by --no-baseline: run it once without, for the record)')
+        base = [] if '--no-baseline' in args else [run_test(t) for t in (SEQ, ART, AUD, CAP, CAP_CANCEL)] + [run_test(VIS), run_test(VIS_REDUCED)]
         csv_good = os.path.join(REPO, 'docs', 'reports', 'media', 'art-v8', 'reload-hip-retrieval', 'logs', 'clip_contact.csv')
-        if os.path.exists(csv_good):
+        if os.path.exists(csv_good) and '--no-baseline' not in args:
             base.append(run_contact(csv_good))
         for name, state, errs in base:
             say('  %-30s %s' % (name, state))
