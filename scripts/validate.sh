@@ -40,6 +40,10 @@ python3 scripts/test_reload_contact.py | tee "$validation_dir/reload-contact.log
 if [[ -n "${DISPLAY:-}" ]]; then
   # Counts the pixels each part of the reload really draws; needs a rendering display (Xvfb is enough).
   run_godot reload-visibility --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_visibility_test.gd -- --step=2
+  # The rifle's painted metal keeps its finish through the reload (it turned pale as the reload rolled it): sun, shade, a skin.
+  run_godot reload-finish-sunlit --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base
+  run_godot reload-finish-shade --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --view=shade
+  run_godot reload-finish-skin --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --skin
 else
   printf 'reload-visibility skipped: no DISPLAY (needs a native rendering display)\n'
 fi

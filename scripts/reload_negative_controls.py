@@ -29,9 +29,11 @@ ACTOR = os.path.join(GAME, 'scripts', 'gameplay', 'actor.gd')
 PHASES = os.path.join(GAME, 'scripts', 'gameplay', 'reload_phases.gd')
 AUDIO = os.path.join(GAME, 'scripts', 'gameplay', 'reload_audio.gd')
 GLB = os.path.join(GAME, 'assets', 'weapons', 'relay_ar', 'relay_ar_arms.glb')
+SHADING = os.path.join(GAME, 'scripts', 'gameplay', 'viewmodel_shading.gd')
+COSMETIC = os.path.join(GAME, 'scripts', 'ui', 'cosmetic_material.gd')
 BPY = os.environ.get('BPY', os.path.join(os.path.dirname(REPO), 'tools', 'bpy-venv', 'bin', 'python'))
 RIFLE = os.path.join(GAME, 'assets', 'weapons', 'relay_ar', 'relay_ar.glb')
-SUMMARY = re.compile(r'^(RELOAD_SEQUENCE_TEST|WEAPON_ART_TEST|RELOAD_VISIBILITY_TEST|RELOAD_AUDIO_TEST|RELOAD_AUDIO_CAPTURE)\b.*?(?:checks=(\d+))?.*?failures=(\d+)', re.M)
+SUMMARY = re.compile(r'^(RELOAD_SEQUENCE_TEST|WEAPON_ART_TEST|RELOAD_VISIBILITY_TEST|RELOAD_AUDIO_TEST|RELOAD_AUDIO_CAPTURE|RELOAD_DISCOLOUR_TEST)\b.*?(?:checks=(\d+))?.*?failures=(\d+)', re.M)
 ERRORS = re.compile(r'^ERROR: (?!.*(?:ObjectDB|leaked)).*$', re.M)
 
 SEQ = ('sequence', ['--headless', '--script', 'res://tests/reload_sequence_test.gd'])
@@ -41,6 +43,8 @@ CAP = ('audio capture', ['--headless', '--audio-driver', 'Dummy', '--script', 'r
 CAP_CANCEL = ('audio capture (cancel)', ['--headless', '--audio-driver', 'Dummy', '--script', 'res://tests/reload_audio_capture.gd', '--', '--scenario=cancel'])
 VIS = ('visibility', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_visibility_test.gd', '--', '--step=2'])
 VIS_REDUCED = ('visibility (reduced motion)', VIS[1] + ['--reduced'])
+# The rifle's painted metal holds its finish through the reload (native: it renders the receiver and handguard at reload ticks).
+DISC = ('finish stability', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_discolour_probe.gd', '--', '--assert', '--conditions=base', '--ticks=0,40,122,126,130,134'])
 
 # (id, what, [(file, old, new)], build_env or None, tests that must fail)
 SOURCE = [
@@ -60,6 +64,9 @@ SOURCE = [
     ('N19', 'the SMG plays the rigged hand\'s whole set of sounds', [(ACTOR, 'if not rigged_events and (event == "unlatch" or not SBReloadPhases.PROCEDURAL_EVENTS.has(event)):', 'if false:')], None, [SEQ, AUD]),
     ('N20', 'reduced motion no longer calms the procedural weapons\' reload dip', [(ACTOR, '\t\t\treload_tilt *= 0.2 # the procedural weapons\' dip is plain motion: still calmed\n', '\t\t\tpass\n')], None, [SEQ]),
     ('N21', 'a reload restarted with no idle frame between does not reset its events', [(ACTOR, 'if reloading and _reload_visual_active and reload_remaining - _reload_clock > reload_duration * 0.5:', 'if false:')], None, [SEQ, AUD]),
+    ('N25', 'the painted metal loses its roughness floor (the finish reflects the sky\'s horizon band again and the rifle turns pale in the reload)', [(SHADING, 'const METAL_ROUGHNESS := 0.80', 'const METAL_ROUGHNESS := 0.0')], None, [ART, DISC]),
+    ('N26', 'the cosmetic finish no longer receives the roughness floor', [(COSMETIC, '\t\tmaterial.set_shader_parameter("viewmodel_roughness", ViewmodelShading.METAL_ROUGHNESS)\n', '')], None, [ART, DISC]),
+    ('N27', 'the shader ignores the roughness floor (it is set but never applied)', [(SHADING, '\t\tROUGHNESS = max(ROUGHNESS, viewmodel_roughness);\n', '')], None, [ART, DISC]),
     ('N22', 'the replacement is drawn from the start of the hip trip: it floats in view with no hand on it', [(ACTOR, '_magazine_spare.visible = progress >= SBReloadPhases.ACQUIRE', '_magazine_spare.visible = progress >= SBReloadPhases.DROP')], None, [SEQ]),
     ('N14', 'the seat phase is changed in reload_phases.gd without rebuilding the clip', [(PHASES, 'const SEAT := 0.80', 'const SEAT := 0.78')], None, [ART, SEQ]),
     ('A1', 'a reload cut short leaves its sounds playing', [(ACTOR, '\telif _reload_visual_active and not _reload_fired.has("seat"):\n\t\t_reload_audio.stop_all() # cancelled before the seat: the sounds that were playing stop with it\n', '')], None, [AUD]),
@@ -127,14 +134,15 @@ def main():
             log.write(text + '\n')
             log.flush()
 
-    originals = {p: open(p).read() for p in (ACTOR, PHASES, AUDIO)}
+    # Every file any source control edits is restored afterwards (a control that names a file missing here once left its edit in the tree).
+    originals = {p: open(p).read() for p in sorted({ACTOR, PHASES, AUDIO} | {path for c in SOURCE for path, _, _ in c[2]})}
     glb_backup = open(GLB, 'rb').read()
     results = []
     try:
         say('# Baseline (no defect injected): every test passes')
         if '--no-baseline' in args:
             say('  (skipped by --no-baseline: run it once without, for the record)')
-        base = [] if '--no-baseline' in args else [run_test(t) for t in (SEQ, ART, AUD, CAP, CAP_CANCEL)] + [run_test(VIS), run_test(VIS_REDUCED)]
+        base = [] if '--no-baseline' in args else [run_test(t) for t in (SEQ, ART, AUD, CAP, CAP_CANCEL)] + [run_test(VIS), run_test(VIS_REDUCED), run_test(DISC)]
         csv_good = os.path.join(REPO, 'docs', 'reports', 'media', 'art-v8', 'reload-hip-retrieval', 'logs', 'clip_contact.csv')
         if os.path.exists(csv_good) and '--no-baseline' not in args:
             base.append(run_contact(csv_good))

@@ -24,6 +24,11 @@ const FLOOR := 0.10
 const LIFT := 0.30
 ## Rim light strength, on silhouette edges facing away from the camera.
 const RIM := 0.22
+## The least roughness of the rifle's painted metal (receiver, handguard) in first person. The sky the engine reflects has a bright
+## horizon band with dark ground below it; at roughness 0.3 to 0.5 the metal's reflection slides across that edge as the reload rolls
+## and lifts the weapon (a few degrees are enough), and the receiver went from 54 to 83 median luma and from graphite to pale
+## blue-grey (docs/reports/media/art-v9/rifle-discolouration). A rougher lobe averages the sky over the band and holds the finish.
+const METAL_ROUGHNESS := 0.80
 
 const UNIFORMS := """
 uniform float viewmodel_fov = 0.0;
@@ -31,6 +36,7 @@ uniform float viewmodel_depth = 0.08;
 uniform float viewmodel_floor = 0.0;
 uniform float viewmodel_lift = 0.0;
 uniform float viewmodel_rim = 0.0;
+uniform float viewmodel_roughness = 0.0;
 uniform vec3 viewmodel_rim_color : source_color = vec3(0.80, 0.84, 0.88);
 """
 
@@ -58,6 +64,7 @@ const PROJECT := """
 ## At the end of fragment().
 const FILL := """
 	if (viewmodel_fov > 0.0) {
+		ROUGHNESS = max(ROUGHNESS, viewmodel_roughness);
 		float facing = clamp(dot(NORMAL, VIEW), 0.0, 1.0);
 		// Form: the fill is brighter on surfaces that face up and dimmer on those that face down (view space, the
 		// camera is upright), so a fist or a forearm has a lit top and a darker underside even in shade.

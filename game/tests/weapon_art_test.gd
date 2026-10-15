@@ -302,6 +302,10 @@ func _run() -> void:
 	# Viewmodel drawing: first person uses the narrower projection, inspection does not.
 	check(arms_mesh.material_override is ShaderMaterial and arms_mesh.material_override.get_shader_parameter("viewmodel_fov") == ViewmodelShading.FOV, "arms draw with the viewmodel projection")
 	check((actor._gun.get_node("body") as MeshInstance3D).material_override.get_shader_parameter("viewmodel_fov") == ViewmodelShading.FOV and actor._finish.get_shader_parameter("viewmodel_fov") == ViewmodelShading.FOV, "rifle body and finish draw with the viewmodel projection in first person")
+	# The painted metal's roughness floor (the rifle turned pale as the reload rolled it, reflecting the sky's horizon band):
+	# first person sets it, the code that applies it is in the shader, and inspection (the engine's own lighting) has none.
+	check(actor._finish.get_shader_parameter("viewmodel_roughness") == ViewmodelShading.METAL_ROUGHNESS and ViewmodelShading.METAL_ROUGHNESS >= 0.7, "first-person painted metal has a roughness floor of at least 0.7 (%s)" % actor._finish.get_shader_parameter("viewmodel_roughness"))
+	check(CosmeticMaterial.shader(true).code.contains("ROUGHNESS = max(ROUGHNESS, viewmodel_roughness)") and not CosmeticMaterial.shader().code.contains("viewmodel_roughness"), "only the first-person cosmetic shader applies the roughness floor")
 	var inspected := Node3D.new()
 	root.add_child(inspected)
 	WeaponModel.build(inspected, "rifle", false)
