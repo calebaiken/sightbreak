@@ -904,14 +904,17 @@ WELL_DEPTH = 0.075
 ZERO3 = (0.0, 0.0, 0.0)
 # The old magazine: the hand takes it, it slides out, clears the well and swings out to the left,
 # where the fingers open and let it go (it falls; the game drops it, nothing here needs it after).
-# Exploration hook (like ARMS_GRAB_JSON): ARMS_PATH_JSON='{"swing": [x, y, z], "pouch": [x, y, z], "mid": [x, y, z]}'
-# overrides where the old magazine is let go, where the replacement waits and its midway point, for one build.
+# Exploration hook (like ARMS_GRAB_JSON): ARMS_PATH_JSON='{"swing": [x, y, z], "hip": [x, y, z], "carry": [x, y, z]}'
+# overrides where the old magazine is let go, where the replacement waits (the hip) and its midway point, for one build.
 # v9: the hip is 31 cm below the well (it was 36): the hand reaches down to the lower edge of the frame, so the open hand and the forearm
 # are seen on the way down (at 36 cm only a sliver of sleeve showed and the hand left the picture for 0.4 s). At 22 cm the replacement
 # was first drawn with 56 % of it inside the frame, a visible pop beside a visible hand, and a pouch drawn to show its source looked like
 # a floating box (docs/reports/media/art-v9/reload-retrieval).
 _PATH = {'swing': (-0.070, 0.020, 0.004), 'hip': (-0.200, 0.040, -0.310), 'carry': (-0.115, 0.050, -0.090), 'hip_turn': (-28, 0, 22),
          'rock': (-15, -9, -3), 'elbow_hip': (-0.10, 0.0, 0.07)}
+if os.environ.get('ARMS_PATH_JSON'):   # exploration hook and the negative controls' injection (N18, N23): overrides for one build
+    import json
+    _PATH.update({k: tuple(v) for k, v in json.loads(os.environ['ARMS_PATH_JSON']).items()})
 # The reduced-motion clip ("reload_calm"): the rifle's staging is smaller there (less roll and lift), so the hand has less room: it goes
 # down 11 cm, turns less, and the elbow swings out as far as in the default so the forearm stays in the picture. Same phases, same timing,
 # same keys; only the hand's reach differs. The pickup is therefore in view, at the lower edge: the replacement is first drawn in a visible

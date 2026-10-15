@@ -1,0 +1,21 @@
+# Baseline (no defect injected): every test passes
+  (skipped by --no-baseline: run it once without, for the record)
+
+## N23: the replacement taken from just under the well, in view: it appears in the picture before the hand has it
+  sequence                       FAILED
+      ERROR: the replacement is first drawn in the hand at the pouch with 91 % of it inside the frame (under 25 %: it rises into view in the hand)
+
+## N18: the replacement fetched from far below the frame
+  visibility                     FAILED
+      ERROR: the support hand shows at least 10000 pixels in every frame outside the hip and the rise from it (worst 6545 at 0.40)
+      ERROR: at the hip the whole left arm is out of the picture (under 1000 px) for at most 10 % of the reload (10 of 10 poses, 20 %)
+      ERROR: no replacement magazine is drawn (3000 px or more) with less than 3000 px of its arm in the frame (2 poses; last at 0.66)
+  sequence                       FAILED
+      ERROR: normal motion: the support wrist is never more than 6 % of the frame outside it (worst 36.6 %)
+      ERROR: normal motion: the thumb's tip joint stays inside the frame the whole reload (7 ticks outside)
+      ERROR: normal motion: at least three of the five fingertip joints stay inside the frame (worst 0 at 0.61)
+
+# Summary
+  N23  caught
+  N18  caught
+  2 controls: 2 caught, 0 crashed, 0 missed, 0 invalid

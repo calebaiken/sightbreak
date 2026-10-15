@@ -87,7 +87,7 @@ CLIPS = [
     ('N17', 'the previous approach from below the frame (the hand leaves the picture)', {'ARMS_APPROACH': '-0.020,-0.010,-0.085'}, [VIS]),
     ('N23', 'the replacement taken from just under the well, in view: it appears in the picture before the hand has it', {'ARMS_PATH_JSON': '{"hip": [-0.05, 0.03, -0.07], "carry": [-0.03, 0.04, -0.05]}'}, [SEQ]),
     ('N24', 'the magazine and hand move in straight lines between keys (robotic, with velocity jumps)', {'ARMS_LINEAR_PATHS': '1'}, [ART]),
-    ('N18', 'the replacement fetched from far below the frame', {'ARMS_PATH_JSON': '{"swing": [-0.06, -0.02, -0.03], "pouch": [-0.15, -0.06, -0.15], "mid": [-0.06, -0.025, -0.06]}'}, [VIS, SEQ]),
+    ('N18', 'the replacement fetched from far below the frame', {'ARMS_PATH_JSON': '{"hip": [-0.20, 0.04, -0.60], "carry": [-0.115, 0.05, -0.40]}'}, [VIS, SEQ]),
 ]
 
 
