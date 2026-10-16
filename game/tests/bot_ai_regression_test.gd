@@ -1,6 +1,6 @@
 extends SceneTree
 
-class PerceptionActor extends SBActor:
+class PerceptionActor extends "res://scripts/gameplay/actor.gd":
 	var visible_enemy: bool = true
 
 	func can_see(other: SBActor) -> bool:
@@ -11,7 +11,7 @@ func _initialize() -> void:
 
 func _run() -> void:
 	var failures: Array[String] = []
-	_test_perception_walls_and_smoke(failures)
+	await _test_perception_walls_and_smoke(failures)
 	await process_frame
 	_test_memory_and_no_live_tracking(failures)
 	await process_frame
@@ -59,6 +59,8 @@ func _test_perception_walls_and_smoke(failures: Array[String]) -> void:
 	wall_defender.global_position = Vector3(-7, 0, -4)
 	wall_defender.yaw = 0.0
 	attacker.global_position = Vector3(-7, 0, -18)
+	await physics_frame
+	await physics_frame
 	if wall_defender.can_see(attacker):
 		failures.append("Bot should not see enemy through solid shipping container wall")
 	var wall_target := SBBotAI.acquire_target(m, wall_defender, m._bot_state[7], SBBotAI.get_profile("normal"))
@@ -208,7 +210,7 @@ func _test_reaction_and_weapon_authority(failures: Array[String]) -> void:
 	# Weapon cooldown and reload timer authority check via tick_authority
 	bot.weapon_id = "rifle"
 	bot.ammo = 0
-	bot.reserves["rifle"] = 30
+	bot.reserve = 30
 	bot.reload_remaining = 0.0
 	bot.input_state = {"reload": true, "fire": true, "move": Vector2.ZERO, "look": Vector2(bot.yaw, bot.pitch)}
 	var shots := [0]
@@ -298,7 +300,7 @@ func _test_lifecycle_difficulty_and_network_integrity(failures: Array[String]) -
 		failures.append("_begin_round must reset all bot states cleanly")
 
 	# Difficulty settings preserve identical weapon authority (damage, cooldown, spread)
-	if SBWeapons.damage_at_distance("rifle", 15.0, false) != 35.0:
+	if float(SBWeapons.get_weapon("rifle").get("damage", 0.0)) != 35.0:
 		failures.append("Bot difficulty must never alter authoritative weapon damage")
 
 	# Protocol version and ranked payload eligibility remain untouched
