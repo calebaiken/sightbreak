@@ -118,29 +118,6 @@ class NativeUI:
     def close(self):
         self.x.XCloseDisplay(self.d)
 
-    def request_close(self):
-        """Send the same WM_DELETE_WINDOW message as a desktop close button."""
-        class Data(C.Union):
-            _fields_ = [('l', C.c_long * 5)]
-        class ClientMessage(C.Structure):
-            _fields_ = [('type', C.c_int), ('serial', C.c_ulong), ('send_event', C.c_int),
-                        ('display', C.c_void_p), ('window', C.c_ulong),
-                        ('message_type', C.c_ulong), ('format', C.c_int), ('data', Data)]
-        class Event(C.Union):
-            _fields_ = [('client', ClientMessage), ('pad', C.c_long * 24)]
-        self.x.XInternAtom.argtypes = [C.c_void_p, C.c_char_p, C.c_int]
-        self.x.XInternAtom.restype = C.c_ulong
-        self.x.XSendEvent.argtypes = [C.c_void_p, C.c_ulong, C.c_int, C.c_long, C.POINTER(Event)]
-        event = Event()
-        event.client.type = 33  # ClientMessage
-        event.client.display = self.d
-        event.client.window = self.window
-        event.client.message_type = self.x.XInternAtom(self.d, b'WM_PROTOCOLS', 0)
-        event.client.format = 32
-        event.client.data.l[0] = self.x.XInternAtom(self.d, b'WM_DELETE_WINDOW', 0)
-        if not self.x.XSendEvent(self.d, self.window, 0, 0, C.byref(event)):
-            raise RuntimeError('Native window close request failed')
-        self.x.XFlush(self.d)
 
 
 def main():
@@ -219,7 +196,8 @@ def main():
         ui.capture(output / '01-exported-menu.png')
         if args.visit_armory:
             ui.click(140, 445)
-            time.sleep(2)
+            wait_for(lambda: not ui.menu_visible(), 10, 'Exported inventory page opened', client)
+            time.sleep(1)
             ui.capture(output / '01b-exported-inventory.png')
             ui.click(1208, 46)
             wait_for(ui.menu_visible, 15, 'Return from exported armory', client)
@@ -255,7 +233,6 @@ def main():
         ui.capture(output / '08-settled.png')
         # Rendered capture stages must be visually reviewed: software rendering
         # can lag the authority. The filenames describe capture timing only.
-        ui.request_close()
         client.wait(timeout=args.timeout)
         (output / 'finish').write_text('finish\n')
         server.wait(timeout=10)
@@ -276,7 +253,7 @@ def main():
                   'reload_trigger': authority['reload_trigger'],
                   'inventory_navigation_captured': args.visit_armory,
                   'desktop_R_key_input': 'VERIFIED via server-observed reload command' if args.reload_mode == 'keyboard' else 'UNVERIFIED',
-                  'exit_method': 'native WM_DELETE_WINDOW after observed input/reload; --quit-after is a fallback',
+                  'exit_method': 'supported --quit-after ' + str(args.quit_after),
                   'scope': 'Actual exported Linux client through native UI; source Godot authority on loopback; llvmpipe software rendering; no physical-device performance claim'}
         (output / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
         print(json.dumps(result, indent=2))
