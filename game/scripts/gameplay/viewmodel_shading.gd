@@ -42,14 +42,14 @@ const HANDGUARD_METAL := 0.30
 ## Low-light form (art-v11, lowlight track). Every number below is a constant of the viewmodel, like the studio ambient: nothing reads the
 ## world, so a dark interior is not lit up and an enemy's view is untouched. All of them are EMPIRICAL (chosen after rendering sweeps, see
 ## docs/reports/media/art-v11/lowlight); each is a uniform whose default (0) reproduces the previous pixels.
-## The studio gradient is modulated by the detail normal's wrapped key (up, left, towards the camera): FORM = 0.6 puts 1.6x of it on what
-## faces the key and 0.4x on what faces away. It is a re-distribution, not an addition: the receiver's median in sun and at the ready is
+## The studio gradient is modulated by the detail normal's wrapped key (up, left, towards the camera): FORM = 0.8 puts 1.8x of it on what
+## faces the key and 0.2x on what faces away. It is a re-distribution, not an addition: the receiver's median in sun and at the ready is
 ## unchanged (54.6), and what faces down or away from the key goes darker while what faces up or left goes lighter, so the rifle has form
 ## where it was one flat slate (shade receiver 19-35, p10-p90, before; see the probe).
-const FORM := 0.60
+const FORM := 0.80
 ## A thin cool edge on geometric edges (screen-space change of the surface normal) of the metal, weighted up: a bevel or a panel line
-## catches a little light the way a machined edge does. Cool like the studio's strip. 0.10 is about +3 to +8 luma on the edge pixels only.
-const EDGE := 0.10
+## catches a little light the way a machined edge does. Cool like the studio's strip. 0.16 is about +4 to +12 luma on the edge pixels only.
+const EDGE := 0.16
 const MAGAZINE_FORM := 0.30
 const MAGAZINE_EDGE := 0.06
 ## The baked occlusion of the buffer tube is 0 over its rear half (it was baked with the stock around it; the first-person rifle has no
@@ -144,7 +144,10 @@ const STUDIO := """
 		// left, and a form factor that modulates the studio's gradient by it: more on what faces the key, less on what faces away.
 		vec2 ts = NORMAL_MAP.rg * 2.0 - 1.0;
 		vec3 nd = normalize(TANGENT * ts.x + BINORMAL * ts.y + NORMAL * sqrt(max(1.0 - dot(ts, ts), 0.0)));
-		float studio_wrap = pow(clamp((dot(nd, normalize(vec3(-0.50, 0.60, 0.62))) + 0.25) / 1.25, 0.0, 1.0), 1.6);
+		// In the part's own frame, so the shading is attached to the weapon: a roll or a lift in the reload does not turn a lit face away
+		// from the key, which would swing the finish's value with the pose (the stability bound of reload_discolour_probe).
+		vec3 nd_local = normalize(transpose(mat3(MODEL_MATRIX)) * (INV_VIEW_MATRIX * vec4(nd, 0.0)).xyz);
+		float studio_wrap = pow(clamp((dot(nd_local, normalize(vec3(-0.65, 0.60, 0.45))) + 0.25) / 1.25, 0.0, 1.0), 1.6);
 		vec3 r = reflect(-VIEW, n);
 		float gloss = 1.0 - ROUGHNESS;
 		vec3 f0 = mix(vec3(0.08 * SPECULAR), ALBEDO, METALLIC);
@@ -158,7 +161,7 @@ const STUDIO := """
 		EMISSION += fresnel * radiance * studio_ao * viewmodel_env * viewmodel_reflect;
 		EMISSION += max(ALBEDO, vec3(viewmodel_key_lift)) * viewmodel_key * studio_wrap * studio_ao;
 		float edge = smoothstep(0.06, 0.40, length(fwidth(NORMAL)));
-		EMISSION += viewmodel_edge_color * viewmodel_edge * edge * mix(0.4, 1.0, smoothstep(-0.6, 0.8, nd.y)) * studio_ao;
+		EMISSION += viewmodel_edge_color * viewmodel_edge * edge * mix(0.4, 1.0, smoothstep(-0.6, 0.8, nd_local.y)) * studio_ao;
 	}
 """
 
