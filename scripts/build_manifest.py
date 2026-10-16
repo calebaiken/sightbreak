@@ -10,9 +10,9 @@ import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 BUILDS = ROOT / "builds"
-VERSION = "0.3.0-dev"
-BUILD_NUMBER = 3
-IOS_VERSION = "0.3.0"
+VERSION = "0.3.1-dev"
+BUILD_NUMBER = 4
+IOS_VERSION = "0.3.1"
 OUTPUTS = {"linux": "linux/sightbreak.x86_64", "android": "android/sightbreak-debug.apk", "ios": "ios/sightbreak.xcodeproj/project.pbxproj"}
 
 

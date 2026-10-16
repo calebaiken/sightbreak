@@ -44,4 +44,6 @@ func _run() -> void:
 	print("PROTOCOL_CLIENT " + JSON.stringify(summary))
 	game.queue_free()
 	await process_frame
+	# AudioServer releases transient shot playback on its mixer/update cycles.
+	await create_timer(0.5).timeout
 	quit()

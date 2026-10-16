@@ -21,8 +21,9 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgl1 libvulkan1 xvfb ripgrep unzip openjdk-17-jdk
           scripts/setup.sh
-          python3 -m venv .venv
-          .venv/bin/pip install -r backend/requirements.txt
+          python3 -m pip install uv==0.12.23
+          uv sync --project backend --locked --group dev
+          ln -s backend/.venv .venv
           backend/dev-db.sh
       - name: Complete matrix (retains failures)
         run: xvfb-run -a .venv/bin/python scripts/validate_matrix.py --backend --protocol --render --out builds/ci-regressions

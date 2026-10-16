@@ -79,6 +79,7 @@ class NativeUI:
                 self.x.XFree(children)
         if selected is None:
             return False
+        self.window = selected
         self.x.XSetInputFocus(self.d, selected, 1, 0)
         self.x.XFlush(self.d)
         return True
@@ -96,6 +97,10 @@ class NativeUI:
 
     def click(self, x, y):
         self.t.XTestFakeMotionEvent(self.d, 0, x, y, 0)
+        # Let the native window consume the pointer move before the click.
+        # Same-batch motion/button events can hit the prior hover target.
+        self.x.XFlush(self.d)
+        time.sleep(.25)
         self.button(True)
         time.sleep(.2)
         self.button(False)
@@ -107,11 +112,14 @@ class NativeUI:
         image.save(path)
 
     def menu_visible(self):
-        pixel = ImageGrab.grab(xdisplay=self.display).getpixel((46, 299))
+        # The connect page also has a crimson button at y=299. Sample the
+        # deploy button's lower edge, outside the connect button's rectangle.
+        pixel = ImageGrab.grab(xdisplay=self.display).getpixel((450, 340))
         return pixel[0] > 80 and pixel[0] > pixel[1] * 1.5
 
     def close(self):
         self.x.XCloseDisplay(self.d)
+
 
 
 def main():
@@ -165,6 +173,19 @@ def main():
             time.sleep(.1)
         raise TimeoutError(label)
 
+    def open_menu_entry(x, y, label):
+        # Xvfb can deliver initial focus asynchronously. Verify page departure
+        # before proceeding; preserve a hard failure if native input never works.
+        for attempt in range(3):
+            ui.focus_game()
+            ui.click(x, y)
+            try:
+                wait_for(lambda: not ui.menu_visible(), 3, label, client)
+                return
+            except TimeoutError:
+                pass
+        raise TimeoutError(label)
+
     def server_has(message):
         return message in (output / 'server.log').read_text()
 
@@ -189,13 +210,13 @@ def main():
         ui.focus_game()
         ui.capture(output / '01-exported-menu.png')
         if args.visit_armory:
-            ui.click(140, 445)
-            time.sleep(2)
+            open_menu_entry(140, 445, 'Exported inventory page opened')
+            time.sleep(1)
             ui.capture(output / '01b-exported-inventory.png')
             ui.click(1208, 46)
             wait_for(ui.menu_visible, 15, 'Return from exported armory', client)
             ui.capture(output / '01c-exported-menu-return.png')
-        ui.click(248, 385)
+        open_menu_entry(248, 385, 'Exported local-network page opened')
         time.sleep(1)
         ui.capture(output / '02-exported-connect.png')
         ui.click(640, 305)

@@ -1,0 +1,84 @@
+commit a143629cb25eb2d3573fa6d854da27a2c2518595
+Author: Caleb Aiken <calebaiken07@gmail.com>
+Date:   Fri Oct 16 05:18:23 2026 +0000
+
+    fix: keep AI equipment purchases within actor authority
+    
+    Remove free ammunition and utility grants from the newly imported helper. Negative and funded purchase controls exercise the real actor contract. Choose the round plan after new-round actors and carrier reset.
+
+diff --git a/game/scripts/gameplay/bot_ai.gd b/game/scripts/gameplay/bot_ai.gd
+index 87fe244..5012c4f 100644
+--- a/game/scripts/gameplay/bot_ai.gd
++++ b/game/scripts/gameplay/bot_ai.gd
+@@ -192,11 +192,7 @@ static func choose_buy_weapon(actor: SBActor, difficulty: String, round_number:
+ static func buy_equipment(actor: SBActor, difficulty: String, round_number: int) -> String:
+ 	var choice: String = choose_buy_weapon(actor, difficulty, round_number)
+ 	actor.buy_weapon(choice)
+-	var spec: Dictionary = SBWeapons.get_weapon(actor.weapon_id)
+-	actor.ammo = int(spec.get("magazine", 30))
+-	actor.reserve = int(spec.get("reserve", 60))
+-	actor.smokes = 1
+-	actor.grenades = 1
++	# Purchases and round resets own equipment resources; failed buys grant nothing.
+ 	return actor.weapon_id
+ 
+ static func record_damage(arg1: Variant, arg2: Variant, arg3: Variant, arg4: Variant, arg5: Variant = null) -> void:
+diff --git a/game/scripts/gameplay/match.gd b/game/scripts/gameplay/match.gd
+index 07ca636..c06f7b4 100644
+--- a/game/scripts/gameplay/match.gd
++++ b/game/scripts/gameplay/match.gd
+@@ -327,7 +327,6 @@ func _begin_round() -> void:
+ 	_damage_history.clear()
+ 	_heard.clear()
+ 	_team_ai_state = SBBotAI.create_team_state()
+-	SBBotAI.select_round_plan(self, 0)
+ 	var attack_index: int = 0
+ 	var defend_index: int = 0
+ 	objective_carrier = 0
+@@ -346,6 +345,7 @@ func _begin_round() -> void:
+ 		if _is_bot(actor.actor_id):
+ 			actor.buy_weapon(SBBotAI.choose_buy_weapon(actor, str(options.get("difficulty", "normal")), round_number))
+ 		actor.input_state = {"move": Vector2.ZERO, "look": Vector2(PI if actor.team == 0 else 0, 0)}
++	SBBotAI.select_round_plan(self, 0)
+ 	_announce("Round %d • prepare your equipment" % round_number)
+ 
+ func _objective_tick(delta: float) -> void:
+diff --git a/game/tests/bot_ai_regression_test.gd b/game/tests/bot_ai_regression_test.gd
+index 32fcbe2..76805ce 100644
+--- a/game/tests/bot_ai_regression_test.gd
++++ b/game/tests/bot_ai_regression_test.gd
+@@ -19,6 +19,8 @@ func _run() -> void:
+ 	await process_frame
+ 	_test_reaction_and_weapon_authority(failures)
+ 	await process_frame
++	_test_equipment_purchase_authority(failures)
++	await process_frame
+ 	_test_objectives_and_team_coordination(failures)
+ 	await process_frame
+ 	_test_navigation_and_stuck_recovery(failures)
+@@ -312,3 +314,25 @@ func _test_lifecycle_difficulty_and_network_integrity(failures: Array[String]) -
+ 	if not m._ranked_payload().is_empty():
+ 		failures.append("Offline bot match must never generate a ranked economy payload")
+ 	m.queue_free()
++
++func _test_equipment_purchase_authority(failures: Array[String]) -> void:
++	var m := _spawn_offline_match("normal")
++	var bot: SBActor = m.actors[2]
++	bot.credits = 5000
++	bot.buy_weapon("rifle")
++	bot.ammo = 2
++	bot.reserve = 3
++	bot.smokes = 0
++	bot.grenades = 0
++	bot.credits = 0
++	var inventory_before: Array = bot.inventory.duplicate()
++	SBBotAI.buy_equipment(bot, "normal", 1)
++	if bot.credits != 0 or bot.weapon_id != "rifle" or bot.inventory != inventory_before or bot.ammo != 2 or bot.reserve != 3 or bot.smokes != 0 or bot.grenades != 0:
++		failures.append("Failed AI purchase must preserve funds, ownership, ammunition and utility")
++	bot.credits = 5000
++	bot.reset_loadout()
++	var price: int = int(SBWeapons.get_weapon("rifle").cost)
++	SBBotAI.buy_equipment(bot, "normal", 1)
++	if bot.credits != 5000 - price or bot.weapon_id != "rifle" or bot.ammo != 30 or bot.reserve != 90 or bot.smokes != 0 or bot.grenades != 0:
++		failures.append("Successful AI purchase must use actor pricing/ammunition and grant no utility")
++	m.queue_free()

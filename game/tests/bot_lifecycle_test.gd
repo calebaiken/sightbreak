@@ -50,5 +50,6 @@ func _finish() -> void:
 	print("BOT_LIFECYCLE_RESULT passed=%s rounds=%d score=%d:%d kills=%d halftime=%s plant_observed=%s reports=%d simulated_seconds=%.1f" % [success, observed_round, match_node.attack_score, match_node.defend_score, kills, halftime_seen, planted_seen, results.size(), elapsed])
 	match_node.queue_free()
 	await process_frame
-	await process_frame
+	# The final shots still have mixer-owned playback references after deletion.
+	await create_timer(0.5).timeout
 	quit(0 if success else 1)

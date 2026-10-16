@@ -40,6 +40,11 @@ const SPACE_L := 18
 const SPACE_XL := 28
 const RADIUS := 3
 const TOUCH_MIN := 48
+## Buttons that spend, give away or commit something: taller than an ordinary target.
+const TOUCH_COMFORT := 56
+## No text on a screen the player is meant to read is drawn smaller than this, whatever
+## the text-scale setting; 12 and 13 px labels were measured as the weak point of the armory.
+const TEXT_FLOOR := 14
 const MOTION_FAST := 0.12
 const MOTION_BASE := 0.2
 const MOTION_SLOW := 0.35
@@ -75,6 +80,12 @@ static func ellipsize(label: Label) -> Label:
 	label.text_overrun_behavior = TextServer.OVERRUN_TRIM_ELLIPSIS
 	label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	return label
+
+## A designed size under the player's text-scale setting (the same 0.85 to 1.4 clamp as
+## build_theme), never below TEXT_FLOOR. Labels that set their own size use this, so
+## they follow the setting the way theme-sized buttons do.
+static func scaled_size(base: int, text_scale: float = 1.0) -> int:
+	return maxi(TEXT_FLOOR, int(round(base * clampf(text_scale, 0.85, 1.4))))
 
 static func squad_color(team: int) -> Color:
 	return ATTACK if team == 0 else DEFEND

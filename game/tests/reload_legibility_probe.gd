@@ -7,11 +7,19 @@ extends SceneTree
 ##   seen      pixels of the magazine with the arms drawn
 ##   covered   1 - seen / free: the share of the magazine the arms hide
 ##   hand      pixels the support hand and forearm cover in the frame
-## and, at the ready pose, where the bore points against the crosshair. Needs a native
-## display. Presentation only.
+## and, at the ready pose, where the bore points against the crosshair. For the support
+## hand it also reports where the wrist and the five distal joints land on screen:
+##   tips   how many of the five distal joints are inside the frame
+##   wrist  whether the wrist is inside the frame
+##   apart  the smallest distance, in pixels at 1280 x 720, between any two distal joints
+##          (a hand whose fingers fuse into a mass has small values)
+## Needs a native display. Presentation only.
 ##   --out=<dir>    also saves the base frame of every pose
 ##   --tag=<name>   label printed on every line (before / after)
 ##   --view=sunlit|backlit|shade
+##   --reduced      reduced motion on
+##   --held         also report, for the magazine in the hand, which node it is and how many magazines
+##                  are visible (the replacement is a second node, so the probe measures the one held)
 ##   --size=WxH     viewport (default 1280x720)
 ##   --ps=a,b,c     only these reload progresses (default: every 0.02)
 ##   --gun-offset=x,y,z and --gun-turn=x,y,z (radians)  added to the weapon node after the
@@ -32,6 +40,7 @@ var size := Vector2i(1280, 720)
 var progresses: Array[float] = []
 var extra_offset := Vector3.ZERO
 var extra_turn := Vector3.ZERO
+var reduced := false
 var actor: SBActor
 var debug_material: ShaderMaterial
 
@@ -62,11 +71,11 @@ func _screen(point: Vector3) -> Vector2:
 	return Vector2(0.5 + 0.5 * (q.x / -q.z) / (t * aspect), 0.5 - 0.5 * (q.y / -q.z) / t)
 
 ## Share of the magazine's projected hull that lies inside the frame.
-func _onscreen_share() -> float:
-	var vertices: PackedVector3Array = actor._magazine.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
+func _onscreen_share(node: MeshInstance3D) -> float:
+	var vertices: PackedVector3Array = node.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
 	var points := PackedVector2Array()
 	for vertex in vertices:
-		points.append(_screen(actor._magazine.global_transform * vertex))
+		points.append(_screen(node.global_transform * vertex))
 	var hull := Geometry2D.convex_hull(points)
 	var area := _area(hull)
 	if area <= 0.0:
@@ -93,6 +102,23 @@ func _debug_arms(arms_mesh: MeshInstance3D) -> void:
 	debug_material.shader = shader
 	debug_material.set_shader_parameter("albedo_texture", load(SBWeaponModel.RELAY_AR_ARMS_TEXTURES + "_albedo.png"))
 	ViewmodelShading.enable(debug_material)
+
+func _hand_report() -> String:
+	var skeleton: Skeleton3D = actor._arms_skeleton
+	var to_world: Transform3D = skeleton.global_transform
+	var wrist := _screen(to_world * skeleton.get_bone_global_pose(skeleton.find_bone("L_hand")).origin)
+	var tips: Array[Vector2] = []
+	for name in ["L_thumb_3", "L_index_3", "L_middle_3", "L_ring_3", "L_pinky_3"]:
+		tips.append(_screen(to_world * skeleton.get_bone_global_pose(skeleton.find_bone(name)).origin))
+	var inside := 0
+	var apart := INF
+	for i in tips.size():
+		if tips[i].x > 0.0 and tips[i].x < 1.0 and tips[i].y > 0.0 and tips[i].y < 1.0:
+			inside += 1
+		for j in range(i + 1, tips.size()):
+			apart = minf(apart, ((tips[i] - tips[j]) * Vector2(1280.0, 720.0)).length())
+	var wrist_in := wrist.x > 0.0 and wrist.x < 1.0 and wrist.y > 0.0 and wrist.y < 1.0
+	return "tips=%d/5 wrist=%s(%.2f,%.2f) apart=%.0fpx" % [inside, "in" if wrist_in else "OUT", wrist.x, wrist.y, apart]
 
 func _luma(c: Color) -> float:
 	return (0.2126 * c.r + 0.7152 * c.g + 0.0722 * c.b) * 255.0
@@ -129,6 +155,8 @@ func _run() -> void:
 		elif argument.begins_with("--gun-turn="):
 			var v := argument.trim_prefix("--gun-turn=").split(",")
 			extra_turn = Vector3(float(v[0]), float(v[1]), float(v[2]))
+		elif argument == "--reduced":
+			reduced = true
 		elif argument.begins_with("--ps="):
 			for part in argument.trim_prefix("--ps=").split(","):
 				progresses.append(float(part))
@@ -149,6 +177,7 @@ func _run() -> void:
 	actor.buy_weapon("rifle")
 	actor._equip_blend = 0
 	actor.apply_cosmetic({})
+	actor.reduced_motion = reduced
 	actor.global_position = place[0]
 	actor.yaw = place[1]
 	actor.rotation.y = place[1]
@@ -178,17 +207,29 @@ func _run() -> void:
 		var base := await _frame()
 		if not output.is_empty():
 			base.save_png(output.path_join("%s-%03d.png" % [view, roundi(progress * 100.0)]))
-		var onscreen := _onscreen_share()
+		# The magazine the frame is about: the one in the hand; else the replacement once it is
+		# in view (it is the one in the well after the seat); else the first one.
+		var held_node: MeshInstance3D = actor._magazine_in_hand
+		if held_node == null:
+			held_node = actor._magazine_spare if actor._magazine_spare != null and actor._magazine_spare.visible else actor._magazine
+		var onscreen := _onscreen_share(held_node)
+		var visible_magazines: Array[MeshInstance3D] = []
+		for node in [actor._magazine, actor._magazine_spare]:
+			if node != null and node.visible:
+				visible_magazines.append(node)
+		var held_name := String(held_node.name) if actor._magazine_in_hand != null else "-"
+		var shown := func(on: bool):
+			for node in visible_magazines:
+				node.visible = on
 		hide_arms.call(true)
 		var without_arms := await _frame()
-		var magazine_node: Node3D = actor._magazine
-		magazine_node.visible = false
+		shown.call(false)
 		var nothing := await _frame()
-		magazine_node.visible = true
+		shown.call(true)
 		hide_arms.call(false)
-		magazine_node.visible = false
+		shown.call(false)
 		var without_magazine := await _frame()
-		magazine_node.visible = true
+		shown.call(true)
 		var free_mask := _changed(without_arms, nothing)
 		var seen_mask := _changed(base, without_magazine)
 		var free := free_mask.size() * 4
@@ -215,5 +256,5 @@ func _run() -> void:
 				by_sleeve += 1
 			else:
 				by_glove += 1
-		print("RELOAD %s | %s | p=%.2f onscreen=%.2f free=%d seen=%d covered=%.2f (glove %.2f, sleeve %.2f) hand=%d" % [tag, view, progress, onscreen, free, seen, covered, float(by_glove) / maxf(free_mask.size(), 1), float(by_sleeve) / maxf(free_mask.size(), 1), hand])
+		print("RELOAD %s | %s | p=%.2f onscreen=%.2f free=%d seen=%d covered=%.2f (glove %.2f, sleeve %.2f) hand=%d %s held=%s mags=%d" % [tag, view, progress, onscreen, free, seen, covered, float(by_glove) / maxf(free_mask.size(), 1), float(by_sleeve) / maxf(free_mask.size(), 1), hand, _hand_report(), held_name, visible_magazines.size()])
 	quit()

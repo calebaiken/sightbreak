@@ -71,7 +71,7 @@ FINGERS = ('index', 'middle', 'ring', 'pinky')
 CUFF = ((0.0, 0.006, 0.0), (0.0, -0.060, -0.002))
 CUFF_RADII = (0.0335, 0.0352)
 CUFF_FLAT = 0.78
-GEAR = ('shell', 'strap', 'cuff')    # parts added outside the glove's skin dilation
+GEAR = ('shell', 'strap', 'cuff', 'seam', 'tip', 'pad')    # parts added outside the glove's skin dilation
 
 
 def finger_chain(name, curls=REST_CURL):
@@ -125,6 +125,13 @@ def glove_shapes():
         r = RADII[name][0]
         adds.append((sdf.cone_shape(CARPAL[name], MCP[name], r * 1.05, r, flat=0.80, region='fabric'), 0.010))
     adds.append((sdf.box_shape((0.0030, 0.0520, -0.0040), np.eye(3), (0.0330, 0.0330, 0.0100), 0.0090, 'palm'), 0.008))
+    # Extensor tendons: a raised cord along the back of each metacarpal, from the carpus to under the knuckle's dome,
+    # so the back of the hand reads as tendons over bone and not as a smooth slab (the glove's fabric follows them).
+    for name in FINGERS:
+        r = RADII[name][0]
+        a = np.asarray(CARPAL[name]) + np.array((0.0, 0.004, r * 0.74))
+        b = np.asarray(MCP[name]) + np.array((0.0, -0.004, r * 0.80))
+        adds.append((sdf.cone_shape(a, b, 0.0027, 0.0025, flat=0.75, region='fabric'), 0.0040))
     thumb_axis = unit(THUMB_DIRS[0])
     thenar_axes = np.stack((unit(np.cross(thumb_axis, Z)), thumb_axis, unit(np.cross(np.cross(thumb_axis, Z), thumb_axis))))
     adds.append((sdf.ellipsoid_shape((-0.0215, 0.0400, -0.0085), thenar_axes, (0.0150, 0.0270, 0.0125), 'palm'), 0.010))
@@ -137,7 +144,7 @@ def glove_shapes():
         radii = RADII[name]
         for i in range(3):
             # Shafts are narrower than the joints at either end (the joints read as knuckles).
-            shaft = sdf.cone_shape(joints[i], joints[i + 1], radii[i] * 0.94, radii[i + 1] * 0.94, ups[i], FLAT, 'fabric')
+            shaft = sdf.cone_shape(joints[i], joints[i + 1], radii[i] * 0.90, radii[i + 1] * 0.90, ups[i], FLAT, 'fabric')
             adds.append((shaft, 0.0025))
             mid = (joints[i] + joints[i + 1]) / 2
             along = unit(joints[i + 1] - joints[i])
@@ -147,7 +154,7 @@ def glove_shapes():
             axes = np.stack((unit(np.cross(unit(joints[i + 1] - joints[i]), ups[i])), unit(joints[i + 1] - joints[i]), ups[i]))
             adds.append((sdf.ellipsoid_shape(joints[i] + ups[i] * radii[i] * 0.38, axes, (radii[i] * 0.78, radii[i] * 0.70, radii[i] * 0.62), 'fabric'), 0.0025))
             # Joint condyles: the finger is widest across the joint.
-            adds.append((sdf.ellipsoid_shape(joints[i], axes, (radii[i] * 1.02, radii[i] * 0.62, radii[i] * 0.80), 'fabric'), 0.0020))
+            adds.append((sdf.ellipsoid_shape(joints[i], axes, (radii[i] * 1.10, radii[i] * 0.66, radii[i] * 0.88), 'fabric'), 0.0020))
     # Thumb: metacarpal sunk into the thenar mass, then two phalanges. The first web
     # (adductor and first dorsal interosseous) ties its metacarpal to the index's.
     joints, ups = thumb_chain()
@@ -163,14 +170,48 @@ def glove_shapes():
     # Glove: moulded knuckle guard over the MCP line with a dome per knuckle.
     kn = _knuckle_axes()
     centre = (np.asarray(MCP['index']) + np.asarray(MCP['pinky'])) / 2 + np.array((0.0, -0.0035, 0.0115))
-    adds.append((sdf.box_shape(centre, kn, (0.0330, 0.0100, 0.0024), 0.0034, 'shell'), 0.0020))
+    adds.append((sdf.box_shape(centre + np.array((0.0, 0.0, 0.0004)), kn, (0.0335, 0.0105, 0.0032), 0.0040, 'shell'), 0.0020))
     for name in FINGERS:
-        adds.append((sdf.ellipsoid_shape(np.asarray(MCP[name]) + np.array((0, -0.001, RADII[name][0] * 1.18)), kn, (0.0070, 0.0062, 0.0030), 'shell'), 0.0020))
+        adds.append((sdf.ellipsoid_shape(np.asarray(MCP[name]) + np.array((0, -0.001, RADII[name][0] * 1.20)), kn, (0.0074, 0.0066, 0.0042), 'shell'), 0.0020))
         joints, ups = finger_chain(name)
         mid = joints[0] + (joints[1] - joints[0]) * 0.55
         along = unit(joints[1] - joints[0])
         pad = np.stack((unit(np.cross(along, ups[0])), along, ups[0]))
-        adds.append((sdf.box_shape(mid + ups[0] * RADII[name][1] * 0.86, pad, (RADII[name][1] * 0.62, LENGTHS[name][0] * 0.26, 0.0016), 0.0013, 'shell'), 0.0010))
+        adds.append((sdf.box_shape(mid + ups[0] * RADII[name][1] * 0.86, pad, (RADII[name][1] * 0.64, LENGTHS[name][0] * 0.28, 0.0024), 0.0018, 'shell'), 0.0010))
+
+    # Fingertip reinforcement (suede), thumb tip included: a cap over the last phalanx, a touch proud of the skin.
+    for name in FINGERS:
+        joints, ups = finger_chain(name)
+        along = unit(joints[3] - joints[2])
+        axes = np.stack((unit(np.cross(along, ups[2])), along, ups[2]))
+        length = np.linalg.norm(joints[3] - joints[2])
+        adds.append((sdf.ellipsoid_shape(joints[2] + along * length * 0.74, axes, (RADII[name][3] * 1.03, length * 0.62 + 0.0030, RADII[name][3] * 0.88), 'tip'), 0.0004))
+    t_joints, t_ups = thumb_chain()
+    t_along = unit(t_joints[3] - t_joints[2])
+    t_axes = np.stack((unit(np.cross(t_along, t_ups[2])), t_along, t_ups[2]))
+    adds.append((sdf.ellipsoid_shape(t_joints[2] + t_along * THUMB_LENGTHS[2] * 0.70, t_axes, (THUMB_RADII[3] * 1.04, THUMB_LENGTHS[2] * 0.62 + 0.0030, THUMB_RADII[3] * 0.92), 'tip'), 0.0004))
+    # Piping seams down both sides of every finger segment (thread, a lighter line at gameplay size).
+    for name in FINGERS:
+        joints, ups = finger_chain(name)
+        for sign in (-1, 1):
+            for i in range(3):
+                side = unit(np.cross(unit(joints[i + 1] - joints[i]), ups[i])) * sign
+                r0, r1 = RADII[name][i] * 0.92 + GLOVE, RADII[name][i + 1] * 0.92 + GLOVE
+                a = joints[i] + side * r0 + (unit(joints[i + 1] - joints[i]) * 0.0020 if i > 0 else 0)
+                b = joints[i + 1] + side * r1 - (unit(joints[i + 1] - joints[i]) * 0.0020 if i < 2 else 0)
+                adds.append((sdf.cone_shape(a, b, 0.00115, 0.00115, region='seam'), 0.0004))
+    for i in range(2):
+        for sign in (-1, 1):
+            side = unit(np.cross(unit(t_joints[i + 1] - t_joints[i]), t_ups[i])) * sign
+            a = t_joints[i] + side * (THUMB_RADII[i] * 0.90 + GLOVE)
+            b = t_joints[i + 1] + side * (THUMB_RADII[i + 1] * 0.90 + GLOVE)
+            adds.append((sdf.cone_shape(a, b, 0.00115, 0.00115, region='seam'), 0.0004))
+    # A stitched line across the back of the hand just behind the knuckle guard, and one round the cuff's top edge.
+    behind = centre + np.array((0.0, -0.0112, -0.0030))
+    adds.append((sdf.cone_shape(behind + kn[0] * 0.0300, behind - kn[0] * 0.0300, 0.00105, 0.00105, region='seam'), 0.0004))
+    adds.append((sdf.torus_shape((0.0, CUFF[0][1] - 0.0040, 0.0), Y, CUFF_RADII[0] + 0.0004, 0.00110, flat=CUFF_FLAT, region='seam'), 0.0004))
+    # Palm: a darker rubberised pad across the heel of the hand.
+    adds.append((sdf.ellipsoid_shape((0.0040, 0.0330, -0.0105), np.eye(3), (0.0290, 0.0210, 0.0050), 'pad'), 0.0020))
     # Cuff (flat ended, over the wrist) and a raised hook-and-loop strap with its tab.
     adds.append((sdf.capped_shape(CUFF[0], CUFF[1], CUFF_RADII[0], CUFF_RADII[1], flat=CUFF_FLAT, rounding=0.0025, region='cuff'), 0.006))
     adds.append((sdf.capped_shape((0.0, -0.019, 0.0), (0.0, -0.043, -0.001), CUFF_RADII[1] + 0.0028, CUFF_RADII[1] + 0.0030, flat=CUFF_FLAT, rounding=0.0012, region='strap'), 0.0008))

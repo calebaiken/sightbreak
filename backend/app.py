@@ -126,7 +126,11 @@ def owned(db, owner, item_id, reservation=None):
 
 def replay(db, actor, route, body):
     key = f'{actor}:{route}:{body.idempotency_key}'
-    hashed = fingerprint(body.model_dump(mode='json'))
+    payload = body.model_dump(mode='json')
+    # Preserve pre-guard receipt hashes for callers that omit the new field.
+    if isinstance(body, MarketBuy) and body.expected_price is None:
+        payload.pop('expected_price', None)
+    hashed = fingerprint(payload)
     previous = db.get(Operation, key)
     if previous:
         if previous.request_hash != hashed: fail('Idempotency key reused with a different request')
@@ -151,6 +155,8 @@ class Register(Login):
             raise ValueError('display name must be one line of visible text')
         return value
 class Idempotent(Strict): idempotency_key: UUID
+class MarketBuy(Idempotent):
+    expected_price: int | None = Field(default=None, strict=True, gt=0, le=10000000)
 class Buy(Idempotent): definition_id: str = Field(max_length=100)
 class Open(Idempotent):
     case_id: UUID
@@ -271,13 +277,15 @@ def market_cancel(listing_id:UUID,request:Request,authorization:Auth=None):
         item.reservation=None; listing.state='cancelled'; audit(db,p.id,'listing_cancelled',listing_id=listing.id)
         return {'state':'cancelled'}
 @app.post('/market/{listing_id}/buy')
-def market_buy(listing_id:UUID,body:Idempotent,request:Request,authorization:Auth=None):
+def market_buy(listing_id:UUID,body:MarketBuy,request:Request,authorization:Auth=None):
     rate(request,'economy')
     with transaction() as db:
         p=authenticated(db,authorization); key,h,old=replay(db,p.id,'buy:'+str(listing_id),body)
         if old: return old
         listing=db.get(Listing,str(listing_id))
         if not listing or listing.state!='active' or listing.seller_id==p.id: fail('Listing unavailable')
+        if body.expected_price is not None and body.expected_price != listing.price:
+            fail('Listing price changed; refresh and confirm the current price')
         seller=db.get(Player,listing.seller_id)
         if not seller.active: fail('Seller unavailable')
         item=owned(db,seller.id,listing.item_id,'market:'+listing.id)

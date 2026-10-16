@@ -14,7 +14,8 @@ MATERIALS = {
     # name: base colour (linear), metallic, roughness
     'anodized': ((0.040, 0.043, 0.047), 0.70, 0.40),
     'steel': ((0.028, 0.029, 0.031), 1.0, 0.30),
-    'polymer': ((0.105, 0.088, 0.064), 0.0, 0.62),  # muted earth-tone furniture
+    'polymer': ((0.105, 0.088, 0.064), 0.0, 0.62),  # muted earth-tone: the magazine
+    'grip_polymer': ((0.040, 0.040, 0.043), 0.0, 0.74),  # graphite furniture: grip, stock, hand stop
     'rubber': ((0.018, 0.018, 0.019), 0.0, 0.86),
     'glass': ((0.015, 0.03, 0.026), 0.0, 0.04),
     'brass': ((0.42, 0.27, 0.08), 1.0, 0.32),

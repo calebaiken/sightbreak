@@ -6,7 +6,7 @@ The standard every first-person weapon follows, using the Relay AR as the worked
 
 - **What it is:** an original 5.56-class carbine designed for SIGHTBREAK. It is AR-pattern in layout but not a copy of any real or game model. Its distinguishing features are:
   - a skeletonised stock with a cheek riser and sling slot;
-  - a raked polymer grip;
+  - a raked graphite pistol grip (v8: palm swell, a flared base, three finger grooves and a recessed stippled panel on each side);
   - an angular reflex sight;
   - a three-port brake;
   - a slotted rounded-hexagon handguard with a hand stop.
@@ -23,21 +23,22 @@ The standard every first-person weapon follows, using the Relay AR as the worked
 - **Materials:**
   - dark anodised aluminium (receivers, handguard and rails; these are the cosmetic paint surfaces);
   - parkerised steel;
-  - earth-tone polymer furniture (stock, grip, magazine, hand stop) for two-tone readability;
+  - furniture in two polymers for readability: graphite (`grip_polymer`: stock, pistol grip, hand stop) and earth-tone (`polymer`: the magazine). The v7 grip and magazine were the same tan, and a glove on the grip measured the same median luma as the grip (89 and 91 in sun); in the game the grip is also darkened to 0.3 of its baked albedo (`GRIP_DARKEN` in `weapon_model.gd`) and given no fill floor, which makes it the darkest thing in the hand (51 in sun against the gloves' 89);
   - rubber and brass.
 
 | Game mesh | Triangles | Draw | Role |
 | --- | ---: | --- | --- |
 | `paint_receiver` | 4,508 | 1 | upper, lower and upper rail; takes the cosmetic finish |
 | `paint_handguard` | 7,976 | 1 | handguard and its rail; takes the cosmetic finish |
-| `body` | 11,082 | 1 | every non-paint, non-stock part |
-| `stock` | 5,132 | 1 (inspection only) | the buttstock, which is behind the camera in first person and is left out there |
+| `body` | 10,094 | 1 | every non-paint, non-stock, non-grip part |
+| `grip` | 1,976 | 1 | the pistol grip (its own mesh since v8, so it can be measured and tinted apart) |
+| `stock` | 5,040 | 1 (inspection only) | the buttstock, which is behind the camera in first person and is left out there |
 | `magazine` + `magazine_rounds` | 1,392 + 236 | 2 | animated by reload |
-| **Rifle total** | **30,326** (**25,194** in first person) | **5** (**4** in first person, plus the cartridge) | budget 32,000 |
+| **Rifle total** | **31,222** (**26,182** in first person) | **6** (**5** in first person, plus the cartridge) | budget 32,000 |
 | `hands` (separate GLB, v2 static fallback) | 9,800 | 1 | budget 10,000 |
 | `arms` (`relay_ar_arms.glb`, rigged, default) | see `ASSET_BUDGETS.md` | 1 | budget 10,000 |
 
-The first-person node therefore holds six draw nodes: body, two paint parts, magazine, hands (or rigged arms) and muzzle flash. The magazine's cartridge is one more draw. The procedural rifle used five draws plus the magazine detail.
+The first-person node therefore holds seven draw nodes since v8: body, grip, two paint parts, magazine, hands (or rigged arms) and muzzle flash (`weapon_art_test.gd` allows seven). During a reload the spare magazine and, after a shot, the muzzle smoke are two more (nine nodes counted by `reload_perf_probe.gd`; draw calls 31 ready, 34 mid-reload on the host's renderer, against 30 and 33 at `fceefa1`). The magazine's cartridge is one more draw. The procedural rifle used five draws plus the magazine detail.
 
 ## Gameplay contract (unchanged)
 

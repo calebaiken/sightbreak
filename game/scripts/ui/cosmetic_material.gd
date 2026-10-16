@@ -56,7 +56,7 @@ const SURFACE := """ vec3 p = local_position;
 # Inspection, third person and procedural weapons: the engine's own vertex transform.
 const CODE := "shader_type spatial;\n" + PARAMETERS + "\nvoid vertex() { local_position = VERTEX; }\nvoid fragment() {\n" + SURFACE + "\n}"
 # First person only: the viewmodel projection, depth and fill (see SBViewmodelShading).
-const VIEWMODEL_CODE := "shader_type spatial;\n" + ViewmodelShading.UNIFORMS + PARAMETERS + "\nvoid vertex() {\n local_position = VERTEX;\n" + ViewmodelShading.PROJECT + "}\nvoid fragment() {\n" + SURFACE + "\n" + ViewmodelShading.FILL + "}"
+const VIEWMODEL_CODE := "shader_type spatial;\n" + ViewmodelShading.RENDER_MODE + ViewmodelShading.UNIFORMS + PARAMETERS + "\nvoid vertex() {\n local_position = VERTEX;\n" + ViewmodelShading.PROJECT + "}\nvoid fragment() {\n" + SURFACE + "\n" + ViewmodelShading.FILL + ViewmodelShading.STUDIO + "}"
 
 ## Assigns one finish to every paint part, binding baked detail when the parts
 ## carry it (authored models set detail_orm/detail_normal/detail_albedo metadata).
@@ -70,7 +70,14 @@ static func apply(material: ShaderMaterial, parts: Array) -> void:
 			material.set_shader_parameter("detail", 1.0)
 			break
 	for part: MeshInstance3D in parts:
-		part.material_override = material
+		var first_person: bool = material.get_shader_parameter("viewmodel_fov") != null and float(material.get_shader_parameter("viewmodel_fov")) > 0.0
+		if first_person and part.name == "paint_handguard":
+			var polymer: ShaderMaterial = material.duplicate()
+			polymer.set_shader_parameter("viewmodel_roughness", ViewmodelShading.HANDGUARD_ROUGHNESS)
+			polymer.set_shader_parameter("viewmodel_metal_scale", ViewmodelShading.HANDGUARD_METAL)
+			part.material_override = polymer
+		else:
+			part.material_override = material
 
 static func rarity_color(rarity: String) -> Color:
 	return RARITIES.get(rarity.capitalize(), RARITIES.Common)
@@ -97,6 +104,8 @@ static func finish(metadata: Dictionary, viewmodel: bool = false) -> ShaderMater
 	material.shader = shader(viewmodel)
 	if viewmodel:
 		ViewmodelShading.enable(material)
+		material.set_shader_parameter("viewmodel_roughness", ViewmodelShading.METAL_ROUGHNESS)
+		material.set_shader_parameter("viewmodel_floor", ViewmodelShading.METAL_FLOOR)
 	var collection := str(metadata.get("collection", ""))
 	var definition := str(metadata.get("definition_id", metadata.get("id", ""))).to_lower()
 	if collection.is_empty():

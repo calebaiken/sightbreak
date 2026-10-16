@@ -1,0 +1,153 @@
+--- a/game/tests/reload_audio_capture.gd
++++ b/game/tests/reload_audio_capture.gd
+@@ -6,7 +6,7 @@
+ ##
+ ## Each of the reload's four voices (SBReloadAudio) is routed to a bus of its own with an AudioEffectCapture, and the
+ ## actor's shot player to a fifth, so a sound that overlaps another can still be heard on its own voice. For every
+-## event the actor logged (the wall-clock millisecond it played, and the voice) the capture of that voice is searched
++## event the actor logged, the capture frame counter is marked at its cue and that voice is searched
+ ## for the sound's onset: it must be there, not before the event, and within the mixer's latency of it.
+ ##
+ ##   --out=<dir>        write mix.wav (the five buses summed, mono), voices.csv (per-event onset and peak) and report.txt
+@@ -23,7 +23,8 @@
+ ## at the same time: onsets measured at 12 to 18 ms after play() on two voices and 61 to 71 ms on the other two, in
+ ## both runs; the spread over the eight runs made was 103 ms, so the bound is two chunks, 90 ms, either side of the run's
+ ## typical offset). This bound checks each sound is on its voice at its time to that accuracy; it says nothing about the
+-## latency of a phone's audio output.
++## latency of a phone's audio output. Capture frame counters, not elapsed wall time, define this clock: the Dummy
++## driver sleeps a buffer duration AFTER processing, so processing/scheduling delays otherwise accumulate as false early audio.
+ const TOLERANCE_MS := 90.0
+ const SILENT := 0.0008          # below this, a bus is silent
+ ## The cancel scenario's weapon change comes at this fraction of the reload: 90 ms into the landing sound, whose second bounce
+@@ -103,18 +104,33 @@
+ 	for i in captures.size():
+ 		samples.append(PackedFloat32Array())
+ 	var seconds := float(Weapons.get_weapon("rifle")["reload"])
+-	var shot := {"msec": -1} # a lambda captures a plain variable by value, so the time goes in a Dictionary
++	var shot := {"msec": -1, "frame": -1} # a lambda captures a plain variable by value, so the time goes in a Dictionary
++	# A cue follows play() on the same main-thread call. Mark the independent mixer frame counter here;
++	# never align a sound by using its measured onset (that would hide a genuinely early sound).
++	var origin_frames: Array[int] = []
++	for capture in captures:
++		var before := capture.get_pushed_frames()
++		capture.clear_buffer()
++		var after := capture.get_pushed_frames()
++		while before != after:
++			before = after
++			capture.clear_buffer()
++			after = capture.get_pushed_frames()
++		origin_frames.append(after)
++	var event_frames: Dictionary = {}
+ 	actor.reload_cue.connect(func(event: String, _p: float):
++		var entry: Dictionary = audio.log.back()
++		var voice: int = entry.voice
++		event_frames[int(entry.id)] = captures[voice].get_pushed_frames() - origin_frames[voice]
+ 		if scenario == "shot" and event == "seat":
+ 			shot.msec = Time.get_ticks_msec()
++			shot.frame = captures[SBReloadAudio.VOICES].get_pushed_frames() - origin_frames[SBReloadAudio.VOICES]
+ 			actor._shot_audio.play())
+-	# The capture's time origin: the wall-clock millisecond of its first pull, less what it had already buffered.
+-	var origin_msec := Time.get_ticks_msec()
+-	for capture in captures:
+-		capture.clear_buffer()
++	var origin_msec := Time.get_ticks_msec() # diagnostic wall timestamp only; not a sample-time origin
+ 	var started := Time.get_ticks_usec()
+ 	var last := started
+ 	var cancel_msec := -1
++	var cancel_frames: Array[int] = []
+ 	actor.start_reload()
+ 	var end_at := seconds + 0.9
+ 	while float(Time.get_ticks_usec() - started) / 1e6 < end_at:
+@@ -125,6 +141,8 @@
+ 		var elapsed := float(now - started) / 1e6
+ 		if scenario == "cancel" and cancel_msec < 0 and elapsed >= seconds * CANCEL_AT:
+ 			cancel_msec = Time.get_ticks_msec()
++			for i in SBReloadAudio.VOICES:
++				cancel_frames.append(captures[i].get_pushed_frames() - origin_frames[i])
+ 			actor.credits = 5000
+ 			actor.inventory.append("smg")
+ 			actor.input_state = {"weapon": "smg"}
+@@ -144,8 +162,10 @@
+ 				var held: PackedFloat32Array = samples[i]
+ 				held.append_array(mono)
+ 				samples[i] = held
+-	# The sample index of wall-clock millisecond m on a bus: the capture was cleared at origin_msec and then ran
+-	# continuously, so index = (m - origin) * rate / 1000 (the loop above pulled every frame, none was dropped).
++	# The cue marks and captured samples share the AudioEffectCapture frame clock. Under CPU load the
++	# Dummy driver's sample count advances more slowly than wall time; that is not early playback.
++	for capture in captures:
++		check(capture.get_discarded_frames() == 0, "the capture dropped no frames")
+ 	var peaks: Array[float] = []
+ 	for i in captures.size():
+ 		var peak := 0.0
+@@ -180,16 +200,14 @@
+ 		check(played_events == ["unlatch", "extract", "pouch", "land"], "the cancelled reload logged only what came before the cancel (%s)" % [played_events])
+ 	else:
+ 		check(played_events == expected, "the reload logged every event once, in order (%s)" % [played_events])
+-	# Where in the capture each logged sound starts. The capture's clock is the mixer's, which runs a little ahead
+-	# of or behind the wall clock by up to a mix chunk, so the offset between the two is not assumed: it is the
+-	# median over the sounds of (the onset found in the capture, less the sound's own attack, less the wall-clock
+-	# millisecond play() was called), and what is checked is that each sound's onset sits on that one offset.
++	# Search around each cue's independently recorded capture-frame mark, retaining the original
++	# windows and tolerances. The median compensates chunk phase, not cumulative wall-clock drift.
+ 	var offsets: Array[float] = []
+ 	var found: Array[Dictionary] = []
+ 	for entry in audio.log:
+ 		var voice: int = entry.voice
+ 		var buffer: PackedFloat32Array = samples[voice]
+-		var start_index := int(float(int(entry.msec) - origin_msec) * rate / 1000.0)
++		var start_index := int(event_frames[int(entry.id)])
+ 		var window_from := maxi(0, start_index - int(0.06 * rate))
+ 		var window_to := mini(buffer.size(), start_index + int(0.40 * rate))
+ 		var peak := 0.0
+@@ -202,7 +220,7 @@
+ 				break
+ 		var attack := _attack_ms(entry.event, entry.variant)
+ 		var onset_ms := float(onset) * 1000.0 / rate + origin_msec
+-		var offset := onset_ms - attack - float(entry.msec)
++		var offset := float(onset - start_index) * 1000.0 / rate - attack
+ 		if onset >= 0:
+ 			offsets.append(offset)
+ 		found.append({"entry": entry, "onset_ms": onset_ms, "onset": onset, "peak": peak, "attack": attack, "offset": offset})
+@@ -219,35 +237,34 @@
+ 		var good: bool = f.onset >= 0 and f.peak > 0.02 and absf(error) <= TOLERANCE_MS
+ 		all_found = all_found and good
+ 		csv.append("%s,%d,%d,%d,%.1f,%.1f,%.3f" % [entry.event, entry.voice, entry.variant, entry.msec, f.onset_ms, f.offset, f.peak])
+-		check(good, "%s on voice %d: heard at %.0f ms after play() with its %.0f ms attack, %.0f ms from the run's typical offset (peak %.3f)" % [entry.event, entry.voice, float(f.onset_ms) - float(entry.msec), f.attack, error, f.peak])
++		check(good, "%s on voice %d: heard at %.0f ms after the cue in capture frames with its %.0f ms attack, %.0f ms from the run's typical offset (peak %.3f)" % [entry.event, entry.voice, float(f.offset) + float(f.attack), f.attack, error, f.peak])
+ 	if scenario != "cancel":
+-		check(typical > -45.0 and typical < MAX_LATENCY * 1000.0, "the mixer's offset from the wall clock is %.0f ms (between -45 and %.0f: output latency plus the mix chunk)" % [typical, MAX_LATENCY * 1000.0])
++		check(typical > -45.0 and typical < MAX_LATENCY * 1000.0, "the mixer's offset from the cue frame mark is %.0f ms (between -45 and %.0f: playback latency plus the mix chunk)" % [typical, MAX_LATENCY * 1000.0])
+ 	if scenario == "cancel":
+ 		# After the cancel (and the mixer's latency) no reload voice makes a sound.
+ 		var loud_after := 0.0
+ 		for i in SBReloadAudio.VOICES:
+ 			var buffer: PackedFloat32Array = samples[i]
+-			var from := int(float(cancel_msec + 80 - origin_msec) * rate / 1000.0)
++			var from := cancel_frames[i] + int(0.080 * rate)
+ 			for k in range(maxi(from, 0), buffer.size()):
+ 				loud_after = maxf(loud_after, absf(buffer[k]))
+ 		check(loud_after < SILENT, "after the cancel (and 80 ms of mixer latency) every reload voice is silent (peak %.5f)" % loud_after)
+ 	if scenario == "shot":
+ 		var shot_buffer: PackedFloat32Array = samples[SBReloadAudio.VOICES]
+-		var from := int(float(int(shot.msec) - origin_msec - 40) * rate / 1000.0)
++		var from := int(shot.frame) - int(0.040 * rate)
+ 		var shot_peak := 0.0
+ 		for k in range(maxi(from, 0), mini(shot_buffer.size(), from + int(0.25 * rate))):
+ 			shot_peak = maxf(shot_peak, absf(shot_buffer[k]))
+ 		var seat_entry: Dictionary = audio.log.back()
+ 		var seat_buffer: PackedFloat32Array = samples[int(seat_entry.voice)]
+-		var seat_from := int(float(int(seat_entry.msec) - origin_msec - 40) * rate / 1000.0)
++		var seat_from := int(event_frames[int(seat_entry.id)]) - int(0.040 * rate)
+ 		var seat_peak := 0.0
+ 		for k in range(maxi(seat_from, 0), mini(seat_buffer.size(), seat_from + int(0.25 * rate))):
+ 			seat_peak = maxf(seat_peak, absf(seat_buffer[k]))
+ 		check(shot_peak > ONSET_LEVEL and seat_peak > ONSET_LEVEL, "a shot fired on the tick of the seat and the seat clunk are both in the mix, each on its own bus (shot %.3f, seat %.3f)" % [shot_peak, seat_peak])
+ 	# Before the first event the reload voices are silent (nothing plays early).
+ 	if scenario != "cancel" and audio.log.size() > 0:
+-		var first_msec: int = audio.log[0].msec
+-		var quiet_until := int(float(first_msec - origin_msec - 60) * rate / 1000.0)
++		var quiet_until := int(event_frames[int(audio.log[0].id)]) - int(0.060 * rate)
+ 		var early := 0.0
+ 		for i in SBReloadAudio.VOICES:
+ 			for k in range(0, mini(quiet_until, (samples[i] as PackedFloat32Array).size())):

@@ -221,6 +221,24 @@ func scrim(strength_left: float, strength_right: float) -> Control:
 	shade.resized.connect(shade.queue_redraw)
 	return shade
 
+## Darkening along the top and bottom edges of the menu, under the build line, the operation
+## notes and the footer, which sit straight on the lit yard. Measured: with only the left-to-right
+## scrim those lines read at a contrast of 1.3 to 2.9 (WCAG asks 4.5); see menu_contrast_probe.gd.
+func menu_bands(strength: float) -> Control:
+	var bands := Control.new()
+	bands.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fill(bands)
+	bands.draw.connect(func():
+		var dark := Color(BG, strength)
+		var clear := Color(BG, 0.0)
+		var top := minf(150.0, bands.size.y * 0.25)
+		var bottom := minf(190.0, bands.size.y * 0.3)
+		bands.draw_polygon(PackedVector2Array([Vector2.ZERO, Vector2(bands.size.x, 0), Vector2(bands.size.x, top), Vector2(0, top)]), PackedColorArray([dark, dark, clear, clear]))
+		bands.draw_polygon(PackedVector2Array([Vector2(0, bands.size.y - bottom), Vector2(bands.size.x, bands.size.y - bottom), bands.size, Vector2(0, bands.size.y)]), PackedColorArray([clear, clear, dark, dark]))
+	)
+	bands.resized.connect(bands.queue_redraw)
+	return bands
+
 func ensure_menu_world() -> void:
 	if is_instance_valid(menu_world): return
 	menu_world = Node3D.new()
@@ -249,6 +267,9 @@ const MENU_LABELS := {
 	"record_title": "TRAINING RECORD  ·  THIS DEVICE", "level": "LEVEL", "xp_to": "XP TO LEVEL",
 	"credits": "TRAINING CREDITS", "matches": "MATCHES", "wins": "WINS",
 	"eliminations": "ELIMINATIONS", "deaths": "DEATHS", "online": "ONLINE", "earned": "EARNED CREDITS",
+	"account_loading": "LOADING ACCOUNT…", "account_unloaded": "ACCOUNT NOT LOADED",
+	"credits_unavailable": "EARNED CREDITS UNAVAILABLE", "session_ended": "SESSION ENDED",
+	"sign_in_again": "SIGN IN AGAIN IN THE ARMORY", "last_confirmed": "LAST CONFIRMED",
 }
 ## Slack that side-by-side menu columns must keep; below it they stack instead.
 const MENU_SAFETY := 32.0
@@ -272,7 +293,8 @@ func show_menu() -> void:
 	clear_ui()
 	ensure_menu_world()
 	menu_world.show()
-	ui.add_child(scrim(0.94, 0.38))
+	ui.add_child(scrim(0.94, 0.62))
+	ui.add_child(menu_bands(0.86))
 	var margins := margin_frame(ui)
 	var rows := VBoxContainer.new()
 	rows.add_theme_constant_override("separation", Design.SPACE_L)
@@ -387,7 +409,7 @@ func menu_columns(region: Vector2, compact: bool) -> Dictionary:
 	record_gap.custom_minimum_size.y = Design.SPACE_M if compact else Design.SPACE_L
 	right.add_child(record_gap)
 	if not compact:
-		var kicker := label(menu_text("operation"), Design.TYPE_MICRO, MUTED, true)
+		var kicker := label(menu_text("operation"), Design.TYPE_SMALL, Design.STEEL_BRIGHT, true)
 		right.add_child(kicker)
 	right.add_child(label("RELAY YARD", 36, Design.TEXT, true))
 	right.add_child(label(menu_text("operation_note"), Design.TYPE_SMALL, GOLD))
@@ -457,13 +479,35 @@ func menu_record_card() -> PanelContainer:
 	stack.add_child(Design.ellipsize(label("%d %s" % [int(profile.data.credits), menu_text("credits")], Design.TYPE_MICRO + 1, Design.STEEL_BRIGHT)))
 	stack.add_child(Design.ellipsize(label("%d %s   ·   %d %s" % [int(profile.data.matches), menu_text("matches"), int(profile.data.wins), menu_text("wins")], Design.TYPE_MICRO + 1, MUTED)))
 	stack.add_child(Design.ellipsize(label("%d %s   ·   %d %s" % [int(profile.data.kills), menu_text("eliminations"), int(profile.data.deaths), menu_text("deaths")], Design.TYPE_MICRO + 1, MUTED)))
-	if is_instance_valid(economy_panel) and not economy_panel.api.token.is_empty():
-		var account: Dictionary = economy_panel.account
-		var online := Design.ellipsize(label("%s   ·   %s" % [menu_text("online"), Design.plain_line(str(account.get("display_name", ""))).to_upper()], Design.TYPE_MICRO + 1, GOLD))
-		online.name = "OnlineIdentity"
-		online.set_meta("user_text", true)
-		stack.add_child(online)
-		stack.add_child(Design.ellipsize(label("%s %s" % [account.get("credits", 0), menu_text("earned")], Design.TYPE_MICRO + 1, GOLD)))
+	if is_instance_valid(economy_panel):
+		# Only what the server has said: an account that has not loaded has no name and no
+		# balance here, and a balance is never shown as 0 because it is missing.
+		var summary: Dictionary = economy_panel.account_summary()
+		if summary.state != "signed_out":
+			var who: String = Design.plain_line(str(summary.name)).to_upper()
+			var identity_line := menu_text("online")
+			var credits_line := menu_text("credits_unavailable")
+			match summary.state:
+				"expired":
+					identity_line = menu_text("session_ended")
+					credits_line = menu_text("sign_in_again")
+				"loading":
+					identity_line += "   ·   " + menu_text("account_loading")
+				"unavailable":
+					identity_line += "   ·   " + menu_text("account_unloaded")
+				_:
+					identity_line += "   ·   " + who if not who.is_empty() else ""
+					if not str(summary.credits).is_empty():
+						credits_line = "%s %s" % [summary.credits, menu_text("earned")]
+						if summary.state == "stale":
+							credits_line += "   ·   " + menu_text("last_confirmed")
+			var online := Design.ellipsize(label(identity_line, Design.TYPE_MICRO + 1, GOLD))
+			online.name = "OnlineIdentity"
+			online.set_meta("user_text", true)
+			stack.add_child(online)
+			var online_credits := Design.ellipsize(label(credits_line, Design.TYPE_MICRO + 1, GOLD))
+			online_credits.name = "OnlineCredits"
+			stack.add_child(online_credits)
 	return card
 
 func panel_screen(title: String, subtitle: String, back: Callable = show_menu) -> VBoxContainer:
@@ -675,6 +719,8 @@ func open_economy(tab: String) -> void:
 		canvas.add_child(economy_panel)
 		economy_panel.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		economy_panel.closed.connect(show_menu)
+		economy_panel.account_changed.connect(func():
+			if screen == "menu": show_menu())
 		if economy_panel.has_signal("loadout_changed"):
 			economy_panel.loadout_changed.connect(func(slots: Dictionary):
 				current_loadout = slots.duplicate(true)
@@ -1157,6 +1203,11 @@ func touch_action(action: String) -> bool:
 func _process(delta: float) -> void:
 	elapsed += delta
 	if server_mode: return
+	# The menu measures the room it has when it is built. When that room changes (a window
+	# resize, a rotation, the device's safe area) it is built again, so a layout chosen for
+	# a wide screen is never kept on a narrow one.
+	if screen == "menu" and menu_layout.has("region") and menu_region() != menu_layout.region:
+		show_menu()
 	if is_instance_valid(menu_camera) and menu_camera.is_inside_tree() and menu_camera.is_visible_in_tree():
 		menu_camera.position = Vector3(27 + sin(elapsed * 0.07) * 4, 18, 30)
 		menu_camera.look_at(Vector3.ZERO)

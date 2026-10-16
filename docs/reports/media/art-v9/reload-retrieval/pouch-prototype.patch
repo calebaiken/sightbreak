@@ -1,0 +1,217 @@
+--- game/scripts/gameplay/actor.gd	2026-10-15 19:57:37.343307688 +0000
++++ /tmp/pouch/actor.with.gd	2026-10-15 19:57:28.649060454 +0000
+@@ -116,6 +116,13 @@
+ ## end of the reload the first one is shown again in the well (the two are identical, so nothing
+ ## pops). Presentation only: ammunition is Actor.ammo and never reads either.
+ var _magazine_spare: MeshInstance3D
++## The pickup's source: a magazine pouch fixed to the body (the camera), at the bottom edge of the frame, with the replacement in it
++## from the old magazine's drop until the hand has it. `pouch_enabled` is the design switch the retrieval was compared with
++## (docs/reports/media/art-v9/reload-retrieval): off, the replacement is first drawn in the hand.
++var pouch_enabled := false
++var _pouch: MeshInstance3D
++var _pouch_sockets := {}
++const POUCH_SLIDE := 0.11
+ ## Where, and how fast, the old magazine is when the hand lets it go (gun space, measured once from
+ ## the clip) and what it does after: a ballistic fall, a pure function of the reload's progress.
+ var _drop_origin := Transform3D.IDENTITY
+@@ -514,6 +521,13 @@
+ 			_magazine_spare.visible = false
+ 			_magazine.get_parent().add_child(_magazine_spare)
+ 			_magazine_spare.transform = _magazine_rest_transform
++			_pouch = MeshInstance3D.new()
++			_pouch.name = "magazine_pouch"
++			_pouch.mesh = SBWeaponModel.pouch_mesh(_magazine.mesh.get_aabb())
++			_pouch.material_override = ViewmodelShading.vertex_colour(0.92, 0.0)
++			_pouch.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
++			_pouch.visible = false
++			camera.add_child(_pouch)
+ 	_muzzle = model.muzzle
+ 	_smoke_node = null
+ 	if _viewmodel and is_local and is_instance_valid(_muzzle) and _muzzle.get_parent() != null:
+@@ -1186,6 +1200,8 @@
+ 		_magazine.transform = _magazine_rest_transform
+ 		if is_instance_valid(_magazine_spare):
+ 			_magazine_spare.visible = false
++		if is_instance_valid(_pouch):
++			_pouch.visible = false
+ 		_magazine_in_hand = null
+ 		return
+ 	var in_hand := _hand_in_gun() * _grip_offset
+@@ -1210,6 +1226,53 @@
+ 		_magazine_spare.transform = _magazine_rest_transform if progress > SBReloadPhases.LETGO else in_hand
+ 		if progress >= SBReloadPhases.ACQUIRE and progress <= SBReloadPhases.LETGO:
+ 			_magazine_in_hand = _magazine_spare # held from the acquisition, at the pouch
++		_pose_pouch(progress)
++
++## The pouch and, until the hand has it, the replacement in it. Both are fixed to the body, so they are placed in the camera's space
++## at the pose the hand takes the magazine in (`_pouch_socket`), and they come up from below the frame as the old magazine falls and go
++## back down after the pickup. With `pouch_enabled` off nothing here is drawn and the replacement is first drawn in the hand.
++func _pose_pouch(progress: float) -> void:
++	if not is_instance_valid(_pouch):
++		return
++	var window := pouch_enabled and progress >= SBReloadPhases.DROP - 0.05 and progress <= SBReloadPhases.ACQUIRE + 0.14
++	_pouch.visible = window
++	if not window:
++		return
++	var rise := 1.0 - smoothstep(SBReloadPhases.DROP - 0.05, SBReloadPhases.DROP + 0.04, progress)
++	var fall := smoothstep(SBReloadPhases.ACQUIRE + 0.02, SBReloadPhases.ACQUIRE + 0.14, progress)
++	var slide := Vector3(0.0, -POUCH_SLIDE * maxf(rise, fall), 0.0)
++	var socket := _pouch_socket()
++	_pouch.global_transform = Transform3D(camera.global_basis * socket.basis, camera.global_transform * socket.origin + camera.global_basis * slide)
++	if progress < SBReloadPhases.ACQUIRE:
++		_magazine_spare.visible = true
++		_magazine_spare.global_transform = _pouch.global_transform
++		_magazine_in_hand = null
++
++## Where the replacement is when the hand takes it, in the camera's space, for the staging the current variant uses (measured from the
++## clip: the rifle is put in its reload pose, the clip is sought to the acquisition and the held magazine's transform is read).
++func _pouch_socket() -> Transform3D:
++	var profile: Dictionary = REDUCED_RELOAD_VARIANTS["current"]
++	if reduced_motion and is_instance_valid(_arms_player):
++		profile = REDUCED_RELOAD_VARIANTS.get(reduced_variant, profile)
++	var clip_name := str(profile.clip) if _arms_player.has_animation(str(profile.clip)) else "reload"
++	var key := "%s|%s|%s" % [clip_name, profile.roll, profile.lift]
++	if _pouch_sockets.has(key):
++		return _pouch_sockets[key]
++	var saved_gun := _gun.transform
++	var saved_time := _arms_time
++	var saved_clip := _arms_player.assigned_animation
++	_gun.position = _gun_rest + ARMS_RELOAD_OFFSET * float(profile.lift)
++	_gun.rotation = ARMS_RELOAD_ROTATION * float(profile.roll)
++	_arms_player.assigned_animation = clip_name
++	_arms_player.seek(SBReloadPhases.ACQUIRE, true)
++	var held := _gun.global_transform * (_hand_in_gun() * _grip_offset)
++	var socket := camera.global_transform.affine_inverse() * held
++	_arms_player.assigned_animation = saved_clip
++	_arms_player.seek(maxf(saved_time, 0.0), true)
++	_arms_time = saved_time
++	_gun.transform = saved_gun
++	_pouch_sockets[key] = socket
++	return socket
+ 
+ ## The old magazine `fall` seconds after the hand lets go: it leaves with a share of the hand's
+ ## speed and falls under gravity (pointing down in the world, whatever the rifle's roll), tumbling
+--- game/scripts/gameplay/weapon_model.gd	2026-10-15 19:57:37.343889934 +0000
++++ /tmp/pouch/weapon_model.with.gd	2026-10-15 19:57:28.652257270 +0000
+@@ -504,6 +504,86 @@
+ ## ports, and a glow disc at the muzzle. Vertex colour is the hue and alpha the additive
+ ## weight, fading to nothing at every outer edge, so there is no hard silhouette to read as a
+ ## sticker. 213 triangles; shared by every build.
++## A magazine pouch for the reload's pickup, in the magazine's own space (the magazine hangs from its origin along -Y, the feed end at
++## the origin): a shallow shell round the feed end, open toward the baseplate (the hand takes the magazine by its base), with a
++## rim, a webbing strap and a flap folded back. About 90 triangles.
++static func pouch_mesh(bounds: AABB) -> ArrayMesh:
++	var shell := Color(0.050, 0.056, 0.064)
++	var rim := Color(0.085, 0.092, 0.100)
++	var strap := Color(0.115, 0.120, 0.100)
++	var margin := 0.006
++	var x0 := bounds.position.x - margin
++	var x1 := bounds.end.x + margin
++	var z0 := bounds.position.z - margin
++	var z1 := bounds.end.z + margin
++	var y_top := 0.010
++	var y_mouth := -0.078
++	var flare := 0.003   # the mouth is a little wider than the closed end
++	var tool := SurfaceTool.new()
++	tool.begin(Mesh.PRIMITIVE_TRIANGLES)
++	var quad := func(a: Vector3, b: Vector3, c: Vector3, d: Vector3, colour: Color) -> void:
++		for v: Vector3 in [a, b, c, a, c, d]:
++			tool.set_color(colour)
++			tool.add_vertex(v)
++	# outer shell: closed end and four sides (counter-clockwise seen from outside)
++	var a0 := Vector3(x0, y_top, z0)
++	var a1 := Vector3(x1, y_top, z0)
++	var a2 := Vector3(x1, y_top, z1)
++	var a3 := Vector3(x0, y_top, z1)
++	var b0 := Vector3(x0 - flare, y_mouth, z0 - flare)
++	var b1 := Vector3(x1 + flare, y_mouth, z0 - flare)
++	var b2 := Vector3(x1 + flare, y_mouth, z1 + flare)
++	var b3 := Vector3(x0 - flare, y_mouth, z1 + flare)
++	quad.call(a3, a2, a1, a0, shell)           # the closed end (faces +Y)
++	quad.call(a0, a1, b1, b0, shell)           # -Z side
++	quad.call(a1, a2, b2, b1, shell)           # +X side
++	quad.call(a2, a3, b3, b2, shell)           # +Z side
++	quad.call(a3, a0, b0, b3, shell)           # -X side
++	# inner faces (the shell is seen from inside where the magazine leaves it), inset by the wall
++	var wall := 0.0025
++	var c0 := Vector3(x0 + wall, y_top - wall, z0 + wall)
++	var c1 := Vector3(x1 - wall, y_top - wall, z0 + wall)
++	var c2 := Vector3(x1 - wall, y_top - wall, z1 - wall)
++	var c3 := Vector3(x0 + wall, y_top - wall, z1 - wall)
++	var d0 := Vector3(x0 - flare + wall, y_mouth, z0 - flare + wall)
++	var d1 := Vector3(x1 + flare - wall, y_mouth, z0 - flare + wall)
++	var d2 := Vector3(x1 + flare - wall, y_mouth, z1 + flare - wall)
++	var d3 := Vector3(x0 - flare + wall, y_mouth, z1 + flare - wall)
++	quad.call(c0, c1, c2, c3, shell.darkened(0.4))
++	quad.call(d0, c0, c3, d3, shell.darkened(0.4))
++	quad.call(d1, d0, c0, c1, shell.darkened(0.4))
++	quad.call(d2, d1, c1, c2, shell.darkened(0.4))
++	quad.call(d3, d2, c2, c3, shell.darkened(0.4))
++	# the mouth's rim: the wall's thickness, lighter, so the opening reads
++	quad.call(b0, b1, d1, d0, rim)
++	quad.call(b1, b2, d2, d1, rim)
++	quad.call(b2, b3, d3, d2, rim)
++	quad.call(b3, b0, d0, d3, rim)
++	# a webbing strap round the shell near the mouth (a raised band) and its tab on the +Z face
++	var ys := y_mouth + 0.016
++	var yt := y_mouth + 0.026
++	var lift := 0.0016
++	var f := func(y: float) -> float: return flare * (y - y_top) / (y_mouth - y_top)
++	var s0 := Vector3(x0 - f.call(ys) - lift, ys, z0 - f.call(ys) - lift)
++	var s1 := Vector3(x1 + f.call(ys) + lift, ys, z0 - f.call(ys) - lift)
++	var s2 := Vector3(x1 + f.call(ys) + lift, ys, z1 + f.call(ys) + lift)
++	var s3 := Vector3(x0 - f.call(ys) - lift, ys, z1 + f.call(ys) + lift)
++	var t0 := Vector3(x0 - f.call(yt) - lift, yt, z0 - f.call(yt) - lift)
++	var t1 := Vector3(x1 + f.call(yt) + lift, yt, z0 - f.call(yt) - lift)
++	var t2 := Vector3(x1 + f.call(yt) + lift, yt, z1 + f.call(yt) + lift)
++	var t3 := Vector3(x0 - f.call(yt) - lift, yt, z1 + f.call(yt) + lift)
++	quad.call(s0, s1, t1, t0, strap)
++	quad.call(s1, s2, t2, t1, strap)
++	quad.call(s2, s3, t3, t2, strap)
++	quad.call(s3, s0, t0, t3, strap)
++	# the flap, folded back from the closed end over the +Z face and hanging open: a short tapering tongue
++	var fy := y_top - 0.002
++	var fz := z1 + 0.003
++	quad.call(Vector3(x0 + 0.004, fy, fz), Vector3(x1 - 0.004, fy, fz), Vector3(x1 - 0.008, fy - 0.030, fz + 0.011), Vector3(x0 + 0.008, fy - 0.030, fz + 0.011), strap.darkened(0.2))
++	quad.call(Vector3(x0 + 0.008, fy - 0.030, fz + 0.011), Vector3(x1 - 0.008, fy - 0.030, fz + 0.011), Vector3(x1 - 0.004, fy, fz), Vector3(x0 + 0.004, fy, fz), strap.darkened(0.45))
++	tool.generate_normals()
++	return tool.commit()
++
+ static func flash_mesh() -> ArrayMesh:
+ 	if _flash_mesh != null:
+ 		return _flash_mesh
+--- game/tests/reload_sequence_capture.gd	2026-10-15 19:57:37.344362856 +0000
++++ /tmp/pouch/capture.with.gd	2026-10-15 19:57:28.653926501 +0000
+@@ -8,6 +8,7 @@
+ ##   --view=sunlit|backlight|shade|dark   (dark: the shade view with the sun at 8 % and the ambient light at 30 %, standing in
+ ##                    for a dark interior, the way viewmodel_light_probe.gd does)
+ ##   --reduced        reduced motion on
++##   --no-pouch       the replacement is first drawn in the hand (the pouch is not drawn): the retrieval's comparison
+ ##   --variant=<name> with --reduced: current (default), calm or still (Actor.REDUCED_RELOAD_VARIANTS)
+ ##   --size=WxH       viewport (default 1280x720)
+ ##   --authority=local|snapshot   how the timer reaches the actor (default local)
+@@ -43,6 +44,7 @@
+ 	var only: Array[int] = []
+ 	var fire := false
+ 	var variant := "current"
++	var no_pouch := false
+ 	for argument in OS.get_cmdline_user_args():
+ 		if argument.begins_with("--out="):
+ 			output = argument.trim_prefix("--out=")
+@@ -57,6 +59,8 @@
+ 		elif argument.begins_with("--only="):
+ 			for part in argument.trim_prefix("--only=").split(","):
+ 				only.append(int(part))
++		elif argument == "--no-pouch":
++			no_pouch = true
+ 		elif argument.begins_with("--variant="):
+ 			variant = argument.trim_prefix("--variant=")
+ 		elif argument == "--fire":
+@@ -91,6 +95,7 @@
+ 	actor.apply_cosmetic({})
+ 	actor.reduced_motion = reduced
+ 	actor.reduced_variant = variant
++	actor.pouch_enabled = not no_pouch
+ 	actor.global_position = place[0]
+ 	actor.yaw = place[1]
+ 	actor.rotation.y = place[1]

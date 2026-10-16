@@ -1,0 +1,34 @@
+{
+  "source": {
+    "commit": "4316c58c8f5ae38ea924631fc48e4b1e7d5df873",
+    "dirty": true,
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.12.14"
+  },
+  "checks": {
+    "each_ticket_retains_its_exact_account_and_actor": true,
+    "all_ten_recovered_with_fresh_authority": true,
+    "ten_distinct_account_bindings": true,
+    "one_ticket_per_initial_admission": true,
+    "ranked_disconnect_policy_preserved": true,
+    "no_unexpected_issuance_during_recovery": true,
+    "bounded_transports": true
+  },
+  "ticket_rows": 10,
+  "consumed_tickets": 10,
+  "reward_rows": 0,
+  "total_credits": 0,
+  "expected_account_ids_by_client": {
+    "0": "718bc42e-4fa0-4307-a82c-3c010a7a1e66",
+    "1": "d8d0f4d7-973c-494e-9a12-94e02bfc3bee",
+    "2": "dd2e2bfa-f131-4ccc-97cb-bfed1b0f1460",
+    "3": "e444490a-0878-4d6c-b547-59a23f839224",
+    "4": "657c5d2d-79f9-4cd5-a5ac-2319cd8b3a6d",
+    "5": "6d5fcee3-044a-44da-9cb6-53edcf66dc5d",
+    "6": "f90aaf9c-97be-4a62-a2ae-f2ed6ca96d1e",
+    "7": "eb8bd8d0-b1aa-49b2-ab2f-7cca3a5b2a64",
+    "8": "3cd38081-4c49-4276-b672-91e7124b946d",
+    "9": "63dce807-db26-4abd-bd33-b7231c746be8"
+  },
+  "scope": "ten real Godot clients; local PostgreSQL/HTTP; synthetic100msRTT+lostclose; no devices"
+}
