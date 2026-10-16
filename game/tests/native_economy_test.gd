@@ -41,7 +41,7 @@ func run():
 	b.active_tab = "market"
 	await b._refresh()
 	check(b.listings.any(func(l): return l.id==listing.id),"buyer sees committed listing")
-	var purchase: Dictionary = await b._perform("/market/%s/buy" % listing.id, {"idempotency_key": b.api.key()})
+	var purchase: Dictionary = await b._perform("/market/%s/buy" % listing.id, {"idempotency_key": b.api.key(), "expected_price": int(listing.price)})
 	check(not purchase.has("_error") and int(b.account.credits)==1600,"buyer native wallet refresh reflects debit")
 	await a._refresh()
 	check(int(a.account.credits)==2388,"seller wallet receives400minus12fee")

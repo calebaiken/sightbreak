@@ -525,6 +525,11 @@ func payloads_and_retry() -> void:
 		popup.hide()
 	fake.log.clear()
 	await show_tab("market")
+	var expected_market_listing: Dictionary = {}
+	for candidate: Dictionary in ui._filtered_listings():
+		if str(candidate.seller_id) != ui.api.player_id:
+			expected_market_listing = candidate
+			break
 	var listing_buy := ui.content.find_children("Buy", "Button", true, false)[0] as Button
 	listing_buy.pressed.emit()
 	await frames(3)
@@ -532,7 +537,7 @@ func payloads_and_retry() -> void:
 	ui.dialog.accept_button.pressed.emit()
 	await frames(8)
 	var bought: Array = posts.call()
-	check(bought.size() == 1 and String(bought[0].path).begins_with("/market/") and String(bought[0].path).ends_with("/buy") and bought[0].payload.keys() == ["idempotency_key"], "Buying a listing posts only a receipt id: " + str(bought))
+	check(bought.size() == 1 and String(bought[0].path).begins_with("/market/") and String(bought[0].path).ends_with("/buy") and bought[0].payload.keys().size() == 2 and bought[0].payload.has("idempotency_key") and int(bought[0].payload.expected_price) == int(expected_market_listing.price) and String(bought[0].path) == "/market/%s/buy" % expected_market_listing.id, "Buying a listing binds the receipt to the displayed listing and price: " + str(bought))
 	fake.log.clear()
 	var create := named("CreateListing") as Button
 	create.pressed.emit()
