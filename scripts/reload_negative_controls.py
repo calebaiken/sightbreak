@@ -34,7 +34,7 @@ COSMETIC = os.path.join(GAME, 'scripts', 'ui', 'cosmetic_material.gd')
 WEAPON_MODEL = os.path.join(GAME, 'scripts', 'gameplay', 'weapon_model.gd')
 BPY = os.environ.get('BPY', os.path.join(os.path.dirname(REPO), 'tools', 'bpy-venv', 'bin', 'python'))
 RIFLE = os.path.join(GAME, 'assets', 'weapons', 'relay_ar', 'relay_ar.glb')
-SUMMARY = re.compile(r'^(RELOAD_SEQUENCE_TEST|WEAPON_ART_TEST|RELOAD_VISIBILITY_TEST|RELOAD_AUDIO_TEST|RELOAD_AUDIO_CAPTURE|RELOAD_DISCOLOUR_TEST|VIEWMODEL_LIGHT_TEST)\b.*?(?:checks=(\d+))?.*?failures=(\d+)', re.M)
+SUMMARY = re.compile(r'^(RELOAD_SEQUENCE_TEST|WEAPON_ART_TEST|RELOAD_VISIBILITY_TEST|RELOAD_AUDIO_TEST|RELOAD_AUDIO_CAPTURE|RELOAD_DISCOLOUR_TEST|VIEWMODEL_LIGHT_TEST|RELOAD_CONTINUITY_TEST)\b.*?(?:checks=(\d+))?.*?failures=(\d+)', re.M)
 ERRORS = re.compile(r'^ERROR: (?!.*(?:ObjectDB|leaked)).*$', re.M)
 
 SEQ = ('sequence', ['--headless', '--script', 'res://tests/reload_sequence_test.gd'])
@@ -44,6 +44,8 @@ CAP = ('audio capture', ['--headless', '--audio-driver', 'Dummy', '--script', 'r
 CAP_CANCEL = ('audio capture (cancel)', ['--headless', '--audio-driver', 'Dummy', '--script', 'res://tests/reload_audio_capture.gd', '--', '--scenario=cancel'])
 VIS = ('visibility', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_visibility_test.gd', '--', '--step=2'])
 VIS_REDUCED = ('visibility (reduced motion)', VIS[1] + ['--reduced'])
+# The replacement is never unsupported or abrupt in the visible frame (hand and magazine enter together, contact through the carry).
+CONT = ('continuity', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_continuity_test.gd'])
 # The parts separate in the lightings (sun and a dark interior at the ready pose: the quick form of the validate.sh run).
 LIGHT = ('light separation', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/viewmodel_light_probe.gd', '--', '--assert', '--poses=ready', '--scenarios=sun,dark interior'])
 # The rifle's painted metal holds its finish through the reload (native: it renders the receiver and handguard at reload ticks).
@@ -87,6 +89,9 @@ CLIPS = [
     ('N17', 'the previous approach from below the frame (the hand leaves the picture)', {'ARMS_APPROACH': '-0.020,-0.010,-0.085'}, [VIS]),
     ('N23', 'the replacement taken from just under the well, in view: it appears in the picture before the hand has it', {'ARMS_PATH_JSON': '{"hip": [-0.05, 0.03, -0.07], "carry": [-0.03, 0.04, -0.05]}'}, [SEQ]),
     ('N24', 'the magazine and hand move in straight lines between keys (robotic, with velocity jumps)', {'ARMS_LINEAR_PATHS': '1'}, [ART]),
+    ('N32', 'the v9 hip pose (magazine untilted, elbow tucked): the magazine\'s top enters the frame ahead of the hand that holds it', {'ARMS_PATH_JSON': '{"hip_turn": [-28, 0, 22], "elbow_hip": [-0.10, 0.0, 0.07]}'}, [CONT]),
+    ('N33', 'the hip raised to 31 cm (v9\'s attempt): the replacement comes into the frame with the hand still below the edge', {'ARMS_PATH_JSON': '{"hip": [-0.20, 0.04, -0.31], "hip_turn": [-28, 0, 22], "elbow_hip": [-0.10, 0.0, 0.07]}'}, [CONT, SEQ]),
+    ('N34', 'the replacement fetched from a pouch far below the frame and brought up at once (it pops into the frame)', {'ARMS_PATH_JSON': '{"hip": [-0.20, 0.04, -0.55], "carry": [-0.115, 0.05, -0.30]}'}, [CONT]),
     ('N18', 'the replacement fetched from far below the frame', {'ARMS_PATH_JSON': '{"hip": [-0.20, 0.04, -0.60], "carry": [-0.115, 0.05, -0.40]}'}, [VIS, SEQ]),
 ]
 
@@ -148,7 +153,7 @@ def main():
         say('# Baseline (no defect injected): every test passes')
         if '--no-baseline' in args:
             say('  (skipped by --no-baseline: run it once without, for the record)')
-        base = [] if '--no-baseline' in args else [run_test(t) for t in (SEQ, ART, AUD, CAP, CAP_CANCEL)] + [run_test(VIS), run_test(VIS_REDUCED), run_test(DISC), run_test(LIGHT)]
+        base = [] if '--no-baseline' in args else [run_test(t) for t in (SEQ, ART, AUD, CAP, CAP_CANCEL)] + [run_test(VIS), run_test(VIS_REDUCED), run_test(CONT), run_test(DISC), run_test(LIGHT)]
         csv_good = os.path.join(REPO, 'docs', 'reports', 'media', 'art-v9', 'hands', 'logs', 'clip_contact.csv')
         if os.path.exists(csv_good) and '--no-baseline' not in args:
             base.append(run_contact(csv_good))
