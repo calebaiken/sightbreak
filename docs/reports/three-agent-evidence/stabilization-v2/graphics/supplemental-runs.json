@@ -1,0 +1,56 @@
+[
+  {
+    "name": "snapshot-correct",
+    "source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics/scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_sequence_capture.gd",
+      "--",
+      "--out=/workspace/reviews/stabilization-v2-20261016/graphics/snapshot-correct",
+      "--authority=snapshot",
+      "--tail=0.55",
+      "--only=0,14,28,34,44,52,58,66,69,72,74,78,80,82,84,90,98,104,110,118,126,134,137,141,146"
+    ],
+    "exit": 0,
+    "seconds": 70.08927341600065
+  },
+  {
+    "name": "perf-before-shader",
+    "source": "f4a763a3c9712c15ae0c369e4f7ee65adf9d38dd",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics-before/scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_perf_probe.gd",
+      "--",
+      "--samples=10"
+    ],
+    "exit": 0,
+    "seconds": 35.02936363400022
+  },
+  {
+    "name": "perf-after-shader",
+    "source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics/scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_perf_probe.gd",
+      "--",
+      "--samples=10"
+    ],
+    "exit": 0,
+    "seconds": 32.3843951380004
+  }
+]

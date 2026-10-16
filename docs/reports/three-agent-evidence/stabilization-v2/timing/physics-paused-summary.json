@@ -1,0 +1,233 @@
+{
+  "label": "physics-paused",
+  "probe": "reload_audio_clock_probe_physics.gd",
+  "cpu_workers": 0,
+  "concurrent_captures": 3,
+  "runs": [
+    {
+      "name": "physics-paused-0-reload",
+      "command": [
+        "scripts/godot.sh",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe_physics.gd",
+        "--",
+        "--out=/workspace/reviews/stabilization-v2-20261016/timing/physics-paused-0-reload",
+        "--clock=frames",
+        "--scenario=reload",
+        "--negative="
+      ],
+      "code": 0,
+      "pause": {
+        "requested_ms": 150,
+        "elapsed_ms": 152.7760210001361
+      },
+      "elapsed_s": 3.7810265570005868,
+      "baseline_sha": "4316c58c8f5ae38ea924631fc48e4b1e7d5df873",
+      "probe_sha256": "7e8b2c007d768b438072ea21138e2d831bce48c23aa0eb74b10dda036783a787",
+      "baseline_status": ""
+    },
+    {
+      "name": "physics-paused-0-cancel",
+      "command": [
+        "scripts/godot.sh",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe_physics.gd",
+        "--",
+        "--out=/workspace/reviews/stabilization-v2-20261016/timing/physics-paused-0-cancel",
+        "--clock=frames",
+        "--scenario=cancel",
+        "--negative="
+      ],
+      "code": 0,
+      "pause": {
+        "requested_ms": 150,
+        "elapsed_ms": 150.16945199931797
+      },
+      "elapsed_s": 3.948015815999497,
+      "baseline_sha": "4316c58c8f5ae38ea924631fc48e4b1e7d5df873",
+      "probe_sha256": "7e8b2c007d768b438072ea21138e2d831bce48c23aa0eb74b10dda036783a787",
+      "baseline_status": ""
+    },
+    {
+      "name": "physics-paused-0-shot",
+      "command": [
+        "scripts/godot.sh",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe_physics.gd",
+        "--",
+        "--out=/workspace/reviews/stabilization-v2-20261016/timing/physics-paused-0-shot",
+        "--clock=frames",
+        "--scenario=shot",
+        "--negative="
+      ],
+      "code": 0,
+      "pause": {
+        "requested_ms": 150,
+        "elapsed_ms": 150.18282199980604
+      },
+      "elapsed_s": 3.7910587360001955,
+      "baseline_sha": "4316c58c8f5ae38ea924631fc48e4b1e7d5df873",
+      "probe_sha256": "7e8b2c007d768b438072ea21138e2d831bce48c23aa0eb74b10dda036783a787",
+      "baseline_status": ""
+    },
+    {
+      "name": "physics-paused-1-reload",
+      "command": [
+        "scripts/godot.sh",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe_physics.gd",
+        "--",
+        "--out=/workspace/reviews/stabilization-v2-20261016/timing/physics-paused-1-reload",
+        "--clock=frames",
+        "--scenario=reload",
+        "--negative="
+      ],
+      "code": 0,
+      "pause": {
+        "requested_ms": 150,
+        "elapsed_ms": 150.13094199912302
+      },
+      "elapsed_s": 3.9796384919991397,
+      "baseline_sha": "4316c58c8f5ae38ea924631fc48e4b1e7d5df873",
+      "probe_sha256": "7e8b2c007d768b438072ea21138e2d831bce48c23aa0eb74b10dda036783a787",
+      "baseline_status": ""
+    },
+    {
+      "name": "physics-paused-1-cancel",
+      "command": [
+        "scripts/godot.sh",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe_physics.gd",
+        "--",
+        "--out=/workspace/reviews/stabilization-v2-20261016/timing/physics-paused-1-cancel",
+        "--clock=frames",
+        "--scenario=cancel",
+        "--negative="
+      ],
+      "code": 0,
+      "pause": {
+        "requested_ms": 150,
+        "elapsed_ms": 150.15133300039452
+      },
+      "elapsed_s": 3.9612244769996323,
+      "baseline_sha": "4316c58c8f5ae38ea924631fc48e4b1e7d5df873",
+      "probe_sha256": "7e8b2c007d768b438072ea21138e2d831bce48c23aa0eb74b10dda036783a787",
+      "baseline_status": ""
+    },
+    {
+      "name": "physics-paused-1-shot",
+      "command": [
+        "scripts/godot.sh",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe_physics.gd",
+        "--",
+        "--out=/workspace/reviews/stabilization-v2-20261016/timing/physics-paused-1-shot",
+        "--clock=frames",
+        "--scenario=shot",
+        "--negative="
+      ],
+      "code": 0,
+      "pause": {
+        "requested_ms": 150,
+        "elapsed_ms": 150.17487299974164
+      },
+      "elapsed_s": 4.008926912000788,
+      "baseline_sha": "4316c58c8f5ae38ea924631fc48e4b1e7d5df873",
+      "probe_sha256": "7e8b2c007d768b438072ea21138e2d831bce48c23aa0eb74b10dda036783a787",
+      "baseline_status": ""
+    },
+    {
+      "name": "physics-paused-2-reload",
+      "command": [
+        "scripts/godot.sh",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe_physics.gd",
+        "--",
+        "--out=/workspace/reviews/stabilization-v2-20261016/timing/physics-paused-2-reload",
+        "--clock=frames",
+        "--scenario=reload",
+        "--negative="
+      ],
+      "code": 0,
+      "pause": {
+        "requested_ms": 150,
+        "elapsed_ms": 150.29713100011577
+      },
+      "elapsed_s": 3.784094312999514,
+      "baseline_sha": "4316c58c8f5ae38ea924631fc48e4b1e7d5df873",
+      "probe_sha256": "7e8b2c007d768b438072ea21138e2d831bce48c23aa0eb74b10dda036783a787",
+      "baseline_status": ""
+    },
+    {
+      "name": "physics-paused-2-cancel",
+      "command": [
+        "scripts/godot.sh",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe_physics.gd",
+        "--",
+        "--out=/workspace/reviews/stabilization-v2-20261016/timing/physics-paused-2-cancel",
+        "--clock=frames",
+        "--scenario=cancel",
+        "--negative="
+      ],
+      "code": 1,
+      "pause": {
+        "requested_ms": 150,
+        "elapsed_ms": 150.16774900050223
+      },
+      "elapsed_s": 3.8364922280006795,
+      "baseline_sha": "4316c58c8f5ae38ea924631fc48e4b1e7d5df873",
+      "probe_sha256": "7e8b2c007d768b438072ea21138e2d831bce48c23aa0eb74b10dda036783a787",
+      "baseline_status": ""
+    },
+    {
+      "name": "physics-paused-2-shot",
+      "command": [
+        "scripts/godot.sh",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe_physics.gd",
+        "--",
+        "--out=/workspace/reviews/stabilization-v2-20261016/timing/physics-paused-2-shot",
+        "--clock=frames",
+        "--scenario=shot",
+        "--negative="
+      ],
+      "code": 0,
+      "pause": {
+        "requested_ms": 150,
+        "elapsed_ms": 150.176422000186
+      },
+      "elapsed_s": 3.8916383740006495,
+      "baseline_sha": "4316c58c8f5ae38ea924631fc48e4b1e7d5df873",
+      "probe_sha256": "7e8b2c007d768b438072ea21138e2d831bce48c23aa0eb74b10dda036783a787",
+      "baseline_status": ""
+    }
+  ]
+}

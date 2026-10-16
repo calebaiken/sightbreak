@@ -1,0 +1,31 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PROBE_CAPTURE_READY clock=frames origin=541
+ok   the capture dropped no frames
+ok   the capture dropped no frames
+ok   the capture dropped no frames
+ok   the capture dropped no frames
+ok   the capture dropped no frames
+captured 139264 frames per bus at 44100 Hz; peaks [0.08469361066818, 0.13238176703453, 0.05278231948614, 0.03180443868041, 0.57282418012619]
+bus 0 onsets (ms from capture start): 565, 1684
+bus 1 onsets (ms from capture start): 684, 1863
+bus 2 onsets (ms from capture start): 1243
+bus 3 onsets (ms from capture start): 1404, 1586
+bus 4 onsets (ms from capture start): 1859
+logged unlatch at 553 ms from origin (voice 0)
+logged extract at 602 ms from origin (voice 1)
+logged pouch at 1133 ms from origin (voice 2)
+logged land at 1328 ms from origin (voice 3)
+logged enter at 1685 ms from origin (voice 0)
+logged seat at 1812 ms from origin (voice 1)
+ok   the reload logged every event once, in order (["unlatch", "extract", "pouch", "land", "enter", "seat"])
+ok   unlatch on voice 0: heard at 6 ms after the cue in capture frames with its 0 ms attack, 0 ms from the run's typical offset (peak 0.066)
+ok   extract on voice 1: heard at 21 ms after the cue in capture frames with its 19 ms attack, -4 ms from the run's typical offset (peak 0.078)
+ok   pouch on voice 2: heard at 33 ms after the cue in capture frames with its 0 ms attack, 27 ms from the run's typical offset (peak 0.053)
+ok   land on voice 3: heard at 10 ms after the cue in capture frames with its 0 ms attack, 4 ms from the run's typical offset (peak 0.032)
+ok   enter on voice 0: heard at 11 ms after the cue in capture frames with its 7 ms attack, -2 ms from the run's typical offset (peak 0.085)
+ok   seat on voice 1: heard at 5 ms after the cue in capture frames with its 0 ms attack, -0 ms from the run's typical offset (peak 0.132)
+ok   the mixer's offset from the cue frame mark is 6 ms (between -45 and 120: playback latency plus the mix chunk)
+ok   a shot fired on the tick of the seat and the seat clunk are both in the mix, each on its own bus (shot 0.573, seat 0.132)
+ok   nothing is audible on any reload voice before the first event (peak 0.00000)
+RELOAD_AUDIO_CAPTURE scenario=shot reduced=false checks=15 failures=0

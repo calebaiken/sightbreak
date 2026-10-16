@@ -1,0 +1,45 @@
+{
+  "commit_id": "7397efd8d10be727840aa91def951f79bdfaff64",
+  "event": "COMMENT",
+  "body": "Independent native stabilization review of frozen 7397efd. The updated source parses and its dedicated regression passes; attacker hearing, real LOS/smoke, memory expiration, team reports, and authoritative plant/defuse controls were independently executed. A new equipment-helper resource bypass is reproduced and narrowly corrected on the integration branch in a143629; please apply that source correction here. Remaining navigation, difficulty hearing, damage-turn priority and sound-precision findings follow below.\n\nSame original native seeds1847/2026/3141, three difficulties and two natural rounds each show mixed tactical results versus a939f1e: Hard target switching25.67%\u219235.90%, commanded-movement stalls15.65%\u219211.82%, and still no Hard objective attempts in six rounds. Allrounds complete. This small controlled sample does not support8.5 tactical acceptance. Full verbatim independent report and source-bound probes will be retained under docs/reports/three-agent-evidence/stabilization-v2/ai/.\n\nSource branches and main remain preserved; this COMMENT review is not an approval or merge.",
+  "comments": [
+    {
+      "path": "game/scripts/gameplay/bot_ai.gd",
+      "line": 199,
+      "side": "RIGHT",
+      "body": "[P1] Preserve resources when a bot purchase fails\n\nOn 7397efd, a real actor with credits 0, rifle owned, ammo 2/reserve 3 and utility 0 gets ammo 30/reserve 90/smokes 1/grenades 1 after buy_equipment, although direct buy_weapon(\"smg\") returns false and changes nothing. The current round-start caller already reset these resources, limiting immediate impact, but this helper breaks the player equipment contract if reused. Delegate purchases only; leave refills to reset_for_round. Minimal external authority_contract_probe.gd exits 1 on 7397efd and unchanged exits 0 after the five assignments are removed in integration a143629.",
+      "start_line": 194,
+      "start_side": "RIGHT"
+    },
+    {
+      "path": "game/scripts/gameplay/bot_ai.gd",
+      "line": 92,
+      "side": "RIGHT",
+      "body": "[P2] Choose defender anchors outside expanded solids\n\nThe actual arena rejects anchors(-15,0,12),(15,0,12),(0,0,9). Native actor simulation for 10s from(-15,.05,9) fails to approach the first within1.8m and ends(-15,.000845,8.6933) with stuck 0; the same actor moves normally toward a reachable anchor. Please validate anchor clearance and actual arrival, rather than a nonzero initial navigation step.",
+      "start_line": 88,
+      "start_side": "RIGHT"
+    },
+    {
+      "path": "game/scripts/gameplay/bot_ai.gd",
+      "line": 522,
+      "side": "RIGHT",
+      "body": "[P2] Apply the difficulty hearing bound to defender rotation\n\nThe bounded memory update rejects a 20m event on easy (hearing_range 18), but this second raw event loop accepts it through the hardcoded 22m bound and sets the destination to it. Native module probe reproduces heard_at=-100 followed by rotation to the rejected event. Consume the bounded hearing result consistently and keep a 20m easy negative control.",
+      "start_line": 517,
+      "start_side": "RIGHT"
+    },
+    {
+      "path": "game/scripts/gameplay/bot_ai.gd",
+      "line": 668,
+      "side": "RIGHT",
+      "body": "[P2] Preserve a recent damage-direction turn when navigating\n\nThe directional hit turn computed above is overwritten here, or by the idle scan below. An unseen hit from yaw -1.570796 produces the same final look 2.498091 as the undamaged navigation input. Keep damage-look precedence and transform the movement into that look frame. Visible rear-attacker FOV acquisition already passes and should remain intact.",
+      "start_line": 662,
+      "start_side": "RIGHT"
+    },
+    {
+      "path": "game/scripts/gameplay/bot_ai.gd",
+      "line": 406,
+      "side": "RIGHT",
+      "body": "[P3] Use or remove the declared hearing precision settings\n\nsound_noise 2.4/1.1/.35 is never read; this assignment gives each difficulty the exact shot coordinate. Native controls confirm equality for all three. Apply bounded deterministic event noise if that remains the intended contract, or correct the configuration/docs. This finding concerns perception precision, not live hidden-motion tracking."
+    }
+  ]
+}

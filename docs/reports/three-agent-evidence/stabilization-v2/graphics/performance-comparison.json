@@ -1,0 +1,157 @@
+{
+  "before_source": "f4a763a3c9712c15ae0c369e4f7ee65adf9d38dd",
+  "after_source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+  "context": "sequential Xvfb104, llvmpipe software rasterizer, LP_NUM_THREADS=2,1280x720,10samples/state; shared host CPU load uncontrolled; no physical GPU/device measurement",
+  "states": {
+    "ready": {
+      "before_median_ms": 251.506,
+      "after_median_ms": 250.5,
+      "delta_percent": -0.4,
+      "draws_equal": true,
+      "primitives_equal": true
+    },
+    "mid_reload": {
+      "before_median_ms": 244.015,
+      "after_median_ms": 268.85,
+      "delta_percent": 10.18,
+      "draws_equal": true,
+      "primitives_equal": true
+    },
+    "flash": {
+      "before_median_ms": 273.193,
+      "after_median_ms": 271.25,
+      "delta_percent": -0.71,
+      "draws_equal": true,
+      "primitives_equal": true
+    },
+    "smoke": {
+      "before_median_ms": 245.381,
+      "after_median_ms": 238.099,
+      "delta_percent": -2.97,
+      "draws_equal": true,
+      "primitives_equal": true
+    }
+  },
+  "before": {
+    "context": "Linux Xvfb / Mesa llvmpipe software rendering at 1280x720; relative cost only, NOT device performance",
+    "flash": {
+      "draw_calls": 34.0,
+      "median_ms": 273.193,
+      "p95_ms": 276.784,
+      "primitives": 77470.0
+    },
+    "mid_reload": {
+      "draw_calls": 34.0,
+      "median_ms": 244.015,
+      "p95_ms": 294.469,
+      "primitives": 74014.0
+    },
+    "ready": {
+      "draw_calls": 31.0,
+      "median_ms": 251.506,
+      "p95_ms": 269.943,
+      "primitives": 72150.0
+    },
+    "renderer": "llvmpipe (LLVM 19.1.7, 256 bits)",
+    "smoke": {
+      "draw_calls": 33.0,
+      "median_ms": 245.381,
+      "p95_ms": 273.55,
+      "primitives": 77190.0
+    },
+    "texture_bytes": {
+      "relay_ar_albedo": 699116,
+      "relay_ar_arms_albedo": 699116,
+      "relay_ar_arms_normal": 1398180,
+      "relay_ar_arms_orm": 699116,
+      "relay_ar_normal": 1398180,
+      "relay_ar_orm": 699116
+    },
+    "texture_bytes_total": 5592824,
+    "tick_visual_us_idle": {
+      "max": 37.0,
+      "median": 5.0,
+      "p95": 6.0
+    },
+    "tick_visual_us_reload": {
+      "max": 207.0,
+      "median": 12.0,
+      "p95": 65.0
+    },
+    "triangles": {
+      "@MeshInstance3D@3121": 280,
+      "arms_001": 9268,
+      "body": 10094,
+      "grip": 1976,
+      "magazine": 1392,
+      "magazine_rounds": 236,
+      "magazine_spare": 1392,
+      "muzzle_smoke": 240,
+      "paint_handguard": 7976,
+      "paint_receiver": 4508
+    },
+    "triangles_total_nodes": 37598,
+    "viewmodel_draw_nodes": 9
+  },
+  "after": {
+    "context": "Linux Xvfb / Mesa llvmpipe software rendering at 1280x720; relative cost only, NOT device performance",
+    "flash": {
+      "draw_calls": 34.0,
+      "median_ms": 271.25,
+      "p95_ms": 341.46,
+      "primitives": 77470.0
+    },
+    "mid_reload": {
+      "draw_calls": 34.0,
+      "median_ms": 268.85,
+      "p95_ms": 432.932,
+      "primitives": 74014.0
+    },
+    "ready": {
+      "draw_calls": 31.0,
+      "median_ms": 250.5,
+      "p95_ms": 466.221,
+      "primitives": 72150.0
+    },
+    "renderer": "llvmpipe (LLVM 19.1.7, 256 bits)",
+    "smoke": {
+      "draw_calls": 33.0,
+      "median_ms": 238.099,
+      "p95_ms": 305.445,
+      "primitives": 77190.0
+    },
+    "texture_bytes": {
+      "relay_ar_albedo": 699116,
+      "relay_ar_arms_albedo": 699116,
+      "relay_ar_arms_normal": 1398180,
+      "relay_ar_arms_orm": 699116,
+      "relay_ar_normal": 1398180,
+      "relay_ar_orm": 699116
+    },
+    "texture_bytes_total": 5592824,
+    "tick_visual_us_idle": {
+      "max": 63.0,
+      "median": 5.0,
+      "p95": 6.0
+    },
+    "tick_visual_us_reload": {
+      "max": 481.0,
+      "median": 12.0,
+      "p95": 54.0
+    },
+    "triangles": {
+      "@MeshInstance3D@3121": 280,
+      "arms_001": 9268,
+      "body": 10094,
+      "grip": 1976,
+      "magazine": 1392,
+      "magazine_rounds": 236,
+      "magazine_spare": 1392,
+      "muzzle_smoke": 240,
+      "paint_handguard": 7976,
+      "paint_receiver": 4508
+    },
+    "triangles_total_nodes": 37598,
+    "viewmodel_draw_nodes": 9
+  }
+}
