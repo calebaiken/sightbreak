@@ -17,6 +17,7 @@ import shlex
 import subprocess
 import time
 from native_log import failed as native_log_failed
+from build_manifest import source
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -31,8 +32,10 @@ def main():
     # Preserve installed templates/settings; tests need no export toolchain.
     for key in ('SIGHTBREAK_RESULT_SPOOL', 'SIGHTBREAK_SERVER_KEY'): env.pop(key, None)
     records = []
+    frozen_source = source()
     report = {'commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
               'dirty': bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip()),
+              'source': frozen_source,
               'platform': platform.platform(), 'python': platform.python_version(), 'checks': records}
     def run(label, command, extra=None, timeout=600):
         start = time.monotonic(); path = args.out / (label + '.log'); code = 1
@@ -48,7 +51,7 @@ def main():
             with path.open('a') as log: log.write('\nHARNESS_ERROR ' + str(error) + '\n')
         text = path.read_text()
         errors = native_log_failed(text) or 'HARNESS_ERROR' in text
-        records.append({'name': label, 'command': command, 'exit': code, 'logged_errors': errors, 'passed': code == 0 and not errors, 'seconds': round(time.monotonic() - start, 3), 'log': path.name})
+        records.append({'name': label, 'source_commit': report['commit'], 'command': command, 'exit': code, 'logged_errors': errors, 'passed': code == 0 and not errors, 'seconds': round(time.monotonic() - start, 3), 'log': path.name})
         (args.out / 'summary.json').write_text(json.dumps(report, indent=2) + '\n')
         print(f'{label}: {"PASS" if records[-1]["passed"] else "FAIL"} ({records[-1]["seconds"]}s)', flush=True)
     # Keep the maintained suite inventory in validate.sh as the single source.
@@ -66,6 +69,7 @@ def main():
     run('connection-lifecycle', ['python3', 'scripts/test_connection_lifecycle.py', '--out', str(args.out / 'connections')])
     run('bridge-transport', ['python3', 'scripts/test_bridge_transport.py'])
     run('build-manifest', ['python3', 'scripts/test_build_manifest.py'])
+    run('reload-contact', ['python3', 'scripts/test_reload_contact.py'])
     if args.protocol:
         run('protocol-matrix', ['bash', 'scripts/test_protocol_compat.sh', str(args.out / 'protocol')])
         run('hostile-handshake', ['bash', 'scripts/test_handshake_hardening.sh', str(args.out / 'handshake')])
@@ -101,6 +105,21 @@ def main():
         run('native-render-lifecycle', ['bash', 'scripts/test_render.sh'])
         run('native-hud-overflow', [str(ROOT / 'scripts/godot.sh'), '--audio-driver', 'Dummy', '--script', 'res://tests/hud_overflow_test.gd'])
         run('native-paint-visibility', [str(ROOT / 'scripts/godot.sh'), '--audio-driver', 'Dummy', '--script', 'res://tests/paint_visibility_test.gd'])
+    # Child clients can satisfy protocol assertions while leaking at shutdown.
+    # Audit retained child logs as well as each top-level command's output.
+    leaked = []
+    for path in sorted(args.out.rglob('*.log')):
+        if re.search(r'ObjectDB.*leaked|Leaked instance', path.read_text(errors='replace')):
+            leaked.append(str(path.relative_to(args.out)))
+    audit_path = args.out / 'nested-resource-cleanup.json'
+    audit_path.write_text(json.dumps({'source_commit': report['commit'], 'leaked_logs': leaked}, indent=2) + '\n')
+    records.append({'name': 'nested-resource-cleanup', 'source_commit': report['commit'], 'passed': not leaked, 'log': audit_path.name})
+    final_source = source()
+    final_dirty = bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip())
+    identity_path = args.out / 'source-identity.json'
+    identity_path.write_text(json.dumps({'before': frozen_source, 'after': final_source, 'initial_dirty': report['dirty'], 'final_dirty': final_dirty}, indent=2) + '\n')
+    records.append({'name': 'frozen-source-identity', 'source_commit': report['commit'], 'passed': not report['dirty'] and not final_dirty and frozen_source == final_source, 'log': identity_path.name})
+    (args.out / 'summary.json').write_text(json.dumps(report, indent=2) + '\n')
     failed = [row['name'] for row in records if not row['passed']]
     print(json.dumps({'groups': len(records), 'failed': failed, 'report': str(args.out / 'summary.json')}, indent=2))
     return bool(failed)
