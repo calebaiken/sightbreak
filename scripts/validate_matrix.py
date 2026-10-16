@@ -16,6 +16,7 @@ import signal
 import shlex
 import subprocess
 import time
+from native_log import failed as native_log_failed
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -46,15 +47,15 @@ def main():
         except (OSError, subprocess.TimeoutExpired) as error:
             with path.open('a') as log: log.write('\nHARNESS_ERROR ' + str(error) + '\n')
         text = path.read_text()
-        errors = bool(re.search(r'^(?:SCRIPT ERROR|ERROR:)|Parse Error|HARNESS_ERROR', text, re.M))
+        errors = native_log_failed(text) or 'HARNESS_ERROR' in text
         records.append({'name': label, 'command': command, 'exit': code, 'logged_errors': errors, 'passed': code == 0 and not errors, 'seconds': round(time.monotonic() - start, 3), 'log': path.name})
         (args.out / 'summary.json').write_text(json.dumps(report, indent=2) + '\n')
         print(f'{label}: {"PASS" if records[-1]["passed"] else "FAIL"} ({records[-1]["seconds"]}s)', flush=True)
     # Keep the maintained suite inventory in validate.sh as the single source.
     for line in (ROOT / 'scripts/validate.sh').read_text().splitlines():
-        match = re.search(r'^run_godot (\S+) (.+)$', line)
-        if match:
-            run(match[1], [str(ROOT / 'scripts/godot.sh'), *shlex.split(match[2])])
+        match = re.search(r'^(\s*)run_godot (\S+) (.+)$', line)
+        if match and (not match[1] or args.render):
+            run(match[2], [str(ROOT / 'scripts/godot.sh'), *shlex.split(match[3])])
         elif line.startswith('SIGHTBREAK_STATE_DIR=') and 'run_godot profile ' in line:
             run('profile', [str(ROOT / 'scripts/godot.sh'), '--headless', '--script', 'res://tests/profile_test.gd'], {'SIGHTBREAK_STATE_DIR': str(args.out / 'profile-state')})
     run('account-output-unit', ['python3', 'scripts/test_account_network_output.py'])
@@ -69,6 +70,7 @@ def main():
         run('protocol-matrix', ['bash', 'scripts/test_protocol_compat.sh', str(args.out / 'protocol')])
         run('hostile-handshake', ['bash', 'scripts/test_handshake_hardening.sh', str(args.out / 'handshake')])
     if args.backend:
+        run('catalog-fixture', [str(ROOT / '.venv/bin/python'), 'scripts/export_catalog_fixture.py', '--check'])
         def unavailable(label, error):
             path = args.out / (label + '.log')
             path.write_text('UNAVAILABLE: ' + str(error) + '\n')
