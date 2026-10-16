@@ -295,9 +295,16 @@ func _run() -> void:
 					_node(part).material_override = finish
 			environment.sky = real_sky
 			if condition.begins_with("studio") and SBWeaponModel.use_authored:
-				var parts: PackedStringArray = condition.trim_prefix("studio").split("g")
+				# studio<strength>g<gradient>r<roughness floor>, all in hundredths (the floor defaults to the shipped one)
+				var spec: String = condition.trim_prefix("studio")
+				var parts: PackedStringArray = spec.split("g")
+				var tail: String = parts[1] if parts.size() > 1 else "35"
+				var gradient := float(tail.get_slice("r", 0)) / 100.0
 				for part in ["receiver", "handguard"]:
-					_node(part).material_override = _studio(finish, float(parts[0]) / 100.0, float(parts[1]) / 100.0 if parts.size() > 1 else 0.35)
+					var experiment := _studio(finish, float(parts[0]) / 100.0, gradient)
+					if tail.contains("r"):
+						experiment.set_shader_parameter("viewmodel_roughness", float(tail.get_slice("r", 1)) / 100.0)
+					_node(part).material_override = experiment
 			if (condition == "furn80" or condition == "all80") and SBWeaponModel.use_authored:
 				var body_node := _node("furniture") as MeshInstance3D
 				if body_node.material_override is ShaderMaterial:

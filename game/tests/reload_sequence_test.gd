@@ -285,11 +285,7 @@ func _identity() -> void:
 	check(acquired.in_hand == 1 and acquired.new_visible, "from the acquisition the hand holds the replacement")
 	# The replacement is first drawn already in the hand, below the frame: it does not appear in view.
 	var first_drawn := timeline[_first(timeline, func(t): return t.new_visible)]
-	# v9: the hand reaches down to the lower edge of the frame, so the pickup is no longer entirely below it. What must still hold is that
-	# the replacement is first drawn already in the hand (never an empty hand with a magazine appearing in it) and that most of it is
-	# still out of the picture at that instant (it rises into view in the hand). The share was under 5 % when the hand left the frame
-	# altogether; the bound is 25 % now, with the hand's own visibility on the way down checked by reload_visibility_test.
-	check(first_drawn.in_hand == 1 and first_drawn.new_share < 0.25, "the replacement is first drawn in the hand at the pouch with %.0f %% of it inside the frame (under 25 %%: it rises into view in the hand)" % (maxf(first_drawn.new_share, 0.0) * 100.0))
+	check(first_drawn.in_hand == 1 and first_drawn.new_share < 0.05, "the replacement is first drawn in the hand at the pouch with %.0f %% of it inside the frame (it is not seen to appear)" % (maxf(first_drawn.new_share, 0.0) * 100.0))
 	# The old one never comes back to the well, and is gone before the end.
 	var came_back := false
 	for t in timeline:
