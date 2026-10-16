@@ -287,6 +287,12 @@ func _run() -> void:
 		"metal60": "METALLIC *= 0.60;", "metal30": "METALLIC *= 0.30;",
 	}
 	var body_original: Material = (_node("furniture") as MeshInstance3D).material_override if SBWeaponModel.use_authored else null
+	# The shipped paint materials, kept so every case starts from them: the first-person handguard is its own polymer clone
+	# (CosmeticMaterial.apply), and assigning `finish` to both parts would measure a handguard that does not ship.
+	var paint_original := {}
+	if SBWeaponModel.use_authored:
+		for part in ["receiver", "handguard"]:
+			paint_original[part] = (_node(part) as MeshInstance3D).material_override
 	var cases: Array[Dictionary] = []
 	if sweep:
 		var full_roll := SBActor.ARMS_RELOAD_ROTATION.z
@@ -311,7 +317,7 @@ func _run() -> void:
 			if SBWeaponModel.use_authored:
 				(_node("furniture") as MeshInstance3D).material_override = body_original
 				for part in ["receiver", "handguard"]:
-					_node(part).material_override = finish
+					_node(part).material_override = paint_original[part]
 			environment.sky = real_sky
 			if condition.begins_with("studio") and SBWeaponModel.use_authored:
 				# studio<strength>g<gradient>r<roughness floor>, all in hundredths (the floor defaults to the shipped one)

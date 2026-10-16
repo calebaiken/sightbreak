@@ -54,7 +54,7 @@ The shader adds one `clamp`, a multiply and an add per fragment on the arms. No 
 
 ## Known defects (the most important first)
 
-1. **The sunlit rifle is still warm grey-olive, with weak specular on its large faces: dark painted graphite, not convincing metal.** The receiver and handguard differ by highlight softness, not value (54.6 vs 56.6). Stable, better than v9, not 8.5.
+1. **The sunlit rifle is still warm grey-olive, with weak specular on its large faces: dark painted graphite, not convincing metal.** In sun the shipped handguard is brighter than the receiver (67.6 vs 54.6 at the ready; level in shade, 29.7 vs 28.4), though the same-model reviewer still read them as close by eye (an earlier version of this line, and of the PR comment, said 54.6 vs 56.6: that came from a probe that did not measure the shipped handguard, see `materials/README.md`). Stable, better than v9, not 8.5.
 2. **Hands are better built and still not good.** The grip hand's fingers read as stacked rounded pads; the glove is smooth and doll-like; no tendon structure; the source is procedural, no sculpt.
 3. **Shade, backlight and the dark interior are crushed** (receiver, grip and sleeves within 30–40 of 255; suppressor end pure black); the gloves and sleeves are brighter than the rifle and the ground there (a separate-light "ghost" look), and the two hands do not match in value.
 4. **`calm`'s hand and magazine are below the frame for about 8–11 ticks** at the hip while the forearm tube stays in view; the default clip has the same stretch by design. No depth passes the continuity test and keeps the hand in view (`reduced-motion/README.md`).
