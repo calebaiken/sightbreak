@@ -71,7 +71,9 @@ def main():
                                     cwd=ROOT, env=environment, text=True, capture_output=True, timeout=90)
             print(result.stdout, end="")
             print(result.stderr, end="", file=sys.stderr)
-            if result.returncode or "ERROR:" in result.stderr or "14/14 passed" not in result.stdout:
+            import re
+            tally = re.search(r"NATIVE_REAL_ECONOMY_QA (\d+)/(\d+) passed", result.stdout)
+            if result.returncode or "ERROR:" in result.stderr or not tally or tally.group(1) != tally.group(2) or int(tally.group(2)) < 35:
                 raise RuntimeError("Native economy regression failed")
             service.terminate()
             service.wait(timeout=10)

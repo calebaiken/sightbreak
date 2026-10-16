@@ -61,3 +61,18 @@ P0 blocks a credible visual milestone, P1 is high impact, P2 is polish. "Branch"
 - **Buttons:** every one works; no placeholder actions.
 - **Field of view:** the competitive aspect and field of view stay ("keep" stretch) unless the owner approves a change (Codex's `MOBILE_ASPECT_REVIEW.md`).
 - **Platforms:** touch targets stay at least 48 px, safe areas are respected, and text scales from 85 to 130 %.
+
+## Round 2 (2026-10-15): the independent review of the UI branch
+
+An independent Codex-agent review of foundation `148760e` and UI `2b2731a` (a separate same-model agent, not human acceptance) scoped its acceptance to the saved-HUD correction and left four UI findings open. It rated UI functionality 7.5/10 and accessibility 7.0/10 and said complete mobile acceptance stays blocked by F3 and F4. Those scores are theirs.
+
+| Finding | Answer | Evidence |
+| --- | --- | --- |
+| F3 (P1, also on the foundation head): the trade confirmation is an unbounded dialog, buttons off screen at 20 items a side and 130 % text | `ConfirmSheet`: bounded to the safe area, terms scroll, summary and both buttons pinned, action-labelled buttons | `captures/increment-4/state/confirm-*.png`; `armory_state_test.gd`, 36 configurations through the real button |
+| F4 (P2): armory labels ignore the text size | Every label scales with the setting and none is under 14 px | `armory_state_test.gd` text-size section |
+| F1 (P2): the menu shows `0 EARNED CREDITS` for an account that did not load | One `account_summary()` feeds the armory and the menu; unknown is never zero; purchases pause on an unconfirmed balance | `menu_state_test.gd` |
+| F2 (P2): the menu keeps a stale layout after a resize or inset change | The menu rebuilds when its measured room changes, and settles | `menu_state_test.gd` resize sequence |
+
+Beyond the review: failure messages by what is known (a retry is offered only with a receipt id), a backend-derived fixture with a drift check, whole numbers printed whole (`1840233.0` and `58.0%` were reaching players), odds in rarity order with each finish's chance, finish-first cards, menu text contrast (16 of 48 labels under 4.5:1 before, 0 after, on software-rendered frames).
+
+**Still open on the UI side:** a master-detail inventory for wide screens; per-item cards inside the confirmation; the market buy does not send the price it displayed (a server-side expected-price check is a request for Codex); phone rendering, physical touch feel and screen-reader behaviour are not measured. The backlog rows above that this branch's increments did not touch (requisition, the scoreboard, settings, the field menu and touch editor, the environment) were not revisited in round 2.

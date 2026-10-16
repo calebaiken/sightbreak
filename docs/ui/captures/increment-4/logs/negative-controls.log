@@ -1,0 +1,51 @@
+# Negative controls for the armory and menu round 2 (one defect injected at a time; each file restored byte for byte)
+# Batch 1
+CAUGHT  confirm sheet taller than the screen (F3): armory_state_test -> exit 1; FAIL: 48 of 736 armory-state checks (10s)
+CAUGHT  armory labels ignore the text size (F4): armory_state_test -> exit 1; FAIL: 25 of 736 armory-state checks (10s)
+CAUGHT  legibility floor removed: armory_state_test -> exit 1; FAIL: 13 of 736 armory-state checks (11s)
+CAUGHT  a missing balance shown as 0 Credits (F1): armory_state_test -> exit 1; FAIL: 2 of 736 armory-state checks (10s)
+MISSED  purchases stay enabled on an unverified balance: armory_state_test -> exit 0; PASS: Armory account, text-size and transaction behaviour (736 checks) (11s)
+CAUGHT  every transport failure is 'unknown' (retry offered after nothing was sent): armory_state_test -> exit 1; FAIL: 4 of 736 armory-state checks (10s)
+CAUGHT  retry offered with no receipt identifier: armory_state_test -> exit 1; FAIL: 2 of 736 armory-state checks (10s)
+CAUGHT  retry button shown for every failure: armory_state_test -> exit 1; FAIL: 3 of 736 armory-state checks (10s)
+CAUGHT  confirmation posts the wrong revision: armory_state_test -> exit 1; FAIL: 36 of 736 armory-state checks (10s)
+CAUGHT  a retry mints a new receipt identifier (double charge): armory_state_test -> exit 1; FAIL: 2 of 736 armory-state checks (10s)
+CAUGHT  menu record card invents a balance (F1): menu_state_test -> exit 1; FAIL: 7 of 51 menu-state checks (3s)
+CAUGHT  menu keeps its creation-time layout after a resize (F2): menu_state_test -> exit 1; FAIL: 12 of 51 menu-state checks (3s)
+CAUGHT  menu ignores account changes behind it: menu_state_test -> exit 1; FAIL: 3 of 51 menu-state checks (3s)
+# Batch 1 note: 'purchases stay enabled on an unverified balance' was an EQUIVALENT mutation (have is already 0 when the balance is unverified, so have < price disables the button anyway). It is not a test gap; the batch below replaces it with mutations that change behaviour.
+# Batch 2
+CAUGHT  stale balance still enables purchases: armory_state_test -> exit 1; FAIL: 2 of 736 armory-state checks (10s)
+      - unavailable: purchases are paused and say why
+      - stale: purchases are paused and say why
+CAUGHT  stale listing buy stays enabled on an unconfirmed balance: armory_state_test -> exit 1; FAIL: 3 of 736 armory-state checks (10s)
+      - Listing_b0000000-0000-4000-8000-000000000001: an unconfirmed balance pauses buying
+      - Listing_b0000000-0000-4000-8000-000000000002: an unconfirmed balance pauses buying
+      - Listing_b0000000-0000-4000-8000-000000000003: an unconfirmed balance pauses buying
+CAUGHT  odds print as 58.0%: armory_state_test -> exit 1; FAIL: 4 of 736 armory-state checks (10s)
+      - Common odds print as 58.0% without a stray .0
+      - Epic odds print as 4.0% without a stray .0
+      - Rare odds print as 11.0% without a stray .0
+      - Uncommon odds print as 26.0% without a stray .0
+CAUGHT  collection cards omit the per-finish odds: armory_state_test -> exit 1; FAIL: 24 of 736 armory-state checks (10s)
+      - obsidian_common shows the odds 58% the server publishes for Common
+      - obsidian_uncommon shows the odds 26% the server publishes for Uncommon
+      - obsidian_rare shows the odds 11% the server publishes for Rare
+      - obsidian_epic shows the odds 4% the server publishes for Epic
+CAUGHT  a 401 leaves the session token in place: armory_state_test -> exit 1; FAIL: 2 of 736 armory-state checks (10s)
+      - A 401 ends the session: account and inventory cleared, state expired
+      - An ended session shows its own card with a sign-in action
+RESTORED armory_state_test: exit 0; PASS: Armory account, text-size and transaction behaviour (736 checks)
+RESTORED menu_state_test: exit 0; PASS: Menu account lines and resize handling (51 checks)
+# Batch 3 (the 'keeps the server's key order' control was a malformed mutation: it added a no-op sort before the real one, so it changed nothing; the unsorted control below is the real one)
+CAUGHT  a pattern seed prints as 1840233.0: armory_state_test -> exit 1; FAIL: 5 of 746 armory-state checks (11s)
+      - inventory: no whole number prints with a trailing .0 (m  Common  •  Obsidian
+      - profile: no whole number prints with a trailing .0 (NE ACCOUNT  /  QA Fixture  XP: 1450.0  •  Level: 2.0  •  Ear)
+      - The buy confirmation prints the pattern seed whole: Buy this exact item for 100 earned Credits?  Obsidian / Gilded Fracture MYTHIC  ·  Obsidian Wear 0.0040  ·  Pattern 424242.0  You pay 100. The seller receives 97 after a market fee of 3. You have 1,250 earned Credits.
+      - The trade terms print the pattern seed whole: Trade with "Rook" (22222222) — revision 3  YOU GIVE:     Obsidian / Graphite  ·  COMMON  ·  wear 0.1200  ·  pattern 1840233.0  YOU RECEIVE:     nothing  You receive nothing in return. This is a gift.  The exchange completes atomically when both players confirm this revision. Any later edit cancels both confirmations.
+MISSED  the odds table keeps the server's key order: armory_state_test -> exit 0; PASS: Armory account, text-size and transaction behaviour (746 checks) (10s)
+CAUGHT  the odds table is not sorted at all: armory_state_test -> exit 1; FAIL: 2 of 746 armory-state checks (10s)
+      - The odds table runs commonest to rarest: ["COMMON", "EPIC", "LEGENDARY", "MYTHIC", "RARE", "UNCOMMON"]
+      - Rarities sort commonest first with unknown ones last: ["Common", "Epic", "Legendary", "Mythic", "Rare", "Uncommon", "Unheard"]
+RESTORED armory_state_test: exit 0; PASS: Armory account, text-size and transaction behaviour (746 checks)
+RESTORED menu_state_test: exit 0; PASS: Menu account lines and resize handling (51 checks)

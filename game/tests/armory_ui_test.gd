@@ -58,16 +58,25 @@ func skin(id: String, name: String, collection: String, rarity: String, wear: fl
 	item.merge(extra, true)
 	return item
 
+## The catalog exactly as the backend serves it (scripts/export_catalog_fixture.py calls the
+## backend's own catalog(), so definitions, prices, odds and the fee rate are the server's).
+func world() -> Dictionary:
+	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/backend_world.json"))
+	return (parsed as Dictionary).world
+
 func fixture_catalog() -> Dictionary:
-	var definitions: Array = [
-		{"id": "key", "name": "Collection key", "kind": "key", "price": 150, "collection": "Universal"},
-		{"id": "obsidian_case", "name": "Obsidian case", "kind": "case", "price": 300, "collection": "Obsidian"},
-		{"id": "crimson_case", "name": "Crimson Archive case", "kind": "case", "price": 300, "collection": "Crimson Archive"},
-	]
-	# Listed deliberately out of rarity order: the browser must sort them.
-	for entry in [["Obsidian", "Mythic", "Eclipse"], ["Obsidian", "Common", "Graphite"], ["Obsidian", "Rare", "Slate"], ["Crimson Archive", "Epic", "Iridescence"], ["Crimson Archive", "Uncommon", "Ember"]]:
-		definitions.append({"id": "%s_%s" % [entry[0].to_lower().replace(" ", "_"), entry[1].to_lower()], "name": "%s / %s" % [entry[0], entry[2]], "kind": "weapon_skin", "rarity": entry[1], "collection": entry[0], "weapon": "rifle"})
-	return {"market_fee_basis_points": 300, "case_tables": {"version": "1", "probabilities": {"Common": 58, "Uncommon": 26, "Rare": 11, "Epic": 4, "Legendary": 0.9, "Mythic": 0.1}}, "definitions": definitions}
+	return (world().catalog as Dictionary).duplicate(true)
+
+## An owned item of a real definition: name, rarity and collection are the catalog's; only the
+## instance's id, wear and state are chosen here.
+func real_skin(id: String, definition_id: String, wear: float, extra := {}) -> Dictionary:
+	var definition: Dictionary = {}
+	for raw in fixture_catalog().definitions:
+		if raw.id == definition_id:
+			definition = raw
+	var item := skin(id, definition.name, definition.collection, definition.rarity, wear, {"definition_id": definition_id})
+	item.merge(extra, true)
+	return item
 
 func make_ui(size: Vector2i, scale: float, credits: int) -> void:
 	if is_instance_valid(ui):
@@ -88,18 +97,18 @@ func make_ui(size: Vector2i, scale: float, credits: int) -> void:
 	ui.busy = false
 
 func fill() -> Dictionary:
-	var graphite := skin("s-graphite", "Obsidian / Graphite", "Obsidian", "Common", 0.12)
-	var slate := skin("s-slate", "Obsidian / Slate", "Obsidian", "Rare", 0.331, {"reserved": true})
-	var iris := skin("s-iris", "Crimson Archive / Iridescence", "Crimson Archive", "Epic", 0.015)
+	var graphite := real_skin("s-graphite", "obsidian_common", 0.12)
+	var slate := real_skin("s-slate", "obsidian_rare", 0.331, {"reserved": true})
+	var iris := real_skin("s-iris", "crimson_archive_legendary", 0.015)
 	ui.inventory = [graphite, slate, iris, {"id": "c-1", "kind": "case", "name": "Obsidian case", "definition_id": "obsidian_case", "collection": "Obsidian"}, {"id": "k-1", "kind": "key", "name": "Collection key", "definition_id": "key"}]
 	ui.equipped_loadout = {"rifle": iris}
 	ui.listings = [
-		{"id": "L-theirs", "seller_id": "other-9999", "price": 100, "item": skin("l-1", "Obsidian / Eclipse", "Obsidian", "Mythic", 0.004)},
+		{"id": "L-theirs", "seller_id": "other-9999", "price": 100, "item": real_skin("l-1", "obsidian_mythic", 0.004)},
 		{"id": "L-mine", "seller_id": "self-0000-0000", "price": 1250, "item": slate},
-		{"id": "L-dear", "seller_id": "other-9999", "price": 5000, "item": skin("l-2", "Crimson Archive / Ember", "Crimson Archive", "Uncommon", 0.4)},
+		{"id": "L-dear", "seller_id": "other-9999", "price": 5000, "item": real_skin("l-2", "crimson_archive_uncommon", 0.4)},
 	]
 	var gift_trade := {"id": "T-gift", "revision": 3, "state": "open", "a": "self-0000-0000", "b": "other-9999", "names": {"other-9999": "Ash\nFORGED  CONFIRM"}, "offers": {"self-0000-0000": ["s-graphite"], "other-9999": []}, "offer_items": {"self-0000-0000": [graphite], "other-9999": []}, "confirmations": []}
-	var swap_trade := {"id": "T-swap", "revision": 1, "state": "open", "a": "other-9999", "b": "self-0000-0000", "names": {"other-9999": "Rook"}, "offers": {"self-0000-0000": ["s-iris"], "other-9999": ["l-1"]}, "offer_items": {"self-0000-0000": [iris], "other-9999": [skin("l-1", "Obsidian / Eclipse", "Obsidian", "Mythic", 0.004)]}, "confirmations": ["other-9999"]}
+	var swap_trade := {"id": "T-swap", "revision": 1, "state": "open", "a": "other-9999", "b": "self-0000-0000", "names": {"other-9999": "Rook"}, "offers": {"self-0000-0000": ["s-iris"], "other-9999": ["l-1"]}, "offer_items": {"self-0000-0000": [iris], "other-9999": [real_skin("l-1", "obsidian_mythic", 0.004)]}, "confirmations": ["other-9999"]}
 	ui.trades = [gift_trade, swap_trade]
 	return {"graphite": graphite, "slate": slate, "iris": iris}
 
@@ -231,7 +240,7 @@ func states() -> void:
 	check(not ui.load_error.is_empty() and not ui.busy and not ui.is_loading, "The failure is recorded and the screen is released")
 	var error_card := named("State_error")
 	check(error_card != null, "A failed refresh shows an error card")
-	check(ui.wallet.text == "ONLINE  •  ACCOUNT NOT LOADED", "With no account loaded the header claims no name or balance: " + ui.wallet.text)
+	check(ui.wallet.text == "ONLINE  •  ACCOUNT NOT LOADED  •  BALANCE UNAVAILABLE", "With no account loaded the header claims no name or balance: " + ui.wallet.text)
 	check(error_card != null and ui.load_error in words(error_card), "The error card states the actual failure")
 	check(error_card != null and "Nothing on this screen was changed" in words(error_card), "The error card says nothing was changed")
 	var retry := named("StateAction") as Button
@@ -284,8 +293,9 @@ func cases_screen() -> void:
 	await show_tab("cases")
 	var key_buy := named("BuySupply_key") as Button
 	check(key_buy != null and key_buy.disabled and key_buy.text == "NEED 50 MORE", "A key costing 150 with 100 Credits says NEED 50 MORE and is disabled")
+	check(int(ui.catalog.prices.key) == 150 and int(ui.catalog.prices.case) == 350, "The shop prices are the backend's own (key 150, case 350)")
 	var case_buy := named("BuySupply_obsidian_case") as Button
-	check(case_buy != null and case_buy.disabled and case_buy.text == "NEED 200 MORE", "A case costing 300 with 100 Credits says NEED 200 MORE")
+	check(case_buy != null and case_buy.disabled and case_buy.text == "NEED 250 MORE", "A case costing 350 with 100 Credits says NEED 250 MORE")
 	ui.account.credits = 1250
 	await show_tab("cases")
 	key_buy = named("BuySupply_key") as Button
@@ -299,35 +309,36 @@ func cases_screen() -> void:
 	var open_button := named("Open_c-1") as Button
 	check(open_button != null and not open_button.disabled, "A held case with a key can be opened")
 	open_button.pressed.emit()
-	check("Obsidian case" in ui.dialog.dialog_text and "Common  58%" in ui.dialog.dialog_text and "Mythic  0.1%" in ui.dialog.dialog_text, "Opening a case confirms with the real published probabilities")
+	check("Obsidian case" in ui.dialog.dialog_text and "Common  58%" in ui.dialog.dialog_text and "Mythic  0.1%" in ui.dialog.dialog_text and "Legendary  0.9%" in ui.dialog.dialog_text, "Opening a case confirms with the real published probabilities, printed without a stray .0: " + ui.dialog.dialog_text.replace("\n", " "))
 	ui.dialog.hide()
 	ui.pending_action = Callable()
 	var keyless: Array = ui.inventory.filter(func(i): return i.kind != "key")
 	ui.inventory = keyless
 	await show_tab("cases")
 	check((named("Open_c-1") as Button).disabled and "collection key is required" in words(ui.content), "Without a key the case cannot be opened, and the screen says why")
-	check("Holds 3 finishes" in words(named("Open_c-1").get_parent()), "A held Obsidian case says it holds 3 finishes")
-	check("Holds 2 finishes" in words(named("BuySupply_crimson_case").get_parent()), "A Crimson Archive case on sale says it holds 2 finishes")
+	check("Holds 6 finishes" in words(named("Open_c-1").get_parent()), "A held Obsidian case says it holds 6 finishes")
+	check("Holds 6 finishes" in words(named("BuySupply_crimson_archive_case").get_parent()), "A Crimson Archive case on sale says it holds 6 finishes")
 	check("Holds" not in words(named("BuySupply_key").get_parent()), "A key is not described as holding finishes")
 	check(ui.case_holds_text("No such collection").is_empty(), "A collection with no listed finishes claims no contents")
 	if not capture_dir.is_empty():
 		await scroll_to(named("Collection_Obsidian").get_parent() as Control)
 		await capture("cases-collection-browser")
 	# Collection browser: grouped, ordered by rarity, each finish inspectable.
-	for collection in ["Obsidian", "Crimson_Archive"]:
+	for collection in ["Obsidian", "Crimson_Archive", "Spectral_Circuit", "Blacksite"]:
 		check(named("Collection_" + collection) != null, "Collection section " + collection)
 	var obsidian := named("Collection_Obsidian")
 	var order: Array[String] = []
 	for button in obsidian.find_children("Finish_*", "Button", true, false):
 		order.append(button.name)
-	check(order == ["Finish_obsidian_common", "Finish_obsidian_rare", "Finish_obsidian_mythic"], "Obsidian finishes run common -> rare -> mythic: " + str(order))
+	check(order == ["Finish_obsidian_common", "Finish_obsidian_uncommon", "Finish_obsidian_rare", "Finish_obsidian_epic", "Finish_obsidian_legendary", "Finish_obsidian_mythic"], "Obsidian finishes run common -> mythic: " + str(order))
 	var crimson := named("Collection_Crimson_Archive")
 	order = []
 	for button in crimson.find_children("Finish_*", "Button", true, false):
 		order.append(button.name)
-	check(order == ["Finish_crimson_archive_uncommon", "Finish_crimson_archive_epic"], "Crimson Archive finishes run uncommon -> epic: " + str(order))
-	check("3 FINISHES" in words(obsidian) and "2 FINISHES" in words(crimson), "Each collection states how many finishes it holds")
-	check(ui.content.find_children("Finish_*", "Button", true, false).size() == 5, "Every catalog finish appears exactly once")
+	check(order[0] == "Finish_crimson_archive_common" and order[-1] == "Finish_crimson_archive_mythic" and order.size() == 6, "Crimson Archive finishes run common -> mythic: " + str(order))
+	check("6 FINISHES" in words(obsidian) and "6 FINISHES" in words(crimson), "Each collection states how many finishes it holds")
+	check(ui.content.find_children("Finish_*", "Button", true, false).size() == 24, "Every catalog finish appears exactly once (4 collections x 6 rarities)")
+	check("MYTHIC  ·  0.1%" in words(named("Finish_obsidian_mythic")) and "COMMON  ·  58%" in words(named("Finish_obsidian_common")), "Each finish states the published chance of its rarity")
 	var popups_before := ui.find_children("*", "PopupPanel", false, false).size()
 	(named("Finish_obsidian_mythic") as Button).pressed.emit()
 	for i in 4:
@@ -365,7 +376,7 @@ func market_screen() -> void:
 	check(buy != null and not buy.disabled and buy.text == "BUY FOR 100", "With exactly 100 Credits the listing is buyable")
 	buy.pressed.emit()
 	var text := ui.dialog.dialog_text
-	for term in ["100 earned Credits", "Obsidian / Eclipse", "MYTHIC", "Wear 0.0040", "You pay 100", "seller receives 97", "market fee of 3", "You have 100 earned Credits"]:
+	for term in ["100 earned Credits", "Obsidian / Gilded Fracture", "MYTHIC", "Wear 0.0040", "You pay 100", "seller receives 97", "market fee of 3", "You have 100 earned Credits"]:
 		check(term in text, "The buy confirmation states \"%s\"" % term)
 	check(ui.pending_action.is_valid(), "The buy confirmation holds the purchase until accepted")
 	ui.dialog.hide()
@@ -427,12 +438,12 @@ func trades_screen() -> void:
 	check(gift[0].get_global_rect().size.x >= 340 and receive[0].get_global_rect().size.x >= 340, "The two columns are at least 340 px wide")
 	var side_by_side: bool = absf(gift[0].get_global_rect().position.y - receive[0].get_global_rect().position.y) < 1.0
 	check(side_by_side, "At 1280 px the two columns sit side by side")
-	check("YOU GIVE" in words(gift[0]) and "Obsidian / Graphite" in words(gift[0]), "The gift trade lists what you give")
+	check("YOU GIVE" in words(gift[0]) and "Graphite" in words(gift[0]) and "OBSIDIAN" in words(gift[0]), "The gift trade lists what you give, finish first")
 	check(receive[0].find_child("Nothing", true, false) != null, "The gift trade says you receive nothing")
 	var warnings := ui.content.find_children("GiftWarning", "PanelContainer", true, false)
 	check(warnings.size() == 1, "Only the one-sided trade carries the gift warning")
 	check(not warnings.is_empty() and "YOU RECEIVE NOTHING FOR THIS OFFER" in words(warnings[0]), "The gift warning is explicit")
-	check("Obsidian / Eclipse" in words(receive[1]) and "Crimson Archive / Iridescence" in words(gift[1]), "The swap trade lists the right item on each side")
+	check("Gilded Fracture" in words(receive[1]) and "OBSIDIAN" in words(receive[1]) and "Iridescence" in words(gift[1]) and "CRIMSON ARCHIVE" in words(gift[1]), "The swap trade lists the right item on each side")
 	var titles := ui.content.find_children("TradeTitle", "Label", true, false)
 	check(titles.size() == 2 and "Ash FORGED CONFIRM" in (titles[0] as Label).text, "A partner name with a newline is flattened to one line: " + (titles[0] as Label).text)
 	check("(other-99)" in (titles[0] as Label).text, "The partner's player ID prefix is shown next to the name")
@@ -446,7 +457,7 @@ func trades_screen() -> void:
 	check("YOU GIVE:" in text and "YOU RECEIVE:" in text and "    nothing" in text and "This is a gift" in text, "The commit dialog repeats the gift terms")
 	check("revision 3" in text and "other-99" in text, "The commit dialog names the revision and the partner")
 	var swap_text: String = ui.trade_confirmation_text(ui.trades[1])
-	check("Obsidian / Eclipse" in swap_text and "MYTHIC" in swap_text and "This is a gift" not in swap_text, "A two-sided swap is not called a gift")
+	check("Obsidian / Gilded Fracture" in swap_text and "MYTHIC" in swap_text and "This is a gift" not in swap_text, "A two-sided swap is not called a gift")
 	# Unsaved edits cannot be confirmed.
 	var confirm_buttons := ui.content.find_children("*", "Button", true, false).filter(func(b): return (b as Button).text == "CONFIRM DISPLAYED REVISION")
 	check(confirm_buttons.size() == 2, "Each open trade has a confirm button")
