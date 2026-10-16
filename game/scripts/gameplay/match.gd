@@ -41,6 +41,7 @@ var connection_state: String = "offline"
 var reconnect_token: String = ""
 var _authority: bool = true
 var _bot_state: Dictionary = {}
+var _team_ai_state: Dictionary = SBBotAI.create_team_state()
 var _peer_actors: Dictionary = {}
 var _reservations: Dictionary = {}
 ## One bounded previous credential per actor until welcome is confirmed by input.
@@ -165,7 +166,7 @@ func _spawn_actor(id: int, team: int, player_name: String) -> SBActor:
 	return actor
 
 func _reset_bot_state(actor: SBActor) -> void:
-	_bot_state[actor.actor_id] = {"reaction": 0.0, "target": 0, "last_position": actor.position, "stuck": 0.0, "last_seen": Vector3.ZERO, "seen_at": -100.0}
+	_bot_state[actor.actor_id] = SBBotAI.create_state(actor)
 
 func local_actor() -> SBActor:
 	return actors.get(local_id) as SBActor
@@ -325,6 +326,8 @@ func _begin_round() -> void:
 	_interactions.clear()
 	_damage_history.clear()
 	_heard.clear()
+	_team_ai_state = SBBotAI.create_team_state()
+	_team_ai_state[0]["primary_site"] = SBBotAI.select_round_plan(round_number, _rng)
 	var attack_index: int = 0
 	var defend_index: int = 0
 	objective_carrier = 0
@@ -341,7 +344,7 @@ func _begin_round() -> void:
 		actor.reset_for_round(spawn)
 		_reset_bot_state(actor)
 		if _is_bot(actor.actor_id):
-			actor.buy_weapon("rifle" if actor.credits >= 2400 else "smg")
+			actor.buy_weapon(SBBotAI.choose_buy_weapon(actor, str(options.get("difficulty", "normal")), round_number))
 		actor.input_state = {"move": Vector2.ZERO, "look": Vector2(PI if actor.team == 0 else 0, 0)}
 	_announce("Round %d • prepare your equipment" % round_number)
 
@@ -438,6 +441,7 @@ func _damaged(victim: int, attacker: int, amount: float) -> void:
 	if not _damage_history.has(victim):
 		_damage_history[victim] = {}
 	_damage_history[victim][attacker] = float(_damage_history[victim].get(attacker, 0)) + amount
+	SBBotAI.record_damage(_bot_state, actors, victim, attacker, _elapsed)
 
 func _eliminated(victim: int, killer: int) -> void:
 	if not _authority:
@@ -457,6 +461,7 @@ func _eliminated(victim: int, killer: int) -> void:
 			var helper: SBActor = actors[assistant_id]
 			if helper.team != killed.team:
 				helper.assists += 1
+	SBBotAI.record_elimination(_team_ai_state, _bot_state, actors, victim, _elapsed)
 	if victim == objective_carrier and objective_state == "carried":
 		objective_state = "dropped"
 		objective_position = killed.position
@@ -519,123 +524,13 @@ func _impact_rpc(at: Vector3, normal: Vector3, hit_actor: bool) -> void:
 	load("res://scripts/gameplay/combat_effects.gd").for_world(self).impact(at, normal.normalized(), hit_actor)
 
 func _bot_input(actor: SBActor, delta: float) -> void:
-	if not actor.alive or phase != "live":
-		return
-	var state: Dictionary = _bot_state[actor.actor_id]
-	var difficulty: String = str(options.get("difficulty", "normal"))
-	var reaction_delay: float = 0.6 if difficulty == "easy" else (0.18 if difficulty == "hard" else 0.35)
-	var target: SBActor = null
-	var nearest: float = 28.0
-	for enemy: SBActor in actors.values():
-		if enemy.team == actor.team or not enemy.alive:
-			continue
-		var distance: float = actor.position.distance_to(enemy.position)
-		var facing := Vector3(-sin(actor.yaw), 0, -cos(actor.yaw))
-		var toward: Vector3 = (enemy.position - actor.position).normalized()
-		if distance < nearest and facing.dot(toward) > -0.15 and actor.can_see(enemy):
-			nearest = distance
-			target = enemy
-	var destination: Vector3 = arena.sites[0 if round_number % 2 == 0 else 1]
-	var interact: bool = false
-	if objective_state == "planted":
-		destination = objective_position
-		var defuser_id: int = _nearest_defender()
-		interact = actor.team == 1 and actor.actor_id == defuser_id and actor.position.distance_to(destination) <= 2.6
-		if actor.team == 0 or actor.actor_id != defuser_id:
-			# Hold separate approach angles while one teammate works the device.
-			var hold_angle: float = float(actor.actor_id % 5) * TAU / 5.0
-			destination += Vector3(cos(hold_angle), 0, sin(hold_angle)) * 4.5
-	elif actor.team == 0 and objective_state == "dropped":
-		destination = objective_position
-	elif actor.team == 0:
-		interact = actor.actor_id == objective_carrier and arena.is_at_site(actor.position) >= 0
-	else:
-		destination = arena.sites[actor.actor_id % 2]
-		for heard_id: int in _heard:
-			if actors.has(heard_id) and actors[heard_id].team != actor.team and _elapsed - float(_heard[heard_id].time) < 2.0 and actor.position.distance_to(_heard[heard_id].position) < 22:
-				destination = _heard[heard_id].position
-	var look := Vector2(actor.yaw, actor.pitch)
-	var firing: bool = false
-	var move := Vector2.ZERO
-	if target:
-		if int(state.target) != target.actor_id:
-			state.reaction = 0.0
-		state.target = target.actor_id
-		state.last_seen = target.position
-		state.seen_at = _elapsed
-		state.reaction = float(state.reaction) + delta
-		var aim: Vector3 = target.position + Vector3(0, 1.15, 0) - (actor.position + Vector3(0, 1.5, 0))
-		var error: float = 0.045 if difficulty == "easy" else (0.008 if difficulty == "hard" else 0.022)
-		var desired := Vector2(atan2(-aim.x, -aim.z) + _rng.randf_range(-error, error), atan2(aim.y, Vector2(aim.x, aim.z).length()))
-		var turn_speed: float = 3.5 if difficulty == "easy" else (7.0 if difficulty == "hard" else 5.0)
-		look.x = rotate_toward(actor.yaw, desired.x, turn_speed * delta)
-		look.y = move_toward(actor.pitch, desired.y, turn_speed * delta)
-		# Reaction time never allows shooting before the muzzle reaches the target.
-		var aligned: bool = absf(angle_difference(look.x, desired.x)) < 0.07 and absf(look.y - desired.y) < 0.07
-		firing = float(state.reaction) >= reaction_delay and aligned and not interact
-		if not bool(SBWeapons.get_weapon(actor.weapon_id).automatic) and bool(actor.input_state.get("fire", false)):
-			firing = false
-		move = Vector2(sin(_elapsed * 1.1 + actor.actor_id) * 0.4, 0)
-		if actor.reload_remaining > 0:
-			var cover: Vector3 = _cover_position(actor, target)
-			var step: Vector3 = arena.bot_navigation(actor.position, cover) - actor.position
-			# Convert the world cover route into the aiming frame so the bot keeps watching danger.
-			var local_step: Vector3 = Basis(Vector3.UP, -look.x) * step.normalized()
-			move = Vector2(local_step.x, -local_step.z)
-	else:
-		state.target = 0
-		state.reaction = 0.0
-		# Investigate a briefly remembered sighting; never aim/fire at hidden live coordinates.
-		if _elapsed - float(state.seen_at) < 2.0 and not interact and objective_state != "planted":
-			destination = state.last_seen
-		if actor.position.distance_to(destination) > 1.8 and not interact:
-			var waypoint: Vector3 = arena.bot_navigation(actor.position, destination)
-			var direction: Vector3 = waypoint - actor.position
-			look = Vector2(atan2(-direction.x, -direction.z), 0)
-			move = Vector2(0, 1)
-		elif not interact:
-			# Scan the approach rather than staring permanently away from the attackers.
-			var approach := Vector3(0, 0, -18) if actor.team == 1 else Vector3(0, 0, 20)
-			var toward_approach: Vector3 = approach - actor.position
-			var scan_yaw: float = atan2(-toward_approach.x, -toward_approach.z) + sin(_elapsed * 0.65 + actor.actor_id) * 0.7
-			look = Vector2(rotate_toward(actor.yaw, scan_yaw, delta * 2.0), 0)
-	if actor.position.distance_to(state.last_position) < 0.05 and move.length() > 0:
-		state.stuck = float(state.stuck) + delta
-	else:
-		state.stuck = 0.0
-	state.last_position = actor.position
-	if float(state.stuck) > 0.9:
-		move.x = 1 if actor.actor_id % 2 == 0 else -1
-	var magazine: int = int(SBWeapons.get_weapon(actor.weapon_id).magazine)
-	var safe_reload: bool = target == null and _elapsed - float(state.seen_at) > 2.5 and actor.ammo <= magazine / 3
-	actor.input_state = {"move": Vector2.ZERO if interact else move, "look": look, "fire": firing, "reload": not interact and (actor.ammo == 0 or safe_reload), "jump": float(state.stuck) > 1.5, "crouch": target != null and actor.actor_id % 3 == 0, "interact": interact}
+	SBBotAI.compute_bot_input(self, actor, delta)
 
 func _nearest_defender() -> int:
-	var chosen: int = 0
-	var nearest: float = INF
-	for actor: SBActor in actors.values():
-		if not actor.alive or actor.team != 1:
-			continue
-		# A human already holding interact keeps priority; bots provide covering fire.
-		if not _is_bot(actor.actor_id) and bool(actor.input_state.get("interact", false)) and actor.position.distance_to(objective_position) <= 2.8:
-			return actor.actor_id
-		var distance: float = actor.position.distance_squared_to(objective_position)
-		if _is_bot(actor.actor_id) and (distance < nearest or (is_equal_approx(distance, nearest) and actor.actor_id < chosen)):
-			chosen = actor.actor_id
-			nearest = distance
-	return chosen
+	return SBBotAI.nearest_defender(self)
 
 func _cover_position(actor: SBActor, threat: SBActor) -> Vector3:
-	var choice: Vector3 = actor.position
-	var nearest: float = 10.0
-	for point: Vector3 in arena.waypoints:
-		var distance: float = actor.position.distance_to(point)
-		if distance < nearest and distance > 1:
-			var query := PhysicsRayQueryParameters3D.create(threat.position + Vector3.UP * 1.4, point + Vector3.UP * 1.0, 1)
-			if not get_world_3d().direct_space_state.intersect_ray(query).is_empty():
-				choice = point
-				nearest = distance
-	return choice
+	return SBBotAI.cover_position(self, actor, threat)
 
 func _update_spectator() -> void:
 	var actor: SBActor = local_actor()

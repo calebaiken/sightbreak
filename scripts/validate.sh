@@ -34,6 +34,7 @@ run_godot resume-admission --headless --script res://tests/independent_resume_ad
 run_godot lost-welcome --headless --script res://tests/lost_welcome_test.gd
 run_godot resume-alias --headless --script res://tests/independent_resume_alias_test.gd
 run_godot resume-auth-loss --headless --script res://tests/resume_auth_loss_test.gd
+run_godot bot-ai-regression --headless --script res://tests/bot_ai_regression_test.gd
 run_godot bots --headless --script res://tests/bot_match_test.gd
 run_godot bot-lifecycle --headless --script res://tests/bot_lifecycle_test.gd
 SIGHTBREAK_STATE_DIR="$validation_dir/profile-state" run_godot profile --headless --script res://tests/profile_test.gd
