@@ -38,6 +38,23 @@ const METAL_FLOOR := 0.12
 ## baked metalness, so it takes the sun with a wider, softer lobe and reflects the studio less.
 const HANDGUARD_ROUGHNESS := 0.62
 const HANDGUARD_METAL := 0.30
+## The machined metal of the Relay AR (receiver, rails, barrel and suppressor: where the baked metalness is high), art-v11 sun-metal
+## track. Every value is EMPIRICAL, set after rendering and measuring the baseline (sun receiver 54.6 median luma at the ready, hue
+## (r - b) / luma +0.018, sun ratio 1.209, shade 28.4) and keeping the stability bounds (1.25, 0.06) unchanged; none is a visual standard.
+## The baked albedo is a graphite of 0.03 linear and the baked metalness 0.44, so the engine's reflectance (f0) was 0.036, a black
+## glossy dielectric; the warm sun's diffuse on it plus a flat cool studio sheen added up to a neutral olive grey that is the same over
+## every face (docs/reports/media/art-v11/sunmetal).
+## Reflectance of the metal (`viewmodel_f0`, a Fresnel f0 in linear light): the sun's specular on bevels and edges.
+const METAL_F0 := 0.15
+## The fraction of the baked diffuse the metal keeps (`viewmodel_diffuse`): the warm sun's diffuse on a graphite is most of the olive.
+const METAL_DIFFUSE := 0.45
+## The studio's reflection strength and key/strip gain on metal (`viewmodel_metal_reflect`, `viewmodel_metal_sheen`), against the
+## defaults 0.30 and 4.0 that polymer, the magazine and the arms keep: the cool constant that replaces the diffuse the metal gave up,
+## and brighter bevel glints (the share of receiver pixels more than 25 luma above its median goes 0.014 to 0.029).
+const METAL_REFLECT := 0.45
+const METAL_SHEEN := 8.0
+## Finish variation on the metal's reflection (`viewmodel_variation`), a fraction of it, fixed to the weapon.
+const METAL_VARIATION := 0.30
 
 const UNIFORMS := """
 uniform float viewmodel_fov = 0.0;
@@ -54,6 +71,12 @@ uniform float viewmodel_metal_scale = 1.0;
 uniform float viewmodel_reflect = 0.30;
 uniform vec3 viewmodel_ambient = vec3(0.165, 0.214, 0.254);
 uniform vec3 viewmodel_bounce = vec3(0.0);
+uniform float viewmodel_f0 = 0.0;
+uniform float viewmodel_diffuse = 1.0;
+uniform float viewmodel_metal_reflect = -1.0;
+uniform float viewmodel_metal_sheen = -1.0;
+uniform float viewmodel_variation = 0.0;
+uniform float viewmodel_normal_fix = 0.0;
 """
 
 ## Inside vertex(). Scales the camera's projection to the viewmodel field of view,
@@ -94,6 +117,27 @@ const FILL := """
 	}
 """
 
+## Reflectance of the machined metal, applied before the studio and the sun see the material (ALBEDO and METALLIC are what the
+## engine's own light reads, so the remap has to be made in them). Where the baked metalness says metal (a smooth ramp, so polymer and
+## the tan magazine, metalness 0, are untouched) it asks for the reflectance `viewmodel_f0` and for `viewmodel_diffuse` of the diffuse the
+## material has (albedo * (1 - metalness)); the albedo becomes the baked hue at that reflectance and the metalness 1 - d / f, which the
+## engine turns back into exactly that diffuse and a reflectance of about f. A finish already more reflective than f (a bright skin)
+## keeps its own. Needs viewmodel_f0 > 0 (the default 0 leaves the material as it was).
+const REFLECTANCE := """
+	if (viewmodel_fov > 0.0 && viewmodel_f0 > 0.0) {
+		float s0 = 0.08 * SPECULAR;
+		float w = smoothstep(0.10, 0.40, METALLIC);
+		float lum = max(dot(ALBEDO, vec3(0.2126, 0.7152, 0.0722)), 0.0001);
+		float f_now = dot(mix(vec3(s0), ALBEDO, METALLIC), vec3(0.3333));
+		float f_wanted = mix(s0, viewmodel_f0, w);
+		float d = lum * (1.0 - METALLIC) * mix(1.0, viewmodel_diffuse, w);
+		float t = w * smoothstep(0.0, 0.02, f_wanted - f_now);
+		float u = clamp(d / f_wanted, 0.0, 1.0);
+		ALBEDO = mix(ALBEDO, ALBEDO / lum * f_wanted, t);
+		METALLIC = mix(METALLIC, 1.0 - u, t);
+	}
+"""
+
 ## The viewmodel's own lighting environment, for the shaders that declare `render_mode ambient_light_disabled` (the engine's sky
 ## radiance and ambient light are then not applied): the arena's flat ambient colour for the diffuse part, and a studio for the
 ## reflection (a soft sky-to-ground gradient, a broad key panel up and to the left, a thin cool strip behind on the right). The sky
@@ -101,11 +145,20 @@ const FILL := """
 ## across that edge (docs/reports/media/art-v9/rifle-discolouration); this environment has no edge, so what moves across the
 ## metal is a gradient and two soft lobes, which is lighting following the pose rather than the colour of the weapon changing.
 ## Uses the detail normal (the baked bevels and panel lines catch the lobes) and the baked ambient occlusion.
-const STUDIO := """
+const STUDIO := REFLECTANCE + """
 	if (viewmodel_fov > 0.0 && viewmodel_env > 0.0) {
-		vec3 detail_normal_ts = NORMAL_MAP * 2.0 - 1.0;
+		// The baked normal maps are imported as RG-only normal maps (the blue channel is not stored; the engine's own normal mapping
+		// rebuilds z from x and y), so reading the blue channel here gives z = -1: the normal is turned inside out, its bevels lean the
+		// wrong way and n.v is 0 on every face. `viewmodel_normal_fix` rebuilds z from x and y (the rifle sets it; the arms keep the old
+		// behaviour, which their bounce bounds in viewmodel_light_probe.gd were measured with).
+		vec2 detail_xy = NORMAL_MAP.xy * 2.0 - 1.0;
+		float detail_z = mix(NORMAL_MAP.z * 2.0 - 1.0, sqrt(max(0.0, 1.0 - dot(detail_xy, detail_xy))), viewmodel_normal_fix);
+		vec3 detail_normal_ts = vec3(detail_xy, detail_z);
 		vec3 n = normalize(TANGENT * detail_normal_ts.x + BINORMAL * detail_normal_ts.y + NORMAL * detail_normal_ts.z);
-		float ndv = clamp(dot(n, VIEW), 0.0, 1.0);
+		// Schlick's term stays at grazing incidence (n.v = 0), which is what the inside-out normal made it on every face and what the
+		// finish-stability bound (1.25) was met with: evaluated at the real n.v the receiver's median luma swung 1.25 to 1.31 through
+		// the reload (docs/reports/media/art-v11/sunmetal).
+		float ndv = clamp(dot(n, VIEW), 0.0, 1.0) * (1.0 - viewmodel_normal_fix);
 		float up = clamp(n.y * 0.5 + 0.5, 0.0, 1.0);
 		EMISSION += ALBEDO * (1.0 - METALLIC) * AO * viewmodel_ambient * viewmodel_env;
 		// Light bounced up from the ground onto what faces down (a forearm's underside, the underside of a fist): a constant of the
@@ -115,24 +168,44 @@ const STUDIO := """
 		float gloss = 1.0 - ROUGHNESS;
 		vec3 f0 = mix(vec3(0.08 * SPECULAR), ALBEDO, METALLIC);
 		vec3 fresnel = f0 + (max(vec3(gloss), f0) - f0) * pow(1.0 - ndv, 5.0);
+		// Metal (after the remap its metalness is near 1; polymer's is 0.13) takes its own reflection strength and key/strip gain.
+		float metal = smoothstep(0.30, 0.70, METALLIC);
+		float sheen = viewmodel_metal_sheen < 0.0 ? viewmodel_sheen : mix(viewmodel_sheen, viewmodel_metal_sheen, metal);
+		float reflection = viewmodel_metal_reflect < 0.0 ? viewmodel_reflect : mix(viewmodel_reflect, viewmodel_metal_reflect, metal);
 		vec3 gradient = mix(vec3(0.26, 0.29, 0.31), vec3(0.38, 0.42, 0.45), smoothstep(-1.0, 1.0, r.y));
 		gradient = mix(gradient, vec3(0.30, 0.33, 0.36), ROUGHNESS * 0.6);
 		float key = pow(max(dot(r, normalize(vec3(-0.50, 0.60, 0.62))), 0.0), mix(48.0, 5.0, ROUGHNESS)) * mix(1.0, 0.4, ROUGHNESS);
 		float strip = pow(max(dot(r, normalize(vec3(0.78, 0.15, -0.40))), 0.0), mix(24.0, 4.0, ROUGHNESS)) * mix(1.0, 0.4, ROUGHNESS);
-		vec3 radiance = gradient + vec3(1.0, 0.96, 0.90) * key * 3.0 * viewmodel_sheen + vec3(0.62, 0.76, 1.0) * strip * 1.2 * viewmodel_sheen;
-		EMISSION += fresnel * radiance * AO * viewmodel_env * viewmodel_reflect;
+		vec3 radiance = gradient + vec3(1.0, 0.96, 0.90) * key * 3.0 * sheen + vec3(0.62, 0.76, 1.0) * strip * 1.2 * sheen;
+		// Finish variation on the metal's reflection, fixed to the weapon in object space (the barrel runs along z) so it does not move
+		// with the pose: a slow swell along the barrel and a fine brushed grain along it, zero on average, so the median holds. A flat
+		// face under a distant environment has one reflection direction over its whole area; this is what puts structure on it.
+		float variation = 1.0;
+		if (viewmodel_variation > 0.0) {
+			vec3 vp = local_position;
+			float swell = sin(vp.z * 23.0 + vp.y * 11.0 + 1.7) * sin(vp.z * 7.0 - vp.x * 40.0 + 0.6);
+			// The grain fades out where a pixel spans more than about a third of its period (a lower render scale, a grazing view), so it
+			// does not alias and shimmer as the weapon moves.
+			float phase_fine = vp.y * 900.0 + sin(vp.x * 300.0 + vp.z * 18.0) * 2.0;
+			float phase_coarse = vp.y * 370.0 + vp.x * 410.0 + vp.z * 9.0;
+			float grain = 0.5 * sin(phase_fine) * (1.0 - smoothstep(2.0, 3.2, fwidth(phase_fine))) + 0.5 * sin(phase_coarse) * (1.0 - smoothstep(2.0, 3.2, fwidth(phase_coarse)));
+			variation = 1.0 + viewmodel_variation * metal * (0.6 * swell + 0.4 * grain);
+		}
+		EMISSION += fresnel * radiance * AO * viewmodel_env * reflection * variation;
 	}
 """
 
 const RENDER_MODE := "render_mode ambient_light_disabled;\n"
 
 const SURFACE := "shader_type spatial;\n" + RENDER_MODE + UNIFORMS + """
+varying vec3 local_position;
 uniform sampler2D albedo_texture : source_color, filter_linear_mipmap;
 uniform sampler2D orm_texture : hint_default_white, filter_linear_mipmap;
 uniform sampler2D normal_texture : hint_normal, filter_linear_mipmap;
 uniform float albedo_gain = 1.0;
 uniform float albedo_saturation = 1.0;
 void vertex() {
+	local_position = VERTEX;
 """ + PROJECT + """
 }
 void fragment() {
@@ -266,3 +339,14 @@ static func enable(material: ShaderMaterial) -> void:
 	material.set_shader_parameter("viewmodel_floor", FLOOR)
 	material.set_shader_parameter("viewmodel_lift", LIFT)
 	material.set_shader_parameter("viewmodel_rim", RIM)
+
+## The machined-metal finish of the rifle (see METAL_F0): reflectance, kept diffuse, the studio's strength and gain on metal, the
+## finish variation and the rebuilt detail normal. Only where the baked metalness is high; the polymer, the magazine and the arms are
+## not metal, and a material that does not call this keeps exactly the behaviour it had.
+static func metal(material: ShaderMaterial) -> void:
+	material.set_shader_parameter("viewmodel_f0", METAL_F0)
+	material.set_shader_parameter("viewmodel_diffuse", METAL_DIFFUSE)
+	material.set_shader_parameter("viewmodel_metal_reflect", METAL_REFLECT)
+	material.set_shader_parameter("viewmodel_metal_sheen", METAL_SHEEN)
+	material.set_shader_parameter("viewmodel_variation", METAL_VARIATION)
+	material.set_shader_parameter("viewmodel_normal_fix", 1.0)

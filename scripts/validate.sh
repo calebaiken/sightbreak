@@ -51,6 +51,9 @@ if [[ -n "${DISPLAY:-}" ]]; then
   # the rifle does not dissolve in a dark interior): bounds set from this round's measurements, see viewmodel_light_probe.gd.
   run_godot viewmodel-light --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/viewmodel_light_probe.gd -- --assert --poses=ready,grab,hip
   run_godot reload-finish-skin --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --skin
+  # The machined metal reads as metal in sun, the polymer handguard as polymer, the shade is not worse (renders through viewmodel_metal_probe.gd).
+  python3 scripts/test_sun_metal.py | tee "$validation_dir/sun-metal.log"
+  python3 scripts/test_sun_metal.py --skin | tee "$validation_dir/sun-metal-skin.log"
 else
   printf 'reload-visibility skipped: no DISPLAY (needs a native rendering display)\n'
 fi

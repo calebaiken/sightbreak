@@ -8,7 +8,7 @@ extends SceneTree
 ##   --views=a,b        sunlit, backlight, shade, dark (default sunlit)
 ##   --ticks=a,b        reload ticks at 60 Hz, -1 = idle (default 134)
 ##   --parts=a,b        parts hidden one at a time: receiver, handguard, body (furniture), arms, grip (default receiver,handguard)
-##   --skin             apply a patterned cosmetic finish (Obsidian) instead of the default unskinned finish
+##   --skin[=Name]      apply a patterned cosmetic finish (collection Name, default Obsidian) instead of the default unskinned finish
 ##   --set=n=v;n=v      experiment: shader uniforms set on the receiver, handguard and body materials (floats)
 ##   --debug=r|n|ndv    draw the receiver, handguard and body unshaded as the studio sees them: r = reflection vector, n = normal, ndv = n.v (colour = value * 0.5 + 0.5)
 ##   --sun=x            multiply the sun's energy by x (0 = no sun)
@@ -55,6 +55,7 @@ func _run() -> void:
 	var ticks: Array[int] = [134]
 	var parts: PackedStringArray = ["receiver", "handguard"]
 	var skin := false
+	var skin_collection := "Obsidian"
 	var overrides := ""
 	var sun_scale := 1.0
 	var debug := ""
@@ -70,8 +71,10 @@ func _run() -> void:
 				ticks.append(int(item))
 		elif argument.begins_with("--parts="):
 			parts = argument.trim_prefix("--parts=").split(",") if argument.length() > 8 else PackedStringArray()
-		elif argument == "--skin":
+		elif argument == "--skin" or argument.begins_with("--skin="):
 			skin = true
+			if argument.begins_with("--skin="):
+				skin_collection = argument.trim_prefix("--skin=")
 		elif argument.begins_with("--set="):
 			overrides = argument.trim_prefix("--set=")
 		elif argument.begins_with("--debug="):
@@ -106,7 +109,7 @@ func _run() -> void:
 	actor.credits = 5000
 	actor.buy_weapon("rifle")
 	actor._equip_blend = 0
-	actor.apply_cosmetic({"collection": "Obsidian", "pattern_seed": 7, "wear": 0.1, "id": "obsidian_test"} if skin else {})
+	actor.apply_cosmetic({"collection": skin_collection, "pattern_seed": 7, "wear": 0.1, "id": skin_collection.to_snake_case() + "_test"} if skin else {})
 	for i in 6:
 		await process_frame
 	if not overrides.is_empty():

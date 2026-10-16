@@ -330,6 +330,24 @@ func _run() -> void:
 	check(arms_mesh.material_override.get_shader_parameter("viewmodel_specular") == WeaponModel.ARMS_SPECULAR and WeaponModel.ARMS_SPECULAR >= 0.0 and WeaponModel.ARMS_SPECULAR < 0.5 and arms_mesh.material_override.get_shader_parameter("viewmodel_floor") == WeaponModel.ARMS_FLOOR, "the arms carry a dielectric specular below the engine's default (%s) and their own fill (%s)" % [WeaponModel.ARMS_SPECULAR, WeaponModel.ARMS_FLOOR])
 	check(WeaponModel.ARMS_BOUNCE.x > 0.0 and arms_mesh.material_override.get_shader_parameter("viewmodel_bounce") == WeaponModel.ARMS_BOUNCE and ViewmodelShading.STUDIO.contains("viewmodel_bounce"), "the arms take a ground bounce on what faces down, so the support forearm's underside is not a black wedge in the hip retrieval (%s)" % WeaponModel.ARMS_BOUNCE)
 	check(arms_mesh.material_override.get_shader_parameter("viewmodel_sheen") == WeaponModel.ARMS_SHEEN and arms_mesh.material_override.get_shader_parameter("viewmodel_reflect") == WeaponModel.ARMS_REFLECT and WeaponModel.ARMS_REFLECT < 0.3, "the arms reflect the studio far less than the metal does, so fabric does not shine (%s, %s)" % [WeaponModel.ARMS_SHEEN, WeaponModel.ARMS_REFLECT])
+	# The machined metal (art-v11 sun-metal track): reflectance, kept diffuse, studio strength and gain on the metal only, the finish
+	# variation and the rebuilt detail normal (the baked normal maps are RG-only imports: the blue channel the studio read was 0, which
+	# turned the normal inside out). The polymer handguard, the magazine and the arms are not metal and keep their behaviour.
+	var body_material := (actor._gun.get_node("body") as MeshInstance3D).material_override as ShaderMaterial
+	var metal_ok := true
+	for metal_material in [receiver_material, body_material]:
+		metal_ok = metal_ok and float(metal_material.get_shader_parameter("viewmodel_f0")) == ViewmodelShading.METAL_F0 and float(metal_material.get_shader_parameter("viewmodel_diffuse")) == ViewmodelShading.METAL_DIFFUSE
+		metal_ok = metal_ok and float(metal_material.get_shader_parameter("viewmodel_metal_reflect")) == ViewmodelShading.METAL_REFLECT and float(metal_material.get_shader_parameter("viewmodel_metal_sheen")) == ViewmodelShading.METAL_SHEEN
+		metal_ok = metal_ok and float(metal_material.get_shader_parameter("viewmodel_variation")) == ViewmodelShading.METAL_VARIATION and float(metal_material.get_shader_parameter("viewmodel_normal_fix")) == 1.0
+	check(metal_ok, "the receiver finish and the rifle body carry the machined-metal finish (reflectance %s, diffuse kept %s, reflection %s, sheen %s, variation %s)" % [ViewmodelShading.METAL_F0, ViewmodelShading.METAL_DIFFUSE, ViewmodelShading.METAL_REFLECT, ViewmodelShading.METAL_SHEEN, ViewmodelShading.METAL_VARIATION])
+	check(ViewmodelShading.METAL_F0 > 0.04 and ViewmodelShading.METAL_DIFFUSE < 1.0 and ViewmodelShading.METAL_REFLECT > 0.30 and ViewmodelShading.METAL_SHEEN > 4.0, "the metal reflects more than a dielectric, keeps less of its diffuse, and takes more studio reflection and key gain than the defaults (0.04, 1, 0.30, 4)")
+	var arms_variation = arms_mesh.material_override.get_shader_parameter("viewmodel_normal_fix")
+	var arms_reflectance = arms_mesh.material_override.get_shader_parameter("viewmodel_f0")
+	check(float(arms_variation if arms_variation != null else 0.0) == 0.0 and float(arms_reflectance if arms_reflectance != null else 0.0) == 0.0, "the arms are not metal: no reflectance remap, and their detail normal keeps the behaviour their bounce bounds in viewmodel_light_probe.gd were measured with")
+	check(float(handguard_material.get_shader_parameter("viewmodel_metal_scale")) * 0.5 < 0.30, "the polymer handguard's metalness (the baked 0.44 scaled by %s) stays below the metal ramp (0.30), so the metal finish does not reach it" % ViewmodelShading.HANDGUARD_METAL)
+	check(ViewmodelShading.STUDIO.contains("sqrt(max(0.0, 1.0 - dot(detail_xy, detail_xy)))") and ViewmodelShading.STUDIO.contains("* (1.0 - viewmodel_normal_fix)"), "the studio rebuilds the detail normal's z from x and y, and keeps Schlick's term at grazing incidence (the finish-stability bound was met with it)")
+	var skin_finish := CosmeticMaterial.finish({"collection": "Obsidian", "pattern_seed": 7, "wear": 0.1, "id": "obsidian_test"}, true)
+	check(float(skin_finish.get_shader_parameter("viewmodel_f0")) == ViewmodelShading.METAL_F0 and float(skin_finish.get_shader_parameter("viewmodel_normal_fix")) == 1.0, "a patterned first-person finish is metal too")
 	var inspected := Node3D.new()
 	root.add_child(inspected)
 	WeaponModel.build(inspected, "rifle", false)

@@ -34,7 +34,7 @@ COSMETIC = os.path.join(GAME, 'scripts', 'ui', 'cosmetic_material.gd')
 WEAPON_MODEL = os.path.join(GAME, 'scripts', 'gameplay', 'weapon_model.gd')
 BPY = os.environ.get('BPY', os.path.join(os.path.dirname(REPO), 'tools', 'bpy-venv', 'bin', 'python'))
 RIFLE = os.path.join(GAME, 'assets', 'weapons', 'relay_ar', 'relay_ar.glb')
-SUMMARY = re.compile(r'^(RELOAD_SEQUENCE_TEST|WEAPON_ART_TEST|RELOAD_VISIBILITY_TEST|RELOAD_AUDIO_TEST|RELOAD_AUDIO_CAPTURE|RELOAD_DISCOLOUR_TEST|VIEWMODEL_LIGHT_TEST|RELOAD_CONTINUITY_TEST)\b.*?(?:checks=(\d+))?.*?failures=(\d+)', re.M)
+SUMMARY = re.compile(r'^(RELOAD_SEQUENCE_TEST|WEAPON_ART_TEST|RELOAD_VISIBILITY_TEST|RELOAD_AUDIO_TEST|RELOAD_AUDIO_CAPTURE|RELOAD_DISCOLOUR_TEST|VIEWMODEL_LIGHT_TEST|RELOAD_CONTINUITY_TEST|SUN_METAL_TEST)\b.*?(?:checks=(\d+))?.*?failures=(\d+)', re.M)
 ERRORS = re.compile(r'^ERROR: (?!.*(?:ObjectDB|leaked)).*$', re.M)
 
 SEQ = ('sequence', ['--headless', '--script', 'res://tests/reload_sequence_test.gd'])
@@ -52,6 +52,9 @@ CONT_CALM = ('continuity (calm)', CONT[1] + CONT_CALM_ARGS)
 LIGHT = ('light separation', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/viewmodel_light_probe.gd', '--', '--assert', '--poses=ready,grab,hip', '--scenarios=sun,dark interior'])
 # The rifle's painted metal holds its finish through the reload (native: it renders the receiver and handguard at reload ticks).
 DISC = ('finish stability', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_discolour_probe.gd', '--', '--assert', '--conditions=base', '--ticks=0,40,122,126,130,134'])
+
+# The machined metal reads as metal in sun and the polymer as polymer, and the shade is not worse (python: renders with the metal probe).
+SUNMETAL = ('sun metal', ['@python', 'scripts/test_sun_metal.py'])
 
 # (id, what, [(file, old, new)], build_env or None, tests that must fail)
 SOURCE = [
@@ -78,6 +81,11 @@ SOURCE = [
     ('N29', 'the painted metal has no fill floor of its own (the rifle dissolves in a dark interior)', [(SHADING, 'const METAL_FLOOR := 0.12', 'const METAL_FLOOR := 0.0')], None, [ART, LIGHT]),
     ('N35', 'the arms get no ground bounce (the support forearm\'s underside is a near-black wedge in the hip retrieval)', [(WEAPON_MODEL, 'const ARMS_BOUNCE := Vector3(0.30, 0.28, 0.23)', 'const ARMS_BOUNCE := Vector3(0.0, 0.0, 0.0)')], None, [ART, LIGHT]),
     ('N31', 'the arms reflect the whole studio (the gloves read as a pale veil beside the sleeves)', [(WEAPON_MODEL, 'const ARMS_REFLECT := 0.05', 'const ARMS_REFLECT := 1.0')], None, [ART, LIGHT]),
+    ('N37', 'the machined-metal finish is not applied (the receiver is the baseline\'s flat warm-grey graphite)', [(SHADING, 'static func metal(material: ShaderMaterial) -> void:\n', 'static func metal(material: ShaderMaterial) -> void:\n\treturn\n')], None, [ART, SUNMETAL]),
+    ('N38', 'the baked normal\'s blue channel is read again (the detail normal is inside out: the bevels lean the wrong way)', [(SHADING, 'material.set_shader_parameter("viewmodel_normal_fix", 1.0)', 'material.set_shader_parameter("viewmodel_normal_fix", 0.0)')], None, [ART]),
+    ('N39', 'Schlick\'s term is evaluated at the real n.v (the receiver\'s median luma swings through the reload past the 1.25 bound)', [(SHADING, '* (1.0 - viewmodel_normal_fix);', '* 1.0;')], None, [ART, DISC]),
+    ('N40', 'the polymer handguard takes the metal finish (its metalness is no longer scaled down)', [(SHADING, 'const HANDGUARD_METAL := 0.30', 'const HANDGUARD_METAL := 1.0')], None, [ART, SUNMETAL]),
+    ('N41', 'the arms get the machined-metal finish (their bounce reads the rebuilt normal: the sleeve\'s hip underside changes)', [(WEAPON_MODEL, '\tmaterial.set_shader_parameter("viewmodel_bounce", ARMS_BOUNCE)\n', '\tmaterial.set_shader_parameter("viewmodel_bounce", ARMS_BOUNCE)\n\tViewmodelShading.metal(material)\n')], None, [ART]),
     ('N22', 'the replacement is drawn from the start of the hip trip: it floats in view with no hand on it', [(ACTOR, '_magazine_spare.visible = progress >= SBReloadPhases.ACQUIRE', '_magazine_spare.visible = progress >= SBReloadPhases.DROP')], None, [SEQ]),
     ('N14', 'the seat phase is changed in reload_phases.gd without rebuilding the clip', [(PHASES, 'const SEAT := 0.80', 'const SEAT := 0.78')], None, [ART, SEQ]),
     ('A1', 'a reload cut short leaves its sounds playing', [(ACTOR, '\telif _reload_visual_active and not _reload_fired.has("seat"):\n\t\t_reload_audio.stop_all() # cancelled before the seat: the sounds that were playing stop with it\n', '')], None, [AUD]),
@@ -110,7 +118,13 @@ def godot(args, display=True, timeout=900):
 
 def run_test(test):
     name, args = test
-    code, out = godot(args)
+    if args[0] == '@python':  # a python test that renders through the metal probe
+        env = dict(os.environ)
+        env.setdefault('DISPLAY', ':99')
+        r = subprocess.run([sys.executable, os.path.join(REPO, args[1])] + args[2:], capture_output=True, text=True, env=env, timeout=1800)
+        code, out = r.returncode, r.stdout + r.stderr
+    else:
+        code, out = godot(args)
     m = list(SUMMARY.finditer(out))
     if not m:
         return name, 'CRASHED', ['no summary line (exit %d)' % code]
@@ -157,7 +171,7 @@ def main():
         say('# Baseline (no defect injected): every test passes')
         if '--no-baseline' in args:
             say('  (skipped by --no-baseline: run it once without, for the record)')
-        base = [] if '--no-baseline' in args else [run_test(t) for t in (SEQ, ART, AUD, CAP, CAP_CANCEL)] + [run_test(VIS), run_test(VIS_REDUCED), run_test(CONT), run_test(DISC), run_test(LIGHT)]
+        base = [] if '--no-baseline' in args else [run_test(t) for t in (SEQ, ART, AUD, CAP, CAP_CANCEL)] + [run_test(VIS), run_test(VIS_REDUCED), run_test(CONT), run_test(DISC), run_test(LIGHT), run_test(SUNMETAL)]
         csv_good = os.path.join(REPO, 'docs', 'reports', 'media', 'art-v9', 'hands', 'logs', 'clip_contact.csv')
         if os.path.exists(csv_good) and '--no-baseline' not in args:
             base.append(run_contact(csv_good))

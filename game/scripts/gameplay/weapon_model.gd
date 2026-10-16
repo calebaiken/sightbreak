@@ -619,6 +619,8 @@ func _build_authored_rifle() -> Vector3:
 	var rifle := _authored_nodes(RELAY_AR, placement)
 	# First person draws with the viewmodel projection; inspection keeps the plain material.
 	var material: Material = ViewmodelShading.surface(RELAY_AR_TEXTURES, 0.84, 0.60) if _hands else load(RELAY_AR_MATERIAL)
+	if _hands:
+		ViewmodelShading.metal(material as ShaderMaterial) # the machined metal of the body (rails, barrel, suppressor); the magazine and polymer are not metal
 	var part_names := ["body", "paint_receiver", "paint_handguard", "magazine"]
 	if rifle.meshes.has("grip"):
 		part_names.append("grip") # graphite furniture, its own draw so it can be told apart from the tan magazine
