@@ -132,17 +132,21 @@ def main():
         # React to the real phase announcement; waiting a fixed wall duration
         # can leave a human eliminated before the input checks even begin.
         wait_for(lambda: 'MATCH: Round live. Secure Relay Yard.' in (out / 'client.log').read_text(), 60, 'Actual offline live phase')
-        for _ in range(3):
+        ui.focus_game()
+        time.sleep(.25)
+        for _ in range(2):
             ui.button(True)
-            time.sleep(.25)
+            time.sleep(1.0)
             ui.button(False)
             time.sleep(.35)
         capture('05-after-fire')
         fired_hud = read_hud('05-after-fire')
         if not 0 < fired_hud['ammo'] < 15 or fired_hud['reserve'] != 60:
             raise RuntimeError('Native fire did not deplete the initial sidearm magazine')
-        tap('r')
-        time.sleep(3)
+        ui.key('r', True)
+        time.sleep(1.0)
+        ui.key('r', False)
+        time.sleep(2.5)
         capture('06-after-reload')
         reloaded_hud = read_hud('06-after-reload')
         if reloaded_hud['ammo'] != 15 or reloaded_hud['reserve'] >= fired_hud['reserve'] or sum(reloaded_hud[k] for k in ('ammo', 'reserve')) != sum(fired_hud[k] for k in ('ammo', 'reserve')):
