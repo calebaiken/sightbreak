@@ -7,6 +7,7 @@ uses the engine's frame budget; interrupted attempts remain failures.
 """
 import argparse
 import hashlib
+import io
 import json
 import os
 from pathlib import Path
@@ -16,6 +17,8 @@ import subprocess
 import time
 
 from build_manifest import ROOT, source
+from PIL import Image
+
 from native_log import failed
 from verify_integration_export import NativeUI
 
@@ -27,7 +30,10 @@ def main():
     parser.add_argument('--xvfb', default=os.environ.get('XVFB_BIN') or shutil.which('Xvfb'))
     parser.add_argument('--quit-after', type=int, default=300)
     parser.add_argument('--timeout', type=float, default=300)
+    parser.add_argument('--tesseract', default=shutil.which('tesseract'))
     args = parser.parse_args()
+    if not args.tesseract:
+        parser.error('Tesseract is required to verify rendered ammunition and living-player state')
     if not args.xvfb or not re.fullmatch(r':[0-9]+', args.display):
         parser.error('Supply Xvfb and an isolated numbered display')
     if args.quit_after <= 0 or args.timeout <= 0:
@@ -72,6 +78,21 @@ def main():
         (out / 'actions.json').write_text(json.dumps(events, indent=2) + '\n')
         print(name, flush=True)
 
+    def read_hud(name):
+        image = Image.open(out / (name + '.png'))
+        def text(box):
+            crop = image.crop(box)
+            crop = crop.resize((crop.width * 3, crop.height * 3))
+            data = io.BytesIO()
+            crop.save(data, format='PNG')
+            return subprocess.check_output([args.tesseract, 'stdin', 'stdout', '--psm', '6'], input=data.getvalue(), stderr=subprocess.DEVNULL).decode()
+        status = text((0, 630, 450, 720))
+        ammo_text = text((980, 625, 1280, 710))
+        match = re.search(r'(\d+)\s*/\s*(\d+)', ammo_text)
+        if 'ELIMINATED' in status.upper() or 'SPECTATING' in status.upper() or match is None:
+            raise RuntimeError('Rendered living-player/ammunition check failed: ' + repr((status, ammo_text)))
+        return {'ammo': int(match[1]), 'reserve': int(match[2]), 'status_ocr': status, 'ammo_ocr': ammo_text}
+
     def tap(key):
         ui.key(key, True)
         time.sleep(.3)
@@ -102,23 +123,30 @@ def main():
         tap('b')
         capture('03-requisition')
         tap('Escape')
-        ui.key('w', True)
-        time.sleep(1)
-        ui.key('w', False)
+        ui.key('d', True)
+        time.sleep(.3)
+        ui.key('d', False)
         ui.t.XTestFakeMotionEvent(ui.d, 0, 690, 350, 0)
         ui.x.XFlush(ui.d)
         capture('04-move-aim')
-        # Preserve the normal preparation timer; software rendering can lag wall time.
-        time.sleep(35)
+        # React to the real phase announcement; waiting a fixed wall duration
+        # can leave a human eliminated before the input checks even begin.
+        wait_for(lambda: 'MATCH: Round live. Secure Relay Yard.' in (out / 'client.log').read_text(), 60, 'Actual offline live phase')
         for _ in range(3):
             ui.button(True)
             time.sleep(.25)
             ui.button(False)
             time.sleep(.35)
         capture('05-after-fire')
+        fired_hud = read_hud('05-after-fire')
+        if not 0 < fired_hud['ammo'] < 15 or fired_hud['reserve'] != 60:
+            raise RuntimeError('Native fire did not deplete the initial sidearm magazine')
         tap('r')
         time.sleep(3)
         capture('06-after-reload')
+        reloaded_hud = read_hud('06-after-reload')
+        if reloaded_hud['ammo'] != 15 or reloaded_hud['reserve'] >= fired_hud['reserve'] or sum(reloaded_hud[k] for k in ('ammo', 'reserve')) != sum(fired_hud[k] for k in ('ammo', 'reserve')):
+            raise RuntimeError('Native offline reload did not conserve rendered ammunition')
         tap('Escape')
         capture('07-field-menu')
         ui.click(640, 318)
@@ -131,6 +159,8 @@ def main():
             raise RuntimeError('Source changed during offline validation')
         result = {'source': before, 'executable_sha256': digest, 'events': events,
                   'exit': client.returncode, 'clean_exit': True, 'passed': True,
+                  'fired_hud': fired_hud, 'reloaded_hud': reloaded_hud,
+                  'controller_sha256': hashlib.file_digest(Path(__file__).open('rb'), 'sha256').hexdigest(),
                   'limits': 'Screenshots require visual review; no private authority instrumentation or mobile performance claim.'}
         (out / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
         print(json.dumps(result), flush=True)
