@@ -19,6 +19,7 @@ run_godot hit-volume --headless --script res://tests/hit_volume_test.gd
 run_godot render-budget --headless --script res://tests/render_budget_test.gd
 run_godot smoke-presentation --headless --script res://tests/smoke_presentation_test.gd
 run_godot match --headless --script res://tests/match_test.gd
+run_godot bot-ai-regression --headless --script res://tests/bot_ai_regression_test.gd
 run_godot bots --headless --script res://tests/bot_match_test.gd
 run_godot bot-lifecycle --headless --script res://tests/bot_lifecycle_test.gd
 SIGHTBREAK_STATE_DIR="$validation_dir/profile-state" run_godot profile --headless --script res://tests/profile_test.gd
