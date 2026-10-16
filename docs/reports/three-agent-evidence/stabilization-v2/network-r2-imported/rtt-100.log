@@ -1,0 +1,1856 @@
+{
+  "conditions": {
+    "rtt_ms": 100.0,
+    "jitter_ms": 0,
+    "loss": 0,
+    "reorder": 0,
+    "clients": 10,
+    "seconds": 18.0,
+    "seed": 7301,
+    "port": 39040,
+    "out": "/workspace/reviews/stabilization-v2-20261016/network-r2-imported/rtt-100",
+    "no_prediction": false,
+    "account_tickets": false,
+    "render_client": -1,
+    "blackout_at": -1,
+    "blackout_seconds": 0,
+    "reconnect_at": -1,
+    "reconnect_delay": 2.0
+  },
+  "scope": "loopback real Godot processes; added RTT simulation; no device/cellular claim",
+  "source": {
+    "commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+    "dirty": false,
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "python": "3.12.14"
+  },
+  "traffic_window_seconds": 24.76825923999968,
+  "traffic_window_scope": "whole proxy lifetime including startup, measurement and report/exit drain",
+  "measurement_start_epoch": 1792129230.849551,
+  "startup_seconds": 3.672856499999398,
+  "measurement_duration_seconds": 18.0,
+  "shared_stop_reached": true,
+  "max_enet_occupancy": 10,
+  "final_authority": [
+    {
+      "actor": 1,
+      "idle_msec": 45,
+      "input_ack": 1187,
+      "peer": 1258682295
+    },
+    {
+      "actor": 2,
+      "idle_msec": 32,
+      "input_ack": 1169,
+      "peer": 1672898120
+    },
+    {
+      "actor": 3,
+      "idle_msec": 15,
+      "input_ack": 1165,
+      "peer": 793732765
+    },
+    {
+      "actor": 4,
+      "idle_msec": 15,
+      "input_ack": 1148,
+      "peer": 1815875734
+    },
+    {
+      "actor": 5,
+      "idle_msec": 32,
+      "input_ack": 1146,
+      "peer": 658795845
+    },
+    {
+      "actor": 6,
+      "idle_msec": 15,
+      "input_ack": 1152,
+      "peer": 543269568
+    },
+    {
+      "actor": 7,
+      "idle_msec": 32,
+      "input_ack": 1143,
+      "peer": 763270718
+    },
+    {
+      "actor": 8,
+      "idle_msec": 32,
+      "input_ack": 1138,
+      "peer": 1356017028
+    },
+    {
+      "actor": 9,
+      "idle_msec": 15,
+      "input_ack": 1137,
+      "peer": 1821588564
+    },
+    {
+      "actor": 10,
+      "idle_msec": 32,
+      "input_ack": 1138,
+      "peer": 896711408
+    }
+  ],
+  "failures": [],
+  "traffic": {
+    "up": {
+      "received_packets": 6542,
+      "forwarded_packets": 6542,
+      "dropped_packets": 0,
+      "udp_payload_bytes": 1409204,
+      "max_datagram_bytes": 262,
+      "datagrams_over_1200": 0
+    },
+    "down": {
+      "received_packets": 4746,
+      "forwarded_packets": 4746,
+      "dropped_packets": 0,
+      "udp_payload_bytes": 3135451,
+      "max_datagram_bytes": 1392,
+      "datagrams_over_1200": 30
+    }
+  },
+  "processes": {
+    "server": {
+      "rss_peak_kib": 164484,
+      "cpu_seconds": 4.66,
+      "rss_current_kib": 111380
+    },
+    "client-0": {
+      "rss_peak_kib": 161980,
+      "cpu_seconds": 2.17,
+      "rss_current_kib": 110448
+    },
+    "client-1": {
+      "rss_peak_kib": 161944,
+      "cpu_seconds": 2.11,
+      "rss_current_kib": 110624
+    },
+    "client-2": {
+      "rss_peak_kib": 161872,
+      "cpu_seconds": 2.01,
+      "rss_current_kib": 110912
+    },
+    "client-3": {
+      "rss_peak_kib": 163056,
+      "cpu_seconds": 2.15,
+      "rss_current_kib": 111528
+    },
+    "client-4": {
+      "rss_peak_kib": 161872,
+      "cpu_seconds": 2.15,
+      "rss_current_kib": 110460
+    },
+    "client-5": {
+      "rss_peak_kib": 162972,
+      "cpu_seconds": 2.2,
+      "rss_current_kib": 111168
+    },
+    "client-6": {
+      "rss_peak_kib": 162476,
+      "cpu_seconds": 2.2,
+      "rss_current_kib": 110540
+    },
+    "client-7": {
+      "rss_peak_kib": 161988,
+      "cpu_seconds": 2.13,
+      "rss_current_kib": 110612
+    },
+    "client-8": {
+      "rss_peak_kib": 162032,
+      "cpu_seconds": 2.17,
+      "rss_current_kib": 110440
+    },
+    "client-9": {
+      "rss_peak_kib": 162132,
+      "cpu_seconds": 2.16,
+      "rss_current_kib": 110476
+    }
+  },
+  "per_client_traffic": [
+    {
+      "up": {
+        "received_packets": 664,
+        "forwarded_packets": 664,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 141756,
+        "max_datagram_bytes": 260,
+        "datagrams_over_1200": 0
+      },
+      "down": {
+        "received_packets": 480,
+        "forwarded_packets": 480,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 318054,
+        "max_datagram_bytes": 1392,
+        "datagrams_over_1200": 3
+      }
+    },
+    {
+      "up": {
+        "received_packets": 648,
+        "forwarded_packets": 648,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 140950,
+        "max_datagram_bytes": 262,
+        "datagrams_over_1200": 0
+      },
+      "down": {
+        "received_packets": 472,
+        "forwarded_packets": 472,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 308539,
+        "max_datagram_bytes": 1392,
+        "datagrams_over_1200": 3
+      }
+    },
+    {
+      "up": {
+        "received_packets": 651,
+        "forwarded_packets": 651,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 140114,
+        "max_datagram_bytes": 256,
+        "datagrams_over_1200": 0
+      },
+      "down": {
+        "received_packets": 468,
+        "forwarded_packets": 468,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 306108,
+        "max_datagram_bytes": 1392,
+        "datagrams_over_1200": 3
+      }
+    },
+    {
+      "up": {
+        "received_packets": 678,
+        "forwarded_packets": 678,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 145769,
+        "max_datagram_bytes": 261,
+        "datagrams_over_1200": 0
+      },
+      "down": {
+        "received_packets": 490,
+        "forwarded_packets": 490,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 323520,
+        "max_datagram_bytes": 1392,
+        "datagrams_over_1200": 3
+      }
+    },
+    {
+      "up": {
+        "received_packets": 647,
+        "forwarded_packets": 647,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 139286,
+        "max_datagram_bytes": 256,
+        "datagrams_over_1200": 0
+      },
+      "down": {
+        "received_packets": 473,
+        "forwarded_packets": 473,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 308833,
+        "max_datagram_bytes": 1392,
+        "datagrams_over_1200": 3
+      }
+    },
+    {
+      "up": {
+        "received_packets": 647,
+        "forwarded_packets": 647,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 139881,
+        "max_datagram_bytes": 257,
+        "datagrams_over_1200": 0
+      },
+      "down": {
+        "received_packets": 472,
+        "forwarded_packets": 472,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 315230,
+        "max_datagram_bytes": 1392,
+        "datagrams_over_1200": 3
+      }
+    },
+    {
+      "up": {
+        "received_packets": 664,
+        "forwarded_packets": 664,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 143428,
+        "max_datagram_bytes": 262,
+        "datagrams_over_1200": 0
+      },
+      "down": {
+        "received_packets": 479,
+        "forwarded_packets": 479,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 318255,
+        "max_datagram_bytes": 1392,
+        "datagrams_over_1200": 3
+      }
+    },
+    {
+      "up": {
+        "received_packets": 648,
+        "forwarded_packets": 648,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 140029,
+        "max_datagram_bytes": 256,
+        "datagrams_over_1200": 0
+      },
+      "down": {
+        "received_packets": 473,
+        "forwarded_packets": 473,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 311484,
+        "max_datagram_bytes": 1392,
+        "datagrams_over_1200": 3
+      }
+    },
+    {
+      "up": {
+        "received_packets": 646,
+        "forwarded_packets": 646,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 136750,
+        "max_datagram_bytes": 257,
+        "datagrams_over_1200": 0
+      },
+      "down": {
+        "received_packets": 466,
+        "forwarded_packets": 466,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 313703,
+        "max_datagram_bytes": 1392,
+        "datagrams_over_1200": 3
+      }
+    },
+    {
+      "up": {
+        "received_packets": 649,
+        "forwarded_packets": 649,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 141241,
+        "max_datagram_bytes": 256,
+        "datagrams_over_1200": 0
+      },
+      "down": {
+        "received_packets": 473,
+        "forwarded_packets": 473,
+        "dropped_packets": 0,
+        "udp_payload_bytes": 311725,
+        "max_datagram_bytes": 1392,
+        "datagrams_over_1200": 3
+      }
+    }
+  ],
+  "resource_peak_timeline": [
+    {
+      "seconds": 1.3630000466946512e-05,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157056,
+          "cpu_seconds": 0.56,
+          "rss_current_kib": 157056
+        },
+        "client-0": {
+          "rss_peak_kib": 3712,
+          "cpu_seconds": 0.0,
+          "rss_current_kib": 3712
+        },
+        "client-1": {
+          "rss_peak_kib": 3812,
+          "cpu_seconds": 0.0,
+          "rss_current_kib": 3812
+        },
+        "client-2": {
+          "rss_peak_kib": 4076,
+          "cpu_seconds": 0.0,
+          "rss_current_kib": 4076
+        },
+        "client-3": {
+          "rss_peak_kib": 1800,
+          "cpu_seconds": 0.0,
+          "rss_current_kib": 1800
+        },
+        "client-4": {
+          "rss_peak_kib": 1776,
+          "cpu_seconds": 0.0,
+          "rss_current_kib": 1776
+        },
+        "client-5": {
+          "rss_peak_kib": 2452,
+          "cpu_seconds": 0.0,
+          "rss_current_kib": 2452
+        },
+        "client-6": {
+          "rss_peak_kib": 264,
+          "cpu_seconds": 0.0,
+          "rss_current_kib": 264
+        },
+        "client-7": {
+          "rss_peak_kib": 1776,
+          "cpu_seconds": 0.0,
+          "rss_current_kib": 1776
+        },
+        "client-8": {
+          "rss_peak_kib": 1732,
+          "cpu_seconds": 0.0,
+          "rss_current_kib": 1732
+        },
+        "client-9": {
+          "rss_peak_kib": 1732,
+          "cpu_seconds": 0.0,
+          "rss_current_kib": 1732
+        }
+      }
+    },
+    {
+      "seconds": 1.0181694149996474,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157116,
+          "cpu_seconds": 0.62,
+          "rss_current_kib": 157116
+        },
+        "client-0": {
+          "rss_peak_kib": 99004,
+          "cpu_seconds": 0.38,
+          "rss_current_kib": 99004
+        },
+        "client-1": {
+          "rss_peak_kib": 95600,
+          "cpu_seconds": 0.28,
+          "rss_current_kib": 95600
+        },
+        "client-2": {
+          "rss_peak_kib": 95644,
+          "cpu_seconds": 0.29,
+          "rss_current_kib": 95644
+        },
+        "client-3": {
+          "rss_peak_kib": 121504,
+          "cpu_seconds": 0.5,
+          "rss_current_kib": 121504
+        },
+        "client-4": {
+          "rss_peak_kib": 87316,
+          "cpu_seconds": 0.25,
+          "rss_current_kib": 87316
+        },
+        "client-5": {
+          "rss_peak_kib": 95000,
+          "cpu_seconds": 0.29,
+          "rss_current_kib": 95000
+        },
+        "client-6": {
+          "rss_peak_kib": 98952,
+          "cpu_seconds": 0.36,
+          "rss_current_kib": 98952
+        },
+        "client-7": {
+          "rss_peak_kib": 95644,
+          "cpu_seconds": 0.29,
+          "rss_current_kib": 95644
+        },
+        "client-8": {
+          "rss_peak_kib": 86184,
+          "cpu_seconds": 0.24,
+          "rss_current_kib": 86184
+        },
+        "client-9": {
+          "rss_peak_kib": 85876,
+          "cpu_seconds": 0.24,
+          "rss_current_kib": 85876
+        }
+      }
+    },
+    {
+      "seconds": 2.0206007050001062,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157448,
+          "cpu_seconds": 0.68,
+          "rss_current_kib": 157448
+        },
+        "client-0": {
+          "rss_peak_kib": 157536,
+          "cpu_seconds": 0.61,
+          "rss_current_kib": 157536
+        },
+        "client-1": {
+          "rss_peak_kib": 156440,
+          "cpu_seconds": 0.5,
+          "rss_current_kib": 156440
+        },
+        "client-2": {
+          "rss_peak_kib": 156784,
+          "cpu_seconds": 0.51,
+          "rss_current_kib": 156784
+        },
+        "client-3": {
+          "rss_peak_kib": 158204,
+          "cpu_seconds": 0.67,
+          "rss_current_kib": 158204
+        },
+        "client-4": {
+          "rss_peak_kib": 156440,
+          "cpu_seconds": 0.55,
+          "rss_current_kib": 156440
+        },
+        "client-5": {
+          "rss_peak_kib": 156424,
+          "cpu_seconds": 0.57,
+          "rss_current_kib": 156424
+        },
+        "client-6": {
+          "rss_peak_kib": 156916,
+          "cpu_seconds": 0.59,
+          "rss_current_kib": 156916
+        },
+        "client-7": {
+          "rss_peak_kib": 156424,
+          "cpu_seconds": 0.56,
+          "rss_current_kib": 156424
+        },
+        "client-8": {
+          "rss_peak_kib": 156368,
+          "cpu_seconds": 0.54,
+          "rss_current_kib": 156368
+        },
+        "client-9": {
+          "rss_peak_kib": 156436,
+          "cpu_seconds": 0.51,
+          "rss_current_kib": 156436
+        }
+      }
+    },
+    {
+      "seconds": 3.021948245999738,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157448,
+          "cpu_seconds": 0.84,
+          "rss_current_kib": 157448
+        },
+        "client-0": {
+          "rss_peak_kib": 157872,
+          "cpu_seconds": 0.76,
+          "rss_current_kib": 157872
+        },
+        "client-1": {
+          "rss_peak_kib": 157864,
+          "cpu_seconds": 0.68,
+          "rss_current_kib": 157864
+        },
+        "client-2": {
+          "rss_peak_kib": 158208,
+          "cpu_seconds": 0.64,
+          "rss_current_kib": 158208
+        },
+        "client-3": {
+          "rss_peak_kib": 158204,
+          "cpu_seconds": 0.74,
+          "rss_current_kib": 158204
+        },
+        "client-4": {
+          "rss_peak_kib": 157876,
+          "cpu_seconds": 0.73,
+          "rss_current_kib": 157876
+        },
+        "client-5": {
+          "rss_peak_kib": 158096,
+          "cpu_seconds": 0.73,
+          "rss_current_kib": 158096
+        },
+        "client-6": {
+          "rss_peak_kib": 158224,
+          "cpu_seconds": 0.76,
+          "rss_current_kib": 158224
+        },
+        "client-7": {
+          "rss_peak_kib": 157864,
+          "cpu_seconds": 0.72,
+          "rss_current_kib": 157864
+        },
+        "client-8": {
+          "rss_peak_kib": 157848,
+          "cpu_seconds": 0.69,
+          "rss_current_kib": 157848
+        },
+        "client-9": {
+          "rss_peak_kib": 157868,
+          "cpu_seconds": 0.67,
+          "rss_current_kib": 157868
+        }
+      }
+    },
+    {
+      "seconds": 4.022268988999713,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157448,
+          "cpu_seconds": 1.02,
+          "rss_current_kib": 157448
+        },
+        "client-0": {
+          "rss_peak_kib": 157876,
+          "cpu_seconds": 0.83,
+          "rss_current_kib": 157876
+        },
+        "client-1": {
+          "rss_peak_kib": 157868,
+          "cpu_seconds": 0.75,
+          "rss_current_kib": 157868
+        },
+        "client-2": {
+          "rss_peak_kib": 158212,
+          "cpu_seconds": 0.71,
+          "rss_current_kib": 158212
+        },
+        "client-3": {
+          "rss_peak_kib": 158208,
+          "cpu_seconds": 0.81,
+          "rss_current_kib": 158208
+        },
+        "client-4": {
+          "rss_peak_kib": 157880,
+          "cpu_seconds": 0.79,
+          "rss_current_kib": 157880
+        },
+        "client-5": {
+          "rss_peak_kib": 158100,
+          "cpu_seconds": 0.8,
+          "rss_current_kib": 158100
+        },
+        "client-6": {
+          "rss_peak_kib": 158228,
+          "cpu_seconds": 0.83,
+          "rss_current_kib": 158228
+        },
+        "client-7": {
+          "rss_peak_kib": 157868,
+          "cpu_seconds": 0.79,
+          "rss_current_kib": 157868
+        },
+        "client-8": {
+          "rss_peak_kib": 157852,
+          "cpu_seconds": 0.77,
+          "rss_current_kib": 157852
+        },
+        "client-9": {
+          "rss_peak_kib": 157872,
+          "cpu_seconds": 0.75,
+          "rss_current_kib": 157872
+        }
+      }
+    },
+    {
+      "seconds": 5.023669640000662,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157456,
+          "cpu_seconds": 1.22,
+          "rss_current_kib": 157456
+        },
+        "client-0": {
+          "rss_peak_kib": 157876,
+          "cpu_seconds": 0.92,
+          "rss_current_kib": 157876
+        },
+        "client-1": {
+          "rss_peak_kib": 157868,
+          "cpu_seconds": 0.83,
+          "rss_current_kib": 157868
+        },
+        "client-2": {
+          "rss_peak_kib": 158220,
+          "cpu_seconds": 0.79,
+          "rss_current_kib": 158220
+        },
+        "client-3": {
+          "rss_peak_kib": 158208,
+          "cpu_seconds": 0.89,
+          "rss_current_kib": 158208
+        },
+        "client-4": {
+          "rss_peak_kib": 157888,
+          "cpu_seconds": 0.88,
+          "rss_current_kib": 157888
+        },
+        "client-5": {
+          "rss_peak_kib": 158108,
+          "cpu_seconds": 0.9,
+          "rss_current_kib": 158108
+        },
+        "client-6": {
+          "rss_peak_kib": 158228,
+          "cpu_seconds": 0.91,
+          "rss_current_kib": 158228
+        },
+        "client-7": {
+          "rss_peak_kib": 157876,
+          "cpu_seconds": 0.88,
+          "rss_current_kib": 157876
+        },
+        "client-8": {
+          "rss_peak_kib": 157860,
+          "cpu_seconds": 0.85,
+          "rss_current_kib": 157860
+        },
+        "client-9": {
+          "rss_peak_kib": 157872,
+          "cpu_seconds": 0.82,
+          "rss_current_kib": 157872
+        }
+      }
+    },
+    {
+      "seconds": 6.023703933000434,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157456,
+          "cpu_seconds": 1.4,
+          "rss_current_kib": 157456
+        },
+        "client-0": {
+          "rss_peak_kib": 157880,
+          "cpu_seconds": 0.99,
+          "rss_current_kib": 157880
+        },
+        "client-1": {
+          "rss_peak_kib": 157872,
+          "cpu_seconds": 0.9,
+          "rss_current_kib": 157872
+        },
+        "client-2": {
+          "rss_peak_kib": 158224,
+          "cpu_seconds": 0.86,
+          "rss_current_kib": 158224
+        },
+        "client-3": {
+          "rss_peak_kib": 158212,
+          "cpu_seconds": 0.96,
+          "rss_current_kib": 158212
+        },
+        "client-4": {
+          "rss_peak_kib": 157892,
+          "cpu_seconds": 0.96,
+          "rss_current_kib": 157892
+        },
+        "client-5": {
+          "rss_peak_kib": 158112,
+          "cpu_seconds": 0.98,
+          "rss_current_kib": 158112
+        },
+        "client-6": {
+          "rss_peak_kib": 158232,
+          "cpu_seconds": 0.98,
+          "rss_current_kib": 158232
+        },
+        "client-7": {
+          "rss_peak_kib": 157880,
+          "cpu_seconds": 0.96,
+          "rss_current_kib": 157880
+        },
+        "client-8": {
+          "rss_peak_kib": 157864,
+          "cpu_seconds": 0.93,
+          "rss_current_kib": 157864
+        },
+        "client-9": {
+          "rss_peak_kib": 157876,
+          "cpu_seconds": 0.89,
+          "rss_current_kib": 157876
+        }
+      }
+    },
+    {
+      "seconds": 7.023964578000232,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157456,
+          "cpu_seconds": 1.61,
+          "rss_current_kib": 157456
+        },
+        "client-0": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.07,
+          "rss_current_kib": 157928
+        },
+        "client-1": {
+          "rss_peak_kib": 157924,
+          "cpu_seconds": 0.97,
+          "rss_current_kib": 157924
+        },
+        "client-2": {
+          "rss_peak_kib": 158276,
+          "cpu_seconds": 0.93,
+          "rss_current_kib": 158276
+        },
+        "client-3": {
+          "rss_peak_kib": 158272,
+          "cpu_seconds": 1.03,
+          "rss_current_kib": 158272
+        },
+        "client-4": {
+          "rss_peak_kib": 157940,
+          "cpu_seconds": 1.03,
+          "rss_current_kib": 157940
+        },
+        "client-5": {
+          "rss_peak_kib": 158156,
+          "cpu_seconds": 1.05,
+          "rss_current_kib": 158156
+        },
+        "client-6": {
+          "rss_peak_kib": 158280,
+          "cpu_seconds": 1.05,
+          "rss_current_kib": 158280
+        },
+        "client-7": {
+          "rss_peak_kib": 157924,
+          "cpu_seconds": 1.03,
+          "rss_current_kib": 157924
+        },
+        "client-8": {
+          "rss_peak_kib": 157916,
+          "cpu_seconds": 1.0,
+          "rss_current_kib": 157916
+        },
+        "client-9": {
+          "rss_peak_kib": 157920,
+          "cpu_seconds": 0.97,
+          "rss_current_kib": 157920
+        }
+      }
+    },
+    {
+      "seconds": 8.024476676999257,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157456,
+          "cpu_seconds": 1.83,
+          "rss_current_kib": 157456
+        },
+        "client-0": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.13,
+          "rss_current_kib": 157928
+        },
+        "client-1": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.04,
+          "rss_current_kib": 157928
+        },
+        "client-2": {
+          "rss_peak_kib": 158276,
+          "cpu_seconds": 0.99,
+          "rss_current_kib": 158276
+        },
+        "client-3": {
+          "rss_peak_kib": 158276,
+          "cpu_seconds": 1.11,
+          "rss_current_kib": 158276
+        },
+        "client-4": {
+          "rss_peak_kib": 157940,
+          "cpu_seconds": 1.09,
+          "rss_current_kib": 157940
+        },
+        "client-5": {
+          "rss_peak_kib": 158160,
+          "cpu_seconds": 1.12,
+          "rss_current_kib": 158160
+        },
+        "client-6": {
+          "rss_peak_kib": 158284,
+          "cpu_seconds": 1.13,
+          "rss_current_kib": 158284
+        },
+        "client-7": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.1,
+          "rss_current_kib": 157928
+        },
+        "client-8": {
+          "rss_peak_kib": 157920,
+          "cpu_seconds": 1.07,
+          "rss_current_kib": 157920
+        },
+        "client-9": {
+          "rss_peak_kib": 157924,
+          "cpu_seconds": 1.04,
+          "rss_current_kib": 157924
+        }
+      }
+    },
+    {
+      "seconds": 9.02535386800082,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157456,
+          "cpu_seconds": 2.06,
+          "rss_current_kib": 157456
+        },
+        "client-0": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.2,
+          "rss_current_kib": 157928
+        },
+        "client-1": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.11,
+          "rss_current_kib": 157928
+        },
+        "client-2": {
+          "rss_peak_kib": 158276,
+          "cpu_seconds": 1.05,
+          "rss_current_kib": 158276
+        },
+        "client-3": {
+          "rss_peak_kib": 158276,
+          "cpu_seconds": 1.17,
+          "rss_current_kib": 158276
+        },
+        "client-4": {
+          "rss_peak_kib": 157940,
+          "cpu_seconds": 1.15,
+          "rss_current_kib": 157940
+        },
+        "client-5": {
+          "rss_peak_kib": 158160,
+          "cpu_seconds": 1.18,
+          "rss_current_kib": 158160
+        },
+        "client-6": {
+          "rss_peak_kib": 158284,
+          "cpu_seconds": 1.2,
+          "rss_current_kib": 158284
+        },
+        "client-7": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.16,
+          "rss_current_kib": 157928
+        },
+        "client-8": {
+          "rss_peak_kib": 157920,
+          "cpu_seconds": 1.14,
+          "rss_current_kib": 157920
+        },
+        "client-9": {
+          "rss_peak_kib": 157924,
+          "cpu_seconds": 1.11,
+          "rss_current_kib": 157924
+        }
+      }
+    },
+    {
+      "seconds": 10.025660888999482,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157464,
+          "cpu_seconds": 2.29,
+          "rss_current_kib": 157464
+        },
+        "client-0": {
+          "rss_peak_kib": 157940,
+          "cpu_seconds": 1.26,
+          "rss_current_kib": 157940
+        },
+        "client-1": {
+          "rss_peak_kib": 157940,
+          "cpu_seconds": 1.17,
+          "rss_current_kib": 157940
+        },
+        "client-2": {
+          "rss_peak_kib": 158284,
+          "cpu_seconds": 1.12,
+          "rss_current_kib": 158284
+        },
+        "client-3": {
+          "rss_peak_kib": 158284,
+          "cpu_seconds": 1.23,
+          "rss_current_kib": 158284
+        },
+        "client-4": {
+          "rss_peak_kib": 157948,
+          "cpu_seconds": 1.23,
+          "rss_current_kib": 157948
+        },
+        "client-5": {
+          "rss_peak_kib": 158168,
+          "cpu_seconds": 1.27,
+          "rss_current_kib": 158168
+        },
+        "client-6": {
+          "rss_peak_kib": 158292,
+          "cpu_seconds": 1.27,
+          "rss_current_kib": 158292
+        },
+        "client-7": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.23,
+          "rss_current_kib": 157936
+        },
+        "client-8": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.21,
+          "rss_current_kib": 157928
+        },
+        "client-9": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.17,
+          "rss_current_kib": 157936
+        }
+      }
+    },
+    {
+      "seconds": 11.02638862800086,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157464,
+          "cpu_seconds": 2.5,
+          "rss_current_kib": 157464
+        },
+        "client-0": {
+          "rss_peak_kib": 157940,
+          "cpu_seconds": 1.34,
+          "rss_current_kib": 157940
+        },
+        "client-1": {
+          "rss_peak_kib": 157940,
+          "cpu_seconds": 1.25,
+          "rss_current_kib": 157940
+        },
+        "client-2": {
+          "rss_peak_kib": 158288,
+          "cpu_seconds": 1.18,
+          "rss_current_kib": 158288
+        },
+        "client-3": {
+          "rss_peak_kib": 158284,
+          "cpu_seconds": 1.31,
+          "rss_current_kib": 158284
+        },
+        "client-4": {
+          "rss_peak_kib": 157948,
+          "cpu_seconds": 1.3,
+          "rss_current_kib": 157948
+        },
+        "client-5": {
+          "rss_peak_kib": 158168,
+          "cpu_seconds": 1.34,
+          "rss_current_kib": 158168
+        },
+        "client-6": {
+          "rss_peak_kib": 158292,
+          "cpu_seconds": 1.35,
+          "rss_current_kib": 158292
+        },
+        "client-7": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.3,
+          "rss_current_kib": 157936
+        },
+        "client-8": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.29,
+          "rss_current_kib": 157928
+        },
+        "client-9": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.26,
+          "rss_current_kib": 157936
+        }
+      }
+    },
+    {
+      "seconds": 12.02921523400073,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157464,
+          "cpu_seconds": 2.69,
+          "rss_current_kib": 157464
+        },
+        "client-0": {
+          "rss_peak_kib": 157940,
+          "cpu_seconds": 1.41,
+          "rss_current_kib": 157940
+        },
+        "client-1": {
+          "rss_peak_kib": 157944,
+          "cpu_seconds": 1.33,
+          "rss_current_kib": 157944
+        },
+        "client-2": {
+          "rss_peak_kib": 158288,
+          "cpu_seconds": 1.25,
+          "rss_current_kib": 158288
+        },
+        "client-3": {
+          "rss_peak_kib": 158284,
+          "cpu_seconds": 1.39,
+          "rss_current_kib": 158284
+        },
+        "client-4": {
+          "rss_peak_kib": 157948,
+          "cpu_seconds": 1.36,
+          "rss_current_kib": 157948
+        },
+        "client-5": {
+          "rss_peak_kib": 158168,
+          "cpu_seconds": 1.41,
+          "rss_current_kib": 158168
+        },
+        "client-6": {
+          "rss_peak_kib": 158292,
+          "cpu_seconds": 1.42,
+          "rss_current_kib": 158292
+        },
+        "client-7": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.37,
+          "rss_current_kib": 157936
+        },
+        "client-8": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.36,
+          "rss_current_kib": 157928
+        },
+        "client-9": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.34,
+          "rss_current_kib": 157936
+        }
+      }
+    },
+    {
+      "seconds": 13.029513871000745,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157464,
+          "cpu_seconds": 2.87,
+          "rss_current_kib": 157464
+        },
+        "client-0": {
+          "rss_peak_kib": 157940,
+          "cpu_seconds": 1.49,
+          "rss_current_kib": 157940
+        },
+        "client-1": {
+          "rss_peak_kib": 157944,
+          "cpu_seconds": 1.4,
+          "rss_current_kib": 157944
+        },
+        "client-2": {
+          "rss_peak_kib": 158288,
+          "cpu_seconds": 1.32,
+          "rss_current_kib": 158288
+        },
+        "client-3": {
+          "rss_peak_kib": 158284,
+          "cpu_seconds": 1.46,
+          "rss_current_kib": 158284
+        },
+        "client-4": {
+          "rss_peak_kib": 157948,
+          "cpu_seconds": 1.43,
+          "rss_current_kib": 157948
+        },
+        "client-5": {
+          "rss_peak_kib": 158168,
+          "cpu_seconds": 1.49,
+          "rss_current_kib": 158168
+        },
+        "client-6": {
+          "rss_peak_kib": 158292,
+          "cpu_seconds": 1.49,
+          "rss_current_kib": 158292
+        },
+        "client-7": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.44,
+          "rss_current_kib": 157936
+        },
+        "client-8": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.44,
+          "rss_current_kib": 157928
+        },
+        "client-9": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.41,
+          "rss_current_kib": 157936
+        }
+      }
+    },
+    {
+      "seconds": 14.03231057099947,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157464,
+          "cpu_seconds": 3.05,
+          "rss_current_kib": 157464
+        },
+        "client-0": {
+          "rss_peak_kib": 157940,
+          "cpu_seconds": 1.58,
+          "rss_current_kib": 157940
+        },
+        "client-1": {
+          "rss_peak_kib": 157944,
+          "cpu_seconds": 1.47,
+          "rss_current_kib": 157944
+        },
+        "client-2": {
+          "rss_peak_kib": 158288,
+          "cpu_seconds": 1.4,
+          "rss_current_kib": 158288
+        },
+        "client-3": {
+          "rss_peak_kib": 158284,
+          "cpu_seconds": 1.52,
+          "rss_current_kib": 158284
+        },
+        "client-4": {
+          "rss_peak_kib": 157948,
+          "cpu_seconds": 1.51,
+          "rss_current_kib": 157948
+        },
+        "client-5": {
+          "rss_peak_kib": 158168,
+          "cpu_seconds": 1.57,
+          "rss_current_kib": 158168
+        },
+        "client-6": {
+          "rss_peak_kib": 158292,
+          "cpu_seconds": 1.56,
+          "rss_current_kib": 158292
+        },
+        "client-7": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.52,
+          "rss_current_kib": 157936
+        },
+        "client-8": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.51,
+          "rss_current_kib": 157928
+        },
+        "client-9": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.48,
+          "rss_current_kib": 157936
+        }
+      }
+    },
+    {
+      "seconds": 15.03321348099962,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157464,
+          "cpu_seconds": 3.21,
+          "rss_current_kib": 157464
+        },
+        "client-0": {
+          "rss_peak_kib": 157940,
+          "cpu_seconds": 1.64,
+          "rss_current_kib": 157940
+        },
+        "client-1": {
+          "rss_peak_kib": 157944,
+          "cpu_seconds": 1.54,
+          "rss_current_kib": 157944
+        },
+        "client-2": {
+          "rss_peak_kib": 158288,
+          "cpu_seconds": 1.48,
+          "rss_current_kib": 158288
+        },
+        "client-3": {
+          "rss_peak_kib": 158284,
+          "cpu_seconds": 1.59,
+          "rss_current_kib": 158284
+        },
+        "client-4": {
+          "rss_peak_kib": 157948,
+          "cpu_seconds": 1.58,
+          "rss_current_kib": 157948
+        },
+        "client-5": {
+          "rss_peak_kib": 158168,
+          "cpu_seconds": 1.64,
+          "rss_current_kib": 158168
+        },
+        "client-6": {
+          "rss_peak_kib": 158292,
+          "cpu_seconds": 1.63,
+          "rss_current_kib": 158292
+        },
+        "client-7": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.59,
+          "rss_current_kib": 157936
+        },
+        "client-8": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.59,
+          "rss_current_kib": 157928
+        },
+        "client-9": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.56,
+          "rss_current_kib": 157936
+        }
+      }
+    },
+    {
+      "seconds": 16.03373294999983,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157464,
+          "cpu_seconds": 3.4,
+          "rss_current_kib": 157464
+        },
+        "client-0": {
+          "rss_peak_kib": 157940,
+          "cpu_seconds": 1.7,
+          "rss_current_kib": 157940
+        },
+        "client-1": {
+          "rss_peak_kib": 157944,
+          "cpu_seconds": 1.61,
+          "rss_current_kib": 157944
+        },
+        "client-2": {
+          "rss_peak_kib": 158288,
+          "cpu_seconds": 1.54,
+          "rss_current_kib": 158288
+        },
+        "client-3": {
+          "rss_peak_kib": 158284,
+          "cpu_seconds": 1.66,
+          "rss_current_kib": 158284
+        },
+        "client-4": {
+          "rss_peak_kib": 157948,
+          "cpu_seconds": 1.65,
+          "rss_current_kib": 157948
+        },
+        "client-5": {
+          "rss_peak_kib": 158168,
+          "cpu_seconds": 1.71,
+          "rss_current_kib": 158168
+        },
+        "client-6": {
+          "rss_peak_kib": 158292,
+          "cpu_seconds": 1.7,
+          "rss_current_kib": 158292
+        },
+        "client-7": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.66,
+          "rss_current_kib": 157936
+        },
+        "client-8": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.66,
+          "rss_current_kib": 157928
+        },
+        "client-9": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.64,
+          "rss_current_kib": 157936
+        }
+      }
+    },
+    {
+      "seconds": 17.03667405899978,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157464,
+          "cpu_seconds": 3.64,
+          "rss_current_kib": 157464
+        },
+        "client-0": {
+          "rss_peak_kib": 157944,
+          "cpu_seconds": 1.77,
+          "rss_current_kib": 157944
+        },
+        "client-1": {
+          "rss_peak_kib": 157944,
+          "cpu_seconds": 1.68,
+          "rss_current_kib": 157944
+        },
+        "client-2": {
+          "rss_peak_kib": 158288,
+          "cpu_seconds": 1.6,
+          "rss_current_kib": 158288
+        },
+        "client-3": {
+          "rss_peak_kib": 158284,
+          "cpu_seconds": 1.72,
+          "rss_current_kib": 158284
+        },
+        "client-4": {
+          "rss_peak_kib": 157948,
+          "cpu_seconds": 1.72,
+          "rss_current_kib": 157948
+        },
+        "client-5": {
+          "rss_peak_kib": 158168,
+          "cpu_seconds": 1.78,
+          "rss_current_kib": 158168
+        },
+        "client-6": {
+          "rss_peak_kib": 158292,
+          "cpu_seconds": 1.78,
+          "rss_current_kib": 158292
+        },
+        "client-7": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.72,
+          "rss_current_kib": 157936
+        },
+        "client-8": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.73,
+          "rss_current_kib": 157928
+        },
+        "client-9": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.7,
+          "rss_current_kib": 157936
+        }
+      }
+    },
+    {
+      "seconds": 18.03690944200025,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157464,
+          "cpu_seconds": 3.84,
+          "rss_current_kib": 157464
+        },
+        "client-0": {
+          "rss_peak_kib": 157944,
+          "cpu_seconds": 1.84,
+          "rss_current_kib": 157944
+        },
+        "client-1": {
+          "rss_peak_kib": 157944,
+          "cpu_seconds": 1.74,
+          "rss_current_kib": 157944
+        },
+        "client-2": {
+          "rss_peak_kib": 158288,
+          "cpu_seconds": 1.66,
+          "rss_current_kib": 158288
+        },
+        "client-3": {
+          "rss_peak_kib": 158284,
+          "cpu_seconds": 1.79,
+          "rss_current_kib": 158284
+        },
+        "client-4": {
+          "rss_peak_kib": 157948,
+          "cpu_seconds": 1.79,
+          "rss_current_kib": 157948
+        },
+        "client-5": {
+          "rss_peak_kib": 158168,
+          "cpu_seconds": 1.85,
+          "rss_current_kib": 158168
+        },
+        "client-6": {
+          "rss_peak_kib": 158292,
+          "cpu_seconds": 1.85,
+          "rss_current_kib": 158292
+        },
+        "client-7": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.78,
+          "rss_current_kib": 157936
+        },
+        "client-8": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.8,
+          "rss_current_kib": 157928
+        },
+        "client-9": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.77,
+          "rss_current_kib": 157936
+        }
+      }
+    },
+    {
+      "seconds": 19.038904299999558,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157464,
+          "cpu_seconds": 4.02,
+          "rss_current_kib": 157464
+        },
+        "client-0": {
+          "rss_peak_kib": 157944,
+          "cpu_seconds": 1.91,
+          "rss_current_kib": 157944
+        },
+        "client-1": {
+          "rss_peak_kib": 157944,
+          "cpu_seconds": 1.81,
+          "rss_current_kib": 157944
+        },
+        "client-2": {
+          "rss_peak_kib": 158288,
+          "cpu_seconds": 1.73,
+          "rss_current_kib": 158288
+        },
+        "client-3": {
+          "rss_peak_kib": 158288,
+          "cpu_seconds": 1.87,
+          "rss_current_kib": 158288
+        },
+        "client-4": {
+          "rss_peak_kib": 157948,
+          "cpu_seconds": 1.86,
+          "rss_current_kib": 157948
+        },
+        "client-5": {
+          "rss_peak_kib": 158168,
+          "cpu_seconds": 1.93,
+          "rss_current_kib": 158168
+        },
+        "client-6": {
+          "rss_peak_kib": 158292,
+          "cpu_seconds": 1.93,
+          "rss_current_kib": 158292
+        },
+        "client-7": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.85,
+          "rss_current_kib": 157936
+        },
+        "client-8": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.87,
+          "rss_current_kib": 157928
+        },
+        "client-9": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.85,
+          "rss_current_kib": 157936
+        }
+      }
+    },
+    {
+      "seconds": 20.039350033999654,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157464,
+          "cpu_seconds": 4.2,
+          "rss_current_kib": 157464
+        },
+        "client-0": {
+          "rss_peak_kib": 157944,
+          "cpu_seconds": 1.97,
+          "rss_current_kib": 157944
+        },
+        "client-1": {
+          "rss_peak_kib": 157944,
+          "cpu_seconds": 1.89,
+          "rss_current_kib": 157944
+        },
+        "client-2": {
+          "rss_peak_kib": 158288,
+          "cpu_seconds": 1.8,
+          "rss_current_kib": 158288
+        },
+        "client-3": {
+          "rss_peak_kib": 158288,
+          "cpu_seconds": 1.94,
+          "rss_current_kib": 158288
+        },
+        "client-4": {
+          "rss_peak_kib": 157948,
+          "cpu_seconds": 1.92,
+          "rss_current_kib": 157948
+        },
+        "client-5": {
+          "rss_peak_kib": 158168,
+          "cpu_seconds": 1.99,
+          "rss_current_kib": 158168
+        },
+        "client-6": {
+          "rss_peak_kib": 158292,
+          "cpu_seconds": 1.99,
+          "rss_current_kib": 158292
+        },
+        "client-7": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.92,
+          "rss_current_kib": 157936
+        },
+        "client-8": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 1.94,
+          "rss_current_kib": 157928
+        },
+        "client-9": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.93,
+          "rss_current_kib": 157936
+        }
+      }
+    },
+    {
+      "seconds": 21.04262712899981,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 157468,
+          "cpu_seconds": 4.39,
+          "rss_current_kib": 157468
+        },
+        "client-0": {
+          "rss_peak_kib": 157948,
+          "cpu_seconds": 2.05,
+          "rss_current_kib": 157948
+        },
+        "client-1": {
+          "rss_peak_kib": 157948,
+          "cpu_seconds": 1.97,
+          "rss_current_kib": 157948
+        },
+        "client-2": {
+          "rss_peak_kib": 158288,
+          "cpu_seconds": 1.88,
+          "rss_current_kib": 158288
+        },
+        "client-3": {
+          "rss_peak_kib": 158288,
+          "cpu_seconds": 2.01,
+          "rss_current_kib": 158288
+        },
+        "client-4": {
+          "rss_peak_kib": 157948,
+          "cpu_seconds": 1.99,
+          "rss_current_kib": 157948
+        },
+        "client-5": {
+          "rss_peak_kib": 158168,
+          "cpu_seconds": 2.06,
+          "rss_current_kib": 158168
+        },
+        "client-6": {
+          "rss_peak_kib": 158292,
+          "cpu_seconds": 2.07,
+          "rss_current_kib": 158292
+        },
+        "client-7": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 1.99,
+          "rss_current_kib": 157936
+        },
+        "client-8": {
+          "rss_peak_kib": 157928,
+          "cpu_seconds": 2.01,
+          "rss_current_kib": 157928
+        },
+        "client-9": {
+          "rss_peak_kib": 157936,
+          "cpu_seconds": 2.01,
+          "rss_current_kib": 157936
+        }
+      }
+    },
+    {
+      "seconds": 22.044352180000715,
+      "peak_samples": {
+        "server": {
+          "rss_peak_kib": 164484,
+          "cpu_seconds": 4.65,
+          "rss_current_kib": 110916
+        },
+        "client-0": {
+          "rss_peak_kib": 161980,
+          "cpu_seconds": 2.17,
+          "rss_current_kib": 110448
+        },
+        "client-1": {
+          "rss_peak_kib": 161944,
+          "cpu_seconds": 2.11,
+          "rss_current_kib": 110624
+        },
+        "client-2": {
+          "rss_peak_kib": 161872,
+          "cpu_seconds": 2.0,
+          "rss_current_kib": 110736
+        },
+        "client-3": {
+          "rss_peak_kib": 163056,
+          "cpu_seconds": 2.15,
+          "rss_current_kib": 111528
+        },
+        "client-4": {
+          "rss_peak_kib": 161872,
+          "cpu_seconds": 2.13,
+          "rss_current_kib": 110320
+        },
+        "client-5": {
+          "rss_peak_kib": 162972,
+          "cpu_seconds": 2.2,
+          "rss_current_kib": 111168
+        },
+        "client-6": {
+          "rss_peak_kib": 162476,
+          "cpu_seconds": 2.17,
+          "rss_current_kib": 110592
+        },
+        "client-7": {
+          "rss_peak_kib": 161988,
+          "cpu_seconds": 2.11,
+          "rss_current_kib": 109956
+        },
+        "client-8": {
+          "rss_peak_kib": 162032,
+          "cpu_seconds": 2.16,
+          "rss_current_kib": 110312
+        },
+        "client-9": {
+          "rss_peak_kib": 162132,
+          "cpu_seconds": 2.14,
+          "rss_current_kib": 109968
+        }
+      }
+    }
+  ],
+  "skipped_commands": 60,
+  "tick_usec_p50": 778,
+  "tick_usec_p95": 8576,
+  "tick_usec_max": 21979,
+  "tick_interval_usec_p50": 16667,
+  "tick_interval_usec_p95": 17429,
+  "tick_interval_usec_max": 25092,
+  "received_tick_gap_median": 3.0,
+  "render_position_error_p50_m": 6.278696140782358e-08,
+  "render_position_error_p95_m": 0.007107558470076372,
+  "prediction_error_at_ack_p50_m": 0.0,
+  "prediction_error_at_ack_p95_m": 0.519256293773651,
+  "first_movement_seconds": [
+    0.033,
+    0.033,
+    0.032,
+    0.033,
+    0.033,
+    0.034,
+    0.032,
+    0.034,
+    0.034,
+    0.033
+  ],
+  "final_client_states": [
+    {
+      "client": 0,
+      "state": "connected",
+      "last_snapshot_age_seconds": 0.02,
+      "accepted_snapshots": 360,
+      "last_accepted_age_seconds": 0.019,
+      "last_accepted_tick": 1311,
+      "reconnect_passed": false
+    },
+    {
+      "client": 1,
+      "state": "connected",
+      "last_snapshot_age_seconds": 0.015,
+      "accepted_snapshots": 360,
+      "last_accepted_age_seconds": 0.014,
+      "last_accepted_tick": 1311,
+      "reconnect_passed": false
+    },
+    {
+      "client": 2,
+      "state": "connected",
+      "last_snapshot_age_seconds": 0.016,
+      "accepted_snapshots": 360,
+      "last_accepted_age_seconds": 0.015,
+      "last_accepted_tick": 1311,
+      "reconnect_passed": false
+    },
+    {
+      "client": 3,
+      "state": "connected",
+      "last_snapshot_age_seconds": 0.026,
+      "accepted_snapshots": 360,
+      "last_accepted_age_seconds": 0.022,
+      "last_accepted_tick": 1311,
+      "reconnect_passed": false
+    },
+    {
+      "client": 4,
+      "state": "connected",
+      "last_snapshot_age_seconds": 0.018,
+      "accepted_snapshots": 361,
+      "last_accepted_age_seconds": 0.018,
+      "last_accepted_tick": 1311,
+      "reconnect_passed": false
+    },
+    {
+      "client": 5,
+      "state": "connected",
+      "last_snapshot_age_seconds": 0.024,
+      "accepted_snapshots": 360,
+      "last_accepted_age_seconds": 0.024,
+      "last_accepted_tick": 1311,
+      "reconnect_passed": false
+    },
+    {
+      "client": 6,
+      "state": "connected",
+      "last_snapshot_age_seconds": 0.016,
+      "accepted_snapshots": 360,
+      "last_accepted_age_seconds": 0.015,
+      "last_accepted_tick": 1311,
+      "reconnect_passed": false
+    },
+    {
+      "client": 7,
+      "state": "connected",
+      "last_snapshot_age_seconds": 0.032,
+      "accepted_snapshots": 360,
+      "last_accepted_age_seconds": 0.032,
+      "last_accepted_tick": 1311,
+      "reconnect_passed": false
+    },
+    {
+      "client": 8,
+      "state": "connected",
+      "last_snapshot_age_seconds": 0.035,
+      "accepted_snapshots": 360,
+      "last_accepted_age_seconds": 0.032,
+      "last_accepted_tick": 1311,
+      "reconnect_passed": false
+    },
+    {
+      "client": 9,
+      "state": "connected",
+      "last_snapshot_age_seconds": 0.038,
+      "accepted_snapshots": 359,
+      "last_accepted_age_seconds": 0.037,
+      "last_accepted_tick": 1311,
+      "reconnect_passed": false
+    }
+  ],
+  "corrections": 635,
+  "hard_corrections": 0,
+  "render_step_p95_m": 0.09041595458979934,
+  "render_samples_compared": 82168
+}

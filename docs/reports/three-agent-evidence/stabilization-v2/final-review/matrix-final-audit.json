@@ -1,0 +1,1092 @@
+{
+  "audited_at": "2026-10-16T06:11:58.240533+00:00",
+  "read_only": true,
+  "no_engine_runs": true,
+  "source": {
+    "source_commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+    "source_game_tree": "2d2b174c2145e9755ddfc78a1369e74443fcc400",
+    "source_content_sha256": "12d50718f295f04d21de691f31fbde8f03612b145680aaa592ef9e6e08cd5eec",
+    "source_game_dirty": false
+  },
+  "frozen_worktrees": {
+    "/workspace/sightbreak-stabilization-v2-frozen-r2": {
+      "source_commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+      "source_game_tree": "2d2b174c2145e9755ddfc78a1369e74443fcc400",
+      "source_content_sha256": "12d50718f295f04d21de691f31fbde8f03612b145680aaa592ef9e6e08cd5eec",
+      "source_game_dirty": false,
+      "tracked_clean": true
+    },
+    "/workspace/sightbreak-stabilization-v2-builds-r2": {
+      "source_commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+      "source_game_tree": "2d2b174c2145e9755ddfc78a1369e74443fcc400",
+      "source_content_sha256": "12d50718f295f04d21de691f31fbde8f03612b145680aaa592ef9e6e08cd5eec",
+      "source_game_dirty": false,
+      "tracked_clean": true
+    }
+  },
+  "primary_source": {
+    "source_commit": "3faad8e549e1e0ce520ddf6d25ddfae6a435ce2f",
+    "source_game_tree": "2d2b174c2145e9755ddfc78a1369e74443fcc400",
+    "source_content_sha256": "12d50718f295f04d21de691f31fbde8f03612b145680aaa592ef9e6e08cd5eec",
+    "source_game_dirty": false
+  },
+  "completed_groups": 74,
+  "command_groups": 72,
+  "final_audit_groups": 2,
+  "failed": [],
+  "expected_inventory_matches_frozen_runner": true,
+  "rows": [
+    {
+      "name": "import",
+      "log": "import.log",
+      "sha256": "7020c77a579c1cf2eb8ef3c3fd5c710f48d1df157aab7311efab95dc12c499d9",
+      "bytes": 14863,
+      "passed": true,
+      "exit": 0,
+      "seconds": 7.943,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "actor",
+      "log": "actor.log",
+      "sha256": "b8e2168531c1e39291f053a26c132e01527769d91b30ae36a0e32ed55f3862a0",
+      "bytes": 108,
+      "passed": true,
+      "exit": 0,
+      "seconds": 4.981,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "world",
+      "log": "world.log",
+      "sha256": "c42c934833cdcd6768bc6dd1f0da18ab6fcdb508058d0c7b8ebb6cfaef401141",
+      "bytes": 228,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.424,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "hit-feedback",
+      "log": "hit-feedback.log",
+      "sha256": "66b821a29b85c0a0a72e6c23c06fc2b679db898945eb5cbdd9261f53471eae4f",
+      "bytes": 112,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.574,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "weapon-integrity",
+      "log": "weapon-integrity.log",
+      "sha256": "122bdcf1c99593655e4113485f06ef77257deb3c45e9217ce3d2da1c4c5eb0f2",
+      "bytes": 116,
+      "passed": true,
+      "exit": 0,
+      "seconds": 8.586,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "hit-volume",
+      "log": "hit-volume.log",
+      "sha256": "33de0459fbc1a1d16301b61afc9a849159e01248a41af1018d858b2b4668a728",
+      "bytes": 110,
+      "passed": true,
+      "exit": 0,
+      "seconds": 7.584,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "hit-history",
+      "log": "hit-history.log",
+      "sha256": "4c183ce1aa341573f2c9d36996a7dbea2470898de3272388601b8df598b6bf58",
+      "bytes": 112,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.376,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "render-budget",
+      "log": "render-budget.log",
+      "sha256": "495efc69088f3bce89899d9a4f28e55133a4db3d867ce39949e6881d9e2417ca",
+      "bytes": 113,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.878,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "smoke-presentation",
+      "log": "smoke-presentation.log",
+      "sha256": "65e240d2b88ae69bf01fd452adf91d4bc49e310628cbdf4a31d2ba3213ad0f33",
+      "bytes": 118,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.675,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "match",
+      "log": "match.log",
+      "sha256": "b11b15756a6eef96df83c685da3c13eeaf90e590e9ed25a9e1c9889e8c0c3e5d",
+      "bytes": 98,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.928,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "state-privacy",
+      "log": "state-privacy.log",
+      "sha256": "969f048e66207cb6a404485b99551a5bef91a9b82cdb461a11d4188a6946e089",
+      "bytes": 113,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.676,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "snapshot-buffer",
+      "log": "snapshot-buffer.log",
+      "sha256": "9bf50714dea7dcbdae09b1e5ee734c99e13768b0debec6cbcc3388a6f4853900",
+      "bytes": 115,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.175,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "input-stream",
+      "log": "input-stream.log",
+      "sha256": "97251fe53bcfe715bc421d02d2af77eae09b6421754e60d6ee0b3c2f00dc80e6",
+      "bytes": 112,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.275,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "movement-replay",
+      "log": "movement-replay.log",
+      "sha256": "3915d3bd005f9b7080eb91e09b23dc98da4969c27f357feec56816be248b3b12",
+      "bytes": 145,
+      "passed": true,
+      "exit": 0,
+      "seconds": 9.244,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "input-lifecycle",
+      "log": "input-lifecycle.log",
+      "sha256": "758e944c7eb3390bb269b60966e2225fc2f029f4c86d4b2edbf4abc1e41c8c0e",
+      "bytes": 277,
+      "passed": true,
+      "exit": 0,
+      "seconds": 6.982,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "peer-lifecycle",
+      "log": "peer-lifecycle.log",
+      "sha256": "8c9dd9672fd512b281a03a7738a3b317de457b9f8067d535fd4a976ab05ff59b",
+      "bytes": 114,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.223,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "result-outbox",
+      "log": "result-outbox.log",
+      "sha256": "a7e8d8a1b97d1cac1fe534c9ba89d97ecd29d674fd4d062552469855c7135ead",
+      "bytes": 112,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.189,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "reconnect-policy",
+      "log": "reconnect-policy.log",
+      "sha256": "89f38f68cc2368dd82e8a87101e20d808631a59efd69695c3bb8c4892e101826",
+      "bytes": 116,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.182,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "reconnect-independent",
+      "log": "reconnect-independent.log",
+      "sha256": "83fbcf6159ebfcf59ab713ea0aeef3560679eb6705f216cfe96867f84ef1949a",
+      "bytes": 2034,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.476,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "resume-admission",
+      "log": "resume-admission.log",
+      "sha256": "e7907a519b6c62dcd8b49ed0351115d39f6c96a31ddf8e1e702b4fdb554b7587",
+      "bytes": 1386,
+      "passed": true,
+      "exit": 0,
+      "seconds": 5.682,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "lost-welcome",
+      "log": "lost-welcome.log",
+      "sha256": "aa3ef30f409f2fa4654ac5714dd08d1ad246a6feebbca2cffc16ffae121ae70f",
+      "bytes": 412,
+      "passed": true,
+      "exit": 0,
+      "seconds": 4.079,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "resume-alias",
+      "log": "resume-alias.log",
+      "sha256": "578969ed56d3e455e210c662f66568450ba25a71aaaa2a8b1c03cdcebf204a73",
+      "bytes": 1832,
+      "passed": true,
+      "exit": 0,
+      "seconds": 4.841,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "resume-auth-loss",
+      "log": "resume-auth-loss.log",
+      "sha256": "dd3bb4c1244b6523194fd7ec11324a88cedbcc35c1e0977fdc7c505144e30a50",
+      "bytes": 599,
+      "passed": true,
+      "exit": 0,
+      "seconds": 11.069,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "bot-ai-regression",
+      "log": "bot-ai-regression.log",
+      "sha256": "06f433725b9d4fd7ffcd4b7f20c2fc5740ac80f30ad5e451953bd663a5df3f20",
+      "bytes": 100,
+      "passed": true,
+      "exit": 0,
+      "seconds": 4.865,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "bots",
+      "log": "bots.log",
+      "sha256": "f8f794e724a1bd2f6d8beb717520153df0cb810b5763b06a710e842f9f1f7063",
+      "bytes": 771,
+      "passed": true,
+      "exit": 0,
+      "seconds": 8.248,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "bot-lifecycle",
+      "log": "bot-lifecycle.log",
+      "sha256": "5aed404ad59e83fd56c996a215a2039c80b0589f23f6741a9754404a0cfd5423",
+      "bytes": 874,
+      "passed": true,
+      "exit": 0,
+      "seconds": 99.194,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "profile",
+      "log": "profile.log",
+      "sha256": "a42589882c017b4830612248189462dfb9d0663120b2472f556971b63ecd97b2",
+      "bytes": 107,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.332,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "touch",
+      "log": "touch.log",
+      "sha256": "687691b446bc7005574cdf6b7b3ef4bd6ab59bce5c686a78a9de81bcdf7c920e",
+      "bytes": 105,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.33,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "main",
+      "log": "main.log",
+      "sha256": "c9be5c74f0494216758d7bce487b0f7a7758eba5d07d6d772e0b8011cd4c7eae",
+      "bytes": 142,
+      "passed": true,
+      "exit": 0,
+      "seconds": 4.535,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "landscape",
+      "log": "landscape.log",
+      "sha256": "c64d0877cfb600ea799624ac87bcc5d3776dd107b4dae30f9f7a337b44c9d493",
+      "bytes": 33794,
+      "passed": true,
+      "exit": 0,
+      "seconds": 163.557,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "ux-contract",
+      "log": "ux-contract.log",
+      "sha256": "70fb84ed6fb173c0e5ef4b89791541a7a8217273d76a529a0fe97d0721776a1c",
+      "bytes": 22634,
+      "passed": true,
+      "exit": 0,
+      "seconds": 25.653,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "hud-overflow",
+      "log": "hud-overflow.log",
+      "sha256": "1c606fd963d2c473bb8da661d284a966c1a04d26fe617b016ba303adc9a49b6c",
+      "bytes": 114,
+      "passed": true,
+      "exit": 0,
+      "seconds": 17.181,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "economy-ui",
+      "log": "economy-ui.log",
+      "sha256": "36b8f035abdc39d0ea8dc0a0e8eea24451a5b99e492b0b47a33fa5d96b525847",
+      "bytes": 141,
+      "passed": true,
+      "exit": 0,
+      "seconds": 4.589,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "armory-ui",
+      "log": "armory-ui.log",
+      "sha256": "c30dd4c908bf427c1e663fe7809bca233d991cfa212cf5ce8f8baadf8aa99bef",
+      "bytes": 207,
+      "passed": true,
+      "exit": 0,
+      "seconds": 6.681,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "armory-state",
+      "log": "armory-state.log",
+      "sha256": "9645f3d80f9fadd728c54c87594691a1a63089a6e9bb42525f66a2358e5cfdf0",
+      "bytes": 3604,
+      "passed": true,
+      "exit": 0,
+      "seconds": 13.068,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "menu-state",
+      "log": "menu-state.log",
+      "sha256": "7c61dc9993612e7db2c644e6de49cca2ffd99ada45f16af7ac7106e52a20ad4b",
+      "bytes": 130,
+      "passed": true,
+      "exit": 0,
+      "seconds": 6.197,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "economy-recovery",
+      "log": "economy-recovery.log",
+      "sha256": "1867764ec7c460ae4288dbf43743cbe51c92ec8a9d0885c37b440601a7b6578c",
+      "bytes": 132,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.381,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "cosmetics",
+      "log": "cosmetics.log",
+      "sha256": "e67b3b0bddda0c16b8298f6aaf6303501880bf1922f95ff7dbac11ff6499c90b",
+      "bytes": 123,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.475,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "weapon-art",
+      "log": "weapon-art.log",
+      "sha256": "9bca3b04f09960f0dcb9ba8c5b1a36d70f32f14cb80dad66361190d38b61309c",
+      "bytes": 111,
+      "passed": true,
+      "exit": 0,
+      "seconds": 4.076,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "integration-actor-lifecycle",
+      "log": "integration-actor-lifecycle.log",
+      "sha256": "2f2fd5f65dee3ff3d335587dcbba7ac4dca225149a5490d0245e26aed2d521a6",
+      "bytes": 124,
+      "passed": true,
+      "exit": 0,
+      "seconds": 4.026,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "reload-sequence",
+      "log": "reload-sequence.log",
+      "sha256": "ad7a5d1c391e6924796fcf5b32640e9983d88681c390502e93bc2b611d19e98b",
+      "bytes": 115,
+      "passed": true,
+      "exit": 0,
+      "seconds": 5.781,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "reload-audio",
+      "log": "reload-audio.log",
+      "sha256": "2406f0d573e35ff2dfe6b204373272dcbec1ff854ed715448494faf2f2286d56",
+      "bytes": 112,
+      "passed": true,
+      "exit": 0,
+      "seconds": 3.775,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "reload-audio-capture",
+      "log": "reload-audio-capture.log",
+      "sha256": "6843f6edc2e9971a48b1686c0834ae1ae71ef8716c1d1ba4f7b4ef89e81e192b",
+      "bytes": 2102,
+      "passed": true,
+      "exit": 0,
+      "seconds": 7.034,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "reload-audio-cancel",
+      "log": "reload-audio-cancel.log",
+      "sha256": "dfaef7a18c5445890155db133012c0be921ca2427728063e5903f8703499243f",
+      "bytes": 1610,
+      "passed": true,
+      "exit": 0,
+      "seconds": 7.084,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "reload-audio-shot",
+      "log": "reload-audio-shot.log",
+      "sha256": "72862d1adc763fbd8201b9498a65dc578ab62f0b11732b1c71ecf6729877255b",
+      "bytes": 2244,
+      "passed": true,
+      "exit": 0,
+      "seconds": 7.139,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "reload-visibility",
+      "log": "reload-visibility.log",
+      "sha256": "44f81e7105da597a6a3085462949ac71bfe0b92fbac08acaf984cb3e7916fe4f",
+      "bytes": 448,
+      "passed": true,
+      "exit": 0,
+      "seconds": 145.834,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "reload-finish-sunlit",
+      "log": "reload-finish-sunlit.log",
+      "sha256": "754a4e467b4abd20763b9a658f3841415ce3b2fd249e973b2334eab1678e1646",
+      "bytes": 7462,
+      "passed": true,
+      "exit": 0,
+      "seconds": 78.042,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "reload-finish-shade",
+      "log": "reload-finish-shade.log",
+      "sha256": "a54a313dabddd86497b5bcf230a8d6b92a3ae90858b6872dd9a2867c31c4e319",
+      "bytes": 7326,
+      "passed": true,
+      "exit": 0,
+      "seconds": 83.568,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "viewmodel-light",
+      "log": "viewmodel-light.log",
+      "sha256": "be885114efc1e74dcb8f1a41bf84d948194fe6136350aebb7f63a4ca997a20c4",
+      "bytes": 6405,
+      "passed": true,
+      "exit": 0,
+      "seconds": 68.28,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "reload-finish-skin",
+      "log": "reload-finish-skin.log",
+      "sha256": "496ec194ce58b4da2e9187d135612041a7e6c7b2d137a79cbddecf83d35dfc34",
+      "bytes": 7462,
+      "passed": true,
+      "exit": 0,
+      "seconds": 68.132,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "account-output-unit",
+      "log": "account-output-unit.log",
+      "sha256": "e6ec182765cd965f2837d8eeaef5a64af48a104f245cd1a0b7281559194c57c1",
+      "bytes": 102,
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.114,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "worker-unit",
+      "log": "worker-unit.log",
+      "sha256": "43dbde73da5ddb950a532ee02fb339205701d054aaf62cb8f3c678af7f4b26d8",
+      "bytes": 1467,
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.766,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "network",
+      "log": "network.log",
+      "sha256": "7dda03f127586974efa65831367243f940e036ff49f9f692f07efbba9d9a82d9",
+      "bytes": 616,
+      "passed": true,
+      "exit": 0,
+      "seconds": 10.841,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "network-soak",
+      "log": "network-soak.log",
+      "sha256": "ed1c79807ab6e827fe64fc20a9d8f99a8c996dcc2dcb9529d6a9abb297ebf882",
+      "bytes": 3259,
+      "passed": true,
+      "exit": 0,
+      "seconds": 67.445,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "network-soak-ten",
+      "log": "network-soak-ten.log",
+      "sha256": "7bdb6609d91b3f97cb9f2c192591bde5a72831d4941693f128143940e668cb7d",
+      "bytes": 13701,
+      "passed": true,
+      "exit": 0,
+      "seconds": 67.475,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "connection-lifecycle",
+      "log": "connection-lifecycle.log",
+      "sha256": "b22d77f940ffd9c9e22e7c066dc6837efdb97ab4f312746676e625c069c459d5",
+      "bytes": 619,
+      "passed": true,
+      "exit": 0,
+      "seconds": 46.545,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "bridge-transport",
+      "log": "bridge-transport.log",
+      "sha256": "b9706068472b56a4743e097daa51382b819098c24feb5442ef0de10ff33787d5",
+      "bytes": 297,
+      "passed": true,
+      "exit": 0,
+      "seconds": 10.417,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "build-manifest",
+      "log": "build-manifest.log",
+      "sha256": "a86a150651d34bd22d6f7ab8b6ef734452b614e943f335c3fb44eb4b33c2d5c9",
+      "bytes": 111,
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.17,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "reload-contact",
+      "log": "reload-contact.log",
+      "sha256": "4caf069b2f20f360266ac182283ee6babff41df0e71e269b3d0883eda0d2893f",
+      "bytes": 97,
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.032,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "protocol-matrix",
+      "log": "protocol-matrix.log",
+      "sha256": "298f432f3a41d5c4c1fef5c8a5ffce50c598bc26959d139dabbb560c6528d19d",
+      "bytes": 2207,
+      "passed": true,
+      "exit": 0,
+      "seconds": 215.541,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "hostile-handshake",
+      "log": "hostile-handshake.log",
+      "sha256": "99bcb35742e6685125824f784a6b45f9fdc58c14d7a18a27a3e2a17f98e07082",
+      "bytes": 1009,
+      "passed": true,
+      "exit": 0,
+      "seconds": 101.56,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "catalog-fixture",
+      "log": "catalog-fixture.log",
+      "sha256": "488f3cb1e19f482297c12c78c756845bb40d387294d3dc0270c2819d67731436",
+      "bytes": 56,
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.616,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "postgresql",
+      "log": "postgresql.log",
+      "sha256": "20594d868de853c5dfd7ba7bce138a8f45e47e3a6d13786214e6da001bdefc6c",
+      "bytes": 616,
+      "passed": true,
+      "exit": 0,
+      "seconds": 5.338,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "account-protocol",
+      "log": "account-protocol.log",
+      "sha256": "d415c497573620a56f2844d97ed3e09c79757dd0b215ac8ff4c1f565a515ce0c",
+      "bytes": 1011,
+      "passed": true,
+      "exit": 0,
+      "seconds": 23.727,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "account-capacity",
+      "log": "account-capacity.log",
+      "sha256": "9925fd9fa8aad7b5fcd82ac8337dd446ffe381df1414cbcdb401d67dde78174b",
+      "bytes": 234,
+      "passed": true,
+      "exit": 0,
+      "seconds": 20.628,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "outbox-crash",
+      "log": "outbox-crash.log",
+      "sha256": "a926dcd619b9240ecc71813994c85b95b0e979456d00a83451cd9a37934739fe",
+      "bytes": 333,
+      "passed": true,
+      "exit": 0,
+      "seconds": 7.998,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "native-economy",
+      "log": "native-economy.log",
+      "sha256": "4ddbeba8dc6db988d0b244b6c91647004ba698b003c47c03d246a2b8439b385b",
+      "bytes": 513,
+      "passed": true,
+      "exit": 0,
+      "seconds": 8.637,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "account-full-reconnect",
+      "log": "account-full-reconnect.log",
+      "sha256": "44dfe4a7556281815cb156baae0bc94d21264df478e7b65c9fc3f346a3a2564d",
+      "bytes": 1253,
+      "passed": true,
+      "exit": 0,
+      "seconds": 35.664,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "economy-conservation",
+      "log": "economy-conservation.log",
+      "sha256": "64bb3eaef083cac8b00ba84bbb608036156bcedae06cc32bfe454d250f813951",
+      "bytes": 1440,
+      "passed": true,
+      "exit": 0,
+      "seconds": 0.867,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "native-render-lifecycle",
+      "log": "native-render-lifecycle.log",
+      "sha256": "0076a2af76ed73b25ec4d99099c2481b9adba267d76ed9d92685c587ee0c7ca0",
+      "bytes": 2029,
+      "passed": true,
+      "exit": 0,
+      "seconds": 56.069,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "native-hud-overflow",
+      "log": "native-hud-overflow.log",
+      "sha256": "1a0ef5c94100af23d6f764128d1763766e0a9c64f9334303526930d33e3d9239",
+      "bytes": 409,
+      "passed": true,
+      "exit": 0,
+      "seconds": 197.034,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "native-paint-visibility",
+      "log": "native-paint-visibility.log",
+      "sha256": "542d01590c02578b2df2f96bbaa104886cdd23afa838d3f19449964476671251",
+      "bytes": 669,
+      "passed": true,
+      "exit": 0,
+      "seconds": 16.221,
+      "independently_scanned_log_clean": true
+    },
+    {
+      "name": "nested-resource-cleanup",
+      "log": "nested-resource-cleanup.json",
+      "sha256": "46cad9ccc5d78680c18ca9321b14efe425f3ee70bf27e28a262259d5791e0dd8",
+      "bytes": 87,
+      "passed": true
+    },
+    {
+      "name": "frozen-source-identity",
+      "log": "source-identity.json",
+      "sha256": "749bedaf4071e122cb737d8ce87ad6246d2074704f5b572826f139570c207a3a",
+      "bytes": 612,
+      "passed": true
+    }
+  ],
+  "summary_sha256": "57cf6696c7583c6c779b42c4096c18801a1a91c8a8d1f30b4f0fac6f58b51b04",
+  "source_identity_sha256": "749bedaf4071e122cb737d8ce87ad6246d2074704f5b572826f139570c207a3a",
+  "nested_log_count": 187,
+  "objectdb_or_leaked_instance_logs": [],
+  "nested_ordinary_error_classification": [
+    {
+      "path": "protocol/client-current.server-release.server.log",
+      "sha256": "c6a7406cd5824a60e029f5ceb11338852822b9307fcde99dbaad2f1795c973bd",
+      "classification": "deliberate legacy/current protocol incompatibility; state logs duplicate process logs",
+      "lines": [
+        {
+          "line": 4,
+          "text": "ERROR: Condition \"len != 2\" is true. Continuing."
+        }
+      ]
+    },
+    {
+      "path": "protocol/client-release.server-current.server.log",
+      "sha256": "86b9dc47fde571ded19de99c9204a28e04b84400ecde3fd70b7ff380b0900f0f",
+      "classification": "deliberate legacy/current protocol incompatibility; state logs duplicate process logs",
+      "lines": [
+        {
+          "line": 4,
+          "text": "ERROR: Condition \"len < 2 || (packet[0] & CMD_MASK) != NETWORK_COMMAND_SYS || packet[1] != SYS_COMMAND_AUTH\" is true. Continuing."
+        },
+        {
+          "line": 6,
+          "text": "ERROR: Condition \"len < 2 || (packet[0] & CMD_MASK) != NETWORK_COMMAND_SYS || packet[1] != SYS_COMMAND_AUTH\" is true. Continuing."
+        },
+        {
+          "line": 9,
+          "text": "ERROR: Condition \"len < 2 || (packet[0] & CMD_MASK) != NETWORK_COMMAND_SYS || packet[1] != SYS_COMMAND_AUTH\" is true. Continuing."
+        },
+        {
+          "line": 11,
+          "text": "ERROR: Condition \"len < 2 || (packet[0] & CMD_MASK) != NETWORK_COMMAND_SYS || packet[1] != SYS_COMMAND_AUTH\" is true. Continuing."
+        },
+        {
+          "line": 16,
+          "text": "ERROR: Condition \"len < 2 || (packet[0] & CMD_MASK) != NETWORK_COMMAND_SYS || packet[1] != SYS_COMMAND_AUTH\" is true. Continuing."
+        },
+        {
+          "line": 18,
+          "text": "ERROR: Condition \"len < 2 || (packet[0] & CMD_MASK) != NETWORK_COMMAND_SYS || packet[1] != SYS_COMMAND_AUTH\" is true. Continuing."
+        }
+      ]
+    },
+    {
+      "path": "protocol/release-e67f2c8/docs/reports/native-render.log",
+      "sha256": "c74a7ffef60da76fa06a83e7afad987016238cacc7fd1bd8d037b897aaa415fb",
+      "classification": "historical log copied from staged release source; not a fresh runtime result",
+      "lines": [
+        {
+          "line": 7,
+          "text": "ERROR: Texture with GL ID of 49: leaked 349524 bytes."
+        },
+        {
+          "line": 9,
+          "text": "ERROR: Texture with GL ID of 50: leaked 349524 bytes."
+        }
+      ]
+    },
+    {
+      "path": "protocol/state/client-current.server-release-server/godot/app_userdata/SIGHTBREAK/logs/godot.log",
+      "sha256": "c6a7406cd5824a60e029f5ceb11338852822b9307fcde99dbaad2f1795c973bd",
+      "classification": "deliberate legacy/current protocol incompatibility; state logs duplicate process logs",
+      "lines": [
+        {
+          "line": 4,
+          "text": "ERROR: Condition \"len != 2\" is true. Continuing."
+        }
+      ]
+    },
+    {
+      "path": "protocol/state/client-release.server-current-server/godot/app_userdata/SIGHTBREAK/logs/godot.log",
+      "sha256": "86b9dc47fde571ded19de99c9204a28e04b84400ecde3fd70b7ff380b0900f0f",
+      "classification": "deliberate legacy/current protocol incompatibility; state logs duplicate process logs",
+      "lines": [
+        {
+          "line": 4,
+          "text": "ERROR: Condition \"len < 2 || (packet[0] & CMD_MASK) != NETWORK_COMMAND_SYS || packet[1] != SYS_COMMAND_AUTH\" is true. Continuing."
+        },
+        {
+          "line": 6,
+          "text": "ERROR: Condition \"len < 2 || (packet[0] & CMD_MASK) != NETWORK_COMMAND_SYS || packet[1] != SYS_COMMAND_AUTH\" is true. Continuing."
+        },
+        {
+          "line": 9,
+          "text": "ERROR: Condition \"len < 2 || (packet[0] & CMD_MASK) != NETWORK_COMMAND_SYS || packet[1] != SYS_COMMAND_AUTH\" is true. Continuing."
+        },
+        {
+          "line": 11,
+          "text": "ERROR: Condition \"len < 2 || (packet[0] & CMD_MASK) != NETWORK_COMMAND_SYS || packet[1] != SYS_COMMAND_AUTH\" is true. Continuing."
+        },
+        {
+          "line": 16,
+          "text": "ERROR: Condition \"len < 2 || (packet[0] & CMD_MASK) != NETWORK_COMMAND_SYS || packet[1] != SYS_COMMAND_AUTH\" is true. Continuing."
+        },
+        {
+          "line": 18,
+          "text": "ERROR: Condition \"len < 2 || (packet[0] & CMD_MASK) != NETWORK_COMMAND_SYS || packet[1] != SYS_COMMAND_AUTH\" is true. Continuing."
+        }
+      ]
+    }
+  ],
+  "final_ci_run": {
+    "conclusion": "success",
+    "created_at": "2026-10-16T05:52:35Z",
+    "head_branch": "integration/sightbreak-three-agent-artifacts",
+    "head_sha": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+    "html_url": "https://github.com/calebaiken/sightbreak/actions/runs/38858072161",
+    "id": 38858072161,
+    "name": "Three-agent development artifacts",
+    "status": "completed",
+    "updated_at": "2026-10-16T05:54:13Z"
+  },
+  "verbatim_reports": [
+    {
+      "path": "ai/REVIEW.md",
+      "sha256": "b29289a1764fa48c5dc9aedda1b8d67a8ad8b9a308dc3705f84e1388b5dcf3da",
+      "external_equals_working_equals_committed": true
+    },
+    {
+      "path": "audio/CAUSALITY_REVIEW.md",
+      "sha256": "d9a21bee8ef36c4c9529d974cd094dc2971a1040e8b139e1144833d7817bd236",
+      "external_equals_working_equals_committed": true
+    },
+    {
+      "path": "timing/REPORT.md",
+      "sha256": "f0660d1d0997577848090b82f4078c6ac092c0ef55aac63ee624b873dbed0c0f",
+      "external_equals_working_equals_committed": true
+    },
+    {
+      "path": "network-review/NETWORK_REVIEW.md",
+      "sha256": "543612d68e08a4d1040f44b4d9bad29cc5edb219a50cabed3c351cfd5c52cb4c",
+      "external_equals_working_equals_committed": true
+    },
+    {
+      "path": "graphics/GRAPHICS_REVIEW.md",
+      "sha256": "a2677640662a82e7470043d1bec0dbcadda680a15f2eddf74a2ab84338835531",
+      "external_equals_working_equals_committed": true
+    },
+    {
+      "path": "graphics/PR2_REVIEW_PAYLOAD.md",
+      "sha256": "3160642c7bf972839e393bbe0e1bcf19e959dbe77da34348ee4158059340b448",
+      "external_equals_working_equals_committed": true
+    }
+  ],
+  "final_source_heads": {
+    "receipt_sha256": "f4c3f33162cfa77490be00a7ace46aceae121ab803f4e848efafe0180621aec8",
+    "gemini_pr14": {
+      "number": 14,
+      "head": "48eb0586e273f96dc20b346ed444d00ab0f3ac30",
+      "branch": "gemini/tactical-bot-intelligence-v1",
+      "draft": true,
+      "state": "open",
+      "merged": false,
+      "url": "https://github.com/calebaiken/sightbreak/pull/14"
+    },
+    "compare_sha256": "ceaa9eca5290dec7a6f088ec8408cd88d37bb3e2b6503fc734eff11a0ba0e014",
+    "after_freeze_changes_integrated_or_validated": false
+  },
+  "primary_report": {
+    "sha256": "5a26944267c0919d3bcda9d3425e28e035eebd5d8bd8d160f344626bdf85da95",
+    "reviewed_lines": 149,
+    "acceptance_qualifications_present": true,
+    "relative_links": [
+      {
+        "label": "Final head receipt",
+        "target": "three-agent-evidence/stabilization-v2/final-source-heads.json",
+        "exists": true
+      },
+      {
+        "label": "after-freeze comparison",
+        "target": "three-agent-evidence/stabilization-v2/gemini-after-freeze-compare.json",
+        "exists": true
+      },
+      {
+        "label": "source-manifest-r2.json",
+        "target": "three-agent-evidence/stabilization-v2/source-manifest-r2.json",
+        "exists": true
+      },
+      {
+        "label": "historical report",
+        "target": "THREE_AGENT_INTEGRATION_REPORT.md",
+        "exists": true
+      },
+      {
+        "label": "Verbatim independent AI review",
+        "target": "three-agent-evidence/stabilization-v2/ai/REVIEW.md",
+        "exists": true
+      },
+      {
+        "label": "Independent causal review",
+        "target": "three-agent-evidence/stabilization-v2/audio/CAUSALITY_REVIEW.md",
+        "exists": true
+      },
+      {
+        "label": "network cleanup review",
+        "target": "three-agent-evidence/stabilization-v2/network-review/NETWORK_REVIEW.md",
+        "exists": true
+      },
+      {
+        "label": "Independent timing report",
+        "target": "three-agent-evidence/stabilization-v2/timing/REPORT.md",
+        "exists": true
+      },
+      {
+        "label": "Verbatim graphics review",
+        "target": "three-agent-evidence/stabilization-v2/graphics/GRAPHICS_REVIEW.md",
+        "exists": true
+      },
+      {
+        "label": "independent network receipt",
+        "target": "three-agent-evidence/stabilization-v2/network-review/final-campaign-preservation-aee6b73.json",
+        "exists": true
+      },
+      {
+        "label": "All 74 rows",
+        "target": "three-agent-evidence/stabilization-v2/matrix-r2/MATRIX.md",
+        "exists": true
+      },
+      {
+        "label": "machine summary",
+        "target": "three-agent-evidence/stabilization-v2/matrix-r2/summary.json",
+        "exists": true
+      },
+      {
+        "label": "child resource audit",
+        "target": "three-agent-evidence/stabilization-v2/matrix-r2/nested-resource-cleanup.json",
+        "exists": true
+      },
+      {
+        "label": "frozen identity",
+        "target": "three-agent-evidence/stabilization-v2/matrix-r2/source-identity.json",
+        "exists": true
+      },
+      {
+        "label": "Complete campaign",
+        "target": "three-agent-evidence/stabilization-v2/network-r2-imported/campaign.json",
+        "exists": true
+      },
+      {
+        "label": "Local build manifest",
+        "target": "three-agent-evidence/stabilization-v2/builds/manifest.json",
+        "exists": true
+      },
+      {
+        "label": "local SHA256 checksums",
+        "target": "three-agent-evidence/stabilization-v2/builds/checksums.txt",
+        "exists": true
+      },
+      {
+        "label": "inspection result",
+        "target": "three-agent-evidence/stabilization-v2/builds/verification/results.json",
+        "exists": true
+      },
+      {
+        "label": "Network native receipt",
+        "target": "three-agent-evidence/stabilization-v2/native-network-r2/results.json",
+        "exists": true
+      },
+      {
+        "label": "Live offline receipt",
+        "target": "three-agent-evidence/stabilization-v2/native-offline-r2-live-input/results.json",
+        "exists": true
+      },
+      {
+        "label": "Final run",
+        "target": "three-agent-evidence/stabilization-v2/actions-v2-final-run.json",
+        "exists": true
+      },
+      {
+        "label": "artifact metadata",
+        "target": "three-agent-evidence/stabilization-v2/actions-v2-artifacts.json",
+        "exists": true
+      },
+      {
+        "label": "download receipt",
+        "target": "three-agent-evidence/stabilization-v2/actions-v2-download-receipt.json",
+        "exists": true
+      },
+      {
+        "label": "decoded job log",
+        "target": "three-agent-evidence/stabilization-v2/actions-v2-job.txt",
+        "exists": true
+      },
+      {
+        "label": "Independent final evidence audit",
+        "target": "three-agent-evidence/stabilization-v2/final-review/AUDIT.md",
+        "exists": false
+      }
+    ],
+    "only_missing_target_is_this_pending_audit_copy": true
+  },
+  "qualifications": [
+    "New 74/74 campaign does not rewrite historical 64/70 or unsuccessful attempts.",
+    "Unexplained broad-wrapper audio-cancel baseline failure remains retained; later passes do not recover discarded raw cause.",
+    "Legacy/current protocol negative diagnostics and copied historical logs contain ERROR lines; no universal error-free claim.",
+    "Tactical and visual 8.5 gates remain failed; physical devices, public Internet, listening quality, production readiness are not established.",
+    "Static menu 0.3.0-dev banner remains stale relative to 0.3.1-dev/build4 metadata.",
+    "CI receipts and supported download audited; no additional CI aggregate byte download/rehash performed by this reviewer."
+  ],
+  "primary_evidence_copy": {
+    "matrix_log_count": 187,
+    "all_matrix_logs_byte_identical": true,
+    "summary_identity_cleanup_byte_identical": true,
+    "matrix_markdown_sha256": "1db9409848decb508ffc53d06edae5aed7dce0c852d5f3fb67e18764da043dfe",
+    "all_74_rows_present": true
+  },
+  "natural_lifecycle": {
+    "rounds": 12,
+    "simulated_seconds": 380.9,
+    "kills": 78,
+    "halftime": true,
+    "result_reports": 1,
+    "plant_observed": false
+  }
+}
