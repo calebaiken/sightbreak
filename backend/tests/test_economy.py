@@ -13,7 +13,7 @@ from fastapi.testclient import TestClient
 from sqlalchemy import text, select, func
 from sqlalchemy.exc import DBAPIError
 from app import app, engine, Base, transaction, mint, credit, password_hasher, digest, now
-from models import Player, Session, Item, Ledger, Trade, Operation
+from models import Player, Session, Item, Ledger, Trade, Operation, Listing
 
 @pytest.fixture(autouse=True)
 def clean_database():
@@ -113,6 +113,58 @@ def test_market_reservation_cancel_and_ownership(client):
     assert post(client,f'/market/{listing}/cancel',hb).status_code==404
     assert post(client,f'/market/{listing}/cancel',ha).status_code==200
     assert post(client,'/market/list',ha,dict(item_id=iid,price=400)).status_code==201
+
+@pytest.mark.parametrize('expected', [399, 401])
+def test_market_expected_price_rejects_mismatch_atomically(client, expected):
+    seller,hs=player(); buyer,hb=player(1000); iid=item(seller)
+    lid=post(client,'/market/list',hs,dict(item_id=iid,price=400)).json()['id']
+    body=idem(expected_price=expected)
+    with transaction() as db:
+        before=(db.scalar(select(func.count()).select_from(Ledger)),
+                db.scalar(select(func.count()).select_from(Operation)))
+    response=post(client,f'/market/{lid}/buy',hb,body)
+    assert response.status_code==409 and 'price changed' in response.json()['detail']
+    with transaction() as db:
+        assert db.get(Player,buyer).credits==1000 and db.get(Player,seller).credits==0
+        assert db.get(Item,iid).owner_id==seller
+        assert db.get(Item,iid).reservation=='market:'+lid
+        assert db.get(Listing,lid).state=='active'
+        assert before==(db.scalar(select(func.count()).select_from(Ledger)),
+                        db.scalar(select(func.count()).select_from(Operation)))
+    # Rejection never burns a receipt; a fresh confirmation can use it.
+    assert post(client,f'/market/{lid}/buy',hb,{**body,'expected_price':400}).status_code==200
+
+def test_market_guarded_replay_is_exact_and_applies_once(client):
+    seller,hs=player(); buyer,hb=player(1000); iid=item(seller)
+    lid=post(client,'/market/list',hs,dict(item_id=iid,price=400)).json()['id']
+    body=idem(expected_price=400)
+    def buy(_):
+        with TestClient(app) as c: return post(c,f'/market/{lid}/buy',hb,body)
+    with ThreadPoolExecutor(max_workers=2) as pool: results=list(pool.map(buy,range(2)))
+    assert all(r.status_code==200 for r in results) and results[0].json()==results[1].json()
+    with transaction() as db: db.get(Listing,lid).price=900
+    assert post(client,f'/market/{lid}/buy',hb,body).json()==results[0].json()
+    assert post(client,f'/market/{lid}/buy',hb,{**body,'expected_price':900}).status_code==409
+    assert post(client,f'/market/{lid}/buy',hb,{'idempotency_key':body['idempotency_key']}).status_code==409
+    with transaction() as db:
+        assert db.get(Player,buyer).credits==600 and db.get(Player,seller).credits==388
+        assert db.get(Item,iid).owner_id==buyer
+
+def test_market_pre_guard_receipt_hash_still_replays(client):
+    from app import fingerprint
+    buyer,hb=player(1000); lid=str(uuid4()); body=idem()
+    response={'item':{'id':'legacy-receipt'},'credits':600,'fee':12}
+    with transaction() as db:
+        db.add(Operation(id=f'{buyer}:buy:{lid}:{body["idempotency_key"]}',
+                         request_hash=fingerprint(body),response=response))
+    assert post(client,f'/market/{lid}/buy',hb,body).json()==response
+    assert post(client,f'/market/{lid}/buy',hb,{**body,'expected_price':None}).json()==response
+    assert post(client,f'/market/{lid}/buy',hb,{**body,'expected_price':400}).status_code==409
+
+@pytest.mark.parametrize('expected', [0, -1, 10000001, True, '400', 400.0])
+def test_market_expected_price_is_a_bounded_strict_integer(client, expected):
+    _,hb=player(1000)
+    assert post(client,f'/market/{uuid4()}/buy',hb,idem(expected_price=expected)).status_code==422
 
 def test_trade_revision_invalidates_confirmation_and_transfers_once(client):
     a,ha=player(); b,hb=player(); ia=item(a); ib=item(b)
