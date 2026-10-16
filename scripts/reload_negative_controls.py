@@ -49,7 +49,7 @@ CONT_CALM_ARGS = ['--', '--reduced', '--variant=calm']
 CONT = ('continuity', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_continuity_test.gd'])
 CONT_CALM = ('continuity (calm)', CONT[1] + CONT_CALM_ARGS)
 # The parts separate in the lightings (sun and a dark interior at the ready pose: the quick form of the validate.sh run).
-LIGHT = ('light separation', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/viewmodel_light_probe.gd', '--', '--assert', '--poses=ready,hip', '--scenarios=sun,dark interior'])
+LIGHT = ('light separation', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/viewmodel_light_probe.gd', '--', '--assert', '--poses=ready,grab,hip', '--scenarios=sun,dark interior'])
 # The rifle's painted metal holds its finish through the reload (native: it renders the receiver and handguard at reload ticks).
 DISC = ('finish stability', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_discolour_probe.gd', '--', '--assert', '--conditions=base', '--ticks=0,40,122,126,130,134'])
 
@@ -77,7 +77,7 @@ SOURCE = [
     ('N28', 'the grip is not darkened over its baked graphite (it was level with the receiver and the gloves)', [(WEAPON_MODEL, 'const GRIP_DARKEN := 0.24', 'const GRIP_DARKEN := 1.0')], None, [LIGHT]),
     ('N29', 'the painted metal has no fill floor of its own (the rifle dissolves in a dark interior)', [(SHADING, 'const METAL_FLOOR := 0.12', 'const METAL_FLOOR := 0.0')], None, [ART, LIGHT]),
     ('N35', 'the arms get no ground bounce (the support forearm\'s underside is a near-black wedge in the hip retrieval)', [(WEAPON_MODEL, 'const ARMS_BOUNCE := Vector3(0.30, 0.28, 0.23)', 'const ARMS_BOUNCE := Vector3(0.0, 0.0, 0.0)')], None, [ART, LIGHT]),
-    ('N31', 'the arms reflect the whole studio (the gloves read as a pale veil beside the sleeves)', [(WEAPON_MODEL, 'const ARMS_REFLECT := 0.10', 'const ARMS_REFLECT := 1.0')], None, [ART, LIGHT]),
+    ('N31', 'the arms reflect the whole studio (the gloves read as a pale veil beside the sleeves)', [(WEAPON_MODEL, 'const ARMS_REFLECT := 0.05', 'const ARMS_REFLECT := 1.0')], None, [ART, LIGHT]),
     ('N22', 'the replacement is drawn from the start of the hip trip: it floats in view with no hand on it', [(ACTOR, '_magazine_spare.visible = progress >= SBReloadPhases.ACQUIRE', '_magazine_spare.visible = progress >= SBReloadPhases.DROP')], None, [SEQ]),
     ('N14', 'the seat phase is changed in reload_phases.gd without rebuilding the clip', [(PHASES, 'const SEAT := 0.80', 'const SEAT := 0.78')], None, [ART, SEQ]),
     ('A1', 'a reload cut short leaves its sounds playing', [(ACTOR, '\telif _reload_visual_active and not _reload_fired.has("seat"):\n\t\t_reload_audio.stop_all() # cancelled before the seat: the sounds that were playing stop with it\n', '')], None, [AUD]),
