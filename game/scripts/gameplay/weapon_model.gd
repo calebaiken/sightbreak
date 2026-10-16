@@ -26,6 +26,12 @@ var _viewmodel := false
 const RELAY_AR := "res://assets/weapons/relay_ar/relay_ar.glb"
 ## Albedo factor of the pistol grip over its baked colour (measured against the gloves; see _build_authored_rifle).
 const GRIP_DARKEN := 0.24
+## The key and strip reflections of the viewmodel studio on the arms (the rifle uses ViewmodelShading's own): a fabric glove
+## must not shine.
+const ARMS_SHEEN := 0.0
+## How much of the studio the arms reflect (the rifle's metal uses ViewmodelShading's default, deliberately low): fabric and
+## rubber at this strength keep the brightness the sky's reflection gave them before the studio replaced it.
+const ARMS_REFLECT := 0.05
 ## The fill's albedo floor for the arms (ViewmodelShading.LIFT is the rifle's): higher, so the near-black gloves are
 ## not left in a dark interior with nothing to read; the grip gets none, so it stays the darkest thing in the hand.
 const ARMS_LIFT := 0.50
@@ -127,6 +133,8 @@ static func _add_arms(parent: Node3D, placement: Transform3D, result: Dictionary
 	material.set_shader_parameter("viewmodel_rim", ARMS_RIM)
 	material.set_shader_parameter("viewmodel_floor", ARMS_FLOOR)
 	material.set_shader_parameter("viewmodel_specular", ARMS_SPECULAR)
+	material.set_shader_parameter("viewmodel_sheen", ARMS_SHEEN)
+	material.set_shader_parameter("viewmodel_reflect", ARMS_REFLECT)
 	for mesh: MeshInstance3D in arms.find_children("*", "MeshInstance3D", true, false):
 		mesh.material_override = material
 		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF

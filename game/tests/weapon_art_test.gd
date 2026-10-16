@@ -313,12 +313,22 @@ func _run() -> void:
 	# Viewmodel drawing: first person uses the narrower projection, inspection does not.
 	check(arms_mesh.material_override is ShaderMaterial and arms_mesh.material_override.get_shader_parameter("viewmodel_fov") == ViewmodelShading.FOV, "arms draw with the viewmodel projection")
 	check((actor._gun.get_node("body") as MeshInstance3D).material_override.get_shader_parameter("viewmodel_fov") == ViewmodelShading.FOV and actor._finish.get_shader_parameter("viewmodel_fov") == ViewmodelShading.FOV, "rifle body and finish draw with the viewmodel projection in first person")
-	# The painted metal's roughness floor (the rifle turned pale as the reload rolled it, reflecting the sky's horizon band):
-	# first person sets it, the code that applies it is in the shader, and inspection (the engine's own lighting) has none.
-	check(actor._finish.get_shader_parameter("viewmodel_roughness") == ViewmodelShading.METAL_ROUGHNESS and ViewmodelShading.METAL_ROUGHNESS >= 0.7, "first-person painted metal has a roughness floor of at least 0.7 (%s)" % actor._finish.get_shader_parameter("viewmodel_roughness"))
-	check(actor._finish.get_shader_parameter("viewmodel_floor") == ViewmodelShading.METAL_FLOOR and ViewmodelShading.METAL_FLOOR > ViewmodelShading.FLOOR, "the painted metal's fill floor (%s) is above the rest of the viewmodel's (%s): it replaces the sheen the roughness floor removed" % [ViewmodelShading.METAL_FLOOR, ViewmodelShading.FLOOR])
+	# The viewmodel's own lighting environment (the rifle turned pale as the reload rolled it, reflecting the sky's horizon band;
+	# a roughness floor held it but took the metal's sheen, so the sky's radiance and ambient light are not applied to first-person
+	# materials and a studio without a horizon edge is reflected instead): first person declares it, inspection and third person
+	# (the engine's own lighting) do not, and the viewmodel shaders agree with each other.
+	var studio_ok: bool = CosmeticMaterial.shader(true).code.contains("render_mode ambient_light_disabled") and CosmeticMaterial.shader(true).code.contains("viewmodel_env")
+	studio_ok = studio_ok and ViewmodelShading.SURFACE.contains("render_mode ambient_light_disabled") and ViewmodelShading.SURFACE.contains("viewmodel_env")
+	check(studio_ok, "first-person finish and surface shaders replace the sky's radiance and ambient light with the viewmodel studio")
+	check(not CosmeticMaterial.shader().code.contains("ambient_light_disabled") and not CosmeticMaterial.shader().code.contains("viewmodel_"), "inspection and third person keep the engine's own lighting")
+	check(not ViewmodelShading.STUDIO.replace("smoothstep(", "").contains("step(") and ViewmodelShading.STUDIO.contains("smoothstep(-1.0, 1.0, r.y)"), "the studio's gradient has no hard edge (a step at the horizon is what made the metal change colour)")
+	var receiver_material := actor._gun.get_node("paint_receiver").material_override as ShaderMaterial
+	var handguard_material := actor._gun.get_node("paint_handguard").material_override as ShaderMaterial
+	check(receiver_material == actor._finish and float(receiver_material.get_shader_parameter("viewmodel_roughness")) == ViewmodelShading.METAL_ROUGHNESS and ViewmodelShading.METAL_ROUGHNESS < 0.5, "the receiver keeps the finish's own (machined metal) response: roughness floor %s" % receiver_material.get_shader_parameter("viewmodel_roughness"))
+	check(handguard_material != receiver_material and float(handguard_material.get_shader_parameter("viewmodel_roughness")) == ViewmodelShading.HANDGUARD_ROUGHNESS and float(handguard_material.get_shader_parameter("viewmodel_metal_scale")) == ViewmodelShading.HANDGUARD_METAL and ViewmodelShading.HANDGUARD_ROUGHNESS > ViewmodelShading.METAL_ROUGHNESS, "the handguard is a polymer part: its own, rougher and less metallic material (%s, %s)" % [handguard_material.get_shader_parameter("viewmodel_roughness"), handguard_material.get_shader_parameter("viewmodel_metal_scale")])
+	check(actor._finish.get_shader_parameter("viewmodel_floor") == ViewmodelShading.METAL_FLOOR and ViewmodelShading.METAL_FLOOR > ViewmodelShading.FLOOR, "the painted metal's fill floor (%s) is above the rest of the viewmodel's (%s)" % [ViewmodelShading.METAL_FLOOR, ViewmodelShading.FLOOR])
 	check(arms_mesh.material_override.get_shader_parameter("viewmodel_specular") == WeaponModel.ARMS_SPECULAR and WeaponModel.ARMS_SPECULAR >= 0.0 and WeaponModel.ARMS_SPECULAR < 0.5 and arms_mesh.material_override.get_shader_parameter("viewmodel_floor") == WeaponModel.ARMS_FLOOR, "the arms carry a dielectric specular below the engine's default (%s) and their own fill (%s)" % [WeaponModel.ARMS_SPECULAR, WeaponModel.ARMS_FLOOR])
-	check(CosmeticMaterial.shader(true).code.contains("ROUGHNESS = max(ROUGHNESS, viewmodel_roughness)") and not CosmeticMaterial.shader().code.contains("viewmodel_roughness"), "only the first-person cosmetic shader applies the roughness floor")
+	check(arms_mesh.material_override.get_shader_parameter("viewmodel_sheen") == WeaponModel.ARMS_SHEEN and arms_mesh.material_override.get_shader_parameter("viewmodel_reflect") == WeaponModel.ARMS_REFLECT and WeaponModel.ARMS_REFLECT < 0.3, "the arms reflect the studio far less than the metal does, so fabric does not shine (%s, %s)" % [WeaponModel.ARMS_SHEEN, WeaponModel.ARMS_REFLECT])
 	var inspected := Node3D.new()
 	root.add_child(inspected)
 	WeaponModel.build(inspected, "rifle", false)
