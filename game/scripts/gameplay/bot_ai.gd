@@ -101,11 +101,17 @@ const ATTACK_SPLIT_WAYPOINTS := {
 static func profile_for(difficulty: String) -> Dictionary:
 	return PROFILES.get(difficulty, PROFILES["normal"])
 
+static func get_profile(difficulty: String) -> Dictionary:
+	return profile_for(difficulty)
+
 static func create_state(actor: SBActor) -> Dictionary:
+	return new_bot_state(actor.position if actor != null else Vector3.ZERO)
+
+static func new_bot_state(initial_pos: Vector3 = Vector3.ZERO) -> Dictionary:
 	return {
 		"reaction": 0.0,
 		"target": 0,
-		"last_position": actor.position,
+		"last_position": initial_pos,
 		"stuck": 0.0,
 		"last_seen": Vector3.ZERO,
 		"seen_at": -100.0,
@@ -124,31 +130,57 @@ static func create_state(actor: SBActor) -> Dictionary:
 	}
 
 static func create_team_state() -> Dictionary:
+	return new_team_state()
+
+static func new_team_state() -> Dictionary:
 	return {
 		0: {
 			"primary_site": 0,
+			"target_site": 0,
 			"contacts": {},
 			"death_alert_pos": Vector3.ZERO,
 			"death_alert_at": -100.0
 		},
 		1: {
 			"primary_site": 0,
+			"target_site": 0,
 			"contacts": {},
 			"death_alert_pos": Vector3.ZERO,
 			"death_alert_at": -100.0
 		}
 	}
 
-static func select_round_plan(round_number: int, rng: RandomNumberGenerator) -> int:
-	# Deterministic-friendly site selection with variety across rounds.
-	if round_number <= 1:
-		return 0
-	var roll: int = (round_number + int(rng.seed % 7)) % 3
-	if roll == 0:
-		return 0
-	if roll == 1:
-		return 1
-	return round_number % 2
+static func select_round_plan(match_node: Node, _team: int = 0) -> Dictionary:
+	var round_num: int = int(match_node.round_number)
+	var target_site: int = round_num % 2
+	var carrier: SBActor = match_node.actors.get(match_node.objective_carrier) as SBActor
+	if carrier != null and carrier.alive and not match_node._is_bot(carrier.actor_id):
+		var dist_a: float = carrier.position.distance_to(match_node.arena.sites[0])
+		var dist_b: float = carrier.position.distance_to(match_node.arena.sites[1])
+		if minf(dist_a, dist_b) < 22.0 or carrier.position.z > -8.0:
+			target_site = 0 if dist_a <= dist_b else 1
+	if match_node.get("_team_ai_state") != null and match_node._team_ai_state is Dictionary:
+		if not match_node._team_ai_state.has(0):
+			match_node._team_ai_state[0] = {"primary_site": target_site, "target_site": target_site, "contacts": {}}
+		else:
+			match_node._team_ai_state[0]["primary_site"] = target_site
+			match_node._team_ai_state[0]["target_site"] = target_site
+	return {"target_site": target_site, "primary_site": target_site}
+
+static func get_site_hold_position(arena: RelayYard, site_pos: Vector3, slot: int) -> Vector3:
+	var site_idx: int = 0 if site_pos.x < 0.0 else 1
+	var offsets: Array = SITE_HOLD_OFFSETS.get(site_idx, SITE_HOLD_OFFSETS[0])
+	var candidate: Vector3 = site_pos + (offsets[posmod(slot, offsets.size())] as Vector3)
+	if arena._clear_path(candidate, candidate + Vector3(0.01, 0.0, 0.01)):
+		return candidate
+	var nearest_wp: Vector3 = site_pos
+	var best_dist: float = INF
+	for wp: Vector3 in arena.waypoints:
+		var d: float = wp.distance_squared_to(candidate)
+		if d < best_dist:
+			best_dist = d
+			nearest_wp = wp
+	return nearest_wp
 
 static func choose_buy_weapon(actor: SBActor, difficulty: String, round_number: int) -> String:
 	if difficulty != "easy" and actor.credits >= 3200 and (actor.actor_id + round_number) % 5 == 0:
@@ -157,7 +189,35 @@ static func choose_buy_weapon(actor: SBActor, difficulty: String, round_number: 
 		return "rifle"
 	return "smg"
 
-static func record_damage(bot_states: Dictionary, actors: Dictionary, victim_id: int, attacker_id: int, elapsed: float) -> void:
+static func buy_equipment(actor: SBActor, difficulty: String, round_number: int) -> String:
+	var choice: String = choose_buy_weapon(actor, difficulty, round_number)
+	actor.buy_weapon(choice)
+	var spec: Dictionary = SBWeapons.get_weapon(actor.weapon_id)
+	actor.ammo = int(spec.get("magazine", 30))
+	actor.reserve = int(spec.get("reserve", 60))
+	actor.smokes = 1
+	actor.grenades = 1
+	return actor.weapon_id
+
+static func record_damage(arg1: Variant, arg2: Variant, arg3: Variant, arg4: Variant, arg5: Variant = null) -> void:
+	var bot_states: Dictionary
+	var actors: Dictionary
+	var victim_id: int
+	var attacker_id: int
+	var elapsed: float
+	if arg1 is Node:
+		var match_node: Node = arg1
+		bot_states = match_node._bot_state
+		actors = match_node.actors
+		victim_id = int(arg2)
+		attacker_id = int(arg3)
+		elapsed = float(match_node._elapsed)
+	else:
+		bot_states = arg1 as Dictionary
+		actors = arg2 as Dictionary
+		victim_id = int(arg3)
+		attacker_id = int(arg4)
+		elapsed = float(arg5)
 	if not bot_states.has(victim_id):
 		return
 	var state: Dictionary = bot_states[victim_id]
@@ -170,11 +230,31 @@ static func record_damage(bot_states: Dictionary, actors: Dictionary, victim_id:
 		var dir: Vector3 = (attacker.position - victim.position).normalized()
 		state["damaged_from"] = victim.position + dir * 10.0
 
-static func record_elimination(team_state: Dictionary, bot_states: Dictionary, actors: Dictionary, victim_id: int, elapsed: float) -> void:
+static func record_elimination(arg1: Variant, arg2: Variant, arg3: Variant, arg4: Variant, arg5: Variant = null) -> void:
+	var team_state: Dictionary
+	var bot_states: Dictionary
+	var actors: Dictionary
+	var victim_id: int
+	var elapsed: float
+	if arg1 is Node:
+		var match_node: Node = arg1
+		team_state = match_node._team_ai_state if match_node.get("_team_ai_state") is Dictionary else {}
+		bot_states = match_node._bot_state
+		actors = match_node.actors
+		victim_id = int(arg2)
+		elapsed = float(match_node._elapsed)
+	else:
+		team_state = arg1 as Dictionary
+		bot_states = arg2 as Dictionary
+		actors = arg3 as Dictionary
+		victim_id = int(arg4)
+		elapsed = float(arg5)
 	var victim: SBActor = actors.get(victim_id) as SBActor
 	if victim == null:
 		return
-	var t_state: Dictionary = team_state.get(victim.team, {})
+	if not team_state.has(victim.team):
+		team_state[victim.team] = {"primary_site": 0, "target_site": 0, "contacts": {}}
+	var t_state: Dictionary = team_state[victim.team]
 	t_state["death_alert_pos"] = victim.position
 	t_state["death_alert_at"] = elapsed
 	for ally: SBActor in actors.values():
@@ -408,6 +488,19 @@ static func _select_objective_and_destination(match_node: Node, actor: SBActor, 
 					destination = match_node.arena.sites[primary_site] + offsets[slot]
 				else:
 					destination = match_node.arena.sites[primary_site]
+			var hearing_range: float = float(profile.get("hearing_range", 24.0))
+			if match_node._elapsed - float(state.get("heard_at", -100.0)) < SOUND_MEMORY_SECONDS:
+				var heard_pos: Vector3 = state.get("heard_pos", Vector3.ZERO)
+				if actor.position.distance_to(heard_pos) <= hearing_range:
+					destination = heard_pos
+					role = "investigate_sound"
+			for heard_id: int in match_node._heard:
+				if match_node.actors.has(heard_id) and match_node.actors[heard_id].team != actor.team:
+					var h_time: float = float(match_node._heard[heard_id].time)
+					var h_pos: Vector3 = match_node._heard[heard_id].position
+					if match_node._elapsed - h_time < SOUND_MEMORY_SECONDS and actor.position.distance_to(h_pos) <= hearing_range:
+						destination = h_pos
+						role = "investigate_sound"
 	else:
 		# Defender logic before plant
 		var anchor_idx: int = (actor.actor_id - 6) % DEFENDER_ANCHORS.size()
@@ -431,6 +524,14 @@ static func _select_objective_and_destination(match_node: Node, actor: SBActor, 
 
 	state["role"] = role
 	return {"destination": destination, "interact": interact, "primary_site": primary_site}
+
+static func select_destination(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary, _interact_override: bool = false, _defuser_id: int = 0) -> Vector3:
+	_update_auditory_and_team_memory(match_node, actor, state, profile)
+	var plan: Dictionary = _select_objective_and_destination(match_node, actor, state, profile)
+	return plan.get("destination", actor.position)
+
+static func tick_bot(match_node: Node, actor: SBActor, delta: float) -> void:
+	compute_bot_input(match_node, actor, delta)
 
 static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) -> void:
 	if not actor.alive or match_node.phase != "live":
@@ -547,6 +648,7 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) ->
 		var mem_window: float = float(profile.get("memory_duration", 2.0))
 		# Investigate a briefly remembered sighting; never aim/fire at hidden live coordinates.
 		if match_node._elapsed - float(state.get("seen_at", -100.0)) < mem_window and not interact and match_node.objective_state != "planted":
+			state["role"] = "pursue_memory"
 			if actor.health <= float(profile.get("retreat_hp", 0.0)):
 				destination = cover_position_from_point(match_node, actor, state["last_seen"])
 			else:

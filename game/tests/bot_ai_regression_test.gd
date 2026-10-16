@@ -1,6 +1,6 @@
 extends SceneTree
 
-class PerceptionActor extends SBActor:
+class PerceptionActor extends "res://scripts/gameplay/actor.gd":
 	var visible_enemy: bool = true
 
 	func can_see(other: SBActor) -> bool:
@@ -303,7 +303,7 @@ func _test_lifecycle_difficulty_and_network_integrity(failures: Array[String]) -
 		failures.append("_begin_round must reset all bot states cleanly")
 
 	# Difficulty settings preserve identical weapon authority (damage, cooldown, spread)
-	if float(SBWeapons.get_weapon("rifle").damage) != 35.0:
+	if float(SBWeapons.get_weapon("rifle").get("damage", 0.0)) != 35.0:
 		failures.append("Bot difficulty must never alter authoritative weapon damage")
 
 	# Protocol version and ranked payload eligibility remain untouched

@@ -327,7 +327,7 @@ func _begin_round() -> void:
 	_damage_history.clear()
 	_heard.clear()
 	_team_ai_state = SBBotAI.create_team_state()
-	_team_ai_state[0]["primary_site"] = SBBotAI.select_round_plan(round_number, _rng)
+	SBBotAI.select_round_plan(self, 0)
 	var attack_index: int = 0
 	var defend_index: int = 0
 	objective_carrier = 0
