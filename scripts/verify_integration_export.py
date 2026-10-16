@@ -112,7 +112,9 @@ class NativeUI:
         image.save(path)
 
     def menu_visible(self):
-        pixel = ImageGrab.grab(xdisplay=self.display).getpixel((46, 299))
+        # The connect page also has a crimson button at y=299. Sample the
+        # deploy button's lower edge, outside the connect button's rectangle.
+        pixel = ImageGrab.grab(xdisplay=self.display).getpixel((450, 340))
         return pixel[0] > 80 and pixel[0] > pixel[1] * 1.5
 
     def close(self):
