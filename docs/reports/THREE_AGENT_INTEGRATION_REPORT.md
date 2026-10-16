@@ -138,3 +138,7 @@ python3 scripts/build_manifest.py package
 ```
 
 Use a running loopback development PostgreSQL for backend checks and a free Xvfb display for native rendering; these commands do not install or configure missing dependencies. The matrix JSON contains the exact executed commands, durations, return codes and log names. AI and native-export probes have separate source-bound reproduction records. Build delivery CI intentionally builds/inspects packages; its success does not assert the regression matrix is green.
+
+## Published review checkpoint
+
+[Integration draft PR16](https://github.com/calebaiken/sightbreak/pull/16), based on PR11, and separate [marketplace guard draft PR15](https://github.com/calebaiken/sightbreak/pull/15) are published. Source-owner review comments were actually posted: [PR14](https://github.com/calebaiken/sightbreak/pull/14#pullrequestreview-5542908108), [PR2](https://github.com/calebaiken/sightbreak/pull/2#pullrequestreview-5542908229), [PR12](https://github.com/calebaiken/sightbreak/pull/12#pullrequestreview-5542908318). They are COMMENTED review records with actionable requests, not approvals. The integration remains a development draft; main and original source branches were preserved.
