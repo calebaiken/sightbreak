@@ -1,0 +1,7 @@
+ok   the replacement magazine is drawn at some tick after the acquisition
+ok   the replacement is not in the frame without the hand touching it for more than 6 ticks (0 unsupported ticks, longest run 0 ending at tick 0, up to 0 px)
+ok   the replacement's first visible tick (71) shows 8 px (under 1500: it enters through the edge)
+ok   it grows by at most 3500 px per tick on the way up (worst 2347 at tick 74)
+ok   the hand enters with it: 32541 px of hand at its first tick, 42477 two ticks later (at least 800)
+ok   from the tick the hand grips it (75) until the seat it touches at least 150 px of the replacement every tick (weakest 156 at tick 75)
+RELOAD_CONTINUITY_TEST view=sunlit reduced=false ticks=136 checks=6 failures=0

@@ -13,6 +13,7 @@ const CombatEffects = preload("res://scripts/gameplay/combat_effects.gd")
 const WeaponModel = preload("res://scripts/gameplay/weapon_model.gd")
 const Utility = preload("res://scripts/gameplay/utility.gd")
 const CosmeticMaterial = preload("res://scripts/ui/cosmetic_material.gd")
+const ViewmodelShading = preload("res://scripts/gameplay/viewmodel_shading.gd")
 const WALK_SPEED := 5.1
 const CROUCH_SPEED := 2.5
 const GRAVITY := 22.0
@@ -83,8 +84,77 @@ var _visual_look := Vector2.ZERO
 var _visual_initialized := false
 var _magazine: MeshInstance3D
 var _magazine_rest := Vector3.ZERO
+## Where the first-person weapon node rests, relative to the eye. Authored models move
+## it to their own balance point so tilts turn about the middle of the weapon.
+const GUN_REST := Vector3(0.235, -0.235, -0.42)
+var _gun_rest := GUN_REST
+## Ejection port in weapon-node space when the model provides one (authored models).
+var _ejection_point := Vector3.INF
+# Authored first person: drawn with the viewmodel projection, with rigged arms whose
+# reload clip is seeked by reload progress and whose index finger follows the kick.
+var _viewmodel := false
+var _arms_player: AnimationPlayer
+var _arms_skeleton: Skeleton3D
+var _arms_time := 0.0
+var _trigger_bones: Array[int] = []
+var _trigger_rest: Array[Quaternion] = []
+## Magazine drop down its own well, in the rifle's space (metres at full extraction), for
+## builds without the rigged arms.
+const MAGAZINE_DROP := 0.23
+## The authored reload's timing lives in SBReloadPhases (reload_phases.gd), the single
+## definition tools/art/arms_build.py keys the arms' clip to and the tests measure the imported
+## clip against. While a hand holds a magazine (the old one from SBReloadPhases.GRASP to DROP,
+## the replacement from ACQUIRE to LETGO) that magazine is posed from the hand bone, so the two
+## cannot drift apart; between, the old one falls and the replacement is not yet in view.
+var _magazine_rest_transform := Transform3D.IDENTITY
+## The magazine's transform in the hand bone's frame while it is held (measured once, at the
+## grasp, when the magazine is still in the well). The replacement is held the same way.
+var _grip_offset := Transform3D.IDENTITY
+var _grip_measured := false
+## The replacement magazine: a second instance of the same mesh, a separate visual identity that
+## enters the picture at SBReloadPhases.ACQUIRE and is the one in the well after the seat. At the
+## end of the reload the first one is shown again in the well (the two are identical, so nothing
+## pops). Presentation only: ammunition is Actor.ammo and never reads either.
+var _magazine_spare: MeshInstance3D
+## Where, and how fast, the old magazine is when the hand lets it go (gun space, measured once from
+## the clip) and what it does after: a ballistic fall, a pure function of the reload's progress.
+var _drop_origin := Transform3D.IDENTITY
+var _drop_velocity := Vector3.ZERO
+const DROP_SPIN := 5.5
+const DROP_VISIBLE_SECONDS := 0.5
+const DROP_GRAVITY := 9.8
+var _hand_bone := -1
+## How much of the reload's whole-weapon staging a player with reduced motion gets, by variant: the roll (about 26
+## degrees in "current") and the lift/shift of the weapon that keeps the hands and the magazine in the frame. "current"
+## is what shipped before and stays the default: the choice between the variants is a policy for the project (and ideally
+## for players with vestibular sensitivity) to make, not something this build decides; the variants exist so it can be
+## made from comparative sequences (docs/reports/media/art-v8/reduced-motion). The hand's own motion in the clip is
+## unaffected by all of them (it is part of the reload), and so are the timing, the sounds and the ammunition.
+## Each variant sets the components of the reload's presentation separately: `roll` and `lift` scale the rifle's whole-weapon
+## staging (ARMS_RELOAD_ROTATION and ARMS_RELOAD_OFFSET), `recoil` the muzzle climb of a shot, and `clip` is the support hand's
+## animation: "reload" is the default clip and "reload_calm" the same phases with a shallower reach to the pouch (14 cm down, not
+## 22), so that with less staging of the rifle the hand and the forearm are still in the frame at the pickup. Presentation only:
+## the timing, the sounds, the ammunition and the authoritative reload are the same in all of them.
+const REDUCED_RELOAD_VARIANTS := {
+	"current": {"roll": 1.0, "lift": 1.0, "recoil": 1.0, "clip": "reload"},
+	"calm": {"roll": 0.4, "lift": 1.3, "recoil": 0.6, "clip": "reload_calm"},
+	"still": {"roll": 0.0, "lift": 1.8, "recoil": 0.4, "clip": "reload_calm"},
+}
+var reduced_variant := "current"
+## With rigged arms the support hand performs the reload, so the weapon lifts, moves
+## toward the centre and rolls clockwise to keep the magazine and the hand in frame at the
+## grab and the seat (fitted through the viewmodel projection; weapon_art_test pins it).
+const ARMS_RELOAD_OFFSET := Vector3(-0.05, 0.14, 0.0)
+const ARMS_RELOAD_ROTATION := Vector3(0.05, 0.0, -0.45)
 var _legs: Array[Node3D] = []
 var _flash: float = 0.0
+## The muzzle smoke: age in seconds since the last shot (past SMOKE_SECONDS it is hidden), its node and material.
+var _smoke_age := 9.0
+var _smoke_node: MeshInstance3D
+var _smoke_material: ShaderMaterial
+const SMOKE_SECONDS := 0.45
+const FLASH_SECONDS := 0.040
+var _flash_variation := Vector3.ONE
 var _crouching: bool = false
 var _gun_color := Color("9aabb5")
 var _paint_parts: Array[MeshInstance3D] = []
@@ -93,13 +163,37 @@ var _finish: ShaderMaterial
 var _rng := RandomNumberGenerator.new()
 var _shot_audio: AudioStreamPlayer3D
 var _hurt_audio: AudioStreamPlayer3D
-var _mechanical_audio: AudioStreamPlayer3D
+var _reload_audio: SBReloadAudio
 var _reload_visual_active := false
-var _reload_visual_seated := false
+## The reload events (SBReloadPhases.EVENTS) this reload has already played: each plays once however the presentation
+## clock is corrected, and the next reload starts empty.
+var _reload_fired: Dictionary = {}
+## A reload that has reached the seat swaps the two magazine nodes when it ends, so the replacement
+## really is the magazine in the well afterwards and the next reload takes THAT one out.
+var _magazine_swap_pending := false
+## The shudder the rifle gives when the magazine is driven home: 1 at the seat click, falling away (presentation
+## only; the weight of the action, not part of any aim).
+var _seat_kick := 0.0
+const SEAT_KICK_OFFSET := Vector3(0.0, -0.007, 0.010)
+const SEAT_KICK_TURN := Vector3(0.020, 0.0, 0.010)
+const SEAT_KICK_DECAY := 11.0
+## The magazine node a hand is holding right now (null when neither is), for the tests and probes.
+var _magazine_in_hand: MeshInstance3D
+## Emitted when the presentation clock crosses a reload event (SBReloadPhases.EVENTS: unlatch, extract, pouch, land,
+## enter, seat; the procedural weapons have only unlatch and seat), on the tick the sound plays and the visible part
+## moves. Presentation only.
+signal reload_cue(event: String, progress: float)
+## The presentation clock's progress at the previous tick, to find the events it crossed.
+var _reload_visual_previous := 0.0
+## Presentation-only reload clock. Online clients receive reload_remaining at the
+## snapshot rate, so posing the weapon from it directly steps the reload clip. This
+## clock counts down every visual tick and stays within RELOAD_VISUAL_SLACK seconds below
+## the authoritative value. Nothing reads it but the viewmodel pose; it never writes
+## reload_remaining, ammunition or any other gameplay state.
+const RELOAD_VISUAL_SLACK := 0.1
+var _reload_clock := 0.0
 static var _shot_streams: Dictionary = {}
 static var _hurt_stream: AudioStreamWAV
-static var _reload_release: AudioStreamWAV
-static var _reload_seat: AudioStreamWAV
 
 func configure(id: int, side: int, label: String, local: bool = false) -> void:
 	actor_id = id
@@ -147,18 +241,12 @@ func _ready() -> void:
 	_hurt_audio.max_distance = 18
 	_hurt_audio.volume_db = -13
 	add_child(_hurt_audio)
-	_mechanical_audio = AudioStreamPlayer3D.new()
-	_mechanical_audio.max_distance = 16
-	_mechanical_audio.unit_size = 1.5
-	_mechanical_audio.volume_db = -17
-	_mechanical_audio.position.y = head_height
-	add_child(_mechanical_audio)
+	_reload_audio = SBReloadAudio.new()
+	add_child(_reload_audio)
 	if _shot_streams.is_empty():
 		for id in Weapons.DATA:
 			_shot_streams[id] = _synthesize_shot(id)
 		_hurt_stream = _synthesize_sound(0.08, 65, 0.25)
-		_reload_release = _synthesize_sound(0.06, 380, 0.58)
-		_reload_seat = _synthesize_sound(0.09, 240, 0.76)
 	_shot_audio.stream = _shot_streams[weapon_id]
 	_hurt_audio.stream = _hurt_stream
 
@@ -414,30 +502,74 @@ func _build_gun() -> void:
 	var model: Dictionary = WeaponModel.build(_gun, weapon_id, true)
 	_paint_parts.assign(model.paint)
 	_magazine = model.magazine
+	_viewmodel = model.get("viewmodel", false)
+	_magazine_spare = null
 	if is_instance_valid(_magazine):
 		_magazine_rest = _magazine.position
+		_magazine_rest_transform = _magazine.transform
+		if _viewmodel and _magazine.get_parent() != null:
+			# The replacement: its own instance of the same mesh, hidden until the hand takes it.
+			_magazine_spare = _magazine.duplicate() as MeshInstance3D
+			_magazine_spare.name = "magazine_spare"
+			_magazine_spare.visible = false
+			_magazine.get_parent().add_child(_magazine_spare)
+			_magazine_spare.transform = _magazine_rest_transform
 	_muzzle = model.muzzle
+	_smoke_node = null
+	if _viewmodel and is_local and is_instance_valid(_muzzle) and _muzzle.get_parent() != null:
+		# A grey puff that leaves the muzzle after a shot and thins out over SMOKE_SECONDS (presentation only).
+		_smoke_material = SBViewmodelShading.smoke()
+		_smoke_node = MeshInstance3D.new()
+		_smoke_node.name = "muzzle_smoke"
+		_smoke_node.mesh = SBWeaponModel.smoke_mesh()
+		_smoke_node.material_override = _smoke_material
+		_smoke_node.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+		_smoke_node.visible = false
+		_muzzle.get_parent().add_child(_smoke_node)
+		_smoke_node.position = _muzzle.position
+		_smoke_age = 9.0
+	_ejection_point = model.get("ejection", Vector3.INF)
+	_arms_player = model.get("arms_player")
+	_arms_skeleton = model.get("arms_skeleton")
+	_arms_time = 0.0
+	_grip_measured = false
+	_hand_bone = -1
+	_drop_velocity = Vector3.ZERO
+	_magazine_swap_pending = false
+	_seat_kick = 0.0
+	_reload_fired.clear()
+	if is_instance_valid(_reload_audio):
+		_reload_audio.stop_all() # a weapon change cancels a reload: nothing of it keeps sounding
+	_magazine_in_hand = null
+	_trigger_bones.clear()
+	_trigger_rest.clear()
+	if is_instance_valid(_arms_skeleton):
+		for bone_name in ["R_index_2", "R_index_3"]:
+			var bone := _arms_skeleton.find_bone(bone_name)
+			if bone >= 0:
+				_trigger_bones.append(bone)
+				_trigger_rest.append(_arms_skeleton.get_bone_rest(bone).basis.get_rotation_quaternion())
 	_gun_color = Weapons.get_weapon(weapon_id)["color"]
-	_gun.position = Vector3(0.235, -0.235, -0.42)
+	_gun_rest = GUN_REST + (model.get("pivot", Vector3.ZERO) as Vector3)
+	_gun.position = _gun_rest
 	apply_cosmetic(_cosmetic)
 
 func apply_cosmetic(metadata: Dictionary) -> void:
 	# Shared inspection/in-match material. Appearance never changes match state.
 	_cosmetic = metadata.duplicate(true)
-	_finish = CosmeticMaterial.finish(metadata)
+	_finish = CosmeticMaterial.finish(metadata, _viewmodel)
 	if metadata.is_empty():
 		var paint := Color("26323b")
 		_finish.set_shader_parameter("base_paint", paint)
-	for part in _paint_parts:
-		part.material_override = _finish
+	CosmeticMaterial.apply(_finish, _paint_parts)
 
 func _exit_tree() -> void:
 	if is_instance_valid(_shot_audio):
 		_shot_audio.stop()
 	if is_instance_valid(_hurt_audio):
 		_hurt_audio.stop()
-	if is_instance_valid(_mechanical_audio):
-		_mechanical_audio.stop()
+	if is_instance_valid(_reload_audio):
+		_reload_audio.stop_all()
 
 func reset_for_round(spawn: Vector3) -> void:
 	if _body_team != team:
@@ -470,7 +602,12 @@ func reset_for_round(spawn: Vector3) -> void:
 	_kick = 0.0
 	_equip_blend = 0.0
 	_reload_visual_active = false
-	_reload_visual_seated = false
+	_reload_fired.clear()
+	if is_instance_valid(_reload_audio):
+		_reload_audio.stop_all()
+	_reload_visual_previous = 0.0
+	_magazine_swap_pending = false
+	_reload_clock = 0.0
 	hit_feedback_remaining = 0.0
 	_flash = 0.0
 	_bob = 0.0
@@ -806,16 +943,37 @@ func show_hit_feedback(headshot: bool, lethal: bool) -> void:
 
 func play_shot_effect() -> void:
 	_kick = 1
-	_flash = 0.040
-	_muzzle.rotation.z = float(Time.get_ticks_msec() % 29) * 0.22
+	_flash = FLASH_SECONDS
+	# Each shot's flash differs a little in turn, length and width; the cosmetic variation
+	# comes from the clock, apart from the authoritative RNG.
+	var ticks := Time.get_ticks_msec()
+	_muzzle.rotation.z = float(ticks % 29) * 0.22
+	_flash_variation = Vector3(0.85 + float(ticks % 17) * 0.015, 0.85 + float(ticks % 13) * 0.02, 0.78 + float(ticks % 23) * 0.02)
+	_muzzle.scale = _flash_variation
+	_smoke_age = 0.0
 	if is_local:
-		CombatEffects.for_world(get_parent()).casing(_gun.global_position + global_basis * Vector3(0.065, 0.02, -0.11), global_basis.x)
+		var port: Vector3 = _gun.global_transform * _ejection_point if _ejection_point != Vector3.INF else _gun.global_position + global_basis * Vector3(0.065, 0.02, -0.11)
+		if _viewmodel:
+			port = _viewmodel_to_world(port)
+		CombatEffects.for_world(get_parent()).casing(port, global_basis.x, _cosmetic_floor(port))
 	if _shot_audio != null:
 		if _shot_audio.stream != _shot_streams[weapon_id]:
 			_shot_audio.stream = _shot_streams[weapon_id]
 		# Separate cosmetic RNG: audio variation cannot alter authoritative spread.
 		_shot_audio.pitch_scale = 0.98 + fmod(float(Time.get_ticks_msec()), 41.0) * 0.001
 		_shot_audio.play()
+
+## The height of the floor under a point, for the brass to bounce on: a downward ray against the
+## world only (never an actor), up to FLOOR_PROBE metres. -INF when there is no floor in reach,
+## and then the casing does not bounce at all. The actor's own feet are NOT a floor: in the air
+## they are above it, and brass that "landed" at the feet's height hung in mid-air. Cosmetic only.
+const FLOOR_PROBE := 4.0
+func _cosmetic_floor(from: Vector3) -> float:
+	if not is_inside_tree():
+		return -INF
+	var query := PhysicsRayQueryParameters3D.create(from, from + Vector3.DOWN * FLOOR_PROBE, 1, [get_rid()])
+	var hit := get_world_3d().direct_space_state.intersect_ray(query)
+	return float((hit.get("position", Vector3.ZERO) as Vector3).y) if not hit.is_empty() else -INF
 
 func _impact(at: Vector3, normal: Vector3, hit_actor: bool) -> void:
 	CombatEffects.for_world(get_parent()).impact(at, normal, hit_actor)
@@ -867,24 +1025,64 @@ func tick_visual(delta: float) -> void:
 	if camera == null or delta <= 0:
 		return
 	var reloading := reload_remaining > 0
-	var reload_fraction := 1.0 - reload_remaining / float(Weapons.get_weapon(weapon_id)["reload"])
+	var reload_duration := float(Weapons.get_weapon(weapon_id)["reload"])
+	# The presentation clock first (see RELOAD_VISUAL_SLACK), then everything the player sees and
+	# hears of the reload follows IT, not the authoritative fraction: the click lands on the frame
+	# the part moves, whatever the snapshot jitter.
+	if reloading and _reload_visual_active and reload_remaining - _reload_clock > reload_duration * 0.5:
+		# The timer went up by more than half a reload: this is a NEW reload that never showed an idle
+		# frame in between (a reload restarted at once). Close the old one the way an idle frame would.
+		_swap_magazines_if_seated()
+		if not _reload_fired.has("seat"):
+			_reload_audio.stop_all()
+		_reload_visual_active = false
+	if not reloading:
+		_reload_clock = 0.0
+	elif not _reload_visual_active or _reload_clock <= 0.0 or reload_remaining - _reload_clock > RELOAD_VISUAL_SLACK:
+		# A new reload, or an authoritative correction upward: follow it at once.
+		_reload_clock = reload_remaining
+	else:
+		_reload_clock = clampf(_reload_clock - delta, reload_remaining - RELOAD_VISUAL_SLACK, reload_remaining)
+	var visual_progress := SBReloadPhases.progress(_reload_clock, reload_duration) if reloading else 0.0
 	if reloading and not _reload_visual_active:
-		_reload_visual_seated = false
-		_mechanical_audio.stream = _reload_release
-		_mechanical_audio.play()
-	elif reloading and reload_fraction > 0.78 and not _reload_visual_seated:
-		_reload_visual_seated = true
-		_mechanical_audio.stream = _reload_seat
-		_mechanical_audio.play()
+		_reload_fired.clear()
+		_reload_audio.begin_reload()
+		_reload_visual_previous = visual_progress
+		if not is_instance_valid(_arms_player):
+			# Procedural magazines start to drop at once, so their release click is the start (as it always was).
+			_fire_reload_cue("unlatch", visual_progress)
+	if reloading:
+		var rigged_events := is_instance_valid(_arms_player)
+		for event in SBReloadPhases.crossed(_reload_visual_previous, visual_progress):
+			# The rigged hand has the whole set; a procedural magazine has a release (fired at the start, above) and a seat.
+			if not rigged_events and (event == "unlatch" or not SBReloadPhases.PROCEDURAL_EVENTS.has(event)):
+				continue
+			_fire_reload_cue(event, visual_progress)
+		_reload_visual_previous = visual_progress
+	elif _reload_visual_active and not _reload_fired.has("seat"):
+		_reload_audio.stop_all() # cancelled before the seat: the sounds that were playing stop with it
 	_reload_visual_active = reloading
+	_seat_kick = _seat_kick * exp(-delta * SEAT_KICK_DECAY) if _seat_kick > 0.002 else 0.0
 	var speed := Vector2(velocity.x, velocity.z).length()
 	_bob += delta * speed * 1.8
 	# Exponential return has the same response at 30, 60 and 120 Hz.
 	_kick *= exp(-delta * 20.0)
 	_flash = maxf(0, _flash - delta)
+	if _flash > 0.0:
+		# A flash is brightest and widest at the start and shrinks fast over its 40 ms.
+		_muzzle.scale = _flash_variation * (0.5 + 0.5 * _flash / FLASH_SECONDS)
 	hit_feedback_remaining = maxf(0, hit_feedback_remaining - delta)
 	_equip_blend *= exp(-delta * 14.0)
 	_muzzle.visible = _flash > 0 and alive
+	if is_instance_valid(_smoke_node):
+		_smoke_age += delta
+		var life := _smoke_age / SMOKE_SECONDS
+		_smoke_node.visible = life < 1.0 and alive
+		if _smoke_node.visible:
+			var grow := 0.55 + 1.25 * life
+			_smoke_node.scale = Vector3(grow, grow, 1.0 + 1.5 * life)
+			_smoke_node.position = _muzzle.position + Vector3(0.0, 0.012 * life, -0.14 * life)
+			_smoke_material.set_shader_parameter("fade", pow(1.0 - life, 1.6) * (0.5 if reduced_motion else 0.85))
 	_world_muzzle.visible = _flash > 0 and alive and not is_local
 	var gait := minf(speed / WALK_SPEED, 1.0) * (0.15 if _crouching else 0.35)
 	for i in range(_legs.size()):
@@ -904,18 +1102,157 @@ func tick_visual(delta: float) -> void:
 		_sway = _sway.limit_length(0.04)
 		if reduced_motion:
 			_sway = Vector2.ZERO
-		var reload_progress := 1.0 - clampf(reload_remaining / maxf(0.1, float(Weapons.get_weapon(weapon_id)["reload"])), 0, 1)
+		var reload_progress := 1.0 - clampf(_reload_clock / maxf(0.1, float(Weapons.get_weapon(weapon_id)["reload"])), 0, 1)
+		var rigged := is_instance_valid(_arms_player)
 		var reload_tilt := sin(reload_progress * PI) if reload_remaining > 0 else 0.0
-		if reduced_motion:
-			reload_tilt *= 0.2
+		if rigged and reload_remaining > 0:
+			# Into the reload pose before the hand reaches the magazine, held through the
+			# swap, and back after the seat.
+			reload_tilt = smoothstep(0.0, 0.16, reload_progress) * (1.0 - smoothstep(SBReloadPhases.LETGO, 1.0, reload_progress))
+		if reduced_motion and not rigged:
+			reload_tilt *= 0.2 # the procedural weapons' dip is plain motion: still calmed
+		# Reduced motion calms sway, bob and the equip swing; it does NOT shrink the rigged reload's staging
+		# lift, which is what keeps the hand and the magazine on screen for the swap (at 20 % of the
+		# lift the support hand fell below the frame). The pose is reached by the same smooth ramp.
 		var bob_weight := 0.0 if reduced_motion else minf(speed / WALK_SPEED, 1.0)
 		var equip_motion := _equip_blend * (0.25 if reduced_motion else 1.0)
-		_gun.position = Vector3(0.235 + sin(_bob) * 0.006 * bob_weight - _sway.x, -0.235 + absf(cos(_bob)) * 0.006 * bob_weight - reload_tilt * 0.13 - _sway.y - equip_motion * 0.19, -0.42 + _kick * (0.075 if weapon_id == "marksman" else 0.046) + equip_motion * 0.08)
-		_gun.rotation = Vector3(_kick * (0.13 if weapon_id == "sidearm" else 0.065) - reload_tilt * 0.38 - equip_motion * 0.48, -_sway.x * 1.8, reload_tilt * 0.38 - _sway.x)
+		var reload_offset := ARMS_RELOAD_OFFSET if rigged else Vector3(0, -0.13, 0)
+		var reload_rotation := ARMS_RELOAD_ROTATION if rigged else Vector3(-0.38, 0, 0.38)
+		var profile: Dictionary = REDUCED_RELOAD_VARIANTS["current"]
+		if reduced_motion and rigged:
+			profile = REDUCED_RELOAD_VARIANTS.get(reduced_variant, REDUCED_RELOAD_VARIANTS["current"])
+			reload_rotation *= float(profile.roll)
+			reload_offset *= float(profile.lift)
+		var kick := _kick * (float(profile.recoil) if reduced_motion and rigged else 1.0)
+		_gun.position = Vector3(_gun_rest.x + sin(_bob) * 0.006 * bob_weight - _sway.x, _gun_rest.y + absf(cos(_bob)) * 0.006 * bob_weight - _sway.y - equip_motion * 0.19, _gun_rest.z + kick * (0.075 if weapon_id == "marksman" else 0.046) + equip_motion * 0.08) + reload_offset * reload_tilt + SEAT_KICK_OFFSET * _seat_kick * (0.25 if reduced_motion else 1.0)
+		_gun.rotation = Vector3(kick * (0.13 if weapon_id == "sidearm" else 0.065) - equip_motion * 0.48, -_sway.x * 1.8, -_sway.x) + reload_rotation * reload_tilt + SEAT_KICK_TURN * _seat_kick * (0.25 if reduced_motion else 1.0)
+		if is_instance_valid(_arms_player):
+			# The clip's first frame is the hold, so 0 returns the hands to the rifle.
+			var clip_time := reload_progress if reload_remaining > 0 else 0.0
+			var clip_name := str(profile.clip) if _arms_player.has_animation(str(profile.clip)) else "reload"
+			if _arms_player.assigned_animation != clip_name:
+				_arms_player.assigned_animation = clip_name
+				_arms_time = -1.0
+			if clip_time != _arms_time:
+				_arms_time = clip_time
+				_arms_player.seek(clip_time, true)
 		if is_instance_valid(_magazine):
-			# Pull down, seat the same magazine, then return to ready. Only visual.
-			var extraction := sin(clampf((reload_progress - 0.12) / 0.72, 0, 1) * PI) if reload_remaining > 0 else 0.0
-			_magazine.position = _magazine_rest + Vector3(-extraction * 0.04, -extraction * 0.24, 0)
+			_pose_magazines(reload_progress if reload_remaining > 0 else 0.0)
+		if is_instance_valid(_arms_skeleton):
+			var pull := clampf(_kick * 1.5, 0.0, 1.0) * 0.32
+			for i in range(_trigger_bones.size()):
+				_arms_skeleton.set_bone_pose_rotation(_trigger_bones[i], _trigger_rest[i] * Quaternion(Vector3.RIGHT, -pull * (1.0 if i == 0 else 0.6)))
+
+## Plays and announces a reload click, once per reload (a correction that takes the clock back over it
+## does not click it again).
+func _fire_reload_cue(event: String, progress: float) -> void:
+	if _reload_fired.has(event):
+		return
+	_reload_fired[event] = true
+	if event == "seat":
+		_magazine_swap_pending = true
+		_seat_kick = 1.0
+	_reload_audio.play(event, progress, head_height)
+	reload_cue.emit(event, progress)
+
+## The reload reached the seat: the replacement is the magazine in the well from now on, and the one that
+## fell is the spare for the next reload (two real nodes, alternating).
+func _swap_magazines_if_seated() -> void:
+	if _magazine_swap_pending and is_instance_valid(_magazine_spare) and is_instance_valid(_magazine):
+		var seated := _magazine_spare
+		_magazine_spare = _magazine
+		_magazine = seated
+	_magazine_swap_pending = false
+
+## Where the magazines are for a reload progress. With the rigged arms the old magazine rides the
+## support hand from the grasp to the drop (the clip took it out of the well and swung it out), then
+## falls; the replacement, a second mesh, appears in the hand at the acquisition, is carried to the
+## well and rides the hand until the let-go; after it the replacement stays in the well. Outside a
+## reload the first magazine sits in the well. Without the rigged arms the one magazine follows the
+## older drop curve.
+func _pose_magazines(progress: float) -> void:
+	if not is_instance_valid(_arms_skeleton) or not is_instance_valid(_arms_player):
+		var extraction := sin(clampf((progress - 0.12) / 0.72, 0, 1) * PI) if reload_remaining > 0 else 0.0
+		_magazine.position = _magazine_rest + _magazine.basis * Vector3(0, -extraction * MAGAZINE_DROP, 0)
+		return
+	if _hand_bone < 0:
+		_hand_bone = _arms_skeleton.find_bone("L_hand")
+	if not _grip_measured:
+		_measure_hold()
+	var reloading := reload_remaining > 0
+	if not reloading:
+		_swap_magazines_if_seated()
+		_magazine.visible = true
+		_magazine.transform = _magazine_rest_transform
+		if is_instance_valid(_magazine_spare):
+			_magazine_spare.visible = false
+		_magazine_in_hand = null
+		return
+	var in_hand := _hand_in_gun() * _grip_offset
+	_magazine_in_hand = null
+	# The old magazine.
+	if progress < SBReloadPhases.GRASP:
+		_magazine.visible = true
+		_magazine.transform = _magazine_rest_transform
+	elif progress <= SBReloadPhases.DROP:
+		_magazine.visible = true
+		_magazine.transform = in_hand
+		_magazine_in_hand = _magazine
+	else:
+		var fall := (progress - SBReloadPhases.DROP) * float(Weapons.get_weapon(weapon_id)["reload"])
+		_magazine.visible = fall <= DROP_VISIBLE_SECONDS
+		_magazine.transform = _dropped_transform(fall)
+	# The replacement.
+	if is_instance_valid(_magazine_spare):
+		# The replacement is drawn from the acquisition: the hand has it at the pouch, below the frame, and
+		# brings it up into view (arms_build.py: the hip pouch). Before that it is not drawn.
+		_magazine_spare.visible = progress >= SBReloadPhases.ACQUIRE
+		_magazine_spare.transform = _magazine_rest_transform if progress > SBReloadPhases.LETGO else in_hand
+		if progress >= SBReloadPhases.ACQUIRE and progress <= SBReloadPhases.LETGO:
+			_magazine_in_hand = _magazine_spare # held from the acquisition, at the pouch
+
+## The old magazine `fall` seconds after the hand lets go: it leaves with a share of the hand's
+## speed and falls under gravity (pointing down in the world, whatever the rifle's roll), tumbling
+## about the rifle's own X (unless reduced motion is on). A pure function of time, so the pose can be
+## sought and replayed.
+func _dropped_transform(fall: float) -> Transform3D:
+	var down := (_gun.global_basis.inverse() * Vector3.DOWN).normalized() * DROP_GRAVITY
+	var at := _drop_origin.origin + _drop_velocity * fall + down * (0.5 * fall * fall)
+	# Reduced motion keeps the fall (the discard has to be seen) but not the tumble.
+	var spin := 0.0 if reduced_motion else DROP_SPIN * fall
+	return Transform3D(Basis(Vector3.RIGHT, spin) * _drop_origin.basis, at)
+
+## Measures, once per built gun, from the clip itself: how the held magazine sits in the hand (at
+## the grasp, with the magazine still in the well) and where, and how fast, the hand is at the drop.
+func _measure_hold() -> void:
+	var was := _arms_time
+	var duration := float(Weapons.get_weapon(weapon_id)["reload"])
+	_arms_player.seek(SBReloadPhases.GRASP, true)
+	_grip_offset = _hand_in_gun().affine_inverse() * _magazine_rest_transform
+	var step := 1.0 / 60.0
+	_arms_player.seek(SBReloadPhases.DROP - step, true)
+	var before := (_hand_in_gun() * _grip_offset).origin
+	_arms_player.seek(SBReloadPhases.DROP, true)
+	_drop_origin = _hand_in_gun() * _grip_offset
+	_drop_velocity = (_drop_origin.origin - before) / (step * duration) * 0.6
+	_arms_player.seek(was, true)
+	_grip_measured = true
+
+## The support hand's transform in the weapon node's space, from the skeleton's current pose.
+func _hand_in_gun() -> Transform3D:
+	var chain := Transform3D.IDENTITY
+	var node: Node = _arms_skeleton
+	while node != null and node != _gun:
+		chain = (node as Node3D).transform * chain
+		node = node.get_parent()
+	return chain * _arms_skeleton.get_bone_global_pose(_hand_bone)
+
+## A point of the viewmodel moved to where it appears on screen under the world
+## camera's projection (the viewmodel draws with a narrower one), at the same depth.
+func _viewmodel_to_world(point: Vector3) -> Vector3:
+	var local := camera.global_transform.affine_inverse() * point
+	var spread := tan(deg_to_rad(camera.fov) * 0.5) / tan(deg_to_rad(ViewmodelShading.FOV) * 0.5)
+	return camera.global_transform * Vector3(local.x * spread, local.y * spread, local.z)
 
 func snapshot() -> Dictionary:
 	return {"id": actor_id, "team": team, "name": display_name, "position": global_position, "velocity": velocity, "yaw": yaw, "pitch": pitch, "recoil": recoil, "health": health, "alive": alive, "kills": kills, "deaths": deaths, "assists": assists, "credits": credits, "weapon": weapon_id, "ammo": ammo, "reserve": reserve, "reload": reload_remaining, "grenades": grenades, "smokes": smokes, "crouch": _crouching, "inventory": inventory.duplicate()}

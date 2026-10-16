@@ -30,6 +30,30 @@ run_godot hud-overflow --headless --script res://tests/hud_overflow_test.gd
 run_godot economy-ui --headless --script res://tests/economy_ui_test.gd
 run_godot economy-recovery --headless --script res://tests/economy_recovery_test.gd
 run_godot cosmetics --headless --script res://tests/cosmetic_presentation_test.gd
+run_godot weapon-art --headless --script res://tests/weapon_art_test.gd
+run_godot reload-sequence --headless --script res://tests/reload_sequence_test.gd
+run_godot reload-audio --headless --script res://tests/reload_audio_test.gd
+# The real mix of a real-time reload through an AudioEffectCapture on the Dummy driver (it mixes in real time, no speaker).
+run_godot reload-audio-capture --headless --audio-driver Dummy --script res://tests/reload_audio_capture.gd -- --scenario=reload
+run_godot reload-audio-cancel --headless --audio-driver Dummy --script res://tests/reload_audio_capture.gd -- --scenario=cancel
+python3 scripts/test_reload_contact.py | tee "$validation_dir/reload-contact.log"
+if [[ -n "${DISPLAY:-}" ]]; then
+  # Counts the pixels each part of the reload really draws; needs a rendering display (Xvfb is enough).
+  run_godot reload-visibility --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_visibility_test.gd -- --step=2
+  # The replacement magazine is never unsupported or abrupt in the visible frame: its hand is in view with it, in contact through the carry.
+  run_godot reload-continuity --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_continuity_test.gd
+  run_godot reload-continuity-calm --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_continuity_test.gd -- --reduced --variant=calm
+  run_godot reload-continuity-still --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_continuity_test.gd -- --reduced --variant=still
+  # The rifle's painted metal keeps its finish through the reload (it turned pale as the reload rolled it): sun, shade, a skin.
+  run_godot reload-finish-sunlit --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base
+  run_godot reload-finish-shade --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --view=shade
+  # The parts separate in four lightings (the grip is darker than the receiver, the gloves are not a pale veil beside the sleeve,
+  # the rifle does not dissolve in a dark interior): bounds set from this round's measurements, see viewmodel_light_probe.gd.
+  run_godot viewmodel-light --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/viewmodel_light_probe.gd -- --assert --poses=ready,grab,hip
+  run_godot reload-finish-skin --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --skin
+else
+  printf 'reload-visibility skipped: no DISPLAY (needs a native rendering display)\n'
+fi
 ./scripts/test_network.sh
 if [[ "${1:-}" == --backend ]]; then
   backend/dev-db.sh

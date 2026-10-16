@@ -1,0 +1,39 @@
+# Baseline (no defect injected): every test passes
+  (skipped by --no-baseline: run it once without, for the record)
+
+## N23: the replacement taken from just under the well, in view: it appears in the picture before the hand has it
+  sequence                       FAILED
+      ERROR: the replacement is first drawn in the hand at the pouch with 100 % of it inside the frame (it is not seen to appear)
+
+## N32: the v9 hip pose (magazine untilted, elbow tucked): the magazine's top enters the frame ahead of the hand that holds it
+  continuity                     FAILED
+      ERROR: the replacement is not in the frame without the hand touching it for more than 6 ticks (9 unsupported ticks, longest run 9 ending at tick 76, up to 8353 px)
+
+## N33: the hip raised to 31 cm (v9's attempt): the replacement comes into the frame with the hand still below the edge
+  continuity                     FAILED
+      ERROR: the replacement is not in the frame without the hand touching it for more than 6 ticks (8 unsupported ticks, longest run 8 ending at tick 75, up to 7702 px)
+      ERROR: the replacement's first visible tick (68) shows 2503 px (under 1500: it enters through the edge)
+  sequence                       FAILED
+      ERROR: the replacement is first drawn in the hand at the pouch with 19 % of it inside the frame (it is not seen to appear)
+
+## N34: the replacement fetched from a pouch far below the frame and brought up at once (it pops into the frame)
+  continuity                     FAILED
+      ERROR: the replacement is not in the frame without the hand touching it for more than 6 ticks (9 unsupported ticks, longest run 9 ending at tick 86, up to 9372 px)
+
+## N18: the replacement fetched from far below the frame
+  visibility                     FAILED
+      ERROR: at the hip the whole left arm is out of the picture (under 1000 px) for at most 10 % of the reload (6 of 10 poses, 12 %)
+      ERROR: no replacement magazine is drawn (3000 px or more) with less than 3000 px of its arm in the frame (2 poses; last at 0.66)
+      ERROR: on the rise from the hip the hand shows at least 6000 pixels (worst 0 at 0.64)
+  sequence                       FAILED
+      ERROR: normal motion: the support wrist is never more than 6 % of the frame outside it (worst 37.7 %)
+      ERROR: normal motion: the thumb's tip joint stays inside the frame the whole reload (7 ticks outside)
+      ERROR: normal motion: at least three of the five fingertip joints stay inside the frame (worst 0 at 0.61)
+
+# Summary
+  N23  caught
+  N32  caught
+  N33  caught
+  N34  caught
+  N18  caught
+  5 controls: 5 caught, 0 crashed, 0 missed, 0 invalid
