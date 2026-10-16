@@ -28,12 +28,16 @@ const RIM := 0.22
 ## horizon band with dark ground below it; at roughness 0.3 to 0.5 the metal's reflection slides across that edge as the reload rolls
 ## and lifts the weapon (a few degrees are enough), and the receiver went from 54 to 83 median luma and from graphite to pale
 ## blue-grey (docs/reports/media/art-v9/rifle-discolouration). A rougher lobe averages the sky over the band and holds the finish.
-const METAL_ROUGHNESS := 0.80
+const METAL_ROUGHNESS := 0.30
 ## The painted metal's own fill strength (FLOOR is the rest of the viewmodel's). The roughness floor above takes the sheen the
 ## sky's reflection gave the receiver and handguard, which was most of their value in shade and a dark interior (median luma
 ## 45 and 69 in the dark interior before it, 20 and 22 after): this puts it back as a constant fill instead of a reflection of
 ## whatever the pose faces.
-const METAL_FLOOR := 0.26
+const METAL_FLOOR := 0.12
+## The handguard is a polymer part on the Relay AR (the receiver is the machined metal): its own roughness floor and a fraction of the
+## baked metalness, so it takes the sun with a wider, softer lobe and reflects the studio less.
+const HANDGUARD_ROUGHNESS := 0.62
+const HANDGUARD_METAL := 0.30
 
 const UNIFORMS := """
 uniform float viewmodel_fov = 0.0;
@@ -44,6 +48,11 @@ uniform float viewmodel_rim = 0.0;
 uniform float viewmodel_roughness = 0.0;
 uniform float viewmodel_specular = -1.0;
 uniform vec3 viewmodel_rim_color : source_color = vec3(0.80, 0.84, 0.88);
+uniform float viewmodel_env = 1.0;
+uniform float viewmodel_sheen = 4.0;
+uniform float viewmodel_metal_scale = 1.0;
+uniform float viewmodel_reflect = 0.30;
+uniform vec3 viewmodel_ambient = vec3(0.165, 0.214, 0.254);
 """
 
 ## Inside vertex(). Scales the camera's projection to the viewmodel field of view,
@@ -71,6 +80,7 @@ const PROJECT := """
 const FILL := """
 	if (viewmodel_fov > 0.0) {
 		ROUGHNESS = max(ROUGHNESS, viewmodel_roughness);
+		METALLIC *= viewmodel_metal_scale;
 		if (viewmodel_specular >= 0.0) {
 			SPECULAR = viewmodel_specular;
 		}
@@ -83,7 +93,36 @@ const FILL := """
 	}
 """
 
-const SURFACE := "shader_type spatial;\n" + UNIFORMS + """
+## The viewmodel's own lighting environment, for the shaders that declare `render_mode ambient_light_disabled` (the engine's sky
+## radiance and ambient light are then not applied): the arena's flat ambient colour for the diffuse part, and a studio for the
+## reflection (a soft sky-to-ground gradient, a broad key panel up and to the left, a thin cool strip behind on the right). The sky
+## the engine reflects has a bright horizon band with dark ground below it, and a weapon that rolls and lifts slides its reflection
+## across that edge (docs/reports/media/art-v9/rifle-discolouration); this environment has no edge, so what moves across the
+## metal is a gradient and two soft lobes, which is lighting following the pose rather than the colour of the weapon changing.
+## Uses the detail normal (the baked bevels and panel lines catch the lobes) and the baked ambient occlusion.
+const STUDIO := """
+	if (viewmodel_fov > 0.0 && viewmodel_env > 0.0) {
+		vec3 detail_normal_ts = NORMAL_MAP * 2.0 - 1.0;
+		vec3 n = normalize(TANGENT * detail_normal_ts.x + BINORMAL * detail_normal_ts.y + NORMAL * detail_normal_ts.z);
+		float ndv = clamp(dot(n, VIEW), 0.0, 1.0);
+		float up = clamp(n.y * 0.5 + 0.5, 0.0, 1.0);
+		EMISSION += ALBEDO * (1.0 - METALLIC) * AO * viewmodel_ambient * viewmodel_env;
+		vec3 r = reflect(-VIEW, n);
+		float gloss = 1.0 - ROUGHNESS;
+		vec3 f0 = mix(vec3(0.08 * SPECULAR), ALBEDO, METALLIC);
+		vec3 fresnel = f0 + (max(vec3(gloss), f0) - f0) * pow(1.0 - ndv, 5.0);
+		vec3 gradient = mix(vec3(0.26, 0.29, 0.31), vec3(0.38, 0.42, 0.45), smoothstep(-1.0, 1.0, r.y));
+		gradient = mix(gradient, vec3(0.30, 0.33, 0.36), ROUGHNESS * 0.6);
+		float key = pow(max(dot(r, normalize(vec3(-0.50, 0.60, 0.62))), 0.0), mix(48.0, 5.0, ROUGHNESS)) * mix(1.0, 0.4, ROUGHNESS);
+		float strip = pow(max(dot(r, normalize(vec3(0.78, 0.15, -0.40))), 0.0), mix(24.0, 4.0, ROUGHNESS)) * mix(1.0, 0.4, ROUGHNESS);
+		vec3 radiance = gradient + vec3(1.0, 0.96, 0.90) * key * 3.0 * viewmodel_sheen + vec3(0.62, 0.76, 1.0) * strip * 1.2 * viewmodel_sheen;
+		EMISSION += fresnel * radiance * AO * viewmodel_env * viewmodel_reflect;
+	}
+"""
+
+const RENDER_MODE := "render_mode ambient_light_disabled;\n"
+
+const SURFACE := "shader_type spatial;\n" + RENDER_MODE + UNIFORMS + """
 uniform sampler2D albedo_texture : source_color, filter_linear_mipmap;
 uniform sampler2D orm_texture : hint_default_white, filter_linear_mipmap;
 uniform sampler2D normal_texture : hint_normal, filter_linear_mipmap;
@@ -100,7 +139,7 @@ void fragment() {
 	ROUGHNESS = orm.g;
 	METALLIC = orm.b;
 	NORMAL_MAP = texture(normal_texture, UV).rgb;
-""" + FILL + """
+""" + FILL + STUDIO + """
 }
 """
 

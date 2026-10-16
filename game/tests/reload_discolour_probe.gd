@@ -126,6 +126,25 @@ func _studio(finish: ShaderMaterial, strength: float, gradient: float) -> Shader
 	material.shader.code = material.shader.code.replace("shader_type spatial;", "shader_type spatial;\nrender_mode ambient_light_disabled;")
 	return material
 
+## Experiment: set shader uniforms on every first-person ShaderMaterial of the weapon for one measurement ("u:name=value;name=value"),
+## returns what to put back as [material, name, old value].
+func _set_uniforms(spec: String) -> Array:
+	var restore := []
+	var materials: Array[ShaderMaterial] = []
+	for node in actor._gun.find_children("*", "MeshInstance3D", true, false):
+		var material := (node as MeshInstance3D).material_override as ShaderMaterial
+		if material != null and not materials.has(material):
+			materials.append(material)
+	for pair in spec.trim_prefix("u:").split(";"):
+		var kv := pair.split("=")
+		if kv.size() != 2:
+			continue
+		for material in materials:
+			if material.shader.get_shader_uniform_list().any(func(u): return u.name == kv[0]):
+				restore.append([material, kv[0], material.get_shader_parameter(kv[0])])
+				material.set_shader_parameter(kv[0], float(kv[1]))
+	return restore
+
 ## The rigged arms' shader material (null for the procedural rifle).
 func _arms_material() -> ShaderMaterial:
 	if not SBWeaponModel.use_authored:
@@ -295,9 +314,16 @@ func _run() -> void:
 					_node(part).material_override = finish
 			environment.sky = real_sky
 			if condition.begins_with("studio") and SBWeaponModel.use_authored:
-				var parts: PackedStringArray = condition.trim_prefix("studio").split("g")
+				# studio<strength>g<gradient>r<roughness floor>, all in hundredths (the floor defaults to the shipped one)
+				var spec: String = condition.trim_prefix("studio")
+				var parts: PackedStringArray = spec.split("g")
+				var tail: String = parts[1] if parts.size() > 1 else "35"
+				var gradient := float(tail.get_slice("r", 0)) / 100.0
 				for part in ["receiver", "handguard"]:
-					_node(part).material_override = _studio(finish, float(parts[0]) / 100.0, float(parts[1]) / 100.0 if parts.size() > 1 else 0.35)
+					var experiment := _studio(finish, float(parts[0]) / 100.0, gradient)
+					if tail.contains("r"):
+						experiment.set_shader_parameter("viewmodel_roughness", float(tail.get_slice("r", 1)) / 100.0)
+					_node(part).material_override = experiment
 			if (condition == "furn80" or condition == "all80") and SBWeaponModel.use_authored:
 				var body_node := _node("furniture") as MeshInstance3D
 				if body_node.material_override is ShaderMaterial:
@@ -328,6 +354,9 @@ func _run() -> void:
 				"nofill":
 					finish.set_shader_parameter("viewmodel_floor", 0.0)
 					finish.set_shader_parameter("viewmodel_rim", 0.0)
+			var uniform_restore := []
+			if condition.begins_with("u:"):
+				uniform_restore = _set_uniforms(condition)
 			var saved := {}
 			if condition == "matte" and SBWeaponModel.use_authored:
 				for part in PARTS:
@@ -338,6 +367,8 @@ func _run() -> void:
 			var m := await _measure("%s_%s" % [case.label, condition])
 			for part in saved:
 				_node(part).material_override = saved[part]
+			for entry in uniform_restore:
+				(entry[0] as ShaderMaterial).set_shader_parameter(entry[1], entry[2])
 			if arms_material != null:
 				arms_material.set_shader_parameter("viewmodel_rim", arms_saved[0])
 				arms_material.set_shader_parameter("viewmodel_floor", arms_saved[1])
