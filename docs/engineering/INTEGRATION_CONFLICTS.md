@@ -48,3 +48,11 @@ and art sources retain Claude's implementations. `match.gd` differs from the
 focused reconnect branch only in the existing diagnostic hit-history and durable
 result-outbox hooks. Protocol6 matched clients/server required. Prediction remains
 opt-in and live rewind disabled. Source PRs were neither edited nor merged.
+
+## Three-agent checkpoint
+
+Isolated branch `integration/sightbreak-three-agent-alpha` starts from verified PR11 `11573e5`, preserving that PR and every source branch. Frozen PR14 `d66e72c` merged with only validation inventory conflict; native Godot exposed published API/property mismatches. Narrow match adapters and protocol-6/physics test bindings are recorded in `9f730dc`. Attacker auditory response remains a failing source-owner regression.
+
+PR2 `ed85754` merges at `0345a18`; only status/validation conflicts preserve both records/suites. Actor presentation stays byte-identical to Claude except existing movement constants and SBMovementStep delegation. PR12 `7e41de6` merges at `cad5c0c`, retaining both fixture drift and network lifecycle checks. PR13 `7dd0628` adds research only. Separate reviewed backend guard `228c382` is merged; native confirmation adds only captured `expected_price` to the existing receipt payload.
+
+No network/server file changes from PR11. Protocol6 matched builds, prediction opt-in, live rewind disabled. See [three-agent report](../reports/THREE_AGENT_INTEGRATION_REPORT.md) for exact source trees, retained failures, artifacts and acceptance limits.

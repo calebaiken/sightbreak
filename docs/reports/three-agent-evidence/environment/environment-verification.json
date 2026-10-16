@@ -1,0 +1,91 @@
+{
+  "commands": [
+    {
+      "command": [
+        "scripts/godot.sh",
+        "--headless",
+        "--version"
+      ],
+      "exit": 0,
+      "output": "4.7.2.stable.official.ed1daf0bf\n"
+    },
+    {
+      "command": [
+        "godot",
+        "--version"
+      ],
+      "exit": 0,
+      "output": "Fontconfig error: No writable cache directories\n4.6.3.stable.official.7d41c59c4\n"
+    },
+    {
+      "command": [
+        "python3",
+        "--version"
+      ],
+      "exit": 0,
+      "output": "Python 3.12.14\n"
+    },
+    {
+      "command": [
+        ".venv/bin/python",
+        "-c",
+        "import fastapi,sqlalchemy,psycopg,pytest,httpx; print({x.__name__:x.__version__ for x in (fastapi,sqlalchemy,psycopg,pytest,httpx)})"
+      ],
+      "exit": 0,
+      "output": "{'fastapi': '0.143.0', 'sqlalchemy': '2.1.4', 'psycopg': '3.3.6', 'pytest': '9.1.1', 'httpx': '0.28.1'}\n"
+    },
+    {
+      "command": [
+        "nproc"
+      ],
+      "exit": 0,
+      "output": "5\n"
+    },
+    {
+      "command": [
+        "free",
+        "-h"
+      ],
+      "exit": 0,
+      "output": "               total        used        free      shared  buff/cache   available\nMem:            17Gi       3.6Gi        12Gi        40Mi       1.4Gi        13Gi\nSwap:             0B          0B          0B\n"
+    },
+    {
+      "command": [
+        "df",
+        "-h",
+        "/workspace"
+      ],
+      "exit": 0,
+      "output": "Filesystem      Size  Used Avail Use% Mounted on\noverlay          32G  1.2G   29G   4% /workspace\n"
+    },
+    {
+      "command": [
+        "java",
+        "-version"
+      ],
+      "exit": 0,
+      "output": "openjdk version \"21.0.12.1\" 2026-08-18\nOpenJDK Runtime Environment (build 21.0.12.1+1-1-deb13u1-Debian)\nOpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-deb13u1-Debian, mixed mode, sharing)\n"
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--short",
+        "--branch"
+      ],
+      "exit": 0,
+      "output": "## integration/sightbreak-three-agent-alpha\n"
+    }
+  ],
+  "limitations": [
+    "System godot is 4.6.3; all campaigns use scripts/godot.sh pinned 4.7.2.",
+    "Git/GitHub and local socket commands require executor network capability.",
+    "Managed status network enforcement observation is unknown; actual permitted GitHub requests succeeded."
+  ],
+  "source": {
+    "source_commit": "d5ff8da85c9c1122676efdcab12502064a517657",
+    "source_game_tree": "8af5ec1b628162dfb6d21a631e26f565b4915dad",
+    "source_content_sha256": "d04973b061f69dda6df7c55242555b25811093e0fcc53df82d9841d05814bb20",
+    "source_game_dirty": false
+  }
+}

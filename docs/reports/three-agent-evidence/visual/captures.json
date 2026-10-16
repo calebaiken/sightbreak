@@ -1,0 +1,81 @@
+[
+  {
+    "name": "sunlit",
+    "exit": 0,
+    "command": [
+      "scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_sequence_capture.gd",
+      "--",
+      "--out=/workspace/reviews/three-agent-20261016/visual/sunlit",
+      "--fire",
+      "--tail=0.55",
+      "--only=0,14,28,34,44,52,58,66,74,82,90,98,104,110,118,126,134,137,141,146"
+    ],
+    "seconds": 75.48103090799998
+  },
+  {
+    "name": "shade",
+    "exit": 0,
+    "command": [
+      "scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_sequence_capture.gd",
+      "--",
+      "--out=/workspace/reviews/three-agent-20261016/visual/shade",
+      "--fire",
+      "--tail=0.55",
+      "--only=0,14,28,34,44,52,58,66,74,82,90,98,104,110,118,126,134,137,141,146",
+      "--view=shade"
+    ],
+    "seconds": 88.933804281
+  },
+  {
+    "name": "backlight",
+    "exit": 0,
+    "command": [
+      "scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_sequence_capture.gd",
+      "--",
+      "--out=/workspace/reviews/three-agent-20261016/visual/backlight",
+      "--fire",
+      "--tail=0.55",
+      "--only=0,14,28,34,44,52,58,66,74,82,90,98,104,110,118,126,134,137,141,146",
+      "--view=backlight"
+    ],
+    "seconds": 69.61087555699999
+  },
+  {
+    "name": "reduced",
+    "exit": 0,
+    "command": [
+      "scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_sequence_capture.gd",
+      "--",
+      "--out=/workspace/reviews/three-agent-20261016/visual/reduced",
+      "--fire",
+      "--tail=0.55",
+      "--only=0,14,28,34,44,52,58,66,74,82,90,98,104,110,118,126,134,137,141,146",
+      "--reduced"
+    ],
+    "seconds": 61.358397963000016
+  }
+]

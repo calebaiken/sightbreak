@@ -1,0 +1,44 @@
+[
+  {
+    "command": [
+      "scripts/godot.sh",
+      "--headless",
+      "--audio-driver",
+      "Dummy",
+      "--script",
+      "res://tests/reload_audio_capture.gd",
+      "--",
+      "--scenario=reload"
+    ],
+    "exit": 0,
+    "log": "repeat-1.log"
+  },
+  {
+    "command": [
+      "scripts/godot.sh",
+      "--headless",
+      "--audio-driver",
+      "Dummy",
+      "--script",
+      "res://tests/reload_audio_capture.gd",
+      "--",
+      "--scenario=reload"
+    ],
+    "exit": 0,
+    "log": "repeat-2.log"
+  },
+  {
+    "command": [
+      "scripts/godot.sh",
+      "--headless",
+      "--audio-driver",
+      "Dummy",
+      "--script",
+      "res://tests/reload_audio_capture.gd",
+      "--",
+      "--scenario=reload"
+    ],
+    "exit": 0,
+    "log": "repeat-3.log"
+  }
+]
