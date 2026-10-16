@@ -39,7 +39,7 @@ const ARMS_REFLECT := 0.05
 const ARMS_LIFT := 0.12
 ## The studio ambient on the arms (linear): albedo-proportional, neutral instead of the cool (0.165, 0.214, 0.254) the rifle takes, about
 ## twice as strong; with ARMS_LIFT this replaces the flat floor. EMPIRICAL.
-const ARMS_AMBIENT := Vector3(0.34, 0.33, 0.30)
+const ARMS_AMBIENT := Vector3(0.29, 0.34, 0.39)
 ## The arms' fill strength (ViewmodelShading.FLOOR is the rifle's), the dielectric specular of their fabric (the engine's default
 ## 0.5 put a pale sheen on the dark gloves in sun, the "bare skin" look: a glove's median luma in sun was 89, about a third of it
 ## additive) and their rim. The specular and the rim came down and the fill went up so that the gloves are darker in sun and

@@ -26,7 +26,14 @@ const SCENARIOS := {
 const POSES := {"ready": -1.0, "grab": 0.15, "hip": 0.47, "mid reload": 0.5, "seat": 0.84}
 ## The "hip" pose is the hip retrieval: the support arm is below the rifle and its forearm's underside is what is in the frame.
 const HIP_SLEEVE_MIN := {"sun": 55.0, "backlight": 45.0, "shade": 38.0, "dark interior": 38.0}
-const PARTS := ["magazine", "receiver", "handguard", "furniture", "grip", "gloves", "sleeves"]
+const PARTS := ["magazine", "receiver", "handguard", "furniture", "grip", "gloves", "sleeves", "glove_support", "glove_grip"]
+## Low-light form (art-v11 lowlight track): see _assert_low_light.
+const GRIP_LOW_MIN := 11.0
+const GLOVES_OVER_RIFLE_MAX := 1.10
+const HANDS_APART_MAX := 5.0
+const FURNITURE_P10_MIN := 5.0
+const LOW_LIGHT := ["shade", "dark interior"]
+const DARK_OVER_SUN_MAX := 0.70
 var output := ""
 var tag := "probe"
 var only_scenarios: PackedStringArray = []
@@ -37,6 +44,8 @@ var arms_floor := -1.0
 var finish_floor := -1.0
 var assert_mode := false
 var medians := {}
+var p10s := {}
+var hand_material: ShaderMaterial
 var finish_lift := -1.0
 var grip_rim := -1.0
 var grip_lift := -1.0
@@ -119,6 +128,14 @@ func _debug_arms() -> void:
 	ViewmodelShading.enable(debug_material)
 	arms.set_meta("lit_material", arms.material_override)
 
+func _hand_debug() -> void:
+	# Which arm a pixel belongs to, from the skeleton: bones 17 and up are the right arm (the grip hand), 0 to 16 the left (the support hand).
+	var shader := Shader.new()
+	shader.code = "shader_type spatial;\nrender_mode unshaded;\n" + ViewmodelShading.UNIFORMS + "varying float hand;\nvoid vertex() {\n hand = float(BONE_INDICES.x >= 17u);\n" + ViewmodelShading.PROJECT + "}\nvoid fragment() { ALBEDO = vec3(hand, 0.0, 0.0); }\n"
+	hand_material = ShaderMaterial.new()
+	hand_material.shader = shader
+	ViewmodelShading.enable(hand_material)
+
 func _run() -> void:
 	if DisplayServer.get_name() == "headless":
 		push_error("A native rendering display is required")
@@ -172,6 +189,7 @@ func _run() -> void:
 	actor._equip_blend = 0
 	actor.apply_cosmetic({})
 	_debug_arms()
+	_hand_debug()
 	var arms_mesh: MeshInstance3D = actor._gun.get_node("arms").find_children("*", "MeshInstance3D", true, false).front()
 	if arms_specular >= 0.0:
 		(arms_mesh.material_override as ShaderMaterial).set_shader_parameter("viewmodel_specular", arms_specular)
@@ -211,7 +229,7 @@ func _run() -> void:
 			var masks := {}
 			var lit_arms: Material = arms_mesh.material_override
 			for part in PARTS:
-				if part == "gloves" or part == "sleeves":
+				if part == "gloves" or part == "sleeves" or part.begins_with("glove_"):
 					continue
 				var node := _part_node(part)
 				if node == null:
@@ -238,12 +256,22 @@ func _run() -> void:
 				(sleeve if albedo > 62.0 else glove).append(index)
 			masks["gloves"] = glove
 			masks["sleeves"] = sleeve
+			arms_mesh.material_override = hand_material
+			var hand_frame := await _frame()
+			arms_mesh.material_override = lit_arms
+			var support := PackedInt32Array()
+			var grip_hand := PackedInt32Array()
+			for index in glove:
+				(grip_hand if hand_frame.get_pixel(index % width, index / width).r > 0.5 else support).append(index)
+			masks["glove_support"] = support
+			masks["glove_grip"] = grip_hand
 			for part in PARTS:
 				var s := _stats(base, masks[part])
 				if s.n >= 48:
 					if not medians.has(scenario + "|" + pose):
 						medians[scenario + "|" + pose] = {}
 					medians[scenario + "|" + pose][part] = s.median
+					p10s[scenario + "|" + pose + "|" + part] = s.p10
 				if s.n < 48:
 					print("LIGHT %s | %s | %s | %s | n=%d (not visible)" % [tag, scenario, pose, part, s.n])
 				else:
@@ -295,9 +323,65 @@ func _assert_separation() -> int:
 			var ok: bool = v.receiver >= 22.0 and v.handguard >= 22.0
 			failures += 0 if ok else 1
 			print("%s %s: receiver %.1f and handguard %.1f in the dark interior (at least 22)" % ["ok  " if ok else "FAIL", key, v.receiver, v.handguard])
+	var low := _assert_low_light()
+	checks += low[0]
+	failures += low[1]
 	print("VIEWMODEL_LIGHT_TEST checks=%d failures=%d" % [checks, failures])
 	for key in medians:
 		pass
 	if failures > 0:
 		push_error("%d separation checks failed" % failures)
 	return 1 if failures > 0 else 0
+
+## Low-light form (art-v11, lowlight track). These bounds are EMPIRICAL: each was set after seeing the measurements before and after the
+## change, between the two, and is a regression guard around a measured state, not a visual standard (values are median luma 0-255):
+##   grip >= 11 in shade and the dark interior          the pistol grip is not pure black (before 5.9 to 6.7, after 15.7 to 16.7)
+##   gloves <= 1.10 x receiver in shade and the dark     the arms are not above the rifle, the "ghost" look (before 1.16 to 1.39, after 0.83 to 1.04)
+##   the two hands within 5 luma in shade and the dark   the support hand is not brighter than the grip hand (before 8.4 at the ready, after 2.8)
+##   the body's 10th percentile >= 5 in shade and dark   no crushed pure-black regions on the rifle (the stock-less buffer tube: before 1.0, after 8 to 19)
+##   receiver, handguard in the dark <= 0.70 x in sun    no glow: the fill does not lift the rifle in the dark toward its value in sun
+func _assert_low_light() -> Array:
+	var checks := 0
+	var failures := 0
+	for key in medians:
+		var parts := str(key).split("|")
+		if not LOW_LIGHT.has(parts[0]):
+			continue
+		var v: Dictionary = medians[key]
+		if v.has("grip"):
+			checks += 1
+			var ok: bool = v.grip >= GRIP_LOW_MIN
+			failures += 0 if ok else 1
+			print("%s %s: grip %.1f not crushed (at least %.0f)" % ["ok  " if ok else "FAIL", key, v.grip, GRIP_LOW_MIN])
+		if v.has("gloves") and v.has("receiver"):
+			checks += 1
+			var ratio: float = v.gloves / v.receiver
+			var ok_ratio := ratio <= GLOVES_OVER_RIFLE_MAX
+			failures += 0 if ok_ratio else 1
+			print("%s %s: gloves %.1f / receiver %.1f = %.2f (at most %.2f)" % ["ok  " if ok_ratio else "FAIL", key, v.gloves, v.receiver, ratio, GLOVES_OVER_RIFLE_MAX])
+		if v.has("glove_support") and v.has("glove_grip"):
+			checks += 1
+			var apart := absf(v.glove_support - v.glove_grip)
+			var ok_hands := apart <= HANDS_APART_MAX
+			failures += 0 if ok_hands else 1
+			print("%s %s: hands %.1f (support) and %.1f (grip), %.1f apart (at most %.0f)" % ["ok  " if ok_hands else "FAIL", key, v.glove_support, v.glove_grip, apart, HANDS_APART_MAX])
+		var furniture_key := "%s|furniture" % key
+		if p10s.has(furniture_key):
+			checks += 1
+			var ok_black: bool = p10s[furniture_key] >= FURNITURE_P10_MIN
+			failures += 0 if ok_black else 1
+			print("%s %s: body 10th percentile %.1f (at least %.0f)" % ["ok  " if ok_black else "FAIL", key, p10s[furniture_key], FURNITURE_P10_MIN])
+	# No glow: the dark interior's rifle is well below the same pose in sun (before 0.50 to 0.52, after 0.53; a fill turned up to lift the blacks
+	# brings the ratio to 0.8 and over).
+	for key in medians:
+		var parts := str(key).split("|")
+		if parts[0] != "dark interior" or not medians.has("sun|" + parts[1]):
+			continue
+		for part in ["receiver", "handguard"]:
+			if medians[key].has(part) and medians["sun|" + parts[1]].has(part):
+				checks += 1
+				var ratio_dark: float = medians[key][part] / medians["sun|" + parts[1]][part]
+				var ok_glow := ratio_dark <= DARK_OVER_SUN_MAX
+				failures += 0 if ok_glow else 1
+				print("%s %s: %s %.1f in the dark interior / %.1f in sun = %.2f (at most %.2f)" % ["ok  " if ok_glow else "FAIL", key, part, medians[key][part], medians["sun|" + parts[1]][part], ratio_dark, DARK_OVER_SUN_MAX])
+	return [checks, failures]
