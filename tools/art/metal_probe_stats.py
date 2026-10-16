@@ -50,6 +50,8 @@ def stats(base, hidden):
         "median": ml,
         "p10": float(np.percentile(l, 10)),
         "p90": float(np.percentile(l, 90)),
+        "p99": float(np.percentile(l, 99)),
+        "max": float(l.max()),
         "chroma": float((med[0] - med[2]) / max(ml, 1.0)),
         "detail": float(detail),
         "hot": float((l > ml + 25.0).mean()),
@@ -80,8 +82,8 @@ def main():
             if s.get("n", 0) < 24:
                 print("%s %-9s n=%d (not visible)" % (key, part, s.get("n", 0)))
                 continue
-            print("%-13s %-9s n=%6d rgb=(%3.0f,%3.0f,%3.0f) luma med=%5.1f p10=%5.1f p90=%5.1f chroma=%+.3f detail=%.2f hot=%.3f" % (
-                key, part, s["n"], *s["rgb"], s["median"], s["p10"], s["p90"], s["chroma"], s["detail"], s["hot"]))
+            print("%-13s %-9s n=%6d rgb=(%3.0f,%3.0f,%3.0f) luma med=%5.1f p10=%5.1f p90=%5.1f p99=%5.1f max=%5.1f chroma=%+.3f detail=%.2f hot=%.3f" % (
+                key, part, s["n"], *s["rgb"], s["median"], s["p10"], s["p90"], s["p99"], s["max"], s["chroma"], s["detail"], s["hot"]))
     if args.json:
         with open(args.json, "w") as f:
             json.dump(result, f, indent=1)

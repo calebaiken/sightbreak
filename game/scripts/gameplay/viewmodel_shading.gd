@@ -48,11 +48,9 @@ const HANDGUARD_METAL := 0.30
 const METAL_F0 := 0.15
 ## The fraction of the baked diffuse the metal keeps (`viewmodel_diffuse`): the warm sun's diffuse on a graphite is most of the olive.
 const METAL_DIFFUSE := 0.45
-## The studio's reflection strength and key/strip gain on metal (`viewmodel_metal_reflect`, `viewmodel_metal_sheen`), against the
-## defaults 0.30 and 4.0 that polymer, the magazine and the arms keep: the cool constant that replaces the diffuse the metal gave up,
-## and brighter bevel glints (the share of receiver pixels more than 25 luma above its median goes 0.014 to 0.029).
+## The strength of the studio's constant gradient on metal (`viewmodel_metal_reflect`), against the default 0.30 that polymer, the magazine
+## and the arms keep: the cool base that replaces the diffuse the metal gave up. The key and strip lobes keep the default strength.
 const METAL_REFLECT := 0.45
-const METAL_SHEEN := 8.0
 ## Finish variation on the metal's reflection (`viewmodel_variation`), a fraction of it, fixed to the weapon.
 const METAL_VARIATION := 0.30
 
@@ -74,7 +72,6 @@ uniform vec3 viewmodel_bounce = vec3(0.0);
 uniform float viewmodel_f0 = 0.0;
 uniform float viewmodel_diffuse = 1.0;
 uniform float viewmodel_metal_reflect = -1.0;
-uniform float viewmodel_metal_sheen = -1.0;
 uniform float viewmodel_variation = 0.0;
 uniform float viewmodel_normal_fix = 0.0;
 """
@@ -168,15 +165,17 @@ const STUDIO := REFLECTANCE + """
 		float gloss = 1.0 - ROUGHNESS;
 		vec3 f0 = mix(vec3(0.08 * SPECULAR), ALBEDO, METALLIC);
 		vec3 fresnel = f0 + (max(vec3(gloss), f0) - f0) * pow(1.0 - ndv, 5.0);
-		// Metal (after the remap its metalness is near 1; polymer's is 0.13) takes its own reflection strength and key/strip gain.
+		// Metal (after the remap its metalness is near 1; polymer's is 0.13) takes its own strength for the studio's constant gradient, the
+		// cool base that replaces the diffuse it gave up. The key and strip lobes keep the default strength: with it the bevels (now
+		// leaning the right way) catch them at about the glint brightness the baseline's sunlit rifle already had, and no brighter in a
+		// dark interior than that (a lobe gain of 8 put 234 of 255 on the suppressor there).
 		float metal = smoothstep(0.30, 0.70, METALLIC);
-		float sheen = viewmodel_metal_sheen < 0.0 ? viewmodel_sheen : mix(viewmodel_sheen, viewmodel_metal_sheen, metal);
-		float reflection = viewmodel_metal_reflect < 0.0 ? viewmodel_reflect : mix(viewmodel_reflect, viewmodel_metal_reflect, metal);
+		float gradient_strength = viewmodel_metal_reflect < 0.0 ? viewmodel_reflect : mix(viewmodel_reflect, viewmodel_metal_reflect, metal);
 		vec3 gradient = mix(vec3(0.26, 0.29, 0.31), vec3(0.38, 0.42, 0.45), smoothstep(-1.0, 1.0, r.y));
 		gradient = mix(gradient, vec3(0.30, 0.33, 0.36), ROUGHNESS * 0.6);
 		float key = pow(max(dot(r, normalize(vec3(-0.50, 0.60, 0.62))), 0.0), mix(48.0, 5.0, ROUGHNESS)) * mix(1.0, 0.4, ROUGHNESS);
 		float strip = pow(max(dot(r, normalize(vec3(0.78, 0.15, -0.40))), 0.0), mix(24.0, 4.0, ROUGHNESS)) * mix(1.0, 0.4, ROUGHNESS);
-		vec3 radiance = gradient + vec3(1.0, 0.96, 0.90) * key * 3.0 * sheen + vec3(0.62, 0.76, 1.0) * strip * 1.2 * sheen;
+		vec3 lobes = vec3(1.0, 0.96, 0.90) * key * 3.0 * viewmodel_sheen + vec3(0.62, 0.76, 1.0) * strip * 1.2 * viewmodel_sheen;
 		// Finish variation on the metal's reflection, fixed to the weapon in object space (the barrel runs along z) so it does not move
 		// with the pose: a slow swell along the barrel and a fine brushed grain along it, zero on average, so the median holds. A flat
 		// face under a distant environment has one reflection direction over its whole area; this is what puts structure on it.
@@ -191,7 +190,7 @@ const STUDIO := REFLECTANCE + """
 			float grain = 0.5 * sin(phase_fine) * (1.0 - smoothstep(2.0, 3.2, fwidth(phase_fine))) + 0.5 * sin(phase_coarse) * (1.0 - smoothstep(2.0, 3.2, fwidth(phase_coarse)));
 			variation = 1.0 + viewmodel_variation * metal * (0.6 * swell + 0.4 * grain);
 		}
-		EMISSION += fresnel * radiance * AO * viewmodel_env * reflection * variation;
+		EMISSION += fresnel * (gradient * gradient_strength + lobes * viewmodel_reflect) * AO * viewmodel_env * variation;
 	}
 """
 
@@ -347,6 +346,5 @@ static func metal(material: ShaderMaterial) -> void:
 	material.set_shader_parameter("viewmodel_f0", METAL_F0)
 	material.set_shader_parameter("viewmodel_diffuse", METAL_DIFFUSE)
 	material.set_shader_parameter("viewmodel_metal_reflect", METAL_REFLECT)
-	material.set_shader_parameter("viewmodel_metal_sheen", METAL_SHEEN)
 	material.set_shader_parameter("viewmodel_variation", METAL_VARIATION)
 	material.set_shader_parameter("viewmodel_normal_fix", 1.0)

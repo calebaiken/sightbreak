@@ -337,10 +337,10 @@ func _run() -> void:
 	var metal_ok := true
 	for metal_material in [receiver_material, body_material]:
 		metal_ok = metal_ok and float(metal_material.get_shader_parameter("viewmodel_f0")) == ViewmodelShading.METAL_F0 and float(metal_material.get_shader_parameter("viewmodel_diffuse")) == ViewmodelShading.METAL_DIFFUSE
-		metal_ok = metal_ok and float(metal_material.get_shader_parameter("viewmodel_metal_reflect")) == ViewmodelShading.METAL_REFLECT and float(metal_material.get_shader_parameter("viewmodel_metal_sheen")) == ViewmodelShading.METAL_SHEEN
+		metal_ok = metal_ok and float(metal_material.get_shader_parameter("viewmodel_metal_reflect")) == ViewmodelShading.METAL_REFLECT
 		metal_ok = metal_ok and float(metal_material.get_shader_parameter("viewmodel_variation")) == ViewmodelShading.METAL_VARIATION and float(metal_material.get_shader_parameter("viewmodel_normal_fix")) == 1.0
-	check(metal_ok, "the receiver finish and the rifle body carry the machined-metal finish (reflectance %s, diffuse kept %s, reflection %s, sheen %s, variation %s)" % [ViewmodelShading.METAL_F0, ViewmodelShading.METAL_DIFFUSE, ViewmodelShading.METAL_REFLECT, ViewmodelShading.METAL_SHEEN, ViewmodelShading.METAL_VARIATION])
-	check(ViewmodelShading.METAL_F0 > 0.04 and ViewmodelShading.METAL_DIFFUSE < 1.0 and ViewmodelShading.METAL_REFLECT > 0.30 and ViewmodelShading.METAL_SHEEN > 4.0, "the metal reflects more than a dielectric, keeps less of its diffuse, and takes more studio reflection and key gain than the defaults (0.04, 1, 0.30, 4)")
+	check(metal_ok, "the receiver finish and the rifle body carry the machined-metal finish (reflectance %s, diffuse kept %s, gradient strength %s, variation %s)" % [ViewmodelShading.METAL_F0, ViewmodelShading.METAL_DIFFUSE, ViewmodelShading.METAL_REFLECT, ViewmodelShading.METAL_VARIATION])
+	check(ViewmodelShading.METAL_F0 > 0.04 and ViewmodelShading.METAL_DIFFUSE < 1.0 and ViewmodelShading.METAL_REFLECT > 0.30, "the metal reflects more than a dielectric, keeps less of its diffuse, and takes more studio gradient than the default (0.04, 1, 0.30)")
 	var arms_variation = arms_mesh.material_override.get_shader_parameter("viewmodel_normal_fix")
 	var arms_reflectance = arms_mesh.material_override.get_shader_parameter("viewmodel_f0")
 	check(float(arms_variation if arms_variation != null else 0.0) == 0.0 and float(arms_reflectance if arms_reflectance != null else 0.0) == 0.0, "the arms are not metal: no reflectance remap, and their detail normal keeps the behaviour their bounce bounds in viewmodel_light_probe.gd were measured with")
