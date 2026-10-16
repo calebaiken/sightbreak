@@ -286,6 +286,10 @@ func _run() -> void:
 		"rough45": "ROUGHNESS = max(ROUGHNESS, 0.45);", "rough65": "ROUGHNESS = max(ROUGHNESS, 0.65);", "rough70": "ROUGHNESS = max(ROUGHNESS, 0.70);", "rough60": "ROUGHNESS = max(ROUGHNESS, 0.60);", "rough80": "ROUGHNESS = max(ROUGHNESS, 0.80);",
 		"metal60": "METALLIC *= 0.60;", "metal30": "METALLIC *= 0.30;",
 	}
+	var paint_original := {}
+	if SBWeaponModel.use_authored:
+		for part in ["receiver", "handguard"]:
+			paint_original[part] = _node(part).material_override
 	var body_original: Material = (_node("furniture") as MeshInstance3D).material_override if SBWeaponModel.use_authored else null
 	var cases: Array[Dictionary] = []
 	if sweep:
@@ -311,7 +315,7 @@ func _run() -> void:
 			if SBWeaponModel.use_authored:
 				(_node("furniture") as MeshInstance3D).material_override = body_original
 				for part in ["receiver", "handguard"]:
-					_node(part).material_override = finish
+					_node(part).material_override = paint_original[part]
 			environment.sky = real_sky
 			if condition.begins_with("studio") and SBWeaponModel.use_authored:
 				# studio<strength>g<gradient>r<roughness floor>, all in hundredths (the floor defaults to the shipped one)
