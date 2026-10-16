@@ -28,6 +28,7 @@ GAME = os.path.join(REPO, 'game')
 ACTOR = os.path.join(GAME, 'scripts', 'gameplay', 'actor.gd')
 PHASES = os.path.join(GAME, 'scripts', 'gameplay', 'reload_phases.gd')
 AUDIO = os.path.join(GAME, 'scripts', 'gameplay', 'reload_audio.gd')
+CAPTURE_SCRIPT = os.path.join(GAME, 'tests', 'reload_audio_capture.gd')
 GLB = os.path.join(GAME, 'assets', 'weapons', 'relay_ar', 'relay_ar_arms.glb')
 SHADING = os.path.join(GAME, 'scripts', 'gameplay', 'viewmodel_shading.gd')
 COSMETIC = os.path.join(GAME, 'scripts', 'ui', 'cosmetic_material.gd')
@@ -85,6 +86,7 @@ SOURCE = [
     ('A4', 'the slide-out has no sound', [(AUDIO, '\t\t_add("extract", _slide(0.17, 1700.0 * shift, 900.0 * shift, 105.0, seed_base + 2, false))\n', '')], None, [AUD]),
     ('A5', 'the reload sounds play 80 dB down (the voices are muted)', [(AUDIO, '\tvoice.volume_db = -15.0 + float(LEVELS.get(event, 0.0))', '\tvoice.volume_db = -95.0')], None, [CAP]),
     ('A6', 'a cancelled reload does not stop its voices (real audio, a cancel as the landing starts)', [(ACTOR, '\t_reload_audio.stop_all() # a weapon change cancels a reload: nothing of it keeps sounding', '\tpass'), (ACTOR, '\telif _reload_visual_active and not _reload_fired.has("seat"):\n\t\t_reload_audio.stop_all() # cancelled before the seat: the sounds that were playing stop with it\n', '')], None, [CAP_CANCEL]),
+    ('A7', 'an unlogged reload voice plays before the first scheduled event', [(CAPTURE_SCRIPT, '\tactor.start_reload()\n', '\taudio._voices[0].stream = SBReloadAudio._streams["unlatch"][1]\n\taudio._voices[0].play()\n\tactor.start_reload()\n')], None, [CAP]),
 ]
 CLIPS = [
     ('N15', 'a hand that does not reach the magazine (knuckle 50 mm off)', {'ARMS_GRAB_JSON': '{"mcp": [0.064, 0.15, -0.19]}'}, ['contact']),
