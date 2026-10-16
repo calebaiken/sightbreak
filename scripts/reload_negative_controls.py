@@ -45,9 +45,11 @@ CAP_CANCEL = ('audio capture (cancel)', ['--headless', '--audio-driver', 'Dummy'
 VIS = ('visibility', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_visibility_test.gd', '--', '--step=2'])
 VIS_REDUCED = ('visibility (reduced motion)', VIS[1] + ['--reduced'])
 # The replacement is never unsupported or abrupt in the visible frame (hand and magazine enter together, contact through the carry).
+CONT_CALM_ARGS = ['--', '--reduced', '--variant=calm']
 CONT = ('continuity', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_continuity_test.gd'])
+CONT_CALM = ('continuity (calm)', CONT[1] + CONT_CALM_ARGS)
 # The parts separate in the lightings (sun and a dark interior at the ready pose: the quick form of the validate.sh run).
-LIGHT = ('light separation', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/viewmodel_light_probe.gd', '--', '--assert', '--poses=ready', '--scenarios=sun,dark interior'])
+LIGHT = ('light separation', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/viewmodel_light_probe.gd', '--', '--assert', '--poses=ready,hip', '--scenarios=sun,dark interior'])
 # The rifle's painted metal holds its finish through the reload (native: it renders the receiver and handguard at reload ticks).
 DISC = ('finish stability', ['--audio-driver', 'Dummy', '--rendering-method', 'gl_compatibility', '--script', 'res://tests/reload_discolour_probe.gd', '--', '--assert', '--conditions=base', '--ticks=0,40,122,126,130,134'])
 
@@ -74,6 +76,7 @@ SOURCE = [
     ('N27', 'the handguard gets the receiver\'s finish (no polymer material of its own)', [(COSMETIC, 'if first_person and part.name == "paint_handguard":', 'if false:')], None, [ART]),
     ('N28', 'the grip is not darkened over its baked graphite (it was level with the receiver and the gloves)', [(WEAPON_MODEL, 'const GRIP_DARKEN := 0.24', 'const GRIP_DARKEN := 1.0')], None, [LIGHT]),
     ('N29', 'the painted metal has no fill floor of its own (the rifle dissolves in a dark interior)', [(SHADING, 'const METAL_FLOOR := 0.12', 'const METAL_FLOOR := 0.0')], None, [ART, LIGHT]),
+    ('N35', 'the arms get no ground bounce (the support forearm\'s underside is a near-black wedge in the hip retrieval)', [(WEAPON_MODEL, 'const ARMS_BOUNCE := Vector3(0.30, 0.28, 0.23)', 'const ARMS_BOUNCE := Vector3(0.0, 0.0, 0.0)')], None, [ART, LIGHT]),
     ('N31', 'the arms reflect the whole studio (the gloves read as a pale veil beside the sleeves)', [(WEAPON_MODEL, 'const ARMS_REFLECT := 0.10', 'const ARMS_REFLECT := 1.0')], None, [ART, LIGHT]),
     ('N22', 'the replacement is drawn from the start of the hip trip: it floats in view with no hand on it', [(ACTOR, '_magazine_spare.visible = progress >= SBReloadPhases.ACQUIRE', '_magazine_spare.visible = progress >= SBReloadPhases.DROP')], None, [SEQ]),
     ('N14', 'the seat phase is changed in reload_phases.gd without rebuilding the clip', [(PHASES, 'const SEAT := 0.80', 'const SEAT := 0.78')], None, [ART, SEQ]),
@@ -92,6 +95,7 @@ CLIPS = [
     ('N32', 'the v9 hip pose (magazine untilted, elbow tucked): the magazine\'s top enters the frame ahead of the hand that holds it', {'ARMS_PATH_JSON': '{"hip_turn": [-28, 0, 22], "elbow_hip": [-0.10, 0.0, 0.07]}'}, [CONT]),
     ('N33', 'the hip raised to 31 cm (v9\'s attempt): the replacement comes into the frame with the hand still below the edge', {'ARMS_PATH_JSON': '{"hip": [-0.20, 0.04, -0.31], "hip_turn": [-28, 0, 22], "elbow_hip": [-0.10, 0.0, 0.07]}'}, [CONT, SEQ]),
     ('N34', 'the replacement fetched from a pouch far below the frame and brought up at once (it pops into the frame)', {'ARMS_PATH_JSON': '{"hip": [-0.20, 0.04, -0.55], "carry": [-0.115, 0.05, -0.30]}'}, [CONT]),
+    ('N36', 'the v9 reduced-motion path (pickup 11 cm below the well, in view): the replacement appears whole in an open hand', {'ARMS_CALM_JSON': '{"hip": [-0.19, 0.04, -0.11], "hip_turn": [-14, 0, 10], "elbow_hip": [-0.12, 0.0, 0.10]}'}, [CONT_CALM]),
     ('N18', 'the replacement fetched from far below the frame', {'ARMS_PATH_JSON': '{"hip": [-0.20, 0.04, -0.60], "carry": [-0.115, 0.05, -0.40]}'}, [VIS, SEQ]),
 ]
 

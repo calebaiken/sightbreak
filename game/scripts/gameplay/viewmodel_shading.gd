@@ -53,6 +53,7 @@ uniform float viewmodel_sheen = 4.0;
 uniform float viewmodel_metal_scale = 1.0;
 uniform float viewmodel_reflect = 0.30;
 uniform vec3 viewmodel_ambient = vec3(0.165, 0.214, 0.254);
+uniform vec3 viewmodel_bounce = vec3(0.0);
 """
 
 ## Inside vertex(). Scales the camera's projection to the viewmodel field of view,
@@ -107,6 +108,9 @@ const STUDIO := """
 		float ndv = clamp(dot(n, VIEW), 0.0, 1.0);
 		float up = clamp(n.y * 0.5 + 0.5, 0.0, 1.0);
 		EMISSION += ALBEDO * (1.0 - METALLIC) * AO * viewmodel_ambient * viewmodel_env;
+		// Light bounced up from the ground onto what faces down (a forearm's underside, the underside of a fist): a constant of the
+		// viewmodel like the ambient, not read from the world, so it adds form without adding visibility in a dark place.
+		EMISSION += ALBEDO * (1.0 - METALLIC) * AO * viewmodel_bounce * clamp(-n.y, 0.0, 1.0) * viewmodel_env;
 		vec3 r = reflect(-VIEW, n);
 		float gloss = 1.0 - ROUGHNESS;
 		vec3 f0 = mix(vec3(0.08 * SPECULAR), ALBEDO, METALLIC);

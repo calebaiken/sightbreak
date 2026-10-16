@@ -38,3 +38,9 @@ The authored first-person rifle uses the same maps on both tiers. A tier hook (s
 - Trim sheets for modular architecture.
 
 Each needs measurement on LOW and STANDARD before it ships.
+
+## First-person lighting: the viewmodel environment (art-v10)
+
+First-person surfaces (`ViewmodelShading.SURFACE` and the first-person cosmetic finish, so the default and every skin) declare `render_mode ambient_light_disabled`. The engine's sky radiance and ambient light are not applied to them; `ViewmodelShading.STUDIO` supplies a fixed environment instead: the arena's flat ambient colour (`viewmodel_ambient`, (0.165, 0.214, 0.254)) for the diffuse part, a ground-bounce term for surfaces that face down (`viewmodel_bounce`, arms only), and a reflection of a small studio (an edge-free sky-to-ground gradient, a key panel up and to the left, a thin cool strip behind on the right) through Schlick Fresnel with the baked metalness and roughness, the detail normal and the baked occlusion. The sun remains the engine's directional light with the baked roughness.
+
+Why: the engine's sky has a bright horizon band, and one `ROUGHNESS` controls both the sun's highlight and the sky's reflection; a weapon that rolls and lifts slides the band across the metal and its colour swings. The previous remedy (a roughness floor of 0.8) removed the swing and flattened the sun's response with it (`docs/reports/media/art-v10/materials/README.md`). Consequences: the viewmodel no longer reflects the world (a red wall does not tint the metal); a map with another ambient colour must set `viewmodel_ambient` (nothing does yet); the ambient and reflection terms are the same constants in a dark interior (the only world-dependent terms are the engine's own lights: the sun and any omni light), which keeps the weapon readable without touching the world camera's lighting or any enemy's visibility. Inspection and third-person models keep the engine's own lighting (asserted in `weapon_art_test.gd`).

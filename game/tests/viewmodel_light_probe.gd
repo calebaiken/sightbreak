@@ -23,7 +23,9 @@ const SCENARIOS := {
 	"dark interior": {"at": Vector3(0, 0.05, 20.5), "yaw": 0.1, "sun": 0.08, "ambient": 0.3},
 }
 ## Reload progress per pose; -1 is the ready pose.
-const POSES := {"ready": -1.0, "grab": 0.15, "mid reload": 0.5, "seat": 0.84}
+const POSES := {"ready": -1.0, "grab": 0.15, "hip": 0.47, "mid reload": 0.5, "seat": 0.84}
+## The "hip" pose is the hip retrieval: the support arm is below the rifle and its forearm's underside is what is in the frame.
+const HIP_SLEEVE_MIN := {"sun": 55.0, "backlight": 45.0, "shade": 38.0, "dark interior": 38.0}
 const PARTS := ["magazine", "receiver", "handguard", "furniture", "grip", "gloves", "sleeves"]
 var output := ""
 var tag := "probe"
@@ -259,6 +261,7 @@ func _run() -> void:
 ##   grip / receiver <= 0.85   the grip is distinctly darker than the receiver in every lighting and pose (before: 1.00 in sun at ready,
 ##                             0.94 in shade at ready; after: 0.56 to 0.76)
 ##   gloves / sleeves <= 0.78 in sun   the gloves are not a pale veil beside the sleeve (before: 0.79 to 0.81; after: 0.73 to 0.76)
+##   sleeves at the hip retrieval pose >= 55 sun, 45 backlight, 38 shade and dark interior   the support forearm's underside is not a black wedge
 ##   receiver and handguard >= 22 in the dark interior   the rifle does not dissolve into it (before the fill: 17 and 18; after: 25 and 28)
 func _assert_separation() -> int:
 	var checks := 0
@@ -272,7 +275,16 @@ func _assert_separation() -> int:
 			var ok := ratio <= 0.85
 			failures += 0 if ok else 1
 			print("%s %s: grip %.1f / receiver %.1f = %.2f (at most 0.85)" % ["ok  " if ok else "FAIL", key, v.grip, v.receiver, ratio])
-		if parts[0] == "sun" and v.has("gloves") and v.has("sleeves"):
+		if parts[1] == "hip" and v.has("sleeves"):
+			# The support forearm's underside in the hip retrieval was a near-black wedge. Empirical bounds, set after seeing the
+			# measurements, midway between the values without and with the ground bounce (art-v10/materials): sun 48.0 / 61.9,
+			# backlight 37.2 / 52.6, shade and dark interior 33.9 / 42.2.
+			var least: float = HIP_SLEEVE_MIN[parts[0]]
+			checks += 1
+			var ok_hip: bool = v.sleeves >= least
+			failures += 0 if ok_hip else 1
+			print("%s %s: sleeves %.1f at the hip retrieval (at least %.0f)" % ["ok  " if ok_hip else "FAIL", key, v.sleeves, least])
+		if parts[0] == "sun" and parts[1] != "hip" and parts[1] != "mid reload" and v.has("gloves") and v.has("sleeves"):
 			var ratio: float = v.gloves / v.sleeves
 			checks += 1
 			var ok := ratio <= 0.78

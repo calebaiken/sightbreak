@@ -44,6 +44,10 @@ const ARMS_SPECULAR := 0.25
 ## Rim light on the arms (ViewmodelShading.RIM is the rifle's): a pale edge on the silhouette so a dark forearm is an outline
 ## against a dark floor.
 const ARMS_RIM := 0.25
+## Ground bounce on what faces down (ViewmodelShading `viewmodel_bounce`, linear colour): the support forearm's underside in the hip
+## retrieval was a near-black wedge (median luma 33 of 255 in sun, art-v10/materials), the sleeve's form lost where it turns away from
+## the light. Zero for the rifle.
+const ARMS_BOUNCE := Vector3(0.30, 0.28, 0.23)
 const RELAY_AR_MATERIAL := "res://assets/weapons/relay_ar/relay_ar_body.tres"
 const RELAY_AR_ORM := "res://assets/weapons/relay_ar/relay_ar_orm.png"
 const RELAY_AR_NORMAL := "res://assets/weapons/relay_ar/relay_ar_normal.png"
@@ -135,6 +139,7 @@ static func _add_arms(parent: Node3D, placement: Transform3D, result: Dictionary
 	material.set_shader_parameter("viewmodel_specular", ARMS_SPECULAR)
 	material.set_shader_parameter("viewmodel_sheen", ARMS_SHEEN)
 	material.set_shader_parameter("viewmodel_reflect", ARMS_REFLECT)
+	material.set_shader_parameter("viewmodel_bounce", ARMS_BOUNCE)
 	for mesh: MeshInstance3D in arms.find_children("*", "MeshInstance3D", true, false):
 		mesh.material_override = material
 		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF

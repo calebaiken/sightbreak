@@ -931,13 +931,15 @@ _PATH = {'swing': (-0.070, 0.020, 0.004), 'hip': (-0.200, 0.040, -0.340), 'carry
 if os.environ.get('ARMS_PATH_JSON'):   # exploration hook and the negative controls' injection (N18, N23): overrides for one build
     import json
     _PATH.update({k: tuple(v) for k, v in json.loads(os.environ['ARMS_PATH_JSON']).items()})
-# The reduced-motion clip ("reload_calm"): the rifle's staging is smaller there (less roll and lift), so the hand has less room: it goes
-# down 11 cm, turns less, and the elbow swings out as far as in the default so the forearm stays in the picture. Same phases, same timing,
-# same keys; only the hand's reach differs. The pickup is therefore in view, at the lower edge: the replacement is first drawn in a visible
-# hand (documented as the price of keeping the hand on screen; docs/reports/media/art-v9/reduced-motion). Found by scanning the reach
-# (ARMS_CALM_JSON) against reload_visibility_test for both reduced variants; 14 cm and deeper left the arm below the frame while the
-# magazine was in view.
-_PATH_CALM = {'hip': (-0.190, 0.040, -0.110), 'carry': (-0.115, 0.050, -0.050), 'hip_turn': (-14, 0, 10), 'elbow_hip': (-0.12, 0.0, 0.10),
+# The reduced-motion clip ("reload_calm"): the rifle's staging is smaller there (less roll and lift) and the hand's excursion is
+# shorter: it goes down 28 cm (34 in the default) and turns less about the forearm (10 degrees against 22), with the same magazine tilt
+# and elbow swing as the default clip so the hand and the magazine enter the frame together. Same phases, same timing, same keys.
+# v9 had it pick up in view, 11 cm down, and the replacement was then drawn whole in an open hand: it appeared (8,640 px in the first
+# visible tick) rather than arrived, which reload_continuity_test flags. Found by scanning the hip depth (ARMS_CALM_JSON, 20 to 28 cm,
+# docs/reports/media/art-v10/reduced-motion): 28 cm is the shallowest at which both reduced variants pass continuity (first visible
+# tick 481 and 417 px) and the 15 visibility rules; at 26 cm `still` has under 150 px of contact at one tick (104), at 24 cm `calm` has (99), and at 20 cm
+# the first draw is 2,670 px.
+_PATH_CALM = {'hip': (-0.190, 0.040, -0.280), 'carry': (-0.115, 0.050, -0.050), 'hip_turn': (55, 0, 10), 'elbow_hip': (-0.35, 0.0, 0.30),
               'carry_at': (0.50, 0.0, 0.0)}
 if os.environ.get('ARMS_CALM_JSON'):   # review hook: the calm clip's overrides for one build
     import json
