@@ -192,11 +192,7 @@ static func choose_buy_weapon(actor: SBActor, difficulty: String, round_number: 
 static func buy_equipment(actor: SBActor, difficulty: String, round_number: int) -> String:
 	var choice: String = choose_buy_weapon(actor, difficulty, round_number)
 	actor.buy_weapon(choice)
-	var spec: Dictionary = SBWeapons.get_weapon(actor.weapon_id)
-	actor.ammo = int(spec.get("magazine", 30))
-	actor.reserve = int(spec.get("reserve", 60))
-	actor.smokes = 1
-	actor.grenades = 1
+	# Purchases and round resets own equipment resources; failed buys grant nothing.
 	return actor.weapon_id
 
 static func record_damage(arg1: Variant, arg2: Variant, arg3: Variant, arg4: Variant, arg5: Variant = null) -> void:

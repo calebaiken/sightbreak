@@ -19,6 +19,8 @@ func _run() -> void:
 	await process_frame
 	_test_reaction_and_weapon_authority(failures)
 	await process_frame
+	_test_equipment_purchase_authority(failures)
+	await process_frame
 	_test_objectives_and_team_coordination(failures)
 	await process_frame
 	_test_navigation_and_stuck_recovery(failures)
@@ -311,4 +313,26 @@ func _test_lifecycle_difficulty_and_network_integrity(failures: Array[String]) -
 		failures.append("Integrated TacticalMatch.PROTOCOL_VERSION must remain 6")
 	if not m._ranked_payload().is_empty():
 		failures.append("Offline bot match must never generate a ranked economy payload")
+	m.queue_free()
+
+func _test_equipment_purchase_authority(failures: Array[String]) -> void:
+	var m := _spawn_offline_match("normal")
+	var bot: SBActor = m.actors[2]
+	bot.credits = 5000
+	bot.buy_weapon("rifle")
+	bot.ammo = 2
+	bot.reserve = 3
+	bot.smokes = 0
+	bot.grenades = 0
+	bot.credits = 0
+	var inventory_before: Array = bot.inventory.duplicate()
+	SBBotAI.buy_equipment(bot, "normal", 1)
+	if bot.credits != 0 or bot.weapon_id != "rifle" or bot.inventory != inventory_before or bot.ammo != 2 or bot.reserve != 3 or bot.smokes != 0 or bot.grenades != 0:
+		failures.append("Failed AI purchase must preserve funds, ownership, ammunition and utility")
+	bot.credits = 5000
+	bot.reset_loadout()
+	var price: int = int(SBWeapons.get_weapon("rifle").cost)
+	SBBotAI.buy_equipment(bot, "normal", 1)
+	if bot.credits != 5000 - price or bot.weapon_id != "rifle" or bot.ammo != 30 or bot.reserve != 90 or bot.smokes != 0 or bot.grenades != 0:
+		failures.append("Successful AI purchase must use actor pricing/ammunition and grant no utility")
 	m.queue_free()
