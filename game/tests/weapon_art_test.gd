@@ -82,6 +82,7 @@ func _viewmodel_screen(camera: Camera3D, point: Vector3) -> Vector2:
 ## Poses the actor at a reload progress from a clean start (the visual reload clock follows the
 ## authoritative timer within a slack, so a jump needs a reset to land exactly).
 func _pose_reload(actor: SBActor, progress: float, reload_time: float) -> void:
+	actor._magazine_swap_pending = false # the node swap at the end of a reload is measured in reload_sequence_test.gd
 	actor.reload_remaining = 0.0
 	actor.tick_visual(0.016)
 	if progress > 0.0:
@@ -220,7 +221,7 @@ func _run() -> void:
 	root.add_child(holder)
 	var parts: Dictionary = WeaponModel.build(holder, "rifle", true)
 	check(parts.paint.size() == 2 and parts.magazine != null and parts.muzzle != null, "authored rifle exposes paint, magazine and muzzle roles")
-	check(holder.get_child_count() <= 6, "first-person rifle with hands is at most six draw nodes (%d)" % holder.get_child_count())
+	check(holder.get_child_count() <= 7, "first-person rifle with hands is at most seven draw nodes (body, receiver paint, handguard paint, magazine, grip, the hands: %d)" % holder.get_child_count())
 	check(parts.magazine.get_child_count() == 1, "cartridge follows the magazine")
 	check(parts.muzzle.position.distance_to(parts.magazine.position) > 0.3, "muzzle flash sits at the authored muzzle")
 	var base := Transform3D(Basis.from_euler(WeaponModel.relay_ar_rotation).scaled(Vector3.ONE * WeaponModel.relay_ar_scale), WeaponModel.relay_ar_offset)
@@ -298,9 +299,26 @@ func _run() -> void:
 	for map in ["albedo", "orm", "normal"]:
 		check(_texture_ok("res://assets/weapons/relay_ar/relay_ar_arms_%s.png" % map, 1024), "arms %s is square, power of two, at most 1024" % map)
 	check(player != null and player.has_animation("reload") and is_equal_approx(player.get_animation("reload").length, 1.0), "the reload clip is one second long, seeked by reload progress")
+	# The reduced-motion variants (Actor.REDUCED_RELOAD_VARIANTS): every clip they name exists and is seeked like the default one,
+	# and the profiles only scale presentation (the default profile is the unscaled one, the calmer ones roll less).
+	var variants: Dictionary = Actor.REDUCED_RELOAD_VARIANTS
+	check(variants.has("current") and variants.has("calm") and variants.has("still"), "the reduced-motion variants current, calm and still exist")
+	var variant_clips_ok := true
+	for variant_name in variants:
+		var clip_name: String = variants[variant_name].clip
+		variant_clips_ok = variant_clips_ok and player != null and player.has_animation(clip_name) and is_equal_approx(player.get_animation(clip_name).length, 1.0)
+	check(variant_clips_ok, "every reduced-motion variant's clip exists and is one second long")
+	check(variants.current.roll == 1.0 and variants.current.lift == 1.0 and variants.current.recoil == 1.0 and variants.current.clip == "reload", "the 'current' variant is the unscaled default")
+	check(variants.calm.roll < variants.current.roll and variants.still.roll < variants.calm.roll and variants.still.recoil < variants.calm.recoil, "calm rolls and kicks less than current and still less than calm")
 	# Viewmodel drawing: first person uses the narrower projection, inspection does not.
 	check(arms_mesh.material_override is ShaderMaterial and arms_mesh.material_override.get_shader_parameter("viewmodel_fov") == ViewmodelShading.FOV, "arms draw with the viewmodel projection")
 	check((actor._gun.get_node("body") as MeshInstance3D).material_override.get_shader_parameter("viewmodel_fov") == ViewmodelShading.FOV and actor._finish.get_shader_parameter("viewmodel_fov") == ViewmodelShading.FOV, "rifle body and finish draw with the viewmodel projection in first person")
+	# The painted metal's roughness floor (the rifle turned pale as the reload rolled it, reflecting the sky's horizon band):
+	# first person sets it, the code that applies it is in the shader, and inspection (the engine's own lighting) has none.
+	check(actor._finish.get_shader_parameter("viewmodel_roughness") == ViewmodelShading.METAL_ROUGHNESS and ViewmodelShading.METAL_ROUGHNESS >= 0.7, "first-person painted metal has a roughness floor of at least 0.7 (%s)" % actor._finish.get_shader_parameter("viewmodel_roughness"))
+	check(actor._finish.get_shader_parameter("viewmodel_floor") == ViewmodelShading.METAL_FLOOR and ViewmodelShading.METAL_FLOOR > ViewmodelShading.FLOOR, "the painted metal's fill floor (%s) is above the rest of the viewmodel's (%s): it replaces the sheen the roughness floor removed" % [ViewmodelShading.METAL_FLOOR, ViewmodelShading.FLOOR])
+	check(arms_mesh.material_override.get_shader_parameter("viewmodel_specular") == WeaponModel.ARMS_SPECULAR and WeaponModel.ARMS_SPECULAR >= 0.0 and WeaponModel.ARMS_SPECULAR < 0.5 and arms_mesh.material_override.get_shader_parameter("viewmodel_floor") == WeaponModel.ARMS_FLOOR, "the arms carry a dielectric specular below the engine's default (%s) and their own fill (%s)" % [WeaponModel.ARMS_SPECULAR, WeaponModel.ARMS_FLOOR])
+	check(CosmeticMaterial.shader(true).code.contains("ROUGHNESS = max(ROUGHNESS, viewmodel_roughness)") and not CosmeticMaterial.shader().code.contains("viewmodel_roughness"), "only the first-person cosmetic shader applies the roughness floor")
 	var inspected := Node3D.new()
 	root.add_child(inspected)
 	WeaponModel.build(inspected, "rifle", false)
@@ -332,15 +350,21 @@ func _run() -> void:
 	var sidearm_paint: Array[String] = _vertex_overrides(sidearm._gun)
 	check(sidearm.weapon_id == "sidearm" and not sidearm._viewmodel and sidearm._paint_parts.size() > 0 and sidearm._finish.shader == CosmeticMaterial.shader() and sidearm_paint.is_empty(), "procedural first-person sidearm keeps the world finish %s" % [sidearm_paint])
 	sidearm.queue_free()
-	# The reload as a mechanical sequence: leave the handguard, reach, grasp, slide the
-	# magazine out along its well, carry it into view, line it up, enter, push to the stop,
-	# keep hold until it is seated, then let go and return. The clip is keyed in
-	# tools/art/arms_build.py to the same fractions as Actor.RELOAD_*; the magazine rides the
-	# support hand between the grasp and the let-go (actor._pose_magazine).
+	# The reload as a mechanical sequence: leave the handguard, reach, grasp, slide the old
+	# magazine out along its well, let it go, fetch the replacement, bring it up, line it up,
+	# enter, push to the stop, keep hold until it is seated, then let go and return. The clip is
+	# keyed in tools/art/arms_build.py to the fractions in SBReloadPhases (reload_phases.gd, read by
+	# the build); each magazine rides the support hand while it holds it (actor._pose_magazines).
+	# What the sequence does with TWO magazines, the sound and the staging is measured in
+	# reload_sequence_test.gd; this block keeps the older geometry checks on the held magazine.
 	var hand := skeleton.find_bone("L_hand")
 	var hold: Vector3 = skeleton.get_bone_global_pose(hand).origin
 	var reload_time: float = 2.25
-	check(is_equal_approx(Actor.RELOAD_GRASP, 0.20) and is_equal_approx(Actor.RELOAD_SEAT, 0.80) and is_equal_approx(Actor.RELOAD_LETGO, 0.85) and Actor.RELOAD_REACH < Actor.RELOAD_GRASP, "the reload's phase boundaries are the ones the clip is keyed to")
+	var phase_order: Array[float] = [SBReloadPhases.REACH, SBReloadPhases.GRASP, SBReloadPhases.UNLATCH, SBReloadPhases.CLEAR, SBReloadPhases.DROP, SBReloadPhases.ACQUIRE, SBReloadPhases.ALIGN, SBReloadPhases.ENTER, SBReloadPhases.SEAT, SBReloadPhases.LETGO]
+	var phases_ascend := phase_order[0] > 0.0 and phase_order[-1] < 1.0
+	for i in range(1, phase_order.size()):
+		phases_ascend = phases_ascend and phase_order[i] > phase_order[i - 1]
+	check(phases_ascend, "the reload's phases are one strictly increasing list inside the reload (%s)" % [phase_order])
 	var rest_transform: Transform3D = actor._magazine_rest_transform
 	var magazine_box: AABB = actor._magazine.mesh.get_aabb()
 	var rest_centre: Vector3 = rest_transform * magazine_box.get_center()
@@ -364,11 +388,25 @@ func _run() -> void:
 			bottom_sum += in_gun
 			bottom_count += 1
 	var well_axis := (bottom_sum / bottom_count - top_sum / top_count).normalized()
+	# The magazine the frame is about: the one in the hand; else the replacement once it is drawn
+	# (it is the one in the well after the seat); else the first one in its well.
+	var subject := func() -> MeshInstance3D:
+		if actor._magazine_in_hand != null:
+			return actor._magazine_in_hand
+		return actor._magazine_spare if actor._magazine_spare != null and actor._magazine_spare.visible else actor._magazine
+	var top_rest: Vector3 = top_sum / top_count
+	var top_local: Vector3 = rest_transform.affine_inverse() * top_rest
 	var moved := func(progress: float) -> Dictionary:
 		_pose_reload(actor, progress, reload_time)
-		var offset: Vector3 = actor._magazine.transform * magazine_box.get_center() - rest_centre
+		var node: MeshInstance3D = subject.call()
+		var offset: Vector3 = node.transform * magazine_box.get_center() - rest_centre
 		var along := offset.dot(well_axis)
-		return {"travel": along, "off_axis": (offset - well_axis * along).length(), "offset": offset, "hand": skeleton.get_bone_global_pose(hand).origin}
+		# The top face is the end that goes into the well: it, not the middle, has to be on the axis (the magazine
+		# is rocked about its lip as it goes in).
+		var top_delta: Vector3 = node.transform * top_local - top_rest
+		return {"travel": along, "off_axis": (offset - well_axis * along).length(), "offset": offset, "hand": skeleton.get_bone_global_pose(hand).origin,
+			"tip_off": (top_delta - well_axis * top_delta.dot(well_axis)).length(), "tip_travel": top_delta.dot(well_axis),
+			"tilt": rad_to_deg(node.transform.basis.get_rotation_quaternion().angle_to(rest_transform.basis.get_rotation_quaternion()))}
 	var index_2 := skeleton.find_bone("L_index_2")
 	var curl_at := func(progress: float) -> Quaternion:
 		_pose_reload(actor, progress, reload_time)
@@ -378,7 +416,7 @@ func _run() -> void:
 	check((at_hold.hand as Vector3).distance_to(hold) < 0.001 and (at_hold.offset as Vector3).length() < 0.0005, "at the start the hand is on the handguard and the magazine is seated")
 	var reaching: Dictionary = moved.call(0.08)
 	check((reaching.hand as Vector3).distance_to(hold) > 0.03 and (reaching.offset as Vector3).length() < 0.0005, "while the hand reaches the magazine the magazine has not moved")
-	var at_grasp: Dictionary = moved.call(Actor.RELOAD_GRASP)
+	var at_grasp: Dictionary = moved.call(SBReloadPhases.GRASP)
 	check((at_grasp.offset as Vector3).length() < 0.0005, "at the grasp the magazine is still seated (%.1f mm)" % ((at_grasp.offset as Vector3).length() * 1000.0))
 	# It slides out along its own well and clears it.
 	for progress in [0.22, 0.26, 0.29, 0.32]:
@@ -386,19 +424,22 @@ func _run() -> void:
 		check(absf(sliding.off_axis) < 0.004, "at %d %% the magazine is on its well's axis (%.1f mm off)" % [roundi(progress * 100), sliding.off_axis * 1000.0])
 	var cleared: Dictionary = moved.call(0.32)
 	check(cleared.travel > 0.085, "by 32 %% the magazine has cleared the well (%.0f mm out)" % (cleared.travel * 1000.0))
-	# Then it is carried out to the rifle's left and shown, away from the well.
-	var shown: Dictionary = moved.call(0.46)
-	check((shown.offset as Vector3).length() > 0.12 and (shown.offset as Vector3).x < -0.08, "mid-reload the replacement is carried out to the rifle's left (%s)" % [shown.offset])
-	check(shown.hand.y > hold.y - 0.15 and (shown.hand as Vector3).distance_to(hold) > 0.12, "the hand carries it: it is away from the handguard and not far below it")
+	# The hand swings the old magazine out to the rifle's left and lets it go, away from the well.
+	var swung: Dictionary = moved.call(SBReloadPhases.DROP)
+	check((swung.offset as Vector3).length() > 0.10 and (swung.offset as Vector3).x < -0.04, "at the drop the old magazine has been carried out to the rifle's left (%s)" % [swung.offset])
+	check((swung.hand as Vector3).distance_to(hold) > 0.08, "the hand carries it: it is away from the handguard at the drop")
+	# The empty hand fetches the replacement from the left, which is its own magazine in its own hand.
+	var fetched: Dictionary = moved.call(SBReloadPhases.ACQUIRE)
+	check((fetched.offset as Vector3).x < -0.10 and actor._magazine_in_hand == actor._magazine_spare, "at the acquisition the replacement, the second magazine, is in the hand out to the left (%s)" % [fetched.offset])
 	# It comes back, lines up under the well, enters and is pushed to its stop.
 	var lined_up: Dictionary = moved.call(0.69)
-	check(lined_up.off_axis < 0.008 and lined_up.travel > 0.07, "at 69 %% it is lined up under the well, not yet in it (%.0f mm out, %.1f mm off)" % [lined_up.travel * 1000.0, lined_up.off_axis * 1000.0])
+	check(lined_up.tip_off < 0.008 and lined_up.tip_travel > 0.05, "at 69 %% its top face is lined up under the well, not yet in it (%.0f mm out, %.1f mm off, tipped %.1f deg)" % [lined_up.tip_travel * 1000.0, lined_up.tip_off * 1000.0, lined_up.tilt])
 	var entering: Dictionary = moved.call(0.75)
-	check(entering.travel > 0.01 and entering.travel < 0.06 and entering.off_axis < 0.004, "at 75 %% it is entering the well (%.0f mm out)" % (entering.travel * 1000.0))
-	var seated: Dictionary = moved.call(Actor.RELOAD_SEAT)
-	check((seated.offset as Vector3).length() < 0.0005, "at %d %% it is seated (%.2f mm from its place)" % [roundi(Actor.RELOAD_SEAT * 100), (seated.offset as Vector3).length() * 1000.0])
+	check(entering.tip_travel > 0.005 and entering.tip_travel < 0.05 and entering.tip_off < 0.004, "at 75 %% its top face is entering the well (%.0f mm out, %.1f mm off, tipped %.1f deg)" % [entering.tip_travel * 1000.0, entering.tip_off * 1000.0, entering.tilt])
+	var seated: Dictionary = moved.call(SBReloadPhases.SEAT)
+	check((seated.offset as Vector3).length() < 0.0005, "at %d %% it is seated (%.2f mm from its place)" % [roundi(SBReloadPhases.SEAT * 100), (seated.offset as Vector3).length() * 1000.0])
 	# The hand lets go only after it is seated: it stays on it, fingers closed, until the let-go.
-	var closed: Quaternion = curl_at.call(Actor.RELOAD_SEAT)
+	var closed: Quaternion = curl_at.call(SBReloadPhases.SEAT)
 	for progress in [0.81, 0.83, 0.845]:
 		var holding: Dictionary = moved.call(progress)
 		var curl: Quaternion = curl_at.call(progress)
@@ -410,9 +451,18 @@ func _run() -> void:
 	var firm: Quaternion = curl_at.call(0.22)
 	var worst_loosening := 0.0
 	for tick in range(0, 81):
-		var progress: float = 0.22 + float(tick) / 80.0 * (Actor.RELOAD_SEAT - 0.22)
+		# up to just before the drop: the clip is keyed at 60 Hz, so the instant of the drop itself
+		# already interpolates toward the opening hand
+		var progress: float = 0.22 + float(tick) / 80.0 * (SBReloadPhases.DROP - 0.012 - 0.22)
 		worst_loosening = maxf(worst_loosening, firm.angle_to(curl_at.call(progress)))
-	check(worst_loosening < deg_to_rad(1.0), "from the grasp to the seat the fingers do not open (worst %.2f deg)" % rad_to_deg(worst_loosening))
+	check(worst_loosening < deg_to_rad(1.0), "from the grasp to the drop the fingers do not open (worst %.2f deg)" % rad_to_deg(worst_loosening))
+	var firm_new: Quaternion = curl_at.call(SBReloadPhases.ACQUIRE + 0.02)
+	check(firm_new.angle_to(curl_at.call(SBReloadPhases.ACQUIRE)) < deg_to_rad(4.0), "the fingers have closed on the replacement by the acquisition (%.1f deg short)" % rad_to_deg(firm_new.angle_to(curl_at.call(SBReloadPhases.ACQUIRE))))
+	worst_loosening = 0.0
+	for tick in range(0, 81):
+		var progress: float = SBReloadPhases.ACQUIRE + 0.02 + float(tick) / 80.0 * (SBReloadPhases.SEAT - SBReloadPhases.ACQUIRE - 0.02)
+		worst_loosening = maxf(worst_loosening, firm_new.angle_to(curl_at.call(progress)))
+	check(worst_loosening < deg_to_rad(1.0), "from the acquisition to the seat the fingers do not open (worst %.2f deg)" % rad_to_deg(worst_loosening))
 	# No teleports: at 240 Hz of reload progress the magazine and the hand move smoothly,
 	# including where the magazine is handed over to the hand at the grasp and back at the let-go.
 	var last_magazine := Vector3.INF
@@ -420,32 +470,65 @@ func _run() -> void:
 	var worst_magazine := 0.0
 	var worst_hand := 0.0
 	var steps := 540
+	var last_in_hand: MeshInstance3D = null
+	var grid_hand: Array[Vector3] = []
+	var grid_mag: Array[Vector3] = []
+	var worst_mag_accel := 0.0
+	var worst_hand_accel := 0.0
+	var accel_at := 0.0
+	var seconds_step := reload_time / steps
 	for tick in range(steps + 1):
-		_pose_reload(actor, float(tick) / steps, reload_time)
-		var magazine_now: Vector3 = actor._magazine.transform * magazine_box.get_center()
+		var at := float(tick) / steps
+		_pose_reload(actor, at, reload_time)
+		# The magazine in the hand (the old one up to the drop, the replacement from the acquisition);
+		# the old one's fall afterwards is free fall and is checked for what it does in the sequence test.
+		var in_hand: MeshInstance3D = actor._magazine_in_hand
+		var magazine_now: Vector3 = in_hand.transform * magazine_box.get_center() if in_hand != null else Vector3.INF
 		var hand_now: Vector3 = skeleton.get_bone_global_pose(hand).origin
-		if last_magazine != Vector3.INF:
-			worst_magazine = maxf(worst_magazine, magazine_now.distance_to(last_magazine))
+		if last_hand != Vector3.INF:
 			worst_hand = maxf(worst_hand, hand_now.distance_to(last_hand))
+		if last_magazine != Vector3.INF and magazine_now != Vector3.INF and in_hand == last_in_hand:
+			worst_magazine = maxf(worst_magazine, magazine_now.distance_to(last_magazine))
+		# Acceleration on the clip's own 60 Hz grid (it is keyed at 60 Hz and linear between keys, so a finer grid
+		# measures the keys' corners, not the motion).
+		if tick % 9 == 0:
+			if grid_hand.size() == 3: grid_hand.pop_front()
+			grid_hand.append(hand_now)
+			if grid_hand.size() == 3:
+				var ha := ((grid_hand[2] - grid_hand[1]) - (grid_hand[1] - grid_hand[0])).length() / pow(seconds_step * 9.0, 2.0)
+				if ha > worst_hand_accel:
+					worst_hand_accel = ha
+					accel_at = at
+			if in_hand == last_in_hand and magazine_now != Vector3.INF:
+				grid_mag.append(magazine_now)
+				if grid_mag.size() > 3: grid_mag.pop_front()
+				if grid_mag.size() == 3:
+					worst_mag_accel = maxf(worst_mag_accel, ((grid_mag[2] - grid_mag[1]) - (grid_mag[1] - grid_mag[0])).length() / pow(seconds_step * 9.0, 2.0))
+			else:
+				grid_mag.clear()
 		last_magazine = magazine_now
+		last_in_hand = in_hand
 		last_hand = hand_now
 	var seconds_per_step := reload_time / steps
-	check(worst_magazine / seconds_per_step < 1.5 and worst_hand / seconds_per_step < 4.5, "the magazine never moves faster than 1.5 m/s and the hand 4.5 m/s (worst %.2f and %.2f m/s)" % [worst_magazine / seconds_per_step, worst_hand / seconds_per_step])
-	# The seat is heard when it happens, not before.
+	check(worst_magazine / seconds_per_step < 2.0 and worst_hand / seconds_per_step < 3.0, "the magazine never moves faster than 2.0 m/s (carried about 0.35 m from the hip in 0.38 s: a mean of 0.9 m/s, a spline peak a little over twice that) and the hand 3.0 m/s (worst %.2f and %.2f m/s)" % [worst_magazine / seconds_per_step, worst_hand / seconds_per_step])
+	check(worst_mag_accel < 20.0 and worst_hand_accel < 50.0, "on the clip's 60 Hz grid the magazine in the hand never accelerates faster than 20 m/s2 and the hand 50 m/s2: no flung or snapped motion (worst %.1f and %.1f m/s2, the hand at %.2f)" % [worst_mag_accel, worst_hand_accel, accel_at])
+	# The sounds follow the visible reload (reload_sequence_test.gd measures when, under snapshot
+	# jitter). Here: stepping the reload through the seat plays the seat once, and not before it.
 	_pose_reload(actor, 0.5, reload_time)
-	_pose_reload(actor, Actor.RELOAD_SEAT - 0.02, reload_time)
-	actor.tick_visual(0.001)
-	check(not actor._reload_visual_seated, "the seat sound has not played before the magazine is seated")
-	_pose_reload(actor, Actor.RELOAD_SEAT + 0.01, reload_time)
-	actor.tick_visual(0.001)
-	check(actor._reload_visual_seated, "the seat sound plays once the magazine is seated")
+	var seated_before := actor._reload_fired.has("seat")
+	for tick in 60:
+		actor.reload_remaining = maxf(0.0, reload_time * (1.0 - 0.5) - (tick + 1) / 60.0)
+		actor.tick_visual(1.0 / 60.0)
+		if SBReloadPhases.progress(actor._reload_clock, reload_time) < SBReloadPhases.SEAT:
+			seated_before = seated_before or actor._reload_fired.has("seat")
+	check(not seated_before and actor._reload_fired.has("seat"), "the seat sound has not played before the magazine is seated and plays once it is")
 	# Staging: the support hand and the whole magazine are in frame when the hand takes
 	# the magazine and when it seats it (they leave the frame only mid-swap).
-	for progress in [0.14, Actor.RELOAD_SEAT]:
-		actor.reload_remaining = reload_time * (1.0 - progress)
-		actor.tick_visual(0.016)
+	for progress in [0.14, SBReloadPhases.SEAT]:
+		_pose_reload(actor, progress, reload_time)
+		var in_view: MeshInstance3D = subject.call()
 		var wrist := _viewmodel_screen(actor.camera, skeleton.global_transform * skeleton.get_bone_global_pose(hand).origin)
-		var bottom := _viewmodel_screen(actor.camera, actor._magazine.global_transform * Vector3(magazine_box.get_center().x, magazine_box.position.y, magazine_box.get_center().z))
+		var bottom := _viewmodel_screen(actor.camera, in_view.global_transform * Vector3(magazine_box.get_center().x, magazine_box.position.y, magazine_box.get_center().z))
 		check(wrist.x > 0.02 and wrist.x < 0.98 and wrist.y < 0.95 and bottom.x > 0.02 and bottom.x < 0.98 and bottom.y < 0.98, "at %d %% of the reload the support hand and magazine are in frame (wrist %s, magazine bottom %s)" % [roundi(progress * 100), wrist, bottom])
 		var tube_end := _viewmodel_screen(actor.camera, (actor._gun.get_node("body") as Node3D).global_transform * Vector3(0, 0.025, 0.205))
 		check(tube_end.x > 1.0 or tube_end.y > 1.0, "the buffer tube's end face stays out of frame at %d %% (%s)" % [roundi(progress * 100), tube_end])
@@ -454,13 +537,11 @@ func _run() -> void:
 	# 36 vertices 2.8 px below a 720 px frame at 15 %).
 	var magazine_vertices: PackedVector3Array = actor._magazine.mesh.surface_get_arrays(0)[Mesh.ARRAY_VERTEX]
 	for progress in [0.12, 0.13, 0.14, 0.15, 0.78, 0.80, 0.82, 0.84]:
-		actor.reload_remaining = 0
-		actor.tick_visual(0.016)
-		actor.reload_remaining = reload_time * (1.0 - progress)
-		actor.tick_visual(0.016)
-		var extent := Rect2(_viewmodel_screen(actor.camera, actor._magazine.global_transform * magazine_vertices[0]), Vector2.ZERO)
+		_pose_reload(actor, progress, reload_time)
+		var in_view: MeshInstance3D = subject.call()
+		var extent := Rect2(_viewmodel_screen(actor.camera, in_view.global_transform * magazine_vertices[0]), Vector2.ZERO)
 		for vertex in magazine_vertices:
-			extent = extent.expand(_viewmodel_screen(actor.camera, actor._magazine.global_transform * vertex))
+			extent = extent.expand(_viewmodel_screen(actor.camera, in_view.global_transform * vertex))
 		check(extent.position.x > 0.01 and extent.end.x < 0.99 and extent.end.y < 0.99, "at %d %% of the reload every magazine vertex is in frame (%s)" % [roundi(progress * 100), extent])
 	# The held reload pose rises toward the centre but leaves the crosshair clear.
 	actor.reload_remaining = reload_time * 0.5

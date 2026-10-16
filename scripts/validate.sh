@@ -50,6 +50,25 @@ run_godot cosmetics --headless --script res://tests/cosmetic_presentation_test.g
 run_godot weapon-art --headless --script res://tests/weapon_art_test.gd
 run_godot integration-actor-lifecycle --headless --script res://tests/integration_actor_lifecycle_test.gd
 python3 scripts/test_account_network_output.py
+run_godot reload-sequence --headless --script res://tests/reload_sequence_test.gd
+run_godot reload-audio --headless --script res://tests/reload_audio_test.gd
+# The real mix of a real-time reload through an AudioEffectCapture on the Dummy driver (it mixes in real time, no speaker).
+run_godot reload-audio-capture --headless --audio-driver Dummy --script res://tests/reload_audio_capture.gd -- --scenario=reload
+run_godot reload-audio-cancel --headless --audio-driver Dummy --script res://tests/reload_audio_capture.gd -- --scenario=cancel
+python3 scripts/test_reload_contact.py | tee "$validation_dir/reload-contact.log"
+if [[ -n "${DISPLAY:-}" ]]; then
+  # Counts the pixels each part of the reload really draws; needs a rendering display (Xvfb is enough).
+  run_godot reload-visibility --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_visibility_test.gd -- --step=2
+  # The rifle's painted metal keeps its finish through the reload (it turned pale as the reload rolled it): sun, shade, a skin.
+  run_godot reload-finish-sunlit --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base
+  run_godot reload-finish-shade --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --view=shade
+  # The parts separate in four lightings (the grip is darker than the receiver, the gloves are not a pale veil beside the sleeve,
+  # the rifle does not dissolve in a dark interior): bounds set from this round's measurements, see viewmodel_light_probe.gd.
+  run_godot viewmodel-light --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/viewmodel_light_probe.gd -- --assert --poses=ready,grab
+  run_godot reload-finish-skin --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --skin
+else
+  printf 'reload-visibility skipped: no DISPLAY (needs a native rendering display)\n'
+fi
 ./scripts/test_network.sh
 python3 scripts/test_connection_lifecycle.py --out "$validation_dir/connection-lifecycle"
 if [[ "${1:-}" == --backend ]]; then

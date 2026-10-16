@@ -1,0 +1,37 @@
+# Baseline (no defect injected): every test passes
+  sequence                       passed
+  weapon-art                     passed
+  audio                          passed
+  audio capture                  passed
+  audio capture (cancel)         passed
+  visibility                     passed
+  visibility (reduced motion)    passed
+  finish stability               passed
+  contact                        passed
+
+## N25: the painted metal loses its roughness floor (the finish reflects the sky's horizon band again and the rifle turns pale in the reload)
+  weapon-art                     FAILED
+      ERROR: first-person painted metal has a roughness floor of at least 0.7 (0.0)
+  finish stability               FAILED
+      ERROR: receiver luma ratio 1.48 exceeds 1.25
+      ERROR: handguard luma ratio 1.40 exceeds 1.25
+
+## N26: the cosmetic finish no longer receives the roughness floor
+  weapon-art                     FAILED
+      ERROR: first-person painted metal has a roughness floor of at least 0.7 (<null>)
+  finish stability               FAILED
+      ERROR: receiver luma ratio 1.48 exceeds 1.25
+      ERROR: handguard luma ratio 1.40 exceeds 1.25
+
+## N27: the shader ignores the roughness floor (it is set but never applied)
+  weapon-art                     FAILED
+      ERROR: only the first-person cosmetic shader applies the roughness floor
+  finish stability               FAILED
+      ERROR: receiver luma ratio 1.48 exceeds 1.25
+      ERROR: handguard luma ratio 1.40 exceeds 1.25
+
+# Summary
+  N25  caught
+  N26  caught
+  N27  caught
+  3 controls: 3 caught, 0 crashed, 0 missed, 0 invalid

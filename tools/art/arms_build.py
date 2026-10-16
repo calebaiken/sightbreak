@@ -25,6 +25,7 @@ not the shipped one's and is never shipped. ARMS_GRAB_JSON overrides entries of 
 """
 import math
 import os
+import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -109,18 +110,23 @@ def material(name, colour, rough):
 # measured 15-16 in a dark interior). The v3 glove at 0.050 with strong tan wear read as bare
 # skin and measured level with the sleeve, so the glove stays well under the jacket.
 PALETTE = {
-    'fabric': ((0.030, 0.027, 0.024), 0.86), 'palm': ((0.042, 0.037, 0.032), 0.93),
-    'shell': ((0.012, 0.012, 0.013), 0.48), 'strap': ((0.022, 0.020, 0.018), 0.80),
-    'cuff': ((0.027, 0.025, 0.022), 0.88),
+    # v8: the gloves are a cool graphite (they were a warm charcoal): lit by the sun that reads as tan, and the review found the right glove
+    # read as bare skin beside the left, which stands in shade. A blue-grey glove stays a glove in warm light, and is still well below the sleeve.
+    'fabric': ((0.025, 0.027, 0.033), 0.86), 'palm': ((0.040, 0.042, 0.050), 0.93),
+    'shell': ((0.009, 0.009, 0.010), 0.46), 'strap': ((0.030, 0.030, 0.033), 0.80),
+    'cuff': ((0.026, 0.028, 0.034), 0.88),
+    # v9: construction you can read at 1280 x 720: suede fingertips and palm lighter than the knit back of the hand, a near-black
+    # moulded guard, a darker rubber palm pad, and thread-coloured piping that outlines the fingers
+    'seam': ((0.060, 0.064, 0.074), 0.90), 'tip': ((0.034, 0.036, 0.044), 0.94), 'pad': ((0.014, 0.015, 0.018), 0.70),
     'sleeve': ((0.045, 0.051, 0.041), 0.90), 'hem': ((0.037, 0.042, 0.034), 0.88),
 }
 
 
 # Game-mesh density: about 8.3k triangles for both arms (v3 was 10,672; the documented
 # hands-and-sleeves budget is 10,000). The sleeve's folds are in the normal map.
-GLOVE_QUADS = 1800
-SLEEVE_SEGMENTS = 32
-SLEEVE_RINGS = 20
+GLOVE_QUADS = 2100
+SLEEVE_SEGMENTS = 28
+SLEEVE_RINGS = 16
 
 
 def right_arm_meshes(h_high, h_mid, glove_faces, sleeve_faces, high=True):
@@ -133,12 +139,21 @@ def right_arm_meshes(h_high, h_mid, glove_faces, sleeve_faces, high=True):
         centres = (v[q[:, 0]] + v[q[:, 2]]) / 2
         reg = sdf.nearest_region(centres, [s for s, k in shapes[0]], 'fabric')
         reg = np.where(reg == None, 'fabric', reg)  # noqa: E711
-        glove_regions = ('fabric', 'palm', 'shell', 'strap', 'cuff')
+        # The palm filler and the heel pad are volumes inside the hand: where the back of the hand is thin their surface comes
+        # as near the skin as the fabric does, and the nearest-surface rule painted stray patches on the back of the hand
+        # and the wrist (seen in v9's first build). Palm and pad colours belong to surfaces that face the palm side only.
+        normals = np.cross(v[q[:, 1]] - v[q[:, 0]], v[q[:, 3]] - v[q[:, 0]])
+        normals /= np.maximum(np.linalg.norm(normals, axis=1, keepdims=True), 1e-12)
+        if (normals * (centres - v.mean(axis=0))).sum() < 0:
+            normals = -normals
+        palmar = normals[:, 2] < -0.35
+        reg = np.where(np.isin(reg, ('palm', 'pad')) & ~palmar, 'fabric', reg)
+        glove_regions = ('fabric', 'palm', 'shell', 'strap', 'cuff', 'seam', 'tip', 'pad')
         parts['glove_high'] = mesh_object('glove_high', v, q, [mats[r] for r in glove_regions], reg)
         v, q = sdf.mesh(arms.sleeve_distance, *arms.sleeve_bounds(), h_high * 1.4)
         centres = (v[q[:, 0]] + v[q[:, 2]]) / 2
         parts['sleeve_high'] = mesh_object('sleeve_high', v, q, [mats['sleeve'], mats['hem']], arms.sleeve_region(centres))
-    plain = (shapes[0], [])
+    plain = ([(shape, k) for shape, k in shapes[0] if shape.region != 'seam'], [])   # the piping is bake detail, not game mesh
     v, q = sdf.mesh(lambda P: arms.glove_distance(P, plain), *arms.glove_bounds(), h_mid)
     glove = retopo(mesh_object('glove_low', v, q), glove_faces)
     v, f = arms.sleeve_low_mesh(SLEEVE_SEGMENTS, SLEEVE_RINGS)
@@ -268,7 +283,24 @@ class Obstacle:
             return 0.05
         loc, normal = hit[0], hit[1]
         d = (p - loc).length
-        return d if (p - loc).dot(normal) >= 0 else -d
+        if (p - loc).dot(normal) >= 0:
+            return d
+        # The nearest face says "behind it". At a convex edge or under an overhang that is wrong for a point beside the
+        # surface (a fingertip 17 mm to the side of the handguard counted as 17 mm inside it, in one frame of 61),
+        # so the sign is decided by ray parity: inside only if rays along each axis cross an odd number of faces in at
+        # least two of three.
+        votes = 0
+        for axis in ((1.0, 0.0, 0.0), (0.0, 1.0, 0.0), (0.0, 0.0, 1.0)):
+            origin, crossings = Vector(p), 0
+            direction = Vector(axis)
+            for _ in range(8):
+                ray = self.bvh.ray_cast(origin, direction)
+                if ray[0] is None:
+                    break
+                crossings += 1
+                origin = ray[0] + direction * 1e-5
+            votes += crossings % 2
+        return -d if votes >= 2 else d
 
 
 def bone_points(rig, mesh_obj, side, stride=1):
@@ -523,9 +555,17 @@ def build(out_dir, rifle_glb, glb_path, size=2048, samples=48, h_high=0.0005, ba
     bpy.ops.object.mode_set(mode='POSE')
     magazine = next(o for o in rifle if o.name == 'magazine')
     grab = grab_pose(rig, arms_obj, placements['L'], magazine)
-    axis, _ = well_axis(magazine)
-    reload_clip(rig, grab, axis)
+    axis, top = well_axis(magazine)
+    global SEATED_TOP
+    SEATED_TOP = Vector(top)
+    default_action = reload_clip(rig, grab, axis)
     review_clip(rig, arms_obj, rifle, axis, out_dir)
+    # The reduced-motion clip: the same phases with a shallower reach (use_path), reviewed for contact too, then back to the default.
+    use_path(_PATH_CALM)
+    calm_action = reload_clip(rig, grab, axis, name='reload_calm')
+    review_clip(rig, arms_obj, rifle, axis, out_dir, csv_name='clip_contact_calm.csv')
+    use_path()
+    rig.animation_data.action = default_action
     bpy.ops.object.mode_set(mode='OBJECT')
     for obj in rifle:
         bpy.data.objects.remove(obj, do_unlink=True)
@@ -598,8 +638,9 @@ def detail_material(name, colour, rough, kind):
     base.inputs['B'].default_value = (*[c * 1.12 for c in colour], 1)
     links.new(tone.outputs['Fac'], base.inputs['Factor'])
     # Wear lightens only slightly: scuffed fabric, not a different colour.
-    wear_colour = {'fabric': (0.060, 0.055, 0.049), 'palm': (0.068, 0.061, 0.053), 'shell': (0.040, 0.040, 0.041),
-                   'strap': (0.036, 0.034, 0.032), 'cuff': (0.045, 0.043, 0.040), 'sleeve': (0.080, 0.088, 0.068), 'hem': (0.066, 0.072, 0.056)}[name]
+    wear_colour = {'fabric': (0.050, 0.054, 0.064), 'palm': (0.062, 0.064, 0.074), 'shell': (0.034, 0.034, 0.036),
+                   'seam': (0.085, 0.090, 0.104), 'tip': (0.058, 0.060, 0.070), 'pad': (0.032, 0.034, 0.040),
+                   'strap': (0.046, 0.046, 0.050), 'cuff': (0.040, 0.043, 0.050), 'sleeve': (0.080, 0.088, 0.068), 'hem': (0.066, 0.072, 0.056)}[name]
     worn = nodes.new('ShaderNodeMix')
     worn.data_type = 'RGBA'
     worn.inputs['B'].default_value = (*wear_colour, 1)
@@ -626,6 +667,18 @@ def detail_material(name, colour, rough, kind):
         grid.squash = 1.0
         links.new(coord.outputs['Object'], grid.inputs['Vector'])
         bump.inputs['Strength'].default_value = 0.35
+        links.new(grid.outputs['Fac'], bump.inputs['Height'])
+    elif kind == 'knit' and name in ('fabric', 'cuff', 'tip', 'palm'):
+        # v9: a knit rib you can see at gameplay size (a 4 to 5 mm cell, three or four texels of the 1024 atlas), not the
+        # sub-millimetre grain that disappeared there. Palm and tips take a finer, flatter version (suede grain).
+        grid = nodes.new('ShaderNodeTexBrick')
+        grid.inputs['Scale'].default_value = 230.0 if name in ('fabric', 'cuff') else 420.0
+        grid.inputs['Mortar Size'].default_value = 0.14
+        grid.offset = 0.5
+        grid.squash = 1.0
+        links.new(coord.outputs['Object'], grid.inputs['Vector'])
+        bump.inputs['Distance'].default_value = 0.0006
+        bump.inputs['Strength'].default_value = 0.45 if name in ('fabric', 'cuff') else 0.25
         links.new(grid.outputs['Fac'], bump.inputs['Height'])
     else:
         weave = nodes.new('ShaderNodeTexNoise')
@@ -695,7 +748,7 @@ def bake_arm(parts, out_dir, size=2048, samples=48):
     UV island. Occlusion still sees the whole arm."""
     low = parts['arm_low']
     for name, (colour, rough) in PALETTE.items():
-        detail_material(name, colour, rough, 'ripstop' if name == 'sleeve' else 'fabric')
+        detail_material(name, colour, rough, 'ripstop' if name == 'sleeve' else 'knit')
     target = bpy.data.materials.new('arms')
     target.use_nodes = True
     sleeve_faces = [p.material_index == low.data.materials.find('sleeve') for p in low.data.polygons]
@@ -785,22 +838,51 @@ def bind_pose(rig, sides):
     return arms_obj
 
 
-# The reload, as fractions of its length (the game seeks the clip by reload progress, and
-# actor.gd times the seat sound and the magazine's carry from the same numbers).
-#   0.00-0.14  the support hand leaves the handguard and comes up to the magazine from below
-#   0.14-0.20  the fingers close on it
-#   0.20-0.32  it slides out along its well and clears it
-#   0.32-0.50  it is lifted out to the rifle's left and shown (the replacement)
-#   0.50-0.69  it comes back and lines up under the well
-#   0.69-0.80  it enters and is pushed to its stop: seated at 0.80
-#   0.80-0.85  the hand stays closed on the seated magazine
-#   0.85-1.00  the fingers open and the hand returns to the handguard
-P_REACH, P_GRASP, P_SEAT, P_LETGO = 0.14, 0.20, 0.80, 0.85
-# The hand arrives at, and leaves, the magazine from below: it first goes to a point this far
-# under the grasp (rifle space) and only then comes up to the base, so it never crosses the
-# magazine on a straight line between the handguard and the grasp.
-APPROACH = Vector((-0.020, -0.010, -0.085))
+# The reload, as fractions of its length, comes from game/scripts/gameplay/reload_phases.gd, the
+# single definition (the game seeks the clip by reload progress and times the magazine's carry,
+# the click sounds and the old magazine's drop from the same names; the tests measure the
+# imported clip against them). Read here by pattern, so there is no second copy to drift.
+#   0.00-REACH       the support hand leaves the handguard and comes up to the magazine from below
+#   REACH-GRASP      the fingers close on it
+#   GRASP-UNLATCH    the hand takes its weight; at UNLATCH the latch lets go
+#   UNLATCH-CLEAR    it slides out along its well and clears it
+#   CLEAR-DROP       it swings out to the left; at DROP the fingers open and it is let go
+#   DROP-ACQUIRE     the empty hand goes to the pouch, down and to the left
+#   at ACQUIRE       the fingers close on the replacement (a second magazine)
+#   ACQUIRE-ALIGN    it is brought up into view and lined up under the well
+#   ALIGN-ENTER-SEAT it enters and is pushed to its stop: seated at SEAT
+#   SEAT-LETGO       the hand stays closed on the seated magazine
+#   LETGO-1.00       the fingers open and the hand returns to the handguard
+HERE = os.path.dirname(os.path.abspath(__file__))
+
+
+def load_phases(path=None):
+    path = path or os.path.join(HERE, '../../game/scripts/gameplay/reload_phases.gd')
+    with open(path) as f:
+        found = {m.group(1): float(m.group(2)) for m in re.finditer(r'^const ([A-Z_]+) := ([0-9.]+)\s*$', f.read(), re.M)}
+    missing = [k for k in ('REACH', 'GRASP', 'UNLATCH', 'CLEAR', 'DROP', 'ACQUIRE', 'ALIGN', 'ENTER', 'SEAT', 'LETGO') if k not in found]
+    if missing:
+        raise SystemExit('reload_phases.gd does not define %s' % ', '.join(missing))
+    order = [found[k] for k in ('REACH', 'GRASP', 'UNLATCH', 'CLEAR', 'DROP', 'ACQUIRE', 'ALIGN', 'ENTER', 'SEAT', 'LETGO')]
+    if order != sorted(order) or len(set(order)) != len(order) or order[0] <= 0 or order[-1] >= 1:
+        raise SystemExit('reload_phases.gd: the phases must be strictly increasing inside (0, 1): %s' % order)
+    return found
+
+
+PHASES = load_phases()
+P_REACH, P_GRASP, P_UNLATCH, P_CLEAR, P_DROP = (PHASES[k] for k in ('REACH', 'GRASP', 'UNLATCH', 'CLEAR', 'DROP'))
+P_ACQUIRE, P_ALIGN, P_ENTER, P_SEAT, P_LETGO = (PHASES[k] for k in ('ACQUIRE', 'ALIGN', 'ENTER', 'SEAT', 'LETGO'))
+# The hand arrives at, and leaves, the magazine from the left and a little above its grasp: it first goes
+# to a point this far from the grasp (rifle space) and only then closes on the base, so it never crosses
+# the magazine on a straight line between the handguard and the grasp. (Until v7 the point was 85 mm BELOW
+# the grasp, which is below the bottom of the frame: the support hand left the picture for about 0.06 of the
+# reload on the way in and again on the way out. reload_visibility_test.gd counts the hand's pixels.)
+APPROACH = Vector((-0.080, 0.000, 0.010))
 APPROACH_AT = 0.65
+if os.environ.get('ARMS_APPROACH'):   # exploration hook: ARMS_APPROACH='x,y,z[,at]' for one build
+    _a = [float(v) for v in os.environ['ARMS_APPROACH'].split(',')]
+    APPROACH = Vector(_a[:3])
+    APPROACH_AT = _a[3] if len(_a) > 3 else APPROACH_AT
 
 
 def well_axis(magazine):
@@ -814,41 +896,145 @@ def well_axis(magazine):
     return (bottom - top).normalized(), top
 
 
-# Path of the magazine relative to where it is seated: (progress, travel out of the well
-# in metres, offset in rifle space, turn in degrees about the rifle's X, Y and Z). The
-# magazine's top is 0.075 m inside the well, so it is clear at 0.09. Between keys the
-# motion eases, so a repeated key is a pause.
+# Paths of the two magazines relative to where a magazine sits when seated: (progress, travel out
+# of the well in metres, offset in rifle space, turn in degrees about the rifle's X, Y and Z).
+# The well holds a magazine 0.075 m deep, so it is clear at 0.09. Between keys the motion is a spline (below),
+# so a repeated key is a pause. Rifle space: x right, y toward the muzzle, z up.
 WELL_DEPTH = 0.075
-MAG_KEYS = (
-    (0.00, 0.000, (0.00, 0.00, 0.00), (0, 0, 0)),
-    (0.20, 0.000, (0.00, 0.00, 0.00), (0, 0, 0)),
-    (0.24, 0.020, (0.00, 0.00, 0.00), (0, 0, 0)),     # the latch lets go; it starts to slide
-    (0.32, 0.098, (0.00, 0.00, 0.00), (0, 0, 0)),     # clear of the well
-    (0.43, 0.100, (-0.120, -0.040, 0.140), (-25, 0, 20)),   # lifted out to the rifle's left and shown
-    (0.50, 0.100, (-0.120, -0.040, 0.140), (-25, 0, 20)),
-    (0.61, 0.100, (-0.030, -0.010, 0.040), (-8, 0, 6)),     # coming back toward the well
-    (0.69, 0.088, (0.000, 0.000, 0.000), (-3, 0, 0)),       # lined up under it
-    (0.75, 0.030, (0.000, 0.000, 0.000), (-1, 0, 0)),       # entering
-    (0.80, 0.000, (0.000, 0.000, 0.000), (0, 0, 0)),        # pushed to its stop
-    (1.00, 0.000, (0.000, 0.000, 0.000), (0, 0, 0)),
-)
+ZERO3 = (0.0, 0.0, 0.0)
+# The old magazine: the hand takes it, it slides out, clears the well and swings out to the left,
+# where the fingers open and let it go (it falls; the game drops it, nothing here needs it after).
+# Exploration hook (like ARMS_GRAB_JSON): ARMS_PATH_JSON='{"swing": [x, y, z], "hip": [x, y, z], "carry": [x, y, z]}'
+# overrides where the old magazine is let go, where the replacement waits (the hip) and its midway point, for one build.
+# v9: the hip is 31 cm below the well (it was 36): the hand reaches down to the lower edge of the frame, so the open hand and the forearm
+# are seen on the way down (at 36 cm only a sliver of sleeve showed and the hand left the picture for 0.4 s). At 22 cm the replacement
+# was first drawn with 56 % of it inside the frame, a visible pop beside a visible hand, and a pouch drawn to show its source looked like
+# a floating box (docs/reports/media/art-v9/reload-retrieval).
+_PATH = {'swing': (-0.070, 0.020, 0.004), 'hip': (-0.200, 0.040, -0.310), 'carry': (-0.115, 0.050, -0.090), 'hip_turn': (-28, 0, 22),
+         'rock': (-15, -9, -3), 'elbow_hip': (-0.10, 0.0, 0.07)}
+if os.environ.get('ARMS_PATH_JSON'):   # exploration hook and the negative controls' injection (N18, N23): overrides for one build
+    import json
+    _PATH.update({k: tuple(v) for k, v in json.loads(os.environ['ARMS_PATH_JSON']).items()})
+# The reduced-motion clip ("reload_calm"): the rifle's staging is smaller there (less roll and lift), so the hand has less room: it goes
+# down 11 cm, turns less, and the elbow swings out as far as in the default so the forearm stays in the picture. Same phases, same timing,
+# same keys; only the hand's reach differs. The pickup is therefore in view, at the lower edge: the replacement is first drawn in a visible
+# hand (documented as the price of keeping the hand on screen; docs/reports/media/art-v9/reduced-motion). Found by scanning the reach
+# (ARMS_CALM_JSON) against reload_visibility_test for both reduced variants; 14 cm and deeper left the arm below the frame while the
+# magazine was in view.
+_PATH_CALM = {'hip': (-0.190, 0.040, -0.110), 'carry': (-0.115, 0.050, -0.050), 'hip_turn': (-14, 0, 10), 'elbow_hip': (-0.12, 0.0, 0.10)}
+if os.environ.get('ARMS_CALM_JSON'):   # review hook: the calm clip's overrides for one build
+    import json
+    _PATH_CALM.update({k: tuple(v) for k, v in json.loads(os.environ['ARMS_CALM_JSON']).items()})
+_PATH_DEFAULT = dict(_PATH)   # with any override of this run (the negative controls use it): use_path() returns to it
+# Key = (progress, travel out of the well, offset, turn[, 'hold']). Between keys the motion is a cubic through
+# every key with a velocity that is continuous (Catmull-Rom), so nothing starts or stops at a key; a key marked
+# 'hold' has zero velocity there (a pause: the grab, the let-go, the seat).
+def _keys():
+    """The two magazines' key tables from the active `_PATH` (the default clip, or the reduced-motion one: use_path)."""
+    swing, hip, hip_turn, carry, rock = _PATH['swing'], _PATH['hip'], _PATH['hip_turn'], _PATH['carry'], _PATH['rock']
+    old = (
+        (0.00, 0.000, ZERO3, (0, 0, 0), 'hold'),
+        (P_GRASP, 0.000, ZERO3, (0, 0, 0), 'hold'),
+        (P_UNLATCH, 0.000, ZERO3, (0, 0, 0), 'hold'),                          # seated until the latch lets go (the click), then it breaks free
+        (P_UNLATCH + 0.030, 0.014, (0.0, 0.0, 0.0), (0, 0, 0)),                # the first millimetres: friction, then it frees
+        (P_CLEAR, 0.098, ZERO3, (0, 0, 0)),                                   # clear of the well, still square to it (the turn comes after, to the drop)
+        (P_DROP, 0.100, swing, (-10, 0, 12)),                                  # swung out to the left; let go
+    )
+    # The replacement is taken from a magazine pouch at the hip, at the bottom edge of the frame: the hand goes
+    # down to it (the forearm stays in the picture), closes on its magazine, and brings it back up
+    # and across, tilted, to the well.
+    new = (
+        (P_ACQUIRE, 0.100, hip, hip_turn, 'hold'),                             # in the hand at the pouch, at the bottom edge of the frame
+        (P_ACQUIRE + (P_ALIGN - P_ACQUIRE) * 0.50, 0.100, carry, (-22, 0, 14)),   # coming up into view, wrist turning
+        (P_ALIGN, 0.088, ZERO3, (rock[0], 0, 0)),                              # under the well, tipped so its front lip goes in first
+        (P_ENTER, 0.030, ZERO3, (rock[1], 0, 0)),                              # entering, rocking upright
+        (P_ENTER + (P_SEAT - P_ENTER) * 0.60, 0.008, ZERO3, (rock[2], 0, 0)),
+        (P_SEAT, 0.000, ZERO3, (0, 0, 0), 'hold'),                             # pushed to its stop
+        (1.00, 0.000, ZERO3, (0, 0, 0), 'hold'),
+    )
+    return old, new
+
+
+MAG_KEYS_OLD, MAG_KEYS_NEW = _keys()
+
+
+def use_path(overrides=None):
+    """Select the hand's reach for the next clip: the default path, or the default with `overrides` (the calm clip). Rebuilds the
+    magazines' key tables; the phases are the same either way."""
+    global MAG_KEYS_OLD, MAG_KEYS_NEW
+    _PATH.clear()
+    _PATH.update(_PATH_DEFAULT)
+    if overrides:
+        _PATH.update({k: tuple(v) for k, v in overrides.items()})
+    MAG_KEYS_OLD, MAG_KEYS_NEW = _keys()
+
+
 MAG_PIVOT = Vector((0.0, 0.13, -0.08))   # about the middle of the part the hand holds
+SEATED_TOP = None                        # the seated magazine's top end (rifle space), set by build(): the pivot of the rock-in
 
 
-def mag_path(p, axis):
-    """The magazine's rigid motion (rifle space) at progress p."""
-    keys = MAG_KEYS
+def spline(keys, p, tangents=None):
+    """Value of a cubic through (progress, vector[, 'hold']) keys at p, velocity-continuous (Catmull-Rom,
+    non-uniform), zero velocity at the ends and at 'hold' keys. `tangents` maps a key index to an explicit
+    velocity (per unit of progress). Constant before the first and after the last key."""
+    import numpy as np
+    ps = [k[0] for k in keys]
+    vs = [np.asarray(k[1], dtype=float) for k in keys]
+    if p <= ps[0]:
+        return vs[0]
+    if p >= ps[-1]:
+        return vs[-1]
+    if os.environ.get('ARMS_LINEAR_PATHS'):   # negative-control hook: straight lines between keys, the robotic motion the splines replace
+        for i in range(len(keys) - 1):
+            if ps[i] <= p <= ps[i + 1]:
+                return vs[i] + (vs[i + 1] - vs[i]) * ((p - ps[i]) / (ps[i + 1] - ps[i]))
+    ms = []
+    for i, k in enumerate(keys):
+        if tangents and i in tangents:
+            ms.append(np.asarray(tangents[i], dtype=float))
+        elif i == 0 or i == len(keys) - 1 or (len(k) > 2 and k[2] == 'hold'):
+            ms.append(np.zeros_like(vs[0]))
+        else:
+            ms.append((vs[i + 1] - vs[i - 1]) / (ps[i + 1] - ps[i - 1]))
     for i in range(len(keys) - 1):
-        if keys[i][0] <= p <= keys[i + 1][0]:
-            a, b = keys[i], keys[i + 1]
-            t = smooth((p - a[0]) / max(b[0] - a[0], 1e-6)) if (a[1:] != b[1:]) else 0.0
-            travel = a[1] + (b[1] - a[1]) * t
-            offset = Vector(a[2]).lerp(Vector(b[2]), t)
-            turn = Vector(a[3]).lerp(Vector(b[3]), t)
-            rot = Matrix.Rotation(math.radians(turn.z), 4, 'Z') @ Matrix.Rotation(math.radians(turn.y), 4, 'Y') @ Matrix.Rotation(math.radians(turn.x), 4, 'X')
-            pivot = Matrix.Translation(MAG_PIVOT) @ rot @ Matrix.Translation(-MAG_PIVOT)
-            return Matrix.Translation(offset + axis * travel) @ pivot
-    return Matrix.Identity(4)
+        if ps[i] <= p <= ps[i + 1]:
+            h = ps[i + 1] - ps[i]
+            t = (p - ps[i]) / h
+            t2, t3 = t * t, t * t * t
+            return ((2 * t3 - 3 * t2 + 1) * vs[i] + (t3 - 2 * t2 + t) * h * ms[i]
+                    + (-2 * t3 + 3 * t2) * vs[i + 1] + (t3 - t2) * h * ms[i + 1])
+    return vs[-1]
+
+
+def _path(keys, p, axis):
+    """A magazine's rigid motion (rifle space) at progress p along one key table; before the first key it
+    is at the first key's pose, after the last at the last."""
+    packed = [(k[0], [k[1]] + list(k[2]) + list(k[3])) + tuple(k[4:]) for k in keys]
+    v = spline(packed, p)
+    travel, offset, turn = float(v[0]), Vector(v[1:4]), Vector(v[4:7])
+    rot = Matrix.Rotation(math.radians(turn.z), 4, 'Z') @ Matrix.Rotation(math.radians(turn.y), 4, 'Y') @ Matrix.Rotation(math.radians(turn.x), 4, 'X')
+    # The magazine turns about the middle of the part the hand holds while it is carried, and about its top end
+    # (the lip that goes into the well) while it is inserted, so the top stays on the well's axis as it rocks.
+    blend = smooth((p - (P_ACQUIRE + (P_ALIGN - P_ACQUIRE) * 0.50)) / ((P_ALIGN - P_ACQUIRE) * 0.50)) if (keys is MAG_KEYS_NEW and SEATED_TOP is not None) else 0.0
+    centre = MAG_PIVOT.lerp(SEATED_TOP, blend) if blend > 0.0 else MAG_PIVOT
+    pivot = Matrix.Translation(centre) @ rot @ Matrix.Translation(-centre)
+    return Matrix.Translation(offset + axis * travel) @ pivot
+
+
+def holding(p):
+    """Which magazine the hand holds at progress p: 'old' from the grasp to the drop, 'new' from
+    the acquisition to the let-go, None while it travels empty or is not on a magazine."""
+    if P_GRASP <= p <= P_DROP:
+        return 'old'
+    if P_ACQUIRE <= p <= P_LETGO:
+        return 'new'
+    return None
+
+
+def mag_path(p, axis, which=None):
+    """The motion of the magazine the hand holds (or `which`) at progress p."""
+    which = which or holding(p) or ('old' if p < P_GRASP else 'new')
+    return _path(MAG_KEYS_OLD if which == 'old' else MAG_KEYS_NEW, p, axis)
 
 
 def smooth(t):
@@ -856,12 +1042,16 @@ def smooth(t):
     return t * t * (3 - 2 * t)
 
 
-# The palm cups the magazine's base from below with the fingers pointing across it and
-# closing up its right face, the thumb on the front: the hand that pushes a magazine home.
-# The forearm then hangs below and behind the magazine, so it never lies between the eye
-# and the magazine (the v4 grasp, with the palm on the left face, put the sleeve over 55-90 %
-# of the magazine from the camera's side of the rifle; tools/art/README measures it).
-GRAB = {'distal': (1.0, 0.0, 0.0), 'dorsal': (0.0, 0.0, -1.0), 'mcp': (0.034, 0.150, -0.190), 'roll': 0,
+# The grasp, chosen by measurement (v7): the palm under the magazine's base and a little to its rear, the
+# fingers pointing across and forward (30 degrees toward the muzzle) and curling up the front and right
+# faces, the thumb rolled round onto the REAR face where the camera sees it. Every digit tip touches the
+# surface (0 to 4 mm) and the thumb is 111 degrees round the magazine from the fingers (clip_contact.csv);
+# in the frame the thumb and three fingertips are drawn in every held frame (reload_visibility_test.gd).
+# The v6 grasp (the same palm, fingers across at 0 degrees, thumb on the front face) hid the thumb and
+# two fingertips behind the magazine; it was found by counting their pixels, not by eye. The search that
+# found this one ran the build over distal directions, dorsal directions, knuckle offsets and rolls and
+# kept those with every digit within 6.5 mm of the magazine and nothing sunk into it or the rifle.
+GRAB = {'distal': (0.866, 0.5, 0.0), 'dorsal': (0.0, 0.0, -1.0), 'mcp': (0.014, 0.150, -0.190), 'roll': 24.5,
         'elbow_dir': (-0.60, -0.50, -0.60), 'curl': (25, 30, 20), 'thumb': (-40, -30, 0)}
 # Bones whose rest points must clear the magazine before the fingers close: the palm,
 # the first phalanges and the thumb's metacarpal (the v3 solve cleared only the palm, so
@@ -869,6 +1059,8 @@ GRAB = {'distal': (1.0, 0.0, 0.0), 'dorsal': (0.0, 0.0, -1.0), 'mcp': (0.034, 0.
 # Extra spread of each finger's first joint in the grasp (radians about its own Z): the index
 # and middle lean toward the thumb, the ring and little finger away from it.
 GRAB_FAN = {'index': -0.10, 'middle': -0.02, 'ring': 0.08, 'pinky': 0.18}
+# How closed the fingers are while the empty hand travels to the pouch (0 open, 1 as on a magazine).
+RELAXED = 0.18
 GRAB_CLEAR = ('L_hand', 'L_index_1', 'L_middle_1', 'L_ring_1', 'L_pinky_1', 'L_thumb_1')
 # Exploration hook: ARMS_GRAB_JSON='{"elbow_dir": [x, y, z], "mcp": [x, y, z]}' overrides
 # entries of GRAB for one build, so a grasp can be tried without editing the file.
@@ -935,14 +1127,16 @@ def grab_pose(rig, arms_obj, placement_L, magazine, report=print):
     return pose
 
 
-def reload_clip(rig, grab, axis, fps=60):
+def reload_clip(rig, grab, axis, fps=60, name='reload'):
     """Key the support arm over a one-second clip that the game seeks by reload progress.
-    The hand reaches the seated magazine, closes on it, carries it along mag_path() and
-    lets go only after it is seated and a short hold has passed."""
+    The hand reaches the seated magazine, closes on it, carries it out and lets it go; goes
+    empty to the pouch, closes on the replacement and carries it to the well; lets go only
+    after it is seated and a short hold has passed."""
     scene = bpy.context.scene
     scene.render.fps = fps
     rig.animation_data_create()
-    action = bpy.data.actions.new('reload')
+    action = bpy.data.actions.new(name)
+    action.use_fake_user = True   # both clips are exported
     rig.animation_data.action = action
     fore, hand = rig.pose.bones['L_forearm'], rig.pose.bones['L_hand']
     rest_fore = rig.data.bones['L_forearm'].matrix_local
@@ -958,27 +1152,72 @@ def reload_clip(rig, grab, axis, fps=60):
     loc_p = loc_g + APPROACH
     elbow_p = grab_elbow + APPROACH * 0.5
 
-    def routed(w):
-        """Hand location, rotation and elbow between the handguard (w=0) and the grasp (w=1),
-        by way of the point below the grasp."""
-        if w <= APPROACH_AT:
-            t = smooth(w / APPROACH_AT)
-            return loc_r.lerp(loc_p, t), rot_r.slerp(rot_g, t), rest_elbow.lerp(elbow_p, t)
-        t = smooth((w - APPROACH_AT) / (1.0 - APPROACH_AT))
-        return loc_p.lerp(loc_g, t), rot_g, elbow_p.lerp(grab_elbow, t)
+    # While the hand is at the hip the elbow is swung out to the left and up, so the sleeve goes down into the
+    # bottom-left corner of the frame instead of dropping out of it with the hand; the bias fades by ALIGN.
+    ELBOW_HIP = Vector(_PATH['elbow_hip'])
+
+    def elbow_bias(p):
+        if p < P_ACQUIRE:
+            return ELBOW_HIP * smooth((p - P_DROP) / (P_ACQUIRE - P_DROP))
+        return ELBOW_HIP * (1.0 - smooth((p - P_ACQUIRE) / (P_ALIGN - P_ACQUIRE)))
+
+    def held(p):
+        """Hand matrix and elbow while it holds a magazine."""
+        M = mag_path(p, axis, holding(p))
+        return M @ grab_hand, grab_elbow + M.translation * 0.5 + (elbow_bias(p) if p > P_DROP else Vector())
+
+    def via(keys, tangents=None):
+        """A hand location and elbow spline over progress; `keys` are (progress, (loc, elbow)[, 'hold'])."""
+        import numpy as np
+        packed = [(k[0], np.concatenate([np.asarray(k[1][0]), np.asarray(k[1][1])])) + tuple(k[2:]) for k in keys]
+        def at(p):
+            v = spline(packed, p, tangents)
+            return Vector(v[:3]), Vector(v[3:])
+        return at
+
+    # Reach: from the handguard by way of a point to the left of the grasp, arriving at REACH with no
+    # velocity, then closing in place until GRASP.
+    reach_at = via([(0.0, (loc_r, rest_elbow), 'hold'), (P_REACH * 0.62, (loc_p, elbow_p)), (P_REACH, (loc_g, grab_elbow), 'hold'),
+                    (P_GRASP, (loc_g, grab_elbow), 'hold')])
+    # The empty hand's journey from the old magazine's release to the pouch at the hip: it leaves the
+    # release with the velocity it had (it does not stop to let go), arcs down and to the left, and arrives
+    # at the pouch slowly.
+    drop_H, drop_elbow = held(P_DROP)
+    before_H, before_elbow = held(P_DROP - 1.0 / fps)
+    take_H, take_elbow = held(P_ACQUIRE)
+    drop_loc, drop_rot, _ = drop_H.decompose()
+    take_loc, take_rot, _ = take_H.decompose()
+    carry_velocity = (drop_loc - before_H.translation) * fps
+    carry_elbow_velocity = (drop_elbow - before_elbow) * fps
+    mid_t = 0.5
+    mid_loc = drop_loc.lerp(take_loc, mid_t) + Vector((-0.04, 0.0, 0.02))
+    mid_elbow = drop_elbow.lerp(take_elbow, mid_t)  # (take_elbow already carries the hip bias)
+    transit_at = via([(P_DROP, (drop_loc, drop_elbow)), (P_DROP + (P_ACQUIRE - P_DROP) * mid_t, (mid_loc, mid_elbow)), (P_ACQUIRE, (take_loc, take_elbow), 'hold')],
+                     {0: list(carry_velocity) + list(carry_elbow_velocity)})
+
+    def transit(p):
+        t = smooth((p - P_DROP) / (P_ACQUIRE - P_DROP))
+        loc, elbow = transit_at(p)
+        return Matrix.LocRotScale(loc, drop_rot.slerp(take_rot, t), None), elbow
+
+    # Return: from the seated magazine, back along the way the hand came, to the handguard.
+    back_end = P_LETGO + (1.0 - P_LETGO) * 0.42
+    settle_t = back_end + (1.0 - back_end) * 0.55
+    return_at = via([(P_LETGO, (loc_g, grab_elbow), 'hold'), (back_end, (loc_p, elbow_p)),
+                     (settle_t, (loc_p.lerp(loc_r, 0.7), elbow_p.lerp(rest_elbow, 0.7))), (1.0, (loc_r, rest_elbow), 'hold')])
 
     for frame in range(fps + 1):
         p = frame / fps
-        M = mag_path(p, axis)
-        # Where the hand is between the handguard and the magazine: 0 on the handguard, 1 on
-        # the magazine. It rides the magazine from the grasp until the let-go.
-        reach = smooth(p / P_REACH) if p < P_GRASP else 1.0 - smooth((p - P_LETGO) / (1.0 - P_LETGO))
-        if P_GRASP <= p <= P_LETGO:
-            H = M @ grab_hand
-            elbow = grab_elbow + M.translation * 0.5
+        if holding(p) is not None:
+            H, elbow = held(p)
+        elif P_DROP < p < P_ACQUIRE:
+            H, elbow = transit(p)
+        elif p < P_GRASP:
+            loc, elbow = reach_at(p)
+            H = Matrix.LocRotScale(loc, rot_r.slerp(rot_g, smooth(p / P_REACH)), None)
         else:
-            loc, rot, elbow = routed(reach)
-            H = Matrix.LocRotScale(loc, rot, None)
+            loc, elbow = return_at(p)
+            H = Matrix.LocRotScale(loc, rot_g.slerp(rot_r, smooth((p - P_LETGO) / (1.0 - P_LETGO))), None)
         wrist = H.translation
         new_y = (wrist - elbow).normalized()
         turn = (rest_fore.to_3x3() @ Vector((0, 1, 0))).rotation_difference(new_y)
@@ -988,11 +1227,28 @@ def reload_clip(rig, grab, axis, fps=60):
         bpy.context.view_layer.update()
         hand.matrix = H
         bpy.context.view_layer.update()
-        # The fingers open in transit, close on the magazine between 0.12 and 0.20, stay
-        # closed until the let-go, and open only then.
-        closing = smooth((p - P_REACH) / (P_GRASP - P_REACH)) if p < P_GRASP else 1.0 - smooth((p - P_LETGO) / 0.05)
+        # The fingers open in transit, close on the old magazine between REACH and GRASP, stay
+        # closed until it is let go, relax while the hand travels to the pouch, close on the
+        # replacement by ACQUIRE, stay closed until the let-go, and open only then.
+        if p < P_GRASP:
+            closing = smooth((p - P_REACH) / (P_GRASP - P_REACH))
+        elif p <= P_DROP:
+            closing = 1.0
+        elif p < P_ACQUIRE:
+            opened = 1.0 - smooth((p - P_DROP) / 0.05) * (1.0 - RELAXED)
+            closing_again = smooth((p - (P_ACQUIRE - 0.07)) / 0.07)
+            closing = max(RELAXED, opened) if p < P_ACQUIRE - 0.07 else RELAXED + (1.0 - RELAXED) * closing_again
+        elif p <= P_LETGO:
+            closing = 1.0
+        else:
+            # The fingers open off the seated magazine, then stay part-curled (about a third) on the way back and close on the handguard at
+            # the end, as a hand does that is about to grip; the first version let them go flat, palm up, for the whole return (a "wave").
+            settle = 1.0 - smooth((p - (P_LETGO + 0.07)) / (1.0 - P_LETGO - 0.07))
+            closing = max(1.0 - smooth((p - P_LETGO) / 0.05), 0.32 * settle)
         flare = math.sin(math.pi * min(1.0, max(0.0, p / P_REACH))) * 0.45 if p < P_REACH else 0.0
-        flare += math.sin(math.pi * min(1.0, max(0.0, (p - P_LETGO) / (1.0 - P_LETGO)))) * 0.25 if p > P_LETGO else 0.0
+        flare += math.sin(math.pi * min(1.0, max(0.0, (p - P_LETGO) / (1.0 - P_LETGO)))) * 0.40 if p > P_LETGO else 0.0
+        if P_DROP < p < P_ACQUIRE:
+            flare += math.sin(math.pi * (p - P_DROP) / (P_ACQUIRE - P_DROP)) * 0.30
         for pb in fingers:
             q = Quaternion().slerp(grab['fingers'][pb.name], closing)
             pb.rotation_quaternion = Quaternion((1, 0, 0), flare) @ q if pb.name[2:] not in ('thumb_1',) else q
@@ -1006,7 +1262,10 @@ def reload_clip(rig, grab, axis, fps=60):
     return action
 
 
-def review_clip(rig, arms_obj, rifle, axis, out_dir, fps=60):
+INF_GAP = 1e9
+
+
+def review_clip(rig, arms_obj, rifle, axis, out_dir, fps=60, csv_name='clip_contact.csv'):
     """Contact review of the reload clip: at every frame, how far the posed arms (both
     sleeves and gloves) enter the rifle and the moving magazine. Writes clip_contact.csv."""
     scene = bpy.context.scene
@@ -1014,39 +1273,92 @@ def review_clip(rig, arms_obj, rifle, axis, out_dir, fps=60):
     magazine = next(o for o in rifle if o.name == 'magazine')
     mag_verts = [magazine.matrix_world @ v.co for v in magazine.data.vertices]
     mag_polys = [list(p.vertices) for p in magazine.data.polygons]
-    rows = ['frame,progress,left_inside_body,left_depth_body_mm,left_inside_magazine,left_depth_magazine_mm,right_inside_body,right_depth_body_mm']
+    # One BVH of the seated magazine; a held magazine is queried by taking the point back into its own space, so the
+    # answer for a rigidly held hand is the same every frame (a BVH rebuilt for every pose gave a different nearest
+    # face for a vertex on an edge, once in 61 frames: an 11.6 mm "penetration" of a hand that had not moved).
+    mag_local = BVHTree.FromPolygons(list(mag_verts), mag_polys)
+    digits = ('thumb', 'index', 'middle', 'ring', 'pinky')
+    rows = ['frame,progress,left_inside_body,left_depth_body_mm,left_inside_magazine,left_depth_magazine_mm,right_inside_body,right_depth_body_mm,held,'
+            + ','.join('gap_%s_mm' % d for d in digits) + ',gap_palm_mm,thumb_opposition_deg']
     names = {g.index: g.name for g in arms_obj.vertex_groups}
+    tip_groups = {'L_%s_3' % d: d for d in digits}
     for frame in range(fps + 1):
         p = frame / fps
         scene.frame_set(frame)
         graph = bpy.context.evaluated_depsgraph_get()
         evaluated = arms_obj.evaluated_get(graph)
         mesh = evaluated.to_mesh()
-        M = mag_path(p, axis)
-        mag = BVHTree.FromPolygons([M @ v for v in mag_verts], mag_polys)
+        which = holding(p)
+        M = mag_path(p, axis, which) if which else None
+        mag = mag_local if M is not None else None
+        to_seated = M.inverted() if M is not None else None
         stats = {'L': [0, 0.0, 0, 0.0], 'R': [0, 0.0, 0, 0.0]}
+        # The closest each fingertip (the distal phalanx's vertices), the thumb and the palm come to the
+        # held magazine's surface, in mm: positive outside it, negative inside. Fingertips that do not
+        # reach it, or that sink into it, are what a wrong grasp looks like.
+        gap = {d: INF_GAP for d in digits}
+        gap['palm'] = INF_GAP
+        tip_points = {d: [] for d in digits}
         for v, src in zip(mesh.vertices, arms_obj.data.vertices):
             if not src.groups:
                 continue
-            side = names[max(src.groups, key=lambda g: g.weight).group][0]
+            group = names[max(src.groups, key=lambda g: g.weight).group]
+            side = group[0]
+            if side == 'L' and mag is not None and (group in tip_groups or group == 'L_hand'):
+                point = evaluated.matrix_world @ v.co
+                point = to_seated @ point   # in the magazine's own (seated) space
+                near = mag.find_nearest(point, 0.2)
+                if near[0] is not None:
+                    signed = (point - near[0]).length * (-1.0 if (point - near[0]).dot(near[1]) < 0 else 1.0)
+                    key = tip_groups.get(group, 'palm')
+                    gap[key] = min(gap[key], signed)
+                    if key != 'palm':
+                        tip_points[key].append(point)
             if side not in stats:
                 continue
             world = evaluated.matrix_world @ v.co
             d = body.distance(world)
             if d < -0.0005:
+                if os.environ.get('ARMS_DEBUG_DEEP') and -d > 0.0009:
+                    print('DEEP', frame, group, round(-d * 1000, 2), tuple(round(c, 3) for c in world))
+                    if os.environ.get('ARMS_DEBUG_DEEP') == '2':
+                        for o in rifle:
+                            if o.name in ('stock', 'magazine', 'magazine_rounds'):
+                                continue
+                            ob = Obstacle([o])
+                            hh = ob.bvh.find_nearest(world, 0.05)
+                            print('   vs', o.name, round(ob.distance(world) * 1000, 2), 'loc', tuple(round(c, 4) for c in hh[0]) if hh[0] else None, 'n', tuple(round(c, 2) for c in hh[1]) if hh[0] else None, 'mw', [round(x, 3) for x in o.matrix_world.to_scale()], len(o.data.polygons))
                 stats[side][0] += 1
                 stats[side][1] = max(stats[side][1], -d)
-            if side == 'L':
-                hit = mag.find_nearest(world, 0.05)
+            if side == 'L' and mag is not None:
+                local = to_seated @ world
+                hit = mag.find_nearest(local, 0.05)
                 if hit[0] is not None:
-                    inside = (world - hit[0]).dot(hit[1]) < 0
-                    if inside and (world - hit[0]).length > 0.0005:
+                    inside = (local - hit[0]).dot(hit[1]) < 0
+                    if inside and (local - hit[0]).length > 0.0005:
                         stats['L'][2] += 1
-                        stats['L'][3] = max(stats['L'][3], (world - hit[0]).length)
+                        stats['L'][3] = max(stats['L'][3], (local - hit[0]).length)
         evaluated.to_mesh_clear()
-        rows.append('%d,%.3f,%d,%.2f,%d,%.2f,%d,%.2f' % (frame, p, stats['L'][0], stats['L'][1] * 1000, stats['L'][2], stats['L'][3] * 1000, stats['R'][0], stats['R'][1] * 1000))
+        # How opposed the thumb is to the other four digits about the held magazine's long axis
+        # (180 degrees: on the far side of it; near 0: on the same side).
+        opposition = -1.0
+        if mag is not None and all(tip_points[d] for d in digits):
+            def centroid(points):
+                total = Vector((0.0, 0.0, 0.0))
+                for q in points:
+                    total += q
+                return total / len(points)
+            centre = Vector(sum((v for v in mag_verts), Vector((0.0, 0.0, 0.0))) / len(mag_verts))
+            along = axis.normalized()
+            flat = lambda vec: vec - along * vec.dot(along)
+            to_thumb = flat(centroid(tip_points['thumb']) - centre)
+            to_fingers = flat(centroid([q for d in digits[1:] for q in tip_points[d]]) - centre)
+            if to_thumb.length > 1e-6 and to_fingers.length > 1e-6:
+                opposition = math.degrees(to_thumb.angle(to_fingers))
+        gap_mm = ','.join(('%.2f' % (gap[d] * 1000)) if gap[d] != INF_GAP else 'nan' for d in digits + ('palm',))
+        rows.append('%d,%.3f,%d,%.2f,%d,%.2f,%d,%.2f,%s,%s,%.1f' % (frame, p, stats['L'][0], stats['L'][1] * 1000, stats['L'][2], stats['L'][3] * 1000, stats['R'][0], stats['R'][1] * 1000, which or '-', gap_mm, opposition))
     scene.frame_set(0)
-    path = os.path.join(out_dir, 'clip_contact.csv')
+    path = os.path.join(out_dir, csv_name)
     with open(path, 'w') as f:
         f.write('\n'.join(rows) + '\n')
     worst_body = max(float(r.split(',')[3]) for r in rows[1:])
