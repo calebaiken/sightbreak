@@ -1,102 +1,84 @@
-class_name SBBotAI
 extends RefCounted
-
-## Modular Tactical Bot Intelligence for SIGHTBREAK.
-## Separates perception, bounded memory, team coordination, objective roles,
-## cover/navigation selection, and difficulty profiles from TacticalMatch.
-## Produces only valid player-equivalent input_state dictionaries; never mutates
-## authoritative health, ammo, cooldowns, hit registration, or economy balances.
-
-const SOUND_MEMORY_SECONDS := 3.5
-const TEAM_REPORT_RADIUS := 30.0
-const TEAM_DEATH_ALERT_RADIUS := 24.0
-const TARGET_HYSTERESIS_BONUS := 4.5
-const MAX_BURST_SECONDS := 0.55
-const BURST_COOLDOWN_SECONDS := 0.16
+class_name SBBotAI
 
 const PROFILES := {
 	"easy": {
-		"reaction_delay": 0.60,
-		"turn_speed": 3.5,
-		"aim_error": 0.045,
-		"vision_range": 28.0,
-		"fov_dot": -0.05,
-		"memory_duration": 2.0,
+		"fov_dot": 0.35,
+		"max_sight_distance": 30.0,
 		"hearing_range": 18.0,
+		"reaction_delay": 0.42,
+		"aim_jitter": 0.095,
+		"turn_speed": 3.2,
+		"memory_duration": 1.6,
+		"burst_duration": 0.22,
+		"burst_pause": 0.32,
+		"strafe_freq": 1.4,
+		"utility_chance": 0.20,
+		"retreat_hp": 20.0,
 		"sound_noise": 2.4,
-		"recoil_compensation": 0.15,
-		"retreat_hp": 0.0,
-		"team_comms": false,
-		"counter_strafe": false,
-		"utility_use": false,
-		"sidearm_fallback": false
 	},
 	"normal": {
-		"reaction_delay": 0.35,
-		"turn_speed": 5.0,
-		"aim_error": 0.022,
-		"vision_range": 38.0,
-		"fov_dot": -0.15,
-		"memory_duration": 3.8,
+		"fov_dot": 0.15,
+		"max_sight_distance": 38.0,
 		"hearing_range": 26.0,
-		"sound_noise": 1.1,
-		"recoil_compensation": 0.65,
+		"reaction_delay": 0.22,
+		"aim_jitter": 0.045,
+		"turn_speed": 5.4,
+		"memory_duration": 3.2,
+		"burst_duration": 0.34,
+		"burst_pause": 0.18,
+		"strafe_freq": 2.3,
+		"utility_chance": 0.55,
 		"retreat_hp": 28.0,
-		"team_comms": true,
-		"counter_strafe": true,
-		"utility_use": true,
-		"sidearm_fallback": true
+		"sound_noise": 1.1,
 	},
 	"hard": {
-		"reaction_delay": 0.18,
-		"turn_speed": 7.0,
-		"aim_error": 0.008,
-		"vision_range": 46.0,
-		"fov_dot": -0.25,
-		"memory_duration": 5.5,
-		"hearing_range": 34.0,
+		"fov_dot": -0.05,
+		"max_sight_distance": 46.0,
+		"hearing_range": 35.0,
+		"reaction_delay": 0.11,
+		"aim_jitter": 0.015,
+		"turn_speed": 8.2,
+		"memory_duration": 5.0,
+		"burst_duration": 0.46,
+		"burst_pause": 0.10,
+		"strafe_freq": 3.1,
+		"utility_chance": 0.85,
+		"retreat_hp": 34.0,
 		"sound_noise": 0.35,
-		"recoil_compensation": 0.92,
-		"retreat_hp": 38.0,
-		"team_comms": true,
-		"counter_strafe": true,
-		"utility_use": true,
-		"sidearm_fallback": true
-	}
+	},
 }
 
-## Site-specific tactical anchor positions validated against RelayYard obstacle AABBs.
-const SITE_HOLD_OFFSETS := {
-	0: [
-		Vector3(3.0, 0.0, 2.0),
-		Vector3(0.0, 0.0, -4.0),
-		Vector3(6.0, 0.0, -1.0),
-		Vector3(-3.0, 0.0, -4.0),
-		Vector3(3.0, 0.0, 5.0)
-	],
-	1: [
-		Vector3(-3.0, 0.0, 2.0),
-		Vector3(0.0, 0.0, -4.0),
-		Vector3(-6.0, 0.0, -1.0),
-		Vector3(3.0, 0.0, -4.0),
-		Vector3(-3.0, 0.0, 5.0)
-	]
-}
+const SOUND_MEMORY_SECONDS := 5.0
+const CALLOUT_MEMORY_SECONDS := 6.0
+const STUCK_REPATH_SECONDS := 0.55
+const TARGET_HYSTERESIS_BONUS := 8.5
 
-## Defender pre-plant anchor positions covering West Freight (Site A), Mid, and East Relay (Site B).
-const DEFENDER_ANCHORS := [
-	Vector3(-15.0, 0.0, 12.0),
-	Vector3(15.0, 0.0, 12.0),
-	Vector3(-12.0, 0.0, 6.0),
-	Vector3(12.0, 0.0, 6.0),
-	Vector3(0.0, 0.0, 9.0)
+const COVER_SPOTS: Array[Vector3] = [
+	Vector3(-14.0, 0.0, -7.2),
+	Vector3(-14.0, 0.0, -2.8),
+	Vector3(14.0, 0.0, -7.2),
+	Vector3(14.0, 0.0, -2.8),
+	Vector3(-16.0, 0.0, 12.8),
+	Vector3(-13.5, 0.0, 7.5),
+	Vector3(16.0, 0.0, 12.8),
+	Vector3(13.5, 0.0, 7.5),
+	Vector3(-3.0, 0.0, -3.2),
+	Vector3(3.0, 0.0, -3.2),
+	Vector3(0.0, 0.0, 5.6),
+	Vector3(-9.2, 0.0, 4.0),
+	Vector3(9.2, 0.0, 4.0),
+	Vector3(-9.2, 0.0, -11.0),
+	Vector3(9.2, 0.0, -11.0),
 ]
 
-## Mid-yardStaging waypoints for split/flank attacker approaches before converging on site.
-const ATTACK_SPLIT_WAYPOINTS := {
-	0: Vector3(-3.0, 0.0, -3.0),
-	1: Vector3(3.0, 0.0, -3.0)
-}
+const DEFENDER_ANCHORS: Array[Vector3] = [
+	Vector3(-15.0, 0.0, 9.0),
+	Vector3(15.0, 0.0, 9.0),
+	Vector3(-12.0, 0.0, 6.0),
+	Vector3(12.0, 0.0, 6.0),
+	Vector3(0.0, 0.0, 12.0),
+]
 
 static func profile_for(difficulty: String) -> Dictionary:
 	return PROFILES.get(difficulty, PROFILES["normal"])
@@ -105,598 +87,681 @@ static func get_profile(difficulty: String) -> Dictionary:
 	return profile_for(difficulty)
 
 static func create_state(actor: SBActor) -> Dictionary:
-	return new_bot_state(actor.position if actor != null else Vector3.ZERO)
+	var pos: Vector3 = actor.position if actor != null else Vector3.ZERO
+	return new_bot_state(pos)
 
 static func new_bot_state(initial_pos: Vector3 = Vector3.ZERO) -> Dictionary:
 	return {
-		"reaction": 0.0,
-		"target": 0,
-		"last_position": initial_pos,
-		"stuck": 0.0,
-		"last_seen": Vector3.ZERO,
+		"last_seen": initial_pos,
 		"seen_at": -100.0,
-		"heard_pos": Vector3.ZERO,
+		"heard_pos": initial_pos,
 		"heard_at": -100.0,
+		"target_seen_since": -100.0,
+		"last_target": -1,
+		"strafe_seed": float(posmod(int(absf(initial_pos.x * 13.0 + initial_pos.z * 7.0)) * 97, 100)) * 0.06,
+		"stuck": 0.0,
+		"last_pos": initial_pos,
+		"role": "default",
+		"damaged_from": initial_pos,
 		"damaged_at": -100.0,
-		"damaged_from": Vector3.ZERO,
-		"attacker_id": 0,
-		"burst_time": 0.0,
-		"burst_cooldown": 0.0,
-		"recovery_wp": -1,
-		"recovery_until": -100.0,
-		"smoke_used": false,
-		"grenade_used": false,
-		"role": "support"
+		"repath_offset": Vector3.ZERO,
+		"repath_until": -100.0,
+		"utility_cooldown_until": 0.0,
+		"burst_timer": 0.0,
 	}
 
 static func create_team_state() -> Dictionary:
-	return new_team_state()
+	return {
+		"primary_site": 0,
+		"target_site": 0,
+		"site_locked": false,
+		"callouts": {},
+		"danger_zones": [],
+	}
 
 static func new_team_state() -> Dictionary:
-	return {
-		0: {
-			"primary_site": 0,
-			"target_site": 0,
-			"contacts": {},
-			"death_alert_pos": Vector3.ZERO,
-			"death_alert_at": -100.0
-		},
-		1: {
-			"primary_site": 0,
-			"target_site": 0,
-			"contacts": {},
-			"death_alert_pos": Vector3.ZERO,
-			"death_alert_at": -100.0
-		}
-	}
-
-static func select_round_plan(match_node: Node, _team: int = 0) -> Dictionary:
-	var round_num: int = int(match_node.round_number)
-	var target_site: int = round_num % 2
-	var carrier: SBActor = match_node.actors.get(match_node.objective_carrier) as SBActor
-	if carrier != null and carrier.alive and not match_node._is_bot(carrier.actor_id):
-		var dist_a: float = carrier.position.distance_to(match_node.arena.sites[0])
-		var dist_b: float = carrier.position.distance_to(match_node.arena.sites[1])
-		if minf(dist_a, dist_b) < 22.0 or carrier.position.z > -8.0:
-			target_site = 0 if dist_a <= dist_b else 1
-	if match_node.get("_team_ai_state") != null and match_node._team_ai_state is Dictionary:
-		if not match_node._team_ai_state.has(0):
-			match_node._team_ai_state[0] = {"primary_site": target_site, "target_site": target_site, "contacts": {}}
-		else:
-			match_node._team_ai_state[0]["primary_site"] = target_site
-			match_node._team_ai_state[0]["target_site"] = target_site
-	return {"target_site": target_site, "primary_site": target_site}
-
-static func get_site_hold_position(arena: RelayYard, site_pos: Vector3, slot: int) -> Vector3:
-	var site_idx: int = 0 if site_pos.x < 0.0 else 1
-	var offsets: Array = SITE_HOLD_OFFSETS.get(site_idx, SITE_HOLD_OFFSETS[0])
-	var candidate: Vector3 = site_pos + (offsets[posmod(slot, offsets.size())] as Vector3)
-	if arena._clear_path(candidate, candidate + Vector3(0.01, 0.0, 0.01)):
-		return candidate
-	var nearest_wp: Vector3 = site_pos
-	var best_dist: float = INF
-	for wp: Vector3 in arena.waypoints:
-		var d: float = wp.distance_squared_to(candidate)
-		if d < best_dist:
-			best_dist = d
-			nearest_wp = wp
-	return nearest_wp
+	return create_team_state()
 
 static func choose_buy_weapon(actor: SBActor, difficulty: String, round_number: int) -> String:
-	if difficulty != "easy" and actor.credits >= 3200 and (actor.actor_id + round_number) % 5 == 0:
-		return "marksman"
-	if actor.credits >= 2400:
+	if actor == null:
+		return "pistol"
+	if round_number == 1 or round_number == 7:
+		return "pistol"
+	if actor.credits >= 2900:
 		return "rifle"
-	return "smg"
-
-static func buy_equipment(actor: SBActor, difficulty: String, round_number: int) -> String:
-	var choice: String = choose_buy_weapon(actor, difficulty, round_number)
-	actor.buy_weapon(choice)
-	var spec: Dictionary = SBWeapons.get_weapon(actor.weapon_id)
-	actor.ammo = int(spec.get("magazine", 30))
-	actor.reserve = int(spec.get("reserve", 60))
-	actor.smokes = 1
-	actor.grenades = 1
+	if actor.credits >= 1850:
+		if difficulty == "easy" and actor.credits < 2400:
+			return "shotgun"
+		return "shotgun" if (actor.id + round_number) % 3 == 0 else "smg"
+	if actor.credits >= 1450:
+		return "smg"
 	return actor.weapon_id
 
+static func buy_equipment(actor: SBActor, difficulty: String, round_number: int) -> String:
+	if actor == null:
+		return "pistol"
+	var choice: String = choose_buy_weapon(actor, difficulty, round_number)
+	if choice != "" and choice != actor.weapon_id:
+		actor.buy_weapon(choice)
+	return actor.weapon_id
+
+static func select_round_plan(match_or_round: Variant, team_or_rng: Variant = 0) -> Variant:
+	if match_or_round is int:
+		var round_num: int = int(match_or_round)
+		var rng: RandomNumberGenerator = team_or_rng as RandomNumberGenerator
+		if rng == null:
+			return posmod(round_num, 2)
+		return int(rng.randi() % 2)
+	var match_node: Node = match_or_round as Node
+	if match_node == null:
+		return {"target_site": 0, "primary_site": 0}
+	if not match_node.get("_team_ai_state") is Dictionary or match_node._team_ai_state.is_empty():
+		match_node._team_ai_state = create_team_state()
+	var target_site: int = int(match_node._team_ai_state.get("primary_site", posmod(int(match_node.round_number), 2)))
+	var carrier: SBActor = match_node.actors.get(match_node.bomb_carrier_id, null)
+	if carrier != null and carrier.alive and match_node.arena != null and match_node.arena.sites.size() >= 2:
+		var d0: float = carrier.position.distance_to(match_node.arena.sites[0])
+		var d1: float = carrier.position.distance_to(match_node.arena.sites[1])
+		if minf(d0, d1) < 22.0 and absf(d0 - d1) > 5.0:
+			target_site = 0 if d0 < d1 else 1
+			match_node._team_ai_state["site_locked"] = true
+		elif not bool(match_node._team_ai_state.get("site_locked", false)):
+			target_site = posmod(int(match_node.round_number) + int(match_node.bomb_carrier_id), 2)
+	match_node._team_ai_state["primary_site"] = target_site
+	match_node._team_ai_state["target_site"] = target_site
+	return match_node._team_ai_state
+
+static func get_site_hold_position(arena: SBArena, site_pos: Vector3, slot: int) -> Vector3:
+	return _site_post_plant_anchor(arena, site_pos, slot)
+
 static func record_damage(arg1: Variant, arg2: Variant, arg3: Variant, arg4: Variant, arg5: Variant = null) -> void:
-	var bot_states: Dictionary
-	var actors: Dictionary
-	var victim_id: int
-	var attacker_id: int
-	var elapsed: float
-	if arg1 is Node:
+	if arg1 is Node and arg2 is SBActor:
 		var match_node: Node = arg1
-		bot_states = match_node._bot_state
-		actors = match_node.actors
-		victim_id = int(arg2)
-		attacker_id = int(arg3)
-		elapsed = float(match_node._elapsed)
-	else:
-		bot_states = arg1 as Dictionary
-		actors = arg2 as Dictionary
-		victim_id = int(arg3)
-		attacker_id = int(arg4)
-		elapsed = float(arg5)
-	if not bot_states.has(victim_id):
+		var victim: SBActor = arg2
+		var attacker: SBActor = arg3 as SBActor
+		if victim == null or attacker == null:
+			return
+		if not match_node._bot_state.has(victim.id):
+			return
+		var st: Dictionary = match_node._bot_state[victim.id]
+		st["damaged_from"] = attacker.position
+		st["damaged_at"] = float(match_node._elapsed)
 		return
-	var state: Dictionary = bot_states[victim_id]
-	state["damaged_at"] = elapsed
-	state["attacker_id"] = attacker_id
-	var attacker: SBActor = actors.get(attacker_id) as SBActor
-	var victim: SBActor = actors.get(victim_id) as SBActor
-	if attacker != null and victim != null and attacker.team != victim.team:
-		# Legitimate directional hit indicator (like a player's damage indicator), not live wallhack tracking.
-		var dir: Vector3 = (attacker.position - victim.position).normalized()
-		state["damaged_from"] = victim.position + dir * 10.0
+	if arg1 is Dictionary and arg2 is Dictionary:
+		var bot_states: Dictionary = arg1
+		var actors: Dictionary = arg2
+		var victim_id: int = int(arg3)
+		var attacker_id: int = int(arg4)
+		var elapsed: float = float(arg5) if arg5 != null else 0.0
+		if not bot_states.has(victim_id) or not actors.has(attacker_id):
+			return
+		var attacker_actor: SBActor = actors[attacker_id]
+		if attacker_actor == null:
+			return
+		var st2: Dictionary = bot_states[victim_id]
+		st2["damaged_from"] = attacker_actor.position
+		st2["damaged_at"] = elapsed
 
 static func record_elimination(arg1: Variant, arg2: Variant, arg3: Variant, arg4: Variant, arg5: Variant = null) -> void:
-	var team_state: Dictionary
-	var bot_states: Dictionary
-	var actors: Dictionary
-	var victim_id: int
-	var elapsed: float
-	if arg1 is Node:
+	if arg1 is Node and arg2 is SBActor:
 		var match_node: Node = arg1
-		team_state = match_node._team_ai_state if match_node.get("_team_ai_state") is Dictionary else {}
-		bot_states = match_node._bot_state
-		actors = match_node.actors
-		victim_id = int(arg2)
-		elapsed = float(match_node._elapsed)
-	else:
-		team_state = arg1 as Dictionary
-		bot_states = arg2 as Dictionary
-		actors = arg3 as Dictionary
-		victim_id = int(arg4)
-		elapsed = float(arg5)
-	var victim: SBActor = actors.get(victim_id) as SBActor
-	if victim == null:
-		return
-	if not team_state.has(victim.team):
-		team_state[victim.team] = {"primary_site": 0, "target_site": 0, "contacts": {}}
-	var t_state: Dictionary = team_state[victim.team]
-	t_state["death_alert_pos"] = victim.position
-	t_state["death_alert_at"] = elapsed
-	for ally: SBActor in actors.values():
-		if ally.alive and ally.team == victim.team and ally.actor_id != victim_id and bot_states.has(ally.actor_id):
-			if ally.position.distance_to(victim.position) <= TEAM_DEATH_ALERT_RADIUS:
-				var st: Dictionary = bot_states[ally.actor_id]
-				if elapsed - float(st.get("seen_at", -100.0)) > 1.5:
-					st["heard_pos"] = victim.position
-					st["heard_at"] = elapsed
-
-static func nearest_defender(match_node: Node) -> int:
-	var chosen: int = 0
-	var nearest: float = INF
-	for actor: SBActor in match_node.actors.values():
-		if not actor.alive or actor.team != 1:
-			continue
-		# A human already holding interact keeps priority; bots provide covering fire.
-		if not match_node._is_bot(actor.actor_id) and bool(actor.input_state.get("interact", false)) and actor.position.distance_to(match_node.objective_position) <= 2.8:
-			return actor.actor_id
-		var distance: float = actor.position.distance_squared_to(match_node.objective_position)
-		if match_node._is_bot(actor.actor_id) and (distance < nearest or (is_equal_approx(distance, nearest) and actor.actor_id < chosen)):
-			chosen = actor.actor_id
-			nearest = distance
-	return chosen
-
-static func cover_position(match_node: Node, actor: SBActor, threat: SBActor) -> Vector3:
-	if threat == null:
-		return actor.position
-	return cover_position_from_point(match_node, actor, threat.position)
-
-static func cover_position_from_point(match_node: Node, actor: SBActor, threat_pos: Vector3) -> Vector3:
-	var choice: Vector3 = actor.position
-	var best_score: float = INF
-	var space: PhysicsDirectSpaceState3D = match_node.get_world_3d().direct_space_state
-	var threat_eye: Vector3 = threat_pos + Vector3.UP * 1.4
-	for point: Vector3 in match_node.arena.waypoints:
-		var distance: float = actor.position.distance_to(point)
-		if distance < 1.0 or distance > 11.5:
-			continue
-		var query := PhysicsRayQueryParameters3D.create(threat_eye, point + Vector3.UP * 1.0, 1)
-		if not space.intersect_ray(query).is_empty():
-			# Prefer close cover that moves away from the threat line.
-			var away_bonus: float = clampf((point.distance_to(threat_pos) - actor.position.distance_to(threat_pos)) * 0.25, -1.5, 1.5)
-			var score: float = distance - away_bonus
-			if score < best_score:
-				best_score = score
-				choice = point
-	return choice
-
-static func safe_navigate(arena: RelayYard, from: Vector3, to: Vector3) -> Vector3:
-	var wp: Vector3 = arena.bot_navigation(from, to)
-	if wp.distance_squared_to(from) > 0.001 or from.distance_to(to) <= 1.2:
-		return wp
-	# Fallback when 'from' or 'to' sits inside an expanded obstacle AABB so _clear_path fails on all waypoints.
-	if arena.waypoints.is_empty():
-		return to
-	var start := -1
-	var finish := -1
-	var start_clear_dist := INF
-	var finish_clear_dist := INF
-	var nearest_start := 0
-	var nearest_finish := 0
-	var nearest_start_dist := INF
-	var nearest_finish_dist := INF
-	for i in range(arena.waypoints.size()):
-		var p: Vector3 = arena.waypoints[i]
-		var ds: float = from.distance_squared_to(p)
-		if ds < nearest_start_dist:
-			nearest_start_dist = ds
-			nearest_start = i
-		if ds < start_clear_dist and arena._clear_path(from, p):
-			start_clear_dist = ds
-			start = i
-		var df: float = to.distance_squared_to(p)
-		if df < nearest_finish_dist:
-			nearest_finish_dist = df
-			nearest_finish = i
-		if df < finish_clear_dist and arena._clear_path(to, p):
-			finish_clear_dist = df
-			finish = i
-	if start < 0:
-		start = nearest_start
-	if finish < 0:
-		finish = nearest_finish
-	if start == finish:
-		return arena.waypoints[finish]
-	var path: PackedVector3Array = arena._navigation.get_point_path(start, finish)
-	if path.is_empty():
-		return arena.waypoints[nearest_start]
-	for i in range(path.size() - 1, -1, -1):
-		if arena._clear_path(from, path[i]) and path[i].distance_squared_to(from) > 0.04:
-			return path[i]
-	return path[1] if path.size() > 1 else path[0]
-
-static func acquire_target(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary) -> SBActor:
-	var best_enemy: SBActor = null
-	var best_score: float = float(profile.get("vision_range", 35.0))
-	var fov_dot: float = float(profile.get("fov_dot", -0.15))
-	var current_target_id: int = int(state.get("target", 0))
-	var recently_damaged: bool = match_node._elapsed - float(state.get("damaged_at", -100.0)) < 1.2
-	var recent_attacker_id: int = int(state.get("attacker_id", 0))
-	var facing := Vector3(-sin(actor.yaw), 0.0, -cos(actor.yaw))
-	var defuser_id: int = nearest_defender(match_node) if match_node.objective_state == "planted" else 0
-
-	for enemy: SBActor in match_node.actors.values():
-		if enemy.team == actor.team or not enemy.alive:
-			continue
-		var distance: float = actor.position.distance_to(enemy.position)
-		if distance > float(profile.get("vision_range", 35.0)):
-			continue
-		var toward: Vector3 = (enemy.position - actor.position).normalized()
-		# Allow peripheral awareness if this specific enemy just shot us and is within line of sight.
-		var in_fov: bool = facing.dot(toward) > fov_dot or (recently_damaged and enemy.actor_id == recent_attacker_id)
-		if not in_fov:
-			continue
-		if not actor.can_see(enemy):
-			continue
-		var score: float = distance
-		if enemy.actor_id == current_target_id:
-			score -= TARGET_HYSTERESIS_BONUS
-		if match_node.objective_state == "carried" and enemy.actor_id == match_node.objective_carrier:
-			score -= 3.5
-		if match_node.objective_state == "planted" and enemy.actor_id == defuser_id:
-			score -= 6.0
-		if recently_damaged and enemy.actor_id == recent_attacker_id:
-			score -= 4.0
-		if score < best_score:
-			best_score = score
-			best_enemy = enemy
-	return best_enemy
-
-static func _update_auditory_and_team_memory(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary) -> void:
-	var hearing_range: float = float(profile.get("hearing_range", 24.0))
-	var best_sound_dist: float = hearing_range
-	for heard_id: int in match_node._heard:
-		if not match_node.actors.has(heard_id):
-			continue
-		var shooter: SBActor = match_node.actors[heard_id]
-		if shooter.team == actor.team:
-			continue
-		var event: Dictionary = match_node._heard[heard_id]
-		var age: float = match_node._elapsed - float(event.get("time", -100.0))
-		if age >= SOUND_MEMORY_SECONDS:
-			continue
-		var pos: Vector3 = event.get("position", Vector3.ZERO)
-		var dist: float = actor.position.distance_to(pos)
-		if dist < best_sound_dist:
-			best_sound_dist = dist
-			state["heard_pos"] = pos
-			state["heard_at"] = float(event.get("time", match_node._elapsed))
-
-	if bool(profile.get("team_comms", true)) and match_node.get("_team_ai_state") != null:
-		var team_dict: Dictionary = match_node._team_ai_state.get(actor.team, {})
-		var contacts: Dictionary = team_dict.get("contacts", {})
-		var mem_duration: float = float(profile.get("memory_duration", 3.8))
-		for enemy_id: int in contacts.keys():
-			var report: Dictionary = contacts[enemy_id]
-			var age: float = match_node._elapsed - float(report.get("time", -100.0))
-			if age > mem_duration:
+		var victim: SBActor = arg2
+		var death_pos: Vector3 = arg4 if arg4 is Vector3 else victim.position
+		if not match_node.get("_team_ai_state") is Dictionary or match_node._team_ai_state.is_empty():
+			match_node._team_ai_state = create_team_state()
+		var zones: Array = match_node._team_ai_state.get("danger_zones", [])
+		zones.append({
+			"team": victim.team,
+			"position": death_pos,
+			"time": float(match_node._elapsed),
+		})
+		match_node._team_ai_state["danger_zones"] = zones
+		for id: int in match_node.actors:
+			var ally: SBActor = match_node.actors[id]
+			if ally == null or not ally.alive or not ally.is_bot or ally.team != victim.team:
 				continue
-			var report_pos: Vector3 = report.get("position", Vector3.ZERO)
-			if actor.position.distance_to(report_pos) <= TEAM_REPORT_RADIUS:
-				if float(report.get("time", -100.0)) > float(state.get("heard_at", -100.0)):
-					state["heard_pos"] = report_pos
-					state["heard_at"] = float(report.get("time", -100.0))
-
-static func _share_sighting(match_node: Node, actor: SBActor, target: SBActor) -> void:
-	if match_node.get("_team_ai_state") == null:
+			if ally.position.distance_to(death_pos) <= 22.0 and match_node._bot_state.has(id):
+				var st: Dictionary = match_node._bot_state[id]
+				st["heard_pos"] = death_pos
+				st["heard_at"] = float(match_node._elapsed)
 		return
-	var team_dict: Dictionary = match_node._team_ai_state.get(actor.team, {})
-	if not team_dict.has("contacts"):
-		team_dict["contacts"] = {}
-	team_dict["contacts"][target.actor_id] = {
-		"position": target.position,
-		"time": match_node._elapsed,
-		"reporter": actor.actor_id
-	}
+	if arg1 is Dictionary and arg2 is Dictionary and arg3 is Dictionary:
+		var team_state: Dictionary = arg1
+		var bot_states: Dictionary = arg2
+		var actors: Dictionary = arg3
+		var victim_id: int = int(arg4)
+		var elapsed: float = float(arg5) if arg5 != null else 0.0
+		if not actors.has(victim_id):
+			return
+		var victim_actor: SBActor = actors[victim_id]
+		var zones2: Array = team_state.get("danger_zones", [])
+		zones2.append({
+			"team": victim_actor.team,
+			"position": victim_actor.position,
+			"time": elapsed,
+		})
+		team_state["danger_zones"] = zones2
+		for id: int in actors:
+			var ally2: SBActor = actors[id]
+			if ally2 == null or not ally2.alive or not ally2.is_bot or ally2.team != victim_actor.team:
+				continue
+			if ally2.position.distance_to(victim_actor.position) <= 22.0 and bot_states.has(id):
+				var st2: Dictionary = bot_states[id]
+				st2["heard_pos"] = victim_actor.position
+				st2["heard_at"] = elapsed
 
-static func _select_objective_and_destination(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary) -> Dictionary:
-	var interact: bool = false
-	var role: String = "rifle"
-	var primary_site: int = match_node.round_number % 2
-	if match_node.get("_team_ai_state") != null and match_node._team_ai_state.has(0):
-		primary_site = int(match_node._team_ai_state[0].get("primary_site", primary_site))
-	var destination: Vector3 = match_node.arena.sites[primary_site]
-
-	if match_node.objective_state == "planted":
-		var planted_site: int = 0 if match_node.objective_position.x < 0.0 else 1
-		destination = match_node.objective_position
-		var defuser_id: int = nearest_defender(match_node)
-		interact = actor.team == 1 and actor.actor_id == defuser_id and actor.position.distance_to(destination) <= 2.6
-		if actor.team == 1 and actor.actor_id == defuser_id:
-			role = "defuser"
-		else:
-			role = "post_plant_hold" if actor.team == 0 else "retake_cover"
-			var offsets: Array = SITE_HOLD_OFFSETS.get(planted_site, SITE_HOLD_OFFSETS[0])
-			var offset: Vector3 = offsets[actor.actor_id % offsets.size()]
-			var candidate: Vector3 = match_node.arena.sites[planted_site] + offset
-			if match_node.arena._clear_path(candidate, candidate + Vector3(0.01, 0.0, 0.01)):
-				destination = candidate
-			else:
-				var hold_angle: float = float(actor.actor_id % 5) * TAU / 5.0
-				destination = match_node.objective_position + Vector3(cos(hold_angle), 0.0, sin(hold_angle)) * 3.2
-	elif actor.team == 0 and match_node.objective_state == "dropped":
-		role = "recover_device"
-		destination = match_node.objective_position
-	elif actor.team == 0:
-		var carrier: SBActor = match_node.actors.get(match_node.objective_carrier) as SBActor
-		# If a human carrier has committed toward a specific site, adapt team target site to escort them.
-		if carrier != null and carrier.alive and not match_node._is_bot(carrier.actor_id) and carrier.position.z > -8.0:
-			primary_site = 0 if carrier.position.x < 0.0 else 1
-			destination = match_node.arena.sites[primary_site]
-		if actor.actor_id == match_node.objective_carrier:
-			role = "carrier"
-			destination = match_node.arena.sites[primary_site]
-			interact = match_node.arena.is_at_site(actor.position) >= 0
-		else:
-			var slot: int = actor.actor_id % 5
-			if slot == 2 and bool(profile.get("team_comms", true)) and actor.position.z < 2.0 and match_node.time_left > 55.0:
-				# Mid/split lurk before converging on the target site.
-				role = "split_flank"
-				destination = ATTACK_SPLIT_WAYPOINTS.get(primary_site, destination)
-			elif slot == 1 and carrier != null and carrier.alive and carrier.position.distance_to(destination) > 7.0:
-				# Entry vanguard clearing slightly ahead of the carrier.
-				role = "entry"
-				destination = match_node.arena.sites[primary_site] + Vector3(0.0, 0.0, -2.2)
-			else:
-				role = "escort"
-				var offsets: Array = SITE_HOLD_OFFSETS.get(primary_site, SITE_HOLD_OFFSETS[0])
-				if actor.position.distance_to(match_node.arena.sites[primary_site]) < 9.0:
-					destination = match_node.arena.sites[primary_site] + offsets[slot]
-				else:
-					destination = match_node.arena.sites[primary_site]
-			var hearing_range: float = float(profile.get("hearing_range", 24.0))
-			if match_node._elapsed - float(state.get("heard_at", -100.0)) < SOUND_MEMORY_SECONDS:
-				var heard_pos: Vector3 = state.get("heard_pos", Vector3.ZERO)
-				if actor.position.distance_to(heard_pos) <= hearing_range:
-					destination = heard_pos
-					role = "investigate_sound"
-			for heard_id: int in match_node._heard:
-				if match_node.actors.has(heard_id) and match_node.actors[heard_id].team != actor.team:
-					var h_time: float = float(match_node._heard[heard_id].time)
-					var h_pos: Vector3 = match_node._heard[heard_id].position
-					if match_node._elapsed - h_time < SOUND_MEMORY_SECONDS and actor.position.distance_to(h_pos) <= hearing_range:
-						destination = h_pos
-						role = "investigate_sound"
-	else:
-		# Defender logic before plant
-		var anchor_idx: int = (actor.actor_id - 6) % DEFENDER_ANCHORS.size()
-		if anchor_idx < 0:
-			anchor_idx = actor.actor_id % DEFENDER_ANCHORS.size()
-		destination = DEFENDER_ANCHORS[anchor_idx] if bool(profile.get("team_comms", true)) else match_node.arena.sites[actor.actor_id % 2]
-		role = "anchor"
-		# Rotate toward confirmed team sightings or recent enemy gunfire.
-		if match_node._elapsed - float(state.get("heard_at", -100.0)) < SOUND_MEMORY_SECONDS:
-			var heard_pos: Vector3 = state.get("heard_pos", Vector3.ZERO)
-			if actor.position.distance_to(heard_pos) < float(profile.get("hearing_range", 24.0)):
-				destination = heard_pos
-				role = "rotate_investigate"
-		for heard_id: int in match_node._heard:
-			if match_node.actors.has(heard_id) and match_node.actors[heard_id].team != actor.team:
-				var h_time: float = float(match_node._heard[heard_id].time)
-				var h_pos: Vector3 = match_node._heard[heard_id].position
-				if match_node._elapsed - h_time < 2.0 and actor.position.distance_to(h_pos) < 22.0:
-					destination = h_pos
-					role = "rotate_investigate"
-
-	state["role"] = role
-	return {"destination": destination, "interact": interact, "primary_site": primary_site}
-
-static func select_destination(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary, _interact_override: bool = false, _defuser_id: int = 0) -> Vector3:
-	_update_auditory_and_team_memory(match_node, actor, state, profile)
+static func select_destination(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary, interact_override: bool = false, defuser_id: int = -1) -> Vector3:
+	if not match_node.get("_team_ai_state") is Dictionary or match_node._team_ai_state.is_empty():
+		match_node._team_ai_state = create_team_state()
+	_sync_team_blackboard(match_node, actor)
 	var plan: Dictionary = _select_objective_and_destination(match_node, actor, state, profile)
-	return plan.get("destination", actor.position)
+	if interact_override and defuser_id == actor.id and match_node.bomb_planted:
+		return match_node.planted_position
+	return Vector3(plan.get("destination", actor.position))
 
 static func tick_bot(match_node: Node, actor: SBActor, delta: float) -> void:
-	compute_bot_input(match_node, actor, delta)
-
-static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) -> void:
-	if not actor.alive or match_node.phase != "live":
+	if actor == null or not actor.alive:
 		return
-	if not match_node._bot_state.has(actor.actor_id):
-		match_node._bot_state[actor.actor_id] = create_state(actor)
-	var state: Dictionary = match_node._bot_state[actor.actor_id]
-	var difficulty: String = str(match_node.options.get("difficulty", "normal"))
-	var profile: Dictionary = profile_for(difficulty)
-	var reaction_delay: float = float(profile.reaction_delay)
+	var cmd: Dictionary = compute_bot_input(match_node, actor, delta)
+	var move: Vector2 = cmd.get("move", Vector2.ZERO)
+	var look: Vector2 = cmd.get("look", Vector2(actor.yaw, actor.pitch))
+	var sprint: bool = bool(cmd.get("sprint", true))
+	var reload_req: bool = bool(cmd.get("reload", false))
+	actor.apply_tick(delta, move, look, sprint, false, reload_req)
+	cmd["interact"] = bool(cmd.get("interact", false))
+	cmd["fire"] = bool(cmd.get("fire", false))
+	cmd["smoke"] = bool(cmd.get("smoke", false))
+	cmd["grenade"] = bool(cmd.get("grenade", false))
+	if match_node != null and match_node.get("_bot_state") is Dictionary and match_node._bot_state.has(actor.id):
+		match_node._bot_state[actor.id]["last_cmd"] = cmd
 
+static func acquire_target(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary) -> SBActor:
+	if match_node == null or actor == null or not actor.alive:
+		return null
+	var arena: SBArena = match_node.arena
+	var best_target: SBActor = null
+	var best_score := -INF
+	var forward := -actor.global_basis.z
+	forward.y = 0.0
+	if forward.length_squared() < 0.001:
+		forward = Vector3.FORWARD
+	else:
+		forward = forward.normalized()
+
+	var max_dist: float = float(profile.get("max_sight_distance", 38.0))
+	var fov_dot: float = float(profile.get("fov_dot", 0.15))
+	var alert_until: float = maxf(float(state.get("damaged_at", -100.0)) + 2.5, float(state.get("heard_at", -100.0)) + 2.2)
+	var is_alert: bool = match_node._elapsed <= alert_until
+	var previous_target_id: int = int(state.get("last_target", -1))
+
+	for id: int in match_node.actors:
+		var other: SBActor = match_node.actors[id]
+		if other == null or not other.alive or other.team == actor.team:
+			continue
+		var to_enemy: Vector3 = other.position - actor.position
+		var dist: float = to_enemy.length()
+		if dist > max_dist:
+			continue
+		var dir := Vector3(to_enemy.x, 0.0, to_enemy.z).normalized()
+		var facing_dot: float = forward.dot(dir)
+		if not is_alert and dist > 4.5 and facing_dot < fov_dot:
+			continue
+		if arena != null and arena.smoke_obscures(actor.eye_position(), other.eye_position()):
+			continue
+		if not actor.can_see(other):
+			continue
+
+		var score: float = 100.0 - dist * 1.65 + facing_dot * 8.0
+		if id == match_node.bomb_carrier_id:
+			score += 6.0
+		if other.planting or other.defusing:
+			score += 14.0
+		if id == previous_target_id:
+			score += TARGET_HYSTERESIS_BONUS
+		if score > best_score:
+			best_score = score
+			best_target = other
+
+	if best_target != null:
+		if previous_target_id != best_target.id:
+			state["last_target"] = best_target.id
+			state["target_seen_since"] = match_node._elapsed
+		state["last_seen"] = best_target.position
+		state["seen_at"] = match_node._elapsed
+		if match_node.get("_team_ai_state") is Dictionary:
+			var callouts: Dictionary = match_node._team_ai_state.get("callouts", {})
+			callouts[actor.team] = {
+				"position": best_target.position,
+				"time": match_node._elapsed,
+				"target_id": best_target.id,
+			}
+			match_node._team_ai_state["callouts"] = callouts
+	else:
+		var prev_target: SBActor = match_node.actors.get(previous_target_id, null) if previous_target_id != -1 else null
+		if prev_target == null or not prev_target.alive or (match_node._elapsed - float(state.get("seen_at", -100.0))) > 0.35:
+			state["last_target"] = -1
+	return best_target
+
+static func safe_navigate(arena: SBArena, from: Vector3, to: Vector3) -> Vector3:
+	if arena == null:
+		return to
+	var flat_from := Vector3(from.x, 0.0, from.z)
+	var safe_to := snap_to_walkable(arena, to, flat_from)
+	if arena.waypoints.is_empty():
+		return safe_to
+	if arena.can_traverse(flat_from, safe_to) and flat_from.distance_to(safe_to) > 0.25:
+		return safe_to
+
+	var start := _nearest_visible_waypoint(arena, flat_from, -1)
+	var finish := _nearest_visible_waypoint(arena, safe_to, -1)
+	if start == -1 or finish == -1:
+		return safe_to
+	if start == finish and flat_from.distance_to(safe_to) > 0.35:
+		var alt_finish := _nearest_visible_waypoint(arena, safe_to, start)
+		if alt_finish != -1:
+			finish = alt_finish
+	var path: PackedVector3Array = arena._navigation.get_point_path(start, finish)
+	if path.size() > 1:
+		for idx in range(1, path.size()):
+			var wp := path[idx]
+			if flat_from.distance_to(wp) > 0.45:
+				if idx + 1 < path.size() and arena.can_traverse(flat_from, path[idx + 1]):
+					return path[idx + 1]
+				return wp
+		return path[path.size() - 1]
+	if path.size() == 1 and flat_from.distance_to(path[0]) > 0.45 and arena.can_traverse(flat_from, path[0]):
+		return path[0]
+	if arena.can_traverse(flat_from, safe_to):
+		return safe_to
+	var step_candidate := snap_to_walkable(arena, flat_from + (safe_to - flat_from).limit_length(2.4), flat_from)
+	if flat_from.distance_to(step_candidate) > 0.35 and arena.can_traverse(flat_from, step_candidate):
+		return step_candidate
+	return arena.bot_navigation(flat_from, safe_to)
+
+static func snap_to_walkable(arena: SBArena, pos: Vector3, reference_from: Variant = null) -> Vector3:
+	var flat_pos := Vector3(pos.x, 0.0, pos.z)
+	if arena == null or not arena.is_blocked(flat_pos, 0.58):
+		return flat_pos
+	var has_ref: bool = reference_from is Vector3
+	var ref_pos: Vector3 = Vector3(reference_from.x, 0.0, reference_from.z) if has_ref else flat_pos
+	var to_ref: Vector3 = ref_pos - flat_pos
+	var base_angle: float = atan2(to_ref.z, to_ref.x) if to_ref.length_squared() > 0.001 else 0.0
+	var best_candidate := flat_pos
+	var best_score := INF
+	for radius in [0.9, 1.5, 2.2, 3.0, 3.8]:
+		for i in range(12):
+			var angle: float = base_angle + float(i) * (TAU / 12.0)
+			var candidate := Vector3(
+				clampf(flat_pos.x + cos(angle) * float(radius), -22.5, 22.5),
+				0.0,
+				clampf(flat_pos.z + sin(angle) * float(radius), -22.5, 22.5)
+			)
+			if arena.is_blocked(candidate, 0.58):
+				continue
+			var score: float = candidate.distance_to(flat_pos)
+			if has_ref:
+				score += candidate.distance_to(ref_pos) * 0.25
+				if arena.can_traverse(ref_pos, candidate):
+					score -= 3.5
+			if score < best_score:
+				best_score = score
+				best_candidate = candidate
+	if best_score < INF:
+		return best_candidate
+	var nearest_idx := _nearest_visible_waypoint(arena, flat_pos, -1)
+	if nearest_idx != -1:
+		return arena.waypoints[nearest_idx]
+	return flat_pos
+
+static func _nearest_visible_waypoint(arena: SBArena, pos: Vector3, exclude_index: int = -1) -> int:
+	var best_vis := -1
+	var best_vis_dist := INF
+	var best_any := -1
+	var best_any_dist := INF
+	for i in range(arena.waypoints.size()):
+		if i == exclude_index:
+			continue
+		var wp: Vector3 = arena.waypoints[i]
+		var d: float = pos.distance_squared_to(wp)
+		if d < best_any_dist:
+			best_any_dist = d
+			best_any = i
+		if d < best_vis_dist and arena.can_traverse(pos, wp):
+			best_vis_dist = d
+			best_vis = i
+	return best_vis if best_vis != -1 else best_any
+
+static func find_tactical_cover(arena: SBArena, from: Vector3, threat_pos: Vector3) -> Vector3:
+	var best_spot := from
+	var best_score := -INF
+	for spot: Vector3 in COVER_SPOTS:
+		if arena != null and arena.is_blocked(spot, 0.58):
+			continue
+		var dist_self: float = from.distance_to(spot)
+		if dist_self > 16.0:
+			continue
+		var occludes_threat: bool = arena != null and not arena.can_traverse(spot, threat_pos)
+		var dist_threat: float = spot.distance_to(threat_pos)
+		var score: float = (28.0 if occludes_threat else 0.0) - dist_self * 1.4 + minf(dist_threat, 20.0) * 0.5
+		if score > best_score:
+			best_score = score
+			best_spot = spot
+	return snap_to_walkable(arena, best_spot, from)
+
+static func _update_auditory_and_team_memory(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary) -> void:
+	var prev_heard_at: float = float(state.get("heard_at", -100.0))
+	if prev_heard_at > -50.0 and (match_node._elapsed - prev_heard_at) >= SOUND_MEMORY_SECONDS:
+		state["heard_at"] = -100.0
+		state["heard_pos"] = Vector3.ZERO
+	var hearing_range: float = float(profile.get("hearing_range", 25.0))
+	var best_heard_time: float = float(state.get("heard_at", -100.0))
+	var best_heard_pos: Vector3 = state.get("heard_pos", actor.position)
+	if match_node.get("_heard") is Dictionary:
+		for heard_id: Variant in match_node._heard:
+			var ev: Dictionary = match_node._heard[heard_id]
+			var shooter: SBActor = match_node.actors.get(int(heard_id), null)
+			var shooter_team: int = shooter.team if shooter != null else int(ev.get("team", -1))
+			if shooter_team == -1 or shooter_team == actor.team:
+				continue
+			var pos: Vector3 = ev.get("position", Vector3.ZERO)
+			var t: float = float(ev.get("time", -100.0))
+			var age: float = match_node._elapsed - t
+			if age < 0.0 or age >= SOUND_MEMORY_SECONDS:
+				continue
+			var dist: float = actor.position.distance_to(pos)
+			if dist <= hearing_range and t >= best_heard_time:
+				best_heard_time = t
+				best_heard_pos = pos
+	elif match_node.get("_heard") is Array:
+		for item: Variant in match_node._heard:
+			if not item is Dictionary:
+				continue
+			var ev2: Dictionary = item
+			if int(ev2.get("team", -1)) == actor.team:
+				continue
+			var pos2: Vector3 = ev2.get("position", Vector3.ZERO)
+			var t2: float = float(ev2.get("time", -100.0))
+			var age2: float = match_node._elapsed - t2
+			if age2 < 0.0 or age2 >= SOUND_MEMORY_SECONDS:
+				continue
+			if actor.position.distance_to(pos2) <= hearing_range and t2 >= best_heard_time:
+				best_heard_time = t2
+				best_heard_pos = pos2
+	state["heard_at"] = best_heard_time
+	state["heard_pos"] = best_heard_pos
+
+	if match_node.get("_team_ai_state") is Dictionary:
+		var callouts: Dictionary = match_node._team_ai_state.get("callouts", {})
+		if callouts.has(actor.team):
+			var callout: Dictionary = callouts[actor.team]
+			var c_time: float = float(callout.get("time", -100.0))
+			if match_node._elapsed - c_time < CALLOUT_MEMORY_SECONDS and match_node._elapsed - float(state.get("seen_at", -100.0)) > 1.5:
+				if c_time > float(state.get("heard_at", -100.0)):
+					state["heard_pos"] = callout.get("position", state["heard_pos"])
+					state["heard_at"] = c_time
+
+static func _sync_team_blackboard(match_node: Node, _actor: SBActor) -> void:
+	if not match_node.get("_team_ai_state") is Dictionary or match_node._team_ai_state.is_empty():
+		match_node._team_ai_state = create_team_state()
+	var carrier: SBActor = match_node.actors.get(match_node.bomb_carrier_id, null)
+	if carrier != null and carrier.alive and match_node.arena != null and match_node.arena.sites.size() >= 2:
+		var d0: float = carrier.position.distance_to(match_node.arena.sites[0])
+		var d1: float = carrier.position.distance_to(match_node.arena.sites[1])
+		if minf(d0, d1) < 22.0 and absf(d0 - d1) > 5.0:
+			var committed_site: int = 0 if d0 < d1 else 1
+			match_node._team_ai_state["primary_site"] = committed_site
+			match_node._team_ai_state["target_site"] = committed_site
+			match_node._team_ai_state["site_locked"] = true
+
+static func _select_objective_and_destination(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary) -> Dictionary:
+	var arena: SBArena = match_node.arena
 	_update_auditory_and_team_memory(match_node, actor, state, profile)
+	var destination: Vector3 = actor.position
+	var interact := false
+	var is_carrier: bool = (actor.id == match_node.bomb_carrier_id)
+	var primary_site: int = int(match_node._team_ai_state.get("primary_site", 0)) if match_node.get("_team_ai_state") is Dictionary else 0
+	var mem_window: float = float(profile.get("memory_duration", 2.0))
+	var has_visual_memory: bool = (match_node._elapsed - float(state.get("seen_at", -100.0))) < mem_window
+	var has_sound_memory: bool = (match_node._elapsed - float(state.get("heard_at", -100.0))) < SOUND_MEMORY_SECONDS
+
+	if actor.team == SBArena.TEAM_ATTACK:
+		if not match_node.bomb_planted:
+			var site_pos: Vector3 = arena.sites[primary_site]
+			if is_carrier:
+				state["role"] = "carrier"
+				destination = site_pos
+				if actor.position.distance_to(site_pos) < SBArena.PLANT_RADIUS - 0.35:
+					interact = true
+				elif has_visual_memory:
+					state["role"] = "pursue_memory"
+					destination = Vector3(state.get("last_seen", destination))
+			else:
+				var carrier: SBActor = match_node.actors.get(match_node.bomb_carrier_id, null)
+				if actor.slot == 4:
+					state["role"] = "split_flank"
+					destination = Vector3(0.0, 0.0, 4.0) if actor.position.z < 2.0 else site_pos
+				elif actor.slot % 2 == 1:
+					state["role"] = "entry"
+					destination = site_pos + Vector3(2.2 if primary_site == 0 else -2.2, 0.0, -2.5)
+				else:
+					state["role"] = "escort"
+					if carrier != null and carrier.alive:
+						var offset := Vector3(-2.4 if actor.slot % 2 == 0 else 2.4, 0.0, -2.0)
+						destination = snap_to_walkable(arena, carrier.position + offset, actor.position)
+					else:
+						destination = site_pos
+				if has_visual_memory:
+					state["role"] = "pursue_memory"
+					destination = Vector3(state.get("last_seen", destination))
+				elif has_sound_memory:
+					state["role"] = "investigate_sound"
+					destination = Vector3(state.get("heard_pos", destination))
+		else:
+			state["role"] = "post_plant_hold"
+			destination = _site_post_plant_anchor(arena, match_node.planted_position, actor.slot)
+			if has_visual_memory:
+				state["role"] = "pursue_memory"
+				destination = Vector3(state.get("last_seen", destination))
+	else:
+		if match_node.bomb_planted:
+			var defuser_id: int = _choose_designated_defuser(match_node)
+			if actor.id == defuser_id:
+				state["role"] = "retake_defuse"
+				destination = match_node.planted_position
+				if actor.position.distance_to(match_node.planted_position) < SBArena.DEFUSE_RADIUS - 0.35:
+					interact = true
+			else:
+				state["role"] = "retake_cover"
+				destination = _site_post_plant_anchor(arena, match_node.planted_position, actor.slot)
+				if has_visual_memory:
+					state["role"] = "pursue_memory"
+					destination = Vector3(state.get("last_seen", destination))
+		else:
+			state["role"] = "anchor"
+			destination = DEFENDER_ANCHORS[posmod(actor.slot, DEFENDER_ANCHORS.size())]
+			if has_visual_memory:
+				state["role"] = "pursue_memory"
+				destination = Vector3(state.get("last_seen", destination))
+			elif has_sound_memory:
+				state["role"] = "investigate_sound"
+				destination = Vector3(state.get("heard_pos", destination))
+
+	return {
+		"destination": snap_to_walkable(arena, destination, actor.position) if not interact else destination,
+		"interact": interact,
+	}
+
+static func _choose_designated_defuser(match_node: Node) -> int:
+	var best_id := -1
+	var best_dist := INF
+	for id: int in match_node.actors:
+		var a: SBActor = match_node.actors[id]
+		if a == null or not a.alive or a.team != SBArena.TEAM_DEFEND:
+			continue
+		if a.defusing:
+			return id
+		var d: float = a.position.distance_to(match_node.planted_position)
+		if d < best_dist:
+			best_dist = d
+			best_id = id
+	return best_id
+
+static func _site_post_plant_anchor(arena: SBArena, site_pos: Vector3, slot: int) -> Vector3:
+	var offsets: Array[Vector3] = [
+		Vector3(-3.2, 0.0, -2.6),
+		Vector3(3.2, 0.0, -2.6),
+		Vector3(-3.6, 0.0, 1.4),
+		Vector3(3.6, 0.0, 1.4),
+		Vector3(0.0, 0.0, -3.6),
+	]
+	var base_idx: int = posmod(slot, offsets.size())
+	for step in range(offsets.size()):
+		var candidate: Vector3 = site_pos + offsets[posmod(base_idx + step, offsets.size())]
+		if arena == null or not arena.is_blocked(candidate, 0.58):
+			return snap_to_walkable(arena, candidate, site_pos)
+	return snap_to_walkable(arena, site_pos + Vector3(0.0, 0.0, -2.2), site_pos)
+
+static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) -> Dictionary:
+	if not match_node._bot_state.has(actor.id):
+		match_node._bot_state[actor.id] = create_state(actor)
+	var state: Dictionary = match_node._bot_state[actor.id]
+	var profile: Dictionary = profile_for(str(match_node.bot_difficulty))
+	var arena: SBArena = match_node.arena
+
+	_sync_team_blackboard(match_node, actor)
+	_update_auditory_and_team_memory(match_node, actor, state, profile)
+
 	var target: SBActor = acquire_target(match_node, actor, state, profile)
 	var plan: Dictionary = _select_objective_and_destination(match_node, actor, state, profile)
-	var destination: Vector3 = plan.destination
-	var interact: bool = bool(plan.interact)
+	var destination: Vector3 = plan["destination"]
+	var interact: bool = bool(plan["interact"])
 
-	var look := Vector2(actor.yaw, actor.pitch)
-	var firing: bool = false
+	if target != null and interact and actor.position.distance_to(target.position) < 16.0:
+		interact = false
+
 	var move := Vector2.ZERO
-	var requested_weapon: String = ""
-	var use_smoke: bool = false
-	var use_grenade: bool = false
-	var crouch: bool = false
+	var look := Vector2(actor.yaw, actor.pitch)
+	var sprint := true
+	var fire := false
+	var reload_req := bool(actor.ammo <= 0 and actor.reserve > 0)
+	var use_smoke := false
+	var use_grenade := false
 
-	var spec: Dictionary = SBWeapons.get_weapon(actor.weapon_id)
-	var magazine: int = int(spec.magazine)
+	var weapon_def: Dictionary = SBWeapons.get_weapon(actor.weapon_id)
+	var clip_size: int = int(weapon_def.get("clip_size", 30))
+	if target == null and not interact and actor.ammo < int(float(clip_size) * 0.35) and actor.reserve > 0:
+		reload_req = true
 
 	if target != null:
-		if int(state.get("target", 0)) != target.actor_id:
-			state["reaction"] = 0.0
-			state["burst_time"] = 0.0
-		state["target"] = target.actor_id
-		state["last_seen"] = target.position
-		state["seen_at"] = match_node._elapsed
-		state["reaction"] = float(state.get("reaction", 0.0)) + delta
-		if bool(profile.get("team_comms", true)):
-			_share_sighting(match_node, actor, target)
+		var aim_point: Vector3 = target.eye_position() - Vector3(0.0, 0.14, 0.0)
+		var to_target: Vector3 = aim_point - actor.eye_position()
+		var flat_len: float = maxf(0.001, Vector2(to_target.x, to_target.z).length())
+		var desired_yaw: float = atan2(-to_target.x, -to_target.z)
+		var desired_pitch: float = clampf(atan2(to_target.y, flat_len), -0.65, 0.65)
 
-		var target_distance: float = actor.position.distance_to(target.position)
-		# Emergency sidearm transition when primary runs dry in close-to-mid combat.
-		if bool(profile.get("sidearm_fallback", true)) and actor.ammo == 0 and actor.weapon_id != "sidearm" and actor.inventory.has("sidearm") and target_distance < 20.0 and not interact:
-			requested_weapon = "sidearm"
+		var jitter: float = float(profile.get("aim_jitter", 0.045))
+		var wobble_phase: float = match_node._elapsed * 5.3 + float(actor.id) * 1.7
+		desired_yaw += sin(wobble_phase) * jitter
+		desired_pitch += cos(wobble_phase * 1.13) * jitter * 0.55
 
-		var aim: Vector3 = target.position + Vector3(0.0, 1.15, 0.0) - (actor.position + Vector3(0.0, 1.5, 0.0))
-		var error: float = float(profile.aim_error)
-		var recoil_comp: float = float(profile.get("recoil_compensation", 0.0))
-		var desired := Vector2(
-			atan2(-aim.x, -aim.z) - actor.recoil.x * recoil_comp + match_node._rng.randf_range(-error, error),
-			atan2(aim.y, Vector2(aim.x, aim.z).length()) - actor.recoil.y * recoil_comp
-		)
-		var turn_speed: float = float(profile.turn_speed)
-		look.x = rotate_toward(actor.yaw, desired.x, turn_speed * delta)
-		look.y = move_toward(actor.pitch, desired.y, turn_speed * delta)
+		var turn_step: float = float(profile.get("turn_speed", 5.4)) * delta
+		var new_yaw: float = rotate_toward(actor.yaw, desired_yaw, turn_step)
+		var new_pitch: float = move_toward(actor.pitch, desired_pitch, turn_step * 0.8)
+		look = Vector2(new_yaw, new_pitch)
 
-		# Burst/recoil discipline at long range so automatic weapons don't spray wildly over targets.
-		var burst_cooldown: float = maxf(0.0, float(state.get("burst_cooldown", 0.0)) - delta)
-		var burst_time: float = float(state.get("burst_time", 0.0))
-		if burst_cooldown > 0.0:
-			burst_time = 0.0
-		elif target_distance > 22.0 and bool(spec.automatic) and actor.recoil.y > 0.11 and burst_time >= MAX_BURST_SECONDS:
-			burst_cooldown = BURST_COOLDOWN_SECONDS
-			burst_time = 0.0
-		state["burst_cooldown"] = burst_cooldown
+		var dist_to_target: float = actor.position.distance_to(target.position)
+		var seen_elapsed: float = match_node._elapsed - float(state.get("target_seen_since", match_node._elapsed))
+		var yaw_error: float = absf(angle_difference(new_yaw, desired_yaw))
+		var max_fire_cone: float = 0.24 if dist_to_target < 12.0 else 0.15
 
-		# Reaction time never allows shooting before the muzzle reaches the target.
-		var aligned: bool = absf(angle_difference(look.x, desired.x)) < 0.07 and absf(look.y - desired.y) < 0.07
-		firing = float(state.get("reaction", 0.0)) >= reaction_delay and aligned and not interact and burst_cooldown <= 0.0
-		if not bool(spec.automatic) and bool(actor.input_state.get("fire", false)):
-			firing = false
-		if firing:
-			state["burst_time"] = burst_time + delta
+		if seen_elapsed >= float(profile.get("reaction_delay", 0.22)) and yaw_error <= max_fire_cone and not actor.reloading and actor.ammo > 0:
+			var burst_len: float = float(profile.get("burst_duration", 0.34))
+			var burst_pause: float = float(profile.get("burst_pause", 0.18))
+			var cycle: float = burst_len + burst_pause
+			var phase: float = fmod(maxf(0.0, seen_elapsed - float(profile.get("reaction_delay", 0.22))), cycle)
+			if dist_to_target < 9.0 or phase <= burst_len:
+				fire = true
+
+		sprint = false
+		var retreat_hp: float = float(profile.get("retreat_hp", 28.0))
+		if (actor.hp <= retreat_hp or actor.reloading) and not interact:
+			var cover_dest: Vector3 = find_tactical_cover(arena, actor.position, target.position)
+			var wp_cover: Vector3 = safe_navigate(arena, actor.position, cover_dest)
+			var dir_cover: Vector3 = (wp_cover - actor.position)
+			dir_cover.y = 0.0
+			if dir_cover.length_squared() > 0.05:
+				var local_cover: Vector3 = Basis(Vector3.UP, -look.x) * dir_cover.normalized()
+				move = Vector2(local_cover.x, -local_cover.z)
 		else:
-			state["burst_time"] = maxf(0.0, burst_time - delta * 2.0)
-
-		# Movement in combat: counter-strafe/brake at long range, strafe at close/mid range, or seek cover when reloading/critical HP.
-		var should_seek_cover: bool = actor.reload_remaining > 0.0 or (actor.health <= float(profile.get("retreat_hp", 0.0)) and not interact)
-		if should_seek_cover:
-			var cover: Vector3 = cover_position(match_node, actor, target)
-			var next_wp: Vector3 = safe_navigate(match_node.arena, actor.position, cover)
-			var step: Vector3 = next_wp - actor.position
-			if step.length_squared() > 0.01:
-				var local_step: Vector3 = Basis(Vector3.UP, -look.x) * step.normalized()
-				move = Vector2(local_step.x, -local_step.z)
-		elif bool(profile.get("counter_strafe", false)) and target_distance > 20.0 and aligned:
-			move = Vector2.ZERO
-		else:
-			move = Vector2(sin(match_node._elapsed * 1.1 + float(actor.actor_id)) * 0.4, 0.0)
-
-		crouch = (actor.actor_id % 3 == 0) or (bool(profile.get("counter_strafe", false)) and target_distance > 18.0 and aligned)
-	else:
-		state["target"] = 0
-		state["reaction"] = 0.0
-		state["burst_time"] = 0.0
-		state["burst_cooldown"] = 0.0
-
-		# Switch back to primary rifle/smg/marksman when out of immediate combat if holding sidearm with primary ammo available.
-		if actor.weapon_id == "sidearm" and actor.inventory.size() > 1:
-			for w_id in ["rifle", "marksman", "smg"]:
-				if actor.inventory.has(w_id):
-					requested_weapon = w_id
-					break
-
-		# Tactical utility: carrier or support deploys smoke when approaching site or before defusing.
-		if bool(profile.get("utility_use", false)) and actor.smokes > 0 and not bool(state.get("smoke_used", false)) and not interact:
-			if actor.team == 0 and actor.position.distance_to(match_node.arena.sites[int(plan.primary_site)]) < 14.0 and actor.position.distance_to(match_node.arena.sites[int(plan.primary_site)]) > 5.0:
-				if actor.actor_id == match_node.objective_carrier or actor.actor_id % 2 == 0:
-					use_smoke = true
-					state["smoke_used"] = true
-			elif actor.team == 1 and match_node.objective_state == "planted" and actor.position.distance_to(match_node.objective_position) < 11.0 and actor.position.distance_to(match_node.objective_position) > 3.5:
-				use_smoke = true
-				state["smoke_used"] = true
-
-		var mem_window: float = float(profile.get("memory_duration", 2.0))
-		# Investigate a briefly remembered sighting; never aim/fire at hidden live coordinates.
-		if match_node._elapsed - float(state.get("seen_at", -100.0)) < mem_window and not interact and match_node.objective_state != "planted":
-			state["role"] = "pursue_memory"
-			if actor.health <= float(profile.get("retreat_hp", 0.0)):
-				destination = cover_position_from_point(match_node, actor, state["last_seen"])
+			var strafe_wave: float = sin(match_node._elapsed * float(profile.get("strafe_freq", 2.3)) + float(state.get("strafe_seed", 0.0)))
+			var strafe_dir: float = 0.85 if strafe_wave >= 0.0 else -0.85
+			if actor.weapon_id == "shotgun" or actor.weapon_id == "smg":
+				move = Vector2(strafe_dir, 0.9 if dist_to_target > 7.5 else 0.0)
+			elif dist_to_target > 22.0:
+				move = Vector2(strafe_dir * 0.75, 0.65)
 			else:
-				destination = state["last_seen"]
-		elif match_node._elapsed - float(state.get("damaged_at", -100.0)) < 1.5 and not interact:
-			# Turn toward directional damage indicator when hit from outside FOV.
-			var dmg_origin: Vector3 = state.get("damaged_from", actor.position)
-			var to_dmg: Vector3 = dmg_origin - actor.position
+				move = Vector2(strafe_dir, 0.0)
+	else:
+		if match_node._elapsed > float(state.get("utility_cooldown_until", 0.0)) and actor.smokes > 0:
+			var util_chance: float = float(profile.get("utility_chance", 0.5))
+			if util_chance >= 0.45 and match_node._elapsed - float(state.get("seen_at", -100.0)) < 2.2:
+				var mem_pos: Vector3 = state.get("last_seen", actor.position)
+				if actor.position.distance_to(mem_pos) > 9.0 and actor.position.distance_to(mem_pos) < 26.0:
+					use_smoke = true
+					state["utility_cooldown_until"] = match_node._elapsed + 12.0
+
+		var has_damage_look := false
+		if match_node._elapsed - float(state.get("damaged_at", -100.0)) < 1.5 and not interact:
+			var to_dmg: Vector3 = Vector3(state.get("damaged_from", actor.position)) - actor.position
 			if to_dmg.length_squared() > 0.1:
 				var dmg_yaw: float = atan2(-to_dmg.x, -to_dmg.z)
-				look = Vector2(rotate_toward(actor.yaw, dmg_yaw, float(profile.turn_speed) * delta), 0.0)
+				look = Vector2(rotate_toward(actor.yaw, dmg_yaw, float(profile.get("turn_speed", 5.0)) * delta), 0.0)
+				has_damage_look = true
 
 		if actor.position.distance_to(destination) > 1.8 and not interact:
-			var waypoint: Vector3 = safe_navigate(match_node.arena, actor.position, destination)
-			var direction: Vector3 = waypoint - actor.position
-			if direction.length_squared() > 0.001:
-				look = Vector2(atan2(-direction.x, -direction.z), 0.0)
-				move = Vector2(0.0, 1.0)
-		elif not interact:
-			# Scan the approach rather than staring permanently away from the attackers.
-			var approach := Vector3(0.0, 0.0, -18.0) if actor.team == 1 else Vector3(0.0, 0.0, 20.0)
-			if match_node._elapsed - float(state.get("heard_at", -100.0)) < SOUND_MEMORY_SECONDS:
-				approach = state.get("heard_pos", approach)
-			var toward_approach: Vector3 = approach - actor.position
-			var scan_yaw: float = atan2(-toward_approach.x, -toward_approach.z) + sin(match_node._elapsed * 0.65 + float(actor.actor_id)) * 0.7
-			look = Vector2(rotate_toward(actor.yaw, scan_yaw, delta * 2.0), 0.0)
+			var target_dest: Vector3 = destination
+			if match_node._elapsed < float(state.get("repath_until", -100.0)):
+				target_dest = snap_to_walkable(arena, actor.position + Vector3(state.get("repath_offset", Vector3.ZERO)), actor.position)
+			var wp: Vector3 = safe_navigate(arena, actor.position, target_dest)
+			var direction: Vector3 = wp - actor.position
+			direction.y = 0.0
+			if direction.length_squared() > 0.01:
+				if not has_damage_look:
+					var nav_yaw: float = atan2(-direction.x, -direction.z)
+					look = Vector2(nav_yaw, 0.0)
+				var local_step: Vector3 = Basis(Vector3.UP, -look.x) * direction.normalized()
+				move = Vector2(local_step.x, -local_step.z)
+		elif not interact and not has_damage_look:
+			var scan_yaw: float = actor.yaw + sin(match_node._elapsed * 1.4 + float(actor.id)) * 0.65 * delta
+			look = Vector2(scan_yaw, 0.0)
 
-	# Stuck detection and multi-stage recovery.
-	if actor.position.distance_to(state.get("last_position", actor.position)) < 0.05 and move.length() > 0.0:
-		state["stuck"] = float(state.get("stuck", 0.0)) + delta
-	else:
-		state["stuck"] = 0.0
-	state["last_position"] = actor.position
-	if float(state.get("stuck", 0.0)) > 0.9:
-		move.x = 1.0 if actor.actor_id % 2 == 0 else -1.0
-		if float(state.get("stuck", 0.0)) > 1.8 and target == null and not interact:
-			move.y = -0.6
+	if move.length() > 0.2 and not interact:
+		if actor.position.distance_to(Vector3(state.get("last_pos", actor.position))) < 0.05:
+			state["stuck"] = float(state.get("stuck", 0.0)) + delta
+			if float(state["stuck"]) > STUCK_REPATH_SECONDS:
+				var side_angle: float = actor.yaw + (PI * 0.5 if actor.id % 2 == 0 else -PI * 0.5)
+				var escape_vec := Vector3(-sin(side_angle), 0.0, -cos(side_angle)) * 3.2
+				state["repath_offset"] = escape_vec
+				state["repath_until"] = match_node._elapsed + 0.9
+				state["stuck"] = 0.0
+				move = Vector2(1.0 if actor.id % 2 == 0 else -1.0, 1.0).normalized()
+		else:
+			state["stuck"] = 0.0
+	state["last_pos"] = actor.position
 
-	var safe_reload: bool = target == null and match_node._elapsed - float(state.get("seen_at", -100.0)) > 2.5 and actor.ammo <= magazine / 3
-	actor.input_state = {
-		"move": Vector2.ZERO if interact else move,
+	if interact:
+		move = Vector2.ZERO
+		sprint = false
+		fire = false
+
+	return {
+		"move": move,
 		"look": look,
-		"fire": firing,
-		"reload": not interact and requested_weapon == "" and (actor.ammo == 0 or safe_reload),
-		"jump": float(state.get("stuck", 0.0)) > 1.5,
-		"crouch": crouch,
+		"sprint": sprint,
+		"crouch": false,
+		"fire": fire,
+		"reload": reload_req,
 		"interact": interact,
-		"weapon": requested_weapon,
 		"smoke": use_smoke,
-		"grenade": use_grenade
+		"grenade": use_grenade,
 	}
