@@ -48,7 +48,7 @@ def integrated_resources(paths):
     for basename in ("relay_ar_albedo.png-", "relay_ar_normal.png-", "relay_ar_orm.png-",
                      "relay_ar_arms_albedo.png-", "relay_ar_arms_normal.png-", "relay_ar_arms_orm.png-"):
         assert any(basename in path and path.endswith('.ctex') for path in paths), f"Missing imported texture: {basename}"
-    for basename in ("state_privacy", "snapshot_buffer", "movement_prediction", "peer_lifecycle", "reconnect_policy", "result_outbox", "viewmodel_shading"):
+    for basename in ("state_privacy", "snapshot_buffer", "movement_prediction", "movement_step", "peer_lifecycle", "reconnect_policy", "result_outbox", "viewmodel_shading", "bot_ai", "reload_audio", "reload_phases", "confirm_sheet"):
         assert any(path.endswith('/' + basename + '.gdc') for path in paths), f"Missing compiled module: {basename}"
 
 
