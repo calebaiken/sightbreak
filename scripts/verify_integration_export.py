@@ -96,6 +96,10 @@ class NativeUI:
 
     def click(self, x, y):
         self.t.XTestFakeMotionEvent(self.d, 0, x, y, 0)
+        # Let the native window consume the pointer move before the click.
+        # Same-batch motion/button events can hit the prior hover target.
+        self.x.XFlush(self.d)
+        time.sleep(.25)
         self.button(True)
         time.sleep(.2)
         self.button(False)
