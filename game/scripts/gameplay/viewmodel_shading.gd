@@ -39,6 +39,27 @@ const METAL_FLOOR := 0.12
 const HANDGUARD_ROUGHNESS := 0.62
 const HANDGUARD_METAL := 0.30
 
+## Low-light form (art-v11, lowlight track). Every number below is a constant of the viewmodel, like the studio ambient: nothing reads the
+## world, so a dark interior is not lit up and an enemy's view is untouched. All of them are EMPIRICAL (chosen after rendering sweeps, see
+## docs/reports/media/art-v11/lowlight); each is a uniform whose default (0) reproduces the previous pixels.
+## The studio gradient is modulated by the detail normal's wrapped key (up, left, towards the camera): FORM = 0.6 puts 1.6x of it on what
+## faces the key and 0.4x on what faces away. It is a re-distribution, not an addition: the receiver's median in sun and at the ready is
+## unchanged (54.6), and what faces down or away from the key goes darker while what faces up or left goes lighter, so the rifle has form
+## where it was one flat slate (shade receiver 19-35, p10-p90, before; see the probe).
+const FORM := 0.60
+## A thin cool edge on geometric edges (screen-space change of the surface normal) of the metal, weighted up: a bevel or a panel line
+## catches a little light the way a machined edge does. Cool like the studio's strip. 0.10 is about +3 to +8 luma on the edge pixels only.
+const EDGE := 0.10
+const MAGAZINE_FORM := 0.30
+const MAGAZINE_EDGE := 0.06
+## The baked occlusion of the buffer tube is 0 over its rear half (it was baked with the stock around it; the first-person rifle has no
+## stock), which drew a pure-black cylinder end in shade. A floor under the occlusion of the studio terms for the rifle's body only.
+const BODY_AO_FLOOR := 0.45
+## The pistol grip is meant to be the darkest thing in the hand, not black (median luma 6 in shade): a studio key on it, lifted by the
+## albedo floor below so its darkened albedo (GRIP_DARKEN) does not leave it with nothing to light.
+const GRIP_KEY := 0.35
+const GRIP_KEY_LIFT := 0.12
+
 const UNIFORMS := """
 uniform float viewmodel_fov = 0.0;
 uniform float viewmodel_depth = 0.08;
@@ -54,6 +75,12 @@ uniform float viewmodel_metal_scale = 1.0;
 uniform float viewmodel_reflect = 0.30;
 uniform vec3 viewmodel_ambient = vec3(0.165, 0.214, 0.254);
 uniform vec3 viewmodel_bounce = vec3(0.0);
+uniform float viewmodel_form = 0.0;
+uniform float viewmodel_key = 0.0;
+uniform float viewmodel_key_lift = 0.10;
+uniform float viewmodel_edge = 0.0;
+uniform vec3 viewmodel_edge_color = vec3(0.30, 0.45, 0.80);
+uniform float viewmodel_ao_floor = 0.0;
 """
 
 ## Inside vertex(). Scales the camera's projection to the viewmodel field of view,
@@ -107,20 +134,31 @@ const STUDIO := """
 		vec3 n = normalize(TANGENT * detail_normal_ts.x + BINORMAL * detail_normal_ts.y + NORMAL * detail_normal_ts.z);
 		float ndv = clamp(dot(n, VIEW), 0.0, 1.0);
 		float up = clamp(n.y * 0.5 + 0.5, 0.0, 1.0);
-		EMISSION += ALBEDO * (1.0 - METALLIC) * AO * viewmodel_ambient * viewmodel_env;
+		float studio_ao = mix(viewmodel_ao_floor, 1.0, AO);
+		EMISSION += ALBEDO * (1.0 - METALLIC) * studio_ao * viewmodel_ambient * viewmodel_env;
 		// Light bounced up from the ground onto what faces down (a forearm's underside, the underside of a fist): a constant of the
 		// viewmodel like the ambient, not read from the world, so it adds form without adding visibility in a dark place.
-		EMISSION += ALBEDO * (1.0 - METALLIC) * AO * viewmodel_bounce * clamp(-n.y, 0.0, 1.0) * viewmodel_env;
+		EMISSION += ALBEDO * (1.0 - METALLIC) * studio_ao * viewmodel_bounce * clamp(-n.y, 0.0, 1.0) * viewmodel_env;
+		// Form in low light (art-v11): the detail normal rebuilt from its two stored channels (the blue channel reads 0 in the imported
+		// normal maps, so `n` above has its z flipped: left as it is, the terms above are tuned to it), a wrapped studio key up and to the
+		// left, and a form factor that modulates the studio's gradient by it: more on what faces the key, less on what faces away.
+		vec2 ts = NORMAL_MAP.rg * 2.0 - 1.0;
+		vec3 nd = normalize(TANGENT * ts.x + BINORMAL * ts.y + NORMAL * sqrt(max(1.0 - dot(ts, ts), 0.0)));
+		float studio_wrap = pow(clamp((dot(nd, normalize(vec3(-0.50, 0.60, 0.62))) + 0.25) / 1.25, 0.0, 1.0), 1.6);
 		vec3 r = reflect(-VIEW, n);
 		float gloss = 1.0 - ROUGHNESS;
 		vec3 f0 = mix(vec3(0.08 * SPECULAR), ALBEDO, METALLIC);
 		vec3 fresnel = f0 + (max(vec3(gloss), f0) - f0) * pow(1.0 - ndv, 5.0);
 		vec3 gradient = mix(vec3(0.26, 0.29, 0.31), vec3(0.38, 0.42, 0.45), smoothstep(-1.0, 1.0, r.y));
 		gradient = mix(gradient, vec3(0.30, 0.33, 0.36), ROUGHNESS * 0.6);
+		gradient *= mix(1.0 - viewmodel_form, 1.0 + viewmodel_form, studio_wrap);
 		float key = pow(max(dot(r, normalize(vec3(-0.50, 0.60, 0.62))), 0.0), mix(48.0, 5.0, ROUGHNESS)) * mix(1.0, 0.4, ROUGHNESS);
 		float strip = pow(max(dot(r, normalize(vec3(0.78, 0.15, -0.40))), 0.0), mix(24.0, 4.0, ROUGHNESS)) * mix(1.0, 0.4, ROUGHNESS);
 		vec3 radiance = gradient + vec3(1.0, 0.96, 0.90) * key * 3.0 * viewmodel_sheen + vec3(0.62, 0.76, 1.0) * strip * 1.2 * viewmodel_sheen;
-		EMISSION += fresnel * radiance * AO * viewmodel_env * viewmodel_reflect;
+		EMISSION += fresnel * radiance * studio_ao * viewmodel_env * viewmodel_reflect;
+		EMISSION += max(ALBEDO, vec3(viewmodel_key_lift)) * viewmodel_key * studio_wrap * studio_ao;
+		float edge = smoothstep(0.06, 0.40, length(fwidth(NORMAL)));
+		EMISSION += viewmodel_edge_color * viewmodel_edge * edge * mix(0.4, 1.0, smoothstep(-0.6, 0.8, nd.y)) * studio_ao;
 	}
 """
 
@@ -266,3 +304,9 @@ static func enable(material: ShaderMaterial) -> void:
 	material.set_shader_parameter("viewmodel_floor", FLOOR)
 	material.set_shader_parameter("viewmodel_lift", LIFT)
 	material.set_shader_parameter("viewmodel_rim", RIM)
+
+## Sets the low-light form terms on a first-person surface (see FORM and the constants after it).
+static func shape(material: ShaderMaterial, form: float, edge: float, ao_floor: float = 0.0) -> void:
+	material.set_shader_parameter("viewmodel_form", form)
+	material.set_shader_parameter("viewmodel_edge", edge)
+	material.set_shader_parameter("viewmodel_ao_floor", ao_floor)

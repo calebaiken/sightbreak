@@ -106,6 +106,7 @@ static func finish(metadata: Dictionary, viewmodel: bool = false) -> ShaderMater
 		ViewmodelShading.enable(material)
 		material.set_shader_parameter("viewmodel_roughness", ViewmodelShading.METAL_ROUGHNESS)
 		material.set_shader_parameter("viewmodel_floor", ViewmodelShading.METAL_FLOOR)
+		ViewmodelShading.shape(material, ViewmodelShading.FORM, ViewmodelShading.EDGE)
 	var collection := str(metadata.get("collection", ""))
 	var definition := str(metadata.get("definition_id", metadata.get("id", ""))).to_lower()
 	if collection.is_empty():

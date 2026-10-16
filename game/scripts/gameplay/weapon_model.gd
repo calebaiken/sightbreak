@@ -32,9 +32,14 @@ const ARMS_SHEEN := 0.0
 ## How much of the studio the arms reflect (the rifle's metal uses ViewmodelShading's default, deliberately low): fabric and
 ## rubber at this strength keep the brightness the sky's reflection gave them before the studio replaced it.
 const ARMS_REFLECT := 0.05
-## The fill's albedo floor for the arms (ViewmodelShading.LIFT is the rifle's): higher, so the near-black gloves are
-## not left in a dark interior with nothing to read; the grip gets none, so it stays the darkest thing in the hand.
-const ARMS_LIFT := 0.50
+## The fill's albedo floor for the arms (ViewmodelShading.LIFT is the rifle's). It was 0.50 (art-v10): a grey emission floor of 0.07
+## that was the same for the charcoal glove and the olive sleeve and put both above the rifle in shade (glove median luma 34-43, rifle
+## 28-34: the "ghost" look). Now 0.12, with the arms' own studio ambient below doing the lifting in proportion to the albedo, so the glove
+## sits below the sleeve and level with or under the rifle (EMPIRICAL, art-v11 lowlight: viewmodel_light_probe).
+const ARMS_LIFT := 0.12
+## The studio ambient on the arms (linear): albedo-proportional, neutral instead of the cool (0.165, 0.214, 0.254) the rifle takes, about
+## twice as strong; with ARMS_LIFT this replaces the flat floor. EMPIRICAL.
+const ARMS_AMBIENT := Vector3(0.34, 0.33, 0.30)
 ## The arms' fill strength (ViewmodelShading.FLOOR is the rifle's), the dielectric specular of their fabric (the engine's default
 ## 0.5 put a pale sheen on the dark gloves in sun, the "bare skin" look: a glove's median luma in sun was 89, about a third of it
 ## additive) and their rim. The specular and the rim came down and the fill went up so that the gloves are darker in sun and
@@ -140,6 +145,7 @@ static func _add_arms(parent: Node3D, placement: Transform3D, result: Dictionary
 	material.set_shader_parameter("viewmodel_sheen", ARMS_SHEEN)
 	material.set_shader_parameter("viewmodel_reflect", ARMS_REFLECT)
 	material.set_shader_parameter("viewmodel_bounce", ARMS_BOUNCE)
+	material.set_shader_parameter("viewmodel_ambient", ARMS_AMBIENT)
 	for mesh: MeshInstance3D in arms.find_children("*", "MeshInstance3D", true, false):
 		mesh.material_override = material
 		mesh.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
@@ -619,6 +625,15 @@ func _build_authored_rifle() -> Vector3:
 	var rifle := _authored_nodes(RELAY_AR, placement)
 	# First person draws with the viewmodel projection; inspection keeps the plain material.
 	var material: Material = ViewmodelShading.surface(RELAY_AR_TEXTURES, 0.84, 0.60) if _hands else load(RELAY_AR_MATERIAL)
+	# Body and magazine take the low-light form terms with their own strengths (the body also has an occlusion floor for its
+	# stock-less buffer tube); in inspection they keep the plain material.
+	var body_material: Material = material
+	var magazine_material: Material = material
+	if _hands:
+		body_material = (material as ShaderMaterial).duplicate()
+		ViewmodelShading.shape(body_material, ViewmodelShading.FORM, ViewmodelShading.EDGE, ViewmodelShading.BODY_AO_FLOOR)
+		magazine_material = (material as ShaderMaterial).duplicate()
+		ViewmodelShading.shape(magazine_material, ViewmodelShading.MAGAZINE_FORM, ViewmodelShading.MAGAZINE_EDGE)
 	var part_names := ["body", "paint_receiver", "paint_handguard", "magazine"]
 	if rifle.meshes.has("grip"):
 		part_names.append("grip") # graphite furniture, its own draw so it can be told apart from the tan magazine
@@ -630,11 +645,19 @@ func _build_authored_rifle() -> Vector3:
 	if _hands:
 		grip_material = ViewmodelShading.surface(RELAY_AR_TEXTURES, 0.84 * GRIP_DARKEN, 0.60)
 		(grip_material as ShaderMaterial).set_shader_parameter("viewmodel_lift", 0.0) # no readability floor: it is meant to be the darkest thing in the hand
+		ViewmodelShading.shape(grip_material, ViewmodelShading.FORM, ViewmodelShading.EDGE)
+		(grip_material as ShaderMaterial).set_shader_parameter("viewmodel_key", ViewmodelShading.GRIP_KEY) # a key and an albedo floor for it: the darkest thing in the hand is not pure black
+		(grip_material as ShaderMaterial).set_shader_parameter("viewmodel_key_lift", ViewmodelShading.GRIP_KEY_LIFT)
 	else:
 		grip_material = (load(RELAY_AR_MATERIAL) as BaseMaterial3D).duplicate()
 		(grip_material as BaseMaterial3D).albedo_color = Color(0.86 * GRIP_DARKEN, 0.86 * GRIP_DARKEN, 0.86 * GRIP_DARKEN)
 	for part_name in part_names:
-		var part := _add_authored(part_name, rifle.meshes[part_name], rifle.markers[part_name], grip_material if part_name == "grip" else material)
+		var part_material: Material = material
+		match part_name:
+			"grip": part_material = grip_material
+			"body": part_material = body_material
+			"magazine": part_material = magazine_material
+		var part := _add_authored(part_name, rifle.meshes[part_name], rifle.markers[part_name], part_material)
 		if part_name.begins_with("paint_"):
 			_paint_parts.append(part)
 	_magazine = _gun.get_node("magazine")
@@ -642,7 +665,7 @@ func _build_authored_rifle() -> Vector3:
 	var rounds := MeshInstance3D.new()
 	rounds.name = "magazine_rounds"
 	rounds.mesh = rifle.meshes["magazine_rounds"]
-	rounds.material_override = material
+	rounds.material_override = magazine_material
 	rounds.transform = _magazine.transform.affine_inverse() * rifle.markers["magazine_rounds"]
 	_magazine.add_child(rounds)
 	if _hands and use_hand_assets and use_rigged_arms and ResourceLoader.exists(RELAY_AR_ARMS):
