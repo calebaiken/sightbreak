@@ -247,15 +247,29 @@ func bot_navigation(from: Vector3, to: Vector3) -> Vector3:
 	var finish := -1
 	var start_distance := INF
 	var finish_distance := INF
+	var fallback_start := -1
+	var fallback_finish := -1
+	var fallback_start_distance := INF
+	var fallback_finish_distance := INF
 	for i in range(waypoints.size()):
 		var d := from.distance_squared_to(waypoints[i])
+		if d < fallback_start_distance:
+			fallback_start = i
+			fallback_start_distance = d
 		if d < start_distance and _clear_path(from, waypoints[i]):
 			start = i
 			start_distance = d
 		var e := to.distance_squared_to(waypoints[i])
+		if e < fallback_finish_distance:
+			fallback_finish = i
+			fallback_finish_distance = e
 		if e < finish_distance and _clear_path(to, waypoints[i]):
 			finish = i
 			finish_distance = e
+	if start < 0:
+		start = fallback_start
+	if finish < 0:
+		finish = fallback_finish
 	if start < 0 or finish < 0:
 		return from
 	var path := _navigation.get_point_path(start, finish)
