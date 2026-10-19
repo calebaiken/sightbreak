@@ -1,0 +1,33 @@
+{
+  "url": "https://get.enterprisedb.com/postgresql/postgresql-17.11-5-windows-x64-binaries.zip",
+  "sha256": "80379b2c04d51c30225532e0ae04509899141e9957ed096fe749d7fd9df8f82f",
+  "port": 55439,
+  "commands": [
+    {
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\pgsql\\bin\\postgres.exe",
+        "--version"
+      ],
+      "exit": 0,
+      "stdout": "postgres (PostgreSQL) 17.11\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\pgsql\\bin\\initdb.exe",
+        "-D",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\data",
+        "-U",
+        "sightbreak",
+        "--pwfile",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\local-password.txt",
+        "--auth=scram-sha-256",
+        "--encoding=UTF8",
+        "--locale=C"
+      ],
+      "exit": 0,
+      "stdout": "The files belonging to this database system will be owned by user \"blith\".\nThis user must also own the server process.\n\nThe database cluster will be initialized with locale \"C\".\nThe default text search configuration will be set to \"english\".\n\nData page checksums are disabled.\n\ncreating directory C:/Users/blith/AppData/Local/Temp/opencode/sightbreak-backend-trade-env/data ... ok\ncreating subdirectories ... ok\nselecting dynamic shared memory implementation ... windows\nselecting default \"max_connections\" ... 100\nselecting default \"shared_buffers\" ... 128MB\nselecting default time zone ... America/New_York\ncreating configuration files ... ok\nrunning bootstrap script ... ok\nperforming post-bootstrap initialization ... ok\nsyncing data to disk ... ok\n\nSuccess. You can now start the database server using:\n\n    ^\"C^:^\\Users^\\blith^\\AppData^\\Local^\\Temp^\\opencode^\\sightbreak^-backend^-trade^-env^\\pgsql^\\bin^\\pg^_ctl^\" -D ^\"C^:^\\Users^\\blith^\\AppData^\\Local^\\Temp^\\opencode^\\sightbreak^-backend^-trade^-env^\\data^\" -l logfile start\n\n",
+      "stderr": ""
+    }
+  ]
+}
