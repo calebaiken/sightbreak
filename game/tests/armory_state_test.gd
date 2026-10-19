@@ -414,17 +414,22 @@ func real_outcome(mode: String, status := 200, body := "{}") -> Dictionary:
 		check(closed_server.listen(0, "127.0.0.1") == OK, "Reserve a disposable closed-port fixture")
 		api.base_url = "http://127.0.0.1:%d" % closed_server.get_local_port()
 		closed_server.stop()
+	elif mode == "unresolvable":
+		api.base_url = "http://sightbreak-armory-fixture.invalid"
 	api.token = "fixture-only"
-	if mode != "closed":
+	if mode not in ["closed", "unresolvable"]:
 		serve_once(mode, status, body)
 	var result: Dictionary = await api.request("/store/buy", HTTPClient.METHOD_POST, {"definition_id": "key", "idempotency_key": api.key()})
 	api.queue_free()
 	return result
 
 func transport_outcomes() -> void:
-	# An explicitly released loopback port refuses the connection before dispatch.
-	var closed := await real_outcome("closed")
-	check(closed.get("_outcome") == "not_reached" and not closed.get("_uncertain", true), "A refused connection is 'not reached' and not uncertain: " + str(closed.get("_error")))
+	# Windows can report a generic connection error for an explicitly closed port;
+	# it is correct to keep that result uncertain. DNS failure is unambiguously unsent.
+	var refused_connection := await real_outcome("closed")
+	check((refused_connection.get("_outcome") == "not_reached" and not refused_connection.get("_uncertain", true)) or (refused_connection.get("_outcome") == "unknown" and refused_connection.get("_uncertain", false)), "A closed endpoint is either proven unreachable or conservatively uncertain")
+	var closed := await real_outcome("unresolvable")
+	check(closed.get("_outcome") == "not_reached" and not closed.get("_uncertain", true), "An unresolvable reserved .invalid host is 'not reached' and not uncertain: " + str(closed.get("_error")))
 	check("nothing was sent" in str(closed._error), "The not-reached message says nothing was sent")
 	check("Retry pending" not in str(closed._error) and "RETRY" not in str(closed._error).to_upper(), "A request that never reached the server does not talk about retrying")
 	check(server.listen(0, "127.0.0.1") == OK, "A loopback test server starts")
