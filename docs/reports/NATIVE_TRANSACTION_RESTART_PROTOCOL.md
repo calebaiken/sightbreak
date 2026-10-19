@@ -119,3 +119,13 @@ This removes the second resident SQLAlchemy/FastAPI application from the shared
 8GB host. All three cases are pre-seeded in the same unique database; before/after
 snapshots include those other fixture rows and require them to remain unchanged.
 The same setup and measurement sequence applies to both revisions.
+
+R8 still stalled before probe execution. A separate pipe control then reproduced
+the blocker: the native startup diagnostic remained active with unread redirected
+pipes after three seconds, but finished with exit zero as soon as `communicate`
+drained them. The measurement coordinator had been waiting on HTTP before it
+drained native stdout/stderr. The final capture revision uses private temporary
+files for native output while the process runs, followed by `wait`, redaction,
+and published text logs. This removes pipe backpressure from the crash barrier.
+The earlier memory reduction remains useful host isolation, but was not itself
+the fix for this reproduced startup failure. All original attempts are retained.
