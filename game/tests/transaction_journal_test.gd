@@ -5,6 +5,17 @@ var checks := 0
 var failures: Array[String] = []
 var receipt_path := "user://journal_test_%d.json" % OS.get_process_id()
 
+## Fault injection after a successful buffered store/close: the actual file is
+## truncated before the read-back. Both temporary and published bytes are checked.
+class TruncatedJournal extends TransactionJournal:
+	var after_publish := false
+	func _matches_bytes(file_path: String, expected: String) -> bool:
+		if file_path.ends_with(".tmp") != after_publish:
+			var file := FileAccess.open(file_path, FileAccess.WRITE)
+			file.store_string("{truncated")
+			file.close()
+		return super._matches_bytes(file_path, expected)
+
 class StubAPI extends EconomyAPI:
 	var reply: Dictionary = {"_error": "lost", "_outcome": "unknown", "_uncertain": true}
 	var calls: Array[Dictionary] = []
@@ -48,6 +59,10 @@ func run() -> void:
 	await ui._perform("/market/listing-id/buy", payload)
 	check(api.staged_before_send, "Receipt exists before the mutation is dispatched")
 	check(not FileAccess.get_file_as_string(receipt_path).contains(api.token), "Bearer credential is absent from the durable record")
+	var child_output: Array = []
+	var child_code := OS.execute(OS.get_executable_path(), PackedStringArray(["--headless", "--path", ProjectSettings.globalize_path("res://"), "--script", "res://tests/transaction_lock_probe.gd", "--", ProjectSettings.globalize_path(receipt_path)]), child_output, true)
+	print("COMPETING_PROCESS " + JSON.stringify(child_output))
+	check(child_code == 0 and str(child_output).contains("OWNER_BLOCKED"), "A competing process cannot stage, retry or clear the owner's receipt")
 	payload.expected_price = 1
 	await ui._logout()
 	check(not ui.pending_transaction.is_empty(), "Sign-out retains the unresolved receipt")
@@ -68,13 +83,17 @@ func run() -> void:
 		{"_error": "expired", "_outcome": "rejected", "_status": 401},
 		{"_error": "limited", "_outcome": "rejected", "_status": 429},
 		{"_error": "invalid", "_outcome": "rejected", "_status": 422},
+		{"_error": "bad request", "_outcome": "rejected", "_status": 400},
+		{"_error": "route unavailable", "_outcome": "rejected", "_status": 404},
+		{"_error": "conflict", "_outcome": "rejected", "_status": 409},
+		{}, {"ok": true}, {"item": {"id": "incomplete-confirmation"}},
 		{"_error": "lost", "_outcome": "unknown", "_uncertain": true}]:
 		api.reply = response
 		api.player_id = "original-owner"
 		api.token = "memory-only-again"
 		await ui._retry_pending()
 		check(not ui.pending_transaction.is_empty() and FileAccess.file_exists(receipt_path), "Retry failure %s preserves earlier uncertainty" % str(response))
-	api.reply = {"item": {"id": "committed-once"}}
+	api.reply = {"item": {"id": "committed-once"}, "credits": 0, "fee": 300000}
 	await ui._retry_pending()
 	check(ui.pending_transaction.is_empty() and not FileAccess.file_exists(receipt_path), "Authoritative confirmation clears both memory and disk")
 	for call in api.calls:
@@ -98,6 +117,20 @@ func run() -> void:
 	journal.path = receipt_path
 	var record := {"path": "/store/buy", "payload": {"idempotency_key": "receipt", "definition_id": "key", "token": "secret"}, "owner": "account", "server": "http://127.0.0.1:8080", "method": HTTPClient.METHOD_POST, "message": "done"}
 	check(journal.stage(record) != OK and not FileAccess.file_exists(receipt_path), "Unrecognized payload fields cannot persist credentials")
+	journal = null
+	for published in [false, true]:
+		ui = make_ui()
+		api = ui.api as StubAPI
+		var damaged := TruncatedJournal.new()
+		damaged.path = receipt_path
+		damaged.after_publish = published
+		ui.transaction_journal = damaged
+		await ui._perform("/store/buy", {"idempotency_key": "write-fault", "definition_id": "key"})
+		check(api.calls.is_empty(), "Closed-file byte mismatch prevents dispatch (published=%s)" % published)
+		ui.free()
+		damaged = null
+		DirAccess.remove_absolute(receipt_path + ".tmp")
+		DirAccess.remove_absolute(receipt_path)
 	await process_frame
 	print("TRANSACTION_JOURNAL %d/%d passed" % [checks - failures.size(), checks])
 	quit(0 if failures.is_empty() else 1)

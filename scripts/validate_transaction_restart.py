@@ -15,6 +15,8 @@ import platform
 import sqlite3
 import subprocess
 import threading
+import time
+import uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,9 +39,15 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
                          "CREATE TABLE requests (body TEXT);")
     reached = threading.Event()
     release = threading.Event()
+    committed = threading.Event()
+    event_lock = threading.Lock()
     hold = True
     token = "fixture-memory-only-credential"
     price = 10000000 if kind == "market" else 100
+
+    def event(name, **fields):
+        with event_lock, (directory / "timeline.jsonl").open("a", encoding="utf-8") as log:
+            log.write(json.dumps(dict(event=name, wall_ns=time.time_ns(), monotonic_ns=time.monotonic_ns(), **fields)) + "\n")
 
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, fmt, *args):
@@ -63,6 +71,7 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
         def do_POST(self):
             nonlocal hold
             body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+            event("request_received", body=body)
             if self.headers.get("Authorization") != "Bearer " + token:
                 self.respond({"detail": "invalid credential"}, 401)
                 return
@@ -70,12 +79,18 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
                 self.respond({"detail": "expected_price must be an integer"}, 422)
                 return
             first = hold
-            if first and boundary == "before_commit":
+            if not first and boundary == "late_commit" and not release.is_set():
+                event("retry_rejected_before_original_commit", status=409)
+                self.respond({"detail": "insufficient credits at retry time"}, 409)
+                return
+            if first and boundary in ("before_commit", "late_commit"):
+                event("before_commit_barrier")
                 reached.set()
                 release.wait(30)
                 # Connection was killed before authority committed. Retry must still use
                 # the persisted intent; the killed first request is deliberately dropped.
-                return
+                if boundary == "before_commit":
+                    return
             canonical = json.dumps(body, sort_keys=True)
             with sqlite3.connect(database) as db:
                 db.execute("INSERT INTO requests(body) VALUES (?)", (canonical,))
@@ -87,8 +102,14 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
                     response = json.loads(old[1])
                 else:
                     response = {"item": {"id": "one-authoritative-instance"}, "credits": 10000000 - price}
+                    if kind == "case":
+                        response.update(roll=0, table_version="1")
+                    elif kind == "market":
+                        response["fee"] = price * 300 // 10000
                     db.execute("INSERT INTO mutations(cost) VALUES (?)", (price,))
                     db.execute("INSERT INTO receipts VALUES (?,?,?)", (body["idempotency_key"], canonical, json.dumps(response)))
+            event("transaction_committed_or_replayed", first=first)
+            committed.set()
             if first:
                 reached.set()
                 release.wait(30)
@@ -98,7 +119,7 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
     server.daemon_threads = True
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
-    payload = {"idempotency_key": "same-immutable-receipt"}
+    payload = {"idempotency_key": str(uuid.uuid5(uuid.NAMESPACE_URL, directory.name))}
     path = "/store/buy"
     if kind == "store":
         payload["definition_id"] = "key"
@@ -117,26 +138,44 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
     try:
         with (directory / "killed-client.log").open("w", encoding="utf-8") as log:
             proc = subprocess.Popen(command, env=env, stdout=log, stderr=subprocess.STDOUT)
+            event("client_started", pid=proc.pid)
             try:
                 if not reached.wait(25):
                     raise RuntimeError(f"Client did not reach {boundary}: {directory}")
             finally:
+                event("kill_requested", pid=proc.pid)
                 proc.kill()
                 proc.wait(timeout=10)
+                event("kill_confirmed", pid=proc.pid, returncode=proc.returncode)
         saved = Path(config["journal"])
         journal = saved.read_text(encoding="utf-8") if saved.exists() else ""
         if journal:
             (directory / "journal-at-kill.json").write_text(journal, encoding="utf-8")
         hold = False
-        release.set()
+        if boundary != "late_commit":
+            release.set()
         config["mode"] = "retry"
         fixture.write_text(json.dumps(config), encoding="utf-8")
-        p = subprocess.run(command, env=env, capture_output=True, text=True, timeout=35)
-        (directory / "restarted-client.log").write_text(p.stdout + p.stderr, encoding="utf-8")
-        lines = [line.removeprefix("RECEIPT_PROBE ") for line in p.stdout.splitlines() if line.startswith("RECEIPT_PROBE ")]
-        if p.returncode or len(lines) != 1 or "SCRIPT ERROR" in p.stderr or "ERROR:" in p.stderr:
-            raise RuntimeError(f"Restart probe failed: {directory}")
-        probe = json.loads(lines[0])
+        def restart(name):
+            process = subprocess.Popen(command, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            event("recovery_started", pid=process.pid, phase=name)
+            stdout, stderr = process.communicate(timeout=35)
+            event("recovery_finished", pid=process.pid, returncode=process.returncode, phase=name)
+            (directory / f"{name}.log").write_text(stdout + stderr, encoding="utf-8")
+            lines = [line.removeprefix("RECEIPT_PROBE ") for line in stdout.splitlines() if line.startswith("RECEIPT_PROBE ")]
+            if process.returncode or len(lines) != 1 or "SCRIPT ERROR" in stderr or "ERROR:" in stderr:
+                raise RuntimeError(f"Restart probe failed: {directory}")
+            return json.loads(lines[0])
+
+        probe = restart("restarted-client")
+        retained_rejection = None
+        if boundary == "late_commit":
+            retained_rejection = bool(probe.get("pending")) and saved.exists() and saved.read_text(encoding="utf-8") == journal
+            event("original_commit_released_after_retry", retained_rejection=retained_rejection)
+            release.set()
+            if not committed.wait(10):
+                raise RuntimeError("Original request did not finish its delayed commit")
+            probe = restart("after-late-commit")
         with sqlite3.connect(database) as db:
             costs = [row[0] for row in db.execute("SELECT cost FROM mutations")]
             requests = [json.loads(row[0]) for row in db.execute("SELECT body FROM requests")]
@@ -145,6 +184,7 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
                 "total_debit": sum(costs), "receipt_reused": recovered and all(body == payload for body in requests),
                 "credential_persisted": token in journal, "journal_before_kill": bool(journal),
                 "journal_after_recovery": saved.exists(), "requests": requests, "probe": probe,
+                "retained_rejection": retained_rejection,
                 "command": command}
     finally:
         release.set()
@@ -177,7 +217,7 @@ def main() -> None:
         cases = []
         for repeat in range(args.repetitions):
             for kind in ["store", "case", "market"]:
-                for boundary in ["before_commit", "after_commit"]:
+                for boundary in ["before_commit", "after_commit", "late_commit"]:
                     case = run_case(args.godot, root, args.out / label / f"{repeat}-{kind}-{boundary}", kind, boundary)
                     cases.append(case)
                     print(label, repeat, kind, boundary, "recovered", case["recovered"], flush=True)
@@ -186,7 +226,8 @@ def main() -> None:
     candidate = result["runs"]["candidate"]
     result["pass"] = (candidate["recovered"] == candidate["total"]
                       and all(case["mutation_count"] == 1 and case["receipt_reused"]
-                              and not case["credential_persisted"] and not case["journal_after_recovery"] for case in candidate["cases"])
+                              and not case["credential_persisted"] and not case["journal_after_recovery"]
+                              and case["retained_rejection"] is not False for case in candidate["cases"])
                       and all(not row["source"]["status_after"] for row in result["runs"].values()))
     (args.out / "summary.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(json.dumps({label: {key: row[key] for key in ["recovered", "total"]} for label, row in result["runs"].items()}, indent=2))

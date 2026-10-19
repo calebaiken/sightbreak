@@ -13,7 +13,7 @@ class RecoveryAPI extends EconomyAPI:
 			if fail_next:
 				fail_next = false
 				return {"_error": "Simulated lost response after commit", "_uncertain": true}
-			return {"item": {"id": "already-committed-instance"}}
+			return {"item": {"id": "already-committed-instance"}, "credits": 0}
 		match path:
 			"/me": return {"credits": 0}
 			"/inventory": return {"items": [{"id": "already-committed-instance"}]}

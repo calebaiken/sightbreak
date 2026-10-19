@@ -6,6 +6,34 @@ const PATH := "user://pending_transaction.json"
 const MAX_BYTES := 8192
 var path := PATH
 var error := ""
+## An OS-owned loopback listener serializes journal owners across processes. No peer
+## is accepted and no protocol/data is exposed. Process exit releases the claim.
+## A port collision fails closed; it never permits another writer. Godot 4.7.2
+## disables Winsock SO_REUSEADDR (which would otherwise permit duplicate listeners).
+var owner_guard: TCPServer
+
+func acquire() -> Error:
+	if owner_guard != null and owner_guard.is_listening():
+		return OK
+	var address := ProjectSettings.globalize_path(path).simplify_path().replace("\\", "/").to_lower()
+	var port := 49152 + int(address.sha256_text().substr(0, 7).hex_to_int() % 16384)
+	var guard := TCPServer.new()
+	var result := guard.listen(port, "127.0.0.1")
+	if result != OK:
+		guard.stop()
+		error = "Another instance or local service is using receipt storage. Close the other instance and retry. Nothing was sent."
+		return result
+	owner_guard = guard
+	return OK
+
+func claim(pending: Dictionary) -> Error:
+	if acquire() != OK:
+		return ERR_ALREADY_IN_USE
+	var existing := load_pending()
+	if not error.is_empty() or existing != pending:
+		error = "The saved receipt changed or could not be read. Nothing was sent; reopen the account screen to reload it."
+		return ERR_INVALID_DATA
+	return OK
 
 func load_pending() -> Dictionary:
 	error = ""
@@ -33,6 +61,8 @@ func load_pending() -> Dictionary:
 	return record.transaction
 
 func stage(pending: Dictionary) -> Error:
+	if acquire() != OK:
+		return ERR_ALREADY_IN_USE
 	var existing := load_pending()
 	if not error.is_empty() or not existing.is_empty():
 		return ERR_ALREADY_IN_USE
@@ -45,19 +75,37 @@ func stage(pending: Dictionary) -> Error:
 	var file := FileAccess.open(path + ".tmp", FileAccess.WRITE)
 	if file == null:
 		return FileAccess.get_open_error()
-	file.store_string(text)
+	var stored := file.store_string(text)
 	file.flush()
 	var result := file.get_error()
 	file.close()
+	# Godot's Windows flush ignores fflush's return value. Reopen after close and
+	# verify actual bytes, both before and after publishing, rather than trusting it.
+	if not stored or result != OK or not _matches_bytes(path + ".tmp", text):
+		return ERR_FILE_CANT_WRITE
+	result = DirAccess.rename_absolute(path + ".tmp", path)
 	if result != OK:
 		return result
-	return DirAccess.rename_absolute(path + ".tmp", path)
+	return OK if _matches_bytes(path, text) else ERR_FILE_CANT_WRITE
+
+func _matches_bytes(file_path: String, expected: String) -> bool:
+	var file := FileAccess.open(file_path, FileAccess.READ)
+	if file == null:
+		return false
+	var bytes := expected.to_utf8_buffer()
+	var matches := file.get_length() == bytes.size() and file.get_buffer(bytes.size()) == bytes
+	file.close()
+	return matches
 
 func clear(pending: Dictionary) -> Error:
-	var existing := load_pending()
-	if not error.is_empty() or existing != pending:
-		return ERR_INVALID_DATA
-	return DirAccess.remove_absolute(path)
+	var result := claim(pending)
+	if result != OK:
+		return result
+	result = DirAccess.remove_absolute(path)
+	if result == OK:
+		owner_guard.stop()
+		owner_guard = null
+	return result
 
 static func valid(pending: Dictionary) -> bool:
 	if pending.size() != 6:
