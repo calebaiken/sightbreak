@@ -7,6 +7,7 @@ signal loadout_changed(slots: Dictionary)
 signal account_changed
 
 const API = preload("res://scripts/ui/economy_api.gd")
+const JOURNAL = preload("res://scripts/ui/transaction_journal.gd")
 const INSPECTOR = preload("res://scripts/ui/item_inspector.gd")
 const REVEAL = preload("res://scripts/ui/case_reveal.gd")
 const SAFE_AREA = preload("res://scripts/ui/safe_area.gd")
@@ -45,6 +46,8 @@ var inventory_available_only := false
 var market_sort := 0
 var market_mine_only := false
 var pending_transaction: Dictionary = {}
+var transaction_journal := JOURNAL.new()
+var transaction_storage_error := ""
 var retry_button: Button
 var safe_margin: MarginContainer
 var tab_buttons: Dictionary = {}
@@ -64,7 +67,14 @@ func _ready() -> void:
 	api = API.new()
 	add_child(api)
 	_build_shell()
+	pending_transaction = transaction_journal.load_pending()
+	transaction_storage_error = transaction_journal.error
+	retry_button.visible = not pending_transaction.is_empty()
 	_render()
+	if not transaction_storage_error.is_empty():
+		_message(transaction_storage_error, true)
+	elif not pending_transaction.is_empty():
+		_message("An unfinished transaction was recovered. Sign in to its original account and server, then retry its saved receipt.")
 
 func open_tab(tab: String) -> void:
 	active_tab = tab if tab in ["inventory", "cases", "market", "trades", "profile"] else "inventory"
@@ -377,8 +387,7 @@ func _logout() -> void:
 	busy = true
 	var result := await api.request("/auth/logout", HTTPClient.METHOD_POST)
 	api.logout()
-	pending_transaction = {}
-	retry_button.hide()
+	retry_button.visible = not pending_transaction.is_empty()
 	account = {}
 	inventory = []
 	selected = {}
@@ -477,7 +486,7 @@ func _failed(result: Dictionary) -> bool:
 			loadout_changed.emit({})
 			_render()
 			_announce_account()
-			_message("Your session ended (the server did not accept it). Sign in again under PROFILE. Nothing was changed.", true)
+			_message("Your session ended (the server did not accept it). Sign in again under PROFILE." + (" The earlier transaction remains unresolved; its receipt is saved." if not pending_transaction.is_empty() else " Nothing was changed."), true)
 			return true
 		_message(str(result["_error"]), true)
 		return true
@@ -499,8 +508,9 @@ func _retry_pending() -> Dictionary:
 	if pending.owner != api.player_id or pending.server != api.base_url:
 		_message("Sign in to the original account and server to recover this transaction.", true)
 		return {"_error": "Account mismatch"}
-	pending_transaction = {}
-	var result := await _perform(pending.path, pending.payload, pending.message, pending.method)
+	if api.token.is_empty():
+		return {"_error": "Sign in to recover the saved receipt."}
+	var result := await _send_transaction(pending.path, pending.payload, pending.message, pending.method, true)
 	if not result.has("_error") and pending.path == "/cases/open":
 		selected = result.get("item", {})
 		_show_committed_reveal(selected)
@@ -509,26 +519,62 @@ func _retry_pending() -> Dictionary:
 func _perform(path: String, payload := {}, message := "Transaction confirmed.", method := HTTPClient.METHOD_POST) -> Dictionary:
 	if busy:
 		return {"_error": "A request is already pending."}
+	if not transaction_storage_error.is_empty():
+		_message(transaction_storage_error, true)
+		return {"_error": transaction_storage_error, "_outcome": "not_sent"}
 	if not pending_transaction.is_empty():
 		_message("Recover the pending transaction before starting another. Retry uses its original receipt identifier.", true)
 		return {"_error": "An unresolved transaction is pending."}
+	if payload.has("idempotency_key"):
+		var pending := {"path": path, "payload": payload.duplicate(true), "message": message, "method": method, "owner": api.player_id, "server": api.base_url}
+		if transaction_journal.stage(pending) != OK:
+			pending_transaction = transaction_journal.load_pending()
+			transaction_storage_error = transaction_journal.error
+			retry_button.visible = not pending_transaction.is_empty()
+			var failure := "The receipt could not be saved. Nothing was sent. Recover any saved receipt or check local storage before retrying."
+			_message(failure, true)
+			return {"_error": failure, "_outcome": "not_sent"}
+		pending_transaction = pending
+	return await _send_transaction(path, payload, message, method, false)
+
+func _send_transaction(path: String, payload: Dictionary, message: String, method: int, recovering: bool) -> Dictionary:
 	busy = true
 	_message("Waiting for server confirmation…")
 	var result := await api.request(path, method, payload)
 	busy = false
-	if result.get("_uncertain", false) and payload.has("idempotency_key"):
-		pending_transaction = {"path": path, "payload": payload.duplicate(true), "message": message, "method": method, "owner": api.player_id, "server": api.base_url}
+	if not pending_transaction.is_empty() and _receipt_resolved(result, recovering):
+		if transaction_journal.clear(pending_transaction) == OK:
+			pending_transaction = {}
+			transaction_storage_error = ""
+		else:
+			transaction_storage_error = "The result arrived, but its saved receipt could not be cleared. Retry the same receipt after checking local storage."
 	retry_button.visible = not pending_transaction.is_empty()
 	if _failed(result):
 		if result.has("_error") and int(result.get("_status", 0)) != 401:
-			_message(failure_text(result, not pending_transaction.is_empty()), true)
+			var text := failure_text(result, not pending_transaction.is_empty())
+			if recovering and not pending_transaction.is_empty():
+				text = str(result.get("_error", "Retry failed.")) + " The earlier attempt remains unresolved. Its original receipt is saved; retry after signing in to the original account/server."
+			_message(text, true)
 		return result
 	var refreshed := await _refresh()
-	if refreshed:
+	if not transaction_storage_error.is_empty():
+		_message(transaction_storage_error, true)
+	elif refreshed:
 		_message(message)
 	else:
 		_message("Transaction confirmed, but account refresh failed. Refresh before making another transaction.", true)
 	return result
+
+func _receipt_resolved(result: Dictionary, recovering: bool) -> bool:
+	if not result.has("_error"):
+		return true
+	var outcome := str(result.get("_outcome", "unknown"))
+	var code := int(result.get("_status", 0))
+	# Auth, throttling and validation can reject a retry before the receipt is looked up.
+	# A failed connection now says nothing about an earlier, possibly committed attempt.
+	if recovering:
+		return outcome == "rejected" and code in [400, 404, 409]
+	return outcome in ["not_sent", "not_reached", "rejected"] and code not in [401, 403, 429]
 
 ## What a failed request means for the player, by what is known (EconomyAPI.request's
 ## "_outcome"). Only an unknown outcome of a transaction that holds a receipt identifier

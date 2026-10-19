@@ -32,6 +32,7 @@ func check(value: bool, message: String) -> void:
 
 func run() -> void:
 	var ui := UI.new()
+	ui.transaction_journal.path = "user://economy_recovery_test_%d.json" % OS.get_process_id()
 	root.add_child(ui)
 	await process_frame
 	ui.api.free()

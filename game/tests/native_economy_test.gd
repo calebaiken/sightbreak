@@ -14,6 +14,8 @@ func run():
 	var scene = load("res://scripts/ui/economy_ui.gd")
 	var a = scene.new()
 	var b = scene.new()
+	a.transaction_journal.path = "user://native_economy_a_%d.json" % OS.get_process_id()
+	b.transaction_journal.path = "user://native_economy_b_%d.json" % OS.get_process_id()
 	root.add_child(a)
 	root.add_child(b)
 	for pair in [[a,"a"],[b,"b"]]:

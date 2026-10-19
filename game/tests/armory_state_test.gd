@@ -109,6 +109,9 @@ func make_ui(size: Vector2i, scale: float, signed_in := true) -> void:
 	root.content_scale_size = size
 	root.size = size
 	ui = UI.new()
+	ui.transaction_journal.path = "user://armory_state_test_%d.json" % OS.get_process_id()
+	if FileAccess.file_exists(ui.transaction_journal.path):
+		DirAccess.remove_absolute(ui.transaction_journal.path)
 	ui.configure({"xp": 430, "credits": 900000, "settings": {"reduced_motion": true, "ui_text_scale": scale}})
 	root.add_child(ui)
 	await frames(1)
@@ -404,6 +407,13 @@ func real_outcome(mode: String, status := 200, body := "{}") -> Dictionary:
 	var api := EconomyAPI.new()
 	root.add_child(api)
 	api.base_url = "http://127.0.0.1:%d" % server.get_local_port() if server.is_listening() else "http://127.0.0.1:9"
+	if mode == "closed":
+		# Fixed service ports can be filtered rather than refused on Windows. Obtain
+		# an unused loopback endpoint from the OS, then close the listener explicitly.
+		var closed_server := TCPServer.new()
+		check(closed_server.listen(0, "127.0.0.1") == OK, "Reserve a disposable closed-port fixture")
+		api.base_url = "http://127.0.0.1:%d" % closed_server.get_local_port()
+		closed_server.stop()
 	api.token = "fixture-only"
 	if mode != "closed":
 		serve_once(mode, status, body)
@@ -412,7 +422,7 @@ func real_outcome(mode: String, status := 200, body := "{}") -> Dictionary:
 	return result
 
 func transport_outcomes() -> void:
-	# Nothing listens on port 9: the connection is refused and no request can have been acted on.
+	# An explicitly released loopback port refuses the connection before dispatch.
 	var closed := await real_outcome("closed")
 	check(closed.get("_outcome") == "not_reached" and not closed.get("_uncertain", true), "A refused connection is 'not reached' and not uncertain: " + str(closed.get("_error")))
 	check("nothing was sent" in str(closed._error), "The not-reached message says nothing was sent")
@@ -446,6 +456,7 @@ func transport_outcomes() -> void:
 	var result: Dictionary = await ui._perform("/store/buy", {"definition_id": "key", "idempotency_key": fake.key()}, "Supply added.")
 	check(result.has("_error") and not ui.pending_transaction.is_empty() and ui.retry_button.visible, "A lost answer to a purchase keeps the receipt and shows RETRY PENDING TRANSACTION")
 	check("RETRY PENDING TRANSACTION" in ui.status.text, "The status line explains the retry: " + ui.status.text)
+	check(ui.transaction_journal.clear(ui.pending_transaction) == OK, "The simulated unresolved receipt is cleared for the next independent fixture")
 	ui.pending_transaction = {}
 	ui.retry_button.hide()
 	fake.script_results = [unknown]
