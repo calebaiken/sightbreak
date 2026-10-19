@@ -238,25 +238,46 @@ def launch(command: list[str], environment: dict, evidence: Evidence, phase: str
     others = native_pids(Path(command[0]))
     if others:
         raise RuntimeError(f"Native slot occupied by PIDs {others}; run serially after they finish")
-    process = subprocess.Popen(command, env=environment, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True, encoding="utf-8")
+    # The first process must remain alive while the coordinator waits at the HTTP
+    # barrier. Undrained Windows pipes can stall Godot before it reaches the probe.
+    # Private files keep capture unbounded without publishing unredacted output.
+    temporary = Path(os.environ["LOCALAPPDATA"]) / "Temp/opencode"
+    stdout = tempfile.TemporaryFile(dir=temporary)
+    stderr = tempfile.TemporaryFile(dir=temporary)
+    try:
+        process = subprocess.Popen(command, env=environment, stdout=stdout, stderr=stderr)
+    except Exception:
+        stdout.close()
+        stderr.close()
+        raise
+    process.receipt_logs = (stdout, stderr)
     evidence.event("native_started", phase=phase, pid=process.pid, command=command, other_native_pids=others)
     return process
 
 
 def collect(process, directory: Path, phase: str, evidence: Evidence, timeout=45):
+    timed_out = False
     try:
-        stdout, stderr = process.communicate(timeout=timeout)
+        process.wait(timeout=timeout)
     except subprocess.TimeoutExpired:
         process.kill()
-        stdout, stderr = process.communicate(timeout=10)
-        (directory / (phase + ".stdout.txt")).write_text(evidence.text(stdout), encoding="utf-8")
-        (directory / (phase + ".stderr.txt")).write_text(evidence.text(stderr), encoding="utf-8")
-        raise
+        process.wait(timeout=10)
+        timed_out = True
+    if not hasattr(process, "receipt_output"):
+        output = []
+        for log in process.receipt_logs:
+            log.seek(0)
+            output.append(log.read().decode("utf-8", errors="replace"))
+            log.close()
+        process.receipt_output = output
+    stdout, stderr = process.receipt_output
     evidence.event("native_finished", phase=phase, pid=process.pid, returncode=process.returncode)
     (directory / (phase + ".stdout.txt")).write_text(evidence.text(stdout), encoding="utf-8")
     (directory / (phase + ".stderr.txt")).write_text(evidence.text(stderr), encoding="utf-8")
     events = [json.loads(line.removeprefix("NATIVE_RECEIPT_EVENT ")) for line in stdout.splitlines()
               if line.startswith("NATIVE_RECEIPT_EVENT ")]
+    if timed_out:
+        raise subprocess.TimeoutExpired(process.args, timeout, output=stdout, stderr=stderr)
     return stdout, stderr, events
 
 
