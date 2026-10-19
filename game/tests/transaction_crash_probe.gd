@@ -20,16 +20,21 @@ func run() -> void:
 	ui.api.player_id = config.owner
 	ui.api.token = config.token
 	var result: Dictionary = {}
+	var observation: Dictionary = {}
 	if config.mode == "send":
 		result = await ui._perform(config.path, config.payload)
+	elif ui.pending_transaction.is_empty():
+		observation = {"recovered": false, "reason": "no pending receipt after process restart"}
 	else:
-		if ui.pending_transaction.is_empty():
-			print("RECEIPT_PROBE " + JSON.stringify({"recovered": false, "reason": "no pending receipt after process restart"}))
-			ui.free()
-			quit(0)
-			return
 		result = await ui._retry_pending()
-	print("RECEIPT_PROBE " + JSON.stringify({"recovered": not result.has("_error") and result.has("item"), "result": result, "pending": not ui.pending_transaction.is_empty()}))
+	if observation.is_empty():
+		observation = {"recovered": not result.has("_error") and result.has("item"), "result": result, "pending": not ui.pending_transaction.is_empty()}
+	print("RECEIPT_PROBE " + JSON.stringify(observation))
+	if config.mode == "retry_hold":
+		# The driver kills this process after the observation, before teardown can run.
+		await create_timer(60.0).timeout
+		quit(2)
+		return
 	ui.queue_free()
 	await process_frame
 	quit(0)
