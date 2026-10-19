@@ -1,0 +1,1492 @@
+{
+  "source_before": {
+    "commit": "77f204083ab5bea4dc9149d3179daf540a994de4",
+    "game_tree": "d286cfff30fcbd98c7f13429f48b580523da0bbc",
+    "status": "",
+    "input_stream_sha256": "6d344ac7892ed4f3d22003a2ca8e0a2d0813bceaa804aeff1c8d2ca7c2559c61"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.14.6",
+  "harness_commit": "77f204083ab5bea4dc9149d3179daf540a994de4",
+  "harness_status": "",
+  "expect_fixed": true,
+  "godot_sha256": "ab1824f85bfd8e0e4128182c000c4003a3e042245b2967848d089b2a04b22424",
+  "driver_sha256": "5c84f2a8cdd58832f2087cebaafbe183a39808cfbc3fb2cfb2cb8dfe7c556317",
+  "probe_sha256": "ec6ed6a056d8a50c1b6554d0a741742802ec42fb26c056711be5790e2dbf9f97",
+  "scope": "real headless native Godot ENet pair; application snapshot omission and hostile replay; isolated static platform; no rendered/device/WAN claim",
+  "trials": [
+    {
+      "directory": "1-steady-prediction-off",
+      "metrics": {
+        "scenario": "steady",
+        "prediction": false,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=steady",
+            "--port=61290",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-steady-prediction-off\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-steady-prediction-off\\barrier"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=steady",
+            "--port=61290",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-steady-prediction-off\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-steady-prediction-off\\barrier"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 14,
+        "client_prediction": false,
+        "dropped_snapshots": 0,
+        "barrier_control": true,
+        "barrier_publish_retries": 1,
+        "barrier_read_retries": {
+          "server": 20,
+          "client": 20
+        },
+        "first_history_cap_seconds": null,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 4.788,
+        "stop_after_last_ack_seconds": 0.0,
+        "recovery_min_speed_mps": 1.01999998092651,
+        "recovery_largest_vx_mps": -1.01999998092651,
+        "shots_at_end": 2,
+        "ammo_at_end": 13,
+        "rejected_packets": 0,
+        "disconnected_at_seconds": -1.0,
+        "final_peer_count": 1,
+        "lifecycle_entries": 1,
+        "input_queues": 1,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "recovery_and_edges_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "1-steady-prediction-on",
+      "metrics": {
+        "scenario": "steady",
+        "prediction": true,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=steady",
+            "--port=61567",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-steady-prediction-on\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-steady-prediction-on\\barrier",
+            "--prediction"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=steady",
+            "--port=61567",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-steady-prediction-on\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-steady-prediction-on\\barrier",
+            "--prediction"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 11,
+        "client_prediction": true,
+        "dropped_snapshots": 0,
+        "barrier_control": true,
+        "barrier_publish_retries": 0,
+        "barrier_read_retries": {
+          "server": 16,
+          "client": 16
+        },
+        "first_history_cap_seconds": null,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 4.792,
+        "stop_after_last_ack_seconds": 0.0,
+        "recovery_min_speed_mps": 1.01999998092651,
+        "recovery_largest_vx_mps": -1.01999998092651,
+        "shots_at_end": 2,
+        "ammo_at_end": 13,
+        "rejected_packets": 0,
+        "disconnected_at_seconds": -1.0,
+        "final_peer_count": 1,
+        "lifecycle_entries": 1,
+        "input_queues": 1,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "recovery_and_edges_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "1-input-gap-prediction-off",
+      "metrics": {
+        "scenario": "input-gap",
+        "prediction": false,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=input-gap",
+            "--port=49984",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-input-gap-prediction-off\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-input-gap-prediction-off\\barrier"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=input-gap",
+            "--port=49984",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-input-gap-prediction-off\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-input-gap-prediction-off\\barrier"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 11,
+        "client_prediction": false,
+        "dropped_snapshots": 0,
+        "barrier_control": true,
+        "barrier_publish_retries": 0,
+        "barrier_read_retries": {
+          "server": 16,
+          "client": 16
+        },
+        "first_history_cap_seconds": null,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 4.781,
+        "stop_after_last_ack_seconds": 0.0,
+        "recovery_min_speed_mps": 1.01999998092651,
+        "recovery_largest_vx_mps": -1.01999998092651,
+        "shots_at_end": 2,
+        "ammo_at_end": 13,
+        "rejected_packets": 0,
+        "disconnected_at_seconds": -1.0,
+        "final_peer_count": 1,
+        "lifecycle_entries": 1,
+        "input_queues": 1,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "recovery_and_edges_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "1-input-gap-prediction-on",
+      "metrics": {
+        "scenario": "input-gap",
+        "prediction": true,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=input-gap",
+            "--port=65149",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-input-gap-prediction-on\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-input-gap-prediction-on\\barrier",
+            "--prediction"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=input-gap",
+            "--port=65149",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-input-gap-prediction-on\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-input-gap-prediction-on\\barrier",
+            "--prediction"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 8,
+        "client_prediction": true,
+        "dropped_snapshots": 0,
+        "barrier_control": true,
+        "barrier_publish_retries": 0,
+        "barrier_read_retries": {
+          "server": 15,
+          "client": 16
+        },
+        "first_history_cap_seconds": null,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 4.793,
+        "stop_after_last_ack_seconds": 0.0,
+        "recovery_min_speed_mps": 1.01999998092651,
+        "recovery_largest_vx_mps": -1.01999998092651,
+        "shots_at_end": 2,
+        "ammo_at_end": 13,
+        "rejected_packets": 0,
+        "disconnected_at_seconds": -1.0,
+        "final_peer_count": 1,
+        "lifecycle_entries": 1,
+        "input_queues": 1,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "recovery_and_edges_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "1-snapshot-gap-prediction-off",
+      "metrics": {
+        "scenario": "snapshot-gap",
+        "prediction": false,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=snapshot-gap",
+            "--port=50259",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-snapshot-gap-prediction-off\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-snapshot-gap-prediction-off\\barrier"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=snapshot-gap",
+            "--port=50259",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-snapshot-gap-prediction-off\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-snapshot-gap-prediction-off\\barrier"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 120,
+        "client_prediction": false,
+        "dropped_snapshots": 80,
+        "barrier_control": true,
+        "barrier_publish_retries": 0,
+        "barrier_read_retries": {
+          "server": 16,
+          "client": 17
+        },
+        "first_history_cap_seconds": 2.901,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 2.949,
+        "stop_after_last_ack_seconds": 0.3320000000000003,
+        "recovery_min_speed_mps": 1.01999998092651,
+        "recovery_largest_vx_mps": -1.01999998092651,
+        "shots_at_end": 2,
+        "ammo_at_end": 13,
+        "rejected_packets": 62,
+        "disconnected_at_seconds": -1.0,
+        "final_peer_count": 1,
+        "lifecycle_entries": 1,
+        "input_queues": 1,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "recovery_and_edges_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "1-snapshot-gap-prediction-on",
+      "metrics": {
+        "scenario": "snapshot-gap",
+        "prediction": true,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=snapshot-gap",
+            "--port=49919",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-snapshot-gap-prediction-on\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-snapshot-gap-prediction-on\\barrier",
+            "--prediction"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=snapshot-gap",
+            "--port=49919",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-snapshot-gap-prediction-on\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-snapshot-gap-prediction-on\\barrier",
+            "--prediction"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 120,
+        "client_prediction": true,
+        "dropped_snapshots": 77,
+        "barrier_control": true,
+        "barrier_publish_retries": 0,
+        "barrier_read_retries": {
+          "server": 15,
+          "client": 17
+        },
+        "first_history_cap_seconds": 2.884,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 2.945,
+        "stop_after_last_ack_seconds": 0.31499999999999995,
+        "recovery_min_speed_mps": 1.01999998092651,
+        "recovery_largest_vx_mps": -1.01999998092651,
+        "shots_at_end": 2,
+        "ammo_at_end": 13,
+        "rejected_packets": 63,
+        "disconnected_at_seconds": -1.0,
+        "final_peer_count": 1,
+        "lifecycle_entries": 1,
+        "input_queues": 1,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "recovery_and_edges_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "1-stale-replay-prediction-off",
+      "metrics": {
+        "scenario": "stale-replay",
+        "prediction": false,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=stale-replay",
+            "--port=58298",
+            "--seconds=34",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-stale-replay-prediction-off\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-stale-replay-prediction-off\\barrier"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=stale-replay",
+            "--port=58298",
+            "--seconds=34",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-stale-replay-prediction-off\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-stale-replay-prediction-off\\barrier"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 11,
+        "client_prediction": false,
+        "dropped_snapshots": 0,
+        "barrier_control": true,
+        "barrier_publish_retries": 0,
+        "barrier_read_retries": {
+          "server": 15,
+          "client": 15
+        },
+        "first_history_cap_seconds": null,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 2.057,
+        "stop_after_last_ack_seconds": 0.33499999999999996,
+        "recovery_min_speed_mps": 0.0,
+        "recovery_largest_vx_mps": 0.0,
+        "shots_at_end": 1,
+        "ammo_at_end": 14,
+        "rejected_packets": 900,
+        "disconnected_at_seconds": 32.06,
+        "final_peer_count": 0,
+        "lifecycle_entries": 0,
+        "input_queues": 0,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "1-stale-replay-prediction-on",
+      "metrics": {
+        "scenario": "stale-replay",
+        "prediction": true,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=stale-replay",
+            "--port=54486",
+            "--seconds=34",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-stale-replay-prediction-on\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-stale-replay-prediction-on\\barrier",
+            "--prediction"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=stale-replay",
+            "--port=54486",
+            "--seconds=34",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-stale-replay-prediction-on\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\1-stale-replay-prediction-on\\barrier",
+            "--prediction"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 8,
+        "client_prediction": true,
+        "dropped_snapshots": 0,
+        "barrier_control": true,
+        "barrier_publish_retries": 0,
+        "barrier_read_retries": {
+          "server": 16,
+          "client": 17
+        },
+        "first_history_cap_seconds": null,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 2.067,
+        "stop_after_last_ack_seconds": 0.33299999999999974,
+        "recovery_min_speed_mps": 0.0,
+        "recovery_largest_vx_mps": 0.0,
+        "shots_at_end": 1,
+        "ammo_at_end": 14,
+        "rejected_packets": 900,
+        "disconnected_at_seconds": 32.072,
+        "final_peer_count": 0,
+        "lifecycle_entries": 0,
+        "input_queues": 0,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "2-steady-prediction-off",
+      "metrics": {
+        "scenario": "steady",
+        "prediction": false,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=steady",
+            "--port=52743",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-steady-prediction-off\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-steady-prediction-off\\barrier"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=steady",
+            "--port=52743",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-steady-prediction-off\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-steady-prediction-off\\barrier"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 11,
+        "client_prediction": false,
+        "dropped_snapshots": 0,
+        "barrier_control": true,
+        "barrier_publish_retries": 0,
+        "barrier_read_retries": {
+          "server": 15,
+          "client": 15
+        },
+        "first_history_cap_seconds": null,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 4.787,
+        "stop_after_last_ack_seconds": 0.0,
+        "recovery_min_speed_mps": 1.01999998092651,
+        "recovery_largest_vx_mps": -1.01999998092651,
+        "shots_at_end": 2,
+        "ammo_at_end": 13,
+        "rejected_packets": 0,
+        "disconnected_at_seconds": -1.0,
+        "final_peer_count": 1,
+        "lifecycle_entries": 1,
+        "input_queues": 1,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "recovery_and_edges_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "2-steady-prediction-on",
+      "metrics": {
+        "scenario": "steady",
+        "prediction": true,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=steady",
+            "--port=60043",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-steady-prediction-on\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-steady-prediction-on\\barrier",
+            "--prediction"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=steady",
+            "--port=60043",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-steady-prediction-on\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-steady-prediction-on\\barrier",
+            "--prediction"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 11,
+        "client_prediction": true,
+        "dropped_snapshots": 0,
+        "barrier_control": true,
+        "barrier_publish_retries": 0,
+        "barrier_read_retries": {
+          "server": 15,
+          "client": 15
+        },
+        "first_history_cap_seconds": null,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 4.799,
+        "stop_after_last_ack_seconds": 0.0,
+        "recovery_min_speed_mps": 1.01999998092651,
+        "recovery_largest_vx_mps": -1.01999998092651,
+        "shots_at_end": 2,
+        "ammo_at_end": 13,
+        "rejected_packets": 0,
+        "disconnected_at_seconds": -1.0,
+        "final_peer_count": 1,
+        "lifecycle_entries": 1,
+        "input_queues": 1,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "recovery_and_edges_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "2-input-gap-prediction-off",
+      "metrics": {
+        "scenario": "input-gap",
+        "prediction": false,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=input-gap",
+            "--port=63674",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-input-gap-prediction-off\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-input-gap-prediction-off\\barrier"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=input-gap",
+            "--port=63674",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-input-gap-prediction-off\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-input-gap-prediction-off\\barrier"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 8,
+        "client_prediction": false,
+        "dropped_snapshots": 0,
+        "barrier_control": true,
+        "barrier_publish_retries": 0,
+        "barrier_read_retries": {
+          "server": 15,
+          "client": 16
+        },
+        "first_history_cap_seconds": null,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 4.796,
+        "stop_after_last_ack_seconds": 0.0,
+        "recovery_min_speed_mps": 1.01999998092651,
+        "recovery_largest_vx_mps": -1.01999998092651,
+        "shots_at_end": 2,
+        "ammo_at_end": 13,
+        "rejected_packets": 0,
+        "disconnected_at_seconds": -1.0,
+        "final_peer_count": 1,
+        "lifecycle_entries": 1,
+        "input_queues": 1,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "recovery_and_edges_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "2-input-gap-prediction-on",
+      "metrics": {
+        "scenario": "input-gap",
+        "prediction": true,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=input-gap",
+            "--port=60667",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-input-gap-prediction-on\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-input-gap-prediction-on\\barrier",
+            "--prediction"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=input-gap",
+            "--port=60667",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-input-gap-prediction-on\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-input-gap-prediction-on\\barrier",
+            "--prediction"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 11,
+        "client_prediction": true,
+        "dropped_snapshots": 0,
+        "barrier_control": true,
+        "barrier_publish_retries": 0,
+        "barrier_read_retries": {
+          "server": 16,
+          "client": 15
+        },
+        "first_history_cap_seconds": null,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 4.798,
+        "stop_after_last_ack_seconds": 0.0,
+        "recovery_min_speed_mps": 1.01999998092651,
+        "recovery_largest_vx_mps": -1.01999998092651,
+        "shots_at_end": 2,
+        "ammo_at_end": 13,
+        "rejected_packets": 0,
+        "disconnected_at_seconds": -1.0,
+        "final_peer_count": 1,
+        "lifecycle_entries": 1,
+        "input_queues": 1,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "recovery_and_edges_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "2-snapshot-gap-prediction-off",
+      "metrics": {
+        "scenario": "snapshot-gap",
+        "prediction": false,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=snapshot-gap",
+            "--port=50724",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-snapshot-gap-prediction-off\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-snapshot-gap-prediction-off\\barrier"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=snapshot-gap",
+            "--port=50724",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-snapshot-gap-prediction-off\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-snapshot-gap-prediction-off\\barrier"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 120,
+        "client_prediction": false,
+        "dropped_snapshots": 80,
+        "barrier_control": true,
+        "barrier_publish_retries": 0,
+        "barrier_read_retries": {
+          "server": 15,
+          "client": 15
+        },
+        "first_history_cap_seconds": 2.891,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 2.964,
+        "stop_after_last_ack_seconds": 0.33099999999999996,
+        "recovery_min_speed_mps": 1.01999998092651,
+        "recovery_largest_vx_mps": -1.01999998092651,
+        "shots_at_end": 2,
+        "ammo_at_end": 13,
+        "rejected_packets": 62,
+        "disconnected_at_seconds": -1.0,
+        "final_peer_count": 1,
+        "lifecycle_entries": 1,
+        "input_queues": 1,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "recovery_and_edges_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "2-snapshot-gap-prediction-on",
+      "metrics": {
+        "scenario": "snapshot-gap",
+        "prediction": true,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=snapshot-gap",
+            "--port=65159",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-snapshot-gap-prediction-on\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-snapshot-gap-prediction-on\\barrier",
+            "--prediction"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=snapshot-gap",
+            "--port=65159",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-snapshot-gap-prediction-on\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-snapshot-gap-prediction-on\\barrier",
+            "--prediction"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 120,
+        "client_prediction": true,
+        "dropped_snapshots": 80,
+        "barrier_control": true,
+        "barrier_publish_retries": 0,
+        "barrier_read_retries": {
+          "server": 15,
+          "client": 17
+        },
+        "first_history_cap_seconds": 2.902,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 2.96,
+        "stop_after_last_ack_seconds": 0.31599999999999984,
+        "recovery_min_speed_mps": 1.01999998092651,
+        "recovery_largest_vx_mps": -1.01999998092651,
+        "shots_at_end": 2,
+        "ammo_at_end": 13,
+        "rejected_packets": 63,
+        "disconnected_at_seconds": -1.0,
+        "final_peer_count": 1,
+        "lifecycle_entries": 1,
+        "input_queues": 1,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "recovery_and_edges_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "2-stale-replay-prediction-off",
+      "metrics": {
+        "scenario": "stale-replay",
+        "prediction": false,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=stale-replay",
+            "--port=64458",
+            "--seconds=34",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-stale-replay-prediction-off\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-stale-replay-prediction-off\\barrier"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=stale-replay",
+            "--port=64458",
+            "--seconds=34",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-stale-replay-prediction-off\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-stale-replay-prediction-off\\barrier"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 11,
+        "client_prediction": false,
+        "dropped_snapshots": 0,
+        "barrier_control": true,
+        "barrier_publish_retries": 0,
+        "barrier_read_retries": {
+          "server": 15,
+          "client": 16
+        },
+        "first_history_cap_seconds": null,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 2.077,
+        "stop_after_last_ack_seconds": 0.31800000000000006,
+        "recovery_min_speed_mps": 0.0,
+        "recovery_largest_vx_mps": 0.0,
+        "shots_at_end": 1,
+        "ammo_at_end": 14,
+        "rejected_packets": 900,
+        "disconnected_at_seconds": 32.061,
+        "final_peer_count": 0,
+        "lifecycle_entries": 0,
+        "input_queues": 0,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "2-stale-replay-prediction-on",
+      "metrics": {
+        "scenario": "stale-replay",
+        "prediction": true,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=stale-replay",
+            "--port=57070",
+            "--seconds=34",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-stale-replay-prediction-on\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-stale-replay-prediction-on\\barrier",
+            "--prediction"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=stale-replay",
+            "--port=57070",
+            "--seconds=34",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-stale-replay-prediction-on\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2\\2-stale-replay-prediction-on\\barrier",
+            "--prediction"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 8,
+        "client_prediction": true,
+        "dropped_snapshots": 0,
+        "barrier_control": true,
+        "barrier_publish_retries": 0,
+        "barrier_read_retries": {
+          "server": 15,
+          "client": 16
+        },
+        "first_history_cap_seconds": null,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 2.056,
+        "stop_after_last_ack_seconds": 0.33599999999999985,
+        "recovery_min_speed_mps": 0.0,
+        "recovery_largest_vx_mps": 0.0,
+        "shots_at_end": 1,
+        "ammo_at_end": 14,
+        "rejected_packets": 900,
+        "disconnected_at_seconds": 32.057,
+        "final_peer_count": 0,
+        "lifecycle_entries": 0,
+        "input_queues": 0,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "improvement_gate": true
+      }
+    }
+  ],
+  "checks": [
+    {
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/input_stream_test.gd"
+      ],
+      "exit": 0,
+      "seconds": 0.7204086999990977,
+      "log": "input_stream_test.log",
+      "log_sha256": "21887e80be562ec31162930487b1a0aaa1484ec94d7874cf0de8b6021b575239",
+      "logged_errors": false
+    },
+    {
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/input_lifecycle_test.gd"
+      ],
+      "exit": 0,
+      "seconds": 5.378389300021809,
+      "log": "input_lifecycle_test.log",
+      "log_sha256": "63c1b06356ce798fc081809199ba429e64613758bae9e345fc79c67c13dc7f0f",
+      "logged_errors": false
+    },
+    {
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/peer_lifecycle_test.gd"
+      ],
+      "exit": 0,
+      "seconds": 0.525381399987964,
+      "log": "peer_lifecycle_test.log",
+      "log_sha256": "c80bcc74f7610d31e8b5259f46bf154fec85209761fd20a3c351b9e5a39308b7",
+      "logged_errors": false
+    },
+    {
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/reconnect_policy_test.gd"
+      ],
+      "exit": 0,
+      "seconds": 0.5824490999802947,
+      "log": "reconnect_policy_test.log",
+      "log_sha256": "c0fa8ce86170e226ebfc27478bac7488c5d96663dd0df6f2fa7c67bdcc177071",
+      "logged_errors": false
+    },
+    {
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/snapshot_buffer_test.gd"
+      ],
+      "exit": 0,
+      "seconds": 0.6318394000118133,
+      "log": "snapshot_buffer_test.log",
+      "log_sha256": "25745989ae341792d00f54900353f78c561819ac0ef65bf2a2ec4f7169d5cec4",
+      "logged_errors": false
+    },
+    {
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/movement_prediction_test.gd"
+      ],
+      "exit": 0,
+      "seconds": 7.035188900015783,
+      "log": "movement_prediction_test.log",
+      "log_sha256": "92ca6ded08d9d0fc5ed2972e2ef5a1dfae9c45bc6b0205d3609cc0b9e0383c73",
+      "logged_errors": false
+    },
+    {
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/state_privacy_test.gd"
+      ],
+      "exit": 0,
+      "seconds": 2.6310607000195887,
+      "log": "state_privacy_test.log",
+      "log_sha256": "fc8683297ef17193297e4f08d73436fd664469ea848b6abe2928f7567e66058b",
+      "logged_errors": false
+    },
+    {
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/integration_actor_lifecycle_test.gd"
+      ],
+      "exit": 0,
+      "seconds": 2.7303738999762572,
+      "log": "integration_actor_lifecycle_test.log",
+      "log_sha256": "01e0ddc9bfa475a822eb9f3094df81499768fa671cc5e2b3ec523c47604ff9b4",
+      "logged_errors": false
+    },
+    {
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/hit_history_test.gd"
+      ],
+      "exit": 0,
+      "seconds": 1.16202049999265,
+      "log": "hit_history_test.log",
+      "log_sha256": "380ffeece21c83e896fde572a7c4ca65256c9e95da15565a93d62a2f2dd62c4a",
+      "logged_errors": false
+    }
+  ],
+  "import": {
+    "scope": "previously prepared native import cache; --skip-import"
+  },
+  "source_after": {
+    "commit": "77f204083ab5bea4dc9149d3179daf540a994de4",
+    "game_tree": "d286cfff30fcbd98c7f13429f48b580523da0bbc",
+    "status": "",
+    "input_stream_sha256": "6d344ac7892ed4f3d22003a2ca8e0a2d0813bceaa804aeff1c8d2ca7c2559c61"
+  },
+  "source_unchanged": true
+}

@@ -1,0 +1,45 @@
+[
+  {
+    "name": "baseline-r2",
+    "command": [
+      "python",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\scripts\\test_input_freshness.py",
+      "--godot",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+      "--source",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-input-freshness-baseline701",
+      "--out",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\baseline-r2",
+      "--skip-import",
+      "--checks",
+      "--repeats",
+      "2",
+      "--barrier-control"
+    ],
+    "started_epoch": 1792438337.3197365,
+    "duration_seconds": 30.924206256866455,
+    "exit": 1
+  },
+  {
+    "name": "candidate-r2",
+    "command": [
+      "python",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\scripts\\test_input_freshness.py",
+      "--godot",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+      "--source",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3",
+      "--out",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\candidate-r2",
+      "--skip-import",
+      "--checks",
+      "--repeats",
+      "2",
+      "--barrier-control",
+      "--expect-fixed"
+    ],
+    "started_epoch": 1792438368.2465827,
+    "duration_seconds": 357.2286994457245,
+    "exit": 0
+  }
+]

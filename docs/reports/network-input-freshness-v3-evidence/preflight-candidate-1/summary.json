@@ -1,0 +1,186 @@
+{
+  "source_before": {
+    "commit": "d2439acdd5f73df7bae5ada62ee1e3dec2cf30db",
+    "game_tree": "2d2b174c2145e9755ddfc78a1369e74443fcc400",
+    "status": "M game/scripts/network/input_stream.gd\n M game/tests/input_stream_test.gd\n?? game/tests/input_freshness_probe.gd\n?? scripts/test_input_freshness.py",
+    "input_stream_sha256": "6d344ac7892ed4f3d22003a2ca8e0a2d0813bceaa804aeff1c8d2ca7c2559c61"
+  },
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.14.6",
+  "godot_sha256": "ab1824f85bfd8e0e4128182c000c4003a3e042245b2967848d089b2a04b22424",
+  "driver_sha256": "342bf2f2101818335199064950a35d61d982dd4ded7ce2a85aaaff23630b8882",
+  "probe_sha256": "62a2c2d9e80fa18215065c56aa8dc847d52b005ba14502c160746350265b3dd6",
+  "scope": "real headless native Godot ENet pair; application snapshot omission and hostile replay; isolated static platform; no rendered/device/WAN claim",
+  "trials": [
+    {
+      "directory": "1-snapshot-gap-prediction-off",
+      "metrics": {
+        "scenario": "snapshot-gap",
+        "prediction": false,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=snapshot-gap",
+            "--port=52245",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\preflight-candidate-1\\1-snapshot-gap-prediction-off\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\preflight-candidate-1\\1-snapshot-gap-prediction-off\\barrier"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=snapshot-gap",
+            "--port=52245",
+            "--seconds=8",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\preflight-candidate-1\\1-snapshot-gap-prediction-off\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\preflight-candidate-1\\1-snapshot-gap-prediction-off\\barrier"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 120,
+        "client_prediction": false,
+        "dropped_snapshots": 78,
+        "first_history_cap_seconds": 2.88,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 2.927,
+        "stop_after_last_ack_seconds": 0.2999999999999998,
+        "recovery_min_speed_mps": 1.01999998092651,
+        "shots_at_end": 2,
+        "ammo_at_end": 13,
+        "rejected_packets": 64,
+        "disconnected_at_seconds": -1.0,
+        "final_peer_count": 1,
+        "lifecycle_entries": 1,
+        "input_queues": 1,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "recovery_and_edges_pass": true,
+        "improvement_gate": true
+      }
+    },
+    {
+      "directory": "1-stale-replay-prediction-off",
+      "metrics": {
+        "scenario": "stale-replay",
+        "prediction": false,
+        "commands": {
+          "server": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=server",
+            "--scenario=stale-replay",
+            "--port=62080",
+            "--seconds=34",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\preflight-candidate-1\\1-stale-replay-prediction-off\\server.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\preflight-candidate-1\\1-stale-replay-prediction-off\\barrier"
+          ],
+          "client": [
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+            "--headless",
+            "--path",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+            "--max-fps",
+            "60",
+            "--script",
+            "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+            "--",
+            "--role=client",
+            "--scenario=stale-replay",
+            "--port=62080",
+            "--seconds=34",
+            "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\preflight-candidate-1\\1-stale-replay-prediction-off\\client.json",
+            "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\preflight-candidate-1\\1-stale-replay-prediction-off\\barrier"
+          ]
+        },
+        "exits": {
+          "server": 0,
+          "client": 0
+        },
+        "native_errors": {
+          "server": false,
+          "client": false
+        },
+        "protocol": 6,
+        "privacy_violations": 0,
+        "hit_history_frames": 0,
+        "max_pending": 11,
+        "client_prediction": false,
+        "dropped_snapshots": 0,
+        "first_history_cap_seconds": null,
+        "stale_window_displacement_m": 0.0,
+        "stale_window_max_speed_mps": 0.0,
+        "last_ack_before_resume_seconds": 2.074,
+        "stop_after_last_ack_seconds": 0.3330000000000002,
+        "recovery_min_speed_mps": 0.0,
+        "shots_at_end": 1,
+        "ammo_at_end": 14,
+        "rejected_packets": 900,
+        "disconnected_at_seconds": 32.064,
+        "final_peer_count": 0,
+        "lifecycle_entries": 0,
+        "input_queues": 0,
+        "pending_joins": 0,
+        "transport_authority_privacy_pass": true,
+        "improvement_gate": true
+      }
+    }
+  ],
+  "checks": [],
+  "import": {
+    "command": [
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+      "--headless",
+      "--path",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+      "--editor",
+      "--import"
+    ],
+    "exit": 0,
+    "seconds": 19.431003300007433,
+    "log": "import.log",
+    "log_sha256": "bba607b02beff749ef36adc43df0583228172a27bb13fde3d79e6874495fddf1",
+    "logged_errors": false
+  },
+  "source_after": {
+    "commit": "d2439acdd5f73df7bae5ada62ee1e3dec2cf30db",
+    "game_tree": "2d2b174c2145e9755ddfc78a1369e74443fcc400",
+    "status": "M game/assets/icon.svg.import\n M game/assets/materials/asphalt.png.import\n M game/assets/materials/asphalt_normal.png.import\n M game/assets/materials/asphalt_roughness.png.import\n M game/assets/materials/concrete.png.import\n M game/assets/materials/concrete_normal.png.import\n M game/assets/materials/concrete_roughness.png.import\n M game/assets/materials/painted_metal.png.import\n M game/assets/materials/painted_metal_normal.png.import\n M game/assets/materials/painted_metal_roughness.png.import\n M game/assets/weapons/relay_ar/relay_ar.glb.import\n M game/assets/weapons/relay_ar/relay_ar_albedo.png.import\n M game/assets/weapons/relay_ar/relay_ar_arms.glb.import\n M game/assets/weapons/relay_ar/relay_ar_arms_albedo.png.import\n M game/assets/weapons/relay_ar/relay_ar_arms_normal.png.import\n M game/assets/weapons/relay_ar/relay_ar_arms_orm.png.import\n M game/assets/weapons/relay_ar/relay_ar_hands.glb.import\n M game/assets/weapons/relay_ar/relay_ar_hands_albedo.png.import\n M game/assets/weapons/relay_ar/relay_ar_hands_normal.png.import\n M game/assets/weapons/relay_ar/relay_ar_hands_orm.png.import\n M game/assets/weapons/relay_ar/relay_ar_normal.png.import\n M game/assets/weapons/relay_ar/relay_ar_orm.png.import\n M game/scripts/network/input_stream.gd\n M game/tests/input_stream_test.gd\n?? game/tests/input_freshness_probe.gd\n?? game/tests/input_freshness_probe.gd.uid\n?? scripts/test_input_freshness.py",
+    "input_stream_sha256": "6d344ac7892ed4f3d22003a2ca8e0a2d0813bceaa804aeff1c8d2ca7c2559c61"
+  },
+  "source_unchanged": false
+}

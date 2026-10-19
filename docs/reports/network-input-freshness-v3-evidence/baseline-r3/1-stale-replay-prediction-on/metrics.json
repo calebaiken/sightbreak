@@ -1,0 +1,79 @@
+{
+  "scenario": "stale-replay",
+  "prediction": true,
+  "commands": {
+    "server": [
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+      "--headless",
+      "--path",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-input-freshness-baseline701\\game",
+      "--max-fps",
+      "60",
+      "--script",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+      "--",
+      "--role=server",
+      "--scenario=stale-replay",
+      "--port=53417",
+      "--seconds=34",
+      "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\baseline-r3\\1-stale-replay-prediction-on\\server.json",
+      "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\baseline-r3\\1-stale-replay-prediction-on\\barrier",
+      "--prediction"
+    ],
+    "client": [
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+      "--headless",
+      "--path",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-input-freshness-baseline701\\game",
+      "--max-fps",
+      "60",
+      "--script",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game\\tests\\input_freshness_probe.gd",
+      "--",
+      "--role=client",
+      "--scenario=stale-replay",
+      "--port=53417",
+      "--seconds=34",
+      "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\baseline-r3\\1-stale-replay-prediction-on\\client.json",
+      "--barrier=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\input-freshness-evidence\\baseline-r3\\1-stale-replay-prediction-on\\barrier",
+      "--prediction"
+    ]
+  },
+  "exits": {
+    "server": 0,
+    "client": 0
+  },
+  "native_errors": {
+    "server": false,
+    "client": false
+  },
+  "protocol": 6,
+  "privacy_violations": 0,
+  "hit_history_frames": 0,
+  "max_pending": 14,
+  "client_prediction": true,
+  "dropped_snapshots": 0,
+  "barrier_control": true,
+  "barrier_publish_retries": 0,
+  "barrier_read_retries": {
+    "server": 15,
+    "client": 15
+  },
+  "first_history_cap_seconds": null,
+  "stale_window_displacement_m": 1.0030095577240004,
+  "stale_window_max_speed_mps": 1.01999998092651,
+  "last_ack_before_resume_seconds": 2.09,
+  "stop_after_last_ack_seconds": null,
+  "recovery_min_speed_mps": 1.01999998092651,
+  "recovery_largest_vx_mps": 1.01999998092651,
+  "shots_at_end": 1,
+  "ammo_at_end": 14,
+  "rejected_packets": 0,
+  "disconnected_at_seconds": -1.0,
+  "final_peer_count": 1,
+  "lifecycle_entries": 1,
+  "input_queues": 1,
+  "pending_joins": 0,
+  "transport_authority_privacy_pass": true,
+  "improvement_gate": false
+}

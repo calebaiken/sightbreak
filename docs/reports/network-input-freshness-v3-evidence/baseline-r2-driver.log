@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-network-timeline-v3\scripts\test_input_freshness.py", line 213, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-network-timeline-v3\scripts\test_input_freshness.py", line 197, in main
+    metrics = trial(args.godot, args.source, args.out / name, scenario, prediction == "on", args.barrier_control)
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-network-timeline-v3\scripts\test_input_freshness.py", line 72, in trial
+    raise RuntimeError(f"{role} readiness failed; inspect {out}")
+RuntimeError: client readiness failed; inspect C:\Users\blith\AppData\Local\Temp\opencode\input-freshness-evidence\baseline-r2\1-steady-prediction-off

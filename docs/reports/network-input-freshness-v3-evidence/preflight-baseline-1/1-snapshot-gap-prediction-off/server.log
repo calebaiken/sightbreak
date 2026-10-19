@@ -1,0 +1,20 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SIGHTBREAK_SERVER_READY port=55886
+ERROR: Error calling from signal 'shot_fired' to callable: 'Node3D::<anonymous lambda>': Method expected 4 argument(s), but called with 3.
+   at: emit_signalp (core/object/object.cpp:1311)
+   GDScript backtrace (most recent call first):
+       [0] _fire (res://scripts/gameplay/actor.gd:754)
+       [1] tick_authority (res://scripts/gameplay/actor.gd:652)
+       [2] _authority_tick (res://scripts/gameplay/match.gd:267)
+       [3] _physics_process (res://scripts/gameplay/match.gd:209)
+       [4] _physics_process (C:/Users/blith/AppData/Local/Temp/opencode/sightbreak-network-timeline-v3/game/tests/input_freshness_probe.gd:78)
+ERROR: Error calling from signal 'shot_fired' to callable: 'Node3D::<anonymous lambda>': Method expected 4 argument(s), but called with 3.
+   at: emit_signalp (core/object/object.cpp:1311)
+   GDScript backtrace (most recent call first):
+       [0] _fire (res://scripts/gameplay/actor.gd:754)
+       [1] tick_authority (res://scripts/gameplay/actor.gd:652)
+       [2] _authority_tick (res://scripts/gameplay/match.gd:267)
+       [3] _physics_process (res://scripts/gameplay/match.gd:209)
+       [4] _physics_process (C:/Users/blith/AppData/Local/Temp/opencode/sightbreak-network-timeline-v3/game/tests/input_freshness_probe.gd:78)
+INPUT_FRESHNESS_PROBE role=server scenario=snapshot-gap completed
