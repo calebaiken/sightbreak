@@ -129,6 +129,10 @@ SLEEVE_SEGMENTS = 28
 SLEEVE_RINGS = 16
 
 
+# 'cage': the glove's game mesh is box-modelled (hand_cage.py); 'quadriflow': the voxel mesh retopologised (v9 and before).
+TOPOLOGY = os.environ.get('ARMS_TOPOLOGY', 'cage')
+
+
 def right_arm_meshes(h_high, h_mid, glove_faces, sleeve_faces, high=True):
     """High-poly glove and sleeve (bake sources) and the low-poly arm, hand-local."""
     mats = {k: material(k, *v) for k, v in PALETTE.items()}
@@ -153,9 +157,15 @@ def right_arm_meshes(h_high, h_mid, glove_faces, sleeve_faces, high=True):
         v, q = sdf.mesh(arms.sleeve_distance, *arms.sleeve_bounds(), h_high * 1.4)
         centres = (v[q[:, 0]] + v[q[:, 2]]) / 2
         parts['sleeve_high'] = mesh_object('sleeve_high', v, q, [mats['sleeve'], mats['hem']], arms.sleeve_region(centres))
-    plain = ([(shape, k) for shape, k in shapes[0] if shape.region != 'seam'], [])   # the piping is bake detail, not game mesh
-    v, q = sdf.mesh(lambda P: arms.glove_distance(P, plain), *arms.glove_bounds(), h_mid)
-    glove = retopo(mesh_object('glove_low', v, q), glove_faces)
+    if TOPOLOGY == 'cage':
+        # Box-modelled cage (tools/art/hand_cage.py): palm block, four fingers and a thumb with edge loops at the joints, subdivided
+        # once and projected onto the glove's signed distance field.
+        import hand_cage
+        glove = hand_cage.glove_low_object('glove_low')
+    else:
+        plain = ([(shape, k) for shape, k in shapes[0] if shape.region != 'seam'], [])   # the piping is bake detail, not game mesh
+        v, q = sdf.mesh(lambda P: arms.glove_distance(P, plain), *arms.glove_bounds(), h_mid)
+        glove = retopo(mesh_object('glove_low', v, q), glove_faces)
     v, f = arms.sleeve_low_mesh(SLEEVE_SEGMENTS, SLEEVE_RINGS)
     sleeve = mesh_object('sleeve_low', v, f)
     select(sleeve)
@@ -460,8 +470,8 @@ def reach(rig, chain, points, obstacle, target, start=None, report=print):
         inside = 0
         for name in chain:
             M = deform(rig, name)
-            inside += sum(obstacle.distance(M @ p) < -0.0006 for p in points.get(name, [])[::2])
-        return (pad - target).length + 0.004 * inside, inside
+            inside += sum(obstacle.distance(M @ p) < -0.0002 for p in points.get(name, []))
+        return (pad - target).length + 0.006 * inside, inside
 
     def descend(x):
         best, _ = cost(x)
@@ -483,7 +493,7 @@ def reach(rig, chain, points, obstacle, target, start=None, report=print):
     best, x = min((descend(list(start)) for start in starts), key=lambda r: r[0])
     c, inside = cost(x)
     apply(x)
-    report('trigger reach: pad %.1f mm from the trigger face, %d points inside' % ((c - 0.004 * inside) * 1000, inside), [round(math.degrees(a)) for a in x])
+    report('trigger reach: pad %.1f mm from the trigger face, %d points inside' % ((c - 0.006 * inside) * 1000, inside), [round(math.degrees(a)) for a in x])
     return x
 
 
@@ -906,23 +916,31 @@ ZERO3 = (0.0, 0.0, 0.0)
 # where the fingers open and let it go (it falls; the game drops it, nothing here needs it after).
 # Exploration hook (like ARMS_GRAB_JSON): ARMS_PATH_JSON='{"swing": [x, y, z], "hip": [x, y, z], "carry": [x, y, z]}'
 # overrides where the old magazine is let go, where the replacement waits (the hip) and its midway point, for one build.
-# The hip is 36 cm below the well: the hand and the replacement are below the frame together, so the replacement is first drawn
-# already rising into view (under 5 % of it in the frame) and never ahead of the hand that holds it. v9 tried 31 cm so that the
+# `carry_at` is how far through the pickup-to-align interval the replacement reaches the carry point (0.50; 0.30 shortened the time the
+# magazine's top is in the frame ahead of its hand, 9 ticks to 5, but broke the motion limits in weapon_art_test: 3.1 m/s). The hip is
+# 34 cm below the well: the hand and the replacement are below the frame together, so the replacement is first drawn already rising
+# into view (under 5 % of it in the frame). v10 tilts the magazine 55 degrees about the rifle's X axis at the hip (`hip_turn`), so its
+# top follows the fingers into the frame instead of leading them, and swings the elbow out and forward (`elbow_hip`) so the forearm
+# rises with the hand: hand and magazine enter together (reload_continuity_test). v9 tried 31 cm so that the
 # open hand and the forearm showed on the way down; the replacement then came into the frame with 20 % of it showing while the
 # hand was still below the edge (two reviews called it an unheld floating magazine) and the change was taken back
 # (docs/reports/media/art-v9/reload-retrieval). The reduced-motion clip (_PATH_CALM) keeps the hand in view on purpose.
-_PATH = {'swing': (-0.070, 0.020, 0.004), 'hip': (-0.200, 0.040, -0.360), 'carry': (-0.115, 0.050, -0.110), 'hip_turn': (-28, 0, 22),
-         'rock': (-15, -9, -3), 'elbow_hip': (-0.10, 0.0, 0.07)}
+_PATH = {'swing': (-0.070, 0.020, 0.004), 'hip': (-0.200, 0.040, -0.340), 'carry': (-0.115, 0.050, -0.110), 'hip_turn': (55, 0, 22),
+         'rock': (-15, -9, -3), 'elbow_hip': (-0.35, 0.0, 0.30),
+         'carry_at': (0.50, 0.0, 0.0)}
 if os.environ.get('ARMS_PATH_JSON'):   # exploration hook and the negative controls' injection (N18, N23): overrides for one build
     import json
     _PATH.update({k: tuple(v) for k, v in json.loads(os.environ['ARMS_PATH_JSON']).items()})
-# The reduced-motion clip ("reload_calm"): the rifle's staging is smaller there (less roll and lift), so the hand has less room: it goes
-# down 11 cm, turns less, and the elbow swings out as far as in the default so the forearm stays in the picture. Same phases, same timing,
-# same keys; only the hand's reach differs. The pickup is therefore in view, at the lower edge: the replacement is first drawn in a visible
-# hand (documented as the price of keeping the hand on screen; docs/reports/media/art-v9/reduced-motion). Found by scanning the reach
-# (ARMS_CALM_JSON) against reload_visibility_test for both reduced variants; 14 cm and deeper left the arm below the frame while the
-# magazine was in view.
-_PATH_CALM = {'hip': (-0.190, 0.040, -0.110), 'carry': (-0.115, 0.050, -0.050), 'hip_turn': (-14, 0, 10), 'elbow_hip': (-0.12, 0.0, 0.10)}
+# The reduced-motion clip ("reload_calm"): the rifle's staging is smaller there (less roll and lift) and the hand's excursion is
+# shorter: it goes down 28 cm (34 in the default) and turns less about the forearm (10 degrees against 22), with the same magazine tilt
+# and elbow swing as the default clip so the hand and the magazine enter the frame together. Same phases, same timing, same keys.
+# v9 had it pick up in view, 11 cm down, and the replacement was then drawn whole in an open hand: it appeared (8,640 px in the first
+# visible tick) rather than arrived, which reload_continuity_test flags. Found by scanning the hip depth (ARMS_CALM_JSON, 20 to 28 cm,
+# docs/reports/media/art-v10/reduced-motion): 28 cm is the shallowest at which both reduced variants pass continuity (first visible
+# tick 481 and 417 px) and the 15 visibility rules; at 26 cm `still` has under 150 px of contact at one tick (104), at 24 cm `calm` has (99), and at 20 cm
+# the first draw is 2,670 px.
+_PATH_CALM = {'hip': (-0.190, 0.040, -0.280), 'carry': (-0.115, 0.050, -0.050), 'hip_turn': (55, 0, 10), 'elbow_hip': (-0.35, 0.0, 0.30),
+              'carry_at': (0.50, 0.0, 0.0)}
 if os.environ.get('ARMS_CALM_JSON'):   # review hook: the calm clip's overrides for one build
     import json
     _PATH_CALM.update({k: tuple(v) for k, v in json.loads(os.environ['ARMS_CALM_JSON']).items()})
@@ -944,9 +962,10 @@ def _keys():
     # The replacement is taken from a magazine pouch at the hip, at the bottom edge of the frame: the hand goes
     # down to it (the forearm stays in the picture), closes on its magazine, and brings it back up
     # and across, tilted, to the well.
+    carry_at = _PATH['carry_at'][0]
     new = (
-        (P_ACQUIRE, 0.100, hip, hip_turn, 'hold'),                             # in the hand at the pouch, at the bottom edge of the frame
-        (P_ACQUIRE + (P_ALIGN - P_ACQUIRE) * 0.50, 0.100, carry, (-22, 0, 14)),   # coming up into view, wrist turning
+        (P_ACQUIRE, 0.100, hip, hip_turn, 'hold'),                             # in the hand at the pouch, below the bottom edge of the frame
+        (P_ACQUIRE + (P_ALIGN - P_ACQUIRE) * carry_at, 0.100, carry, (-22, 0, 14)),   # coming up into view, wrist turning
         (P_ALIGN, 0.088, ZERO3, (rock[0], 0, 0)),                              # under the well, tipped so its front lip goes in first
         (P_ENTER, 0.030, ZERO3, (rock[1], 0, 0)),                              # entering, rocking upright
         (P_ENTER + (P_SEAT - P_ENTER) * 0.60, 0.008, ZERO3, (rock[2], 0, 0)),
@@ -1060,6 +1079,9 @@ GRAB = {'distal': (0.866, 0.5, 0.0), 'dorsal': (0.0, 0.0, -1.0), 'mcp': (0.014, 
 # Extra spread of each finger's first joint in the grasp (radians about its own Z): the index
 # and middle lean toward the thumb, the ring and little finger away from it.
 GRAB_FAN = {'index': -0.10, 'middle': -0.02, 'ring': 0.08, 'pinky': 0.18}
+# How far from the magazine's surface (metres) the solve stops a phalanx's rest points: the skinned vertices between bones (a bent joint's
+# inner side) come a little closer than the points the solve sees, so the margin is a little more than the review's 1.0 mm bound.
+GRAB_MARGIN = 0.0013
 # How closed the fingers are while the empty hand travels to the pouch (0 open, 1 as on a magazine).
 RELAXED = 0.18
 GRAB_CLEAR = ('L_hand', 'L_index_1', 'L_middle_1', 'L_ring_1', 'L_pinky_1', 'L_thumb_1')
@@ -1115,7 +1137,7 @@ def grab_pose(rig, arms_obj, placement_L, magazine, report=print):
         chain = [f'L_{name}_{i}' for i in (1, 2, 3)]
         limits = THUMB_LIMITS if name == 'thumb' else LIMITS
         base = GRAB['thumb'] if name == 'thumb' else GRAB['curl']
-        angles = close_chain(rig, chain, rest_points, obstacle, limits, RATIO, base=[math.radians(a) for a in base])
+        angles = close_chain(rig, chain, rest_points, obstacle, limits, RATIO, margin=GRAB_MARGIN, base=[math.radians(a) for a in base])
         report('grab', name, None if angles is None else [round(math.degrees(a)) for a in angles])
         if name != 'thumb':
             # Fan the fingers a little (the cupped hand is not a fist): this is what keeps
