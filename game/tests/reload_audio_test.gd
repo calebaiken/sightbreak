@@ -104,6 +104,11 @@ func _run() -> void:
 	_restart_and_reset()
 	_other_weapons()
 	print("RELOAD_AUDIO_TEST checks=%d failures=%d" % [checks, failures.size()])
+	# Free test-owned players, then let the mixer and AudioServer update release
+	# their deferred playback references before engine shutdown.
+	world.queue_free()
+	await process_frame
+	await create_timer(0.5).timeout
 	quit(1 if not failures.is_empty() else 0)
 
 ## The sounds themselves: one per event, two different variants of each, and no two events alike.

@@ -286,13 +286,11 @@ func _run() -> void:
 		"rough45": "ROUGHNESS = max(ROUGHNESS, 0.45);", "rough65": "ROUGHNESS = max(ROUGHNESS, 0.65);", "rough70": "ROUGHNESS = max(ROUGHNESS, 0.70);", "rough60": "ROUGHNESS = max(ROUGHNESS, 0.60);", "rough80": "ROUGHNESS = max(ROUGHNESS, 0.80);",
 		"metal60": "METALLIC *= 0.60;", "metal30": "METALLIC *= 0.30;",
 	}
-	var body_original: Material = (_node("furniture") as MeshInstance3D).material_override if SBWeaponModel.use_authored else null
-	# The shipped paint materials, kept so every case starts from them: the first-person handguard is its own polymer clone
-	# (CosmeticMaterial.apply), and assigning `finish` to both parts would measure a handguard that does not ship.
 	var paint_original := {}
 	if SBWeaponModel.use_authored:
 		for part in ["receiver", "handguard"]:
-			paint_original[part] = (_node(part) as MeshInstance3D).material_override
+			paint_original[part] = _node(part).material_override
+	var body_original: Material = (_node("furniture") as MeshInstance3D).material_override if SBWeaponModel.use_authored else null
 	var cases: Array[Dictionary] = []
 	if sweep:
 		var full_roll := SBActor.ARMS_RELOAD_ROTATION.z

@@ -256,6 +256,11 @@ func _run() -> void:
 	await _casings()
 	await _edges()
 	print("RELOAD_SEQUENCE_TEST checks=%d failures=%d" % [checks, failures.size()])
+	# Free test-owned players, then let the mixer and AudioServer update release
+	# their deferred playback references before engine shutdown.
+	world.queue_free()
+	await process_frame
+	await create_timer(0.5).timeout
 	quit(1 if not failures.is_empty() else 0)
 
 ## A second magazine node, distinct from the first, that the first never replaces in the well.
