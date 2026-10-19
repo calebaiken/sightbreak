@@ -5,6 +5,11 @@ Independent critic and integration acceptance are pending. Query-count and
 correctness gates pass on the source below; these are backend test cases, not
 the full V3 native matrix.
 
+This page describes the **first-round** measurements. The later
+[retention follow-up](BACKEND_TRADE_READ_RETENTION_R2.md) preserves the same runtime
+and fixture while retaining actual received bodies and full before/after table
+rows for a separate seven-workload run. Its new neutral packet has its own key.
+
 ## Identity and scope
 
 | Input | Exact identity |
@@ -76,7 +81,7 @@ IDs / 500)`, covering both item- and name-batch boundaries.
 Raw [baseline measurements](backend-trade-read-v3/baseline-measurement/measurement.json),
 [candidate measurements](backend-trade-read-v3/candidate-measurement/measurement.json)
 and [matched comparison](backend-trade-read-v3/comparison.json) retain each
-sample, SQL shapes, response hashes, source/file identities, package versions
+sample, SQL shapes, expected-fixture response hashes, source/file identities, package versions
 and read-only outcomes. Source identity checks pass at the beginning and end.
 
 ## Correctness and sensitive-contract gates

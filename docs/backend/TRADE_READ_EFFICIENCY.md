@@ -52,6 +52,11 @@ serialization require separate scope.
   this evidence-only follow-up use `701ce2c` for the old source and `4a8e9ea` for
   the batching source. The fixture and two-warm-up/ten-sample workloads are fixed.
 
+The [retained-artifact follow-up](../reports/BACKEND_TRADE_READ_RETENTION_R2.md)
+records the exact enhanced harness freeze, executed commands, all actual bodies
+and full table rows, offline falsifiers, qualified timings and a separately
+mapped second-round neutral packet.
+
 The original `backend/tests/test_economy.py` has 44 functions / **61 parametrized
 cases**. Run it on the frozen baseline in the same interpreter/database version,
 then run all **74** backend cases on the candidate. The old implementation is
