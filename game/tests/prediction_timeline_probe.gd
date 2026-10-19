@@ -56,6 +56,15 @@ func controls(tick: int, jumping: bool) -> Dictionary:
 		"look": Vector2.ZERO, "jump": jumping and tick % 180 >= 84 and tick % 180 < 96,
 		"crouch": tick >= 360 and tick < 405}
 
+func snapshot_metrics(_predictor: SBMovementPrediction) -> Dictionary:
+	return {}
+
+func prediction_metrics(_predictor: SBMovementPrediction) -> Dictionary:
+	return {}
+
+func report_metrics() -> Dictionary:
+	return {}
+
 func condition(name: String, delay: int, gap: bool, jumping: bool, enabled: bool) -> Dictionary:
 	var world := Node3D.new()
 	root.add_child(world)
@@ -113,6 +122,7 @@ func condition(name: String, delay: int, gap: bool, jumping: bool, enabled: bool
 				"saved_ack_pose": vector(saved - OFFSET) if saved is Vector3 else null,
 				"ack_error_m": saved.distance_to(state.position) if saved is Vector3 else null,
 				"replayed": vector(predicted.global_position - OFFSET), "pending": predictor.pending.size()})
+			snapshots.back().merge(snapshot_metrics(predictor))
 			last_applied_tick = int(delivery.tick)
 		var command := controls(tick, jumping)
 		predictor.predict(predicted, command, 1, enabled)
@@ -180,6 +190,7 @@ func condition(name: String, delay: int, gap: bool, jumping: bool, enabled: bool
 		"unscored_held_snapshots": unscored_held_snapshots, "maximum_authority_height_m": maximum_authority_height,
 		"held_drift_max_m": percentile(held_drift, 1), "hard_corrections": predictor.hard_corrections,
 		"rows": rows, "snapshots": snapshots}
+	result.merge(prediction_metrics(predictor))
 	world.queue_free()
 	await process_frame
 	await create_timer(0.5).timeout
@@ -198,6 +209,7 @@ func run() -> void:
 	check(cases[5].ack_error_p95_m == null, "disabled prediction is not scored as predicted ACK accuracy")
 	var result := {"scope": "fixed 60 Hz real authority/replay with deterministic in-process packet schedule; not ENet or activation evidence",
 		"engine": Engine.get_version_info().string, "checks": checks, "failures": failures, "conditions": cases}
+	result.merge(report_metrics())
 	if not output.is_empty():
 		var file := FileAccess.open(output, FileAccess.WRITE)
 		file.store_string(JSON.stringify(result, "\t"))
