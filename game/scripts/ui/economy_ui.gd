@@ -510,6 +510,9 @@ func _retry_pending() -> Dictionary:
 		return {"_error": "Account mismatch"}
 	if api.token.is_empty():
 		return {"_error": "Sign in to recover the saved receipt."}
+	if transaction_journal.claim(pending) != OK:
+		_message(transaction_journal.error, true)
+		return {"_error": transaction_journal.error, "_outcome": "not_sent"}
 	var result := await _send_transaction(pending.path, pending.payload, pending.message, pending.method, true)
 	if not result.has("_error") and pending.path == "/cases/open":
 		selected = result.get("item", {})
@@ -520,6 +523,9 @@ func _perform(path: String, payload := {}, message := "Transaction confirmed.", 
 	if busy:
 		return {"_error": "A request is already pending."}
 	if not transaction_storage_error.is_empty():
+		pending_transaction = transaction_journal.load_pending()
+		transaction_storage_error = transaction_journal.error
+	if not transaction_storage_error.is_empty():
 		_message(transaction_storage_error, true)
 		return {"_error": transaction_storage_error, "_outcome": "not_sent"}
 	if not pending_transaction.is_empty():
@@ -528,8 +534,9 @@ func _perform(path: String, payload := {}, message := "Transaction confirmed.", 
 	if payload.has("idempotency_key"):
 		var pending := {"path": path, "payload": payload.duplicate(true), "message": message, "method": method, "owner": api.player_id, "server": api.base_url}
 		if transaction_journal.stage(pending) != OK:
+			var storage_error := transaction_journal.error
 			pending_transaction = transaction_journal.load_pending()
-			transaction_storage_error = transaction_journal.error
+			transaction_storage_error = transaction_journal.error if not transaction_journal.error.is_empty() else storage_error
 			retry_button.visible = not pending_transaction.is_empty()
 			var failure := "The receipt could not be saved. Nothing was sent. Recover any saved receipt or check local storage before retrying."
 			_message(failure, true)
@@ -542,6 +549,8 @@ func _send_transaction(path: String, payload: Dictionary, message: String, metho
 	_message("Waiting for server confirmation…")
 	var result := await api.request(path, method, payload)
 	busy = false
+	if not pending_transaction.is_empty() and not result.has("_error") and not _valid_receipt_result(path, result):
+		result = {"_error": "The server's transaction confirmation was incomplete. Its original receipt is saved.", "_outcome": "unknown", "_uncertain": true}
 	if not pending_transaction.is_empty() and _receipt_resolved(result, recovering):
 		if transaction_journal.clear(pending_transaction) == OK:
 			pending_transaction = {}
@@ -573,8 +582,23 @@ func _receipt_resolved(result: Dictionary, recovering: bool) -> bool:
 	# Auth, throttling and validation can reject a retry before the receipt is looked up.
 	# A failed connection now says nothing about an earlier, possibly committed attempt.
 	if recovering:
-		return outcome == "rejected" and code in [400, 404, 409]
+		# A rejection does not fence an older in-flight attempt. Only successful
+		# replay resolves it under the current backend contract, including 409.
+		return false
 	return outcome in ["not_sent", "not_reached", "rejected"] and code not in [401, 403, 429]
+
+func _valid_receipt_result(path: String, result: Dictionary) -> bool:
+	var item: Variant = result.get("item")
+	if not item is Dictionary or not item.get("id") is String or str(item.id).is_empty():
+		return false
+	if path == "/cases/open":
+		return _receipt_integer(result.get("roll"), 0, 9999) and result.get("table_version") is String and not str(result.table_version).is_empty()
+	if not _receipt_integer(result.get("credits"), 0, 9007199254740991):
+		return false
+	return path == "/store/buy" or _receipt_integer(result.get("fee"), 0, 10000000)
+
+func _receipt_integer(value: Variant, minimum: int, maximum: int) -> bool:
+	return (value is int or value is float) and is_finite(float(value)) and float(value) == floor(float(value)) and float(value) >= minimum and float(value) <= maximum
 
 ## What a failed request means for the player, by what is known (EconomyAPI.request's
 ## "_outcome"). Only an unknown outcome of a transaction that holds a receipt identifier

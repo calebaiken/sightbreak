@@ -57,7 +57,7 @@ class FakeAPI extends EconomyAPI:
 			if path == "/store/buy" or path.ends_with("/buy"):
 				charges += 1
 				credits -= 150
-			result = {"ok": true, "credits": credits}
+			result = {"item": {"id": "fixture-item"}, "credits": credits, "fee": 4, "roll": 0, "table_version": "1"}
 			if not key.is_empty():
 				applied[key] = result
 		if lose_response_once:
