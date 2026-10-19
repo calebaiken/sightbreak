@@ -28,16 +28,16 @@ Research backlog: B-27 is implemented by #15. **B-21 was genuinely unfinished in
 `EconomyUI._perform` recorded uncertain receipts only in RAM, after the request,
 and `_retry_pending` cleared the record before resending. Logout also discarded it.
 PR #18 now persists before dispatch and restores the exact account/server-bound receipt.
-B-28 lists further backend work; the bounded trade-read efficiency slice is in progress.
+B-28 lists further backend work; the bounded trade-read efficiency candidate is in PR19.
 
 ## Independently judgeable slices
 
 | Slice | Declared failure mode / metric | State | Source and evidence |
 |---|---|---|---|
-| S1 / B-21 | Process exit around commit; exact receipt must survive restart and settle once | Matched native campaign passes; harsh reviews pending | [PR #18](https://github.com/calebaiken/sightbreak/pull/18), runtime `ac48342`, tested checkpoint `223ec0c`; **0/18 → 18/18 recovered**; [report](../reports/CLIENT_RECOVERY_V3.md) |
-| S2 | Fully acknowledged stale input batches incorrectly refresh transport liveness | Independent implementation/validation | `astra/network-input-freshness-v3`; protocol and queued retransmission semantics preserved |
-| S3 | Per-trade item/name hydration scales database statements with history size | Independent implementation/validation | `astra/backend-trade-read-v3`; participant scope, response and write behavior preserved |
-| S4 | Experimental prediction/reconciliation divergence under impairment | Independent source-backed audit/implementation | `astra/prediction-reconciliation-v3`; default-off gate retained |
+| S1 / B-21 | Process exit around commit; exact receipt must survive restart and settle once | Current source critic passes; fresh blind review and PostgreSQL oracle pending | [PR #18](https://github.com/calebaiken/sightbreak/pull/18), exact runtime/harness `7b6f379`; **0/27 → 27/27 recovered**, including9 rejected retries before delayed original commits; journal41/recovery12/armory749/menu51 pass; [report](../reports/CLIENT_RECOVERY_V3.md) |
+| S2 | Fully acknowledged stale input batches incorrectly refresh transport liveness | Native fixture calibration and matched evidence underway | [PR #20](https://github.com/calebaiken/sightbreak/pull/20), runtime `f3ceaad`; protocol and queued retransmission semantics preserved |
+| S3 | Per-trade item/name hydration scales database statements with history size | Narrow blind performance win; actual-response/state artifact gap being closed; source review pending | [PR #19](https://github.com/calebaiken/sightbreak/pull/19), runtime `4a8e9ea`;40trades×20items/side **1,643 → 8 SQL statements**; baseline61/candidate74 PostgreSQL checks pass |
+| S4 | Experimental prediction/reconciliation divergence under impairment | First matched probe ties; missing repeated-ACK observations verified; additive diagnostic candidate underway | [PR #21](https://github.com/calebaiken/sightbreak/pull/21), initial probe `d5bdd53`; runtime initially unchanged, no accuracy win claimed; default-off gate retained |
 
 Each candidate needs an exact runtime commit, repeatable command, raw logs, matched
 baseline, separate blind critic, and a recorded Sol handoff. A passing smoke test
@@ -56,7 +56,8 @@ does not activate a feature gate. Failed trials remain in the evidence record.
 
 ## Next recorded actions
 
-1. Incorporate separate harsh source review and blind K/R campaign verdict for S1.
-2. Run native PostgreSQL UI regression against the unchanged authoritative backend; retain any failed trials.
-3. Publish each independent S2/S3/S4 runtime, matched workload and raw evidence to its own draft PR.
-4. Refresh Sol's source-bound findings, resolve blockers and keep applicable feature gates closed until independently qualified.
+1. Finish fresh S1 blind M/Q review and the exact-source native PostgreSQL lost-response oracle.
+2. Publish S2 matched outcomes and independent critic; retain its failed fixture trials.
+3. Close S3 actual-response/state evidence gaps and finish independent safety review.
+4. Judge S4 additive diagnostics against a declared coverage metric; no prediction activation from diagnostic improvement.
+5. Refresh Sol's source-bound findings and keep each candidate independently reviewable. Repair and verify raw Git-blob byte preservation before evidence handoff.
