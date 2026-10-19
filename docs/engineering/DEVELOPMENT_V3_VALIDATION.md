@@ -38,6 +38,8 @@ python scripts/test_offline_hud.py -v
 python scripts/test_export_ui.py -v
 python scripts/test_export_flow.py -v
 python scripts/test_verify_builds.py -v
+python -O scripts/test_verify_builds.py -v
+python scripts/test_reload_negative_controls.py -v
 ```
 
 These are adversarial tooling/unit controls, not simulated substitutes for the
@@ -93,6 +95,29 @@ deadline overrun into a pass.
 Upload failures as well as successes, including nested logs and hidden
 `.local/validation/` native render captures. CI artifacts are **development-only**:
 Android is debug-signed; iOS is an unsigned Xcode project, not a signed IPA.
+
+## Disposable native audio controls
+
+The third CI job imports a separate detached worktree of the same frozen commit
+before running **A5/A6/A7**. The ordinary integration/build checkout is never the
+mutation target. Use fresh paths and the same pinned engine/state environment:
+the CI audio job uses an external CPython **3.13.15** virtual environment, matching
+the locally tested harness interpreter, rather than relying on a system default.
+
+```sh
+git worktree add --detach "$RUNNER_TEMP/sightbreak-v3-controls" "$GITHUB_SHA"
+cd "$RUNNER_TEMP/sightbreak-v3-controls"
+scripts/godot.sh --headless --editor --import --quit
+xvfb-run -a "$SIGHTBREAK_CONTROL_PYTHON" scripts/reload_negative_controls.py --only A5,A6,A7 --log "$GITHUB_WORKSPACE/builds/v3-audio-controls/summary.txt" --raw-out "$GITHUB_WORKSPACE/builds/v3-audio-controls/raw"
+```
+
+Do not use `--no-baseline` for qualification. Retain each command, actual exit,
+complete test summary, process receipt, audio samples and voice-event ledger.
+A crash, parse/resource error, missing summary or containment failure is not a
+successfully caught negative control. The baseline must pass before a deliberate
+mutation can establish sensitivity. The job also compares exact clean source
+before/after restoration and uploads failures. These controls do not explain away
+the original retained V2 cancellation failure or substitute for listening tests.
 
 ## Native Windows subset
 

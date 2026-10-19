@@ -1,0 +1,260 @@
+{
+  "passed": false,
+  "status": "failed",
+  "completed": true,
+  "scope": "Actual native exports; Linux menu/demo, APK metadata/signature, unsigned iOS structure",
+  "failures": [
+    "RuntimeError: iOS plist bundle identifier mismatch"
+  ],
+  "processes": [
+    {
+      "label": "linux-menu",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\sightbreak-verifier-unit-jojih7ii\\checkout with spaces & unicode-\u0152\\builds\\linux\\sightbreak.x86_64",
+        "--headless",
+        "--",
+        "--smoke"
+      ],
+      "log": "linux-menu.log",
+      "process_receipt": "linux-menu.process.json",
+      "receipt": {
+        "complete": true,
+        "exit": 0,
+        "errors": []
+      },
+      "exit": 0,
+      "timed_out": false,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "label": "linux-demo",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\sightbreak-verifier-unit-jojih7ii\\checkout with spaces & unicode-\u0152\\builds\\linux\\sightbreak.x86_64",
+        "--headless",
+        "--quit-after",
+        "120",
+        "--",
+        "--demo"
+      ],
+      "log": "linux-demo.log",
+      "process_receipt": "linux-demo.process.json",
+      "receipt": {
+        "complete": true,
+        "exit": 0,
+        "errors": []
+      },
+      "exit": 0,
+      "timed_out": false,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "label": "android-signature",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\sightbreak-verifier-unit-jojih7ii\\tools\\android-sdk\\build-tools\\36.0.0\\apksigner",
+        "verify",
+        "--verbose",
+        "--print-certs",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\sightbreak-verifier-unit-jojih7ii\\checkout with spaces & unicode-\u0152\\builds\\android\\sightbreak-debug.apk"
+      ],
+      "log": "android-signature.log",
+      "process_receipt": "android-signature.process.json",
+      "receipt": {
+        "complete": true,
+        "exit": 0,
+        "errors": []
+      },
+      "exit": 0,
+      "timed_out": false,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "label": "android-manifest",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\sightbreak-verifier-unit-jojih7ii\\tools\\android-sdk\\build-tools\\36.0.0\\aapt",
+        "dump",
+        "badging",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\sightbreak-verifier-unit-jojih7ii\\checkout with spaces & unicode-\u0152\\builds\\android\\sightbreak-debug.apk"
+      ],
+      "log": "android-manifest.log",
+      "process_receipt": "android-manifest.process.json",
+      "receipt": {
+        "complete": true,
+        "exit": 0,
+        "errors": []
+      },
+      "exit": 0,
+      "timed_out": false,
+      "passed": true,
+      "failures": []
+    },
+    {
+      "label": "android-layout",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\sightbreak-verifier-unit-jojih7ii\\tools\\android-sdk\\build-tools\\36.0.0\\aapt",
+        "dump",
+        "xmltree",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\sightbreak-verifier-unit-jojih7ii\\checkout with spaces & unicode-\u0152\\builds\\android\\sightbreak-debug.apk",
+        "AndroidManifest.xml"
+      ],
+      "log": "android-layout.log",
+      "process_receipt": "android-layout.process.json",
+      "receipt": {
+        "complete": true,
+        "exit": 0,
+        "errors": []
+      },
+      "exit": 0,
+      "timed_out": false,
+      "passed": true,
+      "failures": []
+    }
+  ],
+  "source_before": {
+    "source_commit": "frozen-commit",
+    "source_game_tree": "frozen-tree",
+    "source_content_sha256": "runtime-bytes",
+    "source_validation_sha256": "validation-bytes",
+    "source_game_dirty": false,
+    "source_dirty": false
+  },
+  "source_after": {
+    "source_commit": "frozen-commit",
+    "source_game_tree": "frozen-tree",
+    "source_content_sha256": "runtime-bytes",
+    "source_validation_sha256": "validation-bytes",
+    "source_game_dirty": false,
+    "source_dirty": false
+  },
+  "source_unchanged": true,
+  "physical_device_installation": "NOT TESTED",
+  "device_performance": "NOT TESTED",
+  "xcode_build": "NOT TESTED",
+  "source_commit": "frozen-commit",
+  "source_game_tree": "frozen-tree",
+  "source_content_sha256": "runtime-bytes",
+  "source_validation_sha256": "validation-bytes",
+  "source_game_dirty": false,
+  "source_dirty": false,
+  "export_receipts": {
+    "linux": {
+      "source_commit": "frozen-commit",
+      "source_game_tree": "frozen-tree",
+      "source_content_sha256": "runtime-bytes",
+      "source_validation_sha256": "validation-bytes",
+      "source_game_dirty": false,
+      "source_dirty": false,
+      "target": "linux",
+      "export_completed": true,
+      "built_at_utc": "2026-10-19T19:54:17.502417+00:00",
+      "artifact": {
+        "path": "linux/sightbreak.x86_64",
+        "bytes": 1843,
+        "sha256": "3f6652ca8dcae317dd22b978ec25b22b3d7b3d57b4ba861ca94e1d34c8085d08",
+        "mode": 493
+      },
+      "payload": [
+        {
+          "path": "linux/console launch.sh",
+          "bytes": 58,
+          "sha256": "7962a5c7604aee4e6f01a9607faef57acd7b34abfd79c4ac4bdcdac74ef7cff9",
+          "mode": 493
+        },
+        {
+          "path": "linux/GODOT-LICENSE.txt",
+          "bytes": 17,
+          "sha256": "896a0c207efcf3f6132003ebf33e41491adcc38d01ea16cc359593e5633d59d6",
+          "mode": 420
+        },
+        {
+          "path": "linux/sightbreak.sh",
+          "bytes": 58,
+          "sha256": "7962a5c7604aee4e6f01a9607faef57acd7b34abfd79c4ac4bdcdac74ef7cff9",
+          "mode": 493
+        },
+        {
+          "path": "linux/sightbreak.x86_64",
+          "bytes": 1843,
+          "sha256": "3f6652ca8dcae317dd22b978ec25b22b3d7b3d57b4ba861ca94e1d34c8085d08",
+          "mode": 493
+        }
+      ]
+    },
+    "android": {
+      "source_commit": "frozen-commit",
+      "source_game_tree": "frozen-tree",
+      "source_content_sha256": "runtime-bytes",
+      "source_validation_sha256": "validation-bytes",
+      "source_game_dirty": false,
+      "source_dirty": false,
+      "target": "android",
+      "export_completed": true,
+      "built_at_utc": "2026-10-19T19:54:17.530237+00:00",
+      "artifact": {
+        "path": "android/sightbreak-debug.apk",
+        "bytes": 3720,
+        "sha256": "522571aa2e7243dfb8c1b846bfa2fdcde976a805a9000e668976cb8184845867",
+        "mode": 420
+      },
+      "payload": [
+        {
+          "path": "android/GODOT-LICENSE.txt",
+          "bytes": 17,
+          "sha256": "896a0c207efcf3f6132003ebf33e41491adcc38d01ea16cc359593e5633d59d6",
+          "mode": 420
+        },
+        {
+          "path": "android/sightbreak-debug.apk",
+          "bytes": 3720,
+          "sha256": "522571aa2e7243dfb8c1b846bfa2fdcde976a805a9000e668976cb8184845867",
+          "mode": 420
+        }
+      ]
+    },
+    "ios": {
+      "source_commit": "frozen-commit",
+      "source_game_tree": "frozen-tree",
+      "source_content_sha256": "runtime-bytes",
+      "source_validation_sha256": "validation-bytes",
+      "source_game_dirty": false,
+      "source_dirty": false,
+      "target": "ios",
+      "export_completed": true,
+      "built_at_utc": "2026-10-19T19:54:17.552047+00:00",
+      "artifact": {
+        "path": "ios/sightbreak.xcodeproj/project.pbxproj",
+        "bytes": 132,
+        "sha256": "788ac80440de4fb79ed7e97a2ceacff2600578f4b7993e08f9cf6959a23b00a9",
+        "mode": 420
+      },
+      "payload": [
+        {
+          "path": "ios/GODOT-LICENSE.txt",
+          "bytes": 17,
+          "sha256": "896a0c207efcf3f6132003ebf33e41491adcc38d01ea16cc359593e5633d59d6",
+          "mode": 420
+        },
+        {
+          "path": "ios/sightbreak/sightbreak-Info.plist",
+          "bytes": 502,
+          "sha256": "09b72a307cbc17660396b250178801f74b8ad92e57d9803850ed3a30da142358",
+          "mode": 420
+        },
+        {
+          "path": "ios/sightbreak.pck",
+          "bytes": 1767,
+          "sha256": "1eb7dad0dc2a570c55711fb970404d5e8991b344370b327cf35028748881b106",
+          "mode": 420
+        },
+        {
+          "path": "ios/sightbreak.xcodeproj/project.pbxproj",
+          "bytes": 132,
+          "sha256": "788ac80440de4fb79ed7e97a2ceacff2600578f4b7993e08f9cf6959a23b00a9",
+          "mode": 420
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,387 @@
+--- before/scripts/export_flow.py
++++ after/scripts/export_flow.py
+@@ -5,16 +5,17 @@
+ import math
+ import os
+ from pathlib import Path
+-import subprocess
+ import sys
+ import time
+ import uuid
+ 
+-from godot_process import prepare_output, process_group_options, terminate_process_tree
++from godot_process import prepare_output
++from matrix_process import run_process
+ from native_log import failed as native_log_failed
+ 
+ WORKER_FLAG = '--_export-flow-worker'
+ TOKEN_ENV = 'SIGHTBREAK_EXPORT_FLOW_TOKEN'
++PROCESS_RECEIPT = 'watchdog.process.json'
+ 
+ 
+ def prepare_flow_output(path, supervised=False):
+@@ -22,46 +23,73 @@
+         return prepare_output(path)
+     path = path.resolve()
+     marker = json.loads((path / 'watchdog.json').read_text(encoding='utf-8'))
+-    if not os.environ.get(TOKEN_ENV) or marker.get('token') != os.environ[TOKEN_ENV]:
++    if (not isinstance(marker, dict) or not os.environ.get(TOKEN_ENV)
++            or marker.get('token') != os.environ[TOKEN_ENV]):
+         raise RuntimeError('Export controller requires its owning watchdog token')
+-    if {item.name for item in path.iterdir()} - {'watchdog.json', 'watchdog.log', 'results.json'}:
++    if marker.get('status') != 'incomplete' or marker.get('passed') is not False:
++        raise FileExistsError('Worker output belongs to a completed watchdog')
++    if marker.get('process_receipt') != PROCESS_RECEIPT:
++        raise RuntimeError('Export controller has an invalid process receipt owner')
++    if {item.name for item in path.iterdir()} - {'watchdog.json', 'watchdog.log', 'results.json', PROCESS_RECEIPT}:
+         raise FileExistsError('Worker output contains earlier evidence')
+     return path
+ 
+ 
+ def supervise(script, arguments, output, timeout):
+-    """Keep raw output and an incomplete receipt before starting the worker."""
++    """Keep initial failed receipts, then own the entire worker process tree.
++
++    The wall-clock pass deadline includes startup and cleanup. On failure the
++    shared runner has bounded additional waits to finish containment cleanup;
++    a late clean exit is never a passing export flow.
++    """
+     if not math.isfinite(timeout) or timeout <= 0:
+         raise ValueError('Watchdog timeout must be finite and positive')
++    started = time.monotonic()
++    deadline = started + timeout
+     output = prepare_output(Path(output))
+     token = uuid.uuid4().hex
+-    command = [sys.executable, str(script), WORKER_FLAG, *arguments]
++    command = [sys.executable, '-B', str(script), WORKER_FLAG, *arguments]
++    hash_error = None
++    try:
++        controller_hash = hashlib.sha256(Path(script).read_bytes()).hexdigest()
++    except OSError as error:
++        controller_hash, hash_error = None, error
+     state = {'passed': False, 'status': 'incomplete', 'token': token,
+              'command': command, 'timeout_seconds': timeout,
+-             'controller_sha256': hashlib.sha256(Path(script).read_bytes()).hexdigest()}
+-    (output / 'watchdog.json').write_text(json.dumps(state, indent=2) + '\n', encoding='utf-8')
+-    (output / 'results.json').write_text(json.dumps({'passed': False, 'stage': 'watchdog-start',
+-                                                  'status': 'incomplete'}, indent=2) + '\n', encoding='utf-8')
+-    process, code, failure = None, None, None
+-    started = time.monotonic()
+-    with (output / 'watchdog.log').open('xb') as log:
++             'process_receipt': PROCESS_RECEIPT, 'controller_sha256': controller_hash}
++    with (output / 'watchdog.json').open('x', encoding='utf-8') as receipt:
++        receipt.write(json.dumps(state, indent=2) + '\n')
++    with (output / 'results.json').open('x', encoding='utf-8') as receipt:
++        receipt.write(json.dumps({'passed': False, 'stage': 'watchdog-start',
++                                 'status': 'incomplete'}, indent=2) + '\n')
++    code, failure = None, None
++    with (output / 'watchdog.log').open('x', encoding='utf-8') as log:
+         try:
+-            process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT,
+-                                       env={**os.environ, TOKEN_ENV: token}, **process_group_options())
+-            code = process.wait(timeout=timeout)
++            if hash_error is not None:
++                raise hash_error
++            remaining = deadline - time.monotonic()
++            if remaining <= 0:
++                raise TimeoutError('Export controller exceeded the hard wall-clock watchdog before launch')
++            code = run_process(command, cwd=None, env={**os.environ, TOKEN_ENV: token}, log=log,
++                               result_path=output / PROCESS_RECEIPT, timeout=remaining)
++            if type(code) is not int:
++                raise RuntimeError('Process supervisor returned an invalid worker exit')
+             if code != 0:
+                 failure = 'Export controller exited ' + str(code)
+-        except subprocess.TimeoutExpired:
+-            failure = 'Export controller exceeded the hard wall-clock watchdog'
+         except (Exception, KeyboardInterrupt) as error:
+             failure = type(error).__name__ + ': ' + str(error)
+-        finally:
+-            if process is not None:
+-                try:
+-                    terminate_process_tree(process)
+-                except (Exception, KeyboardInterrupt) as error:
+-                    failure = (failure or '') + '; watchdog cleanup failed: ' + str(error)
+-    if native_log_failed((output / 'watchdog.log').read_text(encoding='utf-8', errors='replace')):
++            log.write('\nHARNESS_ERROR ' + failure + '\n')
++        if time.monotonic() >= deadline:
++            failure = (failure or '') + '; Export controller exceeded the hard wall-clock watchdog (including cleanup)'
++            log.write('\nHARNESS_ERROR hard wall-clock watchdog exceeded (including cleanup)\n')
++    try:
++        text = (output / 'watchdog.log').read_text(encoding='utf-8', errors='replace')
++    except OSError as error:
++        text = ''
++        failure = (failure or '') + '; missing/unreadable watchdog log: ' + str(error)
++    if 'HARNESS_ERROR' in text:
++        failure = (failure or '') + '; process containment reported HARNESS_ERROR (see watchdog.log)'
++    if native_log_failed(text):
+         failure = (failure or '') + '; controller emitted a native error or resource leak'
+     try:
+         result = json.loads((output / 'results.json').read_text(encoding='utf-8'))
+@@ -72,6 +100,10 @@
+         failure = (failure or '') + '; missing/invalid worker result: ' + str(error)
+     if result.get('passed') is not True:
+         failure = failure or 'Export controller did not produce a passing result'
++    if time.monotonic() >= deadline and not failure:
++        failure = 'Export controller exceeded the hard wall-clock watchdog during final audit'
++        with (output / 'watchdog.log').open('a', encoding='utf-8') as log:
++            log.write('\nHARNESS_ERROR ' + failure + '\n')
+     if failure:
+         result.update({'passed': False, 'watchdog_error': failure})
+     state.update({'passed': not failure, 'status': 'failed' if failure else 'passed',
+--- before/scripts/test_export_flow.py
++++ after/scripts/test_export_flow.py
+@@ -1,12 +1,15 @@
+ #!/usr/bin/env python3
+ """Actual CPython timeout/receipt controls, not native exported-client passes."""
+ import contextlib
++import hashlib
+ import io
+ import json
+ import os
+ from pathlib import Path
++import subprocess
+ import sys
+ import tempfile
++import textwrap
+ import time
+ import unittest
+ from unittest.mock import patch
+@@ -69,6 +72,16 @@
+         self.assertEqual(code, 1)
+         self.assertFalse(result['passed'])
+ 
++    def test_nonobject_result_is_a_retained_failure(self):
++        code, result = self.run_worker('(out / "results.json").write_text("[]")\n')
++        self.assertEqual(code, 1)
++        self.assertFalse(result['passed'])
++
++    def test_truthy_nonboolean_result_is_not_success(self):
++        code, result = self.run_worker('(out / "results.json").write_text(json.dumps({"passed": 1}))\n')
++        self.assertEqual(code, 1)
++        self.assertFalse(result['passed'])
++
+     def test_old_output_is_not_reused(self):
+         self.output.mkdir()
+         old = self.output / 'results.json'
+@@ -79,12 +92,220 @@
+ 
+     def test_supervised_worker_requires_the_owning_token(self):
+         self.output.mkdir()
+-        (self.output / 'watchdog.json').write_text(json.dumps({'token': 'owner'}))
++        marker = {'token': 'owner', 'passed': False, 'status': 'incomplete',
++                  'process_receipt': export_flow.PROCESS_RECEIPT}
++        (self.output / 'watchdog.json').write_text(json.dumps(marker))
++        (self.output / 'watchdog.log').write_bytes(b'owned raw bytes\n')
++        (self.output / 'results.json').write_text('{"passed": false, "status": "incomplete"}')
++        (self.output / export_flow.PROCESS_RECEIPT).write_text('{"complete": false}')
+         with patch.dict(os.environ, {export_flow.TOKEN_ENV: 'different'}):
++            with self.assertRaisesRegex(RuntimeError, 'token'):
++                export_flow.prepare_flow_output(self.output, True)
++        with patch.dict(os.environ, {export_flow.TOKEN_ENV: ''}):
+             with self.assertRaisesRegex(RuntimeError, 'token'):
+                 export_flow.prepare_flow_output(self.output, True)
+         with patch.dict(os.environ, {export_flow.TOKEN_ENV: 'owner'}):
+             self.assertEqual(export_flow.prepare_flow_output(self.output, True), self.output.resolve())
++            (self.output / 'earlier.log').write_bytes(b'unowned evidence')
++            with self.assertRaises(FileExistsError):
++                export_flow.prepare_flow_output(self.output, True)
++        self.assertEqual((self.output / 'watchdog.log').read_bytes(), b'owned raw bytes\n')
++
++    def test_completed_watchdog_cannot_reuse_token_to_overwrite_evidence(self):
++        self.run_worker('(out / "results.json").write_text(json.dumps({"passed": True}))\n')
++        before = {path.name: path.read_bytes() for path in self.output.iterdir()}
++        state = json.loads((self.output / 'watchdog.json').read_text())
++        with patch.dict(os.environ, {export_flow.TOKEN_ENV: state['token']}):
++            with self.assertRaises(FileExistsError):
++                export_flow.prepare_flow_output(self.output, True)
++        self.assertEqual({path.name: path.read_bytes() for path in self.output.iterdir()}, before)
++
++    def test_old_process_receipt_alone_refuses_a_new_attempt(self):
++        self.output.mkdir()
++        receipt = self.output / export_flow.PROCESS_RECEIPT
++        receipt.write_bytes(b'earlier process receipt')
++        with self.assertRaises(FileExistsError):
++            self.run_worker('pass\n')
++        self.assertEqual(receipt.read_bytes(), b'earlier process receipt')
++
++    def fake_passing_runner(self, command, *, cwd, env, log, result_path, timeout):
++        state = json.loads((self.output / 'watchdog.json').read_text())
++        initial = json.loads((self.output / 'results.json').read_text())
++        self.assertFalse(state['passed'])
++        self.assertEqual(state['status'], 'incomplete')
++        self.assertFalse(initial['passed'])
++        self.assertEqual(initial['status'], 'incomplete')
++        self.assertEqual(env[export_flow.TOKEN_ENV], state['token'])
++        self.assertEqual(command[0], sys.executable)
++        self.assertIn(export_flow.WORKER_FLAG, command)
++        self.assertEqual(state['controller_sha256'], hashlib.sha256(self.worker.read_bytes()).hexdigest())
++        self.assertEqual(result_path, self.output / export_flow.PROCESS_RECEIPT)
++        self.assertFalse(result_path.exists(), 'process receipt must be fresh before launch')
++        self.assertGreater(timeout, 0)
++        result_path.write_text(json.dumps({'complete': True, 'exit': 0, 'errors': []}))
++        (self.output / 'results.json').write_text('{"passed": true}')
++        return 0
++
++    def test_initial_failed_receipts_and_source_hash_exist_before_launch(self):
++        with patch.object(export_flow, 'run_process', side_effect=self.fake_passing_runner):
++            code, result = self.run_worker('pass\n')
++        self.assertEqual(code, 0)
++        self.assertTrue(result['passed'])
++
++    def test_harness_error_cannot_be_hidden_by_zero_exit_and_passing_json(self):
++        def failed_cleanup(*args, **kwargs):
++            code = self.fake_passing_runner(*args, **kwargs)
++            kwargs['log'].write('HARNESS_ERROR fixture containment cleanup failed\n')
++            return code
++        with patch.object(export_flow, 'run_process', side_effect=failed_cleanup):
++            code, result = self.run_worker('pass\n')
++        self.assertEqual(code, 1)
++        self.assertFalse(result['passed'])
++        self.assertEqual(result['watchdog']['worker_exit'], 0)
++        self.assertIn('HARNESS_ERROR', result['watchdog_error'])
++
++    def test_cleanup_exception_is_a_retained_failure(self):
++        with patch.object(export_flow, 'run_process', side_effect=RuntimeError('fixture cleanup failed')):
++            code, result = self.run_worker('pass\n')
++        self.assertEqual(code, 1)
++        self.assertFalse(result['passed'])
++        self.assertIn('HARNESS_ERROR RuntimeError: fixture cleanup failed',
++                      (self.output / 'watchdog.log').read_text())
++
++    def test_late_zero_exit_cannot_pass_wall_clock_deadline_including_cleanup(self):
++        with patch.object(export_flow, 'run_process', side_effect=self.fake_passing_runner), \
++                patch.object(export_flow.time, 'monotonic', side_effect=[0, .1, 2, 2, 2]):
++            code, result = self.run_worker('pass\n', 1)
++        self.assertEqual(code, 1)
++        self.assertEqual(result['watchdog']['worker_exit'], 0)
++        self.assertIn('hard wall-clock', result['watchdog_error'])
++        self.assertIn('including cleanup', (self.output / 'watchdog.log').read_text())
++
++    def test_expired_startup_deadline_does_not_launch_worker(self):
++        with patch.object(export_flow, 'run_process') as launch, \
++                patch.object(export_flow.time, 'monotonic', side_effect=[0, 2, 2, 2, 2]):
++            code, result = self.run_worker('pass\n', 1)
++        launch.assert_not_called()
++        self.assertEqual(code, 1)
++        self.assertFalse(result['passed'])
++        self.assertIn('before launch', result['watchdog_error'])
++
++    def test_final_audit_cannot_turn_an_expired_deadline_into_success(self):
++        with patch.object(export_flow, 'run_process', side_effect=self.fake_passing_runner), \
++                patch.object(export_flow.time, 'monotonic', side_effect=[0, .1, .2, 2, 2]):
++            code, result = self.run_worker('pass\n', 1)
++        self.assertEqual(code, 1)
++        self.assertFalse(result['passed'])
++        self.assertIn('final audit', result['watchdog_error'])
++        self.assertIn('HARNESS_ERROR', (self.output / 'watchdog.log').read_text())
++
++    def test_missing_controller_retains_initial_failure_without_launch(self):
++        with patch.object(export_flow, 'run_process') as launch, \
++                contextlib.redirect_stdout(io.StringIO()):
++            code = export_flow.supervise(self.worker, [], self.output, 5)
++        launch.assert_not_called()
++        self.assertEqual(code, 1)
++        result = json.loads((self.output / 'results.json').read_text())
++        self.assertFalse(result['passed'])
++        self.assertEqual(result['stage'], 'watchdog-start')
++        self.assertIn('HARNESS_ERROR', (self.output / 'watchdog.log').read_text())
++
++    def entry_worker(self, *, detached=False, stalled=False, awaited=False, timeout=5):
++        """Exercise entry -> token-bound worker -> real CPython descendant."""
++        started = self.root / 'child-started'
++        finished = self.root / 'child-finished'
++        child = ('from pathlib import Path; import os, time; '
++                 'print("synthetic descendant partial output", flush=True); '
++                 f'Path({str(started)!r}).write_text(str(os.getpid())); '
++                 'time.sleep(1.1); print("ERROR: late synthetic descendant", flush=True); '
++                 f'Path({str(finished)!r}).write_text("finished")')
++        if awaited:
++            child = 'print("normally awaited synthetic descendant", flush=True)'
++        self.worker.write_text(textwrap.dedent(f'''\
++            import argparse, json, os, subprocess, sys, time
++            from pathlib import Path
++            sys.path.insert(0, {str(Path(export_flow.__file__).resolve().parent)!r})
++            import export_flow
++
++            def main(supervised=False):
++                parser = argparse.ArgumentParser()
++                parser.add_argument('--output', type=Path, required=True)
++                parser.add_argument('--timeout', type=float, required=True)
++                args = parser.parse_args()
++                out = export_flow.prepare_flow_output(args.output, supervised)
++                state = json.loads((out / 'watchdog.json').read_text())
++                initial = json.loads((out / 'results.json').read_text())
++                assert state['token'] == os.environ[export_flow.TOKEN_ENV]
++                assert state['status'] == initial['status'] == 'incomplete'
++                assert state['passed'] is initial['passed'] is False
++                (out.parent / 'worker-initial.json').write_text(json.dumps(initial))
++                print('synthetic worker validated owner token', flush=True)
++                options = {{}}
++                if {detached!r}:
++                    options = ({{'creationflags': 0x200}} if os.name == 'nt'
++                               else {{'start_new_session': True}})
++                child = subprocess.Popen([sys.executable, '-B', '-c', {child!r}], **options)
++                if {awaited!r}:
++                    child.wait()
++                else:
++                    while not Path({str(started)!r}).exists():
++                        time.sleep(.005)
++                (out / 'results.json').write_text(json.dumps(
++                    {{'passed': True, 'synthetic_control_not_native_evidence': True}}))
++                if {stalled!r}:
++                    time.sleep(30)
++
++            if __name__ == '__main__':
++                raise SystemExit(export_flow.entry(main, __file__))
++            '''), encoding='utf-8')
++        command = [sys.executable, '-B', str(self.worker), '--output', str(self.output),
++                   '--timeout', str(timeout)]
++        process = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=12)
++        result = json.loads((self.output / 'results.json').read_text())
++        return process.returncode, result, started, finished
++
++    def assert_stopped_entry_descendant(self, code, result, started, finished):
++        self.assertTrue(started.exists())
++        self.assertEqual(code, 1)
++        self.assertFalse(result['passed'])
++        initial = json.loads((self.root / 'worker-initial.json').read_text())
++        self.assertFalse(initial['passed'])
++        text = (self.output / 'watchdog.log').read_bytes()
++        self.assertIn(b'synthetic worker validated owner token', text)
++        self.assertIn(b'synthetic descendant partial output', text)
++        self.assertIn(b'HARNESS_ERROR', text)
++        self.assertIn('HARNESS_ERROR', result['watchdog_error'])
++        receipt = json.loads((self.output / export_flow.PROCESS_RECEIPT).read_text())
++        self.assertTrue(receipt['complete'])
++        self.assertTrue(receipt['errors'])
++        result_bytes = (self.output / 'results.json').read_bytes()
++        time.sleep(1.3)
++        self.assertFalse(finished.exists(), 'descendant escaped export containment')
++        self.assertEqual((self.output / 'watchdog.log').read_bytes(), text)
++        self.assertEqual((self.output / 'results.json').read_bytes(), result_bytes)
++
++    def test_entry_token_bound_worker_cannot_leave_descendant_after_zero_exit(self):
++        code, result, started, finished = self.entry_worker()
++        self.assertEqual(result['watchdog']['worker_exit'], 0)
++        self.assert_stopped_entry_descendant(code, result, started, finished)
++
++    def test_entry_new_process_group_cannot_escape(self):
++        code, result, started, finished = self.entry_worker(detached=True)
++        self.assertEqual(result['watchdog']['worker_exit'], 0)
++        self.assert_stopped_entry_descendant(code, result, started, finished)
++
++    def test_entry_timeout_cleans_token_bound_descendant_despite_passing_json(self):
++        started_at = time.monotonic()
++        code, result, started, finished = self.entry_worker(detached=True, stalled=True, timeout=.6)
++        self.assertLess(time.monotonic() - started_at, 4)
++        self.assertIn('hard wall-clock', result['watchdog_error'])
++        self.assert_stopped_entry_descendant(code, result, started, finished)
++
++    def test_entry_normally_awaited_descendant_passes(self):
++        code, result, _, _ = self.entry_worker(awaited=True)
++        self.assertEqual(code, 0)
++        self.assertTrue(result['passed'])
++        self.assertTrue(result['synthetic_control_not_native_evidence'])
+ 
+ 
+ class OCRDeadlineTests(unittest.TestCase):

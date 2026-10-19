@@ -1,0 +1,54 @@
+{
+  "python": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-tools\\python\\cpython-3.13.15-windows-x86_64-none\\python.exe",
+  "version": "3.13.15",
+  "python_sha256": "d7d8f0813d9d4002839b775ed13fc7eb57a756bdcb102e85ab61537003ef8616",
+  "tests": [
+    {
+      "log": "test_export_flow.retry.log",
+      "command": {
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-tools\\python\\cpython-3.13.15-windows-x86_64-none\\python.exe",
+        "arguments": [
+          "-B",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\export-flow-descendant-20261019T1939301091253Z\\after\\source\\scripts\\test_export_flow.py",
+          "-v"
+        ],
+        "exit": 0,
+        "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3"
+      },
+      "tests": 27,
+      "passed": true
+    },
+    {
+      "log": "test_matrix_process.final.log",
+      "command": {
+        "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-tools\\python\\cpython-3.13.15-windows-x86_64-none\\python.exe",
+        "arguments": [
+          "-B",
+          "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\export-flow-descendant-20261019T1939301091253Z\\after\\source\\scripts\\test_matrix_process.py",
+          "-v"
+        ],
+        "exit": 0,
+        "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3"
+      },
+      "tests": 15,
+      "passed": true
+    }
+  ],
+  "gates": {
+    "before_false_pass_reproduced": true,
+    "after_entry_failed_preserving_worker_zero": true,
+    "after_persisted_failure": true,
+    "after_harness_error_retained": true,
+    "after_log_stable": true,
+    "after_child_stopped": true,
+    "containment_receipt_failed_with_real_zero": true,
+    "controller_source_hash_matches": true,
+    "identical_before_after_control_programs": true,
+    "critic_packet_untouched": true,
+    "reviewed_sources_match_checkout": true,
+    "shared_modules_unchanged": true,
+    "final_tests_pass": true
+  },
+  "descendant_pid": 7744,
+  "passed": true
+}
