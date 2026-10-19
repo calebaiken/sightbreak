@@ -1,0 +1,17 @@
+# Baseline (no defect injected): every test passes
+  (skipped by --no-baseline: run it once without, for the record)
+
+## N35: the arms get no ground bounce (the support forearm's underside is a near-black wedge in the hip retrieval)
+  weapon-art                     FAILED
+      ERROR: the arms take a ground bounce on what faces down, so the support forearm's underside is not a black wedge in the hip retrieval ((0.0, 0.0, 0.0))
+  light separation               FAILED
+      ERROR: 2 separation checks failed
+
+## N36: the v9 reduced-motion path (pickup 11 cm below the well, in view): the replacement appears whole in an open hand
+  continuity (calm)              FAILED
+      ERROR: the replacement's first visible tick (68) shows 8640 px (under 1500: it enters through the edge)
+
+# Summary
+  N35  caught
+  N36  caught
+  2 controls: 2 caught, 0 crashed, 0 missed, 0 invalid

@@ -1,0 +1,21 @@
+import sys
+sys.path.insert(0,sys.argv[0].rsplit('/',1)[0])
+from table import load, P
+base=load(sys.argv[1]); cur=load(sys.argv[2])
+def med(t,k,p):
+    v=t[k].get(p); return v[1] if v else None
+ok=True; out=[]
+# 1 identifiable: every visible part median >= 20
+low=[(k,p,round(med(cur,k,p))) for k in cur for p in P if cur[k].get(p) and med(cur,k,p)<20]
+out.append("identifiable (median>=20): %s" % ("PASS" if not low else "FAIL %s" % low))
+# 2 sunlit unchanged: every sun median within 8% of baseline
+sun=[(k[1],p,round(med(base,k,p)),round(med(cur,k,p))) for k in cur if k[0]=="sun" for p in P if cur[k].get(p) and base[k].get(p) and abs(med(cur,k,p)/med(base,k,p)-1)>0.08]
+out.append("sunlit within 8%% of baseline: %s" % ("PASS" if not sun else "FAIL %d parts e.g. %s" % (len(sun), sun[:3])))
+# 3 not self-lit: dark-interior median <= 0.5 x sun median, per part at the ready pose
+ratio=[]
+for p in P:
+    s=med(cur,("sun","ready"),p); d=med(cur,("dark interior","ready"),p)
+    if s and d: ratio.append((p,round(d/s,2)))
+bad=[r for r in ratio if r[1]>0.5]
+out.append("dark/sun ratio <= 0.5 (ready): %s %s" % ("PASS" if not bad else "FAIL", ratio))
+print("\n".join(out))

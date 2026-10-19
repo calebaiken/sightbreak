@@ -1,0 +1,77 @@
+# ARMS_CALM_JSON scan of the pickup depth (hip z), hip_turn x 55, elbow (-0.35,0,0.30); no-bake builds; c1 20 cm, c2 26 cm, c3 20 cm with the v9 elbow, c4 28 cm, c5 24 cm
+# RELOAD_CONTINUITY_TEST and RELOAD_VISIBILITY_TEST with --reduced --variant=calm|still, then weapon_art_test
+=== c1 hip -0.19 0.04 -0.20 rx 55 elbow -0.35,0.0,0.30
+--- continuity calm
+FAIL the replacement's first visible tick (68) shows 2670 px (under 1500: it enters through the edge)
+ERROR: the replacement's first visible tick (68) shows 2670 px (under 1500: it enters through the edge)
+RELOAD_CONTINUITY_TEST view=sunlit reduced=true ticks=136 checks=6 failures=1
+--- visibility calm
+RELOAD_VISIBILITY_TEST view=sunlit reduced=true frames=51 checks=15 failures=0
+--- continuity still
+FAIL the replacement's first visible tick (68) shows 3984 px (under 1500: it enters through the edge)
+ERROR: the replacement's first visible tick (68) shows 3984 px (under 1500: it enters through the edge)
+RELOAD_CONTINUITY_TEST view=sunlit reduced=true ticks=136 checks=6 failures=1
+--- visibility still
+RELOAD_VISIBILITY_TEST view=sunlit reduced=true frames=51 checks=15 failures=0
+--- weapon_art
+WEAPON_ART_TEST checks=180 failures=0
+=== c2 hip -0.19 0.04 -0.26 rx 55 elbow -0.35,0.0,0.30
+--- continuity calm
+ok   the replacement's first visible tick (70) shows 43 px (under 1500: it enters through the edge)
+RELOAD_CONTINUITY_TEST view=sunlit reduced=true ticks=136 checks=6 failures=0
+--- visibility calm
+RELOAD_VISIBILITY_TEST view=sunlit reduced=true frames=51 checks=15 failures=0
+--- continuity still
+ok   the replacement's first visible tick (68) shows 362 px (under 1500: it enters through the edge)
+FAIL from the tick the hand grips it (68) until the seat it touches at least 150 px of the replacement every tick (weakest 104 at tick 71)
+RELOAD_CONTINUITY_TEST view=sunlit reduced=true ticks=136 checks=6 failures=1
+--- visibility still
+RELOAD_VISIBILITY_TEST view=sunlit reduced=true frames=51 checks=15 failures=0
+--- weapon_art
+WEAPON_ART_TEST checks=180 failures=0
+=== c3 hip -0.19 0.04 -0.20 rx 55 elbow -0.12,0.0,0.10
+--- continuity calm
+FAIL the replacement's first visible tick (68) shows 2669 px (under 1500: it enters through the edge)
+ERROR: the replacement's first visible tick (68) shows 2669 px (under 1500: it enters through the edge)
+RELOAD_CONTINUITY_TEST view=sunlit reduced=true ticks=136 checks=6 failures=1
+--- visibility calm
+ERROR: no replacement magazine is drawn (3000 px or more) with less than 3000 px of its arm in the frame (2 poses; last at 0.54)
+RELOAD_VISIBILITY_TEST view=sunlit reduced=true frames=51 checks=15 failures=1
+--- continuity still
+FAIL the replacement's first visible tick (68) shows 3984 px (under 1500: it enters through the edge)
+ERROR: the replacement's first visible tick (68) shows 3984 px (under 1500: it enters through the edge)
+RELOAD_CONTINUITY_TEST view=sunlit reduced=true ticks=136 checks=6 failures=1
+--- visibility still
+RELOAD_VISIBILITY_TEST view=sunlit reduced=true frames=51 checks=15 failures=0
+--- weapon_art
+WEAPON_ART_TEST checks=180 failures=0
+ALLDONE
+=== c4 hip -0.19 0.04 -0.28 rx 55 elbow -0.35,0.0,0.30
+--- continuity calm
+ok   the replacement's first visible tick (71) shows 481 px (under 1500: it enters through the edge)
+RELOAD_CONTINUITY_TEST view=sunlit reduced=true ticks=136 checks=6 failures=0
+--- visibility calm
+RELOAD_VISIBILITY_TEST view=sunlit reduced=true frames=51 checks=15 failures=0
+--- continuity still
+ok   the replacement's first visible tick (70) shows 417 px (under 1500: it enters through the edge)
+RELOAD_CONTINUITY_TEST view=sunlit reduced=true ticks=136 checks=6 failures=0
+--- visibility still
+RELOAD_VISIBILITY_TEST view=sunlit reduced=true frames=51 checks=15 failures=0
+--- weapon_art
+WEAPON_ART_TEST checks=180 failures=0
+=== c5 hip -0.19 0.04 -0.24 rx 55 elbow -0.35,0.0,0.30
+--- continuity calm
+ok   the replacement's first visible tick (68) shows 379 px (under 1500: it enters through the edge)
+FAIL from the tick the hand grips it (68) until the seat it touches at least 150 px of the replacement every tick (weakest 99 at tick 71)
+RELOAD_CONTINUITY_TEST view=sunlit reduced=true ticks=136 checks=6 failures=1
+--- visibility calm
+RELOAD_VISIBILITY_TEST view=sunlit reduced=true frames=51 checks=15 failures=0
+--- continuity still
+FAIL the replacement's first visible tick (68) shows 1561 px (under 1500: it enters through the edge)
+ERROR: the replacement's first visible tick (68) shows 1561 px (under 1500: it enters through the edge)
+RELOAD_CONTINUITY_TEST view=sunlit reduced=true ticks=136 checks=6 failures=1
+--- visibility still
+RELOAD_VISIBILITY_TEST view=sunlit reduced=true frames=51 checks=15 failures=0
+--- weapon_art
+WEAPON_ART_TEST checks=180 failures=0
+ALLDONE

@@ -1,0 +1,230 @@
+# Baseline (no defect injected): every test passes
+  sequence                       passed
+  weapon-art                     passed
+  audio                          passed
+  audio capture                  passed
+  audio capture (cancel)         passed
+  visibility                     passed
+  visibility (reduced motion)    passed
+  contact                        passed
+
+## N1: the replacement is the first magazine again (one node, not two)
+  sequence                       FAILED
+      ERROR: Can't add child 'magazine_spare' to '@Node3D@58', already has a parent '@Node3D@58'.
+      ERROR: the replacement is a second node, not the first one reused
+      ERROR: it is the same magazine model in the same place under its own name
+
+## N2: the replacement is never drawn
+  sequence                       FAILED
+      ERROR: for a moment both magazines are drawn, 9893 mm apart: two separate objects
+      ERROR: from the acquisition the hand holds the replacement
+      ERROR: the replacement is first drawn in the hand at the pouch with 63 % of it inside the frame (it is not seen to appear)
+
+## N3: the nodes do not swap when the reload ends
+  sequence                       FAILED
+      ERROR: when the reload ends the replacement becomes the magazine in the well and the old one the spare
+      ERROR: afterwards one magazine is drawn, seated in the well
+      ERROR: the next reload extracts the node that was the replacement and fetches the one that fell
+
+## N4: the magazine is held 30 mm from where the hand grips it
+  sequence                       FAILED
+      ERROR: after the seat the replacement is in the well (29.57 mm)
+      ERROR: and stays on the well's axis while it does: top face within 2.5 mm of it while in the well (9.2 mm), middle within 5 mm (9.9 mm), turned under 5 degrees (1.0)
+      ERROR: the replacement only moves inward from lined up to the stop (110 mm out at the start, 28.11 mm at the end, backtrack 0.00 mm)
+
+## N5: the old magazine comes back to the well while the replacement is drawn
+  sequence                       FAILED
+      ERROR: after the drop the old magazine is out of the hand and away from its well (0 mm)
+      ERROR: once it has cleared the well the old magazine is never back at it
+      ERROR: after the drop the old magazine falls (0 mm)
+
+## N6: reduced motion shrinks the reload staging to a fifth
+  sequence                       FAILED
+      ERROR: reduced motion does not move the reload staging: the gun is within 118.93 mm and 20.75 deg and the hand within 346.21 mm of where it is without it
+      ERROR: the held magazine is 81 % on screen with reduced motion on
+      ERROR: reduced motion: the support wrist is never more than 6 % of the frame outside it (worst 39.6 %)
+  visibility (reduced motion)    FAILED
+      ERROR: the support hand shows at least 10000 pixels in every frame outside the hip and the rise from it (worst 0 at 0.30)
+      ERROR: at the hip the sleeve shows at least 8000 pixels in every frame (worst 0 at 0.44)
+      ERROR: on the rise from the hip the hand shows at least 6000 pixels (worst 0 at 0.62)
+
+## N7: the clicks follow the authoritative fraction instead of the visible reload
+  sequence                       FAILED
+      ERROR: jitter authority: the release click is within two ticks of the magazine leaving its well (click 39, moves 34)
+      ERROR: jitter authority: the seat click is within a tick of the replacement reaching its stop (click 111, arrives 108)
+      ERROR: jitter authority: at the seat click the replacement is -0.45 mm from its stop and was 1.5 mm four ticks before
+  audio                          FAILED
+      ERROR: jitter authority: each sound lands on the tick the clock reaches its phase, within 0.03 of the reload (worst 0.041)
+
+## N8: the seat click fires 0.05 of the reload early
+  sequence                       FAILED
+      ERROR: local authority: the seat click is within a tick of the replacement reaching its stop (click 101, arrives 107)
+      ERROR: local authority: at the seat click the replacement is 18.80 mm from its stop and was 38.7 mm four ticks before
+      ERROR: snapshot authority: the seat click is within a tick of the replacement reaching its stop (click 102, arrives 108)
+  audio                          passed
+
+## N9: the seat click fires at the let-go instead of the seat
+  sequence                       FAILED
+      ERROR: local authority: the seat click is within a tick of the replacement reaching its stop (click 114, arrives 107)
+      ERROR: local authority: at the seat click the replacement is -0.00 mm from its stop and was -0.5 mm four ticks before
+      ERROR: snapshot authority: the seat click is within a tick of the replacement reaching its stop (click 115, arrives 108)
+  audio                          FAILED
+      ERROR: a reload that ends after the seat lets the seat clunk ring out
+
+## N10: a clock correction that goes back over events plays them twice
+  sequence                       FAILED
+      ERROR: regress authority: each reload event is cued exactly once ({ "unlatch": 1, "extract": 1, "pouch": 2, "land": 2, "enter": 1, "seat": 2 })
+      ERROR: regress authority: the events are cued, and sound, in the authored order (["unlatch", "extract", "pouch", "pouch", "land", "land", "enter", "seat", "seat"] / ["unlatch", "extract", "pouch", "po
+  audio                          FAILED
+      ERROR: regress authority: every event sounds once, in the authored order (["unlatch", "extract", "unlatch", "extract", "pouch", "pouch", "land", "enter", "seat"])
+      ERROR: a timer correction that goes back over events plays none twice ({ "unlatch": 1, "extract": 1, "pouch": 2, "land": 2, "enter": 2, "seat": 2 })
+
+## N11: the seat click plays the release sound
+  sequence                       FAILED
+      ERROR: local authority: the events are cued, and sound, in the authored order (["unlatch", "extract", "pouch", "land", "enter", "seat"] / ["unlatch", "extract", "pouch", "land", "enter", "unlatch"])
+      ERROR: local authority: the seat cue plays the seat sound, and only it (["unlatch"])
+      ERROR: snapshot authority: the events are cued, and sound, in the authored order (["unlatch", "extract", "pouch", "land", "enter", "seat"] / ["unlatch", "extract", "pouch", "land", "enter", "unlatch"]
+  audio                          FAILED
+      ERROR: local authority: every event sounds once, in the authored order (["unlatch", "extract", "pouch", "land", "enter", "unlatch"])
+      ERROR: local authority: each sound lands on the tick the clock reaches its phase, within 0.03 of the reload (worst 0.560)
+      ERROR: snapshot authority: every event sounds once, in the authored order (["unlatch", "extract", "pouch", "land", "enter", "unlatch"])
+
+## N12: brass lands at the shooter's feet again
+  sequence                       FAILED
+      ERROR: the casing is given that floor (2.000), not the shooter's feet (2.0)
+      ERROR: the casing reaches the floor and no lower (lowest 2.005 m)
+      ERROR: it has bounced on it 3 time(s) and is still down at the floor, not up at the shooter (2.005 m)
+
+## N13: the animation completes the reload by writing the timer
+  sequence                       FAILED
+      ERROR: the replacement only moves inward from lined up to the stop (81 mm out at the start, 1.52 mm at the end, backtrack 0.00 mm)
+      ERROR: it is tipped 8.8 degrees as it enters, only ever rocks upright, and is square at the stop (0.80 degrees)
+      ERROR: local authority: the seat click is within a tick of the replacement reaching its stop (click 107, arrives -1)
+
+## N19: the SMG plays the rigged hand's whole set of sounds
+  sequence                       FAILED
+      ERROR: the SMG's release click is at the start and its seat click at the seat, once each ([["unlatch", 0.0], ["extract", 0.27027027027027], ["pouch", 0.5045045045045], ["land", 0.5945945945946], ["ent
+  audio                          FAILED
+      ERROR: the SMG's reload sounds a release and a seat, once each (["unlatch", "extract", "pouch", "land", "enter", "seat"])
+
+## N20: reduced motion no longer calms the procedural weapons' reload dip
+  sequence                       FAILED
+      ERROR: with reduced motion the SMG's reload dip is about a fifth of the normal one (130 mm against 163 mm)
+
+## N21: a reload restarted with no idle frame between does not reset its events
+  sequence                       FAILED
+      ERROR: a reload restarted with no idle frame between plays every event again, once each (["unlatch", "extract", "pouch", "land", "enter", "seat"])
+  audio                          FAILED
+      ERROR: a reload restarted with no idle frame plays the whole list once (["enter", "seat"])
+
+## N22: the replacement is drawn from the start of the hip trip: it floats in view with no hand on it
+  sequence                       FAILED
+      ERROR: for a moment both magazines are drawn, 0 mm apart: two separate objects
+      ERROR: the replacement is first drawn in the hand at the pouch with 100 % of it inside the frame (it is not seen to appear)
+
+## N14: the seat phase is changed in reload_phases.gd without rebuilding the clip
+  weapon-art                     FAILED
+      ERROR: at 78 % it is seated (6.79 mm from its place)
+      ERROR: at 81 % the hand is still closed on the seated magazine (hand 9.4 mm, fingers 0.0 deg)
+      ERROR: at 83 % the hand is still closed on the seated magazine (hand 9.4 mm, fingers 0.0 deg)
+  sequence                       FAILED
+      ERROR: the replacement only moves inward from lined up to the stop (81 mm out at the start, 6.78 mm at the end, backtrack 0.00 mm)
+      ERROR: it is tipped 8.8 degrees as it enters, only ever rocks upright, and is square at the stop (2.72 degrees)
+      ERROR: local authority: the seat click is within a tick of the replacement reaching its stop (click 105, arrives 107)
+
+## A1: a reload cut short leaves its sounds playing
+  audio                          FAILED
+      ERROR: a reload cut short before the seat stops its sounds (2 playing)
+
+## A2: every reload sound uses the same voice, so each cuts the one before
+  audio                          FAILED
+      ERROR: four sounds on one tick use four different voices, and all four are playing ([0, 0, 0, 0], 1 playing)
+      ERROR: a fifth takes a voice (voice 0) and is itself playing, rather than being dropped
+
+## A3: a weapon change leaves the reload sounds playing
+  audio                          passed
+
+## A4: the slide-out has no sound
+  audio                          FAILED
+      ERROR: every reload event has a sound, in two variants
+      ERROR: local authority: every event sounds once, in the authored order (["unlatch", "pouch", "land", "enter", "seat"])
+      ERROR: snapshot authority: every event sounds once, in the authored order (["unlatch", "pouch", "land", "enter", "seat"])
+
+## A5: the reload sounds play 80 dB down (the voices are muted)
+  audio capture                  FAILED
+      ERROR: unlatch on voice 0: heard at -545 ms after play() with its 0 ms attack, -545 ms from the run's typical offset (peak 0.000)
+      ERROR: extract on voice 1: heard at -601 ms after play() with its 19 ms attack, -620 ms from the run's typical offset (peak 0.000)
+      ERROR: pouch on voice 2: heard at -1132 ms after play() with its 0 ms attack, -1132 ms from the run's typical offset (peak 0.000)
+
+## A6: a cancelled reload does not stop its voices (real audio)
+  audio capture (cancel)         passed
+
+## N15: a hand that does not reach the magazine (knuckle 50 mm off)
+  contact                        FAILED
+      the old magazine: the thumb tip is within 6.5 mm of its surface and not more than 2.0 mm into it (13.2 to 13.2)
+      the old magazine: the index tip is within 6.5 mm of its surface and not more than 2.0 mm into it (25.8 to 25.8)
+      the old magazine: the middle tip is within 6.5 mm of its surface and not more than 2.0 mm into it (38.8 to 38.8)
+
+## N16: the previous grasp, which hides the thumb behind the magazine
+  visibility                     FAILED
+      ERROR: and the thumb (0 px) and at least 2 fingertips (worst 2) show at least 100 pixels
+      ERROR: the thumb's tip shows at least 100 pixels whenever the hand is on a magazine (worst 0 at 0.22)
+      ERROR: at least three of the four fingertips show at least 100 pixels whenever the hand is on a magazine (worst 2 at 0.22)
+
+## N17: the previous approach from below the frame (the hand leaves the picture)
+  visibility                     FAILED
+      ERROR: the support hand shows at least 10000 pixels in every frame outside the hip and the rise from it (worst 248 at 0.08)
+
+## N23: the replacement taken from just under the well, in view: it appears in the picture before the hand has it
+  visibility                     passed
+  sequence                       FAILED
+      ERROR: the replacement is first drawn in the hand at the pouch with 91 % of it inside the frame (it is not seen to appear)
+
+## N24: the magazine and hand move in straight lines between keys (robotic, with velocity jumps)
+  weapon-art                     FAILED
+      ERROR: at 32 % the magazine is on its well's axis (4.3 mm off)
+      ERROR: on the clip's 60 Hz grid the magazine in the hand never accelerates faster than 20 m/s2 and the hand 50 m/s2: no flung or snapped motion (worst 20.9 and 69.8 m/s2, the hand at 0.52)
+  sequence                       passed
+
+## N18: the replacement fetched from far below the frame
+  visibility                     FAILED
+      ERROR: the support hand shows at least 10000 pixels in every frame outside the hip and the rise from it (worst 2479 at 0.40)
+      ERROR: at least three of the four fingertips show at least 100 pixels whenever the hand is on a magazine (worst 1 at 0.36)
+      ERROR: while the empty hand goes for the replacement, until it dips, it shows at least 10000 pixels (2 frames, worst 2479 at 0.40)
+  sequence                       FAILED
+      ERROR: normal motion: the support wrist is never more than 6 % of the frame outside it (worst 9.7 %)
+      ERROR: normal motion: at least three of the five fingertip joints stay inside the frame (worst 1 at 0.41)
+      ERROR: reduced motion: the support wrist is never more than 6 % of the frame outside it (worst 9.7 %)
+
+# Summary
+  N1   caught
+  N2   caught
+  N3   caught
+  N4   caught
+  N5   caught
+  N6   caught
+  N7   caught
+  N8   MISSED
+  N9   caught
+  N10  caught
+  N11  caught
+  N12  caught
+  N13  caught
+  N19  caught
+  N20  caught
+  N21  caught
+  N22  caught
+  N14  caught
+  A1   caught
+  A2   caught
+  A3   MISSED
+  A4   caught
+  A5   caught
+  A6   MISSED
+  N15  caught
+  N16  caught
+  N17  caught
+  N23  MISSED
+  N24  MISSED
+  N18  caught
+  30 controls: 25 caught, 0 crashed, 5 missed, 0 invalid
