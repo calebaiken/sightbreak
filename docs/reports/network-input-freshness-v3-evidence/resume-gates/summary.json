@@ -1,0 +1,104 @@
+{
+  "driver_sha256": "67555db10aa7f697fad58870c5ba64809cdee20974fe9fa91e42e115b53908f1",
+  "sources": {
+    "baseline": {
+      "before": {
+        "commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+        "status": ""
+      },
+      "after": {
+        "commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+        "status": ""
+      }
+    },
+    "candidate": {
+      "before": {
+        "commit": "77f204083ab5bea4dc9149d3179daf540a994de4",
+        "status": ""
+      },
+      "after": {
+        "commit": "77f204083ab5bea4dc9149d3179daf540a994de4",
+        "status": ""
+      }
+    }
+  },
+  "checks": [
+    {
+      "source": "baseline",
+      "name": "independent_resume_alias_test",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-input-freshness-baseline701\\game",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/independent_resume_alias_test.gd"
+      ],
+      "exit": 0,
+      "seconds": 2.3780433999781962,
+      "log": "baseline-independent_resume_alias_test.log",
+      "log_sha256": "14ff9ca40bd4346b8c2da226e038ff22e56c3341086c0d0cd254bd4e7885ae66",
+      "native_errors": false
+    },
+    {
+      "source": "baseline",
+      "name": "lost_welcome_test",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-input-freshness-baseline701\\game",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/lost_welcome_test.gd"
+      ],
+      "exit": 0,
+      "seconds": 1.5317534999921918,
+      "log": "baseline-lost_welcome_test.log",
+      "log_sha256": "71a0a7e00e7a432447ec2f5726d14f60b456574d7e50b27c1669c5a613b52b7e",
+      "native_errors": false
+    },
+    {
+      "source": "candidate",
+      "name": "independent_resume_alias_test",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/independent_resume_alias_test.gd"
+      ],
+      "exit": 0,
+      "seconds": 2.6852799000043888,
+      "log": "candidate-independent_resume_alias_test.log",
+      "log_sha256": "14ff9ca40bd4346b8c2da226e038ff22e56c3341086c0d0cd254bd4e7885ae66",
+      "native_errors": false
+    },
+    {
+      "source": "candidate",
+      "name": "lost_welcome_test",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+        "--headless",
+        "--path",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-network-timeline-v3\\game",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/lost_welcome_test.gd"
+      ],
+      "exit": 0,
+      "seconds": 1.64836390002165,
+      "log": "candidate-lost_welcome_test.log",
+      "log_sha256": "71a0a7e00e7a432447ec2f5726d14f60b456574d7e50b27c1669c5a613b52b7e",
+      "native_errors": false
+    }
+  ],
+  "pass": true
+}
