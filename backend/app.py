@@ -296,11 +296,11 @@ def market_buy(listing_id:UUID,body:MarketBuy,request:Request,authorization:Auth
         audit(db,p.id,'market_settled',listing_id=listing.id,item_id=item.id,from_player=seller.id,to_player=p.id,fee=fee)
         return remember(db,key,h,dict(item=item_json(item),credits=p.credits,fee=fee))
 
-def trade_json(t):
+def trade_json(t, items=None, names=None):
     from sqlalchemy.orm import object_session
     db = object_session(t)
-    offer_items = {owner: [item_json(db.get(Item, item_id)) for item_id in ids] for owner, ids in t.offers.items()}
-    names = {pid: db.get(Player, pid).display_name for pid in (t.a, t.b)}
+    offer_items = {owner: [item_json(items[item_id] if items is not None else db.get(Item, item_id)) for item_id in ids] for owner, ids in t.offers.items()}
+    names = {pid: names[pid] if names is not None else db.get(Player, pid).display_name for pid in (t.a, t.b)}
     return dict(id=t.id,a=t.a,b=t.b,names=names,revision=t.revision,offers=t.offers,offer_items=offer_items,confirmations=t.confirmations,state=t.state)
 def get_trade(db, player, trade_id):
     trade=db.get(Trade,str(trade_id))
@@ -310,7 +310,18 @@ def get_trade(db, player, trade_id):
 def trades(authorization:Auth=None):
     with DBSession(engine) as db:
         p=authenticated(db,authorization)
-        return {'trades':[trade_json(t) for t in db.scalars(select(Trade).where(or_(Trade.a==p.id,Trade.b==p.id)))]}
+        rows=list(db.scalars(select(Trade).where(or_(Trade.a==p.id,Trade.b==p.id))))
+        # Hydrate only this participant's trades. Keep current item metadata and
+        # original offer order; closed trades can reference already-transferred items.
+        item_ids=list({iid for t in rows for ids in t.offers.values() for iid in ids})
+        player_ids=list({pid for t in rows for pid in (t.a,t.b)})
+        items={}; names={}
+        # Bound parameter lists even when a long trade history exceeds one batch.
+        for start in range(0,len(item_ids),500):
+            items.update((item.id,item) for item in db.scalars(select(Item).where(Item.id.in_(item_ids[start:start+500]))))
+        for start in range(0,len(player_ids),500):
+            names.update(db.execute(select(Player.id,Player.display_name).where(Player.id.in_(player_ids[start:start+500]))).all())
+        return {'trades':[trade_json(t,items,names) for t in rows]}
 @app.post('/trades',status_code=201)
 def new_trade(body:NewTrade,request:Request,authorization:Auth=None):
     rate(request,'trade',20)
