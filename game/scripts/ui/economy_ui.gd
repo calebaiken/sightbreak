@@ -510,9 +510,16 @@ func _retry_pending() -> Dictionary:
 		return {"_error": "Account mismatch"}
 	if api.token.is_empty():
 		return {"_error": "Sign in to recover the saved receipt."}
-	if transaction_journal.claim(pending) != OK:
-		_message(transaction_journal.error, true)
-		return {"_error": transaction_journal.error, "_outcome": "not_sent"}
+	var claimed := transaction_journal.claim(pending)
+	if claimed != OK:
+		var failure := transaction_journal.error
+		if claimed == ERR_INVALID_DATA:
+			pending_transaction = transaction_journal.load_pending()
+			transaction_storage_error = transaction_journal.error
+			retry_button.visible = not pending_transaction.is_empty()
+			failure = transaction_storage_error if not transaction_storage_error.is_empty() else "Another instance resolved or replaced this receipt. Its current state is loaded; refresh the account before continuing."
+		_message(failure, true)
+		return {"_error": failure, "_outcome": "not_sent"}
 	var result := await _send_transaction(pending.path, pending.payload, pending.message, pending.method, true)
 	if not result.has("_error") and pending.path == "/cases/open":
 		selected = result.get("item", {})

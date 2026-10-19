@@ -40,6 +40,7 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
     reached = threading.Event()
     release = threading.Event()
     committed = threading.Event()
+    barrier_failed = threading.Event()
     event_lock = threading.Lock()
     hold = True
     token = "fixture-memory-only-credential"
@@ -86,7 +87,10 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
             if first and boundary in ("before_commit", "late_commit"):
                 event("before_commit_barrier")
                 reached.set()
-                release.wait(30)
+                if not release.wait(30):
+                    event("barrier_timeout", phase="before_commit")
+                    barrier_failed.set()
+                    return
                 # Connection was killed before authority committed. Retry must still use
                 # the persisted intent; the killed first request is deliberately dropped.
                 if boundary == "before_commit":
@@ -112,7 +116,10 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
             committed.set()
             if first:
                 reached.set()
-                release.wait(30)
+                if not release.wait(30):
+                    event("barrier_timeout", phase="before_response")
+                    barrier_failed.set()
+                    return
             self.respond(response)
 
     server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
@@ -169,13 +176,27 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
 
         probe = restart("restarted-client")
         retained_rejection = None
+        late_order_verified = None
         if boundary == "late_commit":
+            # V2 has no saved intent and sends no recovery request. When a receipt
+            # exists, prove the client really observed the rejection before release.
+            if journal and probe.get("result", {}).get("_status") != 409:
+                raise RuntimeError("Late-commit recovery did not observe the required 409")
             retained_rejection = bool(probe.get("pending")) and saved.exists() and saved.read_text(encoding="utf-8") == journal
             event("original_commit_released_after_retry", retained_rejection=retained_rejection)
             release.set()
             if not committed.wait(10):
                 raise RuntimeError("Original request did not finish its delayed commit")
             probe = restart("after-late-commit")
+            events = [json.loads(line) for line in (directory / "timeline.jsonl").read_text(encoding="utf-8").splitlines()]
+            released = next(row["monotonic_ns"] for row in events if row["event"] == "original_commit_released_after_retry")
+            original_commit = next(row["monotonic_ns"] for row in events if row["event"] == "transaction_committed_or_replayed" and row["first"])
+            rejected = [row["monotonic_ns"] for row in events if row["event"] == "retry_rejected_before_original_commit" and row["status"] == 409]
+            late_order_verified = released < original_commit and (not journal or len(rejected) == 1 and rejected[0] < released)
+            if not late_order_verified:
+                raise RuntimeError("Late-commit rejection/release/commit ordering was not enforced")
+        if barrier_failed.is_set():
+            raise RuntimeError("Fixture barrier timed out; this trial cannot qualify")
         with sqlite3.connect(database) as db:
             costs = [row[0] for row in db.execute("SELECT cost FROM mutations")]
             requests = [json.loads(row[0]) for row in db.execute("SELECT body FROM requests")]
@@ -185,6 +206,7 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
                 "credential_persisted": token in journal, "journal_before_kill": bool(journal),
                 "journal_after_recovery": saved.exists(), "requests": requests, "probe": probe,
                 "retained_rejection": retained_rejection,
+                "late_order_verified": late_order_verified,
                 "command": command}
     finally:
         release.set()
