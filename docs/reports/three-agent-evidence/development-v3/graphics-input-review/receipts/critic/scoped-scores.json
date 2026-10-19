@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "status": "final_before_unblinding",
+  "rubric": {
+    "category_count": 7,
+    "equal_weight_when_all_evaluated": true,
+    "anchors": {"5":"recognizable development blockout","7":"coherent playable alpha with visible simplifications","8.5":"consistently polished and convincing with minor defects","10":"exceptional executed quality"},
+    "acceptance_requires_each_applicable_category": 8.5,
+    "qa_rubric_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3\\docs\\reports\\QA-0.3.md",
+    "qa_rubric_lines": [9,21],
+    "specification_acceptance_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3\\docs\\SPECIFICATION.md",
+    "specification_acceptance_lines": [554,566]
+  },
+  "score_scope": "Human visual estimates of captured subscopes only. Approximate plus/minus 0.5-point reviewer uncertainty, not statistical confidence or measurement precision.",
+  "aggregate": null,
+  "aggregate_reason": "Effects and much of every full-game category are uncaptured; no valid seven-category mean or whole-game pass.",
+  "whole_game_pass": null,
+  "source_identity_mapping_opened": false,
+  "historical_rubric_preview_exposure": true,
+  "historical_scores_used_as_evidence": false,
+  "categories": [
+    {
+      "category": "Geometry and composition",
+      "captured_scope": "Pooled visible yard architecture and composition",
+      "score": 6.5,
+      "evidence": "Coherent container/industrial structural silhouettes, wayfinding, and lane hierarchy; broad plain planes dominate sunlit view; shade adds depth.",
+      "full_category_status": "UNVERIFIED",
+      "uncaptured": ["other map regions","playable composition and scale validation","map-wide landmarks"]
+    },
+    {
+      "category": "Materials and surfaces",
+      "captured_scope": "Pooled visible rifle/gloves/sleeves/magazine/yard",
+      "score": 6.5,
+      "evidence": "Sunlit cloth/glove/tan-magazine/dark-metal separation; flat broad receiver response and inconsistent shaded sleeve information remain.",
+      "full_category_status": "UNVERIFIED",
+      "uncaptured": ["unseen assets","other finishes and cosmetics","implementation-level material properties"]
+    },
+    {
+      "category": "Lighting and atmosphere",
+      "captured_scope": "Sunlit static view and local shaded-viewmodel readability",
+      "score": null,
+      "subscores": [
+        {"scope":"sunlit view","score":6.5},
+        {"scope":"Sequence 03 coherent contact-sheet A, shaded foreground detail","score":6.5},
+        {"scope":"Sequence 03 coherent contact-sheet B, shaded foreground detail","score":6.0}
+      ],
+      "letter_scope": "Contact-sheet identity only; not randomized still-pair letters",
+      "evidence": "Directional shadows and depth are readable; large hard shadows, flat planes, and very dark foreground forms limit grounding and information separation.",
+      "full_category_status": "UNVERIFIED",
+      "uncaptured": ["dynamic stability","character grounding and contact shadows","other lighting contexts"]
+    },
+    {
+      "category": "Models and animation presentation",
+      "captured_scope": "First-person pose/anatomy/framing and sampled continuity only",
+      "score": null,
+      "subscores": [
+        {"sequence":"01","sheet_side":"A","score":6.5},
+        {"sequence":"01","sheet_side":"B","score":7.0},
+        {"sequence":"02","sheet_side":"A","score":6.5},
+        {"sequence":"02","sheet_side":"B","score":6.5},
+        {"sequence":"03","sheet_side":"A","score":6.5},
+        {"sequence":"03","sheet_side":"B","score":7.0}
+      ],
+      "letter_scope": "Local coherent contact-sheet labels; no cross-sequence or still-pair mapping",
+      "evidence": "Compact pickup improves obstruction and arm presentation. Tubular sleeves, slab-like fingers, calm 66-to-67 step, and shaded detail loss remain beyond minor defects.",
+      "full_category_status": "UNVERIFIED",
+      "uncaptured": ["full real-time animation","smoothness and easing","other weapons","third-person characters and equipment","human feel"]
+    },
+    {
+      "category": "Combat and cosmetic effects",
+      "captured_scope": "None sufficient",
+      "score": null,
+      "evidence": "No native SIGHTBREAK firing, impact, smoke, casing sequence, hit feedback, case reveal, or cosmetic-inspection evidence.",
+      "full_category_status": "UNVERIFIED",
+      "uncaptured": ["all combat and cosmetic effects quality"]
+    },
+    {
+      "category": "Identity and consistency",
+      "captured_scope": "Visible palette, industrial architecture, wayfinding, and rifle",
+      "score": 7.5,
+      "evidence": "Graphite/crimson/muted-gold industrial Arcade identity is coherent. No parchment or Valve imitation required.",
+      "full_category_status": "UNVERIFIED",
+      "uncaptured": ["menus","HUD","cosmetics","game-wide consistency"]
+    },
+    {
+      "category": "Competitive readability",
+      "captured_scope": "Static route/viewmodel silhouette and obstruction only",
+      "score": 7.5,
+      "evidence": "Routes and main silhouettes read; low-entry pickup reduces left-side obstruction. Dark gun detail and the bulky alternative sleeve remain limiting.",
+      "full_category_status": "UNVERIFIED",
+      "uncaptured": ["opponent and team separation","HUD and crosshair use","phone display readability","touch reach","effects under combat load"]
+    }
+  ],
+  "acceptance_statement": "Captured scopes do not demonstrate 8.5-level polish. Unverified scopes cannot be passed. No whole-game, release, performance, or seven-category acceptance is claimed."
+}

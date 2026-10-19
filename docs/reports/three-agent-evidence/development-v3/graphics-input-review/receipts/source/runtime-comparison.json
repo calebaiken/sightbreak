@@ -1,0 +1,161 @@
+{
+  "baseline": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+  "candidate": "79a9591350854373076e62a4707ec84edc803756",
+  "supplied_PR_token": "2bb5212dd596571653bd37eb85a4594a72bfd1abc",
+  "supplied_PR_token_characters": 41,
+  "valid_full_SHA1": false,
+  "exact_PR_reference_resolved": false,
+  "local_prefix_2bb5212_resolved": false,
+  "candidate_vs_PR_runtime_blob_equality": "UNVERIFIED: invalid/unresolved supplied reference; no network/GitHub lookup",
+  "failed_diff_stdout_is_not_an_empty_diff": true,
+  "baseline_to_candidate_path_changes": [
+    "M\tgame/assets/weapons/relay_ar/relay_ar_arms.glb",
+    "M\tgame/assets/weapons/relay_ar/relay_ar_arms_albedo.png",
+    "M\tgame/assets/weapons/relay_ar/relay_ar_arms_normal.png",
+    "M\tgame/assets/weapons/relay_ar/relay_ar_arms_orm.png",
+    "M\tgame/scripts/gameplay/viewmodel_shading.gd",
+    "M\tgame/scripts/gameplay/weapon_model.gd",
+    "A\tgame/tests/reload_continuity_test.gd",
+    "A\tgame/tests/reload_continuity_test.gd.uid",
+    "M\tgame/tests/viewmodel_light_probe.gd",
+    "M\tgame/tests/weapon_art_test.gd",
+    "A\tscripts/ab_pair.py",
+    "M\tscripts/reload_negative_controls.py",
+    "M\tscripts/validate.sh",
+    "M\tscripts/verify_offline_export.py",
+    "M\ttools/art/arms_build.py",
+    "A\ttools/art/hand_cage.py",
+    "A\ttools/art/preview_cage.py"
+  ],
+  "unchanged_capture_or_authority_paths": [
+    "game/scripts/gameplay/actor.gd",
+    "game/scripts/gameplay/reload_phases.gd",
+    "game/tests/reload_sequence_capture.gd",
+    "game/scripts/gameplay/weapons.gd",
+    "game/project.godot"
+  ],
+  "scopes": [
+    "game",
+    "server",
+    "backend",
+    "scripts",
+    "tools"
+  ],
+  "current_integration_HEAD_used_for_attribution": false,
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "ls-tree",
+        "-r",
+        "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+        "--",
+        "game",
+        "server",
+        "backend",
+        "scripts",
+        "tools"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "timeout_s": 30,
+      "returncode": 0,
+      "stderr": "",
+      "stdout_bytes": 32137,
+      "stdout_sha256": "67626d48b863f2f441a8a2737b81c4717c6312c573990978d13c806c01ccbc20",
+      "stdout_content_location": "runtime-blob-inventory.json, same reference entries; compact parsed representation"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "ls-tree",
+        "-r",
+        "79a9591350854373076e62a4707ec84edc803756",
+        "--",
+        "game",
+        "server",
+        "backend",
+        "scripts",
+        "tools"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "timeout_s": 30,
+      "returncode": 0,
+      "stderr": "",
+      "stdout_bytes": 32548,
+      "stdout_sha256": "71338cc165f80951115eae28023cb2435c89b15674ab515c21489579748e0e71",
+      "stdout_content_location": "runtime-blob-inventory.json, same reference entries; compact parsed representation"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "--verify",
+        "2bb5212dd596571653bd37eb85a4594a72bfd1abc^{commit}"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "timeout_s": 30,
+      "returncode": 128,
+      "stdout": "",
+      "stderr": "fatal: Needed a single revision\n"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "rev-parse",
+        "--verify",
+        "2bb5212^{commit}"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "timeout_s": 30,
+      "returncode": 128,
+      "stdout": "",
+      "stderr": "fatal: Needed a single revision\n"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "diff",
+        "--name-status",
+        "79a9591350854373076e62a4707ec84edc803756",
+        "2bb5212dd596571653bd37eb85a4594a72bfd1abc",
+        "--",
+        "game",
+        "server",
+        "backend",
+        "scripts",
+        "tools"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "timeout_s": 30,
+      "returncode": 128,
+      "stdout": "",
+      "stderr": "fatal: bad revision '2bb5212dd596571653bd37eb85a4594a72bfd1abc'\n"
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "diff",
+        "--name-status",
+        "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+        "79a9591350854373076e62a4707ec84edc803756",
+        "--",
+        "game",
+        "server",
+        "backend",
+        "scripts",
+        "tools"
+      ],
+      "cwd": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+      "timeout_s": 30,
+      "returncode": 0,
+      "stdout": "M\tgame/assets/weapons/relay_ar/relay_ar_arms.glb\nM\tgame/assets/weapons/relay_ar/relay_ar_arms_albedo.png\nM\tgame/assets/weapons/relay_ar/relay_ar_arms_normal.png\nM\tgame/assets/weapons/relay_ar/relay_ar_arms_orm.png\nM\tgame/scripts/gameplay/viewmodel_shading.gd\nM\tgame/scripts/gameplay/weapon_model.gd\nA\tgame/tests/reload_continuity_test.gd\nA\tgame/tests/reload_continuity_test.gd.uid\nM\tgame/tests/viewmodel_light_probe.gd\nM\tgame/tests/weapon_art_test.gd\nA\tscripts/ab_pair.py\nM\tscripts/reload_negative_controls.py\nM\tscripts/validate.sh\nM\tscripts/verify_offline_export.py\nM\ttools/art/arms_build.py\nA\ttools/art/hand_cage.py\nA\ttools/art/preview_cage.py\n",
+      "stderr": ""
+    }
+  ]
+}

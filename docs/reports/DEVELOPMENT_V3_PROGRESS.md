@@ -20,10 +20,10 @@ including failed/discarded trials and the unresolved original cancellation failu
 | PR #16 combined alpha | `d2439acdd5f73df7bae5ada62ee1e3dec2cf30db` | Starting integration commit |
 | PR #14 bots | `48eb0586e273f96dc20b346ed444d00ab0f3ac30` | **Blocked** by independently reproduced native match/actor contract regressions; V2 runtime retained |
 | PR #2 art | `bb5212dd596571653bd37eb85a4594a72bfd1abc` | Owner head refreshed |
-| Art reconciliation on PR #16 | `79a9591350854373076e62a4707ec84edc803756` | Fixed-condition blinded native comparison pending |
+| Art reconciliation on PR #16 | `79a9591350854373076e62a4707ec84edc803756` | **Held** after frozen blind comparison: clearer shade cloth, but worse normal-pickup sleeve obstruction; no overall win |
 | Native UI / research / expected-price guard | `7e41de6` / `7dd0628` / `228c382` | Already in V2; no new source change asserted |
 | Astra durable-receipt recovery, PR #18 | `astra/systems-v3-recovery` | Source handoff received; not integrated or independently accepted |
-| Astra trade-read batching, PR #19 | `4a8e9ea73aa8b286d9f1751b0a6b485479737294` | Awaiting final source-bound comparison/review; no backend edit here |
+| Astra trade-read batching, PR #19 | `4a8e9ea73aa8b286d9f1751b0a6b485479737294` | Neutral SQL-count verdict frozen; no introduced source defect found; source binding and retained actual-response/state proof still required |
 | Astra input freshness / prediction | `f3ceaad` / separate prediction investigation | Reserved source modules acknowledged; independent handoff validation pending |
 
 The published **74/74 matrix**, separate **12/12 ten-client campaign**, and
@@ -32,9 +32,9 @@ on a clean frozen V3 commit before any corresponding V3 claim.
 
 ## Active slices
 
-1. Bot input independently reproduced and blocked. [Exact-head source review](https://github.com/calebaiken/sightbreak/pull/14#pullrequestreview-5576455853) is posted; compact raw evidence is being published here. External helper aliases are diagnostics, not working-match adapters or a measured integration win.
-2. Native graphics packet prepared: 39 randomized matched pairs and six chronological sheets. A fresh critic is judging neutral outputs; the private mapping remains unopened. The separate continuity matrix is not yet finalized.
-3. Integration provenance/process/HUD corrections are in pre-freeze review. The original independent critic's failures are retained, including missing original temporary receipts explicitly marked unavailable. A second critic is checking corrected controls; passing pure units are not native campaign results.
+1. Bot input independently reproduced and blocked. [Exact-head source review](https://github.com/calebaiken/sightbreak/pull/14#pullrequestreview-5576455853) and [compact raw evidence](three-agent-evidence/development-v3/ai-input-review/REPORT.md) are published. External helper aliases are diagnostics, not working-match adapters or a measured integration win.
+2. Graphics verdict frozen before mapping: 39 randomized matched pairs and six chronological sheets. [Published source-bound evidence](three-agent-evidence/development-v3/graphics-input-review/REPORT.md) finds candidate `79a9591` loses normal-pickup composition to V2 despite clearer shade cloth; the whole input is held. The conspicuous calm magazine entry belongs to the **old baseline**, not the candidate. [A separate corrected PR binding](three-agent-evidence/development-v3/graphics-pr-binding/README.md) verifies eleven visual blobs against the real PR #2 head without rewriting the packet's invalid-token failure. Separate incomplete continuity tests are not an acceptance claim.
+3. Integration provenance/process/HUD corrections remain pre-freeze. Critics reproduced late-descendant false-success in the matrix and export watchdog; shared pre-launch containment now rejects it while retaining actual root exits. The campaign's real CPython control also rejects the escape; artifact verification is being updated to the same boundary. Passing tooling controls are not native campaign results.
 4. Freeze the integration commit, run the full maintained matrix and separate twelve-condition ten-client campaign, then export and independently inspect the actual packaged bytes and executable entry points.
 5. Run completion-driven exported network and living-player offline input flows. Publish exact source, all retained attempts, checksums, independent critique and development artifacts. Source defects return to their source PR; no runtime claim precedes a new frozen-source run.
 
@@ -46,10 +46,12 @@ These are tooling controls on the uncommitted integration, **not a verified V3 c
 | --- | --- |
 | Identical runtime, different exporter commit | Old packaging incorrectly succeeded (`provenance-before`); corrected exact-identity unit rejects it |
 | Fresh-source Git boundaries | Seven real isolated-Git tests exit 0: staged/untracked/deleted source, untracked documentation, two dirty byte states, ignored outputs, same bytes/different commit (`real-git-controls-20261019T191905Z`) |
-| Portable process/network controls | 57 mocked engine/socket/cleanup units exit 0 in that same attempt; no native workload executed |
+| Portable process/network controls | Initial 57 mocked controls retained; new 58-test suite includes real CPython exited-root/late-descendant rejection and exits 0 (`campaign-containment-20261019T194928Z`). No native workload executed |
 | Living-player OCR | Initial unreadable ammunition substring failed a negative control; corrected four-test suite exits 0 (`hud-revision-20261019T191733Z`). Blank/zero/dead/ambiguous health is rejected |
 | Prior correction batch | Manifest 23, matrix harness 8 and export UI 6 tests exit 0; the earlier OCR failure is retained in `tooling-revisions-20261019T191236Z`, not overwritten |
 | Original harsh integration critique | `critic-before-20261019T190803.5556140Z-18b0b5af`: 77 evidence hashes checked; manifest SHA-256 `a66a6c06b5eb63cc7a6a33c6a76d66cff1763161acd565f4a8817d518b39ed75`. Reconstructed source is labelled; unavailable original fixture bytes/receipts are not invented |
+| Export watchdog descendant control | `export-flow-descendant-20261019T1939301091253Z`: entry exit 1, actual worker exit 0, failed receipt, stopped descendant and no late output; serial 27-test retry passes. Paging-file-exhausted parallel attempt retained |
+| Backend neutral packet | Verdict frozen at `2026-10-19T19:46:36.4321805Z`; report SHA-256 `f76906b5b3ee735d65eedef6bf23998d274a614778fb9e76c196ba39957bfdfa`. Prefers K for statement counts only; no identity or general latency/state-safety acceptance. [Missing-receipt request](https://github.com/calebaiken/sightbreak/pull/19#issuecomment-6275871795) is posted |
 
 ## Current observations and limits
 

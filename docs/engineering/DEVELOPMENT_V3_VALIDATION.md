@@ -33,8 +33,11 @@ python scripts/test_build_manifest.py -v
 python scripts/test_source_identity.py -v
 python scripts/test_godot_process.py -v
 python scripts/test_validate_matrix.py -v
+python scripts/test_matrix_process.py -v
 python scripts/test_offline_hud.py -v
 python scripts/test_export_ui.py -v
+python scripts/test_export_flow.py -v
+python scripts/test_verify_builds.py -v
 ```
 
 These are adversarial tooling/unit controls, not simulated substitutes for the
@@ -73,15 +76,19 @@ python3 scripts/verify_packaged_builds.py --output builds/v3-package-verificatio
 .venv/bin/python scripts/verify_offline_export.py --display :107 --timeout 300 --output builds/v3-export-offline
 ```
 
-The packaged verifier and its tests are still under independent builder review
-at this document checkpoint. Its eventual result must inspect extracted bytes,
-permissions and the actual Linux entry points, not just archive existence.
+The packaged verifier inspects extracted bytes, permissions and the actual Linux
+entry points, not just archive existence. Its pure controls and independent mock
+review do not establish a native pass: actual frozen Linux execution remains required.
 Both UI controllers require a real X11 display (an isolated Xvfb is allowed),
 XTest, Pillow and, for offline HUD OCR, Tesseract. They close the completed client
 through the standard desktop close event and require clean normal exit.
 `--quit-after` is only a deliberately premature-exit control, not the normal flow
 or a wall-clock timeout. Screenshots and positive-health OCR must establish that
 offline firing/reload happened while alive, with ammunition conservation.
+The separate-process watchdog owns descendants before launch, bounds the complete
+flow, retains partial OCR output, and rejects surviving descendants even when the
+controller's own exit is zero. Its bounded failure-cleanup allowance cannot turn a
+deadline overrun into a pass.
 
 Upload failures as well as successes, including nested logs and hidden
 `.local/validation/` native render captures. CI artifacts are **development-only**:
