@@ -24,18 +24,20 @@ Current refs fetched 2026-10-19; `git merge-base --is-ancestor` and `git cherry`
 | #10 reconnect | `8100d35` | Runtime integrated; sole non-ancestor commit adds account-validation documentation/evidence |
 | #15 expected price | `228c382` | Ancestor of frozen V2/#16, intentionally after #11; guarded price and legacy receipt fingerprints retained |
 
-Research backlog: B-27 is implemented by #15; **B-21 is genuinely unfinished**:
-`EconomyUI._perform` records uncertain receipts only in RAM, after the request,
-and `_retry_pending` clears the record before resending. Logout also discards it.
-B-28 lists further backend work; bounded efficiency candidates are under audit.
+Research backlog: B-27 is implemented by #15. **B-21 was genuinely unfinished in V2**:
+`EconomyUI._perform` recorded uncertain receipts only in RAM, after the request,
+and `_retry_pending` cleared the record before resending. Logout also discarded it.
+PR #18 now persists before dispatch and restores the exact account/server-bound receipt.
+B-28 lists further backend work; the bounded trade-read efficiency slice is in progress.
 
 ## Independently judgeable slices
 
 | Slice | Declared failure mode / metric | State | Source and evidence |
 |---|---|---|---|
-| S1 / B-21 | Process exit after a keyed transaction commits but before its response; exact receipt must survive restart and settle once | Implementing | Process-kill A/B fixture and disk/error/account-isolation checks planned |
-| S2 | Prediction/reconciliation or lifecycle gap with matched impairment | Independent audit | Selection pending source-backed findings |
-| S3 | Backend efficiency with preserved authority/economy | Independent audit | Selection pending measured bounded workload |
+| S1 / B-21 | Process exit around commit; exact receipt must survive restart and settle once | Matched native campaign passes; harsh reviews pending | [PR #18](https://github.com/calebaiken/sightbreak/pull/18), runtime `ac48342`, tested checkpoint `223ec0c`; **0/18 → 18/18 recovered**; [report](../reports/CLIENT_RECOVERY_V3.md) |
+| S2 | Fully acknowledged stale input batches incorrectly refresh transport liveness | Independent implementation/validation | `astra/network-input-freshness-v3`; protocol and queued retransmission semantics preserved |
+| S3 | Per-trade item/name hydration scales database statements with history size | Independent implementation/validation | `astra/backend-trade-read-v3`; participant scope, response and write behavior preserved |
+| S4 | Experimental prediction/reconciliation divergence under impairment | Independent source-backed audit/implementation | `astra/prediction-reconciliation-v3`; default-off gate retained |
 
 Each candidate needs an exact runtime commit, repeatable command, raw logs, matched
 baseline, separate blind critic, and a recorded Sol handoff. A passing smoke test
@@ -45,6 +47,7 @@ does not activate a feature gate. Failed trials remain in the evidence record.
 
 - [PR16 systems handoff](https://github.com/calebaiken/sightbreak/pull/16#issuecomment-6274885599)
 - [PR12 narrow transaction-hook handoff](https://github.com/calebaiken/sightbreak/pull/12#issuecomment-6274889863); comments/reviews refreshed before editing.
+- [Sol V3 integration / QA PR #17](https://github.com/calebaiken/sightbreak/pull/17); shared harness portability belongs to Sol. Systems slices use focused separate harnesses.
 - Protocol 6 remains matched. Prediction defaults off; live rewind stays disabled.
 - Preserve Claude UI/visual nodes and API, Gemini bot interfaces, movement delegation,
   expected-price capture, authoritative economy, and offline-training separation.
@@ -53,7 +56,7 @@ does not activate a feature gate. Failed trials remain in the evidence record.
 
 ## Next recorded actions
 
-1. Implement persist-before-send and same-account/server exact recovery; retain unknown receipts across retry/sign-out.
-2. Freeze S1 runtime, reproduce matched process-kill workloads and applicable UI/economy checks.
-3. Publish candidate PR/evidence; have a separate harsh critic rank unlabelled results and identify the largest remaining gap.
-4. Incorporate source-bound Sol findings and advance independent S2/S3 while review is pending.
+1. Incorporate separate harsh source review and blind K/R campaign verdict for S1.
+2. Run native PostgreSQL UI regression against the unchanged authoritative backend; retain any failed trials.
+3. Publish each independent S2/S3/S4 runtime, matched workload and raw evidence to its own draft PR.
+4. Refresh Sol's source-bound findings, resolve blockers and keep applicable feature gates closed until independently qualified.

@@ -1,0 +1,83 @@
+baseline 0 store before_commit recovered False
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 65506)
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\http\server.py", line 485, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\http\server.py", line 473, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\Users\blith\OneDrive\Documents\Default Project\sightbreak\scripts\validate_transaction_restart.py", line 95, in do_POST
+    self.respond(response)
+    ~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\blith\OneDrive\Documents\Default Project\sightbreak\scripts\validate_transaction_restart.py", line 54, in respond
+    self.end_headers()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\http\server.py", line 587, in end_headers
+    self.flush_headers()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\http\server.py", line 591, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+baseline 0 store after_commit recovered False
+baseline 0 case before_commit recovered False
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 65510)
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\socketserver.py", line 697, in process_request_thread
+    self.finish_request(request, client_address)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\socketserver.py", line 766, in __init__
+    self.handle()
+    ~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\http\server.py", line 485, in handle
+    self.handle_one_request()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\http\server.py", line 473, in handle_one_request
+    method()
+    ~~~~~~^^
+  File "C:\Users\blith\OneDrive\Documents\Default Project\sightbreak\scripts\validate_transaction_restart.py", line 95, in do_POST
+    self.respond(response)
+    ~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\blith\OneDrive\Documents\Default Project\sightbreak\scripts\validate_transaction_restart.py", line 54, in respond
+    self.end_headers()
+    ~~~~~~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\http\server.py", line 587, in end_headers
+    self.flush_headers()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\http\server.py", line 591, in flush_headers
+    self.wfile.write(b"".join(self._headers_buffer))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Programs\Python\Python314\Lib\socketserver.py", line 845, in write
+    self._sock.sendall(b)
+    ~~~~~~~~~~~~~~~~~~^^^
+ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
+----------------------------------------
+baseline 0 case after_commit recovered False
+Traceback (most recent call last):
+  File "C:\Users\blith\OneDrive\Documents\Default Project\sightbreak\scripts\validate_transaction_restart.py", line 197, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\blith\OneDrive\Documents\Default Project\sightbreak\scripts\validate_transaction_restart.py", line 181, in main
+    case = run_case(args.godot, root, args.out / label / f"{repeat}-{kind}-{boundary}", kind, boundary)
+  File "C:\Users\blith\OneDrive\Documents\Default Project\sightbreak\scripts\validate_transaction_restart.py", line 122, in run_case
+    raise RuntimeError(f"Client did not reach {boundary}: {directory}")
+RuntimeError: Client did not reach before_commit: C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-receipts-r1\baseline\0-market-before_commit

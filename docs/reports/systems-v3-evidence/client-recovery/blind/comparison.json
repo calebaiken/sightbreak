@@ -1,0 +1,893 @@
+{
+  "declared_bar": "Recover all 18 process-killed transactions per source (3 repeats x3 endpoints x2 kill boundaries), original receipt and consent, one mutation/debit only per recovered intent, zero persisted bearer credentials; preserve source-clean provenance. Client restart fixture, not host power loss or PostgreSQL qualification.",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.6",
+    "godot": "4.7.2.stable.official.ed1daf0bf",
+    "probe_sha256": "6e4e7a5ee3f8d8c831c3b140c9685c29da8e3434d144d299e22205458ccca927",
+    "harness_sha256": "74d03ff9fb39703cc873f8e30b2f167661363b80fdeabaad4d69b14363050295"
+  },
+  "samples": {
+    "K": {
+      "recovered": 0,
+      "total": 18,
+      "clean_before_after": true,
+      "cases": [
+        {
+          "kind": "store",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "store",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "case",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "case",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "market",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "market",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "store",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "store",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "case",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "case",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "market",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "market",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "store",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "store",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "case",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "case",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "market",
+          "boundary": "before_commit",
+          "recovered": false,
+          "mutation_count": 0,
+          "total_debit": 0,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        },
+        {
+          "kind": "market",
+          "boundary": "after_commit",
+          "recovered": false,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": false,
+          "credential_persisted": false,
+          "journal_before_kill": false,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "reason": "no pending receipt after process restart",
+            "recovered": false
+          }
+        }
+      ]
+    },
+    "R": {
+      "recovered": 18,
+      "total": 18,
+      "clean_before_after": true,
+      "cases": [
+        {
+          "kind": "store",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "store",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            },
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "case",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "case",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            },
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "market",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 0.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "market",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            },
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 0.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "store",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "store",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            },
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "case",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "case",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            },
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "market",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 0.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "market",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            },
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 0.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "store",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "store",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            },
+            {
+              "definition_id": "key",
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "case",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "case",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 100,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            },
+            {
+              "case_id": "case-instance",
+              "idempotency_key": "same-immutable-receipt",
+              "key_id": "key-instance"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 9999900.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "market",
+          "boundary": "before_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 0.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        },
+        {
+          "kind": "market",
+          "boundary": "after_commit",
+          "recovered": true,
+          "mutation_count": 1,
+          "total_debit": 10000000,
+          "receipt_reused": true,
+          "credential_persisted": false,
+          "journal_before_kill": true,
+          "journal_after_recovery": false,
+          "requests": [
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            },
+            {
+              "expected_price": 10000000,
+              "idempotency_key": "same-immutable-receipt"
+            }
+          ],
+          "probe": {
+            "pending": false,
+            "recovered": true,
+            "result": {
+              "credits": 0.0,
+              "item": {
+                "id": "one-authoritative-instance"
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

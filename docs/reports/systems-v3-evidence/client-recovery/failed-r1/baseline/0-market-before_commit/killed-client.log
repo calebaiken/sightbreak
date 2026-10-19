@@ -1,0 +1,9 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+RECEIPT_PROBE {"pending":false,"recovered":false,"result":{"_error":"expected_price must be an integer (422)","_outcome":"rejected","_status":422,"_uncertain":false}}
+ERROR: Object '<Object#36205233862>' was freed or unreferenced while a signal is being emitted from it. Try connecting to the signal using 'CONNECT_DEFERRED' flag, or use queue_free() to free the object (if this object is a Node) to avoid this error and potential crashes.
+   at: ~Object (core/object/object.cpp:2324)
+   GDScript backtrace (most recent call first):
+       [0] run (C:/Users/blith/OneDrive/Documents/Default Project/sightbreak/game/tests/transaction_crash_probe.gd:30)
+       [1] _perform (res://scripts/ui/economy_ui.gd:525)
+       [2] request (res://scripts/ui/economy_api.gd:78)
