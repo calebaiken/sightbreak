@@ -276,6 +276,34 @@ def seed(service, balance: int, evidence: Evidence):
     return fixture
 
 
+def prepare_database(root: Path, database: str, output: Path, repetitions: int, include_native: bool):
+    """Exit this setup interpreter before starting the service/native client on an 8GB host."""
+    assert re.fullmatch(r"sightbreak_receipt_[0-9a-f]+_test", database)
+    sys.path.insert(0, str(root / "backend"))
+    import app as service
+    assert service.engine.url.database == database
+    service.Base.metadata.create_all(service.engine)
+    with service.engine.begin() as db:
+        for migration in sorted((root / "backend/migrations").glob("*.sql")):
+            db.exec_driver_sql(migration.read_text(encoding="utf-8"))
+    evidence = Evidence(output.parent)
+    fixtures = {"cases": [], "native": [], "fee_basis_points": service.CONFIG["market_fee_basis_points"]}
+    for price in [400, 401, 10000000][:repetitions]:
+        buyer, seller = seed(service, price + 1600, evidence), seed(service, 2000, evidence)
+        with service.transaction() as db:
+            item = service.mint(db, seller["owner"], "obsidian_rare").id
+        fixtures["cases"].append(dict(buyer=buyer, seller=seller, item=item, price=price))
+    if include_native:
+        for _ in range(2):
+            a, b = seed(service, 2000, evidence), seed(service, 2000, evidence)
+            with service.transaction() as db:
+                items = {key: service.mint(db, a["owner"], definition).id
+                         for key, definition in [("case", "obsidian_case"), ("key", "key"), ("skin", "obsidian_rare")]}
+            fixtures["native"].append(dict(a=a, b=b, items=items))
+    write_json(output, fixtures)
+    service.engine.dispose()
+
+
 def verify_commit(before, after, fixture, purchase, fee) -> dict:
     players_before = {row["id"]: row for row in before["players"]}
     players_after = {row["id"]: row for row in after["players"]}
@@ -305,13 +333,11 @@ def verify_commit(before, after, fixture, purchase, fee) -> dict:
     )
 
 
-def run_case(args, root, private, service, database, backend_port, directory, price):
+def run_case(args, root, private, seeded, fee_basis_points, database, backend_port, directory):
     directory.mkdir()
     evidence = Evidence(directory)
-    buyer = seed(service, price + 1600, evidence)
-    seller = seed(service, 2000, evidence)
-    with service.transaction() as db:
-        item = service.mint(db, seller["owner"], "obsidian_rare").id
+    buyer, seller, item, price = (seeded[key] for key in ["buyer", "seller", "item", "price"])
+    evidence.secrets.update([buyer["password"], buyer["token"], seller["password"], seller["token"]])
     listing = request(f"http://127.0.0.1:{backend_port}", "/market/list", dict(item_id=item, price=price), seller["token"])
     path = f'/market/{listing["id"]}/buy'
     proxy = HoldProxy(backend_port, path, evidence)
@@ -332,7 +358,7 @@ def run_case(args, root, private, service, database, backend_port, directory, pr
         if not proxy.reached.wait(25):
             raise RuntimeError("Native request did not reach upstream response barrier")
         committed = snapshot(database, directory, "02-committed-before-kill", evidence)
-        checks = verify_commit(before, committed, config, proxy.held, price * service.CONFIG["market_fee_basis_points"] // 10000)
+        checks = verify_commit(before, committed, config, proxy.held, price * fee_basis_points // 10000)
         before_kill = journal_snapshot(journal, directory, "journal-before-kill", evidence)
         if not all(checks.values()):
             write_json(directory / "commit-checks.json", checks)
@@ -407,13 +433,11 @@ def run_case(args, root, private, service, database, backend_port, directory, pr
         fixture.unlink(missing_ok=True)
 
 
-def native_economy(args, root, private, service, backend_port, directory, calibrated):
+def native_economy(args, root, private, seeded, backend_port, directory, calibrated):
     directory.mkdir()
     evidence = Evidence(directory)
-    a, b = seed(service, 2000, evidence), seed(service, 2000, evidence)
-    with service.transaction() as db:
-        items = {key: service.mint(db, a["owner"], definition).id
-                 for key, definition in [("case", "obsidian_case"), ("key", "key"), ("skin", "obsidian_rare")]}
+    a, b, items = (seeded[key] for key in ["a", "b", "items"])
+    evidence.secrets.update([a["password"], a["token"], b["password"], b["token"]])
     config = dict(a=a["owner"], b=b["owner"], token_a=a["token"], token_b=b["token"], **items,
                   api_url=f"http://127.0.0.1:{backend_port}")
     fixture = private / (directory.name + ".json")
@@ -474,7 +498,6 @@ def main():
     (args.out / PROBE.name).write_bytes(PROBE.read_bytes())
     created = False
     process = None
-    service = None
     try:
         with tempfile.TemporaryDirectory(prefix="sightbreak-receipt-", dir=Path(os.environ["LOCALAPPDATA"]) / "Temp/opencode") as folder:
             private = Path(folder)
@@ -492,12 +515,18 @@ def main():
                 db.execute(sql.SQL("CREATE DATABASE {}").format(sql.Identifier(database)))
             created = True
             os.environ["DATABASE_URL"] = f'postgresql+psycopg://{CONNECT["user"]}:{CONNECT["password"]}@127.0.0.1:{CONNECT["port"]}/{database}'
-            sys.path.insert(0, str(root / "backend"))
-            import app as service
-            service.Base.metadata.create_all(service.engine)
-            with service.engine.begin() as db:
-                for migration in sorted((root / "backend/migrations").glob("*.sql")):
-                    db.exec_driver_sql(migration.read_text(encoding="utf-8"))
+            setup_file = private / "seeded-private.json"
+            setup_command = [sys.executable, str(HARNESS), "--prepare", str(root), database,
+                             str(setup_file), str(args.repetitions), str(int(args.native_economy))]
+            setup = subprocess.Popen(setup_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+            setup_stdout, setup_stderr = setup.communicate(timeout=90)
+            summary["setup"] = dict(pid=setup.pid, command=setup_command, returncode=setup.returncode)
+            (args.out / "setup.stdout.txt").write_text(setup_stdout, encoding="utf-8")
+            (args.out / "setup.stderr.txt").write_text(setup_stderr, encoding="utf-8")
+            if setup.returncode:
+                raise RuntimeError("PostgreSQL setup subprocess failed")
+            seeded = json.loads(setup_file.read_text(encoding="utf-8"))
+            setup_file.unlink()
             with socket.socket() as listener:
                 listener.bind(("127.0.0.1", 0))
                 port = listener.getsockname()[1]
@@ -515,20 +544,18 @@ def main():
                         time.sleep(0.1)
                 else:
                     raise RuntimeError("Real PostgreSQL API did not become healthy")
-                for index, price in enumerate([400, 401, 10000000][:args.repetitions]):
-                    result = run_case(args, root, private, service, database, port, args.out / f"run-{index + 1}", price)
+                for index, case in enumerate(seeded["cases"]):
+                    result = run_case(args, root, private, case, seeded["fee_basis_points"], database, port, args.out / f"run-{index + 1}")
                     summary["runs"].append(result)
                     print(f'run-{index + 1} recovered={result["recovered"]} authoritative_pass={result["authoritative_pass"]}', flush=True)
                 if args.native_economy:
-                    summary["native_economy"] = [native_economy(args, root, private, service, port, args.out / name, calibrated)
-                        for name, calibrated in [("native-economy-original", False), ("native-economy-dns-calibrated", True)]]
+                    summary["native_economy"] = [native_economy(args, root, private, seeded["native"][index], port, args.out / name, calibrated)
+                        for index, (name, calibrated) in enumerate([("native-economy-original", False), ("native-economy-dns-calibrated", True)])]
                 summary["archived_source_unchanged"] = source_manifest == manifest(root, exclude_cache=True)
                 process.terminate()
                 process.wait(timeout=10)
                 summary["service"]["stopped_wall_ns"] = time.time_ns()
                 process = None
-            service.engine.dispose()
-            service = None
         summary["source_after"] = identity(args.source, args.revision)
         summary["harness_after"] = identity(HARNESS.parents[1], "HEAD")
         summary["core_pass"] = (all(run["authoritative_pass"] and run["recovered"] == bool(args.expect_recovered) for run in summary["runs"])
@@ -542,8 +569,6 @@ def main():
         if process is not None:
             process.terminate()
             process.wait(timeout=10)
-        if service is not None:
-            service.engine.dispose()
         if created:
             with psycopg.connect(**CONNECT, dbname="postgres", autocommit=True) as db:
                 db.execute(sql.SQL("DROP DATABASE {} WITH (FORCE)").format(sql.Identifier(database)))
@@ -554,4 +579,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) == 7 and sys.argv[1] == "--prepare":
+        prepare_database(Path(sys.argv[2]), sys.argv[3], Path(sys.argv[4]), int(sys.argv[5]), bool(int(sys.argv[6])))
+    else:
+        main()

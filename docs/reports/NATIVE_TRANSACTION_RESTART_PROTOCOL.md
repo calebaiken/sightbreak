@@ -111,3 +111,11 @@ and four early probe events, identically in both arms. The workload, timeout,
 transaction assertions, and backend contracts are unchanged. A separate native
 UI-only startup diagnostic completed in 1.312 seconds, and Godot's check-only
 parse of the external probe passed; neither is counted as a receipt recovery.
+
+The verbose r7 attempt again stopped during engine startup before probe events.
+The subsequent freeze moves schema/migration/fixture setup into a short-lived
+Python subprocess that exits before the real service and native client launch.
+This removes the second resident SQLAlchemy/FastAPI application from the shared
+8GB host. All three cases are pre-seeded in the same unique database; before/after
+snapshots include those other fixture rows and require them to remain unchanged.
+The same setup and measurement sequence applies to both revisions.
