@@ -1,0 +1,360 @@
+{
+  "checks": 46,
+  "failures": 0,
+  "coverage": {
+    "baseline": {
+      "position_and_coverage_consistent": true,
+      "complete_observability_gate": false,
+      "lifecycle_events": 14,
+      "lifecycle_events_with_diagnostics": 0,
+      "conditions": [
+        {
+          "condition": "flat-zero",
+          "snapshots": 202,
+          "measurement_snapshots": 179,
+          "recovery_snapshots": 23,
+          "diagnostic_samples": 0,
+          "held_snapshots": 0,
+          "legacy_held_covered": 0,
+          "held_covered": 0,
+          "diagnostic_held_covered": 0,
+          "repeated_ack_positive_drift_samples": 0,
+          "transport": {
+            "input_sent": 301,
+            "input_delivered": 301,
+            "input_dropped": 0,
+            "snapshots_sent": 202,
+            "snapshots_delivered": 202,
+            "fully_drained": {
+              "ack": 600,
+              "authority_queue": 0,
+              "downstream": 0,
+              "final_tick": 630,
+              "pending": 0,
+              "sequence": 600,
+              "upstream": 0
+            }
+          }
+        },
+        {
+          "condition": "flat-100ms",
+          "snapshots": 204,
+          "measurement_snapshots": 178,
+          "recovery_snapshots": 26,
+          "diagnostic_samples": 0,
+          "held_snapshots": 0,
+          "legacy_held_covered": 0,
+          "held_covered": 0,
+          "diagnostic_held_covered": 0,
+          "repeated_ack_positive_drift_samples": 0,
+          "transport": {
+            "input_sent": 304,
+            "input_delivered": 304,
+            "input_dropped": 0,
+            "snapshots_sent": 204,
+            "snapshots_delivered": 204,
+            "fully_drained": {
+              "ack": 600,
+              "authority_queue": 0,
+              "downstream": 0,
+              "final_tick": 630,
+              "pending": 0,
+              "sequence": 600,
+              "upstream": 0
+            }
+          }
+        },
+        {
+          "condition": "flat-100ms-bursts",
+          "snapshots": 204,
+          "measurement_snapshots": 178,
+          "recovery_snapshots": 26,
+          "diagnostic_samples": 0,
+          "held_snapshots": 10,
+          "legacy_held_covered": 5,
+          "held_covered": 5,
+          "diagnostic_held_covered": 0,
+          "repeated_ack_positive_drift_samples": 0,
+          "transport": {
+            "input_sent": 304,
+            "input_delivered": 286,
+            "input_dropped": 18,
+            "snapshots_sent": 204,
+            "snapshots_delivered": 204,
+            "fully_drained": {
+              "ack": 600,
+              "authority_queue": 0,
+              "downstream": 0,
+              "final_tick": 630,
+              "pending": 0,
+              "sequence": 600,
+              "upstream": 0
+            }
+          }
+        },
+        {
+          "condition": "jump-100ms-bursts",
+          "snapshots": 204,
+          "measurement_snapshots": 178,
+          "recovery_snapshots": 26,
+          "diagnostic_samples": 0,
+          "held_snapshots": 10,
+          "legacy_held_covered": 5,
+          "held_covered": 5,
+          "diagnostic_held_covered": 0,
+          "repeated_ack_positive_drift_samples": 0,
+          "transport": {
+            "input_sent": 304,
+            "input_delivered": 286,
+            "input_dropped": 18,
+            "snapshots_sent": 204,
+            "snapshots_delivered": 204,
+            "fully_drained": {
+              "ack": 600,
+              "authority_queue": 0,
+              "downstream": 0,
+              "final_tick": 630,
+              "pending": 0,
+              "sequence": 600,
+              "upstream": 0
+            }
+          }
+        },
+        {
+          "condition": "flat-200ms-bursts",
+          "snapshots": 206,
+          "measurement_snapshots": 177,
+          "recovery_snapshots": 29,
+          "diagnostic_samples": 0,
+          "held_snapshots": 10,
+          "legacy_held_covered": 5,
+          "held_covered": 5,
+          "diagnostic_held_covered": 0,
+          "repeated_ack_positive_drift_samples": 0,
+          "transport": {
+            "input_sent": 307,
+            "input_delivered": 289,
+            "input_dropped": 18,
+            "snapshots_sent": 206,
+            "snapshots_delivered": 206,
+            "fully_drained": {
+              "ack": 600,
+              "authority_queue": 0,
+              "downstream": 0,
+              "final_tick": 630,
+              "pending": 0,
+              "sequence": 600,
+              "upstream": 0
+            }
+          }
+        },
+        {
+          "condition": "disabled-100ms-bursts",
+          "snapshots": 204,
+          "measurement_snapshots": 178,
+          "recovery_snapshots": 26,
+          "diagnostic_samples": 0,
+          "held_snapshots": 10,
+          "legacy_held_covered": 5,
+          "held_covered": 5,
+          "diagnostic_held_covered": 0,
+          "repeated_ack_positive_drift_samples": 0,
+          "transport": {
+            "input_sent": 304,
+            "input_delivered": 286,
+            "input_dropped": 18,
+            "snapshots_sent": 204,
+            "snapshots_delivered": 204,
+            "fully_drained": {
+              "ack": 600,
+              "authority_queue": 0,
+              "downstream": 0,
+              "final_tick": 630,
+              "pending": 0,
+              "sequence": 600,
+              "upstream": 0
+            }
+          }
+        }
+      ]
+    },
+    "candidate": {
+      "position_and_coverage_consistent": true,
+      "complete_observability_gate": true,
+      "lifecycle_events": 14,
+      "lifecycle_events_with_diagnostics": 14,
+      "conditions": [
+        {
+          "condition": "flat-zero",
+          "snapshots": 202,
+          "measurement_snapshots": 179,
+          "recovery_snapshots": 23,
+          "diagnostic_samples": 202,
+          "held_snapshots": 0,
+          "legacy_held_covered": 0,
+          "held_covered": 0,
+          "diagnostic_held_covered": 0,
+          "repeated_ack_positive_drift_samples": 0,
+          "transport": {
+            "input_sent": 301,
+            "input_delivered": 301,
+            "input_dropped": 0,
+            "snapshots_sent": 202,
+            "snapshots_delivered": 202,
+            "fully_drained": {
+              "ack": 600,
+              "authority_queue": 0,
+              "downstream": 0,
+              "final_tick": 630,
+              "pending": 0,
+              "sequence": 600,
+              "upstream": 0
+            }
+          }
+        },
+        {
+          "condition": "flat-100ms",
+          "snapshots": 204,
+          "measurement_snapshots": 178,
+          "recovery_snapshots": 26,
+          "diagnostic_samples": 204,
+          "held_snapshots": 0,
+          "legacy_held_covered": 0,
+          "held_covered": 0,
+          "diagnostic_held_covered": 0,
+          "repeated_ack_positive_drift_samples": 0,
+          "transport": {
+            "input_sent": 304,
+            "input_delivered": 304,
+            "input_dropped": 0,
+            "snapshots_sent": 204,
+            "snapshots_delivered": 204,
+            "fully_drained": {
+              "ack": 600,
+              "authority_queue": 0,
+              "downstream": 0,
+              "final_tick": 630,
+              "pending": 0,
+              "sequence": 600,
+              "upstream": 0
+            }
+          }
+        },
+        {
+          "condition": "flat-100ms-bursts",
+          "snapshots": 204,
+          "measurement_snapshots": 178,
+          "recovery_snapshots": 26,
+          "diagnostic_samples": 204,
+          "held_snapshots": 10,
+          "legacy_held_covered": 5,
+          "held_covered": 10,
+          "diagnostic_held_covered": 10,
+          "repeated_ack_positive_drift_samples": 5,
+          "transport": {
+            "input_sent": 304,
+            "input_delivered": 286,
+            "input_dropped": 18,
+            "snapshots_sent": 204,
+            "snapshots_delivered": 204,
+            "fully_drained": {
+              "ack": 600,
+              "authority_queue": 0,
+              "downstream": 0,
+              "final_tick": 630,
+              "pending": 0,
+              "sequence": 600,
+              "upstream": 0
+            }
+          }
+        },
+        {
+          "condition": "jump-100ms-bursts",
+          "snapshots": 204,
+          "measurement_snapshots": 178,
+          "recovery_snapshots": 26,
+          "diagnostic_samples": 204,
+          "held_snapshots": 10,
+          "legacy_held_covered": 5,
+          "held_covered": 10,
+          "diagnostic_held_covered": 10,
+          "repeated_ack_positive_drift_samples": 5,
+          "transport": {
+            "input_sent": 304,
+            "input_delivered": 286,
+            "input_dropped": 18,
+            "snapshots_sent": 204,
+            "snapshots_delivered": 204,
+            "fully_drained": {
+              "ack": 600,
+              "authority_queue": 0,
+              "downstream": 0,
+              "final_tick": 630,
+              "pending": 0,
+              "sequence": 600,
+              "upstream": 0
+            }
+          }
+        },
+        {
+          "condition": "flat-200ms-bursts",
+          "snapshots": 206,
+          "measurement_snapshots": 177,
+          "recovery_snapshots": 29,
+          "diagnostic_samples": 206,
+          "held_snapshots": 10,
+          "legacy_held_covered": 5,
+          "held_covered": 10,
+          "diagnostic_held_covered": 10,
+          "repeated_ack_positive_drift_samples": 6,
+          "transport": {
+            "input_sent": 307,
+            "input_delivered": 289,
+            "input_dropped": 18,
+            "snapshots_sent": 206,
+            "snapshots_delivered": 206,
+            "fully_drained": {
+              "ack": 600,
+              "authority_queue": 0,
+              "downstream": 0,
+              "final_tick": 630,
+              "pending": 0,
+              "sequence": 600,
+              "upstream": 0
+            }
+          }
+        },
+        {
+          "condition": "disabled-100ms-bursts",
+          "snapshots": 204,
+          "measurement_snapshots": 178,
+          "recovery_snapshots": 26,
+          "diagnostic_samples": 204,
+          "held_snapshots": 10,
+          "legacy_held_covered": 5,
+          "held_covered": 10,
+          "diagnostic_held_covered": 10,
+          "repeated_ack_positive_drift_samples": 5,
+          "transport": {
+            "input_sent": 304,
+            "input_delivered": 286,
+            "input_dropped": 18,
+            "snapshots_sent": 204,
+            "snapshots_delivered": 204,
+            "fully_drained": {
+              "ack": 600,
+              "authority_queue": 0,
+              "downstream": 0,
+              "final_tick": 630,
+              "pending": 0,
+              "sequence": 600,
+              "upstream": 0
+            }
+          }
+        }
+      ]
+    }
+  },
+  "legacy_outputs_identical": true,
+  "scope": "author-run archived receipt and position-oracle audit; independent critic acceptance separate"
+}
