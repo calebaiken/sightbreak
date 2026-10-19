@@ -45,7 +45,7 @@ def capture(cmd, cwd, output, timeout=180):
             "log": output.name, "log_sha256": sha(output), "logged_errors": bool(ERROR.search(result.stdout.decode("utf-8", "replace")))}
 
 
-def trial(godot, source, out, scenario, prediction):
+def trial(godot, source, out, scenario, prediction, barrier_control):
     out.mkdir()
     barrier = out / "barrier"
     barrier.mkdir()
@@ -71,8 +71,25 @@ def trial(godot, source, out, scenario, prediction):
                 if children[role].poll() is not None or time.monotonic() > deadline:
                     raise RuntimeError(f"{role} readiness failed; inspect {out}")
                 time.sleep(.02)
-        (barrier / "start.tmp").write_text(json.dumps({"epoch": time.time() + .5}), encoding="utf-8")
-        os.replace(barrier / "start.tmp", barrier / "start.json")
+        if barrier_control:
+            # Deliberately unreadable pre-measurement data must not become a
+            # script error or an accidental zero-time start. Both peers retry.
+            (barrier / "start.json").write_text("", encoding="utf-8")
+            time.sleep(.25)
+        publish_retries = 0
+        publish_deadline = time.monotonic() + 5
+        while True:
+            (barrier / "start.tmp").write_text(json.dumps({"epoch": time.time() + .5}), encoding="utf-8")
+            try:
+                os.replace(barrier / "start.tmp", barrier / "start.json")
+                break
+            except PermissionError:
+                # Windows may hold the destination open while a native peer
+                # reads it. Retry boundedly; keep the shared start in the future.
+                publish_retries += 1
+                if time.monotonic() >= publish_deadline:
+                    raise
+                time.sleep(.02)
         deadline = time.monotonic() + duration + 15
         while not all((out / (role + ".json")).exists() for role in children):
             if any(p.poll() is not None for p in children.values()) or time.monotonic() > deadline:
@@ -103,24 +120,27 @@ def trial(godot, source, out, scenario, prediction):
               "protocol": server["protocol"], "privacy_violations": client["privacy_violations"],
               "hit_history_frames": server["hit_history_frames"], "max_pending": client["max_pending"],
               "client_prediction": client["prediction"], "dropped_snapshots": client["dropped_snapshots"],
+              "barrier_control": barrier_control, "barrier_publish_retries": publish_retries, "barrier_read_retries": {"server": server["barrier_read_retries"], "client": client["barrier_read_retries"]},
               "first_history_cap_seconds": cap_rows[0]["t"] if cap_rows else None,
               "stale_window_displacement_m": abs(held[-1]["x"] - held[0]["x"]) if held else None,
               "stale_window_max_speed_mps": max((abs(r["vx"]) for r in held), default=None),
               "last_ack_before_resume_seconds": last_ack_time,
               "stop_after_last_ack_seconds": stopped[0]["t"] - last_ack_time if stopped else None,
               "recovery_min_speed_mps": min((abs(r["vx"]) for r in recovered), default=None),
+              "recovery_largest_vx_mps": max((r["vx"] for r in recovered), default=None),
               "shots_at_end": rows[-1]["shots"], "ammo_at_end": rows[-1]["ammo"],
               "rejected_packets": rows[-1]["rejected"], "disconnected_at_seconds": server["disconnected_at"],
               "final_peer_count": server["final_peer_count"], "lifecycle_entries": server["lifecycle_entries"],
               "input_queues": server["input_queues"], "pending_joins": server["pending_joins"]}
     result["transport_authority_privacy_pass"] = (all(code == 0 for code in exits.values()) and not any(result["native_errors"].values())
         and result["protocol"] == 6 and result["privacy_violations"] == 0 and result["hit_history_frames"] == 0
-        and result["client_prediction"] == prediction and client["max_pending"] <= 120)
+        and result["client_prediction"] == prediction and client["max_pending"] <= 120
+        and (not barrier_control or all(count > 0 for count in result["barrier_read_retries"].values())))
     if scenario == "stale-replay":
         result["improvement_gate"] = (31.5 <= server["disconnected_at"] <= 32.5 and all(server[k] == 0 for k in ("final_peer_count", "lifecycle_entries", "input_queues", "pending_joins")))
     else:
         result["recovery_and_edges_pass"] = (result["shots_at_end"] == 2 and result["ammo_at_end"] == 13
-            and result["recovery_min_speed_mps"] > .9 and server["final_peer_count"] == 1)
+            and result["recovery_largest_vx_mps"] < -.9 and server["final_peer_count"] == 1)
         result["improvement_gate"] = (result["stale_window_displacement_m"] < .001 and result["stale_window_max_speed_mps"] < .001
             and result["stop_after_last_ack_seconds"] is not None and result["stop_after_last_ack_seconds"] <= .35) if scenario == "snapshot-gap" else True
     (out / "metrics.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
@@ -136,6 +156,7 @@ def main():
     parser.add_argument("--prediction", nargs="+", choices=["off", "on"], default=["off", "on"])
     parser.add_argument("--repeats", type=int, default=2)
     parser.add_argument("--checks", action="store_true")
+    parser.add_argument("--barrier-control", action="store_true", help="publish an empty start file for 250ms before the valid atomic barrier; require both peers to retry without errors")
     parser.add_argument("--expect-fixed", action="store_true", help="also fail the run when a declared improvement gate fails")
     parser.add_argument("--skip-import", action="store_true", help="use a previously imported class/resource cache; permits clean frozen-source runs after restoring platform-generated .import metadata")
     parser.add_argument("--allow-dirty", action="store_true", help="preflight only; final source-bound runs must be clean")
@@ -173,7 +194,7 @@ def main():
             for scenario in args.scenarios:
                 for prediction in args.prediction:
                     name = f"{repeat + 1}-{scenario}-prediction-{prediction}"
-                    metrics = trial(args.godot, args.source, args.out / name, scenario, prediction == "on")
+                    metrics = trial(args.godot, args.source, args.out / name, scenario, prediction == "on", args.barrier_control)
                     manifest["trials"].append({"directory": name, "metrics": metrics})
                     print(json.dumps({"trial": name, "gate": metrics["improvement_gate"], "authority_privacy": metrics["transport_authority_privacy_pass"], "stale_displacement_m": metrics["stale_window_displacement_m"]}), flush=True)
                     save()

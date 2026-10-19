@@ -97,6 +97,7 @@ var duration := 8.0
 var prediction := false
 var ready_written := false
 var reported := false
+var barrier_read_retries := 0
 
 func _initialize() -> void:
 	for arg: String in OS.get_cmdline_user_args():
@@ -125,11 +126,21 @@ func _process(_delta: float) -> bool:
 		ready.close()
 		ready_written = true
 	if game.start_msec < 0 and FileAccess.file_exists(barrier.path_join("start.json")):
-		var epoch := float(JSON.parse_string(FileAccess.get_file_as_string(barrier.path_join("start.json"))).epoch)
+		# A Windows preflight observed a transient unreadable/empty start file
+		# despite atomic publication. Stay outside measurement until valid data is
+		# available; the Python watchdog still bounds a permanently bad barrier.
+		var parsed := JSON.new()
+		var error := parsed.parse(FileAccess.get_file_as_string(barrier.path_join("start.json")))
+		var epoch_value: Variant = parsed.data.get("epoch") if error == OK and parsed.data is Dictionary else null
+		if not (epoch_value is float or epoch_value is int) or not is_finite(float(epoch_value)) or float(epoch_value) <= 0:
+			barrier_read_retries += 1
+			if barrier_read_retries == 1: print("INPUT_FRESHNESS_BARRIER_RETRY role=" + role)
+			return false
+		var epoch := float(epoch_value)
 		game.start_msec = Time.get_ticks_msec() + int((epoch - Time.get_unix_time_from_system()) * 1000)
 	if game.seconds() >= duration:
 		reported = true
-		var report := {"role": role, "scenario": scenario, "protocol": TacticalMatch.PROTOCOL_VERSION, "prediction": game._prediction_enabled, "hit_history_frames": game._hit_history.frames.size(), "rows": game.rows, "dropped_snapshots": game.dropped_snapshots, "accepted_snapshots": game.accepted_snapshots, "privacy_violations": game.privacy_violations, "max_pending": game.max_pending, "disconnected_at": game.disconnected_at, "shots": game.shots, "final_peer_count": game._peer_actors.size(), "lifecycle_entries": game._peer_lifecycle.peers.size(), "input_queues": game._input_stream.queues.size(), "pending_joins": game._pending_joins.size()}
+		var report := {"role": role, "scenario": scenario, "barrier_read_retries": barrier_read_retries, "protocol": TacticalMatch.PROTOCOL_VERSION, "prediction": game._prediction_enabled, "hit_history_frames": game._hit_history.frames.size(), "rows": game.rows, "dropped_snapshots": game.dropped_snapshots, "accepted_snapshots": game.accepted_snapshots, "privacy_violations": game.privacy_violations, "max_pending": game.max_pending, "disconnected_at": game.disconnected_at, "shots": game.shots, "final_peer_count": game._peer_actors.size(), "lifecycle_entries": game._peer_lifecycle.peers.size(), "input_queues": game._input_stream.queues.size(), "pending_joins": game._pending_joins.size()}
 		var file := FileAccess.open(output + ".tmp", FileAccess.WRITE)
 		file.store_string(JSON.stringify(report))
 		file.close()
