@@ -4,8 +4,30 @@
 when clients retransmit only acknowledged commands.** In the matched native
 workload, baseline continued moving and retained the stale peer; candidate stopped
 movement and retired the peer, then accepted fresh controls normally. Development
-draft [PR20](https://github.com/calebaiken/sightbreak/pull/20); separate critique
-and aggregate acceptance remain pending.
+draft [PR20](https://github.com/calebaiken/sightbreak/pull/20).
+**Independent source review: PASS; blind outcome verdict and aggregate acceptance:
+pending.**
+
+## Independent review and neutral handoff
+
+The [independent source critic recorded PASS](https://github.com/calebaiken/sightbreak/pull/20#issuecomment-6276000222)
+for exact runtime `f3ceaad98e089aa393c7f5fa650a52695094d979`. Main has dispatched the
+accepted neutral packet to a fresh blind critic and will record the independent
+outcome-only verdict after return.
+
+The [public neutral handoff](network-input-freshness-v3/blind/README.md) supplies
+the exact accepted ZIP, manifest, host-independent verification instructions and
+original raw/source references. This is an **evidence-only publication: no new
+native run or shipping change**. The parent mapping/counterpart bundle remains
+separate and unpublished until the independent verdict(s) are frozen.
+
+- ZIP SHA256: `8fb111324051b4bfc590a216ab09c107ef0c10605f755b7e481757d125172112`.
+- Manifest SHA256: `fe83c4bdcc1ea662f034ff4ebc340a4e115ed27e8a7d404a2aa80175d84146ce`.
+
+The neutral packet preserves the distinction between simulation-time input
+neutralization and subsequent deceleration, wall-time idle expiry, restored-ACK
+recovery and held-edge continuity. Its verifier checks byte/receipt integrity;
+the comparative outcome verdict remains pending.
 
 ## Exact sources
 
