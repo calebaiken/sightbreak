@@ -4,13 +4,18 @@ extends RefCounted
 ## Flush + same-directory rename precede dispatch; this covers app-process termination.
 const PATH := "user://pending_transaction.json"
 const MAX_BYTES := 8192
-var path := PATH
 var error := ""
 ## An OS-owned loopback listener serializes journal owners across processes. No peer
 ## is accepted and no protocol/data is exposed. Process exit releases the claim.
 ## A port collision fails closed; it never permits another writer. Godot 4.7.2
 ## disables Winsock SO_REUSEADDR (which would otherwise permit duplicate listeners).
 var owner_guard: TCPServer
+var path := PATH:
+	set(value):
+		if owner_guard != null and owner_guard.is_listening() and value != path:
+			error = "Receipt storage cannot be moved while it is in use."
+			return
+		path = value
 
 func acquire() -> Error:
 	if owner_guard != null and owner_guard.is_listening():
@@ -27,13 +32,21 @@ func acquire() -> Error:
 	return OK
 
 func claim(pending: Dictionary) -> Error:
+	var already_owned := owner_guard != null and owner_guard.is_listening()
 	if acquire() != OK:
 		return ERR_ALREADY_IN_USE
 	var existing := load_pending()
 	if not error.is_empty() or existing != pending:
-		error = "The saved receipt changed or could not be read. Nothing was sent; reopen the account screen to reload it."
+		if not already_owned:
+			_release()
+		error = "The saved receipt changed or could not be read. Nothing was sent; reload its current state."
 		return ERR_INVALID_DATA
 	return OK
+
+func _release() -> void:
+	if owner_guard != null:
+		owner_guard.stop()
+	owner_guard = null
 
 func load_pending() -> Dictionary:
 	error = ""
@@ -103,8 +116,7 @@ func clear(pending: Dictionary) -> Error:
 		return result
 	result = DirAccess.remove_absolute(path)
 	if result == OK:
-		owner_guard.stop()
-		owner_guard = null
+		_release()
 	return result
 
 static func valid(pending: Dictionary) -> bool:

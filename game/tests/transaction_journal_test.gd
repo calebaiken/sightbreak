@@ -58,6 +58,8 @@ func run() -> void:
 	var payload := {"idempotency_key": "same-receipt", "expected_price": 10000000}
 	await ui._perform("/market/listing-id/buy", payload)
 	check(api.staged_before_send, "Receipt exists before the mutation is dispatched")
+	ui.transaction_journal.path = receipt_path + ".retargeted"
+	check(ui.transaction_journal.path == receipt_path, "An active journal owner cannot retarget its guard to another path")
 	check(not FileAccess.get_file_as_string(receipt_path).contains(api.token), "Bearer credential is absent from the durable record")
 	var child_output: Array = []
 	var child_code := OS.execute(OS.get_executable_path(), PackedStringArray(["--headless", "--path", ProjectSettings.globalize_path("res://"), "--script", "res://tests/transaction_lock_probe.gd", "--", ProjectSettings.globalize_path(receipt_path)]), child_output, true)
@@ -131,6 +133,24 @@ func run() -> void:
 		damaged = null
 		DirAccess.remove_absolute(receipt_path + ".tmp")
 		DirAccess.remove_absolute(receipt_path)
+	# Two persistent account panels observe K. A resolves it; B's stale retry must
+	# reload disk and release its newly acquired claim, allowing either panel to work.
+	ui = make_ui()
+	api = ui.api as StubAPI
+	await ui._perform("/store/buy", {"idempotency_key": "handoff-k", "definition_id": "key"})
+	var other := make_ui()
+	var other_api := other.api as StubAPI
+	api.reply = {"item": {"id": "handoff-item"}, "credits": 0}
+	await ui._retry_pending()
+	var stale: Dictionary = await other._retry_pending()
+	check(stale.has("_error") and other_api.calls.is_empty(), "A stale claimant does not resend a resolved receipt")
+	check(other.pending_transaction.is_empty() and not other.retry_button.visible, "The existing panel reloads cleared receipt state without recreation")
+	api.reply = {"_error": "lost", "_outcome": "unknown", "_uncertain": true}
+	await ui._perform("/store/buy", {"idempotency_key": "handoff-next", "definition_id": "key"})
+	check(api.calls.size() == 3 and not ui.pending_transaction.is_empty(), "A stale claimant releases its new guard so the original panel can stage again")
+	ui.free()
+	other.free()
+	DirAccess.remove_absolute(receipt_path)
 	await process_frame
 	print("TRANSACTION_JOURNAL %d/%d passed" % [checks - failures.size(), checks])
 	quit(0 if failures.is_empty() else 1)
