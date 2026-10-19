@@ -62,10 +62,14 @@ Timing is supporting in-process TestClient/loopback evidence, not production
 throughput, concurrent load, network HTTP latency or a hardware-independent
 speedup guarantee. Ten-sample P95 here is the maximum observed sample.
 
-Every canonical response hash matches between revisions. Canonicalization sorts
+Every **expected-fixture** canonical response hash matches between revisions in
+these initial records. Each actual response was asserted equal to its expected
+fixture; actual bodies and their hashes were not retained in this first round.
+Canonicalization sorts
 only top-level trades and JSON object keys; offer and confirmation array order
 is preserved. Every workload also compares all authoritative table rows before
-and after its requests. All comparisons pass; all measured application SQL is
+and after its requests. The first-round records retained comparison booleans,
+not the snapshots or their hashes. All comparisons pass; all measured application SQL is
 SELECT. The budget is `3 + ceil(unique item IDs / 500) + ceil(unique participant
 IDs / 500)`, covering both item- and name-batch boundaries.
 

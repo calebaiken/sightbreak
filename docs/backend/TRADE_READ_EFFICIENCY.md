@@ -41,6 +41,16 @@ serialization require separate scope.
   match the fixture, and all authoritative tables must remain byte-identical
   before/after each workload. Raw per-request timings and SQL shapes are saved.
   Timings are in-process TestClient plus loopback PostgreSQL, not a load test.
+- Enhanced retention saves every distinct received raw/canonical response body,
+  hashes every warm-up/timed response, and saves full canonical before/after rows
+  for all 12 authoritative tables with per-table/aggregate hashes. The original
+  first-round records contained expected-fixture hashes and state-equality
+  booleans only. `scripts/verify_trade_read_artifacts.py <output>` independently
+  recomputes the enhanced artifacts using only the standard library.
+- `--runtime-reference <commit>` requires the complete backend Git tree to match
+  that revision, while recording the distinct frozen harness commit/hash. For
+  this evidence-only follow-up use `701ce2c` for the old source and `4a8e9ea` for
+  the batching source. The fixture and two-warm-up/ten-sample workloads are fixed.
 
 The original `backend/tests/test_economy.py` has 44 functions / **61 parametrized
 cases**. Run it on the frozen baseline in the same interpreter/database version,
