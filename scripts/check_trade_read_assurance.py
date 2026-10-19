@@ -12,7 +12,6 @@ from pathlib import Path
 import secrets
 import subprocess
 import sys
-import tarfile
 import time
 import xml.etree.ElementTree as ET
 
@@ -38,17 +37,34 @@ def git(*args):
     return subprocess.check_output(['git', '-c', 'core.longpaths=true', *args], cwd=ROOT, text=True).strip()
 
 
-def copy_backend(revision, destination):
+def copy_backend(revision, destination, working_bytes=False):
     destination.mkdir(parents=True, exist_ok=False)
-    archive = subprocess.check_output(['git', 'archive', revision, 'backend'], cwd=ROOT)
-    with tarfile.open(fileobj=io.BytesIO(archive)) as stream:
-        for member in stream:
-            if member.isdir():
-                continue
-            path = (destination / member.name).resolve()
-            assert member.isfile() and path.is_relative_to(destination.resolve())
-            path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_bytes(stream.extractfile(member).read())
+    names = git('ls-tree', '-r', '--name-only', revision, '--', 'backend').splitlines()
+    # git archive applies this Windows host's CRLF export conversion. Historical
+    # fixture receipts hash LF blobs; use unfiltered blobs explicitly. Current
+    # mutation copies use actual working bytes so only the four constants differ.
+    result = subprocess.run(['git', 'cat-file', '--batch'], cwd=ROOT,
+                            input=''.join(revision + ':' + name + '\n' for name in names).encode(),
+                            capture_output=True, check=True)
+    stream = io.BytesIO(result.stdout)
+    records = {}
+    if working_bytes:
+        assert revision == git('rev-parse', 'HEAD')
+    for name in names:
+        oid, kind, size = stream.readline().decode().split()
+        assert kind == 'blob'
+        blob = stream.read(int(size))
+        assert stream.read(1) == b'\n'
+        data = (ROOT / name).read_bytes() if working_bytes else blob
+        assert data.replace(b'\r\n', b'\n') == blob.replace(b'\r\n', b'\n'), name
+        path = destination / name
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(data)
+        records[name] = {'git_blob_oid': oid, 'git_blob_sha256': hashlib.sha256(blob).hexdigest(),
+                         'materialized_sha256': sha(path)}
+    assert not stream.read()
+    return {'revision': revision, 'mode': 'exact_working_bytes' if working_bytes else 'unfiltered_git_blobs',
+            'files': records}
 
 
 def fixture_probe(source, fixture_root, expected):
@@ -99,9 +115,10 @@ def run_controls(out):
     scratch = out.parent / (out.name + '-scratch-' + secrets.token_hex(4))
     scratch.mkdir(exist_ok=False)
     mutant = scratch / 'batch-5000'
-    copy_backend(commit, mutant)
+    materialization = {'batch-5000': copy_backend(commit, mutant, working_bytes=True)}
     app = mutant / 'backend/app.py'
-    original = app.read_text(encoding='utf-8')
+    assert {name: sha(mutant / name) for name in tracked} == before
+    original = app.read_bytes().decode('utf-8')
     node = next(n for n in ast.parse(original).body if isinstance(n, ast.FunctionDef) and n.name == 'trades')
     assert sum(isinstance(n, ast.Constant) and n.value == 500 for n in ast.walk(node)) == 4
     segment = ast.get_source_segment(original, node)
@@ -168,7 +185,7 @@ def run_controls(out):
     write(out / 'bound-results.json', summaries)
 
     mismatch = scratch / 'fixture-mismatch'
-    copy_backend(commit, mismatch)
+    materialization['fixture-mismatch'] = copy_backend(commit, mismatch, working_bytes=True)
     mismatch_file = mismatch / 'backend/tests/test_trade_reads.py'
     mismatch_file.write_bytes(mismatch_file.read_bytes() + b'\n# Isolated provenance-negative byte change.\n')
     probes = [('fixture-positive', ROOT, ROOT, frozen['test_fixture_sha256'], 0, 'current_import_control'),
@@ -177,7 +194,8 @@ def run_controls(out):
     for revision in ('701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd', RUNTIME,
                      '8070436f53dd98e9529e8c21ea7b0f7e3ecb6daf'):
         pinned[revision] = scratch / ('pinned-' + revision[:7])
-        copy_backend(revision, pinned[revision])
+        materialization[revision] = copy_backend(revision, pinned[revision])
+    write(out / 'materialization.json', materialization)
     for round_name, harness, archive in (
         ('round1', RUNTIME, ROOT / 'docs/reports/backend-trade-read-v3'),
         ('round2', '8070436f53dd98e9529e8c21ea7b0f7e3ecb6daf', ROOT / 'docs/reports/backend-trade-read-v3/retention-r2')):
