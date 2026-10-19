@@ -1,0 +1,47 @@
+name: Competitive engineering validation
+# Manual only; no public service, release, signing credential or paid runner.
+on:
+  workflow_dispatch:
+    inputs:
+      android:
+        description: Also export a debug Android APK
+        type: boolean
+        default: false
+permissions:
+  contents: read
+jobs:
+  linux-validation:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Prepare pinned engine and local PostgreSQL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgl1 libvulkan1 xvfb ripgrep unzip openjdk-17-jdk
+          scripts/setup.sh
+          python3 -m pip install uv==0.12.23
+          uv sync --project backend --locked --group dev
+          ln -s backend/.venv .venv
+          backend/dev-db.sh
+      - name: Complete matrix (retains failures)
+        run: xvfb-run -a .venv/bin/python scripts/validate_matrix.py --backend --protocol --render --out builds/ci-regressions
+      - name: Linux debug export
+        if: always()
+        run: scripts/export.sh linux
+      - name: Android debug export
+        if: inputs.android
+        run: |
+          scripts/setup-android.sh
+          scripts/export.sh android
+      - name: Preserve logs and unsigned/debug artifacts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: competitive-engineering-${{ github.sha }}
+          path: |
+            builds/ci-regressions/
+            builds/linux/
+            builds/android/
+          retention-days: 7

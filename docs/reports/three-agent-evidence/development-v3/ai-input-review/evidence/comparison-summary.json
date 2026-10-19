@@ -1,0 +1,2987 @@
+{
+  "north": {
+    "behavior_repeat_byte_identical": true,
+    "behavior_r1_stdout_sha256": "53478f356ab3498a858a333c14024867fed98dd71620b0335a1b6a2f015293af",
+    "behavior_r2_stdout_sha256": "53478f356ab3498a858a333c14024867fed98dd71620b0335a1b6a2f015293af",
+    "behavior_stderr_empty_both_runs": true,
+    "policy_repeat_byte_identical": true,
+    "adapted_anchor_arrival_count": 2,
+    "adapted_anchor_total": 5,
+    "adapted_anchor_results": [
+      {
+        "slot": 0,
+        "declared_anchor": "(-15.0, 0.0, 12.0)",
+        "arrival_seconds": -1.0,
+        "minimum_distance_m": 2.03137063980103,
+        "seconds_within_1_8m": 0.0,
+        "final_position": "(-15.0, 0.000845, 9.237773)"
+      },
+      {
+        "slot": 1,
+        "declared_anchor": "(15.0, 0.0, 12.0)",
+        "arrival_seconds": -1.0,
+        "minimum_distance_m": 2.57814359664917,
+        "seconds_within_1_8m": 0.0,
+        "final_position": "(11.40492, 0.000195, 12.0)"
+      },
+      {
+        "slot": 2,
+        "declared_anchor": "(-12.0, 0.0, 6.0)",
+        "arrival_seconds": 3.38333333333333,
+        "minimum_distance_m": 1.14179408550262,
+        "seconds_within_1_8m": 16.6166666666667,
+        "final_position": "(-11.24964, 0.000195, 6.860609)"
+      },
+      {
+        "slot": 3,
+        "declared_anchor": "(12.0, 0.0, 6.0)",
+        "arrival_seconds": 3.13333333333333,
+        "minimum_distance_m": 1.18241631984711,
+        "seconds_within_1_8m": 16.8666666666667,
+        "final_position": "(11.29334, 0.000195, 6.94802)"
+      },
+      {
+        "slot": 4,
+        "declared_anchor": "(0.0, 0.0, 9.0)",
+        "arrival_seconds": -1.0,
+        "minimum_distance_m": 2.53083443641663,
+        "seconds_within_1_8m": 0.0,
+        "final_position": "(-3.0, 0.000195, 9.289138)"
+      }
+    ],
+    "adapted_easy_defender_hearing_20m": [
+      {
+        "age": 0.0,
+        "case": "hearing",
+        "declared_range": 18.0,
+        "destination": "(6.0, 0.05, 2.0)",
+        "destination_exact_sound": true,
+        "difficulty": "easy",
+        "distance": 20.0,
+        "heard_at": -100.0,
+        "heard_exact": false,
+        "role": "rotate_investigate",
+        "scenario": "easy_bypass20",
+        "team": 1
+      }
+    ],
+    "adapted_damage_priority": [
+      {
+        "case": "damage_priority",
+        "damaged_at": 100.0,
+        "damaged_look": "(2.999696, 0.0)",
+        "expected_yaw": -0.6,
+        "has_visual_memory": false,
+        "move": "(0.0, 1.0)",
+        "retained_damage_yaw": false,
+        "undamaged_look": "(2.999696, 0.0)",
+        "world_move": "(-0.141421, 0.0, 0.989949)"
+      },
+      {
+        "case": "damage_priority",
+        "damaged_at": 100.0,
+        "damaged_look": "(-0.380506, 0.0)",
+        "expected_yaw": -0.6,
+        "has_visual_memory": true,
+        "move": "(0.0, 1.0)",
+        "retained_damage_yaw": false,
+        "undamaged_look": "(-0.380506, 0.0)",
+        "world_move": "(0.371391, 0.0, -0.928477)"
+      }
+    ],
+    "sound_precision_samples": 96.0,
+    "sound_precision_exact_samples": 96.0,
+    "sound_precision": [
+      {
+        "case": "sound_precision",
+        "declared_sound_noise": 2.4,
+        "difficulty": "easy",
+        "exact_count": 16,
+        "mean_position_error_m": 0.0,
+        "samples": 16,
+        "team": 1
+      },
+      {
+        "case": "sound_precision",
+        "declared_sound_noise": 1.1,
+        "difficulty": "normal",
+        "exact_count": 16,
+        "mean_position_error_m": 0.0,
+        "samples": 16,
+        "team": 1
+      },
+      {
+        "case": "sound_precision",
+        "declared_sound_noise": 0.35,
+        "difficulty": "hard",
+        "exact_count": 16,
+        "mean_position_error_m": 0.0,
+        "samples": 16,
+        "team": 1
+      },
+      {
+        "case": "sound_precision",
+        "declared_sound_noise": 2.4,
+        "difficulty": "easy",
+        "exact_count": 16,
+        "mean_position_error_m": 0.0,
+        "samples": 16,
+        "team": 0
+      },
+      {
+        "case": "sound_precision",
+        "declared_sound_noise": 1.1,
+        "difficulty": "normal",
+        "exact_count": 16,
+        "mean_position_error_m": 0.0,
+        "samples": 16,
+        "team": 0
+      },
+      {
+        "case": "sound_precision",
+        "declared_sound_noise": 0.35,
+        "difficulty": "hard",
+        "exact_count": 16,
+        "mean_position_error_m": 0.0,
+        "samples": 16,
+        "team": 0
+      }
+    ],
+    "original_actor_contract": [
+      {
+        "arena_class": "RelayYard",
+        "case": "bot_api",
+        "methods": {
+          "_select_objective_and_destination": {
+            "arguments": 4,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "_share_sighting": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 0
+            }
+          },
+          "_update_auditory_and_team_memory": {
+            "arguments": 4,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 0
+            }
+          },
+          "acquire_target": {
+            "arguments": 4,
+            "return": {
+              "class_name": "SBActor",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 24,
+              "usage": 0
+            }
+          },
+          "buy_equipment": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 4,
+              "usage": 0
+            }
+          },
+          "choose_buy_weapon": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 4,
+              "usage": 0
+            }
+          },
+          "compute_bot_input": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 0
+            }
+          },
+          "cover_position": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 9,
+              "usage": 0
+            }
+          },
+          "cover_position_from_point": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 9,
+              "usage": 0
+            }
+          },
+          "create_state": {
+            "arguments": 1,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "create_team_state": {
+            "arguments": 0,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "get_profile": {
+            "arguments": 1,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "get_site_hold_position": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 9,
+              "usage": 0
+            }
+          },
+          "nearest_defender": {
+            "arguments": 1,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 2,
+              "usage": 0
+            }
+          },
+          "new_bot_state": {
+            "arguments": 1,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "new_team_state": {
+            "arguments": 0,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "profile_for": {
+            "arguments": 1,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "record_damage": {
+            "arguments": 5,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 0
+            }
+          },
+          "record_elimination": {
+            "arguments": 5,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 0
+            }
+          },
+          "safe_navigate": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 9,
+              "usage": 0
+            }
+          },
+          "select_destination": {
+            "arguments": 6,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 9,
+              "usage": 0
+            }
+          },
+          "select_round_plan": {
+            "arguments": 2,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "tick_bot": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 0
+            }
+          }
+        }
+      },
+      {
+        "case": "shipped_actor_surface",
+        "has_apply_tick": false,
+        "has_eye_position": false,
+        "has_tick_authority": true,
+        "missing_candidate_properties": [
+          "id",
+          "slot",
+          "hp",
+          "reloading",
+          "is_bot",
+          "planting",
+          "defusing"
+        ]
+      },
+      {
+        "case": "production_damage_callback_ids",
+        "damaged_at": 10.0,
+        "expected": 10.0,
+        "recorded": true
+      },
+      {
+        "case": "dictionary_damage_callback",
+        "damaged_at": 10.0,
+        "damaged_from": "(-14.0, 0.05, -8.0)",
+        "recorded": true
+      },
+      {
+        "case": "production_elimination_callback_ids",
+        "heard_at": -100.0,
+        "team_state": {
+          "0": {
+            "contacts": {},
+            "death_alert_at": 10.0,
+            "death_alert_pos": "(-14.0, 0.05, -10.0)",
+            "primary_site": 0,
+            "target_site": 0
+          },
+          "1": {
+            "contacts": {},
+            "death_alert_at": -100.0,
+            "death_alert_pos": "(0.0, 0.0, 0.0)",
+            "primary_site": 0,
+            "target_site": 0
+          }
+        }
+      },
+      {
+        "case": "shipped_compute",
+        "input_state": {
+          "crouch": true,
+          "fire": false,
+          "grenade": false,
+          "interact": false,
+          "jump": false,
+          "look": "(-0.00325, -0.029158)",
+          "move": "(-0.384559, 0.0)",
+          "reload": false,
+          "smoke": false,
+          "weapon": ""
+        },
+        "wrote_input": true
+      },
+      {
+        "after": {
+          "ammo": 30,
+          "credits": 2600,
+          "grenades": 0,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "reserve": 90,
+          "smokes": 0,
+          "weapon": "rifle"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "first_round_equipment",
+        "choice": "rifle",
+        "choice_is_valid": true
+      },
+      {
+        "case": "mid_budget_choice",
+        "choice": "smg",
+        "valid": true
+      },
+      {
+        "can_instantiate": true,
+        "case": "shipped_match_load",
+        "resource_loaded": true
+      }
+    ],
+    "original_elimination_contract": [
+      {
+        "ally_alert_recorded": true,
+        "ally_heard_at": 100.0,
+        "team_state": {
+          "0": {
+            "contacts": {},
+            "death_alert_at": -100.0,
+            "death_alert_pos": "(0.0, 0.0, 0.0)",
+            "primary_site": 0,
+            "target_site": 0
+          },
+          "1": {
+            "contacts": {},
+            "death_alert_at": 100.0,
+            "death_alert_pos": "(-14.0, 0.05, 2.0)",
+            "primary_site": 0,
+            "target_site": 0
+          }
+        }
+      }
+    ],
+    "real_equipment_contract": [
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 0,
+          "grenades": 0,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "rifle"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 0,
+          "grenades": 0,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "rifle"
+        },
+        "case": "failed_purchase_grants_nothing",
+        "passed": true
+      },
+      {
+        "after": {
+          "ammo": 30,
+          "credits": 2600,
+          "grenades": 0,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "reserve": 90,
+          "smokes": 0,
+          "weapon": "rifle"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "successful_purchase_uses_real_actor_price_and_ammo",
+        "passed": true
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "rifle"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "rifle"
+        },
+        "case": "duplicate_purchase_grants_nothing",
+        "passed": true
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "dead_actor_purchase_grants_nothing",
+        "passed": true
+      },
+      {
+        "after": {
+          "ammo": 15,
+          "credits": 5000,
+          "grenades": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 60,
+          "smokes": 1,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 15,
+          "credits": 5000,
+          "grenades": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 60,
+          "smokes": 1,
+          "weapon": "sidearm"
+        },
+        "case": "round_reset_is_the_resource_owner",
+        "passed": true
+      }
+    ],
+    "equipment_pass_count": 5,
+    "adapted_invalid_equipment_choices": [],
+    "additional_policy_observations": [
+      {
+        "case": "team_report_bounds",
+        "difficulty": "easy",
+        "distance": 10.0,
+        "exact_position": false,
+        "report_accepted": false
+      },
+      {
+        "case": "team_report_bounds",
+        "difficulty": "easy",
+        "distance": 40.0,
+        "exact_position": false,
+        "report_accepted": false
+      },
+      {
+        "case": "team_report_bounds",
+        "difficulty": "normal",
+        "distance": 10.0,
+        "exact_position": true,
+        "report_accepted": true
+      },
+      {
+        "case": "team_report_bounds",
+        "difficulty": "normal",
+        "distance": 40.0,
+        "exact_position": false,
+        "report_accepted": false
+      },
+      {
+        "case": "team_report_bounds",
+        "difficulty": "hard",
+        "distance": 10.0,
+        "exact_position": true,
+        "report_accepted": true
+      },
+      {
+        "case": "team_report_bounds",
+        "difficulty": "hard",
+        "distance": 40.0,
+        "exact_position": false,
+        "report_accepted": false
+      },
+      {
+        "acquired_after": false,
+        "acquired_before": false,
+        "case": "rear_visual_from_unrelated_sound",
+        "damage_time": -100.0,
+        "enemy_position": "(-14.0, 0.05, 8.0)",
+        "real_los_positive": true,
+        "sound_position": "(-14.0, 0.05, -10.0)"
+      },
+      {
+        "bot_interact": true,
+        "bot_role": "defuser",
+        "case": "idle_human_defuser_priority",
+        "human_holding_interact": false,
+        "selected_actor": 6
+      },
+      {
+        "bot_interact": false,
+        "bot_role": "retake_cover",
+        "case": "idle_human_defuser_priority",
+        "human_holding_interact": true,
+        "selected_actor": 7
+      },
+      {
+        "case": "tick_bot_command_sink",
+        "last_cmd_saved": false,
+        "shipped_actor_has_apply_tick": false,
+        "wrote_actor_input": true
+      }
+    ]
+  },
+  "south": {
+    "behavior_repeat_byte_identical": true,
+    "behavior_r1_stdout_sha256": "24b61c46d30b82ff5642404d2dbc5c6e86b4d4a58a6ebfb10faf4d089440cd08",
+    "behavior_r2_stdout_sha256": "24b61c46d30b82ff5642404d2dbc5c6e86b4d4a58a6ebfb10faf4d089440cd08",
+    "behavior_stderr_empty_both_runs": true,
+    "policy_repeat_byte_identical": true,
+    "adapted_anchor_arrival_count": 5,
+    "adapted_anchor_total": 5,
+    "adapted_anchor_results": [
+      {
+        "slot": 0,
+        "declared_anchor": "(-15.0, 0.0, 9.0)",
+        "arrival_seconds": 2.81666666666667,
+        "minimum_distance_m": 0.93632972240448,
+        "seconds_within_1_8m": 17.1833333333333,
+        "final_position": "(-14.35637, 0.050265, 9.680042)"
+      },
+      {
+        "slot": 1,
+        "declared_anchor": "(15.0, 0.0, 9.0)",
+        "arrival_seconds": 3.76666666666667,
+        "minimum_distance_m": 1.00155520439148,
+        "seconds_within_1_8m": 16.2333333333333,
+        "final_position": "(14.20041, 0.050351, 9.603128)"
+      },
+      {
+        "slot": 2,
+        "declared_anchor": "(-12.0, 0.0, 6.0)",
+        "arrival_seconds": 3.38333333333333,
+        "minimum_distance_m": 1.15533089637756,
+        "seconds_within_1_8m": 16.6166666666667,
+        "final_position": "(-11.24111, 0.000596, 6.871135)"
+      },
+      {
+        "slot": 3,
+        "declared_anchor": "(12.0, 0.0, 6.0)",
+        "arrival_seconds": 3.13333333333333,
+        "minimum_distance_m": 1.19725215435028,
+        "seconds_within_1_8m": 16.8666666666667,
+        "final_position": "(11.28513, 0.000176, 6.960404)"
+      },
+      {
+        "slot": 4,
+        "declared_anchor": "(0.0, 0.0, 12.0)",
+        "arrival_seconds": 1.58333333333333,
+        "minimum_distance_m": 1.41500389575958,
+        "seconds_within_1_8m": 18.4166666666667,
+        "final_position": "(0.712028, 0.000396, 13.22281)"
+      }
+    ],
+    "adapted_easy_defender_hearing_20m": [
+      {
+        "age": 0.0,
+        "case": "hearing",
+        "declared_range": 18.0,
+        "destination": "(-15.0, 0.0, 9.0)",
+        "destination_exact_sound": false,
+        "difficulty": "easy",
+        "distance": 20.0,
+        "heard_at": -100.0,
+        "heard_exact": false,
+        "role": "anchor",
+        "scenario": "easy_bypass20",
+        "team": 1
+      }
+    ],
+    "adapted_damage_priority": [
+      {
+        "case": "damage_priority",
+        "damaged_at": 100.0,
+        "damaged_look": "(-0.648, 0.0)",
+        "expected_yaw": -0.648,
+        "has_visual_memory": false,
+        "move": "(0.484772, -0.87464)",
+        "retained_damage_yaw": true,
+        "undamaged_look": "(2.999696, 0.0)",
+        "world_move": "(-0.141421, 0.0, 0.989949)"
+      },
+      {
+        "case": "damage_priority",
+        "damaged_at": 100.0,
+        "damaged_look": "(-0.648, 0.0)",
+        "expected_yaw": -0.648,
+        "has_visual_memory": true,
+        "move": "(-0.603593, 0.797293)",
+        "retained_damage_yaw": true,
+        "undamaged_look": "(0.0, 0.0)",
+        "world_move": "(0.0, 0.0, -1.0)"
+      }
+    ],
+    "sound_precision_samples": 96.0,
+    "sound_precision_exact_samples": 96.0,
+    "sound_precision": [
+      {
+        "case": "sound_precision",
+        "declared_sound_noise": 2.4,
+        "difficulty": "easy",
+        "exact_count": 16,
+        "mean_position_error_m": 0.0,
+        "samples": 16,
+        "team": 1
+      },
+      {
+        "case": "sound_precision",
+        "declared_sound_noise": 1.1,
+        "difficulty": "normal",
+        "exact_count": 16,
+        "mean_position_error_m": 0.0,
+        "samples": 16,
+        "team": 1
+      },
+      {
+        "case": "sound_precision",
+        "declared_sound_noise": 0.35,
+        "difficulty": "hard",
+        "exact_count": 16,
+        "mean_position_error_m": 0.0,
+        "samples": 16,
+        "team": 1
+      },
+      {
+        "case": "sound_precision",
+        "declared_sound_noise": 2.4,
+        "difficulty": "easy",
+        "exact_count": 16,
+        "mean_position_error_m": 0.0,
+        "samples": 16,
+        "team": 0
+      },
+      {
+        "case": "sound_precision",
+        "declared_sound_noise": 1.1,
+        "difficulty": "normal",
+        "exact_count": 16,
+        "mean_position_error_m": 0.0,
+        "samples": 16,
+        "team": 0
+      },
+      {
+        "case": "sound_precision",
+        "declared_sound_noise": 0.35,
+        "difficulty": "hard",
+        "exact_count": 16,
+        "mean_position_error_m": 0.0,
+        "samples": 16,
+        "team": 0
+      }
+    ],
+    "original_actor_contract": [
+      {
+        "arena_class": "SBArena",
+        "case": "bot_api",
+        "methods": {
+          "_choose_designated_defuser": {
+            "arguments": 1,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 2,
+              "usage": 0
+            }
+          },
+          "_nearest_visible_waypoint": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 2,
+              "usage": 0
+            }
+          },
+          "_select_objective_and_destination": {
+            "arguments": 4,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "_site_post_plant_anchor": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 9,
+              "usage": 0
+            }
+          },
+          "_sync_team_blackboard": {
+            "arguments": 2,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 0
+            }
+          },
+          "_update_auditory_and_team_memory": {
+            "arguments": 4,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 0
+            }
+          },
+          "acquire_target": {
+            "arguments": 4,
+            "return": {
+              "class_name": "SBActor",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 24,
+              "usage": 0
+            }
+          },
+          "buy_equipment": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 4,
+              "usage": 0
+            }
+          },
+          "choose_buy_weapon": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 4,
+              "usage": 0
+            }
+          },
+          "compute_bot_input": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "create_state": {
+            "arguments": 1,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "create_team_state": {
+            "arguments": 0,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "find_tactical_cover": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 9,
+              "usage": 0
+            }
+          },
+          "get_profile": {
+            "arguments": 1,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "get_site_hold_position": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 9,
+              "usage": 0
+            }
+          },
+          "new_bot_state": {
+            "arguments": 1,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "new_team_state": {
+            "arguments": 0,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "profile_for": {
+            "arguments": 1,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 27,
+              "usage": 0
+            }
+          },
+          "record_damage": {
+            "arguments": 5,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 0
+            }
+          },
+          "record_elimination": {
+            "arguments": 5,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 0
+            }
+          },
+          "safe_navigate": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 9,
+              "usage": 0
+            }
+          },
+          "select_destination": {
+            "arguments": 6,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 9,
+              "usage": 0
+            }
+          },
+          "select_round_plan": {
+            "arguments": 2,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 131072
+            }
+          },
+          "snap_to_walkable": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 9,
+              "usage": 0
+            }
+          },
+          "tick_bot": {
+            "arguments": 3,
+            "return": {
+              "class_name": "",
+              "hint": 0,
+              "hint_string": "",
+              "name": "",
+              "type": 0,
+              "usage": 0
+            }
+          }
+        }
+      },
+      {
+        "case": "shipped_actor_surface",
+        "has_apply_tick": false,
+        "has_eye_position": false,
+        "has_tick_authority": true,
+        "missing_candidate_properties": [
+          "id",
+          "slot",
+          "hp",
+          "reloading",
+          "is_bot",
+          "planting",
+          "defusing"
+        ]
+      },
+      {
+        "case": "production_damage_callback_ids",
+        "damaged_at": -100.0,
+        "expected": 10.0,
+        "recorded": false
+      },
+      {
+        "case": "dictionary_damage_callback",
+        "damaged_at": 10.0,
+        "damaged_from": "(-14.0, 0.05, -10.0)",
+        "recorded": true
+      },
+      {
+        "case": "production_elimination_callback_ids",
+        "heard_at": -100.0,
+        "team_state": {
+          "callouts": {},
+          "danger_zones": [],
+          "primary_site": 0,
+          "site_locked": false,
+          "target_site": 0
+        }
+      },
+      {
+        "case": "shipped_compute",
+        "input_state": {
+          "sentinel": true
+        },
+        "wrote_input": false
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "first_round_equipment",
+        "choice": "pistol",
+        "choice_is_valid": false
+      },
+      {
+        "case": "mid_budget_choice",
+        "choice": "",
+        "valid": false
+      },
+      {
+        "can_instantiate": false,
+        "case": "shipped_match_load",
+        "resource_loaded": true
+      }
+    ],
+    "original_elimination_contract": [
+      {
+        "ally_alert_recorded": false,
+        "ally_heard_at": -100.0,
+        "team_state": {
+          "callouts": {},
+          "danger_zones": [
+            {
+              "position": "(-14.0, 0.05, 2.0)",
+              "team": 1,
+              "time": 100.0
+            }
+          ],
+          "primary_site": 0,
+          "site_locked": false,
+          "target_site": 0
+        }
+      }
+    ],
+    "real_equipment_contract": [
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 0,
+          "grenades": 0,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "rifle"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 0,
+          "grenades": 0,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "rifle"
+        },
+        "case": "failed_purchase_grants_nothing",
+        "passed": true
+      },
+      {
+        "after": {
+          "ammo": 30,
+          "credits": 2600,
+          "grenades": 0,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "reserve": 90,
+          "smokes": 0,
+          "weapon": "rifle"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "successful_purchase_uses_real_actor_price_and_ammo",
+        "passed": true
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "rifle"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "rifle"
+        },
+        "case": "duplicate_purchase_grants_nothing",
+        "passed": true
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "dead_actor_purchase_grants_nothing",
+        "passed": true
+      },
+      {
+        "after": {
+          "ammo": 15,
+          "credits": 5000,
+          "grenades": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 60,
+          "smokes": 1,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 15,
+          "credits": 5000,
+          "grenades": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 60,
+          "smokes": 1,
+          "weapon": "sidearm"
+        },
+        "case": "round_reset_is_the_resource_owner",
+        "passed": true
+      }
+    ],
+    "equipment_pass_count": 5,
+    "adapted_invalid_equipment_choices": [
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 0,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 0,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "easy",
+        "initial_credits": 0,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 1100,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 1100,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "easy",
+        "initial_credits": 1100,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 1450,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 1450,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "easy",
+        "initial_credits": 1450,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 1850,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 1850,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "easy",
+        "initial_credits": 1850,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 1850,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 1850,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "shotgun",
+        "choice_valid": false,
+        "difficulty": "easy",
+        "initial_credits": 1850,
+        "round": 2
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 2400,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 2400,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "easy",
+        "initial_credits": 2400,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 2400,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 2400,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "shotgun",
+        "choice_valid": false,
+        "difficulty": "easy",
+        "initial_credits": 2400,
+        "round": 2
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 2600,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 2600,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "easy",
+        "initial_credits": 2600,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 2600,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 2600,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "shotgun",
+        "choice_valid": false,
+        "difficulty": "easy",
+        "initial_credits": 2600,
+        "round": 2
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 2900,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 2900,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "easy",
+        "initial_credits": 2900,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "easy",
+        "initial_credits": 5000,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 0,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 0,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "normal",
+        "initial_credits": 0,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 1100,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 1100,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "normal",
+        "initial_credits": 1100,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 1450,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 1450,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "normal",
+        "initial_credits": 1450,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 1850,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 1850,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "normal",
+        "initial_credits": 1850,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 1850,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 1850,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "shotgun",
+        "choice_valid": false,
+        "difficulty": "normal",
+        "initial_credits": 1850,
+        "round": 2
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 2400,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 2400,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "normal",
+        "initial_credits": 2400,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 2400,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 2400,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "shotgun",
+        "choice_valid": false,
+        "difficulty": "normal",
+        "initial_credits": 2400,
+        "round": 2
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 2600,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 2600,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "normal",
+        "initial_credits": 2600,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 2600,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 2600,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "shotgun",
+        "choice_valid": false,
+        "difficulty": "normal",
+        "initial_credits": 2600,
+        "round": 2
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 2900,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 2900,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "normal",
+        "initial_credits": 2900,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "normal",
+        "initial_credits": 5000,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 0,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 0,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "hard",
+        "initial_credits": 0,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 1100,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 1100,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "hard",
+        "initial_credits": 1100,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 1450,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 1450,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "hard",
+        "initial_credits": 1450,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 1850,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 1850,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "hard",
+        "initial_credits": 1850,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 1850,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 1850,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "shotgun",
+        "choice_valid": false,
+        "difficulty": "hard",
+        "initial_credits": 1850,
+        "round": 2
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 2400,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 2400,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "hard",
+        "initial_credits": 2400,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 2400,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 2400,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "shotgun",
+        "choice_valid": false,
+        "difficulty": "hard",
+        "initial_credits": 2400,
+        "round": 2
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 2600,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 2600,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "hard",
+        "initial_credits": 2600,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 2600,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 2600,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "shotgun",
+        "choice_valid": false,
+        "difficulty": "hard",
+        "initial_credits": 2600,
+        "round": 2
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 2900,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 2900,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "hard",
+        "initial_credits": 2900,
+        "round": 1
+      },
+      {
+        "after": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "before": {
+          "ammo": 2,
+          "credits": 5000,
+          "grenades": 0,
+          "inventory": [
+            "sidearm"
+          ],
+          "reserve": 3,
+          "smokes": 0,
+          "weapon": "sidearm"
+        },
+        "case": "equipment",
+        "choice": "pistol",
+        "choice_valid": false,
+        "difficulty": "hard",
+        "initial_credits": 5000,
+        "round": 1
+      }
+    ],
+    "additional_policy_observations": [
+      {
+        "case": "team_report_bounds",
+        "difficulty": "easy",
+        "distance": 10.0,
+        "exact_position": true,
+        "report_accepted": true
+      },
+      {
+        "case": "team_report_bounds",
+        "difficulty": "easy",
+        "distance": 40.0,
+        "exact_position": true,
+        "report_accepted": true
+      },
+      {
+        "case": "team_report_bounds",
+        "difficulty": "normal",
+        "distance": 10.0,
+        "exact_position": true,
+        "report_accepted": true
+      },
+      {
+        "case": "team_report_bounds",
+        "difficulty": "normal",
+        "distance": 40.0,
+        "exact_position": true,
+        "report_accepted": true
+      },
+      {
+        "case": "team_report_bounds",
+        "difficulty": "hard",
+        "distance": 10.0,
+        "exact_position": true,
+        "report_accepted": true
+      },
+      {
+        "case": "team_report_bounds",
+        "difficulty": "hard",
+        "distance": 40.0,
+        "exact_position": true,
+        "report_accepted": true
+      },
+      {
+        "acquired_after": true,
+        "acquired_before": false,
+        "case": "rear_visual_from_unrelated_sound",
+        "damage_time": -100.0,
+        "enemy_position": "(-14.0, 0.05, 8.0)",
+        "real_los_positive": true,
+        "sound_position": "(-14.0, 0.05, -10.0)"
+      },
+      {
+        "bot_interact": false,
+        "bot_role": "retake_cover",
+        "case": "idle_human_defuser_priority",
+        "human_holding_interact": false,
+        "selected_actor": 7
+      },
+      {
+        "bot_interact": false,
+        "bot_role": "retake_cover",
+        "case": "idle_human_defuser_priority",
+        "human_holding_interact": true,
+        "selected_actor": 7
+      },
+      {
+        "case": "tick_bot_command_sink",
+        "last_cmd_saved": false,
+        "shipped_actor_has_apply_tick": false,
+        "wrote_actor_input": false
+      }
+    ]
+  },
+  "retained_baseline_sweep": {
+    "conditions": 9,
+    "two_round_conditions_completed": 9,
+    "rounds": 18.0,
+    "plants": 2.0,
+    "defuses": 0.0,
+    "note": "Candidate could not parse the same sweep; no candidate comparative performance or objective claim is valid.",
+    "records": [
+      {
+        "bot_decisions": 1278,
+        "completed": true,
+        "decision_us_mean": 292.52034428795,
+        "decision_us_p95": 706,
+        "defuse_attempts": 0,
+        "defuses": 0,
+        "difficulty": "easy",
+        "engagement_ticks": 600,
+        "inactive_actor_ratio": 0.0785791173304629,
+        "inactive_actor_seconds": 13.3833333333333,
+        "kills": 14,
+        "live_physics_ticks": 1504,
+        "live_seconds": 25.0666666666665,
+        "movement_requests": 1106,
+        "movement_stalls": 65,
+        "objective_actor_count": 0,
+        "objective_input_ticks": 0,
+        "plant_attempts": 0,
+        "plants": 0,
+        "role_decisions": {
+          "anchor": 516,
+          "carrier": 141,
+          "escort": 250,
+          "pursue_memory": 150,
+          "recover_device": 44,
+          "rotate_investigate": 177
+        },
+        "rounds": [
+          {
+            "objective": "dropped",
+            "round": 1,
+            "score": [
+              0,
+              1
+            ],
+            "seconds": 11.6
+          },
+          {
+            "objective": "dropped",
+            "round": 2,
+            "score": [
+              0,
+              2
+            ],
+            "seconds": 25.067
+          }
+        ],
+        "seed": 1847,
+        "shots": 249,
+        "stuck_ticks_over_0_9": 4,
+        "target_switches": 28
+      },
+      {
+        "bot_decisions": 1420,
+        "completed": true,
+        "decision_us_mean": 282.377464788732,
+        "decision_us_p95": 662,
+        "defuse_attempts": 0,
+        "defuses": 0,
+        "difficulty": "easy",
+        "engagement_ticks": 800,
+        "inactive_actor_ratio": 0.060646186440678,
+        "inactive_actor_seconds": 11.45,
+        "kills": 12,
+        "live_physics_ticks": 1468,
+        "live_seconds": 24.4666666666666,
+        "movement_requests": 1235,
+        "movement_stalls": 86,
+        "objective_actor_count": 0,
+        "objective_input_ticks": 0,
+        "plant_attempts": 0,
+        "plants": 0,
+        "role_decisions": {
+          "anchor": 577,
+          "carrier": 136,
+          "escort": 369,
+          "pursue_memory": 191,
+          "recover_device": 45,
+          "rotate_investigate": 102
+        },
+        "rounds": [
+          {
+            "objective": "dropped",
+            "round": 1,
+            "score": [
+              0,
+              1
+            ],
+            "seconds": 14.4
+          },
+          {
+            "objective": "dropped",
+            "round": 2,
+            "score": [
+              0,
+              2
+            ],
+            "seconds": 24.467
+          }
+        ],
+        "seed": 2026,
+        "shots": 310,
+        "stuck_ticks_over_0_9": 9,
+        "target_switches": 53
+      },
+      {
+        "bot_decisions": 1137,
+        "completed": true,
+        "decision_us_mean": 348.029023746702,
+        "decision_us_p95": 774,
+        "defuse_attempts": 0,
+        "defuses": 0,
+        "difficulty": "easy",
+        "engagement_ticks": 585,
+        "inactive_actor_ratio": 0.0936642143406171,
+        "inactive_actor_seconds": 14.2166666666667,
+        "kills": 11,
+        "live_physics_ticks": 1098,
+        "live_seconds": 18.3000000000002,
+        "movement_requests": 968,
+        "movement_stalls": 41,
+        "objective_actor_count": 0,
+        "objective_input_ticks": 0,
+        "plant_attempts": 0,
+        "plants": 0,
+        "role_decisions": {
+          "anchor": 510,
+          "carrier": 72,
+          "escort": 266,
+          "pursue_memory": 112,
+          "recover_device": 87,
+          "rotate_investigate": 90
+        },
+        "rounds": [
+          {
+            "objective": "dropped",
+            "round": 1,
+            "score": [
+              0,
+              1
+            ],
+            "seconds": 13.6
+          },
+          {
+            "objective": "dropped",
+            "round": 2,
+            "score": [
+              0,
+              2
+            ],
+            "seconds": 18.3
+          }
+        ],
+        "seed": 3141,
+        "shots": 205,
+        "stuck_ticks_over_0_9": 2,
+        "target_switches": 45
+      },
+      {
+        "bot_decisions": 1593,
+        "completed": true,
+        "decision_us_mean": 616.016949152542,
+        "decision_us_p95": 1261,
+        "defuse_attempts": 0,
+        "defuses": 0,
+        "difficulty": "normal",
+        "engagement_ticks": 964,
+        "inactive_actor_ratio": 0.0885916601101495,
+        "inactive_actor_seconds": 18.7666666666667,
+        "kills": 14,
+        "live_physics_ticks": 1995,
+        "live_seconds": 33.2499999999994,
+        "movement_requests": 771,
+        "movement_stalls": 66,
+        "objective_actor_count": 1,
+        "objective_input_ticks": 23,
+        "plant_attempts": 1,
+        "plants": 1,
+        "role_decisions": {
+          "anchor": 331,
+          "carrier": 157,
+          "defuser": 45,
+          "escort": 207,
+          "investigate_sound": 158,
+          "post_plant_hold": 135,
+          "pursue_memory": 346,
+          "retake_cover": 9,
+          "rotate_investigate": 149,
+          "split_flank": 56
+        },
+        "rounds": [
+          {
+            "objective": "carried",
+            "round": 1,
+            "score": [
+              1,
+              0
+            ],
+            "seconds": 18.267
+          },
+          {
+            "objective": "planted",
+            "round": 2,
+            "score": [
+              2,
+              0
+            ],
+            "seconds": 33.25
+          }
+        ],
+        "seed": 1847,
+        "shots": 274,
+        "stuck_ticks_over_0_9": 0,
+        "target_switches": 190
+      },
+      {
+        "bot_decisions": 1663,
+        "completed": true,
+        "decision_us_mean": 516.828021647625,
+        "decision_us_p95": 999,
+        "defuse_attempts": 0,
+        "defuses": 0,
+        "difficulty": "normal",
+        "engagement_ticks": 892,
+        "inactive_actor_ratio": 0.117389993972272,
+        "inactive_actor_seconds": 25.9666666666667,
+        "kills": 12,
+        "live_physics_ticks": 2035,
+        "live_seconds": 33.916666666666,
+        "movement_requests": 822,
+        "movement_stalls": 73,
+        "objective_actor_count": 1,
+        "objective_input_ticks": 2,
+        "plant_attempts": 1,
+        "plants": 0,
+        "role_decisions": {
+          "anchor": 438,
+          "carrier": 79,
+          "escort": 198,
+          "investigate_sound": 33,
+          "pursue_memory": 536,
+          "recover_device": 197,
+          "rotate_investigate": 128,
+          "split_flank": 54
+        },
+        "rounds": [
+          {
+            "objective": "dropped",
+            "round": 1,
+            "score": [
+              0,
+              1
+            ],
+            "seconds": 14.0
+          },
+          {
+            "objective": "dropped",
+            "round": 2,
+            "score": [
+              1,
+              1
+            ],
+            "seconds": 33.917
+          }
+        ],
+        "seed": 2026,
+        "shots": 258,
+        "stuck_ticks_over_0_9": 0,
+        "target_switches": 184
+      },
+      {
+        "bot_decisions": 1723,
+        "completed": true,
+        "decision_us_mean": 665.1340684852,
+        "decision_us_p95": 1435,
+        "defuse_attempts": 0,
+        "defuses": 0,
+        "difficulty": "normal",
+        "engagement_ticks": 1009,
+        "inactive_actor_ratio": 0.0579100145137881,
+        "inactive_actor_seconds": 13.3,
+        "kills": 16,
+        "live_physics_ticks": 4100,
+        "live_seconds": 68.3333333333307,
+        "movement_requests": 1141,
+        "movement_stalls": 147,
+        "objective_actor_count": 1,
+        "objective_input_ticks": 23,
+        "plant_attempts": 1,
+        "plants": 1,
+        "role_decisions": {
+          "anchor": 326,
+          "carrier": 160,
+          "defuser": 263,
+          "escort": 169,
+          "investigate_sound": 50,
+          "post_plant_hold": 263,
+          "pursue_memory": 273,
+          "recover_device": 58,
+          "rotate_investigate": 108,
+          "split_flank": 53
+        },
+        "rounds": [
+          {
+            "objective": "dropped",
+            "round": 1,
+            "score": [
+              0,
+              1
+            ],
+            "seconds": 12.933
+          },
+          {
+            "objective": "planted",
+            "round": 2,
+            "score": [
+              1,
+              1
+            ],
+            "seconds": 68.333
+          }
+        ],
+        "seed": 3141,
+        "shots": 262,
+        "stuck_ticks_over_0_9": 0,
+        "target_switches": 84
+      },
+      {
+        "bot_decisions": 1717,
+        "completed": true,
+        "decision_us_mean": 852.362259755387,
+        "decision_us_p95": 1899,
+        "defuse_attempts": 0,
+        "defuses": 0,
+        "difficulty": "hard",
+        "engagement_ticks": 1195,
+        "inactive_actor_ratio": 0.0931554778045047,
+        "inactive_actor_seconds": 21.3,
+        "kills": 16,
+        "live_physics_ticks": 2974,
+        "live_seconds": 49.5666666666651,
+        "movement_requests": 1044,
+        "movement_stalls": 183,
+        "objective_actor_count": 0,
+        "objective_input_ticks": 0,
+        "plant_attempts": 0,
+        "plants": 0,
+        "role_decisions": {
+          "anchor": 192,
+          "carrier": 41,
+          "escort": 66,
+          "investigate_sound": 28,
+          "pursue_memory": 522,
+          "recover_device": 465,
+          "rotate_investigate": 358,
+          "split_flank": 45
+        },
+        "rounds": [
+          {
+            "objective": "dropped",
+            "round": 1,
+            "score": [
+              1,
+              0
+            ],
+            "seconds": 36.267
+          },
+          {
+            "objective": "dropped",
+            "round": 2,
+            "score": [
+              2,
+              0
+            ],
+            "seconds": 49.567
+          }
+        ],
+        "seed": 1847,
+        "shots": 307,
+        "stuck_ticks_over_0_9": 8,
+        "target_switches": 263
+      },
+      {
+        "bot_decisions": 3182,
+        "completed": true,
+        "decision_us_mean": 576.408233815211,
+        "decision_us_p95": 967,
+        "defuse_attempts": 0,
+        "defuses": 0,
+        "difficulty": "hard",
+        "engagement_ticks": 2000,
+        "inactive_actor_ratio": 0.299155040282963,
+        "inactive_actor_seconds": 126.866666666667,
+        "kills": 15,
+        "live_physics_ticks": 7161,
+        "live_seconds": 119.349999999995,
+        "movement_requests": 1095,
+        "movement_stalls": 64,
+        "objective_actor_count": 0,
+        "objective_input_ticks": 0,
+        "plant_attempts": 0,
+        "plants": 0,
+        "role_decisions": {
+          "anchor": 882,
+          "carrier": 54,
+          "escort": 69,
+          "investigate_sound": 79,
+          "pursue_memory": 1136,
+          "recover_device": 833,
+          "rotate_investigate": 100,
+          "split_flank": 29
+        },
+        "rounds": [
+          {
+            "objective": "dropped",
+            "round": 1,
+            "score": [
+              0,
+              1
+            ],
+            "seconds": 19.333
+          },
+          {
+            "objective": "dropped",
+            "round": 2,
+            "score": [
+              0,
+              2
+            ],
+            "seconds": 119.35
+          }
+        ],
+        "seed": 2026,
+        "shots": 165,
+        "stuck_ticks_over_0_9": 0,
+        "target_switches": 908
+      },
+      {
+        "bot_decisions": 1522,
+        "completed": true,
+        "decision_us_mean": 622.1123521682,
+        "decision_us_p95": 1146,
+        "defuse_attempts": 0,
+        "defuses": 0,
+        "difficulty": "hard",
+        "engagement_ticks": 955,
+        "inactive_actor_ratio": 0.205273533760473,
+        "inactive_actor_seconds": 41.65,
+        "kills": 15,
+        "live_physics_ticks": 2370,
+        "live_seconds": 39.499999999999,
+        "movement_requests": 679,
+        "movement_stalls": 86,
+        "objective_actor_count": 0,
+        "objective_input_ticks": 0,
+        "plant_attempts": 0,
+        "plants": 0,
+        "role_decisions": {
+          "anchor": 281,
+          "carrier": 86,
+          "escort": 130,
+          "investigate_sound": 125,
+          "pursue_memory": 566,
+          "recover_device": 142,
+          "rotate_investigate": 128,
+          "split_flank": 64
+        },
+        "rounds": [
+          {
+            "objective": "dropped",
+            "round": 1,
+            "score": [
+              1,
+              0
+            ],
+            "seconds": 25.067
+          },
+          {
+            "objective": "dropped",
+            "round": 2,
+            "score": [
+              1,
+              1
+            ],
+            "seconds": 39.5
+          }
+        ],
+        "seed": 3141,
+        "shots": 180,
+        "stuck_ticks_over_0_9": 1,
+        "target_switches": 319
+      }
+    ]
+  },
+  "retained_recovered_file_count": 37
+}

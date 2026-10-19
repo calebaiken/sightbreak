@@ -1,0 +1,39 @@
+test_repro_executable_wrapper_is_packaged_without_execute_permissions (__main__.IsolatedAdversarialReview.test_repro_executable_wrapper_is_packaged_without_execute_permissions) ... ok
+test_repro_failed_reverification_keeps_old_passed_report (__main__.IsolatedAdversarialReview.test_repro_failed_reverification_keeps_old_passed_report) ... ok
+test_repro_living_hud_check_accepts_blank_and_zero_health_status (__main__.IsolatedAdversarialReview.test_repro_living_hud_check_accepts_blank_and_zero_health_status) ... 
+  test_repro_living_hud_check_accepts_blank_and_zero_health_status (__main__.IsolatedAdversarialReview.test_repro_living_hud_check_accepts_blank_and_zero_health_status) (status=b'') ... ERROR
+  test_repro_living_hud_check_accepts_blank_and_zero_health_status (__main__.IsolatedAdversarialReview.test_repro_living_hud_check_accepts_blank_and_zero_health_status) (status=b'000 HEALTH') ... ERROR
+test_repro_old_outputs_can_be_reattested_under_another_commit (__main__.IsolatedAdversarialReview.test_repro_old_outputs_can_be_reattested_under_another_commit) ... ok
+test_repro_package_accepts_change_after_payload_check (__main__.IsolatedAdversarialReview.test_repro_package_accepts_change_after_payload_check) ... ok
+test_repro_project_version_disagrees_with_manifest_and_presets (__main__.IsolatedAdversarialReview.test_repro_project_version_disagrees_with_manifest_and_presets) ... ok
+test_repro_timeout_discards_captured_stdout_and_keeps_old_log (__main__.IsolatedAdversarialReview.test_repro_timeout_discards_captured_stdout_and_keeps_old_log) ... ok
+
+======================================================================
+ERROR: test_repro_living_hud_check_accepts_blank_and_zero_health_status (__main__.IsolatedAdversarialReview.test_repro_living_hud_check_accepts_blank_and_zero_health_status) (status=b'')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<stdin>", line 120, in test_repro_living_hud_check_accepts_blank_and_zero_health_status
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\verify_offline_export.py", line 91, in read_hud
+    status = text((0, 630, 450, 720))
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\verify_offline_export.py", line 90, in text
+    return subprocess.check_output([args.tesseract, 'stdin', 'stdout', '--psm', '6'], input=data.getvalue(), stderr=subprocess.DEVNULL).decode()
+                                    ^^^^
+NameError: name 'args' is not defined
+
+======================================================================
+ERROR: test_repro_living_hud_check_accepts_blank_and_zero_health_status (__main__.IsolatedAdversarialReview.test_repro_living_hud_check_accepts_blank_and_zero_health_status) (status=b'000 HEALTH')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<stdin>", line 120, in test_repro_living_hud_check_accepts_blank_and_zero_health_status
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\verify_offline_export.py", line 91, in read_hud
+    status = text((0, 630, 450, 720))
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\verify_offline_export.py", line 90, in text
+    return subprocess.check_output([args.tesseract, 'stdin', 'stdout', '--psm', '6'], input=data.getvalue(), stderr=subprocess.DEVNULL).decode()
+                                    ^^^^
+NameError: name 'args' is not defined
+
+----------------------------------------------------------------------
+Ran 7 tests in 2.115s
+
+FAILED (errors=2)
+Exited with code 1

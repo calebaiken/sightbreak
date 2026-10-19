@@ -1,0 +1,264 @@
+[
+  {
+    "commit": "48eb0586e273f96dc20b346ed444d00ab0f3ac30",
+    "repository_path": "game/scripts/gameplay/bot_ai.gd",
+    "git_blob_sha1": "e0e04fb0ec9abe5ffa6d7174778b4f08bc2ba3f3",
+    "external_snapshot": "candidate-source/bot_ai.gd",
+    "snapshot_sha256": "91246817436685b35df0aede811e566e3998ec24b76b4fa6723bc9177cc6418e",
+    "native_worktree_sha256": "a685e25b6760078c9162dd15e7a4b66a8bb316dffdbd3c95cebaa7502e09d333",
+    "recovery_command": [
+      "git",
+      "show",
+      "48eb0586e273f96dc20b346ed444d00ab0f3ac30:game/scripts/gameplay/bot_ai.gd"
+    ],
+    "excerpt_encoding": "JSON strings; LF-joined source lines, not a byte-for-byte whole-file copy",
+    "ranges": [
+      {
+        "first_line": 1,
+        "last_line": 55,
+        "text": "extends RefCounted\nclass_name SBBotAI\n\nconst PROFILES := {\n\t\"easy\": {\n\t\t\"fov_dot\": 0.35,\n\t\t\"max_sight_distance\": 30.0,\n\t\t\"hearing_range\": 18.0,\n\t\t\"reaction_delay\": 0.42,\n\t\t\"aim_jitter\": 0.095,\n\t\t\"turn_speed\": 3.2,\n\t\t\"memory_duration\": 1.6,\n\t\t\"burst_duration\": 0.22,\n\t\t\"burst_pause\": 0.32,\n\t\t\"strafe_freq\": 1.4,\n\t\t\"utility_chance\": 0.20,\n\t\t\"retreat_hp\": 20.0,\n\t\t\"sound_noise\": 2.4,\n\t},\n\t\"normal\": {\n\t\t\"fov_dot\": 0.15,\n\t\t\"max_sight_distance\": 38.0,\n\t\t\"hearing_range\": 26.0,\n\t\t\"reaction_delay\": 0.22,\n\t\t\"aim_jitter\": 0.045,\n\t\t\"turn_speed\": 5.4,\n\t\t\"memory_duration\": 3.2,\n\t\t\"burst_duration\": 0.34,\n\t\t\"burst_pause\": 0.18,\n\t\t\"strafe_freq\": 2.3,\n\t\t\"utility_chance\": 0.55,\n\t\t\"retreat_hp\": 28.0,\n\t\t\"sound_noise\": 1.1,\n\t},\n\t\"hard\": {\n\t\t\"fov_dot\": -0.05,\n\t\t\"max_sight_distance\": 46.0,\n\t\t\"hearing_range\": 35.0,\n\t\t\"reaction_delay\": 0.11,\n\t\t\"aim_jitter\": 0.015,\n\t\t\"turn_speed\": 8.2,\n\t\t\"memory_duration\": 5.0,\n\t\t\"burst_duration\": 0.46,\n\t\t\"burst_pause\": 0.10,\n\t\t\"strafe_freq\": 3.1,\n\t\t\"utility_chance\": 0.85,\n\t\t\"retreat_hp\": 34.0,\n\t\t\"sound_noise\": 0.35,\n\t},\n}\n\nconst SOUND_MEMORY_SECONDS := 5.0\nconst CALLOUT_MEMORY_SECONDS := 6.0\nconst STUCK_REPATH_SECONDS := 0.55\nconst TARGET_HYSTERESIS_BONUS := 8.5"
+      },
+      {
+        "first_line": 75,
+        "last_line": 81,
+        "text": "const DEFENDER_ANCHORS: Array[Vector3] = [\n\tVector3(-15.0, 0.0, 9.0),\n\tVector3(15.0, 0.0, 9.0),\n\tVector3(-12.0, 0.0, 6.0),\n\tVector3(12.0, 0.0, 6.0),\n\tVector3(0.0, 0.0, 12.0),\n]"
+      },
+      {
+        "first_line": 113,
+        "last_line": 146,
+        "text": "static func create_team_state() -> Dictionary:\n\treturn {\n\t\t\"primary_site\": 0,\n\t\t\"target_site\": 0,\n\t\t\"site_locked\": false,\n\t\t\"callouts\": {},\n\t\t\"danger_zones\": [],\n\t}\n\nstatic func new_team_state() -> Dictionary:\n\treturn create_team_state()\n\nstatic func choose_buy_weapon(actor: SBActor, difficulty: String, round_number: int) -> String:\n\tif actor == null:\n\t\treturn \"pistol\"\n\tif round_number == 1 or round_number == 7:\n\t\treturn \"pistol\"\n\tif actor.credits >= 2900:\n\t\treturn \"rifle\"\n\tif actor.credits >= 1850:\n\t\tif difficulty == \"easy\" and actor.credits < 2400:\n\t\t\treturn \"shotgun\"\n\t\treturn \"shotgun\" if (actor.id + round_number) % 3 == 0 else \"smg\"\n\tif actor.credits >= 1450:\n\t\treturn \"smg\"\n\treturn actor.weapon_id\n\nstatic func buy_equipment(actor: SBActor, difficulty: String, round_number: int) -> String:\n\tif actor == null:\n\t\treturn \"pistol\"\n\tvar choice: String = choose_buy_weapon(actor, difficulty, round_number)\n\tif choice != \"\" and choice != actor.weapon_id:\n\t\tactor.buy_weapon(choice)\n\treturn actor.weapon_id"
+      },
+      {
+        "first_line": 148,
+        "last_line": 172,
+        "text": "static func select_round_plan(match_or_round: Variant, team_or_rng: Variant = 0) -> Variant:\n\tif match_or_round is int:\n\t\tvar round_num: int = int(match_or_round)\n\t\tvar rng: RandomNumberGenerator = team_or_rng as RandomNumberGenerator\n\t\tif rng == null:\n\t\t\treturn posmod(round_num, 2)\n\t\treturn int(rng.randi() % 2)\n\tvar match_node: Node = match_or_round as Node\n\tif match_node == null:\n\t\treturn {\"target_site\": 0, \"primary_site\": 0}\n\tif not match_node.get(\"_team_ai_state\") is Dictionary or match_node._team_ai_state.is_empty():\n\t\tmatch_node._team_ai_state = create_team_state()\n\tvar target_site: int = int(match_node._team_ai_state.get(\"primary_site\", posmod(int(match_node.round_number), 2)))\n\tvar carrier: SBActor = match_node.actors.get(match_node.bomb_carrier_id, null)\n\tif carrier != null and carrier.alive and match_node.arena != null and match_node.arena.sites.size() >= 2:\n\t\tvar d0: float = carrier.position.distance_to(match_node.arena.sites[0])\n\t\tvar d1: float = carrier.position.distance_to(match_node.arena.sites[1])\n\t\tif minf(d0, d1) < 22.0 and absf(d0 - d1) > 5.0:\n\t\t\ttarget_site = 0 if d0 < d1 else 1\n\t\t\tmatch_node._team_ai_state[\"site_locked\"] = true\n\t\telif not bool(match_node._team_ai_state.get(\"site_locked\", false)):\n\t\t\ttarget_site = posmod(int(match_node.round_number) + int(match_node.bomb_carrier_id), 2)\n\tmatch_node._team_ai_state[\"primary_site\"] = target_site\n\tmatch_node._team_ai_state[\"target_site\"] = target_site\n\treturn match_node._team_ai_state"
+      },
+      {
+        "first_line": 177,
+        "last_line": 251,
+        "text": "static func record_damage(arg1: Variant, arg2: Variant, arg3: Variant, arg4: Variant, arg5: Variant = null) -> void:\n\tif arg1 is Node and arg2 is SBActor:\n\t\tvar match_node: Node = arg1\n\t\tvar victim: SBActor = arg2\n\t\tvar attacker: SBActor = arg3 as SBActor\n\t\tif victim == null or attacker == null:\n\t\t\treturn\n\t\tif not match_node._bot_state.has(victim.id):\n\t\t\treturn\n\t\tvar st: Dictionary = match_node._bot_state[victim.id]\n\t\tst[\"damaged_from\"] = attacker.position\n\t\tst[\"damaged_at\"] = float(match_node._elapsed)\n\t\treturn\n\tif arg1 is Dictionary and arg2 is Dictionary:\n\t\tvar bot_states: Dictionary = arg1\n\t\tvar actors: Dictionary = arg2\n\t\tvar victim_id: int = int(arg3)\n\t\tvar attacker_id: int = int(arg4)\n\t\tvar elapsed: float = float(arg5) if arg5 != null else 0.0\n\t\tif not bot_states.has(victim_id) or not actors.has(attacker_id):\n\t\t\treturn\n\t\tvar attacker_actor: SBActor = actors[attacker_id]\n\t\tif attacker_actor == null:\n\t\t\treturn\n\t\tvar st2: Dictionary = bot_states[victim_id]\n\t\tst2[\"damaged_from\"] = attacker_actor.position\n\t\tst2[\"damaged_at\"] = elapsed\n\nstatic func record_elimination(arg1: Variant, arg2: Variant, arg3: Variant, arg4: Variant, arg5: Variant = null) -> void:\n\tif arg1 is Node and arg2 is SBActor:\n\t\tvar match_node: Node = arg1\n\t\tvar victim: SBActor = arg2\n\t\tvar death_pos: Vector3 = arg4 if arg4 is Vector3 else victim.position\n\t\tif not match_node.get(\"_team_ai_state\") is Dictionary or match_node._team_ai_state.is_empty():\n\t\t\tmatch_node._team_ai_state = create_team_state()\n\t\tvar zones: Array = match_node._team_ai_state.get(\"danger_zones\", [])\n\t\tzones.append({\n\t\t\t\"team\": victim.team,\n\t\t\t\"position\": death_pos,\n\t\t\t\"time\": float(match_node._elapsed),\n\t\t})\n\t\tmatch_node._team_ai_state[\"danger_zones\"] = zones\n\t\tfor id: int in match_node.actors:\n\t\t\tvar ally: SBActor = match_node.actors[id]\n\t\t\tif ally == null or not ally.alive or not ally.is_bot or ally.team != victim.team:\n\t\t\t\tcontinue\n\t\t\tif ally.position.distance_to(death_pos) <= 22.0 and match_node._bot_state.has(id):\n\t\t\t\tvar st: Dictionary = match_node._bot_state[id]\n\t\t\t\tst[\"heard_pos\"] = death_pos\n\t\t\t\tst[\"heard_at\"] = float(match_node._elapsed)\n\t\treturn\n\tif arg1 is Dictionary and arg2 is Dictionary and arg3 is Dictionary:\n\t\tvar team_state: Dictionary = arg1\n\t\tvar bot_states: Dictionary = arg2\n\t\tvar actors: Dictionary = arg3\n\t\tvar victim_id: int = int(arg4)\n\t\tvar elapsed: float = float(arg5) if arg5 != null else 0.0\n\t\tif not actors.has(victim_id):\n\t\t\treturn\n\t\tvar victim_actor: SBActor = actors[victim_id]\n\t\tvar zones2: Array = team_state.get(\"danger_zones\", [])\n\t\tzones2.append({\n\t\t\t\"team\": victim_actor.team,\n\t\t\t\"position\": victim_actor.position,\n\t\t\t\"time\": elapsed,\n\t\t})\n\t\tteam_state[\"danger_zones\"] = zones2\n\t\tfor id: int in actors:\n\t\t\tvar ally2: SBActor = actors[id]\n\t\t\tif ally2 == null or not ally2.alive or not ally2.is_bot or ally2.team != victim_actor.team:\n\t\t\t\tcontinue\n\t\t\tif ally2.position.distance_to(victim_actor.position) <= 22.0 and bot_states.has(id):\n\t\t\t\tvar st2: Dictionary = bot_states[id]\n\t\t\t\tst2[\"heard_pos\"] = victim_actor.position\n\t\t\t\tst2[\"heard_at\"] = elapsed"
+      },
+      {
+        "first_line": 262,
+        "last_line": 310,
+        "text": "static func tick_bot(match_node: Node, actor: SBActor, delta: float) -> void:\n\tif actor == null or not actor.alive:\n\t\treturn\n\tvar cmd: Dictionary = compute_bot_input(match_node, actor, delta)\n\tvar move: Vector2 = cmd.get(\"move\", Vector2.ZERO)\n\tvar look: Vector2 = cmd.get(\"look\", Vector2(actor.yaw, actor.pitch))\n\tvar sprint: bool = bool(cmd.get(\"sprint\", true))\n\tvar reload_req: bool = bool(cmd.get(\"reload\", false))\n\tactor.apply_tick(delta, move, look, sprint, false, reload_req)\n\tcmd[\"interact\"] = bool(cmd.get(\"interact\", false))\n\tcmd[\"fire\"] = bool(cmd.get(\"fire\", false))\n\tcmd[\"smoke\"] = bool(cmd.get(\"smoke\", false))\n\tcmd[\"grenade\"] = bool(cmd.get(\"grenade\", false))\n\tif match_node != null and match_node.get(\"_bot_state\") is Dictionary and match_node._bot_state.has(actor.id):\n\t\tmatch_node._bot_state[actor.id][\"last_cmd\"] = cmd\n\nstatic func acquire_target(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary) -> SBActor:\n\tif match_node == null or actor == null or not actor.alive:\n\t\treturn null\n\tvar arena: SBArena = match_node.arena\n\tvar best_target: SBActor = null\n\tvar best_score := -INF\n\tvar forward := -actor.global_basis.z\n\tforward.y = 0.0\n\tif forward.length_squared() < 0.001:\n\t\tforward = Vector3.FORWARD\n\telse:\n\t\tforward = forward.normalized()\n\n\tvar max_dist: float = float(profile.get(\"max_sight_distance\", 38.0))\n\tvar fov_dot: float = float(profile.get(\"fov_dot\", 0.15))\n\tvar alert_until: float = maxf(float(state.get(\"damaged_at\", -100.0)) + 2.5, float(state.get(\"heard_at\", -100.0)) + 2.2)\n\tvar is_alert: bool = match_node._elapsed <= alert_until\n\tvar previous_target_id: int = int(state.get(\"last_target\", -1))\n\n\tfor id: int in match_node.actors:\n\t\tvar other: SBActor = match_node.actors[id]\n\t\tif other == null or not other.alive or other.team == actor.team:\n\t\t\tcontinue\n\t\tvar to_enemy: Vector3 = other.position - actor.position\n\t\tvar dist: float = to_enemy.length()\n\t\tif dist > max_dist:\n\t\t\tcontinue\n\t\tvar dir := Vector3(to_enemy.x, 0.0, to_enemy.z).normalized()\n\t\tvar facing_dot: float = forward.dot(dir)\n\t\tif not is_alert and dist > 4.5 and facing_dot < fov_dot:\n\t\t\tcontinue\n\t\tif arena != null and arena.smoke_obscures(actor.eye_position(), other.eye_position()):\n\t\t\tcontinue"
+      },
+      {
+        "first_line": 451,
+        "last_line": 501,
+        "text": "static func _update_auditory_and_team_memory(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary) -> void:\n\tvar prev_heard_at: float = float(state.get(\"heard_at\", -100.0))\n\tif prev_heard_at > -50.0 and (match_node._elapsed - prev_heard_at) >= SOUND_MEMORY_SECONDS:\n\t\tstate[\"heard_at\"] = -100.0\n\t\tstate[\"heard_pos\"] = Vector3.ZERO\n\tvar hearing_range: float = float(profile.get(\"hearing_range\", 25.0))\n\tvar best_heard_time: float = float(state.get(\"heard_at\", -100.0))\n\tvar best_heard_pos: Vector3 = state.get(\"heard_pos\", actor.position)\n\tif match_node.get(\"_heard\") is Dictionary:\n\t\tfor heard_id: Variant in match_node._heard:\n\t\t\tvar ev: Dictionary = match_node._heard[heard_id]\n\t\t\tvar shooter: SBActor = match_node.actors.get(int(heard_id), null)\n\t\t\tvar shooter_team: int = shooter.team if shooter != null else int(ev.get(\"team\", -1))\n\t\t\tif shooter_team == -1 or shooter_team == actor.team:\n\t\t\t\tcontinue\n\t\t\tvar pos: Vector3 = ev.get(\"position\", Vector3.ZERO)\n\t\t\tvar t: float = float(ev.get(\"time\", -100.0))\n\t\t\tvar age: float = match_node._elapsed - t\n\t\t\tif age < 0.0 or age >= SOUND_MEMORY_SECONDS:\n\t\t\t\tcontinue\n\t\t\tvar dist: float = actor.position.distance_to(pos)\n\t\t\tif dist <= hearing_range and t >= best_heard_time:\n\t\t\t\tbest_heard_time = t\n\t\t\t\tbest_heard_pos = pos\n\telif match_node.get(\"_heard\") is Array:\n\t\tfor item: Variant in match_node._heard:\n\t\t\tif not item is Dictionary:\n\t\t\t\tcontinue\n\t\t\tvar ev2: Dictionary = item\n\t\t\tif int(ev2.get(\"team\", -1)) == actor.team:\n\t\t\t\tcontinue\n\t\t\tvar pos2: Vector3 = ev2.get(\"position\", Vector3.ZERO)\n\t\t\tvar t2: float = float(ev2.get(\"time\", -100.0))\n\t\t\tvar age2: float = match_node._elapsed - t2\n\t\t\tif age2 < 0.0 or age2 >= SOUND_MEMORY_SECONDS:\n\t\t\t\tcontinue\n\t\t\tif actor.position.distance_to(pos2) <= hearing_range and t2 >= best_heard_time:\n\t\t\t\tbest_heard_time = t2\n\t\t\t\tbest_heard_pos = pos2\n\tstate[\"heard_at\"] = best_heard_time\n\tstate[\"heard_pos\"] = best_heard_pos\n\n\tif match_node.get(\"_team_ai_state\") is Dictionary:\n\t\tvar callouts: Dictionary = match_node._team_ai_state.get(\"callouts\", {})\n\t\tif callouts.has(actor.team):\n\t\t\tvar callout: Dictionary = callouts[actor.team]\n\t\t\tvar c_time: float = float(callout.get(\"time\", -100.0))\n\t\t\tif match_node._elapsed - c_time < CALLOUT_MEMORY_SECONDS and match_node._elapsed - float(state.get(\"seen_at\", -100.0)) > 1.5:\n\t\t\t\tif c_time > float(state.get(\"heard_at\", -100.0)):\n\t\t\t\t\tstate[\"heard_pos\"] = callout.get(\"position\", state[\"heard_pos\"])\n\t\t\t\t\tstate[\"heard_at\"] = c_time"
+      },
+      {
+        "first_line": 516,
+        "last_line": 607,
+        "text": "static func _select_objective_and_destination(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary) -> Dictionary:\n\tvar arena: SBArena = match_node.arena\n\t_update_auditory_and_team_memory(match_node, actor, state, profile)\n\tvar destination: Vector3 = actor.position\n\tvar interact := false\n\tvar is_carrier: bool = (actor.id == match_node.bomb_carrier_id)\n\tvar primary_site: int = int(match_node._team_ai_state.get(\"primary_site\", 0)) if match_node.get(\"_team_ai_state\") is Dictionary else 0\n\tvar mem_window: float = float(profile.get(\"memory_duration\", 2.0))\n\tvar has_visual_memory: bool = (match_node._elapsed - float(state.get(\"seen_at\", -100.0))) < mem_window\n\tvar has_sound_memory: bool = (match_node._elapsed - float(state.get(\"heard_at\", -100.0))) < SOUND_MEMORY_SECONDS\n\n\tif actor.team == SBArena.TEAM_ATTACK:\n\t\tif not match_node.bomb_planted:\n\t\t\tvar site_pos: Vector3 = arena.sites[primary_site]\n\t\t\tif is_carrier:\n\t\t\t\tstate[\"role\"] = \"carrier\"\n\t\t\t\tdestination = site_pos\n\t\t\t\tif actor.position.distance_to(site_pos) < SBArena.PLANT_RADIUS - 0.35:\n\t\t\t\t\tinteract = true\n\t\t\t\telif has_visual_memory:\n\t\t\t\t\tstate[\"role\"] = \"pursue_memory\"\n\t\t\t\t\tdestination = Vector3(state.get(\"last_seen\", destination))\n\t\t\telse:\n\t\t\t\tvar carrier: SBActor = match_node.actors.get(match_node.bomb_carrier_id, null)\n\t\t\t\tif actor.slot == 4:\n\t\t\t\t\tstate[\"role\"] = \"split_flank\"\n\t\t\t\t\tdestination = Vector3(0.0, 0.0, 4.0) if actor.position.z < 2.0 else site_pos\n\t\t\t\telif actor.slot % 2 == 1:\n\t\t\t\t\tstate[\"role\"] = \"entry\"\n\t\t\t\t\tdestination = site_pos + Vector3(2.2 if primary_site == 0 else -2.2, 0.0, -2.5)\n\t\t\t\telse:\n\t\t\t\t\tstate[\"role\"] = \"escort\"\n\t\t\t\t\tif carrier != null and carrier.alive:\n\t\t\t\t\t\tvar offset := Vector3(-2.4 if actor.slot % 2 == 0 else 2.4, 0.0, -2.0)\n\t\t\t\t\t\tdestination = snap_to_walkable(arena, carrier.position + offset, actor.position)\n\t\t\t\t\telse:\n\t\t\t\t\t\tdestination = site_pos\n\t\t\t\tif has_visual_memory:\n\t\t\t\t\tstate[\"role\"] = \"pursue_memory\"\n\t\t\t\t\tdestination = Vector3(state.get(\"last_seen\", destination))\n\t\t\t\telif has_sound_memory:\n\t\t\t\t\tstate[\"role\"] = \"investigate_sound\"\n\t\t\t\t\tdestination = Vector3(state.get(\"heard_pos\", destination))\n\t\telse:\n\t\t\tstate[\"role\"] = \"post_plant_hold\"\n\t\t\tdestination = _site_post_plant_anchor(arena, match_node.planted_position, actor.slot)\n\t\t\tif has_visual_memory:\n\t\t\t\tstate[\"role\"] = \"pursue_memory\"\n\t\t\t\tdestination = Vector3(state.get(\"last_seen\", destination))\n\telse:\n\t\tif match_node.bomb_planted:\n\t\t\tvar defuser_id: int = _choose_designated_defuser(match_node)\n\t\t\tif actor.id == defuser_id:\n\t\t\t\tstate[\"role\"] = \"retake_defuse\"\n\t\t\t\tdestination = match_node.planted_position\n\t\t\t\tif actor.position.distance_to(match_node.planted_position) < SBArena.DEFUSE_RADIUS - 0.35:\n\t\t\t\t\tinteract = true\n\t\t\telse:\n\t\t\t\tstate[\"role\"] = \"retake_cover\"\n\t\t\t\tdestination = _site_post_plant_anchor(arena, match_node.planted_position, actor.slot)\n\t\t\t\tif has_visual_memory:\n\t\t\t\t\tstate[\"role\"] = \"pursue_memory\"\n\t\t\t\t\tdestination = Vector3(state.get(\"last_seen\", destination))\n\t\telse:\n\t\t\tstate[\"role\"] = \"anchor\"\n\t\t\tdestination = DEFENDER_ANCHORS[posmod(actor.slot, DEFENDER_ANCHORS.size())]\n\t\t\tif has_visual_memory:\n\t\t\t\tstate[\"role\"] = \"pursue_memory\"\n\t\t\t\tdestination = Vector3(state.get(\"last_seen\", destination))\n\t\t\telif has_sound_memory:\n\t\t\t\tstate[\"role\"] = \"investigate_sound\"\n\t\t\t\tdestination = Vector3(state.get(\"heard_pos\", destination))\n\n\treturn {\n\t\t\"destination\": snap_to_walkable(arena, destination, actor.position) if not interact else destination,\n\t\t\"interact\": interact,\n\t}\n\nstatic func _choose_designated_defuser(match_node: Node) -> int:\n\tvar best_id := -1\n\tvar best_dist := INF\n\tfor id: int in match_node.actors:\n\t\tvar a: SBActor = match_node.actors[id]\n\t\tif a == null or not a.alive or a.team != SBArena.TEAM_DEFEND:\n\t\t\tcontinue\n\t\tif a.defusing:\n\t\t\treturn id\n\t\tvar d: float = a.position.distance_to(match_node.planted_position)\n\t\tif d < best_dist:\n\t\t\tbest_dist = d\n\t\t\tbest_id = id\n\treturn best_id"
+      },
+      {
+        "first_line": 624,
+        "last_line": 637,
+        "text": "static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) -> Dictionary:\n\tif not match_node._bot_state.has(actor.id):\n\t\tmatch_node._bot_state[actor.id] = create_state(actor)\n\tvar state: Dictionary = match_node._bot_state[actor.id]\n\tvar profile: Dictionary = profile_for(str(match_node.bot_difficulty))\n\tvar arena: SBArena = match_node.arena\n\n\t_sync_team_blackboard(match_node, actor)\n\t_update_auditory_and_team_memory(match_node, actor, state, profile)\n\n\tvar target: SBActor = acquire_target(match_node, actor, state, profile)\n\tvar plan: Dictionary = _select_objective_and_destination(match_node, actor, state, profile)\n\tvar destination: Vector3 = plan[\"destination\"]\n\tvar interact: bool = bool(plan[\"interact\"])"
+      },
+      {
+        "first_line": 713,
+        "last_line": 767,
+        "text": "\t\tvar has_damage_look := false\n\t\tif match_node._elapsed - float(state.get(\"damaged_at\", -100.0)) < 1.5 and not interact:\n\t\t\tvar to_dmg: Vector3 = Vector3(state.get(\"damaged_from\", actor.position)) - actor.position\n\t\t\tif to_dmg.length_squared() > 0.1:\n\t\t\t\tvar dmg_yaw: float = atan2(-to_dmg.x, -to_dmg.z)\n\t\t\t\tlook = Vector2(rotate_toward(actor.yaw, dmg_yaw, float(profile.get(\"turn_speed\", 5.0)) * delta), 0.0)\n\t\t\t\thas_damage_look = true\n\n\t\tif actor.position.distance_to(destination) > 1.8 and not interact:\n\t\t\tvar target_dest: Vector3 = destination\n\t\t\tif match_node._elapsed < float(state.get(\"repath_until\", -100.0)):\n\t\t\t\ttarget_dest = snap_to_walkable(arena, actor.position + Vector3(state.get(\"repath_offset\", Vector3.ZERO)), actor.position)\n\t\t\tvar wp: Vector3 = safe_navigate(arena, actor.position, target_dest)\n\t\t\tvar direction: Vector3 = wp - actor.position\n\t\t\tdirection.y = 0.0\n\t\t\tif direction.length_squared() > 0.01:\n\t\t\t\tif not has_damage_look:\n\t\t\t\t\tvar nav_yaw: float = atan2(-direction.x, -direction.z)\n\t\t\t\t\tlook = Vector2(nav_yaw, 0.0)\n\t\t\t\tvar local_step: Vector3 = Basis(Vector3.UP, -look.x) * direction.normalized()\n\t\t\t\tmove = Vector2(local_step.x, -local_step.z)\n\t\telif not interact and not has_damage_look:\n\t\t\tvar scan_yaw: float = actor.yaw + sin(match_node._elapsed * 1.4 + float(actor.id)) * 0.65 * delta\n\t\t\tlook = Vector2(scan_yaw, 0.0)\n\n\tif move.length() > 0.2 and not interact:\n\t\tif actor.position.distance_to(Vector3(state.get(\"last_pos\", actor.position))) < 0.05:\n\t\t\tstate[\"stuck\"] = float(state.get(\"stuck\", 0.0)) + delta\n\t\t\tif float(state[\"stuck\"]) > STUCK_REPATH_SECONDS:\n\t\t\t\tvar side_angle: float = actor.yaw + (PI * 0.5 if actor.id % 2 == 0 else -PI * 0.5)\n\t\t\t\tvar escape_vec := Vector3(-sin(side_angle), 0.0, -cos(side_angle)) * 3.2\n\t\t\t\tstate[\"repath_offset\"] = escape_vec\n\t\t\t\tstate[\"repath_until\"] = match_node._elapsed + 0.9\n\t\t\t\tstate[\"stuck\"] = 0.0\n\t\t\t\tmove = Vector2(1.0 if actor.id % 2 == 0 else -1.0, 1.0).normalized()\n\t\telse:\n\t\t\tstate[\"stuck\"] = 0.0\n\tstate[\"last_pos\"] = actor.position\n\n\tif interact:\n\t\tmove = Vector2.ZERO\n\t\tsprint = false\n\t\tfire = false\n\n\treturn {\n\t\t\"move\": move,\n\t\t\"look\": look,\n\t\t\"sprint\": sprint,\n\t\t\"crouch\": false,\n\t\t\"fire\": fire,\n\t\t\"reload\": reload_req,\n\t\t\"interact\": interact,\n\t\t\"smoke\": use_smoke,\n\t\t\"grenade\": use_grenade,\n\t}"
+      }
+    ]
+  },
+  {
+    "commit": "48eb0586e273f96dc20b346ed444d00ab0f3ac30",
+    "repository_path": "game/scripts/gameplay/match.gd",
+    "git_blob_sha1": "a6bd7a9d4dc0d1549695ba3d246fc89d4557bfd5",
+    "external_snapshot": "candidate-source/match.gd",
+    "snapshot_sha256": "7f5043f8c9b4c7bc8ff69609278d4ef9c7ccfc6c04b38845e5c9478f8e65d504",
+    "native_worktree_sha256": "7fd3511fb8da4ecff9c6fcf1b894d049ef3909aa93d88de6d1f4c3a9ce7fe9d5",
+    "recovery_command": [
+      "git",
+      "show",
+      "48eb0586e273f96dc20b346ed444d00ab0f3ac30:game/scripts/gameplay/match.gd"
+    ],
+    "excerpt_encoding": "JSON strings; LF-joined source lines, not a byte-for-byte whole-file copy",
+    "ranges": [
+      {
+        "first_line": 13,
+        "last_line": 16,
+        "text": "const PROTOCOL_VERSION := 2\nconst HANDSHAKE_SECONDS := 5.0\nconst JOIN_TIMEOUT_SECONDS := 20.0\nconst HELLO_LIMIT := 512"
+      },
+      {
+        "first_line": 25,
+        "last_line": 46,
+        "text": "var phase: String = \"buy\"\nvar round_number: int = 0\nvar attack_score: int = 0\nvar defend_score: int = 0\nvar time_left: float = BUY_SECONDS\nvar objective_state: String = \"carried\"\nvar objective_timer: float = 0.0\nvar interaction_progress: float = 0.0\nvar objective_position := Vector3.ZERO\nvar objective_carrier: int = 1\nvar objective_contributions: Dictionary = {}\nvar arena: RelayYard\nvar actors: Dictionary = {}\nvar options: Dictionary = {}\nvar local_id: int = 1\nvar connection_state: String = \"offline\"\nvar reconnect_token: String = \"\"\nvar _authority: bool = true\nvar _bot_state: Dictionary = {}\nvar _team_ai_state: Dictionary = SBBotAI.new_team_state()\nvar _peer_actors: Dictionary = {}\nvar _reservations: Dictionary = {}"
+      },
+      {
+        "first_line": 198,
+        "last_line": 215,
+        "text": "func _authority_tick(delta: float) -> void:\n\tif not _handshake_drops.is_empty():\n\t\t_drop_rejected_peers()\n\t_bot_clock -= delta\n\tif _bot_clock <= 0:\n\t\t_bot_clock = 0.12\n\t\tfor actor: SBActor in actors.values():\n\t\t\tif _is_bot(actor.actor_id):\n\t\t\t\t_bot_input(actor, 0.12)\n\tif local_actor() != null:\n\t\tlocal_actor().input_state = _local_input.duplicate()\n\tfor actor: SBActor in actors.values():\n\t\tif phase != \"live\":\n\t\t\tactor.input_state = {\"move\": Vector2.ZERO, \"look\": actor.input_state.get(\"look\", Vector2(actor.yaw, actor.pitch))}\n\t\telif not _is_bot(actor.actor_id) and actor.actor_id != local_id:\n\t\t\tif _elapsed - float(_last_peer_input.get(actor.actor_id, -10.0)) > 0.3:\n\t\t\t\tactor.input_state = {\"move\": Vector2.ZERO, \"look\": Vector2(actor.yaw, actor.pitch)}\n\t\tactor.tick_authority(delta)"
+      },
+      {
+        "first_line": 373,
+        "last_line": 403,
+        "text": "func _damaged(victim: int, attacker: int, amount: float) -> void:\n\tif not _authority:\n\t\treturn\n\tif not _damage_history.has(victim):\n\t\t_damage_history[victim] = {}\n\t_damage_history[victim][attacker] = float(_damage_history[victim].get(attacker, 0)) + amount\n\tSBBotAI.record_damage(self, victim, attacker, amount)\n\nfunc _eliminated(victim: int, killer: int) -> void:\n\tif not _authority:\n\t\treturn\n\tvar killed: SBActor = actors.get(victim)\n\tvar source: SBActor = actors.get(killer)\n\tif killed == null:\n\t\treturn\n\tkilled.deaths += 1\n\tif source and source.team != killed.team:\n\t\tsource.kills += 1\n\t\tsource.credits = mini(9000, source.credits + 300)\n\t\t_announce(source.display_name + \"  ›  \" + killed.display_name)\n\t_report_elimination(killer, victim, killed.last_hit_headshot)\n\tfor assistant_id: int in _damage_history.get(victim, {}):\n\t\tif assistant_id != killer and actors.has(assistant_id) and float(_damage_history[victim][assistant_id]) >= 20:\n\t\t\tvar helper: SBActor = actors[assistant_id]\n\t\t\tif helper.team != killed.team:\n\t\t\t\thelper.assists += 1\n\tSBBotAI.record_elimination(self, victim, killer, killed.position)\n\tif victim == objective_carrier and objective_state == \"carried\":\n\t\tobjective_state = \"dropped\"\n\t\tobjective_position = killed.position\n\t\tobjective_carrier = 0"
+      },
+      {
+        "first_line": 450,
+        "last_line": 457,
+        "text": "func _bot_input(actor: SBActor, delta: float) -> void:\n\tSBBotAI.tick_bot(self, actor, delta)\n\nfunc _nearest_defender() -> int:\n\treturn SBBotAI.nearest_defender(self)\n\nfunc _cover_position(actor: SBActor, threat: SBActor) -> Vector3:\n\treturn SBBotAI.cover_position(self, actor, threat)"
+      }
+    ]
+  },
+  {
+    "commit": "48eb0586e273f96dc20b346ed444d00ab0f3ac30",
+    "repository_path": "game/scripts/gameplay/actor.gd",
+    "git_blob_sha1": "0107f50dcaf4f19ced97937ce83420cb8fe93682",
+    "external_snapshot": "candidate-source/actor.gd",
+    "snapshot_sha256": "15367ea91170da968d8f96293b0038ed8559e74d5e9e5c18d1d08961717edbf2",
+    "native_worktree_sha256": "73e2c416f1116ac9d54d020a5f121571d31ddd115e3d598e49b1c292185c7b44",
+    "recovery_command": [
+      "git",
+      "show",
+      "48eb0586e273f96dc20b346ed444d00ab0f3ac30:game/scripts/gameplay/actor.gd"
+    ],
+    "excerpt_encoding": "JSON strings; LF-joined source lines, not a byte-for-byte whole-file copy",
+    "ranges": [
+      {
+        "first_line": 30,
+        "last_line": 51,
+        "text": "var actor_id: int = 0\nvar team: int = 0\nvar display_name: String = \"Operator\"\nvar is_local: bool = false\nvar alive: bool = true\nvar health: float = 100.0\nvar kills: int = 0\nvar assists: int = 0\nvar deaths: int = 0\nvar credits: int = 800\nvar weapon_id: String = \"sidearm\"\nvar ammo: int = 15\nvar reserve: int = 60\nvar input_state: Dictionary = {}\nvar yaw: float = 0.0\nvar pitch: float = 0.0\nvar camera: Camera3D\nvar head_height: float = 1.62\nvar grenades: int = 1\nvar smokes: int = 1\nvar reload_remaining: float = 0.0\nvar recoil := Vector2.ZERO"
+      },
+      {
+        "first_line": 490,
+        "last_line": 537,
+        "text": "func tick_authority(delta: float) -> void:\n\tif not alive:\n\t\treturn\n\tvar look: Vector2 = input_state.get(\"look\", Vector2(yaw, pitch))\n\tif is_finite(look.x) and is_finite(look.y):\n\t\tyaw = wrapf(look.x, -PI, PI)\n\t\tpitch = clampf(look.y, -1.42, 1.42)\n\trotation.y = yaw\n\tvar requested_crouch: bool = input_state.get(\"crouch\", false)\n\t# Standing requires room overhead; never expand the capsule into a solid ceiling.\n\tif requested_crouch or not _crouching or _can_stand():\n\t\t_crouching = requested_crouch\n\t_collision.shape.height = 1.25 if _crouching else 1.8\n\t_collision.position.y = 0.625 if _crouching else 0.9\n\thead_height = 1.13 if _crouching else 1.62\n\t_body.scale.y = 0.72 if _crouching else 1.0\n\tvar move: Vector2 = input_state.get(\"move\", Vector2.ZERO)\n\tif not is_finite(move.x) or not is_finite(move.y):\n\t\tmove = Vector2.ZERO\n\tmove = move.limit_length(1.0)\n\tvar direction := global_basis * Vector3(move.x, 0, -move.y)\n\tvar speed := CROUCH_SPEED if _crouching else WALK_SPEED\n\tvar acceleration := 28.0 if is_on_floor() else 7.0\n\tvelocity.x = move_toward(velocity.x, direction.x * speed, acceleration * delta)\n\tvelocity.z = move_toward(velocity.z, direction.z * speed, acceleration * delta)\n\tif not is_on_floor():\n\t\tvelocity.y -= GRAVITY * delta\n\tvar jump: bool = input_state.get(\"jump\", false)\n\tif jump and not _jump_previous and is_on_floor() and not _crouching:\n\t\tvelocity.y = 6.4\n\t_jump_previous = jump\n\tmove_and_slide()\n\t_deploy_remaining = maxf(0, _deploy_remaining - delta)\n\tfor id in _weapon_cooldowns:\n\t\t_weapon_cooldowns[id] = float(_weapon_cooldowns[id]) - delta\n\trecoil = recoil.move_toward(Vector2.ZERO, delta * 0.11)\n\tif reload_remaining > 0:\n\t\treload_remaining = maxf(0, reload_remaining - delta)\n\t\tif reload_remaining == 0:\n\t\t\tvar amount := mini(int(Weapons.get_weapon(weapon_id)[\"magazine\"]) - ammo, reserve)\n\t\t\tammo += amount\n\t\t\treserve -= amount\n\tvar requested_weapon: String = input_state.get(\"weapon\", \"\")\n\tif not requested_weapon.is_empty() and requested_weapon != weapon_id and inventory.has(requested_weapon):\n\t\t_equip(requested_weapon)\n\tif input_state.get(\"reload\", false):\n\t\tstart_reload()\n\tvar firing: bool = input_state.get(\"fire\", false)"
+      },
+      {
+        "first_line": 603,
+        "last_line": 613,
+        "text": "func buy_weapon(id: String) -> bool:\n\tif not alive or not Weapons.DATA.has(id):\n\t\treturn false\n\tvar spec := Weapons.get_weapon(id)\n\tvar cost := int(spec[\"cost\"])\n\tif credits < cost or inventory.has(id):\n\t\treturn false\n\tcredits -= cost\n\tinventory.append(id)\n\t_equip(id)\n\treturn true"
+      }
+    ]
+  },
+  {
+    "commit": "48eb0586e273f96dc20b346ed444d00ab0f3ac30",
+    "repository_path": "game/scripts/gameplay/arena.gd",
+    "git_blob_sha1": "8519b71e3585fe8c48f7679ab88edfcfddc40d4d",
+    "external_snapshot": "candidate-source/arena.gd",
+    "snapshot_sha256": "e457ede52910001eb5273af73e997837f9347eb45bbe67448bcc3912829e30bf",
+    "native_worktree_sha256": "642bc5a45e8ca368bf24435d40797d30d685d27195a8cc7cafb360a0c6156987",
+    "recovery_command": [
+      "git",
+      "show",
+      "48eb0586e273f96dc20b346ed444d00ab0f3ac30:game/scripts/gameplay/arena.gd"
+    ],
+    "excerpt_encoding": "JSON strings; LF-joined source lines, not a byte-for-byte whole-file copy",
+    "ranges": [
+      {
+        "first_line": 1,
+        "last_line": 13,
+        "text": "extends Node3D\nclass_name SBArena\n\nconst TEAM_ATTACK := 0\nconst TEAM_DEFEND := 1\nconst ROUND_TIME := 100.0\nconst BUY_TIME := 12.0\nconst PLANT_TIME := 3.2\nconst DEFUSE_TIME := 4.5\nconst BOMB_TIMER := 40.0\nconst PLANT_RADIUS := 4.0\nconst DEFUSE_RADIUS := 2.8\n"
+      }
+    ]
+  },
+  {
+    "commit": "48eb0586e273f96dc20b346ed444d00ab0f3ac30",
+    "repository_path": "game/scripts/gameplay/weapons.gd",
+    "git_blob_sha1": "89431953e3fc9c34341c43cdc24ca858bc2d44e2",
+    "external_snapshot": "candidate-source/weapons.gd",
+    "snapshot_sha256": "e5038af222b3dc91bc727cae5b3bc2735c68f0f1da4b75091ecc8ba421ca8932",
+    "native_worktree_sha256": "b722d64b52d43d5cf7c206cba058bb5b2fe96cd5baab943be8a34f0652923a4f",
+    "recovery_command": [
+      "git",
+      "show",
+      "48eb0586e273f96dc20b346ed444d00ab0f3ac30:game/scripts/gameplay/weapons.gd"
+    ],
+    "excerpt_encoding": "JSON strings; LF-joined source lines, not a byte-for-byte whole-file copy",
+    "ranges": [
+      {
+        "first_line": 1,
+        "last_line": 13,
+        "text": "class_name SBWeapons\nextends RefCounted\n\n# Match currency only. Cosmetic ownership never enters these definitions.\nconst DATA := {\n\t\"sidearm\": {\"name\": \"Kestrel 9\", \"cost\": 0, \"damage\": 27.0, \"head\": 3.3, \"range\": 45.0, \"falloff\": 0.55, \"interval\": 0.23, \"magazine\": 15, \"reserve\": 60, \"reload\": 1.45, \"spread\": 0.003, \"recoil\": 0.012, \"automatic\": false, \"color\": Color(\"9aabb5\")},\n\t\"smg\": {\"name\": \"Vectorline\", \"cost\": 1100, \"damage\": 22.0, \"head\": 3.1, \"range\": 35.0, \"falloff\": 0.5, \"interval\": 0.085, \"magazine\": 30, \"reserve\": 120, \"reload\": 1.85, \"spread\": 0.009, \"recoil\": 0.009, \"automatic\": true, \"color\": Color(\"54b7b1\")},\n\t\"rifle\": {\"name\": \"Relay AR\", \"cost\": 2400, \"damage\": 35.0, \"head\": 3.5, \"range\": 70.0, \"falloff\": 0.72, \"interval\": 0.105, \"magazine\": 30, \"reserve\": 90, \"reload\": 2.25, \"spread\": 0.002, \"recoil\": 0.016, \"automatic\": true, \"color\": Color(\"d8ae65\")},\n\t\"marksman\": {\"name\": \"Longwatch\", \"cost\": 3200, \"damage\": 74.0, \"head\": 2.2, \"range\": 100.0, \"falloff\": 0.86, \"interval\": 0.82, \"magazine\": 8, \"reserve\": 32, \"reload\": 2.8, \"spread\": 0.001, \"recoil\": 0.045, \"automatic\": false, \"color\": Color(\"ae9aca\")}\n}\n\nstatic func get_weapon(id: String) -> Dictionary:\n\treturn DATA.get(id, DATA[\"sidearm\"])"
+      }
+    ]
+  },
+  {
+    "commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+    "repository_path": "game/scripts/gameplay/bot_ai.gd",
+    "git_blob_sha1": "5012c4f1bff7b65b0a01bb8158afaa85855cdb17",
+    "external_snapshot": "baseline-source/bot_ai.gd",
+    "snapshot_sha256": "22ff394b0513c8f09e4428411b5007aed8efa1820d0c13643ac8c126f12a0682",
+    "native_worktree_sha256": "f2f8ff5cf1c6f0d1bfa0be0d04b4bc662b1a26f7a4bc38bb9a3cf9da4d749fcd",
+    "recovery_command": [
+      "git",
+      "show",
+      "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd:game/scripts/gameplay/bot_ai.gd"
+    ],
+    "excerpt_encoding": "JSON strings; LF-joined source lines, not a byte-for-byte whole-file copy",
+    "ranges": [
+      {
+        "first_line": 17,
+        "last_line": 65,
+        "text": "const PROFILES := {\n\t\"easy\": {\n\t\t\"reaction_delay\": 0.60,\n\t\t\"turn_speed\": 3.5,\n\t\t\"aim_error\": 0.045,\n\t\t\"vision_range\": 28.0,\n\t\t\"fov_dot\": -0.05,\n\t\t\"memory_duration\": 2.0,\n\t\t\"hearing_range\": 18.0,\n\t\t\"sound_noise\": 2.4,\n\t\t\"recoil_compensation\": 0.15,\n\t\t\"retreat_hp\": 0.0,\n\t\t\"team_comms\": false,\n\t\t\"counter_strafe\": false,\n\t\t\"utility_use\": false,\n\t\t\"sidearm_fallback\": false\n\t},\n\t\"normal\": {\n\t\t\"reaction_delay\": 0.35,\n\t\t\"turn_speed\": 5.0,\n\t\t\"aim_error\": 0.022,\n\t\t\"vision_range\": 38.0,\n\t\t\"fov_dot\": -0.15,\n\t\t\"memory_duration\": 3.8,\n\t\t\"hearing_range\": 26.0,\n\t\t\"sound_noise\": 1.1,\n\t\t\"recoil_compensation\": 0.65,\n\t\t\"retreat_hp\": 28.0,\n\t\t\"team_comms\": true,\n\t\t\"counter_strafe\": true,\n\t\t\"utility_use\": true,\n\t\t\"sidearm_fallback\": true\n\t},\n\t\"hard\": {\n\t\t\"reaction_delay\": 0.18,\n\t\t\"turn_speed\": 7.0,\n\t\t\"aim_error\": 0.008,\n\t\t\"vision_range\": 46.0,\n\t\t\"fov_dot\": -0.25,\n\t\t\"memory_duration\": 5.5,\n\t\t\"hearing_range\": 34.0,\n\t\t\"sound_noise\": 0.35,\n\t\t\"recoil_compensation\": 0.92,\n\t\t\"retreat_hp\": 38.0,\n\t\t\"team_comms\": true,\n\t\t\"counter_strafe\": true,\n\t\t\"utility_use\": true,\n\t\t\"sidearm_fallback\": true\n\t}"
+      },
+      {
+        "first_line": 86,
+        "last_line": 93,
+        "text": "## Defender pre-plant anchor positions covering West Freight (Site A), Mid, and East Relay (Site B).\nconst DEFENDER_ANCHORS := [\n\tVector3(-15.0, 0.0, 12.0),\n\tVector3(15.0, 0.0, 12.0),\n\tVector3(-12.0, 0.0, 6.0),\n\tVector3(12.0, 0.0, 6.0),\n\tVector3(0.0, 0.0, 9.0)\n]"
+      },
+      {
+        "first_line": 185,
+        "last_line": 227,
+        "text": "static func choose_buy_weapon(actor: SBActor, difficulty: String, round_number: int) -> String:\n\tif difficulty != \"easy\" and actor.credits >= 3200 and (actor.actor_id + round_number) % 5 == 0:\n\t\treturn \"marksman\"\n\tif actor.credits >= 2400:\n\t\treturn \"rifle\"\n\treturn \"smg\"\n\nstatic func buy_equipment(actor: SBActor, difficulty: String, round_number: int) -> String:\n\tvar choice: String = choose_buy_weapon(actor, difficulty, round_number)\n\tactor.buy_weapon(choice)\n\t# Purchases and round resets own equipment resources; failed buys grant nothing.\n\treturn actor.weapon_id\n\nstatic func record_damage(arg1: Variant, arg2: Variant, arg3: Variant, arg4: Variant, arg5: Variant = null) -> void:\n\tvar bot_states: Dictionary\n\tvar actors: Dictionary\n\tvar victim_id: int\n\tvar attacker_id: int\n\tvar elapsed: float\n\tif arg1 is Node:\n\t\tvar match_node: Node = arg1\n\t\tbot_states = match_node._bot_state\n\t\tactors = match_node.actors\n\t\tvictim_id = int(arg2)\n\t\tattacker_id = int(arg3)\n\t\telapsed = float(match_node._elapsed)\n\telse:\n\t\tbot_states = arg1 as Dictionary\n\t\tactors = arg2 as Dictionary\n\t\tvictim_id = int(arg3)\n\t\tattacker_id = int(arg4)\n\t\telapsed = float(arg5)\n\tif not bot_states.has(victim_id):\n\t\treturn\n\tvar state: Dictionary = bot_states[victim_id]\n\tstate[\"damaged_at\"] = elapsed\n\tstate[\"attacker_id\"] = attacker_id\n\tvar attacker: SBActor = actors.get(attacker_id) as SBActor\n\tvar victim: SBActor = actors.get(victim_id) as SBActor\n\tif attacker != null and victim != null and attacker.team != victim.team:\n\t\t# Legitimate directional hit indicator (like a player's damage indicator), not live wallhack tracking.\n\t\tvar dir: Vector3 = (attacker.position - victim.position).normalized()\n\t\tstate[\"damaged_from\"] = victim.position + dir * 10.0"
+      },
+      {
+        "first_line": 264,
+        "last_line": 277,
+        "text": "static func nearest_defender(match_node: Node) -> int:\n\tvar chosen: int = 0\n\tvar nearest: float = INF\n\tfor actor: SBActor in match_node.actors.values():\n\t\tif not actor.alive or actor.team != 1:\n\t\t\tcontinue\n\t\t# A human already holding interact keeps priority; bots provide covering fire.\n\t\tif not match_node._is_bot(actor.actor_id) and bool(actor.input_state.get(\"interact\", false)) and actor.position.distance_to(match_node.objective_position) <= 2.8:\n\t\t\treturn actor.actor_id\n\t\tvar distance: float = actor.position.distance_squared_to(match_node.objective_position)\n\t\tif match_node._is_bot(actor.actor_id) and (distance < nearest or (is_equal_approx(distance, nearest) and actor.actor_id < chosen)):\n\t\t\tchosen = actor.actor_id\n\t\t\tnearest = distance\n\treturn chosen"
+      },
+      {
+        "first_line": 348,
+        "last_line": 418,
+        "text": "static func acquire_target(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary) -> SBActor:\n\tvar best_enemy: SBActor = null\n\tvar best_score: float = float(profile.get(\"vision_range\", 35.0))\n\tvar fov_dot: float = float(profile.get(\"fov_dot\", -0.15))\n\tvar current_target_id: int = int(state.get(\"target\", 0))\n\tvar recently_damaged: bool = match_node._elapsed - float(state.get(\"damaged_at\", -100.0)) < 1.2\n\tvar recent_attacker_id: int = int(state.get(\"attacker_id\", 0))\n\tvar facing := Vector3(-sin(actor.yaw), 0.0, -cos(actor.yaw))\n\tvar defuser_id: int = nearest_defender(match_node) if match_node.objective_state == \"planted\" else 0\n\n\tfor enemy: SBActor in match_node.actors.values():\n\t\tif enemy.team == actor.team or not enemy.alive:\n\t\t\tcontinue\n\t\tvar distance: float = actor.position.distance_to(enemy.position)\n\t\tif distance > float(profile.get(\"vision_range\", 35.0)):\n\t\t\tcontinue\n\t\tvar toward: Vector3 = (enemy.position - actor.position).normalized()\n\t\t# Allow peripheral awareness if this specific enemy just shot us and is within line of sight.\n\t\tvar in_fov: bool = facing.dot(toward) > fov_dot or (recently_damaged and enemy.actor_id == recent_attacker_id)\n\t\tif not in_fov:\n\t\t\tcontinue\n\t\tif not actor.can_see(enemy):\n\t\t\tcontinue\n\t\tvar score: float = distance\n\t\tif enemy.actor_id == current_target_id:\n\t\t\tscore -= TARGET_HYSTERESIS_BONUS\n\t\tif match_node.objective_state == \"carried\" and enemy.actor_id == match_node.objective_carrier:\n\t\t\tscore -= 3.5\n\t\tif match_node.objective_state == \"planted\" and enemy.actor_id == defuser_id:\n\t\t\tscore -= 6.0\n\t\tif recently_damaged and enemy.actor_id == recent_attacker_id:\n\t\t\tscore -= 4.0\n\t\tif score < best_score:\n\t\t\tbest_score = score\n\t\t\tbest_enemy = enemy\n\treturn best_enemy\n\nstatic func _update_auditory_and_team_memory(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary) -> void:\n\tvar hearing_range: float = float(profile.get(\"hearing_range\", 24.0))\n\tvar best_sound_dist: float = hearing_range\n\tfor heard_id: int in match_node._heard:\n\t\tif not match_node.actors.has(heard_id):\n\t\t\tcontinue\n\t\tvar shooter: SBActor = match_node.actors[heard_id]\n\t\tif shooter.team == actor.team:\n\t\t\tcontinue\n\t\tvar event: Dictionary = match_node._heard[heard_id]\n\t\tvar age: float = match_node._elapsed - float(event.get(\"time\", -100.0))\n\t\tif age >= SOUND_MEMORY_SECONDS:\n\t\t\tcontinue\n\t\tvar pos: Vector3 = event.get(\"position\", Vector3.ZERO)\n\t\tvar dist: float = actor.position.distance_to(pos)\n\t\tif dist < best_sound_dist:\n\t\t\tbest_sound_dist = dist\n\t\t\tstate[\"heard_pos\"] = pos\n\t\t\tstate[\"heard_at\"] = float(event.get(\"time\", match_node._elapsed))\n\n\tif bool(profile.get(\"team_comms\", true)) and match_node.get(\"_team_ai_state\") != null:\n\t\tvar team_dict: Dictionary = match_node._team_ai_state.get(actor.team, {})\n\t\tvar contacts: Dictionary = team_dict.get(\"contacts\", {})\n\t\tvar mem_duration: float = float(profile.get(\"memory_duration\", 3.8))\n\t\tfor enemy_id: int in contacts.keys():\n\t\t\tvar report: Dictionary = contacts[enemy_id]\n\t\t\tvar age: float = match_node._elapsed - float(report.get(\"time\", -100.0))\n\t\t\tif age > mem_duration:\n\t\t\t\tcontinue\n\t\t\tvar report_pos: Vector3 = report.get(\"position\", Vector3.ZERO)\n\t\t\tif actor.position.distance_to(report_pos) <= TEAM_REPORT_RADIUS:\n\t\t\t\tif float(report.get(\"time\", -100.0)) > float(state.get(\"heard_at\", -100.0)):\n\t\t\t\t\tstate[\"heard_pos\"] = report_pos\n\t\t\t\t\tstate[\"heard_at\"] = float(report.get(\"time\", -100.0))"
+      },
+      {
+        "first_line": 487,
+        "last_line": 522,
+        "text": "\t\t\tvar hearing_range: float = float(profile.get(\"hearing_range\", 24.0))\n\t\t\tif match_node._elapsed - float(state.get(\"heard_at\", -100.0)) < SOUND_MEMORY_SECONDS:\n\t\t\t\tvar heard_pos: Vector3 = state.get(\"heard_pos\", Vector3.ZERO)\n\t\t\t\tif actor.position.distance_to(heard_pos) <= hearing_range:\n\t\t\t\t\tdestination = heard_pos\n\t\t\t\t\trole = \"investigate_sound\"\n\t\t\tfor heard_id: int in match_node._heard:\n\t\t\t\tif match_node.actors.has(heard_id) and match_node.actors[heard_id].team != actor.team:\n\t\t\t\t\tvar h_time: float = float(match_node._heard[heard_id].time)\n\t\t\t\t\tvar h_pos: Vector3 = match_node._heard[heard_id].position\n\t\t\t\t\tif match_node._elapsed - h_time < SOUND_MEMORY_SECONDS and actor.position.distance_to(h_pos) <= hearing_range:\n\t\t\t\t\t\tdestination = h_pos\n\t\t\t\t\t\trole = \"investigate_sound\"\n\telse:\n\t\t# Defender logic before plant\n\t\tvar anchor_idx: int = (actor.actor_id - 6) % DEFENDER_ANCHORS.size()\n\t\tif anchor_idx < 0:\n\t\t\tanchor_idx = actor.actor_id % DEFENDER_ANCHORS.size()\n\t\tdestination = DEFENDER_ANCHORS[anchor_idx] if bool(profile.get(\"team_comms\", true)) else match_node.arena.sites[actor.actor_id % 2]\n\t\trole = \"anchor\"\n\t\t# Rotate toward confirmed team sightings or recent enemy gunfire.\n\t\tif match_node._elapsed - float(state.get(\"heard_at\", -100.0)) < SOUND_MEMORY_SECONDS:\n\t\t\tvar heard_pos: Vector3 = state.get(\"heard_pos\", Vector3.ZERO)\n\t\t\tif actor.position.distance_to(heard_pos) < float(profile.get(\"hearing_range\", 24.0)):\n\t\t\t\tdestination = heard_pos\n\t\t\t\trole = \"rotate_investigate\"\n\t\tfor heard_id: int in match_node._heard:\n\t\t\tif match_node.actors.has(heard_id) and match_node.actors[heard_id].team != actor.team:\n\t\t\t\tvar h_time: float = float(match_node._heard[heard_id].time)\n\t\t\t\tvar h_pos: Vector3 = match_node._heard[heard_id].position\n\t\t\t\tif match_node._elapsed - h_time < 2.0 and actor.position.distance_to(h_pos) < 22.0:\n\t\t\t\t\tdestination = h_pos\n\t\t\t\t\trole = \"rotate_investigate\"\n\n\tstate[\"role\"] = role\n\treturn {\"destination\": destination, \"interact\": interact, \"primary_site\": primary_site}"
+      },
+      {
+        "first_line": 644,
+        "last_line": 674,
+        "text": "\t\tvar mem_window: float = float(profile.get(\"memory_duration\", 2.0))\n\t\t# Investigate a briefly remembered sighting; never aim/fire at hidden live coordinates.\n\t\tif match_node._elapsed - float(state.get(\"seen_at\", -100.0)) < mem_window and not interact and match_node.objective_state != \"planted\":\n\t\t\tstate[\"role\"] = \"pursue_memory\"\n\t\t\tif actor.health <= float(profile.get(\"retreat_hp\", 0.0)):\n\t\t\t\tdestination = cover_position_from_point(match_node, actor, state[\"last_seen\"])\n\t\t\telse:\n\t\t\t\tdestination = state[\"last_seen\"]\n\t\telif match_node._elapsed - float(state.get(\"damaged_at\", -100.0)) < 1.5 and not interact:\n\t\t\t# Turn toward directional damage indicator when hit from outside FOV.\n\t\t\tvar dmg_origin: Vector3 = state.get(\"damaged_from\", actor.position)\n\t\t\tvar to_dmg: Vector3 = dmg_origin - actor.position\n\t\t\tif to_dmg.length_squared() > 0.1:\n\t\t\t\tvar dmg_yaw: float = atan2(-to_dmg.x, -to_dmg.z)\n\t\t\t\tlook = Vector2(rotate_toward(actor.yaw, dmg_yaw, float(profile.turn_speed) * delta), 0.0)\n\n\t\tif actor.position.distance_to(destination) > 1.8 and not interact:\n\t\t\tvar waypoint: Vector3 = safe_navigate(match_node.arena, actor.position, destination)\n\t\t\tvar direction: Vector3 = waypoint - actor.position\n\t\t\tif direction.length_squared() > 0.001:\n\t\t\t\tlook = Vector2(atan2(-direction.x, -direction.z), 0.0)\n\t\t\t\tmove = Vector2(0.0, 1.0)\n\t\telif not interact:\n\t\t\t# Scan the approach rather than staring permanently away from the attackers.\n\t\t\tvar approach := Vector3(0.0, 0.0, -18.0) if actor.team == 1 else Vector3(0.0, 0.0, 20.0)\n\t\t\tif match_node._elapsed - float(state.get(\"heard_at\", -100.0)) < SOUND_MEMORY_SECONDS:\n\t\t\t\tapproach = state.get(\"heard_pos\", approach)\n\t\t\tvar toward_approach: Vector3 = approach - actor.position\n\t\t\tvar scan_yaw: float = atan2(-toward_approach.x, -toward_approach.z) + sin(match_node._elapsed * 0.65 + float(actor.actor_id)) * 0.7\n\t\t\tlook = Vector2(rotate_toward(actor.yaw, scan_yaw, delta * 2.0), 0.0)\n"
+      },
+      {
+        "first_line": 686,
+        "last_line": 698,
+        "text": "\tvar safe_reload: bool = target == null and match_node._elapsed - float(state.get(\"seen_at\", -100.0)) > 2.5 and actor.ammo <= magazine / 3\n\tactor.input_state = {\n\t\t\"move\": Vector2.ZERO if interact else move,\n\t\t\"look\": look,\n\t\t\"fire\": firing,\n\t\t\"reload\": not interact and requested_weapon == \"\" and (actor.ammo == 0 or safe_reload),\n\t\t\"jump\": float(state.get(\"stuck\", 0.0)) > 1.5,\n\t\t\"crouch\": crouch,\n\t\t\"interact\": interact,\n\t\t\"weapon\": requested_weapon,\n\t\t\"smoke\": use_smoke,\n\t\t\"grenade\": use_grenade\n\t}"
+      }
+    ]
+  },
+  {
+    "commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+    "repository_path": "game/scripts/gameplay/match.gd",
+    "git_blob_sha1": "c06f7b4177a40819fa44eee6ee678c3958fce752",
+    "external_snapshot": "baseline-source/match.gd",
+    "snapshot_sha256": "b03479bca8ae99845572978f836fdaa13b8c13074db383ed06be0c0157470850",
+    "native_worktree_sha256": "e18814f932ea7b75d0e52c569770dbffc59276e46f419e305b072d7b92cbe8d3",
+    "recovery_command": [
+      "git",
+      "show",
+      "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd:game/scripts/gameplay/match.gd"
+    ],
+    "excerpt_encoding": "JSON strings; LF-joined source lines, not a byte-for-byte whole-file copy",
+    "ranges": [
+      {
+        "first_line": 438,
+        "last_line": 464,
+        "text": "func _damaged(victim: int, attacker: int, amount: float) -> void:\n\tif not _authority:\n\t\treturn\n\tif not _damage_history.has(victim):\n\t\t_damage_history[victim] = {}\n\t_damage_history[victim][attacker] = float(_damage_history[victim].get(attacker, 0)) + amount\n\tSBBotAI.record_damage(_bot_state, actors, victim, attacker, _elapsed)\n\nfunc _eliminated(victim: int, killer: int) -> void:\n\tif not _authority:\n\t\treturn\n\tvar killed: SBActor = actors.get(victim)\n\tvar source: SBActor = actors.get(killer)\n\tif killed == null:\n\t\treturn\n\tkilled.deaths += 1\n\tif source and source.team != killed.team:\n\t\tsource.kills += 1\n\t\tsource.credits = mini(9000, source.credits + 300)\n\t\t_announce(source.display_name + \"  ›  \" + killed.display_name)\n\t_report_elimination(killer, victim, killed.last_hit_headshot)\n\tfor assistant_id: int in _damage_history.get(victim, {}):\n\t\tif assistant_id != killer and actors.has(assistant_id) and float(_damage_history[victim][assistant_id]) >= 20:\n\t\t\tvar helper: SBActor = actors[assistant_id]\n\t\t\tif helper.team != killed.team:\n\t\t\t\thelper.assists += 1\n\tSBBotAI.record_elimination(_team_ai_state, _bot_state, actors, victim, _elapsed)"
+      },
+      {
+        "first_line": 526,
+        "last_line": 533,
+        "text": "func _bot_input(actor: SBActor, delta: float) -> void:\n\tSBBotAI.compute_bot_input(self, actor, delta)\n\nfunc _nearest_defender() -> int:\n\treturn SBBotAI.nearest_defender(self)\n\nfunc _cover_position(actor: SBActor, threat: SBActor) -> Vector3:\n\treturn SBBotAI.cover_position(self, actor, threat)"
+      }
+    ]
+  }
+]
