@@ -7,11 +7,13 @@ Run the identical probe against a clean baseline and candidate checkout.
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
 import json
 import os
 from pathlib import Path
 import platform
+import queue
 import sqlite3
 import subprocess
 import threading
@@ -43,6 +45,7 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
     barrier_failed = threading.Event()
     event_lock = threading.Lock()
     hold = True
+    late = boundary in ("late_commit", "recovery_kill")
     token = "fixture-memory-only-credential"
     price = 10000000 if kind == "market" else 100
 
@@ -80,11 +83,11 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
                 self.respond({"detail": "expected_price must be an integer"}, 422)
                 return
             first = hold
-            if not first and boundary == "late_commit" and not release.is_set():
+            if not first and late and not release.is_set():
                 event("retry_rejected_before_original_commit", status=409)
                 self.respond({"detail": "insufficient credits at retry time"}, 409)
                 return
-            if first and boundary in ("before_commit", "late_commit"):
+            if first and (boundary == "before_commit" or late):
                 event("before_commit_barrier")
                 reached.set()
                 if not release.wait(30):
@@ -155,45 +158,94 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
                 proc.wait(timeout=10)
                 event("kill_confirmed", pid=proc.pid, returncode=proc.returncode)
         saved = Path(config["journal"])
+        def capture_journal(name):
+            raw = saved.read_bytes() if saved.exists() else None
+            observation = {"wall_ns": time.time_ns(), "monotonic_ns": time.monotonic_ns(),
+                           "exists": raw is not None,
+                           "sha256": hashlib.sha256(raw).hexdigest() if raw is not None else None,
+                           "bytes_base64": base64.b64encode(raw).decode() if raw is not None else None}
+            (directory / f"{name}.json").write_text(json.dumps(observation, indent=2), encoding="utf-8")
+            return observation
+
         journal = saved.read_text(encoding="utf-8") if saved.exists() else ""
+        capture_journal("journal-first-kill-state")
         if journal:
             (directory / "journal-at-kill.json").write_text(journal, encoding="utf-8")
         hold = False
-        if boundary != "late_commit":
+        if not late:
             release.set()
-        config["mode"] = "retry"
+        config["mode"] = "retry_hold" if boundary == "recovery_kill" else "retry"
         fixture.write_text(json.dumps(config), encoding="utf-8")
-        def restart(name):
+        def restart(name, kill_after_observation=False):
             process = subprocess.Popen(command, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             event("recovery_started", pid=process.pid, phase=name)
-            stdout, stderr = process.communicate(timeout=35)
+            if kill_after_observation:
+                observed = queue.Queue()
+                lines = []
+
+                def read_until_observation():
+                    for line in process.stdout:
+                        lines.append(line)
+                        if line.startswith("RECEIPT_PROBE "):
+                            observed.put(json.loads(line.removeprefix("RECEIPT_PROBE ")))
+                            return
+
+                reader = threading.Thread(target=read_until_observation, daemon=True)
+                reader.start()
+                try:
+                    value = observed.get(timeout=25)
+                    event("recovery_observation_before_kill", pid=process.pid, phase=name, observation=value)
+                    if process.poll() is not None:
+                        raise RuntimeError("Recovery exited before the required forced kill")
+                finally:
+                    event("recovery_kill_requested", pid=process.pid, phase=name)
+                    process.kill()
+                    process.wait(timeout=10)
+                    event("recovery_kill_confirmed", pid=process.pid, phase=name, returncode=process.returncode)
+                reader.join(timeout=5)
+                stdout = "".join(lines) + process.stdout.read()
+                stderr = process.stderr.read()
+                if process.returncode == 0:
+                    raise RuntimeError("Recovery unexpectedly exited normally")
+            else:
+                try:
+                    stdout, stderr = process.communicate(timeout=35)
+                except subprocess.TimeoutExpired:
+                    process.kill()
+                    process.communicate()
+                    raise
             event("recovery_finished", pid=process.pid, returncode=process.returncode, phase=name)
             (directory / f"{name}.log").write_text(stdout + stderr, encoding="utf-8")
             lines = [line.removeprefix("RECEIPT_PROBE ") for line in stdout.splitlines() if line.startswith("RECEIPT_PROBE ")]
-            if process.returncode or len(lines) != 1 or "SCRIPT ERROR" in stderr or "ERROR:" in stderr:
+            if (process.returncode and not kill_after_observation) or len(lines) != 1 or "SCRIPT ERROR" in stderr or "ERROR:" in stderr:
                 raise RuntimeError(f"Restart probe failed: {directory}")
             return json.loads(lines[0])
 
-        probe = restart("restarted-client")
+        probe = restart("restarted-client", boundary == "recovery_kill")
         retained_rejection = None
         late_order_verified = None
-        if boundary == "late_commit":
+        release_before_commit = None
+        if late:
             # V2 has no saved intent and sends no recovery request. When a receipt
             # exists, prove the client really observed the rejection before release.
             if journal and probe.get("result", {}).get("_status") != 409:
                 raise RuntimeError("Late-commit recovery did not observe the required 409")
             retained_rejection = bool(probe.get("pending")) and saved.exists() and saved.read_text(encoding="utf-8") == journal
+            capture_journal("journal-after-rejected-recovery")
             event("original_commit_released_after_retry", retained_rejection=retained_rejection)
             release.set()
             if not committed.wait(10):
                 raise RuntimeError("Original request did not finish its delayed commit")
+            config["mode"] = "retry"
+            fixture.write_text(json.dumps(config), encoding="utf-8")
             probe = restart("after-late-commit")
             events = [json.loads(line) for line in (directory / "timeline.jsonl").read_text(encoding="utf-8").splitlines()]
             released = next(row["monotonic_ns"] for row in events if row["event"] == "original_commit_released_after_retry")
             original_commit = next(row["monotonic_ns"] for row in events if row["event"] == "transaction_committed_or_replayed" and row["first"])
             rejected = [row["monotonic_ns"] for row in events if row["event"] == "retry_rejected_before_original_commit" and row["status"] == 409]
-            late_order_verified = released < original_commit and (not journal or len(rejected) == 1 and rejected[0] < released)
-            if not late_order_verified:
+            release_before_commit = released < original_commit
+            late_order_verified = len(rejected) == 1 and rejected[0] < released < original_commit if journal else None
+            if not release_before_commit or (journal and not late_order_verified):
                 raise RuntimeError("Late-commit rejection/release/commit ordering was not enforced")
         if barrier_failed.is_set():
             raise RuntimeError("Fixture barrier timed out; this trial cannot qualify")
@@ -201,12 +253,14 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
             costs = [row[0] for row in db.execute("SELECT cost FROM mutations")]
             requests = [json.loads(row[0]) for row in db.execute("SELECT body FROM requests")]
         recovered = probe.get("recovered", False)
+        final_journal = capture_journal("journal-after-recovery")
         return {"kind": kind, "boundary": boundary, "recovered": recovered, "mutation_count": len(costs),
                 "total_debit": sum(costs), "receipt_reused": recovered and all(body == payload for body in requests),
                 "credential_persisted": token in journal, "journal_before_kill": bool(journal),
-                "journal_after_recovery": saved.exists(), "requests": requests, "probe": probe,
+                "journal_after_recovery": final_journal["exists"], "requests": requests, "probe": probe,
                 "retained_rejection": retained_rejection,
                 "late_order_verified": late_order_verified,
+                "release_before_commit": release_before_commit,
                 "command": command}
     finally:
         release.set()
@@ -221,6 +275,8 @@ def main() -> None:
     parser.add_argument("--candidate", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--repetitions", type=int, default=3)
+    parser.add_argument("--boundaries", nargs="+", choices=["before_commit", "after_commit", "late_commit", "recovery_kill"],
+                        default=["before_commit", "after_commit", "late_commit"])
     args = parser.parse_args()
     args.out.mkdir(parents=True, exist_ok=False)
     result = {"platform": platform.platform(), "python": platform.python_version(),
@@ -239,7 +295,7 @@ def main() -> None:
         cases = []
         for repeat in range(args.repetitions):
             for kind in ["store", "case", "market"]:
-                for boundary in ["before_commit", "after_commit", "late_commit"]:
+                for boundary in args.boundaries:
                     case = run_case(args.godot, root, args.out / label / f"{repeat}-{kind}-{boundary}", kind, boundary)
                     cases.append(case)
                     print(label, repeat, kind, boundary, "recovered", case["recovered"], flush=True)
