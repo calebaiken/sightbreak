@@ -101,3 +101,13 @@ Add `--native-economy` to the candidate invocation for the supplemental runs.
 Evidence is an application-process-crash oracle. It does not measure machine
 power loss, filesystem durability across power loss, or backend process failure.
 Fresh independent blinded criticism is a separate main-session gate.
+
+## Startup diagnostics revision
+
+The first frozen harness (`1fa754b`) reached a healthy real API but had two
+attempts stop before any native probe event or proxy request (r5 and r6). Those
+raw failures remain retained. The next freeze adds verbose native loading logs
+and four early probe events, identically in both arms. The workload, timeout,
+transaction assertions, and backend contracts are unchanged. A separate native
+UI-only startup diagnostic completed in 1.312 seconds, and Godot's check-only
+parse of the external probe passed; neither is counted as a receipt recovery.

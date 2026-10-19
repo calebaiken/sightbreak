@@ -3,6 +3,7 @@ extends SceneTree
 const UI = preload("res://scripts/ui/economy_ui.gd")
 
 func _initialize() -> void:
+	record("initialize")
 	call_deferred("run")
 
 func record(event: String, fields := {}) -> void:
@@ -12,13 +13,16 @@ func record(event: String, fields := {}) -> void:
 	print("NATIVE_RECEIPT_EVENT " + JSON.stringify(fields))
 
 func run() -> void:
+	record("read_fixture")
 	var config: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(OS.get_environment("SIGHTBREAK_RECEIPT_FIXTURE")))
 	# Exactly the integer captured by the market buy button; JSON.parse makes floats.
 	config.payload.expected_price = int(config.payload.expected_price)
+	record("construct_ui")
 	var ui := UI.new()
 	for property in ui.get_property_list():
 		if property.name == "transaction_journal":
 			ui.get("transaction_journal").path = config.journal
+	record("add_ui")
 	root.add_child(ui)
 	var pending_on_start: Dictionary = ui.pending_transaction.duplicate(true)
 	record("ui_ready", {"mode": config.mode, "pending": pending_on_start})

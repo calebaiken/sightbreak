@@ -324,7 +324,7 @@ def run_case(args, root, private, service, database, backend_port, directory, pr
     write_json(fixture, config)
     write_json(directory / "fixture.redacted.json", evidence.redact(config))
     environment = dict(os.environ, SIGHTBREAK_RECEIPT_FIXTURE=str(fixture))
-    command = [str(args.godot), "--headless", "--path", str(root / "game"), "--script", str(PROBE)]
+    command = [str(args.godot), "--headless", "--verbose", "--path", str(root / "game"), "--script", str(PROBE)]
     process = None
     try:
         before = snapshot(database, directory, "01-before", evidence)
