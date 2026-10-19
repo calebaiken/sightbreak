@@ -79,6 +79,22 @@ Under the **same six deterministic packet schedules** retained in PR21:
    frozen sources. Default-off prediction, protocol6, disabled live rewind and all
    authority/graphics/bot contracts remain preserved.
 
+The follow-up incorporates the fresh critic's
+[checkpoint feedback](https://github.com/calebaiken/sightbreak/pull/21#issuecomment-6275674040):
+the measured schedule remains ticks 1–540; same-time P95 is computed over inclusive
+ticks 61–540, and the legacy ACK P95 uses samples received through tick 540. Both
+use `sorted[int((n-1)*0.95)]`. A 90-tick tail follows: neutral commands through tick
+600, then no new commands; snapshot generation stops after the final command can
+arrive, allowing both packet directions, the authority queue and client history
+to drain by tick 630. The final ACK must equal sequence 600. `transport_ledger`
+records every scheduled send, delivery and drop, including recovery; its counts,
+pairing, timestamps and final drain are checked independently in Python. A known
+0.4 m snapshot offset control is retained alongside the separate 0.3 m old command
+error, demonstrating that the two meanings are not conflated. Fourteen shared
+packet/reset events execute on both baseline and candidate before helper-specific
+controls. Neutral packets include named native logs; source/cache manifests and
+the label map remain separate for post-verdict inspection.
+
 The old source lacks the new series and lifecycle interface; its observability
 gate must fail rather than being reported as an observability pass. Lifecycle
 controls are explicitly unavailable there. Existing native assertions still run.

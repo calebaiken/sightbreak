@@ -2,6 +2,15 @@ extends "res://tests/prediction_timeline_probe.gd"
 ## Same packet schedule as the retained timeline probe; additive observer only.
 var lifecycle: Dictionary = {}
 var lifecycle_timeline: Array = []
+var transport_ledger: Array = []
+
+func recovery_ticks() -> int:
+	return 90
+
+func transport_event(event: Dictionary) -> void:
+	var record := event.duplicate(true)
+	record.phase = "measurement" if int(event.tick) <= TICKS else "recovery"
+	transport_ledger.append(record)
 
 func snapshot_metrics(predictor: SBMovementPrediction) -> Dictionary:
 	var diagnostics: Variant = predictor.get("snapshot_diagnostics")
@@ -18,13 +27,15 @@ func prediction_metrics(predictor: SBMovementPrediction) -> Dictionary:
 	for sample: Dictionary in correction_samples:
 		for field: String in ["previous", "authority", "replayed"]:
 			sample[field] = vector(sample[field] - OFFSET)
-	return {"snapshot_diagnostic_observations": diagnostics.observations if diagnostics != null else 0,
+	var result := {"snapshot_diagnostic_observations": diagnostics.observations if diagnostics != null else 0,
 		"snapshot_diagnostic_repeats": diagnostics.repeats if diagnostics != null else 0,
 		"snapshot_diagnostic_retained": diagnostics.samples.size() if diagnostics != null else 0,
 		"snapshot_diagnostic_evicted": diagnostics.evicted if diagnostics != null else 0,
 		"legacy_error_samples_m": predictor.error_samples.duplicate(),
 		"legacy_corrections": predictor.corrections, "legacy_visual_offset": vector(predictor.visual_offset),
-		"legacy_large_corrections": correction_samples}
+		"legacy_large_corrections": correction_samples, "transport_ledger": transport_ledger.duplicate(true)}
+	transport_ledger.clear()
+	return result
 
 func report_metrics() -> Dictionary:
 	return {"diagnostic_lifecycle": lifecycle, "lifecycle_timeline": lifecycle_timeline}
@@ -125,6 +136,10 @@ func lifecycle_controls() -> void:
 	check(repeat.repeated_ack and is_equal_approx(repeat.previous_snapshot_delta_m, 0.4), "repeat measures snapshot-to-snapshot delta")
 	check(is_equal_approx(repeat.first_snapshot_drift_m, 0.4), "repeat is anchored to first observed snapshot")
 	check(predictor.error_samples == legacy and legacy.size() == 1 and is_equal_approx(legacy[0], 0.3), "repeat leaves consumed-command error series unchanged")
+	var known_offset := {"first_snapshot_position": [1.5, 0, 0], "repeat_snapshot_position": [1.9, 0, 0],
+		"pending_predicted_position": [1.8, 0, 0], "expected_snapshot_delta_m": 0.4,
+		"observed_snapshot_delta_m": repeat.previous_snapshot_delta_m,
+		"expected_legacy_error_m": 0.3, "legacy_error_samples_after_repeat_m": predictor.error_samples.duplicate()}
 	deliver(predictor, actor, 10, Vector3(1.9, 0, 0), 7)
 	check(diagnostics.samples.back().previous_snapshot_delta_m == 0.0, "identical repeated snapshot has zero measured delta")
 	var accepted: int = diagnostics.observations
@@ -179,7 +194,7 @@ func lifecycle_controls() -> void:
 	check(diagnostics.samples.is_empty() and diagnostics.observations == 0 and predictor.sequence == 0, "connection reset clears diagnostics and preserves existing sequence reset")
 	check(actor.ammo == 15 and actor.health == 100 and actor.reload_remaining == 0, "diagnostic controls grant no combat state")
 	lifecycle = {"available": true, "checks": checks - before_checks, "ordered_delivery": delivery_trace,
-		"bounded_cache": bounded_receipt, "legacy_error_samples_m": legacy}
+		"bounded_cache": bounded_receipt, "legacy_error_samples_m": legacy, "known_offset_control": known_offset}
 	world.queue_free()
 	await process_frame
 	await create_timer(0.5).timeout

@@ -20,11 +20,71 @@ def close(left, right):
     return abs(left - right) < 0.00002
 
 
+def transport_and_windows(case):
+    """Pair every scheduled delivery with its send and independently check metric windows."""
+    valid = True
+    up, down, received_up, received_down = {}, {}, set(), set()
+    delay = case['one_way_delay_ticks']
+    for event in case['transport_ledger']:
+        tick = event['tick']
+        valid &= event['phase'] == ('measurement' if tick <= 540 else 'recovery')
+        if event['kind'] == 'input_sent':
+            valid &= tick not in up and tick % 2 == 0 and event['due'] == tick + delay
+            valid &= event['dropped'] == (case['upstream_bursts'] and tick <= 540 and tick % 90 >= 84)
+            valid &= 0 < len(event['sequences']) <= 12 and event['sequences'] == sorted(set(event['sequences']))
+            up[tick] = event
+        elif event['kind'] == 'input_delivered':
+            sent = up.get(event['send_tick'])
+            valid &= sent is not None and event['send_tick'] not in received_up
+            if sent is not None:
+                valid &= not sent['dropped'] and sent['due'] == tick and sent['sequences'] == event['sequences']
+            received_up.add(event['send_tick'])
+        elif event['kind'] == 'snapshot_sent':
+            valid &= tick not in down and tick % 3 == 0 and event['due'] == tick + delay + 1
+            valid &= event['ack'] == case['rows'][tick - 1]['ack']
+            down[tick] = event
+        elif event['kind'] == 'snapshot_delivered':
+            sent = down.get(event['send_tick'])
+            valid &= sent is not None and event['send_tick'] not in received_down
+            if sent is not None:
+                valid &= sent['due'] == tick and sent['ack'] == event['ack']
+            received_down.add(event['send_tick'])
+        else:
+            valid = False
+    valid &= received_up == {tick for tick, event in up.items() if not event['dropped']}
+    valid &= received_down == set(down) == {row['send_tick'] for row in case['snapshots']}
+    valid &= sum(event['dropped'] for event in up.values()) == case['dropped_packets']
+    for row in case['snapshots']:
+        valid &= row['receive_tick'] == down[row['send_tick']]['due']
+        valid &= close(math.dist(row['authority'], case['rows'][row['send_tick'] - 1]['authority']), 0)
+    windows = case['metric_windows']
+    valid &= windows == {'measurement_ticks': 540, 'same_time_first_tick': 61, 'same_time_last_tick': 540,
+                         'ack_samples_last_receive_tick': 540, 'held_ticks_last_tick': 540,
+                         'percentile': 'sorted[int((n-1)*0.95)]', 'recovery_ticks': 90}
+    separation = sorted(math.dist(row['authority'], row['prediction']) for row in case['rows'] if 61 <= row['tick'] <= 540)
+    valid &= close(separation[int((len(separation) - 1) * .95)], case['same_time_error_p95_m'])
+    ack_errors = [row['ack_error_m'] for row in case['snapshots'] if row['ack_error_m'] is not None]
+    valid &= len(ack_errors) == len(case['legacy_error_samples_m'])
+    valid &= all(close(a, b) for a, b in zip(ack_errors, case['legacy_error_samples_m']))
+    measured_ack = sorted(row['ack_error_m'] for row in case['snapshots'] if row['receive_tick'] <= 540 and row['ack_error_m'] is not None)
+    valid &= len(measured_ack) == case['ack_error_sample_count']
+    valid &= (close(measured_ack[int((len(measured_ack) - 1) * .95)], case['ack_error_p95_m'])
+              if case['prediction_enabled'] else case['ack_error_p95_m'] is None)
+    valid &= case['drain'] == {'final_tick': 630, 'sequence': 600, 'ack': 600, 'pending': 0,
+                              'upstream': 0, 'downstream': 0, 'authority_queue': 0}
+    return bool(valid), {'input_sent': len(up), 'input_delivered': len(received_up),
+                         'input_dropped': sum(event['dropped'] for event in up.values()),
+                         'snapshots_sent': len(down), 'snapshots_delivered': len(received_down),
+                         'fully_drained': case['drain']}
+
+
 def evaluate(data):
     """Compute coverage and drift independently from the delivered native positions."""
     conditions = []
     valid = True
     for case in data['conditions']:
+        transport_valid, transport = transport_and_windows(case)
+        valid &= transport_valid
         first = previous = None
         last_ack = None
         observations = repeats = held = legacy_held = covered_held = diagnostic_held = 0
@@ -60,10 +120,13 @@ def evaluate(data):
         valid &= case['snapshot_diagnostic_retained'] <= 120
         valid &= observations - case['snapshot_diagnostic_evicted'] == case['snapshot_diagnostic_retained']
         conditions.append({'condition': case['name'], 'snapshots': len(case['snapshots']),
+                           'measurement_snapshots': sum(row['receive_tick'] <= 540 for row in case['snapshots']),
+                           'recovery_snapshots': sum(row['receive_tick'] > 540 for row in case['snapshots']),
                            'diagnostic_samples': observations, 'held_snapshots': held,
                            'legacy_held_covered': legacy_held, 'held_covered': covered_held,
                            'diagnostic_held_covered': diagnostic_held,
-                           'repeated_ack_positive_drift_samples': repeated_drift_samples})
+                           'repeated_ack_positive_drift_samples': repeated_drift_samples,
+                           'transport': transport})
     expected_epoch, observation_count, last_ack = -1, 0, None
     first = previous = expected_sample = None
     lifecycle_present = 0
@@ -98,6 +161,12 @@ def evaluate(data):
                 if actual is not None:
                     for key, value in expected_sample.items():
                         valid &= close(actual[key], value) if isinstance(value, float) else actual[key] == value
+    if data['diagnostic_lifecycle']['available']:
+        control = data['diagnostic_lifecycle']['known_offset_control']
+        valid &= close(control['observed_snapshot_delta_m'], math.dist(control['first_snapshot_position'], control['repeat_snapshot_position']))
+        valid &= close(control['observed_snapshot_delta_m'], control['expected_snapshot_delta_m'])
+        valid &= len(control['legacy_error_samples_after_repeat_m']) == 1
+        valid &= close(control['legacy_error_samples_after_repeat_m'][0], control['expected_legacy_error_m'])
     complete = (valid and lifecycle_present == len(data['lifecycle_timeline']) and
                 all(c['diagnostic_samples'] == c['snapshots'] and
                              c['held_covered'] == c['held_snapshots'] for c in conditions)
@@ -190,6 +259,10 @@ def main():
             result = execute([*base, '--script', 'res://tests/' + test + '.gd'], stage, evidence / (test + '.log'))
             record['tests'][test] = result
             failed |= result['exit'] != 0 or result['logged_error']
+        neutral_logs = args.out / 'blind' / label
+        neutral_logs.mkdir()
+        for log in evidence.glob('*.log'):
+            shutil.copyfile(log, neutral_logs / log.name)
         record['shipping_after_sha256_by_path'] = shipping(game)
         failed |= original != record['shipping_after_sha256_by_path']
         write(args.out / 'manifest.json', receipts)
@@ -215,6 +288,13 @@ def main():
         'drift and bounded lifecycle state. Compare every pre-existing movement/ACK/correction output.\n'
         'A first observed snapshot is NOT a consumption-time pose; its earlier hold duration is unknown.\n'
         'Duplicate/out-of-order outer ticks, round/reconnect resets and cache saturation are included.\n'
+        'metric_windows names the inclusive61–540 same-time window and ACK samples received through540;\n'
+        'P95 uses sorted[int((n-1)*0.95)]. The original540-tick schedule is followed by90 recovery ticks: \n'
+        'neutral input through600, then complete input/history/authority/bidirectional packet drain by630.\n'
+        'transport_ledger retains every input/snapshot send, delivery and dropped input batch.\n'
+        'The lifecycle receipt includes a known0.4m snapshot-offset positive control distinct from0.3m command error.\n'
+        'Named native maintained-gate logs are included under each neutral sample folder. Source/capture/cache\n'
+        'manifests and the label map are separate from this neutral packet; inspect them after the first verdict.\n'
         'This is deterministic in-process scheduling, not ENet, and can demonstrate observability only.\n'
         'No gameplay accuracy, performance or prediction activation win is claimed by this bar.\n', encoding='utf-8')
     raise SystemExit(1 if failed else 0)

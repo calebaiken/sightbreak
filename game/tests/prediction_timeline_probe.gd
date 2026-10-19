@@ -65,6 +65,12 @@ func prediction_metrics(_predictor: SBMovementPrediction) -> Dictionary:
 func report_metrics() -> Dictionary:
 	return {}
 
+func recovery_ticks() -> int:
+	return 0
+
+func transport_event(_event: Dictionary) -> void:
+	pass
+
 func condition(name: String, delay: int, gap: bool, jumping: bool, enabled: bool) -> Dictionary:
 	var world := Node3D.new()
 	root.add_child(world)
@@ -94,6 +100,7 @@ func condition(name: String, delay: int, gap: bool, jumping: bool, enabled: bool
 	var rows: Array = []
 	var snapshots: Array = []
 	var errors: Array = []
+	var measured_ack_errors: Array[float] = []
 	var held_drift: Array = []
 	var held_ticks := 0
 	var dropped_packets := 0
@@ -101,14 +108,18 @@ func condition(name: String, delay: int, gap: bool, jumping: bool, enabled: bool
 	var last_applied_tick := -1
 	var consumed_pose: Dictionary = {}
 	var starting_ammo := predicted.ammo
+	var tail := recovery_ticks()
+	var generation_stop := TICKS + mini(tail, 60)
+	var snapshot_stop := TICKS if tail == 0 else generation_stop + 2 * delay + 6
 	await physics_frame
 	await physics_frame
-	for tick in range(1, TICKS + 1):
+	for tick in range(1, TICKS + tail + 1):
 		# Match._client_tick reconciles before generating this tick's input.
 		while not downstream.is_empty() and int(downstream.front().due) <= tick:
 			var delivery: Dictionary = downstream.pop_front()
 			var state: Dictionary = delivery.state
 			var ack := int(state.move_ack)
+			transport_event({"kind": "snapshot_delivered", "tick": tick, "send_tick": delivery.tick, "ack": ack})
 			var saved: Variant = null
 			for record: Dictionary in predictor.pending:
 				if int(record.command.sequence) == ack:
@@ -124,18 +135,25 @@ func condition(name: String, delay: int, gap: bool, jumping: bool, enabled: bool
 				"replayed": vector(predicted.global_position - OFFSET), "pending": predictor.pending.size()})
 			snapshots.back().merge(snapshot_metrics(predictor))
 			last_applied_tick = int(delivery.tick)
-		var command := controls(tick, jumping)
-		predictor.predict(predicted, command, 1, enabled)
-		if tick % 2 == 0:
+		var command := controls(tick, jumping) if tick <= TICKS else {"move": Vector2.ZERO, "look": Vector2.ZERO}
+		if tick <= generation_stop:
+			predictor.predict(predicted, command, 1, enabled)
+		if tick % 2 == 0 and not predictor.pending.is_empty():
 			# A 100 ms upstream loss burst straddles each direction/jump edge.
-			var drop := gap and tick % 90 >= 84
+			var drop := gap and tick <= TICKS and tick % 90 >= 84
+			var packet := predictor.packet().duplicate(true)
+			transport_event({"kind": "input_sent", "tick": tick, "due": tick + delay, "dropped": drop,
+				"sequences": packet.commands.map(func(value): return value.sequence)})
 			if drop:
 				dropped_packets += 1
 			else:
-				upstream.append({"due": tick + delay, "packet": predictor.packet().duplicate(true)})
+				upstream.append({"due": tick + delay, "tick": tick, "packet": packet})
 		while not upstream.is_empty() and int(upstream.front().due) <= tick:
 			var delivery: Dictionary = upstream.pop_front()
-			if game._input_stream.accept(PEER, delivery.packet, 1, int(tick * 1000.0 / 60.0)):
+			var accepted := game._input_stream.accept(PEER, delivery.packet, 1, int(tick * 1000.0 / 60.0))
+			transport_event({"kind": "input_delivered", "tick": tick, "send_tick": delivery.tick, "accepted": accepted,
+				"sequences": delivery.packet.commands.map(func(value): return value.sequence)})
+			if accepted:
 				# Exact effect of the accepted-input timestamp at Match._input_rpc:1011.
 				game._last_peer_input[1] = game._elapsed
 		var previous_ack := int(game._last_input_sequence.get(1, 0))
@@ -144,13 +162,13 @@ func condition(name: String, delay: int, gap: bool, jumping: bool, enabled: bool
 		var ack := int(game._last_input_sequence.get(1, 0))
 		if ack > previous_ack:
 			consumed_pose[ack] = {"position": authority.global_position, "tick": tick}
-		elif ack > 0:
+		elif ack > 0 and tick <= TICKS:
 			held_ticks += 1
 		var original: Dictionary = consumed_pose.get(ack, {"position": authority.global_position, "tick": tick})
 		var drift := authority.global_position.distance_to(original.position)
-		if drift > 0:
+		if drift > 0 and tick <= TICKS:
 			held_drift.append(drift)
-		if tick % 3 == 0:
+		if tick % 3 == 0 and tick <= snapshot_stop:
 			var state := authority.snapshot()
 			state.position += OFFSET
 			state.move_ack = ack
@@ -158,10 +176,13 @@ func condition(name: String, delay: int, gap: bool, jumping: bool, enabled: bool
 			state.jump_held = authority._jump_previous
 			downstream.append({"due": tick + delay + 1, "tick": tick, "state": state,
 				"held": tick - int(original.tick), "consumed": vector(original.position), "drift": drift})
+			transport_event({"kind": "snapshot_sent", "tick": tick, "due": tick + delay + 1, "ack": ack})
 		var error := predicted.global_position.distance_to(authority.global_position + OFFSET)
 		maximum_authority_height = maxf(maximum_authority_height, authority.global_position.y)
-		if tick > 60:
+		if tick > 60 and tick <= TICKS:
 			errors.append(error)
+		if tick == TICKS:
+			measured_ack_errors = predictor.error_samples.duplicate()
 		rows.append({"tick": tick, "ack": ack, "sequence": predictor.sequence,
 			"authority": vector(authority.global_position), "prediction": vector(predicted.global_position - OFFSET),
 			"error_m": error, "held_steps": tick - int(original.tick), "same_ack_drift_m": drift,
@@ -175,6 +196,9 @@ func condition(name: String, delay: int, gap: bool, jumping: bool, enabled: bool
 	check(not game._prediction_enabled and TacticalMatch.PROTOCOL_VERSION == 6, name + ": defaults and protocol intact")
 	check(game._hit_history.frames.is_empty(), name + ": live hit history inactive")
 	check(not jumping or maximum_authority_height > 0.4, name + ": jump condition actually leaves the floor")
+	if tail > 0:
+		check(predictor.pending.is_empty() and upstream.is_empty() and downstream.is_empty() and game._input_stream.queues.get(PEER, {}).is_empty(), name + ": recovery drains client history, authority queue and both packet directions")
+		check(int(game._last_input_sequence.get(1, 0)) == predictor.sequence, name + ": recovery acknowledges the final generated command")
 	var held_snapshots := 0
 	var unscored_held_snapshots := 0
 	for sample: Dictionary in snapshots:
@@ -184,9 +208,15 @@ func condition(name: String, delay: int, gap: bool, jumping: bool, enabled: bool
 				unscored_held_snapshots += 1
 	var result := {"name": name, "one_way_delay_ticks": delay, "upstream_bursts": gap, "jumping": jumping,
 		"prediction_enabled": enabled, "ticks": TICKS, "held_ticks": held_ticks, "dropped_packets": dropped_packets,
+		"metric_windows": {"measurement_ticks": TICKS, "same_time_first_tick": 61, "same_time_last_tick": TICKS,
+			"ack_samples_last_receive_tick": TICKS, "held_ticks_last_tick": TICKS,
+			"percentile": "sorted[int((n-1)*0.95)]", "recovery_ticks": tail},
+		"drain": {"final_tick": TICKS + tail, "sequence": predictor.sequence, "ack": int(game._last_input_sequence.get(1, 0)),
+			"pending": predictor.pending.size(), "upstream": upstream.size(), "downstream": downstream.size(),
+			"authority_queue": game._input_stream.queues.get(PEER, {}).size()},
 		"skipped_commands": game._input_stream.skipped_commands, "same_time_error_p95_m": percentile(errors, 0.95),
-		"same_time_error_max_m": percentile(errors, 1), "ack_error_p95_m": percentile(predictor.error_samples, 0.95) if enabled else null,
-		"ack_error_sample_count": predictor.error_samples.size(), "held_snapshots": held_snapshots,
+		"same_time_error_max_m": percentile(errors, 1), "ack_error_p95_m": percentile(measured_ack_errors, 0.95) if enabled else null,
+		"ack_error_sample_count": measured_ack_errors.size(), "held_snapshots": held_snapshots,
 		"unscored_held_snapshots": unscored_held_snapshots, "maximum_authority_height_m": maximum_authority_height,
 		"held_drift_max_m": percentile(held_drift, 1), "hard_corrections": predictor.hard_corrections,
 		"rows": rows, "snapshots": snapshots}
