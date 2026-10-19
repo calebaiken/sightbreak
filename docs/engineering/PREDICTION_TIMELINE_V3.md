@@ -114,5 +114,11 @@ proposing any protocol or replay change. An additional production snapshot field
 would require protocol-owner review and a version decision, not a silent protocol6
 semantic change.
 
-Results, unsuccessful preflights and exact source/evidence receipts are appended
-in the slice report after the frozen matched run.
+The frozen probe commit is `d5bdd538bb13e3cc97f4eae577c36d3d050a2a3e`.
+Results, unsuccessful preflights and source/evidence receipts are in the
+[slice report](../reports/PREDICTION_TIMELINE_V3_REPORT.md). The read-only metric
+audit can be reproduced on the published evidence:
+
+```powershell
+python scripts/audit_prediction_timeline.py docs/reports/prediction-timeline-v3/matched
+```
