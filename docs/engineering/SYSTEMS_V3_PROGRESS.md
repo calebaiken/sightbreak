@@ -34,9 +34,9 @@ B-28 lists further backend work; the bounded trade-read efficiency candidate is 
 
 | Slice | Declared failure mode / metric | State | Source and evidence |
 |---|---|---|---|
-| S1 / B-21 | Process exit around commit; exact receipt must survive restart and settle once | Current source critic passes; fresh blind review and PostgreSQL oracle pending | [PR #18](https://github.com/calebaiken/sightbreak/pull/18), exact runtime/harness `7b6f379`; **0/27 → 27/27 recovered**, including9 rejected retries before delayed original commits; journal41/recovery12/armory749/menu51 pass; [report](../reports/CLIENT_RECOVERY_V3.md) |
-| S2 | Fully acknowledged stale input batches incorrectly refresh transport liveness | Native fixture calibration and matched evidence underway | [PR #20](https://github.com/calebaiken/sightbreak/pull/20), runtime `f3ceaad`; protocol and queued retransmission semantics preserved |
-| S3 | Per-trade item/name hydration scales database statements with history size | Narrow blind performance win; actual-response/state artifact gap being closed; source review pending | [PR #19](https://github.com/calebaiken/sightbreak/pull/19), runtime `4a8e9ea`;40trades×20items/side **1,643 → 8 SQL statements**; baseline61/candidate74 PostgreSQL checks pass |
+| S1 / B-21 | Process exit around commit; exact receipt must survive restart and settle once | Source, r6 blind and r7 second-kill critics pass; PostgreSQL oracle pending | [PR #18](https://github.com/calebaiken/sightbreak/pull/18), runtime `7b6f379`; **0/27 → 27/27 recovered**; follow-up harness `e0cd1e4` adds kill after retry409, **0/9 → 9/9**; journal41/recovery12/armory749/menu51 pass; [report](../reports/CLIENT_RECOVERY_V3.md) |
+| S2 | Fully acknowledged stale input batches incorrectly refresh transport liveness | Independent source critic passes; matched native results published, blind packet being prepared | [PR #20](https://github.com/calebaiken/sightbreak/pull/20), runtime `f3ceaad`, tested `77f2040`, evidence `1627a9a`; stale-window travel **1.003–1.020m → 0m**, stop315–332ms, stale peer retired32.057–32.072s vs still bound34s;16valid native pairs and11regression groups per source |
+| S3 | Per-trade item/name hydration scales database statements with history size | Source critic passes; artifact-complete second blind review pending | [PR #19](https://github.com/calebaiken/sightbreak/pull/19), runtime `4a8e9ea`, enhanced harness `8070436`, evidence `89215fb`; 40 trades × 20 items/side **1,643 → 8 SQL statements**; baseline61/candidate74 PostgreSQL checks pass;168 received responses and336 table snapshots retained; small-read timing regressions disclosed |
 | S4 | Experimental prediction/reconciliation divergence under impairment | First matched probe ties; missing repeated-ACK observations verified; additive diagnostic candidate underway | [PR #21](https://github.com/calebaiken/sightbreak/pull/21), initial probe `d5bdd53`; runtime initially unchanged, no accuracy win claimed; default-off gate retained |
 
 Each candidate needs an exact runtime commit, repeatable command, raw logs, matched
@@ -56,8 +56,8 @@ does not activate a feature gate. Failed trials remain in the evidence record.
 
 ## Next recorded actions
 
-1. Finish fresh S1 blind M/Q review and the exact-source native PostgreSQL lost-response oracle.
+1. Finish the S1 exact-source native PostgreSQL lost-response oracle.
 2. Publish S2 matched outcomes and independent critic; retain its failed fixture trials.
-3. Close S3 actual-response/state evidence gaps and finish independent safety review.
+3. Independently judge the artifact-complete S3 response/state packet; retain the first qualified verdict.
 4. Judge S4 additive diagnostics against a declared coverage metric; no prediction activation from diagnostic improvement.
 5. Refresh Sol's source-bound findings and keep each candidate independently reviewable. Repair and verify raw Git-blob byte preservation before evidence handoff.

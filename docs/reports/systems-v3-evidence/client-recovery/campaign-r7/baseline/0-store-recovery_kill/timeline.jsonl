@@ -1,0 +1,14 @@
+{"event": "client_started", "wall_ns": 1792439624802583600, "monotonic_ns": 257906505951200, "pid": 8324}
+{"event": "request_received", "wall_ns": 1792439625463861300, "monotonic_ns": 257907167241500, "body": {"definition_id": "key", "idempotency_key": "1f537bc7-4561-52fa-a787-4dbf9522ef3e"}}
+{"event": "before_commit_barrier", "wall_ns": 1792439625464550400, "monotonic_ns": 257907167928600}
+{"event": "kill_requested", "wall_ns": 1792439625465223700, "monotonic_ns": 257907168602200, "pid": 8324}
+{"event": "kill_confirmed", "wall_ns": 1792439625484510100, "monotonic_ns": 257907187889400, "pid": 8324, "returncode": 1}
+{"event": "recovery_started", "wall_ns": 1792439625496522100, "monotonic_ns": 257907199901900, "pid": 10992, "phase": "restarted-client"}
+{"event": "recovery_observation_before_kill", "wall_ns": 1792439625904091700, "monotonic_ns": 257907607479300, "pid": 10992, "phase": "restarted-client", "observation": {"reason": "no pending receipt after process restart", "recovered": false}}
+{"event": "recovery_kill_requested", "wall_ns": 1792439625905118300, "monotonic_ns": 257907608505100, "pid": 10992, "phase": "restarted-client"}
+{"event": "recovery_kill_confirmed", "wall_ns": 1792439625923238200, "monotonic_ns": 257907626626200, "pid": 10992, "phase": "restarted-client", "returncode": 1}
+{"event": "recovery_finished", "wall_ns": 1792439625924184400, "monotonic_ns": 257907627571700, "pid": 10992, "returncode": 1, "phase": "restarted-client"}
+{"event": "original_commit_released_after_retry", "wall_ns": 1792439625926704900, "monotonic_ns": 257907630092300, "retained_rejection": false}
+{"event": "transaction_committed_or_replayed", "wall_ns": 1792439625951604900, "monotonic_ns": 257907654992400, "first": true}
+{"event": "recovery_started", "wall_ns": 1792439625963090900, "monotonic_ns": 257907666478600, "pid": 6668, "phase": "after-late-commit"}
+{"event": "recovery_finished", "wall_ns": 1792439626460713900, "monotonic_ns": 257908164110700, "pid": 6668, "returncode": 0, "phase": "after-late-commit"}

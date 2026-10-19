@@ -5,7 +5,9 @@
 Draft [PR #18](https://github.com/calebaiken/sightbreak/pull/18), branch
 `astra/systems-v3-recovery`, based on PR #16 `d2439ac`.
 
-- Current runtime and matched harness: **7b6f379a3f8c809d0985a64e883cbadfdd78d135**.
+- Current runtime and r6 matched harness: **7b6f379a3f8c809d0985a64e883cbadfdd78d135**.
+- Recovery-kill follow-up harness/probe: **e0cd1e4f746dcb5cdec9e977e672ba4b2e88658a**;
+  `game/scripts` and `backend` are byte-identical to `7b6f379`.
 - Earlier checkpoints: `ac48342` implementation, `223ec0c` first matched run,
   `cda6372` first critic fixes; all earlier evidence remains available.
 - Matched frozen reference: **701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd**.
@@ -23,18 +25,44 @@ one authoritative mutation/debit and no bearer credential in the app journal.
 | Recovered after restart (3 repeats × 3 kinds × before/after/late commit) | 0/27 | **27/27** |
 | Original receipt/body reused on recovery | 0/27 | **27/27** |
 | Retained receipt through retry409 before delayed original commit | No saved receipt | **9/9** |
-| Duplicate authoritative mutations | 0 | **0** |
+| Duplicate fixture mutation-cost rows | 0 | **0** |
 | App journals containing a bearer credential | 0 | **0** |
 | Pending journals left after confirmed recovery | 0 (receipt was lost) | **0** |
 
 V2's nine pre-commit cases have no mutation and no recoverable intent. Its eighteen
 post/late-commit cases have one mutation but no recoverable receipt. The candidate's
-27 cases each have one mutation and the original confirmed item. Every late-commit
+27 cases each have one mutation and the original confirmed item. Each candidate late-commit
 case records rejection, release and original commit in the required order; every
 native termination has a PID and completion acknowledgement. This is a
 durable HTTP/SQLite fixture with the real native UI and real process termination,
 not a claim of newly reproduced PostgreSQL economy correctness or host power-loss
 durability. Retained V2 PostgreSQL evidence remains the server reference.
+
+The independent r6 blind reviewer selected **M (candidate)** over Q (V2), verifying
+all309 packet hashes,54 SQLite integrity checks and all9 candidate late-order chains.
+V2 never retries409; its r6 `late_order_verified:true` denotes only release-before-commit
+and must not be read as the complete chain. The follow-up harness records null for
+an unexercised chain and a separate `release_before_commit` value.
+
+### Force-kill during rejected recovery
+
+The critic's next falsifier was an abrupt exit during recovery itself. The focused
+[r7 campaign](systems-v3-evidence/client-recovery/campaign-r7/summary.json) runs3repeats
+of each route, using the same held original and409retry. The native probe reports the
+retry result then waits without freeing the UI; the driver force-kills it, captures
+the journal bytes, releases the original commit, and starts a third client process.
+Both checkouts remained clean. **V2 recovered0/9; the unchanged candidate runtime9/9**,
+with exactly one fixture effect, identical original receipt/consent and verified
+rejection-before-release-before-commit order. PID/timestamp events include the second
+kill acknowledgment. Captured disk-state artifacts include existence, exact base64
+bytes and SHA-256 after each kill and after final recovery. The independent follow-up
+review selected P (candidate): all174packet hashes,18SQLite integrity checks and9full
+rejection → second kill → release → commit chains pass. Second-kill acknowledgments
+occur20.33–24.11ms after the logged observation; all9retained journals are byte-identical.
+The [verdict](systems-v3-evidence/client-recovery/independent-review-r7.md) and
+[post-verdict mapping](systems-v3-evidence/client-recovery/blind-r7-mapping.json) are retained.
+This is post-response/pre-teardown termination, not arbitrary
+instruction-level or host power-loss qualification.
 
 ## Implementation boundaries
 
@@ -66,7 +94,7 @@ engine errors. [Commands and raw logs](systems-v3-evidence/client-recovery/nativ
 The journal checks include a separate competing native process, two live stale-UI
 owners, account/server mismatch, retry failures, malformed success, corrupt storage,
 unwritable paths and actual-file truncation fault injection. Native PostgreSQL recovery
-and the updated blind outcome review remain pending; the current source re-review
+remains pending; the current source re-review
 found no blocking defect in this bounded slice.
 
 ## Reproduce
@@ -87,6 +115,9 @@ restarts it and checks persisted receipts and authority ledgers. The late-commit
 variant holds the original, returns409 to a retry, then releases the original and
 restarts again. Barrier timeouts and incorrect event order fail the trial. The output
 directory must not exist and must be outside either checkout.
+
+At `e0cd1e4`, append `--boundaries recovery_kill` to run the focused9-case/arm
+follow-up rather than repeat the completed27-case/arm campaign.
 
 For each native check above, invoke Godot with
 `--headless --path game --script res://tests/<test-name>.gd` after importing.
@@ -134,7 +165,14 @@ unchecked writes, premature clearing on failed recovery, and malformed success.
 `cda6372` addressed them. A second review found a stale-owner lock/liveness defect
 and the permissive late-commit oracle; `7b6f379` corrected both. The independent
 source re-review now passes this bounded process-restart slice. A fresh reviewer
-receives only the r6 neutral M/Q packet; its mapping is withheld until verdict.
+selected the candidate from only the r6 neutral M/Q packet; its
+[mapping](systems-v3-evidence/client-recovery/blind-r6-mapping.json) was published
+after verdict. The [recorded verdict and qualifications](systems-v3-evidence/client-recovery/independent-review-r6.md)
+distinguish parsed JSON consent from raw wire bytes, fixture effects from wallets,
+and retained clean-source assertions from independent attestations. The separately
+labelled r7 packet passed that critic's proposed second-kill falsifier. Interruption
+during journal creation/replacement or successful clearing remains unmeasured; r7
+terminates at a stable post-response boundary.
 
 The largest evidence gap from the first blind review was real PostgreSQL market
 settlement through a lost response, fresh authentication, recovery and a second
