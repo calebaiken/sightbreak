@@ -85,11 +85,13 @@ def database_snapshot():
 
 
 @pytest.mark.parametrize('count,per_side', [(0, 0), (1, 0), (1, 2), (40, 1), (40, 20), (501, 0)])
-def test_trade_read_payload_privacy_and_query_budget(client, count, per_side):
+def test_trade_read_payload_privacy_and_query_budget(client, count, per_side, record_property):
     headers, expected = seed_workload(count, per_side)
     statements = []
+    parameter_counts = []
     def record(conn, cursor, statement, parameters, context, executemany):
         statements.append(statement)
+        parameter_counts.append(len(parameters))
     event.listen(engine, 'before_cursor_execute', record)
     try:
         response = client.get('/trades', headers=headers)
@@ -100,7 +102,13 @@ def test_trade_read_payload_privacy_and_query_budget(client, count, per_side):
     # Authentication is two SELECTs, then the participant-only trade query.
     # Additional reads scale in bounded 500-ID batches, not with each offer/name.
     budget = 3 + (ceil((count + 1) / 500) if count else 0) + ceil(count * per_side * 2 / 500)
+    record_property('query_count', len(statements))
+    record_property('query_budget', budget)
+    record_property('query_parameter_counts', parameter_counts)
     assert len(statements) <= budget, (len(statements), budget)
+    # Fewer round trips must not hide an oversized IN list. Capture counts only,
+    # never bound values (authentication parameters include a session hash).
+    assert all(size <= 500 for size in parameter_counts), parameter_counts
     assert all(statement.lstrip().upper().startswith('SELECT') for statement in statements)
 
 

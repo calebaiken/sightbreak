@@ -47,8 +47,9 @@ serialization require separate scope.
   first-round records contained expected-fixture hashes and state-equality
   booleans only. `scripts/verify_trade_read_artifacts.py <output>` independently
   recomputes the enhanced artifacts using only the standard library.
-- `--runtime-reference <commit>` requires the complete backend Git tree to match
-  that revision, while recording the distinct frozen harness commit/hash. For
+- `--runtime-reference <commit>` requires the shipping backend, excluding
+  `backend/tests`, to match that revision, while recording the complete backend
+  tree plus the distinct test/fixture and frozen harness hashes. For
   this evidence-only follow-up use `701ce2c` for the old source and `4a8e9ea` for
   the batching source. The fixture and two-warm-up/ten-sample workloads are fixed.
 
@@ -56,6 +57,19 @@ The [retained-artifact follow-up](../reports/BACKEND_TRADE_READ_RETENTION_R2.md)
 records the exact enhanced harness freeze, executed commands, all actual bodies
 and full table rows, offline falsifiers, qualified timings and a separately
 mapped second-round neutral packet.
+
+The current harness also records the actually imported fixture module's
+`__file__`, resolved path and byte SHA256 before/after measurement, rejecting a
+mismatch with the harness-root fixture. Earlier records hashed only the
+harness-root file; later import replays must be identified as post-hoc evidence.
+
+The query-budget test now checks every executed statement's bound-parameter
+count directly against 500 as well as the round-trip budget. Targeted assurance
+controls are reproducible with `scripts/check_trade_read_assurance.py --out
+<new-directory>` using `SIGHTBREAK_TEST_ADMIN_URL`. They execute only the
+1,600-item/502-participant boundary cases, then an isolated 500-to-5000 mutation,
+fixture provenance controls and explicitly post-hoc frozen import replays.
+The runtime in the working checkout is not mutated.
 
 The original `backend/tests/test_economy.py` has 44 functions / **61 parametrized
 cases**. Run it on the frozen baseline in the same interpreter/database version,

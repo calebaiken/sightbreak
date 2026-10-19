@@ -32,6 +32,16 @@ def sha256(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
+def fixture_identity(module, expected_sha256):
+    path = Path(module.__file__).resolve()
+    identity = {'module': module.__name__, 'module_file': module.__file__,
+                'resolved_path': str(path), 'sha256': sha256(path),
+                'expected_sha256': expected_sha256}
+    if identity['sha256'] != expected_sha256:
+        raise RuntimeError('Imported fixture byte mismatch: ' + json.dumps(identity, sort_keys=True))
+    return identity
+
+
 def canonical_bytes(value):
     return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode('utf-8')
 
@@ -93,7 +103,7 @@ def main():
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--samples', type=int, default=10)
     parser.add_argument('--runtime-reference', default='HEAD',
-                        help='Git revision whose complete backend tree must match --source')
+                        help='Git revision whose shipping backend (excluding tests) must match --source')
     args = parser.parse_args()
     if args.samples < 2:
         parser.error('--samples must be at least two')
@@ -104,8 +114,11 @@ def main():
         raise SystemExit('Backend must be committed/clean before measurement')
     runtime_reference = subprocess.check_output(['git', 'rev-parse', args.runtime_reference], cwd=source, text=True).strip()
     reference_tree = subprocess.check_output(['git', 'rev-parse', runtime_reference + ':backend'], cwd=source, text=True).strip()
-    if initial['backend_tree'] != reference_tree:
-        raise SystemExit('Backend tree differs from the requested runtime reference')
+    runtime_diff = subprocess.check_output(['git', 'diff', '--name-only', runtime_reference, 'HEAD',
+                                            '--', 'backend', ':(exclude)backend/tests'],
+                                           cwd=source, text=True).strip()
+    if runtime_diff:
+        raise SystemExit('Shipping backend differs from the requested runtime reference: ' + runtime_diff)
     harness_commit = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     harness_status = subprocess.check_output(['git', 'status', '--porcelain', '--',
                                               'scripts/benchmark_trade_reads.py',
@@ -120,11 +133,13 @@ def main():
     db_url = admin.set(drivername='postgresql+psycopg', database=database)
     report = {'schema': 'trade-read-retained-artifacts-v2',
               'started_at': datetime.now(timezone.utc).isoformat(), 'source': initial,
-              'runtime_reference': {'commit': runtime_reference, 'backend_tree': reference_tree},
+              'runtime_reference': {'commit': runtime_reference, 'backend_tree': reference_tree,
+                                    'match_scope': 'backend excluding backend/tests', 'runtime_diff': runtime_diff},
               'harness_commit': harness_commit,
               'harness_sha256': sha256(Path(__file__)),
               'artifact_verifier_sha256': sha256(ROOT / 'scripts/verify_trade_read_artifacts.py'),
               'fixture_sha256': sha256(ROOT / 'backend/tests/test_trade_reads.py'),
+              'fixture_file': str(ROOT / 'backend/tests/test_trade_reads.py'),
               'platform': platform.platform(), 'python': sys.version,
               'packages': {p: importlib.metadata.version(p) for p in
                            ('sqlalchemy', 'psycopg', 'psycopg-binary', 'fastapi', 'starlette', 'httpx', 'pytest')},
@@ -148,7 +163,10 @@ def main():
         from app import Base, app, engine
         from fastapi.testclient import TestClient
         from sqlalchemy import event, text
-        from test_trade_reads import canonical_trades, database_snapshot, seed_workload
+        import test_trade_reads as fixture
+        report['imported_fixture'] = fixture_identity(fixture, report['fixture_sha256'])
+        canonical_trades, database_snapshot, seed_workload = (fixture.canonical_trades,
+                                                             fixture.database_snapshot, fixture.seed_workload)
         Base.metadata.create_all(engine)
         with engine.begin() as db:
             for migration in sorted((source / 'backend/migrations').glob('*.sql')):
@@ -205,6 +223,8 @@ def main():
         assert report['final_source'] == initial, 'Backend changed during the measurement'
         assert sha256(Path(__file__)) == report['harness_sha256'], 'Harness changed during measurement'
         assert sha256(ROOT / 'backend/tests/test_trade_reads.py') == report['fixture_sha256'], 'Fixture changed during measurement'
+        report['final_imported_fixture'] = fixture_identity(fixture, report['fixture_sha256'])
+        assert report['final_imported_fixture'] == report['imported_fixture'], 'Imported fixture changed during measurement'
         report['completed'] = True
     finally:
         if engine is not None:
