@@ -2,6 +2,8 @@ class_name SBMovementPrediction
 extends RefCounted
 ## Bounded movement replay. Server positions/collision and all combat stay final.
 const MAX_HISTORY := 120
+const AckSnapshotDiagnostics := preload("res://scripts/network/ack_snapshot_diagnostics.gd")
+var snapshot_diagnostics := AckSnapshotDiagnostics.new()
 var sequence := 0
 var _grounded_override := -1
 var epoch := -1
@@ -13,6 +15,7 @@ var error_samples: Array[float] = []
 var large_corrections: Array[Dictionary] = []
 
 func reset(connection: bool = false) -> void:
+	snapshot_diagnostics.clear()
 	pending.clear()
 	visual_offset = Vector3.ZERO
 	epoch = -1
@@ -22,6 +25,7 @@ func reset(connection: bool = false) -> void:
 
 func predict(actor: CharacterBody3D, controls: Dictionary, current_epoch: int, enabled: bool) -> void:
 	if epoch != current_epoch:
+		snapshot_diagnostics.begin_epoch(current_epoch)
 		pending.clear()
 		visual_offset = Vector3.ZERO
 		epoch = current_epoch
@@ -46,6 +50,7 @@ func packet() -> Dictionary:
 	return {"epoch": epoch, "commands": commands}
 
 func reconcile(actor: CharacterBody3D, state: Dictionary, current_epoch: int, previous_position: Vector3, enabled: bool) -> void:
+	snapshot_diagnostics.observe(state, current_epoch, enabled)
 	var ack: int = state.get("move_ack", 0)
 	actor._jump_previous = bool(state.get("jump_held", false))
 	_grounded_override = 1 if bool(state.get("grounded", false)) else 0
