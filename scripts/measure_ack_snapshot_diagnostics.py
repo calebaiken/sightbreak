@@ -64,10 +64,46 @@ def evaluate(data):
                            'legacy_held_covered': legacy_held, 'held_covered': covered_held,
                            'diagnostic_held_covered': diagnostic_held,
                            'repeated_ack_positive_drift_samples': repeated_drift_samples})
-    complete = (valid and all(c['diagnostic_samples'] == c['snapshots'] and
+    expected_epoch, observation_count, last_ack = -1, 0, None
+    first = previous = expected_sample = None
+    lifecycle_present = 0
+    for row in data['lifecycle_timeline']:
+        if row['event'] in ('connection_reset', 'predict_epoch'):
+            expected_epoch = -1 if row['event'] == 'connection_reset' else row['epoch']
+            observation_count, last_ack = 0, None
+            first = previous = expected_sample = None
+        elif row['accepted']:
+            if row['epoch'] != expected_epoch:
+                expected_epoch, observation_count, last_ack = row['epoch'], 0, None
+            repeated = row['ack'] == last_ack
+            position = row['received_snapshot_position']
+            if not repeated:
+                first = position
+            observation_count += 1
+            expected_sample = {'ack': row['ack'], 'position': position, 'first_snapshot_position': first,
+                               'repeated_ack': repeated, 'observation': observation_count, 'epoch': expected_epoch,
+                               'prediction_enabled': True, 'anchor_kind': 'first_observed_snapshot_not_consumption',
+                               'previous_snapshot_delta_m': math.dist(previous, position) if repeated else None,
+                               'first_snapshot_drift_m': math.dist(first, position)}
+            last_ack, previous = row['ack'], position
+        diagnostic = row['snapshot_diagnostics']
+        if diagnostic is not None:
+            lifecycle_present += 1
+            valid &= diagnostic['epoch'] == expected_epoch and diagnostic['observations'] == observation_count
+            actual = diagnostic['sample']
+            if expected_sample is None:
+                valid &= actual is None
+            else:
+                valid &= actual is not None and actual.keys() == expected_sample.keys()
+                if actual is not None:
+                    for key, value in expected_sample.items():
+                        valid &= close(actual[key], value) if isinstance(value, float) else actual[key] == value
+    complete = (valid and lifecycle_present == len(data['lifecycle_timeline']) and
+                all(c['diagnostic_samples'] == c['snapshots'] and
                              c['held_covered'] == c['held_snapshots'] for c in conditions)
                 and data['diagnostic_lifecycle']['available'])
     return {'position_and_coverage_consistent': bool(valid), 'complete_observability_gate': bool(complete),
+            'lifecycle_events': len(data['lifecycle_timeline']), 'lifecycle_events_with_diagnostics': lifecycle_present,
             'conditions': conditions}
 
 
@@ -79,7 +115,9 @@ def legacy_projection(data):
                 del case[key]
         for row in case['snapshots']:
             del row['snapshot_observation']
-    return projected
+    lifecycle = [{k: v for k, v in row.items() if k != 'snapshot_diagnostics'}
+                 for row in data['lifecycle_timeline']]
+    return {'conditions': projected, 'lifecycle_timeline': lifecycle}
 
 
 def main():

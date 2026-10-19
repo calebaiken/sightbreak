@@ -1,6 +1,7 @@
 extends "res://tests/prediction_timeline_probe.gd"
 ## Same packet schedule as the retained timeline probe; additive observer only.
 var lifecycle: Dictionary = {}
+var lifecycle_timeline: Array = []
 
 func snapshot_metrics(predictor: SBMovementPrediction) -> Dictionary:
 	var diagnostics: Variant = predictor.get("snapshot_diagnostics")
@@ -26,7 +27,7 @@ func prediction_metrics(predictor: SBMovementPrediction) -> Dictionary:
 		"legacy_large_corrections": correction_samples}
 
 func report_metrics() -> Dictionary:
-	return {"diagnostic_lifecycle": lifecycle}
+	return {"diagnostic_lifecycle": lifecycle, "lifecycle_timeline": lifecycle_timeline}
 
 func deliver(predictor: SBMovementPrediction, actor: SBActor, ack: int, position: Vector3, current_epoch: int, enabled: bool = false) -> void:
 	var state := actor.snapshot()
@@ -37,6 +38,64 @@ func deliver(predictor: SBMovementPrediction, actor: SBActor, ack: int, position
 	var previous := actor.global_position
 	actor.apply_snapshot(state, 1.0)
 	predictor.reconcile(actor, state, current_epoch, previous, enabled)
+
+func shared_lifecycle_timeline() -> void:
+	# Execute this identical packet/reset sequence even when the new helper is absent.
+	var world := Node3D.new()
+	root.add_child(world)
+	block(world, Vector3(0, -0.5, 0), Vector3(80, 1, 80))
+	var actor := SBActor.new()
+	actor.configure(1, 0, "Matched lifecycle", true)
+	world.add_child(actor)
+	actor.reset_for_round(Vector3(0, 0.05, 0))
+	var predictor := SBMovementPrediction.new()
+	var diagnostics: Variant = predictor.get("snapshot_diagnostics")
+	var buffer := SBSnapshotBuffer.new()
+	var events: Array = [
+		["packet", 100, 1, 1, 0.0, true], ["packet", 100, 1, 1, 30.0, false],
+		["packet", 99, 1, 1, 29.0, false], ["packet", 103, 1, 1, 0.25, true],
+		["packet", 102, 1, 1, 28.0, false], ["packet", 106, 1, 2, 0.5, true],
+		["connection_reset", 0, 0, 0, 0.0, false], ["packet", 0, 0, 0, 0.0, true],
+		["packet", 3, 0, 0, 0.3, true], ["packet", 6, 1, 0, 10.0, true],
+		["packet", 5, 0, 0, 27.0, false], ["packet", 9, 1, 1, 10.1, true],
+		["predict_epoch", 10, 2, 0, 0.0, false], ["packet", 12, 2, 0, 20.0, true]]
+	await physics_frame
+	for event: Array in events:
+		var accepted := false
+		if event[0] == "connection_reset":
+			predictor.reset(true)
+			buffer.clear()
+		elif event[0] == "predict_epoch":
+			predictor.predict(actor, {"move": Vector2(0.2, 0), "look": Vector2.ZERO}, event[2], true)
+		else:
+			var position := Vector3(float(event[4]), 0.05, 0)
+			accepted = buffer.push(event[1], float(event[1]) / 60.0, event[2], [{"id": 1, "position": position}])
+			check(accepted == event[5], "matched lifecycle packet acceptance follows outer tick order")
+			if accepted:
+				deliver(predictor, actor, event[3], position, event[2], true)
+			predictor.predict(actor, {"move": Vector2(0.2, 0), "look": Vector2.ZERO}, buffer.epoch, true)
+		var observation: Variant = null
+		if diagnostics != null:
+			observation = {"epoch": diagnostics.epoch, "observations": diagnostics.observations, "sample": null}
+			if not diagnostics.samples.is_empty():
+				var sample: Dictionary = diagnostics.samples.back().duplicate(true)
+				sample.position = vector(sample.position)
+				sample.first_snapshot_position = vector(sample.first_snapshot_position)
+				observation.sample = sample
+		lifecycle_timeline.append({"event": event[0], "tick": event[1], "epoch": event[2], "ack": event[3], "accepted": accepted,
+			"received_snapshot_position": vector(Vector3(float(event[4]), 0.05, 0)) if event[0] == "packet" else null,
+			"position": vector(actor.global_position), "velocity": vector(actor.velocity), "ammo": actor.ammo,
+			"health": actor.health, "jump_held": actor._jump_previous, "crouching": actor._crouching,
+			"prediction_epoch": predictor.epoch, "sequence": predictor.sequence,
+			"pending_sequences": predictor.pending.map(func(record): return record.command.sequence),
+			"legacy_error_samples_m": predictor.error_samples.duplicate(), "corrections": predictor.corrections,
+			"hard_corrections": predictor.hard_corrections, "visual_offset": vector(predictor.visual_offset),
+			"snapshot_diagnostics": observation})
+		await physics_frame
+	check(buffer.stale_packets == 4, "matched lifecycle rejects duplicate/reordered packets across reset")
+	world.queue_free()
+	await process_frame
+	await create_timer(0.5).timeout
 
 func lifecycle_controls() -> void:
 	var predictor := SBMovementPrediction.new()
@@ -126,5 +185,6 @@ func lifecycle_controls() -> void:
 	await create_timer(0.5).timeout
 
 func run() -> void:
+	await shared_lifecycle_timeline()
 	await lifecycle_controls()
 	await super.run()
