@@ -5,7 +5,9 @@ Android and iOS project. Godot remains **4.7.2.stable.official.ed1daf0bf**. The
 [preflight](reports/DESKTOP_PREFLIGHT.md) records the preserved V2 base; V2's test
 results are historical. See the [Steam plan](STEAM_RELEASE_READINESS.md) and
 [desktop checklist](DESKTOP_TESTING.md). Native execution results are recorded
-separately from artifact inspection in the desktop QA report.
+separately from artifact inspection in the [desktop QA report](reports/DESKTOP_ALPHA_REPORT.md).
+That report links native CI packages and records exact frozen source `0fb7480`;
+later documentation commits do not re-attest those artifacts.
 
 Use Python 3.12+ on Windows 10/11 x86_64, Linux x86_64 or macOS. No Bash is required
 for desktop setup, export, inspection or packaging. On Windows use `python`; on
@@ -42,17 +44,21 @@ receipt. Extract the Linux ZIP preserving executable bits, then run
 `windows/SIGHTBREAK.exe`. macOS users launch `macos/SIGHTBREAK.app`, or its native
 `Contents/MacOS/SIGHTBREAK` executable from a terminal for logs. macOS requires
 11+ on Intel and 13+ on Apple Silicon for this pinned toolchain; both architectures
-still need native qualification. Development apps are ad-hoc signed and not
+still need full native gameplay qualification. Apple Silicon startup passed on
+macOS 15; Intel graphical startup timed out on the hosted software renderer.
+Development apps are ad-hoc signed and not
 notarized; public distribution needs Developer ID signing/notarization and actual
 Gatekeeper validation. Do not embed signing identities or credentials.
 
-Desktop defaults to keyboard/mouse. Use Escape to release the pointer and open
+The tested nontouch desktop uses keyboard/mouse. Use Escape to release the pointer and open
 the field menu, including in-match settings. Focus loss opens a menu and requires
 explicit resume; offline training suspends while network authority continues.
 Windowed, borderless fullscreen and exclusive fullscreen are saved in settings;
 exclusive mode may map to normal fullscreen on some platforms/compositors.
-Mouse look uses unscaled screen motion. Touch remains optional on desktop and
-available on mobile; controller hardware and controller-only menus need testing.
+Mouse look uses unscaled screen motion. An inherited touchscreen-desktop defect
+still enables the touch HUD and suppresses mouse capture based on touchscreen
+availability; those laptops need a platform-selection correction and native test.
+Mobile touch remains available; controller hardware and controller-only menus need testing.
 
 `GODOT_BIN`, `SIGHTBREAK_TOOLS_DIR` and `SIGHTBREAK_STATE_DIR` remain supported.
 Godot uses repository-local XDG state on Linux, native AppData on Windows and

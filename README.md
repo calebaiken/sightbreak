@@ -16,6 +16,12 @@ cross-export inspection; [Steam readiness](docs/STEAM_RELEASE_READINESS.md) is
 preparation only. This branch starts from frozen V2 runtime; it does not merge
 unfinished V3, bot or graphics changes. Quality and untested-platform gates remain open.
 
+The [desktop delivery report](docs/reports/DESKTOP_ALPHA_REPORT.md) records frozen
+source `0fb7480`, five inspected packages, real Linux offline/restart and Windows
+network-input passes, and macOS Apple Silicon startup. Intel macOS graphical
+startup failed; the original Windows reload timeout remains an intermittent issue.
+These results do not establish complete desktop or Steam release acceptance.
+
 ## Competitive engineering stack (development only)
 
 Codex draft PRs [3](https://github.com/calebaiken/sightbreak/pull/3) → [4](https://github.com/calebaiken/sightbreak/pull/4) → [5](https://github.com/calebaiken/sightbreak/pull/5) → [6](https://github.com/calebaiken/sightbreak/pull/6) → [7](https://github.com/calebaiken/sightbreak/pull/7) → [8](https://github.com/calebaiken/sightbreak/pull/8) depend on corrected Claude PR1. They add recipient state privacy, continuous remote interpolation, **opt-in** local prediction, bounded peer admission and durable result recovery. Protocol6 requires matched client/server builds. Historical hit-volume recording is diagnostic only; live lag compensation is incomplete. The isolated integration preview combines Claude's graphics PR2 with this stack; its source branch and assets are untouched.

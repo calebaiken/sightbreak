@@ -1,6 +1,6 @@
 # Steam release readiness
 
-**Development preparation only — 2026-10-20.** No Steam application, SDK integration, upload, purchase, live service or store publication is included. No release or Steam Deck certification is claimed. Export/build verification and native gameplay evidence belong in [builds](builds.md) and the current desktop QA report; export success alone does not establish playability.
+**Development preparation only — 2026-10-20.** No Steam application, SDK integration, upload, purchase, live service or store publication is included. No release or Steam Deck certification is claimed. Export/build verification and native gameplay evidence belong in [builds](builds.md) and the [desktop QA report](reports/DESKTOP_ALPHA_REPORT.md); export success alone does not establish playability.
 
 ## 1. Current development status
 
@@ -34,7 +34,7 @@ Use three OS-specific depots for the initial desktop release. Symbolic names are
 
 | Symbolic depot | OS restriction | Install-relative launch entry |
 | --- | --- | --- |
-| `WINDOWS_DEPOT_ID` | Windows, 64-bit | `windows/sightbreak.exe` |
+| `WINDOWS_DEPOT_ID` | Windows, 64-bit | `windows/SIGHTBREAK.exe` |
 | `LINUX_DEPOT_ID` | Linux, 64-bit | `linux/sightbreak.x86_64` |
 | `MACOS_DEPOT_ID` | macOS | `macos/SIGHTBREAK.app` (bundle launch; confirm partner UI representation) |
 

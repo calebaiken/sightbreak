@@ -4,8 +4,15 @@
 
 Native exports and desktop input/settings changes are development work, not Steam
 or commercial release acceptance. Native versus inspection-only results must be
-read from the current desktop QA evidence, not older scores below. macOS Intel
-and Apple Silicon both need runtime qualification; signing/notarization, physical
+read from the [current desktop QA evidence](reports/DESKTOP_ALPHA_REPORT.md), not
+older scores below. Linux offline/restart and Windows native network-input checks
+pass; Windows first-attempt reload completion timed out before an unchanged-source
+retry passed. Root cause remains unresolved. macOS15 Apple Silicon startup passes;
+Intel graphical startup times out, and earlier macOS14 ARM ANGLE aborts remain
+retained. Both architectures still need complete gameplay qualification.
+Touchscreen-equipped desktops inherit automatic touch-HUD classification and
+suppressed mouse capture; this P1 input-selection defect needs correction and a
+native touchscreen test. Signing/notarization, physical
 GPU/frame pacing, controller-only UX, mixed-platform multiplayer and Steam Deck
 certification remain open. Current Steamworks documentation retrieval was blocked
 by host policy/OAuth; the [readiness plan](STEAM_RELEASE_READINESS.md) distinguishes

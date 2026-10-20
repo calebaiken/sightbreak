@@ -9,9 +9,18 @@ network/backend/economy contracts are preserved. [Preflight](reports/DESKTOP_PRE
 and [desktop acceptance checklist](DESKTOP_TESTING.md) define the current scope.
 No full milestone or per-category 8.5 acceptance is inferred from these changes.
 
+[Final desktop evidence](reports/DESKTOP_ALPHA_REPORT.md): five exports/packages
+inspected; Linux real offline/restart and network input pass; Windows network
+input passes an unchanged-source retry with the first timeout retained; macOS15
+Apple Silicon startup passes, Intel graphical startup fails. The full maintained
+rendered/backend suite passes on frozen `0fb7480`. Complete exported objectives,
+touchscreen-desktop input selection and human/platform quality gates remain open.
+
 Next three implementation priorities:
 
-1. Complete native desktop full-match/objective/controller/focus/DPI qualification,
+1. Correct inherited touchscreen-desktop input selection; resolve Intel macOS
+   graphical startup and diagnose intermittent Windows reload; complete native
+   desktop full-match/objective/controller/focus/DPI qualification,
    including Intel/Apple Silicon macOS, then physical Linux/Windows GPU profiling.
 2. Independently integrate the narrow V3 input-freshness fix, followed by durable
    client recovery with a real PostgreSQL lost-response/re-auth/restart oracle;

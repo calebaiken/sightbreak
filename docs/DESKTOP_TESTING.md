@@ -6,6 +6,12 @@ Use a new evidence directory and frozen clean commit for every attempt. The
 `Native desktop alpha` workflow and scripts are development gates; unexecuted
 platforms remain **UNVERIFIED**. Headless startup is not graphical acceptance.
 
+Completed milestone results and retained failures are in the
+[desktop delivery report](reports/DESKTOP_ALPHA_REPORT.md). Its source is frozen
+separately from later documentation commits. Touchscreen-equipped desktops also
+require an input-selection correction: touchscreen availability currently forces
+the touch HUD and suppresses mouse capture, outside the nontouch tested scope.
+
 | Area | Required evidence |
 | --- | --- |
 | Windows | AMD64 PE, icon/version/PCK inspection; native Windows rendered startup and input; clean normal close |

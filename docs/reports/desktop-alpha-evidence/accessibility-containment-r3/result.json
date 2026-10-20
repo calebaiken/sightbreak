@@ -1,0 +1,59 @@
+{
+  "native_roots_clean": true,
+  "strict_groups_empty": true,
+  "client_final_exit": 0,
+  "headless_final_exit": 0,
+  "xvfb_final_exit": 0,
+  "new_helper_processes": [],
+  "commands": [
+    {
+      "name": "xvfb",
+      "command": [
+        "/workspace/tools/xvfb/usr/bin/Xvfb",
+        ":119",
+        "-screen",
+        "0",
+        "1280x720x24",
+        "-nolisten",
+        "tcp"
+      ],
+      "pid": 13455
+    },
+    {
+      "name": "headless",
+      "command": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak/game",
+        "--headless",
+        "--accessibility",
+        "disabled",
+        "--accessibility-driver",
+        "dummy",
+        "--",
+        "--smoke"
+      ],
+      "pid": 13460,
+      "exit": 0,
+      "group_after_exit": []
+    },
+    {
+      "name": "client",
+      "command": [
+        "/workspace/sightbreak/builds/desktop-alpha-3710c19/linux/sightbreak.x86_64",
+        "--audio-driver",
+        "Dummy",
+        "--position",
+        "0,0",
+        "--accessibility",
+        "disabled",
+        "--accessibility-driver",
+        "dummy"
+      ],
+      "pid": 13470,
+      "exit": 0,
+      "group_after_exit": []
+    }
+  ],
+  "scope": "Lifecycle-only diagnostic; screen-reader qualification UNVERIFIED; no network/gameplay pass"
+}
