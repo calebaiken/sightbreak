@@ -20,7 +20,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libgl1 libvulkan1 xvfb ripgrep unzip openjdk-17-jdk
-          scripts/setup.sh
+          scripts/setup.sh --targets linux android ios
           python3 -m pip install uv==0.12.23
           uv sync --project backend --locked --group dev
           ln -s backend/.venv .venv
