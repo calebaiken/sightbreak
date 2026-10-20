@@ -2,6 +2,7 @@ name: Native desktop alpha
 on:
   push:
     branches: [codex/desktop-steam-readiness]
+    paths: ["game/**", "scripts/**", ".github/workflows/desktop-alpha.yml"]
   workflow_dispatch:
 permissions:
   contents: read
@@ -17,7 +18,9 @@ jobs:
             target: linux
           - os: windows-latest
             target: windows
-          - os: macos-14
+          - os: macos-15
+            target: macos
+          - os: macos-15-intel
             target: macos
     runs-on: ${{ matrix.os }}
     timeout-minutes: 30
@@ -44,6 +47,26 @@ jobs:
       - name: Native graphical startup and artifact inspection (Windows/macOS)
         if: runner.os != 'Linux'
         run: python scripts/verify_builds.py --targets ${{ matrix.target }} --graphical
+      - name: Retain macOS OpenGL diagnostic after default virtual-GPU failure
+        if: failure() && runner.os == 'macOS'
+        shell: python
+        run: |
+          import os, pathlib, sys, subprocess, json
+          sys.path.insert(0, 'scripts')
+          from build_manifest import BUILDS, OUTPUTS, validate_record
+          from native_log import failed
+          record = validate_record('macos')
+          out = BUILDS / 'verification'
+          capture = out / 'macos-opengl-diagnostic.png'
+          command = [str(BUILDS / OUTPUTS['macos']), '--rendering-driver', 'opengl3', '--audio-driver', 'Dummy', '--', '--smoke', '--capture='+str(capture)]
+          with (out / 'macos-opengl-diagnostic.log').open('w') as log:
+              result = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, timeout=120)
+          output = (out / 'macos-opengl-diagnostic.log').read_text(errors='replace')
+          report = {'default_driver_failure_retained': True, 'source_commit': record['source_commit'], 'command': command, 'exit': result.returncode, 'clean_log': not failed(output), 'capture_exists': capture.is_file(), 'scope': 'Diagnostic explicit OpenGL override on hosted virtual GPU; not default-launch acceptance'}
+          (out / 'macos-opengl-diagnostic.json').write_text(json.dumps(report, indent=2))
+          print(output[-16000:])
+          print(json.dumps(report))
+          if result.returncode or failed(output) or not capture.is_file(): raise SystemExit(1)
       - name: Native graphical startup and artifact inspection (Linux)
         if: runner.os == 'Linux'
         run: xvfb-run -a python scripts/verify_builds.py --targets linux --graphical
@@ -78,7 +101,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: sightbreak-desktop-${{ matrix.target }}-${{ github.sha }}
+          name: sightbreak-desktop-${{ matrix.target }}-${{ matrix.os }}-${{ github.sha }}
           path: builds/desktop-alpha/
           include-hidden-files: true
           if-no-files-found: warn

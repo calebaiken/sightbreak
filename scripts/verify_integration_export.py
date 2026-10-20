@@ -22,6 +22,7 @@ import re
 import shutil
 import subprocess
 import time
+from urllib.parse import quote
 
 from PIL import Image, ImageGrab
 from build_manifest import BUILDS, OUTPUTS, source, validate_record
@@ -439,6 +440,11 @@ def main():
             xvfb = launch('xvfb', [args.xvfb, args.display, '-screen', '0', '1280x720x24', '-nolisten', 'tcp'])
             wait_for(display_socket.exists, 5, 'Xvfb readiness', xvfb)
             env.update(DISPLAY=args.display, LIBGL_ALWAYS_SOFTWARE='1', LP_NUM_THREADS='2')
+            # This isolated Xvfb gameplay test has no desktop portal/session bus.
+            # An explicit unavailable UNIX address prevents libdbus autolaunch
+            # from escaping into init-owned DBus/AT-SPI helpers. Product startup
+            # remains unchanged; portal and screen-reader coverage is unverified.
+            env['DBUS_SESSION_BUS_ADDRESS'] = 'unix:path=' + quote(str(output / 'no-session-bus.sock'), safe='/._-')
             ui = NativeUI(args.display)
         else:
             # Godot uses native roaming/local AppData on Windows. Isolate test
@@ -447,12 +453,13 @@ def main():
                 path = output / 'state' / part
                 path.mkdir(parents=True, exist_ok=True)
                 env[variable] = str(path)
-        server_command = toolchain.command('--headless', '--script', str(ROOT / 'scripts/fixtures/export_integration.gd'), '--', '--output=' + str(output))
+        accessibility_flags = ['--accessibility', 'disabled', '--accessibility-driver', 'dummy'] if args.target == 'linux' else []
+        server_command = toolchain.command('--headless', *accessibility_flags, '--script', str(ROOT / 'scripts/fixtures/export_integration.gd'), '--', '--output=' + str(output))
         if args.reload_mode == 'authority':
             server_command.append('--automatic-reload')
         server = launch('server', server_command, env, ROOT)
         wait_for(lambda: server_has('SIGHTBREAK_SERVER_READY'), 15, 'Authority readiness', server)
-        client_command = [str(executable), '--audio-driver', 'Dummy', '--position', '0,0']
+        client_command = [str(executable), '--audio-driver', 'Dummy', '--position', '0,0', *accessibility_flags]
         if args.target == 'windows':
             client_command += ['--resolution', f'{ui.width}x{ui.height}']
         if args.quit_after:
@@ -546,6 +553,7 @@ def main():
                        'desktop_R_key_input': 'VERIFIED via server-observed reload command' if args.reload_mode == 'keyboard' else 'UNVERIFIED',
                        'movement_aim_input': 'Native input delivered; authoritative displacement not measured by this fixture',
                        'exit_method': 'completion-driven WM_DELETE_WINDOW' if args.target == 'linux' else 'completion-driven WM_CLOSE',
+                       'automation_accessibility': 'Disabled with dummy driver and unavailable test-session bus; screen-reader/desktop portals UNVERIFIED' if args.target == 'linux' else 'No automation override; screen-reader/desktop portals UNVERIFIED',
                        'scope': 'Actual exported native desktop client; source Godot authority on loopback; no physical hardware or internet-security acceptance'})
     except (Exception, SystemExit) as error:
         result.update({'passed': False, 'error': str(error), 'artifact_source': manifest, 'authority_source': source_before})

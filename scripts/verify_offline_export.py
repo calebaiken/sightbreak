@@ -15,6 +15,7 @@ import re
 import shutil
 import subprocess
 import time
+from urllib.parse import quote
 
 from build_manifest import ROOT, BUILDS, OUTPUTS, source, validate_record
 from PIL import Image
@@ -123,12 +124,12 @@ def main():
     try:
         launch('xvfb', [args.xvfb, args.display, '-screen', '0', '1280x720x24', '-nolisten', 'tcp'])
         wait_for(socket.exists, 5, 'Xvfb readiness')
-        env = dict(os.environ, DISPLAY=args.display, LIBGL_ALWAYS_SOFTWARE='1', LP_NUM_THREADS='2')
+        env = dict(os.environ, DISPLAY=args.display, LIBGL_ALWAYS_SOFTWARE='1', LP_NUM_THREADS='2', DBUS_SESSION_BUS_ADDRESS='unix:path=' + quote(str(out / 'unavailable-session-bus'), safe='/'))
         for key, directory in [('XDG_DATA_HOME', 'data'), ('XDG_CONFIG_HOME', 'config'), ('XDG_CACHE_HOME', 'cache')]:
             path = out / 'state' / directory
             path.mkdir(parents=True, exist_ok=True)
             env[key] = str(path)
-        client_command = [str(executable), '--audio-driver', 'Dummy']
+        client_command = [str(executable), '--audio-driver', 'Dummy', '--accessibility', 'disabled', '--accessibility-driver', 'dummy']
         if args.quit_after: client_command += ['--quit-after', str(args.quit_after)]
         ui = NativeUI(args.display)
         client = launch('client', client_command, env)
@@ -188,6 +189,7 @@ def main():
         purchased_hud = read_hud('06e-purchased-smg')
         if purchased_hud['ammo'] != 30 or purchased_hud['reserve'] != 120:
             raise RuntimeError('Authoritative requisition did not equip the purchased SMG')
+        wait_for(lambda: (out / 'client.log').read_text().count('MATCH: Round live.') >= 2, 35, 'Second active round for weapon switching')
         tap('2')
         capture('06f-switched-sidearm')
         switched_hud = read_hud('06f-switched-sidearm')
@@ -221,7 +223,7 @@ def main():
         client.wait(timeout=20)
         initial_exit = client.returncode
         if initial_exit != 0: raise RuntimeError('Initial native client did not exit cleanly')
-        reopened = launch('reopened', [str(executable), '--audio-driver', 'Dummy'], env)
+        reopened = launch('reopened', [str(executable), '--audio-driver', 'Dummy', '--accessibility', 'disabled', '--accessibility-driver', 'dummy'], env)
         client = reopened
         wait_for(lambda: ui.focus_game() and ui.menu_visible(), 45, 'Reopened native menu')
         capture('09-reopened-menu')
@@ -239,7 +241,7 @@ def main():
                   'exit': client.returncode, 'initial_exit': initial_exit, 'clean_exit': True, 'passed': True,
                   'exit_method': 'completion-driven WM_DELETE_WINDOW', 'settings_restart_equal': True, 'natural_round_completed': True, 'purchase_and_weapon_switch': True, 'exported_plant_defuse': 'UNVERIFIED', 'training_progress': 'Stored record preserved; full exported match completion remains UNVERIFIED', 'fired_hud': fired_hud, 'reloaded_hud': reloaded_hud,
                   'controller_sha256': hashlib.file_digest(Path(__file__).open('rb'), 'sha256').hexdigest(),
-                  'limits': 'Screenshots require visual review; no private authority instrumentation or mobile performance claim.'}
+                  'limits': 'Screenshots require visual review; no private authority instrumentation or mobile performance claim. Isolated Linux automation disables accessibility and D-Bus portal autolaunch; their qualification remains UNVERIFIED.'}
         (out / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
         print(json.dumps(result), flush=True)
     except Exception as error:
