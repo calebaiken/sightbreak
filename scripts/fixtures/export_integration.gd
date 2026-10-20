@@ -84,7 +84,7 @@ func _process(delta: float) -> bool:
 		finish.call_deferred()
 	return false
 func write_report() -> Dictionary:
-	var report := {"scope":"source Godot authority fixture; client is actual exported Linux ELF driven through native UI; no rewards","joined_id":joined_id,"shots":shots,"lowest_ammo":lowest_ammo,"largest_ack":largest_ack,"reload_seen":reload_seen,"reload_completed":reload_completed,"reload_trigger":"authority fixture" if automatic_reload else "native client input", "reload_command_seen":reload_command_seen,"prediction_default":game._prediction_enabled,"protocol":TacticalMatch.PROTOCOL_VERSION}
+	var report := {"scope":"source Godot authority fixture; client is actual exported desktop binary driven through native UI; no rewards","joined_id":joined_id,"shots":shots,"lowest_ammo":lowest_ammo,"largest_ack":largest_ack,"reload_seen":reload_seen,"reload_completed":reload_completed,"reload_trigger":"authority fixture" if automatic_reload else "native client input", "reload_command_seen":reload_command_seen,"prediction_default":game._prediction_enabled,"protocol":TacticalMatch.PROTOCOL_VERSION}
 	report.passed = joined_id > 0 and shots > 0 and lowest_ammo < 30 and largest_ack > 10 and reload_seen and reload_completed and (automatic_reload or reload_command_seen)
 	var file := FileAccess.open(output.path_join("authority.json"),FileAccess.WRITE)
 	file.store_string(JSON.stringify(report,"\t"))

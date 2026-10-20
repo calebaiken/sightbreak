@@ -32,7 +32,9 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgl1 libvulkan1 xvfb
+          sudo apt-get install -y libgl1 libvulkan1 libxtst6 xvfb tesseract-ocr
+      - name: Native screenshot dependency
+        run: python -m pip install Pillow==12.3.0
       - name: Install checksum-pinned native editor and selected templates
         run: python scripts/toolchain.py setup --targets ${{ matrix.target }}
       - name: Packaging integrity controls
@@ -64,6 +66,12 @@ jobs:
               (out / 'results.json').write_text(json.dumps(receipts, indent=2))
               if result.returncode or failed(text):
                   raise SystemExit(suite + ' failed; raw output retained')
+      - name: Real exported keyboard and pointer input (Windows/Linux)
+        if: runner.os != 'macOS'
+        run: python scripts/verify_integration_export.py --target ${{ matrix.target }} --visit-armory --timeout 240 --output builds/desktop-alpha/native-input
+      - name: Living-player offline input and settings restart (Linux)
+        if: runner.os == 'Linux'
+        run: python scripts/verify_offline_export.py --display :102 --timeout 300 --output builds/desktop-alpha/offline-input
       - name: Package only the native target
         run: python scripts/build_manifest.py package --targets ${{ matrix.target }}
       - name: Preserve development packages and failed attempts
