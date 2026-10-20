@@ -1,5 +1,26 @@
 # Development milestones
 
+## Desktop alpha continuation — 2026-10-20
+
+0.3.2-dev (build 5) adds Windows x86_64/macOS Universal 2 export presets, portable
+selected-target toolchain/packaging, exact-source/mode checks, native CI and safe
+desktop focus/in-match settings/display handling. Android/iOS presets and all
+network/backend/economy contracts are preserved. [Preflight](reports/DESKTOP_PREFLIGHT.md)
+and [desktop acceptance checklist](DESKTOP_TESTING.md) define the current scope.
+No full milestone or per-category 8.5 acceptance is inferred from these changes.
+
+Next three implementation priorities:
+
+1. Complete native desktop full-match/objective/controller/focus/DPI qualification,
+   including Intel/Apple Silicon macOS, then physical Linux/Windows GPU profiling.
+2. Independently integrate the narrow V3 input-freshness fix, followed by durable
+   client recovery with a real PostgreSQL lost-response/re-auth/restart oracle;
+   preserve protocol compatibility and default-off prediction/rewind.
+3. Repair match/actor contracts before tactical AI porting, and fix the measured
+   reload/hand framing defects with native before/after motion and independent review.
+
+Older milestone records below retain their historical scope and failures.
+
 ## Combined preview update — 2026-10-14
 
 The isolated combined branch includes PR1=98ff57c, PR2=64ec598 and Codex PR3–8=89c0e9. See [integration report](reports/COMBINED_INTEGRATION_REPORT.md) for exact source/build identities and evidence. Full maintained47-group matrix passes; new custom-HUD adversarial tests and full-capacity close-loss reconnect fail. Unicode feed clipping is fixed; older references below are historical. Default rig works, static fallback projection is defective, and the independent weapon/arms visual slice scores5.5/10 (not the historical whole-game8.1 rubric). Device performance, physical touch, Xcode and production Internet security remain unverified. Next priority: owner corrections for HUD/fallback, a separate bounded reconnect fix with hostile account/capacity tests, then refreshed combined verification. Prediction stays opt-in, live rewind disabled, earned-only economy unchanged.
