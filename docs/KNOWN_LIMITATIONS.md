@@ -1,5 +1,25 @@
 # Known limitations
 
+## Desktop continuation — 2026-10-20
+
+Native exports and desktop input/settings changes are development work, not Steam
+or commercial release acceptance. Native versus inspection-only results must be
+read from the [current desktop QA evidence](reports/DESKTOP_ALPHA_REPORT.md), not
+older scores below. Linux offline/restart and Windows native network-input checks
+pass; Windows first-attempt reload completion timed out before an unchanged-source
+retry passed. Root cause remains unresolved. macOS15 Apple Silicon startup passes;
+Intel graphical startup times out, and earlier macOS14 ARM ANGLE aborts remain
+retained. Both architectures still need complete gameplay qualification.
+Touchscreen-equipped desktops inherit automatic touch-HUD classification and
+suppressed mouse capture; this P1 input-selection defect needs correction and a
+native touchscreen test. Signing/notarization, physical
+GPU/frame pacing, controller-only UX, mixed-platform multiplayer and Steam Deck
+certification remain open. Current Steamworks documentation retrieval was blocked
+by host policy/OAuth; the [readiness plan](STEAM_RELEASE_READINESS.md) distinguishes
+retrieved Godot sources from official Steam review links. No Steam SDK integration
+or live upload is implemented. V3 #18–#21, new bot/art inputs and production
+security remain separately gated; prediction and live rewind remain disabled.
+
 ## Combined preview update — 2026-10-14
 
 The isolated combined branch includes PR1=98ff57c, PR2=64ec598 and Codex PR3–8=89c0e9. See [integration report](reports/COMBINED_INTEGRATION_REPORT.md) for exact source/build identities and evidence. Full maintained47-group matrix passes; new custom-HUD adversarial tests and full-capacity close-loss reconnect fail. Unicode feed clipping is fixed; older references below are historical. Default rig works, static fallback projection is defective, and the independent weapon/arms visual slice scores5.5/10 (not the historical whole-game8.1 rubric). Device performance, physical touch, Xcode and production Internet security remain unverified. Next priority: owner corrections for HUD/fallback, a separate bounded reconnect fix with hostile account/capacity tests, then refreshed combined verification. Prediction stays opt-in, live rewind disabled, earned-only economy unchanged.

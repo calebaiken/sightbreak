@@ -1,4 +1,4 @@
-# SIGHTBREAK 0.3.0-dev
+# SIGHTBREAK 0.3.2-dev
 
 A native **Godot 4.7.2** tactical FPS development build for desktop, Android and unsigned iOS project export. Fight a 5v5 offline match in the original Relay Yard, or connect to a dedicated server. The separate PostgreSQL economy supports authenticated accounts, earned Credits, collectible rifle finishes, cases, two-sided trades and marketplace purchases.
 
@@ -6,9 +6,25 @@ A native **Godot 4.7.2** tactical FPS development build for desktop, Android and
 
 This is a playable **development alpha**, not the finished release in the [full specification](docs/SPECIFICATION.md). Historical whole-game visual QA scored the earlier pass **8.1/10**, below the required 8.5/10 milestone gate; physical mobile usability, sustained device performance and production security remain unverified. Read the [0.3 independent QA evidence](docs/reports/QA-0.3.md), [known limitations](docs/KNOWN_LIMITATIONS.md) and [milestone roadmap](docs/MILESTONES.md).
 
+## Desktop alpha continuation
+
+Windows x86_64, Linux x86_64 and macOS Universal 2 now have independently selected
+native export/verification/package commands. [Build and run instructions](docs/builds.md)
+include platform prerequisites, exact-source receipts and clean-attempt rules.
+The [desktop checklist](docs/DESKTOP_TESTING.md) separates native gameplay from
+cross-export inspection; [Steam readiness](docs/STEAM_RELEASE_READINESS.md) is
+preparation only. This branch starts from frozen V2 runtime; it does not merge
+unfinished V3, bot or graphics changes. Quality and untested-platform gates remain open.
+
+The [desktop delivery report](docs/reports/DESKTOP_ALPHA_REPORT.md) records frozen
+source `0fb7480`, five inspected packages, real Linux offline/restart and Windows
+network-input passes, and macOS Apple Silicon startup. Intel macOS graphical
+startup failed; the original Windows reload timeout remains an intermittent issue.
+These results do not establish complete desktop or Steam release acceptance.
+
 ## Competitive engineering stack (development only)
 
-Codex draft PRs [3](https://github.com/calebaiken/sightbreak/pull/3) → [4](https://github.com/calebaiken/sightbreak/pull/4) → [5](https://github.com/calebaiken/sightbreak/pull/5) → [6](https://github.com/calebaiken/sightbreak/pull/6) → [7](https://github.com/calebaiken/sightbreak/pull/7) → [8](https://github.com/calebaiken/sightbreak/pull/8) depend on corrected Claude PR1. They add recipient state privacy, continuous remote interpolation, **opt-in** local prediction, bounded peer admission and durable result recovery. Protocol5 requires matched client/server builds. Historical hit-volume recording is diagnostic only; live lag compensation is incomplete. The isolated integration preview combines Claude's graphics PR2 with this stack; its source branch and assets are untouched.
+Codex draft PRs [3](https://github.com/calebaiken/sightbreak/pull/3) → [4](https://github.com/calebaiken/sightbreak/pull/4) → [5](https://github.com/calebaiken/sightbreak/pull/5) → [6](https://github.com/calebaiken/sightbreak/pull/6) → [7](https://github.com/calebaiken/sightbreak/pull/7) → [8](https://github.com/calebaiken/sightbreak/pull/8) depend on corrected Claude PR1. They add recipient state privacy, continuous remote interpolation, **opt-in** local prediction, bounded peer admission and durable result recovery. Protocol6 requires matched client/server builds. Historical hit-volume recording is diagnostic only; live lag compensation is incomplete. The isolated integration preview combines Claude's graphics PR2 with this stack; its source branch and assets are untouched.
 
 Read [current engineering QA](docs/reports/CODEX_NETWORK_QA.md), [network contracts](docs/network/NETWORK_ARCHITECTURE.md), [parallel integration instructions](docs/engineering/PARALLEL_WORK.md) and [build validation](docs/network/BUILD_VALIDATION.md). Unicode feed clipping is fixed. New custom-status layout oscillation, adverse full-capacity reconnect and the weapon/arms visual gate remain open; no full8.5 or production acceptance is claimed. Git branches/PRs are reviewable work, not authorization to merge.
 

@@ -1,0 +1,108 @@
+name: Native desktop alpha
+on:
+  push:
+    branches: [codex/desktop-steam-readiness]
+    paths: ["game/**", "scripts/**", ".github/workflows/desktop-alpha.yml"]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native:
+    if: github.event.repository.private == false
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            target: linux
+          - os: windows-latest
+            target: windows
+          - os: macos-15
+            target: macos
+          - os: macos-15-intel
+            target: macos
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    env:
+      SIGHTBREAK_BUILDS_DIR: ${{ github.workspace }}/builds/desktop-alpha
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Linux display dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgl1 libvulkan1 libxtst6 xvfb tesseract-ocr
+      - name: Native screenshot dependency
+        run: python -m pip install Pillow==12.3.0
+      - name: Install checksum-pinned native editor and selected templates
+        run: python scripts/toolchain.py setup --targets ${{ matrix.target }}
+      - name: Packaging integrity controls
+        run: python scripts/test_build_manifest.py -v
+      - name: Export exact clean source
+        run: python scripts/export.py ${{ matrix.target }}
+      - name: Native graphical startup and artifact inspection (Windows/macOS)
+        if: runner.os != 'Linux'
+        run: python scripts/verify_builds.py --targets ${{ matrix.target }} --graphical
+      - name: Retain macOS OpenGL diagnostic after default virtual-GPU failure
+        if: failure() && runner.os == 'macOS'
+        shell: python
+        run: |
+          import os, pathlib, sys, subprocess, json
+          sys.path.insert(0, 'scripts')
+          from build_manifest import BUILDS, OUTPUTS, validate_record
+          from native_log import failed
+          record = validate_record('macos')
+          out = BUILDS / 'verification'
+          capture = out / 'macos-opengl-diagnostic.png'
+          command = [str(BUILDS / OUTPUTS['macos']), '--rendering-driver', 'opengl3', '--audio-driver', 'Dummy', '--', '--smoke', '--capture='+str(capture)]
+          with (out / 'macos-opengl-diagnostic.log').open('w') as log:
+              result = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, timeout=120)
+          output = (out / 'macos-opengl-diagnostic.log').read_text(errors='replace')
+          report = {'default_driver_failure_retained': True, 'source_commit': record['source_commit'], 'command': command, 'exit': result.returncode, 'clean_log': not failed(output), 'capture_exists': capture.is_file(), 'scope': 'Diagnostic explicit OpenGL override on hosted virtual GPU; not default-launch acceptance'}
+          (out / 'macos-opengl-diagnostic.json').write_text(json.dumps(report, indent=2))
+          print(output[-16000:])
+          print(json.dumps(report))
+          if result.returncode or failed(output) or not capture.is_file(): raise SystemExit(1)
+      - name: Native graphical startup and artifact inspection (Linux)
+        if: runner.os == 'Linux'
+        run: xvfb-run -a python scripts/verify_builds.py --targets linux --graphical
+      - name: Native authority and compatibility regressions
+        shell: python
+        run: |
+          import os, pathlib, subprocess, sys, json
+          sys.path.insert(0, 'scripts')
+          import toolchain
+          from native_log import failed
+          out = pathlib.Path(os.environ['SIGHTBREAK_BUILDS_DIR']) / 'regressions'
+          out.mkdir(parents=True)
+          receipts = []
+          for suite in ('actor', 'match', 'state_privacy', 'movement_prediction', 'peer_lifecycle'):
+              command = toolchain.command('--headless', '--script', 'res://tests/' + suite + '_test.gd')
+              with (out / (suite + '.log')).open('w', encoding='utf-8') as log:
+                  result = subprocess.run(command, env=toolchain.environment(), stdout=log, stderr=subprocess.STDOUT, timeout=120)
+              text = (out / (suite + '.log')).read_text(encoding='utf-8', errors='replace')
+              receipts.append({'command': command, 'exit': result.returncode, 'clean_log': not failed(text)})
+              (out / 'results.json').write_text(json.dumps(receipts, indent=2))
+              if result.returncode or failed(text):
+                  raise SystemExit(suite + ' failed; raw output retained')
+      - name: Real exported keyboard and pointer input (Windows/Linux)
+        if: runner.os != 'macOS'
+        run: python scripts/verify_integration_export.py --target ${{ matrix.target }} --visit-armory --timeout 240 --output builds/desktop-alpha/native-input
+      - name: Living-player offline input and settings restart (Linux)
+        if: runner.os == 'Linux'
+        run: python scripts/verify_offline_export.py --display :102 --timeout 300 --output builds/desktop-alpha/offline-input
+      - name: Package only the native target
+        run: python scripts/build_manifest.py package --targets ${{ matrix.target }}
+      - name: Preserve development packages and failed attempts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-desktop-${{ matrix.target }}-${{ matrix.os }}-${{ github.sha }}
+          path: builds/desktop-alpha/
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14

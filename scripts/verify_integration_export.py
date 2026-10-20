@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Drive the actual Linux export's native UI against a source-engine authority.
+"""Drive an actual Linux/Windows export through native input and a real authority.
 
-Requires Pillow, X11/XTest, a free 1280x720 Xvfb display, and the export templates.
+Requires Pillow and a graphical desktop. Linux uses an isolated X11/XTest/Xvfb
+session. Windows uses its desktop window, native SendInput and client-area captures.
 The exported template cannot execute external --script drivers. Only the source
 Godot process executes the fixture. This checks real exported menu/admission,
 mouse firing, reload and clean engine teardown. Keyboard mode requires the
@@ -14,14 +15,18 @@ from ctypes.util import find_library
 import hashlib
 import json
 import os
+import platform
+import signal
 from pathlib import Path
 import re
 import shutil
 import subprocess
 import time
+from urllib.parse import quote
 
-from PIL import ImageGrab
-from build_manifest import source
+from PIL import Image, ImageGrab
+from build_manifest import BUILDS, OUTPUTS, source, validate_record
+import toolchain
 from native_log import failed as native_log_failed
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -53,6 +58,16 @@ class NativeUI:
         self.d = self.x.XOpenDisplay(display.encode())
         if not self.d:
             raise RuntimeError('Cannot open native display ' + display)
+        # A desktop WM normally creates these atoms. Bare Xvfb does not, while
+        # Godot 4.7.2 looks up WM_DELETE_WINDOW with only_if_exists=True at startup.
+        # Construct this controller before launching the client so its cached
+        # close protocol is the actual standard atom, rather than None.
+        self.x.XInternAtom.argtypes = [C.c_void_p, C.c_char_p, C.c_int]
+        self.x.XInternAtom.restype = C.c_ulong
+        self.x.XSync.argtypes = [C.c_void_p, C.c_int]
+        self.wm_delete = self.x.XInternAtom(self.d, b'WM_DELETE_WINDOW', 0)
+        self.wm_protocols = self.x.XInternAtom(self.d, b'WM_PROTOCOLS', 0)
+        self.x.XSync(self.d, 0)
 
     def focus_game(self):
         root, parent, count = C.c_ulong(), C.c_ulong(), C.c_uint()
@@ -117,177 +132,491 @@ class NativeUI:
         pixel = ImageGrab.grab(xdisplay=self.display).getpixel((450, 340))
         return pixel[0] > 80 and pixel[0] > pixel[1] * 1.5
 
+    def relative_motion(self, dx, dy):
+        self.t.XTestFakeRelativeMotionEvent.argtypes = [C.c_void_p, C.c_int, C.c_int, C.c_ulong]
+        self.t.XTestFakeRelativeMotionEvent(self.d, dx, dy, 0)
+        self.x.XFlush(self.d)
+
+    def request_close(self):
+        class MessageData(C.Union):
+            _fields_ = [('b', C.c_char * 20), ('s', C.c_short * 10), ('l', C.c_long * 5)]
+        class ClientMessage(C.Structure):
+            _fields_ = [('type', C.c_int), ('serial', C.c_ulong), ('send_event', C.c_int),
+                        ('display', C.c_void_p), ('window', C.c_ulong), ('message_type', C.c_ulong),
+                        ('format', C.c_int), ('data', MessageData)]
+        class Event(C.Union):
+            _fields_ = [('message', ClientMessage), ('padding', C.c_long * 24)]
+        self.x.XGetWMProtocols.argtypes = [C.c_void_p, C.c_ulong, C.POINTER(C.POINTER(C.c_ulong)), C.POINTER(C.c_int)]
+        protocols, count = C.POINTER(C.c_ulong)(), C.c_int()
+        advertised = self.x.XGetWMProtocols(self.d, self.window, C.byref(protocols), C.byref(count))
+        try:
+            supports_close = advertised and self.wm_delete in [protocols[index] for index in range(count.value)]
+        finally:
+            if protocols:
+                self.x.XFree(protocols)
+        if not supports_close:
+            raise RuntimeError('WM_DELETE_WINDOW is not advertised; create NativeUI before launching Godot on bare Xvfb')
+        self.x.XSendEvent.argtypes = [C.c_void_p, C.c_ulong, C.c_int, C.c_long, C.POINTER(Event)]
+        event = Event()
+        event.message.type = 33  # ClientMessage
+        event.message.display = self.d
+        event.message.window = self.window
+        event.message.message_type = self.wm_protocols
+        event.message.format = 32
+        event.message.data.l[0] = self.wm_delete
+        event.message.data.l[1] = 0  # CurrentTime
+        if not self.x.XSendEvent(self.d, self.window, 0, 0, C.byref(event)):
+            raise RuntimeError('XSendEvent rejected the desktop close request')
+        self.x.XSync(self.d, 0)
+
     def close(self):
         self.x.XCloseDisplay(self.d)
 
 
+class WinUI:
+    """Reference coordinates are 1280x720; captures retain actual client pixels."""
+    def __init__(self, pid=None):
+        if os.name != 'nt':
+            raise RuntimeError('WinUI requires native Windows')
+        self.pid = pid
+        self.window = None
+        self.user = C.WinDLL('user32', use_last_error=True)
+        self.user.SetProcessDPIAware()
+        self.user.GetWindowTextLengthW.argtypes = [C.c_void_p]
+        self.user.GetWindowTextW.argtypes = [C.c_void_p, C.c_wchar_p, C.c_int]
+        self.user.IsWindowVisible.argtypes = [C.c_void_p]
+        self.user.GetWindowThreadProcessId.argtypes = [C.c_void_p, C.POINTER(C.c_uint32)]
+        self.user.GetClientRect.argtypes = [C.c_void_p, C.c_void_p]
+        self.user.ClientToScreen.argtypes = [C.c_void_p, C.c_void_p]
+        self.user.SetForegroundWindow.argtypes = [C.c_void_p]
+        self.user.GetForegroundWindow.restype = C.c_void_p
+        self.user.ShowWindow.argtypes = [C.c_void_p, C.c_int]
+        self.user.SetWindowPos.argtypes = [C.c_void_p, C.c_void_p, C.c_int, C.c_int, C.c_int, C.c_int, C.c_uint]
+        self.user.PostMessageW.argtypes = [C.c_void_p, C.c_uint, C.c_size_t, C.c_ssize_t]
+        self.user.SendInput.argtypes = [C.c_uint, C.c_void_p, C.c_int]
+        self.user.MapVirtualKeyW.argtypes = [C.c_uint, C.c_uint]
+        self.width = min(1280, self.user.GetSystemMetrics(0) - 40,
+                         (self.user.GetSystemMetrics(1) - 100) * 16 // 9)
+        self.width = self.width // 16 * 16
+        self.height = self.width * 9 // 16
+        if self.width < 640:
+            raise RuntimeError('Windows desktop is too small for the native input test')
+
+    def focus_game(self):
+        callback_type = C.WINFUNCTYPE(C.c_int, C.c_void_p, C.c_ssize_t)
+        candidates = []
+        @callback_type
+        def visit(window, _context):
+            pid = C.c_uint32()
+            self.user.GetWindowThreadProcessId(window, C.byref(pid))
+            if pid.value != self.pid or not self.user.IsWindowVisible(window):
+                return 1
+            title = C.create_unicode_buffer(self.user.GetWindowTextLengthW(window) + 1)
+            self.user.GetWindowTextW(window, title, len(title))
+            if 'SIGHTBREAK' in title.value:
+                rect = (C.c_int32 * 4)()
+                if self.user.GetClientRect(window, C.byref(rect)):
+                    candidates.append(((rect[2]-rect[0]) * (rect[3]-rect[1]), window))
+            return 1
+        self.user.EnumWindows.argtypes = [callback_type, C.c_ssize_t]
+        self.user.EnumWindows(visit, 0)
+        if not candidates:
+            return False
+        window = max(candidates)[1]
+        if window != self.window:
+            self.user.ShowWindow(window, 9)  # SW_RESTORE
+            self.user.SetWindowPos(window, None, 0, 0, 0, 0, 0x1 | 0x4 | 0x10)
+        self.window = window
+        self.user.SetForegroundWindow(window)
+        return self.user.GetForegroundWindow() == window
+
+    def bounds(self):
+        rect = (C.c_int32 * 4)()
+        origin = (C.c_int32 * 2)()
+        if not self.window or not self.user.GetClientRect(self.window, C.byref(rect)) or not self.user.ClientToScreen(self.window, C.byref(origin)):
+            raise RuntimeError('Cannot locate native Windows client area')
+        width, height = rect[2] - rect[0], rect[3] - rect[1]
+        if width <= 0 or height <= 0 or abs(width / height - 16 / 9) > .02:
+            raise RuntimeError('Expected a visible 16:9 Windows client area')
+        bounds = (origin[0], origin[1], origin[0] + width, origin[1] + height)
+        if bounds[0] < 0 or bounds[1] < 0 or bounds[2] > self.user.GetSystemMetrics(0) or bounds[3] > self.user.GetSystemMetrics(1):
+            raise RuntimeError('Windows client is clipped by desktop bounds')
+        return bounds
+
+    def image(self):
+        return ImageGrab.grab(bbox=self.bounds(), all_screens=True)
+
+    def _input(self, kind, dx=0, dy=0, flags=0, scan=0):
+        class Mouse(C.Structure):
+            _fields_ = [('dx', C.c_int32), ('dy', C.c_int32), ('data', C.c_uint32),
+                        ('flags', C.c_uint32), ('time', C.c_uint32), ('extra', C.c_size_t)]
+        class Keyboard(C.Structure):
+            _fields_ = [('vk', C.c_uint16), ('scan', C.c_uint16), ('flags', C.c_uint32),
+                        ('time', C.c_uint32), ('extra', C.c_size_t)]
+        class InputData(C.Union):
+            _fields_ = [('mouse', Mouse), ('key', Keyboard)]
+        class Input(C.Structure):
+            _fields_ = [('type', C.c_uint32), ('data', InputData)]
+        event = Input()
+        event.type = kind
+        if kind == 0:
+            event.data.mouse = Mouse(dx, dy, 0, flags, 0, 0)
+        else:
+            event.data.key = Keyboard(0, scan, flags, 0, 0)
+        if self.user.SendInput(1, C.byref(event), C.sizeof(event)) != 1:
+            raise C.WinError(C.get_last_error())
+
+    def key(self, name, down):
+        vk = {'Escape': 0x1b, 'Tab': 0x09, 'Return': 0x0d, 'space': 0x20}.get(name)
+        if vk is None and len(name) == 1 and name.isascii():
+            vk = ord(name.upper())
+        if vk is None:
+            raise RuntimeError('Unknown native Windows key: ' + name)
+        scan = self.user.MapVirtualKeyW(vk, 0)
+        if not scan:
+            raise RuntimeError('Cannot map native Windows key: ' + name)
+        self._input(1, flags=0x8 | (0 if down else 0x2), scan=scan)
+
+    def button(self, down):
+        self._input(0, flags=0x2 if down else 0x4)
+
+    def relative_motion(self, dx, dy):
+        self._input(0, dx=dx, dy=dy, flags=0x1)
+
+    def click(self, x, y):
+        left, top, right, bottom = self.bounds()
+        self.user.SetCursorPos(left + int(x * (right-left) / 1280), top + int(y * (bottom-top) / 720))
+        time.sleep(.25)
+        self.button(True)
+        time.sleep(.2)
+        self.button(False)
+
+    def capture(self, path):
+        self.image().save(path)
+
+    def menu_visible(self):
+        image = self.image()
+        pixel = image.getpixel((int(450 * image.width / 1280), int(340 * image.height / 720)))
+        return pixel[0] > 80 and pixel[0] > pixel[1] * 1.5
+
+    def request_close(self):
+        if not self.user.PostMessageW(self.window, 0x10, 0, 0):  # WM_CLOSE
+            raise C.WinError(C.get_last_error())
+
+    def close(self):
+        pass
+
+
+def windows_job():
+    """Own descendants before launching; retain the handle until this process exits."""
+    kernel = C.WinDLL('kernel32', use_last_error=True)
+    kernel.CreateJobObjectW.restype = C.c_void_p
+    kernel.GetCurrentProcess.restype = C.c_void_p
+    kernel.SetInformationJobObject.argtypes = [C.c_void_p, C.c_int, C.c_void_p, C.c_uint]
+    kernel.AssignProcessToJobObject.argtypes = [C.c_void_p, C.c_void_p]
+    kernel.QueryInformationJobObject.argtypes = [C.c_void_p, C.c_int, C.c_void_p, C.c_uint, C.c_void_p]
+    job = kernel.CreateJobObjectW(None, None)
+    limits = C.create_string_buffer(144)  # x64 JOBOBJECT_EXTENDED_LIMIT_INFORMATION
+    C.c_uint32.from_buffer(limits, 16).value = 0x2000  # KILL_ON_JOB_CLOSE
+    if not job or not kernel.SetInformationJobObject(job, 9, limits, len(limits)) or not kernel.AssignProcessToJobObject(job, kernel.GetCurrentProcess()):
+        raise C.WinError(C.get_last_error())
+    return kernel, job
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--output', type=Path, default=ROOT / 'builds/verification/integration')
-    parser.add_argument('--display', default=':101', help='A free isolated X11 display')
+    parser.add_argument('--output', type=Path, default=BUILDS / 'verification/integration')
+    parser.add_argument('--target', choices=('linux', 'windows'), default='windows' if os.name == 'nt' else 'linux')
+    parser.add_argument('--display', default=':101', help='A free isolated X11 display (Linux only)')
     parser.add_argument('--xvfb', default=os.environ.get('XVFB_BIN') or shutil.which('Xvfb'))
-    parser.add_argument('--quit-after', type=int, default=300)
-    parser.add_argument('--timeout', type=float, default=180)
-    parser.add_argument('--visit-armory', action='store_true', help='Capture actual exported inventory navigation; screenshots require visual inspection')
-    parser.add_argument('--reload-mode', choices=('authority', 'keyboard'), default='authority')
+    parser.add_argument('--quit-after', type=int, default=0, help='Optional premature-exit control; normal flow closes the window after completion')
+    parser.add_argument('--timeout', type=float, default=180, help='Whole-flow wall-clock budget, with separate bounded failure cleanup')
+    parser.add_argument('--visit-armory', action='store_true', help='Capture exported inventory navigation; screenshots require visual inspection')
+    parser.add_argument('--reload-mode', choices=('authority', 'keyboard'), default='keyboard')
     args = parser.parse_args()
-    if not args.xvfb:
-        parser.error('Set --xvfb or XVFB_BIN to the Xvfb executable')
-    if not re.fullmatch(r':[0-9]+', args.display):
-        parser.error('Use a local numbered display such as :101')
-    if args.quit_after <= 0 or args.timeout <= 0:
-        parser.error('Exit iterations and timeout must be positive')
-    display_socket = Path('/tmp/.X11-unix/X' + args.display[1:])
-    if display_socket.exists():
-        parser.error('Display is already in use: ' + args.display)
+    if args.target != ('windows' if os.name == 'nt' else 'linux') or platform.system() not in ('Linux', 'Windows'):
+        parser.error('Execute the selected export on its matching native Linux/Windows host; macOS input is UNVERIFIED')
+    if args.quit_after < 0 or args.timeout <= 0:
+        parser.error('Frame budget must be nonnegative and timeout positive')
+    display_socket = None
+    if args.target == 'linux':
+        if not args.xvfb:
+            parser.error('Set --xvfb or XVFB_BIN to the Xvfb executable')
+        if not re.fullmatch(r':[0-9]+', args.display):
+            parser.error('Use a local numbered display such as :101')
+        display_socket = Path('/tmp/.X11-unix/X' + args.display[1:])
+        if display_socket.exists():
+            parser.error('Display is already in use: ' + args.display)
     output = args.output.resolve()
+    if output.exists() and any(output.iterdir()):
+        parser.error('Use a new or empty evidence directory; earlier attempts are preserved')
     output.mkdir(parents=True, exist_ok=True)
-    # Reject stale success records; retain each campaign in a separate directory.
-    for name in ('finish', 'authority.json', 'results.json'):
-        (output / name).unlink(missing_ok=True)
-    executable = ROOT / 'builds/linux/sightbreak.x86_64'
-    manifest = json.loads((executable.parent / 'source.json').read_text())
-    source_before = source()
-    if manifest['source_content_sha256'] != source_before['source_content_sha256']:
-        raise RuntimeError('Export and source authority have different runtime content')
-    executable_hash = hashlib.file_digest(executable.open('rb'), 'sha256').hexdigest()
-    if executable_hash != manifest['artifact']['sha256']:
-        raise RuntimeError('Export no longer matches its build manifest')
-    processes, logs, ui = [], [], None
+    executable = BUILDS / OUTPUTS[args.target]
+    processes, logs, commands, ui = [], [], [], None
+    manifest = source_before = None
+    result = {'passed': False, 'target': args.target, 'host': platform.platform()}
+    (output / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
+    started = time.monotonic()
+    deadline = started + args.timeout
+    job = None
+    held_keys = set()
+    capture_dimensions = []
+
+    def remaining():
+        value = deadline - time.monotonic()
+        if value <= 0:
+            raise TimeoutError('Whole native-input flow deadline exceeded')
+        return value
+
+    def pause(seconds):
+        if seconds >= remaining():
+            raise TimeoutError('Whole native-input flow deadline exceeded')
+        time.sleep(seconds)
 
     def launch(name, command, env=None, cwd=output):
-        log = (output / (name + '.log')).open('w')
+        remaining()
+        log = (output / (name + '.log')).open('w', encoding='utf-8')
         logs.append(log)
-        process = subprocess.Popen(command, cwd=cwd, env=env, stdout=log, stderr=subprocess.STDOUT)
-        processes.append(process)
+        process = subprocess.Popen(command, cwd=cwd, env=env, stdout=log, stderr=subprocess.STDOUT,
+                                   start_new_session=os.name != 'nt')
+        processes.append((name, process))
+        commands.append({'name': name, 'command': command, 'pid': process.pid, 'started_seconds': time.monotonic()-started})
+        (output / 'commands.json').write_text(json.dumps(commands, indent=2) + '\n')
         return process
 
     def wait_for(condition, seconds, label, process=None):
-        deadline = time.monotonic() + seconds
-        while time.monotonic() < deadline:
-            if condition():
-                return
+        until = min(deadline, time.monotonic() + seconds)
+        while time.monotonic() < until:
             if process is not None and process.poll() is not None:
                 raise RuntimeError(label + ': process exited early')
+            if condition():
+                return
             time.sleep(.1)
         raise TimeoutError(label)
 
+    def key(name, down):
+        ui.key(name, down)
+        (held_keys.add if down else held_keys.discard)(name)
+
+    def capture(name):
+        remaining()
+        ui.capture(output / (name + '.png'))
+        with Image.open(output / (name + '.png')) as image:
+            capture_dimensions[:] = list(image.size)
+        events.append({'capture': name, 'seconds': time.monotonic()-started})
+        (output / 'actions.json').write_text(json.dumps(events, indent=2) + '\n')
+
     def open_menu_entry(x, y, label):
-        # Xvfb can deliver initial focus asynchronously. Verify page departure
-        # before proceeding; preserve a hard failure if native input never works.
-        for attempt in range(3):
+        for _attempt in range(3):
             ui.focus_game()
             ui.click(x, y)
             try:
                 wait_for(lambda: not ui.menu_visible(), 3, label, client)
                 return
             except TimeoutError:
-                pass
+                remaining()
         raise TimeoutError(label)
 
     def server_has(message):
-        return message in (output / 'server.log').read_text()
+        return message in (output / 'server.log').read_text(encoding='utf-8', errors='replace')
 
+    events = []
     try:
-        xvfb = launch('xvfb', [args.xvfb, args.display, '-screen', '0', '1280x720x24', '-nolisten', 'tcp'])
-        wait_for(display_socket.exists, 5, 'Xvfb readiness', xvfb)
-        env = dict(os.environ, DISPLAY=args.display, LIBGL_ALWAYS_SOFTWARE='1', LP_NUM_THREADS='2')
-        for name, directory in [('XDG_DATA_HOME', 'data'), ('XDG_CONFIG_HOME', 'config'), ('XDG_CACHE_HOME', 'cache')]:
-            path = output / 'state' / directory
+        source_before = source()
+        manifest = validate_record(args.target, source_before)
+        engine = toolchain.verify_engine()
+        executable_hash = hashlib.file_digest(executable.open('rb'), 'sha256').hexdigest()
+        result.update({'artifact_source': manifest, 'authority_source': source_before, 'engine': engine,
+                       'executable_sha256': executable_hash})
+        if os.name == 'nt':
+            job = windows_job()
+            ui = WinUI()
+        env = toolchain.environment()
+        for variable, part in (('XDG_DATA_HOME', 'data'), ('XDG_CONFIG_HOME', 'config'), ('XDG_CACHE_HOME', 'cache')):
+            path = output / 'state' / part
             path.mkdir(parents=True, exist_ok=True)
-            env[name] = str(path)
-        server_command = [str(ROOT / 'scripts/godot.sh'), '--headless', '--script', str(ROOT / 'scripts/fixtures/export_integration.gd'), '--', '--output=' + str(output)]
+            env[variable] = str(path)
+        if args.target == 'linux':
+            xvfb = launch('xvfb', [args.xvfb, args.display, '-screen', '0', '1280x720x24', '-nolisten', 'tcp'])
+            wait_for(display_socket.exists, 5, 'Xvfb readiness', xvfb)
+            env.update(DISPLAY=args.display, LIBGL_ALWAYS_SOFTWARE='1', LP_NUM_THREADS='2')
+            # This isolated Xvfb gameplay test has no desktop portal/session bus.
+            # An explicit unavailable UNIX address prevents libdbus autolaunch
+            # from escaping into init-owned DBus/AT-SPI helpers. Product startup
+            # remains unchanged; portal and screen-reader coverage is unverified.
+            env['DBUS_SESSION_BUS_ADDRESS'] = 'unix:path=' + quote(str(output / 'no-session-bus.sock'), safe='/._-')
+            ui = NativeUI(args.display)
+        else:
+            # Godot uses native roaming/local AppData on Windows. Isolate test
+            # state without modifying HOME or the player's actual profile.
+            for variable, part in (('APPDATA', 'roaming'), ('LOCALAPPDATA', 'local')):
+                path = output / 'state' / part
+                path.mkdir(parents=True, exist_ok=True)
+                env[variable] = str(path)
+        accessibility_flags = ['--accessibility', 'disabled', '--accessibility-driver', 'dummy'] if args.target == 'linux' else []
+        server_command = toolchain.command('--headless', *accessibility_flags, '--script', str(ROOT / 'scripts/fixtures/export_integration.gd'), '--', '--output=' + str(output))
         if args.reload_mode == 'authority':
             server_command.append('--automatic-reload')
-        server = launch('server', server_command,
-                        {**env, 'SIGHTBREAK_STATE_DIR': str(output / 'server-state')}, ROOT)
+        server = launch('server', server_command, env, ROOT)
         wait_for(lambda: server_has('SIGHTBREAK_SERVER_READY'), 15, 'Authority readiness', server)
-        client = launch('client', [str(executable), '--audio-driver', 'Dummy', '--quit-after', str(args.quit_after)], env)
-        ui = NativeUI(args.display)
+        client_command = [str(executable), '--audio-driver', 'Dummy', '--position', '0,0', *accessibility_flags]
+        if args.target == 'windows':
+            client_command += ['--resolution', f'{ui.width}x{ui.height}']
+        if args.quit_after:
+            client_command += ['--quit-after', str(args.quit_after)]
+        client = launch('client', client_command, env)
+        if args.target == 'windows':
+            ui.pid = client.pid
         wait_for(ui.focus_game, 30, 'Export window readiness', client)
         wait_for(ui.menu_visible, 60, 'Actual native menu readiness', client)
-        ui.focus_game()
-        ui.capture(output / '01-exported-menu.png')
+        capture('01-exported-menu')
         if args.visit_armory:
             open_menu_entry(140, 445, 'Exported inventory page opened')
-            time.sleep(1)
-            ui.capture(output / '01b-exported-inventory.png')
+            pause(1)
+            capture('01b-exported-inventory')
             ui.click(1208, 46)
             wait_for(ui.menu_visible, 15, 'Return from exported armory', client)
-            ui.capture(output / '01c-exported-menu-return.png')
+            capture('01c-exported-menu-return')
         open_menu_entry(248, 385, 'Exported local-network page opened')
-        time.sleep(1)
-        ui.capture(output / '02-exported-connect.png')
+        pause(1)
+        capture('02-exported-connect')
         ui.click(640, 305)
         wait_for(lambda: server_has('EXPORT_UI_ACK_READY'), 80, 'Owner snapshot acknowledged', client)
-        time.sleep(1)
-        ui.capture(output / '03-exported-network-rifle.png')
+        pause(1)
+        capture('03-exported-network-rifle')
+        key('d', True)
+        pause(.5)
+        key('d', False)
+        ui.relative_motion(12, -4)
+        pause(.5)
+        capture('03b-native-move-aim-input')
         ui.button(True)
-        time.sleep(.7)
-        ui.capture(output / '04-fire-input.png')
+        pause(.7)
+        capture('04-fire-input')
         ui.button(False)
-        time.sleep(.5)
-        ui.capture(output / '05-after-fire-input.png')
+        pause(.5)
+        capture('05-after-fire-input')
         key_down = None
         if args.reload_mode == 'keyboard':
             ui.focus_game()
-            ui.key('r', True)
+            key('r', True)
             key_down = time.monotonic()
         wait_for(lambda: server_has('EXPORT_UI_RELOAD_STARTED'), 10, 'Authority confirms reload start', client)
-        time.sleep(.5)
-        ui.capture(output / '06-after-authority-reload-start.png')
+        pause(.5)
+        capture('06-after-authority-reload-start')
         if key_down is not None:
-            time.sleep(max(0, 2.5 - (time.monotonic() - key_down)))
-            ui.key('r', False)
+            pause(max(0, 2.5 - (time.monotonic() - key_down)))
+            key('r', False)
         wait_for(lambda: server_has('EXPORT_UI_RELOAD_COMPLETED'), 5, 'Authority reload completion', client)
-        time.sleep(.5)
-        ui.capture(output / '07-after-authority-reload-completion.png')
-        time.sleep(3)
-        ui.capture(output / '08-settled.png')
-        # Rendered capture stages must be visually reviewed: software rendering
-        # can lag the authority. The filenames describe capture timing only.
-        client.wait(timeout=args.timeout)
+        pause(.5)
+        capture('07-after-authority-reload-completion')
+        pause(3)
+        capture('08-settled')
+        if client.poll() is not None:
+            raise RuntimeError('Export exited before completion-driven desktop close')
+        ui.request_close()
+        client.wait(timeout=min(30, remaining()))
         (output / 'finish').write_text('finish\n')
-        server.wait(timeout=10)
-        authority = json.loads((output / 'authority.json').read_text())
+        server.wait(timeout=min(10, remaining()))
+        authority = json.loads((output / 'authority.json').read_text(encoding='utf-8'))
         if not authority['passed'] or client.returncode != 0 or server.returncode != 0:
             raise RuntimeError('Native authority or clean-exit check failed')
+        if authority.get('protocol') != 6 or authority.get('prediction_default') is not False:
+            raise RuntimeError('Protocol/default-off prediction contract changed')
         for name in ('client', 'server'):
-            log_text = (output / (name + '.log')).read_text()
-            if native_log_failed(log_text):
+            if native_log_failed((output / (name + '.log')).read_text(encoding='utf-8', errors='replace')):
                 raise RuntimeError(name + ': error or resource leak; inspect log')
-        if source()['source_content_sha256'] != source_before['source_content_sha256']:
-            raise RuntimeError('Runtime source changed during verification')
-        result = {'passed': True, 'artifact_source': manifest, 'authority_source': source_before,
-                  'executable_sha256': executable_hash, 'authority': authority,
-                  'client_exit': client.returncode, 'server_exit': server.returncode,
-                  'capture_dimensions': [1280, 720], 'capture_method': 'raw X11 ImageGrab; no image edits',
-                  'rendered_capture_stages': 'Require visual inspection; authority timing is not rendered timing',
-                  'reload_trigger': authority['reload_trigger'],
-                  'inventory_navigation_captured': args.visit_armory,
-                  'desktop_R_key_input': 'VERIFIED via server-observed reload command' if args.reload_mode == 'keyboard' else 'UNVERIFIED',
-                  'exit_method': 'supported --quit-after ' + str(args.quit_after),
-                  'scope': 'Actual exported Linux client through native UI; source Godot authority on loopback; llvmpipe software rendering; no physical-device performance claim'}
-        (output / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
-        print(json.dumps(result, indent=2))
-    except Exception as error:
-        (output / 'results.json').write_text(json.dumps({'passed': False, 'error': str(error), 'artifact_source': manifest, 'authority_source': source_before}, indent=2) + '\n')
-        raise
+        validate_record(args.target, source_before)
+        if source() != source_before:
+            raise RuntimeError('Source changed during native verification')
+        if os.name == 'nt':
+            accounting = C.create_string_buffer(48)  # JOBOBJECT_BASIC_ACCOUNTING_INFORMATION
+            if not job[0].QueryInformationJobObject(job[1], 1, accounting, len(accounting), None):
+                raise C.WinError(C.get_last_error())
+            if C.c_uint32.from_buffer(accounting, 40).value != 1:
+                raise RuntimeError('Native root exited but job still owns a descendant')
+        else:
+            for name, process in processes:
+                if name == 'xvfb':
+                    continue
+                try:
+                    os.killpg(process.pid, 0)
+                except ProcessLookupError:
+                    continue
+                raise RuntimeError(name + ': native root exited with descendants still alive')
+        remaining()
+        result.update({'passed': True, 'authority': authority, 'client_exit': client.returncode,
+                       'server_exit': server.returncode, 'capture_method': 'raw X11 desktop' if args.target == 'linux' else 'raw Windows client-area desktop capture',
+                       'rendered_capture_stages': 'Require visual inspection; authority timing is not rendered timing',
+                       'capture_dimensions': capture_dimensions,
+                       'reload_trigger': authority['reload_trigger'], 'inventory_navigation_captured': args.visit_armory,
+                       'desktop_R_key_input': 'VERIFIED via server-observed reload command' if args.reload_mode == 'keyboard' else 'UNVERIFIED',
+                       'movement_aim_input': 'Native input delivered; authoritative displacement not measured by this fixture',
+                       'exit_method': 'completion-driven WM_DELETE_WINDOW' if args.target == 'linux' else 'completion-driven WM_CLOSE',
+                       'automation_accessibility': 'Disabled with dummy driver and unavailable test-session bus; screen-reader/desktop portals UNVERIFIED' if args.target == 'linux' else 'No automation override; screen-reader/desktop portals UNVERIFIED',
+                       'scope': 'Actual exported native desktop client; source Godot authority on loopback; no physical hardware or internet-security acceptance'})
+    except (Exception, SystemExit) as error:
+        result.update({'passed': False, 'error': str(error), 'artifact_source': manifest, 'authority_source': source_before})
     finally:
+        cleanup_errors = []
         if ui:
-            ui.close()
-        for process in reversed(processes):
-            if process.poll() is None:
-                process.terminate()
-        for process in reversed(processes):
+            for name in list(held_keys):
+                try:
+                    ui.key(name, False)
+                except Exception as error:
+                    cleanup_errors.append('release '+name+': '+str(error))
+            try:
+                ui.button(False)
+                ui.close()
+            except Exception as error:
+                cleanup_errors.append('native input teardown: '+str(error))
+        # Linux groups and the Windows job establish ownership before launch.
+        # Root exits are retained separately from forced cleanup.
+        for name, process in reversed(processes):
+            try:
+                if os.name != 'nt':
+                    os.killpg(process.pid, signal.SIGTERM)
+                elif process.poll() is None:
+                    process.terminate()
+            except ProcessLookupError:
+                pass
+            except Exception as error:
+                cleanup_errors.append(name+' termination: '+str(error))
+        for name, process in reversed(processes):
             try:
                 process.wait(timeout=5)
             except subprocess.TimeoutExpired:
-                process.kill()
-                process.wait()
+                try:
+                    if os.name != 'nt':
+                        os.killpg(process.pid, signal.SIGKILL)
+                    else:
+                        process.kill()
+                    process.wait(timeout=5)
+                except Exception as error:
+                    cleanup_errors.append(name+' forced cleanup: '+str(error))
+            if os.name != 'nt':
+                # An already-exited root can leave a descendant that ignored
+                # SIGTERM; do not skip group cleanup merely because wait() won.
+                try:
+                    os.killpg(process.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+                except Exception as error:
+                    cleanup_errors.append(name+' descendant cleanup: '+str(error))
+        for entry, (name, process) in zip(commands, processes):
+            entry['exit_code'] = process.returncode
         for log in logs:
             log.close()
+        result['cleanup_errors'] = cleanup_errors
+        if cleanup_errors:
+            result.update(passed=False, error=result.get('error', 'Native process cleanup failed'))
+        result['commands'] = commands
+        result['elapsed_seconds'] = time.monotonic() - started
+        (output / 'commands.json').write_text(json.dumps(commands, indent=2) + '\n')
+        (output / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
+    if not result['passed']:
+        raise RuntimeError(result.get('error', 'Native input validation failed'))
+    print(json.dumps(result, indent=2))
 
 
 if __name__ == '__main__':

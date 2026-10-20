@@ -15,6 +15,7 @@ func run() -> void:
 	root.add_child(main)
 	await frames(3)
 	check(main.screen == "menu" and main.menu_camera.current, "Native main menu and3D preview start")
+	check(str(ProjectSettings.get_setting("application/config/version")) in main.menu_text("build"), "Menu version follows shipped project metadata")
 	var original_quality: int = int(main.profile.data.settings.graphics_quality)
 	main.profile.data.settings.graphics_quality = 0
 	main.apply_settings()
@@ -76,6 +77,26 @@ func run() -> void:
 	main._notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
 	main._physics_process(1.0 / 60.0)
 	check(not game._local_input.fire, "Application focus loss releases physical fire")
+	check(main.paused and main.match_suspended, "Losing focus pauses offline training and opens field menu")
+	check(game._local_input.move == Vector2.ZERO, "Unfocused game sends neutral movement")
+	main._notification(Node.NOTIFICATION_APPLICATION_FOCUS_IN)
+	main._physics_process(1.0 / 60.0)
+	check(main.paused and not game._local_input.fire, "Regaining focus requires explicit resume before shooting")
+	main.close_overlay()
+	main.show_match_settings()
+	check(main.paused and main.match_suspended, "Settings open inside a paused match")
+	var old_size: int = main.health_label.get_theme_font_size("font_size")
+	main.profile.data.settings.ui_text_scale = 1.2
+	main.refresh_settings()
+	check(main.match_game == game and main.paused and main.health_label.get_theme_font_size("font_size") > old_size, "In-match text scaling rebuilds the HUD without replacing its paused match")
+	main.profile.data.settings.ui_text_scale = 1.0
+	main.refresh_settings()
+	main.close_overlay()
+	main.show_buy()
+	main._notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
+	check(main.paused and main.match_suspended, "Focus loss also suspends training while requisition was already open")
+	main._notification(Node.NOTIFICATION_APPLICATION_FOCUS_IN)
+	main.close_overlay()
 	main.touch.enabled = true
 	main.touch.actions.fire = true
 	main._physics_process(1.0 / 60.0)

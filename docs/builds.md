@@ -1,3 +1,92 @@
+# Desktop alpha build commands — 0.3.2-dev (build 5)
+
+This continuation adds Windows x86_64 and macOS Universal 2 to the existing Linux,
+Android and iOS project. Godot remains **4.7.2.stable.official.ed1daf0bf**. The
+[preflight](reports/DESKTOP_PREFLIGHT.md) records the preserved V2 base; V2's test
+results are historical. See the [Steam plan](STEAM_RELEASE_READINESS.md) and
+[desktop checklist](DESKTOP_TESTING.md). Native execution results are recorded
+separately from artifact inspection in the [desktop QA report](reports/DESKTOP_ALPHA_REPORT.md).
+That report links native CI packages and records exact frozen source `0fb7480`;
+later documentation commits do not re-attest those artifacts.
+
+Use Python 3.12+ on Windows 10/11 x86_64, Linux x86_64 or macOS. No Bash is required
+for desktop setup, export, inspection or packaging. On Windows use `python`; on
+Linux/macOS substitute `python3` if needed. In a clean committed checkout:
+
+```sh
+# Select ONE target: windows, linux, macos, android or ios.
+python scripts/toolchain.py setup --targets windows
+python scripts/export.py windows
+python scripts/verify_builds.py --targets windows --graphical
+python scripts/build_manifest.py package --targets windows
+```
+
+Replace `windows` with `linux` or `macos` for the matching native host. Setup
+installs only selected export templates from the SHA512-verified official archive;
+it does not require all five platform SDKs. Python setup defaults to the host's
+desktop target. Bash wrappers remain available. Android additionally requires
+`scripts/setup-android.sh` and its Java/SDK tooling; select `--targets android`
+when installing Godot templates. iOS remains a distinct unsigned Xcode-project
+export, not a macOS application or an IPA. Existing mobile CI explicitly selects
+`--targets linux android ios`.
+
+| Target | Export output | Distributable |
+| --- | --- | --- |
+| Windows | `builds/windows/SIGHTBREAK.exe` (+ console launcher) | `sightbreak-windows-debug.zip` |
+| Linux | `builds/linux/sightbreak.x86_64` (+ `sightbreak.sh`) | `sightbreak-linux-debug.zip` |
+| macOS | `builds/macos/SIGHTBREAK.app` (+ development console launcher) | `sightbreak-macos-debug.zip` |
+| Android | `builds/android/sightbreak-debug.apk` | `sightbreak-android-debug.zip` |
+| iOS | `builds/ios/sightbreak.xcodeproj` | `sightbreak-ios-xcode-project.zip` |
+
+Packages include the actual game resources, license/copyright notices and source
+receipt. Extract the Linux ZIP preserving executable bits, then run
+`linux/sightbreak.sh` (or the ELF directly). Windows users launch
+`windows/SIGHTBREAK.exe`. macOS users launch `macos/SIGHTBREAK.app`, or its native
+`Contents/MacOS/SIGHTBREAK` executable from a terminal for logs. macOS requires
+11+ on Intel and 13+ on Apple Silicon for this pinned toolchain; both architectures
+still need full native gameplay qualification. Apple Silicon startup passed on
+macOS 15; Intel graphical startup timed out on the hosted software renderer.
+Development apps are ad-hoc signed and not
+notarized; public distribution needs Developer ID signing/notarization and actual
+Gatekeeper validation. Do not embed signing identities or credentials.
+
+The tested nontouch desktop uses keyboard/mouse. Use Escape to release the pointer and open
+the field menu, including in-match settings. Focus loss opens a menu and requires
+explicit resume; offline training suspends while network authority continues.
+Windowed, borderless fullscreen and exclusive fullscreen are saved in settings;
+exclusive mode may map to normal fullscreen on some platforms/compositors.
+Mouse look uses unscaled screen motion. An inherited touchscreen-desktop defect
+still enables the touch HUD and suppresses mouse capture based on touchscreen
+availability; those laptops need a platform-selection correction and native test.
+Mobile touch remains available; controller hardware and controller-only menus need testing.
+
+`GODOT_BIN`, `SIGHTBREAK_TOOLS_DIR` and `SIGHTBREAK_STATE_DIR` remain supported.
+Godot uses repository-local XDG state on Linux, native AppData on Windows and
+native Library/Application Support paths on macOS. Never repurpose HOME. Saves
+remain offline training/settings; they cannot become account Credits/items.
+
+For a new attempt, choose a fresh **ignored** build root before every command:
+`SIGHTBREAK_BUILDS_DIR=/absolute/path/to/checkout/builds/attempt-2` (PowerShell:
+`$env:SIGHTBREAK_BUILDS_DIR = "C:/path/to/checkout/builds/attempt-2"`). Existing
+exports/receipts/archives are rejected, not overwritten. Every export, verifier
+and package must use the same exact clean commit, game tree, physical source and
+validation-tool bytes. Hashes and physical/delivery modes bind every payload.
+Signing, platform tooling and filesystem differences can change output bytes;
+this is exact input/output provenance, not a binary reproducibility promise.
+Default verifier/package commands retain the old Linux+Android+iOS selection;
+use `--targets` to build/inspect/package a subset or all five explicitly.
+
+The branch-scoped `Native desktop alpha` Actions workflow builds and executes on
+Windows, Linux and macOS runners, retaining failures and development artifacts.
+Its graphical startup check is separate from real Windows/Linux pointer/keyboard
+network tests and Linux living-player offline/restart tests. Runner evidence is
+not physical GPU, Steam Deck, mobile, human balance or 8.5 quality acceptance.
+
+---
+
+The following build records and commands are historical and keep their original
+versions, source identities, hashes, failures and validation limits.
+
 # Native builds
 
 SIGHTBREAK is a native Godot 4.7.2 project. The Linux build is a desktop development target; Android and iOS are the intended mobile targets. This repository does not use a webview or a browser renderer.

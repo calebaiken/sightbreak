@@ -15,7 +15,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libgl1 libvulkan1 xvfb ripgrep unzip openjdk-17-jdk
-          scripts/setup.sh
+          scripts/setup.sh --targets linux android ios
           scripts/setup-android.sh
       - name: Export exact checkout
         run: |
