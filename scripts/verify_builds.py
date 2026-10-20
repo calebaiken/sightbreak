@@ -126,11 +126,21 @@ def main(targets=None, graphical=False):
             environment[variable] = str(logs / "state" / suffix)
             (logs / "state" / suffix).mkdir(parents=True, exist_ok=True)
 
+    runs = []
+
     def run(label, command):
-        with (logs / f"{label}.log").open("w", encoding="utf-8") as stream:
-            result = subprocess.run(command, env=environment, stdout=stream, stderr=subprocess.STDOUT, timeout=120)
+        try:
+            with (logs / f"{label}.log").open("w", encoding="utf-8") as stream:
+                result = subprocess.run(command, env=environment, stdout=stream, stderr=subprocess.STDOUT, timeout=120)
+        except subprocess.TimeoutExpired:
+            runs.append({"label": label, "command": command, "exit_code": None, "status": "TIMEOUT"})
+            print((logs / f"{label}.log").read_text(encoding="utf-8", errors="replace")[-16000:], flush=True)
+            raise
         output = (logs / f"{label}.log").read_text(encoding="utf-8", errors="replace")
-        require(result.returncode == 0, f"{label} failed; see {logs}")
+        runs.append({"label": label, "command": command, "exit_code": result.returncode, "clean_log": not native_log_failed(output)})
+        if result.returncode or native_log_failed(output):
+            print(output[-16000:], flush=True)
+        require(result.returncode == 0, f"{label} failed (exit {result.returncode}); see {logs}")
         require(not native_log_failed(output), f"{label} emitted error; see {logs}")
         return output
 
@@ -196,7 +206,7 @@ def main(targets=None, graphical=False):
             result["artifact_inspection"] = True
             validate_record(target, build_source)
         finally:
-            write_json(logs / "results.json", {**build_source, "host": platform.platform(), "targets": results, "gameplay": "See separate real-input evidence; startup is not gameplay acceptance."})
+            write_json(logs / "results.json", {**build_source, "host": platform.platform(), "targets": results, "runs": runs, "gameplay": "See separate real-input evidence; startup is not gameplay acceptance."})
     require(source() == build_source, "Source changed during verification")
     print(json.dumps(results, indent=2))
 

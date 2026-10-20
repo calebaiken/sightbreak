@@ -102,9 +102,17 @@ def main():
 
     def ocr_words():
         ui.capture(out / 'ocr-current.png')
-        raw = subprocess.check_output([args.tesseract, str(out / 'ocr-current.png'), 'stdout', '--psm', '11', 'tsv'], stderr=subprocess.DEVNULL, timeout=20).decode()
+        # Analysis-only preprocessing; the native screenshot stays untouched.
+        image = Image.open(out / 'ocr-current.png').convert('L')
+        image = image.point(lambda value: 0 if value > 145 else 255).resize((image.width * 2, image.height * 2))
+        data = io.BytesIO()
+        image.save(data, format='PNG')
+        raw = subprocess.check_output([args.tesseract, 'stdin', 'stdout', '--psm', '11', 'tsv'], input=data.getvalue(), stderr=subprocess.DEVNULL, timeout=20).decode()
         import csv
-        return [row for row in csv.DictReader(io.StringIO(raw), delimiter='\t') if row.get('text', '').strip()]
+        rows = [row for row in csv.DictReader(io.StringIO(raw), delimiter='\t') if row.get('text', '').strip()]
+        for row in rows:
+            for key in ('left', 'top', 'width', 'height'): row[key] = int(row[key]) // 2
+        return rows
 
     def click_text(word):
         row = next((row for row in ocr_words() if row['text'].upper() == word), None)
@@ -122,8 +130,8 @@ def main():
             env[key] = str(path)
         client_command = [str(executable), '--audio-driver', 'Dummy']
         if args.quit_after: client_command += ['--quit-after', str(args.quit_after)]
-        client = launch('client', client_command, env)
         ui = NativeUI(args.display)
+        client = launch('client', client_command, env)
         wait_for(lambda: ui.focus_game() and ui.menu_visible(), 60, 'Native menu')
         capture('01-menu')
         for _ in range(3):
@@ -170,6 +178,26 @@ def main():
         time.sleep(.8)
         capture('06b-scoreboard')
         ui.key('Tab', False)
+        # Complete one natural round without injecting winners or match state.
+        wait_for(lambda: 'MATCH: Round 2' in (out / 'client.log').read_text(), 160, 'Natural exported round completion')
+        capture('06c-next-round')
+        tap('b')
+        capture('06d-funded-requisition')
+        click_text('VECTORLINE')
+        capture('06e-purchased-smg')
+        purchased_hud = read_hud('06e-purchased-smg')
+        if purchased_hud['ammo'] != 30 or purchased_hud['reserve'] != 120:
+            raise RuntimeError('Authoritative requisition did not equip the purchased SMG')
+        tap('2')
+        capture('06f-switched-sidearm')
+        switched_hud = read_hud('06f-switched-sidearm')
+        if switched_hud['ammo'] != 15:
+            raise RuntimeError('Native sidearm switch did not reach the HUD')
+        tap('1')
+        capture('06g-switched-primary')
+        primary_hud = read_hud('06g-switched-primary')
+        if primary_hud['ammo'] != 30 or primary_hud['reserve'] != 120:
+            raise RuntimeError('Native primary switch did not restore the purchased weapon')
         tap('Escape')
         capture('07-field-menu')
         # Use native OCR to locate text; menu row positions can legitimately change.
@@ -209,7 +237,7 @@ def main():
             raise RuntimeError('Source changed during offline validation')
         result = {'source': before, 'executable_sha256': digest, 'events': events,
                   'exit': client.returncode, 'initial_exit': initial_exit, 'clean_exit': True, 'passed': True,
-                  'exit_method': 'completion-driven WM_DELETE_WINDOW', 'settings_restart_equal': True, 'training_progress': 'Stored record preserved; full exported match completion remains UNVERIFIED', 'fired_hud': fired_hud, 'reloaded_hud': reloaded_hud,
+                  'exit_method': 'completion-driven WM_DELETE_WINDOW', 'settings_restart_equal': True, 'natural_round_completed': True, 'purchase_and_weapon_switch': True, 'exported_plant_defuse': 'UNVERIFIED', 'training_progress': 'Stored record preserved; full exported match completion remains UNVERIFIED', 'fired_hud': fired_hud, 'reloaded_hud': reloaded_hud,
                   'controller_sha256': hashlib.file_digest(Path(__file__).open('rb'), 'sha256').hexdigest(),
                   'limits': 'Screenshots require visual review; no private authority instrumentation or mobile performance claim.'}
         (out / 'results.json').write_text(json.dumps(result, indent=2) + '\n')

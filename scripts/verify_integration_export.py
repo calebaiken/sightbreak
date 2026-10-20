@@ -57,6 +57,16 @@ class NativeUI:
         self.d = self.x.XOpenDisplay(display.encode())
         if not self.d:
             raise RuntimeError('Cannot open native display ' + display)
+        # A desktop WM normally creates these atoms. Bare Xvfb does not, while
+        # Godot 4.7.2 looks up WM_DELETE_WINDOW with only_if_exists=True at startup.
+        # Construct this controller before launching the client so its cached
+        # close protocol is the actual standard atom, rather than None.
+        self.x.XInternAtom.argtypes = [C.c_void_p, C.c_char_p, C.c_int]
+        self.x.XInternAtom.restype = C.c_ulong
+        self.x.XSync.argtypes = [C.c_void_p, C.c_int]
+        self.wm_delete = self.x.XInternAtom(self.d, b'WM_DELETE_WINDOW', 0)
+        self.wm_protocols = self.x.XInternAtom(self.d, b'WM_PROTOCOLS', 0)
+        self.x.XSync(self.d, 0)
 
     def focus_game(self):
         root, parent, count = C.c_ulong(), C.c_ulong(), C.c_uint()
@@ -135,18 +145,28 @@ class NativeUI:
                         ('format', C.c_int), ('data', MessageData)]
         class Event(C.Union):
             _fields_ = [('message', ClientMessage), ('padding', C.c_long * 24)]
-        self.x.XInternAtom.argtypes = [C.c_void_p, C.c_char_p, C.c_int]
-        self.x.XInternAtom.restype = C.c_ulong
+        self.x.XGetWMProtocols.argtypes = [C.c_void_p, C.c_ulong, C.POINTER(C.POINTER(C.c_ulong)), C.POINTER(C.c_int)]
+        protocols, count = C.POINTER(C.c_ulong)(), C.c_int()
+        advertised = self.x.XGetWMProtocols(self.d, self.window, C.byref(protocols), C.byref(count))
+        try:
+            supports_close = advertised and self.wm_delete in [protocols[index] for index in range(count.value)]
+        finally:
+            if protocols:
+                self.x.XFree(protocols)
+        if not supports_close:
+            raise RuntimeError('WM_DELETE_WINDOW is not advertised; create NativeUI before launching Godot on bare Xvfb')
         self.x.XSendEvent.argtypes = [C.c_void_p, C.c_ulong, C.c_int, C.c_long, C.POINTER(Event)]
         event = Event()
         event.message.type = 33  # ClientMessage
         event.message.display = self.d
         event.message.window = self.window
-        event.message.message_type = self.x.XInternAtom(self.d, b'WM_PROTOCOLS', 0)
+        event.message.message_type = self.wm_protocols
         event.message.format = 32
-        event.message.data.l[0] = self.x.XInternAtom(self.d, b'WM_DELETE_WINDOW', 0)
-        self.x.XSendEvent(self.d, self.window, 0, 0, C.byref(event))
-        self.x.XFlush(self.d)
+        event.message.data.l[0] = self.wm_delete
+        event.message.data.l[1] = 0  # CurrentTime
+        if not self.x.XSendEvent(self.d, self.window, 0, 0, C.byref(event)):
+            raise RuntimeError('XSendEvent rejected the desktop close request')
+        self.x.XSync(self.d, 0)
 
     def close(self):
         self.x.XCloseDisplay(self.d)
@@ -419,6 +439,7 @@ def main():
             xvfb = launch('xvfb', [args.xvfb, args.display, '-screen', '0', '1280x720x24', '-nolisten', 'tcp'])
             wait_for(display_socket.exists, 5, 'Xvfb readiness', xvfb)
             env.update(DISPLAY=args.display, LIBGL_ALWAYS_SOFTWARE='1', LP_NUM_THREADS='2')
+            ui = NativeUI(args.display)
         else:
             # Godot uses native roaming/local AppData on Windows. Isolate test
             # state without modifying HOME or the player's actual profile.
@@ -437,9 +458,7 @@ def main():
         if args.quit_after:
             client_command += ['--quit-after', str(args.quit_after)]
         client = launch('client', client_command, env)
-        if args.target == 'linux':
-            ui = NativeUI(args.display)
-        else:
+        if args.target == 'windows':
             ui.pid = client.pid
         wait_for(ui.focus_game, 30, 'Export window readiness', client)
         wait_for(ui.menu_visible, 60, 'Actual native menu readiness', client)

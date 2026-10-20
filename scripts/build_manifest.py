@@ -98,6 +98,7 @@ def payload(target):
             raise SystemExit(f"Developer/credential file in export: {relative}")
         if target in ("linux", "windows", "android"):
             allowed = {pathlib.Path(OUTPUTS[target]).name, "GODOT-LICENSE.txt", "GODOT-COPYRIGHT.txt"}
+            if target == "android": allowed.add("sightbreak-debug.apk.idsig")
             allowed.update({"sightbreak.sh"} if target == "linux" else {"SIGHTBREAK.console.exe"} if target == "windows" else set())
             if relative.as_posix() not in allowed:
                 raise SystemExit(f"Unexpected {target} payload: {relative}")

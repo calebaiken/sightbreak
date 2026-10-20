@@ -165,6 +165,13 @@ class BuildManifestTests(unittest.TestCase):
                 with self.assertRaisesRegex(SystemExit, "Developer/credential file"):
                     manifest.finish(target)
 
+    def test_android_signature_sidecar_is_preserved(self):
+        manifest.begin("android")
+        (self.builds / manifest.OUTPUTS["android"]).write_bytes(b"native fixture")
+        (self.builds / "android/sightbreak-debug.apk.idsig").write_bytes(b"signature fixture")
+        manifest.finish("android")
+        self.assertIn("android/sightbreak-debug.apk.idsig", [row["path"] for row in manifest.payload("android")])
+
     def test_required_ios_asset_catalog_is_preserved(self):
         manifest.begin("ios")
         artifact = self.builds / manifest.OUTPUTS["ios"]
