@@ -76,6 +76,8 @@ var input_round := -1
 var input_actor := -1
 var switch_requested := false
 var touch_score_until := 0.0
+var application_focused := true
+var applied_window_mode := -1
 var reward_label: Label
 var current_loadout: Dictionary = {}
 var cosmetic_weapon := ""
@@ -263,7 +265,7 @@ const MENU_LABELS := {
 	"tagline": "PRECISION · PRESSURE · PURPOSE", "operation": "CURRENT OPERATION",
 	"operation_note": "2 SITES  ·  3 ROUTES  ·  FIRST TO 7", "callsign": "CALLSIGN",
 	"policy": "EARNED IN PLAY  ·  NO REAL-MONEY PURCHASES",
-	"build": "DEVELOPMENT BUILD  ·  0.3.0-dev",
+	"build": "DEVELOPMENT BUILD",
 	"record_title": "TRAINING RECORD  ·  THIS DEVICE", "level": "LEVEL", "xp_to": "XP TO LEVEL",
 	"credits": "TRAINING CREDITS", "matches": "MATCHES", "wins": "WINS",
 	"eliminations": "ELIMINATIONS", "deaths": "DEATHS", "online": "ONLINE", "earned": "EARNED CREDITS",
@@ -278,6 +280,7 @@ var menu_labels: Dictionary = {}
 var menu_layout := {}
 
 func menu_text(id: String) -> String:
+	if id == "build": return "DEVELOPMENT BUILD  ·  " + str(ProjectSettings.get_setting("application/config/version"))
 	return str(menu_labels.get(id, MENU_LABELS[id]))
 
 ## Space the menu's content may use: the safe area less the frame's margins.
@@ -649,6 +652,9 @@ func setting_choice(parent: Control, title: String, choices: Array, selected: in
 func show_settings() -> void:
 	screen = "settings"
 	var rows := panel_screen("FIELD SETTINGS", "Saved on this device. Touch HUD layouts are editable during a match from the field menu.")
+	populate_settings(rows)
+
+func populate_settings(rows: VBoxContainer) -> void:
 	section(rows, "CONTROLS")
 	setting_slider(rows, "MOUSE SENSITIVITY", "sensitivity", 0.0005, 0.008, 0.0001)
 	setting_slider(rows, "TOUCH SENSITIVITY", "touch_sensitivity", 0.001, 0.012, 0.0002)
@@ -656,6 +662,8 @@ func show_settings() -> void:
 	setting_toggle(rows, "GYROSCOPE AIMING (supported devices)", "gyro")
 	setting_toggle(rows, "SHOW TOUCH CONTROLS ON DESKTOP", "touch_visible")
 	section(rows, "DISPLAY & PERFORMANCE")
+	if not OS.has_feature("mobile"):
+		setting_choice(rows, "WINDOW MODE", ["WINDOWED", "BORDERLESS FULLSCREEN", "EXCLUSIVE FULLSCREEN"], int(profile.data.settings.window_mode), func(index: int): profile.data.settings.window_mode = index; profile.save(); apply_settings())
 	setting_choice(rows, "GRAPHICS", ["LOW  ·  NO SHADOWS", "STANDARD"], int(profile.data.settings.graphics_quality), func(index: int): profile.data.settings.graphics_quality = index; profile.save(); apply_settings())
 	setting_slider(rows, "3D RENDER SCALE", "render_scale", 0.5, 1.0, 0.05, true)
 	var limits := [30, 60, 90, 120]
@@ -671,7 +679,7 @@ func show_settings() -> void:
 		profile.data.settings.ui_text_scale = TEXT_SCALES[index]
 		profile.save()
 		ui.theme = build_theme()
-		show_settings.call_deferred()
+		refresh_settings.call_deferred()
 	)
 	setting_toggle(rows, "REDUCED MOTION", "reduced_motion")
 	setting_slider(rows, "CROSSHAIR SIZE", "crosshair_size", 2, 12, 1)
@@ -692,7 +700,22 @@ func show_settings() -> void:
 	rows.add_child(wrapped_label("WASD / left stick: move  ·  Mouse / right stick: aim  ·  LMB / R2: fire\nR: reload  ·  E: hold plant / defuse  ·  Space: jump  ·  Ctrl: crouch\nB: buy  ·  G: frag  ·  Q: smoke  ·  1 / 2: switch  ·  Tab: roster  ·  Esc: field menu", Design.TYPE_SMALL + 1, MUTED))
 	rows.add_child(wrapped_label("TOUCH: left thumb moves; drag the open area or FIRE to aim. Hold FIRE to shoot; hold USE to plant or defuse. Field menu → EDIT TOUCH HUD moves buttons and the joystick; RESET POSITIONS restores the layout.", Design.TYPE_SMALL + 1, GOLD))
 
+func refresh_settings() -> void:
+	if screen == "game":
+		build_hud()
+		show_match_settings()
+	else: show_settings()
+
+func apply_display_mode() -> void:
+	if OS.has_feature("mobile") or DisplayServer.get_name() == "headless": return
+	var desired := clampi(int(profile.data.settings.window_mode), 0, 2)
+	if desired == applied_window_mode: return
+	var modes := [DisplayServer.WINDOW_MODE_WINDOWED, DisplayServer.WINDOW_MODE_FULLSCREEN, DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN]
+	DisplayServer.window_set_mode(modes[desired])
+	applied_window_mode = desired
+
 func apply_settings() -> void:
+	apply_display_mode()
 	Engine.max_fps = int(profile.data.settings.fps_limit)
 	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(0.001, float(profile.data.settings.volume))))
 	if not is_inside_tree(): return
@@ -762,7 +785,7 @@ func start_match(options: Dictionary) -> void:
 	physical_mouse_fire = false
 	if not server_mode:
 		build_hud()
-		if not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		if application_focused and not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func _hud_block(alignment: int) -> VBoxContainer:
 	var block := VBoxContainer.new()
@@ -1127,17 +1150,25 @@ func _notification(what: int) -> void:
 	if what == NOTIFICATION_APPLICATION_FOCUS_OUT or what == NOTIFICATION_WM_WINDOW_FOCUS_OUT:
 		physical_mouse_fire = false
 		mouse_delta = Vector2.ZERO
+		application_focused = false
+		switch_requested = false
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		if is_instance_valid(touch): touch.reset_input()
+		if screen == "game" and is_instance_valid(match_game):
+			set_match_suspended(true)
+			if not paused: toggle_pause()
+	elif what == NOTIFICATION_APPLICATION_FOCUS_IN or what == NOTIFICATION_WM_WINDOW_FOCUS_IN:
+		application_focused = true
 
 func _input(event: InputEvent) -> void:
-	if server_mode: return
+	if server_mode or not application_focused: return
 	# Touch-to-mouse emulation is needed by menus, but must never fire the weapon.
 	if event is InputEventMouse and event.device == InputEvent.DEVICE_ID_EMULATION:
 		return
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		physical_mouse_fire = event.pressed and screen == "game" and not paused
 	if event is InputEventMouseMotion and screen == "game" and not paused and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		mouse_delta += event.relative
+		mouse_delta += event.screen_relative
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_ESCAPE:
 			if screen == "game":
@@ -1155,12 +1186,12 @@ func _physics_process(delta: float) -> void:
 		input_look = Vector2(actor.yaw, actor.pitch)
 		input_round = match_game.round_number
 		input_actor = actor.actor_id
-	var state: Dictionary = {"move": Vector2.ZERO, "look": input_look}
+	var state: Dictionary = {"move": Vector2.ZERO, "look": input_look, "fire": false}
 	if actor != null: actor.reduced_motion = bool(profile.data.settings.reduced_motion)
 	if actor != null and actor.weapon_id != cosmetic_weapon:
 		actor.apply_cosmetic(current_loadout.get(actor.weapon_id, {}))
 		cosmetic_weapon = actor.weapon_id
-	if not paused and actor != null:
+	if application_focused and not paused and actor != null:
 		var sensitivity := float(profile.data.settings.sensitivity)
 		input_look.x -= mouse_delta.x * sensitivity
 		input_look.y -= mouse_delta.y * sensitivity
@@ -1445,7 +1476,7 @@ func close_overlay() -> void:
 	mouse_delta = Vector2.ZERO
 	set_match_suspended(false)
 	if touch != null: touch.enabled = uses_touch_controls()
-	if not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if application_focused and not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 func toggle_pause() -> void:
 	if paused:
@@ -1455,8 +1486,15 @@ func toggle_pause() -> void:
 	set_match_suspended(true)
 	rows.add_child(label("Training is paused." if match_suspended else "The match continues while this menu is open.", Design.TYPE_BODY, MUTED))
 	rows.add_child(button("RESUME", close_overlay, Design.TOUCH_MIN, "primary"))
+	rows.add_child(button("SETTINGS", show_match_settings))
 	rows.add_child(button("EDIT TOUCH HUD", open_touch_editor))
 	rows.add_child(button("LEAVE MATCH", leave_match, Design.TOUCH_MIN, "ghost"))
+
+func show_match_settings() -> void:
+	var rows := make_overlay("FIELD SETTINGS")
+	set_match_suspended(true)
+	populate_settings(rows)
+	rows.add_child(button("BACK TO FIELD MENU", func(): close_overlay(); toggle_pause(), Design.TOUCH_MIN, "ghost"))
 
 func open_touch_editor() -> void:
 	close_overlay()
@@ -1486,7 +1524,7 @@ func finish_touch_editor() -> void:
 	physical_mouse_fire = false
 	mouse_delta = Vector2.ZERO
 	set_match_suspended(false)
-	if not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if application_focused and not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 ## Buy state for one weapon: owned, affordable, or the shortfall.
 ## Real availability of a weapon for the local player: what the card's chip says, and

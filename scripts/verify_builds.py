@@ -73,7 +73,7 @@ def desktop_resources(target):
         require(data[:2] == b"MZ", "Missing Windows DOS header")
         pe = struct.unpack_from("<I", data, 0x3c)[0]
         require(data[pe:pe+4] == b"PE\0\0" and struct.unpack_from("<H", data, pe+4)[0] == 0x8664, "Windows export must be AMD64 PE")
-        require("SIGHTBREAK".encode("utf-16-le") in data and "0.3.1.4".encode("utf-16-le") in data, "Missing Windows product/version resources")
+        require("SIGHTBREAK".encode("utf-16-le") in data and f"{IOS_VERSION}.{BUILD_NUMBER}".encode("utf-16-le") in data, "Missing Windows product/version resources")
         # Resolve the PE resource directory and require icon, group-icon and version types.
         optional = pe + 24
         require(struct.unpack_from("<H", data, optional)[0] == 0x20b, "Expected PE32+")

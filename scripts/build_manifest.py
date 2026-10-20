@@ -13,9 +13,9 @@ import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 BUILDS = pathlib.Path(os.environ.get("SIGHTBREAK_BUILDS_DIR", ROOT / "builds")).resolve()
-VERSION = "0.3.1-dev"
-BUILD_NUMBER = 4
-IOS_VERSION = "0.3.1"
+VERSION = "0.3.2-dev"
+BUILD_NUMBER = 5
+IOS_VERSION = "0.3.2"
 OUTPUTS = {"linux": "linux/sightbreak.x86_64", "android": "android/sightbreak-debug.apk", "ios": "ios/sightbreak.xcodeproj/project.pbxproj",
            "windows": "windows/SIGHTBREAK.exe", "macos": "macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK"}
 LEGACY_TARGETS = ("linux", "android", "ios")
@@ -66,7 +66,7 @@ def delivery_mode(path):
     if os.name != "nt":
         return stat.S_IMODE(path.stat().st_mode) & 0o777
     relative = path.relative_to(BUILDS)
-    executable = path.name in ("sightbreak.x86_64", "sightbreak.sh") or (relative.parts[0] == "macos" and "MacOS" in relative.parts)
+    executable = path.name in ("sightbreak.x86_64", "sightbreak.sh", "SIGHTBREAK.command") or (relative.parts[0] == "macos" and "MacOS" in relative.parts)
     return 0o755 if executable else 0o644
 
 
@@ -91,14 +91,17 @@ def payload(target):
             continue
         if any(part in ("tests", ".godot", "__pycache__", ".git") or part.startswith(".env") for part in relative.parts):
             raise SystemExit(f"Developer-only file in export: {relative}")
-        if path.suffix.lower() in (".py", ".pyc", ".gd", ".gdc", ".ts", ".js", ".pem", ".key", ".p12", ".pfx", ".keystore", ".json") or any(word in path.name.lower() for word in ("credential", "secret", "private_key", "steam_appid")):
+        catalog_json = target == "ios" and relative.as_posix() in (
+            "sightbreak/Images.xcassets/AppIcon.appiconset/Contents.json",
+            "sightbreak/Images.xcassets/SplashImage.imageset/Contents.json")
+        if (path.suffix.lower() == ".json" and not catalog_json) or path.suffix.lower() in (".py", ".pyc", ".gd", ".gdc", ".ts", ".js", ".pem", ".key", ".p12", ".pfx", ".keystore") or any(word in path.name.lower() for word in ("credential", "secret", "private_key", "steam_appid")):
             raise SystemExit(f"Developer/credential file in export: {relative}")
         if target in ("linux", "windows", "android"):
             allowed = {pathlib.Path(OUTPUTS[target]).name, "GODOT-LICENSE.txt", "GODOT-COPYRIGHT.txt"}
             allowed.update({"sightbreak.sh"} if target == "linux" else {"SIGHTBREAK.console.exe"} if target == "windows" else set())
             if relative.as_posix() not in allowed:
                 raise SystemExit(f"Unexpected {target} payload: {relative}")
-        if target == "macos" and relative.parts[0] not in ("SIGHTBREAK.app", "GODOT-LICENSE.txt", "GODOT-COPYRIGHT.txt"):
+        if target == "macos" and relative.parts[0] not in ("SIGHTBREAK.app", "GODOT-LICENSE.txt", "GODOT-COPYRIGHT.txt", "SIGHTBREAK.command"):
             raise SystemExit(f"Unexpected macOS payload: {relative}")
         records.append(descriptor(path))
     return records

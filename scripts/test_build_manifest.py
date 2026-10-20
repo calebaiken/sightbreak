@@ -165,6 +165,17 @@ class BuildManifestTests(unittest.TestCase):
                 with self.assertRaisesRegex(SystemExit, "Developer/credential file"):
                     manifest.finish(target)
 
+    def test_required_ios_asset_catalog_is_preserved(self):
+        manifest.begin("ios")
+        artifact = self.builds / manifest.OUTPUTS["ios"]
+        artifact.parent.mkdir(parents=True, exist_ok=True)
+        artifact.write_bytes(b"native fixture")
+        catalog = self.builds / "ios/sightbreak/Images.xcassets/AppIcon.appiconset/Contents.json"
+        catalog.parent.mkdir(parents=True)
+        catalog.write_text('{"images": []}')
+        manifest.finish("ios")
+        self.assertIn("ios/sightbreak/Images.xcassets/AppIcon.appiconset/Contents.json", [r["path"] for r in manifest.payload("ios")])
+
     def test_receipt_version_tampering_rejected(self):
         self.make_export("linux")
         path = self.builds / "linux/source.json"
