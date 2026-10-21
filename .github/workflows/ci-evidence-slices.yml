@@ -7,13 +7,13 @@ on:
     inputs:
       source_run:
         description: Completed original run ID
-        default: '39673232413'
+        default: '39384250334'
       source_artifact:
-        description: Original sightbreak-qa artifact ID
-        default: '12381946357'
+        description: Original QA artifact ID or exact authorized historical Windows artifact
+        default: '12245964199'
       source_commit:
         description: Exact original source SHA
-        default: 'e3c1194a9c7bb2ff8a5e3b81ab122513dce4a32c'
+        default: '0fb74800cffb96077069144028d113e308ef1744'
 permissions:
   contents: read
   actions: read
@@ -21,6 +21,10 @@ jobs:
   slice:
     runs-on: ubuntu-24.04
     timeout-minutes: 8
+    env:
+      SOURCE_RUN: ${{ inputs.source_run || '39384250334' }}
+      SOURCE_ARTIFACT: ${{ inputs.source_artifact || '12245964199' }}
+      SOURCE_COMMIT: ${{ inputs.source_commit || '0fb74800cffb96077069144028d113e308ef1744' }}
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
@@ -28,14 +32,12 @@ jobs:
       - name: Download and preserve source-bound original observations
         env:
           GH_TOKEN: ${{ github.token }}
-          SOURCE_RUN: ${{ inputs.source_run || '39673232413' }}
-          SOURCE_ARTIFACT: ${{ inputs.source_artifact || '12381946357' }}
-          SOURCE_COMMIT: ${{ inputs.source_commit || 'e3c1194a9c7bb2ff8a5e3b81ab122513dce4a32c' }}
         run: >-
           python3 scripts/slice_ci_evidence.py
           --run-id "$SOURCE_RUN" --artifact-id "$SOURCE_ARTIFACT"
           --source-commit "$SOURCE_COMMIT" --output "$RUNNER_TEMP/evidence-slices"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: env.SOURCE_ARTIFACT != '12245964199'
         with:
           name: retained-qa-layouts-${{ github.run_id }}
           path: ${{ runner.temp }}/evidence-slices/layouts
@@ -43,6 +45,7 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: env.SOURCE_ARTIFACT != '12245964199'
         with:
           name: retained-qa-full-match-${{ github.run_id }}
           path: ${{ runner.temp }}/evidence-slices/full-match
@@ -50,6 +53,7 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: env.SOURCE_ARTIFACT != '12245964199'
         with:
           name: retained-qa-objectives-${{ github.run_id }}
           path: ${{ runner.temp }}/evidence-slices/objectives
@@ -57,9 +61,18 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: env.SOURCE_ARTIFACT != '12245964199'
         with:
           name: retained-qa-other-${{ github.run_id }}
           path: ${{ runner.temp }}/evidence-slices/other
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 14
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: env.SOURCE_ARTIFACT == '12245964199'
+        with:
+          name: retained-historical-windows-${{ github.run_id }}
+          path: ${{ runner.temp }}/evidence-slices/historical
           compression-level: 0
           if-no-files-found: error
           retention-days: 14
