@@ -1,6 +1,7 @@
 extends Node
 
 const Profile = preload("res://scripts/profile.gd")
+const OfflineDiagnostics = preload("res://scripts/offline_diagnostics.gd")
 const Touch = preload("res://scripts/ui/touch_controls.gd")
 const SafeArea = preload("res://scripts/ui/safe_area.gd")
 const Design = preload("res://scripts/ui/design_tokens.gd")
@@ -31,6 +32,7 @@ const KILL_FEED_SEPARATION := 6
 const TEXT_SCALES := [0.9, 1.0, 1.15, 1.3]
 const WEAPON_ROLES := {"sidearm": "SIDEARM", "smg": "SMG", "rifle": "RIFLE", "marksman": "MARKSMAN"}
 var profile = Profile.new()
+var offline_diagnostics
 var canvas: CanvasLayer
 var ui: Control
 var menu_world: Node3D
@@ -85,10 +87,14 @@ var cosmetic_weapon := ""
 var match_suspended := false
 
 func _ready() -> void:
+	var startup_probe := "--smoke" in OS.get_cmdline_user_args()
+	if startup_probe: print("SIGHTBREAK_STARTUP phase=ready_enter msec=", Time.get_ticks_msec())
 	profile.load_profile()
 	Input.use_accumulated_input = false
 	apply_settings()
+	if startup_probe: print("SIGHTBREAK_STARTUP phase=settings_applied msec=", Time.get_ticks_msec())
 	var args := OS.get_cmdline_user_args()
+	offline_diagnostics = OfflineDiagnostics.create(args, profile.data)
 	server_mode = "--server" in args
 	smoke_mode = "--smoke" in args
 	demo_mode = "--demo" in args
@@ -110,7 +116,9 @@ func _ready() -> void:
 	ui.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	ui.theme = build_theme()
 	canvas.add_child(ui)
+	if startup_probe: print("SIGHTBREAK_STARTUP phase=menu_begin msec=", Time.get_ticks_msec())
 	show_menu()
+	if startup_probe: print("SIGHTBREAK_STARTUP phase=menu_constructed msec=", Time.get_ticks_msec())
 	if demo_mode: start_match({"mode": "offline", "difficulty": "normal", "name": "Operator"})
 
 func text_scale() -> float:
@@ -794,6 +802,8 @@ func open_economy(tab: String) -> void:
 	economy_panel.open_tab(tab)
 
 func start_match(options: Dictionary) -> void:
+	if offline_diagnostics != null:
+		options = offline_diagnostics.configure_match(options)
 	if is_instance_valid(match_game):
 		remove_child(match_game)
 		match_game.queue_free()
@@ -808,6 +818,7 @@ func start_match(options: Dictionary) -> void:
 	match_game.name = "Match"
 	match_game.configure(options)
 	add_child(match_game)
+	if offline_diagnostics != null: offline_diagnostics.begin_match(match_game)
 	match_game.match_finished.connect(on_match_finished)
 	match_game.notification.connect(show_notification)
 	match_game.exit_requested.connect(leave_match)
@@ -1220,6 +1231,7 @@ func _input(event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	if server_mode or screen != "game" or not is_instance_valid(match_game): return
+	if offline_diagnostics != null: offline_diagnostics.observe(match_game, delta)
 	var actor = match_game.local_actor()
 	if actor != null and (input_round != match_game.round_number or input_actor != actor.actor_id):
 		input_look = Vector2(actor.yaw, actor.pitch)
@@ -1294,6 +1306,7 @@ func _process(delta: float) -> void:
 		menu_camera.look_at(Vector3.ZERO)
 	if smoke_mode:
 		smoke_frames += 1
+		if smoke_frames == 1: print("SIGHTBREAK_STARTUP phase=first_process msec=", Time.get_ticks_msec())
 		if smoke_frames == 15:
 			print("SIGHTBREAK_MAIN_READY screen=", screen)
 			if not smoke_capture.is_empty() and DisplayServer.get_name() != "headless":
@@ -1754,6 +1767,7 @@ func on_match_finished(summary: Dictionary) -> void:
 	if server_mode: return
 	var reward: Dictionary = {}
 	if match_game.options.get("mode", "offline") == "offline": reward = profile.record_match(summary)
+	if offline_diagnostics != null: offline_diagnostics.completed(match_game, summary, profile.data)
 	var rows := make_overlay("OPERATION COMPLETE")
 	var outcome := "DRAW" if summary.get("draw", false) else "VICTORY" if summary.get("won", false) else "DEFEAT"
 	var outcome_label := label(outcome, Design.TYPE_DISPLAY - 12, GOLD if outcome == "VICTORY" else Design.CRIMSON_BRIGHT if outcome == "DEFEAT" else MUTED, true)
@@ -1771,6 +1785,7 @@ func on_match_finished(summary: Dictionary) -> void:
 
 func leave_match() -> void:
 	physical_mouse_fire = false
+	if offline_diagnostics != null: offline_diagnostics.finish()
 	if server_mode:
 		get_tree().quit(1)
 		return
