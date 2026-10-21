@@ -1,0 +1,26 @@
+name: Windows observation API diagnostic only
+on:
+  push:
+    branches: [codex/windows-observation-probe]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native-api-probe:
+    runs-on: windows-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Preserve S7 contract failure and compare exact native API operations
+        run: python scripts/diagnose_windows_observation.py --output observation-probe
+      - name: Retain small native diagnostic evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: windows-observation-api-${{ github.sha }}
+          path: observation-probe/
+          if-no-files-found: error
+          retention-days: 30
