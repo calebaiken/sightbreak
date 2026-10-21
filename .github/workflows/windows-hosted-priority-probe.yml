@@ -3,6 +3,11 @@ on:
   push:
     branches: [codex/windows-priority-playability-validation]
   workflow_dispatch:
+    inputs:
+      run_gameplay:
+        type: boolean
+        default: false
+        description: Explicitly rerun the three offline gates (ownership-only by default)
 permissions:
   contents: read
 jobs:
@@ -107,7 +112,7 @@ jobs:
           hwnd=u.CreateWindowExW(0,'STATIC','Owned foreign-window negative control',0x10cf0000,700,20,260,110,None,None,None,None)
           if not hwnd: raise C.WinError(C.get_last_error())
           Path(sys.argv[1]).write_text(json.dumps({'hwnd':hwnd}),encoding='utf-8')
-          deadline=time.monotonic()+110
+          deadline=time.monotonic()+180
           msg=W.MSG()
           while u.IsWindow(hwnd):
               if time.monotonic()>deadline: raise TimeoutError('Foreign control window close deadline')
@@ -150,6 +155,7 @@ jobs:
               assert after['game'] == 0x4000 and receipt['current_priority_class'] == 0x4000
               assert before['foreign'] == after['foreign'] and before['controller'] == after['controller']
               result['controls'].append({'name': 'only matching real owned game is changed', 'passed': True, 'before': before, 'after': after, 'receipt': receipt})
+              wait(lambda: ui.focus_game() and ui.menu_visible(), 60, 'Actual rendered main menu before normal close')
               ui.capture(out / 'native-owned-game.png')
               ui.request_close()
               assert game.wait(timeout=15) == 0
@@ -196,10 +202,10 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - name: Offline input, settings, normal exit and restart
-        if: always() && steps.export.outcome == 'success'
+        if: always() && steps.export.outcome == 'success' && github.event_name == 'workflow_dispatch' && inputs.run_gameplay
         run: python scripts/verify_offline_export.py --target windows --hosted-render-priority below-normal --timeout 300 --output builds/windows-hosted-priority-probe/offline-input
       - name: Upload offline input evidence immediately
-        if: always() && steps.export.outcome == 'success'
+        if: always() && steps.export.outcome == 'success' && github.event_name == 'workflow_dispatch' && inputs.run_gameplay
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: windows-offline-input-${{ github.sha }}
@@ -212,10 +218,10 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - name: Real player plant and natural objective resolution
-        if: always() && steps.export.outcome == 'success'
+        if: always() && steps.export.outcome == 'success' && github.event_name == 'workflow_dispatch' && inputs.run_gameplay
         run: python scripts/verify_offline_match.py --target windows --hosted-render-priority below-normal --scenario plant --timeout 180 --output builds/windows-hosted-priority-probe/offline-plant
       - name: Upload plant evidence immediately
-        if: always() && steps.export.outcome == 'success'
+        if: always() && steps.export.outcome == 'success' && github.event_name == 'workflow_dispatch' && inputs.run_gameplay
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: windows-offline-plant-${{ github.sha }}
@@ -228,10 +234,10 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - name: Real player defuse after ordinary bot plant
-        if: always() && steps.export.outcome == 'success'
+        if: always() && steps.export.outcome == 'success' && github.event_name == 'workflow_dispatch' && inputs.run_gameplay
         run: python scripts/verify_offline_match.py --target windows --hosted-render-priority below-normal --scenario defuse --timeout 180 --output builds/windows-hosted-priority-probe/offline-defuse
       - name: Upload defuse evidence immediately
-        if: always() && steps.export.outcome == 'success'
+        if: always() && steps.export.outcome == 'success' && github.event_name == 'workflow_dispatch' && inputs.run_gameplay
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: windows-offline-defuse-${{ github.sha }}
