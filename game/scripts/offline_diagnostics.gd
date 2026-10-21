@@ -20,6 +20,7 @@ var _event_count := 0
 var _events_dropped := 0
 var _previous: Dictionary = {}
 var _completion_calls := 0
+var _interact_held := false
 var _summary: Dictionary = {}
 var _training_after: Dictionary = {}
 
@@ -232,6 +233,16 @@ func begin_match(game) -> void:
 
 func observe(game, delta: float) -> void:
 	if not _started or not _can_observe(game) or _finished: return
+	# Observe edges every physics tick, independently of normalized progress and
+	# the five-Hz status sampler. Main calls this before consuming the next input,
+	# so an edge is timestamped one tick after its first authoritative use.
+	var input_actor = game.local_actor()
+	var held: bool = input_actor != null and bool(input_actor.input_state.get("interact", false))
+	if held != _interact_held:
+		_interact_held = held
+		_event("local_interact_input", {"held": held, "elapsed": game._elapsed,
+			"simulation_tick": game._simulation_tick, "round_number": game.round_number,
+			"interaction_progress": game.interaction_progress})
 	_clock += delta
 	if _clock < SAMPLE_SECONDS: return
 	_clock = 0.0

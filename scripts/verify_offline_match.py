@@ -35,6 +35,31 @@ RULES = {'buy_seconds': 15, 'round_seconds': 100, 'device_seconds': 35,
          'plant_seconds': 3, 'defuse_seconds': 5, 'win_score': 7}
 
 
+def verify_hold_edges(observations, prior, required, message):
+    """Measure exact consumed-input/notification edges, independently of progress."""
+    completions = [item for item in observations if item.get('event') == 'notification'
+                   and message in item.get('message', '') and item['simulation_tick'] > prior['simulation_tick']]
+    if len(completions) != 1:
+        raise RuntimeError('Exact authoritative objective completion notification is missing or duplicated')
+    completed = completions[0]
+    inputs = [item for item in observations if item.get('event') == 'local_interact_input'
+              and prior['simulation_tick'] < item['simulation_tick'] <= completed['simulation_tick']]
+    if len(inputs) != 1 or inputs[0].get('held') is not True:
+        raise RuntimeError('Final objective hold lacks one uninterrupted authoritative consumed-E edge')
+    started = inputs[0]
+    seconds = completed['elapsed'] - started['elapsed']
+    ticks = completed['simulation_tick'] - started['simulation_tick']
+    # The input observer sees the first consumed tick, rather than the instant
+    # just before its delta. Allow that single60-Hz tick, not a status-sample gap.
+    if seconds + 1 / 60 + 1e-6 < required or ticks + 1 + 1e-6 < required * 60:
+        raise RuntimeError('Objective completed before its full authoritative consumed-input hold duration')
+    if completed['elapsed'] - prior['elapsed'] + 1 / 60 + 1e-6 < required:
+        raise RuntimeError('Objective completed too early after the known-zero authority observation')
+    return {'input_started': started, 'completion_notification': completed,
+            'simulation_seconds': seconds, 'simulation_ticks': ticks,
+            'one_tick_tolerance_seconds': 1 / 60}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
@@ -290,11 +315,12 @@ def main():
         aim(yaw, -1.2, sensitivity)
         key('q', True)
         try:
-            wait(lambda state: state.get('local_actor', {}).get('smokes') == before_smokes - 1,
-                 3, 'Real Q consumes ordinary smoke inventory')
+            consumed = wait(lambda state: state.get('local_actor', {}).get('smokes') == before_smokes - 1,
+                            3, 'Real Q consumes ordinary smoke inventory')
         finally:
             key('q', False)
         result['partial_checks']['native_smoke_deployed'] = True
+        return consumed
 
     def objectives(initial, sensitivity):
         state = wait(lambda item: item.get('phase') == 'live', 45, 'Objective scenario live phase')
@@ -303,8 +329,12 @@ def main():
             if state['objective_carrier'] != local(state)['id'] or local(state)['team'] != 0:
                 raise RuntimeError('Plant fixture did not start the ordinary living attacker carrier')
             invalid_interaction()
+            consumed = smoke(sensitivity, math.pi)
+            # Ordinary projectile fuse is1.6s. Establish cover before entering
+            # the exposed site; waiting never changes the utility or bot rules.
+            wait(lambda item: item.get('elapsed', 0) >= consumed['elapsed'] + 1.7,
+                 5, 'Ordinary smoke fuse advances in authoritative simulation time')
             move_to(-15, 8)
-            smoke(sensitivity, math.pi)
             expected_state, goal, required, minimum_distance = 'carried', 'planted', 3, 4.2
         else:
             if local(state)['team'] != 1:
@@ -337,6 +367,7 @@ def main():
         if prior['phase'] != 'live' or prior['objective_state'] != expected_state or prior['interaction_progress'] != 0:
             raise RuntimeError('Final objective hold did not start from a reset eligible live state')
         command_wall_msec = time.time_ns() // 1_000_000
+        command_monotonic = time.monotonic()
         record('objective_hold_command', elapsed=prior['elapsed'], simulation_tick=prior['simulation_tick'],
                command_wall_unix_msec=command_wall_msec, required_simulation_seconds=required)
         samples = []
@@ -369,23 +400,17 @@ def main():
             completed = wait(hold_observation, required + 3, 'Player-driven ' + args.scenario + ' completes')
         finally:
             key('e', False)
-        # Notification events carry the actual transition tick, avoiding the
-        # five-Hz status sampling delay when measuring the completion instant.
+        completion_observed_monotonic = time.monotonic()
+        # Per-physics consumed-input edges and transition notifications avoid
+        # five-Hz status sampling and normalized-progress inference as a gate.
         message = 'Relay device armed' if args.scenario == 'plant' else 'Relay device defused'
-        edges = [item for item in events() if item.get('event') == 'notification' and message in item.get('message', '')
-                 and item['simulation_tick'] >= samples[0]['simulation_tick']]
-        if len(edges) != 1:
-            raise RuntimeError('Exact authoritative objective completion notification is missing or duplicated')
+        timing = verify_hold_edges(events(), prior, required, message)
         start_elapsed = samples[0]['elapsed'] - samples[0]['progress'] * required
-        start_tick = samples[0]['simulation_tick'] - samples[0]['progress'] * required * 60
-        held_seconds, held_ticks = edges[0]['elapsed'] - start_elapsed, edges[0]['simulation_tick'] - start_tick
-        if held_seconds + 1 / 60 + 1e-6 < required or held_ticks + 1 + 1e-6 < required * 60:
-            raise RuntimeError('Objective completed before its full authoritative hold duration')
         result['objective_hold'] = {'command_wall_unix_msec': command_wall_msec, 'command_elapsed': prior['elapsed'],
                                     'command_simulation_tick': prior['simulation_tick'], 'samples': samples,
-                                    'start_inferred_from_normalized_progress': start_elapsed,
-                                    'completion_notification': edges[0], 'simulation_seconds': held_seconds,
-                                    'simulation_ticks': held_ticks, 'one_tick_tolerance_seconds': 1 / 60}
+                                    'diagnostic_start_inferred_from_normalized_progress': start_elapsed,
+                                    'diagnostic_native_command_to_observed_completion_wall_seconds': completion_observed_monotonic - command_monotonic,
+                                    **timing}
         actor = local(completed)
         if completed['phase'] == 'post':
             round_won = completed['attack_score'] > prior['attack_score'] if actor['team'] == 0 else completed['defend_score'] > prior['defend_score']

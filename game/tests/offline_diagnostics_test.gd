@@ -60,6 +60,15 @@ func run() -> void:
 	observer.completed(ordinary, {"won":true}, profile)
 	var ordinary_state: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(output.path_join("status.json")))
 	check(int(ordinary_state.completion_calls) == 0 and not ordinary_state.has("summary"), "Observer rejects a completion call before a real match result")
+	# Unit-only input mutation tests observation, never objective completion.
+	ordinary.local_actor().input_state["interact"] = true
+	observer.observe(ordinary, 0.001)
+	var edge: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(output.path_join("events.jsonl")).strip_edges().split("\n")[-1])
+	check(edge.event == "local_interact_input" and edge.held and edge.interaction_progress == 0 and edge.simulation_tick == ordinary._simulation_tick and edge.elapsed == ordinary._elapsed, "Input edge uses the authority clock independently of status throttle and normalized progress")
+	ordinary.local_actor().input_state["interact"] = false
+	observer.observe(ordinary, 0.001)
+	edge = JSON.parse_string(FileAccess.get_file_as_string(output.path_join("events.jsonl")).strip_edges().split("\n")[-1])
+	check(edge.event == "local_interact_input" and not edge.held, "Released interaction is independently observable before the next status sample")
 	observer.finish()
 	root.remove_child(ordinary)
 	ordinary.queue_free()
