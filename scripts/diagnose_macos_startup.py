@@ -83,6 +83,8 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 anti_aliasing/quality/msaa_3d=1
 environment/defaults/default_clear_color=Color(0.026, 0.031, 0.043, 1)
+textures/vram_compression/import_etc2_astc=true
+textures/vram_compression/import_s3tc_bptc=true
 '''
 MINIMAL_PRESET = '''[preset.0]
 name="macOS"
@@ -90,6 +92,8 @@ platform="macOS"
 runnable=false
 advanced_options=true
 export_filter="all_resources"
+include_filter=""
+exclude_filter=""
 script_export_mode=2
 [preset.0.options]
 binary_format/architecture="universal"
@@ -101,6 +105,8 @@ application/min_macos_version_arm64="13.00"
 display/high_res=true
 codesign/codesign=1
 notarization/notarization=0
+texture_format/s3tc_bptc=true
+texture_format/etc2_astc=false
 '''
 
 
@@ -317,12 +323,17 @@ def main():
             (fixture / name).write_text(content)
         report["fixture_sha256"] = {path.name: digest(path) for path in fixture.iterdir() if path.is_file()}
         minimal_app = output / "MinimalGraphics.app"
-        for arguments in (("--editor", "--import", "--quit"), ("--export-debug", "macOS", str(minimal_app))):
+        for label, arguments in (("minimal-import", ("--editor", "--import", "--quit")),
+                                 ("minimal-export", ("--export-debug", "macOS", str(minimal_app)))):
             command = [toolchain.binary(), "--headless", "--path", str(fixture), *arguments]
             result = bounded_command(command, 120)
+            (output / (label + ".log")).write_text(result["output"])
             report["preparation"].append(result)
             write_json(output / "results.json", report)
+            print(json.dumps({"preparation": label, "command": command, "exit_code": result["exit_code"],
+                              "timed_out": result["timed_out"], "clean_log": not native_log_failed(result["output"])}), flush=True)
             if result["exit_code"] != 0 or result["timed_out"] or native_log_failed(result["output"]):
+                print(result["output"][-16000:], flush=True)
                 raise RuntimeError("Minimal official-engine import/export failed; inspect preparation receipt")
         report["fixture_sha256_after_preparation"] = {path.name: digest(path) for path in fixture.iterdir() if path.is_file()}
         minimal = minimal_app / "Contents/MacOS/MinimalGraphics"

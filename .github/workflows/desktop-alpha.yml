@@ -166,3 +166,24 @@ jobs:
           include-hidden-files: true
           if-no-files-found: warn
           retention-days: 14
+      - name: Preserve separately downloadable QA evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-qa-${{ matrix.target }}-${{ matrix.os }}-${{ github.sha }}
+          path: |
+            builds/desktop-playability/**/*.json
+            builds/desktop-playability/**/*.jsonl
+            builds/desktop-playability/**/*.log
+            builds/desktop-playability/macos-diagnostics/*.txt
+            builds/desktop-playability/macos-diagnostics/*.png
+            builds/desktop-playability/verification/*.png
+            builds/desktop-playability/native-input/03-exported-network-rifle.png
+            builds/desktop-playability/offline-input/06g-switched-primary.png
+            builds/desktop-playability/offline-full-match/07-operation-complete.png
+            builds/desktop-playability/offline-full-match/08-final-scoreboard.png
+            builds/desktop-playability/offline-plant/05-objective-hold.png
+            builds/desktop-playability/offline-defuse/06-player-objective-completed.png
+            builds/desktop-playability/layouts/*/*.png
+          if-no-files-found: warn
+          retention-days: 14
