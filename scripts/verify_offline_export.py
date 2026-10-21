@@ -23,7 +23,7 @@ import time
 from urllib.parse import quote
 
 from build_manifest import BUILDS, OUTPUTS, source, validate_record
-from PIL import Image
+from PIL import Image, ImageChops
 from native_log import failed
 from native_observation import read_observation_json
 from verify_integration_export import NativeUI, WinUI, windows_job
@@ -181,14 +181,20 @@ def main():
 
     def read_hud(name):
         with Image.open(out / (name + '.png')) as image:
-            def text(box):
+            def text(box, health_contrast=False):
                 # Crop coordinates describe the reference layout; raw captures
                 # retain the actual native client dimensions and pixels.
                 crop = image.crop(tuple(round(value * image.size[index % 2] / REFERENCE[index % 2])
                                         for index, value in enumerate(box)))
                 crop = crop.resize(((box[2] - box[0]) * 3, (box[3] - box[1]) * 3))
+                if health_contrast:
+                    # Critical health is red. Ordinary grayscale OCR can erase
+                    # that text against the dark HUD; analyze channel brightness
+                    # without changing the original native screenshot.
+                    red, green, blue = crop.convert('RGB').split()
+                    crop = ImageChops.lighter(ImageChops.lighter(red, green), blue).point(lambda value: 0 if value > 145 else 255)
                 return ocr(crop, 6, name + ':' + str(box))
-            status = text((0, 630, 450, 720))
+            status = text((0, 630, 450, 720), health_contrast=True)
             health = re.search(r'(?<!\d)(\d{1,3})\s*[^A-Z0-9]*HEALTH', status.upper())
             ammo_text = text((980, 625, 1280, 710))
         match = re.search(r'(\d+)\s*/\s*(\d+)', ammo_text)
