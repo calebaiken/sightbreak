@@ -1,5 +1,32 @@
 # Known limitations
 
+## Desktop playability — 2026-10-21
+
+0.3.3-dev/build 6 corrects desktop touchscreen classification, held-input focus
+recovery and role/phase objective guidance. The [playability report](reports/DESKTOP_PLAYABILITY_REPORT.md)
+records source-bound Windows/Linux stock matches, objective and earned-save
+restart evidence, extracted packages and every remaining failed gate. Source
+fixtures simulate capabilities; physical touchscreen/controller input is unverified.
+
+Complete Windows offline automation and repeated objective qualification remain
+open. Hosted renderer contention can delay native observation/OCR; the historical
+network reload cause remains unresolved. A controlled trial reproduces its gate:
+2.333 observed simulation seconds take9.464 wall seconds, with completion observed
+0.795s after the unchanged timeout. The underlying host component and a shared
+historical cause remain unproven. Windows final plant/defuse/full-match scenarios
+pass separately; its offline flow still fails OCR lookup of a visibly present
+LEAVE MATCH button. Exact sources and failed gates are retained in the report. Intel
+macOS game startup still times out although official minimal 2D/3D controls work.
+Apple Silicon startup passes; macOS complete gameplay remains unverified. Neither
+virtual graphics nor cross-export proves physical GPU compatibility or frame pacing.
+
+Human full matches, high DPI/window modes, Wayland, controller-only UX, mobile
+hardware/Xcode compilation, signing/notarization, production security and every
+applicable 8.5 quality gate remain open. No new V3/bot/art integration, Steam SDK,
+authentication, paid economy or upload is included. Prediction/live rewind and
+offline/account economy boundaries retain their existing constraints. Sections
+below preserve older milestones, including defects since corrected.
+
 ## Desktop continuation — 2026-10-20
 
 Native exports and desktop input/settings changes are development work, not Steam

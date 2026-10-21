@@ -1,0 +1,86 @@
+{
+  "label": "frozen-game-default",
+  "command": [
+    "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-baseline/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+    "--verbose",
+    "--audio-driver",
+    "Dummy",
+    "--log-file",
+    "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-game-default.godot.log",
+    "--",
+    "--smoke",
+    "--capture=/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-game-default.png"
+  ],
+  "budget_seconds": 120,
+  "native_exit_code": null,
+  "timed_out": true,
+  "surviving_owned_group": [],
+  "pid": 10361,
+  "elapsed_before_cleanup": 120.02561000900005,
+  "owned_group_after_native_exit": [],
+  "exit_code_after_cleanup": -15,
+  "elapsed_total": 120.44979156500006,
+  "process_states": [
+    {
+      "seconds": 15.168338339000002,
+      "owned_group": [
+        "10361  7968 10361 R<s  00:15  94.8 /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-baseline/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK"
+      ]
+    },
+    {
+      "seconds": 90.07191368400004,
+      "owned_group": [
+        "10361  7968 10361 R<s  01:30  97.2 /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-baseline/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK"
+      ]
+    },
+    {
+      "seconds": 120.02562940400003,
+      "owned_group": [
+        "10361  7968 10361 R<s  02:00 100.0 /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-baseline/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK"
+      ]
+    }
+  ],
+  "samples": [
+    {
+      "command": [
+        "sample",
+        "10361",
+        "2",
+        "1",
+        "-file",
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-game-default-15s.sample.txt"
+      ],
+      "exit_code": -15,
+      "timed_out": true,
+      "output": "Sampling process 10361 for 2 seconds with 1 millisecond of run time between samples\nSampling completed, processing symbols...\n",
+      "descendants_after_root_exit": [],
+      "surviving_owned_group": [],
+      "sample_path": "frozen-game-default-15s.sample.txt"
+    },
+    {
+      "command": [
+        "sample",
+        "10361",
+        "2",
+        "1",
+        "-file",
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-game-default-90s.sample.txt"
+      ],
+      "exit_code": -15,
+      "timed_out": true,
+      "output": "Sampling process 10361 for 2 seconds with 1 millisecond of run time between samples\nSampling completed, processing symbols...\n",
+      "descendants_after_root_exit": [],
+      "surviving_owned_group": [],
+      "sample_path": "frozen-game-default-90s.sample.txt"
+    }
+  ],
+  "capture": null,
+  "marker_observed": false,
+  "clean_log": true,
+  "renderer_lines": [
+    "OpenGL debugging not supported!",
+    "OpenGL API 4.1 APPLE-21.1.1 - Compatibility - Using Device: Apple Inc. - Apple Software Renderer"
+  ],
+  "phase_lines": [],
+  "passed": false
+}

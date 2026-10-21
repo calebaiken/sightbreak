@@ -1,0 +1,33 @@
+[
+  {
+    "name": "server",
+    "command": [
+      "D:\\a\\sightbreak\\tools\\godot-4.7.2\\Godot_v4.7.2-stable_win64.exe",
+      "--path",
+      "D:\\a\\sightbreak\\sightbreak\\game",
+      "--headless",
+      "--script",
+      "D:\\a\\sightbreak\\sightbreak\\scripts\\fixtures\\export_integration.gd",
+      "--",
+      "--output=D:\\a\\sightbreak\\sightbreak\\builds\\desktop-playability\\native-input"
+    ],
+    "pid": 7564,
+    "started_seconds": 0.375,
+    "exit_code": 0
+  },
+  {
+    "name": "client",
+    "command": [
+      "D:\\a\\sightbreak\\sightbreak\\builds\\desktop-playability\\windows\\SIGHTBREAK.exe",
+      "--audio-driver",
+      "Dummy",
+      "--position",
+      "0,0",
+      "--resolution",
+      "976x549"
+    ],
+    "pid": 7284,
+    "started_seconds": 0.8899999999999864,
+    "exit_code": 0
+  }
+]

@@ -1,5 +1,29 @@
 # Development milestones
 
+## Desktop playability — 2026-10-21
+
+0.3.3-dev/build 6 implements explicit desktop/mobile touch policy, safe held-input
+resume, consistent controller routing, role/phase objective guidance, bounded
+read-only debug/offline observations, native Windows/Linux objective/full-match
+controllers and macOS minimal/frozen/candidate diagnostics. Actual results and
+exact frozen packages are in the [playability report](reports/DESKTOP_PLAYABILITY_REPORT.md).
+Implementation and passing source tests do not establish milestone-wide or 8.5
+acceptance; retained failed native gates remain blockers.
+
+Next three priorities:
+
+1. Resolve measured native Windows authority/freshness timing and offline OCR,
+   then repeat complete interaction/restart and layout flows without altering
+   gameplay or failed deadlines. Retain separately passed objectives/matches. Isolate
+   Intel's game-rendering workload while retaining the unchanged startup gate.
+2. Qualify human full matches on real Windows/Linux/Intel/ARM hardware, macOS
+   gameplay, touch/controller/high-DPI/window modes, Wayland, mobile devices,
+   audio/frame pacing and signing. Independently assess every applicable 8.5 gate.
+3. Independently qualify V3 input freshness and durable recovery with real
+   PostgreSQL restart/lost-response evidence, then repair tactical AI contracts
+   and measured gunplay/visual defects. Steam publication and public operations
+   remain later milestones with their own authorization and release gates.
+
 ## Desktop alpha continuation — 2026-10-20
 
 0.3.2-dev (build 5) adds Windows x86_64/macOS Universal 2 export presets, portable

@@ -1,4 +1,4 @@
-# SIGHTBREAK 0.3.2-dev
+# SIGHTBREAK 0.3.3-dev
 
 A native **Godot 4.7.2** tactical FPS development build for desktop, Android and unsigned iOS project export. Fight a 5v5 offline match in the original Relay Yard, or connect to a dedicated server. The separate PostgreSQL economy supports authenticated accounts, earned Credits, collectible rifle finishes, cases, two-sided trades and marketplace purchases.
 
@@ -6,21 +6,26 @@ A native **Godot 4.7.2** tactical FPS development build for desktop, Android and
 
 This is a playable **development alpha**, not the finished release in the [full specification](docs/SPECIFICATION.md). Historical whole-game visual QA scored the earlier pass **8.1/10**, below the required 8.5/10 milestone gate; physical mobile usability, sustained device performance and production security remain unverified. Read the [0.3 independent QA evidence](docs/reports/QA-0.3.md), [known limitations](docs/KNOWN_LIMITATIONS.md) and [milestone roadmap](docs/MILESTONES.md).
 
-## Desktop alpha continuation
+## Desktop playability continuation
 
-Windows x86_64, Linux x86_64 and macOS Universal 2 now have independently selected
-native export/verification/package commands. [Build and run instructions](docs/builds.md)
-include platform prerequisites, exact-source receipts and clean-attempt rules.
-The [desktop checklist](docs/DESKTOP_TESTING.md) separates native gameplay from
-cross-export inspection; [Steam readiness](docs/STEAM_RELEASE_READINESS.md) is
-preparation only. This branch starts from frozen V2 runtime; it does not merge
-unfinished V3, bot or graphics changes. Quality and untested-platform gates remain open.
+0.3.3-dev (build 6), [draft PR #23](https://github.com/calebaiken/sightbreak/pull/23),
+continues desktop [PR #22](https://github.com/calebaiken/sightbreak/pull/22).
+Touchscreen desktops now default to keyboard/mouse; Android/iOS retain touch
+defaults. **SHOW TOUCH CONTROLS ON DESKTOP** explicitly enables the desktop HUD.
+Focus recovery requires explicit resume and release of held controls. Objective
+guidance follows the player's role and round phase.
 
-The [desktop delivery report](docs/reports/DESKTOP_ALPHA_REPORT.md) records frozen
-source `0fb7480`, five inspected packages, real Linux offline/restart and Windows
-network-input passes, and macOS Apple Silicon startup. Intel macOS graphical
-startup failed; the original Windows reload timeout remains an intermittent issue.
-These results do not establish complete desktop or Steam release acceptance.
+The [playability report](docs/reports/DESKTOP_PLAYABILITY_REPORT.md) records exact
+sources, native Windows/Linux stock matches, objective attempts, earned-training
+restart evidence and retained failures. Intel macOS startup and complete desktop
+qualification remain blocked; Apple Silicon startup does not establish gameplay.
+Physical input/GPU performance and every applicable 8.5 quality gate remain open.
+No V3/bot/art integration, Steam SDK/authentication or publication is included.
+
+[Build/run instructions](docs/builds.md) · [desktop acceptance checklist](docs/DESKTOP_TESTING.md)
+· [Steam preparation](docs/STEAM_RELEASE_READINESS.md). The
+[parent report](docs/reports/DESKTOP_ALPHA_REPORT.md) and its `0fb7480` artifacts
+remain historical, with their original passes and failures.
 
 ## Competitive engineering stack (development only)
 
@@ -56,7 +61,7 @@ Choose **DEPLOY / OFFLINE 5 v 5**. No account or backend is needed. The first ro
 | Buy / roster | B / Tab | BUY / TEAM |
 | Menu | Escape | Pause button |
 
-Settings include sensitivity, FOV, frame cap, shadow quality, 3D render scale (50–100 %; the HUD stays at native resolution), volume, crosshair size/color, interface text size, gyro, controller input and reduced motion. The offline field menu pauses training; network matches keep running. During a match, the field menu opens the touch HUD editor. Drag the joystick or action buttons and press **SAVE TOUCH LAYOUT**; use **RESET POSITIONS** to restore defaults. Button scale is adjustable in settings. Touch input is canceled on focus loss, and simulated mouse events cannot fire the weapon. Physical gyro/controller behavior still needs device review.
+Settings include sensitivity, FOV, frame cap, shadow quality, 3D render scale (50–100 %; the HUD stays at native resolution), volume, crosshair size/color, interface text size, gyro, controller input and reduced motion. Escape opens the field menu and releases the cursor; offline training pauses while network matches keep running. Choose **SETTINGS** to change settings, or **EDIT TOUCH HUD** to move optional touch controls and save/reset their layout. After focus loss, resume explicitly and release held inputs before pressing again. Touch-generated mouse events cannot fire the weapon twice. Physical gyro/controller/touch behavior still needs device review.
 
 ## 0.3 visual and mobile milestone
 

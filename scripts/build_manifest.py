@@ -13,9 +13,9 @@ import zipfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 BUILDS = pathlib.Path(os.environ.get("SIGHTBREAK_BUILDS_DIR", ROOT / "builds")).resolve()
-VERSION = "0.3.2-dev"
-BUILD_NUMBER = 5
-IOS_VERSION = "0.3.2"
+VERSION = "0.3.3-dev"
+BUILD_NUMBER = 6
+IOS_VERSION = "0.3.3"
 OUTPUTS = {"linux": "linux/sightbreak.x86_64", "android": "android/sightbreak-debug.apk", "ios": "ios/sightbreak.xcodeproj/project.pbxproj",
            "windows": "windows/SIGHTBREAK.exe", "macos": "macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK"}
 LEGACY_TARGETS = ("linux", "android", "ios")

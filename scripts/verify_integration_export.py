@@ -137,6 +137,27 @@ class NativeUI:
         self.t.XTestFakeRelativeMotionEvent(self.d, dx, dy, 0)
         self.x.XFlush(self.d)
 
+    def diagnostics(self):
+        """Observe native focus/button/key state without changing focus or input."""
+        self.x.XGetInputFocus.argtypes = [C.c_void_p, C.POINTER(C.c_ulong), C.POINTER(C.c_int)]
+        focused, revert = C.c_ulong(), C.c_int()
+        self.x.XGetInputFocus(self.d, C.byref(focused), C.byref(revert))
+        self.x.XQueryKeymap.argtypes = [C.c_void_p, C.c_void_p]
+        keys = (C.c_ubyte * 32)()
+        self.x.XQueryKeymap(self.d, keys)
+        states = {}
+        for name in ('r', 'd', 'w'):
+            code = self.x.XKeysymToKeycode(self.d, self.x.XStringToKeysym(name.encode()))
+            states[name] = bool(code and keys[code // 8] & (1 << (code % 8)))
+        self.x.XQueryPointer.argtypes = [C.c_void_p, C.c_ulong, C.POINTER(C.c_ulong), C.POINTER(C.c_ulong), C.POINTER(C.c_int), C.POINTER(C.c_int), C.POINTER(C.c_int), C.POINTER(C.c_int), C.POINTER(C.c_uint)]
+        root, child, rx, ry, wx, wy, mask = C.c_ulong(), C.c_ulong(), C.c_int(), C.c_int(), C.c_int(), C.c_int(), C.c_uint()
+        pointer = self.x.XQueryPointer(self.d, self.x.XDefaultRootWindow(self.d), C.byref(root), C.byref(child), C.byref(rx), C.byref(ry), C.byref(wx), C.byref(wy), C.byref(mask))
+        window = getattr(self, 'window', None)
+        return {'target_window': window, 'foreground_window': focused.value,
+                'target_focused': window is not None and focused.value == window,
+                'lmb_down': bool(mask.value & (1 << 8)) if pointer else None,
+                'keys_down': states, 'state_source': 'XGetInputFocus/XQueryPointer/XQueryKeymap'}
+
     def request_close(self):
         class MessageData(C.Union):
             _fields_ = [('b', C.c_char * 20), ('s', C.c_short * 10), ('l', C.c_long * 5)]
@@ -195,6 +216,8 @@ class WinUI:
         self.user.PostMessageW.argtypes = [C.c_void_p, C.c_uint, C.c_size_t, C.c_ssize_t]
         self.user.SendInput.argtypes = [C.c_uint, C.c_void_p, C.c_int]
         self.user.MapVirtualKeyW.argtypes = [C.c_uint, C.c_uint]
+        self.user.GetAsyncKeyState.argtypes = [C.c_int]
+        self.user.GetAsyncKeyState.restype = C.c_short
         self.width = min(1280, self.user.GetSystemMetrics(0) - 40,
                          (self.user.GetSystemMetrics(1) - 100) * 16 // 9)
         self.width = self.width // 16 * 16
@@ -243,8 +266,51 @@ class WinUI:
             raise RuntimeError('Windows client is clipped by desktop bounds')
         return bounds
 
+    def lower_owned_render_priority(self, process):
+        """Opt-in hosted offline QA resource isolation; never a game setting."""
+        pid = C.c_uint32()
+        if (not isinstance(process, subprocess.Popen) or process.poll() is not None
+                or self.pid != process.pid or not self.window
+                or not self.user.GetWindowThreadProcessId(self.window, C.byref(pid))
+                or pid.value != process.pid):
+            raise RuntimeError('Hosted render priority requires the live owned child window/PID')
+        kernel = C.WinDLL('kernel32', use_last_error=True)
+        kernel.OpenProcess.argtypes = [C.c_uint32, C.c_int, C.c_uint32]
+        kernel.OpenProcess.restype = C.c_void_p
+        kernel.GetPriorityClass.argtypes = [C.c_void_p]
+        kernel.GetPriorityClass.restype = C.c_uint32
+        kernel.SetPriorityClass.argtypes = [C.c_void_p, C.c_uint32]
+        kernel.SetPriorityClass.restype = C.c_int
+        kernel.CloseHandle.argtypes = [C.c_void_p]
+        kernel.CloseHandle.restype = C.c_int
+        handle = kernel.OpenProcess(0x1000 | 0x200, False, process.pid)
+        if not handle:
+            raise C.WinError(C.get_last_error())
+        try:
+            before = kernel.GetPriorityClass(handle)
+            if not before or not kernel.SetPriorityClass(handle, 0x4000):
+                raise C.WinError(C.get_last_error())
+            current = kernel.GetPriorityClass(handle)
+            if current != 0x4000:
+                raise RuntimeError('Owned hosted render priority was not applied')
+            return {'pid': process.pid, 'window_pid': pid.value, 'before_priority_class': before,
+                    'current_priority_class': current,
+                    'scope': 'Opt-in Windows hosted offline QA only; owned child below-normal, no affinity/rules/time-scale changes'}
+        finally:
+            kernel.CloseHandle(handle)
+
     def image(self):
         return ImageGrab.grab(bbox=self.bounds(), all_screens=True)
+
+    def diagnostics(self):
+        """Read actual OS state; SendInput success alone does not prove delivery."""
+        foreground = self.user.GetForegroundWindow()
+        return {'target_window': self.window, 'foreground_window': foreground,
+                'target_focused': self.window is not None and foreground == self.window,
+                'lmb_down': bool(self.user.GetAsyncKeyState(0x01) & 0x8000),
+                'keys_down': {name: bool(self.user.GetAsyncKeyState(ord(name.upper())) & 0x8000)
+                              for name in ('r', 'd', 'w')},
+                'state_source': 'GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof'}
 
     def _input(self, kind, dx=0, dy=0, flags=0, scan=0):
         class Mouse(C.Structure):
@@ -333,11 +399,15 @@ def main():
     parser.add_argument('--timeout', type=float, default=180, help='Whole-flow wall-clock budget, with separate bounded failure cleanup')
     parser.add_argument('--visit-armory', action='store_true', help='Capture exported inventory navigation; screenshots require visual inspection')
     parser.add_argument('--reload-mode', choices=('authority', 'keyboard'), default='keyboard')
+    parser.add_argument('--input-schedule', choices=('legacy', 'release-first'), default='legacy',
+                        help='Diagnostic comparison only: retain legacy capture while LMB is held, or capture after release; qualification gates are unchanged')
+    parser.add_argument('--fire-capture-delay', type=float, default=0,
+                        help='Explicit synthetic capture pressure in seconds (0..10); delays only the fire screenshot and is recorded separately from spontaneous failures')
     args = parser.parse_args()
     if args.target != ('windows' if os.name == 'nt' else 'linux') or platform.system() not in ('Linux', 'Windows'):
         parser.error('Execute the selected export on its matching native Linux/Windows host; macOS input is UNVERIFIED')
-    if args.quit_after < 0 or args.timeout <= 0:
-        parser.error('Frame budget must be nonnegative and timeout positive')
+    if args.quit_after < 0 or args.timeout <= 0 or not 0 <= args.fire_capture_delay <= 10:
+        parser.error('Frame budget must be nonnegative, timeout positive, and synthetic fire-capture delay between 0 and 10')
     display_socket = None
     if args.target == 'linux':
         if not args.xvfb:
@@ -354,13 +424,45 @@ def main():
     executable = BUILDS / OUTPUTS[args.target]
     processes, logs, commands, ui = [], [], [], None
     manifest = source_before = None
-    result = {'passed': False, 'target': args.target, 'host': platform.platform()}
+    result = {'passed': False, 'target': args.target, 'host': platform.platform(),
+              'input_schedule': args.input_schedule, 'synthetic_fire_capture_delay_seconds': args.fire_capture_delay,
+              'qualification_note': 'Any nonzero synthetic capture pressure is a diagnostic experiment, not physical performance or a spontaneous Windows failure'}
     (output / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
     started = time.monotonic()
     deadline = started + args.timeout
     job = None
     held_keys = set()
+    fire_down = False
     capture_dimensions = []
+    events = []
+
+    def interrupted(signum, _frame):
+        raise SystemExit('Native validation interrupted by signal ' + str(signum))
+
+    signal.signal(signal.SIGTERM, interrupted)
+    signal.signal(signal.SIGINT, interrupted)
+
+    def trace(event, **details):
+        entry = {'event': event, 'seconds': time.monotonic()-started,
+                 'wall_unix_msec': time.time_ns() // 1_000_000,
+                 'driver_held_keys': sorted(held_keys), 'driver_fire_down': fire_down, **details}
+        if ui is not None:
+            try:
+                entry['native_state'] = ui.diagnostics()
+            except Exception as error:
+                entry['native_state_error'] = str(error)
+        events.append(entry)
+        if len(events) > 512:
+            del events[0]
+        (output / 'actions.json').write_text(json.dumps(events, indent=2) + '\n')
+
+    def authority_observation():
+        try:
+            data = json.loads((output / 'authority-telemetry.json').read_text(encoding='utf-8'))
+            return data['samples'][-1] if data['samples'] else None
+        except (OSError, ValueError, KeyError):
+            # The authority may be publishing this diagnostic file concurrently.
+            return None
 
     def remaining():
         value = deadline - time.monotonic()
@@ -385,42 +487,65 @@ def main():
         return process
 
     def wait_for(condition, seconds, label, process=None):
+        trace('wait_begin', label=label, budget_seconds=seconds)
         until = min(deadline, time.monotonic() + seconds)
         while time.monotonic() < until:
             if process is not None and process.poll() is not None:
                 raise RuntimeError(label + ': process exited early')
             if condition():
+                trace('wait_completed', label=label, authority=authority_observation())
                 return
             time.sleep(.1)
+        trace('wait_timeout', label=label, authority=authority_observation())
         raise TimeoutError(label)
 
     def key(name, down):
+        trace('key_before', key=name, down=down)
         ui.key(name, down)
         (held_keys.add if down else held_keys.discard)(name)
+        trace('key_after', key=name, down=down)
+
+    def button(down):
+        nonlocal fire_down
+        trace('button_before', down=down)
+        ui.button(down)
+        fire_down = down
+        trace('button_after', down=down)
+
+    def motion(dx, dy):
+        trace('motion_before', dx=dx, dy=dy)
+        ui.relative_motion(dx, dy)
+        trace('motion_after', dx=dx, dy=dy)
 
     def capture(name):
         remaining()
+        trace('capture_begin', capture=name)
+        capture_started = time.monotonic()
+        if name == '04-fire-input' and args.fire_capture_delay:
+            trace('synthetic_capture_delay_begin', delay_seconds=args.fire_capture_delay)
+            pause(args.fire_capture_delay)
+            trace('synthetic_capture_delay_end')
         ui.capture(output / (name + '.png'))
         with Image.open(output / (name + '.png')) as image:
             capture_dimensions[:] = list(image.size)
-        events.append({'capture': name, 'seconds': time.monotonic()-started})
-        (output / 'actions.json').write_text(json.dumps(events, indent=2) + '\n')
+        trace('capture_end', capture=name, duration_seconds=time.monotonic()-capture_started,
+              authority=authority_observation())
 
     def open_menu_entry(x, y, label):
-        for _attempt in range(3):
-            ui.focus_game()
-            ui.click(x, y)
-            try:
-                wait_for(lambda: not ui.menu_visible(), 3, label, client)
-                return
-            except TimeoutError:
-                remaining()
-        raise TimeoutError(label)
+        ui.focus_game()
+        trace('menu_click_before', x=x, y=y, label=label)
+        ui.click(x, y)
+        trace('menu_click_after', x=x, y=y, label=label)
+        # A stale rendered menu is a readiness signal, never permission to
+        # repeat an absolute pointer move after the game captures the mouse.
+        # PR22 allowed three click+3s attempts (~10.35s total). Preserve that
+        # aggregate cold-page budget with one click; replaying pointer motion
+        # is unsafe once a page starts capturing input.
+        wait_for(lambda: not ui.menu_visible(), 9.9, label, client)
 
     def server_has(message):
         return message in (output / 'server.log').read_text(encoding='utf-8', errors='replace')
 
-    events = []
     try:
         source_before = source()
         manifest = validate_record(args.target, source_before)
@@ -487,13 +612,18 @@ def main():
         key('d', True)
         pause(.5)
         key('d', False)
-        ui.relative_motion(12, -4)
+        motion(12, -4)
         pause(.5)
         capture('03b-native-move-aim-input')
-        ui.button(True)
+        trace('before_firing', authority=authority_observation())
+        button(True)
         pause(.7)
-        capture('04-fire-input')
-        ui.button(False)
+        if args.input_schedule == 'legacy':
+            capture('04-fire-input')
+            button(False)
+        else:
+            button(False)
+            capture('04-fire-input')
         pause(.5)
         capture('05-after-fire-input')
         key_down = None
@@ -556,7 +686,19 @@ def main():
                        'automation_accessibility': 'Disabled with dummy driver and unavailable test-session bus; screen-reader/desktop portals UNVERIFIED' if args.target == 'linux' else 'No automation override; screen-reader/desktop portals UNVERIFIED',
                        'scope': 'Actual exported native desktop client; source Godot authority on loopback; no physical hardware or internet-security acceptance'})
     except (Exception, SystemExit) as error:
+        trace('failure', error=str(error), authority=authority_observation())
+        if ui is not None:
+            try:
+                ui.capture(output / 'failure-ui.png')
+                trace('failure_capture', capture='failure-ui.png')
+            except Exception as capture_error:
+                trace('failure_capture_error', error=str(capture_error))
+        (output / 'diagnostic-request').write_text('read-only failure snapshot\n')
+        # Failure diagnostics have a separate bounded 150 ms cleanup allowance;
+        # they do not extend or turn a failed qualification wait into a pass.
+        time.sleep(.15)
         result.update({'passed': False, 'error': str(error), 'artifact_source': manifest, 'authority_source': source_before})
+        result['failure_authority_observation'] = authority_observation()
     finally:
         cleanup_errors = []
         if ui:
@@ -612,9 +754,24 @@ def main():
             result.update(passed=False, error=result.get('error', 'Native process cleanup failed'))
         result['commands'] = commands
         result['elapsed_seconds'] = time.monotonic() - started
+        # Include decisive measurements in CI text as well as the raw artifact.
+        # This stays bounded even when downloading a CI artifact is unavailable.
+        result['input_timing'] = {
+            'before_firing': next((event for event in events if event['event'] == 'before_firing'), None),
+            'fire_button_edges': [event for event in events if event['event'] in ('button_before', 'button_after')][-8:],
+            'reload_key_edges': [event for event in events if event['event'] in ('key_before', 'key_after') and event.get('key') == 'r'][-8:],
+            'capture_durations': [{key: event[key] for key in ('capture', 'seconds', 'duration_seconds')}
+                                  for event in events if event['event'] == 'capture_end'][-20:],
+            'last_authority_sample': authority_observation(),
+        }
         (output / 'commands.json').write_text(json.dumps(commands, indent=2) + '\n')
         (output / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
     if not result['passed']:
+        print(json.dumps({'native_input_failure': result, 'recent_actions': events[-12:]}, indent=2))
+        for name in ('server', 'client'):
+            path = output / (name + '.log')
+            if path.is_file():
+                print(name + ' log tail (bounded):\n' + path.read_text(encoding='utf-8', errors='replace')[-12000:])
         raise RuntimeError(result.get('error', 'Native input validation failed'))
     print(json.dumps(result, indent=2))
 

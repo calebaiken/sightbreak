@@ -3,14 +3,50 @@
 Record OS/architecture, engine, exact source SHA/game tree, source and artifact
 hashes, commands/actual exit codes, raw failures, logs and unedited screenshots.
 Use a new evidence directory and frozen clean commit for every attempt. The
-`Native desktop alpha` workflow and scripts are development gates; unexecuted
+`Desktop playability P1` workflow and scripts are development gates; unexecuted
 platforms remain **UNVERIFIED**. Headless startup is not graphical acceptance.
 
-Completed milestone results and retained failures are in the
-[desktop delivery report](reports/DESKTOP_ALPHA_REPORT.md). Its source is frozen
-separately from later documentation commits. Touchscreen-equipped desktops also
-require an input-selection correction: touchscreen availability currently forces
-the touch HUD and suppresses mouse capture, outside the nontouch tested scope.
+Current exact-source results and retained failures are in the
+[playability report](reports/DESKTOP_PLAYABILITY_REPORT.md); the
+[parent delivery report](reports/DESKTOP_ALPHA_REPORT.md) retains its historical
+scope. Desktop/mobile touch selection is now explicit. Simulated touchscreen and
+controller capability tests are separate from physical input-device qualification.
+
+For objectives and newly earned ordinary-match training, run separate fresh
+attempts against the selected exported package:
+
+```sh
+python scripts/verify_offline_match.py --target linux --scenario plant --seed 42 --display :107 --timeout 180 --output /absolute/new/plant
+python scripts/verify_offline_match.py --target linux --scenario defuse --seed 42 --display :108 --timeout 180 --output /absolute/new/defuse
+python scripts/verify_offline_match.py --target linux --scenario full-match --display :109 --timeout 1800 --output /absolute/new/full-match
+```
+
+On native Windows use `--target windows`; Win32 input requires no Xvfb. Automated
+macOS gameplay remains unimplemented. Windows hosted CI explicitly selects
+`--hosted-render-priority below-normal` for owned offline game processes; default
+manual invocation inherits priority. Disclose that scheduling adjustment and its
+actual class receipts separately from shipped game behavior or performance. `--executable` accepts an extracted native
+entry point only when its bytes match the original clean export receipt.
+
+Plant/defuse declare initial debug/offline spawns, side and seed before physics;
+ten stock living actors, equipment, AI, combat, collision and timers remain active.
+Require actual movement from outside interaction range, out-of-range/interrupted-E
+negative controls, uninterrupted 3/5-second **simulation** holds measured from
+consumed input to authoritative completion, local contribution, ordinary objective
+resolution, next round and normal restart. Read-only authority observations do
+not replace rendered phase/role evidence. Retain legitimate combat deaths and
+automation overshoot failures; do not change health or winners to pass.
+
+`full-match` forbids `--seed`, retaining stock spawns/teams/randomness and
+`time_scale=1`. Require one normal result, ten-player scoreboard, exactly one new
+history entry and earned offline XP/Credits actually loaded in a reopened client.
+Preserving an unchanged profile alone is insufficient. The 1800-second watchdog
+is a bounded trial, not a guarantee for every possible match. No save/result API
+injection is allowed. Offline training cannot authorize account rewards.
+
+Layouts request 960×540, 1280×720, 1920×1080 and 1280×800. Capture generation,
+independent original-image review, physical high DPI and performance are separate
+gates. Preserve each attempt and its exact source when later attempts succeed.
 
 | Area | Required evidence |
 | --- | --- |

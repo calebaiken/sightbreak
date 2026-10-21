@@ -120,9 +120,21 @@ func _ready() -> void:
 	var mode: String = str(options.get("mode", "offline"))
 	_authority = mode != "client"
 	local_id = 1 if mode == "offline" else 0
+	# Only an explicitly configured debug/offline observer can declare initial
+	# objective-test conditions. Trace-only and all network runs return no fixture.
+	var initial_conditions: Dictionary = preload("res://scripts/offline_diagnostics.gd").fixture_for(options, arena)
+	var stock_attack_spawns: Array[Vector3] = arena.attack_spawns.duplicate()
+	var stock_defend_spawns: Array[Vector3] = arena.defend_spawns.duplicate()
+	if not initial_conditions.is_empty():
+		_rng.seed = int(initial_conditions.seed)
+		arena.attack_spawns.assign(initial_conditions.attack_spawns)
+		arena.defend_spawns.assign(initial_conditions.defend_spawns)
 	if _authority:
 		for id in range(1, 11):
-			_spawn_actor(id, 0 if id <= 5 else 1, str(options.get("name", "Operator")) if id == local_id else BOT_NAMES[id - 1])
+			var side := 0 if id <= 5 else 1
+			if initial_conditions.get("scenario", "") == "defuse" and id in [1, 6]: side = 1 - side
+			var actor := _spawn_actor(id, side, str(options.get("name", "Operator")) if id == local_id else BOT_NAMES[id - 1])
+			if not initial_conditions.is_empty(): actor._rng.seed = int(initial_conditions.seed) * 97 + id
 		if mode == "server" and bool(options.get("require_accounts", false)):
 			phase = "waiting"
 			time_left = 0
@@ -134,6 +146,11 @@ func _ready() -> void:
 				actor.reset_for_round(arena.attack_spawns[(actor.actor_id - 1) % 5] if actor.team == 0 else arena.defend_spawns[(actor.actor_id - 1) % 5])
 		else:
 			_begin_round()
+	# Restore stock spawn definitions before the first physics tick. Only the
+	# declared first-round actor locations/side and RNG initialization differed.
+	if not initial_conditions.is_empty():
+		arena.attack_spawns.assign(stock_attack_spawns)
+		arena.defend_spawns.assign(stock_defend_spawns)
 	if mode == "server":
 		_host()
 	elif mode == "client":

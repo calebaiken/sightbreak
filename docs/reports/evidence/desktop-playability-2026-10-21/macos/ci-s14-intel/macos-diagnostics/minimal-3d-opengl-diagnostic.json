@@ -1,0 +1,48 @@
+{
+  "label": "minimal-3d-opengl-diagnostic",
+  "command": [
+    "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/MinimalGraphics.app/Contents/MacOS/SIGHTBREAK Native Graphics Control",
+    "--verbose",
+    "--rendering-driver",
+    "opengl3",
+    "--audio-driver",
+    "Dummy",
+    "--log-file",
+    "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/minimal-3d-opengl-diagnostic.godot.log",
+    "--",
+    "--probe-3d",
+    "--capture=/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/minimal-3d-opengl-diagnostic.png"
+  ],
+  "budget_seconds": 120,
+  "native_exit_code": 0,
+  "timed_out": false,
+  "surviving_owned_group": [],
+  "pid": 13984,
+  "elapsed_before_cleanup": 11.93099649599992,
+  "owned_group_after_native_exit": [],
+  "exit_code_after_cleanup": 0,
+  "elapsed_total": 12.101163036000003,
+  "process_states": [],
+  "samples": [],
+  "capture": {
+    "valid_png": true,
+    "width": 1280,
+    "height": 720,
+    "sha256": "abab76c84c40c859c9264c2bc7b109250b9c994fc229e40e7300aac6e7dd43d8"
+  },
+  "marker_observed": true,
+  "clean_log": true,
+  "renderer_lines": [
+    "OpenGL debugging not supported!",
+    "OpenGL API 4.1 APPLE-21.1.1 - Compatibility - Using Device: Apple Inc. - Apple Software Renderer"
+  ],
+  "phase_lines": [
+    "MINIMAL_DIAG_INIT msec=4690",
+    "MINIMAL_DIAG_READY msec=4807",
+    "MINIMAL_DIAG_FIRST_PROCESS msec=4827",
+    "MINIMAL_DIAG_BEFORE_DRAW msec=10803",
+    "MINIMAL_DIAG_AFTER_DRAW msec=10994",
+    "MINIMAL_DIAG_EXIT capture_error=0 msec=11060"
+  ],
+  "passed": true
+}

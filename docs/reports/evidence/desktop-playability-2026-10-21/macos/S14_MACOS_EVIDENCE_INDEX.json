@@ -1,0 +1,478 @@
+{
+  "scope": "Read-only independent final S14 native Mac receipts/captures; no engine or game executed by reviewer",
+  "source_commit": "d6784ab2d81dae204b6a699f0177f7e9d70bec4e",
+  "run": 39678945538,
+  "hosts": [
+    {
+      "arch": "arm",
+      "source": {
+        "source_dirty": false,
+        "source_validation_sha256": "fa8c8697056ca74c9b7347b1622ebd881fa727306147d5c42ef15564afe9d86d",
+        "source_commit": "d6784ab2d81dae204b6a699f0177f7e9d70bec4e",
+        "source_game_tree": "45b6c6ea9d3244700e324e90d6df4778ee28d18e",
+        "source_content_sha256": "0c471fb5c52826aa0391db7d4514429d08dc683f53d96e89f9176557d8a6f7ed",
+        "source_game_dirty": false
+      },
+      "status": "PASS startup controls only",
+      "binaries": [
+        {
+          "label": "minimal",
+          "sha256": "9b940cd82b1832ff5a45fe0e2ecdee5337f9b2647d6deab6b0d9c4eab54818a0",
+          "architectures": "x86_64 arm64",
+          "architectures_exit": 0,
+          "signature_exit": 0
+        },
+        {
+          "label": "candidate",
+          "sha256": "771a7baeb0d4eb78966954383023f9b0400f88e3965d6a05c8df2b70b5418187",
+          "architectures": "x86_64 arm64",
+          "architectures_exit": 0,
+          "signature_exit": 0
+        },
+        {
+          "label": "baseline",
+          "sha256": "a1b6d4102a3a87348e4e8d94a755cd935698a72e2867ef07889ae41f3e7af328",
+          "architectures": "x86_64 arm64",
+          "architectures_exit": 0,
+          "signature_exit": 0
+        }
+      ],
+      "trials": [
+        {
+          "label": "editor-minimal-2d-default",
+          "native_exit_code": 0,
+          "timed_out": false,
+          "exit_code_after_cleanup": 0,
+          "surviving_owned_group": [],
+          "passed": true,
+          "capture": {
+            "valid_png": true,
+            "width": 1024,
+            "height": 656,
+            "sha256": "7b4d87f94cd14522d33ba68ca32fb9b7ff361b559b5d34c4a9e78edba14d1ea1"
+          },
+          "sample_helpers": []
+        },
+        {
+          "label": "editor-minimal-3d-default",
+          "native_exit_code": 0,
+          "timed_out": false,
+          "exit_code_after_cleanup": 0,
+          "surviving_owned_group": [],
+          "passed": true,
+          "capture": {
+            "valid_png": true,
+            "width": 1024,
+            "height": 656,
+            "sha256": "88732a66cf27bd86f1c387655c45bee8229539fdc0ac98c1f1a0a99468e0ef63"
+          },
+          "sample_helpers": []
+        },
+        {
+          "label": "export-minimal-3d-default",
+          "native_exit_code": 0,
+          "timed_out": false,
+          "exit_code_after_cleanup": 0,
+          "surviving_owned_group": [],
+          "passed": true,
+          "capture": {
+            "valid_png": true,
+            "width": 1024,
+            "height": 656,
+            "sha256": "88732a66cf27bd86f1c387655c45bee8229539fdc0ac98c1f1a0a99468e0ef63"
+          },
+          "sample_helpers": []
+        },
+        {
+          "label": "frozen-game-default",
+          "native_exit_code": 0,
+          "timed_out": false,
+          "exit_code_after_cleanup": 0,
+          "surviving_owned_group": [],
+          "passed": true,
+          "capture": {
+            "valid_png": true,
+            "width": 1004,
+            "height": 564,
+            "sha256": "46cd8bb35de6be01f54861b3e9bc1cb293f269e88f052c5de09f5cda84026488"
+          },
+          "sample_helpers": []
+        },
+        {
+          "label": "candidate-game-default",
+          "native_exit_code": 0,
+          "timed_out": false,
+          "exit_code_after_cleanup": 0,
+          "surviving_owned_group": [],
+          "passed": true,
+          "capture": {
+            "valid_png": true,
+            "width": 1004,
+            "height": 564,
+            "sha256": "0584b5504a702204906cb3a7331884fe6d939b9fd2ca906b54bc2e1fccd7d2d1"
+          },
+          "sample_helpers": []
+        }
+      ],
+      "regressions": [
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/actor_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        },
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/match_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        },
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/state_privacy_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        },
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/movement_prediction_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        },
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/peer_lifecycle_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        },
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/input_mode_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        },
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/offline_diagnostics_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        },
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/hud_objective_hint_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        }
+      ]
+    },
+    {
+      "arch": "intel",
+      "source": {
+        "source_dirty": false,
+        "source_validation_sha256": "fa8c8697056ca74c9b7347b1622ebd881fa727306147d5c42ef15564afe9d86d",
+        "source_commit": "d6784ab2d81dae204b6a699f0177f7e9d70bec4e",
+        "source_game_tree": "45b6c6ea9d3244700e324e90d6df4778ee28d18e",
+        "source_content_sha256": "0c471fb5c52826aa0391db7d4514429d08dc683f53d96e89f9176557d8a6f7ed",
+        "source_game_dirty": false
+      },
+      "status": "FAIL or INCOMPLETE; retain original default gate",
+      "binaries": [
+        {
+          "label": "minimal",
+          "sha256": "e55f5fcd28c4a5ad4ce641cb3d84805af279af1b86dfdd171bbb0a47682aa3e1",
+          "architectures": "x86_64 arm64",
+          "architectures_exit": 0,
+          "signature_exit": 0
+        },
+        {
+          "label": "candidate",
+          "sha256": "afd43d2eaa8faa17893fdfd206a0405362e753e9d49e79893948aa4521382e66",
+          "architectures": "x86_64 arm64",
+          "architectures_exit": 0,
+          "signature_exit": 0
+        },
+        {
+          "label": "baseline",
+          "sha256": "a1b6d4102a3a87348e4e8d94a755cd935698a72e2867ef07889ae41f3e7af328",
+          "architectures": "x86_64 arm64",
+          "architectures_exit": 0,
+          "signature_exit": 0
+        }
+      ],
+      "trials": [
+        {
+          "label": "editor-minimal-2d-default",
+          "native_exit_code": 0,
+          "timed_out": false,
+          "exit_code_after_cleanup": 0,
+          "surviving_owned_group": [],
+          "passed": true,
+          "capture": {
+            "valid_png": true,
+            "width": 1280,
+            "height": 720,
+            "sha256": "b2717a5743e1e4513a4be34df8a8e23e3f46fd3c90f3c0d1251ca17878f3a96b"
+          },
+          "sample_helpers": []
+        },
+        {
+          "label": "editor-minimal-3d-default",
+          "native_exit_code": 0,
+          "timed_out": false,
+          "exit_code_after_cleanup": 0,
+          "surviving_owned_group": [],
+          "passed": true,
+          "capture": {
+            "valid_png": true,
+            "width": 1280,
+            "height": 720,
+            "sha256": "abab76c84c40c859c9264c2bc7b109250b9c994fc229e40e7300aac6e7dd43d8"
+          },
+          "sample_helpers": [
+            {
+              "exit_code": -15,
+              "timed_out": true,
+              "sample_path": "editor-minimal-3d-default-15s.sample.txt"
+            }
+          ]
+        },
+        {
+          "label": "export-minimal-3d-default",
+          "native_exit_code": 0,
+          "timed_out": false,
+          "exit_code_after_cleanup": 0,
+          "surviving_owned_group": [],
+          "passed": true,
+          "capture": {
+            "valid_png": true,
+            "width": 1280,
+            "height": 720,
+            "sha256": "abab76c84c40c859c9264c2bc7b109250b9c994fc229e40e7300aac6e7dd43d8"
+          },
+          "sample_helpers": []
+        },
+        {
+          "label": "frozen-game-default",
+          "native_exit_code": null,
+          "timed_out": true,
+          "exit_code_after_cleanup": -15,
+          "surviving_owned_group": [],
+          "passed": false,
+          "sample_helpers": [
+            {
+              "exit_code": -15,
+              "timed_out": true,
+              "sample_path": "frozen-game-default-15s.sample.txt"
+            },
+            {
+              "exit_code": -15,
+              "timed_out": true,
+              "sample_path": "frozen-game-default-90s.sample.txt"
+            }
+          ]
+        },
+        {
+          "label": "candidate-game-default",
+          "native_exit_code": null,
+          "timed_out": true,
+          "exit_code_after_cleanup": -15,
+          "surviving_owned_group": [],
+          "passed": false,
+          "sample_helpers": [
+            {
+              "exit_code": 0,
+              "timed_out": false,
+              "sample_path": "candidate-game-default-15s.sample.txt"
+            },
+            {
+              "exit_code": 0,
+              "timed_out": false,
+              "sample_path": "candidate-game-default-90s.sample.txt"
+            }
+          ]
+        },
+        {
+          "label": "minimal-3d-opengl-diagnostic",
+          "native_exit_code": 0,
+          "timed_out": false,
+          "exit_code_after_cleanup": 0,
+          "surviving_owned_group": [],
+          "passed": true,
+          "capture": {
+            "valid_png": true,
+            "width": 1280,
+            "height": 720,
+            "sha256": "abab76c84c40c859c9264c2bc7b109250b9c994fc229e40e7300aac6e7dd43d8"
+          },
+          "sample_helpers": []
+        },
+        {
+          "label": "candidate-opengl-diagnostic",
+          "native_exit_code": null,
+          "timed_out": true,
+          "exit_code_after_cleanup": -15,
+          "surviving_owned_group": [],
+          "passed": false,
+          "sample_helpers": [
+            {
+              "exit_code": 0,
+              "timed_out": false,
+              "sample_path": "candidate-opengl-diagnostic-15s.sample.txt"
+            },
+            {
+              "exit_code": 0,
+              "timed_out": false,
+              "sample_path": "candidate-opengl-diagnostic-90s.sample.txt"
+            }
+          ]
+        }
+      ],
+      "regressions": [
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/actor_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        },
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/match_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        },
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/state_privacy_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        },
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/movement_prediction_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        },
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/peer_lifecycle_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        },
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/input_mode_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        },
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/offline_diagnostics_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        },
+        {
+          "command": [
+            "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+            "--path",
+            "/Users/runner/work/sightbreak/sightbreak/game",
+            "--headless",
+            "--script",
+            "res://tests/hud_objective_hint_test.gd"
+          ],
+          "exit": 0,
+          "clean_log": true
+        }
+      ]
+    }
+  ]
+}

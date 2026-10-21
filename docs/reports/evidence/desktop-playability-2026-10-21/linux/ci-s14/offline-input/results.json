@@ -1,0 +1,5807 @@
+{
+  "passed": false,
+  "target": "linux",
+  "host": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "controller_command": [
+    "/opt/hostedtoolcache/Python/3.12.15/x64/bin/python",
+    "scripts/verify_offline_export.py",
+    "--target",
+    "linux",
+    "--display",
+    ":102",
+    "--timeout",
+    "300",
+    "--output",
+    "builds/desktop-playability/offline-input"
+  ],
+  "captures": [
+    {
+      "name": "01-menu",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "name": "02-offline-spawn",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "name": "03-requisition",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "name": "04-move-aim",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "name": "05-after-fire",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "name": "06-after-reload",
+      "dimensions": [
+        1280,
+        720
+      ]
+    },
+    {
+      "name": "06b-scoreboard",
+      "dimensions": [
+        1280,
+        720
+      ]
+    }
+  ],
+  "source": {
+    "source_dirty": false,
+    "source_validation_sha256": "fa8c8697056ca74c9b7347b1622ebd881fa727306147d5c42ef15564afe9d86d",
+    "source_commit": "d6784ab2d81dae204b6a699f0177f7e9d70bec4e",
+    "source_game_tree": "45b6c6ea9d3244700e324e90d6df4778ee28d18e",
+    "source_content_sha256": "0c471fb5c52826aa0391db7d4514429d08dc683f53d96e89f9176557d8a6f7ed",
+    "source_game_dirty": false
+  },
+  "artifact_source": {
+    "source_dirty": false,
+    "source_validation_sha256": "fa8c8697056ca74c9b7347b1622ebd881fa727306147d5c42ef15564afe9d86d",
+    "source_commit": "d6784ab2d81dae204b6a699f0177f7e9d70bec4e",
+    "source_game_tree": "45b6c6ea9d3244700e324e90d6df4778ee28d18e",
+    "source_content_sha256": "0c471fb5c52826aa0391db7d4514429d08dc683f53d96e89f9176557d8a6f7ed",
+    "source_game_dirty": false,
+    "target": "linux",
+    "version": "0.3.3-dev",
+    "build_number": 6,
+    "export_completed": true,
+    "built_at_utc": "2026-10-21T21:28:04.314447+00:00",
+    "artifact": {
+      "path": "linux/sightbreak.x86_64",
+      "bytes": 84221848,
+      "sha256": "664c1395b95ed60b8806b0f601fe0c57a5bd5df249639a1b545e938800f25249",
+      "mode": 493,
+      "archive_mode": 493
+    },
+    "payload": [
+      {
+        "path": "linux/GODOT-COPYRIGHT.txt",
+        "bytes": 100108,
+        "sha256": "cb1980c88089573bcacd7221d777c689bb8bbd778799f24c27fca0fe5f774d6d",
+        "mode": 420,
+        "archive_mode": 420
+      },
+      {
+        "path": "linux/GODOT-LICENSE.txt",
+        "bytes": 1149,
+        "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+        "mode": 420,
+        "archive_mode": 420
+      },
+      {
+        "path": "linux/sightbreak.sh",
+        "bytes": 125,
+        "sha256": "a0db3f835983003639ef11b7738df7c53ec7ff16eabfb826b6f4b1fce507f411",
+        "mode": 493,
+        "archive_mode": 493
+      },
+      {
+        "path": "linux/sightbreak.x86_64",
+        "bytes": 84221848,
+        "sha256": "664c1395b95ed60b8806b0f601fe0c57a5bd5df249639a1b545e938800f25249",
+        "mode": 493,
+        "archive_mode": 493
+      }
+    ]
+  },
+  "executable_sha256": "664c1395b95ed60b8806b0f601fe0c57a5bd5df249639a1b545e938800f25249",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "profile_observation_path": "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/offline-input/state/data/godot/app_userdata/SIGHTBREAK/offline_training.json",
+  "last_offline_observation": {
+    "actors": [
+      {
+        "alive": true,
+        "ammo": 15,
+        "assists": 0,
+        "credits": 800,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 100.0,
+        "id": 1,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": 0.0280000008642673,
+        "position": [
+          -4.89777755737305,
+          0.000156247988343239,
+          -21.0
+        ],
+        "reload": 0.0,
+        "reserve": 59,
+        "smokes": 1,
+        "team": 0,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": 3.0015926361084
+      },
+      {
+        "alive": false,
+        "ammo": 6,
+        "assists": 0,
+        "credits": 800,
+        "deaths": 1,
+        "grenades": 1,
+        "health": 0.0,
+        "id": 2,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": -0.0100147435441613,
+        "position": [
+          -0.86120992898941,
+          0.000156247988343239,
+          -18.2169017791748
+        ],
+        "reload": 0.0,
+        "reserve": 60,
+        "smokes": 1,
+        "team": 0,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": 3.1010537147522
+      },
+      {
+        "alive": true,
+        "ammo": 7,
+        "assists": 0,
+        "credits": 800,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 65.3936473083496,
+        "id": 3,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": -0.0096503896638751,
+        "position": [
+          0.506821811199188,
+          0.000156247988343239,
+          -17.8326187133789
+        ],
+        "reload": 0.0,
+        "reserve": 60,
+        "smokes": 1,
+        "team": 0,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": -3.07514643669128
+      },
+      {
+        "alive": true,
+        "ammo": 5,
+        "assists": 0,
+        "credits": 1100,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 49.4111240768433,
+        "id": 4,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 1,
+        "pitch": -0.00935483817011118,
+        "position": [
+          5.11051177978516,
+          0.000156247988343239,
+          -19.2103900909424
+        ],
+        "reload": 0.0,
+        "reserve": 60,
+        "smokes": 1,
+        "team": 0,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": 3.11694979667664
+      },
+      {
+        "alive": true,
+        "ammo": 15,
+        "assists": 0,
+        "credits": 800,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 100.0,
+        "id": 5,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": 0.0,
+        "position": [
+          11.2989349365234,
+          0.000156247988343239,
+          -6.24775457382202
+        ],
+        "reload": 0.0,
+        "reserve": 60,
+        "smokes": 1,
+        "team": 0,
+        "velocity": [
+          -0.28110933303833,
+          0.0,
+          5.04524803161621
+        ],
+        "weapon": "sidearm",
+        "yaw": 2.99493360519409
+      },
+      {
+        "alive": true,
+        "ammo": 8,
+        "assists": 0,
+        "credits": 800,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 100.0,
+        "id": 6,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": -0.00925998017191887,
+        "position": [
+          -5.75705671310425,
+          0.000156247988343239,
+          16.9894981384277
+        ],
+        "reload": 0.0,
+        "reserve": 60,
+        "smokes": 1,
+        "team": 1,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": -0.279477894306183
+      },
+      {
+        "alive": true,
+        "ammo": 11,
+        "assists": 0,
+        "credits": 800,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 100.0,
+        "id": 7,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": -0.0097688240930438,
+        "position": [
+          -0.674566805362701,
+          0.000936659867875278,
+          16.5125045776367
+        ],
+        "reload": 0.0,
+        "reserve": 60,
+        "smokes": 1,
+        "team": 1,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": 0.0937084332108498
+      },
+      {
+        "alive": true,
+        "ammo": 6,
+        "assists": 1,
+        "credits": 800,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 65.6887301254272,
+        "id": 8,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": -0.00974217895418406,
+        "position": [
+          -1.73172152042389,
+          0.000936659867875278,
+          17.9629440307617
+        ],
+        "reload": 0.0,
+        "reserve": 60,
+        "smokes": 1,
+        "team": 1,
+        "velocity": [
+          0.0,
+          0.0,
+          -2.33333325386047
+        ],
+        "weapon": "sidearm",
+        "yaw": -0.0464971289038658
+      },
+      {
+        "alive": true,
+        "ammo": 6,
+        "assists": 0,
+        "credits": 800,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 65.3778053665161,
+        "id": 9,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": -0.0101705808192492,
+        "position": [
+          2.97146940231323,
+          0.000941985112149268,
+          18.2687740325928
+        ],
+        "reload": 0.0,
+        "reserve": 60,
+        "smokes": 1,
+        "team": 1,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": 0.0580087564885616
+      },
+      {
+        "alive": false,
+        "ammo": 6,
+        "assists": 0,
+        "credits": 1100,
+        "deaths": 1,
+        "grenades": 1,
+        "health": 0.0,
+        "id": 10,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 1,
+        "pitch": -0.00986263249069452,
+        "position": [
+          4.21500396728516,
+          0.000941985112149268,
+          18.1075878143311
+        ],
+        "reload": 0.0,
+        "reserve": 60,
+        "smokes": 1,
+        "team": 1,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": -0.0189344827085733
+      }
+    ],
+    "attack_score": 0,
+    "completion_calls": 0,
+    "defend_score": 0,
+    "drawn_frames": 152,
+    "elapsed": 18.4500000000002,
+    "events_dropped": 0,
+    "interaction_progress": 0.0,
+    "local_actor": {
+      "alive": true,
+      "ammo": 15,
+      "assists": 0,
+      "credits": 800,
+      "deaths": 0,
+      "grenades": 1,
+      "health": 100.0,
+      "id": 1,
+      "inventory": [
+        "sidearm"
+      ],
+      "kills": 0,
+      "pitch": 0.0280000008642673,
+      "position": [
+        -4.89777755737305,
+        0.000156247988343239,
+        -21.0
+      ],
+      "reload": 0.0,
+      "reserve": 59,
+      "smokes": 1,
+      "team": 0,
+      "velocity": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "weapon": "sidearm",
+      "yaw": 3.0015926361084
+    },
+    "local_contribution": 0,
+    "local_input": {
+      "fire": false,
+      "interact": false,
+      "move": [
+        0.0,
+        0.0
+      ],
+      "reload": false
+    },
+    "objective_carrier": 1,
+    "objective_position": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "objective_state": "carried",
+    "objective_timer": 0.0,
+    "phase": "live",
+    "round_number": 1,
+    "scenario": "standard",
+    "schema": 1,
+    "scope": "debug_offline_read_only_observation",
+    "simulation_tick": 1107,
+    "time_left": 96.5500000000002,
+    "time_scale": 1.0,
+    "ui": {
+      "capabilities": {
+        "mobile": false,
+        "touchscreen": false
+      },
+      "focused": true,
+      "mouse_mode": 2,
+      "paused": false,
+      "scoreboard_visible": false,
+      "screen": "game",
+      "status_text": "Cipher  \u203a  Echo",
+      "touch_controls": false,
+      "window_mode": 0,
+      "window_size": [
+        1280,
+        720
+      ]
+    },
+    "wall_msec": 58760
+  },
+  "hud_analysis_pauses": [
+    {
+      "capture": "05-after-fire",
+      "before": {
+        "actors": [
+          {
+            "alive": true,
+            "ammo": 14,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0280000008642673,
+            "position": [
+              -4.89777755737305,
+              0.000156247988343239,
+              -21.0
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.0015926361084
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 2,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00949381571263075,
+            "position": [
+              -1.45498466491699,
+              0.000156247988343239,
+              -18.3834533691406
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.13004779815674
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 3,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00948988366872072,
+            "position": [
+              0.523505866527557,
+              0.000156247988343239,
+              -18.3303985595703
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.06029206911196
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 4,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00929445028305054,
+            "position": [
+              5.0189151763916,
+              0.000156247988343239,
+              -19.2461757659912
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              2.49916124343872,
+              0.0,
+              0.76952987909317
+            ],
+            "weapon": "sidearm",
+            "yaw": -2.71402359008789
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 5,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              7.08933973312378,
+              0.000156247988343239,
+              -18.8449058532715
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              4.01556873321533,
+              0.0,
+              3.1440737247467
+            ],
+            "weapon": "sidearm",
+            "yaw": -2.23506712913513
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 6,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              -6.25715255737305,
+              0.000156247988343239,
+              18.4193897247314
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.948927164077759,
+              0.0,
+              -1.88621377944946
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.283938139677048
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 7,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00935468077659607,
+            "position": [
+              -0.00286201760172844,
+              0.000936659867875278,
+              19.0461750030518
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              2.53666019439697,
+              0.0,
+              -0.706408083438873
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.441965252161026
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 8,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00953624211251736,
+            "position": [
+              -1.67329180240631,
+              0.000936659867875278,
+              18.3829460144043
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.0179168693721294
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 9,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00949730165302753,
+            "position": [
+              2.97146940231323,
+              0.000941985112149268,
+              18.2687740325928
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.112147010862827
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 10,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00949258171021938,
+            "position": [
+              3.58934783935547,
+              0.000941985112149268,
+              18.2058849334717
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.124716050922871
+          }
+        ],
+        "attack_score": 0,
+        "completion_calls": 0,
+        "defend_score": 0,
+        "drawn_frames": 121,
+        "elapsed": 15.8000000000004,
+        "events_dropped": 0,
+        "interaction_progress": 0.0,
+        "local_actor": {
+          "alive": true,
+          "ammo": 14,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0280000008642673,
+          "position": [
+            -4.89777755737305,
+            0.000156247988343239,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.0015926361084
+        },
+        "local_contribution": 0,
+        "local_input": {
+          "fire": false,
+          "interact": false,
+          "move": [
+            0.0,
+            0.0
+          ],
+          "reload": false
+        },
+        "objective_carrier": 1,
+        "objective_position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "objective_state": "carried",
+        "objective_timer": 0.0,
+        "phase": "live",
+        "round_number": 1,
+        "scenario": "standard",
+        "schema": 1,
+        "scope": "debug_offline_read_only_observation",
+        "simulation_tick": 948,
+        "time_left": 99.2,
+        "time_scale": 1.0,
+        "ui": {
+          "capabilities": {
+            "mobile": false,
+            "touchscreen": false
+          },
+          "focused": true,
+          "mouse_mode": 2,
+          "paused": false,
+          "scoreboard_visible": false,
+          "screen": "game",
+          "status_text": "Round live. Secure Relay Yard.",
+          "touch_controls": false,
+          "window_mode": 0,
+          "window_size": [
+            1280,
+            720
+          ]
+        },
+        "wall_msec": 47314
+      },
+      "scope": "ordinary native pause for saved-pixel OCR",
+      "paused": {
+        "actors": [
+          {
+            "alive": true,
+            "ammo": 14,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0280000008642673,
+            "position": [
+              -4.89777755737305,
+              0.000156247988343239,
+              -21.0
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.0015926361084
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 2,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00949381571263075,
+            "position": [
+              -1.45498466491699,
+              0.000156247988343239,
+              -18.3834533691406
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.13004779815674
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 3,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00948988366872072,
+            "position": [
+              0.523505866527557,
+              0.000156247988343239,
+              -18.3303985595703
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.06029206911196
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 4,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00929445028305054,
+            "position": [
+              5.10774803161621,
+              0.000156247988343239,
+              -19.2113246917725
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.632494509220123,
+              0.0,
+              0.522738218307495
+            ],
+            "weapon": "sidearm",
+            "yaw": -2.71402359008789
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 5,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              7.35704374313354,
+              0.000156247988343239,
+              -18.6353034973145
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              4.01556873321533,
+              0.0,
+              3.1440737247467
+            ],
+            "weapon": "sidearm",
+            "yaw": -2.23506712913513
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 6,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              -6.16212368011475,
+              0.000156247988343239,
+              18.2158641815186
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              1.42870509624481,
+              0.0,
+              -3.75288057327271
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.283938139677048
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 7,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00935468077659607,
+            "position": [
+              0.088470883667469,
+              0.000936659867875278,
+              19.0041370391846
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.669993460178375,
+              0.0,
+              -0.630610525608063
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.441965252161026
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 8,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00953624211251736,
+            "position": [
+              -1.67329180240631,
+              0.000936659867875278,
+              18.3829460144043
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.0179168693721294
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 9,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00949730165302753,
+            "position": [
+              2.97146940231323,
+              0.000941985112149268,
+              18.2687740325928
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.112147010862827
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 10,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00949258171021938,
+            "position": [
+              3.58934783935547,
+              0.000941985112149268,
+              18.2058849334717
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.124716050922871
+          }
+        ],
+        "attack_score": 0,
+        "completion_calls": 0,
+        "defend_score": 0,
+        "drawn_frames": 123,
+        "elapsed": 15.866666666667,
+        "events_dropped": 0,
+        "interaction_progress": 0.0,
+        "local_actor": {
+          "alive": true,
+          "ammo": 14,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0280000008642673,
+          "position": [
+            -4.89777755737305,
+            0.000156247988343239,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.0015926361084
+        },
+        "local_contribution": 0,
+        "local_input": {
+          "fire": false,
+          "interact": false,
+          "move": [
+            0.0,
+            0.0
+          ],
+          "reload": false
+        },
+        "objective_carrier": 1,
+        "objective_position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "objective_state": "carried",
+        "objective_timer": 0.0,
+        "phase": "live",
+        "round_number": 1,
+        "scenario": "standard",
+        "schema": 1,
+        "scope": "debug_offline_read_only_observation",
+        "simulation_tick": 952,
+        "time_left": 99.1333333333334,
+        "time_scale": 1.0,
+        "ui": {
+          "capabilities": {
+            "mobile": false,
+            "touchscreen": false
+          },
+          "focused": true,
+          "mouse_mode": 0,
+          "paused": true,
+          "scoreboard_visible": false,
+          "screen": "game",
+          "status_text": "Round live. Secure Relay Yard.",
+          "touch_controls": false,
+          "window_mode": 0,
+          "window_size": [
+            1280,
+            720
+          ]
+        },
+        "wall_msec": 47960
+      },
+      "after_analysis": {
+        "actors": [
+          {
+            "alive": true,
+            "ammo": 14,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0280000008642673,
+            "position": [
+              -4.89777755737305,
+              0.000156247988343239,
+              -21.0
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.0015926361084
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 2,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00949381571263075,
+            "position": [
+              -1.45498466491699,
+              0.000156247988343239,
+              -18.3834533691406
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.13004779815674
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 3,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00948988366872072,
+            "position": [
+              0.523505866527557,
+              0.000156247988343239,
+              -18.3303985595703
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.06029206911196
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 4,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00929445028305054,
+            "position": [
+              5.10774803161621,
+              0.000156247988343239,
+              -19.2113246917725
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.632494509220123,
+              0.0,
+              0.522738218307495
+            ],
+            "weapon": "sidearm",
+            "yaw": -2.71402359008789
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 5,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              7.35704374313354,
+              0.000156247988343239,
+              -18.6353034973145
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              4.01556873321533,
+              0.0,
+              3.1440737247467
+            ],
+            "weapon": "sidearm",
+            "yaw": -2.23506712913513
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 6,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              -6.16212368011475,
+              0.000156247988343239,
+              18.2158641815186
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              1.42870509624481,
+              0.0,
+              -3.75288057327271
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.283938139677048
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 7,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00935468077659607,
+            "position": [
+              0.088470883667469,
+              0.000936659867875278,
+              19.0041370391846
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.669993460178375,
+              0.0,
+              -0.630610525608063
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.441965252161026
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 8,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00953624211251736,
+            "position": [
+              -1.67329180240631,
+              0.000936659867875278,
+              18.3829460144043
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.0179168693721294
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 9,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00949730165302753,
+            "position": [
+              2.97146940231323,
+              0.000941985112149268,
+              18.2687740325928
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.112147010862827
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 10,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00949258171021938,
+            "position": [
+              3.58934783935547,
+              0.000941985112149268,
+              18.2058849334717
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.124716050922871
+          }
+        ],
+        "attack_score": 0,
+        "completion_calls": 0,
+        "defend_score": 0,
+        "drawn_frames": 129,
+        "elapsed": 15.866666666667,
+        "events_dropped": 0,
+        "interaction_progress": 0.0,
+        "local_actor": {
+          "alive": true,
+          "ammo": 14,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0280000008642673,
+          "position": [
+            -4.89777755737305,
+            0.000156247988343239,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.0015926361084
+        },
+        "local_contribution": 0,
+        "local_input": {
+          "fire": false,
+          "interact": false,
+          "move": [
+            0.0,
+            0.0
+          ],
+          "reload": false
+        },
+        "objective_carrier": 1,
+        "objective_position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "objective_state": "carried",
+        "objective_timer": 0.0,
+        "phase": "live",
+        "round_number": 1,
+        "scenario": "standard",
+        "schema": 1,
+        "scope": "debug_offline_read_only_observation",
+        "simulation_tick": 952,
+        "time_left": 99.1333333333334,
+        "time_scale": 1.0,
+        "ui": {
+          "capabilities": {
+            "mobile": false,
+            "touchscreen": false
+          },
+          "focused": true,
+          "mouse_mode": 0,
+          "paused": true,
+          "scoreboard_visible": false,
+          "screen": "game",
+          "status_text": "Round live. Secure Relay Yard.",
+          "touch_controls": false,
+          "window_mode": 0,
+          "window_size": [
+            1280,
+            720
+          ]
+        },
+        "wall_msec": 51457
+      },
+      "resumed": {
+        "actors": [
+          {
+            "alive": true,
+            "ammo": 14,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0280000008642673,
+            "position": [
+              -4.89777755737305,
+              0.000156247988343239,
+              -21.0
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.0015926361084
+          },
+          {
+            "alive": true,
+            "ammo": 14,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 82.8907223892212,
+            "id": 2,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00997465290129185,
+            "position": [
+              -1.45498466491699,
+              0.000156247988343239,
+              -18.3834533691406
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.12870699564089
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 3,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              0.519334852695465,
+              0.000156247988343239,
+              -18.3070640563965
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              -0.125129789113998,
+              0.0,
+              0.933333337306976
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.11705493927002
+          },
+          {
+            "alive": true,
+            "ammo": 14,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 4,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00932524539530277,
+            "position": [
+              5.11051177978516,
+              0.000156247988343239,
+              -19.2103900909424
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.10735607147217
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 5,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              7.85709667205811,
+              0.000156247988343239,
+              -17.9497985839844
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              2.91428279876709,
+              0.0,
+              4.18532514572144
+            ],
+            "weapon": "sidearm",
+            "yaw": -2.53334760665894
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 6,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              -6.11402225494385,
+              0.000156247988343239,
+              17.9714946746826
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.933333337306976,
+              0.0,
+              -0.952880442142487
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.284394204616547
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 7,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              0.0685263201594353,
+              0.000936659867875278,
+              18.9780693054199
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              -0.933333337306976,
+              0.0,
+              -0.933333337306976
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.233472913503647
+          },
+          {
+            "alive": true,
+            "ammo": 14,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 8,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0100170969963074,
+            "position": [
+              -1.67329180240631,
+              0.000936659867875278,
+              18.3829460144043
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.0155553091317415
+          },
+          {
+            "alive": true,
+            "ammo": 14,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 9,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00950132589787245,
+            "position": [
+              2.97146940231323,
+              0.000941985112149268,
+              18.2687740325928
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.10740402340889
+          },
+          {
+            "alive": true,
+            "ammo": 14,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 83.0534656143188,
+            "id": 10,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00949698686599731,
+            "position": [
+              3.58934783935547,
+              0.000941985112149268,
+              18.2058849334717
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.139714270830154
+          }
+        ],
+        "attack_score": 0,
+        "completion_calls": 0,
+        "defend_score": 0,
+        "drawn_frames": 131,
+        "elapsed": 16.0333333333337,
+        "events_dropped": 0,
+        "interaction_progress": 0.0,
+        "local_actor": {
+          "alive": true,
+          "ammo": 14,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0280000008642673,
+          "position": [
+            -4.89777755737305,
+            0.000156247988343239,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.0015926361084
+        },
+        "local_contribution": 0,
+        "local_input": {
+          "fire": false,
+          "interact": false,
+          "move": [
+            0.0,
+            0.0
+          ],
+          "reload": false
+        },
+        "objective_carrier": 1,
+        "objective_position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "objective_state": "carried",
+        "objective_timer": 0.0,
+        "phase": "live",
+        "round_number": 1,
+        "scenario": "standard",
+        "schema": 1,
+        "scope": "debug_offline_read_only_observation",
+        "simulation_tick": 962,
+        "time_left": 98.9666666666667,
+        "time_scale": 1.0,
+        "ui": {
+          "capabilities": {
+            "mobile": false,
+            "touchscreen": false
+          },
+          "focused": true,
+          "mouse_mode": 2,
+          "paused": false,
+          "scoreboard_visible": false,
+          "screen": "game",
+          "status_text": "Round live. Secure Relay Yard.",
+          "touch_controls": false,
+          "window_mode": 0,
+          "window_size": [
+            1280,
+            720
+          ]
+        },
+        "wall_msec": 52139
+      }
+    },
+    {
+      "capture": "06-after-reload",
+      "before": {
+        "actors": [
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0280000008642673,
+            "position": [
+              -4.89777755737305,
+              0.000156247988343239,
+              -21.0
+            ],
+            "reload": 0.0,
+            "reserve": 59,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.0015926361084
+          },
+          {
+            "alive": false,
+            "ammo": 6,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 1,
+            "grenades": 1,
+            "health": 0.0,
+            "id": 2,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0100147435441613,
+            "position": [
+              -0.86120992898941,
+              0.000156247988343239,
+              -18.2169017791748
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.1010537147522
+          },
+          {
+            "alive": true,
+            "ammo": 8,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 65.3936473083496,
+            "id": 3,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0096503896638751,
+            "position": [
+              0.506821811199188,
+              0.000156247988343239,
+              -17.8326187133789
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.0517270565033
+          },
+          {
+            "alive": true,
+            "ammo": 6,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 49.4111240768433,
+            "id": 4,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00933456048369408,
+            "position": [
+              5.11051177978516,
+              0.000156247988343239,
+              -19.2103900909424
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.12123656272888
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 5,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              11.0658798217773,
+              0.000156247988343239,
+              -7.49516630172729
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              1.11889064311981,
+              0.0,
+              4.97574663162231
+            ],
+            "weapon": "sidearm",
+            "yaw": -2.92040300369263
+          },
+          {
+            "alive": true,
+            "ammo": 9,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 6,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00925998017191887,
+            "position": [
+              -5.75705671310425,
+              0.000156247988343239,
+              16.9894981384277
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.302639424800873
+          },
+          {
+            "alive": true,
+            "ammo": 12,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 7,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0097688240930438,
+            "position": [
+              -0.674566805362701,
+              0.000936659867875278,
+              16.5125045776367
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.107993647456169
+          },
+          {
+            "alive": true,
+            "ammo": 6,
+            "assists": 1,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 65.6887301254272,
+            "id": 8,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0100573664531112,
+            "position": [
+              -1.67329180240631,
+              0.000936659867875278,
+              18.3829460144043
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.00834048818796873
+          },
+          {
+            "alive": true,
+            "ammo": 7,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 82.68680103302,
+            "id": 9,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0101705808192492,
+            "position": [
+              2.97146940231323,
+              0.000941985112149268,
+              18.2687740325928
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.0702197104692459
+          },
+          {
+            "alive": true,
+            "ammo": 6,
+            "assists": 0,
+            "credits": 1100,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 15.260188331604,
+            "id": 10,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 1,
+            "pitch": -0.00955683551728725,
+            "position": [
+              3.99667143821716,
+              0.000941985112149268,
+              18.1639232635498
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              2.49166226387024,
+              0.0,
+              -0.203885406255722
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.118689231574535
+          }
+        ],
+        "attack_score": 0,
+        "completion_calls": 0,
+        "defend_score": 0,
+        "drawn_frames": 147,
+        "elapsed": 18.2000000000002,
+        "events_dropped": 0,
+        "interaction_progress": 0.0,
+        "local_actor": {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0280000008642673,
+          "position": [
+            -4.89777755737305,
+            0.000156247988343239,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 59,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.0015926361084
+        },
+        "local_contribution": 0,
+        "local_input": {
+          "fire": false,
+          "interact": false,
+          "move": [
+            0.0,
+            0.0
+          ],
+          "reload": false
+        },
+        "objective_carrier": 1,
+        "objective_position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "objective_state": "carried",
+        "objective_timer": 0.0,
+        "phase": "live",
+        "round_number": 1,
+        "scenario": "standard",
+        "schema": 1,
+        "scope": "debug_offline_read_only_observation",
+        "simulation_tick": 1092,
+        "time_left": 96.8000000000002,
+        "time_scale": 1.0,
+        "ui": {
+          "capabilities": {
+            "mobile": false,
+            "touchscreen": false
+          },
+          "focused": true,
+          "mouse_mode": 2,
+          "paused": false,
+          "scoreboard_visible": false,
+          "screen": "game",
+          "status_text": "Echo  \u203a  Sable",
+          "touch_controls": false,
+          "window_mode": 0,
+          "window_size": [
+            1280,
+            720
+          ]
+        },
+        "wall_msec": 56910
+      },
+      "scope": "ordinary native pause for saved-pixel OCR",
+      "paused": {
+        "actors": [
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0280000008642673,
+            "position": [
+              -4.89777755737305,
+              0.000156247988343239,
+              -21.0
+            ],
+            "reload": 0.0,
+            "reserve": 59,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.0015926361084
+          },
+          {
+            "alive": false,
+            "ammo": 6,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 1,
+            "grenades": 1,
+            "health": 0.0,
+            "id": 2,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0100147435441613,
+            "position": [
+              -0.86120992898941,
+              0.000156247988343239,
+              -18.2169017791748
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.1010537147522
+          },
+          {
+            "alive": true,
+            "ammo": 8,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 65.3936473083496,
+            "id": 3,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0101271579042077,
+            "position": [
+              0.506821811199188,
+              0.000156247988343239,
+              -17.8326187133789
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.06245827674866
+          },
+          {
+            "alive": true,
+            "ammo": 6,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 49.4111240768433,
+            "id": 4,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00982058886438608,
+            "position": [
+              5.11051177978516,
+              0.000156247988343239,
+              -19.2103900909424
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.10125875473022
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 5,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              11.2896575927734,
+              0.000156247988343239,
+              -6.50001668930054
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              1.11889064311981,
+              0.0,
+              4.97574663162231
+            ],
+            "weapon": "sidearm",
+            "yaw": -2.92040300369263
+          },
+          {
+            "alive": true,
+            "ammo": 9,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 6,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00973674841225147,
+            "position": [
+              -5.75705671310425,
+              0.000156247988343239,
+              16.9894981384277
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.296387493610382
+          },
+          {
+            "alive": true,
+            "ammo": 11,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 7,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0092920558527112,
+            "position": [
+              -0.674566805362701,
+              0.000936659867875278,
+              16.5125045776367
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.0941906422376633
+          },
+          {
+            "alive": true,
+            "ammo": 6,
+            "assists": 1,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 65.6887301254272,
+            "id": 8,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              -1.73172152042389,
+              0.000936659867875278,
+              18.1029453277588
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              -0.438222646713257,
+              0.0,
+              -3.73333334922791
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.0860325023531914
+          },
+          {
+            "alive": true,
+            "ammo": 6,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 82.68680103302,
+            "id": 9,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00969381164759398,
+            "position": [
+              2.97146940231323,
+              0.000941985112149268,
+              18.2687740325928
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.0861304551362991
+          },
+          {
+            "alive": true,
+            "ammo": 6,
+            "assists": 0,
+            "credits": 1100,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 15.260188331604,
+            "id": 10,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 1,
+            "pitch": -0.00986263249069452,
+            "position": [
+              4.21500396728516,
+              0.000941985112149268,
+              18.1075878143311
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              -1.24167156219482,
+              0.0,
+              -0.320537835359573
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.0189344827085733
+          }
+        ],
+        "attack_score": 0,
+        "completion_calls": 0,
+        "defend_score": 0,
+        "drawn_frames": 149,
+        "elapsed": 18.4000000000002,
+        "events_dropped": 0,
+        "interaction_progress": 0.0,
+        "local_actor": {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0280000008642673,
+          "position": [
+            -4.89777755737305,
+            0.000156247988343239,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 59,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.0015926361084
+        },
+        "local_contribution": 0,
+        "local_input": {
+          "fire": false,
+          "interact": false,
+          "move": [
+            0.0,
+            0.0
+          ],
+          "reload": false
+        },
+        "objective_carrier": 1,
+        "objective_position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "objective_state": "carried",
+        "objective_timer": 0.0,
+        "phase": "live",
+        "round_number": 1,
+        "scenario": "standard",
+        "schema": 1,
+        "scope": "debug_offline_read_only_observation",
+        "simulation_tick": 1104,
+        "time_left": 96.6000000000002,
+        "time_scale": 1.0,
+        "ui": {
+          "capabilities": {
+            "mobile": false,
+            "touchscreen": false
+          },
+          "focused": true,
+          "mouse_mode": 0,
+          "paused": true,
+          "scoreboard_visible": false,
+          "screen": "game",
+          "status_text": "Echo  \u203a  Sable",
+          "touch_controls": false,
+          "window_mode": 0,
+          "window_size": [
+            1280,
+            720
+          ]
+        },
+        "wall_msec": 57557
+      },
+      "after_analysis": {
+        "actors": [
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0280000008642673,
+            "position": [
+              -4.89777755737305,
+              0.000156247988343239,
+              -21.0
+            ],
+            "reload": 0.0,
+            "reserve": 59,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.0015926361084
+          },
+          {
+            "alive": false,
+            "ammo": 6,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 1,
+            "grenades": 1,
+            "health": 0.0,
+            "id": 2,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0100147435441613,
+            "position": [
+              -0.86120992898941,
+              0.000156247988343239,
+              -18.2169017791748
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.1010537147522
+          },
+          {
+            "alive": true,
+            "ammo": 8,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 65.3936473083496,
+            "id": 3,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0101271579042077,
+            "position": [
+              0.506821811199188,
+              0.000156247988343239,
+              -17.8326187133789
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.06245827674866
+          },
+          {
+            "alive": true,
+            "ammo": 6,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 49.4111240768433,
+            "id": 4,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00982058886438608,
+            "position": [
+              5.11051177978516,
+              0.000156247988343239,
+              -19.2103900909424
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.10125875473022
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 5,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              11.2896575927734,
+              0.000156247988343239,
+              -6.50001668930054
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              1.11889064311981,
+              0.0,
+              4.97574663162231
+            ],
+            "weapon": "sidearm",
+            "yaw": -2.92040300369263
+          },
+          {
+            "alive": true,
+            "ammo": 9,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 6,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00973674841225147,
+            "position": [
+              -5.75705671310425,
+              0.000156247988343239,
+              16.9894981384277
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.296387493610382
+          },
+          {
+            "alive": true,
+            "ammo": 11,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 7,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0092920558527112,
+            "position": [
+              -0.674566805362701,
+              0.000936659867875278,
+              16.5125045776367
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.0941906422376633
+          },
+          {
+            "alive": true,
+            "ammo": 6,
+            "assists": 1,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 65.6887301254272,
+            "id": 8,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              -1.73172152042389,
+              0.000936659867875278,
+              18.1029453277588
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              -0.438222646713257,
+              0.0,
+              -3.73333334922791
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.0860325023531914
+          },
+          {
+            "alive": true,
+            "ammo": 6,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 82.68680103302,
+            "id": 9,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00969381164759398,
+            "position": [
+              2.97146940231323,
+              0.000941985112149268,
+              18.2687740325928
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.0861304551362991
+          },
+          {
+            "alive": true,
+            "ammo": 6,
+            "assists": 0,
+            "credits": 1100,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 15.260188331604,
+            "id": 10,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 1,
+            "pitch": -0.00986263249069452,
+            "position": [
+              4.21500396728516,
+              0.000941985112149268,
+              18.1075878143311
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              -1.24167156219482,
+              0.0,
+              -0.320537835359573
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.0189344827085733
+          }
+        ],
+        "attack_score": 0,
+        "completion_calls": 0,
+        "defend_score": 0,
+        "drawn_frames": 150,
+        "elapsed": 18.4000000000002,
+        "events_dropped": 0,
+        "interaction_progress": 0.0,
+        "local_actor": {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0280000008642673,
+          "position": [
+            -4.89777755737305,
+            0.000156247988343239,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 59,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.0015926361084
+        },
+        "local_contribution": 0,
+        "local_input": {
+          "fire": false,
+          "interact": false,
+          "move": [
+            0.0,
+            0.0
+          ],
+          "reload": false
+        },
+        "objective_carrier": 1,
+        "objective_position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "objective_state": "carried",
+        "objective_timer": 0.0,
+        "phase": "live",
+        "round_number": 1,
+        "scenario": "standard",
+        "schema": 1,
+        "scope": "debug_offline_read_only_observation",
+        "simulation_tick": 1104,
+        "time_left": 96.6000000000002,
+        "time_scale": 1.0,
+        "ui": {
+          "capabilities": {
+            "mobile": false,
+            "touchscreen": false
+          },
+          "focused": true,
+          "mouse_mode": 0,
+          "paused": true,
+          "scoreboard_visible": false,
+          "screen": "game",
+          "status_text": "Echo  \u203a  Sable",
+          "touch_controls": false,
+          "window_mode": 0,
+          "window_size": [
+            1280,
+            720
+          ]
+        },
+        "wall_msec": 57976
+      },
+      "resumed": {
+        "actors": [
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0280000008642673,
+            "position": [
+              -4.89777755737305,
+              0.000156247988343239,
+              -21.0
+            ],
+            "reload": 0.0,
+            "reserve": 59,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.0015926361084
+          },
+          {
+            "alive": false,
+            "ammo": 6,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 1,
+            "grenades": 1,
+            "health": 0.0,
+            "id": 2,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0100147435441613,
+            "position": [
+              -0.86120992898941,
+              0.000156247988343239,
+              -18.2169017791748
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.1010537147522
+          },
+          {
+            "alive": true,
+            "ammo": 7,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 65.3936473083496,
+            "id": 3,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0096503896638751,
+            "position": [
+              0.506821811199188,
+              0.000156247988343239,
+              -17.8326187133789
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.07514643669128
+          },
+          {
+            "alive": true,
+            "ammo": 5,
+            "assists": 0,
+            "credits": 1100,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 49.4111240768433,
+            "id": 4,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 1,
+            "pitch": -0.00935483817011118,
+            "position": [
+              5.11051177978516,
+              0.000156247988343239,
+              -19.2103900909424
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 3.11694979667664
+          },
+          {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 5,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              11.2989349365234,
+              0.000156247988343239,
+              -6.24775457382202
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              -0.28110933303833,
+              0.0,
+              5.04524803161621
+            ],
+            "weapon": "sidearm",
+            "yaw": 2.99493360519409
+          },
+          {
+            "alive": true,
+            "ammo": 8,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 6,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00925998017191887,
+            "position": [
+              -5.75705671310425,
+              0.000156247988343239,
+              16.9894981384277
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.279477894306183
+          },
+          {
+            "alive": true,
+            "ammo": 11,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 7,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0097688240930438,
+            "position": [
+              -0.674566805362701,
+              0.000936659867875278,
+              16.5125045776367
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.0937084332108498
+          },
+          {
+            "alive": true,
+            "ammo": 6,
+            "assists": 1,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 65.6887301254272,
+            "id": 8,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.00974217895418406,
+            "position": [
+              -1.73172152042389,
+              0.000936659867875278,
+              17.9629440307617
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              -2.33333325386047
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.0464971289038658
+          },
+          {
+            "alive": true,
+            "ammo": 6,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 65.3778053665161,
+            "id": 9,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.0101705808192492,
+            "position": [
+              2.97146940231323,
+              0.000941985112149268,
+              18.2687740325928
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.0580087564885616
+          },
+          {
+            "alive": false,
+            "ammo": 6,
+            "assists": 0,
+            "credits": 1100,
+            "deaths": 1,
+            "grenades": 1,
+            "health": 0.0,
+            "id": 10,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 1,
+            "pitch": -0.00986263249069452,
+            "position": [
+              4.21500396728516,
+              0.000941985112149268,
+              18.1075878143311
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -0.0189344827085733
+          }
+        ],
+        "attack_score": 0,
+        "completion_calls": 0,
+        "defend_score": 0,
+        "drawn_frames": 152,
+        "elapsed": 18.4500000000002,
+        "events_dropped": 0,
+        "interaction_progress": 0.0,
+        "local_actor": {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0280000008642673,
+          "position": [
+            -4.89777755737305,
+            0.000156247988343239,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 59,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.0015926361084
+        },
+        "local_contribution": 0,
+        "local_input": {
+          "fire": false,
+          "interact": false,
+          "move": [
+            0.0,
+            0.0
+          ],
+          "reload": false
+        },
+        "objective_carrier": 1,
+        "objective_position": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "objective_state": "carried",
+        "objective_timer": 0.0,
+        "phase": "live",
+        "round_number": 1,
+        "scenario": "standard",
+        "schema": 1,
+        "scope": "debug_offline_read_only_observation",
+        "simulation_tick": 1107,
+        "time_left": 96.5500000000002,
+        "time_scale": 1.0,
+        "ui": {
+          "capabilities": {
+            "mobile": false,
+            "touchscreen": false
+          },
+          "focused": true,
+          "mouse_mode": 2,
+          "paused": false,
+          "scoreboard_visible": false,
+          "screen": "game",
+          "status_text": "Cipher  \u203a  Echo",
+          "touch_controls": false,
+          "window_mode": 0,
+          "window_size": [
+            1280,
+            720
+          ]
+        },
+        "wall_msec": 58760
+      }
+    }
+  ],
+  "native_reload": {
+    "before": {
+      "actors": [
+        {
+          "alive": true,
+          "ammo": 14,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0280000008642673,
+          "position": [
+            -4.89777755737305,
+            0.000156247988343239,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.0015926361084
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 2,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00949381571263075,
+          "position": [
+            -1.45498466491699,
+            0.000156247988343239,
+            -18.3834533691406
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -3.13004779815674
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 3,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00948988366872072,
+          "position": [
+            0.523505866527557,
+            0.000156247988343239,
+            -18.3303985595703
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.06029206911196
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 4,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00929445028305054,
+          "position": [
+            5.0189151763916,
+            0.000156247988343239,
+            -19.2461757659912
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            2.49916124343872,
+            0.0,
+            0.76952987909317
+          ],
+          "weapon": "sidearm",
+          "yaw": -2.71402359008789
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 5,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            7.08933973312378,
+            0.000156247988343239,
+            -18.8449058532715
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            4.01556873321533,
+            0.0,
+            3.1440737247467
+          ],
+          "weapon": "sidearm",
+          "yaw": -2.23506712913513
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 6,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            -6.25715255737305,
+            0.000156247988343239,
+            18.4193897247314
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.948927164077759,
+            0.0,
+            -1.88621377944946
+          ],
+          "weapon": "sidearm",
+          "yaw": -0.283938139677048
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 7,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00935468077659607,
+          "position": [
+            -0.00286201760172844,
+            0.000936659867875278,
+            19.0461750030518
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            2.53666019439697,
+            0.0,
+            -0.706408083438873
+          ],
+          "weapon": "sidearm",
+          "yaw": -0.441965252161026
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 8,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00953624211251736,
+          "position": [
+            -1.67329180240631,
+            0.000936659867875278,
+            18.3829460144043
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -0.0179168693721294
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 9,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00949730165302753,
+          "position": [
+            2.97146940231323,
+            0.000941985112149268,
+            18.2687740325928
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.112147010862827
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 10,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00949258171021938,
+          "position": [
+            3.58934783935547,
+            0.000941985112149268,
+            18.2058849334717
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.124716050922871
+        }
+      ],
+      "attack_score": 0,
+      "completion_calls": 0,
+      "defend_score": 0,
+      "drawn_frames": 121,
+      "elapsed": 15.8000000000004,
+      "events_dropped": 0,
+      "interaction_progress": 0.0,
+      "local_actor": {
+        "alive": true,
+        "ammo": 14,
+        "assists": 0,
+        "credits": 800,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 100.0,
+        "id": 1,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": 0.0280000008642673,
+        "position": [
+          -4.89777755737305,
+          0.000156247988343239,
+          -21.0
+        ],
+        "reload": 0.0,
+        "reserve": 60,
+        "smokes": 1,
+        "team": 0,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": 3.0015926361084
+      },
+      "local_contribution": 0,
+      "local_input": {
+        "fire": false,
+        "interact": false,
+        "move": [
+          0.0,
+          0.0
+        ],
+        "reload": false
+      },
+      "objective_carrier": 1,
+      "objective_position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "objective_state": "carried",
+      "objective_timer": 0.0,
+      "phase": "live",
+      "round_number": 1,
+      "scenario": "standard",
+      "schema": 1,
+      "scope": "debug_offline_read_only_observation",
+      "simulation_tick": 948,
+      "time_left": 99.2,
+      "time_scale": 1.0,
+      "ui": {
+        "capabilities": {
+          "mobile": false,
+          "touchscreen": false
+        },
+        "focused": true,
+        "mouse_mode": 2,
+        "paused": false,
+        "scoreboard_visible": false,
+        "screen": "game",
+        "status_text": "Round live. Secure Relay Yard.",
+        "touch_controls": false,
+        "window_mode": 0,
+        "window_size": [
+          1280,
+          720
+        ]
+      },
+      "wall_msec": 47314
+    },
+    "started": {
+      "actors": [
+        {
+          "alive": true,
+          "ammo": 14,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0280000008642673,
+          "position": [
+            -4.89777755737305,
+            0.000156247988343239,
+            -21.0
+          ],
+          "reload": 1.35,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.0015926361084
+        },
+        {
+          "alive": true,
+          "ammo": 13,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 82.8907223892212,
+          "id": 2,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00949788466095924,
+          "position": [
+            -1.45498466491699,
+            0.000156247988343239,
+            -18.3834533691406
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.11979794502258
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 3,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00962956435978413,
+          "position": [
+            0.506821811199188,
+            0.000156247988343239,
+            -17.8326187133789
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.466666549444199
+          ],
+          "weapon": "sidearm",
+          "yaw": 2.97186994552612
+        },
+        {
+          "alive": true,
+          "ammo": 14,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 4,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00980201363563538,
+          "position": [
+            5.11051177978516,
+            0.000156247988343239,
+            -19.2103900909424
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.08489155769348
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 5,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            8.48852729797363,
+            0.000156247988343239,
+            -17.0429763793945
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            2.91428279876709,
+            0.0,
+            4.18532514572144
+          ],
+          "weapon": "sidearm",
+          "yaw": -2.53334760665894
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 6,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00962956435978413,
+          "position": [
+            -5.94656324386597,
+            0.000156247988343239,
+            17.4928150177002
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            -0.486213773488998
+          ],
+          "weapon": "sidearm",
+          "yaw": -0.188243538141251
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 7,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00953800417482853,
+          "position": [
+            -0.0654635354876518,
+            0.000936659867875278,
+            18.5036239624023
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            -0.466666549444199
+          ],
+          "weapon": "sidearm",
+          "yaw": -0.0200854800641537
+        },
+        {
+          "alive": true,
+          "ammo": 13,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 8,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00954032875597477,
+          "position": [
+            -1.67329180240631,
+            0.000936659867875278,
+            18.3829460144043
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -0.019999336451292
+        },
+        {
+          "alive": true,
+          "ammo": 14,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 9,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00997809506952763,
+          "position": [
+            2.97146940231323,
+            0.000941985112149268,
+            18.2687740325928
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.108456611633301
+        },
+        {
+          "alive": true,
+          "ammo": 14,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 83.0534656143188,
+          "id": 10,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00997375603765249,
+          "position": [
+            3.58934783935547,
+            0.000941985112149268,
+            18.2058849334717
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.12943671643734
+        }
+      ],
+      "attack_score": 0,
+      "completion_calls": 0,
+      "defend_score": 0,
+      "drawn_frames": 132,
+      "elapsed": 16.2500000000004,
+      "events_dropped": 0,
+      "interaction_progress": 0.0,
+      "local_actor": {
+        "alive": true,
+        "ammo": 14,
+        "assists": 0,
+        "credits": 800,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 100.0,
+        "id": 1,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": 0.0280000008642673,
+        "position": [
+          -4.89777755737305,
+          0.000156247988343239,
+          -21.0
+        ],
+        "reload": 1.35,
+        "reserve": 60,
+        "smokes": 1,
+        "team": 0,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": 3.0015926361084
+      },
+      "local_contribution": 0,
+      "local_input": {
+        "fire": false,
+        "interact": false,
+        "move": [
+          0.0,
+          0.0
+        ],
+        "reload": true
+      },
+      "objective_carrier": 1,
+      "objective_position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "objective_state": "carried",
+      "objective_timer": 0.0,
+      "phase": "live",
+      "round_number": 1,
+      "scenario": "standard",
+      "schema": 1,
+      "scope": "debug_offline_read_only_observation",
+      "simulation_tick": 975,
+      "time_left": 98.7500000000001,
+      "time_scale": 1.0,
+      "ui": {
+        "capabilities": {
+          "mobile": false,
+          "touchscreen": false
+        },
+        "focused": true,
+        "mouse_mode": 2,
+        "paused": false,
+        "scoreboard_visible": false,
+        "screen": "game",
+        "status_text": "Round live. Secure Relay Yard.",
+        "touch_controls": false,
+        "window_mode": 0,
+        "window_size": [
+          1280,
+          720
+        ]
+      },
+      "wall_msec": 52445
+    },
+    "completed": {
+      "actors": [
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0280000008642673,
+          "position": [
+            -4.89777755737305,
+            0.000156247988343239,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 59,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.0015926361084
+        },
+        {
+          "alive": true,
+          "ammo": 7,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 14.3516801071167,
+          "id": 2,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00949788466095924,
+          "position": [
+            -1.45498466491699,
+            0.000156247988343239,
+            -18.3834533691406
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.11412507692446
+        },
+        {
+          "alive": true,
+          "ammo": 10,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 65.3936473083496,
+          "id": 3,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.0101271579042077,
+          "position": [
+            0.506821811199188,
+            0.000156247988343239,
+            -17.8326187133789
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -3.08659195899963
+        },
+        {
+          "alive": true,
+          "ammo": 8,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 66.2725799942016,
+          "id": 4,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00980201363563538,
+          "position": [
+            5.11051177978516,
+            0.000156247988343239,
+            -19.2103900909424
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.09038209915161
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 5,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            10.5810279846191,
+            0.000156247988343239,
+            -9.6513147354126
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            1.118891954422,
+            0.0,
+            4.97574663162231
+          ],
+          "weapon": "sidearm",
+          "yaw": -2.92040276527405
+        },
+        {
+          "alive": true,
+          "ammo": 11,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 6,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00973674841225147,
+          "position": [
+            -5.75705671310425,
+            0.000156247988343239,
+            16.9894981384277
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -0.28608164191246
+        },
+        {
+          "alive": true,
+          "ammo": 13,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 7,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.0092920558527112,
+          "position": [
+            -0.674566805362701,
+            0.000936659867875278,
+            16.5125045776367
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.112718090415001
+        },
+        {
+          "alive": true,
+          "ammo": 7,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 65.6887301254272,
+          "id": 8,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00954032875597477,
+          "position": [
+            -1.67329180240631,
+            0.000936659867875278,
+            18.3829460144043
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -0.00544225331395864
+        },
+        {
+          "alive": true,
+          "ammo": 8,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 82.68680103302,
+          "id": 9,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00969381164759398,
+          "position": [
+            2.97146940231323,
+            0.000941985112149268,
+            18.2687740325928
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0739432573318481
+        },
+        {
+          "alive": true,
+          "ammo": 8,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 32.1978732299805,
+          "id": 10,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00997375603765249,
+          "position": [
+            3.58934783935547,
+            0.000941985112149268,
+            18.2058849334717
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.139656513929367
+        }
+      ],
+      "attack_score": 0,
+      "completion_calls": 0,
+      "defend_score": 0,
+      "drawn_frames": 144,
+      "elapsed": 17.7666666666669,
+      "events_dropped": 0,
+      "interaction_progress": 0.0,
+      "local_actor": {
+        "alive": true,
+        "ammo": 15,
+        "assists": 0,
+        "credits": 800,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 100.0,
+        "id": 1,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": 0.0280000008642673,
+        "position": [
+          -4.89777755737305,
+          0.000156247988343239,
+          -21.0
+        ],
+        "reload": 0.0,
+        "reserve": 59,
+        "smokes": 1,
+        "team": 0,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": 3.0015926361084
+      },
+      "local_contribution": 0,
+      "local_input": {
+        "fire": false,
+        "interact": false,
+        "move": [
+          0.0,
+          0.0
+        ],
+        "reload": false
+      },
+      "objective_carrier": 1,
+      "objective_position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "objective_state": "carried",
+      "objective_timer": 0.0,
+      "phase": "live",
+      "round_number": 1,
+      "scenario": "standard",
+      "schema": 1,
+      "scope": "debug_offline_read_only_observation",
+      "simulation_tick": 1066,
+      "time_left": 97.2333333333335,
+      "time_scale": 1.0,
+      "ui": {
+        "capabilities": {
+          "mobile": false,
+          "touchscreen": false
+        },
+        "focused": true,
+        "mouse_mode": 2,
+        "paused": false,
+        "scoreboard_visible": false,
+        "screen": "game",
+        "status_text": "Round live. Secure Relay Yard.",
+        "touch_controls": false,
+        "window_mode": 0,
+        "window_size": [
+          1280,
+          720
+        ]
+      },
+      "wall_msec": 56005
+    },
+    "capture_ready": {
+      "actors": [
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0280000008642673,
+          "position": [
+            -4.89777755737305,
+            0.000156247988343239,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 59,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.0015926361084
+        },
+        {
+          "alive": false,
+          "ammo": 6,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 1,
+          "grenades": 1,
+          "health": 0.0,
+          "id": 2,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.0100147435441613,
+          "position": [
+            -0.86120992898941,
+            0.000156247988343239,
+            -18.2169017791748
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.1010537147522
+        },
+        {
+          "alive": true,
+          "ammo": 8,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 65.3936473083496,
+          "id": 3,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.0096503896638751,
+          "position": [
+            0.506821811199188,
+            0.000156247988343239,
+            -17.8326187133789
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -3.0517270565033
+        },
+        {
+          "alive": true,
+          "ammo": 6,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 49.4111240768433,
+          "id": 4,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00933456048369408,
+          "position": [
+            5.11051177978516,
+            0.000156247988343239,
+            -19.2103900909424
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.12123656272888
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 5,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            11.0658798217773,
+            0.000156247988343239,
+            -7.49516630172729
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            1.11889064311981,
+            0.0,
+            4.97574663162231
+          ],
+          "weapon": "sidearm",
+          "yaw": -2.92040300369263
+        },
+        {
+          "alive": true,
+          "ammo": 9,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 6,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00925998017191887,
+          "position": [
+            -5.75705671310425,
+            0.000156247988343239,
+            16.9894981384277
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -0.302639424800873
+        },
+        {
+          "alive": true,
+          "ammo": 12,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 7,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.0097688240930438,
+          "position": [
+            -0.674566805362701,
+            0.000936659867875278,
+            16.5125045776367
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.107993647456169
+        },
+        {
+          "alive": true,
+          "ammo": 6,
+          "assists": 1,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 65.6887301254272,
+          "id": 8,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.0100573664531112,
+          "position": [
+            -1.67329180240631,
+            0.000936659867875278,
+            18.3829460144043
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -0.00834048818796873
+        },
+        {
+          "alive": true,
+          "ammo": 7,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 82.68680103302,
+          "id": 9,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.0101705808192492,
+          "position": [
+            2.97146940231323,
+            0.000941985112149268,
+            18.2687740325928
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0702197104692459
+        },
+        {
+          "alive": true,
+          "ammo": 6,
+          "assists": 0,
+          "credits": 1100,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 15.260188331604,
+          "id": 10,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 1,
+          "pitch": -0.00955683551728725,
+          "position": [
+            3.99667143821716,
+            0.000941985112149268,
+            18.1639232635498
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            2.49166226387024,
+            0.0,
+            -0.203885406255722
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.118689231574535
+        }
+      ],
+      "attack_score": 0,
+      "completion_calls": 0,
+      "defend_score": 0,
+      "drawn_frames": 147,
+      "elapsed": 18.2000000000002,
+      "events_dropped": 0,
+      "interaction_progress": 0.0,
+      "local_actor": {
+        "alive": true,
+        "ammo": 15,
+        "assists": 0,
+        "credits": 800,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 100.0,
+        "id": 1,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": 0.0280000008642673,
+        "position": [
+          -4.89777755737305,
+          0.000156247988343239,
+          -21.0
+        ],
+        "reload": 0.0,
+        "reserve": 59,
+        "smokes": 1,
+        "team": 0,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": 3.0015926361084
+      },
+      "local_contribution": 0,
+      "local_input": {
+        "fire": false,
+        "interact": false,
+        "move": [
+          0.0,
+          0.0
+        ],
+        "reload": false
+      },
+      "objective_carrier": 1,
+      "objective_position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "objective_state": "carried",
+      "objective_timer": 0.0,
+      "phase": "live",
+      "round_number": 1,
+      "scenario": "standard",
+      "schema": 1,
+      "scope": "debug_offline_read_only_observation",
+      "simulation_tick": 1092,
+      "time_left": 96.8000000000002,
+      "time_scale": 1.0,
+      "ui": {
+        "capabilities": {
+          "mobile": false,
+          "touchscreen": false
+        },
+        "focused": true,
+        "mouse_mode": 2,
+        "paused": false,
+        "scoreboard_visible": false,
+        "screen": "game",
+        "status_text": "Echo  \u203a  Sable",
+        "touch_controls": false,
+        "window_mode": 0,
+        "window_size": [
+          1280,
+          720
+        ]
+      },
+      "wall_msec": 56910
+    },
+    "input_seconds": 52.618206361999995,
+    "wall_seconds_after_input": 4.795909122000012,
+    "observed_simulation_seconds": 1.5166666666664987,
+    "completion_watchdog_seconds": 15,
+    "whole_flow_deadline_unchanged": true,
+    "after_capture": {
+      "actors": [
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0280000008642673,
+          "position": [
+            -4.89777755737305,
+            0.000156247988343239,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 59,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.0015926361084
+        },
+        {
+          "alive": false,
+          "ammo": 6,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 1,
+          "grenades": 1,
+          "health": 0.0,
+          "id": 2,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.0100147435441613,
+          "position": [
+            -0.86120992898941,
+            0.000156247988343239,
+            -18.2169017791748
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.1010537147522
+        },
+        {
+          "alive": true,
+          "ammo": 8,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 65.3936473083496,
+          "id": 3,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.0096503896638751,
+          "position": [
+            0.506821811199188,
+            0.000156247988343239,
+            -17.8326187133789
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -3.0517270565033
+        },
+        {
+          "alive": true,
+          "ammo": 6,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 49.4111240768433,
+          "id": 4,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00933456048369408,
+          "position": [
+            5.11051177978516,
+            0.000156247988343239,
+            -19.2103900909424
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.12123656272888
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 5,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            11.0658798217773,
+            0.000156247988343239,
+            -7.49516630172729
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            1.11889064311981,
+            0.0,
+            4.97574663162231
+          ],
+          "weapon": "sidearm",
+          "yaw": -2.92040300369263
+        },
+        {
+          "alive": true,
+          "ammo": 9,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 6,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.00925998017191887,
+          "position": [
+            -5.75705671310425,
+            0.000156247988343239,
+            16.9894981384277
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -0.302639424800873
+        },
+        {
+          "alive": true,
+          "ammo": 12,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 7,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.0097688240930438,
+          "position": [
+            -0.674566805362701,
+            0.000936659867875278,
+            16.5125045776367
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.107993647456169
+        },
+        {
+          "alive": true,
+          "ammo": 6,
+          "assists": 1,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 65.6887301254272,
+          "id": 8,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.0100573664531112,
+          "position": [
+            -1.67329180240631,
+            0.000936659867875278,
+            18.3829460144043
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -0.00834048818796873
+        },
+        {
+          "alive": true,
+          "ammo": 7,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 82.68680103302,
+          "id": 9,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.0101705808192492,
+          "position": [
+            2.97146940231323,
+            0.000941985112149268,
+            18.2687740325928
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0702197104692459
+        },
+        {
+          "alive": true,
+          "ammo": 6,
+          "assists": 0,
+          "credits": 1100,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 15.260188331604,
+          "id": 10,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 1,
+          "pitch": -0.00955683551728725,
+          "position": [
+            3.99667143821716,
+            0.000941985112149268,
+            18.1639232635498
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            2.49166226387024,
+            0.0,
+            -0.203885406255722
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.118689231574535
+        }
+      ],
+      "attack_score": 0,
+      "completion_calls": 0,
+      "defend_score": 0,
+      "drawn_frames": 147,
+      "elapsed": 18.2000000000002,
+      "events_dropped": 0,
+      "interaction_progress": 0.0,
+      "local_actor": {
+        "alive": true,
+        "ammo": 15,
+        "assists": 0,
+        "credits": 800,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 100.0,
+        "id": 1,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": 0.0280000008642673,
+        "position": [
+          -4.89777755737305,
+          0.000156247988343239,
+          -21.0
+        ],
+        "reload": 0.0,
+        "reserve": 59,
+        "smokes": 1,
+        "team": 0,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": 3.0015926361084
+      },
+      "local_contribution": 0,
+      "local_input": {
+        "fire": false,
+        "interact": false,
+        "move": [
+          0.0,
+          0.0
+        ],
+        "reload": false
+      },
+      "objective_carrier": 1,
+      "objective_position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "objective_state": "carried",
+      "objective_timer": 0.0,
+      "phase": "live",
+      "round_number": 1,
+      "scenario": "standard",
+      "schema": 1,
+      "scope": "debug_offline_read_only_observation",
+      "simulation_tick": 1092,
+      "time_left": 96.8000000000002,
+      "time_scale": 1.0,
+      "ui": {
+        "capabilities": {
+          "mobile": false,
+          "touchscreen": false
+        },
+        "focused": true,
+        "mouse_mode": 2,
+        "paused": false,
+        "scoreboard_visible": false,
+        "screen": "game",
+        "status_text": "Echo  \u203a  Sable",
+        "touch_controls": false,
+        "window_mode": 0,
+        "window_size": [
+          1280,
+          720
+        ]
+      },
+      "wall_msec": 56910
+    }
+  },
+  "error": "Natural exported round completion",
+  "initial_exit": null,
+  "reopened_exit": null,
+  "commands": [
+    {
+      "name": "xvfb",
+      "command": [
+        "/usr/bin/Xvfb",
+        ":102",
+        "-screen",
+        "0",
+        "1280x720x24",
+        "-nolisten",
+        "tcp"
+      ],
+      "pid": 3327,
+      "started_seconds": 0.29042764999999804,
+      "exit_code": 0
+    },
+    {
+      "name": "client",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/linux/sightbreak.x86_64",
+        "--audio-driver",
+        "Dummy",
+        "--accessibility",
+        "disabled",
+        "--accessibility-driver",
+        "dummy",
+        "--",
+        "--offline-validation",
+        "--offline-trace-dir=/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/offline-input/initial-offline-trace"
+      ],
+      "pid": 3332,
+      "started_seconds": 0.3973080479999851,
+      "exit_code": -15
+    }
+  ],
+  "events": [
+    "01-menu",
+    "02-offline-spawn",
+    "03-requisition",
+    "04-move-aim",
+    "05-after-fire",
+    "06-after-reload",
+    "06b-scoreboard"
+  ],
+  "cleanup_errors": [],
+  "ocr_commands": [
+    {
+      "command": [
+        "/usr/bin/tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "05-after-fire:(0, 630, 450, 720)",
+      "started_seconds": 48.45967808,
+      "finished_seconds": 48.72121399700001,
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/usr/bin/tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "05-after-fire:(980, 625, 1280, 710)",
+      "started_seconds": 48.77598285299999,
+      "finished_seconds": 51.98333813899998,
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/usr/bin/tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06-after-reload:(0, 630, 450, 720)",
+      "started_seconds": 58.050996661,
+      "finished_seconds": 58.358820702,
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "/usr/bin/tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06-after-reload:(980, 625, 1280, 710)",
+      "started_seconds": 58.41038510300001,
+      "finished_seconds": 58.82207597799999,
+      "exit_code": 0
+    }
+  ],
+  "elapsed_seconds": 220.302932559
+}
