@@ -505,7 +505,10 @@ def main():
         trace('menu_click_after', x=x, y=y, label=label)
         # A stale rendered menu is a readiness signal, never permission to
         # repeat an absolute pointer move after the game captures the mouse.
-        wait_for(lambda: not ui.menu_visible(), 3, label, client)
+        # PR22 allowed three click+3s attempts (~10.35s total). Preserve that
+        # aggregate cold-page budget with one click; replaying pointer motion
+        # is unsafe once a page starts capturing input.
+        wait_for(lambda: not ui.menu_visible(), 9.9, label, client)
 
     def server_has(message):
         return message in (output / 'server.log').read_text(encoding='utf-8', errors='replace')
