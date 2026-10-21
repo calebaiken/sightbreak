@@ -78,6 +78,7 @@ var switch_requested := false
 var touch_score_until := 0.0
 var application_focused := true
 var applied_window_mode := -1
+var waiting_for_input_release := false
 var reward_label: Label
 var current_loadout: Dictionary = {}
 var cosmetic_weapon := ""
@@ -144,8 +145,44 @@ func scroll_rows(parent: Control) -> VBoxContainer:
 	scroll.add_child(content)
 	return content
 
+## Capability reporting is separate from the player's selected control mode.
+## A touchscreen laptop is still a desktop; a controller never selects touch.
+func input_capabilities() -> Dictionary:
+	return {"mobile": OS.has_feature("mobile"), "touchscreen": DisplayServer.is_touchscreen_available()}
+
 func uses_touch_controls() -> bool:
-	return DisplayServer.is_touchscreen_available() or bool(profile.data.settings.touch_visible)
+	return bool(input_capabilities().mobile) or bool(profile.data.settings.touch_visible)
+
+func update_pointer_mode() -> void:
+	var capture := application_focused and screen == "game" and not paused and not uses_touch_controls()
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if capture else Input.MOUSE_MODE_VISIBLE
+	if is_instance_valid(touch) and not touch.editing:
+		touch.enabled = uses_touch_controls() and not paused and application_focused
+
+func connected_controllers() -> Array[int]:
+	return Input.get_connected_joypads()
+
+func controller_axis(device: int, axis: int) -> float:
+	return Input.get_joy_axis(device, axis)
+
+func controller_button(device: int, key: int) -> bool:
+	return Input.is_joy_button_pressed(device, key)
+
+## Focus loss cannot rely on an OS delivering every key/button-up event.
+## Require neutral controls after explicit resume before accepting held input.
+func controls_released() -> bool:
+	for key in [KEY_W, KEY_A, KEY_S, KEY_D, KEY_R, KEY_E, KEY_SPACE, KEY_CTRL, KEY_G, KEY_Q, KEY_1, KEY_2]:
+		if Input.is_physical_key_pressed(key): return false
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT): return false
+	var pads := connected_controllers()
+	if not pads.is_empty():
+		var device := pads[0]
+		if Vector2(controller_axis(device, JOY_AXIS_LEFT_X), controller_axis(device, JOY_AXIS_LEFT_Y)).length() > 0.15: return false
+		if Vector2(controller_axis(device, JOY_AXIS_RIGHT_X), controller_axis(device, JOY_AXIS_RIGHT_Y)).length() > 0.15: return false
+		if controller_axis(device, JOY_AXIS_TRIGGER_RIGHT) > 0.4: return false
+		for key in [JOY_BUTTON_A, JOY_BUTTON_B, JOY_BUTTON_X, JOY_BUTTON_Y]:
+			if controller_button(device, key): return false
+	return true
 
 func button(text: String, callback: Callable, height: float = 48, variant := "secondary") -> Button:
 	var node := Button.new()
@@ -716,6 +753,7 @@ func apply_display_mode() -> void:
 
 func apply_settings() -> void:
 	apply_display_mode()
+	update_pointer_mode()
 	Engine.max_fps = int(profile.data.settings.fps_limit)
 	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(0.001, float(profile.data.settings.volume))))
 	if not is_inside_tree(): return
@@ -785,7 +823,7 @@ func start_match(options: Dictionary) -> void:
 	physical_mouse_fire = false
 	if not server_mode:
 		build_hud()
-		if application_focused and not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		update_pointer_mode()
 
 func _hud_block(alignment: int) -> VBoxContainer:
 	var block := VBoxContainer.new()
@@ -1151,6 +1189,7 @@ func _notification(what: int) -> void:
 		physical_mouse_fire = false
 		mouse_delta = Vector2.ZERO
 		application_focused = false
+		waiting_for_input_release = true
 		switch_requested = false
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		if is_instance_valid(touch): touch.reset_input()
@@ -1192,31 +1231,42 @@ func _physics_process(delta: float) -> void:
 		actor.apply_cosmetic(current_loadout.get(actor.weapon_id, {}))
 		cosmetic_weapon = actor.weapon_id
 	if application_focused and not paused and actor != null:
+		if waiting_for_input_release:
+			if not controls_released():
+				mouse_delta = Vector2.ZERO
+				physical_mouse_fire = false
+				switch_requested = false
+				if is_instance_valid(touch): touch.reset_input()
+				match_game.set_local_input(state)
+				return
+			waiting_for_input_release = false
 		var sensitivity := float(profile.data.settings.sensitivity)
 		input_look.x -= mouse_delta.x * sensitivity
 		input_look.y -= mouse_delta.y * sensitivity
 		mouse_delta = Vector2.ZERO
 		var move := Vector2(float(Input.is_physical_key_pressed(KEY_D)) - float(Input.is_physical_key_pressed(KEY_A)), float(Input.is_physical_key_pressed(KEY_W)) - float(Input.is_physical_key_pressed(KEY_S)))
-		if touch != null:
+		if touch != null and touch.enabled:
 			move += touch.movement
 			var touch_look: Vector2 = touch.consume_look()
 			input_look -= touch_look * float(profile.data.settings.touch_sensitivity)
-		if not Input.get_connected_joypads().is_empty():
-			var device := int(Input.get_connected_joypads()[0])
-			move += Vector2(Input.get_joy_axis(device, JOY_AXIS_LEFT_X), -Input.get_joy_axis(device, JOY_AXIS_LEFT_Y)).limit_length()
-			var stick := Vector2(Input.get_joy_axis(device, JOY_AXIS_RIGHT_X), Input.get_joy_axis(device, JOY_AXIS_RIGHT_Y))
+		var pads := connected_controllers()
+		var device := pads[0] if not pads.is_empty() else -1
+		if device >= 0:
+			var stick_move := Vector2(controller_axis(device, JOY_AXIS_LEFT_X), -controller_axis(device, JOY_AXIS_LEFT_Y))
+			if stick_move.length() > 0.15: move += stick_move.limit_length()
+			var stick := Vector2(controller_axis(device, JOY_AXIS_RIGHT_X), controller_axis(device, JOY_AXIS_RIGHT_Y))
 			if stick.length() > 0.15: input_look -= stick * delta * 2.6
-		if bool(profile.data.settings.gyro) and DisplayServer.is_touchscreen_available():
+		if bool(profile.data.settings.gyro) and uses_touch_controls():
 			var gyro := Input.get_gyroscope()
 			input_look -= Vector2(gyro.y, gyro.x) * delta * float(profile.data.settings.gyro_sensitivity)
 		input_look.y = clampf(input_look.y, -1.45, 1.45)
 		state.move = move.limit_length(1.0)
 		state.look = input_look
-		state.fire = physical_mouse_fire or Input.get_joy_axis(0, JOY_AXIS_TRIGGER_RIGHT) > 0.4 or touch_action("fire")
-		state.reload = Input.is_physical_key_pressed(KEY_R) or Input.is_joy_button_pressed(0, JOY_BUTTON_X) or touch_action("reload")
-		state.jump = Input.is_physical_key_pressed(KEY_SPACE) or Input.is_joy_button_pressed(0, JOY_BUTTON_A) or touch_action("jump")
-		state.crouch = Input.is_physical_key_pressed(KEY_CTRL) or Input.is_joy_button_pressed(0, JOY_BUTTON_B) or touch_action("crouch")
-		state.interact = Input.is_physical_key_pressed(KEY_E) or Input.is_joy_button_pressed(0, JOY_BUTTON_Y) or touch_action("interact")
+		state.fire = physical_mouse_fire or (device >= 0 and controller_axis(device, JOY_AXIS_TRIGGER_RIGHT) > 0.4) or touch_action("fire")
+		state.reload = Input.is_physical_key_pressed(KEY_R) or (device >= 0 and controller_button(device, JOY_BUTTON_X)) or touch_action("reload")
+		state.jump = Input.is_physical_key_pressed(KEY_SPACE) or (device >= 0 and controller_button(device, JOY_BUTTON_A)) or touch_action("jump")
+		state.crouch = Input.is_physical_key_pressed(KEY_CTRL) or (device >= 0 and controller_button(device, JOY_BUTTON_B)) or touch_action("crouch")
+		state.interact = Input.is_physical_key_pressed(KEY_E) or (device >= 0 and controller_button(device, JOY_BUTTON_Y)) or touch_action("interact")
 		state.grenade = Input.is_physical_key_pressed(KEY_G) or touch_action("grenade")
 		state.smoke = Input.is_physical_key_pressed(KEY_Q) or touch_action("smoke")
 		if switch_requested:
@@ -1229,7 +1279,7 @@ func _physics_process(delta: float) -> void:
 	match_game.set_local_input(state)
 
 func touch_action(action: String) -> bool:
-	return touch != null and bool(touch.actions.get(action, false))
+	return touch != null and touch.enabled and bool(touch.actions.get(action, false))
 
 func _process(delta: float) -> void:
 	elapsed += delta
@@ -1475,8 +1525,7 @@ func close_overlay() -> void:
 	physical_mouse_fire = false
 	mouse_delta = Vector2.ZERO
 	set_match_suspended(false)
-	if touch != null: touch.enabled = uses_touch_controls()
-	if application_focused and not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	update_pointer_mode()
 
 func toggle_pause() -> void:
 	if paused:
@@ -1524,7 +1573,7 @@ func finish_touch_editor() -> void:
 	physical_mouse_fire = false
 	mouse_delta = Vector2.ZERO
 	set_match_suspended(false)
-	if application_focused and not DisplayServer.is_touchscreen_available(): Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	update_pointer_mode()
 
 ## Buy state for one weapon: owned, affordable, or the shortfall.
 ## Real availability of a weapon for the local player: what the card's chip says, and
