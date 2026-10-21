@@ -1,0 +1,57 @@
+name: Windows exported offline fire acknowledgement validation
+on:
+  push:
+    branches: [codex/windows-fire-ack-validation]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native-windows-offline-only:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    env:
+      SIGHTBREAK_BUILDS_DIR: ${{ github.workspace }}/builds/windows-fire-ack-validation
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Existing native Windows screenshot and OCR dependencies
+        shell: pwsh
+        run: |
+          python -m pip install Pillow==12.3.0
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          choco install tesseract --version=5.5.0.20241111 --yes --no-progress
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $ocr = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
+          if (!(Test-Path $ocr)) { throw 'Tesseract executable missing' }
+          "TESSERACT_BIN=$ocr" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          & $ocr --version
+      - name: Install checksum-pinned native Windows toolchain only
+        run: python scripts/toolchain.py setup --targets windows
+      - name: Native filesystem and packaging controls
+        shell: pwsh
+        run: |
+          python scripts/test_native_observation.py -v
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python scripts/test_build_manifest.py -v
+          exit $LASTEXITCODE
+      - name: Export this clean source revision
+        id: export
+        run: python scripts/export.py windows
+      - name: Unchanged complete native offline input and restart gates
+        if: always() && steps.export.outcome == 'success'
+        run: python scripts/verify_offline_export.py --target windows --hosted-render-priority below-normal --timeout 300 --output builds/windows-fire-ack-validation/offline-input
+      - name: Preserve actual attempt and source evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: windows-fire-ack-${{ github.sha }}
+          path: |
+            builds/windows-fire-ack-validation/offline-input/**/*.json
+            builds/windows-fire-ack-validation/offline-input/**/*.jsonl
+            builds/windows-fire-ack-validation/offline-input/**/*.log
+            builds/windows-fire-ack-validation/offline-input/**/*.png
+            builds/windows-fire-ack-validation/windows/source.json
+          if-no-files-found: error
+          retention-days: 14
