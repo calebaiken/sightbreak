@@ -397,7 +397,13 @@ def main():
                 return bool(samples)
             wait(started_hold, 3, 'Final native E hold starts')
             capture('05-objective-hold')
-            completed = wait(hold_observation, required + 3, 'Player-driven ' + args.scenario + ' completes')
+            # Linux llvmpipe trial linux-defuse-r1 advanced only4.216 of the
+            # required5 simulation seconds during the former8-second watchdog.
+            # Bound software-renderer wall overhead separately; acceptance still
+            # requires the exact3/5 authority seconds from consumed-input edges.
+            wall_budget = required * 3
+            result['objective_hold_wall_budget_seconds'] = wall_budget
+            completed = wait(hold_observation, wall_budget, 'Player-driven ' + args.scenario + ' completes')
         finally:
             key('e', False)
         completion_observed_monotonic = time.monotonic()

@@ -287,15 +287,28 @@ def main():
         trace('deploy_click_before', x=248, y=319)
         ui.click(248, 319)
         trace('deploy_click_after', x=248, y=319)
-        def offline_ready():
+        def offline_observation():
             try:
                 state = json.loads((initial_trace / 'status.json').read_text(encoding='utf-8'))
             except (OSError, ValueError):
-                return False
-            return (state.get('scope') == 'debug_offline_read_only_observation'
-                    and state.get('ui', {}).get('screen') == 'game'
-                    and bool(state.get('local_actor')))
-        wait_for(offline_ready, 30, 'Real offline match readiness after one Deploy click', client)
+                return {}
+            if state.get('scope') != 'debug_offline_read_only_observation':
+                raise RuntimeError('Unexpected offline observation scope')
+            result['last_offline_observation'] = state
+            return state
+
+        def observed(predicate, seconds, label, after=-1):
+            latest = {}
+            def ready():
+                nonlocal latest
+                latest = offline_observation()
+                return latest.get('wall_msec', -1) > after and predicate(latest)
+            wait_for(ready, seconds, label, client)
+            trace('offline_observation', label=label, state=latest)
+            return latest
+
+        observed(lambda state: state.get('ui', {}).get('screen') == 'game' and bool(state.get('local_actor')),
+                 30, 'Real offline match readiness after one Deploy click')
         pause(3)
         capture('02-offline-spawn')
         tap('b')
@@ -371,6 +384,86 @@ def main():
         tap('Escape')
         capture('07d-explicit-resume')
         resumed_hud = read_hud('07d-explicit-resume')
+        focus_start = observed(lambda state: state.get('ui', {}).get('focused') is True
+                               and state.get('ui', {}).get('paused') is False
+                               and state.get('phase') == 'live' and state.get('local_actor', {}).get('alive') is True,
+                               15, 'Living active player before native focus loss')
+        try:
+            key('w', True)
+            button(True)
+            trace('native_focus_loss_before', method='XSetInputFocus(root)' if args.target == 'linux' else 'ShowWindow(SW_MINIMIZE)')
+            if args.target == 'linux':
+                ui.x.XSetInputFocus(ui.d, ui.x.XDefaultRootWindow(ui.d), 1, 0)
+                ui.x.XFlush(ui.d)
+            else:
+                ui.user.ShowWindow(ui.window, 6)  # SW_MINIMIZE
+            trace('native_focus_loss_after')
+            lost = observed(lambda state: state.get('ui', {}).get('focused') is False
+                            and state.get('ui', {}).get('paused') is True,
+                            10, 'Native focus loss pauses actual offline match', focus_start['wall_msec'])
+            trace('native_focus_restore_before')
+            if args.target == 'windows':
+                ui.user.ShowWindow(ui.window, 9)  # SW_RESTORE; focus_game retains the same HWND
+            wait_for(ui.focus_game, 10, 'Restore actual native input focus', client)
+            trace('native_focus_restore_after')
+            restored = observed(lambda state: state.get('ui', {}).get('focused') is True,
+                                10, 'Actual game observes restored focus', lost['wall_msec'])
+            if restored['ui'].get('paused') is not True or restored['ui'].get('mouse_mode') != 0:
+                raise RuntimeError('Native focus restoration resumed gameplay or hid the pointer without explicit resume')
+            capture('07e-restored-focus-still-paused')
+            tap('Escape')
+            guarded = observed(lambda state: state.get('ui', {}).get('paused') is False,
+                               10, 'Explicit resume with W and LMB still physically held', restored['wall_msec'])
+            baseline_actor = restored['local_actor']
+            guard_samples = []
+            def check_guard(state, stable_position=None):
+                inputs, actor = state.get('local_input', {}), state.get('local_actor', {})
+                native = ui.diagnostics()
+                if (state.get('ui', {}).get('focused') is not True or state['ui'].get('paused') is not False
+                        or inputs.get('move') != [0, 0] or inputs.get('fire') is not False
+                        or inputs.get('interact') is not False or inputs.get('reload') is not False
+                        or actor.get('id') != baseline_actor.get('id') or actor.get('alive') is not True
+                        or actor.get('ammo') != baseline_actor.get('ammo') or actor.get('weapon') != baseline_actor.get('weapon')
+                        or abs(actor.get('yaw', 0) - baseline_actor.get('yaw', 0)) > 0.000001
+                        or abs(actor.get('pitch', 0) - baseline_actor.get('pitch', 0)) > 0.000001
+                        or native.get('lmb_down') is not True or native.get('keys_down', {}).get('w') is not True
+                        or (stable_position is not None and actor.get('position') != stable_position)):
+                    raise RuntimeError('Held input moved/fired after native focus recovery; raw observations retained')
+                guard_samples.append(state)
+            check_guard(guarded)
+            # Focus-out can freeze ordinary pre-existing movement velocity.
+            # Neutral input must hold throughout its bounded natural decay.
+            settle_start = guarded['elapsed']
+            while any(abs(guarded['local_actor']['velocity'][axis]) > .01 for axis in (0, 2)):
+                guarded = observed(lambda state: True, 10, 'Neutral held input while ordinary inertia settles',
+                                   guarded['wall_msec'])
+                check_guard(guarded)
+                if guarded['elapsed'] - settle_start > 1.0:
+                    raise RuntimeError('Neutral movement inertia failed to settle within one simulation second')
+            stable_position = guarded['local_actor']['position'][:]
+            for index in range(2):
+                guarded = observed(lambda state: True, 10, 'Fresh held-input guard sample ' + str(index + 1),
+                                   guarded['wall_msec'])
+                check_guard(guarded, stable_position)
+            capture('07f-resumed-held-input-neutral')
+        finally:
+            key('w', False)
+            button(False)
+        released = observed(lambda state: state.get('local_input', {}).get('move') == [0, 0]
+                            and state.get('local_input', {}).get('fire') is False,
+                            10, 'Released held focus-test controls', guarded['wall_msec'])
+        try:
+            key('w', True)
+            moved = observed(lambda state: state.get('local_actor', {}).get('alive') is True
+                             and state.get('local_input', {}).get('move', [0, 0]) != [0, 0]
+                             and state.get('local_actor', {}).get('position') != released['local_actor']['position'],
+                             10, 'Fresh W press moves actual player after focus recovery', released['wall_msec'])
+        finally:
+            key('w', False)
+        capture('07g-fresh-press-movement')
+        result['native_focus_recovery'] = {'lost': lost, 'restored_paused': restored,
+                                           'held_neutral_samples': guard_samples, 'released': released,
+                                           'fresh_press_movement': moved}
         tap('Escape')
         click_text('LEAVE')
         wait_for(ui.menu_visible, 30, 'Return from offline match', client)
