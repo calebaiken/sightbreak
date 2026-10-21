@@ -1,11 +1,12 @@
-name: Native desktop alpha
+name: Desktop playability P1
 on:
   push:
-    branches: [codex/desktop-steam-readiness]
+    branches: [codex/desktop-playability-p1]
     paths: ["game/**", "scripts/**", ".github/workflows/desktop-alpha.yml"]
   workflow_dispatch:
 permissions:
   contents: read
+  actions: read
 jobs:
   native:
     if: github.event.repository.private == false
@@ -23,9 +24,9 @@ jobs:
           - os: macos-15-intel
             target: macos
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 30
+    timeout-minutes: 60
     env:
-      SIGHTBREAK_BUILDS_DIR: ${{ github.workspace }}/builds/desktop-alpha
+      SIGHTBREAK_BUILDS_DIR: ${{ github.workspace }}/builds/desktop-playability
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
@@ -36,6 +37,16 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libgl1 libvulkan1 libxtst6 xvfb tesseract-ocr
+      - name: Windows OCR dependency
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          choco install tesseract --version=5.5.0.20241111 --yes --no-progress
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $ocr = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
+          if (!(Test-Path $ocr)) { throw 'Tesseract executable missing' }
+          "TESSERACT_BIN=$ocr" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          & $ocr --version
       - name: Native screenshot dependency
         run: python -m pip install Pillow==12.3.0
       - name: Install checksum-pinned native editor and selected templates
@@ -43,6 +54,7 @@ jobs:
       - name: Packaging integrity controls
         run: python scripts/test_build_manifest.py -v
       - name: Export exact clean source
+        id: export
         run: python scripts/export.py ${{ matrix.target }}
       - name: Native graphical startup and artifact inspection (Windows/macOS)
         if: runner.os != 'Linux'
@@ -71,6 +83,7 @@ jobs:
         if: runner.os == 'Linux'
         run: xvfb-run -a python scripts/verify_builds.py --targets linux --graphical
       - name: Native authority and compatibility regressions
+        if: always() && steps.export.outcome == 'success'
         shell: python
         run: |
           import os, pathlib, subprocess, sys, json
@@ -80,29 +93,76 @@ jobs:
           out = pathlib.Path(os.environ['SIGHTBREAK_BUILDS_DIR']) / 'regressions'
           out.mkdir(parents=True)
           receipts = []
-          for suite in ('actor', 'match', 'state_privacy', 'movement_prediction', 'peer_lifecycle'):
+          for suite in ('actor', 'match', 'state_privacy', 'movement_prediction', 'peer_lifecycle', 'input_mode', 'offline_diagnostics'):
               command = toolchain.command('--headless', '--script', 'res://tests/' + suite + '_test.gd')
               with (out / (suite + '.log')).open('w', encoding='utf-8') as log:
-                  result = subprocess.run(command, env=toolchain.environment(), stdout=log, stderr=subprocess.STDOUT, timeout=120)
+                  environment = toolchain.environment()
+                  if suite in ('input_mode', 'offline_diagnostics'):
+                      environment['SIGHTBREAK_STATE_DIR'] = str((out / (suite + '-state')).resolve())
+                      if os.name == 'nt':
+                          for key, part in (('APPDATA', 'roaming'), ('LOCALAPPDATA', 'local')):
+                              directory = out / 'input-mode-state' / part
+                              directory.mkdir(parents=True, exist_ok=True)
+                              environment[key] = str(directory.resolve())
+                      elif sys.platform != 'darwin':
+                          for key, part in (('XDG_DATA_HOME', 'data'), ('XDG_CONFIG_HOME', 'config'), ('XDG_CACHE_HOME', 'cache')):
+                              directory = out / 'input-mode-state' / part
+                              directory.mkdir(parents=True, exist_ok=True)
+                              environment[key] = str(directory.resolve())
+                  result = subprocess.run(command, env=environment, stdout=log, stderr=subprocess.STDOUT, timeout=120)
               text = (out / (suite + '.log')).read_text(encoding='utf-8', errors='replace')
               receipts.append({'command': command, 'exit': result.returncode, 'clean_log': not failed(text)})
               (out / 'results.json').write_text(json.dumps(receipts, indent=2))
               if result.returncode or failed(text):
                   raise SystemExit(suite + ' failed; raw output retained')
       - name: Real exported keyboard and pointer input (Windows/Linux)
-        if: runner.os != 'macOS'
-        run: python scripts/verify_integration_export.py --target ${{ matrix.target }} --visit-armory --timeout 240 --output builds/desktop-alpha/native-input
-      - name: Living-player offline input and settings restart (Linux)
-        if: runner.os == 'Linux'
-        run: python scripts/verify_offline_export.py --display :102 --timeout 300 --output builds/desktop-alpha/offline-input
+        if: always() && steps.export.outcome == 'success' && runner.os != 'macOS'
+        run: python scripts/verify_integration_export.py --target ${{ matrix.target }} --visit-armory --timeout 240 --output builds/desktop-playability/native-input
+      - name: Controlled delayed-capture reload comparison (Windows)
+        if: always() && steps.export.outcome == 'success' && runner.os == 'Windows'
+        run: python scripts/verify_integration_export.py --target windows --input-schedule release-first --fire-capture-delay 4 --timeout 240 --output builds/desktop-playability/reload-release-first
+      - name: Retain original delayed-capture schedule (Windows diagnostic)
+        if: always() && steps.export.outcome == 'success' && runner.os == 'Windows'
+        shell: python
+        run: |
+          import json, pathlib, subprocess, sys
+          output = pathlib.Path('builds/desktop-playability/reload-legacy-delayed')
+          command = [sys.executable, 'scripts/verify_integration_export.py', '--target', 'windows', '--input-schedule', 'legacy', '--fire-capture-delay', '4', '--timeout', '240', '--output', str(output)]
+          result = subprocess.run(command, timeout=270)
+          receipt = {'command': command, 'exit_code': result.returncode, 'scope': 'Controlled diagnostic: delays capture while original schedule still holds fire. Does not replace the normal undelayed gameplay gate.'}
+          (output / 'diagnostic-exit.json').write_text(json.dumps(receipt, indent=2))
+          print(json.dumps(receipt))
+      - name: Living-player offline input and settings restart (Windows/Linux)
+        if: always() && steps.export.outcome == 'success' && runner.os != 'macOS'
+        run: python scripts/verify_offline_export.py --target ${{ matrix.target }} --display :102 --timeout 300 --output builds/desktop-playability/offline-input
+      - name: Real player plant and natural device resolution (Windows/Linux)
+        if: always() && steps.export.outcome == 'success' && runner.os != 'macOS'
+        run: python scripts/verify_offline_match.py --target ${{ matrix.target }} --scenario plant --display :103 --timeout 180 --output builds/desktop-playability/offline-plant
+      - name: Real player defuse after ordinary bot plant (Windows/Linux)
+        if: always() && steps.export.outcome == 'success' && runner.os != 'macOS'
+        run: python scripts/verify_offline_match.py --target ${{ matrix.target }} --scenario defuse --display :104 --timeout 180 --output builds/desktop-playability/offline-defuse
+      - name: Complete stock-rules offline match and earned training restart (Windows/Linux)
+        if: always() && steps.export.outcome == 'success' && runner.os != 'macOS'
+        run: python scripts/verify_offline_match.py --target ${{ matrix.target }} --scenario full-match --display :105 --timeout 1800 --output builds/desktop-playability/offline-full-match
+      - name: Rendered desktop layouts and explicit touch selection (Linux)
+        if: always() && steps.export.outcome == 'success' && runner.os == 'Linux'
+        run: python scripts/capture_desktop_layouts.py --touch-toggle --output builds/desktop-playability/layouts
+      - name: Download immutable macOS alpha comparison artifact
+        if: always() && steps.export.outcome == 'success' && runner.os == 'macOS'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api repos/calebaiken/sightbreak/actions/artifacts/12247215871/zip > "$RUNNER_TEMP/sightbreak-macos-frozen.zip"
+      - name: Native macOS minimal/frozen/candidate graphical diagnosis
+        if: always() && steps.export.outcome == 'success' && runner.os == 'macOS'
+        run: python scripts/diagnose_macos_startup.py --output builds/desktop-playability/macos-diagnostics --baseline-archive "$RUNNER_TEMP/sightbreak-macos-frozen.zip"
       - name: Package only the native target
         run: python scripts/build_manifest.py package --targets ${{ matrix.target }}
       - name: Preserve development packages and failed attempts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: sightbreak-desktop-${{ matrix.target }}-${{ matrix.os }}-${{ github.sha }}
-          path: builds/desktop-alpha/
+          name: sightbreak-playability-${{ matrix.target }}-${{ matrix.os }}-${{ github.sha }}
+          path: builds/desktop-playability/
           include-hidden-files: true
           if-no-files-found: warn
           retention-days: 14
