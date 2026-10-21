@@ -1,0 +1,55 @@
+name: Windows OCR resource diagnostic only
+on:
+  push:
+    branches: [codex/windows-ocr-diagnosis]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  native-ocr-benchmark:
+    runs-on: windows-latest
+    timeout-minutes: 8
+    env:
+      SIGHTBREAK_BUILDS_DIR: ${{ github.workspace }}/builds/windows-ocr-diagnosis
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Existing native screenshot and OCR dependencies
+        shell: pwsh
+        run: |
+          python -m pip install Pillow==12.3.0
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          choco install tesseract --version=5.5.0.20241111 --yes --no-progress
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Download only the immutable retained failed-flow QA artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: python
+        run: |
+          import os, pathlib, subprocess
+          archive = pathlib.Path(os.environ['RUNNER_TEMP']) / 'retained-windows-offline.zip'
+          with archive.open('wb') as output:
+              result = subprocess.run(['gh', 'api', 'repos/calebaiken/sightbreak/actions/artifacts/12379793621/zip'], stdout=output, timeout=60)
+          if result.returncode: raise SystemExit(result.returncode)
+          if archive.stat().st_size > 32 * 1024 * 1024: raise SystemExit('Artifact exceeds bounded download budget')
+      - name: Install checksum-pinned selected Windows toolchain
+        run: python scripts/toolchain.py setup --targets windows
+      - name: Export this clean source for ordinary graphical menu load
+        run: python scripts/export.py windows
+      - name: Counterbalanced default and one-thread OCR with unchanged20-second budgets
+        shell: pwsh
+        run: python scripts/diagnose_windows_ocr.py --archive "$env:RUNNER_TEMP/retained-windows-offline.zip" --output builds/windows-ocr-diagnosis/ocr-probe --tesseract 'C:/Program Files/Tesseract-OCR/tesseract.exe'
+      - name: Preserve small native benchmark evidence, including timeouts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: windows-ocr-resource-${{ github.sha }}
+          path: |
+            builds/windows-ocr-diagnosis/ocr-probe/
+            builds/windows-ocr-diagnosis/windows/*.json
+            builds/windows-ocr-diagnosis/windows/*.log
+          if-no-files-found: error
+          retention-days: 14
