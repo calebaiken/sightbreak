@@ -595,10 +595,22 @@ def main():
                       expected_xp=xp, expected_credits_earned=earned, natural_rounds=sorted(observed_rounds))
         result['partial_checks']['normal_full_match_and_single_training_record'] = True
         tap('Escape')
+        wait(lambda s: s.get('phase') == 'match_over' and s.get('ui', {}).get('paused') is False,
+             8, 'Real Escape dismisses final summary before Tab roster')
         key('Tab', True)
-        pause(.5)
-        capture('08-final-scoreboard')
-        key('Tab', False)
+        try:
+            roster_state = wait(lambda s: s.get('phase') == 'match_over'
+                               and s.get('ui', {}).get('paused') is False
+                               and s.get('ui', {}).get('scoreboard_visible') is True,
+                               8, 'Actual held Tab displays final roster')
+            capture('08-final-scoreboard')
+            if observe().get('ui', {}).get('scoreboard_visible') is not True:
+                raise RuntimeError('Final roster disappeared during native capture')
+            result['final_roster_visibility'] = roster_state
+        finally:
+            key('Tab', False)
+        wait(lambda s: s.get('ui', {}).get('scoreboard_visible') is False,
+             5, 'Actual Tab release dismisses final roster')
         pause(3)
         if observe().get('completion_calls') != 1:
             raise RuntimeError('Completed-match dwell repeated training completion')

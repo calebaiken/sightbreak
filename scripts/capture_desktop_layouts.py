@@ -13,6 +13,7 @@ import ctypes as C
 import hashlib
 import io
 import json
+import math
 import os
 from pathlib import Path
 import platform
@@ -31,6 +32,46 @@ from verify_integration_export import NativeUI
 import toolchain
 
 DEFAULT_SIZES = ("960x540", "1280x720", "1920x1080", "1280x800")
+
+
+
+class LayoutProgressWatchdog:
+    """Reject a stalled authority while preserving real software-renderer time."""
+    def __init__(self, now, stall_seconds=5):
+        self.last_advanced = now
+        self.previous = None
+        self.stall_seconds = stall_seconds
+        self.evidence = {"stall_watchdog_seconds": stall_seconds, "samples": [],
+            "scope": "Software-rendered functional capture timing; not physical-device performance acceptance",
+            "basis": "Retained1920x1080 S7 advanced10.7667 simulation seconds in45 wall seconds; a0.2s simulation observation may take0.84 wall seconds. Five wall seconds allows approximately six such sample periods but rejects a frozen authority."}
+
+    def observe(self, state, now):
+        if state:
+            tick, elapsed = state.get("simulation_tick"), state.get("elapsed")
+            if (state.get("schema") != 1 or state.get("time_scale") != 1
+                    or not isinstance(tick, int) or isinstance(tick, bool) or tick < 0
+                    or not isinstance(elapsed, (int, float)) or isinstance(elapsed, bool)
+                    or not math.isfinite(elapsed) or elapsed < 0):
+                raise RuntimeError("Layout authority clock/schema or normal simulation speed changed")
+            prior = self.previous
+            if prior and (tick < prior["simulation_tick"] or elapsed < prior["elapsed"]):
+                raise RuntimeError("Layout authority clock moved backward")
+            if prior is None or (tick > prior["simulation_tick"] and elapsed > prior["elapsed"]):
+                self.last_advanced = now
+                sample = {"wall_seconds": now, "simulation_tick": tick, "elapsed": elapsed,
+                          "phase": state.get("phase"), "time_left": state.get("time_left"),
+                          "health": state.get("local_actor", {}).get("health")}
+                if len(self.evidence["samples"]) >= 1200:
+                    raise RuntimeError("Layout progress evidence exceeded its bounded sample budget")
+                self.evidence["samples"].append(sample)
+                self.previous = sample
+        if now - self.last_advanced >= self.stall_seconds:
+            raise RuntimeError("Layout authority stopped advancing within the progress watchdog")
+        samples = self.evidence["samples"]
+        if len(samples) > 1:
+            seconds = samples[-1]["wall_seconds"] - samples[0]["wall_seconds"]
+            if seconds > 0:
+                self.evidence["observed_simulation_seconds_per_wall_second"] = (samples[-1]["elapsed"] - samples[0]["elapsed"]) / seconds
 
 
 def sha256(path):
@@ -94,6 +135,7 @@ def capture_case(args, size, display, out, executable, expected, before, whole_d
     logs, processes, held = [], [], set()
     ui = live = None
     ocr_sequence = 0
+    ocr_deadline = None
     trace_directory = out / "offline-trace"
 
     def remaining():
@@ -130,6 +172,8 @@ def capture_case(args, size, display, out, executable, expected, before, whole_d
             if process is not None and process.poll() is not None:
                 raise RuntimeError(label + ": native process exited early")
             if condition():
+                if time.monotonic() > until:
+                    raise TimeoutError(label + ": confirmation exceeded its wall budget")
                 action("observed", label=label)
                 return
             time.sleep(.1)
@@ -146,6 +190,7 @@ def capture_case(args, size, display, out, executable, expected, before, whole_d
 
     def is_live():
         state = read_status()
+        live_progress.observe(state, time.monotonic() - started)
         actor, controls = state.get("local_actor", {}), state.get("ui", {})
         return (state.get("phase") == "live" and actor.get("alive") is True and actor.get("health", 0) > 0
                 and controls.get("screen") == "game" and controls.get("paused") is False)
@@ -193,9 +238,14 @@ def capture_case(args, size, display, out, executable, expected, before, whole_d
             data = io.BytesIO()
             analysis.save(data, format="PNG")
         command = [args.tesseract, "stdin", "stdout", "--psm", "11", "tsv"]
+        ocr_budget = min(12, remaining())
+        if ocr_deadline is not None:
+            ocr_budget = min(ocr_budget, ocr_deadline - time.monotonic())
+            if ocr_budget <= 0:
+                raise TimeoutError("Rendered UI OCR confirmation exceeded its wall budget")
         with (out / "ocr-stderr.log").open("ab") as stderr:
             completed = subprocess.run(command, input=data.getvalue(), stdout=subprocess.PIPE, stderr=stderr,
-                                       timeout=min(12, remaining()))
+                                       timeout=ocr_budget)
         result["ocr_commands"].append({"command": command, "label": label, "exit_code": completed.returncode,
                                        "original_sha256": sha256(raw_path), "analysis_scale": factor})
         if completed.returncode:
@@ -260,6 +310,56 @@ def capture_case(args, size, display, out, executable, expected, before, whole_d
         return any("".join(re.sub("[^A-Z]", "", row["text"].upper()) for row in line) == "FIELDSETTINGS"
                    for line in lines("field-settings-check"))
 
+    def rendered_field_menu():
+        return any("".join(re.sub("[^A-Z]", "", row["text"].upper()) for row in line) == "FIELDMENU"
+                   for line in lines("field-menu-check"))
+
+    def rendered_hud(touch_enabled):
+        groups = lines("touch-hud-check" if touch_enabled else "keyboard-hud-check")
+        text_lines = ["".join(re.sub("[^A-Z]", "", row["text"].upper()) for row in line) for line in groups]
+        words = {re.sub("[^A-Z]", "", row["text"].upper()) for line in groups for row in line}
+        if any("FIELDSETTINGS" in line or "FIELDMENU" in line for line in text_lines):
+            return False
+        if touch_enabled:
+            return {"FIRE", "RELOAD", "USE"}.issubset(words)
+        return ({"TAB", "ROSTER", "ESC"}.issubset(words)
+                and bool({"HEALTH", "ELIMINATED"} & words) and "FIRE" not in words)
+
+    def wait_rendered_ui(paused, label, rendered, seconds=5, touch_enabled=None, scoreboard_visible=None):
+        nonlocal ocr_deadline
+        # Read-only UI flags precede drawing the new screen. Require two actual
+        # drawn frames after observing them, then inspect the native pixels too.
+        first_frames = None
+        final = {}
+        def ready():
+            nonlocal first_frames, final
+            state = read_status()
+            controls = state.get("ui", {})
+            if (controls.get("screen") != "game" or controls.get("paused") is not paused
+                    or touch_enabled is not None and controls.get("touch_controls") is not touch_enabled
+                    or scoreboard_visible is not None and controls.get("scoreboard_visible") is not scoreboard_visible):
+                first_frames = None
+                return False
+            frames = state.get("drawn_frames")
+            if not isinstance(frames, int) or isinstance(frames, bool) or frames < 0:
+                raise RuntimeError("Rendered layout fence requires an actual drawn-frame observation")
+            if first_frames is None:
+                first_frames = frames
+            if frames < first_frames:
+                raise RuntimeError("Rendered layout frame clock moved backward")
+            if frames < first_frames + 2 or not rendered():
+                return False
+            final = state
+            return True
+        previous_deadline = ocr_deadline
+        ocr_deadline = min(deadline, time.monotonic() + seconds)
+        try:
+            wait_for(ready, seconds, label, live)
+        finally:
+            ocr_deadline = previous_deadline
+        action("rendered_ui_fence", label=label, first_drawn_frames=first_frames,
+               final_drawn_frames=final["drawn_frames"], state=final)
+
     try:
         validate_record("linux", before)
         if sha256(executable) != expected:
@@ -303,33 +403,37 @@ def capture_case(args, size, display, out, executable, expected, before, whole_d
         if expect_paused():
             tap("Escape")
             action("explicit_resume_after_initial_focus")
-        wait_for(is_live, 45, "Ordinary living-player live phase", live)
+        # Fifteen simulation seconds of ordinary buy time took more than45
+        # wall seconds on the retained1920x1080 llvmpipe runner. Keep normal
+        # clocks and a finite case deadline; reject true stalls separately.
+        live_progress = LayoutProgressWatchdog(time.monotonic() - started)
+        result["live_phase_wait"] = live_progress.evidence
+        wait_for(is_live, remaining(), "Ordinary living-player live phase", live)
+        result["live_phase_wait"]["live_observed"] = True
         save_capture("02-live-hud")
         key("Tab", True)
         pause(.7)
-        wait_for(rendered_roster, 8, "Actual rendered Tab roster", live)
+        wait_rendered_ui(False, "Actual rendered Tab roster", rendered_roster, seconds=8, scoreboard_visible=True)
         save_capture("03-tab-roster")
         key("Tab", False)
         tap("Escape")
-        wait_for(expect_paused, 4, "Paused field menu", live)
+        wait_rendered_ui(True, "Actual rendered paused field menu", rendered_field_menu)
         save_capture("04-field-menu")
         click_text("SETTINGS", "field-settings-control")
-        wait_for(rendered_field_settings, 8, "Actual rendered field settings", live)
+        wait_rendered_ui(True, "Actual rendered field settings", rendered_field_settings, seconds=8)
         save_capture("05-field-settings")
         if args.touch_toggle and size == (1280, 720):
             toggle_touch(True)
             tap("Escape")  # Explicit native dismissal/resume, not a state call.
-            wait_for(lambda: read_status().get("ui", {}).get("touch_controls") is True
-                     and read_status().get("ui", {}).get("paused") is False, 4, "Explicit touch-HUD resume", live)
+            wait_rendered_ui(False, "Explicit rendered touch-HUD resume", lambda: rendered_hud(True), touch_enabled=True)
             save_capture("06-touch-hud-opt-in")
             tap("Escape")
-            wait_for(expect_paused, 4, "Touch-mode field menu", live)
+            wait_rendered_ui(True, "Actual rendered touch-mode field menu", rendered_field_menu)
             click_text("SETTINGS", "touch-field-settings-control")
-            wait_for(rendered_field_settings, 8, "Actual rendered touch-mode field settings", live)
+            wait_rendered_ui(True, "Actual rendered touch-mode field settings", rendered_field_settings, seconds=8)
             toggle_touch(False)
             tap("Escape")
-            wait_for(lambda: read_status().get("ui", {}).get("touch_controls") is False
-                     and read_status().get("ui", {}).get("paused") is False, 4, "Explicit keyboard/mouse resume", live)
+            wait_rendered_ui(False, "Explicit rendered keyboard/mouse resume", lambda: rendered_hud(False), touch_enabled=False)
             save_capture("07-keyboard-mouse-restored")
             result["touch_toggle"] = "Real settings click persisted on/off; explicit resumes and rendered touch HUD captured"
         if live.poll() is not None:
@@ -401,16 +505,16 @@ def main():
     parser.add_argument("--executable", type=Path, help="Optional extracted Linux ELF; bytes must match the original export receipt")
     parser.add_argument("--sizes", type=size_value, nargs="+", default=[size_value(size) for size in DEFAULT_SIZES])
     parser.add_argument("--display-base", type=int, default=130)
-    parser.add_argument("--case-timeout", type=float, default=90)
-    parser.add_argument("--timeout", type=float, default=400)
+    parser.add_argument("--case-timeout", type=float, default=120)
+    parser.add_argument("--timeout", type=float, default=520)
     parser.add_argument("--xvfb", default=os.environ.get("XVFB_BIN") or shutil.which("Xvfb"))
     parser.add_argument("--tesseract", default=os.environ.get("TESSERACT_BIN") or shutil.which("tesseract"))
     parser.add_argument("--touch-toggle", action="store_true", help="At1280x720, opt in/out through real field settings and capture touch HUD")
     args = parser.parse_args()
     if platform.system() != "Linux" or not args.xvfb or not args.tesseract:
         parser.error("Requires native Linux, Xvfb/XTest, Pillow and Tesseract; other platform layouts remain UNVERIFIED")
-    if not 0 < args.case_timeout <= 90 or not 0 < args.timeout <= 600 or not 1 <= args.display_base <= 1000:
-        parser.error("Use case deadline1–90seconds, whole deadline1–600seconds and display base1–1000")
+    if not 0 < args.case_timeout <= 120 or not 0 < args.timeout <= 600 or not 1 <= args.display_base <= 1000:
+        parser.error("Use case deadline1–120seconds, whole deadline1–600seconds and display base1–1000")
     if len(set(args.sizes)) != len(args.sizes):
         parser.error("Select unique sizes")
     for signum in (signal.SIGTERM, signal.SIGINT):

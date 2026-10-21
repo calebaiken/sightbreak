@@ -450,11 +450,46 @@ def main():
         tap('Escape')
         capture('07d-explicit-resume')
         resumed_hud = read_hud('07d-explicit-resume')
+        tap('Escape')
+        click_text('LEAVE')
+        wait_for(ui.menu_visible, 30, 'Return from offline match', client)
+        capture('08-return-menu')
+        ui.request_close()
+        client.wait(timeout=min(20, remaining()))
+        initial_exit = client.returncode
+        if initial_exit != 0:
+            raise RuntimeError('Initial native client did not exit cleanly')
+        loaded_trace = out / 'restart-profile-trace'
+        reopened = launch('reopened', [str(executable), '--audio-driver', 'Dummy', *flags, '--',
+                                     '--offline-validation', '--offline-trace-dir=' + str(loaded_trace)], env)
+        client = reopened
+        if args.target == 'windows':
+            ui.pid = reopened.pid
+        wait_for(ui.focus_game, 30, 'Reopened native window', reopened)
+        wait_for(ui.menu_visible, 45, 'Reopened native menu', reopened)
+        capture('09-reopened-menu')
+        if json.loads(saved_path.read_text(encoding='utf-8')) != saved:
+            raise RuntimeError('Local settings/training data changed across restart')
+        # Disk equality alone cannot prove load_profile worked. Enter a fresh
+        # ordinary match and observe the profile actually loaded by this process.
+        trace('reopened_deploy_click_before', x=248, y=319)
+        ui.click(248, 319)
+        trace('reopened_deploy_click_after', x=248, y=319)
+        wait_for(lambda: (loaded_trace / 'events.jsonl').is_file(), 30,
+                 'Reopened process loaded profile into ordinary offline match', reopened)
+        with (loaded_trace / 'events.jsonl').open(encoding='utf-8') as stream:
+            loaded = json.loads(stream.readline())
+        if loaded.get('initial_conditions') != 'stock_spawns_teams_random_seeds' or loaded.get('initial_profile') != saved:
+            raise RuntimeError('Reopened process did not load saved settings/training')
+        capture('10-reopened-loaded-settings')
+        # The earlier round already exercises weapons and settings. Prove
+        # focus recovery with a living player in this new, ordinary stock match.
+        initial_trace = loaded_trace
         focus_start = observed(lambda state: state.get('ui', {}).get('focused') is True
                                and state.get('ui', {}).get('paused') is False
                                and state.get('time_scale') == 1
                                and state.get('phase') == 'live' and state.get('local_actor', {}).get('alive') is True,
-                               15, 'Living active player before native focus loss')
+                               60, 'Fresh stock match reaches a living active player before native focus loss', loaded['wall_msec'])
         def require_focus_context(state):
             if (state.get('phase') != 'live' or state.get('round_number') != focus_start['round_number']
                     or state.get('time_scale') != 1
@@ -484,7 +519,7 @@ def main():
             require_focus_context(restored)
             if restored['ui'].get('paused') is not True or restored['ui'].get('mouse_mode') != 0:
                 raise RuntimeError('Native focus restoration resumed gameplay or hid the pointer without explicit resume')
-            capture('07e-restored-focus-still-paused')
+            capture('11a-restored-focus-still-paused')
             tap('Escape')
             guarded = observed(lambda state: state.get('ui', {}).get('paused') is False,
                                10, 'Explicit resume with W and LMB still physically held', restored['wall_msec'])
@@ -520,7 +555,7 @@ def main():
                 guarded = observed(lambda state: True, 10, 'Fresh held-input guard sample ' + str(index + 1),
                                    guarded['wall_msec'])
                 check_guard(guarded, stable_position)
-            capture('07f-resumed-held-input-neutral')
+            capture('11b-resumed-held-input-neutral')
         finally:
             key('w', False)
             button(False)
@@ -537,47 +572,18 @@ def main():
             require_focus_context(moved)
         finally:
             key('w', False)
-        capture('07g-fresh-press-movement')
-        result['native_focus_recovery'] = {'lost': lost, 'restored_paused': restored,
+        capture('11c-fresh-press-movement')
+        result['native_focus_recovery'] = {'scope': 'fresh stock match after settings restart', 'lost': lost, 'restored_paused': restored,
                                            'held_neutral_samples': guard_samples, 'released': released,
                                            'fresh_press_movement': moved}
-        tap('Escape')
-        click_text('LEAVE')
-        wait_for(ui.menu_visible, 30, 'Return from offline match', client)
-        capture('08-return-menu')
-        ui.request_close()
-        client.wait(timeout=min(20, remaining()))
-        initial_exit = client.returncode
-        if initial_exit != 0:
-            raise RuntimeError('Initial native client did not exit cleanly')
-        loaded_trace = out / 'restart-profile-trace'
-        reopened = launch('reopened', [str(executable), '--audio-driver', 'Dummy', *flags, '--',
-                                     '--offline-validation', '--offline-trace-dir=' + str(loaded_trace)], env)
-        client = reopened
-        if args.target == 'windows':
-            ui.pid = reopened.pid
-        wait_for(ui.focus_game, 30, 'Reopened native window', reopened)
-        wait_for(ui.menu_visible, 45, 'Reopened native menu', reopened)
-        capture('09-reopened-menu')
-        if json.loads(saved_path.read_text(encoding='utf-8')) != saved:
-            raise RuntimeError('Local settings/training data changed across restart')
-        # Disk equality alone cannot prove load_profile worked. Enter a fresh
-        # ordinary match and observe the profile actually loaded by this process.
-        trace('reopened_deploy_click_before', x=248, y=319)
-        ui.click(248, 319)
-        trace('reopened_deploy_click_after', x=248, y=319)
-        wait_for(lambda: (loaded_trace / 'events.jsonl').is_file(), 30,
-                 'Reopened process loaded profile into ordinary offline match', reopened)
-        with (loaded_trace / 'events.jsonl').open(encoding='utf-8') as stream:
-            loaded = json.loads(stream.readline())
-        if loaded.get('initial_conditions') != 'stock_spawns_teams_random_seeds' or loaded.get('initial_profile') != saved:
-            raise RuntimeError('Reopened process did not load saved settings/training')
-        capture('10-reopened-loaded-settings')
         ui.request_close()
         reopened.wait(timeout=min(20, remaining()))
         reopened_exit = reopened.returncode
         if reopened_exit or failed((out / 'reopened.log').read_text(encoding='utf-8', errors='replace')):
             raise RuntimeError('Reopened export failed clean shutdown')
+        if json.loads(saved_path.read_text(encoding='utf-8')) != saved:
+            raise RuntimeError('Uncompleted fresh focus-test match changed stored settings/training')
+        result['incomplete_training_unchanged_after_reopened_exit'] = True
         if initial_exit != 0 or failed((out / 'client.log').read_text(encoding='utf-8', errors='replace')):
             raise RuntimeError('Export failed clean termination or native log gate')
         validate_record(args.target, before)

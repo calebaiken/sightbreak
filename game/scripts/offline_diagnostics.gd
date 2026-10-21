@@ -151,6 +151,7 @@ func _snapshot(game) -> Dictionary:
 	if controller != null and controller.has_method("input_capabilities"):
 		state["ui"] = {"screen": controller.screen, "paused": controller.paused,
 			"status_text": controller.status_label.text if is_instance_valid(controller.status_label) else "",
+			"scoreboard_visible": is_instance_valid(controller.score_panel) and controller.score_panel.is_visible_in_tree(),
 			"focused": controller.application_focused, "touch_controls": controller.uses_touch_controls(),
 			"capabilities": controller.input_capabilities(), "mouse_mode": Input.mouse_mode,
 			"window_mode": DisplayServer.window_get_mode(),
