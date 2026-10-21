@@ -1,0 +1,53 @@
+[
+  {
+    "name": "xvfb",
+    "command": [
+      "/workspace/tools/xvfb/usr/bin/Xvfb",
+      ":176",
+      "-screen",
+      "0",
+      "1280x720x24",
+      "-nolisten",
+      "tcp"
+    ],
+    "pid": 34517,
+    "started_seconds": 0.1748270230000344,
+    "exit_code": 0
+  },
+  {
+    "name": "client",
+    "command": [
+      "/workspace/sightbreak-playability/builds/playability-r12/linux/sightbreak.x86_64",
+      "--audio-driver",
+      "Dummy",
+      "--accessibility",
+      "disabled",
+      "--accessibility-driver",
+      "dummy",
+      "--",
+      "--offline-validation",
+      "--offline-trace-dir=/workspace/playability-evidence/linux-offline-r12/initial-offline-trace"
+    ],
+    "pid": 34522,
+    "started_seconds": 0.2810770770001909,
+    "exit_code": 0
+  },
+  {
+    "name": "reopened",
+    "command": [
+      "/workspace/sightbreak-playability/builds/playability-r12/linux/sightbreak.x86_64",
+      "--audio-driver",
+      "Dummy",
+      "--accessibility",
+      "disabled",
+      "--accessibility-driver",
+      "dummy",
+      "--",
+      "--offline-validation",
+      "--offline-trace-dir=/workspace/playability-evidence/linux-offline-r12/restart-profile-trace"
+    ],
+    "pid": 34704,
+    "started_seconds": 109.59285598499991,
+    "exit_code": 0
+  }
+]

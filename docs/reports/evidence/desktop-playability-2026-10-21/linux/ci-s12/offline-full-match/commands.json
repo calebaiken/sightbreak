@@ -1,0 +1,53 @@
+[
+  {
+    "name": "xvfb",
+    "command": [
+      "/usr/bin/Xvfb",
+      ":105",
+      "-screen",
+      "0",
+      "1280x720x24",
+      "-nolisten",
+      "tcp"
+    ],
+    "pid": 4255,
+    "started_seconds": 0.2487329939999654,
+    "exit_code": 0
+  },
+  {
+    "name": "client",
+    "command": [
+      "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/linux/sightbreak.x86_64",
+      "--audio-driver",
+      "Dummy",
+      "--accessibility",
+      "disabled",
+      "--accessibility-driver",
+      "dummy",
+      "--",
+      "--offline-validation",
+      "--offline-trace-dir=/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/offline-full-match/trace"
+    ],
+    "pid": 4260,
+    "started_seconds": 0.35369091699999444,
+    "exit_code": 0
+  },
+  {
+    "name": "reopened",
+    "command": [
+      "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/linux/sightbreak.x86_64",
+      "--audio-driver",
+      "Dummy",
+      "--accessibility",
+      "disabled",
+      "--accessibility-driver",
+      "dummy",
+      "--",
+      "--offline-validation",
+      "--offline-trace-dir=/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/offline-full-match/trace-reopened"
+    ],
+    "pid": 4361,
+    "started_seconds": 562.8326410519999,
+    "exit_code": 0
+  }
+]

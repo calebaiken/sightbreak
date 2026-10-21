@@ -1,0 +1,54 @@
+[
+  {
+    "name": "xvfb",
+    "command": [
+      "/usr/bin/Xvfb",
+      ":101",
+      "-screen",
+      "0",
+      "1280x720x24",
+      "-nolisten",
+      "tcp"
+    ],
+    "pid": 3228,
+    "started_seconds": 0.2882651850000002,
+    "exit_code": 0
+  },
+  {
+    "name": "server",
+    "command": [
+      "/home/runner/work/sightbreak/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "--path",
+      "/home/runner/work/sightbreak/sightbreak/game",
+      "--headless",
+      "--accessibility",
+      "disabled",
+      "--accessibility-driver",
+      "dummy",
+      "--script",
+      "/home/runner/work/sightbreak/sightbreak/scripts/fixtures/export_integration.gd",
+      "--",
+      "--output=/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/native-input"
+    ],
+    "pid": 3233,
+    "started_seconds": 0.3952758670000094,
+    "exit_code": 0
+  },
+  {
+    "name": "client",
+    "command": [
+      "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/linux/sightbreak.x86_64",
+      "--audio-driver",
+      "Dummy",
+      "--position",
+      "0,0",
+      "--accessibility",
+      "disabled",
+      "--accessibility-driver",
+      "dummy"
+    ],
+    "pid": 3243,
+    "started_seconds": 0.9993358220000061,
+    "exit_code": 0
+  }
+]

@@ -1,0 +1,4566 @@
+[
+  {
+    "passed": true,
+    "target": "linux",
+    "host": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "input_schedule": "legacy",
+    "synthetic_fire_capture_delay_seconds": 0,
+    "qualification_note": "Any nonzero synthetic capture pressure is a diagnostic experiment, not physical performance or a spontaneous Windows failure",
+    "artifact_source": {
+      "source_dirty": false,
+      "source_validation_sha256": "dd0006577773e1f0f3bd6aef3e3fd75b68c5e617273572461636fa5910b6ec86",
+      "source_commit": "475e00a7d3129398d04d423a25b1807547987693",
+      "source_game_tree": "45b6c6ea9d3244700e324e90d6df4778ee28d18e",
+      "source_content_sha256": "0c471fb5c52826aa0391db7d4514429d08dc683f53d96e89f9176557d8a6f7ed",
+      "source_game_dirty": false,
+      "target": "linux",
+      "version": "0.3.3-dev",
+      "build_number": 6,
+      "export_completed": true,
+      "built_at_utc": "2026-10-21T21:11:28.193702+00:00",
+      "artifact": {
+        "path": "linux/sightbreak.x86_64",
+        "bytes": 84221848,
+        "sha256": "2281ee62840e238ea03c8c139f34ced51a23129638ea7bd0fbd6895fadaac35b",
+        "mode": 493,
+        "archive_mode": 493
+      },
+      "payload": [
+        {
+          "path": "linux/GODOT-COPYRIGHT.txt",
+          "bytes": 100108,
+          "sha256": "cb1980c88089573bcacd7221d777c689bb8bbd778799f24c27fca0fe5f774d6d",
+          "mode": 420,
+          "archive_mode": 420
+        },
+        {
+          "path": "linux/GODOT-LICENSE.txt",
+          "bytes": 1149,
+          "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+          "mode": 420,
+          "archive_mode": 420
+        },
+        {
+          "path": "linux/sightbreak.sh",
+          "bytes": 125,
+          "sha256": "a0db3f835983003639ef11b7738df7c53ec7ff16eabfb826b6f4b1fce507f411",
+          "mode": 493,
+          "archive_mode": 493
+        },
+        {
+          "path": "linux/sightbreak.x86_64",
+          "bytes": 84221848,
+          "sha256": "2281ee62840e238ea03c8c139f34ced51a23129638ea7bd0fbd6895fadaac35b",
+          "mode": 493,
+          "archive_mode": 493
+        }
+      ]
+    },
+    "authority_source": {
+      "source_dirty": false,
+      "source_validation_sha256": "dd0006577773e1f0f3bd6aef3e3fd75b68c5e617273572461636fa5910b6ec86",
+      "source_commit": "475e00a7d3129398d04d423a25b1807547987693",
+      "source_game_tree": "45b6c6ea9d3244700e324e90d6df4778ee28d18e",
+      "source_content_sha256": "0c471fb5c52826aa0391db7d4514429d08dc683f53d96e89f9176557d8a6f7ed",
+      "source_game_dirty": false
+    },
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "executable_sha256": "2281ee62840e238ea03c8c139f34ced51a23129638ea7bd0fbd6895fadaac35b",
+    "authority": {
+      "first_reload_observation": "reload_input_present_at_first_active_sample",
+      "joined_id": 1,
+      "largest_ack": 201,
+      "lowest_ammo": 24,
+      "passed": true,
+      "prediction_default": false,
+      "protocol": 6,
+      "reload_command_seen": true,
+      "reload_completed": true,
+      "reload_seen": true,
+      "reload_trigger": "native client input",
+      "scope": "source Godot authority fixture; client is actual exported desktop binary driven through native UI; no rewards",
+      "shots": 6
+    },
+    "client_exit": 0,
+    "server_exit": 0,
+    "capture_method": "raw X11 desktop",
+    "rendered_capture_stages": "Require visual inspection; authority timing is not rendered timing",
+    "capture_dimensions": [
+      1280,
+      720
+    ],
+    "reload_trigger": "native client input",
+    "inventory_navigation_captured": true,
+    "desktop_R_key_input": "VERIFIED via server-observed reload command",
+    "movement_aim_input": "Native input delivered; authoritative displacement not measured by this fixture",
+    "exit_method": "completion-driven WM_DELETE_WINDOW",
+    "automation_accessibility": "Disabled with dummy driver and unavailable test-session bus; screen-reader/desktop portals UNVERIFIED",
+    "scope": "Actual exported native desktop client; source Godot authority on loopback; no physical hardware or internet-security acceptance",
+    "cleanup_errors": [],
+    "commands": [
+      {
+        "name": "xvfb",
+        "command": [
+          "/usr/bin/Xvfb",
+          ":101",
+          "-screen",
+          "0",
+          "1280x720x24",
+          "-nolisten",
+          "tcp"
+        ],
+        "pid": 3378,
+        "started_seconds": 0.3102927949998957,
+        "exit_code": 0
+      },
+      {
+        "name": "server",
+        "command": [
+          "/home/runner/work/sightbreak/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+          "--path",
+          "/home/runner/work/sightbreak/sightbreak/game",
+          "--headless",
+          "--accessibility",
+          "disabled",
+          "--accessibility-driver",
+          "dummy",
+          "--script",
+          "/home/runner/work/sightbreak/sightbreak/scripts/fixtures/export_integration.gd",
+          "--",
+          "--output=/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/native-input"
+        ],
+        "pid": 3383,
+        "started_seconds": 0.4174055749999752,
+        "exit_code": 0
+      },
+      {
+        "name": "client",
+        "command": [
+          "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/linux/sightbreak.x86_64",
+          "--audio-driver",
+          "Dummy",
+          "--position",
+          "0,0",
+          "--accessibility",
+          "disabled",
+          "--accessibility-driver",
+          "dummy"
+        ],
+        "pid": 3393,
+        "started_seconds": 1.021926411000095,
+        "exit_code": 0
+      }
+    ],
+    "elapsed_seconds": 34.40225694500009,
+    "input_timing": {
+      "before_firing": {
+        "event": "before_firing",
+        "seconds": 24.06380805899994,
+        "wall_unix_msec": 1792617161081,
+        "driver_held_keys": [],
+        "driver_fire_down": false,
+        "authority": {
+          "ack": 63,
+          "alive": true,
+          "ammo": 30,
+          "authority_elapsed_seconds": 23.15,
+          "fire_input": false,
+          "fixture_elapsed_seconds": 23.1768220000001,
+          "joined_id": 1,
+          "peer_bound": true,
+          "peer_count": 1,
+          "phase": "live",
+          "reason": "periodic",
+          "reload_input": false,
+          "reload_remaining": 0.0,
+          "reserve": 90,
+          "shots": 0,
+          "simulation_tick": 1389,
+          "wall_elapsed_msec": 23150,
+          "wall_unix_msec": 1792617160978,
+          "weapon": "rifle",
+          "weapon_input": ""
+        },
+        "native_state": {
+          "target_window": 4194307,
+          "foreground_window": 4194307,
+          "target_focused": true,
+          "lmb_down": false,
+          "keys_down": {
+            "r": false,
+            "d": false,
+            "w": false
+          },
+          "state_source": "XGetInputFocus/XQueryPointer/XQueryKeymap"
+        }
+      },
+      "fire_button_edges": [
+        {
+          "event": "button_before",
+          "seconds": 24.06493424700011,
+          "wall_unix_msec": 1792617161082,
+          "driver_held_keys": [],
+          "driver_fire_down": false,
+          "down": true,
+          "native_state": {
+            "target_window": 4194307,
+            "foreground_window": 4194307,
+            "target_focused": true,
+            "lmb_down": false,
+            "keys_down": {
+              "r": false,
+              "d": false,
+              "w": false
+            },
+            "state_source": "XGetInputFocus/XQueryPointer/XQueryKeymap"
+          }
+        },
+        {
+          "event": "button_after",
+          "seconds": 24.066039734000015,
+          "wall_unix_msec": 1792617161083,
+          "driver_held_keys": [],
+          "driver_fire_down": true,
+          "down": true,
+          "native_state": {
+            "target_window": 4194307,
+            "foreground_window": 4194307,
+            "target_focused": true,
+            "lmb_down": true,
+            "keys_down": {
+              "r": false,
+              "d": false,
+              "w": false
+            },
+            "state_source": "XGetInputFocus/XQueryPointer/XQueryKeymap"
+          }
+        },
+        {
+          "event": "button_before",
+          "seconds": 24.99308836099999,
+          "wall_unix_msec": 1792617162010,
+          "driver_held_keys": [],
+          "driver_fire_down": true,
+          "down": false,
+          "native_state": {
+            "target_window": 4194307,
+            "foreground_window": 4194307,
+            "target_focused": true,
+            "lmb_down": true,
+            "keys_down": {
+              "r": false,
+              "d": false,
+              "w": false
+            },
+            "state_source": "XGetInputFocus/XQueryPointer/XQueryKeymap"
+          }
+        },
+        {
+          "event": "button_after",
+          "seconds": 24.99436772099989,
+          "wall_unix_msec": 1792617162011,
+          "driver_held_keys": [],
+          "driver_fire_down": false,
+          "down": false,
+          "native_state": {
+            "target_window": 4194307,
+            "foreground_window": 4194307,
+            "target_focused": true,
+            "lmb_down": false,
+            "keys_down": {
+              "r": false,
+              "d": false,
+              "w": false
+            },
+            "state_source": "XGetInputFocus/XQueryPointer/XQueryKeymap"
+          }
+        }
+      ],
+      "reload_key_edges": [
+        {
+          "event": "key_before",
+          "seconds": 25.71753482600002,
+          "wall_unix_msec": 1792617162734,
+          "driver_held_keys": [],
+          "driver_fire_down": false,
+          "key": "r",
+          "down": true,
+          "native_state": {
+            "target_window": 4194307,
+            "foreground_window": 4194307,
+            "target_focused": true,
+            "lmb_down": false,
+            "keys_down": {
+              "r": false,
+              "d": false,
+              "w": false
+            },
+            "state_source": "XGetInputFocus/XQueryPointer/XQueryKeymap"
+          }
+        },
+        {
+          "event": "key_after",
+          "seconds": 25.718821294999998,
+          "wall_unix_msec": 1792617162736,
+          "driver_held_keys": [
+            "r"
+          ],
+          "driver_fire_down": false,
+          "key": "r",
+          "down": true,
+          "native_state": {
+            "target_window": 4194307,
+            "foreground_window": 4194307,
+            "target_focused": true,
+            "lmb_down": false,
+            "keys_down": {
+              "r": true,
+              "d": false,
+              "w": false
+            },
+            "state_source": "XGetInputFocus/XQueryPointer/XQueryKeymap"
+          }
+        },
+        {
+          "event": "key_before",
+          "seconds": 28.220178741999916,
+          "wall_unix_msec": 1792617165237,
+          "driver_held_keys": [
+            "r"
+          ],
+          "driver_fire_down": false,
+          "key": "r",
+          "down": false,
+          "native_state": {
+            "target_window": 4194307,
+            "foreground_window": 4194307,
+            "target_focused": true,
+            "lmb_down": false,
+            "keys_down": {
+              "r": true,
+              "d": false,
+              "w": false
+            },
+            "state_source": "XGetInputFocus/XQueryPointer/XQueryKeymap"
+          }
+        },
+        {
+          "event": "key_after",
+          "seconds": 28.22266135599989,
+          "wall_unix_msec": 1792617165239,
+          "driver_held_keys": [],
+          "driver_fire_down": false,
+          "key": "r",
+          "down": false,
+          "native_state": {
+            "target_window": 4194307,
+            "foreground_window": 4194307,
+            "target_focused": true,
+            "lmb_down": false,
+            "keys_down": {
+              "r": false,
+              "d": false,
+              "w": false
+            },
+            "state_source": "XGetInputFocus/XQueryPointer/XQueryKeymap"
+          }
+        }
+      ],
+      "capture_durations": [
+        {
+          "capture": "01-exported-menu",
+          "seconds": 8.841578069999969,
+          "duration_seconds": 0.19103149599982316
+        },
+        {
+          "capture": "01b-exported-inventory",
+          "seconds": 12.805978113000037,
+          "duration_seconds": 0.03139833700015515
+        },
+        {
+          "capture": "01c-exported-menu-return",
+          "seconds": 13.818309047999946,
+          "duration_seconds": 0.14023248199987393
+        },
+        {
+          "capture": "02-exported-connect",
+          "seconds": 15.953143963000002,
+          "duration_seconds": 0.04908304500008853
+        },
+        {
+          "capture": "03-exported-network-rifle",
+          "seconds": 22.79401566699994,
+          "duration_seconds": 0.26717788300015854
+        },
+        {
+          "capture": "03b-native-move-aim-input",
+          "seconds": 24.062255598000093,
+          "duration_seconds": 0.2551956459999474
+        },
+        {
+          "capture": "04-fire-input",
+          "seconds": 24.991700808999894,
+          "duration_seconds": 0.22264595599995118
+        },
+        {
+          "capture": "05-after-fire-input",
+          "seconds": 25.715825749000032,
+          "duration_seconds": 0.21827824999991208
+        },
+        {
+          "capture": "06-after-authority-reload-start",
+          "seconds": 27.60837355500007,
+          "duration_seconds": 0.2780164020000484
+        },
+        {
+          "capture": "07-after-authority-reload-completion",
+          "seconds": 29.806201366000096,
+          "duration_seconds": 0.2701015570000891
+        },
+        {
+          "capture": "08-settled",
+          "seconds": 33.050278444000014,
+          "duration_seconds": 0.23721600599992598
+        }
+      ],
+      "last_authority_sample": {
+        "ack": 201,
+        "alive": true,
+        "ammo": 30,
+        "authority_elapsed_seconds": 33.0666666666661,
+        "fire_input": false,
+        "fixture_elapsed_seconds": 33.0863740000012,
+        "joined_id": 1,
+        "peer_bound": false,
+        "peer_count": 0,
+        "phase": "live",
+        "reason": "report",
+        "reload_input": false,
+        "reload_remaining": 0.0,
+        "reserve": 84,
+        "shots": 6,
+        "simulation_tick": 1984,
+        "wall_elapsed_msec": 33059,
+        "wall_unix_msec": 1792617170887,
+        "weapon": "rifle",
+        "weapon_input": ""
+      }
+    }
+  },
+  {
+    "passed": false,
+    "scenario": "plant",
+    "target": "linux",
+    "host": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "controller_command": [
+      "/opt/hostedtoolcache/Python/3.12.15/x64/bin/python",
+      "scripts/verify_offline_match.py",
+      "--target",
+      "linux",
+      "--scenario",
+      "plant",
+      "--display",
+      ":103",
+      "--timeout",
+      "180",
+      "--output",
+      "builds/desktop-playability/offline-plant"
+    ],
+    "timeout_seconds": 180.0,
+    "partial_checks": {
+      "native_smoke_deployed": true
+    },
+    "captures": [
+      {
+        "name": "01-main-menu",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 7.873763372999974,
+        "render_freshness": null
+      },
+      {
+        "name": "02-offline-initial-conditions",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 11.160455400000046,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 1,
+          "before_drawn_frames": 4,
+          "ready_drawn_frames": 6,
+          "after_capture_drawn_frames": 6
+        }
+      }
+    ],
+    "source": {
+      "source_dirty": false,
+      "source_validation_sha256": "dd0006577773e1f0f3bd6aef3e3fd75b68c5e617273572461636fa5910b6ec86",
+      "source_commit": "475e00a7d3129398d04d423a25b1807547987693",
+      "source_game_tree": "45b6c6ea9d3244700e324e90d6df4778ee28d18e",
+      "source_content_sha256": "0c471fb5c52826aa0391db7d4514429d08dc683f53d96e89f9176557d8a6f7ed",
+      "source_game_dirty": false
+    },
+    "artifact_source": {
+      "source_dirty": false,
+      "source_validation_sha256": "dd0006577773e1f0f3bd6aef3e3fd75b68c5e617273572461636fa5910b6ec86",
+      "source_commit": "475e00a7d3129398d04d423a25b1807547987693",
+      "source_game_tree": "45b6c6ea9d3244700e324e90d6df4778ee28d18e",
+      "source_content_sha256": "0c471fb5c52826aa0391db7d4514429d08dc683f53d96e89f9176557d8a6f7ed",
+      "source_game_dirty": false,
+      "target": "linux",
+      "version": "0.3.3-dev",
+      "build_number": 6,
+      "export_completed": true,
+      "built_at_utc": "2026-10-21T21:11:28.193702+00:00",
+      "artifact": {
+        "path": "linux/sightbreak.x86_64",
+        "bytes": 84221848,
+        "sha256": "2281ee62840e238ea03c8c139f34ced51a23129638ea7bd0fbd6895fadaac35b",
+        "mode": 493,
+        "archive_mode": 493
+      },
+      "payload": [
+        {
+          "path": "linux/GODOT-COPYRIGHT.txt",
+          "bytes": 100108,
+          "sha256": "cb1980c88089573bcacd7221d777c689bb8bbd778799f24c27fca0fe5f774d6d",
+          "mode": 420,
+          "archive_mode": 420
+        },
+        {
+          "path": "linux/GODOT-LICENSE.txt",
+          "bytes": 1149,
+          "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+          "mode": 420,
+          "archive_mode": 420
+        },
+        {
+          "path": "linux/sightbreak.sh",
+          "bytes": 125,
+          "sha256": "a0db3f835983003639ef11b7738df7c53ec7ff16eabfb826b6f4b1fce507f411",
+          "mode": 493,
+          "archive_mode": 493
+        },
+        {
+          "path": "linux/sightbreak.x86_64",
+          "bytes": 84221848,
+          "sha256": "2281ee62840e238ea03c8c139f34ced51a23129638ea7bd0fbd6895fadaac35b",
+          "mode": 493,
+          "archive_mode": 493
+        }
+      ]
+    },
+    "executable": "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/linux/sightbreak.x86_64",
+    "executable_sha256": "2281ee62840e238ea03c8c139f34ced51a23129638ea7bd0fbd6895fadaac35b",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "initial": {
+      "actor_spread_seeds": {
+        "1": "4075",
+        "10": "4084",
+        "2": "4076",
+        "3": "4077",
+        "4": "4078",
+        "5": "4079",
+        "6": "4080",
+        "7": "4081",
+        "8": "4082",
+        "9": "4083"
+      },
+      "actors": [
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            -15.0,
+            0.0500000007450581,
+            2.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.14159265358979
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 2,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            -2.20000004768372,
+            0.0500000007450581,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.14159265358979
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 3,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            0.0,
+            0.0500000007450581,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.14159265358979
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 4,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            2.20000004768372,
+            0.0500000007450581,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.14159265358979
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 5,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            4.40000009536743,
+            0.0500000007450581,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.14159265358979
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 6,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            13.1999998092651,
+            0.0500000007450581,
+            20.5
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 7,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            15.3999996185303,
+            0.0500000007450581,
+            20.5
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 8,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            17.6000003814697,
+            0.0500000007450581,
+            20.5
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 9,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            19.7999992370605,
+            0.0500000007450581,
+            20.5
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 10,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            22.0,
+            0.0500000007450581,
+            20.5
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        }
+      ],
+      "attack_score": 0,
+      "completion_calls": 0,
+      "defend_score": 0,
+      "difficulty": "normal",
+      "drawn_frames": 3,
+      "elapsed": 0.0,
+      "event": "initial",
+      "event_index": 0,
+      "events_dropped": 0,
+      "initial_conditions": "declared_initial_spawns_side_and_seeds_only",
+      "initial_profile": {
+        "credits": 0,
+        "deaths": 0,
+        "display_name": "Operator",
+        "history": [],
+        "kills": 0,
+        "last_daily": "",
+        "level": 1,
+        "matches": 0,
+        "schema": 1,
+        "scope": "offline_training",
+        "settings": {
+          "crosshair_color": "d9eac6",
+          "crosshair_size": 5.0,
+          "difficulty": 1,
+          "fov": 78.0,
+          "fps_limit": 60,
+          "graphics_quality": 1,
+          "gyro": false,
+          "gyro_sensitivity": 1.2,
+          "hud_positions": {},
+          "hud_scale": 1.0,
+          "reduced_motion": false,
+          "render_scale": 1.0,
+          "sensitivity": 0.0028,
+          "touch_sensitivity": 0.004,
+          "touch_visible": false,
+          "ui_text_scale": 1.0,
+          "volume": 0.65,
+          "window_mode": 0
+        },
+        "wins": 0,
+        "xp": 0
+      },
+      "interaction_progress": 0.0,
+      "local_actor": {
+        "alive": true,
+        "ammo": 15,
+        "assists": 0,
+        "credits": 800,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 100.0,
+        "id": 1,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": 0.0,
+        "position": [
+          -15.0,
+          0.0500000007450581,
+          2.0
+        ],
+        "reload": 0.0,
+        "reserve": 60,
+        "smokes": 1,
+        "team": 0,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": 3.14159265358979
+      },
+      "local_contribution": 0,
+      "local_input": {
+        "fire": false,
+        "interact": false,
+        "move": [
+          0.0,
+          0.0
+        ],
+        "reload": false
+      },
+      "match_seed": "42",
+      "objective_carrier": 1,
+      "objective_position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "objective_state": "carried",
+      "objective_timer": 0.0,
+      "observer_wall_msec": 8152,
+      "phase": "buy",
+      "prediction_enabled": false,
+      "protocol": 6,
+      "round_number": 1,
+      "rules": {
+        "buy_seconds": 15.0,
+        "defuse_seconds": 5.0,
+        "device_seconds": 35.0,
+        "plant_seconds": 3.0,
+        "round_seconds": 100.0,
+        "win_score": 7
+      },
+      "scenario": "plant",
+      "schema": 1,
+      "scope": "debug_offline_read_only_observation",
+      "simulation_tick": 0,
+      "time_left": 15.0,
+      "time_scale": 1.0,
+      "ui": {
+        "capabilities": {
+          "mobile": false,
+          "touchscreen": false
+        },
+        "focused": true,
+        "mouse_mode": 0,
+        "paused": false,
+        "scoreboard_visible": false,
+        "screen": "menu",
+        "status_text": "",
+        "touch_controls": false,
+        "window_mode": 0,
+        "window_size": [
+          1280,
+          720
+        ]
+      },
+      "wall_msec": 8152
+    },
+    "profile_observation_path": "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/offline-plant/state/data/godot/app_userdata/SIGHTBREAK/offline_training.json",
+    "error": "Legitimate native movement did not reach the requested floor position",
+    "initial_exit": null,
+    "reopened_exit": null,
+    "commands": [
+      {
+        "name": "xvfb",
+        "command": [
+          "/usr/bin/Xvfb",
+          ":103",
+          "-screen",
+          "0",
+          "1280x720x24",
+          "-nolisten",
+          "tcp"
+        ],
+        "pid": 3701,
+        "started_seconds": 0.30633943299994826,
+        "exit_code": 0
+      },
+      {
+        "name": "client",
+        "command": [
+          "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/linux/sightbreak.x86_64",
+          "--audio-driver",
+          "Dummy",
+          "--accessibility",
+          "disabled",
+          "--accessibility-driver",
+          "dummy",
+          "--",
+          "--offline-validation",
+          "--offline-trace-dir=/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/offline-plant/trace",
+          "--offline-scenario=plant",
+          "--offline-seed=42"
+        ],
+        "pid": 3706,
+        "started_seconds": 0.41480549900006736,
+        "exit_code": -15
+      }
+    ],
+    "cleanup_errors": [],
+    "elapsed_seconds": 64.16147067299994,
+    "controller_sha256": "40e92ad40f0debb790581f7a0e98dc17b51c6e5974795d6a066d47dcad10c2b2"
+  },
+  {
+    "passed": true,
+    "scenario": "defuse",
+    "target": "linux",
+    "host": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "controller_command": [
+      "/opt/hostedtoolcache/Python/3.12.15/x64/bin/python",
+      "scripts/verify_offline_match.py",
+      "--target",
+      "linux",
+      "--scenario",
+      "defuse",
+      "--display",
+      ":104",
+      "--timeout",
+      "180",
+      "--output",
+      "builds/desktop-playability/offline-defuse"
+    ],
+    "timeout_seconds": 180.0,
+    "partial_checks": {
+      "native_smoke_deployed": true,
+      "ordinary_bot_plant_observed": true,
+      "interrupted_E_reset": true,
+      "player_defuse": true,
+      "objective_resolution_and_next_round": true
+    },
+    "captures": [
+      {
+        "name": "01-main-menu",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 7.872501512999861,
+        "render_freshness": null
+      },
+      {
+        "name": "02-offline-initial-conditions",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 11.271180850000064,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 1,
+          "before_drawn_frames": 4,
+          "ready_drawn_frames": 6,
+          "after_capture_drawn_frames": 6
+        }
+      },
+      {
+        "name": "03-bot-planted-device",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 52.01626241700001,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 1,
+          "before_drawn_frames": 142,
+          "ready_drawn_frames": 144,
+          "after_capture_drawn_frames": 145
+        }
+      },
+      {
+        "name": "03b-legitimate-objective-approach",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 55.90325887900008,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 1,
+          "before_drawn_frames": 154,
+          "ready_drawn_frames": 157,
+          "after_capture_drawn_frames": 157
+        }
+      },
+      {
+        "name": "04-interrupted-hold-reset",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 58.514220313999886,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 1,
+          "before_drawn_frames": 163,
+          "ready_drawn_frames": 165,
+          "after_capture_drawn_frames": 165
+        }
+      },
+      {
+        "name": "05-objective-hold",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 60.17717807300005,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 1,
+          "before_drawn_frames": 167,
+          "ready_drawn_frames": 170,
+          "after_capture_drawn_frames": 170
+        }
+      },
+      {
+        "name": "06-player-objective-completed",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 71.9814474079999,
+        "render_freshness": {
+          "expected_phase": "post",
+          "expected_round": 1,
+          "before_drawn_frames": 204,
+          "ready_drawn_frames": 206,
+          "after_capture_drawn_frames": 207
+        }
+      },
+      {
+        "name": "07-objective-round-resolved",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 72.73600485499992,
+        "render_freshness": {
+          "expected_phase": "post",
+          "expected_round": 1,
+          "before_drawn_frames": 207,
+          "ready_drawn_frames": 209,
+          "after_capture_drawn_frames": 210
+        }
+      },
+      {
+        "name": "08-natural-next-round",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 80.62336973900005,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 2,
+          "before_drawn_frames": 241,
+          "ready_drawn_frames": 243,
+          "after_capture_drawn_frames": 243
+        }
+      },
+      {
+        "name": "09-reopened-menu",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 85.03147485299996,
+        "render_freshness": null
+      }
+    ],
+    "source": {
+      "source_dirty": false,
+      "source_validation_sha256": "dd0006577773e1f0f3bd6aef3e3fd75b68c5e617273572461636fa5910b6ec86",
+      "source_commit": "475e00a7d3129398d04d423a25b1807547987693",
+      "source_game_tree": "45b6c6ea9d3244700e324e90d6df4778ee28d18e",
+      "source_content_sha256": "0c471fb5c52826aa0391db7d4514429d08dc683f53d96e89f9176557d8a6f7ed",
+      "source_game_dirty": false
+    },
+    "artifact_source": {
+      "source_dirty": false,
+      "source_validation_sha256": "dd0006577773e1f0f3bd6aef3e3fd75b68c5e617273572461636fa5910b6ec86",
+      "source_commit": "475e00a7d3129398d04d423a25b1807547987693",
+      "source_game_tree": "45b6c6ea9d3244700e324e90d6df4778ee28d18e",
+      "source_content_sha256": "0c471fb5c52826aa0391db7d4514429d08dc683f53d96e89f9176557d8a6f7ed",
+      "source_game_dirty": false,
+      "target": "linux",
+      "version": "0.3.3-dev",
+      "build_number": 6,
+      "export_completed": true,
+      "built_at_utc": "2026-10-21T21:11:28.193702+00:00",
+      "artifact": {
+        "path": "linux/sightbreak.x86_64",
+        "bytes": 84221848,
+        "sha256": "2281ee62840e238ea03c8c139f34ced51a23129638ea7bd0fbd6895fadaac35b",
+        "mode": 493,
+        "archive_mode": 493
+      },
+      "payload": [
+        {
+          "path": "linux/GODOT-COPYRIGHT.txt",
+          "bytes": 100108,
+          "sha256": "cb1980c88089573bcacd7221d777c689bb8bbd778799f24c27fca0fe5f774d6d",
+          "mode": 420,
+          "archive_mode": 420
+        },
+        {
+          "path": "linux/GODOT-LICENSE.txt",
+          "bytes": 1149,
+          "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+          "mode": 420,
+          "archive_mode": 420
+        },
+        {
+          "path": "linux/sightbreak.sh",
+          "bytes": 125,
+          "sha256": "a0db3f835983003639ef11b7738df7c53ec7ff16eabfb826b6f4b1fce507f411",
+          "mode": 493,
+          "archive_mode": 493
+        },
+        {
+          "path": "linux/sightbreak.x86_64",
+          "bytes": 84221848,
+          "sha256": "2281ee62840e238ea03c8c139f34ced51a23129638ea7bd0fbd6895fadaac35b",
+          "mode": 493,
+          "archive_mode": 493
+        }
+      ]
+    },
+    "executable": "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/linux/sightbreak.x86_64",
+    "executable_sha256": "2281ee62840e238ea03c8c139f34ced51a23129638ea7bd0fbd6895fadaac35b",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "initial": {
+      "actor_spread_seeds": {
+        "1": "4075",
+        "10": "4084",
+        "2": "4076",
+        "3": "4077",
+        "4": "4078",
+        "5": "4079",
+        "6": "4080",
+        "7": "4081",
+        "8": "4082",
+        "9": "4083"
+      },
+      "actors": [
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            -20.0,
+            0.0500000007450581,
+            9.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 2,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            -15.0,
+            0.0500000007450581,
+            10.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.14159265358979
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 3,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            -2.20000004768372,
+            0.0500000007450581,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.14159265358979
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 4,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            0.0,
+            0.0500000007450581,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.14159265358979
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 5,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            2.20000004768372,
+            0.0500000007450581,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.14159265358979
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 6,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            4.40000009536743,
+            0.0500000007450581,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.14159265358979
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 7,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            15.3999996185303,
+            0.0500000007450581,
+            -20.5
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 8,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            17.6000003814697,
+            0.0500000007450581,
+            -20.5
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 9,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            19.7999992370605,
+            0.0500000007450581,
+            -20.5
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 10,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            22.0,
+            0.0500000007450581,
+            -20.5
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        }
+      ],
+      "attack_score": 0,
+      "completion_calls": 0,
+      "defend_score": 0,
+      "difficulty": "normal",
+      "drawn_frames": 3,
+      "elapsed": 0.0,
+      "event": "initial",
+      "event_index": 0,
+      "events_dropped": 0,
+      "initial_conditions": "declared_initial_spawns_side_and_seeds_only",
+      "initial_profile": {
+        "credits": 0,
+        "deaths": 0,
+        "display_name": "Operator",
+        "history": [],
+        "kills": 0,
+        "last_daily": "",
+        "level": 1,
+        "matches": 0,
+        "schema": 1,
+        "scope": "offline_training",
+        "settings": {
+          "crosshair_color": "d9eac6",
+          "crosshair_size": 5.0,
+          "difficulty": 1,
+          "fov": 78.0,
+          "fps_limit": 60,
+          "graphics_quality": 1,
+          "gyro": false,
+          "gyro_sensitivity": 1.2,
+          "hud_positions": {},
+          "hud_scale": 1.0,
+          "reduced_motion": false,
+          "render_scale": 1.0,
+          "sensitivity": 0.0028,
+          "touch_sensitivity": 0.004,
+          "touch_visible": false,
+          "ui_text_scale": 1.0,
+          "volume": 0.65,
+          "window_mode": 0
+        },
+        "wins": 0,
+        "xp": 0
+      },
+      "interaction_progress": 0.0,
+      "local_actor": {
+        "alive": true,
+        "ammo": 15,
+        "assists": 0,
+        "credits": 800,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 100.0,
+        "id": 1,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": 0.0,
+        "position": [
+          -20.0,
+          0.0500000007450581,
+          9.0
+        ],
+        "reload": 0.0,
+        "reserve": 60,
+        "smokes": 1,
+        "team": 1,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": 0.0
+      },
+      "local_contribution": 0,
+      "local_input": {
+        "fire": false,
+        "interact": false,
+        "move": [
+          0.0,
+          0.0
+        ],
+        "reload": false
+      },
+      "match_seed": "42",
+      "objective_carrier": 2,
+      "objective_position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "objective_state": "carried",
+      "objective_timer": 0.0,
+      "observer_wall_msec": 8185,
+      "phase": "buy",
+      "prediction_enabled": false,
+      "protocol": 6,
+      "round_number": 1,
+      "rules": {
+        "buy_seconds": 15.0,
+        "defuse_seconds": 5.0,
+        "device_seconds": 35.0,
+        "plant_seconds": 3.0,
+        "round_seconds": 100.0,
+        "win_score": 7
+      },
+      "scenario": "defuse",
+      "schema": 1,
+      "scope": "debug_offline_read_only_observation",
+      "simulation_tick": 0,
+      "time_left": 15.0,
+      "time_scale": 1.0,
+      "ui": {
+        "capabilities": {
+          "mobile": false,
+          "touchscreen": false
+        },
+        "focused": true,
+        "mouse_mode": 0,
+        "paused": false,
+        "scoreboard_visible": false,
+        "screen": "menu",
+        "status_text": "",
+        "touch_controls": false,
+        "window_mode": 0,
+        "window_size": [
+          1280,
+          720
+        ]
+      },
+      "wall_msec": 8185
+    },
+    "profile_observation_path": "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/offline-defuse/state/data/godot/app_userdata/SIGHTBREAK/offline_training.json",
+    "bot_planter_id": 2,
+    "approach_origin": [
+      -20.0,
+      0.000156247988343239,
+      9.0
+    ],
+    "approach_end": [
+      -16.600025177002,
+      0.000156247988343239,
+      9.0
+    ],
+    "approach_distance": 3.3999748229980007,
+    "objective_hold_wall_budget_seconds": 15,
+    "objective_hold": {
+      "command_wall_unix_msec": 1792617524461,
+      "command_elapsed": 21.6500000000001,
+      "command_simulation_tick": 1299,
+      "samples": [
+        {
+          "elapsed": 21.8666666666667,
+          "simulation_tick": 1312,
+          "progress": 0.0266666666666667
+        },
+        {
+          "elapsed": 22.3,
+          "simulation_tick": 1338,
+          "progress": 0.113333333333333
+        },
+        {
+          "elapsed": 22.5166666666667,
+          "simulation_tick": 1351,
+          "progress": 0.156666666666667
+        },
+        {
+          "elapsed": 22.7333333333333,
+          "simulation_tick": 1364,
+          "progress": 0.2
+        },
+        {
+          "elapsed": 22.95,
+          "simulation_tick": 1377,
+          "progress": 0.243333333333333
+        },
+        {
+          "elapsed": 23.1666666666666,
+          "simulation_tick": 1390,
+          "progress": 0.286666666666667
+        },
+        {
+          "elapsed": 23.3833333333333,
+          "simulation_tick": 1403,
+          "progress": 0.33
+        },
+        {
+          "elapsed": 23.5999999999999,
+          "simulation_tick": 1416,
+          "progress": 0.373333333333333
+        },
+        {
+          "elapsed": 23.8166666666666,
+          "simulation_tick": 1429,
+          "progress": 0.416666666666666
+        },
+        {
+          "elapsed": 24.0333333333332,
+          "simulation_tick": 1442,
+          "progress": 0.459999999999999
+        },
+        {
+          "elapsed": 24.2499999999999,
+          "simulation_tick": 1455,
+          "progress": 0.503333333333333
+        },
+        {
+          "elapsed": 24.4666666666666,
+          "simulation_tick": 1468,
+          "progress": 0.546666666666666
+        },
+        {
+          "elapsed": 24.6833333333332,
+          "simulation_tick": 1481,
+          "progress": 0.589999999999999
+        },
+        {
+          "elapsed": 24.8999999999999,
+          "simulation_tick": 1494,
+          "progress": 0.633333333333332
+        },
+        {
+          "elapsed": 25.1166666666665,
+          "simulation_tick": 1507,
+          "progress": 0.676666666666665
+        },
+        {
+          "elapsed": 25.3333333333332,
+          "simulation_tick": 1520,
+          "progress": 0.719999999999998
+        },
+        {
+          "elapsed": 25.5499999999998,
+          "simulation_tick": 1533,
+          "progress": 0.763333333333332
+        },
+        {
+          "elapsed": 25.7666666666665,
+          "simulation_tick": 1546,
+          "progress": 0.806666666666665
+        },
+        {
+          "elapsed": 25.9833333333331,
+          "simulation_tick": 1559,
+          "progress": 0.849999999999998
+        },
+        {
+          "elapsed": 26.1999999999998,
+          "simulation_tick": 1572,
+          "progress": 0.893333333333331
+        },
+        {
+          "elapsed": 26.4166666666664,
+          "simulation_tick": 1585,
+          "progress": 0.936666666666664
+        },
+        {
+          "elapsed": 26.6333333333331,
+          "simulation_tick": 1598,
+          "progress": 0.979999999999998
+        }
+      ],
+      "diagnostic_start_inferred_from_normalized_progress": 21.733333333333366,
+      "diagnostic_native_command_to_observed_completion_wall_seconds": 12.716194677999965,
+      "input_started": {
+        "elapsed": 21.75,
+        "event": "local_interact_input",
+        "event_index": 16,
+        "held": true,
+        "interaction_progress": 0.00333333333333333,
+        "observer_wall_msec": 58303,
+        "round_number": 1,
+        "simulation_tick": 1305
+      },
+      "completion_notification": {
+        "elapsed": 26.7499999999998,
+        "event": "notification",
+        "event_index": 17,
+        "message": "Defenders win \u2022 Relay device defused",
+        "observer_wall_msec": 70563,
+        "simulation_tick": 1605
+      },
+      "simulation_seconds": 4.999999999999801,
+      "simulation_ticks": 300,
+      "one_tick_tolerance_seconds": 0.016666666666666666
+    },
+    "objective_transition": "defused",
+    "local_contribution_before": 0,
+    "local_contribution_after": 1,
+    "credits_before": 800,
+    "credits_after": 3800,
+    "funds_explanation": "Objective300 plus ordinary round award in the same observed transition",
+    "objective_resolution": "defused",
+    "progression_settings_restart_equal": true,
+    "exit_method": "WM_DELETE_WINDOW",
+    "capture_method": "raw X11 desktop",
+    "scope": "Actual exported native OS input and explicit read-only debug/offline observation; no physical-device/input-feel acceptance",
+    "initial_exit": 0,
+    "reopened_exit": 0,
+    "commands": [
+      {
+        "name": "xvfb",
+        "command": [
+          "/usr/bin/Xvfb",
+          ":104",
+          "-screen",
+          "0",
+          "1280x720x24",
+          "-nolisten",
+          "tcp"
+        ],
+        "pid": 3778,
+        "started_seconds": 0.30494869099993593,
+        "exit_code": 0
+      },
+      {
+        "name": "client",
+        "command": [
+          "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/linux/sightbreak.x86_64",
+          "--audio-driver",
+          "Dummy",
+          "--accessibility",
+          "disabled",
+          "--accessibility-driver",
+          "dummy",
+          "--",
+          "--offline-validation",
+          "--offline-trace-dir=/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/offline-defuse/trace",
+          "--offline-scenario=defuse",
+          "--offline-seed=42"
+        ],
+        "pid": 3783,
+        "started_seconds": 0.4116007410000293,
+        "exit_code": 0
+      },
+      {
+        "name": "reopened",
+        "command": [
+          "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/linux/sightbreak.x86_64",
+          "--audio-driver",
+          "Dummy",
+          "--accessibility",
+          "disabled",
+          "--accessibility-driver",
+          "dummy"
+        ],
+        "pid": 3821,
+        "started_seconds": 83.34126064899988,
+        "exit_code": 0
+      }
+    ],
+    "cleanup_errors": [],
+    "elapsed_seconds": 85.964189842,
+    "controller_sha256": "40e92ad40f0debb790581f7a0e98dc17b51c6e5974795d6a066d47dcad10c2b2"
+  },
+  {
+    "passed": true,
+    "scenario": "full-match",
+    "target": "linux",
+    "host": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "controller_command": [
+      "/opt/hostedtoolcache/Python/3.12.15/x64/bin/python",
+      "scripts/verify_offline_match.py",
+      "--target",
+      "linux",
+      "--scenario",
+      "full-match",
+      "--display",
+      ":105",
+      "--timeout",
+      "1800",
+      "--output",
+      "builds/desktop-playability/offline-full-match"
+    ],
+    "timeout_seconds": 1800.0,
+    "partial_checks": {
+      "standard_live_move_aim_fire_reload": true,
+      "normal_full_match_and_single_training_record": true,
+      "earned_profile_loaded_after_restart": true
+    },
+    "captures": [
+      {
+        "name": "01-main-menu",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 7.811075998999968,
+        "render_freshness": null
+      },
+      {
+        "name": "02-offline-initial-conditions",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 11.200155010999879,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 1,
+          "before_drawn_frames": 4,
+          "ready_drawn_frames": 6,
+          "after_capture_drawn_frames": 6
+        }
+      },
+      {
+        "name": "03-real-move-aim",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 46.643309331999944,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 1,
+          "before_drawn_frames": 118,
+          "ready_drawn_frames": 121,
+          "after_capture_drawn_frames": 121
+        }
+      },
+      {
+        "name": "04-real-fire",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 49.82421594099992,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 1,
+          "before_drawn_frames": 123,
+          "ready_drawn_frames": 126,
+          "after_capture_drawn_frames": 126
+        }
+      },
+      {
+        "name": "05-real-reload-start",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 51.40730044199995,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 1,
+          "before_drawn_frames": 128,
+          "ready_drawn_frames": 131,
+          "after_capture_drawn_frames": 131
+        }
+      },
+      {
+        "name": "06-real-reload-completed",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 54.44583251900008,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 1,
+          "before_drawn_frames": 139,
+          "ready_drawn_frames": 141,
+          "after_capture_drawn_frames": 141
+        }
+      },
+      {
+        "name": "round-01-live",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 55.429222597000035,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 1,
+          "before_drawn_frames": 141,
+          "ready_drawn_frames": 144,
+          "after_capture_drawn_frames": 144
+        }
+      },
+      {
+        "name": "round-01-post",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 89.95122150099996,
+        "render_freshness": {
+          "expected_phase": "post",
+          "expected_round": 1,
+          "before_drawn_frames": 236,
+          "ready_drawn_frames": 238,
+          "after_capture_drawn_frames": 238
+        }
+      },
+      {
+        "name": "round-02-buy",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 103.61969570400015,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 2,
+          "before_drawn_frames": 274,
+          "ready_drawn_frames": 277,
+          "after_capture_drawn_frames": 277
+        }
+      },
+      {
+        "name": "round-02-live",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 137.73421332899989,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 2,
+          "before_drawn_frames": 386,
+          "ready_drawn_frames": 388,
+          "after_capture_drawn_frames": 388
+        }
+      },
+      {
+        "name": "round-02-post",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 167.1377930829999,
+        "render_freshness": {
+          "expected_phase": "post",
+          "expected_round": 2,
+          "before_drawn_frames": 472,
+          "ready_drawn_frames": 474,
+          "after_capture_drawn_frames": 474
+        }
+      },
+      {
+        "name": "round-03-buy",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 179.80210910200003,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 3,
+          "before_drawn_frames": 509,
+          "ready_drawn_frames": 511,
+          "after_capture_drawn_frames": 511
+        }
+      },
+      {
+        "name": "round-03-live",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 214.7691420340002,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 3,
+          "before_drawn_frames": 622,
+          "ready_drawn_frames": 625,
+          "after_capture_drawn_frames": 625
+        }
+      },
+      {
+        "name": "round-03-post",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 231.95076382199977,
+        "render_freshness": {
+          "expected_phase": "post",
+          "expected_round": 3,
+          "before_drawn_frames": 670,
+          "ready_drawn_frames": 672,
+          "after_capture_drawn_frames": 672
+        }
+      },
+      {
+        "name": "round-04-buy",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 245.66518141300003,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 4,
+          "before_drawn_frames": 708,
+          "ready_drawn_frames": 711,
+          "after_capture_drawn_frames": 711
+        }
+      },
+      {
+        "name": "round-04-live",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 280.0321369479998,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 4,
+          "before_drawn_frames": 821,
+          "ready_drawn_frames": 823,
+          "after_capture_drawn_frames": 823
+        }
+      },
+      {
+        "name": "round-04-post",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 337.14727118300016,
+        "render_freshness": {
+          "expected_phase": "post",
+          "expected_round": 4,
+          "before_drawn_frames": 976,
+          "ready_drawn_frames": 979,
+          "after_capture_drawn_frames": 979
+        }
+      },
+      {
+        "name": "round-05-buy",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 348.5059049050001,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 5,
+          "before_drawn_frames": 1013,
+          "ready_drawn_frames": 1015,
+          "after_capture_drawn_frames": 1015
+        }
+      },
+      {
+        "name": "round-05-live",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 382.71290330700003,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 5,
+          "before_drawn_frames": 1125,
+          "ready_drawn_frames": 1127,
+          "after_capture_drawn_frames": 1127
+        }
+      },
+      {
+        "name": "round-05-post",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 418.7616489789998,
+        "render_freshness": {
+          "expected_phase": "post",
+          "expected_round": 5,
+          "before_drawn_frames": 1228,
+          "ready_drawn_frames": 1231,
+          "after_capture_drawn_frames": 1231
+        }
+      },
+      {
+        "name": "round-06-buy",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 431.27862464300006,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 6,
+          "before_drawn_frames": 1267,
+          "ready_drawn_frames": 1270,
+          "after_capture_drawn_frames": 1270
+        }
+      },
+      {
+        "name": "round-06-live",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 465.58555939999997,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 6,
+          "before_drawn_frames": 1379,
+          "ready_drawn_frames": 1382,
+          "after_capture_drawn_frames": 1382
+        }
+      },
+      {
+        "name": "round-06-post",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 506.122521669,
+        "render_freshness": {
+          "expected_phase": "post",
+          "expected_round": 6,
+          "before_drawn_frames": 1486,
+          "ready_drawn_frames": 1488,
+          "after_capture_drawn_frames": 1488
+        }
+      },
+      {
+        "name": "round-07-buy",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 519.4601459300002,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 7,
+          "before_drawn_frames": 1523,
+          "ready_drawn_frames": 1525,
+          "after_capture_drawn_frames": 1525
+        }
+      },
+      {
+        "name": "round-07-live",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 550.0940655240001,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 7,
+          "before_drawn_frames": 1636,
+          "ready_drawn_frames": 1639,
+          "after_capture_drawn_frames": 1639
+        }
+      },
+      {
+        "name": "round-07-post",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 746.278979618,
+        "render_freshness": {
+          "expected_phase": "post",
+          "expected_round": 7,
+          "before_drawn_frames": 2237,
+          "ready_drawn_frames": 2240,
+          "after_capture_drawn_frames": 2240
+        }
+      },
+      {
+        "name": "round-08-buy",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 756.408603806,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 8,
+          "before_drawn_frames": 2274,
+          "ready_drawn_frames": 2276,
+          "after_capture_drawn_frames": 2276
+        }
+      },
+      {
+        "name": "round-08-live",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 786.685622297,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 8,
+          "before_drawn_frames": 2386,
+          "ready_drawn_frames": 2388,
+          "after_capture_drawn_frames": 2388
+        }
+      },
+      {
+        "name": "round-08-post",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 804.4531967819998,
+        "render_freshness": {
+          "expected_phase": "post",
+          "expected_round": 8,
+          "before_drawn_frames": 2443,
+          "ready_drawn_frames": 2445,
+          "after_capture_drawn_frames": 2445
+        }
+      },
+      {
+        "name": "round-09-buy",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 817.5016546920001,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 9,
+          "before_drawn_frames": 2481,
+          "ready_drawn_frames": 2484,
+          "after_capture_drawn_frames": 2484
+        }
+      },
+      {
+        "name": "round-09-live",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 847.7256300539998,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 9,
+          "before_drawn_frames": 2593,
+          "ready_drawn_frames": 2596,
+          "after_capture_drawn_frames": 2596
+        }
+      },
+      {
+        "name": "round-09-post",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 864.1636624990001,
+        "render_freshness": {
+          "expected_phase": "post",
+          "expected_round": 9,
+          "before_drawn_frames": 2648,
+          "ready_drawn_frames": 2650,
+          "after_capture_drawn_frames": 2651
+        }
+      },
+      {
+        "name": "round-10-buy",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 874.4921847850001,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 10,
+          "before_drawn_frames": 2685,
+          "ready_drawn_frames": 2687,
+          "after_capture_drawn_frames": 2687
+        }
+      },
+      {
+        "name": "round-10-live",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 904.6699789599998,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 10,
+          "before_drawn_frames": 2797,
+          "ready_drawn_frames": 2799,
+          "after_capture_drawn_frames": 2799
+        }
+      },
+      {
+        "name": "round-10-post",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 930.2181938379999,
+        "render_freshness": {
+          "expected_phase": "post",
+          "expected_round": 10,
+          "before_drawn_frames": 2879,
+          "ready_drawn_frames": 2882,
+          "after_capture_drawn_frames": 2882
+        }
+      },
+      {
+        "name": "round-11-buy",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 942.8101461470001,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 11,
+          "before_drawn_frames": 2916,
+          "ready_drawn_frames": 2918,
+          "after_capture_drawn_frames": 2918
+        }
+      },
+      {
+        "name": "round-11-live",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 972.8551887529998,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 11,
+          "before_drawn_frames": 3028,
+          "ready_drawn_frames": 3030,
+          "after_capture_drawn_frames": 3030
+        }
+      },
+      {
+        "name": "round-11-post",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 1004.798179373,
+        "render_freshness": {
+          "expected_phase": "post",
+          "expected_round": 11,
+          "before_drawn_frames": 3126,
+          "ready_drawn_frames": 3129,
+          "after_capture_drawn_frames": 3129
+        }
+      },
+      {
+        "name": "round-12-buy",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 1016.826601881,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 12,
+          "before_drawn_frames": 3165,
+          "ready_drawn_frames": 3168,
+          "after_capture_drawn_frames": 3168
+        }
+      },
+      {
+        "name": "round-12-live",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 1047.0032048869998,
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 12,
+          "before_drawn_frames": 3277,
+          "ready_drawn_frames": 3280,
+          "after_capture_drawn_frames": 3280
+        }
+      },
+      {
+        "name": "round-12-match_over",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 1069.727464769,
+        "render_freshness": {
+          "expected_phase": "match_over",
+          "expected_round": 12,
+          "before_drawn_frames": 3350,
+          "ready_drawn_frames": 3352,
+          "after_capture_drawn_frames": 3352
+        }
+      },
+      {
+        "name": "07-operation-complete",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 1070.8734267230002,
+        "render_freshness": {
+          "expected_phase": "match_over",
+          "expected_round": 12,
+          "before_drawn_frames": 3352,
+          "ready_drawn_frames": 3355,
+          "after_capture_drawn_frames": 3355
+        }
+      },
+      {
+        "name": "08-final-scoreboard",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 1073.744561465,
+        "render_freshness": {
+          "expected_phase": "match_over",
+          "expected_round": 12,
+          "before_drawn_frames": 3360,
+          "ready_drawn_frames": 3363,
+          "after_capture_drawn_frames": 3363
+        }
+      },
+      {
+        "name": "09-reopened-menu",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 1081.679246489,
+        "render_freshness": null
+      },
+      {
+        "name": "10-reopened-earned-profile-stock-match",
+        "dimensions": [
+          1280,
+          720
+        ],
+        "seconds": 1083.8203509989999,
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 1,
+          "before_drawn_frames": 4,
+          "ready_drawn_frames": 6,
+          "after_capture_drawn_frames": 6
+        }
+      }
+    ],
+    "source": {
+      "source_dirty": false,
+      "source_validation_sha256": "dd0006577773e1f0f3bd6aef3e3fd75b68c5e617273572461636fa5910b6ec86",
+      "source_commit": "475e00a7d3129398d04d423a25b1807547987693",
+      "source_game_tree": "45b6c6ea9d3244700e324e90d6df4778ee28d18e",
+      "source_content_sha256": "0c471fb5c52826aa0391db7d4514429d08dc683f53d96e89f9176557d8a6f7ed",
+      "source_game_dirty": false
+    },
+    "artifact_source": {
+      "source_dirty": false,
+      "source_validation_sha256": "dd0006577773e1f0f3bd6aef3e3fd75b68c5e617273572461636fa5910b6ec86",
+      "source_commit": "475e00a7d3129398d04d423a25b1807547987693",
+      "source_game_tree": "45b6c6ea9d3244700e324e90d6df4778ee28d18e",
+      "source_content_sha256": "0c471fb5c52826aa0391db7d4514429d08dc683f53d96e89f9176557d8a6f7ed",
+      "source_game_dirty": false,
+      "target": "linux",
+      "version": "0.3.3-dev",
+      "build_number": 6,
+      "export_completed": true,
+      "built_at_utc": "2026-10-21T21:11:28.193702+00:00",
+      "artifact": {
+        "path": "linux/sightbreak.x86_64",
+        "bytes": 84221848,
+        "sha256": "2281ee62840e238ea03c8c139f34ced51a23129638ea7bd0fbd6895fadaac35b",
+        "mode": 493,
+        "archive_mode": 493
+      },
+      "payload": [
+        {
+          "path": "linux/GODOT-COPYRIGHT.txt",
+          "bytes": 100108,
+          "sha256": "cb1980c88089573bcacd7221d777c689bb8bbd778799f24c27fca0fe5f774d6d",
+          "mode": 420,
+          "archive_mode": 420
+        },
+        {
+          "path": "linux/GODOT-LICENSE.txt",
+          "bytes": 1149,
+          "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+          "mode": 420,
+          "archive_mode": 420
+        },
+        {
+          "path": "linux/sightbreak.sh",
+          "bytes": 125,
+          "sha256": "a0db3f835983003639ef11b7738df7c53ec7ff16eabfb826b6f4b1fce507f411",
+          "mode": 493,
+          "archive_mode": 493
+        },
+        {
+          "path": "linux/sightbreak.x86_64",
+          "bytes": 84221848,
+          "sha256": "2281ee62840e238ea03c8c139f34ced51a23129638ea7bd0fbd6895fadaac35b",
+          "mode": 493,
+          "archive_mode": 493
+        }
+      ]
+    },
+    "executable": "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/linux/sightbreak.x86_64",
+    "executable_sha256": "2281ee62840e238ea03c8c139f34ced51a23129638ea7bd0fbd6895fadaac35b",
+    "engine": "4.7.2.stable.official.ed1daf0bf",
+    "initial": {
+      "actor_spread_seeds": {
+        "1": "-4772376434772418549",
+        "10": "4991119517874441017",
+        "2": "-801740921836157997",
+        "3": "-2662844195781813748",
+        "4": "-9023214882406933980",
+        "5": "8594277721812006098",
+        "6": "-8571245713673739455",
+        "7": "-8668184582764683930",
+        "8": "5410370556866824371",
+        "9": "7766046059212728129"
+      },
+      "actors": [
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            -4.40000009536743,
+            0.0500000007450581,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.14159265358979
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 2,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            -2.20000004768372,
+            0.0500000007450581,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.14159265358979
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 3,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            0.0,
+            0.0500000007450581,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.14159265358979
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 4,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            2.20000004768372,
+            0.0500000007450581,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.14159265358979
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 5,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            4.40000009536743,
+            0.0500000007450581,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 3.14159265358979
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 6,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            -4.40000009536743,
+            0.0500000007450581,
+            20.5
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 7,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            -2.20000004768372,
+            0.0500000007450581,
+            20.5
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 8,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            0.0,
+            0.0500000007450581,
+            20.5
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 9,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            2.20000004768372,
+            0.0500000007450581,
+            20.5
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        },
+        {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 10,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            4.40000009536743,
+            0.0500000007450581,
+            20.5
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        }
+      ],
+      "attack_score": 0,
+      "completion_calls": 0,
+      "defend_score": 0,
+      "difficulty": "normal",
+      "drawn_frames": 3,
+      "elapsed": 0.0,
+      "event": "initial",
+      "event_index": 0,
+      "events_dropped": 0,
+      "initial_conditions": "stock_spawns_teams_random_seeds",
+      "initial_profile": {
+        "credits": 0,
+        "deaths": 0,
+        "display_name": "Operator",
+        "history": [],
+        "kills": 0,
+        "last_daily": "",
+        "level": 1,
+        "matches": 0,
+        "schema": 1,
+        "scope": "offline_training",
+        "settings": {
+          "crosshair_color": "d9eac6",
+          "crosshair_size": 5.0,
+          "difficulty": 1,
+          "fov": 78.0,
+          "fps_limit": 60,
+          "graphics_quality": 1,
+          "gyro": false,
+          "gyro_sensitivity": 1.2,
+          "hud_positions": {},
+          "hud_scale": 1.0,
+          "reduced_motion": false,
+          "render_scale": 1.0,
+          "sensitivity": 0.0028,
+          "touch_sensitivity": 0.004,
+          "touch_visible": false,
+          "ui_text_scale": 1.0,
+          "volume": 0.65,
+          "window_mode": 0
+        },
+        "wins": 0,
+        "xp": 0
+      },
+      "interaction_progress": 0.0,
+      "local_actor": {
+        "alive": true,
+        "ammo": 15,
+        "assists": 0,
+        "credits": 800,
+        "deaths": 0,
+        "grenades": 1,
+        "health": 100.0,
+        "id": 1,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": 0.0,
+        "position": [
+          -4.40000009536743,
+          0.0500000007450581,
+          -21.0
+        ],
+        "reload": 0.0,
+        "reserve": 60,
+        "smokes": 1,
+        "team": 0,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": 3.14159265358979
+      },
+      "local_contribution": 0,
+      "local_input": {
+        "fire": false,
+        "interact": false,
+        "move": [
+          0.0,
+          0.0
+        ],
+        "reload": false
+      },
+      "match_seed": "-1260506836550613569",
+      "objective_carrier": 1,
+      "objective_position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "objective_state": "carried",
+      "objective_timer": 0.0,
+      "observer_wall_msec": 8152,
+      "phase": "buy",
+      "prediction_enabled": false,
+      "protocol": 6,
+      "round_number": 1,
+      "rules": {
+        "buy_seconds": 15.0,
+        "defuse_seconds": 5.0,
+        "device_seconds": 35.0,
+        "plant_seconds": 3.0,
+        "round_seconds": 100.0,
+        "win_score": 7
+      },
+      "scenario": "standard",
+      "schema": 1,
+      "scope": "debug_offline_read_only_observation",
+      "simulation_tick": 0,
+      "time_left": 15.0,
+      "time_scale": 1.0,
+      "ui": {
+        "capabilities": {
+          "mobile": false,
+          "touchscreen": false
+        },
+        "focused": true,
+        "mouse_mode": 0,
+        "paused": false,
+        "scoreboard_visible": false,
+        "screen": "menu",
+        "status_text": "",
+        "touch_controls": false,
+        "window_mode": 0,
+        "window_size": [
+          1280,
+          720
+        ]
+      },
+      "wall_msec": 8152
+    },
+    "profile_observation_path": "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/offline-full-match/state/data/godot/app_userdata/SIGHTBREAK/offline_training.json",
+    "initial_displacement": 0.3811106681823704,
+    "fired_ammunition": [
+      14,
+      60
+    ],
+    "reloaded_ammunition": [
+      15,
+      59
+    ],
+    "summary": {
+      "assists": 0,
+      "attack_score": 5,
+      "deaths": 12,
+      "defend_score": 7,
+      "draw": false,
+      "duration": 446.283333333256,
+      "kills": 0,
+      "objectives": 0,
+      "offline": true,
+      "rounds": 12,
+      "scoreboard": [
+        {
+          "alive": true,
+          "assists": 6,
+          "bot": true,
+          "credits": 9000,
+          "deaths": 8,
+          "id": 2,
+          "kills": 14,
+          "local": false,
+          "name": "Sable",
+          "objectives": 0,
+          "team": 1
+        },
+        {
+          "alive": false,
+          "assists": 6,
+          "bot": true,
+          "credits": 8800,
+          "deaths": 8,
+          "id": 6,
+          "kills": 13,
+          "local": false,
+          "name": "Ember",
+          "objectives": 0,
+          "team": 0
+        },
+        {
+          "alive": true,
+          "assists": 3,
+          "bot": true,
+          "credits": 9000,
+          "deaths": 8,
+          "id": 5,
+          "kills": 12,
+          "local": false,
+          "name": "Vale",
+          "objectives": 0,
+          "team": 1
+        },
+        {
+          "alive": true,
+          "assists": 3,
+          "bot": true,
+          "credits": 9000,
+          "deaths": 7,
+          "id": 4,
+          "kills": 10,
+          "local": false,
+          "name": "Cipher",
+          "objectives": 0,
+          "team": 1
+        },
+        {
+          "alive": false,
+          "assists": 7,
+          "bot": true,
+          "credits": 7000,
+          "deaths": 9,
+          "id": 8,
+          "kills": 9,
+          "local": false,
+          "name": "Slate",
+          "objectives": 0,
+          "team": 0
+        },
+        {
+          "alive": false,
+          "assists": 8,
+          "bot": true,
+          "credits": 7600,
+          "deaths": 8,
+          "id": 9,
+          "kills": 8,
+          "local": false,
+          "name": "Morrow",
+          "objectives": 0,
+          "team": 0
+        },
+        {
+          "alive": false,
+          "assists": 7,
+          "bot": true,
+          "credits": 7300,
+          "deaths": 8,
+          "id": 10,
+          "kills": 8,
+          "local": false,
+          "name": "Echo",
+          "objectives": 0,
+          "team": 0
+        },
+        {
+          "alive": false,
+          "assists": 3,
+          "bot": true,
+          "credits": 9000,
+          "deaths": 8,
+          "id": 7,
+          "kills": 7,
+          "local": false,
+          "name": "Kestrel",
+          "objectives": 0,
+          "team": 0
+        },
+        {
+          "alive": false,
+          "assists": 9,
+          "bot": true,
+          "credits": 8800,
+          "deaths": 10,
+          "id": 3,
+          "kills": 5,
+          "local": false,
+          "name": "Rook",
+          "objectives": 0,
+          "team": 1
+        },
+        {
+          "alive": false,
+          "assists": 0,
+          "bot": false,
+          "credits": 9000,
+          "deaths": 12,
+          "id": 1,
+          "kills": 0,
+          "local": true,
+          "name": "Operator",
+          "objectives": 0,
+          "team": 1
+        }
+      ],
+      "won": true
+    },
+    "training_before": {
+      "credits": 0,
+      "deaths": 0,
+      "display_name": "Operator",
+      "history": [],
+      "kills": 0,
+      "last_daily": "",
+      "level": 1,
+      "matches": 0,
+      "schema": 1,
+      "scope": "offline_training",
+      "settings": {
+        "crosshair_color": "d9eac6",
+        "crosshair_size": 5.0,
+        "difficulty": 1,
+        "fov": 78.0,
+        "fps_limit": 60,
+        "graphics_quality": 1,
+        "gyro": false,
+        "gyro_sensitivity": 1.2,
+        "hud_positions": {},
+        "hud_scale": 1.0,
+        "reduced_motion": false,
+        "render_scale": 1.0,
+        "sensitivity": 0.0028,
+        "touch_sensitivity": 0.004,
+        "touch_visible": false,
+        "ui_text_scale": 1.0,
+        "volume": 0.65,
+        "window_mode": 0
+      },
+      "wins": 0,
+      "xp": 0
+    },
+    "training_after": {
+      "credits": 325,
+      "deaths": 12,
+      "display_name": "Operator",
+      "history": [
+        {
+          "assists": 0,
+          "attack_score": 5,
+          "credits_earned": 325,
+          "deaths": 12,
+          "defend_score": 7,
+          "draw": false,
+          "duration": 446.283333333256,
+          "kills": 0,
+          "objectives": 0,
+          "offline": true,
+          "rounds": 12,
+          "scoreboard": [
+            {
+              "alive": true,
+              "assists": 6,
+              "bot": true,
+              "credits": 9000,
+              "deaths": 8,
+              "id": 2,
+              "kills": 14,
+              "local": false,
+              "name": "Sable",
+              "objectives": 0,
+              "team": 1
+            },
+            {
+              "alive": false,
+              "assists": 6,
+              "bot": true,
+              "credits": 8800,
+              "deaths": 8,
+              "id": 6,
+              "kills": 13,
+              "local": false,
+              "name": "Ember",
+              "objectives": 0,
+              "team": 0
+            },
+            {
+              "alive": true,
+              "assists": 3,
+              "bot": true,
+              "credits": 9000,
+              "deaths": 8,
+              "id": 5,
+              "kills": 12,
+              "local": false,
+              "name": "Vale",
+              "objectives": 0,
+              "team": 1
+            },
+            {
+              "alive": true,
+              "assists": 3,
+              "bot": true,
+              "credits": 9000,
+              "deaths": 7,
+              "id": 4,
+              "kills": 10,
+              "local": false,
+              "name": "Cipher",
+              "objectives": 0,
+              "team": 1
+            },
+            {
+              "alive": false,
+              "assists": 7,
+              "bot": true,
+              "credits": 7000,
+              "deaths": 9,
+              "id": 8,
+              "kills": 9,
+              "local": false,
+              "name": "Slate",
+              "objectives": 0,
+              "team": 0
+            },
+            {
+              "alive": false,
+              "assists": 8,
+              "bot": true,
+              "credits": 7600,
+              "deaths": 8,
+              "id": 9,
+              "kills": 8,
+              "local": false,
+              "name": "Morrow",
+              "objectives": 0,
+              "team": 0
+            },
+            {
+              "alive": false,
+              "assists": 7,
+              "bot": true,
+              "credits": 7300,
+              "deaths": 8,
+              "id": 10,
+              "kills": 8,
+              "local": false,
+              "name": "Echo",
+              "objectives": 0,
+              "team": 0
+            },
+            {
+              "alive": false,
+              "assists": 3,
+              "bot": true,
+              "credits": 9000,
+              "deaths": 8,
+              "id": 7,
+              "kills": 7,
+              "local": false,
+              "name": "Kestrel",
+              "objectives": 0,
+              "team": 0
+            },
+            {
+              "alive": false,
+              "assists": 9,
+              "bot": true,
+              "credits": 8800,
+              "deaths": 10,
+              "id": 3,
+              "kills": 5,
+              "local": false,
+              "name": "Rook",
+              "objectives": 0,
+              "team": 1
+            },
+            {
+              "alive": false,
+              "assists": 0,
+              "bot": false,
+              "credits": 9000,
+              "deaths": 12,
+              "id": 1,
+              "kills": 0,
+              "local": true,
+              "name": "Operator",
+              "objectives": 0,
+              "team": 1
+            }
+          ],
+          "time": "2026-10-21T21:37:00",
+          "won": true
+        }
+      ],
+      "kills": 0,
+      "last_daily": "2026-10-21",
+      "level": 1,
+      "matches": 1,
+      "schema": 1,
+      "scope": "offline_training",
+      "settings": {
+        "crosshair_color": "d9eac6",
+        "crosshair_size": 5.0,
+        "difficulty": 1,
+        "fov": 78.0,
+        "fps_limit": 60,
+        "graphics_quality": 1,
+        "gyro": false,
+        "gyro_sensitivity": 1.2,
+        "hud_positions": {},
+        "hud_scale": 1.0,
+        "reduced_motion": false,
+        "render_scale": 1.0,
+        "sensitivity": 0.0028,
+        "touch_sensitivity": 0.004,
+        "touch_visible": false,
+        "ui_text_scale": 1.0,
+        "volume": 0.65,
+        "window_mode": 0
+      },
+      "wins": 1,
+      "xp": 120
+    },
+    "expected_xp": 120,
+    "expected_credits_earned": 325,
+    "natural_rounds": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "final_roster_visibility": {
+      "actors": [
+        {
+          "alive": false,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 9000,
+          "deaths": 12,
+          "grenades": 1,
+          "health": 0.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            -4.40000009536743,
+            0.000195310218259692,
+            15.0600433349609
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": 0.0
+        },
+        {
+          "alive": true,
+          "ammo": 17,
+          "assists": 6,
+          "credits": 9000,
+          "deaths": 8,
+          "grenades": 1,
+          "health": 32.4916426086426,
+          "id": 2,
+          "inventory": [
+            "sidearm",
+            "smg",
+            "marksman",
+            "rifle"
+          ],
+          "kills": 14,
+          "pitch": 0.0,
+          "position": [
+            -1.86426758766174,
+            0.000195310218259692,
+            6.23276329040527
+          ],
+          "reload": 0.0,
+          "reserve": 90,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "rifle",
+          "yaw": -0.151762172579765
+        },
+        {
+          "alive": false,
+          "ammo": 4,
+          "assists": 9,
+          "credits": 8800,
+          "deaths": 10,
+          "grenades": 1,
+          "health": 0.0,
+          "id": 3,
+          "inventory": [
+            "sidearm",
+            "smg",
+            "rifle",
+            "marksman"
+          ],
+          "kills": 5,
+          "pitch": -0.0113353477790952,
+          "position": [
+            2.23443102836609,
+            0.00094237586017698,
+            13.3389167785645
+          ],
+          "reload": 0.0,
+          "reserve": 32,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "marksman",
+          "yaw": 0.15277898311615
+        },
+        {
+          "alive": true,
+          "ammo": 24,
+          "assists": 3,
+          "credits": 9000,
+          "deaths": 7,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 4,
+          "inventory": [
+            "sidearm",
+            "smg",
+            "rifle",
+            "marksman"
+          ],
+          "kills": 10,
+          "pitch": -0.0170210245996714,
+          "position": [
+            -1.12209808826447,
+            0.00094237586017698,
+            1.54773712158203
+          ],
+          "reload": 0.0,
+          "reserve": 90,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "rifle",
+          "yaw": 0.15908919274807
+        },
+        {
+          "alive": true,
+          "ammo": 2,
+          "assists": 3,
+          "credits": 9000,
+          "deaths": 8,
+          "grenades": 1,
+          "health": 8.10510208129883,
+          "id": 5,
+          "inventory": [
+            "sidearm",
+            "smg",
+            "rifle",
+            "marksman"
+          ],
+          "kills": 12,
+          "pitch": -0.00957135576754808,
+          "position": [
+            0.0245535746216774,
+            0.00094237586017698,
+            17.9931411743164
+          ],
+          "reload": 0.0,
+          "reserve": 32,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "marksman",
+          "yaw": 0.117017559707165
+        },
+        {
+          "alive": false,
+          "ammo": 28,
+          "assists": 6,
+          "credits": 8800,
+          "deaths": 8,
+          "grenades": 1,
+          "health": 0.0,
+          "id": 6,
+          "inventory": [
+            "sidearm",
+            "smg",
+            "marksman",
+            "rifle"
+          ],
+          "kills": 13,
+          "pitch": -0.0515636317431927,
+          "position": [
+            -11.1697463989258,
+            -0.000745564699172974,
+            7.07156038284302
+          ],
+          "reload": 0.0,
+          "reserve": 90,
+          "smokes": 0,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "rifle",
+          "yaw": -1.96505546569824
+        },
+        {
+          "alive": false,
+          "ammo": 30,
+          "assists": 3,
+          "credits": 9000,
+          "deaths": 8,
+          "grenades": 1,
+          "health": 0.0,
+          "id": 7,
+          "inventory": [
+            "sidearm",
+            "smg",
+            "rifle"
+          ],
+          "kills": 7,
+          "pitch": -0.0169485304504633,
+          "position": [
+            -4.15209150314331,
+            0.000195310218259692,
+            -18.8329677581787
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "rifle",
+          "yaw": -2.99678182601929
+        },
+        {
+          "alive": false,
+          "ammo": 5,
+          "assists": 7,
+          "credits": 7000,
+          "deaths": 9,
+          "grenades": 1,
+          "health": 0.0,
+          "id": 8,
+          "inventory": [
+            "sidearm",
+            "smg",
+            "rifle",
+            "marksman"
+          ],
+          "kills": 9,
+          "pitch": -0.0117010809481144,
+          "position": [
+            -0.523461103439331,
+            0.000195310218259692,
+            -18.3306427001953
+          ],
+          "reload": 0.0,
+          "reserve": 32,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "marksman",
+          "yaw": 3.09415292739868
+        },
+        {
+          "alive": false,
+          "ammo": 7,
+          "assists": 8,
+          "credits": 7600,
+          "deaths": 8,
+          "grenades": 1,
+          "health": 0.0,
+          "id": 9,
+          "inventory": [
+            "sidearm",
+            "smg",
+            "rifle",
+            "marksman"
+          ],
+          "kills": 8,
+          "pitch": -0.0313672572374344,
+          "position": [
+            1.08198010921478,
+            0.000195310218259692,
+            -18.519998550415
+          ],
+          "reload": 0.0,
+          "reserve": 32,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "marksman",
+          "yaw": 2.98555254936218
+        },
+        {
+          "alive": false,
+          "ammo": 7,
+          "assists": 7,
+          "credits": 7300,
+          "deaths": 8,
+          "grenades": 1,
+          "health": 0.0,
+          "id": 10,
+          "inventory": [
+            "sidearm",
+            "smg",
+            "rifle",
+            "marksman"
+          ],
+          "kills": 8,
+          "pitch": -0.0093088410794735,
+          "position": [
+            3.04692554473877,
+            -0.000745564699172974,
+            -18.6401081085205
+          ],
+          "reload": 0.0,
+          "reserve": 32,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "marksman",
+          "yaw": 2.96684050559998
+        }
+      ],
+      "attack_score": 5,
+      "completion_calls": 1,
+      "defend_score": 7,
+      "drawn_frames": 3360,
+      "elapsed": 447.616666666588,
+      "events_dropped": 0,
+      "interaction_progress": 0.0,
+      "local_actor": {
+        "alive": false,
+        "ammo": 15,
+        "assists": 0,
+        "credits": 9000,
+        "deaths": 12,
+        "grenades": 1,
+        "health": 0.0,
+        "id": 1,
+        "inventory": [
+          "sidearm"
+        ],
+        "kills": 0,
+        "pitch": 0.0,
+        "position": [
+          -4.40000009536743,
+          0.000195310218259692,
+          15.0600433349609
+        ],
+        "reload": 0.0,
+        "reserve": 60,
+        "smokes": 1,
+        "team": 1,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "sidearm",
+        "yaw": 0.0
+      },
+      "local_contribution": 0,
+      "local_input": {
+        "fire": false,
+        "interact": false,
+        "move": [
+          0.0,
+          0.0
+        ],
+        "reload": false
+      },
+      "objective_carrier": 0,
+      "objective_position": [
+        -11.1697463989258,
+        -0.000745564699172974,
+        7.07156038284302
+      ],
+      "objective_state": "dropped",
+      "objective_timer": 0.0,
+      "phase": "match_over",
+      "round_number": 12,
+      "scenario": "standard",
+      "schema": 1,
+      "scope": "debug_offline_read_only_observation",
+      "simulation_tick": 26857,
+      "summary": {
+        "assists": 0,
+        "attack_score": 5,
+        "deaths": 12,
+        "defend_score": 7,
+        "draw": false,
+        "duration": 446.283333333256,
+        "kills": 0,
+        "objectives": 0,
+        "offline": true,
+        "rounds": 12,
+        "scoreboard": [
+          {
+            "alive": true,
+            "assists": 6,
+            "bot": true,
+            "credits": 9000,
+            "deaths": 8,
+            "id": 2,
+            "kills": 14,
+            "local": false,
+            "name": "Sable",
+            "objectives": 0,
+            "team": 1
+          },
+          {
+            "alive": false,
+            "assists": 6,
+            "bot": true,
+            "credits": 8800,
+            "deaths": 8,
+            "id": 6,
+            "kills": 13,
+            "local": false,
+            "name": "Ember",
+            "objectives": 0,
+            "team": 0
+          },
+          {
+            "alive": true,
+            "assists": 3,
+            "bot": true,
+            "credits": 9000,
+            "deaths": 8,
+            "id": 5,
+            "kills": 12,
+            "local": false,
+            "name": "Vale",
+            "objectives": 0,
+            "team": 1
+          },
+          {
+            "alive": true,
+            "assists": 3,
+            "bot": true,
+            "credits": 9000,
+            "deaths": 7,
+            "id": 4,
+            "kills": 10,
+            "local": false,
+            "name": "Cipher",
+            "objectives": 0,
+            "team": 1
+          },
+          {
+            "alive": false,
+            "assists": 7,
+            "bot": true,
+            "credits": 7000,
+            "deaths": 9,
+            "id": 8,
+            "kills": 9,
+            "local": false,
+            "name": "Slate",
+            "objectives": 0,
+            "team": 0
+          },
+          {
+            "alive": false,
+            "assists": 8,
+            "bot": true,
+            "credits": 7600,
+            "deaths": 8,
+            "id": 9,
+            "kills": 8,
+            "local": false,
+            "name": "Morrow",
+            "objectives": 0,
+            "team": 0
+          },
+          {
+            "alive": false,
+            "assists": 7,
+            "bot": true,
+            "credits": 7300,
+            "deaths": 8,
+            "id": 10,
+            "kills": 8,
+            "local": false,
+            "name": "Echo",
+            "objectives": 0,
+            "team": 0
+          },
+          {
+            "alive": false,
+            "assists": 3,
+            "bot": true,
+            "credits": 9000,
+            "deaths": 8,
+            "id": 7,
+            "kills": 7,
+            "local": false,
+            "name": "Kestrel",
+            "objectives": 0,
+            "team": 0
+          },
+          {
+            "alive": false,
+            "assists": 9,
+            "bot": true,
+            "credits": 8800,
+            "deaths": 10,
+            "id": 3,
+            "kills": 5,
+            "local": false,
+            "name": "Rook",
+            "objectives": 0,
+            "team": 1
+          },
+          {
+            "alive": false,
+            "assists": 0,
+            "bot": false,
+            "credits": 9000,
+            "deaths": 12,
+            "id": 1,
+            "kills": 0,
+            "local": true,
+            "name": "Operator",
+            "objectives": 0,
+            "team": 1
+          }
+        ],
+        "won": true
+      },
+      "time_left": 5.0,
+      "time_scale": 1.0,
+      "training_after": {
+        "credits": 325,
+        "deaths": 12,
+        "display_name": "Operator",
+        "history": [
+          {
+            "assists": 0,
+            "attack_score": 5,
+            "credits_earned": 325,
+            "deaths": 12,
+            "defend_score": 7,
+            "draw": false,
+            "duration": 446.283333333256,
+            "kills": 0,
+            "objectives": 0,
+            "offline": true,
+            "rounds": 12,
+            "scoreboard": [
+              {
+                "alive": true,
+                "assists": 6,
+                "bot": true,
+                "credits": 9000,
+                "deaths": 8,
+                "id": 2,
+                "kills": 14,
+                "local": false,
+                "name": "Sable",
+                "objectives": 0,
+                "team": 1
+              },
+              {
+                "alive": false,
+                "assists": 6,
+                "bot": true,
+                "credits": 8800,
+                "deaths": 8,
+                "id": 6,
+                "kills": 13,
+                "local": false,
+                "name": "Ember",
+                "objectives": 0,
+                "team": 0
+              },
+              {
+                "alive": true,
+                "assists": 3,
+                "bot": true,
+                "credits": 9000,
+                "deaths": 8,
+                "id": 5,
+                "kills": 12,
+                "local": false,
+                "name": "Vale",
+                "objectives": 0,
+                "team": 1
+              },
+              {
+                "alive": true,
+                "assists": 3,
+                "bot": true,
+                "credits": 9000,
+                "deaths": 7,
+                "id": 4,
+                "kills": 10,
+                "local": false,
+                "name": "Cipher",
+                "objectives": 0,
+                "team": 1
+              },
+              {
+                "alive": false,
+                "assists": 7,
+                "bot": true,
+                "credits": 7000,
+                "deaths": 9,
+                "id": 8,
+                "kills": 9,
+                "local": false,
+                "name": "Slate",
+                "objectives": 0,
+                "team": 0
+              },
+              {
+                "alive": false,
+                "assists": 8,
+                "bot": true,
+                "credits": 7600,
+                "deaths": 8,
+                "id": 9,
+                "kills": 8,
+                "local": false,
+                "name": "Morrow",
+                "objectives": 0,
+                "team": 0
+              },
+              {
+                "alive": false,
+                "assists": 7,
+                "bot": true,
+                "credits": 7300,
+                "deaths": 8,
+                "id": 10,
+                "kills": 8,
+                "local": false,
+                "name": "Echo",
+                "objectives": 0,
+                "team": 0
+              },
+              {
+                "alive": false,
+                "assists": 3,
+                "bot": true,
+                "credits": 9000,
+                "deaths": 8,
+                "id": 7,
+                "kills": 7,
+                "local": false,
+                "name": "Kestrel",
+                "objectives": 0,
+                "team": 0
+              },
+              {
+                "alive": false,
+                "assists": 9,
+                "bot": true,
+                "credits": 8800,
+                "deaths": 10,
+                "id": 3,
+                "kills": 5,
+                "local": false,
+                "name": "Rook",
+                "objectives": 0,
+                "team": 1
+              },
+              {
+                "alive": false,
+                "assists": 0,
+                "bot": false,
+                "credits": 9000,
+                "deaths": 12,
+                "id": 1,
+                "kills": 0,
+                "local": true,
+                "name": "Operator",
+                "objectives": 0,
+                "team": 1
+              }
+            ],
+            "time": "2026-10-21T21:37:00",
+            "won": true
+          }
+        ],
+        "kills": 0,
+        "last_daily": "2026-10-21",
+        "level": 1,
+        "matches": 1,
+        "schema": 1,
+        "scope": "offline_training",
+        "settings": {
+          "crosshair_color": "d9eac6",
+          "crosshair_size": 5.0,
+          "difficulty": 1,
+          "fov": 78.0,
+          "fps_limit": 60,
+          "graphics_quality": 1,
+          "gyro": false,
+          "gyro_sensitivity": 1.2,
+          "hud_positions": {},
+          "hud_scale": 1.0,
+          "reduced_motion": false,
+          "render_scale": 1.0,
+          "sensitivity": 0.0028,
+          "touch_sensitivity": 0.004,
+          "touch_visible": false,
+          "ui_text_scale": 1.0,
+          "volume": 0.65,
+          "window_mode": 0
+        },
+        "wins": 1,
+        "xp": 120
+      },
+      "ui": {
+        "capabilities": {
+          "mobile": false,
+          "touchscreen": false
+        },
+        "focused": true,
+        "mouse_mode": 2,
+        "paused": false,
+        "scoreboard_visible": true,
+        "screen": "game",
+        "status_text": "Defenders win \u2022 Attackers eliminated",
+        "touch_controls": false,
+        "window_mode": 0,
+        "window_size": [
+          1280,
+          720
+        ]
+      },
+      "wall_msec": 1072027
+    },
+    "reopened_initial_profile": {
+      "credits": 325,
+      "deaths": 12,
+      "display_name": "Operator",
+      "history": [
+        {
+          "assists": 0.0,
+          "attack_score": 5.0,
+          "credits_earned": 325.0,
+          "deaths": 12.0,
+          "defend_score": 7.0,
+          "draw": false,
+          "duration": 446.283333333256,
+          "kills": 0.0,
+          "objectives": 0.0,
+          "offline": true,
+          "rounds": 12.0,
+          "scoreboard": [
+            {
+              "alive": true,
+              "assists": 6.0,
+              "bot": true,
+              "credits": 9000.0,
+              "deaths": 8.0,
+              "id": 2.0,
+              "kills": 14.0,
+              "local": false,
+              "name": "Sable",
+              "objectives": 0.0,
+              "team": 1.0
+            },
+            {
+              "alive": false,
+              "assists": 6.0,
+              "bot": true,
+              "credits": 8800.0,
+              "deaths": 8.0,
+              "id": 6.0,
+              "kills": 13.0,
+              "local": false,
+              "name": "Ember",
+              "objectives": 0.0,
+              "team": 0.0
+            },
+            {
+              "alive": true,
+              "assists": 3.0,
+              "bot": true,
+              "credits": 9000.0,
+              "deaths": 8.0,
+              "id": 5.0,
+              "kills": 12.0,
+              "local": false,
+              "name": "Vale",
+              "objectives": 0.0,
+              "team": 1.0
+            },
+            {
+              "alive": true,
+              "assists": 3.0,
+              "bot": true,
+              "credits": 9000.0,
+              "deaths": 7.0,
+              "id": 4.0,
+              "kills": 10.0,
+              "local": false,
+              "name": "Cipher",
+              "objectives": 0.0,
+              "team": 1.0
+            },
+            {
+              "alive": false,
+              "assists": 7.0,
+              "bot": true,
+              "credits": 7000.0,
+              "deaths": 9.0,
+              "id": 8.0,
+              "kills": 9.0,
+              "local": false,
+              "name": "Slate",
+              "objectives": 0.0,
+              "team": 0.0
+            },
+            {
+              "alive": false,
+              "assists": 8.0,
+              "bot": true,
+              "credits": 7600.0,
+              "deaths": 8.0,
+              "id": 9.0,
+              "kills": 8.0,
+              "local": false,
+              "name": "Morrow",
+              "objectives": 0.0,
+              "team": 0.0
+            },
+            {
+              "alive": false,
+              "assists": 7.0,
+              "bot": true,
+              "credits": 7300.0,
+              "deaths": 8.0,
+              "id": 10.0,
+              "kills": 8.0,
+              "local": false,
+              "name": "Echo",
+              "objectives": 0.0,
+              "team": 0.0
+            },
+            {
+              "alive": false,
+              "assists": 3.0,
+              "bot": true,
+              "credits": 9000.0,
+              "deaths": 8.0,
+              "id": 7.0,
+              "kills": 7.0,
+              "local": false,
+              "name": "Kestrel",
+              "objectives": 0.0,
+              "team": 0.0
+            },
+            {
+              "alive": false,
+              "assists": 9.0,
+              "bot": true,
+              "credits": 8800.0,
+              "deaths": 10.0,
+              "id": 3.0,
+              "kills": 5.0,
+              "local": false,
+              "name": "Rook",
+              "objectives": 0.0,
+              "team": 1.0
+            },
+            {
+              "alive": false,
+              "assists": 0.0,
+              "bot": false,
+              "credits": 9000.0,
+              "deaths": 12.0,
+              "id": 1.0,
+              "kills": 0.0,
+              "local": true,
+              "name": "Operator",
+              "objectives": 0.0,
+              "team": 1.0
+            }
+          ],
+          "time": "2026-10-21T21:37:00",
+          "won": true
+        }
+      ],
+      "kills": 0,
+      "last_daily": "2026-10-21",
+      "level": 1,
+      "matches": 1,
+      "schema": 1,
+      "scope": "offline_training",
+      "settings": {
+        "crosshair_color": "d9eac6",
+        "crosshair_size": 5.0,
+        "difficulty": 1.0,
+        "fov": 78.0,
+        "fps_limit": 60.0,
+        "graphics_quality": 1.0,
+        "gyro": false,
+        "gyro_sensitivity": 1.2,
+        "hud_positions": {},
+        "hud_scale": 1.0,
+        "reduced_motion": false,
+        "render_scale": 1.0,
+        "sensitivity": 0.0028,
+        "touch_sensitivity": 0.004,
+        "touch_visible": false,
+        "ui_text_scale": 1.0,
+        "volume": 0.65,
+        "window_mode": 0
+      },
+      "wins": 1,
+      "xp": 120
+    },
+    "progression_settings_restart_equal": true,
+    "exit_method": "WM_DELETE_WINDOW",
+    "capture_method": "raw X11 desktop",
+    "scope": "Actual exported native OS input and explicit read-only debug/offline observation; no physical-device/input-feel acceptance",
+    "initial_exit": 0,
+    "reopened_exit": 0,
+    "commands": [
+      {
+        "name": "xvfb",
+        "command": [
+          "/usr/bin/Xvfb",
+          ":105",
+          "-screen",
+          "0",
+          "1280x720x24",
+          "-nolisten",
+          "tcp"
+        ],
+        "pid": 3906,
+        "started_seconds": 0.3071923089999018,
+        "exit_code": 0
+      },
+      {
+        "name": "client",
+        "command": [
+          "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/linux/sightbreak.x86_64",
+          "--audio-driver",
+          "Dummy",
+          "--accessibility",
+          "disabled",
+          "--accessibility-driver",
+          "dummy",
+          "--",
+          "--offline-validation",
+          "--offline-trace-dir=/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/offline-full-match/trace"
+        ],
+        "pid": 3911,
+        "started_seconds": 0.41385377000005974,
+        "exit_code": 0
+      },
+      {
+        "name": "reopened",
+        "command": [
+          "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/linux/sightbreak.x86_64",
+          "--audio-driver",
+          "Dummy",
+          "--accessibility",
+          "disabled",
+          "--accessibility-driver",
+          "dummy",
+          "--",
+          "--offline-validation",
+          "--offline-trace-dir=/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/offline-full-match/trace-reopened"
+        ],
+        "pid": 4049,
+        "started_seconds": 1079.970232403,
+        "exit_code": 0
+      }
+    ],
+    "cleanup_errors": [],
+    "elapsed_seconds": 1084.65547436,
+    "controller_sha256": "40e92ad40f0debb790581f7a0e98dc17b51c6e5974795d6a066d47dcad10c2b2"
+  }
+]

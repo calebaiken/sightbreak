@@ -1,4 +1,12 @@
-# Desktop alpha build commands — 0.3.2-dev (build 5)
+# Desktop development build commands — 0.3.3-dev (build 6)
+
+Current source identities, native results, package hashes and remaining blockers
+are in the [playability report](reports/DESKTOP_PLAYABILITY_REPORT.md). The local
+five-target development package set is bound to frozen `e3c1194`; later native-host S14
+bundles have their own source receipts and qualification outcomes. Export, verify
+and package one exact clean source in a new
+build root. Distribute the named inner game ZIP; Actions diagnostic bundles also
+contain logs and test state and are not game distributions.
 
 This continuation adds Windows x86_64 and macOS Universal 2 to the existing Linux,
 Android and iOS project. Godot remains **4.7.2.stable.official.ed1daf0bf**. The
@@ -55,10 +63,17 @@ the field menu, including in-match settings. Focus loss opens a menu and require
 explicit resume; offline training suspends while network authority continues.
 Windowed, borderless fullscreen and exclusive fullscreen are saved in settings;
 exclusive mode may map to normal fullscreen on some platforms/compositors.
-Mouse look uses unscaled screen motion. An inherited touchscreen-desktop defect
-still enables the touch HUD and suppresses mouse capture based on touchscreen
-availability; those laptops need a platform-selection correction and native test.
-Mobile touch remains available; controller hardware and controller-only menus need testing.
+Mouse look uses unscaled screen motion. Desktop defaults to keyboard/mouse even
+when touchscreen hardware is available. **SHOW TOUCH CONTROLS ON DESKTOP** opts
+into touch HUD/input; Android/iOS keep mobile defaults. After explicit resume,
+release held keys, mouse buttons, controller or touch inputs before new actions
+are accepted. Physical touchscreen/controller delivery, hot-plug, high DPI and
+controller-only menus remain unverified.
+
+For contended hosted Windows automation, offline validators optionally accept
+`--hosted-render-priority below-normal`. This changes only the owned test game
+process scheduling after window/PID verification; it changes no shipped setting,
+affinity, rules or deadline. Native scenario gates still apply and may fail.
 
 `GODOT_BIN`, `SIGHTBREAK_TOOLS_DIR` and `SIGHTBREAK_STATE_DIR` remain supported.
 Godot uses repository-local XDG state on Linux, native AppData on Windows and
@@ -76,7 +91,7 @@ this is exact input/output provenance, not a binary reproducibility promise.
 Default verifier/package commands retain the old Linux+Android+iOS selection;
 use `--targets` to build/inspect/package a subset or all five explicitly.
 
-The branch-scoped `Native desktop alpha` Actions workflow builds and executes on
+The branch-scoped `Desktop playability P1` Actions workflow builds and executes on
 Windows, Linux and macOS runners, retaining failures and development artifacts.
 Its graphical startup check is separate from real Windows/Linux pointer/keyboard
 network tests and Linux living-player offline/restart tests. Runner evidence is
@@ -142,7 +157,7 @@ python3 scripts/build_manifest.py package
 (cd builds && sha256sum --check checksums.txt)
 ```
 
-Every export records the Git commit, game tree, and a content digest of shipped source in its `source.json`. Export fails if source changes during the build or if Godot logs errors despite exiting successfully. Packaging refuses uncommitted game source, incomplete exports, changed binaries, or stale source. Each ZIP includes engine license notices; normalized ZIP timestamps make packaging repeatable for identical inputs. Engine export timestamps and local Android debug signing keys can change binary hashes between rebuilds; byte-for-byte reproducible APKs across different workspaces are not claimed. Ten `python3 scripts/test_build_manifest.py` regression checks cover these provenance guards.
+Every export records the Git commit, game tree, and a content digest of shipped source in its `source.json`. Export fails if source changes during the build or if Godot logs errors despite exiting successfully. Packaging refuses uncommitted game source, incomplete exports, changed binaries, or stale source. Each ZIP includes engine license notices; normalized ZIP timestamps make packaging repeatable for identical inputs. Engine export timestamps and local Android debug signing keys can change binary hashes between rebuilds; byte-for-byte reproducible APKs across different workspaces are not claimed. Twenty-four `python3 scripts/test_build_manifest.py` regression checks cover these provenance guards.
 
 ## Trust and release boundaries
 

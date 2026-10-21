@@ -1,0 +1,149 @@
+{
+  "size": [
+    1920,
+    1080
+  ],
+  "display": ":132",
+  "capture_generation_passed": false,
+  "visual_acceptance": "UNVERIFIED; inspect original captures independently",
+  "scope": "Actual exported Linux graphical layouts; --demo HUD is not menu navigation, objective, full-match, physical hardware or performance acceptance",
+  "captures": [],
+  "commands": [
+    {
+      "label": "xvfb",
+      "command": [
+        "/usr/bin/Xvfb",
+        ":132",
+        "-screen",
+        "0",
+        "1920x1080x24",
+        "-nolisten",
+        "tcp"
+      ],
+      "pid": 4713,
+      "started_seconds": 0.17550132299993493,
+      "exit_code": 0
+    },
+    {
+      "label": "menu",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/builds/desktop-playability/linux/sightbreak.x86_64",
+        "--audio-driver",
+        "Dummy",
+        "--accessibility",
+        "disabled",
+        "--accessibility-driver",
+        "dummy",
+        "--position",
+        "0,0",
+        "--resolution",
+        "1920x1080"
+      ],
+      "pid": 4718,
+      "started_seconds": 0.2793122820000917,
+      "exit_code": -15
+    }
+  ],
+  "ocr_commands": [
+    {
+      "command": [
+        "/usr/bin/tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "11",
+        "tsv"
+      ],
+      "label": "menu-ready-1",
+      "exit_code": 0,
+      "original_sha256": "1722d48078a2839c78004cac8764f351226847efbfd1a21e45b9fc18632814e8",
+      "analysis_scale": 2
+    },
+    {
+      "command": [
+        "/usr/bin/tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "11",
+        "tsv"
+      ],
+      "label": "menu-ready-2",
+      "exit_code": 0,
+      "original_sha256": "1722d48078a2839c78004cac8764f351226847efbfd1a21e45b9fc18632814e8",
+      "analysis_scale": 2
+    },
+    {
+      "command": [
+        "/usr/bin/tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "11",
+        "tsv"
+      ],
+      "label": "menu-ready-3",
+      "exit_code": 0,
+      "original_sha256": "1722d48078a2839c78004cac8764f351226847efbfd1a21e45b9fc18632814e8",
+      "analysis_scale": 2
+    },
+    {
+      "command": [
+        "/usr/bin/tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "11",
+        "tsv"
+      ],
+      "label": "menu-ready-4",
+      "exit_code": 0,
+      "original_sha256": "1722d48078a2839c78004cac8764f351226847efbfd1a21e45b9fc18632814e8",
+      "analysis_scale": 2
+    },
+    {
+      "command": [
+        "/usr/bin/tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "11",
+        "tsv"
+      ],
+      "label": "menu-ready-5",
+      "exit_code": 0,
+      "original_sha256": "1722d48078a2839c78004cac8764f351226847efbfd1a21e45b9fc18632814e8",
+      "analysis_scale": 2
+    }
+  ],
+  "actions": [
+    {
+      "event": "observed",
+      "seconds": 0.2756460779999088,
+      "label": "Fresh Xvfb display"
+    },
+    {
+      "event": "observed",
+      "seconds": 0.8807478730000184,
+      "label": "Actual exported menu window",
+      "native_input": {
+        "target_window": 4194307,
+        "foreground_window": 4194307,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "XGetInputFocus/XQueryPointer/XQueryKeymap"
+      }
+    }
+  ],
+  "touch_toggle": "NOT_REQUESTED",
+  "cleanup_errors": [
+    "menu: forced cleanup or descendant after root exit"
+  ],
+  "error": "Command '['/usr/bin/tesseract', 'stdin', 'stdout', '--psm', '11', 'tsv']' timed out after 12 seconds",
+  "elapsed_seconds": 20.156057349000093
+}

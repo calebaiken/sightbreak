@@ -4,6 +4,15 @@
 
 ## 1. Current development status
 
+The 2026-10-21 [desktop playability continuation, draft PR #23](https://github.com/calebaiken/sightbreak/pull/23)
+is stacked on desktop PR #22. Input-policy/objective-HUD corrections, native
+Windows/Linux match and offline-training restart evidence, macOS diagnostics and
+remaining failed gates are in the [playability report](reports/DESKTOP_PLAYABILITY_REPORT.md).
+A scripted offline match cannot authorize online rewards, certify physical
+performance or satisfy Steam release review. No Steam SDK/authentication or
+publication work is added; the official-Steamworks retrieval limitation below
+remains unchanged.
+
 This milestone starts from PR #16 `d2439acdd5f73df7bae5ada62ee1e3dec2cf30db`, whose game/backend/server trees match frozen V2 `701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd`. Historical V2 results are not new desktop/V3 results. PR #17 has no verified V3 candidate; recovery, trade-read, input-freshness and prediction-diagnostic PRs #18–#21 retain separate integration gates. Newer bot/art inputs remain blocked by the recorded contract/visual findings.
 
 Implemented foundations include native offline 5v5, authoritative LAN matches, settings/training persistence and a separate PostgreSQL account/economy backend. Protocol 6 remains the current runtime contract. Prediction stays disabled by default; live hit-history rewind stays disabled. Public matchmaking, secure public transport, production operations and commercial quality acceptance remain incomplete.

@@ -1,0 +1,19 @@
+# Source13 Windows native results — independent inspection
+
+Source `475e00a7d3129398d04d423a25b1807547987693`, game tree `45b6c6ea9d3244700e324e90d6df4778ee28d18e`. Run https://github.com/calebaiken/sightbreak/actions/runs/39676657230, job119488159598. Overall job FAILED; three offline-flow subprocesses exit1 while complete full-match and all three network cases passed. Official Godot4.7.2, native Windows2025Server10.0.26100, actual rendered ANGLE/Microsoft Basic Render Driver. Physical hardware performance/input feel is UNVERIFIED.
+
+Executed PE SHA256 `0357cfb0f137fe6f00e7017aff5e5f9be27a1f21a0b79229df8e662d41ce4bf7`. Actual owned child priority32768→16384 is recorded for offline flows only; this is explicit hosted resource isolation, not a shipped priority change.
+
+| Scenario | Result and actual cause |
+|---|---|
+| Offline input/settings/restart | FAIL47.984s: `Player, round, life, weapon, or ammunition changed during saved-HUD analysis`. Before ordinary pause: alive100, round1, ammo15, tick935/frame171. Pause acknowledgement: alive100, round1, ammo14, tick945/frame173. Strict saved-HUD context correctly rejected delayed firing across the analysis boundary. No death caused this particular failure. |
+| Player plant | FAIL64.953s: legitimate movement did not converge inside existing15s approach budget. Nine settled recorrections; last settled distance .8728m from requested(-15,8), final actor alive100 moving at position(-15,8.5928). Native smoke passed; no completed player plant. |
+| Player defuse | FAIL68.265s: real bot plant and interrupted-E reset passed; movement genuinely settled .2239m from(-17,9). Final held-E authoritative edge1548; Rook killed Operator tick1817, then Attackers win/Defenders eliminated, before required300tick interval. Objective remained planted; no defuse completion or restart. |
+| Complete stock-rules match | PASS596.016wall/497.6167simseconds: 12 naturally resolved rounds, final6–6 DRAW. Actual native movement .770m, aim, fire14/60, Rreload15/59. Local0kills/10deaths/0objectives. Natural bot/round rules resolved match; no winner/state injection. |
+| Scoreboard/summary | PASS: independently viewed07-operation-complete.png shows DRAW/FINAL06:06/12ROUNDS/+120XP/+250CREDITS;08-final-scoreboard.png displays all10 actors and matches authoritative result. |
+| Exactly-once offline training and restart | PASS: one `completed` event216 with completion_calls1; matches0→1, historylength1, XP0→120, Credits0→250. Actual disk offline_training.json == training_after == reopened_initial_profile. New stock-match/restart equality true; native initial/reopened exit0/0, cleanup_errors empty. No authenticated account reward claim. |
+| Three native network/reload cases | PASS normal legacy, release-first+4s synthetic capture delay, legacy+4s synthetic delay; protocol/private/default-off gates unchanged. Historical intermittent PR22 reload timeout still unreproduced/unresolved. |
+
+Raw job log `/workspace/playability-evidence/windows/ci-s13-windows-full.log`; extracted QA `/workspace/playability-evidence/windows/qa-s13-final-extracted`. QA artifact12382034293,16,095,707bytes, SHA256 `af649f600fe4e4474bf674f802a6333efff925a7a9a56edf26dd0f91aafbd707`, independently downloaded/hashed/extracted. Packaged build artifact12381709355,138,156,716bytes, service-reported SHA256 `eac9dee50b338442a4d6a499207400647fbca8a129d220b1396566e57621e292`; large packaged build not independently downloaded here.
+
+The separate short probe from the same application/controller bytes has different outcomes and is not substituted for this matrix. It passed defuse but failed offline/plant; its separate ownership-only follow-up passed all live PID/HWND negatives and normal closes. See hosted-priority-validation-r1/DIAGNOSIS.md for exact sources and retained failed attempts. Source14's narrowly changed fire acknowledgement is qualified separately; no failures above were overwritten.
