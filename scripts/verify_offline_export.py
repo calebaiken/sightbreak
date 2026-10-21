@@ -388,8 +388,8 @@ def main():
             trace('offline_observation', label=label, state=latest)
             return latest
 
-        observed(lambda state: state.get('ui', {}).get('screen') == 'game' and bool(state.get('local_actor')),
-                 30, 'Real offline match readiness after one Deploy click')
+        initial_offline = observed(lambda state: state.get('ui', {}).get('screen') == 'game' and bool(state.get('local_actor')),
+                                   30, 'Real offline match readiness after one Deploy click')
         pause(3)
         capture('02-offline-spawn')
         tap('b')
@@ -407,22 +407,47 @@ def main():
         trace('relative_motion', dx=50, dy=-10)
         capture('04-move-aim')
         pause(.25)
+        fire_origin = offline_observation() or result.get('last_offline_observation', {})
+        fire_actor = fire_origin.get('local_actor', {})
+        if (fire_origin.get('phase') != 'live' or fire_origin.get('time_scale') != 1
+                or fire_origin.get('round_number') != initial_offline.get('round_number')
+                or fire_actor.get('id') != initial_offline.get('local_actor', {}).get('id')
+                or fire_actor.get('alive') is not True or fire_actor.get('weapon') != 'sidearm'
+                or fire_actor.get('ammo') != 15 or fire_actor.get('reserve') != 60
+                or not isinstance(fire_origin.get('wall_msec'), int)
+                or fire_origin['wall_msec'] <= initial_offline['wall_msec']):
+            raise RuntimeError('Native fire requires an observed living player with the initial full sidearm')
         for _ in range(2):
             button(True)
             pause(1.0)
             button(False)
             pause(.35)
+        fire_frame_ack = None
+        def rendered_fire_ready(state):
+            nonlocal fire_frame_ack
+            if not state:
+                return False
+            actor = state.get('local_actor', {})
+            if (state.get('time_scale') != 1
+                    or state.get('phase') != 'live' or state.get('round_number') != fire_origin.get('round_number')
+                    or actor.get('id') != fire_actor.get('id') or actor.get('alive') is not True
+                    or actor.get('weapon') != 'sidearm' or actor.get('reserve') != 60 or actor.get('reload') != 0):
+                raise RuntimeError('Fire acknowledgement changed player, round, life, weapon, reserve, or simulation speed')
+            frames = state.get('drawn_frames')
+            if not isinstance(frames, int) or isinstance(frames, bool) or frames < 0:
+                raise RuntimeError('Fire capture requires a valid drawn-frame observation')
+            if not 0 < actor.get('ammo', 15) < 15:
+                return False
+            if fire_frame_ack is None or fire_frame_ack[0] != actor['ammo']:
+                fire_frame_ack = (actor['ammo'], frames)
+            return frames >= fire_frame_ack[1] + 2
+        # Reuse the original five-second authority budget, including this frame fence.
+        before_reload = observed(rendered_fire_ready, 5, 'Authoritative depleted sidearm and two drawn frames', fire_origin['wall_msec'])
         capture('05-after-fire')
         fired_hud = read_hud('05-after-fire')
-        if not 0 < fired_hud['ammo'] < 15 or fired_hud['reserve'] != 60:
-            raise RuntimeError('Native fire did not deplete the initial sidearm magazine')
-        before_reload = observed(lambda state: state.get('phase') == 'live'
-                                 and state.get('local_actor', {}).get('alive') is True
-                                 and state['local_actor'].get('weapon') == 'sidearm'
-                                 and state['local_actor'].get('reload') == 0
-                                 and state['local_actor'].get('ammo') == fired_hud['ammo']
-                                 and state['local_actor'].get('reserve') == fired_hud['reserve'],
-                                 5, 'Authoritative depleted sidearm agrees with rendered fire')
+        if (not 0 < fired_hud['ammo'] < 15 or fired_hud['reserve'] != 60
+                or any(fired_hud[field] != before_reload['local_actor'][field] for field in ('ammo', 'reserve'))):
+            raise RuntimeError('Native fire rendered ammunition disagrees with acknowledged sidearm depletion')
         def reload_context(state):
             if not state:
                 return None
