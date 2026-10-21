@@ -58,6 +58,9 @@ jobs:
       - name: Export exact clean source
         id: export
         run: python scripts/export.py ${{ matrix.target }}
+      - name: Inspect development package structure independently of gameplay qualification
+        id: package_inspection
+        run: python scripts/verify_builds.py --targets ${{ matrix.target }}
       - name: Native graphical startup and artifact inspection (Windows/macOS)
         if: runner.os != 'Linux'
         run: python scripts/verify_builds.py --targets ${{ matrix.target }} --graphical
@@ -157,7 +160,8 @@ jobs:
       - name: Native macOS minimal/frozen/candidate graphical diagnosis
         if: always() && steps.export.outcome == 'success' && runner.os == 'macOS'
         run: python scripts/diagnose_macos_startup.py --output builds/desktop-playability/macos-diagnostics --baseline-archive "$RUNNER_TEMP/sightbreak-macos-frozen.zip"
-      - name: Package only the native target
+      - name: Preserve source-bound development package including failed qualification attempts
+        if: always() && steps.export.outcome == 'success' && steps.package_inspection.outcome == 'success'
         run: python scripts/build_manifest.py package --targets ${{ matrix.target }}
       - name: Preserve development packages and failed attempts
         if: always()

@@ -2,10 +2,10 @@
 """Capture real exported Linux layouts; screenshots still need independent review.
 
 Each requested size owns a fresh Xvfb display and user-data directory. The menu
-uses the graphical export's existing smoke capture; a separate --demo session
-supplies ordinary offline HUD/roster/settings layouts, never full-gameplay or
-menu-navigation acceptance. Observation files are read-only; no save or match
-state is edited. OCR preprocesses copies only, leaving original PNGs untouched.
+and a separate --demo session use raw native-window captures. The latter supplies
+ordinary offline HUD/roster/settings layouts, never full-gameplay or menu-navigation
+acceptance. Observation files are read-only; no save or match state is edited.
+OCR preprocesses copies only, leaving original PNGs untouched.
 """
 import argparse
 import csv
@@ -150,20 +150,19 @@ def capture_case(args, size, display, out, executable, expected, before, whole_d
         return (state.get("phase") == "live" and actor.get("alive") is True and actor.get("health", 0) > 0
                 and controls.get("screen") == "game" and controls.get("paused") is False)
 
-    def save_capture(label, engine_capture=False):
+    def save_capture(label):
         remaining()
         state_before = read_status() if live else None
         path = out / (label + ".png")
-        if not engine_capture:
-            if ui.window_size() != size:
-                raise RuntimeError("Export window does not match the actual requested native size")
-            ui.capture(path)
+        if ui.window_size() != size:
+            raise RuntimeError("Export window does not match the actual requested native size")
+        ui.capture(path)
         with Image.open(path) as image:
             if image.size != size:
                 raise RuntimeError("Rendered capture dimensions mismatch: " + str(image.size))
         state_after = read_status() if live else None
         result["captures"].append({"name": path.name, "sha256": sha256(path), "dimensions": list(size),
-            "method": "Graphical export viewport PNG" if engine_capture else "Raw native X11 display PNG",
+            "method": "Raw native X11 display PNG",
             "state_before": state_before, "state_after": state_after})
         action("capture", name=path.name)
         print(f"{size[0]}x{size[1]} {label}", flush=True)
@@ -253,6 +252,10 @@ def capture_case(args, size, display, out, executable, expected, before, whole_d
         rows = lines("tab-roster-check")
         return sum(row["text"].upper() == "BOT" for line in rows for row in line) >= 4
 
+    def rendered_menu():
+        words = {re.sub("[^A-Z]", "", row["text"].upper()) for line in lines("menu-ready") for row in line}
+        return {"SIGHTBREAK", "DEPLOY"}.issubset(words)
+
     def rendered_field_settings():
         return any("".join(re.sub("[^A-Z]", "", row["text"].upper()) for row in line) == "FIELDSETTINGS"
                    for line in lines("field-settings-check"))
@@ -277,12 +280,20 @@ def capture_case(args, size, display, out, executable, expected, before, whole_d
         ui = LayoutUI(display, size)
         flags = ["--audio-driver", "Dummy", "--accessibility", "disabled", "--accessibility-driver", "dummy",
                  "--position", "0,0", "--resolution", f"{size[0]}x{size[1]}"]
-        menu = launch("menu", [str(executable), *flags, "--", "--smoke", "--capture=" + str(out / "01-menu.png")], env)
-        menu.wait(timeout=min(20, remaining()))
+        # The viewport texture can retain1280x720 content in a1280x800 native
+        # window. Qualify actual OS bounds/pixels, including any letterboxing.
+        menu = launch("menu", [str(executable), *flags], env)
+        wait_for(ui.focus_game, 20, "Actual exported menu window", menu)
+        if ui.window_size() != size:
+            raise RuntimeError("Native menu window geometry differs from requested size")
+        wait_for(rendered_menu, 15, "Actual rendered main menu", menu)
+        save_capture("01-menu")
+        ui.request_close()
+        menu.wait(timeout=min(12, remaining()))
         menu_log = (out / "menu.log").read_text(errors="replace")
-        if menu.returncode != 0 or "SIGHTBREAK_MAIN_READY screen=menu" not in menu_log or native_log_failed(menu_log):
+        result["native_menu_exit"] = menu.returncode
+        if menu.returncode != 0 or native_log_failed(menu_log):
             raise RuntimeError("Actual rendered exported menu did not complete cleanly")
-        save_capture("01-menu", engine_capture=True)
         live = launch("live-layout", [str(executable), *flags, "--", "--demo", "--offline-validation",
                       "--offline-trace-dir=" + str(trace_directory)], env)
         wait_for(ui.focus_game, 20, "Actual exported HUD window", live)
@@ -314,6 +325,7 @@ def capture_case(args, size, display, out, executable, expected, before, whole_d
             tap("Escape")
             wait_for(expect_paused, 4, "Touch-mode field menu", live)
             click_text("SETTINGS", "touch-field-settings-control")
+            wait_for(rendered_field_settings, 8, "Actual rendered touch-mode field settings", live)
             toggle_touch(False)
             tap("Escape")
             wait_for(lambda: read_status().get("ui", {}).get("touch_controls") is False
@@ -328,7 +340,7 @@ def capture_case(args, size, display, out, executable, expected, before, whole_d
             raise RuntimeError("Actual layout session did not exit cleanly")
         result["native_menu_exit"] = menu.returncode
         result["native_live_exit"] = live.returncode
-        result["exit_method"] = "Menu smoke completion; live session completion-driven WM_DELETE_WINDOW"
+        result["exit_method"] = "Menu and live session completion-driven WM_DELETE_WINDOW"
         validate_record("linux", before)
         if source() != before or sha256(executable) != expected:
             raise RuntimeError("Source/executable changed during rendered layout capture")

@@ -1,8 +1,11 @@
-"""Read atomically replaced observation files without blocking their producer.
+"""Read complete observation files without blocking their Godot producer.
 
 Windows CRT opens normally omit FILE_SHARE_DELETE. A polling reader can then
-make the producer's atomic rename fail. These read-only handles explicitly allow
-replacement; an already-open reader still sees its original complete snapshot.
+make Godot's DeleteFileW-then-MoveFileW publication fail. These read-only handles
+allow that sequence; an open reader still sees its original complete snapshot.
+Windows publication has a missing-path interval, which callers already handle
+under their existing stale-observation watchdog. This does not promise that
+legacy Windows os.replace can replace an open destination.
 """
 from contextlib import contextmanager
 import io

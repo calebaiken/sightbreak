@@ -11,6 +11,34 @@ func check(value: bool, message: String) -> void:
 		push_error(message)
 
 func _initialize() -> void:
+	# Environment-only state roots do not redirect Godot's native macOS user://.
+	# Use a private native directory before constructing any controller/profile.
+	var original_user_dir := OS.get_user_data_dir()
+	var fixture_name := "SIGHTBREAK_QA/hud-objective-hint-%d-%d" % [OS.get_process_id(), Time.get_ticks_usec()]
+	ProjectSettings.set_setting("application/config/use_custom_user_dir", true)
+	ProjectSettings.set_setting("application/config/custom_user_dir_name", fixture_name)
+	var fixture_user_dir := OS.get_user_data_dir()
+	if fixture_user_dir == original_user_dir or not fixture_user_dir.replace("\\", "/").ends_with("/" + fixture_name) or DirAccess.dir_exists_absolute(fixture_user_dir):
+		push_error("HUD fixture requires a new, distinct native user-data directory: " + fixture_user_dir)
+		quit(2)
+		return
+	if DirAccess.make_dir_recursive_absolute(fixture_user_dir) != OK:
+		push_error("Cannot create private HUD fixture directory: " + fixture_user_dir)
+		quit(2)
+		return
+	var marker_path := fixture_user_dir.path_join("hud-fixture-owner.txt")
+	var marker := FileAccess.open(marker_path, FileAccess.WRITE)
+	if marker == null:
+		push_error("Cannot create private HUD fixture ownership marker: " + marker_path)
+		quit(2)
+		return
+	marker.store_string(fixture_name)
+	marker.close()
+	if FileAccess.get_file_as_string("user://hud-fixture-owner.txt") != fixture_name:
+		push_error("HUD fixture user:// does not resolve to its private native directory")
+		quit(2)
+		return
+	print("HUD_OBJECTIVE_HINT_TEST_STATE native_user_dir=%s original_user_dir=%s owner=%s" % [fixture_user_dir, original_user_dir, fixture_name])
 	run.call_deferred()
 
 func expect_status(main: Node, game: Node, actor: Node, item: Dictionary, context: String) -> void:

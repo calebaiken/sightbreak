@@ -336,11 +336,76 @@ def main():
         fired_hud = read_hud('05-after-fire')
         if not 0 < fired_hud['ammo'] < 15 or fired_hud['reserve'] != 60:
             raise RuntimeError('Native fire did not deplete the initial sidearm magazine')
+        before_reload = observed(lambda state: state.get('phase') == 'live'
+                                 and state.get('local_actor', {}).get('alive') is True
+                                 and state['local_actor'].get('weapon') == 'sidearm'
+                                 and state['local_actor'].get('reload') == 0
+                                 and state['local_actor'].get('ammo') == fired_hud['ammo']
+                                 and state['local_actor'].get('reserve') == fired_hud['reserve'],
+                                 5, 'Authoritative depleted sidearm agrees with rendered fire')
+        def reload_context(state):
+            if not state:
+                return None
+            actor = state.get('local_actor', {})
+            if (state.get('time_scale') != 1 or state.get('phase') != 'live'
+                    or state.get('round_number') != before_reload['round_number']
+                    or actor.get('id') != before_reload['local_actor']['id']
+                    or actor.get('alive') is not True or actor.get('weapon') != 'sidearm'):
+                raise RuntimeError('Reload observation changed player, round, weapon, life, or simulation speed')
+            return actor
+
+        def reload_began(state):
+            actor = reload_context(state)
+            if actor is None or actor.get('reload', 0) <= 0:
+                return False
+            if (actor.get('ammo') != before_reload['local_actor']['ammo']
+                    or actor.get('reserve') != before_reload['local_actor']['reserve']):
+                raise RuntimeError('Authoritative ammunition changed before the observed reload countdown completed')
+            return True
+
+        reload_input_seconds = time.monotonic() - started
         key('r', True)
-        pause(1.0)
-        key('r', False)
-        pause(2.5)
+        try:
+            reload_started = observed(reload_began, 5, 'Real R input starts authoritative offline reload', before_reload['wall_msec'])
+        finally:
+            key('r', False)
+
+        def reload_completed(state):
+            actor = reload_context(state)
+            if actor is None or actor.get('reload', 0) > 0:
+                return False
+            amount = 15 - before_reload['local_actor']['ammo']
+            if actor.get('ammo') != 15 or actor.get('reserve') != before_reload['local_actor']['reserve'] - amount:
+                raise RuntimeError('Authoritative offline reload did not transfer and conserve the exact ammunition')
+            simulation_seconds = state['elapsed'] - reload_started['elapsed']
+            if simulation_seconds < reload_started['local_actor']['reload'] - 1.0 / 60:
+                raise RuntimeError('Authoritative offline reload finished before its observed simulation countdown')
+            return True
+
+        # A hosted software renderer may advance fewer than 60 physics ticks
+        # per wall second. The retained failure completed a valid 1.3s reload
+        # after 4.72 wall seconds; the old 2.5s sleep captured RELOADING 0.3s.
+        # Wait for the real transfer, with a finite wall watchdog and the same
+        # whole-flow deadline. This does not change game time or claim frame rate.
+        reload_finished = observed(reload_completed, 15, 'Authoritative offline reload completion', reload_started['wall_msec'])
+        finished_frames = reload_finished.get('drawn_frames')
+        if not isinstance(finished_frames, int) or finished_frames < 0:
+            raise RuntimeError('Offline reload capture requires a valid drawn-frame observation')
+
+        def reload_rendered(state):
+            return reload_completed(state) and state.get('drawn_frames', -1) >= finished_frames + 2
+
+        reload_ready = observed(reload_rendered, 5, 'Two rendered frames after authoritative reload transfer', reload_finished['wall_msec'])
+        result['native_reload'] = {'before': before_reload, 'started': reload_started, 'completed': reload_finished,
+                                   'capture_ready': reload_ready, 'input_seconds': reload_input_seconds,
+                                   'wall_seconds_after_input': time.monotonic() - started - reload_input_seconds,
+                                   'observed_simulation_seconds': reload_finished['elapsed'] - reload_started['elapsed'],
+                                   'completion_watchdog_seconds': 15, 'whole_flow_deadline_unchanged': True}
         capture('06-after-reload')
+        reload_after_capture = offline_observation()
+        if not reload_completed(reload_after_capture):
+            raise RuntimeError('Offline reload state stopped being valid during native capture')
+        result['native_reload']['after_capture'] = reload_after_capture
         reloaded_hud = read_hud('06-after-reload')
         if reloaded_hud['ammo'] != 15 or reloaded_hud['reserve'] >= fired_hud['reserve'] or sum(reloaded_hud[k] for k in ('ammo', 'reserve')) != sum(fired_hud[k] for k in ('ammo', 'reserve')):
             raise RuntimeError('Native offline reload did not conserve rendered ammunition')
