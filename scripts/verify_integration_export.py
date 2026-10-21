@@ -499,15 +499,13 @@ def main():
               authority=authority_observation())
 
     def open_menu_entry(x, y, label):
-        for _attempt in range(3):
-            ui.focus_game()
-            ui.click(x, y)
-            try:
-                wait_for(lambda: not ui.menu_visible(), 3, label, client)
-                return
-            except TimeoutError:
-                remaining()
-        raise TimeoutError(label)
+        ui.focus_game()
+        trace('menu_click_before', x=x, y=y, label=label)
+        ui.click(x, y)
+        trace('menu_click_after', x=x, y=y, label=label)
+        # A stale rendered menu is a readiness signal, never permission to
+        # repeat an absolute pointer move after the game captures the mouse.
+        wait_for(lambda: not ui.menu_visible(), 3, label, client)
 
     def server_has(message):
         return message in (output / 'server.log').read_text(encoding='utf-8', errors='replace')

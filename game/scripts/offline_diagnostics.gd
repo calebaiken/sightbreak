@@ -98,6 +98,9 @@ static func fixture_for(options: Dictionary, arena) -> Dictionary:
 	if observer.scenario == "plant":
 		attackers[0] = Vector3(-15, 0.05, 2)
 	else:
+		# Keep the other defenders outside normal initial sight range of A.
+		# Their stock AI remains active and may engage/rotate once play starts.
+		for index in range(5): defenders[index].z = -20.5
 		# The first attacker in ordinary insertion order (actor 2 after the side
 		# swap) remains the ordinary carrier chosen by _begin_round, not forced.
 		attackers[0] = Vector3(-15, 0.05, 10)

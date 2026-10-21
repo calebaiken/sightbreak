@@ -271,22 +271,31 @@ def main():
             ui = WinUI()
             flags = ['--position', '0,0', '--resolution', f'{ui.width}x{ui.height}']
         result['profile_observation_path'] = str(saved_path)
+        initial_trace = out / 'initial-offline-trace'
         client_command = [str(executable), '--audio-driver', 'Dummy', *flags]
         if args.quit_after:
             client_command += ['--quit-after', str(args.quit_after)]
+        client_command += ['--', '--offline-validation', '--offline-trace-dir=' + str(initial_trace)]
         client = launch('client', client_command, env)
         if args.target == 'windows':
             ui.pid = client.pid
         wait_for(ui.focus_game, 30, 'Native export window', client)
         wait_for(ui.menu_visible, 60, 'Native menu', client)
         capture('01-menu')
-        for _ in range(3):
-            ui.click(248, 319)
-            pause(1)
-            if not ui.menu_visible():
-                break
-        if ui.menu_visible():
-            raise RuntimeError('Offline deployment did not leave menu')
+        # Loading can leave old menu pixels on screen after capture starts.
+        # Wait for departure without sending that absolute click into gameplay.
+        trace('deploy_click_before', x=248, y=319)
+        ui.click(248, 319)
+        trace('deploy_click_after', x=248, y=319)
+        def offline_ready():
+            try:
+                state = json.loads((initial_trace / 'status.json').read_text(encoding='utf-8'))
+            except (OSError, ValueError):
+                return False
+            return (state.get('scope') == 'debug_offline_read_only_observation'
+                    and state.get('ui', {}).get('screen') == 'game'
+                    and bool(state.get('local_actor')))
+        wait_for(offline_ready, 30, 'Real offline match readiness after one Deploy click', client)
         pause(3)
         capture('02-offline-spawn')
         tap('b')
@@ -384,7 +393,9 @@ def main():
             raise RuntimeError('Local settings/training data changed across restart')
         # Disk equality alone cannot prove load_profile worked. Enter a fresh
         # ordinary match and observe the profile actually loaded by this process.
+        trace('reopened_deploy_click_before', x=248, y=319)
         ui.click(248, 319)
+        trace('reopened_deploy_click_after', x=248, y=319)
         wait_for(lambda: (loaded_trace / 'events.jsonl').is_file(), 30,
                  'Reopened process loaded profile into ordinary offline match', reopened)
         with (loaded_trace / 'events.jsonl').open(encoding='utf-8') as stream:

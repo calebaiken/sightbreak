@@ -111,6 +111,11 @@ func run() -> void:
 			check(game.local_actor().team == 1 and game.objective_carrier != game.local_id, "Defuse fixture requires ordinary attacker carrier")
 			var carrier = game.actors[game.objective_carrier]
 			check(carrier.team == 0 and game.arena.is_at_site(carrier.position) == 0 and game.local_actor().position.distance_to(carrier.position) > 2.8, "Defuse fixture starts outside range with an unplanted normal bot carrier at A")
+			var initially_distant := true
+			for actor in game.actors.values():
+				if actor.team == 1 and actor.actor_id != game.local_id:
+					initially_distant = initially_distant and actor.position.distance_to(carrier.position) > 38.0
+			check(initially_distant, "Declared defuse layout places other defenders beyond normal initial sight range without disabling their AI")
 		diagnostic.begin_match(game)
 		var initial: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(destination.path_join("status.json")))
 		check(initial.initial_conditions == "declared_initial_spawns_side_and_seeds_only" and initial.actor_spread_seeds.size() == 10, scenario + ": full declared initial layout and seeds are recorded")

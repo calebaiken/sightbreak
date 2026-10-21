@@ -308,11 +308,11 @@ def main():
         result['partial_checks']['interrupted_E_reset'] = True
         capture('04-interrupted-hold-reset')
 
-    def smoke(sensitivity, yaw):
+    def smoke(sensitivity, yaw, pitch=-1.2):
         before_smokes = local()['smokes']
         if before_smokes < 1:
             raise RuntimeError('Stock smoke inventory is unavailable')
-        aim(yaw, -1.2, sensitivity)
+        aim(yaw, pitch, sensitivity)
         key('q', True)
         try:
             consumed = wait(lambda state: state.get('local_actor', {}).get('smokes') == before_smokes - 1,
@@ -329,7 +329,7 @@ def main():
             if state['objective_carrier'] != local(state)['id'] or local(state)['team'] != 0:
                 raise RuntimeError('Plant fixture did not start the ordinary living attacker carrier')
             invalid_interaction()
-            consumed = smoke(sensitivity, math.pi)
+            consumed = smoke(sensitivity, math.pi, pitch=-0.8)
             # Ordinary projectile fuse is1.6s. Establish cover before entering
             # the exposed site; waiting never changes the utility or bot rules.
             wait(lambda item: item.get('elapsed', 0) >= consumed['elapsed'] + 1.7,
@@ -586,12 +586,13 @@ def main():
         if args.target == 'windows': ui.pid = client.pid
         wait_ui(lambda: ui.focus_game() and ui.menu_visible(), 60, 'Real exported main menu', client)
         capture('01-main-menu')
-        for _ in range(3):
-            ui.click(248, 319)
-            pause(1)
-            if not ui.menu_visible(): break
-        if ui.menu_visible(): raise RuntimeError('Normal native Deploy navigation did not start offline5v5')
-        wait(lambda state: bool(state.get('local_actor')), 30, 'Read-only actual offline state')
+        # A rendered menu can remain visible while the native match is loading.
+        # Replaying its absolute pointer click after capture would become aim.
+        record('deploy_click_before', x=248, y=319)
+        ui.click(248, 319)
+        record('deploy_click_after', x=248, y=319)
+        wait(lambda state: bool(state.get('local_actor')) and state.get('ui', {}).get('screen') == 'game',
+             30, 'Read-only actual offline state')
         with (trace_dir / 'events.jsonl').open(encoding='utf-8') as stream:
             initial = json.loads(stream.readline())
         expected_initial = 'stock_spawns_teams_random_seeds' if args.scenario == 'full-match' else 'declared_initial_spawns_side_and_seeds_only'
@@ -633,12 +634,11 @@ def main():
         if reopened_profile != saved:
             raise RuntimeError('Local progression/settings changed across normal restart')
         if args.scenario == 'full-match':
-            for _ in range(3):
-                ui.click(248, 319)
-                pause(1)
-                if not ui.menu_visible(): break
-            if ui.menu_visible(): raise RuntimeError('Reopened native Deploy did not start an ordinary stock match')
-            wait(lambda item: bool(item.get('local_actor')), 30, 'Reopened stock match observes the loaded profile')
+            record('reopened_deploy_click_before', x=248, y=319)
+            ui.click(248, 319)
+            record('reopened_deploy_click_after', x=248, y=319)
+            wait(lambda item: bool(item.get('local_actor')) and item.get('ui', {}).get('screen') == 'game',
+                 30, 'Reopened stock match observes the loaded profile')
             with (trace_dir / 'events.jsonl').open(encoding='utf-8') as stream:
                 reopened_initial = json.loads(stream.readline())
             if reopened_initial.get('event') != 'initial' or reopened_initial.get('initial_conditions') != 'stock_spawns_teams_random_seeds' or reopened_initial.get('initial_profile') != saved:
