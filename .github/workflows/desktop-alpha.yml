@@ -139,16 +139,16 @@ jobs:
           print(json.dumps(receipt))
       - name: Living-player offline input and settings restart (Windows/Linux)
         if: always() && steps.export.outcome == 'success' && runner.os != 'macOS'
-        run: python scripts/verify_offline_export.py --target ${{ matrix.target }} --display :102 --timeout 300 --output builds/desktop-playability/offline-input
+        run: python scripts/verify_offline_export.py --target ${{ matrix.target }} ${{ runner.os == 'Windows' && '--hosted-render-priority below-normal' || '' }} --display :102 --timeout 300 --output builds/desktop-playability/offline-input
       - name: Real player plant and natural device resolution (Windows/Linux)
         if: always() && steps.export.outcome == 'success' && runner.os != 'macOS'
-        run: python scripts/verify_offline_match.py --target ${{ matrix.target }} --scenario plant --display :103 --timeout 180 --output builds/desktop-playability/offline-plant
+        run: python scripts/verify_offline_match.py --target ${{ matrix.target }} ${{ runner.os == 'Windows' && '--hosted-render-priority below-normal' || '' }} --scenario plant --display :103 --timeout 180 --output builds/desktop-playability/offline-plant
       - name: Real player defuse after ordinary bot plant (Windows/Linux)
         if: always() && steps.export.outcome == 'success' && runner.os != 'macOS'
-        run: python scripts/verify_offline_match.py --target ${{ matrix.target }} --scenario defuse --display :104 --timeout 180 --output builds/desktop-playability/offline-defuse
+        run: python scripts/verify_offline_match.py --target ${{ matrix.target }} ${{ runner.os == 'Windows' && '--hosted-render-priority below-normal' || '' }} --scenario defuse --display :104 --timeout 180 --output builds/desktop-playability/offline-defuse
       - name: Complete stock-rules offline match and earned training restart (Windows/Linux)
         if: always() && steps.export.outcome == 'success' && runner.os != 'macOS'
-        run: python scripts/verify_offline_match.py --target ${{ matrix.target }} --scenario full-match --display :105 --timeout 1800 --output builds/desktop-playability/offline-full-match
+        run: python scripts/verify_offline_match.py --target ${{ matrix.target }} ${{ runner.os == 'Windows' && '--hosted-render-priority below-normal' || '' }} --scenario full-match --display :105 --timeout 1800 --output builds/desktop-playability/offline-full-match
       - name: Rendered desktop layouts and explicit touch selection (Linux)
         if: always() && steps.export.outcome == 'success' && runner.os == 'Linux'
         run: python scripts/capture_desktop_layouts.py --touch-toggle --output builds/desktop-playability/layouts

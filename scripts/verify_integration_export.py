@@ -266,6 +266,39 @@ class WinUI:
             raise RuntimeError('Windows client is clipped by desktop bounds')
         return bounds
 
+    def lower_owned_render_priority(self, process):
+        """Opt-in hosted offline QA resource isolation; never a game setting."""
+        pid = C.c_uint32()
+        if (not isinstance(process, subprocess.Popen) or process.poll() is not None
+                or self.pid != process.pid or not self.window
+                or not self.user.GetWindowThreadProcessId(self.window, C.byref(pid))
+                or pid.value != process.pid):
+            raise RuntimeError('Hosted render priority requires the live owned child window/PID')
+        kernel = C.WinDLL('kernel32', use_last_error=True)
+        kernel.OpenProcess.argtypes = [C.c_uint32, C.c_int, C.c_uint32]
+        kernel.OpenProcess.restype = C.c_void_p
+        kernel.GetPriorityClass.argtypes = [C.c_void_p]
+        kernel.GetPriorityClass.restype = C.c_uint32
+        kernel.SetPriorityClass.argtypes = [C.c_void_p, C.c_uint32]
+        kernel.SetPriorityClass.restype = C.c_int
+        kernel.CloseHandle.argtypes = [C.c_void_p]
+        kernel.CloseHandle.restype = C.c_int
+        handle = kernel.OpenProcess(0x1000 | 0x200, False, process.pid)
+        if not handle:
+            raise C.WinError(C.get_last_error())
+        try:
+            before = kernel.GetPriorityClass(handle)
+            if not before or not kernel.SetPriorityClass(handle, 0x4000):
+                raise C.WinError(C.get_last_error())
+            current = kernel.GetPriorityClass(handle)
+            if current != 0x4000:
+                raise RuntimeError('Owned hosted render priority was not applied')
+            return {'pid': process.pid, 'window_pid': pid.value, 'before_priority_class': before,
+                    'current_priority_class': current,
+                    'scope': 'Opt-in Windows hosted offline QA only; owned child below-normal, no affinity/rules/time-scale changes'}
+        finally:
+            kernel.CloseHandle(handle)
+
     def image(self):
         return ImageGrab.grab(bbox=self.bounds(), all_screens=True)
 

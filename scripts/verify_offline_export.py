@@ -42,11 +42,14 @@ def main():
     parser.add_argument('--quit-after', type=int, default=0, help='Premature-exit negative control; successful flow closes normally')
     parser.add_argument('--timeout', type=float, default=300, help='Whole-flow wall deadline, plus separately bounded failure cleanup')
     parser.add_argument('--tesseract', default=os.environ.get('TESSERACT_BIN') or shutil.which('tesseract'))
+    parser.add_argument('--hosted-render-priority', choices=('inherited', 'below-normal'), default='inherited')
     args = parser.parse_args()
     if args.target != ('windows' if os.name == 'nt' else 'linux') or platform.system() not in ('Linux', 'Windows'):
         parser.error('Run the selected export on native Linux/Windows; macOS gameplay input is UNVERIFIED')
     if not args.tesseract:
         parser.error('Set --tesseract or TESSERACT_BIN; native rendered health/ammunition checks require Tesseract')
+    if args.hosted_render_priority != 'inherited' and args.target != 'windows':
+        parser.error('Hosted render priority requires native Windows; other targets retain inherited priority')
     if args.quit_after < 0 or args.timeout <= 0:
         parser.error('Frame budget must be nonnegative and timeout positive')
     display_socket = None
@@ -356,6 +359,8 @@ def main():
         if args.target == 'windows':
             ui.pid = client.pid
         wait_for(ui.focus_game, 30, 'Native export window', client)
+        if args.hosted_render_priority == 'below-normal':
+            result.setdefault('hosted_render_priority', []).append(ui.lower_owned_render_priority(client))
         wait_for(ui.menu_visible, 60, 'Native menu', client)
         capture('01-menu')
         # Loading can leave old menu pixels on screen after capture starts.
@@ -541,6 +546,8 @@ def main():
         if args.target == 'windows':
             ui.pid = reopened.pid
         wait_for(ui.focus_game, 30, 'Reopened native window', reopened)
+        if args.hosted_render_priority == 'below-normal':
+            result.setdefault('hosted_render_priority', []).append(ui.lower_owned_render_priority(reopened))
         wait_for(ui.menu_visible, 45, 'Reopened native menu', reopened)
         capture('09-reopened-menu')
         if json.loads(saved_path.read_text(encoding='utf-8')) != saved:

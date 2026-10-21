@@ -71,6 +71,7 @@ def main():
     parser.add_argument('--timeout', type=float, default=1800, help='Whole native flow wall budget plus bounded failure cleanup')
     parser.add_argument('--display', default=':106', help='Free isolated X11 display (Linux only)')
     parser.add_argument('--xvfb', default=os.environ.get('XVFB_BIN') or shutil.which('Xvfb'))
+    parser.add_argument('--hosted-render-priority', choices=('inherited', 'below-normal'), default='inherited')
     args = parser.parse_args()
     if platform.system() not in ('Linux', 'Windows') or args.target != ('windows' if os.name == 'nt' else 'linux'):
         parser.error('Execute the selected package on native Linux/Windows; macOS gameplay remains UNVERIFIED')
@@ -78,6 +79,8 @@ def main():
         parser.error('Timeout must be positive; scenario seed must be a nonnegative signed32-bit integer')
     if args.scenario == 'full-match' and args.seed is not None:
         parser.error('Full-match must retain stock random seeds; omit --seed')
+    if args.hosted_render_priority != 'inherited' and args.target != 'windows':
+        parser.error('Hosted render priority requires native Windows; other targets retain inherited priority')
     socket = None
     if args.target == 'linux':
         if not args.xvfb or not re.fullmatch(r':[0-9]+', args.display):
@@ -197,6 +200,14 @@ def main():
         if not actor.get('alive') or not 0 < actor.get('health', 0) <= 100:
             raise RuntimeError('Player is not alive for the required native action')
         return actor
+
+    def native_menu_ready():
+        if not ui.focus_game():
+            return False
+        if (args.hosted_render_priority == 'below-normal'
+                and not any(item['pid'] == client.pid for item in result.get('hosted_render_priority', []))):
+            result.setdefault('hosted_render_priority', []).append(ui.lower_owned_render_priority(client))
+        return ui.menu_visible()
 
     def key(name, down):
         # A reached deadline must never prevent a held native key being released.
@@ -685,7 +696,7 @@ def main():
             command += ['--offline-scenario=' + args.scenario, '--offline-seed=' + str(42 if args.seed is None else args.seed)]
         client = launch('client', command, env)
         if args.target == 'windows': ui.pid = client.pid
-        wait_ui(lambda: ui.focus_game() and ui.menu_visible(), 60, 'Real exported main menu', client)
+        wait_ui(native_menu_ready, 60, 'Real exported main menu', client)
         capture('01-main-menu')
         # A rendered menu can remain visible while the native match is loading.
         # Replaying its absolute pointer click after capture would become aim.
@@ -729,7 +740,7 @@ def main():
             reopened_command += ['--', '--offline-validation', '--offline-trace-dir=' + str(trace_dir)]
         client = launch('reopened', reopened_command, env)
         if args.target == 'windows': ui.pid = client.pid
-        wait_ui(lambda: ui.focus_game() and ui.menu_visible(), 60, 'Normal reopened native main menu', client)
+        wait_ui(native_menu_ready, 60, 'Normal reopened native main menu', client)
         capture('09-reopened-menu')
         reopened_profile = json.loads(profile_path.read_text(encoding='utf-8')) if profile_path.exists() else old
         if reopened_profile != saved:
