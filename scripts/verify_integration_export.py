@@ -651,6 +651,12 @@ def main():
                        'scope': 'Actual exported native desktop client; source Godot authority on loopback; no physical hardware or internet-security acceptance'})
     except (Exception, SystemExit) as error:
         trace('failure', error=str(error), authority=authority_observation())
+        if ui is not None:
+            try:
+                ui.capture(output / 'failure-ui.png')
+                trace('failure_capture', capture='failure-ui.png')
+            except Exception as capture_error:
+                trace('failure_capture_error', error=str(capture_error))
         (output / 'diagnostic-request').write_text('read-only failure snapshot\n')
         # Failure diagnostics have a separate bounded 150 ms cleanup allowance;
         # they do not extend or turn a failed qualification wait into a pass.

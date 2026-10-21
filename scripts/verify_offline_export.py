@@ -25,6 +25,7 @@ from urllib.parse import quote
 from build_manifest import BUILDS, OUTPUTS, source, validate_record
 from PIL import Image
 from native_log import failed
+from native_observation import read_observation_json
 from verify_integration_export import NativeUI, WinUI, windows_job
 import toolchain
 
@@ -289,7 +290,7 @@ def main():
         trace('deploy_click_after', x=248, y=319)
         def offline_observation():
             try:
-                state = json.loads((initial_trace / 'status.json').read_text(encoding='utf-8'))
+                state = read_observation_json(initial_trace / 'status.json')
             except (OSError, ValueError):
                 return {}
             if state.get('scope') != 'debug_offline_read_only_observation':

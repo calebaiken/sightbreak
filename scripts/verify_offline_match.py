@@ -27,6 +27,7 @@ from urllib.parse import quote
 from PIL import Image
 from build_manifest import BUILDS, OUTPUTS, source, validate_record
 from native_log import failed
+from native_observation import read_observation_json
 from verify_integration_export import NativeUI, WinUI, windows_job
 import toolchain
 
@@ -153,7 +154,7 @@ def main():
             raise RuntimeError('Export exited before scenario completion')
         remaining()
         try:
-            state = json.loads((trace_dir / 'status.json').read_text(encoding='utf-8'))
+            state = read_observation_json(trace_dir / 'status.json')
         except (OSError, ValueError):
             if last_state and time.monotonic() - last_update > 5:
                 raise RuntimeError('Offline observation stalled or became unreadable')

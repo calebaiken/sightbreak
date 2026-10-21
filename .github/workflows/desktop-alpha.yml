@@ -53,6 +53,8 @@ jobs:
         run: python scripts/toolchain.py setup --targets ${{ matrix.target }}
       - name: Packaging integrity controls
         run: python scripts/test_build_manifest.py -v
+      - name: Atomic observation reader filesystem semantics
+        run: python scripts/test_native_observation.py -v
       - name: Export exact clean source
         id: export
         run: python scripts/export.py ${{ matrix.target }}
@@ -176,14 +178,7 @@ jobs:
             builds/desktop-playability/**/*.jsonl
             builds/desktop-playability/**/*.log
             builds/desktop-playability/macos-diagnostics/*.txt
-            builds/desktop-playability/macos-diagnostics/*.png
-            builds/desktop-playability/verification/*.png
-            builds/desktop-playability/native-input/03-exported-network-rifle.png
-            builds/desktop-playability/offline-input/06g-switched-primary.png
-            builds/desktop-playability/offline-full-match/07-operation-complete.png
-            builds/desktop-playability/offline-full-match/08-final-scoreboard.png
-            builds/desktop-playability/offline-plant/05-objective-hold.png
-            builds/desktop-playability/offline-defuse/06-player-objective-completed.png
-            builds/desktop-playability/layouts/*/*.png
+            builds/desktop-playability/**/*.png
+            !builds/desktop-playability/offline-full-match/round-*.png
           if-no-files-found: warn
           retention-days: 14

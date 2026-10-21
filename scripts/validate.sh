@@ -98,4 +98,5 @@ if [[ "${1:-}" == --backend ]]; then
   .venv/bin/python backend/simulate.py
 fi
 python3 scripts/test_build_manifest.py
+python3 scripts/test_native_observation.py -v
 printf 'Validation completed. Logs: %s\n' "$validation_dir"
