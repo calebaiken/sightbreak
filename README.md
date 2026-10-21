@@ -1,4 +1,4 @@
-# SIGHTBREAK 0.3.2-dev
+# SIGHTBREAK 0.3.3-dev
 
 A native **Godot 4.7.2** tactical FPS development build for desktop, Android and unsigned iOS project export. Fight a 5v5 offline match in the original Relay Yard, or connect to a dedicated server. The separate PostgreSQL economy supports authenticated accounts, earned Credits, collectible rifle finishes, cases, two-sided trades and marketplace purchases.
 
