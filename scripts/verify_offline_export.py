@@ -452,8 +452,14 @@ def main():
         resumed_hud = read_hud('07d-explicit-resume')
         focus_start = observed(lambda state: state.get('ui', {}).get('focused') is True
                                and state.get('ui', {}).get('paused') is False
+                               and state.get('time_scale') == 1
                                and state.get('phase') == 'live' and state.get('local_actor', {}).get('alive') is True,
                                15, 'Living active player before native focus loss')
+        def require_focus_context(state):
+            if (state.get('phase') != 'live' or state.get('round_number') != focus_start['round_number']
+                    or state.get('time_scale') != 1
+                    or state.get('local_actor', {}).get('id') != focus_start['local_actor']['id']):
+                raise RuntimeError('Native focus validation changed live round, actor, or simulation speed')
         try:
             key('w', True)
             button(True)
@@ -467,6 +473,7 @@ def main():
             lost = observed(lambda state: state.get('ui', {}).get('focused') is False
                             and state.get('ui', {}).get('paused') is True,
                             10, 'Native focus loss pauses actual offline match', focus_start['wall_msec'])
+            require_focus_context(lost)
             trace('native_focus_restore_before')
             if args.target == 'windows':
                 ui.user.ShowWindow(ui.window, 9)  # SW_RESTORE; focus_game retains the same HWND
@@ -474,6 +481,7 @@ def main():
             trace('native_focus_restore_after')
             restored = observed(lambda state: state.get('ui', {}).get('focused') is True,
                                 10, 'Actual game observes restored focus', lost['wall_msec'])
+            require_focus_context(restored)
             if restored['ui'].get('paused') is not True or restored['ui'].get('mouse_mode') != 0:
                 raise RuntimeError('Native focus restoration resumed gameplay or hid the pointer without explicit resume')
             capture('07e-restored-focus-still-paused')
@@ -483,6 +491,7 @@ def main():
             baseline_actor = restored['local_actor']
             guard_samples = []
             def check_guard(state, stable_position=None):
+                require_focus_context(state)
                 inputs, actor = state.get('local_input', {}), state.get('local_actor', {})
                 native = ui.diagnostics()
                 if (state.get('ui', {}).get('focused') is not True or state['ui'].get('paused') is not False
@@ -518,12 +527,14 @@ def main():
         released = observed(lambda state: state.get('local_input', {}).get('move') == [0, 0]
                             and state.get('local_input', {}).get('fire') is False,
                             10, 'Released held focus-test controls', guarded['wall_msec'])
+        require_focus_context(released)
         try:
             key('w', True)
             moved = observed(lambda state: state.get('local_actor', {}).get('alive') is True
                              and state.get('local_input', {}).get('move', [0, 0]) != [0, 0]
                              and state.get('local_actor', {}).get('position') != released['local_actor']['position'],
                              10, 'Fresh W press moves actual player after focus recovery', released['wall_msec'])
+            require_focus_context(moved)
         finally:
             key('w', False)
         capture('07g-fresh-press-movement')
