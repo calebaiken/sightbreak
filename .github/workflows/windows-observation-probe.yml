@@ -16,6 +16,19 @@ jobs:
           python-version: '3.12'
       - name: Preserve S7 contract failure and compare exact native API operations
         run: python scripts/diagnose_windows_observation.py --output observation-probe
+      - name: Exercise corrected producer-specific filesystem contract
+        shell: python
+        run: |
+          import hashlib, json, pathlib, subprocess, sys
+          test = pathlib.Path('scripts/test_native_observation_candidate.py')
+          result = subprocess.run([sys.executable, str(test), '-v'], stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=30)
+          out = pathlib.Path('observation-probe')
+          (out / 'candidate-test.log').write_bytes(result.stdout)
+          report = {'candidate_test_sha256': hashlib.sha256(test.read_bytes()).hexdigest(), 'exit_code': result.returncode, 'scope': 'Actual Windows filesystem semantics; no exported gameplay acceptance claim'}
+          (out / 'candidate-test.json').write_text(json.dumps(report, indent=2), encoding='utf-8')
+          print(result.stdout.decode('utf-8', errors='replace'))
+          print(json.dumps(report))
+          raise SystemExit(result.returncode)
       - name: Retain small native diagnostic evidence
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
