@@ -131,6 +131,7 @@ func _snapshot(game) -> Dictionary:
 	var state := {"schema": 1, "scope": "debug_offline_read_only_observation",
 		"scenario": scenario if not scenario.is_empty() else "standard",
 		"wall_msec": Time.get_ticks_msec(), "elapsed": game._elapsed,
+		"drawn_frames": Engine.get_frames_drawn(),
 		"simulation_tick": game._simulation_tick, "time_scale": Engine.time_scale,
 		"phase": game.phase, "time_left": game.time_left,
 		"round_number": game.round_number, "attack_score": game.attack_score,
@@ -149,6 +150,7 @@ func _snapshot(game) -> Dictionary:
 	var controller: Node = game.get_parent()
 	if controller != null and controller.has_method("input_capabilities"):
 		state["ui"] = {"screen": controller.screen, "paused": controller.paused,
+			"status_text": controller.status_label.text if is_instance_valid(controller.status_label) else "",
 			"focused": controller.application_focused, "touch_controls": controller.uses_touch_controls(),
 			"capabilities": controller.input_capabilities(), "mouse_mode": Input.mouse_mode,
 			"window_mode": DisplayServer.window_get_mode(),
@@ -235,7 +237,15 @@ func begin_match(game) -> void:
 		if _can_observe(game): _event("notification", {"message": message, "elapsed": game._elapsed, "simulation_tick": game._simulation_tick}))
 
 func observe(game, delta: float) -> void:
-	if not _started or not _can_observe(game) or _finished: return
+	if not _started or not _can_observe(game): return
+	if _finished:
+		# Preserve the final result while still observing rendered UI/frame
+		# freshness. This neither processes input nor emits another completion.
+		_clock += delta
+		if _clock >= SAMPLE_SECONDS:
+			_clock = 0.0
+			_status(_snapshot(game))
+		return
 	# Observe edges every physics tick, independently of normalized progress and
 	# the five-Hz status sampler. Main calls this before consuming the next input,
 	# so an edge is timestamped one tick after its first authoritative use.

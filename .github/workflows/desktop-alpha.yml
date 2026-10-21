@@ -93,7 +93,7 @@ jobs:
           out = pathlib.Path(os.environ['SIGHTBREAK_BUILDS_DIR']) / 'regressions'
           out.mkdir(parents=True)
           receipts = []
-          for suite in ('actor', 'match', 'state_privacy', 'movement_prediction', 'peer_lifecycle', 'input_mode', 'offline_diagnostics'):
+          for suite in ('actor', 'match', 'state_privacy', 'movement_prediction', 'peer_lifecycle', 'input_mode', 'offline_diagnostics', 'hud_objective_hint'):
               command = toolchain.command('--headless', '--script', 'res://tests/' + suite + '_test.gd')
               with (out / (suite + '.log')).open('w', encoding='utf-8') as log:
                   environment = toolchain.environment()

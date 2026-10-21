@@ -42,6 +42,7 @@ run_godot touch --headless --script res://tests/touch_test.gd
 run_godot main --headless --script res://tests/main_test.gd
 SIGHTBREAK_STATE_DIR="$validation_dir/input-mode-state" run_godot input-mode --headless --script res://tests/input_mode_test.gd
 SIGHTBREAK_STATE_DIR="$validation_dir/offline-diagnostics-state" run_godot offline-diagnostics --headless --script res://tests/offline_diagnostics_test.gd
+SIGHTBREAK_STATE_DIR="$validation_dir/objective-hud-state" run_godot objective-hud --headless --script res://tests/hud_objective_hint_test.gd
 run_godot landscape --headless --script res://tests/landscape_ui_test.gd
 run_godot ux-contract --headless --script res://tests/ux_contract_test.gd
 run_godot hud-overflow --headless --script res://tests/hud_overflow_test.gd

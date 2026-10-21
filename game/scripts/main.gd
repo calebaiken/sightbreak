@@ -1293,6 +1293,22 @@ func _physics_process(delta: float) -> void:
 func touch_action(action: String) -> bool:
 	return touch != null and touch.enabled and bool(touch.actions.get(action, false))
 
+## Guidance follows the same phase, side and carrier eligibility as objectives.
+## The authority still decides whether a nearby held interaction can progress.
+func objective_hint(actor: SBActor) -> String:
+	if match_game.phase == "post": return "ROUND COMPLETE"
+	if match_game.phase == "match_over": return "OPERATION COMPLETE"
+	if not actor.alive: return "SPECTATING YOUR SQUAD"
+	if match_game.phase != "live": return ""
+	var use_key := "USE" if uses_touch_controls() else "E"
+	if match_game.objective_state == "planted":
+		return "HOLD %s NEAR THE DEVICE TO DEFUSE" % use_key if actor.team == 1 else "DEFEND THE DEVICE"
+	if actor.team == 0:
+		if match_game.objective_state == "dropped": return "RECOVER THE RELAY DEVICE"
+		if match_game.objective_carrier != actor.actor_id: return "ESCORT THE DEVICE CARRIER"
+		return "HOLD %s AT A SITE TO PLANT" % use_key
+	return "DEFEND THE TWO OBJECTIVE SITES"
+
 func _process(delta: float) -> void:
 	elapsed += delta
 	if server_mode: return
@@ -1373,7 +1389,8 @@ func _process(delta: float) -> void:
 		utility_label.text = "FRAG ×%d    SMOKE ×%d" % [actor.grenades, actor.smokes]
 		if touch != null: touch.counts = {"grenade": actor.grenades, "smoke": actor.smokes}
 		if match_game.phase == "buy": status_label.text = "BUY PHASE   /   %s TO EQUIP" % ("TAP BUY" if uses_touch_controls() else "PRESS B")
-		elif match_game.phase != "waiting" and elapsed > float(status_label.get_meta("until", 0.0)): status_label.text = ("HOLD USE AT A SITE TO PLANT" if uses_touch_controls() else "HOLD E AT A SITE TO PLANT") if actor.team == 0 and str(match_game.objective_state) != "planted" else ("HOLD USE NEAR THE DEVICE TO DEFUSE" if uses_touch_controls() else "HOLD E NEAR THE DEVICE TO DEFUSE") if str(match_game.objective_state) == "planted" else "DEFEND THE TWO OBJECTIVE SITES"
+		elif match_game.phase != "waiting" and elapsed > float(status_label.get_meta("until", 0.0)):
+			status_label.text = objective_hint(actor)
 		_fit_status_line()
 		crosshair.visible = actor.alive and not paused
 		crosshair.queue_redraw()

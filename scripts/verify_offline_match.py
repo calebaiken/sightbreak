@@ -125,7 +125,7 @@ def main():
                  'wall_unix_msec': time.time_ns() // 1_000_000, 'held_keys': sorted(held), **data}
         if last_state:
             entry['observed'] = {name: last_state.get(name) for name in
-                                 ('wall_msec', 'phase', 'round_number', 'elapsed', 'simulation_tick', 'objective_state',
+                                 ('wall_msec', 'drawn_frames', 'phase', 'round_number', 'elapsed', 'simulation_tick', 'objective_state',
                                   'interaction_progress', 'local_contribution', 'local_actor')}
         if ui is not None:
             try:
@@ -229,13 +229,51 @@ def main():
 
     def capture(name):
         remaining()
-        record('capture_begin', capture=name)
+        freshness = None
+        # Authority transitions can precede the next HUD draw. Observe two
+        # subsequent rendered frames before naming a capture for that state.
+        # Menus already use the native rendered-menu readiness check and may
+        # have no trace (or retain the previous process's final observation).
+        in_game = name not in ('01-main-menu', '09-reopened-menu') and last_state.get('ui', {}).get('screen') == 'game'
+        if in_game:
+            phase, round_number = last_state.get('phase'), last_state.get('round_number')
+            before_frames = last_state.get('drawn_frames')
+            if not isinstance(before_frames, int) or before_frames < 0:
+                raise RuntimeError('Rendered capture requires a valid drawn-frame observation: ' + name)
+            freshness = {'expected_phase': phase, 'expected_round': round_number,
+                         'before_drawn_frames': before_frames}
+            record('capture_render_wait_begin', capture=name, **freshness)
+            until = min(deadline, time.monotonic() + 5)
+            while True:
+                state = observe()
+                if state.get('phase') != phase or state.get('round_number') != round_number:
+                    record('capture_render_phase_changed', capture=name, **freshness)
+                    raise RuntimeError('Expected capture phase/round changed before rendering: ' + name)
+                drawn = state.get('drawn_frames')
+                if not isinstance(drawn, int) or drawn < before_frames:
+                    raise RuntimeError('Rendered frame counter is missing or moved backward: ' + name)
+                if drawn >= before_frames + 2:
+                    freshness['ready_drawn_frames'] = drawn
+                    break
+                if time.monotonic() >= until:
+                    raise TimeoutError('Two rendered frames did not advance within the capture budget: ' + name)
+                time.sleep(.05)
+        record('capture_begin', capture=name, render_freshness=freshness)
         ui.capture(out / (name + '.png'))
         with Image.open(out / (name + '.png')) as image:
             dimensions = list(image.size)
         remaining()
-        captures.append({'name': name, 'dimensions': dimensions, 'seconds': time.monotonic() - started})
-        record('capture_end', capture=name, dimensions=dimensions)
+        receipt = {'name': name, 'dimensions': dimensions, 'seconds': time.monotonic() - started,
+                   'render_freshness': freshness}
+        captures.append(receipt)
+        if freshness is not None:
+            state = observe()
+            freshness['after_capture_drawn_frames'] = state.get('drawn_frames')
+            if state.get('phase') != freshness['expected_phase'] or state.get('round_number') != freshness['expected_round']:
+                receipt['render_phase_changed'] = True
+                record('capture_render_phase_changed', capture=name, render_freshness=freshness)
+                raise RuntimeError('Expected capture phase/round changed during native capture: ' + name)
+        record('capture_end', capture=name, dimensions=dimensions, render_freshness=freshness)
         print(name, flush=True)
 
     def events():
@@ -431,6 +469,14 @@ def main():
                       credits_after=actor['credits'], funds_explanation=funds_note)
         result['partial_checks']['player_' + args.scenario] = True
         capture('06-player-objective-completed')
+        if args.scenario == 'plant':
+            def planted_role_guidance(item):
+                if item.get('phase') != 'live' or item.get('round_number') != round_number:
+                    raise RuntimeError('Round resolved before post-plant role guidance could be captured')
+                return item.get('ui', {}).get('status_text') == 'DEFEND THE DEVICE'
+            wait(planted_role_guidance, 15, 'Actual attacker HUD restores post-plant role guidance')
+            capture('06b-postplant-role-guidance')
+            result['partial_checks']['postplant_attacker_role_guidance'] = True
         resolved = wait(lambda item: item.get('phase') in ('post', 'match_over'), 50, 'Natural objective round resolution')
         notices = [item.get('message', '') for item in events() if item.get('event') == 'notification']
         if not any('Relay device defused' in item or 'Relay device detonated' in item for item in notices):
