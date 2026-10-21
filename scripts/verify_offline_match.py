@@ -302,15 +302,51 @@ def main():
         origin = local()['position'][:]
         until = min(deadline, time.monotonic() + seconds)
         while time.monotonic() < until:
-            actor = local()
+            state = observe()
+            if time.monotonic() >= until:
+                break
+            actor = local(state)
             dx, dz = x - actor['position'][0], z - actor['position'][2]
             if math.hypot(dx, dz) < .45:
+                released_after_tick = state['simulation_tick']
                 for name in ('w', 'a', 's', 'd'):
                     key(name, False)
-                pause(.3)
-                end = local()['position'][:]
-                record('movement_completed', origin=origin, destination=end, requested=[x, z])
-                return end
+                record('movement_settle_begin', requested=[x, z], released_after_tick=released_after_tick)
+                settled_ticks = []
+                last_tick = released_after_tick
+                # Native release and a fixed sleep do not prove that the
+                # authority consumed neutral input or stopped. Observe newer
+                # physics ticks and recheck the actual endpoint before return.
+                # Corrections share the original movement deadline.
+                while time.monotonic() < until:
+                    state = observe()
+                    if time.monotonic() >= until:
+                        break
+                    actor = local(state)
+                    tick = state['simulation_tick']
+                    if tick > last_tick:
+                        last_tick = tick
+                        velocity = actor['velocity']
+                        speed = math.hypot(velocity[0], velocity[2])
+                        neutral = state.get('local_input', {}).get('move') == [0, 0]
+                        if neutral and speed <= .05:
+                            end = actor['position'][:]
+                            distance = math.hypot(x - end[0], z - end[2])
+                            if distance >= .45:
+                                record('movement_recorrect', requested=[x, z], destination=end,
+                                       target_distance=distance, horizontal_speed=speed,
+                                       released_after_tick=released_after_tick)
+                                break
+                            settled_ticks.append(tick)
+                            if len(settled_ticks) == 2:
+                                record('movement_completed', origin=origin, destination=end, requested=[x, z],
+                                       target_distance=distance, horizontal_speed=speed,
+                                       settled_simulation_ticks=settled_ticks)
+                                return end
+                        else:
+                            settled_ticks.clear()
+                    pause(.05)
+                continue
             yaw = actor['yaw']
             mx, my = math.cos(yaw) * dx - math.sin(yaw) * dz, -math.sin(yaw) * dx - math.cos(yaw) * dz
             wanted = set()

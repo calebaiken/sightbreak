@@ -179,7 +179,7 @@ def main():
             raise RuntimeError('Tesseract failed: ' + label + '; raw stderr retained')
         return completed.stdout.decode('utf-8', errors='replace')
 
-    def read_hud(name):
+    def read_hud_pixels(name):
         with Image.open(out / (name + '.png')) as image:
             def text(box, health_contrast=False):
                 # Crop coordinates describe the reference layout; raw captures
@@ -202,6 +202,75 @@ def main():
             raise RuntimeError('Rendered living-player/ammunition check failed: ' + repr((status, ammo_text)))
         return {'health': int(health[1]), 'ammo': int(match[1]), 'reserve': int(match[2]),
                 'status_ocr': status, 'ammo_ocr': ammo_text}
+
+    def read_hud(name):
+        # Analyze the already captured native pixels while ordinary Escape
+        # pause protects the living player from time spent in external OCR.
+        native = ui.diagnostics()
+        if held_keys or native.get('lmb_down') is not False or any(native.get('keys_down', {}).values()):
+            raise RuntimeError('HUD analysis requires physically released controls')
+        before_analysis = offline_observation()
+        actor = before_analysis.get('local_actor', {})
+        if before_analysis.get('ui', {}).get('paused') is True:
+            return read_hud_pixels(name)
+        if (before_analysis.get('ui', {}).get('screen') != 'game'
+                or before_analysis.get('ui', {}).get('focused') is not True
+                or before_analysis.get('time_scale') != 1 or actor.get('alive') is not True):
+            raise RuntimeError('HUD analysis requires the actual living, focused offline player')
+
+        def require_analysis_context(state):
+            current = state.get('local_actor', {})
+            if (state.get('phase') != before_analysis['phase']
+                    or state.get('round_number') != before_analysis['round_number'] or state.get('time_scale') != 1
+                    or current.get('alive') is not True
+                    or any(current.get(field) != actor.get(field) for field in ('id', 'weapon', 'ammo', 'reserve'))):
+                raise RuntimeError('Player, round, life, weapon, or ammunition changed during saved-HUD analysis')
+
+        def analysis_escape(cleanup=False):
+            if cleanup:
+                # Cleanup can release ordinary pause after the acceptance
+                # deadline, just as the outer teardown releases held controls.
+                ui.key('Escape', True)
+                held_keys.add('Escape')
+                trace('key_after', key='Escape', down=True, scope='saved_hud_analysis_cleanup')
+            else:
+                key('Escape', True)
+            try:
+                if cleanup:
+                    time.sleep(.1)
+                else:
+                    pause(.1)
+            finally:
+                # Key-up remains mandatory even if the whole-flow deadline
+                # expires while this ordinary native press is being delivered.
+                ui.key('Escape', False)
+                held_keys.discard('Escape')
+                trace('key_after', key='Escape', down=False, scope='saved_hud_analysis')
+
+        receipt = {'capture': name, 'before': before_analysis, 'scope': 'ordinary native pause for saved-pixel OCR'}
+        result.setdefault('hud_analysis_pauses', []).append(receipt)
+        try:
+            analysis_escape()
+            paused_state = observed(lambda state: state.get('ui', {}).get('paused') is True,
+                                    10, 'Native pause before saved-HUD OCR: ' + name, before_analysis['wall_msec'])
+            require_analysis_context(paused_state)
+            receipt['paused'] = paused_state
+            reading = read_hud_pixels(name)
+            after_analysis = observed(lambda state: state.get('ui', {}).get('paused') is True,
+                                      5, 'Fresh paused observation after saved-HUD OCR: ' + name, paused_state['wall_msec'])
+            require_analysis_context(after_analysis)
+            if (after_analysis.get('elapsed') != paused_state.get('elapsed')
+                    or after_analysis['local_actor'].get('health') != paused_state['local_actor'].get('health')):
+                raise RuntimeError('Ordinary offline pause did not freeze gameplay during saved-HUD OCR')
+            receipt['after_analysis'] = after_analysis
+            return reading
+        finally:
+            if client.poll() is None and offline_observation().get('ui', {}).get('paused') is True:
+                analysis_escape(cleanup=True)
+                resumed_state = observed(lambda state: state.get('ui', {}).get('paused') is False,
+                                         10, 'Explicit native resume after saved-HUD OCR: ' + name)
+                require_analysis_context(resumed_state)
+                receipt['resumed'] = resumed_state
 
     def ocr_words():
         remaining()
@@ -504,6 +573,15 @@ def main():
         try:
             key('w', True)
             button(True)
+            input_ack = observed(lambda state: state.get('local_input', {}).get('fire') is True
+                                 and state.get('local_input', {}).get('move', [0, 0]) != [0, 0],
+                                 10, 'Game consumed physical W and LMB before native focus loss', focus_start['wall_msec'])
+            require_focus_context(input_ack)
+            if (input_ack.get('local_actor', {}).get('alive') is not True
+                    or input_ack.get('ui', {}).get('focused') is not True
+                    or input_ack.get('ui', {}).get('paused') is not False):
+                raise RuntimeError('Physical input acknowledgment lost the living active focus-test context')
+            trace('native_focus_held_input_acknowledged', state=input_ack)
             trace('native_focus_loss_before', method='XSetInputFocus(root)' if args.target == 'linux' else 'ShowWindow(SW_MINIMIZE)')
             if args.target == 'linux':
                 ui.x.XSetInputFocus(ui.d, ui.x.XDefaultRootWindow(ui.d), 1, 0)
@@ -579,7 +657,8 @@ def main():
         finally:
             key('w', False)
         capture('11c-fresh-press-movement')
-        result['native_focus_recovery'] = {'scope': 'fresh stock match after settings restart', 'lost': lost, 'restored_paused': restored,
+        result['native_focus_recovery'] = {'scope': 'fresh stock match after settings restart', 'held_input_acknowledged': input_ack,
+                                           'lost': lost, 'restored_paused': restored,
                                            'held_neutral_samples': guard_samples, 'released': released,
                                            'fresh_press_movement': moved}
         ui.request_close()
