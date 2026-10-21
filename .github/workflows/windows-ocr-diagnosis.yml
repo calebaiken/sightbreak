@@ -39,9 +39,9 @@ jobs:
         run: python scripts/toolchain.py setup --targets windows
       - name: Export this clean source for ordinary graphical menu load
         run: python scripts/export.py windows
-      - name: Counterbalanced default and one-thread OCR with unchanged20-second budgets
+      - name: Counterbalanced normal and below-normal owned game priority, unchanged20-second OCR budgets
         shell: pwsh
-        run: python scripts/diagnose_windows_ocr.py --archive "$env:RUNNER_TEMP/retained-windows-offline.zip" --output builds/windows-ocr-diagnosis/ocr-probe --tesseract 'C:/Program Files/Tesseract-OCR/tesseract.exe'
+        run: python scripts/diagnose_windows_ocr.py --comparison priority --archive "$env:RUNNER_TEMP/retained-windows-offline.zip" --output builds/windows-ocr-diagnosis/ocr-probe --tesseract 'C:/Program Files/Tesseract-OCR/tesseract.exe'
       - name: Preserve small native benchmark evidence, including timeouts
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02

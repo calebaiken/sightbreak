@@ -29,7 +29,7 @@ def sha(data):
 
 class ProcessCpu:
     """Read real Windows process CPU times while retaining a query handle."""
-    def __init__(self, pid):
+    def __init__(self, pid, *, set_priority=False):
         self.kernel = C.WinDLL('kernel32', use_last_error=True)
         self.kernel.OpenProcess.argtypes = [wintypes.DWORD, wintypes.BOOL, wintypes.DWORD]
         self.kernel.OpenProcess.restype = wintypes.HANDLE
@@ -37,7 +37,13 @@ class ProcessCpu:
         self.kernel.CloseHandle.restype = wintypes.BOOL
         self.kernel.GetProcessTimes.argtypes = [wintypes.HANDLE] + [C.POINTER(wintypes.FILETIME)] * 4
         self.kernel.GetProcessTimes.restype = wintypes.BOOL
-        self.handle = self.kernel.OpenProcess(0x1000, False, pid)
+        self.kernel.GetPriorityClass.argtypes = [wintypes.HANDLE]
+        self.kernel.GetPriorityClass.restype = wintypes.DWORD
+        self.kernel.SetPriorityClass.argtypes = [wintypes.HANDLE, wintypes.DWORD]
+        self.kernel.SetPriorityClass.restype = wintypes.BOOL
+        self.kernel.GetProcessAffinityMask.argtypes = [wintypes.HANDLE, C.POINTER(C.c_size_t), C.POINTER(C.c_size_t)]
+        self.kernel.GetProcessAffinityMask.restype = wintypes.BOOL
+        self.handle = self.kernel.OpenProcess(0x1000 | 0x400 | (0x200 if set_priority else 0), False, pid)
         if not self.handle:
             raise C.WinError(C.get_last_error())
 
@@ -51,12 +57,30 @@ class ProcessCpu:
     def close(self):
         self.kernel.CloseHandle(self.handle)
 
+    def priority(self):
+        value = self.kernel.GetPriorityClass(self.handle)
+        if not value:
+            raise C.WinError(C.get_last_error())
+        return value
+
+    def set_priority(self, value):
+        if not self.kernel.SetPriorityClass(self.handle, value):
+            raise C.WinError(C.get_last_error())
+
+    def affinity(self):
+        process, system = C.c_size_t(), C.c_size_t()
+        if not self.kernel.GetProcessAffinityMask(self.handle, C.byref(process), C.byref(system)):
+            raise C.WinError(C.get_last_error())
+        return {'process_mask': hex(process.value), 'system_mask': hex(system.value),
+                'scope': 'Read only; diagnostic never changes affinity'}
+
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--archive', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--tesseract', required=True)
+    parser.add_argument('--comparison', choices=('threads', 'priority'), default='threads')
     args = parser.parse_args()
     if os.name != 'nt':
         parser.error('Execute this diagnostic on native Windows')
@@ -87,7 +111,7 @@ def main():
         raise RuntimeError('Tesseract version command failed')
     before = source()
     manifest = validate_record('windows', before)
-    report = {'scope': __doc__, 'source': before, 'artifact_source': manifest,
+    report = {'scope': __doc__, 'comparison': args.comparison, 'source': before, 'artifact_source': manifest,
               'retained_failed_attempt_artifact': ARTIFACT_ID, 'archive_sha256': ARCHIVE_SHA256,
               'retained_export_source': retained_source['source_commit'],
               'raw_input_sha256': sha(raw_input.read_bytes()), 'native_size': native_size,
@@ -95,7 +119,9 @@ def main():
               'analysis_input_sha256': sha(analysis_bytes), 'analysis_size': list(analysis.size),
               'host': platform.platform(), 'logical_cpu_count': os.cpu_count(),
               'default_omp_environment': {name: os.environ.get(name) for name in ('OMP_THREAD_LIMIT', 'OMP_NUM_THREADS')},
-              'trial_timeout_seconds': 20, 'trials': []}
+              'trial_timeout_seconds': 20,
+              'time_scale_scope': 'Ordinary menu only; no active match or time_scale setter/injection; gameplay physics unmeasured',
+              'trials': []}
 
     def save():
         (args.output / 'results.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf-8')
@@ -105,12 +131,25 @@ def main():
         if setting == 'limit1':
             environment['OMP_THREAD_LIMIT'] = '1'
         command = [args.tesseract, 'stdin', 'stdout', '--psm', '11', 'tsv']
-        menu_before = menu_cpu.read() if menu_cpu else None
-        started = time.monotonic()
-        process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=environment)
-        cpu = ProcessCpu(process.pid)
+        original_priority = menu_cpu.priority() if menu_cpu else None
+        if menu_cpu and client.poll() is not None:
+            raise RuntimeError('Native menu exited before contention measurement')
+        if menu_cpu and args.comparison == 'priority':
+            # NORMAL_PRIORITY_CLASS versus BELOW_NORMAL_PRIORITY_CLASS; owned
+            # game process only. OCR/controller priority and affinity unchanged.
+            menu_cpu.set_priority(0x4000 if setting == 'below-normal-game' else 0x20)
+        cpu = process = None
         timed_out = False
         try:
+            menu_priority = menu_cpu.priority() if menu_cpu else None
+            menu_affinity = menu_cpu.affinity() if menu_cpu else None
+            native_before = ui.diagnostics() if menu_cpu else None
+            menu_interval_started = time.monotonic()
+            menu_before = menu_cpu.read() if menu_cpu else None
+            started = time.monotonic()
+            process = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, env=environment)
+            cpu = ProcessCpu(process.pid)
+            ocr_priority, ocr_affinity = cpu.priority(), cpu.affinity()
             try:
                 output, errors = process.communicate(input=analysis_bytes, timeout=20)
             except subprocess.TimeoutExpired:
@@ -119,11 +158,19 @@ def main():
                 output, errors = process.communicate(timeout=5)
             elapsed = time.monotonic() - started
             cpu_seconds = cpu.read()
+            menu_after = menu_cpu.read() if menu_cpu else None
+            menu_interval_seconds = time.monotonic() - menu_interval_started
+            native_after = ui.diagnostics() if menu_cpu else None
+            if menu_cpu and client.poll() is not None:
+                raise RuntimeError('Native menu exited during contention measurement')
         finally:
-            cpu.close()
-            if process.poll() is None:
+            if cpu:
+                cpu.close()
+            if process is not None and process.poll() is None:
                 process.kill()
                 process.wait(timeout=5)
+            if menu_cpu:
+                menu_cpu.set_priority(original_priority)
         name = f'{condition}-{repeat}-{setting}'
         (args.output / (name + '.tsv')).write_bytes(output)
         (args.output / (name + '.stderr.log')).write_bytes(errors)
@@ -134,7 +181,12 @@ def main():
         entry = {'condition': condition, 'setting': setting, 'repeat': repeat, 'command': command,
                  'omp_thread_limit': environment.get('OMP_THREAD_LIMIT'), 'timed_out': timed_out,
                  'exit_code': process.returncode, 'wall_seconds': elapsed, 'ocr_cpu_seconds': cpu_seconds,
-                 'menu_cpu_seconds_during_trial': menu_cpu.read() - menu_before if menu_cpu else None,
+                 'ocr_priority_class': ocr_priority, 'ocr_affinity': ocr_affinity,
+                 'game_priority_class_during_trial': menu_priority,
+                 'game_priority_class_restored': menu_cpu.priority() if menu_cpu else None,
+                 'game_affinity': menu_affinity, 'native_before': native_before, 'native_after': native_after,
+                 'menu_cpu_seconds_during_trial': menu_after - menu_before if menu_cpu else None,
+                 'menu_cpu_interval_wall_seconds': menu_interval_seconds if menu_cpu else None,
                  'stdout_sha256': sha(output), 'stderr_sha256': sha(errors),
                  'output_bytes': len(output), 'word_count': len(words), 'vectorline_matches': matches}
         report['trials'].append(entry)
@@ -144,9 +196,10 @@ def main():
     save()
     # Counterbalance order to separate the environment setting from cold-cache
     # and later-trial effects. Keep the exact same bytes and20-second budget.
-    for repeat, settings in enumerate((('default', 'limit1'), ('limit1', 'default')), 1):
-        for setting in settings:
-            trial('idle', setting, repeat)
+    if args.comparison == 'threads':
+        for repeat, settings in enumerate((('default', 'limit1'), ('limit1', 'default')), 1):
+            for setting in settings:
+                trial('idle', setting, repeat)
     ui, job, client, menu_cpu = WinUI(), windows_job(), None, None
     with (args.output / 'native-menu.log').open('w', encoding='utf-8') as log:
         try:
@@ -171,9 +224,11 @@ def main():
             ui.capture(args.output / 'native-menu.png')
             report['native_menu'] = {'command': command, 'pid': client.pid, 'native_state': ui.diagnostics(),
                                      'scope': 'Ordinary graphical exported menu contention, not live-match load or gameplay acceptance'}
-            menu_cpu = ProcessCpu(client.pid)
+            menu_cpu = ProcessCpu(client.pid, set_priority=args.comparison == 'priority')
             save()
-            for repeat, settings in enumerate((('default', 'limit1'), ('limit1', 'default')), 1):
+            schedules = ((('default', 'limit1'), ('limit1', 'default')) if args.comparison == 'threads'
+                         else (('normal-game', 'below-normal-game'), ('below-normal-game', 'normal-game')))
+            for repeat, settings in enumerate(schedules, 1):
                 for setting in settings:
                     trial('rendered-menu', setting, repeat, menu_cpu)
             ui.request_close()
@@ -186,7 +241,11 @@ def main():
                 menu_cpu.close()
             if client is not None and client.poll() is None:
                 client.terminate()
-                client.wait(timeout=5)
+                try:
+                    client.wait(timeout=5)
+                except subprocess.TimeoutExpired:
+                    client.kill()
+                    client.wait(timeout=5)
                 report.setdefault('native_menu', {})['forced_cleanup_exit'] = client.returncode
             ui.close()
             # windows_job owns this Python process too: retain its kill-on-close
