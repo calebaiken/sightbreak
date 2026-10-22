@@ -100,6 +100,20 @@ func run() -> void:
 		match_node._tick_order()
 	check(match_node._rng.randi() == expected_roll.randi(), "shuffling leaves the gameplay random stream alone")
 
+	# Bot habits must not depend on which squad an id belongs to. Raw id parity gave ids 6-10 two crouchers (6, 9) to one
+	# in ids 1-5 (3), and three even ids to two.
+	var habit_counts := {"crouch": [0, 0], "even": [0, 0]}
+	for id: int in ids:
+		var probe: SBActor = match_node.actors[id]
+		var squad: int = 0 if id <= 5 else 1
+		check(SBBotAI.squad_index(probe) == (id - 1) % 5, "actor %d has squad index %d" % [id, (id - 1) % 5])
+		if SBBotAI.squad_index(probe) % 3 == 0:
+			habit_counts["crouch"][squad] += 1
+		if SBBotAI.squad_index(probe) % 2 == 0:
+			habit_counts["even"][squad] += 1
+	check(habit_counts["crouch"][0] == habit_counts["crouch"][1], "both squads have the same number of crouchers (%s)" % str(habit_counts["crouch"]))
+	check(habit_counts["even"][0] == habit_counts["even"][1], "both squads have the same number of smoke throwers (%s)" % str(habit_counts["even"]))
+
 	match_node.queue_free()
 	await process_frame
 	print("TICK_ORDER_TEST checks=%d failures=%d" % [checks, failures.size()])
