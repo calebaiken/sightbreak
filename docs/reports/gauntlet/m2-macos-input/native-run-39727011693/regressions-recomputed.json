@@ -1,0 +1,222 @@
+{
+  "checks": {
+    "ten_exact_maintained_suites": true,
+    "all_native_exits_clean": true,
+    "native_logs_clean": true,
+    "every_suite_has_native_assertion_summary": true,
+    "fresh_before_state": true,
+    "distinct_native_producer_paths": true,
+    "before_after_same_native_path": true,
+    "native_custom_identity_selected": true,
+    "native_path_matches_namespace": true,
+    "original_resources_unchanged": true,
+    "copied_resources_unchanged": true,
+    "owned_cleanup_complete": true,
+    "no_finalization_failure": true,
+    "isolation_pass_receipt": true,
+    "retained_produced_files_match_hashes": true,
+    "separate_HUD_fixture_cleanup_attested": true
+  },
+  "all_checks_passed": true,
+  "native_test_summaries": {
+    "actor": [
+      "ACTOR TESTS: 73 checks, 0 failures"
+    ],
+    "match": [
+      "MATCH_TEST: 75/75 passed"
+    ],
+    "authority_order": [
+      "AUTHORITY_ORDER checks=178 failures=0 mode=assertion"
+    ],
+    "state_privacy": [
+      "STATE_PRIVACY_TEST checks=55 failures=0"
+    ],
+    "movement_prediction": [
+      "MOVEMENT_PREDICTION_TEST checks=725 failures=0 maximum_error_m=0.075834"
+    ],
+    "peer_lifecycle": [
+      "PEER_LIFECYCLE_TEST checks=16 failures=0"
+    ],
+    "input_mode": [
+      "INPUT_MODE_TEST checks=36 failures=0 graphical_pointer=false scope=simulated_capabilities_and_input_not_physical_hardware baseline=false"
+    ],
+    "menu_focus": [
+      "MENU_FOCUS_TEST checks=30 failures=0 scope=scene_focus_synthetic_actions_not_physical_hardware"
+    ],
+    "offline_diagnostics": [
+      "OFFLINE_DIAGNOSTICS_TEST checks=60 failures=0 scope=source_initialization_and_read_only_observer_not_exported_gameplay"
+    ],
+    "hud_objective_hint": [
+      "HUD_OBJECTIVE_HINT_TEST source=res://scripts/main.gd scope=frozen_source_ui checks=33 failures=0"
+    ]
+  },
+  "retained_produced_files_verified": [
+    "actor/logs/godot.log",
+    "actor/logs/godot2026-10-22T05.17.32.log",
+    "actor/logs/godot2026-10-22T05.17.34.log",
+    "match/logs/godot.log",
+    "match/logs/godot2026-10-22T05.17.35.log",
+    "match/logs/godot2026-10-22T05.17.36.log",
+    "authority_order/logs/godot.log",
+    "authority_order/logs/godot2026-10-22T05.17.37.log",
+    "authority_order/logs/godot2026-10-22T05.17.45.log",
+    "state_privacy/logs/godot.log",
+    "state_privacy/logs/godot2026-10-22T05.17.46.log",
+    "movement_prediction/logs/godot.log",
+    "movement_prediction/logs/godot2026-10-22T05.17.47.log",
+    "movement_prediction/logs/godot2026-10-22T05.17.54.log",
+    "peer_lifecycle/logs/godot.log",
+    "peer_lifecycle/logs/godot2026-10-22T05.17.54.log",
+    "peer_lifecycle/logs/godot2026-10-22T05.17.55.log",
+    "input_mode/logs/godot.log",
+    "input_mode/logs/godot2026-10-22T05.17.56.log",
+    "input_mode/logs/godot2026-10-22T05.17.57.log",
+    "input_mode/offline_training.json",
+    "menu_focus/logs/godot.log",
+    "menu_focus/logs/godot2026-10-22T05.17.57.log",
+    "menu_focus/logs/godot2026-10-22T05.17.59.log",
+    "offline_diagnostics/logs/godot.log",
+    "offline_diagnostics/logs/godot2026-10-22T05.18.00.log",
+    "offline_diagnostics/logs/godot2026-10-22T05.18.01.log",
+    "offline_diagnostics/offline-diagnostics-unit/defuse/events.jsonl",
+    "offline_diagnostics/offline-diagnostics-unit/defuse/status.json",
+    "offline_diagnostics/offline-diagnostics-unit/events.jsonl",
+    "offline_diagnostics/offline-diagnostics-unit/plant/events.jsonl",
+    "offline_diagnostics/offline-diagnostics-unit/plant/status.json",
+    "offline_diagnostics/offline-diagnostics-unit/status.json",
+    "hud_objective_hint/logs/godot.log",
+    "hud_objective_hint/logs/godot2026-10-22T05.18.01.log",
+    "hud_objective_hint/logs/godot2026-10-22T05.18.02.log"
+  ],
+  "produced_files_not_in_selected_receipts": [],
+  "HUD_fixture_cleanup_native_receipts": [
+    {
+      "exit": 0,
+      "native_user_dir": "/Users/runner/Library/Application Support/SIGHTBREAK_QA/hud-objective-hint-6920-166176",
+      "original_exit": 0,
+      "original_user_dir_restored": true,
+      "owned": true,
+      "owner": "SIGHTBREAK_QA/hud-objective-hint-6920-166176",
+      "reason": "",
+      "removed": true
+    }
+  ],
+  "suites": [
+    {
+      "suite": "actor",
+      "exit": 0,
+      "wall_seconds": 2.4259154589999525,
+      "produced_files": {
+        "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.17.32.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.17.34.log": "b8e2168531c1e39291f053a26c132e01527769d91b30ae36a0e32ed55f3862a0"
+      },
+      "native_user_dir": "/Users/runner/Library/Application Support/SIGHTBREAK-native-tests-01bdcaec72f241bf8d42ae321fcada59/actor"
+    },
+    {
+      "suite": "match",
+      "exit": 0,
+      "wall_seconds": 0.886194708000005,
+      "produced_files": {
+        "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.17.35.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.17.36.log": "b11b15756a6eef96df83c685da3c13eeaf90e590e9ed25a9e1c9889e8c0c3e5d"
+      },
+      "native_user_dir": "/Users/runner/Library/Application Support/SIGHTBREAK-native-tests-01bdcaec72f241bf8d42ae321fcada59/match"
+    },
+    {
+      "suite": "authority_order",
+      "exit": 0,
+      "wall_seconds": 8.554787334000025,
+      "produced_files": {
+        "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.17.37.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.17.45.log": "2d9869d0b91829a65d5b639a553e4c7eb24139d3ac59f9e86f804b4bb101c574"
+      },
+      "native_user_dir": "/Users/runner/Library/Application Support/SIGHTBREAK-native-tests-01bdcaec72f241bf8d42ae321fcada59/authority_order"
+    },
+    {
+      "suite": "state_privacy",
+      "exit": 0,
+      "wall_seconds": 0.6390183750000347,
+      "produced_files": {
+        "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.17.46.log": "969f048e66207cb6a404485b99551a5bef91a9b82cdb461a11d4188a6946e089"
+      },
+      "native_user_dir": "/Users/runner/Library/Application Support/SIGHTBREAK-native-tests-01bdcaec72f241bf8d42ae321fcada59/state_privacy"
+    },
+    {
+      "suite": "movement_prediction",
+      "exit": 0,
+      "wall_seconds": 6.390676374999998,
+      "produced_files": {
+        "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.17.47.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.17.54.log": "3915d3bd005f9b7080eb91e09b23dc98da4969c27f357feec56816be248b3b12"
+      },
+      "native_user_dir": "/Users/runner/Library/Application Support/SIGHTBREAK-native-tests-01bdcaec72f241bf8d42ae321fcada59/movement_prediction"
+    },
+    {
+      "suite": "peer_lifecycle",
+      "exit": 0,
+      "wall_seconds": 0.462104375000024,
+      "produced_files": {
+        "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.17.54.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.17.55.log": "8c9dd9672fd512b281a03a7738a3b317de457b9f8067d535fd4a976ab05ff59b"
+      },
+      "native_user_dir": "/Users/runner/Library/Application Support/SIGHTBREAK-native-tests-01bdcaec72f241bf8d42ae321fcada59/peer_lifecycle"
+    },
+    {
+      "suite": "input_mode",
+      "exit": 0,
+      "wall_seconds": 1.0529135419999989,
+      "produced_files": {
+        "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.17.56.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.17.57.log": "c19215e6d66d0dffe15d173472c347f3ee411ce2fc394f898ee695e75d9c17cd",
+        "offline_training.json": "8de01e1c9044cf30e7e87849d899bf41b27d2caac82bd576783ca1c043121b11"
+      },
+      "native_user_dir": "/Users/runner/Library/Application Support/SIGHTBREAK-native-tests-01bdcaec72f241bf8d42ae321fcada59/input_mode"
+    },
+    {
+      "suite": "menu_focus",
+      "exit": 0,
+      "wall_seconds": 1.6741840839999895,
+      "produced_files": {
+        "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.17.57.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.17.59.log": "4edfc0577795adcaeffcc3d825432a2050032f0bdfe17cc27174ff4c67cb3562"
+      },
+      "native_user_dir": "/Users/runner/Library/Application Support/SIGHTBREAK-native-tests-01bdcaec72f241bf8d42ae321fcada59/menu_focus"
+    },
+    {
+      "suite": "offline_diagnostics",
+      "exit": 0,
+      "wall_seconds": 0.8594195829999762,
+      "produced_files": {
+        "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.18.00.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.18.01.log": "e669c97a8c3db430d4dfce67a5abe8c8a7ebbe69f74eaadef8f1e9d93ccd3d30",
+        "offline-diagnostics-unit/defuse/events.jsonl": "0247ef561d6ad9ef25c32aab21c2571a2405e4a7aa73d47d759b11017ecf909a",
+        "offline-diagnostics-unit/defuse/status.json": "bd88cb0906ad3adc2d0497a6b60b4fb0dd4cad677cc79c3432237c9599c06495",
+        "offline-diagnostics-unit/events.jsonl": "0663f7695c7ca4728f9f644342d6d251cde38f61be6956c78ec5f97f30e8ee9a",
+        "offline-diagnostics-unit/plant/events.jsonl": "f256247420dabcb15e163d829a9e1dc0555a5cfb552bf13eb12e1f320cc8f2aa",
+        "offline-diagnostics-unit/plant/status.json": "e13852ced0b682a499ae56f2faa24b56d9cbd8a4b81990018ffdc79c606a60f7",
+        "offline-diagnostics-unit/status.json": "0e77d2a66defc67f8ee35b6e44c4e0df59164e1959d063ac4e5d847d8d3588bd"
+      },
+      "native_user_dir": "/Users/runner/Library/Application Support/SIGHTBREAK-native-tests-01bdcaec72f241bf8d42ae321fcada59/offline_diagnostics"
+    },
+    {
+      "suite": "hud_objective_hint",
+      "exit": 0,
+      "wall_seconds": 0.9015965830000141,
+      "produced_files": {
+        "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.18.01.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+        "logs/godot2026-10-22T05.18.02.log": "b95ddc8346005a98b560d031c4650d9220fc76b07d76794f6642211f63728e22"
+      },
+      "native_user_dir": "/Users/runner/Library/Application Support/SIGHTBREAK-native-tests-01bdcaec72f241bf8d42ae321fcada59/hud_objective_hint"
+    }
+  ]
+}
