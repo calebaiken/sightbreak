@@ -4,9 +4,9 @@ Run [39719407304](https://github.com/calebaiken/sightbreak/actions/runs/39719407
 
 ARM default startup, graphical controls and ten native source suites pass within their stated scope. The new unsigned iOS device build fails in the real arm64 linker with Xcode 16.4/iPhoneOS 18.5. [ARM_REPORT.md](ARM_REPORT.md) records the raw failure, verifier parser issue, checks and limitations.
 
-Intel default startup, explicit OpenGL retention and minimal/frozen/current comparison steps have failed. Intel feature collection is still running as of 04:14:30 UTC; no raw Intel cause or feature verdict is asserted at this checkpoint. This report will receive a separate outcome increment when its receipts are available.
+Intel default startup and explicit OpenGL time out. Minimal native graphics controls pass, while frozen/current games and all five grouped feature cases time out at the unchanged 120-second budget. No instrumented completed viewport-render phase or capture is logged for any feature case. [INTEL_REPORT.md](INTEL_REPORT.md) records the exact traces, native samples and limits. No shipping graphics correction is supported.
 
-G13 remains FAILED and G14 remains IN PROGRESS. Startup, source suites, export structure, device compilation, signing, installation, runtime, physical devices, human play and release acceptance stay distinct. No gameplay or release gate is approved here.
+G13 remains FAILED. The original iOS compile attempt remains FAILED; a separate source/run follow-up at `2a2b732`/`39721286005` independently passes the unsigned device-compile slice in the [separate follow-up report](../../m2-native-mac-ci-39721286005/independent-review/REPORT.md). Startup, source suites, export structure, device compilation, signing, installation, runtime, physical devices, human play and release acceptance stay distinct. No gameplay or release gate is approved here.
 
 `brief.txt` is the exact parent assignment. `CRITERIA_REVIEW.md` sets the review boundaries. `source/independent-source-identity.json` records independently recomputed commit/tree/content/validation identities. `ARTIFACTS.json` binds downloaded originals and records oversized artifacts not requested. Raw connector metadata, completed job logs and independent audits are under `raw/`; frozen source/criteria snapshots are under `source/`.
 
