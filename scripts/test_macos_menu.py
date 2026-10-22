@@ -45,7 +45,7 @@ class MenuControls(unittest.TestCase):
                     adapter.settings_point(capture)
 
     def test_target_requires_unique_exact_confident_in_bounds_text(self):
-        for change in ('duplicate', 'partial', 'confidence', 'outside', 'nonfinite'):
+        for change in ('duplicate', 'partial', 'confidence', 'outside', 'nonfinite', 'tiny_outside'):
             capture = capture_fixture()
             entry = capture['text'][-1]
             if change == 'duplicate':
@@ -56,8 +56,10 @@ class MenuControls(unittest.TestCase):
                 entry['confidence'] = .79
             elif change == 'outside':
                 entry['box_normalized_bottom_left'] = [.9, .2, .2, .1]
-            else:
+            elif change == 'nonfinite':
                 entry['box_normalized_bottom_left'][0] = float('nan')
+            else:
+                entry['box_normalized_bottom_left'] = [1, .1, 1e-20, .1]
             with self.subTest(change=change), self.assertRaises(RuntimeError):
                 adapter.settings_point(capture)
 

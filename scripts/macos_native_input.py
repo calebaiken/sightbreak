@@ -43,7 +43,7 @@ def settings_point(capture):
     box = entries[0].get('box_normalized_bottom_left', [])
     if (len(box) != 4 or not all(isinstance(value, (int, float)) and not isinstance(value, bool)
                                and math.isfinite(value) for value in box)
-            or min(box[2:]) <= 0 or box[0] < 0 or box[1] < 0 or box[0] + box[2] > 1 or box[1] + box[3] > 1):
+            or min(box[2:]) <= 0 or box[0] < 0 or box[1] < 0 or box[2] > 1 - box[0] or box[3] > 1 - box[1]):
         raise RuntimeError('SETTINGS target lies outside original screenshot')
     return (bounds[0] + (box[0] + box[2] / 2) * bounds[2],
             bounds[1] + (1 - box[1] - box[3] / 2) * bounds[3])

@@ -56,7 +56,8 @@ class ScreenIdentity(unittest.TestCase):
         for label in (*driver.HOME_LABELS, 'FIELD SETTINGS'):
             source = '02-field-settings.json' if label == 'FIELD SETTINGS' else '03-returned-menu.json'
             for box in ([], [0, 0, 0, .1], [-.01, .2, .1, .1], [.9, .1, .2, .1],
-                        [.1, .95, .1, .1], [.1, float('nan'), .1, .1], [False, .1, .1, .1]):
+                        [.1, .95, .1, .1], [.1, float('nan'), .1, .1], [False, .1, .1, .1],
+                        [1, .1, 1e-20, .1], [.1, 1, .1, 1e-20]):
                 capture = original(source)
                 next(row for row in capture['text'] if row['text'] == label)['box_normalized_bottom_left'] = box
                 with self.subTest(label=label, box=box), self.assertRaises(RuntimeError):

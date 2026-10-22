@@ -61,7 +61,7 @@ def unique_screen_label(capture, phrase):
             and all(isinstance(value, (int, float)) and not isinstance(value, bool)
                     and math.isfinite(value) for value in box)
             and min(box[2:]) > 0 and min(box[:2]) >= 0
-            and box[0] + box[2] <= 1 and box[1] + box[3] <= 1)
+            and box[2] <= 1 - box[0] and box[3] <= 1 - box[1])
 
 
 def require_screen(capture, name):
