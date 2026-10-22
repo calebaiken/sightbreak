@@ -17,14 +17,23 @@ import toolchain
 
 
 def evidence(directory):
-    return {name: hashlib.sha256((directory / name).read_bytes()).hexdigest()
+    return {name: hashlib.sha256((directory / name).read_bytes()).hexdigest() if (directory / name).is_file() else None
             for name in ('results.json', 'isolation.json', 'input_mode.log')}
 
 
 def select_failure(directory):
     """Select only the retained exit-zero input_mode leak, without changing it."""
-    results = json.loads((directory / 'results.json').read_text())
-    isolation = json.loads((directory / 'isolation.json').read_text())
+    missing = [name for name in ('results.json', 'isolation.json', 'input_mode.log') if not (directory / name).is_file()]
+    if missing:
+        return 'Original failure evidence is absent: ' + ', '.join(missing)
+    try:
+        results = json.loads((directory / 'results.json').read_text())
+        isolation = json.loads((directory / 'isolation.json').read_text())
+    except json.JSONDecodeError:
+        return 'Original failure evidence is not valid JSON'
+    if (not isinstance(results, list) or not all(isinstance(row, dict) for row in results)
+            or not isinstance(isolation, dict) or not isinstance(isolation.get('failure'), dict)):
+        return 'Original failure receipt shape does not establish the required strict failure'
     matches = [row for row in results if row.get('suite') == 'input_mode']
     if (len(matches) != 1 or results[-1] != matches[0] or matches[0].get('exit') != 0
             or matches[0].get('clean_log') is not False or isolation.get('passed') is not False
@@ -37,7 +46,7 @@ def select_failure(directory):
             or isolation.get('copied_resources_unchanged') is not True
             or isolation.get('temporary_project_removed') is not True
             or isolation.get('finalization_failures') != [] or not isolation.get('cleanup')
-            or not all(item.get('removed') is True for item in isolation['cleanup'])):
+            or not all(isinstance(item, dict) and item.get('removed') is True for item in isolation['cleanup'])):
         return 'Original source or owned cleanup receipt was not clean'
     if isolation.get('source_resources_sha256') != inventory(toolchain.ROOT / 'game'):
         return 'Current source bytes differ from the original failed strict suite'
@@ -127,6 +136,8 @@ def run(failed_output, output):
             finally:
                 report['isolation'] = runner.report
                 report['owned_processes'] = runner.processes
+            if time.monotonic() - started > 240:
+                raise TimeoutError('Whole verbose diagnostic deadline exceeded during finalization')
             report.update(status='DIAGNOSTIC_CLEAN_REPEAT', passed=runner.report['passed'])
     except (Exception, SystemExit) as error:
         report['failure'] = {'type': type(error).__name__, 'message': str(error)}
@@ -142,6 +153,8 @@ def run(failed_output, output):
                 report['original_evidence_unchanged'] = evidence(failed_output) == original
                 if not report['original_evidence_unchanged']:
                     raise RuntimeError('Original strict failure evidence changed')
+            if time.monotonic() - started > 240:
+                raise TimeoutError('Whole verbose diagnostic deadline exceeded during receipt checks')
         except (Exception, SystemExit) as error:
             report['finalization_failure'] = {'type': type(error).__name__, 'message': str(error)}
             report.update(passed=False, status='FAILED')

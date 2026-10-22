@@ -37,7 +37,7 @@ class DiagnosticControls(unittest.TestCase):
             original = diagnostic.evidence(directory)
             with patch.object(diagnostic, 'inventory', return_value={'source': 'invented-hash'}):
                 self.assertIsNone(diagnostic.select_failure(directory))
-                for key, value in [('passed', True), ('failure', {}), ('cleanup', []),
+                for key, value in [('passed', True), ('failure', {}), ('failure', None), ('cleanup', []),
                                    ('source_resources_unchanged', False), ('copied_resources_unchanged', False),
                                    ('temporary_project_removed', False), ('finalization_failures', [{}]),
                                    ('source_resources_sha256', {})]:
@@ -174,6 +174,50 @@ class DiagnosticControls(unittest.TestCase):
                 launch.assert_not_called()
             for output in (original, original / 'nested', Path(temporary)):
                 with self.subTest(output=output), self.assertRaises(RuntimeError): diagnostic.run(original, output)
+
+    def test_missing_original_receipts_skip_without_fabricated_hashes_or_engine(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            original = Path(temporary) / 'absent-original'
+            identity = {'source_commit': 'invented', 'source_game_tree': 'invented', 'source_content_sha256': 'invented',
+                        'source_validation_sha256': 'invented', 'source_dirty': False, 'source_game_dirty': False}
+            with (patch.object(diagnostic.platform, 'system', return_value='Darwin'),
+                  patch.object(diagnostic.platform, 'machine', return_value='arm64'),
+                  patch.object(diagnostic, 'source', return_value=identity),
+                  patch.object(diagnostic, 'VerboseInputMode') as launch):
+                self.assertEqual(diagnostic.run(original, Path(temporary) / 'new'), 0)
+                report = json.loads((Path(temporary) / 'new/diagnostic.json').read_text())
+                self.assertEqual(report['status'], 'SKIPPED_DIFFERENT_OR_UNPROVEN_FAILURE')
+                self.assertIn('absent', report['skip_reason'])
+                self.assertEqual(report['original_evidence_sha256'], {'results.json': None, 'isolation.json': None, 'input_mode.log': None})
+                self.assertTrue(report['original_evidence_unchanged'])
+                self.assertFalse(report['passed'])
+                launch.assert_not_called()
+
+    def test_finalization_overrun_cannot_report_clean_repeat(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            original = Path(temporary) / 'original'
+            self.failure_fixture(original)
+            clock = Clock()
+            identity = {'source_commit': 'invented', 'source_game_tree': 'invented', 'source_content_sha256': 'invented',
+                        'source_validation_sha256': 'invented', 'source_dirty': False, 'source_game_dirty': False}
+            class Runner:
+                report = {'passed': True}
+                processes = []
+                def __init__(self, *args): pass
+                def __enter__(self): return self
+                def __exit__(self, *args): clock.now = 241
+                def run(self, suite): pass
+            with (patch.object(diagnostic.platform, 'system', return_value='Darwin'),
+                  patch.object(diagnostic.platform, 'machine', return_value='arm64'),
+                  patch.object(diagnostic, 'source', return_value=identity),
+                  patch.object(diagnostic.time, 'monotonic', clock.monotonic),
+                  patch.object(diagnostic, 'select_failure', return_value=None),
+                  patch.object(diagnostic, 'VerboseInputMode', Runner)):
+                self.assertEqual(diagnostic.run(original, Path(temporary) / 'new'), 1)
+                report = json.loads((Path(temporary) / 'new/diagnostic.json').read_text())
+                self.assertFalse(report['passed'])
+                self.assertEqual(report['status'], 'FAILED')
+                self.assertEqual(report['failure']['type'], 'TimeoutError')
 
 
 if __name__ == '__main__':
