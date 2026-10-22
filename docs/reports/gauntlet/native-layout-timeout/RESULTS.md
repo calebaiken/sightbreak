@@ -43,7 +43,7 @@ python3 docs/reports/gauntlet/native-layout-timeout/measure_tesseract_threads.py
 
 ## Repeated startup investigation
 
-The failed 0ca CI receipts contain 31 repeated completed startup OCR calls after
+The failed 0ca CI receipts contain 30 repeated completed startup OCR calls after
 first occurrences, across the four cases. Their original PNG hashes exactly
 match the retained prior native `menu-ready-1` originals for each size. Those
 prior images are available; the new CI final menu/settings images remain
