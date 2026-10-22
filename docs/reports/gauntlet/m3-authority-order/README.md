@@ -1,6 +1,6 @@
 # M3: same-tick hitscan order candidate
 
-Status: **IN PROGRESS; independent acceptance pending.** This is a bounded
+Status: **Independent critic accepted the bounded correction; root integration pending.** This is a bounded
 correctness correction, not a claim that SIGHTBREAK matches are balanced.
 Criteria were recorded before gameplay edits in [CRITERIA.md](CRITERIA.md).
 
@@ -11,11 +11,10 @@ The frozen `6a0d8d5` baseline loses the later actor's return fire in every one o
 reverses every winner. The same tick's moving and crouching targets are hit before
 they advance in one insertion order and missed in the other. The corrected
 candidate accepts both lethal shots in all 32 duels and uses the post-movement
-pose in either order. The identical final harness passes 162 checks on the
-candidate and intentionally fails 152 checks on the frozen baseline. After fresh
-review, 16 explicit paired-pose assertions raise the oracle to 178 checks with a
-0.1 mm tolerance; the observed first-pair floor difference was 78 µm. See
-`after-reviewed.txt` and `before-reviewed-assertion.txt` for that revised oracle.
+pose in either order. The identical reviewed harness passes 178 checks on the
+candidate and intentionally fails 152 checks on the frozen baseline. Its paired
+pose assertions allow 0.1 mm of native floor-solver settling; the observed largest
+first-pair residue was 78 µm.
 
 The match now advances all actor movement and stance, then runs existing action
 logic and traces with a server-local hit sink, then resolves queued contacts before
@@ -29,10 +28,14 @@ prediction, protocol 6, rewind settings and privacy filters are unchanged.
 
 Native engine output and provenance:
 
-- [before-final-assertion.txt](before-final-assertion.txt): intentionally failing
-  frozen baseline oracle, exit **1**, with [receipt](before-final-receipt.json).
-- [after-final.txt](after-final.txt): final candidate, 162 checks, zero failures.
-- [source-manifest.json](source-manifest.json): engine, branch and source hashes.
+- [before-reviewed-assertion.txt](before-reviewed-assertion.txt): reviewed frozen
+  baseline oracle, expected exit **1**, with [receipt](before-reviewed-receipt.json).
+- [after-reviewed-final.txt](after-reviewed-final.txt): reviewed candidate, 178
+  checks, zero failures, from the frozen `d593d7b` harness.
+- [reviewed-source-manifest.json](reviewed-source-manifest.json): engine, exact
+  product/harness commits, hashes, complete default validation result and skips.
+- `before-final-assertion.txt`, `after-final.txt` and `source-manifest.json` retain
+  the earlier 162-check oracle and its original provenance.
 - [before.txt](before.txt) and [after.txt](after.txt): initial corrected fixture
   before/after runs, with 130 checks and raw CPU samples.
 - Expanded runs retain the intermediate 162-check harness. Its first shield
@@ -77,9 +80,34 @@ authoritative look inputs, and shot/damage event counts. It checks 3,170–3,180
 and equal damage events in every active 2,000-tick sample. Actual authority calls
 are timed individually; control generation and deferred presentation/audio frame
 flushes occur outside the measured intervals. The earlier unflushed active trial
-is retained as `before-reviewed-cpu.txt` / `after-reviewed-cpu.txt`; final reviewed
-measurements will be recorded separately. These are CPU measurements on a shared
-headless host, never hardware frame rate or input latency.
+is retained as `before-reviewed-cpu.txt` / `after-reviewed-cpu.txt`.
+
+The final identical `--benchmark-only` pair passes 14 assertions on each build.
+Every active sample records 3,170 or 3,180 shots and the same number of damage
+events. Final raw files are `before-reviewed-flushed-cpu.txt` and
+`after-reviewed-flushed-cpu.txt`; [reviewed-cpu-summary.json](reviewed-cpu-summary.json)
+retains all samples.
+
+| Condition | Baseline median / p95 (µs) | Candidate median / p95 (µs) |
+| --- | --- | --- |
+| Idle | 246.74 / 259.08 | 245.49 / 249.94 |
+| Active shots and damage | 487.29 / 503.48 | 462.88 / 466.55 |
+
+The relative medians are -0.51% idle and -5.01% active in this pair. This shows no
+regression in the measured conditions; shared-host noise prevents a speed-up or
+exact-overhead claim. These are headless CPU measurements, never hardware frame
+rate or input latency. Deferred audio allocations occur inside the timed calls;
+their cleanup and visual/render work occur outside. This measures only the narrow
+headless authority call, not total simulation-frame cost.
+
+The independent instrumented pair is retained under [independent/](independent/).
+It also passes 14/14 active assertions on each build, with median idle/active costs
+249.42/480.22 µs baseline and 247.22/475.68 µs candidate. Nodes (448), audio nodes
+(60), resources (69), effect slots (24/40/12) and message-buffer maximum (4,096)
+stay fixed. Temporary objects return to about 2,346 after each two-frame flush.
+The small post-flush static-memory increase tracks the test's recorded-shot array
+(22,700 entries), rather than new gameplay nodes. These short runs do not certify
+long-session memory or frame-time quality.
 
 ## Remaining limitations and design questions
 
@@ -121,5 +149,9 @@ Full default maintained validation on product commit `470fad5` completed with
 exit 0; [validate.txt](validate.txt) retains actual output. No rendered display was
 used, catalog drift lacked backend Python, and three Windows publication checks
 were skipped on Linux. Backend service validation was not requested by the default
-command. The reviewed pose/benchmark harness is a subsequent test-only change. A fresh independent critic must judge source, evidence and limitations
-before root considers integration. The builder has issued no acceptance verdict.
+command. The reviewed pose/benchmark harness is a subsequent test-only change.
+The fresh critic accepted the bounded correction in [independent/REPORT.md](independent/REPORT.md),
+using known source identities and native reproduction, without a blind comparison.
+Its complete raw top-level artifacts and checksums are in
+[independent/review-raw.tar.gz](independent/review-raw.tar.gz). Root owns integration;
+this acceptance closes no general fairness or ten-client qualification gate.

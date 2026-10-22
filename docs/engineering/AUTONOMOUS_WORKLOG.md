@@ -142,3 +142,32 @@ remaining gap: same-victim multiattacker kill/assist/lethal-feedback attribution
 still follows contact order. Existing mutual-wipe, utility and collision rules
 also remain unresolved. Evidence and exact commands:
 `docs/reports/gauntlet/m3-authority-order/README.md`.
+
+### M3 independent evidence corrections
+
+The fresh source/native critic reproduced 162/0 candidate and 162/152 baseline,
+then found two evidence defects: the finite-reserve timing loop exhausted ammo,
+and paired equality omitted positions. Commit `d593d7b` adds 16 paired-pose checks
+with 0.1 mm tolerance (observed residue 78 µm), and an ammo-sufficient, recoil-
+compensated benchmark that counts actual shots/damage events. Original timing
+claims are corrected to depleted-trigger measurements and all raw logs remain.
+The final identical correctness harness passes 178/178 candidate and intentionally
+fails 152/178 baseline. Each active 2,000-tick sample has 3,170–3,180 shots with equal
+damage events. Deferred presentation/audio flushes run outside timers. Final
+baseline/candidate median costs: idle 246.74/245.49 µs, active 487.29/462.88 µs;
+shared host, no speed-up or hardware-latency claim. The critic is independently
+instrumenting allocation/message counters before issuing its bounded verdict.
+
+The complete default `./scripts/validate.sh` on unchanged product `470fad5` exited
+0, including native network/lifecycle checks and 9,217 landscape assertions.
+Rendered checks, catalog/backend Python and three Windows-only publication checks
+remain skipped/unavailable exactly as logged. Optional backend-service validation
+was not part of that default run. Builder acceptance remains pending independent
+review. Root owns mission integration and the acceptance matrix.
+
+Final independent verdict: accepted bounded `d593d7b`, with no blocking gameplay,
+authority or privacy regression found. The review was source/native correctness
+with known identities, not blinded. `independent/REPORT.md` and the complete raw
+review archive retain its 178-check pair, 28-check independent negative probe,
+11 regression groups and allocation/message counters. Root owns integration and
+the native CI registration. General fairness and ten-client gates remain open.
