@@ -34,7 +34,7 @@ func _start() -> void:
 	m.match_finished.connect(func(_result: Dictionary) -> void: reports += 1)
 	started_ms = Time.get_ticks_msec()
 	Engine.time_scale = 4.0
-	print("BOT_SQUAD_OBSERVATION_START " + JSON.stringify({"seed": seed_value, "swap_start": swap_start, "difficulty": "normal", "time_scale": 4, "protocol": m.PROTOCOL_VERSION, "authority": "stock_phased", "actor_order": m.actors.keys()}))
+	print("BOT_SQUAD_OBSERVATION_START " + JSON.stringify({"seed": seed_value, "swap_start": swap_start, "difficulty": "normal", "time_scale": 4, "protocol": m.PROTOCOL_VERSION, "authority_override": false, "actor_order": m.actors.keys()}))
 
 func _process(_delta: float) -> bool:
 	if m == null or done: return false

@@ -47,6 +47,7 @@ def main():
                     start, match = starts[0], matches[0]
                     assert start["seed"] == seed and start["swap_start"] == swap
                     assert start["actor_order"] == list(range(1, 11)) and start["protocol"] == 6
+                    assert start["authority_override"] is False
                     assert match["valid"] and match["phase"] == "match_over" and match["ranked_payload_empty"]
                     assert match["seed"] == seed and match["swap_start"] == swap and match["time_scale"] == 4
                     assert len(rounds) == match["rounds"] and 7 <= len(rounds) <= 12

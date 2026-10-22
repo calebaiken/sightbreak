@@ -91,8 +91,10 @@ func _sample(id: int, difficulty: String, team: int, kind: String) -> Dictionary
 			enemy.team = 1
 			enemy.reset_for_round(m.arena.sites[0])
 	elif kind == "idle":
-		var idle_plan := SBBotAI._select_objective_and_destination(m, bot, state, SBBotAI.profile_for(difficulty))
-		bot.position = idle_plan.destination
+		# Escorts choose a hold offset once at the site; settle that second plan too.
+		for iteration in range(2):
+			var idle_plan := SBBotAI._select_objective_and_destination(m, bot, state, SBBotAI.profile_for(difficulty))
+			bot.position = idle_plan.destination
 		# Center on the scan approach to expose the phase rather than a 180-degree turn.
 		var approach := Vector3(0, 0, -18) if team == 1 else Vector3(0, 0, 20)
 		var toward := approach - bot.position
@@ -131,6 +133,8 @@ func _sample(id: int, difficulty: String, team: int, kind: String) -> Dictionary
 		check(not command.jump and command.move == Vector2(0, 1), "%s id=%d below recovery threshold" % [difficulty, id])
 	elif kind == "stuck_jump":
 		check(command.jump and is_equal_approx(command.move.x, 1.0 if slot % 2 == 0 else -1.0) and is_equal_approx(command.move.y, 1.0), "%s id=%d jump before reverse threshold" % [difficulty, id])
+	elif kind == "idle":
+		check(command.move == Vector2.ZERO, "%s id=%d idle fixture actually scans without moving" % [difficulty, id])
 	elif kind == "carrier" and team == 0:
 		check(role == "carrier" and command.interact and command.move == Vector2.ZERO and not command.fire and not command.smoke, "%s id=%d carrier stops to plant" % [difficulty, id])
 	elif kind == "defuser" and team == 1:
@@ -143,6 +147,13 @@ func _sample(id: int, difficulty: String, team: int, kind: String) -> Dictionary
 	# Normalize only ID-valued target bookkeeping; every emitted input field is compared.
 	var result := {"command": command, "role": role, "destination": plan.destination}
 	print("BOT_SQUAD_SAMPLE " + JSON.stringify({"id": id, "slot": slot, "difficulty": difficulty, "team": team, "kind": kind, "output": result}))
+	if kind == "smoke" and difficulty != "easy" and (team == 1 or slot % 2 == 0):
+		check(bool(state.smoke_used), "%s id=%d smoke decision marks used state" % [difficulty, id])
+		m._bot_input(bot, DT)
+		check(not bot.input_state.smoke, "%s id=%d repeat decision suppresses second smoke" % [difficulty, id])
+		m._reset_bot_state(bot)
+		m._bot_input(bot, DT)
+		check(bot.input_state.smoke, "%s id=%d real bot state reset re-arms smoke" % [difficulty, id])
 	if kind == "close":
 		var first_fire := 1 if command.fire else 0
 		for tick in range(2, 7):

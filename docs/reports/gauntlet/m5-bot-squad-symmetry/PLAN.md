@@ -51,3 +51,8 @@ confidence claim, native human gameplay claim, or earned-progression claim.
 The optional set is not required to establish deterministic habit correctness.
 Do not interfere with layout timing comparisons. A fresh independent critic must
 review exact product and evidence before integration; this builder cannot approve.
+
+Before any observation sample started, root prioritized the maintained suite,
+final deterministic oracle and independent review, then the original-budget
+layout rerun. The optional eight-match set is OMITTED. Its tooling is retained
+for future qualification and has not been executed as a match measurement here.
