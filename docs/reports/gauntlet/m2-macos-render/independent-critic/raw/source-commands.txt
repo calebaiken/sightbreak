@@ -1,0 +1,51 @@
+$ git rev-parse HEAD
+2390ab82f08ed766742bbbdf37bb08e46f204a46
+exit=0
+
+$ git status --short
+exit=0
+
+$ git diff --name-status 6a0d8d5..2390ab8
+A	.github/workflows/macos-render-diagnostic.yml
+A	docs/reports/gauntlet/m2-macos-render/CRITERIA.md
+A	docs/reports/gauntlet/m2-macos-render/RESULTS.md
+A	docs/reports/gauntlet/m2-macos-render/SHA256SUMS
+A	docs/reports/gauntlet/m2-macos-render/attempt-1-import-absolute.txt
+A	docs/reports/gauntlet/m2-macos-render/attempt-1-import.txt
+A	docs/reports/gauntlet/m2-macos-render/attempt-2-export-corrected.txt
+A	docs/reports/gauntlet/m2-macos-render/attempt-2-export.txt
+A	docs/reports/gauntlet/m2-macos-render/attempt-2-fixture-source.json
+A	docs/reports/gauntlet/m2-macos-render/attempt-2-import.txt
+A	docs/reports/gauntlet/m2-macos-render/attempt-2-linux-results.json
+A	docs/reports/gauntlet/m2-macos-render/candidate-content.json
+A	docs/reports/gauntlet/m2-macos-render/fresh-state-regressions.json
+A	docs/reports/gauntlet/m2-macos-render/headless-regressions.json
+A	docs/reports/gauntlet/m2-macos-render/input_mode_test-fresh-state.txt
+A	docs/reports/gauntlet/m2-macos-render/input_mode_test.txt
+A	docs/reports/gauntlet/m2-macos-render/intel-original-artifact-12398461742.zip
+A	docs/reports/gauntlet/m2-macos-render/linux-controls.tar.gz
+A	docs/reports/gauntlet/m2-macos-render/main_test.txt
+A	docs/reports/gauntlet/m2-macos-render/menu_focus_test-fresh-state.txt
+A	docs/reports/gauntlet/m2-macos-render/menu_focus_test.txt
+A	docs/reports/gauntlet/m2-macos-render/movement_prediction_test.txt
+A	docs/reports/gauntlet/m2-macos-render/original-sha256.txt
+A	docs/reports/gauntlet/m2-macos-render/state_privacy_test.txt
+A	docs/reports/gauntlet/m2-macos-render/trace-tests.txt
+A	docs/reports/gauntlet/m2-macos-render/world_test.txt
+A	scripts/diagnose_macos_render.py
+A	scripts/diagnostics/render_feature_probe.gd
+A	scripts/test_macos_render_diagnostic.py
+exit=0
+
+$ git diff --name-only 6a0d8d5..2390ab8 -- game scripts/diagnose_macos_startup.py scripts/verify_builds.py scripts/toolchain.py
+exit=0
+
+$ git rev-parse 6a0d8d5:game 2390ab8:game
+13079ab8a3de9b18252a652ed57157e0776cf394
+13079ab8a3de9b18252a652ed57157e0776cf394
+exit=0
+
+4c27fdb0d8fd83ce6fc158228eadc4208106add36a9344bd6fa7bcb49dbe91f7  scripts/diagnose_macos_render.py
+7ffcc1451ae46226b8efe76cf8924e697d7c8268b434af827bfd4bba339670f3  scripts/diagnostics/render_feature_probe.gd
+29eacb280b30902d078410cfc2a76513256a014386abb3b079ef4c911e021802  scripts/test_macos_render_diagnostic.py
+976805ea86041d9659566d8627aeb150b4d8af49ce87ee6dcbb4b51d660a0e88  .github/workflows/macos-render-diagnostic.yml
