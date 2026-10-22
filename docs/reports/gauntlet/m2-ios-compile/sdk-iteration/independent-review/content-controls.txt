@@ -1,0 +1,21 @@
+PASS inventory resolves and deduplicates Xcode alias
+PASS zero-exit absent probe fails closed; environment unchanged
+PASS zero-exit signed probe fails closed; environment unchanged
+PASS zero-exit simulator probe fails closed; environment unchanged
+PASS zero-exit truncated probe fails closed; environment unchanged
+PASS SDK outside candidate Developer directory rejected before compiler
+PASS stale probe directory and valid prior binary rejected before commands
+PASS empty installed Xcode inventory rejected
+PASS more than 16 distinct installed Xcodes rejected
+PASS actual failed native log rejected; observed Ld normal format accepted only in synthetic parser fixture
+PASS foreign linker target and mixed success/failure markers rejected
+PASS all three retained failure files match downloaded ARM receipts byte-for-byte
+{
+  "control_count": 12,
+  "receipt_sha256": {
+    "compile.json": "f1ef4cca688f000f0e905621b7a9be154a3821399acb37b76aafe13301c2e09e",
+    "exported-source.json": "37e1facaf9a3b08012fe5ba2a0f32efdad841592982c299db3848aca22bfd4a9",
+    "xcodebuild-device.txt": "f5dacf45a1a9a51b3a95aa14f4a578ea92aa9c31b320d7977edf185544b5847f"
+  },
+  "native_compile": "UNVERIFIED; Linux fixture controls only"
+}
