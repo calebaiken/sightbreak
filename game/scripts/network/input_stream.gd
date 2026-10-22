@@ -32,6 +32,12 @@ func accept(peer: int, packet: Dictionary, round_epoch: int, now_msec: int) -> b
 			return false
 		if command.sequence > ack:
 			staged[command.sequence] = clean
+	# Fully acknowledged retransmissions carry no fresh intent. Returning true
+	# would renew Match's silence/idle timers while a history-capped client keeps
+	# resending its last batch. Queued, unacknowledged duplicates remain valid.
+	if staged.is_empty():
+		rejected += 1
+		return false
 	var queue: Dictionary = queues.get(peer, {})
 	# A command identity is immutable after first receipt.
 	for sequence: int in staged:
