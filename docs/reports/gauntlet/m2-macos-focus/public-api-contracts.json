@@ -1,0 +1,43 @@
+[
+  {
+    "name": "NSRunningApplication",
+    "url": "https://raw.githubusercontent.com/phracker/MacOSX-SDKs/master/MacOSX10.15.sdk/System/Library/Frameworks/AppKit.framework/Versions/C/Headers/NSRunningApplication.h",
+    "retrieved_utc": "2026-10-22",
+    "sha256": "310c26625e969de69204d9e88c2b58177692f3dc1afb13439b9a06c8e765a13c",
+    "excerpts": [
+      {
+        "first_line": 10,
+        "last_line": 18,
+        "text": "/* NSRunningApplication is a class to manipulate and provide information for a single instance of an application.  Only user applications are tracked; this does not provide information about every process on the system.\n \n Some properties of an application are fixed, such as the bundle identifier.  Other properties may vary over time, such as whether the app is hidden.  Properties that vary can be observed with KVO, in which case the description comment for the method will mention it.\n \n Properties that vary over time are inherently race-prone.  For example, a hidden app may unhide itself at any time.  To ameliorate this, properties persist until the next turn of the main run loop in a common mode.  For example, if you repeatedly poll an unhidden app for its hidden property without allowing the run loop to run, it will continue to return NO, even if the app hides, until the next turn of the run loop.\n \n NSRunningApplication is thread safe, in that its properties are returned atomically.  However, it is still subject to the main run loop policy described above.  If you access an instance of NSRunningApplication from a background thread, be aware that its time-varying properties may change from under you as the main run loop runs (or not).\n \n An NSRunningApplication instance remains valid after the application exits.  However, most properties lose their significance, and some properties may not be available on a terminated application."
+      },
+      {
+        "first_line": 103,
+        "last_line": 110,
+        "text": "- (BOOL)hide;\n- (BOOL)unhide;\n\n/* Attempts to activate the receiver.  This method return true if the request to activate was successfully sent, false if not (for example, if the application has quit, or is of a type that cannot be activated). */\n- (BOOL)activateWithOptions:(NSApplicationActivationOptions)options;\n\n/* Attempts to quit the receiver normally.  This method returns true if the request was successfully sent, false if not (for example, if the application is no longer running).  This method may return before the receiver exits; you should observe the terminated property or listen for the notification to detect when the app has exited. */\n- (BOOL)terminate;"
+      }
+    ]
+  },
+  {
+    "name": "CFRunLoop",
+    "url": "https://raw.githubusercontent.com/apple-oss-distributions/CF/main/CFRunLoop.h",
+    "retrieved_utc": "2026-10-22",
+    "sha256": "9e0c210c8e8c9762c5c70810293868e9d1d67dd46d167cd24e5d2d707f6aae5f",
+    "excerpts": [
+      {
+        "first_line": 49,
+        "last_line": 56,
+        "text": "\n/* Reasons for CFRunLoopRunInMode() to Return */\nenum {\n    kCFRunLoopRunFinished = 1,\n    kCFRunLoopRunStopped = 2,\n    kCFRunLoopRunTimedOut = 3,\n    kCFRunLoopRunHandledSource = 4\n};"
+      },
+      {
+        "first_line": 68,
+        "last_line": 70,
+        "text": "\nCF_EXPORT const CFStringRef kCFRunLoopDefaultMode;\nCF_EXPORT const CFStringRef kCFRunLoopCommonModes;"
+      },
+      {
+        "first_line": 74,
+        "last_line": 86,
+        "text": "CF_EXPORT CFRunLoopRef CFRunLoopGetCurrent(void);\nCF_EXPORT CFRunLoopRef CFRunLoopGetMain(void);\n\nCF_EXPORT CFStringRef CFRunLoopCopyCurrentMode(CFRunLoopRef rl);\n\nCF_EXPORT CFArrayRef CFRunLoopCopyAllModes(CFRunLoopRef rl);\n\nCF_EXPORT void CFRunLoopAddCommonMode(CFRunLoopRef rl, CFStringRef mode);\n\nCF_EXPORT CFAbsoluteTime CFRunLoopGetNextTimerFireDate(CFRunLoopRef rl, CFStringRef mode);\n\nCF_EXPORT void CFRunLoopRun(void);\nCF_EXPORT SInt32 CFRunLoopRunInMode(CFStringRef mode, CFTimeInterval seconds, Boolean returnAfterSourceHandled);"
+      }
+    ]
+  }
+]

@@ -103,7 +103,9 @@ jobs:
       - name: ARM Mac native menu input source controls
         id: macos_menu_controls
         if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15'
-        run: python scripts/test_macos_menu.py -v
+        run: |
+          python scripts/test_macos_menu.py -v
+          python scripts/test_macos_focus.py -v
       - name: ARM Mac real exported Settings pointer and Escape navigation
         if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15' && steps.macos_input_preflight.outcome == 'success' && steps.macos_menu_controls.outcome == 'success'
         timeout-minutes: 5

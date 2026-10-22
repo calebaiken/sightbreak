@@ -66,6 +66,12 @@ class MacMenuUI(MacReadOnly):
         self.bind(self.cg, 'CGEventCreateKeyboardEvent', [C.c_void_p, C.c_uint16, C.c_bool], C.c_void_p)
         self.bind(self.cg, 'CGEventSetFlags', [C.c_void_p, C.c_uint64], None)
         self.bind(self.cg, 'CGEventPost', [C.c_uint32, C.c_void_p], None)
+        self.bind(self.cf, 'CFRunLoopGetMain', [], C.c_void_p)
+        self.bind(self.cf, 'CFRunLoopGetCurrent', [], C.c_void_p)
+        self.bind(self.cf, 'CFRunLoopRunInMode', [C.c_void_p, C.c_double, C.c_ubyte], C.c_int32)
+        self.run_loop_default_mode = C.c_void_p.in_dll(self.cf, 'kCFRunLoopDefaultMode').value
+        if not self.run_loop_default_mode:
+            raise RuntimeError('Public kCFRunLoopDefaultMode is unavailable')
 
     def cls(self, name):
         result = self.objc.objc_getClass(name.encode())
@@ -89,6 +95,13 @@ class MacMenuUI(MacReadOnly):
         app = self.message(workspace, 'frontmostApplication')
         return self.message(app, 'processIdentifier', returns=C.c_int32) if app else None
 
+    def current_foreground_pid(self):
+        # NSRunningApplication documents time-varying state as persisting until
+        # the main run loop advances. Guard reads must process that loop too;
+        # focus_state() deliberately retains raw before/after diagnostic reads.
+        self.pump_run_loop(.001)
+        return self.foreground_pid()
+
     def diagnostics(self):
         event = self.cg.CGEventCreate(None)
         if not event:
@@ -97,13 +110,14 @@ class MacMenuUI(MacReadOnly):
             point = self.cg.CGEventGetLocation(event)
         finally:
             self.cf.CFRelease(event)
-        return {'foreground_pid': self.foreground_pid(), 'target_pid': self.pid,
+        return {'foreground_pid': self.current_foreground_pid(), 'target_pid': self.pid,
                 'lmb_down': bool(self.cg.CGEventSourceButtonState(0, 0)),
                 'escape_down': bool(self.cg.CGEventSourceKeyState(0, 53)),
                 'pointer_points': [point.x, point.y], 'held_by_driver': sorted(self.held),
                 'state_source': 'NSWorkspace/CGEventSource combined-session state/CGEventGetLocation'}
 
-    def require_target(self):
+    def require_window(self):
+        """Read-only window/capture guard; does not establish foreground focus."""
         require_absent_profile()
         permissions = self.preflight()
         denied = [name for name in ('CGPreflightPostEventAccess', 'CGPreflightScreenCaptureAccess') if permissions[name] is not True]
@@ -112,17 +126,66 @@ class MacMenuUI(MacReadOnly):
         current = [entry for entry in self.windows(self.pid) if entry['window_id'] == self.window and entry['onscreen']]
         if len(current) != 1 or not same_bounds(current[0]['bounds_points_including_chrome'], self.bounds):
             raise RuntimeError('Owned visible window or its geometry changed before input')
-        if self.foreground_pid() != self.pid:
+
+    def require_target(self):
+        self.require_window()
+        if self.current_foreground_pid() != self.pid:
             raise RuntimeError('Exact exported process is not foreground before input')
 
+    def focus_state(self):
+        application = self.application()
+        state = {'foreground_pid': self.foreground_pid(), 'target_pid': self.pid,
+                 'target_window': self.window, 'pinned_bounds_points': self.bounds,
+                 'target_application_available': bool(application)}
+        if application:
+            for label, selector in (('target_active', 'isActive'), ('target_hidden', 'isHidden'),
+                                    ('target_terminated', 'isTerminated'),
+                                    ('target_finished_launching', 'isFinishedLaunching')):
+                state[label] = bool(self.message(application, selector, returns=C.c_bool))
+            state['target_activation_policy'] = self.message(application, 'activationPolicy', returns=C.c_long)
+        return state
+
+    def pump_run_loop(self, seconds):
+        current, main = self.cf.CFRunLoopGetCurrent(), self.cf.CFRunLoopGetMain()
+        if not current or current != main:
+            raise RuntimeError('AppKit observation requires the controller main run loop')
+        started = time.monotonic()
+        code = self.cf.CFRunLoopRunInMode(self.run_loop_default_mode, seconds, 0)
+        return {'api': 'CFRunLoopRunInMode', 'mode': 'kCFRunLoopDefaultMode',
+                'requested_seconds': seconds, 'elapsed_seconds': time.monotonic() - started,
+                'return_code': code, 'controller_main_run_loop': True}
+
     def focus(self, seconds=5):
+        started = time.monotonic()
+        until = started + seconds
+        self.trace('focus_before_request', focus_budget_seconds=seconds, native_state=self.focus_state())
         accepted = self.message(self.application(), 'activateWithOptions:', 3, returns=C.c_bool, types=(C.c_ulong,))
-        until = time.monotonic() + seconds
+        self.trace('focus_request_returned', api='NSRunningApplication.activateWithOptions:',
+                   activation_options=3, request_accepted=bool(accepted), native_state=self.focus_state())
+        last = None
         while time.monotonic() < until:
-            if self.foreground_pid() == self.pid:
-                self.trace('focus_observed', request_accepted=accepted, native_state=self.diagnostics())
-                return
-            time.sleep(.05)
+            before = self.focus_state()
+            available = until - time.monotonic()
+            if available <= 0:
+                break
+            pumped = self.pump_run_loop(min(.05, available))
+            last = self.focus_state()
+            now = time.monotonic()
+            self.trace('focus_sample', focus_seconds=now - started, before_run_loop=before,
+                       run_loop=pumped, after_run_loop=last)
+            if now <= until and last['foreground_pid'] == self.pid:
+                self.require_target()
+                state = self.diagnostics()
+                if time.monotonic() <= until and state['foreground_pid'] == self.pid:
+                    self.trace('focus_observed', request_accepted=accepted, native_state=state)
+                    return
+            # A run loop with no installed sources can return immediately. Keep
+            # polling bounded without turning that result into focus proof.
+            idle = min(.05 - min(.05, pumped['elapsed_seconds']), until - time.monotonic())
+            if idle > 0:
+                time.sleep(idle)
+        self.trace('focus_timeout', focus_budget_seconds=seconds, last_sample=last,
+                   elapsed_seconds=time.monotonic() - started)
         raise RuntimeError('Public NSRunningApplication activation did not produce exact foreground PID')
 
     def neutral(self):

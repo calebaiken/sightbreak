@@ -69,6 +69,22 @@ def ordinary_failure_close(ui, client):
     return report
 
 
+def background_then_focus(ui, capture, result, trace):
+    """Keep read-only capture and focus evidence separate; require both for input."""
+    background_error = None
+    try:
+        capture('00-background-window', None, require_focus=False)
+        result['background_capture_status'] = 'PASS_CAPTURE_ONLY_NO_FOCUS_OR_INPUT'
+    except (RuntimeError, OSError, ValueError, subprocess.TimeoutExpired) as error:
+        background_error = error
+        result['background_capture_status'] = 'BLOCKED_EXTERNALLY' if isinstance(error, NativePrerequisiteBlocked) else 'FAILED'
+        result['background_capture_failure'] = {'type': type(error).__name__, 'message': str(error)}
+        trace('background_capture_failed', **result['background_capture_failure'])
+    ui.focus()
+    if background_error is not None:
+        raise background_error  # Focus diagnostics never authorize input after capture failure.
+
+
 def run(output, preflight_path, timeout=150):
     output = Path(output).resolve()
     if output.exists() and any(output.iterdir()):
@@ -109,9 +125,9 @@ def run(output, preflight_path, timeout=150):
             raise RuntimeError(name + ' failed exit=' + str(process.returncode) + '; original helper log/report retained')
         return process.returncode
 
-    def capture(name, screen):
+    def capture(name, screen, *, require_focus=True):
         remaining()
-        ui.require_target()
+        (ui.require_target if require_focus else ui.require_window)()
         png, receipt = output / (name + '.png'), output / (name + '.json')
         exit_code = child_command(name, [str(helper), '--pid', str(client.pid), '--window', str(ui.window),
                                         '--png', str(png), '--report', str(receipt)], 25, allow_failure=True)
@@ -126,11 +142,14 @@ def run(output, preflight_path, timeout=150):
                 or not same_bounds(data.get('bounds_points_including_chrome', []), ui.bounds)
                 or data.get('input_events_posted') != 0 or data.get('permission_requests_made') != 0):
             raise RuntimeError('OS capture receipt did not match exact current owned window')
-        require_screen(data, screen)
-        ui.require_target()
+        if screen is not None:
+            require_screen(data, screen)
+        (ui.require_target if require_focus else ui.require_window)()
         result['captures'].append({'name': name, 'png_sha256': digest(png),
-                                   'receipt_sha256': digest(receipt), 'window_id': ui.window})
-        trace('screen_confirmed', screen=screen, capture=name, native_state=ui.diagnostics())
+                                   'receipt_sha256': digest(receipt), 'window_id': ui.window,
+                                   'foreground_required': require_focus, 'screen_checked': screen})
+        trace('screen_confirmed' if screen is not None else 'background_capture_observed',
+              screen=screen, capture=name, foreground_required=require_focus, native_state=ui.diagnostics())
         return data
 
     try:
@@ -176,8 +195,10 @@ def run(output, preflight_path, timeout=150):
                 time.sleep(.1)
             if window is None:
                 raise TimeoutError('Exact exported visible window not observed')
+            result['selected_client_window'] = window
+            trace('client_window_selected', client_pid=client.pid, window=window)
             ui = MacMenuUI(client.pid, window['window_id'], window['bounds_points_including_chrome'], trace)
-            ui.focus()
+            background_then_focus(ui, capture, result, trace)
             ui.neutral()
             # Initial capture may start while the first native frame is being
             # drawn. Keep every failed image/receipt, with one bounded retry.

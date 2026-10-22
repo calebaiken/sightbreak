@@ -96,6 +96,7 @@ class MenuControls(unittest.TestCase):
         ui.preflight = lambda: {'CGPreflightPostEventAccess': True, 'CGPreflightScreenCaptureAccess': True}
         ui.windows = lambda pid: [{'window_id': 34, 'onscreen': True, 'bounds_points_including_chrome': [40, 32, 960, 568]}]
         ui.foreground_pid = lambda: 123
+        ui.pump_run_loop = lambda seconds: {'elapsed_seconds': 0, 'return_code': 1}
         return ui
 
     def test_wrong_focus_geometry_permission_or_profile_prevents_down_event(self):
