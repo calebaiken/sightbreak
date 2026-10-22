@@ -78,6 +78,15 @@ and replayed; the full native execution remains attributed to `471fbd8`.
 No full `validate.sh`, new native export or second complete match is claimed for
 the followup. The product files did not change.
 
+The critic's followup review found one pure-verifier boundary defect: production
+caps activity at the terminal match duration, whereas a later observation can
+contain more elapsed time. Correction `b38508e` reconstructs that terminal
+duration from the emitted summary and applies the same integer cap. A tolerance
+of 0.1 microseconds handles JSON serialization at integer boundaries. Its added
+control rejects a full second above the valid cap; all 15 maintained controls and
+frozen-raw replay pass. Separate `validator-cap-*` receipts retain this iteration.
+This remains a pure validator change with no relabeled native run.
+
 ## Remaining limits and next work
 
 Nine clients deliberately turn at spawn. These ordinary input RPCs satisfy the

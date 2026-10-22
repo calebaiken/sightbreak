@@ -122,3 +122,7 @@ prediction feel, impairment, remote hosting or human play. The game listener use
 inherited wildcard UDP; API/database use loopback. Followup `0aae3f8` strengthens
 only pure validation/registration and was unit-tested/raw-replayed. Product
 gameplay/backend/worker files remain identical to frozen `0ca125d`.
+
+Final pure-validator followup `b38508e` corrects terminal-duration activity capping
+and adds a float-boundary negative control. All 15 controls and frozen-raw replay
+pass; no additional native execution or gate promotion is claimed.

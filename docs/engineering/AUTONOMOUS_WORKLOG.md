@@ -297,3 +297,9 @@ at spawn under the current activity rule. G3/G16 remain open for AFK resistance,
 combat/remote-host/privacy/impairment/launcher and broader economy requirements.
 The production game listener's wildcard UDP bind is also retained explicitly;
 only API/DB bindings are loopback. Supported bind configuration is next work.
+
+The final independent followup found a pure-verifier false rejection near integer
+activity duration. `b38508e` reconstructs terminal duration from the emitted
+summary, applies the production cap and limits serialization ambiguity to 0.1
+microseconds. All 15 standard-Python controls and frozen-raw replay pass; separate
+validator-cap receipts retain this correction without relabeling the native run.

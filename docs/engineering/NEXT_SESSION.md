@@ -201,3 +201,9 @@ proof), no combat/remote-host/impairment/human-play claim. Client traffic is
 loopback, but production `_host()` binds wildcard UDP; API/DB bind loopback.
 Supported explicit bind-address configuration is a next engineering correction.
 No local process or background work remains running for this candidate.
+
+Final pure-verifier correction `b38508e` mirrors production's terminal-duration
+activity cap, with a 0.1-microsecond serialization-boundary tolerance. The critic
+found the earlier false rejection before integration. All 15 standard-Python
+controls and frozen-raw replay pass; see separate validator-cap receipts. Native
+execution remains `471fbd8`. Final independent followup review is in progress.
