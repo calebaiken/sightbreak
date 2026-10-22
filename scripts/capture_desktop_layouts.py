@@ -9,7 +9,6 @@ OCR preprocesses copies only, leaving original PNGs untouched.
 """
 import argparse
 import csv
-import ctypes as C
 import hashlib
 import io
 import json
@@ -104,14 +103,10 @@ class LayoutUI(NativeUI):
         self.image().save(path)
 
     def window_size(self):
-        root, x, y = C.c_ulong(), C.c_int(), C.c_int()
-        width, height, border, depth = C.c_uint(), C.c_uint(), C.c_uint(), C.c_uint()
-        if not self.x.XGetGeometry(self.d, self.window, C.byref(root), C.byref(x), C.byref(y),
-                                  C.byref(width), C.byref(height), C.byref(border), C.byref(depth)):
-            raise RuntimeError("Cannot inspect native export window geometry")
-        if x.value != 0 or y.value != 0:
+        x, y, width, height = self.window_geometry()
+        if x != 0 or y != 0:
             raise RuntimeError("Native export is offset/clipped within its exact-sized display")
-        return width.value, height.value
+        return width, height
 
 
 def size_value(text):
