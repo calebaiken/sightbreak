@@ -25,3 +25,9 @@ even if retrieved. Bug-report performance claims are not SIGHTBREAK benchmarks.
 No image or protected game asset was copied into the product. G18 remains blocked
 for actual presentation/animation/feel comparison. Available native correctness,
 previous-build comparisons and independent rendered-output reviews continue.
+
+At 06:39 UTC, the existing issue 3325 candidates were rechecked through the
+supported connector and ordinary direct image requests. Both image requests
+returned HTTP 403; neither produced an image. [The recheck receipt](recheck-0639.json)
+records both URLs. This confirms the existing access limitation, not a new
+inspected benchmark. No alternate access route was attempted.
