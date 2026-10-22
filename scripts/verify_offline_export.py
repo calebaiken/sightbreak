@@ -31,6 +31,7 @@ import toolchain
 
 
 REFERENCE = (1280, 720)
+MAX_OCR_STDOUT_BYTES = 2 * 1024 * 1024
 
 
 def read_hud_pixels(path, ocr):
@@ -220,18 +221,34 @@ def main():
         image.save(data, format='PNG')
         entry = {'command': command, 'label': label, 'started_seconds': time.monotonic() - started}
         ocr_commands.append(entry)
+        def retain_stdout(payload, complete):
+            # Raw .log files remain in the existing bounded QA receipt pack.
+            # Keep bytes even on timeout, without letting a receipt grow freely.
+            retained = payload[:MAX_OCR_STDOUT_BYTES]
+            path = out / 'ocr-stdout' / (str(len(ocr_commands)).zfill(3) + '.log')
+            path.parent.mkdir(exist_ok=True)
+            path.write_bytes(retained)
+            entry.update(stdout_path=path.relative_to(out).as_posix(), stdout_total_bytes=len(payload),
+                         stdout_retained_bytes=len(retained), stdout_sha256=hashlib.sha256(retained).hexdigest(),
+                         stdout_complete=complete and len(retained) == len(payload),
+                         stdout_truncated=len(retained) != len(payload))
         with (out / 'ocr-stderr.log').open('ab') as stderr:
             stderr.write(('\nOCR ' + label + '\n').encode('utf-8'))
             try:
                 completed = subprocess.run(command, input=data.getvalue(), stdout=subprocess.PIPE, stderr=stderr,
                                            timeout=min(20, remaining()))
-            except subprocess.TimeoutExpired:
+            except subprocess.TimeoutExpired as error:
+                retain_stdout(error.output or b'', False)
                 entry.update(timed_out=True, exit_code=None)
                 raise
+            else:
+                retain_stdout(completed.stdout, True)
+                entry['exit_code'] = completed.returncode
             finally:
                 entry['finished_seconds'] = time.monotonic() - started
                 (out / 'ocr-commands.json').write_text(json.dumps(ocr_commands, indent=2) + '\n')
-        entry['exit_code'] = completed.returncode
+        if entry['stdout_truncated']:
+            raise RuntimeError('OCR stdout exceeded its bounded receipt budget; prefix retained')
         if completed.returncode:
             raise RuntimeError('Tesseract failed: ' + label + '; raw stderr retained')
         return completed.stdout.decode('utf-8', errors='replace')
