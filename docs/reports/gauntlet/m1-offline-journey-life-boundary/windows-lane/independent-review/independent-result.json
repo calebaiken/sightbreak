@@ -1,0 +1,782 @@
+{
+  "candidate_commit": "47b142d654ad8b73b4700ca5b7427b25ab7682b8",
+  "comparison_commit": "7d46d2eb9c2c690fe0364eb6fc64f1bd85b5d226",
+  "workflow_sha256": {
+    "7d46d2e": "185e9b6589fd338e5a3c42183ddd0092d4bc5e60b7091845b7077ee03a46e51a",
+    "47b142d": "8b71789eb4f2cf085013ee7f483301fdd0a32c61e93170ff1639d2d4680dd06a"
+  },
+  "all_unrelated_yaml_fields_identical": true,
+  "unchanged_step_count": 33,
+  "case_count": 18,
+  "cases": [
+    {
+      "event": "workflow_dispatch",
+      "inputs": {},
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "workflow_dispatch",
+      "inputs": {
+        "lane": ""
+      },
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "workflow_dispatch",
+      "inputs": {
+        "lane": "all"
+      },
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "workflow_dispatch",
+      "inputs": {
+        "lane": "arm-macos-ios"
+      },
+      "results": [
+        [
+          {
+            "os": "macos-15",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "macos-15",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "workflow_dispatch",
+      "inputs": {
+        "lane": "windows"
+      },
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "workflow_dispatch",
+      "inputs": {
+        "lane": "unknown"
+      },
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "push",
+      "inputs": {},
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "push",
+      "inputs": {
+        "lane": ""
+      },
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "push",
+      "inputs": {
+        "lane": "all"
+      },
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "push",
+      "inputs": {
+        "lane": "arm-macos-ios"
+      },
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "push",
+      "inputs": {
+        "lane": "windows"
+      },
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "push",
+      "inputs": {
+        "lane": "unknown"
+      },
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "workflow_call",
+      "inputs": {},
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "workflow_call",
+      "inputs": {
+        "lane": ""
+      },
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "workflow_call",
+      "inputs": {
+        "lane": "all"
+      },
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "workflow_call",
+      "inputs": {
+        "lane": "arm-macos-ios"
+      },
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "workflow_call",
+      "inputs": {
+        "lane": "windows"
+      },
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    },
+    {
+      "event": "workflow_call",
+      "inputs": {
+        "lane": "unknown"
+      },
+      "results": [
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ],
+        [
+          {
+            "os": "ubuntu-24.04",
+            "target": "linux"
+          },
+          {
+            "os": "windows-latest",
+            "target": "windows"
+          },
+          {
+            "os": "macos-15",
+            "target": "macos"
+          },
+          {
+            "os": "macos-15-intel",
+            "target": "macos"
+          }
+        ]
+      ],
+      "pass": true
+    }
+  ],
+  "scope": "Static YAML and Node logical-operator replay. No GitHub engine, dispatch or native Windows run."
+}
