@@ -6,7 +6,7 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-Updated 2026-10-22, 08:30 UTC. **IN PROGRESS / PRIMARY**. Persistent tracker
+Updated 2026-10-22, 08:56 UTC. **IN PROGRESS / PRIMARY**. Persistent tracker
 [issue #25](https://github.com/calebaiken/sightbreak/issues/25); initialization
 `561d0cb`. No native Codex goal API is exposed. Branch `codex/v1-mission-playability`,
 [draft PR27](https://github.com/calebaiken/sightbreak/pull/27), preserves
@@ -43,9 +43,14 @@ PR24 → PR23 → PR22 → PR16 dependencies and contributor ownership.
   accepted.** Native `79e076e` recovers 12/12 crash cases versus baseline 0/12;
   exact HTTP bytes/key/price, one fixture mutation, credential-free journals,
   account/origin isolation and cleanup pass. Original PR18 authorship retained.
-  Real production PostgreSQL market settlement is now being qualified on a
-  separate branch, with synthetic fixture value. Critic has rejected initial
-  harness gaps before runtime; no production API/DB attempt has started.
+  Production PostgreSQL/API market recovery independently passes at exact
+  `882931dd`: nine SQL snapshots, six fresh native logins, two held-response
+  SIGKILLs, one original operation / two ledger rows / one item transfer,
+  buyer 600 / seller 488 / fee 12. Both independent live read-only witnesses,
+  account/origin guards, unchanged journals, revocation, price conflict and actual
+  cleanup pass. Root `4150ad0a`; [report](../reports/gauntlet/m3-postgres-receipt-recovery/REPORT.md).
+  These are synthetic fixture balances. Store/case and rendered consent remain
+  separate; the next store component has begun in its own source branch.
 - **M3 current-source ten-account trial 2 passes strict independent SQL recovery**
   at `3b5cf764`: one operation / ten rewards / ten ledger rows, 2,875 credits /
   2,650 XP, pre-ACK / post-replay / distinct final-query witnesses and cleanup.
@@ -94,7 +99,7 @@ PR24 → PR23 → PR22 → PR16 dependencies and contributor ownership.
 | G13 | macOS native package (Intel and Apple Silicon) | FAILED | Latest 0527715 run 39741565795 independently passes fourteen suites / 8,844 checks and real menu navigation. Verbose diagnostic skipped. Earlier actor six-leak / input_mode two-leak failures remain unresolved; Intel rendering still times out. [Latest evidence](../reports/gauntlet/m2-native-mac-ci-39741565795/independent-review/REPORT.md). | Fresh independent native critics | Actual full gameplay, stable leak resolution, Intel and physical qualification; obtain verbose types if a supported failure recurs. |
 | G14 | Android and iOS keep building | IN PROGRESS | Fresh frozen 6a Android debug APK and unsigned iOS project export and structural inspection pass. Independent 48/49 package checks: simulator metadata claims ARM64+x86_64 but pinned debug archive contains x86_64 only; device archive is ARM64. [Evidence](../reports/gauntlet/m2-mobile-preservation/independent-package-critic/REPORT.md). Actual Xcode 16.4 / SDK 18.5 link fails on five iOS 26 framework globals. Reviewed SDK selection is integrated; retries39721286005 at2a2b732 and39727011693 ate7718ee pass independent unsigned-device compile review, with exact source/PCK and raw unsigned codesign evidence. Final binary reparse and runtime remain open. | Fresh independent mobile package critic | Preserve accepted exact-source unsigned compile; qualify simulator metadata, installation, older OS behavior and physical play. No credential/signing action is authorized. |
 | G15 | Packaging, build provenance, Steam staging procedure | IN PROGRESS | Source-bound manifests exist. `STEAM_RELEASE_READINESS.md` is design only: no SteamPipe template, no App ID, Steamworks docs not retrievable (host denied). | Reported | Owner approval is needed for any upload or account step. |
-| G16 | Economy and progression integrity | IN PROGRESS | Corrected-source trial 2 at 3b5cf764 independently passes stock ten-account settlement and pre-ACK / post-replay SQL witnesses: one operation / ten rewards / ten ledger rows, 2,875 credits / 2,650 XP. Trial 1 remains blocked. Separate backend regression passes 61 cases. [Trial evidence](../reports/gauntlet/m3-account-activity/TRIAL_2_HANDOFF.md). | Fresh independent native / live-database and regression critics | Keyed store/armory receipt component independently passes 12/12 native fixture recoveries versus baseline 0/12. Next qualify production PostgreSQL lost-response settlement and rendered player recovery; meaningful activity, AFK policy, remote recovery and deployment security remain separate. |
+| G16 | Economy and progression integrity | IN PROGRESS | Corrected-source trial 2 at 3b5cf764 independently passes stock ten-account settlement and pre-ACK / post-replay SQL witnesses: one operation / ten rewards / ten ledger rows, 2,875 credits / 2,650 XP. Trial 1 remains blocked. Separate backend regression passes 61 cases. [Trial evidence](../reports/gauntlet/m3-account-activity/TRIAL_2_HANDOFF.md). | Fresh independent native / live-database and regression critics | Keyed store/armory receipt component independently passes 12/12 native fixture recoveries versus baseline 0/12. Production PostgreSQL/API market lost-response recovery independently passes at 882931dd with two live SQL witnesses and owned cleanup; synthetic fixture value only. Next qualify store/case and rendered player recovery; meaningful activity, AFK policy, remote recovery and deployment security remain separate. |
 | G17 | Human playtesting | BLOCKED EXTERNALLY | No human feedback exists. | none | Needs people. Use `docs/research/HUMAN_AND_DEVICE_TESTING_PLAN.md`. |
 | G18 | Counter-Strike 2 comparison for weapon feel, animation, readability | BLOCKED EXTERNALLY | Steam, YouTube and counter-strike.net hosts denied by the network policy (see [BARS.md](BARS.md)). | none | Owner allows the hosts, or supplies reference captures. |
 | G19 | Physical-device performance (frame pacing, thermals, memory) | BLOCKED EXTERNALLY | Only llvmpipe software-render timings exist. | none | Needs hardware. |

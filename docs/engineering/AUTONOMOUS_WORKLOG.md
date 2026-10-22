@@ -405,3 +405,14 @@ A resume-note update initially stopped after updating the progress matrix becaus
 its old text anchor had changed. The partial documentation commit402120b is retained;
 this checkpoint replaces the active resume block with the actual owners/sources.
 No product code or raw evidence was changed by that editing error.
+
+
+2026-10-22 08:56 UTC — Production PostgreSQL/API market recovery accepted at
+exact `882931dd`, independently reviewed `5aa3992d`, root integration `4150ad0a`.
+Actual held replies/two alive process kills, fresh logins, exact single settlement,
+account/origin guards, both live SQL witnesses and owned cleanup pass. Initial
+source falsifiers and all raw outputs remain. Root pure 9/17 groups pass.
+Synthetic value only; store/case/rendered/remote and broad gates remain open.
+Continued immediately with separate store recovery source work. M6 final contrast
+native underlay and blind comparison pass their bounded scope; live capture keeps
+its OCR/cleanup failure until a fresh unchanged-budget run verifies corrections.

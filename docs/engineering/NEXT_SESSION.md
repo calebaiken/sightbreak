@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-22, 08:30 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-22, 08:56 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native Codex goal API is exposed. Read AGENTS.md, the mission and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
@@ -9,7 +9,7 @@ implementation after each verified increment; these corrections do not finish v1
 ## Root and accepted checkpoints
 
 - Root `/workspace/sightbreak-v1-execution`, branch `codex/v1-mission-playability`.
-  Checkpoint before this note `81eb8d74`; last pushed `6767a93`. Last complete
+  Checkpoint before this note `4150ad0a`; last pushed `216f99e8`. Last complete
   aggregate / platform source `0527715`. No shared branch merged or rewritten.
 - [Draft PR27](https://github.com/calebaiken/sightbreak/pull/27) targets PR24
   `c84eaf3` → PR23 `db3981e` → PR22 `82a03fc` → PR16 `d2439ac`.
@@ -132,22 +132,26 @@ implementation after each verified increment; these corrections do not finish v1
    source-bound export and original capture_desktop_layouts.py --sizes 1280x720
    --touch-toggle (actual live HUD/occlusion). No whole contrast/accessibility/
    presentation acceptance yet. M6 native engine/render slot currently idle.
-6. **Production PostgreSQL market recovery source review.** Builder
-   /root/client_result_recovery_builder, /workspace/sightbreak-postgres-receipt-recovery,
-   codex/m3-postgres-receipt-recovery from 89393f3. Fresh critic
-   /root/postgres_market_receipt_critic is active on initial freeze f5bea861,
-   production game/backend/server unchanged. Eight oracle + 11 guard groups pass;
-   no production transaction run yet. Initial source rejected before runtime for
-   missing all-route mutation capture and response-metadata/SQL joins; builder
-   also fixes pre-migration volume labels/mount, per-query postmaster binding,
-   budget-before-new-work and journal-listener cleanup. Preserve rejected freeze.
-   Obtain exact corrected freeze + independent source/pure acceptance before one
-   declared market run. Synthetic buyer 1000 / seller 100 / listing 400 → 600 / 488 / fee 12,
-   one operation/transfer, actual 200→SQL→alive SIGKILL twice, fresh auth/revocation,
-   wrong-account/origin zero mutations, final post-refresh independent SQL witness,
-   no saved credentials and owned cleanup. Runtime lane not yet released. Managed
-   environment is current/running, restricted/enforced revision 17, VPN false;
-   recheck managed local Docker socket before launch without changing auth/config.
+6. **Production PostgreSQL/API market recovery independently PASS.** Actual
+   source `882931dd`, builder handoff `19dbb518`, fresh review `5aa3992d`;
+   root integrated through `4150ad0a`. Nine distinct SQL snapshots, three exact
+   POST attempts, six actual fresh native logins, two held real 200 replies then
+   alive/-9 kills before headers, byte-identical 303-byte journal, exact stored
+   response/fresh reads, 401 old sessions, 409 changed price, zero guard/post-clear
+   mutations. Both actual independent read-only SQL witnesses precede release;
+   buyer 600 / seller 488 / fee 12, one original operation, two ledger rows,
+   one item transfer/loadout removal, no XP/rewards/tickets. All processes, five
+   ports, owned container and named volume independently gone. Archive 66 members,
+   135,813 raw / 19,069 compressed bytes, SHA-256
+   9e3eb7d7a2cb4ebdad8c94b0e0f59b25cc40b6d252074926311213630960d793.
+   Root pure reruns 9 oracle / 17 guard groups pass. Original rejected source and
+   all preflight failures retained; no repeat required. Synthetic fixture value,
+   not earned progression, remote/power-loss or rendered player-consent proof.
+   Immediately selected STORE as next separate component: builder
+   /root/client_result_recovery_builder creates fresh own branch from `4150ad0a`,
+   actual POST /store/buy / definition_id:key, one 150-credit debit and original
+   minted key through repeated lost replies/restarts. Source/pure work only;
+   preregister component oracle, freeze and fresh critic before any service run.
 7. **M5 bot objective diagnosis**, builder /root/bot_objective_quality_builder,
    own branch/source investigation from 81eb8d74. Exact current Windows trace has
    natural 100 s round 7 timeout: carrier 6 alive 100 HP / SMG 30/0, four attackers /

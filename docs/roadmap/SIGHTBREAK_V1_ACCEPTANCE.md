@@ -25,3 +25,10 @@ fourteen-suite Windows/ARM runs, Windows selected gameplay gates, corrected-acti
 ten-account settlement/recovery, backend regression and four-weapon probe. Linux
 next-round timing and earlier unexplained Mac strict leaks remain failures. The canonical matrix records their exact sources and reviewers;
 none of these increments closes the full release-candidate gates.
+
+Production PostgreSQL/API market recovery now has separate actual native and live
+read-only SQL qualification at `882931dd`, root integration `4150ad0a`.
+[The independent review](../reports/gauntlet/m3-postgres-receipt-recovery/independent-critic/RUNTIME_REVIEW.md)
+retains both lost-response kills, final exact settlement, guard checks and cleanup.
+Synthetic test balances are not earned progression. Store/case, rendered consent,
+remote hosting and whole G3/G7/G16 remain open.
