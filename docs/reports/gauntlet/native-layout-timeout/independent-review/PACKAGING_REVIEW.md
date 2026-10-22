@@ -24,6 +24,14 @@ source files are read without transformation or truncation. The existing
 symlink rejection, fresh output requirement and deterministic unique relative
 entry construction remain in use.
 
+A separate narrow critic also passes controls for exact default ZIP parity with
+`021e493`, upper-case/nested PNGs, excluded caches, ordinary/directory/dangling
+links, exact final ZIP boundary, one-byte overflow, empty selection and temporary
+cleanup. A real 30 MiB PNG control fails because ZIP/index overhead would exceed
+the bound; the other three size archives still finish. Its code, exact candidate
+and baseline module snapshots, and result JSONs are retained in
+`packaging-edges/`. Snapshot bytes were independently compared with Git.
+
 The workflow diff only adds a Linux packaging step and four unconditional-on-
 completion uploads. Every successful size can upload even when another size
 fails packaging. The four upload names bind to `github.sha`, the original full
