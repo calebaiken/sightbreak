@@ -57,8 +57,13 @@ fails desktop recognition, and touch labels still reject desktop mode even when
 desktop footer tokens are supplied as a counterexample. All original PNG byte
 hashes remain unchanged.
 
-Raw test output is in `targeted-tests.txt`; OCR TSVs and per-call timing/transform
+Raw test output is in `targeted-tests.txt.gz`; OCR TSVs and per-call timing/transform
 receipts are in `saved-image-r1/`. Existing native-observation regressions pass
 four Linux cases, with three Windows-only skips; all 24 build/log tests pass.
 Compilation and whitespace checks pass. These are validator results only; actual
 native opt-in/off execution and independent review remain pending.
+
+The first evidence-staging whitespace check flagged Tesseract's empty final TSV
+fields and trailing blank lines in raw unittest output. Those raw artifacts and
+the large baseline result are now stored as lossless gzip files; decompressed
+bytes were checked against their originals. No OCR row or failure was edited.

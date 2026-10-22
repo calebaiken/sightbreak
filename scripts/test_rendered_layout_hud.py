@@ -1,5 +1,6 @@
 """Real native PNG/Tesseract regressions; no settings flag can satisfy these."""
 import csv
+import gzip
 import hashlib
 import io
 import json
@@ -63,7 +64,7 @@ class RenderedLayoutHUDTests(unittest.TestCase):
         full, footer = self.groups['desktop']
         self.assertTrue(rendered_hud_matches(full, False, footer))
         self.assertFalse(rendered_hud_matches(full, True))
-        baseline = (FIXTURES / 'baseline-desktop.tsv').read_text()
+        baseline = gzip.decompress((FIXTURES / 'baseline-desktop.tsv.gz').read_bytes()).decode('utf-8')
         baseline_words = {row['text'].upper() for row in csv.DictReader(io.StringIO(baseline), delimiter='\t')}
         self.assertIn('HEALTH', baseline_words)
         self.assertFalse({'TAB', 'ROSTER', 'ESC'}.issubset(baseline_words))
