@@ -89,37 +89,7 @@ jobs:
         run: xvfb-run -a python scripts/verify_builds.py --targets linux --graphical
       - name: Native authority and compatibility regressions
         if: always() && steps.export.outcome == 'success'
-        shell: python
-        run: |
-          import os, pathlib, subprocess, sys, json
-          sys.path.insert(0, 'scripts')
-          import toolchain
-          from native_log import failed
-          out = pathlib.Path(os.environ['SIGHTBREAK_BUILDS_DIR']) / 'regressions'
-          out.mkdir(parents=True)
-          receipts = []
-          for suite in ('actor', 'match', 'state_privacy', 'movement_prediction', 'peer_lifecycle', 'input_mode', 'menu_focus', 'offline_diagnostics', 'hud_objective_hint'):
-              command = toolchain.command('--headless', '--script', 'res://tests/' + suite + '_test.gd')
-              with (out / (suite + '.log')).open('w', encoding='utf-8') as log:
-                  environment = toolchain.environment()
-                  if suite in ('input_mode', 'menu_focus', 'offline_diagnostics'):
-                      environment['SIGHTBREAK_STATE_DIR'] = str((out / (suite + '-state')).resolve())
-                      if os.name == 'nt':
-                          for key, part in (('APPDATA', 'roaming'), ('LOCALAPPDATA', 'local')):
-                              directory = out / 'input-mode-state' / part
-                              directory.mkdir(parents=True, exist_ok=True)
-                              environment[key] = str(directory.resolve())
-                      elif sys.platform != 'darwin':
-                          for key, part in (('XDG_DATA_HOME', 'data'), ('XDG_CONFIG_HOME', 'config'), ('XDG_CACHE_HOME', 'cache')):
-                              directory = out / 'input-mode-state' / part
-                              directory.mkdir(parents=True, exist_ok=True)
-                              environment[key] = str(directory.resolve())
-                  result = subprocess.run(command, env=environment, stdout=log, stderr=subprocess.STDOUT, timeout=120)
-              text = (out / (suite + '.log')).read_text(encoding='utf-8', errors='replace')
-              receipts.append({'command': command, 'exit': result.returncode, 'clean_log': not failed(text)})
-              (out / 'results.json').write_text(json.dumps(receipts, indent=2))
-              if result.returncode or failed(text):
-                  raise SystemExit(suite + ' failed; raw output retained')
+        run: python scripts/run_native_regressions.py --output builds/desktop-playability/regressions
       - name: Real exported keyboard and pointer input (Windows/Linux)
         if: always() && steps.export.outcome == 'success' && runner.os != 'macOS'
         run: python scripts/verify_integration_export.py --target ${{ matrix.target }} --visit-armory --timeout 240 --output builds/desktop-playability/native-input

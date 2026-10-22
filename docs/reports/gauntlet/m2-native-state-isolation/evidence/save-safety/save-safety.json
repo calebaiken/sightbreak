@@ -1,0 +1,60 @@
+{
+  "passed": true,
+  "baseline": {
+    "input_mode": {
+      "command": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/tmp/sightbreak-native-tests-13zqevvf/project",
+        "--headless",
+        "--script",
+        "res://tests/input_mode_test.gd"
+      ],
+      "exit": 0,
+      "clean_log": true,
+      "wall_seconds": 0.9164082749994122,
+      "log": "/workspace/sightbreak-ci-isolation/builds/m2-isolation/save-safety-current/baseline-input_mode.log"
+    },
+    "menu_focus": {
+      "command": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/tmp/sightbreak-native-tests-13zqevvf/project",
+        "--headless",
+        "--script",
+        "res://tests/menu_focus_test.gd"
+      ],
+      "exit": 2,
+      "clean_log": false,
+      "wall_seconds": 0.16448380699875997,
+      "log": "/workspace/sightbreak-ci-isolation/builds/m2-isolation/save-safety-current/baseline-menu_focus.log"
+    },
+    "produced_save_sha256": "8de01e1c9044cf30e7e87849d899bf41b27d2caac82bd576783ca1c043121b11"
+  },
+  "source_fresh_save_guard": {
+    "command": [
+      "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "--path",
+      "/tmp/sightbreak-native-tests-13zqevvf/project",
+      "--headless",
+      "--script",
+      "res://tests/menu_focus_test.gd"
+    ],
+    "exit": 2,
+    "clean_log": false,
+    "wall_seconds": 0.16453843799899914,
+    "log": "/workspace/sightbreak-ci-isolation/builds/m2-isolation/save-safety-current/canonical-sentinel-guard.log"
+  },
+  "native_startup_with_crlf_config": true,
+  "canonical_sentinel_preserved_sha256": "7993151cc1165a0b5b7808712f0e976f55ede00592a215a89cab6543df0f89b4",
+  "distinct_native_suite_paths": [
+    "/workspace/sightbreak-ci-isolation/.local/save-safety-current/data/SIGHTBREAK-native-tests-6a79dbf7f2194d1b835186916745e87d/input_mode",
+    "/workspace/sightbreak-ci-isolation/.local/save-safety-current/data/SIGHTBREAK-native-tests-6a79dbf7f2194d1b835186916745e87d/menu_focus",
+    "/workspace/sightbreak-ci-isolation/.local/save-safety-current/data/SIGHTBREAK-native-tests-6a79dbf7f2194d1b835186916745e87d/offline_diagnostics"
+  ],
+  "existing_isolated_save_rejected": "Refusing existing suite state; no save or prior evidence was overwritten",
+  "source_resources_unchanged": true,
+  "copied_resources_unchanged": true,
+  "temporary_project_removed": true,
+  "user_namespaces_removed": true
+}
