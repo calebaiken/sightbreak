@@ -217,11 +217,15 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
             try:
                 if not reached.wait(25):
                     raise RuntimeError(f"Client did not reach {boundary}: {directory}")
+                if proc.poll() is not None:
+                    raise RuntimeError("Original client exited before the required forced kill")
             finally:
                 event("kill_requested", pid=proc.pid)
                 proc.kill()
                 proc.wait(timeout=10)
                 event("kill_confirmed", pid=proc.pid, returncode=proc.returncode)
+        if proc.returncode == 0 or native_error((directory / "killed-client.log").read_text(encoding="utf-8")):
+            raise RuntimeError(f"Original client failed the forced-kill/native-error gate: {directory}")
         saved = Path(config["journal"])
         def capture_journal(name):
             raw = saved.read_bytes() if saved.exists() else None
@@ -244,43 +248,51 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
         def restart(name, kill_after_observation=False):
             process = subprocess.Popen(command, env=env, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
             event("recovery_started", pid=process.pid, phase=name)
-            if kill_after_observation:
-                observed = queue.Queue()
-                lines = []
+            stdout = stderr = ""
+            reader = None
+            observed_lines = []
+            captured = False
+            try:
+                if kill_after_observation:
+                    observed = queue.Queue()
 
-                def read_until_observation():
-                    for line in process.stdout:
-                        lines.append(line)
-                        if line.startswith("RECEIPT_PROBE "):
-                            observed.put(json.loads(line.removeprefix("RECEIPT_PROBE ")))
-                            return
+                    def read_until_observation():
+                        for line in process.stdout:
+                            observed_lines.append(line)
+                            if line.startswith("RECEIPT_PROBE "):
+                                observed.put(json.loads(line.removeprefix("RECEIPT_PROBE ")))
+                                return
 
-                reader = threading.Thread(target=read_until_observation, daemon=True)
-                reader.start()
-                try:
-                    value = observed.get(timeout=25)
-                    event("recovery_observation_before_kill", pid=process.pid, phase=name, observation=value)
-                    if process.poll() is not None:
-                        raise RuntimeError("Recovery exited before the required forced kill")
-                finally:
-                    event("recovery_kill_requested", pid=process.pid, phase=name)
+                    reader = threading.Thread(target=read_until_observation, daemon=True)
+                    reader.start()
+                    try:
+                        value = observed.get(timeout=25)
+                        event("recovery_observation_before_kill", pid=process.pid, phase=name, observation=value)
+                        if process.poll() is not None:
+                            raise RuntimeError("Recovery exited before the required forced kill")
+                    finally:
+                        event("recovery_kill_requested", pid=process.pid, phase=name)
+                        process.kill()
+                        process.wait(timeout=10)
+                        event("recovery_kill_confirmed", pid=process.pid, phase=name, returncode=process.returncode)
+                    if process.returncode == 0:
+                        raise RuntimeError("Recovery unexpectedly exited normally")
+                else:
+                    stdout, stderr = process.communicate(timeout=35)
+                    captured = True
+            finally:
+                # Preserve both streams even when the observation, wait or timeout
+                # gate fails. Stop the owned process before draining its pipes.
+                if process.poll() is None:
                     process.kill()
                     process.wait(timeout=10)
-                    event("recovery_kill_confirmed", pid=process.pid, phase=name, returncode=process.returncode)
-                reader.join(timeout=5)
-                stdout = "".join(lines) + process.stdout.read()
-                stderr = process.stderr.read()
-                if process.returncode == 0:
-                    raise RuntimeError("Recovery unexpectedly exited normally")
-            else:
-                try:
-                    stdout, stderr = process.communicate(timeout=35)
-                except subprocess.TimeoutExpired:
-                    process.kill()
-                    process.communicate()
-                    raise
-            event("recovery_finished", pid=process.pid, returncode=process.returncode, phase=name)
-            (directory / f"{name}.log").write_text(stdout + stderr, encoding="utf-8")
+                if reader is not None:
+                    reader.join(timeout=5)
+                if not captured:
+                    tail_stdout, stderr = process.communicate(timeout=10)
+                    stdout = "".join(observed_lines) + tail_stdout
+                event("recovery_finished", pid=process.pid, returncode=process.returncode, phase=name)
+                (directory / f"{name}.log").write_text(stdout + stderr, encoding="utf-8")
             lines = [line.removeprefix("RECEIPT_PROBE ") for line in stdout.splitlines() if line.startswith("RECEIPT_PROBE ")]
             if (process.returncode and not kill_after_observation) or len(lines) != 1 or native_error(stdout + stderr):
                 raise RuntimeError(f"Restart probe failed: {directory}")
