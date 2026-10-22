@@ -149,6 +149,7 @@ class MacMenuUI(MacReadOnly):
     def button(self, down, point):
         if down:
             self.require_target()
+            self.neutral()
             self.last_pointer_point = point
             self.held.add('lmb')
         self.post(self.cg.CGEventCreateMouseEvent(None, 1 if down else 2, Point(*point), 0), 'lmb_down' if down else 'lmb_up')
@@ -158,6 +159,7 @@ class MacMenuUI(MacReadOnly):
     def escape(self, down):
         if down:
             self.require_target()
+            self.neutral()
             self.held.add('escape')
         self.post(self.cg.CGEventCreateKeyboardEvent(None, 53, down), 'escape_down' if down else 'escape_up')
         if not down:

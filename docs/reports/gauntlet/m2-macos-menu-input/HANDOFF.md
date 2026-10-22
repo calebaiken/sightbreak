@@ -30,12 +30,20 @@ cleanup/profile/window receipts before launch; a previous run cannot authorize
 an unmatched build. A fresh critic must review source before root dispatch and
 actual native PNGs/state/source/cleanup before acceptance.
 
-Eight Linux observer controls pass. These cover titlebar/Retina coordinate
+Nine Linux observer controls pass. These cover titlebar/Retina coordinate
 mapping, unknown geometry, ambiguous/low-confidence OCR targets, outcome
 recognition, preflight identity/permissions/cleanup, refusal before a down event,
 owned-only release and non-native no-launch behavior. They do not compile Swift
 or establish Mac API, capture, focus or input delivery. The source helper's first
 native compilation and all OS behavior remain unverified.
+
+The first source review found that transaction-entry neutrality was checked
+before pointer movement, rather than at each actual down-event boundary. Initial
+`aa309a1` is rejected on that declared criterion. The correction checks native
+neutral state again immediately after exact-window/focus validation in both down
+paths, before claiming ownership or posting. A dirty state at that boundary now
+refuses both pointer and Escape down events. The initial injected-state proof
+and fresh re-review are retained in milestone evidence.
 
 Root reports independently inspected raw preflight at `e7718ee`, run
 39727011693, job 119653125533: all four queried permissions true; PID 6968,

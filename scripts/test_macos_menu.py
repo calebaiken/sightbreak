@@ -133,6 +133,20 @@ class MenuControls(unittest.TestCase):
         ui.release_owned()
         self.assertEqual(released, [])
 
+    def test_actual_down_boundary_rejects_newly_dirty_os_controls(self):
+        for control in ('lmb', 'escape'):
+            ui = self.fake_ui()
+            ui.require_target = lambda: None
+            ui.diagnostics = lambda: {'lmb_down': True, 'escape_down': False}
+            with self.subTest(control=control), patch.object(ui, 'post') as post:
+                with self.assertRaisesRegex(RuntimeError, 'not neutral'):
+                    if control == 'lmb':
+                        ui.button(True, [100, 200])
+                    else:
+                        ui.escape(True)
+                post.assert_not_called()
+                self.assertEqual(ui.held, set())
+
     def test_non_mac_host_never_launches_helper_or_client(self):
         with tempfile.TemporaryDirectory() as temporary:
             with patch.object(driver, 'MacReadOnly', side_effect=RuntimeError('requires ARM Mac')), patch.object(driver.subprocess, 'Popen') as launch:
