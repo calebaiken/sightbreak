@@ -135,9 +135,9 @@ accumulates 23.68 CPU seconds. Threads categorized by llvmpipe names accumulate
 22.62 CPU seconds; the main thread accumulates 0.79 and other observed threads
 0.26. CPU time can exceed wall time across workers. Per-thread deltas cover each
 thread's first-to-last observations and need not sum exactly to aggregate
-process CPU. This supports software-rasterizer work as the dominant measured
-CPU category in that interval, while the process monitor still includes other
-work. Thread names alone do not identify the expensive rendering feature.
+process CPU. These are observed counters grouped by thread names. They do not
+measure a rendering function's cost or establish which work caused the deadline
+failure. The process monitor also includes callbacks, synchronization and draw.
 
 Readable cgroup v2 root quota is 400000/100000 microseconds, equivalent to four
 CPUs. Its observed `nr_throttled` and `throttled_usec` deltas are both zero.
@@ -182,10 +182,13 @@ cmp /tmp/linux-frame-native-audit.json docs/reports/gauntlet/m1-linux-frame-samp
 The largest remaining gap is identifying the expensive full-quality render/
 process work. The next supported experiment is a separately reviewed fixed-view
 renderer profile reproducing the retained POST scene with unchanged graphics.
-If the cost persists without match simulation, it narrows the renderer question;
-if it does not, inspect live scene/controller work before selecting a fix.
-Neither outcome authorizes weakening the original plant gate. No further native
-attempt was run; the lane was released to root. Physical-GPU pacing, human
+It needs matched source, camera, actors, graphics, resource limits and sampler
+overhead controls, plus measurements of actual rendering functions/passes.
+If long presentation intervals persist without match simulation, investigate
+those measured rendering paths; otherwise inspect live scene/controller work.
+No cost attribution or performance improvement follows from the current coarse
+monitors. No further native attempt was run; the lane was released to root.
+Physical-GPU pacing, human
 playability and the full Linux/RC gates remain open. Arena/PR26 content,
 authority, protocol and canonical mission files are unchanged by this branch.
 
