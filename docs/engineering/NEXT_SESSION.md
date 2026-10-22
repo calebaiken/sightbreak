@@ -1,19 +1,19 @@
 # Next session
 
-Updated 2026-10-22 by Claude. A fresh session should be able to continue from this file alone.
+Updated 2026-10-22 (after M3) by Claude. A fresh session should be able to continue from this file alone.
 
 ## State
 
-- Stack: `codex/desktop-playability-p1` (PR #23, `db3981e`) <- `claude/mission-foundation-v1` (draft PR #24: skills, agents, records, session brief) <- `claude/relay-yard-tactical-layout-v1` (draft PR: Relay Yard layout revision 2, measurement tools, evidence). Push with `git push -u origin <branch>` explicitly; the worktrees' upstreams are unset on purpose.
+- Stack: `codex/desktop-playability-p1` (PR #23, `db3981e`) <- `claude/mission-foundation-v1` (draft PR #24: skills, agents, records, session brief) <- `claude/relay-yard-tactical-layout-v1` (draft PR #26: Relay Yard layout revision 2, measurement tools, evidence). Separately, off the Codex base: `claude/fair-actor-order-v1` (draft PR #28: tick-order shuffle and squad-symmetric bot habits, finding F2). Push with `git push -u origin <branch>` explicitly; the worktrees' upstreams are unset on purpose.
 - Done and verified here: native baseline of PR #23 (full suite, no failures); Relay Yard layout revision 2 (full suite exit 0, four blind critic rounds won, data independently recomputed). Details: worklog entries "Session 1" and `docs/design/RELAY_YARD_LAYOUT.md`.
-- Open defects found: **F2** (actors 1-5 win 71% of bot rounds in either role, from the id-ordered authoritative tick), hard difficulty rarely plants, sites bare, no long lane or elevation, mixed-layout handshake gap, native plant scenario route unverified.
-- Worktrees used in session 1: `/home/user/wt/mission-foundation`, `/home/user/wt/layout`. Toolchain `/home/user/tools/godot-4.7.2`, state dir `/home/user/sightbreak/.local`. None survives a container reset; `./scripts/setup.sh` rebuilds them. Xvfb: `Xvfb :99 -screen 0 1920x1080x24 +extension GLX +render -noreset &`.
+- Open defects found: **F2 is fixed on PR #28 and waits for Codex review** (ids 1-5 won 71% of normal rounds; the fixed build gives 49.9%, interval 46.8% to 53.1%, over 72 matches; hard is unresolved at 24 matches), hard difficulty rarely plants, sites bare, no long lane or elevation, mixed-layout handshake gap, native plant scenario route unverified. On the unchanged pad attackers win about a quarter of normal rounds; the layout's 59% and 67% were confounded and need re-measuring.
+- Worktrees used in session 1: `/home/user/wt/mission-foundation`, `/home/user/wt/layout`, `/home/user/wt/fair`. Toolchain `/home/user/tools/godot-4.7.2`, state dir `/home/user/sightbreak/.local`. None survives a container reset; `./scripts/setup.sh` rebuilds them. Xvfb: `Xvfb :99 -screen 0 1920x1080x24 +extension GLX +render -noreset &`.
 
 ## Do next, in order
 
 1. `git fetch origin`; check whether PR #23, #24 or any of #16-#22 moved. If the base moved, merge it into your branch (no rebase, no force-push) and re-run `./scripts/validate.sh`.
 2. Recheck the reference hosts (`docs/roadmap/BARS.md`). If `*.steamstatic.com` or `youtube.com` now answer, fetch the CS2 references first, record URL, date and SHA-256 and start the viewmodel gauntlet against bar B1.
-3. **Fix F2.** Branch `claude/fair-actor-order-v1` off `codex/desktop-playability-p1`. In `match.gd` `_authority_tick`, process actors in a rotating or shuffled order each tick (deterministic from the tick or the match RNG). Add a regression test, then run `scripts/measure_relay_yard.sh ... --both-starts` and `bot_objective_metrics.gd --reverse-order`: ids 1-5 should win about half. Shared authority code: write the PR so Codex can review it quickly and say so in the PR text.
+3. **F2 follow-up.** Check PR #28 for review comments from Codex. Once it merges (or the stack is integrated), merge the base into the layout branch and re-measure layout side balance and pacing with `scripts/measure_relay_yard.sh ... --both-starts` plus `scripts/squad_balance.py` (the 59% and 67% attacker wins were confounded). For hard difficulty run at least 72 matches before claiming anything.
 4. Weapon and viewmodel gauntlet (G4, G5): run `game/tests/presentation_gallery_capture.gd` (written, never run) to capture all four weapons and the operators in identical views; critic round; measurable fire/recoil/reload harness. Only the Relay AR has authored art.
 5. Layout follow-ups from `docs/design/RELAY_YARD_LAYOUT.md` "Next": site structure, hard-difficulty tactics, a long lane, visual polish.
 6. HUD and menu journeys (G7) at 1280x720, 1920x1080, 960x720, 1560x720.

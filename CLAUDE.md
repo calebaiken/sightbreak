@@ -39,3 +39,11 @@ DISPLAY=:99 ./scripts/validate.sh       # full maintained suite (long)
 ```
 
 Software rendering (llvmpipe) gives relative timings only. Never present it as device FPS.
+
+## Operating notes (learned the hard way)
+
+- A GDScript compile error makes `--headless --script` hang instead of failing. Run every test under `timeout`.
+- Never edit `game/` files while a measurement run is going: each match loads the scripts when it starts, so a run that spans an edit mixes two builds. Stop it, then restart.
+- Never `pkill -f` / `pgrep -f` a pattern that also appears in your own command line; the wrapper shell matches and dies (exit 144). Put the kill in a script file, or match on a pid.
+- Look at pair-level properties, not only averages. A rotating tick order gave every actor an equal lead and still left ids 5 and 6 in order 90% of the time.
+- A subagent that recomputes your numbers is worth running before the write-up, not after: it changed three of the claims in the fairness record.

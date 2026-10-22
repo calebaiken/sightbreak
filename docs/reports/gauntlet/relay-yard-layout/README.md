@@ -46,4 +46,4 @@ Each round's findings changed the build before the next. The loss in round 4 pai
 - The "before" numbers come from the same harness run against `db3981e` with the harness files copied in; the base game files are untouched.
 - Critic scores are records, not acceptance. A picture does not override the measured gates.
 - The stored log archives are the raw output of the harness; nothing is edited. Seeds 41-46 were not used for tuning. Seeds 31-36 and 11-23 were.
-- The attacker win rates in the logs are confounded by finding F2 (actors 1-5 win about 71% of rounds in either role). Read plant rate, round time, first-kill time, kill distance and spawn-zone kills; do not read side balance.
+- The attacker win rates in the logs are confounded by finding F2 (actors 1-5 win about 71% of rounds in either role). Read plant rate, round time, first-kill time, kill distance and spawn-zone kills; do not read side balance. The fix is draft PR #28; these logs predate it.

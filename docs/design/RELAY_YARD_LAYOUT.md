@@ -90,6 +90,8 @@ Under the stock tick order (`actors.values()` in id order), actors 1-5 win 71% o
 
 The authoritative tick runs `tick_authority` for each actor in id order, so in a same-tick trade the lower id fires and kills first. It is probably a real fairness defect for networked play too, where player ids are seats. It lives in `match.gd` (Codex-owned shared code), so it is not changed here. A fix would rotate or shuffle the processing order each tick; it needs its own PR and a regression test. Logged in the worklog.
 
+**Update (M3).** Fixed outside this branch, in draft PR #28 (`claude/fair-actor-order-v1`). There were two causes: the id-ordered tick, and bot habits keyed on raw id parity. A per-tick shuffle alone left ids 1-5 at 61%; with the habits made squad-symmetric the pooled normal result is 49.9% (46.8% to 53.1%) over 72 matches. The attacker win rates in the table above (59% normal, 67% hard) were measured before the fix and are confounded; on the unchanged pad, with symmetric squads, attackers win about a quarter of normal rounds. They need re-measuring on this layout once PR #28 is in.
+
 ## Compatibility notes for other contributors
 
 - **Mixed builds.** Layout is part of the build. The handshake carries the protocol (6) and a build string, but nothing that distinguishes layouts. A client and a server on different layouts would disagree about hits and movement. Treat the layout as protocol-affecting and match builds, or bump the protocol in a Codex-owned change.
@@ -111,7 +113,7 @@ To measure the old layout, run the same script from a checkout of `db3981e` afte
 
 ## Next
 
-1. Fix F2 (processing order) with a regression test, then re-measure balance.
+1. F2 is fixed in PR #28 (pending Codex review). After it lands, re-measure side balance and pacing on this layout.
 2. Site structure: a plant pocket, a second entry and post-plant cover at each site.
 3. Hard-difficulty tactics so rounds reach the sites.
 4. A long lane and a half-height position for variety.
