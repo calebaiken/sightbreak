@@ -1,7 +1,7 @@
 # Next session
 
-Updated 2026-10-22, 06:15 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
-IN PROGRESS / PRIMARY, [issue25](https://github.com/calebaiken/sightbreak/issues/25).
+Updated 2026-10-22, 06:29 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native Codex goal API is exposed. Read AGENTS.md, the mission and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
@@ -9,7 +9,7 @@ implementation after each verified increment; these corrections do not finish v1
 ## Root and source checkpoints
 
 - Root: `/workspace/sightbreak-v1-execution`, `codex/v1-mission-playability`.
-  Current checkpoint before this note: `c8d04f1`; last pushed: `3b97a00`.
+  Current checkpoint before this note: `f8b7e82`; last pushed: `b09cfe1`.
 - [Draft PR27](https://github.com/calebaiken/sightbreak/pull/27) targets PR24
   `c84eaf3` → PR23 `db3981e` → PR22 `82a03fc` → PR16 `d2439ac`.
   No shared branch was merged or rewritten. Fetch live refs before integration.
@@ -21,12 +21,12 @@ implementation after each verified increment; these corrections do not finish v1
   validation SHA256 `0fd96995226efdf47fb351860eedda3a8ca1b0086b3ef291a5e99f640766abc3`.
   Before/after source is clean and identical. Independent evidence `609913e`:
   `docs/reports/gauntlet/combined-validation-b85f936/independent-critic/REVIEW.md`.
-  All52 required Godot logs, ENet2/2, lifecycle cleanup, catalog29 and Python groups
+  All52 required Godot logs, ENet 2/2, lifecycle cleanup, catalog 29 and Python groups
   pass. Five rendered checks, three Windows unit cases and optional backend SQL
   are not covered. Later Mac tools change validation identity; do not relabel this
   pass as the whole latest HEAD. Shipping game/backend/server equal `3b97a00`.
 - First aggregate at `a23e349` failed because root sparse checkout omitted tracked
-  reload CSV/hash fixtures. Original57-file archive/exit1 remains in `0e63ada`.
+  reload CSV/hash fixtures. Original 57-file archive/exit1 remains in `0e63ada`.
   Restore `docs/reports/media/art-v9/hands/logs` in every aggregate checkout.
 
 ## Actual native runs
@@ -35,10 +35,10 @@ implementation after each verified increment; these corrections do not finish v1
 | --- | --- |
 | [39725980732](https://github.com/calebaiken/sightbreak/actions/runs/39725980732), `872a576`, single Linux119649852989 | Raw independent source/input/ordinary journey, defuse,9-round stock match/earned restart and four-size201.314 s pass. Player plants180 ticks, +1objective/+300credits, but later15 s role-guidance wait fails amid notifications before death. Natural resolution/restart in that plant scenario are unreached. FullQA46 MB untransferred; original per-size PNGs available. Evidence `b85f936`, report `m1-native-ci-39725980732/remote`. |
 | [39727011693](https://github.com/calebaiken/sightbreak/actions/runs/39727011693), `e7718ee`, single ARM119653125533 | Actual no-event readiness and unsigned iOS compile independently pass. All four permission APIs true; exact preflight PID6968/window34/internal PNG valid, profile absent, normal0/no remaining group. No input posted. Evidence `e6c323a`, `m2-macos-input/native-run-39727011693`. |
-| [39728129445](https://github.com/calebaiken/sightbreak/actions/runs/39728129445), `a8eb7eb`, single Windows119656711230 | Overall FAIL only plant, independently audited. Original ordinary journey passes233.547 s; all16 original OCR outputs/strict LEAVE call retained. Defuse/full ten-round match and exact120 XP /325 credits restart pass; raw archives and independent review are committed as3f74e20/317410a (`m1-native-ci-39728129445/REPORT.md`). Its own180-tick plant/reward/living PNG pass, followed by notification starvation/death in15 s role wait. Critic `native_ci_outcome_critic` retains original fullQA22.7 MB and bounded3.3 MB. |
+| [39728129445](https://github.com/calebaiken/sightbreak/actions/runs/39728129445), `a8eb7eb`, single Windows119656711230 | Overall FAIL only plant, independently audited. Original ordinary journey passes233.547 s; all 16 original OCR outputs/strict LEAVE call retained. Defuse/full ten-round match and exact120 XP  / 325 credits restart pass; raw archives and independent review are committed as 3f74e20/317410a (`m1-native-ci-39728129445/REPORT.md`). Its own180-tick plant/reward/living PNG pass, followed by notification starvation/death in15 s role wait. Critic `native_ci_outcome_critic` retains original fullQA22.7 MB and bounded3.3 MB. |
 | [39729489971](https://github.com/calebaiken/sightbreak/actions/runs/39729489971), `3b97a00`, single ARM119661018459 | New real-menu attempt FAILS before events. Swift compiles; gamePID3996 cannot be verified foreground within5 s (last observedPID3721),0CGpost attempts, no helper invocation/OS capture. Ordinary close0/groups gone. Own helper permission/geometry/Vision unreached. Separate preflightPID3571/window35 cannot stand in for3996. All12 native suites actually pass4,461 assertions. Independent raw rejection is committed as `a172934`/`5378b1f`; report `m2-macos-menu-input/native-run-39729489971/REPORT.md`. |
 
-Earlier `0ca125d` run39719407304 and `6a0d8d5` run39712752860 failures remain
+Earlier `0ca125d` run 39719407304 and `6a0d8d5` run 39712752860 failures remain
 historical. Intel default/OpenGL and all five feature ablations time out120 s;
 minimal controls pass, no winning variant supports a shipping renderer change.
 Physical Intel/Mac GPU qualification stays open. Actual unsigned iOS compilations
@@ -49,12 +49,12 @@ Installation, runtime, older OS and physical mobile play remain open.
 ## Active execution queue
 
 1. **M1 planted-role source accepted; complete journey FAILS.** Source `3c4d921`
-   is integrated as `d7dc1be`; criteria7686a7e, builder evidence87c12d4/21f99e2,
-   independent reviewe2c61ac. Review: `m1-postplant-guidance/independent-critic/REVIEW.md`.
+   is integrated as `d7dc1be`; criteria 7686a7e, builder evidence 87c12d4/21f99e2,
+   independent review e2c61ac. Review: `m1-postplant-guidance/independent-critic/REVIEW.md`.
    All 1,458 flood frames are correct versus none on baseline; 1,559 independent
-   controls pass. Both native rounds3/4 pass 180-tick ordinary plant, +1/+300,
-   living DEFEND pixels and natural defender defuse, then FAIL unchanged12 s
-   next-round wait: only247 ticks /4.116667 sim seconds in12.053 wall, POST0.65 left.
+   controls pass. Both native rounds 3/4 pass 180-tick ordinary plant, +1/+300,
+   living DEFEND pixels and natural defender defuse, then FAIL unchanged 12 s
+   next-round wait: only 247 ticks  / 4.116667 sim seconds in 12.053 wall, POST 0.65 left.
    Restart is unreached. Round4 has no recorder and also fails; no recorder-only
    cause is supported. Both explicitly select LP_NUM_THREADS=2/llvmpipe; outer
    parent env is not client readback. No fixed-fps/physics override. Arena/sky
@@ -62,42 +62,45 @@ Installation, runtime, older OS and physical mobile play remain open.
    comparison cannot establish a UI/render regression. Full candidate aggregate
    and exact-source Windows run remain required. No unbounded retry or deadline
    increase is authorized merely to find a pass.
-   Original H.264 video130.400 s /1,304 frames /7,961,368 bytes is retained, SHA256
+   Original H.264 video 130.400 s  / 1,304 frames  / 7,961,368 bytes is retained, SHA256
    `9527ba7f05d288c1545ea8dbc3723a83d5e19774118af099119fb6c7b0dfb7cc`.
    Builder and critic have exited their engine lane; preserve both failures.
-2. **M3 corrected account match executing.** Builder `/root/account_match_builder`
-   is reactivated in `/workspace/sightbreak-account-activity`, branch
-   `codex/m3-account-activity-qualification`, authorized immutable source
-   `e2c61ac2ecbd38ab55bc9edb712b028322c1490f`, game tree
-   `fb6be859e05812d8707be1ef5c6f747d2588c1e9`. Coordinate before launch with fresh
-   `/root/account_activity_qualification_critic`; it owns a read-only live SQL
-   observer. Exact stock harness, ten NEW fake accounts, own PostgreSQL/API/ports/
-   spool, pinned engine and no gameplay/score/activity injection. Exclusive local
-   engine/CPU lane belongs to this run until cleanup. Runtime roughly9 min plus
-   import. Fifteen validator controls already pass; no redundant repeat needed.
-   Critic must see committed SQL no later than lost-worker-killed checkpoint,
-   BEFORE proxy ACK release, plus replay state. Missing that live window stays
-   blocked. Source/eleven native process/socket provenance and cleanup required.
-   Prior471fbd8 one operation/10rewards/2,875credits/2,650XP is a benchmark, not this
-   run's assumed output. Yaw-only activity remains permitted; no AFK-resistance or
-   whole G3/G16 claim. Local inherited UDP listener remains wildcard.
-3. **M2 Mac focus observer.** Builder `/root/mac_input_builder`, own sparse
-   `/workspace/sightbreak-macos-focus`, branch `codex/m2-macos-focus-observer`,
-   base609913e. Inspect actual run39729489971 before revising. Original raw base:
-   `/workspace/sightbreak-mac-menu-native-review/docs/reports/gauntlet/m2-macos-menu-input/native-run-39729489971/full-qa/macos-menu-input`.
-   Public SDK header says NSRunningApplication time-varying values update on main
-   run-loop turns: this proves an observer risk, not that run's failure cause.
-   Prepare truthful selected-window/activation-return/before-after run-loop/state
-   receipts with the same single public activation and5 s guard. Independent owned
-   background capture may decouple capture permission/geometry from focus; critique
-   revised criteria before native use. Never substitute window order for focus,
-   bypass/request TCC, mutate securityDB or use unsupported flags/alternate identity.
-   Candidatef184c4c/eab9882/1260217 is independently accepted for one bounded
-   actual ARM retry, source-only (eight independent controls, twenty packaged).
-   Integrated asbabf0b4/3544db0/dd7f057/c8d04f1. Root reran all twenty pure controls
-   successfully. No native attempt for this revision yet; push clean checkpoint
-   and dispatch ARM lane, then verify actual returned SHA and single job. A separate exact-owned background capture precedes focus
-   and is explicitly capture-only; any failure stops input.
+2. **M3 first corrected-account trial: harness PASS / independent BLOCKED.**
+   Immutable source `e2c61ac2ecbd38ab55bc9edb712b028322c1490f`, game tree
+   `fb6be859e05812d8707be1ef5c6f747d2588c1e9`, completes in 529.336562 seconds.
+   Seven stock/recovery checks pass, with one operation / ten rewards and ledger
+   rows, 2,875 credits / 2,650 XP. New payload is a62c9357…; prior trial payload
+   was not reused. Critic sees actual committed SQL before the lost-worker
+   checkpoint, exact source/eleven native processes/socket and owned cleanup.
+   However, final retained SQL clock 50.186645 precedes replay 50.187242 by 0.597 ms.
+   Deduplication discarded later identical samples. Do not infer the missing
+   post-replay witness: qualification stays BLOCKED. All resources are removed;
+   local engine lane is released. Evidence: `f8b7e82`, independent rejection
+   `71f430e`, reports `m3-account-activity` and `m3-account-activity-qualification`.
+   Critic `/root/account_activity_qualification_critic` prepares separate v2
+   observer, retaining every recovery row plus a distinct owned read-only query
+   initiated after replay. Seven pure controls pass; a fresh source critic is
+   active. Original flawed observer/hash and trial remain unchanged. Builder
+   `/root/account_match_builder` is idle after archiving. Authorize a fresh
+   account/resource/output run only after observer review and aggregate cleanup.
+   Keep stock rules, yaw policy, no AFK-resistance or whole G3/G16 claim.
+3. **M2 actual Mac focus/capture advances; automatic journey still FAILS.**
+   Run39732825169 at exact `b09cfe1b661ec153f2bd57d45e695cc70e9717b0`, single
+   ARM job 119671543697, now observes current PID 4062/window 45 [40,32,960,568],
+   background capture-only success, accepted public activation, exact foreground
+   and five actual events. Original 01/02/03 PNGs visibly show menu/settings/menu.
+   Final automatic gate rejects merged header confidence 0.5 under unchanged 0.8.
+   Keep this FAILED; a visible image does not change the automatic result.
+   A separate source gate runs only seven suites  / 1,584 assertions: input_mode
+   is 462/0, exit 0 but strict log rejects two ObjectDB instances leaked at exit.
+   Five later suites are UNREACHED. No verbose object types/cause are known.
+   iOS unsigned compile passes separately. Native critic is finishing raw report.
+   Original base: `/workspace/sightbreak-mac-menu-native-review/docs/reports/gauntlet/m2-macos-focus/native-run-39732825169/full-qa`.
+   Source builder `/root/mac_input_builder` starts next bounded iteration from
+   `f8b7e82`: accurate exact high-confidence home identity against actual receipts,
+   plus bounded failure-followup verbose input_mode diagnostic. Preserve every
+   original confidence, source/window/profile/focus/input/cleanup guard and the
+   strict failed gate. Source/pure work only; fresh critic before next native run.
 4. **M6 touch transition accepted.** Integrated `66bcc5e`/`a06017b`, final native
    source589a52a. Initial candidate visually wins but is rejected for existing-row
    clipping. Revision passes462 checks vs prior16 failures, independent4/4 clipping
@@ -116,9 +119,24 @@ Installation, runtime, older OS and physical mobile play remain open.
 6. **M4 gunplay invariants.** `/root/gunplay_timing_builder` investigates actual
    four-weapon fire/reload/switch/ammo/damage/feedback contracts in sparse
    `/workspace/sightbreak-gunplay-invariants`, `codex/m4-gunplay-invariants`,
-   source317410a. Declare measurable rules/behavior benchmark before a supported
-   correction; no arbitrary feel tuning or CS2/human parity claim. Source/pure
-   work only until account cleanup. Fresh critic required before integration.
+   source 317410a. Criteria 395b602, probe b6c2ccd, docs 68587d0. No shipping change
+   or product defect established. Fresh critic 5606f1e requires harness revision:
+   cadence permits truncated firing; damage events lack health delta; initial
+   deploy events and reload timelines are missing. Retain those counterexamples.
+   Builder is idle awaiting reactivation; source repair then actual measured
+   output under a coordinated engine lane, independent recomputation afterward.
+   No arbitrary feel tuning, CS2/human parity or product completion claim.
+
+7. **New combined aggregate executing.** Frozen clean checkout
+   `/workspace/sightbreak-validate-b09cfe1`, exact `b09cfe1`, own private state,
+   original `./scripts/validate.sh`; command session 5200, raw
+   `builds/combined-validation`, logs `.local/validation/run-3uEIWG`.
+   Source/engine/environment before receipt retained; after/result pending.
+   Includes restored tracked hands CSV/hash fixture. This run owns local CPU
+   until it finishes; do not overlap Godot/native/OCR. Input_mode passes 462/0
+   without the Mac warning in this Linux log. Entire result still pending;
+   fresh independent aggregate review required. Optional backend/physical/render
+   gates do not silently pass from this headless run.
 
 ## Tools, recovery and constraints
 
@@ -140,11 +158,11 @@ gh workflow run desktop-alpha.yml --repo calebaiken/sightbreak --ref codex/v1-mi
 SIGHTBREAK_TOOLS_DIR=/workspace/tools SIGHTBREAK_BACKEND_PYTHON=/workspace/sightbreak/.venv/bin/python ./scripts/validate.sh
 ```
 
-Earlier safe sparse updates recovered6.69 GB from eleven clean completed own worktrees;
-a third pass on five additional clean completed checkouts recovered at least1.804 GB
+Earlier safe sparse updates recovered 6.69 GB from eleven clean completed own worktrees;
+a third pass on five additional clean completed checkouts recovered at least 1.804 GB
 more, plus an unmeasured partial first pass. Its initial cone-path error and exact
 HEAD/untracked-size preservation receipts are retained in third JSON. No payload
-was deleted. Disk has about5.2 GB free. In all passes,
+was deleted. Disk has about 5.2 GB free. In all passes,
 all HEADs and ignored/untracked builds were preserved. Root receipts are
 `builds/session-storage-recovery*.json`. Restore omitted tracked docs with
 `git sparse-checkout disable` if space permits. New worktrees should be created
