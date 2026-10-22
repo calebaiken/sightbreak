@@ -1,0 +1,12 @@
+Working directory: /workspace
+Read-only artifact inspection command:
+python3 /workspace/reviews/mobile-package-critic/inspect.py > /workspace/reviews/mobile-package-critic/inspection.log 2>&1
+Final exit code: 1 (one retained supplemental simulator metadata/payload mismatch).
+The runner writes only its own directory; all source/artifact/template reads are local.
+No rebuild, setup, re-signing or installation command was run.
+
+Raw failed parser assumption retained:
+/workspace/reviews/mobile-package-critic/parser-assumption-round0/inspect.py
+/workspace/reviews/mobile-package-critic/parser-assumption-round0/inspection.log
+/workspace/reviews/mobile-package-critic/parser-assumption-round0/inspection-results.json
+The final runner reads BSD ar member headers rather than assuming a fat simulator file.
