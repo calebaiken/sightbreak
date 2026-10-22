@@ -14,7 +14,10 @@ remaining in the eight-second settings confirmation. 1280×800 passed in
 59.912499 seconds. These results remain failures/passes of that exact run.
 The complete QA artifact is 36,909,293 bytes, beyond the download tool's 32 MiB
 single-file limit, so those native PNGs were unavailable for independent review.
-No pixel-quality conclusion follows from the OCR receipts.
+The two menu exceptions occur after the pixel predicate returned true and then
+failed its post-condition deadline check: SIGHTBREAK and DEPLOY were recognized
+late. This does not demonstrate missing menu text. No pixel-quality conclusion
+follows from the OCR receipts.
 
 The comparison bar is the unchanged `capture_desktop_layouts.py` observer,
 actual Tesseract and the byte-bound native PNG fixtures in
