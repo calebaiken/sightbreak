@@ -20,7 +20,7 @@ import toolchain
 from native_log import failed
 
 
-SUITES = ('actor', 'match', 'state_privacy', 'movement_prediction', 'peer_lifecycle',
+SUITES = ('actor', 'match', 'authority_order', 'state_privacy', 'movement_prediction', 'peer_lifecycle',
           'input_mode', 'menu_focus', 'offline_diagnostics', 'hud_objective_hint')
 PROBE = '''extends SceneTree
 func _initialize() -> void:
