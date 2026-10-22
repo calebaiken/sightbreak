@@ -141,21 +141,25 @@ inet_server_addr()::text, inet_server_port(), pg_postmaster_start_time()::text,
 
 
 def identity(name):
-    container, _ = docker(name + '-container-sql', ['exec', CID, 'psql', '-X', '-At', '-F', '|', '-U', ROLE, '-d', DB, '-c', SQL])
+    # Use TCP for the internal witness too: inet_server_port() is NULL on a
+    # Unix-domain connection. Pass the ephemeral secret only through memory.
+    container, _ = docker(name + '-container-sql', ['exec', '-e', 'PGPASSWORD', CID, 'psql', '-h', '127.0.0.1', '-X', '-At', '-F', '|', '-U', ROLE, '-d', DB, '-c', SQL],
+                          env=dict(ENV, PGPASSWORD=PASSWORD))
     with psycopg.connect(host='127.0.0.1', port=PORT, user=ROLE, password=PASSWORD,
                          dbname=DB, connect_timeout=5, application_name=RUN) as connection:
         row = connection.execute(SQL).fetchone()
     keys = ['database', 'role', 'version', 'server_address', 'server_port', 'postmaster_started', 'system_identifier']
     value = dict(zip(keys, row))
+    value.update(external_host='127.0.0.1', external_port=PORT,
+                 verified_container_id=CID, checked_utc=datetime.now(timezone.utc).isoformat(),
+                 identity_checks_passed=False)
+    dump(name + '.json', value)
     internal = container.strip().split('|')
     assert value['database'] == DB and DB.endswith('_test') and value['role'] == ROLE
     assert internal[0:2] == [DB, ROLE] and internal[6] == value['system_identifier']
     assert value['server_port'] == 5432 and internal[4] == '5432'
     assert value['postmaster_started'] == internal[5]
-    value['external_host'] = '127.0.0.1'
-    value['external_port'] = PORT
-    value['verified_container_id'] = CID
-    value['checked_utc'] = datetime.now(timezone.utc).isoformat()
+    value['identity_checks_passed'] = True
     dump(name + '.json', value)
     return value
 

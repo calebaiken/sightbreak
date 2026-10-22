@@ -1,0 +1,30 @@
+{
+  "id": "526cbb8e86a5964c54b7595cf5637dec5141bc9bbd17f0aa5cca3c877c19b82a",
+  "image_id": "sha256:327daa8fae7178d61f93142f146b098467b345e10997b9eb79f63bd58e5c8f3c",
+  "labels": {
+    "io.sightbreak.owner": "backend_regression_builder",
+    "io.sightbreak.qualification": "sightbreak-backend-regression-304618a2553f"
+  },
+  "mounts": [
+    {
+      "Destination": "/var/lib/postgresql/data",
+      "Driver": "local",
+      "Mode": "z",
+      "Name": "sightbreak-backend-regression-304618a2553f-data",
+      "Propagation": "",
+      "RW": true,
+      "Source": "/var/lib/docker/volumes/sightbreak-backend-regression-304618a2553f-data/_data",
+      "Type": "volume"
+    }
+  ],
+  "name": "/sightbreak-backend-regression-304618a2553f",
+  "pid": 116330,
+  "ports": {
+    "5432/tcp": [
+      {
+        "HostIp": "127.0.0.1",
+        "HostPort": "32771"
+      }
+    ]
+  }
+}
