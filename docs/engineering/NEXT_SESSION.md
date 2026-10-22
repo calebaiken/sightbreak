@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-22, 07:22 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-22, 07:30 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native Codex goal API is exposed. Read AGENTS.md, the mission and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
@@ -9,8 +9,8 @@ implementation after each verified increment; these corrections do not finish v1
 ## Root and accepted checkpoints
 
 - Root `/workspace/sightbreak-v1-execution`, branch `codex/v1-mission-playability`.
-  Checkpoint before this note `a09f0d6`; last pushed `20464da`. Push this accepted
-  checkpoint before one new ARM run. No protected/shared branch merged or rewritten.
+  Checkpoint before this note `89393f3` plus archive verification `4fdcdfa`;
+  last pushed `ba5013d`. New ARM run is already executing. No protected/shared branch merged or rewritten.
 - [Draft PR27](https://github.com/calebaiken/sightbreak/pull/27) targets PR24
   `c84eaf3` → PR23 `db3981e` → PR22 `82a03fc` → PR16 `d2439ac`.
   Last live fetch 07:00 UTC: main `4d8cdb3`, PR26 map `778c89a`, PR28 `2641ddf`.
@@ -25,8 +25,8 @@ implementation after each verified increment; these corrections do not finish v1
 - First aggregate at `a23e349` failed because root omitted tracked reload fixtures;
   the original 57-file archive / exit 1 remains in `0e63ada`. Every aggregate
   checkout needs `docs/reports/media/art-v9/hands/logs`.
-- Shipping game content remains f148106d4ed189f2a5d49e798f55bf0fb30f612126ec203037377f88d332855e.
-  M4 test/UID additions change full game tree to 41abd17652a89c554463faa5b216a7af59aec0e7.
+- New receipt shipping content is 6bebcf50351c29d4c9959bfe4b33418f8f7b4a2e963e65336f361e99891f07b5;
+  full game tree 1f3616afdfaaed0fb7c9ffbd0aa8e4947f7d2a48.
   Do not label newer whole HEAD with an older exact-source native result.
 
 ## Verified increments and retained failures
@@ -88,33 +88,35 @@ implementation after each verified increment; these corrections do not finish v1
    confidence 1, exit 0 and cleanup. Strict gate FAILS actor first: 73 assertions,
    zero failures, six leaks, eleven suites unreached. Previous input_mode-specific
    diagnostic honestly SKIPS. Earlier b09 run fails input_mode with two leaks.
-   Cause/types/nondeterminism UNKNOWN. Push clean accepted checkpoint, dispatch
-   one arm-macos-ios lane, verify exact returned SHA/job, then fresh raw review.
-   Use existing critic `/root/mac_native_menu_outcome_critic` for the new run.
+   Cause/types/nondeterminism UNKNOWN. Dispatched one ARM lane: run 39739927334 at exact ba5013d9de939f9897f7b5cb63dd4323a3ff043f,
+   single job 119694416545. Latest metadata reports strict suites and menu success,
+   verbose diagnostic honestly skipped; no raw verdict yet. Fresh critic
+   `/root/mac_first_leak_native_critic` owns raw/source/PNG/cleanup review.
+   No actual verbose types or cause may be inferred from the skipped repeat.
    Source builder `/root/mac_input_builder` completed; reactivate only on evidence.
-2. **M3 store/armory transaction receipt recovery actively building.** Own
-   `/workspace/sightbreak-client-result-recovery`, branch
-   `codex/m3-client-result-recovery`, base `b97fd81`; criteria `95be0e7`.
-   Scope is keyed store/case/market/armory requests, NOT postmatch reward UI.
-   Original PR18 head `ccd0955` independently verified; narrow compatible runtime
-   commits preserve original authors/-x attribution. Production candidate matches
-   that reviewed journal/UI; no whole V3 import. Baseline loses uncertain RAM
-   receipts on logout/restart. Require exact-key/payload retry, account/origin
-   privacy, no saved bearer/password, server-only items/balances, honest storage
-   failures and bounded ownership. Builder `/root/client_result_recovery_builder`;
-   fresh critic `/root/transaction_receipt_critic`, own review branch
-   `review/m3-armory-receipt-recovery`. Critic requested raw route/method oracle,
-   initial process/error checks and timeout-output preservation before runtime.
-   Latest reported clean harness freeze `79e076e` (production game unchanged from
-   `a9aa5e0`); baseline clean `/workspace/sightbreak-client-receipt-baseline` at b97fd81.
-   Builder owns LOCAL ENGINE CPU. Declared native workload in own RUNTIME_PLAN.md:
-   python3 scripts/validate_transaction_restart.py --godot /workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64 --baseline /workspace/sightbreak-client-receipt-baseline --candidate /workspace/sightbreak-client-result-recovery --out /workspace/sightbreak-client-receipt-runtime-r1 --repetitions 1 --boundaries before_commit after_commit late_commit recovery_kill
-   Then five affected suites only in private state. No broad root engine/OCR
-   contention. Await actual baseline/candidate outputs and independent acceptance;
-   fix supported findings, preserve failures, integrate only accepted own commits.
-3. **After receipt integration**, freeze clean root in a new sparse checkout,
+2. **M3 store/armory receipt component independently accepted and integrated.**
+   Native-tested source `79e076e`, game 1f3616afdfaaed0fb7c9ffbd0aa8e4947f7d2a48,
+   root runtime 52973a5 / e51816c / e8c701a; original PR18 authorship preserved.
+   Exact current source recovers 12/12 versus baseline b97fd81 0/12, with real
+   native HTTP / SQLite / process-kill evidence. Five affected suites pass:
+   journal 41, recovery 12, armory 748, menu 51 and economy / offline / URL / UUID.
+   Critic ecc2690 audits all route/body/price/ledger/journal joins and cleanup;
+   builder archive 89393f3 retains 373 files / 83,552 bytes. Followup 4fdcdfa
+   independently verifies original bytes, manifests, exclusions and finalization.
+   Reports `m3-client-result-recovery/RESULTS.md` and `independent-critic/REVIEW.md`.
+   No whole V3, rendered consent, PostgreSQL, power-loss or whole G3/G7/G16 claim.
+   Builder `/root/client_result_recovery_builder` immediately continues production
+   PostgreSQL/API lost-response settlement, source/fixture criteria only until
+   root releases runtime lane. No services or engine authorized yet.
+   Native coverage builder `/root/native_new_systems_coverage_builder` is adding
+   only journal + measured gunplay probe to the original twelve native suites;
+   separate critic `/root/transaction_receipt_critic` will review. Preserve old
+   commands/order/strict log/private namespace/120 s limits. New count is fourteen.
+   Root owns local engine CPU for the two-suite strict native check and aggregate.
+3. **After native registration review**, freeze clean root in a new sparse checkout,
    restore tracked hands/log fixtures and run complete unmodified validate.sh.
-   M4 adds a mandatory gunplay probe; journal work adds further registration.
+   Expected 54 mandatory Godot logs (verify maintained script), plus new pure
+   receipt oracle group. Also run strict private native journal/gunplay suites.
    Capture exit, exact source/engine, before/after cleanliness, logs and actual
    cleanup. Use a separate fresh critic for raw archive and failures. Do not
    relabel b09's older full pass. Then select next release blocker immediately.

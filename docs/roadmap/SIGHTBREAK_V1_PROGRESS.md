@@ -6,7 +6,7 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-Updated 2026-10-22, 07:22 UTC. The mission remains **IN PROGRESS / PRIMARY**.
+Updated 2026-10-22, 07:30 UTC. The mission remains **IN PROGRESS / PRIMARY**.
 Branch `codex/v1-mission-playability`, [draft PR27](https://github.com/calebaiken/sightbreak/pull/27),
 retains PR24 → PR23 → PR22 → PR16 dependencies. Initialization is `561d0cb`;
 [issue #25](https://github.com/calebaiken/sightbreak/issues/25) is the supported
@@ -53,11 +53,17 @@ persistent tracker. No native Codex goal registration is claimed.
   and one dependency warning remain retained. Critic `8b5f40d` verifies the raw
   archive and source; it did not itself query SQL while the database was live.
   No backend product code changed or production-deployment gate closed.
-- **M3 keyed store/armory receipt recovery is actively implementing PR18's narrow
-  compatible delta.** Baseline loses uncertain request keys on logout/restart.
-  Builder and fresh critic are testing durable exact-key recovery, account/origin
-  isolation, no saved credentials, server-only balances and bounded crash behavior.
-  This is separate from match-result outbox recovery; whole V3 is unqualified.
+- **M3 keyed store/armory receipt recovery is independently accepted and integrated.**
+  Exact native source `79e076e` recovers 12/12 process-kill cases versus baseline
+  0/12 across store, case and market routes. Original HTTP method/route/body,
+  expected price, one fixture mutation, credential-free journals and owned
+  cleanup all pass independent audit. Five affected suites pass, including the
+  unchanged strict armory transport check. Root runtime `52973a5` / `e51816c` /
+  `e8c701a` preserves original PR18 authorship; critic `ecc2690` and archive
+  `89393f3` retain findings, fixes and actual outputs. This uses local SQLite
+  fixtures and a separate stub lifecycle, not production PostgreSQL or rendered
+  player consent. Those boundaries are next; postmatch rewards remain separate.
+  New maintained native registration is being reviewed before final aggregate.
 - **M4 four-weapon engineering measurement independently passes**, exact source
   `fc5d677`: 2,840 native probe checks / 52 records plus 289 affected existing
   checks. Critic recomputes 5,121 predicates, real ray damage, friendly shielding,
@@ -94,7 +100,7 @@ persistent tracker. No native Codex goal registration is claimed.
 | G13 | macOS native package (Intel and Apple Silicon) | FAILED | Actual run 39736389634 at 20464da independently passes real menu navigation. Strict source gate fails actor first: 73 checks / zero assertions, six leaked objects, eleven suites unreached. Earlier b09 input_mode fails with two leaks. Intel rendering still times out. [Evidence](../reports/gauntlet/m2-macos-screen-identity/native-run-39736389634/REPORT.md). | Fresh independent native critics | Execute the independently accepted first-leak verbose diagnostic; identify actual object types before fixing. Strict failure stays failed. Full gameplay, Intel and physical-device gates remain open. |
 | G14 | Android and iOS keep building | IN PROGRESS | Fresh frozen 6a Android debug APK and unsigned iOS project export and structural inspection pass. Independent 48/49 package checks: simulator metadata claims ARM64+x86_64 but pinned debug archive contains x86_64 only; device archive is ARM64. [Evidence](../reports/gauntlet/m2-mobile-preservation/independent-package-critic/REPORT.md). Actual Xcode 16.4 / SDK 18.5 link fails on five iOS 26 framework globals. Reviewed SDK selection is integrated; retries39721286005 at2a2b732 and39727011693 ate7718ee pass independent unsigned-device compile review, with exact source/PCK and raw unsigned codesign evidence. Final binary reparse and runtime remain open. | Fresh independent mobile package critic | Preserve accepted exact-source unsigned compile; qualify simulator metadata, installation, older OS behavior and physical play. No credential/signing action is authorized. |
 | G15 | Packaging, build provenance, Steam staging procedure | IN PROGRESS | Source-bound manifests exist. `STEAM_RELEASE_READINESS.md` is design only: no SteamPipe template, no App ID, Steamworks docs not retrievable (host denied). | Reported | Owner approval is needed for any upload or account step. |
-| G16 | Economy and progression integrity | IN PROGRESS | Corrected-source trial 2 at 3b5cf764 independently passes stock ten-account settlement and pre-ACK / post-replay SQL witnesses: one operation / ten rewards / ten ledger rows, 2,875 credits / 2,650 XP. Trial 1 remains blocked. Separate backend regression passes 61 cases. [Trial evidence](../reports/gauntlet/m3-account-activity/TRIAL_2_HANDOFF.md). | Fresh independent native / live-database and regression critics | Qualify keyed store/armory receipt recovery now in development. Meaningful activity, AFK policy, remote recovery and production security remain separate. |
+| G16 | Economy and progression integrity | IN PROGRESS | Corrected-source trial 2 at 3b5cf764 independently passes stock ten-account settlement and pre-ACK / post-replay SQL witnesses: one operation / ten rewards / ten ledger rows, 2,875 credits / 2,650 XP. Trial 1 remains blocked. Separate backend regression passes 61 cases. [Trial evidence](../reports/gauntlet/m3-account-activity/TRIAL_2_HANDOFF.md). | Fresh independent native / live-database and regression critics | Keyed store/armory receipt component independently passes 12/12 native fixture recoveries versus baseline 0/12. Next qualify production PostgreSQL lost-response settlement and rendered player recovery; meaningful activity, AFK policy, remote recovery and deployment security remain separate. |
 | G17 | Human playtesting | BLOCKED EXTERNALLY | No human feedback exists. | none | Needs people. Use `docs/research/HUMAN_AND_DEVICE_TESTING_PLAN.md`. |
 | G18 | Counter-Strike 2 comparison for weapon feel, animation, readability | BLOCKED EXTERNALLY | Steam, YouTube and counter-strike.net hosts denied by the network policy (see [BARS.md](BARS.md)). | none | Owner allows the hosts, or supplies reference captures. |
 | G19 | Physical-device performance (frame pacing, thermals, memory) | BLOCKED EXTERNALLY | Only llvmpipe software-render timings exist. | none | Needs hardware. |
