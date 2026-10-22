@@ -1,0 +1,418 @@
+{
+  "candidate": "65c3b8bfdfa14342411c9aa6519244628cc12c81",
+  "scope": "Declared observer scheduling only",
+  "controls": [
+    {
+      "case": "drawn_frames_rollback_inside_frame_wait",
+      "outcome": "correctly_rejected",
+      "error": "Named capture observation or frame counter moved backward: declared-only",
+      "capture_called": false,
+      "accepted_after_capture": false,
+      "receipt_stages": [
+        "capture",
+        "expected_actor_id",
+        "expected_round",
+        "expected_phase",
+        "expected_binding",
+        "absolute_deadline_monotonic",
+        "additional_drawn_frames_required",
+        "acknowledged",
+        "counter_regression"
+      ],
+      "sample_history": [
+        {
+          "label": "Named living buy phase: declared-only",
+          "driver_seconds": 0.1,
+          "wall_msec": 162604,
+          "drawn_frames": 1142,
+          "simulation_tick": 6814
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.2,
+          "wall_msec": 162704,
+          "drawn_frames": 1143,
+          "simulation_tick": 6815
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.30000000000000004,
+          "wall_msec": 162754,
+          "drawn_frames": 1142,
+          "simulation_tick": 6815
+        }
+      ]
+    },
+    {
+      "case": "simulation_tick_rollback_inside_frame_wait",
+      "outcome": "correctly_rejected",
+      "error": "Named capture observation or frame counter moved backward: declared-only",
+      "capture_called": false,
+      "accepted_after_capture": false,
+      "receipt_stages": [
+        "capture",
+        "expected_actor_id",
+        "expected_round",
+        "expected_phase",
+        "expected_binding",
+        "absolute_deadline_monotonic",
+        "additional_drawn_frames_required",
+        "acknowledged",
+        "counter_regression"
+      ],
+      "sample_history": [
+        {
+          "label": "Named living buy phase: declared-only",
+          "driver_seconds": 0.1,
+          "wall_msec": 162604,
+          "drawn_frames": 1142,
+          "simulation_tick": 6814
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.2,
+          "wall_msec": 162704,
+          "drawn_frames": 1143,
+          "simulation_tick": 6815
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.30000000000000004,
+          "wall_msec": 162754,
+          "drawn_frames": 1143,
+          "simulation_tick": 6814
+        }
+      ]
+    },
+    {
+      "case": "wall_msec_rollback_inside_frame_wait",
+      "outcome": "correctly_rejected",
+      "error": "Named capture observation or frame counter moved backward: declared-only",
+      "capture_called": false,
+      "accepted_after_capture": false,
+      "receipt_stages": [
+        "capture",
+        "expected_actor_id",
+        "expected_round",
+        "expected_phase",
+        "expected_binding",
+        "absolute_deadline_monotonic",
+        "additional_drawn_frames_required",
+        "acknowledged",
+        "counter_regression"
+      ],
+      "sample_history": [
+        {
+          "label": "Named living buy phase: declared-only",
+          "driver_seconds": 0.1,
+          "wall_msec": 162604,
+          "drawn_frames": 1142,
+          "simulation_tick": 6814
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.2,
+          "wall_msec": 162704,
+          "drawn_frames": 1143,
+          "simulation_tick": 6815
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.30000000000000004,
+          "wall_msec": 162654,
+          "drawn_frames": 1143,
+          "simulation_tick": 6815
+        }
+      ]
+    },
+    {
+      "case": "buffered_pre_capture_publication_then_stopped_producer",
+      "outcome": "correctly_rejected",
+      "error": "Fresh named context beyond post-capture barrier: declared-only",
+      "capture_called": true,
+      "accepted_after_capture": false,
+      "receipt_stages": [
+        "capture",
+        "expected_actor_id",
+        "expected_round",
+        "expected_phase",
+        "expected_binding",
+        "absolute_deadline_monotonic",
+        "additional_drawn_frames_required",
+        "acknowledged",
+        "ready",
+        "before_capture",
+        "binding_before_capture",
+        "after_capture_barrier"
+      ],
+      "sample_history": [
+        {
+          "label": "Named living buy phase: declared-only",
+          "driver_seconds": 0.1,
+          "wall_msec": 162604,
+          "drawn_frames": 1142,
+          "simulation_tick": 6814
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.2,
+          "wall_msec": 162804,
+          "drawn_frames": 1144,
+          "simulation_tick": 6816
+        },
+        {
+          "label": "Fresh named context immediately before capture: declared-only",
+          "driver_seconds": 0.30000000000000004,
+          "wall_msec": 162904,
+          "drawn_frames": 1145,
+          "simulation_tick": 6817
+        },
+        {
+          "label": "Observation barrier after raw capture: declared-only",
+          "driver_seconds": 0.7,
+          "wall_msec": 163004,
+          "drawn_frames": 1146,
+          "simulation_tick": 6818
+        }
+      ]
+    },
+    {
+      "case": "post_capture_new_valid_publication",
+      "outcome": "accepted_declared_control",
+      "error": null,
+      "capture_called": true,
+      "accepted_after_capture": true,
+      "receipt_stages": [
+        "capture",
+        "expected_actor_id",
+        "expected_round",
+        "expected_phase",
+        "expected_binding",
+        "absolute_deadline_monotonic",
+        "additional_drawn_frames_required",
+        "acknowledged",
+        "ready",
+        "before_capture",
+        "binding_before_capture",
+        "after_capture_barrier",
+        "after_capture",
+        "binding_after_capture",
+        "remaining_original_budget_seconds"
+      ],
+      "sample_history": [
+        {
+          "label": "Named living buy phase: declared-only",
+          "driver_seconds": 0.1,
+          "wall_msec": 162604,
+          "drawn_frames": 1142,
+          "simulation_tick": 6814
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.2,
+          "wall_msec": 162804,
+          "drawn_frames": 1144,
+          "simulation_tick": 6816
+        },
+        {
+          "label": "Fresh named context immediately before capture: declared-only",
+          "driver_seconds": 0.30000000000000004,
+          "wall_msec": 162904,
+          "drawn_frames": 1145,
+          "simulation_tick": 6817
+        },
+        {
+          "label": "Observation barrier after raw capture: declared-only",
+          "driver_seconds": 0.7,
+          "wall_msec": 163004,
+          "drawn_frames": 1146,
+          "simulation_tick": 6818
+        },
+        {
+          "label": "Fresh named context beyond post-capture barrier: declared-only",
+          "driver_seconds": 0.7999999999999999,
+          "wall_msec": 163104,
+          "drawn_frames": 1147,
+          "simulation_tick": 6819
+        }
+      ]
+    },
+    {
+      "case": "new_post_capture_publication_loses_buy_phase",
+      "outcome": "correctly_rejected",
+      "error": "Named capture lost its living buy-phase actor/round/focus context",
+      "capture_called": true,
+      "accepted_after_capture": false,
+      "receipt_stages": [
+        "capture",
+        "expected_actor_id",
+        "expected_round",
+        "expected_phase",
+        "expected_binding",
+        "absolute_deadline_monotonic",
+        "additional_drawn_frames_required",
+        "acknowledged",
+        "ready",
+        "before_capture",
+        "binding_before_capture",
+        "after_capture_barrier"
+      ],
+      "sample_history": [
+        {
+          "label": "Named living buy phase: declared-only",
+          "driver_seconds": 0.1,
+          "wall_msec": 162604,
+          "drawn_frames": 1142,
+          "simulation_tick": 6814
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.2,
+          "wall_msec": 162804,
+          "drawn_frames": 1144,
+          "simulation_tick": 6816
+        },
+        {
+          "label": "Fresh named context immediately before capture: declared-only",
+          "driver_seconds": 0.30000000000000004,
+          "wall_msec": 162904,
+          "drawn_frames": 1145,
+          "simulation_tick": 6817
+        },
+        {
+          "label": "Observation barrier after raw capture: declared-only",
+          "driver_seconds": 0.7,
+          "wall_msec": 163004,
+          "drawn_frames": 1146,
+          "simulation_tick": 6818
+        },
+        {
+          "label": "Fresh named context beyond post-capture barrier: declared-only",
+          "driver_seconds": 0.7999999999999999,
+          "wall_msec": 163104,
+          "drawn_frames": 1147,
+          "simulation_tick": 6819
+        }
+      ]
+    },
+    {
+      "case": "original_deadline_expires_at_post_capture_barrier",
+      "outcome": "correctly_rejected",
+      "error": "Original transition budget expired before named capture: declared-only",
+      "capture_called": true,
+      "accepted_after_capture": false,
+      "receipt_stages": [
+        "capture",
+        "expected_actor_id",
+        "expected_round",
+        "expected_phase",
+        "expected_binding",
+        "absolute_deadline_monotonic",
+        "additional_drawn_frames_required",
+        "acknowledged",
+        "ready",
+        "before_capture",
+        "binding_before_capture",
+        "after_capture_barrier"
+      ],
+      "sample_history": [
+        {
+          "label": "Named living buy phase: declared-only",
+          "driver_seconds": 0.1,
+          "wall_msec": 162604,
+          "drawn_frames": 1142,
+          "simulation_tick": 6814
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.2,
+          "wall_msec": 162804,
+          "drawn_frames": 1144,
+          "simulation_tick": 6816
+        },
+        {
+          "label": "Fresh named context immediately before capture: declared-only",
+          "driver_seconds": 0.30000000000000004,
+          "wall_msec": 162904,
+          "drawn_frames": 1145,
+          "simulation_tick": 6817
+        },
+        {
+          "label": "Observation barrier after raw capture: declared-only",
+          "driver_seconds": 0.7,
+          "wall_msec": 163004,
+          "drawn_frames": 1146,
+          "simulation_tick": 6818
+        }
+      ]
+    },
+    {
+      "case": "normal_monotonic_two_frame_and_post_capture_barrier",
+      "outcome": "accepted_declared_control",
+      "error": null,
+      "capture_called": true,
+      "accepted_after_capture": true,
+      "receipt_stages": [
+        "capture",
+        "expected_actor_id",
+        "expected_round",
+        "expected_phase",
+        "expected_binding",
+        "absolute_deadline_monotonic",
+        "additional_drawn_frames_required",
+        "acknowledged",
+        "ready",
+        "before_capture",
+        "binding_before_capture",
+        "after_capture_barrier",
+        "after_capture",
+        "binding_after_capture",
+        "remaining_original_budget_seconds"
+      ],
+      "sample_history": [
+        {
+          "label": "Named living buy phase: declared-only",
+          "driver_seconds": 0.1,
+          "wall_msec": 162604,
+          "drawn_frames": 1142,
+          "simulation_tick": 6814
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.2,
+          "wall_msec": 162704,
+          "drawn_frames": 1143,
+          "simulation_tick": 6815
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.30000000000000004,
+          "wall_msec": 162804,
+          "drawn_frames": 1144,
+          "simulation_tick": 6816
+        },
+        {
+          "label": "Fresh named context immediately before capture: declared-only",
+          "driver_seconds": 0.4,
+          "wall_msec": 162904,
+          "drawn_frames": 1145,
+          "simulation_tick": 6817
+        },
+        {
+          "label": "Observation barrier after raw capture: declared-only",
+          "driver_seconds": 0.5,
+          "wall_msec": 163004,
+          "drawn_frames": 1146,
+          "simulation_tick": 6818
+        },
+        {
+          "label": "Fresh named context beyond post-capture barrier: declared-only",
+          "driver_seconds": 0.6,
+          "wall_msec": 163104,
+          "drawn_frames": 1147,
+          "simulation_tick": 6819
+        }
+      ]
+    }
+  ]
+}

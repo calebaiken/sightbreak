@@ -1,0 +1,415 @@
+diff --git a/scripts/test_offline_capture_fences.py b/scripts/test_offline_capture_fences.py
+new file mode 100644
+index 0000000..c65b1a7
+--- /dev/null
++++ b/scripts/test_offline_capture_fences.py
+@@ -0,0 +1,206 @@
++#!/usr/bin/env python3
++"""Declared callback/state controls; these do not capture or prove native pixels."""
++from copy import deepcopy
++import json
++from pathlib import Path
++import unittest
++
++from verify_offline_export import capture_living_phase, require_living_capture_phase
++
++
++REFERENCE = json.loads((Path(__file__).parent / 'fixtures/offline_capture_observations.json').read_text())
++
++
++def advanced(state, frames=0, **changes):
++    result = deepcopy(state)
++    result.update(drawn_frames=state['drawn_frames'] + frames,
++                  wall_msec=state['wall_msec'] + 100 * frames,
++                  simulation_tick=state['simulation_tick'] + frames)
++    result.update(changes)
++    return result
++
++
++class DeclaredCallbacks:
++    def __init__(self, states, *, round_number=2, until=160, elapsed=0):
++        self.states = list(states)
++        self.round_number, self.until, self.elapsed = round_number, until, elapsed
++        self.receipt, self.captures, self.wait_budgets = {}, [], []
++        self.expected = {'source': {'source_commit': 'frozen', 'source_dirty': False},
++                         'process_pid': 20, 'process_running': True, 'trace_directory': '/declared/trace'}
++        if round_number == 1:
++            self.expected.update(loaded_initial_event=deepcopy(REFERENCE['restart_initial']),
++                                 stored_profile=deepcopy(REFERENCE['restart_initial']['initial_profile']))
++        self.bindings = [deepcopy(self.expected) for _ in range(3)]
++        self.binding_index = 0
++
++    def binding(self):
++        result = self.bindings[self.binding_index]
++        self.binding_index += 1
++        return deepcopy(result)
++
++    def observed(self, predicate, seconds, label, after=-1):
++        self.wait_budgets.append(seconds)
++        until = self.elapsed + seconds
++        while self.states:
++            self.elapsed += .1
++            if self.elapsed >= until:
++                raise TimeoutError('Declared original budget expired: ' + label)
++            state = deepcopy(self.states.pop(0))
++            if state.get('wall_msec', -1) > after and predicate(state):
++                return state
++        self.elapsed = until
++        raise TimeoutError('No further fresh declared observation: ' + label)
++
++    def run(self):
++        return capture_living_phase('declared-capture', actor_id=1, round_number=self.round_number,
++                                    after=-1, until=self.until, observed=self.observed,
++                                    capture=self.captures.append, binding=self.binding,
++                                    expected_binding=deepcopy(self.expected), receipt=self.receipt,
++                                    clock=lambda: self.elapsed)
++
++
++def round_sequence():
++    state = REFERENCE['round_2_buy']
++    return [deepcopy(REFERENCE['old_post']), deepcopy(state), advanced(state, 1),
++            advanced(state, 2), advanced(state, 3), advanced(state, 4)]
++
++
++def reopened_sequence():
++    menu = REFERENCE['restart_initial']
++    game = advanced(menu, 1)
++    game['ui'].update(screen='game', mouse_mode=2)
++    return [deepcopy(menu), game, advanced(game, 1), advanced(game, 2), advanced(game, 3), advanced(game, 4)]
++
++
++class CaptureFenceTests(unittest.TestCase):
++    def test_actual_old_post_and_loaded_menu_cannot_authorize_capture(self):
++        for key, number in [('old_post', 2), ('restart_initial', 1)]:
++            with self.subTest(reference=key):
++                with self.assertRaises(RuntimeError):
++                    require_living_capture_phase(REFERENCE[key], 1, number)
++                callbacks = DeclaredCallbacks([REFERENCE[key]], round_number=number)
++                with self.assertRaises(TimeoutError):
++                    callbacks.run()
++                self.assertEqual(callbacks.captures, [])
++
++    def test_declared_natural_round_fence_preserves_old_post_then_waits_two_frames(self):
++        callbacks = DeclaredCallbacks(round_sequence())
++        receipt = callbacks.run()
++        self.assertEqual(callbacks.captures, ['declared-capture'])
++        self.assertEqual(receipt['acknowledged']['drawn_frames'], 1142)
++        self.assertEqual(receipt['ready']['drawn_frames'], 1144)
++        self.assertEqual(receipt['before_capture']['drawn_frames'], 1145)
++        self.assertEqual(receipt['after_capture']['drawn_frames'], 1146)
++        self.assertFalse(REFERENCE['old_post']['local_actor']['alive'])
++
++    def test_declared_reopened_trace_requires_game_hud_after_initial_profile_event(self):
++        callbacks = DeclaredCallbacks(reopened_sequence(), round_number=1, until=30)
++        receipt = callbacks.run()
++        self.assertEqual(callbacks.captures, ['declared-capture'])
++        self.assertEqual(receipt['acknowledged']['ui']['screen'], 'game')
++        self.assertEqual(receipt['ready']['drawn_frames'], receipt['acknowledged']['drawn_frames'] + 2)
++        self.assertEqual(REFERENCE['restart_initial']['ui']['screen'], 'menu')
++
++    def test_one_frame_and_stalled_counter_never_capture(self):
++        state = REFERENCE['round_2_buy']
++        for states in ([state, advanced(state, 1)],
++                       [state, advanced(state, 1), advanced(state, 1, wall_msec=state['wall_msec'] + 300)]):
++            with self.subTest(length=len(states)):
++                callbacks = DeclaredCallbacks(states)
++                with self.assertRaises(TimeoutError):
++                    callbacks.run()
++                self.assertEqual(callbacks.captures, [])
++
++    def test_stale_observation_does_not_supply_the_frame_fence(self):
++        state = REFERENCE['round_2_buy']
++        callbacks = DeclaredCallbacks([state, advanced(state, 4, wall_msec=state['wall_msec'])])
++        with self.assertRaises(TimeoutError):
++            callbacks.run()
++        self.assertEqual(callbacks.captures, [])
++
++    def test_invalid_frame_and_clock_values_fail_without_capture(self):
++        for field in ('drawn_frames', 'wall_msec', 'simulation_tick'):
++            for value in (None, True, -1, 1.5, '12'):
++                with self.subTest(field=field, value=value):
++                    item = deepcopy(REFERENCE['round_2_buy'])
++                    item[field] = value
++                    callbacks = DeclaredCallbacks([item])
++                    with self.assertRaises((RuntimeError, TimeoutError, TypeError)):
++                        callbacks.run()
++                    self.assertEqual(callbacks.captures, [])
++
++    def test_frame_regression_between_ready_and_capture_is_rejected(self):
++        states = round_sequence()
++        states[3]['drawn_frames'] += 3
++        callbacks = DeclaredCallbacks(states)
++        with self.assertRaisesRegex(RuntimeError, 'backward before'):
++            callbacks.run()
++        self.assertEqual(callbacks.captures, [])
++
++    def test_frame_regression_after_raw_capture_cannot_pass(self):
++        states = round_sequence()
++        states[-1]['drawn_frames'] = states[-2]['drawn_frames'] - 1
++        callbacks = DeclaredCallbacks(states)
++        with self.assertRaisesRegex(RuntimeError, 'backward during'):
++            callbacks.run()
++        self.assertEqual(callbacks.captures, ['declared-capture'])
++        self.assertNotIn('binding_after_capture', callbacks.receipt)
++
++    def test_life_actor_phase_focus_speed_context_loss_never_passes(self):
++        changes = [('local_actor', 'alive', False), ('local_actor', 'health', 0),
++                   ('local_actor', 'id', 2), ('ui', 'focused', False), ('ui', 'paused', True),
++                   ('ui', 'screen', 'menu'), ('ui', 'scoreboard_visible', True),
++                   ('', 'round_number', 3), ('', 'phase', 'post'), ('', 'time_scale', 2),
++                   ('', 'scenario', 'plant'), ('', 'scope', 'other'), ('', 'schema', 2)]
++        for section, field, value in changes:
++            for index in (2, 4, 5):
++                with self.subTest(field=field, stage=index):
++                    states = round_sequence()
++                    (states[index][section] if section else states[index])[field] = value
++                    callbacks = DeclaredCallbacks(states)
++                    with self.assertRaises(RuntimeError):
++                        callbacks.run()
++                    self.assertEqual(bool(callbacks.captures), index == 5)
++                    self.assertNotIn('binding_after_capture', callbacks.receipt)
++
++    def test_source_process_trace_and_loaded_settings_races_cannot_pass(self):
++        for field in ('source', 'process_pid', 'process_running', 'trace_directory',
++                      'loaded_initial_event', 'stored_profile'):
++            for index in (0, 1, 2):
++                with self.subTest(field=field, stage=index):
++                    callbacks = DeclaredCallbacks(reopened_sequence(), round_number=1, until=30)
++                    callbacks.bindings[index][field] = 'changed'
++                    with self.assertRaisesRegex(RuntimeError, 'changed source, native process, trace, or loaded settings'):
++                        callbacks.run()
++                    self.assertEqual(bool(callbacks.captures), index == 2)
++
++    def test_original_absolute_budget_is_shared_across_all_waits(self):
++        callbacks = DeclaredCallbacks(reopened_sequence(), round_number=1, until=30, elapsed=28)
++        receipt = callbacks.run()
++        self.assertEqual(receipt['absolute_deadline_monotonic'], 30)
++        self.assertTrue(all(0 < seconds <= 2 for seconds in callbacks.wait_budgets))
++        self.assertEqual(callbacks.wait_budgets, sorted(callbacks.wait_budgets, reverse=True))
++        self.assertLess(receipt['remaining_original_budget_seconds'], 2)
++
++    def test_frame_wait_cannot_gain_a_new_budget_after_event_arrival(self):
++        callbacks = DeclaredCallbacks(round_sequence(), until=160, elapsed=159.7)
++        with self.assertRaises(TimeoutError):
++            callbacks.run()
++        self.assertEqual(callbacks.captures, [])
++
++    def test_capture_cannot_extend_the_original_deadline(self):
++        callbacks = DeclaredCallbacks(reopened_sequence(), round_number=1, until=30)
++        def capture(_):
++            callbacks.captures.append('declared-capture')
++            callbacks.elapsed = 30
++        with self.assertRaises(TimeoutError):
++            capture_living_phase('declared-capture', actor_id=1, round_number=1, after=-1, until=30,
++                                 observed=callbacks.observed, capture=capture, binding=callbacks.binding,
++                                 expected_binding=callbacks.expected, receipt=callbacks.receipt,
++                                 clock=lambda: callbacks.elapsed)
++        self.assertEqual(callbacks.captures, ['declared-capture'])
++        self.assertNotIn('after_capture', callbacks.receipt)
++
++
++if __name__ == '__main__':
++    unittest.main()
+diff --git a/scripts/validate.sh b/scripts/validate.sh
+index a284a2d..6ea73e0 100755
+--- a/scripts/validate.sh
++++ b/scripts/validate.sh
+@@ -106,4 +106,5 @@ python3 scripts/test_build_manifest.py
+ python3 scripts/test_native_observation.py -v
+ python3 scripts/test_offline_role_guidance.py -v
+ python3 scripts/test_offline_export_ocr.py -v
++python3 scripts/test_offline_capture_fences.py -v
+ printf 'Validation completed. Logs: %s\n' "$validation_dir"
+diff --git a/scripts/verify_offline_export.py b/scripts/verify_offline_export.py
+index ba4c51b..c276715 100644
+--- a/scripts/verify_offline_export.py
++++ b/scripts/verify_offline_export.py
+@@ -88,6 +88,109 @@ def focus_controls_released(state):
+             and state.get('local_input', {}).get('fire') is False)
+ 
+ 
++def require_living_capture_phase(state, actor_id, round_number):
++    """Validate the named buy HUD; a later life or stale menu cannot replace it."""
++    actor, ui = state.get('local_actor', {}), state.get('ui', {})
++    if (state.get('schema') != 1 or isinstance(state.get('schema'), bool)
++            or state.get('scope') != 'debug_offline_read_only_observation'
++            or state.get('scenario') != 'standard' or state.get('time_scale') != 1
++            or isinstance(state.get('time_scale'), bool)
++            or state.get('phase') != 'buy' or state.get('round_number') != round_number
++            or isinstance(state.get('round_number'), bool) or actor.get('id') != actor_id
++            or isinstance(actor.get('id'), bool) or actor.get('alive') is not True
++            or isinstance(actor.get('health'), bool) or not isinstance(actor.get('health'), (int, float))
++            or not 0 < actor['health'] <= 100 or ui.get('screen') != 'game'
++            or ui.get('focused') is not True or ui.get('paused') is not False
++            or ui.get('scoreboard_visible') is not False):
++        raise RuntimeError('Named capture lost its living buy-phase actor/round/focus context')
++    for field in ('drawn_frames', 'wall_msec', 'simulation_tick'):
++        value = state.get(field)
++        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
++            raise RuntimeError('Named capture requires a valid nonnegative integer ' + field)
++
++
++def capture_living_phase(name, *, actor_id, round_number, after, until,
++                         observed, capture, binding, expected_binding, receipt,
++                         clock=time.monotonic):
++    """Fence two real drawn frames inside the caller's existing absolute budget.
++
++    Callbacks use the native controller in production. Declared observation
++    sequences can test this scheduling logic but cannot establish rendered pixels.
++    """
++    receipt.update(capture=name, expected_actor_id=actor_id, expected_round=round_number,
++                   expected_phase='buy', expected_binding=expected_binding,
++                   absolute_deadline_monotonic=until, additional_drawn_frames_required=2)
++
++    def budget():
++        value = until - clock()
++        if value <= 0:
++            raise TimeoutError('Original transition budget expired before named capture: ' + name)
++        return value
++
++    def require_binding():
++        current = binding()
++        if current != expected_binding:
++            receipt['rejected_binding'] = current
++            raise RuntimeError('Named capture changed source, native process, trace, or loaded settings: ' + name)
++        budget()
++        return current
++
++    def acknowledge(state):
++        if not state:
++            return False
++        # Preserve the actual old POST/dead state while the natural round turns.
++        # The reopened initial event can also precede build_hud on the menu.
++        number = state.get('round_number')
++        if isinstance(number, int) and not isinstance(number, bool) and 1 <= number < round_number:
++            return False
++        if number == round_number and state.get('ui', {}).get('screen') == 'menu':
++            return False
++        require_living_capture_phase(state, actor_id, round_number)
++        return True
++
++    require_binding()
++    acknowledged = observed(acknowledge, budget(), 'Named living buy phase: ' + name, after)
++    receipt['acknowledged'] = acknowledged
++
++    def rendered(state):
++        require_living_capture_phase(state, actor_id, round_number)
++        if any(state[field] < acknowledged[field] for field in ('drawn_frames', 'wall_msec', 'simulation_tick')):
++            raise RuntimeError('Named capture observation or frame counter moved backward: ' + name)
++        return (state['wall_msec'] > acknowledged['wall_msec']
++                and state['drawn_frames'] >= acknowledged['drawn_frames'] + 2)
++
++    ready = observed(rendered, budget(), 'Two drawn frames before named capture: ' + name,
++                     acknowledged['wall_msec'])
++    receipt['ready'] = ready
++
++    def before_capture_context(state):
++        if not rendered(state):
++            return False
++        if any(state[field] < ready[field] for field in ('drawn_frames', 'wall_msec', 'simulation_tick')):
++            raise RuntimeError('Named capture context moved backward before raw capture: ' + name)
++        return True
++
++    before_capture = observed(before_capture_context, budget(), 'Fresh named context immediately before capture: ' + name,
++                              ready['wall_msec'])
++    receipt['before_capture'] = before_capture
++    receipt['binding_before_capture'] = require_binding()
++    budget()
++    capture(name)
++
++    def after_capture_context(state):
++        if not rendered(state):
++            return False
++        if any(state[field] < before_capture[field] for field in ('drawn_frames', 'wall_msec', 'simulation_tick')):
++            raise RuntimeError('Named capture context moved backward during raw capture: ' + name)
++        return True
++
++    receipt['after_capture'] = observed(after_capture_context, budget(), 'Fresh named context after raw capture: ' + name,
++                                        before_capture['wall_msec'])
++    receipt['binding_after_capture'] = require_binding()
++    receipt['remaining_original_budget_seconds'] = budget()
++    return receipt
++
++
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--output', type=Path, required=True)
+@@ -142,6 +245,12 @@ def main():
+             raise TimeoutError('Whole offline-input flow deadline exceeded')
+         return value
+ 
++    def transition_budget(until, label):
++        value = min(remaining(), until - time.monotonic())
++        if value <= 0:
++            raise TimeoutError('Original transition budget expired: ' + label)
++        return value
++
+     def pause(seconds):
+         if seconds >= remaining():
+             raise TimeoutError('Whole offline-input flow deadline exceeded')
+@@ -455,6 +564,16 @@ def main():
+             trace('offline_observation', label=label, state=latest)
+             return latest
+ 
++        def phase_capture_binding(*, loaded_event=None):
++            current = {'source': source(), 'process_pid': client.pid,
++                       'process_running': client.poll() is None,
++                       'trace_directory': str(initial_trace.resolve())}
++            if loaded_event is not None:
++                with (initial_trace / 'events.jsonl').open(encoding='utf-8') as stream:
++                    current['loaded_initial_event'] = json.loads(stream.readline())
++                current['stored_profile'] = json.loads(saved_path.read_text(encoding='utf-8'))
++            return current
++
+         initial_offline = observed(lambda state: state.get('ui', {}).get('screen') == 'game' and bool(state.get('local_actor')),
+                                    30, 'Real offline match readiness after one Deploy click')
+         pause(3)
+@@ -585,8 +704,16 @@ def main():
+         pause(.8)
+         capture('06b-scoreboard')
+         key('Tab', False)
+-        wait_for(lambda: client_has('MATCH: Round 2'), 160, 'Natural exported round completion', client)
+-        capture('06c-next-round')
++        next_round_until = min(deadline, time.monotonic() + 160)
++        wait_for(lambda: client_has('MATCH: Round 2'), transition_budget(next_round_until, 'Natural exported round completion'),
++                 'Natural exported round completion', client)
++        next_round_receipt = {'transition_watchdog_seconds': 160}
++        result.setdefault('phase_capture_fences', {})['06c-next-round'] = next_round_receipt
++        capture_living_phase('06c-next-round', actor_id=initial_offline['local_actor']['id'], round_number=2,
++                             after=initial_offline['wall_msec'], until=next_round_until,
++                             observed=observed, capture=capture, binding=phase_capture_binding,
++                             expected_binding={'source': before, 'process_pid': client.pid, 'process_running': True,
++                                               'trace_directory': str(initial_trace.resolve())}, receipt=next_round_receipt)
+         tap('b')
+         capture('06d-funded-requisition')
+         click_text('VECTORLINE')
+@@ -704,16 +831,26 @@ def main():
+         trace('reopened_deploy_click_before', x=248, y=319)
+         ui.click(248, 319)
+         trace('reopened_deploy_click_after', x=248, y=319)
+-        wait_for(lambda: (loaded_trace / 'events.jsonl').is_file(), 30,
++        loaded_until = min(deadline, time.monotonic() + 30)
++        wait_for(lambda: (loaded_trace / 'events.jsonl').is_file(), transition_budget(loaded_until, 'Reopened profile load'),
+                  'Reopened process loaded profile into ordinary offline match', reopened)
+         with (loaded_trace / 'events.jsonl').open(encoding='utf-8') as stream:
+             loaded = json.loads(stream.readline())
+         if loaded.get('initial_conditions') != 'stock_spawns_teams_random_seeds' or loaded.get('initial_profile') != saved:
+             raise RuntimeError('Reopened process did not load saved settings/training')
+-        capture('10-reopened-loaded-settings')
++        # The initial profile event is published before build_hud. Observe this
++        # reopened process, never the retired client's trace or last observation.
++        initial_trace = loaded_trace
++        loaded_receipt = {'transition_watchdog_seconds': 30}
++        result.setdefault('phase_capture_fences', {})['10-reopened-loaded-settings'] = loaded_receipt
++        capture_living_phase('10-reopened-loaded-settings', actor_id=loaded['local_actor']['id'], round_number=1,
++                             after=loaded['wall_msec'], until=loaded_until,
++                             observed=observed, capture=capture, binding=lambda: phase_capture_binding(loaded_event=loaded),
++                             expected_binding={'source': before, 'process_pid': reopened.pid, 'process_running': True,
++                                               'trace_directory': str(loaded_trace.resolve()),
++                                               'loaded_initial_event': loaded, 'stored_profile': saved}, receipt=loaded_receipt)
+         # The earlier round already exercises weapons and settings. Prove
+         # focus recovery with a living player in this new, ordinary stock match.
+-        initial_trace = loaded_trace
+         focus_start = observed(lambda state: state.get('ui', {}).get('focused') is True
+                                and state.get('ui', {}).get('paused') is False
+                                and state.get('time_scale') == 1

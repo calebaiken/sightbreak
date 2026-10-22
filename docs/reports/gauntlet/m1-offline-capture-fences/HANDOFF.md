@@ -145,3 +145,31 @@ rollback, an observer-clock rollback, and a buffered pre-capture state followed
 by no new publication. Round 2 retains the exact revised command and raw output.
 These remain declared scheduling controls, not a native pixel result. Independent
 reevaluation and actual native captures are pending; account still owns the lane.
+
+## Independent source verdict and handoff
+
+The fresh critic accepts frozen source
+`65c3b8bfdfa14342411c9aa6519244628cc12c81` for native qualification. Its eight
+independent scheduling controls pass, alongside the maintained 15-group suite.
+The intermediate rollback and buffered-before-capture counterexamples now
+reject. The critic found no further concrete source blocker; this is a source
+verdict only, with native pixels explicitly unverified.
+
+Both external critic directories are archived verbatim under
+`independent-critic/rejected-aaa1929/` and
+`independent-critic/accepted-65c3b8b/`. Their reports, frozen source/tests/fixtures,
+independent harness, original false acceptances, revised control outputs and
+hash indexes keep the critic's original wording and raw bytes. The separate
+`archive-receipts.json` verifies every source/destination file hash and directory
+entry without editing the critic artifacts.
+
+Root will integrate the bounded source correction and dispatch exact-source
+Windows gates. No local native rerun is authorized for this milestone; account
+qualification has CPU priority. The original two Windows phase-invalid captures
+remain the actual regression bar. No new native pixels, Godot, renderer or OCR
+result is claimed by this branch. The largest remaining deficiency is actual
+Windows inspection of both changed captures and their fresh state/frame brackets.
+
+Builder handoff: criteria `3e3b40a`, rejected candidate `aaa1929`, corrected source
+`65c3b8b`, then the docs-only independent evidence archive. The branch is ready
+for root integration; the builder releases its slot and retains all prior work.
