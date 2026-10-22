@@ -70,5 +70,6 @@ promotes partial rounds to a completed match. Latest reports and transitions are
 retained on failure. `completed-*.json` retain the completion boundary separately
 from the subsequent deliberate server-kill disconnects.
 
-The builder cannot approve this candidate. Independent review and raw-output
-recomputation are required before integration. G3 and G16 remain in progress.
+The builder cannot approve this candidate. See [RESULTS.md](RESULTS.md) for the
+completed frozen run, separate independent review, rejected validator iteration,
+and remaining limits. G3 and G16 remain in progress.

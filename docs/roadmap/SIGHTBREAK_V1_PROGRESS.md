@@ -105,3 +105,20 @@ Filled in as runs complete. Commit under test: `db3981e` (`codex/desktop-playabi
 - Reference footage hosts are denied; CS2 parity cannot be measured here (G18).
 - No GPU, audio device, humans or local Mac/Windows host. Actual native GitHub runners are available; their observed results and failures remain distinct from local proof.
 - Parallel contributors: preserve PR18–24 dependencies and Claude-owned PR26 map work; do not integrate newer bots or map changes without independent qualification (`PARALLEL_WORK.md`).
+
+## M3 controlled account match, 2026-10-22
+
+G3 and G16 remain **IN PROGRESS**. Frozen test source `471fbd8` completed a real
+ten-account seven-round stock match in 525.962 wall seconds, then delivered its
+earned production payload after Godot/worker SIGKILL, owned PostgreSQL outage,
+lost acknowledgment, restart and duplicate spool replay. Exactly one match
+operation, ten rewards and ten ledger rows produced 2,875 credits / 2,650 XP.
+Independent critic `93f6b68` recomputed raw outputs, queried the actual temporary
+database and verified cleanup. [Evidence and limits](../reports/gauntlet/m3-account-match/RESULTS.md).
+
+This is scripted no-combat, current-policy look activity with loopback client
+traffic; it does not verify substantive participation, AFK resistance, fairness,
+prediction feel, impairment, remote hosting or human play. The game listener uses
+inherited wildcard UDP; API/database use loopback. Followup `0aae3f8` strengthens
+only pure validation/registration and was unit-tested/raw-replayed. Product
+gameplay/backend/worker files remain identical to frozen `0ca125d`.

@@ -268,3 +268,32 @@ Native Mac evidence 7d46d2e finds all five Intel feature cases time out; no grap
 change is supported. Live Claude PR28 has an alternative authority shuffle and
 separate bot habits; no import. Account-backed stock match 471fbd8 is in round 6
 with actual ten-account admission and no injected production match fields.
+
+## 2026-10-22 — M3 stock account match and earned recovery
+
+Builder `codex/m3-account-complete-match` fetched the existing `2a2b732` account,
+stock-gameplay and outbox implementations as its concrete bar. Existing movement
+and crash probes inject phase/timer or result fields, so this slice added separate
+ordinary-input/observation probes and an owned ephemeral PostgreSQL orchestration
+harness. Initial validator counterexamples (scores, replica rounds, actor activity
+keys, contradictory summaries) were rejected by a fresh critic and corrected
+before native execution. Their failed iteration remains in independent evidence.
+
+Frozen `471fbd8` passed 04:29:01–04:37:47 UTC, 525.962 wall seconds. Ten distinct
+accounts/tickets completed seven stock rounds with six real plants, automatic
+halftime and every client result. The same earned payload survived game/worker
+kills, a real owned-database outage, lost acknowledgment and duplicate replay:
+one operation, ten ledger rows/rewards, 2,875 credits and 2,650 XP. No balances,
+score, duration or activity fields were assigned by the harness. All children and
+the owned container were cleaned up. Separate critic `93f6b68` independently
+recomputed the raw artifacts, queried live PostgreSQL and verified engine/cleanup.
+
+Followup `0aae3f8` adds outgoing-award consistency checks, 14 standard-Python
+controls and maintained-suite registration. Controls and pure replay of frozen
+receipts pass; native execution remains attributed to `471fbd8`. No product files
+changed and no new full-suite/export claim follows. [Results and raw hashes](../reports/gauntlet/m3-account-match/RESULTS.md).
+The largest remaining limitation is participation: nine clients deliberately turn
+at spawn under the current activity rule. G3/G16 remain open for AFK resistance,
+combat/remote-host/privacy/impairment/launcher and broader economy requirements.
+The production game listener's wildcard UDP bind is also retained explicitly;
+only API/DB bindings are loopback. Supported bind configuration is next work.

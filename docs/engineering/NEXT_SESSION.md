@@ -173,3 +173,31 @@ fix. Full QA PNG artifact is 36,909,293 bytes, above transfer cap. New per-size
 original PNG artifacts must preserve existing receipts/full artifacts. No new
 rendered comparison is possible from the unavailable current images alone.
 Account match owns the local native lane until its stock run finishes.
+
+## M3 account-match candidate, 2026-10-22
+
+Builder branch `codex/m3-account-complete-match`, worktree
+`/workspace/sightbreak-account-match`, based on `2a2b732`. Test-only commits
+`f6e93e2` → `ee89ef4` → `471fbd8` implement ten real account clients finishing
+stock rules and recovering the production earned result. Frozen `471fbd8` passed
+04:29:01–04:37:47 UTC, 525.962 wall seconds: seven rounds, six genuine plants,
+automatic halftime, all ten replicas, one match operation / ten rewards / ten
+ledger rows, exactly 2,875 credits and 2,650 XP after outage/lost-ACK/kill/replay.
+All owned child processes and the temporary PostgreSQL container were removed.
+Raw outputs are committed under `docs/reports/gauntlet/m3-account-match/round-1`;
+see its RESULTS.md for exact provenance and limits.
+
+Separate critic `93f6b68` independently recomputes raw data, queried the actual
+owned PostgreSQL database and verified cleanup. Initial validator counterexamples
+were fixed before execution. Followup `0aae3f8` adds pure outgoing-award checks,
+14 standard-Python controls and validate.sh registration; it was unit-tested and
+replayed against the frozen receipts, without relabeling the native execution.
+No product gameplay/backend/worker change or second native run is claimed.
+
+Integrate the builder candidate and independent review only after root review;
+run the maintained suite on the combined source. G3/G16 remain IN PROGRESS:
+nine clients turn at spawn under the existing activity policy (no AFK-resistance
+proof), no combat/remote-host/impairment/human-play claim. Client traffic is
+loopback, but production `_host()` binds wildcard UDP; API/DB bind loopback.
+Supported explicit bind-address configuration is a next engineering correction.
+No local process or background work remains running for this candidate.
