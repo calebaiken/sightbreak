@@ -22,7 +22,10 @@ from native_log import failed
 
 SUITES = ('actor', 'match', 'authority_order', 'state_privacy', 'movement_prediction', 'peer_lifecycle',
           'input_mode', 'menu_focus', 'offline_diagnostics', 'hud_objective_hint',
-          'activity_provenance', 'bot_squad_symmetry')
+          'activity_provenance', 'bot_squad_symmetry', 'transaction_journal', 'gunplay_rules')
+SUITE_ARGUMENTS = {
+    'gunplay_rules': ['--headless', '--audio-driver', 'Dummy', '--script', 'res://tests/gunplay_rules_probe.gd'],
+}
 PROBE = '''extends SceneTree
 func _initialize() -> void:
     var destination := ""
@@ -142,7 +145,8 @@ class NativeSceneSuites:
         before = self.prepare(suite)
         if before['profile_exists'] or before['diagnostics_exist']:
             raise RuntimeError('Refusing existing suite state; no save or prior evidence was overwritten')
-        receipt = self.execute(suite, ['--headless', '--script', 'res://tests/' + suite + '_test.gd'], 120)
+        arguments = SUITE_ARGUMENTS.get(suite, ['--headless', '--script', 'res://tests/' + suite + '_test.gd'])
+        receipt = self.execute(suite, arguments, 120)
         receipt.update(suite=suite, before=before, after=self.probe('after-' + suite))
         user_dir = Path(receipt['after']['user_data_dir'])
         receipt['produced_files_sha256'] = inventory(user_dir)
