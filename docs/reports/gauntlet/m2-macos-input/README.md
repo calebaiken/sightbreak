@@ -36,11 +36,13 @@ python scripts/probe_macos_input.py --output builds/desktop-playability/macos-in
 Nine observer controls pass on Linux; the [revision 2 raw output](readiness/controls-r2.txt)
 includes absent/existing/dangling player-profile entries and native cache
 inventory without deletion. The [first seven controls](readiness/controls.txt)
-retains an intentional native-host rejection and an actual owned-process cleanup
+retain an intentional native-host rejection and an actual owned-process cleanup
 control. An initial control failed because a global `Popen` patch intercepted
 Python's platform probe; the control now supplies its platform string explicitly.
 There is no Mac API or native input pass in these controls. No engine workload
 was run, beyond reading pinned Godot 4.7.2 `--help` to verify window flags.
+The [earlier-step source inspection](PRIOR_STEPS.md) predicts fresh QA leaves no
+canonical player profile; runtime entry checks still govern launch.
 
 The largest open gap is actual ARM permissions. If both required preflights are
 true, the next useful slice is pointer Settings navigation followed by Escape

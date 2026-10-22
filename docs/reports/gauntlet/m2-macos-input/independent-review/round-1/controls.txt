@@ -1,0 +1,40 @@
+Subject: ecb30708e9b6d3765bcbe342c5887dd25f4a4cf0
+Frozen script SHA256: e9468c21aa984d7bd3bff6af17b4dcfbb2863bfb7592dad5af869f59627aed10
+Linux controls only; no native APIs, exports, or engine workload.
+test_actual_owned_process_is_reaped (frozen_controls.PreflightControls.test_actual_owned_process_is_reaped) ... ok
+test_actual_plist_bytes_decode_through_cf_boundary (frozen_controls.PreflightControls.test_actual_plist_bytes_decode_through_cf_boundary) ... ok
+test_native_framework_objects_are_released_on_bad_payload (frozen_controls.PreflightControls.test_native_framework_objects_are_released_on_bad_payload) ... ok
+test_non_native_run_retains_failure_and_never_launches (frozen_controls.PreflightControls.test_non_native_run_retains_failure_and_never_launches) ... ok
+test_only_owned_layer_zero_metadata_survives (frozen_controls.PreflightControls.test_only_owned_layer_zero_metadata_survives) ... ok
+test_prior_attempt_is_preserved (frozen_controls.PreflightControls.test_prior_attempt_is_preserved) ... ok
+test_required_permissions_fail_closed (frozen_controls.PreflightControls.test_required_permissions_fail_closed) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.005s
+
+OK
+{
+  "scope": "Read-only ARM Mac preflight; no native input or OS screenshot acceptance",
+  "status": "FAILED",
+  "native_input_verified": false,
+  "input_events_posted": 0,
+  "permission_requests_made": 0,
+  "host": "Linux observer control",
+  "architecture": "x86_64",
+  "failure": {
+    "type": "RuntimeError",
+    "message": "Requires native ARM macOS; no native-input claim from another host"
+  },
+  "cleanup": {
+    "owned_group_gone": true,
+    "process_started": false
+  },
+  "seconds": 4.8500998673262075e-05
+}
+ctypes sizes: {'Point': 16, 'Size': 16, 'Rect': 32}
+Denied posting remains external blocker: PASS (fully mocked state machine; no Mac API/export)
+Profile drift overrides readiness: PASS (fully mocked state machine; no Mac API/export)
+Remaining owned group overrides readiness: PASS (fully mocked state machine; no Mac API/export)
+Source drift overrides readiness: PASS (fully mocked state machine; no Mac API/export)
+Export mutation overrides readiness: PASS (fully mocked state machine; no Mac API/export)
+Frozen source Python compilation: True
