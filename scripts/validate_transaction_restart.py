@@ -23,6 +23,63 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 ROOT = Path(__file__).resolve().parents[1]
 PROBE = ROOT / "game/tests/transaction_crash_probe.gd"
+LIFECYCLE_PROBE = ROOT / "game/tests/receipt_lifecycle_probe.gd"
+PINNED_GODOT = "4.7.2.stable.official.ed1daf0bf"
+
+
+def native_error(output: str) -> bool:
+    return any(marker in output for marker in ("SCRIPT ERROR", "ERROR:", "Parse Error"))
+
+
+def private_env(directory: Path, **extra: str) -> dict:
+    """Keep user://, preferences and caches inside this fixture's own directory."""
+    return dict(os.environ, XDG_DATA_HOME=str(directory / "user-data"),
+                XDG_CONFIG_HOME=str(directory / "user-config"),
+                XDG_CACHE_HOME=str(directory / "user-cache"), **extra)
+
+
+def lifecycle(exe: Path, root: Path, directory: Path) -> dict:
+    directory.mkdir(parents=True)
+    command = [str(exe), "--headless", "--path", str(root / "game"), "--script", str(LIFECYCLE_PROBE)]
+    completed = subprocess.run(command, env=private_env(directory, SIGHTBREAK_LIFECYCLE_JOURNAL=str(directory / "pending")),
+                               capture_output=True, text=True, timeout=35)
+    output = completed.stdout + completed.stderr
+    (directory / "native.log").write_text(output, encoding="utf-8")
+    observations = [json.loads(line.removeprefix("RECEIPT_LIFECYCLE ")) for line in completed.stdout.splitlines()
+                    if line.startswith("RECEIPT_LIFECYCLE ")]
+    if completed.returncode or native_error(output) or len(observations) != 1:
+        raise RuntimeError(f"Lifecycle probe failed: {directory}")
+    return observations[0]
+
+
+def candidate_case_passes(case: dict) -> bool:
+    expected_debit = 10000000 if case.get("kind") == "market" else 100
+    return (case.get("kind") in ("store", "case", "market")
+            and case.get("boundary") in ("before_commit", "after_commit", "late_commit", "recovery_kill")
+            and case.get("recovered") is True and case.get("mutation_count") == 1
+            and case.get("total_debit") == expected_debit
+            and case.get("receipt_reused") is True and bool(case.get("requests"))
+            and case.get("route_and_bytes_reused") is True
+            and case.get("authority_result_matches") is True
+            and case.get("credential_persisted") is False
+            and case.get("journal_before_kill") is True
+            and case.get("journal_after_recovery") is False
+            and (case.get("boundary") not in ("late_commit", "recovery_kill")
+                 or (case.get("retained_rejection") is True and case.get("late_order_verified") is True)))
+
+
+def candidate_lifecycle_passes(result: dict) -> bool:
+    retry, logout = result.get("retry", {}), result.get("logout", {})
+    retry_calls, logout_calls = retry.get("calls", []), logout.get("calls", [])
+    return (retry.get("pending_after_lost_response") is True and retry.get("retry_status") == 409
+            and retry.get("pending_after_rejected_retry") is True
+            and retry.get("journal_after_rejected_retry") is True
+            and len(retry_calls) == 2 and retry_calls[0] == retry_calls[1]
+            and logout.get("pending_after_logout") is True and logout.get("token_cleared") is True
+            and logout.get("account_cleared") is True and logout.get("pending_after_recreation") is True
+            and logout.get("pending_after_confirmation") is False and len(logout_calls) == 1
+            and logout.get("result", {}).get("item", {}).get("id") == "fixture-server-confirmed-item"
+            and logout.get("account") == {"credits": 0, "xp": 0})
 
 
 def identity(root: Path) -> dict:
@@ -38,13 +95,14 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
     with sqlite3.connect(database) as db:
         db.executescript("CREATE TABLE receipts (key TEXT PRIMARY KEY, payload TEXT, response TEXT);"
                          "CREATE TABLE mutations (id INTEGER PRIMARY KEY, cost INTEGER);"
-                         "CREATE TABLE requests (body TEXT);")
+                         "CREATE TABLE requests (method TEXT, path TEXT, raw_body TEXT, body TEXT);")
     reached = threading.Event()
     release = threading.Event()
     committed = threading.Event()
     barrier_failed = threading.Event()
     event_lock = threading.Lock()
     hold = True
+    inbound: list[dict] = []
     late = boundary in ("late_commit", "recovery_kill")
     token = "fixture-memory-only-credential"
     price = 10000000 if kind == "market" else 100
@@ -74,8 +132,15 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
 
         def do_POST(self):
             nonlocal hold
-            body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
-            event("request_received", body=body)
+            raw = self.rfile.read(int(self.headers["Content-Length"]))
+            body = json.loads(raw)
+            observation = {"method": self.command, "path": self.path,
+                           "raw_body_base64": base64.b64encode(raw).decode(), "body": body}
+            inbound.append(observation)
+            event("request_received", **observation)
+            if self.path != path:
+                self.respond({"detail": "unexpected transaction endpoint"}, 404)
+                return
             if self.headers.get("Authorization") != "Bearer " + token:
                 self.respond({"detail": "invalid credential"}, 401)
                 return
@@ -100,7 +165,7 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
                     return
             canonical = json.dumps(body, sort_keys=True)
             with sqlite3.connect(database) as db:
-                db.execute("INSERT INTO requests(body) VALUES (?)", (canonical,))
+                db.execute("INSERT INTO requests VALUES (?,?,?,?)", (self.command, self.path, raw.decode(), canonical))
                 old = db.execute("SELECT payload,response FROM receipts WHERE key=?", (body["idempotency_key"],)).fetchone()
                 if old:
                     if old[0] != canonical:
@@ -143,7 +208,7 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
               "journal": str(directory / "pending.json"), "mode": "send", "path": path, "payload": payload}
     fixture = directory / "fixture.json"
     fixture.write_text(json.dumps(config), encoding="utf-8")
-    env = dict(os.environ, SIGHTBREAK_RECEIPT_FIXTURE=str(fixture))
+    env = private_env(directory, SIGHTBREAK_RECEIPT_FIXTURE=str(fixture))
     command = [str(exe), "--headless", "--path", str(root / "game"), "--script", str(PROBE)]
     try:
         with (directory / "killed-client.log").open("w", encoding="utf-8") as log:
@@ -217,7 +282,7 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
             event("recovery_finished", pid=process.pid, returncode=process.returncode, phase=name)
             (directory / f"{name}.log").write_text(stdout + stderr, encoding="utf-8")
             lines = [line.removeprefix("RECEIPT_PROBE ") for line in stdout.splitlines() if line.startswith("RECEIPT_PROBE ")]
-            if (process.returncode and not kill_after_observation) or len(lines) != 1 or "SCRIPT ERROR" in stderr or "ERROR:" in stderr:
+            if (process.returncode and not kill_after_observation) or len(lines) != 1 or native_error(stdout + stderr):
                 raise RuntimeError(f"Restart probe failed: {directory}")
             return json.loads(lines[0])
 
@@ -252,10 +317,16 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
         with sqlite3.connect(database) as db:
             costs = [row[0] for row in db.execute("SELECT cost FROM mutations")]
             requests = [json.loads(row[0]) for row in db.execute("SELECT body FROM requests")]
+            receipts = db.execute("SELECT key,payload,response FROM receipts").fetchall()
         recovered = probe.get("recovered", False)
         final_journal = capture_journal("journal-after-recovery")
         return {"kind": kind, "boundary": boundary, "recovered": recovered, "mutation_count": len(costs),
                 "total_debit": sum(costs), "receipt_reused": recovered and all(body == payload for body in requests),
+                "route_and_bytes_reused": bool(inbound) and all(row["method"] == "POST" and row["path"] == path
+                    and row["body"] == payload and row["raw_body_base64"] == inbound[0]["raw_body_base64"] for row in inbound),
+                "inbound_requests": inbound,
+                "authority_result_matches": len(receipts) == 1 and receipts[0][0] == payload["idempotency_key"]
+                    and json.loads(receipts[0][1]) == payload and probe.get("result") == json.loads(receipts[0][2]),
                 "credential_persisted": token in journal, "journal_before_kill": bool(journal),
                 "journal_after_recovery": final_journal["exists"], "requests": requests, "probe": probe,
                 "retained_rejection": retained_rejection,
@@ -278,20 +349,32 @@ def main() -> None:
     parser.add_argument("--boundaries", nargs="+", choices=["before_commit", "after_commit", "late_commit", "recovery_kill"],
                         default=["before_commit", "after_commit", "late_commit"])
     args = parser.parse_args()
+    if args.repetitions < 1:
+        parser.error("--repetitions must be positive")
+    args.out = args.out.resolve()
+    for root in (args.baseline.resolve(), args.candidate.resolve()):
+        if args.out == root or root in args.out.parents:
+            parser.error("--out must be outside both source checkouts")
+    version = subprocess.check_output([str(args.godot), "--version"], text=True).strip()
+    if version != PINNED_GODOT:
+        parser.error(f"Expected pinned Godot {PINNED_GODOT}; got {version}")
     args.out.mkdir(parents=True, exist_ok=False)
     result = {"platform": platform.platform(), "python": platform.python_version(),
-              "godot": subprocess.check_output([str(args.godot), "--version"], text=True).strip(),
+              "godot": version,
               "probe_sha256": hashlib.sha256(PROBE.read_bytes()).hexdigest(),
+              "lifecycle_probe_sha256": hashlib.sha256(LIFECYCLE_PROBE.read_bytes()).hexdigest(),
               "harness_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), "runs": {}}
     for label, root in [("baseline", args.baseline), ("candidate", args.candidate)]:
         root = root.resolve()
         source = identity(root)
         if source["status"]:
             raise RuntimeError(f"Dirty source tree: {label}: {source['status']}")
-        imported = subprocess.run([str(args.godot), "--headless", "--path", str(root / "game"), "--editor", "--import", "--quit"], capture_output=True, text=True, timeout=120)
+        imported = subprocess.run([str(args.godot), "--headless", "--path", str(root / "game"), "--editor", "--import", "--quit"],
+                                  env=private_env(args.out / label), capture_output=True, text=True, timeout=120)
         (args.out / f"{label}-import.log").write_text(imported.stdout + imported.stderr, encoding="utf-8")
-        if imported.returncode or "SCRIPT ERROR" in imported.stderr:
+        if imported.returncode or native_error(imported.stdout + imported.stderr):
             raise RuntimeError(f"Import failed: {label}")
+        lifecycle_result = lifecycle(args.godot, root, args.out / label / "lifecycle")
         cases = []
         for repeat in range(args.repetitions):
             for kind in ["store", "case", "market"]:
@@ -299,14 +382,15 @@ def main() -> None:
                     case = run_case(args.godot, root, args.out / label / f"{repeat}-{kind}-{boundary}", kind, boundary)
                     cases.append(case)
                     print(label, repeat, kind, boundary, "recovered", case["recovered"], flush=True)
-        source["status_after"] = identity(root)["status"]
-        result["runs"][label] = {"source": source, "cases": cases, "recovered": sum(case["recovered"] for case in cases), "total": len(cases)}
+        source_after = identity(root)
+        if source_after != source:
+            raise RuntimeError(f"Source changed during workload: {label}")
+        result["runs"][label] = {"source": source, "source_after": source_after, "lifecycle": lifecycle_result,
+                                "cases": cases, "recovered": sum(case["recovered"] for case in cases), "total": len(cases)}
     candidate = result["runs"]["candidate"]
-    result["pass"] = (candidate["recovered"] == candidate["total"]
-                      and all(case["mutation_count"] == 1 and case["receipt_reused"]
-                              and not case["credential_persisted"] and not case["journal_after_recovery"]
-                              and case["retained_rejection"] is not False for case in candidate["cases"])
-                      and all(not row["source"]["status_after"] for row in result["runs"].values()))
+    result["pass"] = (candidate["total"] > 0 and candidate["recovered"] == candidate["total"]
+                      and all(candidate_case_passes(case) for case in candidate["cases"])
+                      and candidate_lifecycle_passes(candidate["lifecycle"]))
     (args.out / "summary.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
     print(json.dumps({label: {key: row[key] for key in ["recovered", "total"]} for label, row in result["runs"].items()}, indent=2))
     raise SystemExit(0 if result["pass"] else 1)

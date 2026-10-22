@@ -56,6 +56,8 @@ run_godot armory-ui --headless --script res://tests/armory_ui_test.gd
 run_godot armory-state --headless --script res://tests/armory_state_test.gd
 run_godot menu-state --headless --script res://tests/menu_state_test.gd
 run_godot economy-recovery --headless --script res://tests/economy_recovery_test.gd
+SIGHTBREAK_STATE_DIR="$validation_dir/transaction-journal-state" run_godot transaction-journal --headless --script res://tests/transaction_journal_test.gd
+python3 scripts/test_transaction_restart_oracle.py
 run_godot cosmetics --headless --script res://tests/cosmetic_presentation_test.gd
 run_godot weapon-art --headless --script res://tests/weapon_art_test.gd
 run_godot integration-actor-lifecycle --headless --script res://tests/integration_actor_lifecycle_test.gd
