@@ -1,0 +1,119 @@
+{
+  "release": "4.7.2-stable",
+  "engine_commit": "ed1daf0bf",
+  "commit_Engine_xml_sha256": "8a4205ff0f3d4a6d3ba10c94c10472418d1e1abe3c0a6aa44b7106cb1f0f1936",
+  "tag_and_commit_Engine_xml_bytes_equal": true,
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/4.7.2-stable/doc/classes/Engine.xml",
+      "bytes": 24701,
+      "sha256": "8a4205ff0f3d4a6d3ba10c94c10472418d1e1abe3c0a6aa44b7106cb1f0f1936",
+      "path": "doc/classes/Engine.xml",
+      "excerpts": [
+        "<method name=\"get_frames_drawn\">\n\t\t\t<return type=\"int\" />\n\t\t\t<description>\n\t\t\t\tReturns the total number of frames drawn since the engine started.\n\t\t\t\t[b]Note:[/b] On headless platforms, or if rendering is disabled with [code]--disable-render-loop[/code] via command line, this method always returns [code]0[/code]. See also [method get_process_frames].\n\t\t\t</description>\n\t\t</method>",
+        "<method name=\"get_physics_frames\" qualifiers=\"const\">\n\t\t\t<return type=\"int\" />\n\t\t\t<description>\n\t\t\t\tReturns the total number of frames passed since the engine started. This number is increased every [b]physics frame[/b]. See also [method get_process_frames].\n\t\t\t\tThis method can be used to run expensive logic less often without relying on a [Timer]:\n\t\t\t\t[codeblocks]\n\t\t\t\t[gdscript]\n\t\t\t\tfunc _physics_process(_delta):\n\t\t\t\t\tif Engine.get_physics_frames() % 2 == 0:\n\t\t\t\t\t\tpass # Run expensive logic only once every 2 physics frames here.\n\t\t\t\t[/gdscript]\n\t\t\t\t[csharp]\n\t\t\t\tpublic override void _PhysicsProcess(double delta)\n\t\t\t\t{\n\t\t\t\t\tbase._PhysicsProcess(delta);\n\n\t\t\t\t\tif (Engine.GetPhysicsFrames() % 2 == 0)\n\t\t\t\t\t{\n\t\t\t\t\t\t// Run expensive logic only once every 2 physics frames here.\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t[/csharp]\n\t\t\t\t[/codeblocks]\n\t\t\t</description>\n\t\t</method>",
+        "<method name=\"get_process_frames\" qualifiers=\"const\">\n\t\t\t<return type=\"int\" />\n\t\t\t<description>\n\t\t\t\tReturns the total number of frames passed since the engine started. This number is increased every [b]process frame[/b], regardless of whether the render loop is enabled. See also [method get_frames_drawn] and [method get_physics_frames].\n\t\t\t\tThis method can be used to run expensive logic less often without relying on a [Timer]:\n\t\t\t\t[codeblocks]\n\t\t\t\t[gdscript]\n\t\t\t\tfunc _process(_delta):\n\t\t\t\t\tif Engine.get_process_frames() % 5 == 0:\n\t\t\t\t\t\tpass # Run expensive logic only once every 5 process (render) frames here.\n\t\t\t\t[/gdscript]\n\t\t\t\t[csharp]\n\t\t\t\tpublic override void _Process(double delta)\n\t\t\t\t{\n\t\t\t\t\tbase._Process(delta);\n\n\t\t\t\t\tif (Engine.GetProcessFrames() % 5 == 0)\n\t\t\t\t\t{\n\t\t\t\t\t\t// Run expensive logic only once every 5 process (render) frames here.\n\t\t\t\t\t}\n\t\t\t\t}\n\t\t\t\t[/csharp]\n\t\t\t\t[/codeblocks]\n\t\t\t</description>\n\t\t</method>",
+        "<member name=\"max_fps\" type=\"int\" setter=\"set_max_fps\" getter=\"get_max_fps\" default=\"0\">\n\t\t\tThe maximum number of frames that can be rendered every second (FPS). A value of [code]0[/code] means the framerate is uncapped.\n\t\t\tLimiting the FPS can be useful to reduce the host machine's power consumption, which reduces heat, noise emissions, and improves battery life.\n\t\t\tIf [member ProjectSettings.display/window/vsync/vsync_mode] is [b]Enabled[/b] or [b]Adaptive[/b], the setting takes precedence and the max FPS number cannot exceed the monitor's refresh rate. See also [method DisplayServer.screen_get_refresh_rate].\n\t\t\tIf [member ProjectSettings.display/window/vsync/vsync_mode] is [b]Enabled[/b], on monitors with variable refresh rate enabled (G-Sync/FreeSync), using an FPS limit a few frames lower than the monitor's refresh rate will [url=https://blurbusters.com/howto-low-lag-vsync-on/]reduce input lag while avoiding tearing[/url]. At higher refresh rates, the difference between the FPS limit and the monitor refresh rate should be increased to ensure frames to account for timing inaccuracies. The optimal formula for the FPS limit value in this scenario is [code]r - (r * r) / 3600.0[/code], where [code]r[/code] is the monitor's refresh rate.\n\t\t\t[b]Note:[/b] The actual number of frames per second may still be below this value if the CPU or GPU cannot keep up with the project's logic and rendering.\n\t\t\t[b]Note:[/b] If [member ProjectSettings.display/window/vsync/vsync_mode] is [b]Disabled[/b], limiting the FPS to a high value that can be consistently reached on the system can reduce input lag compared to an uncapped framerate. Since this works by ensuring the GPU load is lower than 100%, this latency reduction is only effective in GPU-bottlenecked scenarios, not CPU-bottlenecked scenarios.\n\t\t</member>",
+        "<member name=\"max_physics_steps_per_frame\" type=\"int\" setter=\"set_max_physics_steps_per_frame\" getter=\"get_max_physics_steps_per_frame\" default=\"8\">\n\t\t\tThe maximum number of physics steps that can be simulated each rendered frame.\n\t\t\t[b]Note:[/b] The default value is tuned to prevent expensive physics simulations from triggering even more expensive simulations indefinitely. However, the game will appear to slow down if the rendering FPS is less than [code]1 / max_physics_steps_per_frame[/code] of [member physics_ticks_per_second]. This occurs even if [code]delta[/code] is consistently used in physics calculations. To avoid this, increase [member max_physics_steps_per_frame] if you have increased [member physics_ticks_per_second] significantly above its default value.\n\t\t</member>",
+        "<member name=\"physics_jitter_fix\" type=\"float\" setter=\"set_physics_jitter_fix\" getter=\"get_physics_jitter_fix\" default=\"0.5\">\n\t\t\tHow much physics ticks are synchronized with real time. If [code]0[/code] or less, the ticks are fully synchronized. Higher values cause the in-game clock to deviate more from the real clock, but they smooth out framerate jitters.\n\t\t\t[b]Note:[/b] The default value of [code]0.5[/code] should be good enough for most cases; values above [code]2[/code] could cause the game to react to dropped frames with a noticeable delay and are not recommended.\n\t\t\t[b]Note:[/b] When using a custom physics interpolation solution, or within a network game, it's recommended to disable the physics jitter fix by setting this property to [code]0[/code].\n\t\t</member>",
+        "<member name=\"physics_ticks_per_second\" type=\"int\" setter=\"set_physics_ticks_per_second\" getter=\"get_physics_ticks_per_second\" default=\"60\">\n\t\t\tThe number of fixed iterations per second. This controls how often physics simulation and the [method Node._physics_process] method are run.\n\t\t\tCPU usage scales approximately with the physics tick rate. However, at very low tick rates (usually below 30), physics behavior can break down. Input can also become less responsive at low tick rates as there can be a gap between input being registered, and the response on the next physics tick. High tick rates give more accurate physics simulation, particularly for fast moving objects. For example, racing games may benefit from increasing the tick rate above the default 60.\n\t\t\tSee also [member max_fps] and [member ProjectSettings.physics/common/physics_ticks_per_second].\n\t\t\t[b]Note:[/b] Only [member max_physics_steps_per_frame] physics ticks may be simulated per rendered frame at most. If more physics ticks have to be simulated per rendered frame to keep up with rendering, the project will appear to slow down (even if [code]delta[/code] is used consistently in physics calculations). Therefore, it is recommended to also increase [member max_physics_steps_per_frame] if increasing [member physics_ticks_per_second] significantly above its default value.\n\t\t\t[b]Note:[/b] Consider enabling [url=$DOCS_URL/tutorials/physics/interpolation/index.html]physics interpolation[/url] if you change [member physics_ticks_per_second] to a value that is not a multiple of [code]60[/code]. Using physics interpolation will avoid jittering when the monitor refresh rate and physics update rate don't exactly match.\n\t\t</member>"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/4.7.2-stable/doc/classes/Performance.xml",
+      "bytes": 19931,
+      "sha256": "b990acb61f9df03060b0f0cf29c62e5923c1a86977c283c25171570f2f609839",
+      "path": "doc/classes/Performance.xml",
+      "excerpts": [
+        "<constant name=\"TIME_PROCESS\" value=\"1\" enum=\"Monitor\">\n\t\t\tTime it took to complete one frame, in seconds. [i]Lower is better.[/i]\n\t\t</constant>",
+        "<constant name=\"TIME_PHYSICS_PROCESS\" value=\"2\" enum=\"Monitor\">\n\t\t\tTime it took to complete one physics frame, in seconds. [i]Lower is better.[/i]\n\t\t</constant>",
+        "<constant name=\"RENDER_TOTAL_PRIMITIVES_IN_FRAME\" value=\"12\" enum=\"Monitor\">\n\t\t\tThe total number of vertices or indices rendered in the last rendered frame. This metric doesn't include primitives from culled objects (either via hiding nodes, frustum culling or occlusion culling). Due to the depth prepass and shadow passes, the number of primitives is always higher than the actual number of vertices in the scene (typically double or triple the original vertex count). [i]Lower is better.[/i]\n\t\t</constant>",
+        "<constant name=\"RENDER_TOTAL_DRAW_CALLS_IN_FRAME\" value=\"13\" enum=\"Monitor\">\n\t\t\tThe total number of draw calls performed in the last rendered frame. This metric doesn't include culled objects (either via hiding nodes, frustum culling or occlusion culling), since they do not result in draw calls. [i]Lower is better.[/i]\n\t\t</constant>"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/4.7.2-stable/doc/classes/Viewport.xml",
+      "bytes": 70622,
+      "sha256": "823814573d14d4579fde29854d5bda9a8be108078eac131b8e89fb67ef39a1b3",
+      "path": "doc/classes/Viewport.xml",
+      "excerpts": [
+        "<method name=\"get_texture\" qualifiers=\"const\">\n\t\t\t<return type=\"ViewportTexture\" />\n\t\t\t<description>\n\t\t\t\tReturns the viewport's texture.\n\t\t\t\t[b]Note:[/b] When trying to store the current texture (e.g. in a file), it might be completely black or outdated if used too early, especially when used in e.g. [method Node._ready]. To make sure the texture you get is correct, you can await [signal RenderingServer.frame_post_draw] signal.\n\t\t\t\t[codeblocks]\n\t\t\t\t[gdscript]\n\t\t\t\tfunc _ready():\n\t\t\t\t    await RenderingServer.frame_post_draw\n\t\t\t\t    $Viewport.get_texture().get_image().save_png(\"user://Screenshot.png\")\n\t\t\t\t[/gdscript]\n\t\t\t\t[csharp]\n\t\t\t\tpublic async override void _Ready()\n\t\t\t\t{\n\t\t\t\t    await ToSignal(RenderingServer.Singleton, RenderingServer.SignalName.FramePostDraw);\n\t\t\t\t    var viewport = GetNode&lt;Viewport&gt;(\"Viewport\");\n\t\t\t\t    viewport.GetTexture().GetImage().SavePng(\"user://Screenshot.png\");\n\t\t\t\t}\n\t\t\t\t[/csharp]\n\t\t\t\t[/codeblocks]\n\t\t\t\t[b]Note:[/b] When [member use_hdr_2d] is [code]true[/code] the returned texture will be an HDR image using linear encoding.\n\t\t\t</description>\n\t\t</method>",
+        "<method name=\"get_visible_rect\" qualifiers=\"const\">\n\t\t\t<return type=\"Rect2\" />\n\t\t\t<description>\n\t\t\t\tReturns the visible rectangle in global screen coordinates.\n\t\t\t</description>\n\t\t</method>",
+        "<member name=\"scaling_3d_scale\" type=\"float\" setter=\"set_scaling_3d_scale\" getter=\"get_scaling_3d_scale\" default=\"1.0\">\n\t\t\tScales the 3D render buffer based on the viewport size uses an image filter specified in [member ProjectSettings.rendering/scaling_3d/mode] to scale the output image to the full viewport size. Values lower than [code]1.0[/code] can be used to speed up 3D rendering at the cost of quality (undersampling). Values greater than [code]1.0[/code] are only valid for bilinear mode and can be used to improve 3D rendering quality at a high performance cost (supersampling). See also [member ProjectSettings.rendering/anti_aliasing/quality/msaa_3d] for multi-sample antialiasing, which is significantly cheaper but only smooths the edges of polygons.\n\t\t\tWhen using FSR upscaling, AMD recommends exposing the following values as preset options to users \"Ultra Quality: 0.77\", \"Quality: 0.67\", \"Balanced: 0.59\", \"Performance: 0.5\" instead of exposing the entire scale.\n\t\t\tTo control this property on the root viewport, set the [member ProjectSettings.rendering/scaling_3d/scale] project setting.\n\t\t</member>"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/4.7.2-stable/doc/classes/Texture2D.xml",
+      "bytes": 8417,
+      "sha256": "69c7095fc40dd2b834c2420241a9e28494c114f43e72671b60bd5e34fa08dc38",
+      "path": "doc/classes/Texture2D.xml",
+      "excerpts": [
+        "<method name=\"get_size\" qualifiers=\"const\">\n\t\t\t<return type=\"Vector2\" />\n\t\t\t<description>\n\t\t\t\tReturns the texture size in pixels.\n\t\t\t</description>\n\t\t</method>"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/4.7.2-stable/doc/classes/DisplayServer.xml",
+      "bytes": 204221,
+      "sha256": "eac0dbd0002d1b7df79c139d86e563e862503fe517775ff475dbe66a6b58874c",
+      "path": "doc/classes/DisplayServer.xml",
+      "excerpts": [
+        "<method name=\"window_get_size\" qualifiers=\"const\">\n\t\t\t<return type=\"Vector2i\" />\n\t\t\t<param index=\"0\" name=\"window_id\" type=\"int\" default=\"0\" />\n\t\t\t<description>\n\t\t\t\tReturns the size of the window specified by [param window_id] (in pixels), excluding the borders drawn by the operating system. This is also called the \"client area\". See also [method window_get_size_with_decorations], [method window_set_size] and [method window_get_position].\n\t\t\t</description>\n\t\t</method>"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/4.7.2-stable/main/performance.cpp",
+      "bytes": 26035,
+      "sha256": "1e1b3d1468b383f69399d25e7637e4c34f9718987684a74191cd6ecb12f52c4d",
+      "path": "main/performance.cpp",
+      "excerpts": [
+        {
+          "start_line": 243,
+          "text": "\t\tcase TIME_FPS:\n\t\t\treturn Engine::get_singleton()->get_frames_per_second();\n\t\tcase TIME_PROCESS:\n\t\t\treturn _process_time;\n\t\tcase TIME_PHYSICS_PROCESS:\n\t\t\treturn _physics_process_time;\n\t\tcase TIME_NAVIGATION_PROCESS:"
+        }
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/4.7.2-stable/main/main.cpp",
+      "bytes": 210345,
+      "sha256": "1831257f5c8eb0707d278f04b21b1e4b3ba863f8dca5cab36022d4b19e36b8c1",
+      "path": "main/main.cpp",
+      "excerpts": [
+        {
+          "start_line": 2249,
+          "text": "\n\tOS::get_singleton()->set_cmdline(execpath, main_args, user_args);\n\n\tEngine::get_singleton()->set_physics_ticks_per_second(GLOBAL_DEF_BASIC(PropertyInfo(Variant::INT, \"physics/common/physics_ticks_per_second\", PROPERTY_HINT_RANGE, \"1,1000,1\"), 60));\n\tEngine::get_singleton()->set_max_physics_steps_per_frame(GLOBAL_DEF_BASIC(PropertyInfo(Variant::INT, \"physics/common/max_physics_steps_per_frame\", PROPERTY_HINT_RANGE, \"1,100,1\"), 8));\n\tEngine::get_singleton()->set_physics_jitter_fix(GLOBAL_DEF(PropertyInfo(Variant::FLOAT, \"physics/common/physics_jitter_fix\", PROPERTY_HINT_RANGE, \"0,2,0.001,or_greater\"), 0.5));\n\tEngine::get_singleton()->set_max_fps(GLOBAL_DEF(PropertyInfo(Variant::INT, \"application/run/max_fps\", PROPERTY_HINT_RANGE, \"0,1000,1\"), 0));\n\tif (max_fps >= 0) {"
+        },
+        {
+          "start_line": 4954,
+          "text": "\n\tconst int max_physics_steps = Engine::get_singleton()->get_user_max_physics_steps_per_frame();\n\tif (fixed_fps == -1 && advance.physics_steps > max_physics_steps) {\n\t\tprocess_step -= (advance.physics_steps - max_physics_steps) * physics_step;\n\t\tadvance.physics_steps = max_physics_steps;\n\t}"
+        },
+        {
+          "start_line": 5045,
+          "text": "\n\t\tGodotProfileZoneGrouped(_profile_zone, \"main loop iteration end\");\n\t\tOS::get_singleton()->get_main_loop()->iteration_end();\n\n\t\tphysics_process_ticks = MAX(physics_process_ticks, OS::get_singleton()->get_ticks_usec() - physics_begin); // keep the largest one for reference\n\t\tphysics_process_max = MAX(OS::get_singleton()->get_ticks_usec() - physics_begin, physics_process_max);\n\n\t\tEngine::get_singleton()->_in_physics = false;\n\t}"
+        },
+        {
+          "start_line": 5058,
+          "text": "\n\tuint64_t process_begin = OS::get_singleton()->get_ticks_usec();\n\n\tGodotProfileZoneGrouped(_profile_zone, \"process\");\n\tif (OS::get_singleton()->get_main_loop()->process(process_step * time_scale)) {\n\t\texit = true;\n\t}\n\tmessage_queue->flush();\n\n#ifndef NAVIGATION_2D_DISABLED\n\tGodotProfileZoneGrouped(_profile_zone, \"process 2D navigation\");\n\tNavigationServer2D::get_singleton()->process(process_step * time_scale);\n#endif // NAVIGATION_2D_DISABLED\n#ifndef NAVIGATION_3D_DISABLED\n\tGodotProfileZoneGrouped(_profile_zone, \"process 3D navigation\");\n\tNavigationServer3D::get_singleton()->process(process_step * time_scale);\n#endif // NAVIGATION_3D_DISABLED\n\n\tGodotProfileZoneGrouped(_profile_zone, \"RenderingServer::sync\");\n\tRenderingServer::get_singleton()->sync(); //sync if still drawing from previous frames.\n\n\tGodotProfileZoneGrouped(_profile_zone, \"RenderingServer::draw\");\n\tconst bool has_pending_resources_for_processing = RD::get_singleton() && RD::get_singleton()->has_pending_resources_for_processing();\n\tbool wants_present = (DisplayServer::get_singleton()->can_any_window_draw() ||\n\t\t\t\t\t\t\t\t DisplayServer::get_singleton()->has_additional_outputs()) &&\n\t\t\tRenderingServer::get_singleton()->is_render_loop_enabled();\n\n\tif (wants_present || has_pending_resources_for_processing) {\n\t\twants_present |= force_redraw_requested;\n\t\tif ((!force_redraw_requested) && OS::get_singleton()->is_in_low_processor_usage_mode()) {\n\t\t\tif (RenderingServer::get_singleton()->has_changed()) {\n\t\t\t\tRenderingServer::get_singleton()->draw(wants_present, scaled_step); // flush visual commands\n\t\t\t\tEngine::get_singleton()->increment_frames_drawn();\n\t\t\t}\n\t\t} else {\n\t\t\tRenderingServer::get_singleton()->draw(wants_present, scaled_step); // flush visual commands\n\t\t\tEngine::get_singleton()->increment_frames_drawn();\n\t\t\tforce_redraw_requested = false;\n\t\t}\n\t}\n\n\tprocess_ticks = OS::get_singleton()->get_ticks_usec() - process_begin;\n\tprocess_max = MAX(process_ticks, process_max);\n\tuint64_t frame_time = OS::get_singleton()->get_ticks_usec() - ticks;"
+        },
+        {
+          "start_line": 5113,
+          "text": "\n\tif (EngineDebugger::is_active()) {\n\t\tEngineDebugger::get_singleton()->iteration(frame_time, process_ticks, physics_process_ticks, physics_step);\n\t}\n\n\tframes++;\n\tEngine::get_singleton()->_process_frames++;\n\n\tif (frame > 1000000) {\n\t\t// Wait a few seconds before printing FPS, as FPS reporting just after the engine has started is inaccurate.\n\t\tif (hide_print_fps_attempts == 0) {\n\t\t\tif (editor || project_manager) {\n\t\t\t\tif (print_fps) {\n\t\t\t\t\tprint_line(vformat(\"Editor FPS: %d (%s mspf)\", frames, rtos(1000.0 / frames).pad_decimals(2)));\n\t\t\t\t}\n\t\t\t} else if (print_fps || GLOBAL_GET(\"debug/settings/stdout/print_fps\")) {\n\t\t\t\tprint_line(vformat(\"Project FPS: %d (%s mspf)\", frames, rtos(1000.0 / frames).pad_decimals(2)));\n\t\t\t}\n\t\t} else {\n\t\t\thide_print_fps_attempts--;\n\t\t}\n\n\t\tEngine::get_singleton()->_fps = frames;\n\t\tperformance->set_process_time(USEC_TO_SEC(process_max));\n\t\tperformance->set_physics_process_time(USEC_TO_SEC(physics_process_max));\n\t\tperformance->set_navigation_process_time(USEC_TO_SEC(navigation_process_max));\n\t\tprocess_max = 0;\n\t\tphysics_process_max = 0;\n\t\tnavigation_process_max = 0;\n\n\t\tframe %= 1000000;\n\t\tframes = 0;"
+        }
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/4.7.2-stable/doc/classes/Time.xml",
+      "path": "doc/classes/Time.xml",
+      "bytes": 15064,
+      "sha256": "e54a2584f5fc00094809bb856949cd76b818d3e084b7c5b8adb31b43ad16825b",
+      "excerpts": [
+        "<method name=\"get_ticks_usec\" qualifiers=\"const\">\n\t\t\t<return type=\"int\" />\n\t\t\t<description>\n\t\t\t\tReturns the amount of time passed in microseconds since the engine started.\n\t\t\t\tWill always be positive or 0 and uses a 64-bit value (it will wrap after roughly half a million years).\n\t\t\t</description>\n\t\t</method>"
+      ]
+    }
+  ],
+  "limits": [
+    "TIME_PROCESS includes process callbacks, renderer synchronization and draw; published as maximum over the preceding statistics window.",
+    "TIME_PHYSICS_PROCESS is the maximum individual physics step over the preceding statistics window, not a frame total.",
+    "ViewportTexture.get_size is output texture dimensions. No internal 3D target size is claimed."
+  ],
+  "commit_Engine_xml_url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/doc/classes/Engine.xml"
+}

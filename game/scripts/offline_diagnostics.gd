@@ -142,6 +142,28 @@ func _snapshot(game) -> Dictionary:
 		"local_contribution": int(game.objective_contributions.get(game.local_id, 0)),
 		"local_actor": _actor(local) if local != null else {}, "actors": actors,
 		"completion_calls": _completion_calls, "events_dropped": _events_dropped}
+	var read_begin_usec := Time.get_ticks_usec()
+	var viewport: Viewport = game.get_viewport()
+	var visible_size := viewport.get_visible_rect().size
+	var texture_size := viewport.get_texture().get_size()
+	state["frame_diagnostics"] = {
+		"read_begin_usec": read_begin_usec,
+		"max_physics_steps_per_frame": Engine.max_physics_steps_per_frame,
+		"physics_ticks_per_second": Engine.physics_ticks_per_second,
+		"physics_jitter_fix": Engine.physics_jitter_fix, "max_fps": Engine.max_fps,
+		"process_frames": Engine.get_process_frames(), "physics_frames": Engine.get_physics_frames(),
+		"drawn_frames": Engine.get_frames_drawn(),
+		# Godot 4.7.2 publishes maxima at its roughly one-second statistics refresh.
+		# Process time includes renderer sync/draw; physics time is one largest step.
+		"process_max_seconds_last_engine_window": Performance.get_monitor(Performance.TIME_PROCESS),
+		"physics_step_max_seconds_last_engine_window": Performance.get_monitor(Performance.TIME_PHYSICS_PROCESS),
+		"draw_calls_last_rendered_frame": Performance.get_monitor(Performance.RENDER_TOTAL_DRAW_CALLS_IN_FRAME),
+		"primitives_last_rendered_frame": Performance.get_monitor(Performance.RENDER_TOTAL_PRIMITIVES_IN_FRAME),
+		"viewport_visible_size": [visible_size.x, visible_size.y],
+		"viewport_texture_size_pixels": [texture_size.x, texture_size.y],
+		"viewport_3d_scale": viewport.scaling_3d_scale,
+		"internal_3d_target_size": {"available": false, "reason": "Inspected Viewport API exposes output texture size, not internal 3D target size."},
+		"read_end_usec": Time.get_ticks_usec()}
 	if local != null:
 		state["local_input"] = {"interact": bool(local.input_state.get("interact", false)),
 			"fire": bool(local.input_state.get("fire", false)),
