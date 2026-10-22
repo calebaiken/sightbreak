@@ -55,6 +55,20 @@ def require_screen(capture, name):
         raise RuntimeError('Original OS screenshot did not confirm ' + name + ' screen')
 
 
+def ordinary_failure_close(ui, client):
+    """Try the public quit request before owned-group fallback on failure."""
+    if ui is None or client is None or client.poll() is not None:
+        return {'needed': False}
+    report = {'needed': True, 'request_accepted': ui.request_close()}
+    if report['request_accepted']:
+        try:
+            client.wait(timeout=3)
+            report['exit_code'] = client.returncode
+        except subprocess.TimeoutExpired:
+            report['timed_out'] = True
+    return report
+
+
 def run(output, preflight_path, timeout=150):
     output = Path(output).resolve()
     if output.exists() and any(output.iterdir()):
@@ -214,6 +228,10 @@ def run(output, preflight_path, timeout=150):
                     raise RuntimeError('Owned controls remain held or native state could not be observed')
             except BaseException as error:
                 failures.append('input_release: ' + str(error))
+        try:
+            result['failure_ordinary_close'] = ordinary_failure_close(ui, client)
+        except BaseException as error:
+            failures.append('ordinary_close: ' + str(error))
         result['cleanup'] = []
         for name, process in [*helper_processes, *([('client', client)] if client is not None else [])]:
             try:

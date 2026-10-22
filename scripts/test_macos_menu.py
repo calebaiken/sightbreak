@@ -157,6 +157,22 @@ class MenuControls(unittest.TestCase):
             post.assert_not_called()
             self.assertEqual(ui.held, set())
 
+    def test_failure_cleanup_tries_public_quit_before_owned_group_fallback(self):
+        class Client:
+            returncode = None
+            def poll(self):
+                return self.returncode
+            def wait(self, timeout):
+                self.returncode = 0
+        client = Client()
+        ui = self.fake_ui()
+        with patch.object(ui, 'request_close', return_value=True) as request:
+            report = driver.ordinary_failure_close(ui, client)
+            self.assertTrue(report['request_accepted'])
+            self.assertEqual(report['exit_code'], 0)
+            driver.ordinary_failure_close(ui, client)
+            request.assert_called_once()
+
     def test_non_mac_host_never_launches_helper_or_client(self):
         with tempfile.TemporaryDirectory() as temporary:
             with patch.object(driver, 'MacReadOnly', side_effect=RuntimeError('requires ARM Mac')), patch.object(driver.subprocess, 'Popen') as launch:

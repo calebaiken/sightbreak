@@ -30,7 +30,7 @@ cleanup/profile/window receipts before launch; a previous run cannot authorize
 an unmatched build. A fresh critic must review source before root dispatch and
 actual native PNGs/state/source/cleanup before acceptance.
 
-Ten Linux observer controls pass. These cover titlebar/Retina coordinate
+Eleven Linux observer controls pass. These cover titlebar/Retina coordinate
 mapping, unknown geometry, ambiguous/low-confidence OCR targets, outcome
 recognition, preflight identity/permissions/cleanup, refusal before a down event,
 owned-only release and non-native no-launch behavior. They do not compile Swift
@@ -46,6 +46,8 @@ refuses both pointer and Escape down events. The initial injected-state proof
 and fresh re-review are retained in milestone evidence.
 The fresh neutral-state observation must also retain the exact foreground PID;
 an observed focus loss after the first target check now refuses the event.
+Failure cleanup also attempts the public ordinary quit request, with a separate
+3-second budget, before falling back to owned process-group termination.
 
 Root reports independently inspected raw preflight at `e7718ee`, run
 39727011693, job 119653125533: all four queried permissions true; PID 6968,
