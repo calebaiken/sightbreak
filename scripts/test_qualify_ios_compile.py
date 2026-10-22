@@ -2,6 +2,7 @@
 """Portable fixture controls; these do not claim an actual Apple compiler run."""
 import hashlib
 import json
+import os
 from pathlib import Path
 import plistlib
 import struct
@@ -164,6 +165,84 @@ class IosCompileControls(unittest.TestCase):
         self.assertIn("CODE_SIGNING_ALLOWED=NO", command)
         self.assertEqual(command[-1], "build")
         self.assertFalse(any("archive" == word or "allowProvisioning" in word for word in command))
+
+    def xcode_fixture(self, outcomes):
+        applications = self.root / "Applications"
+        for version in outcomes:
+            developer = applications / ("Xcode_" + version + ".app/Contents/Developer")
+            (developer / "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk").mkdir(parents=True)
+        calls = []
+        def attempt(label, command, environment):
+            developer = Path(environment["DEVELOPER_DIR"])
+            version = developer.parents[1].name.removeprefix("Xcode_").removesuffix(".app")
+            calls.append((label, command, dict(environment)))
+            if command[-1] == "--show-sdk-path":
+                return 0, str(developer / "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS.sdk")
+            result = outcomes[version]
+            if result == 0:
+                Path(command[-1]).write_bytes(macho())
+            return result, "Undefined symbols" if result else ""
+        return applications, calls, attempt
+
+    def test_sdk_selection_falls_back_after_real_probe_failure_and_isolates_environment(self):
+        applications, calls, attempt = self.xcode_fixture({"26.3": 1, "26.2": 0, "16.4": 1})
+        before = dict(os.environ)
+        environment = {"HOME": "/unchanged-home", "SIGHTBREAK_BUILDS_DIR": str(self.root / "export")}
+        report = {}
+        developer, sdk = ios.select_xcode(report, environment, self.root / "derived", attempt, applications)
+        self.assertIn("Xcode_26.2.app", str(developer))
+        self.assertTrue(sdk.is_relative_to(developer))
+        self.assertEqual(environment["HOME"], "/unchanged-home")
+        self.assertEqual(environment["DEVELOPER_DIR"], str(developer))
+        self.assertEqual(dict(os.environ), before)
+        self.assertEqual([item["probe_exit_code"] for item in report["sdk_selection"]["candidates"]], [1, 0])
+        self.assertEqual(len(calls), 4)
+        for _, command, candidate_env in calls:
+            self.assertEqual(candidate_env["HOME"], "/unchanged-home")
+            self.assertNotIn("xcode-select", command)
+            if "clang" in command:
+                self.assertIn("-no_adhoc_codesign", command)
+                self.assertIn("arm64-apple-ios15.0", command)
+                self.assertEqual(command.count("-u"), len(ios.REQUIRED_SDK_SYMBOLS))
+                for symbol in ios.REQUIRED_SDK_SYMBOLS:
+                    self.assertIn(symbol, command)
+
+    def test_no_compatible_installed_sdk_fails_preflight_and_keeps_failure_evidence(self):
+        applications, calls, attempt = self.xcode_fixture({"16.4": 1})
+        environment = {"DEVELOPER_DIR": "/original/selection"}
+        report = {}
+        with self.assertRaisesRegex(RuntimeError, "No installed Xcode can link"):
+            ios.select_xcode(report, environment, self.root / "derived", attempt, applications)
+        self.assertEqual(environment["DEVELOPER_DIR"], "/original/selection")
+        self.assertFalse(report["sdk_selection"]["candidates"][0]["compatible"])
+        self.assertEqual(report["sdk_selection"]["candidates"][0]["probe_exit_code"], 1)
+        self.assertEqual(len(calls), 2)
+
+    def test_successful_probe_exit_requires_a_fresh_unsigned_device_binary(self):
+        applications, _, attempt = self.xcode_fixture({"26.3": 0})
+        def wrong_platform(label, command, environment):
+            result = attempt(label, command, environment)
+            if "clang" in command:
+                Path(command[-1]).write_bytes(macho(platform=7))
+            return result
+        report = {}
+        with self.assertRaisesRegex(RuntimeError, "No installed Xcode can link"):
+            ios.select_xcode(report, {}, self.root / "derived", wrong_platform, applications)
+        self.assertIn("device-iOS", report["sdk_selection"]["candidates"][0]["failure"])
+
+    def test_actual_native_failed_log_never_qualifies_and_observed_linker_format_is_supported(self):
+        log = (ios.manifest.ROOT / "docs/reports/gauntlet/m2-ios-compile/sdk-iteration/failure-0ca125d/xcodebuild-device.txt").read_text()
+        with self.assertRaises(RuntimeError):
+            ios.inspect_build_actions(log)
+        actions = "\n".join(line for line in log.splitlines() if line.startswith(("CompileC ", "Ld ")))
+        self.assertIn(" normal (in target 'sightbreak'", actions)
+        # The success marker below is a fixture. The retained native run failed.
+        self.assertTrue(ios.inspect_build_actions(actions + "\n** BUILD SUCCEEDED **\n")["linker_action"])
+        self.assertTrue(ios.inspect_build_actions(actions.replace(" normal (", " normal arm64 (") + "\n** BUILD SUCCEEDED **\n")["linker_action"])
+        for missing in ("CompileC", "Ld"):
+            with self.subTest(missing=missing):
+                with self.assertRaises(RuntimeError):
+                    ios.inspect_build_actions("\n".join(line for line in actions.splitlines() if not line.startswith(missing)) + "\n** BUILD SUCCEEDED **\n")
 
 
 if __name__ == "__main__":

@@ -20,6 +20,10 @@ import toolchain
 from verify_builds import integrated_resources, no_test_harnesses, packed_paths, require
 
 
+REQUIRED_SDK_SYMBOLS = ("_CADynamicRangeAutomatic", "_CADynamicRangeConstrainedHigh",
+                        "_CADynamicRangeHigh", "_CADynamicRangeStandard", "_MTLTensorDomain")
+
+
 def digest(path, algorithm="sha256"):
     with Path(path).open("rb") as stream:
         return hashlib.file_digest(stream, algorithm).hexdigest()
@@ -156,6 +160,75 @@ def compile_command(export, derived):
             "CODE_SIGNING_ALLOWED=NO", "build"]
 
 
+def installed_developers(applications):
+    paths = {path.resolve() for path in applications.glob("Xcode*.app/Contents/Developer") if path.is_dir()}
+    return sorted(paths, key=lambda path: (tuple(int(part) for part in re.findall(r"\d+", path.parents[1].name)), str(path)), reverse=True)
+
+
+def sdk_probe_command(sdk, source, output):
+    command = ["xcrun", "--sdk", "iphoneos", "clang", "-target", "arm64-apple-ios15.0",
+               "-isysroot", str(sdk), str(source), "-framework", "QuartzCore", "-framework", "Metal",
+               "-Xlinker", "-undefined", "-Xlinker", "error", "-Xlinker", "-no_adhoc_codesign"]
+    for symbol in REQUIRED_SDK_SYMBOLS:
+        command.extend(["-Xlinker", "-u", "-Xlinker", symbol])
+    return [*command, "-o", str(output)]
+
+
+def select_xcode(report, environment, derived, attempt, applications=Path("/Applications")):
+    """Select only an installed SDK that actually links the missing strong symbols."""
+    developers = installed_developers(applications)
+    selection = {"required_symbols": list(REQUIRED_SDK_SYMBOLS),
+                 "installed_developer_directories": [str(path) for path in developers], "candidates": []}
+    report["sdk_selection"] = selection
+    require(0 < len(developers) <= 16, "No bounded installed Xcode inventory available")
+    directory = derived / "sdk-probe"
+    directory.mkdir(parents=True)
+    source = directory / "probe.c"
+    source.write_text("int main(void) { return 0; }\n", encoding="utf-8")
+    selection["probe_source"] = source.read_text(encoding="utf-8")
+    for index, developer in enumerate(developers):
+        candidate = {"developer_directory": str(developer), "compatible": False}
+        selection["candidates"].append(candidate)
+        local = dict(environment, DEVELOPER_DIR=str(developer))
+        code, output = attempt("sdk-candidate-" + str(index), ["xcrun", "--sdk", "iphoneos", "--show-sdk-path"], local)
+        candidate["sdk_query_exit_code"] = code
+        if code:
+            continue
+        sdk = Path(output.strip()).resolve()
+        candidate["sdk_path"] = str(sdk)
+        if not sdk.is_dir() or not sdk.is_relative_to(developer):
+            candidate["failure"] = "SDK does not belong to candidate developer directory"
+            continue
+        probe = directory / ("candidate-" + str(index))
+        code, _ = attempt("sdk-link-probe-" + str(index), sdk_probe_command(sdk, source, probe), local)
+        candidate["probe_exit_code"] = code
+        if code:
+            continue
+        try:
+            candidate["probe_executable"] = inspect_macho(probe)
+        except (OSError, RuntimeError) as error:
+            candidate["failure"] = str(error)
+            continue
+        candidate["compatible"] = True
+        selection["selected_developer_directory"] = str(developer)
+        selection["selected_sdk"] = str(sdk)
+        # This dictionary is passed only to owned child processes; os.environ and
+        # the runner's global xcode-select setting are never changed.
+        environment["DEVELOPER_DIR"] = str(developer)
+        return developer, sdk
+    raise RuntimeError("No installed Xcode can link the five pinned-Godot iOS 26 SDK symbols; see retained SDK preflight logs")
+
+
+def inspect_build_actions(output):
+    compiler = re.search(r"(?m)^(CompileC|SwiftCompile) ", output)
+    # Xcode 16.4's actual retained linker action omits architecture after normal.
+    # Architecture and platform are established independently from the final app.
+    linker = re.search(r"(?m)^Ld [^\n]+ normal(?: arm64)? \(in target 'sightbreak' from project 'sightbreak'\)\s*$", output)
+    require("** BUILD SUCCEEDED **" in output and "** BUILD FAILED **" not in output and compiler and linker,
+            "Compiler, linker or build-success evidence missing")
+    return {"compiler_action": True, "linker_action": True, "build_succeeded": True}
+
+
 def qualify(output, export, derived, seconds):
     require(0 < seconds <= 1200, "Choose a total command budget between 1 and 1200 seconds")
     for path in (output, export, derived):
@@ -172,9 +245,9 @@ def qualify(output, export, derived, seconds):
               "physical_device": "UNVERIFIED", "total_command_budget_seconds": seconds, "commands": []}
     environment = dict(os.environ, SIGHTBREAK_BUILDS_DIR=str(export))
 
-    def run(label, command, limit=30, expected=(0,)):
+    def run(label, command, limit=30, expected=(0,), env=None):
         result = bounded_command(command, output / (label + ".log"),
-                                 min(limit, deadline - time.monotonic()), env=environment)
+                                 min(limit, deadline - time.monotonic()), env=environment if env is None else env)
         report["commands"].append({"label": label, **result})
         manifest.write_json(output / "compile.json", report)
         require(result["cleanup_complete"] and not result.get("unexpected_descendants"), "Owned process cleanup failed: " + label)
@@ -187,10 +260,17 @@ def qualify(output, export, derived, seconds):
         snapshot_command = [sys.executable, str(Path(__file__).resolve()), "--source-snapshot"]
         # Bound local git/hash provenance work in the same owned-process wrapper.
         report["source"] = json.loads(run("source-before", snapshot_command))
+        report["default_developer_directory"] = run("xcode-select-default", ["xcode-select", "-p"]).strip()
+        def attempt(label, command, env):
+            output = run(label, command, expected=range(256), env=env)
+            return report["commands"][-1]["exit_code"], output
+        developer, sdk = select_xcode(report, environment, derived, attempt)
         report["xcode_version"] = run("xcode-version", ["xcodebuild", "-version"]).strip()
         require(report["xcode_version"].startswith("Xcode "), "Native Xcode identity missing")
-        report["developer_directory"] = run("xcode-select", ["xcode-select", "-p"]).strip()
+        report["developer_directory"] = str(developer)
+        report["process_local_developer_dir"] = environment["DEVELOPER_DIR"]
         report["iphoneos_sdk"] = run("iphoneos-sdk", ["xcrun", "--sdk", "iphoneos", "--show-sdk-path"]).strip()
+        require(Path(report["iphoneos_sdk"]).resolve() == sdk, "Selected SDK changed after link preflight")
         report["iphoneos_sdk_version"] = run("iphoneos-sdk-version", ["xcrun", "--sdk", "iphoneos", "--show-sdk-version"]).strip()
         report["clang_version"] = run("clang-version", ["xcrun", "--sdk", "iphoneos", "clang", "--version"]).strip()
         require("Apple clang" in report["clang_version"], "Apple compiler identity missing")
@@ -207,9 +287,7 @@ def qualify(output, export, derived, seconds):
         source_record = json.loads((export / "ios/source.json").read_text())
         require(manifest.same_source(source_record, report["source"]) and source_record["export_completed"], "Wrong export provenance")
         build_log = run("xcodebuild-device", compile_command(export, derived), 600)
-        require("** BUILD SUCCEEDED **" in build_log and
-                re.search(r"(?m)^(CompileC|SwiftCompile) ", build_log) and re.search(r"(?m)^Ld .* normal arm64", build_log),
-                "Compiler, linker or build-success evidence missing")
+        report["build_actions"] = inspect_build_actions(build_log)
         app = derived / "Build/Products/Debug-iphoneos/sightbreak.app"
         report["app"] = inspect_app(app, export, source_record)
         signature = run("unsigned-app", ["codesign", "-d", "--verbose=4", str(app)], expected=(1,))

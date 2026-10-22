@@ -1,8 +1,9 @@
 # iOS device compile candidate
 
-Status: IN PROGRESS. No native Xcode compilation has run for this candidate.
-The build gate remains unverified until the ARM macOS workflow output receives
-independent review. [Declared criteria](CRITERIA.md).
+Status: IN PROGRESS. The first native Xcode compilation failed against the
+default iPhoneOS 18.5 SDK. The [SDK correction](sdk-iteration/README.md) retains
+that exact-source failure and needs a new ARM Mac attempt. The build gate
+remains unverified. [Declared criteria](CRITERIA.md).
 
 `qualify_ios_compile.py` exports a fresh unsigned project using the template
 archive already cached by native setup, checks that archive's pinned SHA512,
