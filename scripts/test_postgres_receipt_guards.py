@@ -53,17 +53,20 @@ class GuardTests(unittest.TestCase):
              mock.patch.object(self.run, "command", return_value=(campaign.PINNED_GODOT, 0)), \
              mock.patch.object(self.run, "docker", return_value=('"wrong-image"\n["postgres@sha256:wrong"]', 0)) as docker:
             with self.assertRaisesRegex(AssertionError, "cached PG image"): self.run.execute()
-            self.assertEqual(len(docker.call_args_list), 1)
+            self.assertEqual(len(docker.call_args_list), 2)
             self.assertIsNone(self.run.volume); self.assertIsNone(self.run.cid)
 
     def test_expired_work_deadline_still_allows_owned_cleanup(self):
         self.run.deadline = time.monotonic() - 100
         self.run.cid = "a" * 64
         with mock.patch.object(self.run, "selected_container", return_value={"id": self.run.cid}), \
-             mock.patch.object(self.run, "docker", side_effect=[("", 0), ("", 1)]) as docker:
+             mock.patch.object(self.run, "docker", side_effect=[("", 0), ("", 1)]) as docker, \
+             mock.patch.object(campaign.socket, "socket") as sockets:
+            sockets.return_value.__enter__.return_value.connect_ex.return_value = 1
             self.run.cleanup()
             self.assertTrue(self.run.state["cleanup"]["pass"])
             self.assertGreater(self.run.deadline, time.monotonic())
+            self.assertTrue(self.run.state["cleanup"]["ports"][str(self.run.journal_port)])
             self.assertEqual(len(docker.call_args_list), 2)
 
     def test_ownership_failure_prevents_destructive_command(self):
@@ -72,6 +75,44 @@ class GuardTests(unittest.TestCase):
              mock.patch.object(self.run, "docker") as docker:
             with self.assertRaisesRegex(AssertionError, "owner mismatch"): self.run.cleanup()
             docker.assert_not_called()
+
+    def test_volume_labels_and_exact_mount_required_before_use(self):
+        self.run.volume = "owned-test-volume"
+        valid = dict(Name=self.run.volume, Type="volume", Destination="/var/lib/postgresql/data", RW=True)
+        self.run.verify_mount(dict(mounts=[valid]))
+        for field, poison in (("Name", "unowned"), ("Type", "bind"), ("Destination", "/other"), ("RW", False)):
+            with self.subTest(field=field), self.assertRaisesRegex(AssertionError, "mount"):
+                self.run.verify_mount(dict(mounts=[dict(valid, **{field: poison})]))
+        with self.assertRaisesRegex(AssertionError, "mount"): self.run.verify_mount(dict(mounts=[valid, valid]))
+        for labels in ({}, {campaign.LABEL: "wrong", "io.sightbreak.owner": campaign.OWNER}):
+            raw = json.dumps(self.run.volume) + "\n" + json.dumps(labels)
+            with mock.patch.object(self.run, "docker", return_value=(raw, 0)) as docker:
+                with self.assertRaisesRegex(AssertionError, "volume ownership"): self.run.selected_volume("pure-volume")
+                self.assertEqual(docker.call_args.args[1][0:2], ["volume", "inspect"])
+
+    def test_expired_deadline_blocks_all_new_runtime_entrypoints(self):
+        self.run.deadline = time.monotonic() - 1
+        for name, args in (("start_process", ("pure", [], {})), ("start_proxy", ("pure",)),
+                           ("sql_identity", ("pure",)), ("sql_snapshot", ("pure",)),
+                           ("command", ("pure", ["must-not-start"]))):
+            with self.subTest(name=name), self.assertRaisesRegex(AssertionError, "240-second"):
+                getattr(self.run, name)(*args)
+
+    def test_sql_snapshot_rejects_initial_identity_postmaster_and_role_replacement(self):
+        self.run.pg_identity = dict(system_identifier="owned-cluster", postmaster_started="2026-10-22 07:00:00+00")
+        observed = dict(database=self.run.db, role=self.run.role, system_identifier="owned-cluster", postmaster_started="2026-10-22T07:00:00+00:00")
+        for field, poison in (("postmaster_started", "2026-10-22T07:00:01+00:00"), ("role", "other-role"), ("system_identifier", "other-cluster")):
+            with self.subTest(field=field):
+                connect = mock.MagicMock()
+                connect.return_value.__enter__.return_value.execute.return_value.fetchone.return_value = [dict(observed, **{field: poison})]
+                with mock.patch.dict("sys.modules", {"psycopg": SimpleNamespace(connect=connect)}), \
+                     mock.patch.object(campaign, "verify_sql_witness"):
+                    with self.assertRaisesRegex(AssertionError, "snapshot identity"): self.run.sql_snapshot("pure")
+        connect = mock.MagicMock()
+        connect.return_value.__enter__.return_value.execute.return_value.fetchone.return_value = [observed]
+        with mock.patch.dict("sys.modules", {"psycopg": SimpleNamespace(connect=connect)}), \
+             mock.patch.object(campaign, "verify_sql_witness"):
+            self.assertEqual(self.run.sql_snapshot("pure-format-equivalence")["postmaster_started"], observed["postmaster_started"])
 
     def test_secret_attempt_is_redacted_and_recorded_as_failure(self):
         password, token = "synthetic-password-value-123", "synthetic-token-value-456"
@@ -96,6 +137,60 @@ class GuardTests(unittest.TestCase):
         connection = mock.Mock(); connection.getresponse.return_value = backend
         return handler, connection
 
+    def test_every_wrong_route_mutation_is_observed_before_upstream_even_on_failure(self):
+        for method, path, body in (("POST", "/market/other/buy", b'{"idempotency_key":"original-key"}'),
+                                   ("POST", "/store/buy", b'{"idempotency_key":"other-key"}'),
+                                   ("PUT", "/loadout", b'{}'), ("PATCH", "/other", b'not-json'),
+                                   ("DELETE", "/other", b'{}')):
+            with self.subTest(method=method, path=path):
+                handler, connection = self.handler()
+                handler.command, handler.path = method, path
+                handler.headers, handler.rfile = {"Content-Length": str(len(body))}, io.BytesIO(body)
+                connection.getresponse.return_value.status = 409
+                previous = len(self.run.mutation_attempts)
+                def assert_before_dispatch(*args, **kwargs):
+                    self.assertEqual(len(self.run.mutation_attempts), previous + 1)
+                    event = self.run.events[-1]
+                    self.assertEqual(event["phase"], "mutation_attempt")
+                    self.assertEqual((event["method"], event["path"], event["raw_body_hex"]), (method, path, body.hex()))
+                connection.request.side_effect = assert_before_dispatch
+                with mock.patch.object(campaign.http.client, "HTTPConnection", return_value=connection): handler.forward()
+                self.assertEqual(len(self.run.mutation_attempts), previous + 1)
+                self.assertFalse(self.run.market_requests)
+        handler, connection = self.handler()
+        handler.path = "/store/buy"
+        connection.request.side_effect = RuntimeError("refused upstream")
+        with mock.patch.object(campaign.http.client, "HTTPConnection", return_value=connection): handler.forward()
+        self.assertEqual(self.run.events[-1]["phase"], "proxy_failure")
+        self.assertEqual(self.run.events[-2]["phase"], "mutation_attempt")
+
+    def test_invalid_or_expired_mutation_still_counted_without_upstream_dispatch(self):
+        for condition in ("route", "length", "deadline"):
+            with self.subTest(condition=condition):
+                handler, _ = self.handler()
+                handler.path = "//refused" if condition == "route" else "/store/buy"
+                if condition == "length": handler.headers["Content-Length"] = "99999"
+                if condition == "deadline": self.run.deadline = time.monotonic() - 1
+                previous = len(self.run.mutation_attempts)
+                handler.forward()
+                self.assertEqual(len(self.run.mutation_attempts), previous + 1)
+                self.assertFalse(self.run.mutation_attempts[-1]["body_complete"])
+                self.assertEqual(self.run.events[-2]["phase"], "mutation_attempt")
+                self.assertEqual(self.run.events[-1]["phase"], "proxy_failure")
+
+    def test_mutation_body_credential_redacted_before_hex_encoding_and_privacy_fails(self):
+        secret = "synthetic-mutation-secret"
+        self.run.add_secret(secret)
+        handler, connection = self.handler()
+        body = json.dumps(dict(idempotency_key="key", unexpected=secret)).encode()
+        handler.path, handler.rfile = "/store/buy", io.BytesIO(body)
+        handler.headers = {"Content-Length": str(len(body))}
+        with mock.patch.object(campaign.http.client, "HTTPConnection", return_value=connection): handler.forward()
+        raw = (self.run.out / "timeline.jsonl").read_text()
+        self.assertNotIn(secret, raw); self.assertNotIn(secret.encode().hex(), raw)
+        self.assertTrue(self.run.leaks)
+        self.assertTrue(self.run.mutation_attempts[-1]["credential_redacted"])
+
     def test_auth_response_and_header_never_enter_retained_proxy_log(self):
         token = "backend-generated-token-must-stay-memory-only"
         handler, connection = self.handler(dict(token=token, player_id="synthetic-account"))
@@ -118,12 +213,13 @@ class GuardTests(unittest.TestCase):
 
     def test_direct_auth_failure_suppresses_raw_exception_context(self):
         unknown = "unknown-auth-exception-secret"
-        for phase in ("construction", "close"):
+        for phase in ("construction", "read", "close"):
             with self.subTest(phase=phase):
                 connection = mock.Mock()
                 connection.getresponse.return_value.status = 401
                 connection.getresponse.return_value.read.return_value = b'{"detail":"refused"}'
                 if phase == "close": connection.close.side_effect = RuntimeError(unknown)
+                if phase == "read": connection.getresponse.return_value.read.side_effect = RuntimeError(unknown)
                 with mock.patch.object(campaign.http.client, "HTTPConnection", return_value=connection,
                                        side_effect=RuntimeError(unknown) if phase == "construction" else None):
                     try: self.run.request("/auth/login", dict(username="x", password="synthetic"))
@@ -146,11 +242,12 @@ class GuardTests(unittest.TestCase):
         self.assertEqual(process.communicate.call_count, 2)
 
     def test_docker_selectors_removed_and_explicit_local_socket_preserved(self):
-        with mock.patch.dict(os.environ, {"DOCKER_HOST": "tcp://untrusted:2375", "DOCKER_CONTEXT": "untrusted", "DOCKER_CONFIG": "/tmp/preserve-selector"}):
+        with mock.patch.dict(os.environ, {"DOCKER_HOST": "tcp://untrusted:2375", "DOCKER_CONTEXT": "untrusted", "DOCKER_CONFIG": "/tmp/preserve-selector", "PGHOSTADDR": "untrusted", "PGSERVICE": "saved"}):
             args = argparse.Namespace(out=self.root / "selector-out", godot=self.engine, component="market")
             run = campaign.Run(args)
         self.assertNotIn("DOCKER_HOST", run.env); self.assertNotIn("DOCKER_CONTEXT", run.env)
         self.assertEqual(run.env["DOCKER_CONFIG"], "/tmp/preserve-selector")
+        self.assertNotIn("PGHOSTADDR", run.env); self.assertNotIn("PGSERVICE", run.env)
         with mock.patch.object(run, "command", return_value=("", 0)) as command:
             run.docker("pure", ["info"])
             self.assertEqual(command.call_args.args[1][:2], ["docker", "--host=unix:///var/run/docker.sock"])

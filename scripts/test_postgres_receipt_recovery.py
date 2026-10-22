@@ -39,7 +39,9 @@ LABEL = "io.sightbreak.receipt-run"
 OWNER = "client_result_recovery_builder"
 SECRET_ENV = ("DATABASE_URL", "POSTGRES_PASSWORD", "PGPASSWORD", "SIGHTBREAK_SERVER_KEY",
               "SIGHTBREAK_JOIN_TICKET", "SIGHTBREAK_NATIVE_FIXTURE", "SIGHTBREAK_PG_RECEIPT_AUTH",
-              "DOCKER_HOST", "DOCKER_CONTEXT", "DOCKER_TLS", "DOCKER_TLS_VERIFY", "DOCKER_CERT_PATH")
+              "DOCKER_HOST", "DOCKER_CONTEXT", "DOCKER_TLS", "DOCKER_TLS_VERIFY", "DOCKER_CERT_PATH",
+              "PGHOST", "PGHOSTADDR", "PGPORT", "PGDATABASE", "PGUSER", "PGPASSFILE",
+              "PGSERVICE", "PGSERVICEFILE", "PGOPTIONS", "PGSSLMODE", "PGSSLKEY", "PGSSLCERT", "PGSSLROOTCERT")
 
 
 def proc_identity(pid: int) -> dict | None:
@@ -71,10 +73,11 @@ class Run:
         self.children, self.proxies, self.events, self.sessions = [], [], [], {}
         self.cid, self.volume, self.db_port, self.api_port = None, None, None, None
         self.api_listener = None
+        self.journal_port = 49152 + int(hashlib.sha256(str(self.out / "client/pending.json").replace("\\", "/").lower().encode()).hexdigest()[:7], 16) % 16384
         self.pg_identity, self.spec, self.current_phase = None, {}, "setup"
         self.holds = {1: threading.Event(), 2: threading.Event()}
         self.releases = {1: threading.Event(), 2: threading.Event()}
-        self.market_requests, self.responses, self.reads, self.sql_rows, self.leaks = [], {}, {}, {}, []
+        self.mutation_attempts, self.market_requests, self.responses, self.reads, self.sql_rows, self.leaks = [], [], {}, {}, {}, []
         self.state = dict(run=self.run, component="market", status="in_progress", database=self.db, role=self.role,
                           scope="owned synthetic production PostgreSQL/API; native method calls; no player consent or earned-value claim",
                           processes=[], steps=[], snapshots=[], observer_handoffs=[], cleanup={})
@@ -96,6 +99,30 @@ class Run:
                     self.leaks.append(dict(phase=self.current_phase, marker="credential detected before persistence"))
                     text = text.replace(value, "[REDACTED_FIXTURE_CREDENTIAL]")
         return text
+
+    def redact_bytes(self, body):
+        # Redact before hex encoding, which would otherwise evade plaintext scans.
+        with self.lock:
+            for value in self.secrets:
+                if value.encode() in body:
+                    self.leaks.append(dict(phase=self.current_phase, marker="credential detected in mutation body"))
+                    body = body.replace(value.encode(), b"[REDACTED_FIXTURE_CREDENTIAL]")
+        return body
+
+    def selected_volume(self, label):
+        raw, _ = self.docker(label, ["volume", "inspect", "--format", "{{json .Name}}\n{{json .Labels}}", self.volume])
+        name, labels = [json.loads(line) for line in raw.splitlines()]
+        require(name == self.volume and labels.get(LABEL) == self.run and labels.get("io.sightbreak.owner") == OWNER,
+                "volume ownership mismatch")
+        row = dict(name=name, labels=labels)
+        self.dump(label + ".json", row)
+        return row
+
+    def verify_mount(self, container):
+        mounts = container["mounts"]
+        require(len(mounts) == 1 and mounts[0].get("Type") == "volume" and mounts[0].get("Name") == self.volume
+                and mounts[0].get("Destination") == "/var/lib/postgresql/data" and mounts[0].get("RW") is True,
+                "container data mount mismatch")
 
     def dump(self, name, value):
         raw = self.redact(json.dumps(value, indent=2, sort_keys=True, default=str)) + "\n"
@@ -157,12 +184,15 @@ class Run:
         return row
 
     def sql_identity(self, label):
+        self.remaining()
         import psycopg
         inside, _ = self.docker(label + "-internal", ["exec", "-e", "PGPASSWORD", self.cid, "psql", "-h", "127.0.0.1", "-X", "-At", "-F", "|", "-U", self.role, "-d", self.db, "-c", IDENTITY_SQL],
                                 env=dict(self.env, PGPASSWORD=self.password))
+        self.remaining()
         with psycopg.connect(host="127.0.0.1", port=self.db_port, user=self.role, password=self.password,
                              dbname=self.db, connect_timeout=5,
                              options="-c default_transaction_read_only=on -c statement_timeout=5000") as db:
+            self.remaining()
             external = db.execute(IDENTITY_SQL).fetchone()
         internal = inside.strip().split("|")
         require(external[0] == self.db and self.db.endswith("_test") and external[1] == self.role and external[4] == 5432
@@ -173,17 +203,22 @@ class Run:
         return row
 
     def sql_snapshot(self, phase):
+        self.remaining()
         import psycopg
         requested = dict(phase=phase, query_id=self.run + ":" + phase + ":" + uuid4().hex,
                          requested_monotonic_ns=time.monotonic_ns(), requested_wall_ns=time.time_ns())
+        self.remaining()
         with psycopg.connect(host="127.0.0.1", port=self.db_port, user=self.role, password=self.password,
                              dbname=self.db, connect_timeout=5,
                              options="-c default_transaction_read_only=on -c statement_timeout=5000") as db:
+            self.remaining()
             observed = db.execute(BUSINESS_SQL).fetchone()[0]
         row = dict(observed, **requested, completed_monotonic_ns=time.monotonic_ns(), completed_wall_ns=time.time_ns())
         verify_sql_witness(row, phase)
         require(row["database"] == self.db and row["role"] == self.role
-                and row["system_identifier"] == self.pg_identity["system_identifier"], "snapshot identity mismatch")
+                and row["system_identifier"] == self.pg_identity["system_identifier"]
+                and datetime.fromisoformat(row["postmaster_started"]) == datetime.fromisoformat(str(self.pg_identity["postmaster_started"])),
+                "snapshot identity mismatch")
         self.dump("sql-" + phase + ".json", row)
         with self.lock:
             self.sql_rows[phase] = row
@@ -192,6 +227,7 @@ class Run:
         return row
 
     def start_process(self, label, argv, env, pass_fds=()):
+        self.remaining()
         process = subprocess.Popen(argv, cwd=ROOT, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                                    text=True, start_new_session=True, pass_fds=pass_fds)
         record = dict(label=label, argv=argv, identity=proc_identity(process.pid), lines=[], process=process)
@@ -223,6 +259,7 @@ class Run:
             headers = {"Content-Type": "application/json"}
             if token: headers["Authorization"] = "Bearer " + token
             data = None if payload is None else json.dumps(payload).encode()
+            self.remaining()
             connection.request(method or ("GET" if payload is None else "POST"), path, body=data, headers=headers)
             response = connection.getresponse(); raw = response.read()
             parsed = json.loads(raw)
@@ -262,16 +299,38 @@ class Run:
         class Handler(BaseHTTPRequestHandler):
             def log_message(self, *_args): pass
             def forward(self):
-                connection = None
+                connection, attempt, attempt_retained, index = None, None, False, None
+                auth = self.path.startswith("/auth/")
+                # Count all non-auth mutations before parsing, validation or an
+                # upstream connection; refused/wrong-route attempts cannot hide.
+                if not auth and self.command in ("POST", "PUT", "PATCH", "DELETE"):
+                    attempt = dict(method=self.command, path=self.path, origin=name, native_phase=run.current_phase,
+                                   authorization_present=bool(self.headers.get("Authorization")),
+                                   raw_body_hex=None, payload=None, body_complete=False)
+                    with run.lock: run.mutation_attempts.append(attempt)
                 try:
+                    run.remaining()
                     require(self.path.startswith("/") and not self.path.startswith("//"), "proxy accepts only relative paths")
                     length = int(self.headers.get("Content-Length", "0")); require(0 <= length <= 8192, "proxy body exceeds bound")
                     body = self.rfile.read(length)
+                    require(len(body) == length, "proxy body incomplete")
+                    if attempt is not None:
+                        safe = run.redact_bytes(body)
+                        attempt.update(raw_body_hex=safe.hex(), body_complete=True, credential_redacted=safe != body)
+                        try: attempt["payload"] = json.loads(safe)
+                        except (ValueError, UnicodeDecodeError): attempt["payload_parse_error"] = True
+                        run.event("mutation_attempt", **attempt); attempt_retained = True
+                    market = self.command == "POST" and self.path == run.spec.get("path")
+                    if market:
+                        with run.lock:
+                            run.market_requests.append(attempt); index = len(run.market_requests)
+                        run.event("market_request", index=index, **attempt)
                     headers = {k: v for k, v in self.headers.items() if k.lower() not in ("host", "connection", "proxy-connection", "transfer-encoding")}
-                    connection = http.client.HTTPConnection("127.0.0.1", run.api_port, timeout=10)
+                    run.remaining()
+                    connection = http.client.HTTPConnection("127.0.0.1", run.api_port, timeout=run.remaining(10))
+                    run.remaining()
                     connection.request(self.command, self.path, body=body or None, headers=headers)
                     response = connection.getresponse(); raw = response.read()
-                    auth = self.path.startswith("/auth/")
                     if auth:
                         parsed = json.loads(raw)
                         if isinstance(parsed, dict) and parsed.get("token"):
@@ -283,13 +342,7 @@ class Run:
                         value = json.loads(raw)
                         run.reads.setdefault(run.current_phase, {})[self.path] = value
                         run.event("business_read", native_phase=run.current_phase, origin=name, path=self.path, response=value)
-                    market = self.command == "POST" and self.path == run.spec.get("path")
                     if market:
-                        observation = dict(method=self.command, path=self.path, raw_body_hex=body.hex(), payload=json.loads(body),
-                                           origin=name, phase=run.current_phase, authorization_present=bool(self.headers.get("Authorization")))
-                        with run.lock:
-                            run.market_requests.append(observation); index = len(run.market_requests)
-                        run.event("market_request", index=index, **observation)
                         parsed = json.loads(raw)
                         run.responses[index] = parsed
                         run.event("market_" + str(index) + "_backend_200", status=response.status, response=parsed)
@@ -310,6 +363,8 @@ class Run:
                     self.wfile.write(raw)
                     if market: run.event("market_" + str(index) + "_response_forwarded")
                 except BaseException as error:
+                    if attempt is not None and not attempt_retained:
+                        run.event("mutation_attempt", **attempt)
                     run.event("proxy_failure", origin=name, error_type=type(error).__name__,
                               exception="authentication details withheld" if self.path.startswith("/auth/") else run.redact(str(error)))
                     self.close_connection = True
@@ -322,9 +377,12 @@ class Run:
             do_GET = forward
             do_POST = forward
             do_PUT = forward
+            do_PATCH = forward
+            do_DELETE = forward
         return Handler
 
     def start_proxy(self, name):
+        self.remaining()
         server = ThreadingHTTPServer(("127.0.0.1", 0), self.proxy_handler(name)); server.daemon_threads = True
         thread = threading.Thread(target=server.serve_forever, daemon=True); thread.start()
         self.proxies.append((name, server, thread))
@@ -340,10 +398,12 @@ class Run:
         env = dict(self.env, XDG_DATA_HOME=str(state / "data"), XDG_CONFIG_HOME=str(state / "config"), XDG_CACHE_HOME=str(state / "cache"),
                    SIGHTBREAK_PG_RECEIPT_CONFIG=str(path), SIGHTBREAK_PG_RECEIPT_AUTH=json.dumps(account["auth"]))
         argv = [str(self.args.godot), "--headless", "--path", str(ROOT / "game"), "--script", "res://tests/postgres_receipt_probe.gd"]
+        self.event(phase + "_journal_listener_expected", address="127.0.0.1", port=self.journal_port, journal_path=str(state / "pending.json"))
         child = self.start_process(phase, argv, env); process = child["process"]
         if held is not None:
             self.wait_for(lambda: self.holds[held].is_set() or process.poll() is not None, phase + " held production response", 10)
             require(self.holds[held].is_set() and process.poll() is None, phase + " did not reach held response while alive")
+            self.record_journal_listener(phase, process.pid)
             self.event(phase + "_alive_before_kill", process=proc_identity(process.pid))
             self.event(phase + "_kill_requested", process=child["identity"])
             os.killpg(process.pid, signal.SIGKILL); process.wait(timeout=5); child["reader"].join(timeout=5)
@@ -374,6 +434,21 @@ class Run:
         self.event(phase + "_response_and_refresh_complete", observation=results[0])
         return results[0]
 
+    def record_journal_listener(self, phase, pid):
+        # Linux /proc maps the deterministic journal TCP listener to this native
+        # process without connecting to its intentionally protocol-free socket.
+        expected = "0100007F:" + format(self.journal_port, "04X")
+        rows = [line.split() for line in Path("/proc/net/tcp").read_text().splitlines()[1:]]
+        matches = [r for r in rows if r[1] == expected and r[3] == "0A"]
+        sockets = set()
+        for fd in Path(f"/proc/{pid}/fd").iterdir():
+            try: sockets.add(os.readlink(fd))
+            except FileNotFoundError: pass
+        owned = [r for r in matches if "socket:[" + r[9] + "]" in sockets]
+        require(len(matches) == len(owned) == 1, "native journal listener ownership not observed")
+        self.event(phase + "_journal_listener_owned", port=self.journal_port, address="127.0.0.1",
+                   process=proc_identity(pid), inode=owned[0][9])
+
     def cleanup(self):
         # Cleanup remains bounded and usable even after the work deadline fails.
         self.deadline = time.monotonic() + 60
@@ -402,13 +477,11 @@ class Run:
             _, status = self.docker("container-absent", ["inspect", "--format", "{{.Id}}", self.cid], check=False)
             cleanup["container_absent"] = status == 1
         if self.volume:
-            raw, _ = self.docker("volume-before-cleanup", ["volume", "inspect", "--format", "{{json .Name}}\n{{json .Labels}}", self.volume])
-            name, labels = [json.loads(line) for line in raw.splitlines()]
-            require(name == self.volume and labels.get(LABEL) == self.run and labels.get("io.sightbreak.owner") == OWNER, "volume ownership mismatch")
+            self.selected_volume("volume-before-cleanup")
             self.docker("remove-owned-volume", ["volume", "rm", self.volume])
             _, status = self.docker("volume-absent", ["volume", "inspect", "--format", "{{.Name}}", self.volume], check=False)
             cleanup["volume_absent"] = status == 1
-        ports = [p for p in (self.db_port, self.api_port) if p] + [server.server_port for _, server, _ in self.proxies]
+        ports = [p for p in (self.db_port, self.api_port, self.journal_port) if p] + [server.server_port for _, server, _ in self.proxies]
         cleanup["ports"] = {}
         for port in ports:
             with socket.socket() as sock:
@@ -418,17 +491,23 @@ class Run:
         require(cleanup["pass"], "owned resource cleanup incomplete")
 
     def execute(self):
+        # The driver never consults inherited libpq routing/credential selectors.
+        # Explicit fixture values below are the only database connection source.
+        for key in SECRET_ENV:
+            if key.startswith("PG"): os.environ.pop(key, None)
         import psycopg
         self.state["source_before"] = self.source()
         self.state["engine"] = dict(path=str(self.args.godot), sha256=hashlib.sha256(self.args.godot.read_bytes()).hexdigest())
         require(self.state["engine"]["sha256"] == PINNED_GODOT_SHA256, "wrong pinned Linux engine bytes")
         version, _ = self.command("engine-version", [str(self.args.godot), "--version"])
         require(version.strip() == PINNED_GODOT, "wrong pinned engine")
+        self.docker("docker-readiness", ["info", "--format", "{{json .ServerVersion}}\n{{json .OSType}}\n{{json .DockerRootDir}}"])
         raw, _ = self.docker("image", ["image", "inspect", "--format", "{{json .Id}}\n{{json .RepoDigests}}", IMAGE])
         image_id, digests = [json.loads(line) for line in raw.splitlines()]
         require("postgres@sha256:" + IMAGE.rsplit("sha256:", 1)[1] in digests, "wrong cached PG image")
         self.volume = self.run + "-data"
         self.docker("volume-create", ["volume", "create", "--label", LABEL + "=" + self.run, "--label", "io.sightbreak.owner=" + OWNER, self.volume])
+        self.selected_volume("volume-owned-before-start")
         raw, _ = self.docker("postgres-start", ["run", "-d", "--pull=never", "--name", self.run,
                             "--label", LABEL + "=" + self.run, "--label", "io.sightbreak.owner=" + OWNER,
                             "-p", "127.0.0.1::5432", "-e", "POSTGRES_PASSWORD", "-e", "POSTGRES_USER=" + self.role,
@@ -436,17 +515,20 @@ class Run:
                             env=dict(self.env, POSTGRES_PASSWORD=self.password))
         self.cid = raw.strip(); require(bool(re.fullmatch("[a-f0-9]{64}", self.cid)), "container ID missing")
         container = self.selected_container("container-owned")
+        self.verify_mount(container)
         binding = container["ports"]["5432/tcp"]
         require(container["image"] == image_id and len(binding) == 1 and binding[0]["HostIp"] == "127.0.0.1", "container binding/image unsafe")
         self.db_port = int(binding[0]["HostPort"]); require(self.db_port != 55432, "shared DB port selected")
         def ready():
             try:
+                self.remaining()
                 with psycopg.connect(host="127.0.0.1", port=self.db_port, user=self.role, password=self.password, dbname=self.db, connect_timeout=1): return True
             except psycopg.OperationalError: return False
         self.wait_for(ready, "owned PG readiness", 30)
         self.pg_identity = self.sql_identity("identity-before-migration")
         backend_env = dict(self.env, DATABASE_URL=f"postgresql+psycopg://{self.role}:{self.password}@127.0.0.1:{self.db_port}/{self.db}", PYTHONDONTWRITEBYTECODE="1")
         self.command("migrate", [sys.executable, "-B", "backend/migrate.py"], env=backend_env, timeout=60)
+        self.remaining()
         self.api_listener = socket.socket()
         self.api_listener.bind(("127.0.0.1", 0)); self.api_listener.listen(128)
         require(self.api_listener.getsockname()[0] == "127.0.0.1", "API listener not loopback")
@@ -477,6 +559,7 @@ class Run:
         sys.path.insert(0, str(ROOT / "backend"))
         from app import credit, engine, mint, transaction
         from models import Player
+        self.remaining()
         with transaction() as db:
             credit(db, db.get(Player, accounts["seller"]["id"]), 100, "fictional_test_fixture", self.run)
             credit(db, db.get(Player, accounts["buyer"]["id"]), 1000, "fictional_test_fixture", self.run)
@@ -502,10 +585,10 @@ class Run:
         settled = self.sql_rows["settled"]; verify_market(before, settled, self.spec, self.responses[1])
         journal = self.out / "client/pending.json"
         for phase, account, url in (("wrong_account", accounts["outsider"], origin), ("wrong_origin", accounts["buyer"], origin2)):
-            count = len(self.market_requests)
+            count = len(self.mutation_attempts)
             result = self.native(phase, "guard", account, url)
             require(result["pending_before"] and result["pending_after"] and result["result"].get("_error")
-                    and journal.read_bytes() == first and len(self.market_requests) == count, "client isolation guard failed")
+                    and journal.read_bytes() == first and len(self.mutation_attempts) == count, "client isolation guard failed")
             verify_unchanged(settled, self.sql_snapshot(phase))
         status, outsider = self.request(self.spec["path"], dict(idempotency_key=self.spec["key"], expected_price=400), accounts["outsider"]["token"])
         require(status == 409 and "item" not in outsider, "outsider received buyer receipt")
@@ -523,16 +606,16 @@ class Run:
         final_event = next(e for e in self.events if e["phase"] == "final_recovery_response_and_refresh_complete")
         final_sql = self.sql_snapshot("after_final_refresh"); verify_sql_witness(final_sql, "after_final_refresh", final_event); verify_unchanged(settled, final_sql)
         self.observer("post_final_refresh")
-        count = len(self.market_requests)
+        count = len(self.mutation_attempts)
         cleared = self.native("post_clear_restart", "post_clear", accounts["buyer"], origin)
-        require(not cleared["pending_before"] and not cleared["pending_after"] and len(self.market_requests) == count and not journal.exists(), "post-clear restart recreated a purchase")
+        require(not cleared["pending_before"] and not cleared["pending_after"] and len(self.mutation_attempts) == count and not journal.exists(), "post-clear restart recreated a purchase")
         verify_unchanged(settled, self.sql_snapshot("post_clear_restart"))
         status, rejected = self.request(self.spec["path"], dict(idempotency_key=self.spec["key"], expected_price=401), accounts["buyer"]["token"])
         require(status == 409, "changed-price receipt was accepted")
         self.event("changed_price_refused", account=self.spec["buyer"], path=self.spec["path"],
                    payload=dict(idempotency_key=self.spec["key"], expected_price=401), status=status, response=rejected)
         verify_unchanged(settled, self.sql_snapshot("changed_price_rejected"))
-        require(len(self.market_requests) == 3 and all(r["method"] == "POST" and r["path"] == self.spec["path"]
+        require(len(self.mutation_attempts) == len(self.market_requests) == 3 and all(r["method"] == "POST" and r["path"] == self.spec["path"]
                 and r["payload"] == dict(idempotency_key=self.spec["key"], expected_price=400)
                 and r["raw_body_hex"] == self.market_requests[0]["raw_body_hex"] and r["origin"] == "origin1"
                 and r["authorization_present"] for r in self.market_requests), "request identity/raw-body changed")

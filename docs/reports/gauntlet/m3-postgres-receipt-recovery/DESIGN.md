@@ -1,6 +1,7 @@
 # Source-only production market recovery design
 
-No runtime has run for this component. The intended implementation adds test
+No PostgreSQL/API/proxy or native transaction has run for this component.
+The one authorized private pinned editor import is retained separately. The intended implementation adds test
 orchestration and a native probe; production game/backend/server source stays
 unchanged. Existing author attribution remains in the imported B-21 history.
 
@@ -24,7 +25,8 @@ processes obtain new actual backend sessions. Expected total auth calls are nine
 limit 15. Preserve that limit; failure is evidence, not grounds to disable it.
 
 The transparent HTTP proxy forwards only to the fixed owned loopback API. It
-records raw mutation method/path/body and the original backend response, but
+counts every non-auth POST/PUT/PATCH/DELETE before validation or forwarding,
+including refusals and upstream failures. It records raw mutation method/path/body and the original backend response, but
 redacts authentication bodies/headers/responses. Actual authentication responses
 are parsed in memory to collect token values for the final leak scan. GETs and
 ordinary responses are forwarded unchanged. A one-shot barrier for the original
@@ -58,7 +60,7 @@ timestamped files. Do not infer a post-replay witness from a pre-replay query.
 The wrong-origin native process signs in anew through a second owned proxy URL
 to the same production backend. Its account ID matches, its base URL differs,
 and its saved journal keeps the original URL. The expected failure is the real
-client's origin guard, with no keyed POST at either proxy. This does not prove
+client's origin guard, with no non-auth mutation attempt at either proxy. This does not prove
 remote origin security or cross-host token binding. The wrong-account native
 process signs in as the distinct outsider and exercises the same real guard.
 
@@ -94,3 +96,17 @@ socket, avoiding a reserve/close/rebind gap. Cleanup gets its own bounded window
 after the work deadline, and authentication construction/read/close failures
 withhold raw credential-bearing exception contents.
 Root controls the local native lane; further engine use requires coordination.
+
+The source-only f5bea861 freeze was rejected by independent falsifiers: a
+wrong-route POST could escape its market-only count, and a matching poisoned
+stored/actual response could escape the SQL metadata join. Corrections count
+all attempts before forwarding, bind every returned item field to SQL and the
+declared definition, and challenge both gaps in pure tests. Volume labels and
+exact mount are checked before migration; every snapshot binds initial
+postmaster/role/system ID. Before starting processes/listeners/requests/queries,
+the driver checks its work deadline. The deterministic native journal port is
+recorded before launch, observed through Linux socket inode/PID ownership while
+both killed clients are alive, and checked closed during cleanup. Authentication
+construction/read/close exception contents stay withheld. Known credentials
+are redacted before raw mutation bytes are hex encoded; any redaction fails the
+privacy gate. These source checks do not establish runtime acceptance.

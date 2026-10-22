@@ -8,13 +8,17 @@ from postgres_receipt_oracle import fingerprint, verify_market, verify_order, ve
 def fixture():
     spec = dict(buyer="buyer", seller="seller", outsider="outsider", item="original-item",
                 listing="original-listing", key="3c74ec8e-77c7-455d-8661-b43f2f29aead", price=400, fee=12)
-    response = {"item": {"id": "original-item", "pattern_seed": 314159, "wear": 0.1234}, "credits": 600, "fee": 12}
+    response = {"item": dict(id="original-item", definition_id="obsidian_rare", rarity="Rare", pattern_seed=314159,
+                             wear=0.1234, variant="standard", acquired_at="2026-10-22T06:59:10+00:00",
+                             collection="Obsidian", kind="weapon_skin", name="Obsidian / Carbon", reserved=False,
+                             trade_eligible=True, marketplace_eligible=True), "credits": 600, "fee": 12}
     before = dict(database="owned_receipt_test", system_identifier="cluster-1", role="fixture-role",
                   postmaster_started="2026-10-22 06:59:00+00", schema_versions=[1, 2, 3, 4],
                   sql_clock="2026-10-22 07:00:00+00", business={
         "players": [dict(id=p, credits=c, xp=0, active=True) for p, c in (("buyer", 1000), ("seller", 100), ("outsider", 0))],
         "items": [dict(id="original-item", owner_id="seller", consumed=False, reservation="market:original-listing",
-                       pattern_seed=314159, wear=1234, definition_id="obsidian_rare")],
+                       pattern_seed=314159, wear=1234, definition_id="obsidian_rare", rarity="Rare", variant="standard",
+                       acquired_at="2026-10-22T06:59:10+00:00")],
         "listings": [dict(id="original-listing", item_id="original-item", seller_id="seller", buyer_id=None, price=400, state="active")],
         "ledger": [dict(id="seed-b", player_id="buyer", amount=1000, balance_after=1000, reason="fictional_test_fixture", reference="run"),
                    dict(id="seed-s", player_id="seller", amount=100, balance_after=100, reason="fictional_test_fixture", reference="run")],
@@ -83,6 +87,17 @@ class MarketOracleTests(unittest.TestCase):
                 elif change == "wrong_result": b["operations"][0]["response"]["item"]["id"] = "other-item"
                 elif change == "audit_fee": b["audit"][-1]["details"]["fee"] = 0
                 else: b["audit"].append(dict(id="extra", actor="buyer", action="market_settled", details={}))
+                with self.assertRaises(AssertionError): verify_market(before, settled, spec, response)
+
+    def test_matched_poisoned_response_and_operation_metadata_rejects(self):
+        changes = dict(pattern_seed=1, definition_id="other", rarity="Common", variant="other", wear=0.9999,
+                       acquired_at="2026-10-22T06:59:11+00:00", reserved=True, trade_eligible=False,
+                       marketplace_eligible=False, collection="other", kind="key", name="other")
+        for field, poison in changes.items():
+            with self.subTest(field=field):
+                before, settled, spec, response = fixture()
+                response["item"][field] = poison
+                settled["business"]["operations"][0]["response"] = deepcopy(response)
                 with self.assertRaises(AssertionError): verify_market(before, settled, spec, response)
 
     def test_wrong_cluster_database_schema_and_seed_reject(self):

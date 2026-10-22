@@ -10,7 +10,10 @@ One market sequence is planned. Store and case are separate unqualified work.
 Use a clean frozen own branch, the existing backend interpreter, pinned Linux
 Godot bytes and cached PostgreSQL digest. The runner refuses production source
 changes, dirty source, wrong engine/image, shared port 55432, unowned container
-or volume identity and a mismatched SQL cluster before fixture writes. It creates
+or volume identity and a mismatched SQL cluster before fixture writes. Volume
+labels are checked before container start; its sole writable named data mount is
+checked before migration. Every SQL snapshot binds the initial postmaster, role
+and system identifier. It creates
 only a new labelled volume/container, a new loopback API listener and two owned
 loopback proxy listeners. No pull, deployment, credential file or shared DB.
 
@@ -22,8 +25,10 @@ cd /workspace/sightbreak-postgres-receipt-recovery
   --out /workspace/sightbreak-postgres-receipt-market-r1
 ```
 
-The source workload has a 240-second wall bound; cleanup has an independent
-60-second allowance even on failure. Specific existing/bounded waits are PG
+The source workload has a 240-second deadline checked before new commands,
+processes, listeners, upstream requests and SQL connections/queries, plus bounded
+waits; this is not an external hard watchdog for already-running work. Cleanup
+has an independent 60-second allowance even on failure. Specific existing/bounded waits are PG
 readiness 30 seconds, migrations 60, API readiness 20, normal native completion
 35, held-response observation 10 and proxy hold 15. Native EconomyAPI retains
 its unchanged 12-second request timeout. An expired/missing barrier is a failure;
@@ -61,10 +66,19 @@ matching release file with JSON fields `run`, `phase`, `status: "observed"`.
 These are handoff acknowledgments, not substitutes for retained independent SQL.
 A missing/late witness fails the bounded attempt and remains retained.
 
-The runner preserves per-phase sanitized native/API logs, raw non-auth market
-request bodies, actual backend responses, exact journal captures, unique SQL
+Before any container attempt, the driver rechecks the managed local Docker
+socket with endpoint/context/TLS selectors cleared and retains selected daemon
+readiness fields. It does not restart the daemon or inspect credential config.
+Inherited libpq routing/credential selectors are removed without reading values;
+all database connections use explicit owned fixture parameters.
+
+The runner preserves per-phase sanitized native/API logs, every attempted
+non-auth mutation's method/path/credential-free raw bytes before forwarding,
+including refused or wrong-route attempts, plus the three exact market requests, actual backend responses, exact journal captures, unique SQL
 files, both event clocks, PID/start identities, resource IDs/bindings, source
-before/after and cleanup receipts. Auth bodies/replies/headers, native bootstrap
+before/after and cleanup receipts. It records the deterministic journal listener
+port, proves its socket inode belongs to each held native PID, and checks it
+closed alongside DB/API/proxy listeners at cleanup. Auth bodies/replies/headers, native bootstrap
 passwords/tokens and DB secrets never enter argv or retained configuration.
 Known plaintext auth values are checked across all persistent client/output
 bytes. A log redaction event itself fails privacy qualification.

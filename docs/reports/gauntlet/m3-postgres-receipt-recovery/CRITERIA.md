@@ -66,7 +66,8 @@ Retain these separate phases without deduplicating equal SQL snapshots:
    Revoke its old actual session through production `/auth/logout` using only
    the in-memory token, then prove the old token receives 401 without logging it.
 4. Fresh native wrong-account and second-owned-origin attempts must retain the
-   byte-identical journal and issue zero keyed mutation requests. Separate production API replay
+   byte-identical journal and issue zero non-auth mutation attempts at either
+   proxy, including wrong-route, malformed, refused or upstream-failing attempts. Separate production API replay
    with outsider authentication must not return the buyer's receipt or item.
    Before/after business SQL stays unchanged. The second proxy origin forwards
    to the same owned backend, isolating the client origin check from account ID.
@@ -80,7 +81,7 @@ Retain these separate phases without deduplicating equal SQL snapshots:
    clears the journal and refreshes ownership/balance from actual API reads.
    Retain a distinct SQL query requested after the final response and completed
    account/inventory refresh. A second post-clear
-   restart has no receipt and sends no purchase. Business SQL remains unchanged.
+   restart has no receipt and sends no non-auth mutation. Business SQL remains unchanged.
 7. A changed expected price with the original key must receive production 409
    without changing business SQL. No altered or fresh request may replace an
    unresolved receipt. Any failure remains a failure; no deadline extension or
@@ -94,11 +95,16 @@ settlement audit, no match rewards and no game tickets. Sum of the two purchase
 ledger amounts is -12. The service has no separate fee-account ledger; do not
 invent one. Original operation ID and request hash must join to the exact native
 request and stored response. Every successful native result must equal that
-original stored response, including the item identity and fee.
+original stored response. Join its complete item metadata to the selected SQL
+item row: identity, definition, rarity, random seed, variant, wear divided by
+10,000, acquisition time and reservation/eligibility. The declared
+`obsidian_rare` definition is Obsidian / Carbon, Rare, weapon_skin. Matching
+poisoned operation/result metadata cannot substitute for this SQL join.
 
 Each SQL witness has a unique phase/query ID, requested/completed monotonic and
 wall clocks, actual PostgreSQL clock, cluster/database identity and complete
-selected rows. The final query must start after replay; an earlier identical
+selected rows. Every snapshot binds to the initial pre-migration role,
+system identifier and parsed postmaster timestamp. The final query must start after replay; an earlier identical
 sample is insufficient. Independent read-only live SQL observation is arranged
 before runtime and after final replay. Keep clean fixed source until its
 source-after receipt.
@@ -111,7 +117,10 @@ container and labelled volume using the already pinned cached digest from
 ports bind 127.0.0.1; random PostgreSQL port must differ from shared 55432. Refuse
 arbitrary DATABASE_URL, API URL, container or volume selection. Verify cluster
 identity over external TCP and internal container SQL before migrations/fixture
-writes. Apply all four unchanged production migrations. No shared dev database,
+writes. Verify the created volume's exact name and owner/run labels before
+starting the container, and its sole writable named-volume mount at
+`/var/lib/postgresql/data` before migrations. Recheck ownership before removal. Apply all four unchanged
+production migrations. No shared dev database,
 image pull, production service, paid action or live credential is used.
 
 No bearer token or plaintext account password may appear in the journal, app
@@ -129,7 +138,8 @@ Record exact source/engine/image hashes, native/process/socket identities,
 raw method/path/body only for non-auth transaction requests, original response,
 SQL and journal bytes, failures, private user namespaces and resource cleanup.
 Delete only exact owned IDs after label/volume checks. Reap process groups,
-close proxy/API/DB ports, remove the owned container/volume, and record source
+observe the native journal listener's inode belonging to each killed native PID,
+close journal/proxy/API/DB ports, remove the owned container/volume, and record source
 unchanged afterward. A fresh critic must inspect actual native and SQL outputs.
 The builder cannot approve its own work.
 

@@ -1,0 +1,64 @@
+{
+  "base": "89393f3d1e059a3da35533e0bd84e98a098c691c",
+  "rejected_source_only_freeze": "f5bea86141c66e4753d2ef3d2e49f122ad9398bc",
+  "scope": "source and pure only; authorized parser at38d78ff; no service or native transaction",
+  "component_sha256": {
+    "scripts/test_postgres_receipt_recovery.py": "1cc2a4167534a4fd27938b8993f4265f4f365faeb0534cdd0d7c83e337bc621b",
+    "scripts/postgres_receipt_oracle.py": "6052d8923a33918ba9a21d26a7ca3ebd4b8b6113fe8adba88f1eea4980604019",
+    "scripts/test_postgres_receipt_oracle.py": "9eaf3c8d6ca0ebf6a04388c0a4161c260f9eca38375f0dbfbfc48e1324077120",
+    "scripts/test_postgres_receipt_guards.py": "ea5a546513c354282d7ef2d32bc547b043a5261825469db800862329778f3795",
+    "game/tests/postgres_receipt_probe.gd": "4128aa1c96d5793f9e1a381b37c05f4df93890341276c48fe69bbf77d98e0e77",
+    "game/tests/postgres_receipt_probe.gd.uid": "625b462b9f71b83df79adfab870d09b04a591a9d938388e37d2db60fd28e1e16"
+  },
+  "checks": {
+    "oracle_groups": 9,
+    "guard_groups": 17,
+    "runtime_services_started": false,
+    "native_transaction_run": false
+  },
+  "failures": [
+    {
+      "evidence": "guards-correction-r1.log",
+      "source": "recovery-correction-r1.py.txt",
+      "reason": "editing indentation error before guard import; no entrypoint ran"
+    },
+    {
+      "source": "f5bea861",
+      "reason": "independent wrong-route attempt and SQL item-metadata falsifiers; source-only rejection, not production defects; critic retains independent outputs"
+    }
+  ],
+  "receipts": {
+    "oracle-correction-r1.log": {
+      "sha256": "770e2f383635e8d554ee3e9690497e9342ce58cbbde25fc00e6caa814dcca499",
+      "bytes": 1394
+    },
+    "guards-correction-r1.log": {
+      "sha256": "af23df47d9649bcf9ae89d4325eb57d27e422bfd6f34c40ab3ef81d61bbc9996",
+      "bytes": 517
+    },
+    "guards-correction-r2.log": {
+      "sha256": "6b78bc8a15c54897272afa93179affb212911b82395a9c0527145bd3b896b2d4",
+      "bytes": 2714
+    },
+    "guards-correction-r3.log": {
+      "sha256": "a3422844304ae06bdf0741f6d1602374324e22b6b40e9b03193ba039900da3a2",
+      "bytes": 2714
+    },
+    "oracle-correction-final.log": {
+      "sha256": "770e2f383635e8d554ee3e9690497e9342ce58cbbde25fc00e6caa814dcca499",
+      "bytes": 1394
+    },
+    "guards-correction-final.log": {
+      "sha256": "6b78bc8a15c54897272afa93179affb212911b82395a9c0527145bd3b896b2d4",
+      "bytes": 2714
+    },
+    "help-correction-final.log": {
+      "sha256": "0ab0898661b5e6d2753438ea4c6bb304c4f495e4aa5233d0aed82fcf67cc220e",
+      "bytes": 570
+    },
+    "recovery-correction-r1.py.txt": {
+      "sha256": "4ebed297d007791a30a5b2d4839f0cb330b06bb74afe7d62f28f11eceac036a9",
+      "bytes": 43858
+    }
+  }
+}

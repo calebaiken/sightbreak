@@ -102,6 +102,21 @@ def verify_market(before: dict, settled: dict, spec: dict, actual_response: dict
     require(operation["request_hash"] == fingerprint(payload), "operation request hash changed")
     require(operation["response"] == actual_response and actual_response["item"]["id"] == item["id"]
             and actual_response["credits"] == 600 and actual_response["fee"] == 12, "response not original settlement")
+    # Join every returned item field to the selected SQL row, independently of
+    # the stored response. A matching poisoned operation/result is insufficient.
+    sql_item, response_item = b["items"][0], actual_response["item"]
+    acquired = datetime.fromisoformat(sql_item["acquired_at"])
+    returned_acquired = datetime.fromisoformat(response_item["acquired_at"])
+    require(acquired.tzinfo is not None and returned_acquired.tzinfo is not None and acquired == returned_acquired,
+            "response acquisition timestamp differs from SQL")
+    expected_item = {k: sql_item[k] for k in ("id", "definition_id", "rarity", "pattern_seed", "variant")}
+    expected_item.update(wear=sql_item["wear"] / 10000.0, acquired_at=response_item["acquired_at"],
+                         reserved=sql_item["reservation"] is not None,
+                         trade_eligible=not sql_item["consumed"] and sql_item["reservation"] is None,
+                         marketplace_eligible=not sql_item["consumed"] and sql_item["reservation"] is None,
+                         collection="Obsidian", kind="weapon_skin", name="Obsidian / Carbon")
+    require(sql_item["definition_id"] == "obsidian_rare" and sql_item["rarity"] == "Rare"
+            and response_item == expected_item, "response item metadata differs from SQL/declared definition")
     old_audit = {r["id"]: r for r in a["audit"]}
     new_audit = {r["id"]: r for r in b["audit"]}
     require(len(new_audit) == len(b["audit"]) == len(old_audit) + 1 and all(new_audit.get(k) == v for k, v in old_audit.items()),
