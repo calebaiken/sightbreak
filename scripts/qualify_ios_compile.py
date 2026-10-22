@@ -182,10 +182,11 @@ def qualify(output, export, derived, seconds):
         return (output / (label + ".log")).read_text(encoding="utf-8", errors="replace")
 
     try:
-        report["source"] = manifest.source()
-        manifest.clean(report["source"])
         report["host"] = {"system": platform.system(), "machine": platform.machine(), "platform": platform.platform()}
         require(platform.system() == "Darwin" and platform.machine() == "arm64", "Requires native ARM macOS; no test skip")
+        snapshot_command = [sys.executable, str(Path(__file__).resolve()), "--source-snapshot"]
+        # Bound local git/hash provenance work in the same owned-process wrapper.
+        report["source"] = json.loads(run("source-before", snapshot_command))
         report["xcode_version"] = run("xcode-version", ["xcodebuild", "-version"]).strip()
         require(report["xcode_version"].startswith("Xcode "), "Native Xcode identity missing")
         report["developer_directory"] = run("xcode-select", ["xcode-select", "-p"]).strip()
@@ -214,7 +215,7 @@ def qualify(output, export, derived, seconds):
         signature = run("unsigned-app", ["codesign", "-d", "--verbose=4", str(app)], expected=(1,))
         require("code object is not signed at all" in signature, "codesign did not establish unsigned app")
         run("inspect-project-after-build", [sys.executable, str(manifest.ROOT / "scripts/verify_builds.py"), "--targets", "ios"], 60)
-        require(manifest.source() == report["source"], "Source changed during iOS qualification")
+        require(json.loads(run("source-after", snapshot_command)) == report["source"], "Source changed during iOS qualification")
         report.update(status="PASS", compile_completed=True)
     except (Exception, SystemExit) as error:
         report["failure"] = str(error)
@@ -233,6 +234,11 @@ def qualify(output, export, derived, seconds):
 
 
 def main():
+    if sys.argv[1:] == ["--source-snapshot"]:
+        current = manifest.source()
+        manifest.clean(current)
+        print(json.dumps(current))
+        return 0
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--builds", type=Path, required=True)
