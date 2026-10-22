@@ -1564,10 +1564,12 @@ func toggle_pause() -> void:
 	var rows := make_overlay("FIELD MENU")
 	set_match_suspended(true)
 	rows.add_child(label("Training is paused." if match_suspended else "The match continues while this menu is open.", Design.TYPE_BODY, MUTED))
-	rows.add_child(button("RESUME", close_overlay, Design.TOUCH_MIN, "primary"))
+	var resume := button("RESUME", close_overlay, Design.TOUCH_MIN, "primary")
+	rows.add_child(resume)
 	rows.add_child(button("SETTINGS", show_match_settings))
 	rows.add_child(button("EDIT TOUCH HUD", open_touch_editor))
 	rows.add_child(button("LEAVE MATCH", leave_match, Design.TOUCH_MIN, "ghost"))
+	resume.grab_focus()
 
 func show_match_settings() -> void:
 	var rows := make_overlay("FIELD SETTINGS")
