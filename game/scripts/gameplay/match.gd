@@ -100,6 +100,7 @@ var _device_audio: AudioStreamPlayer3D
 var _beep_clock: float = 0.0
 var _remote_utilities: Dictionary = {}
 var _rng := RandomNumberGenerator.new()
+var _order_rng := RandomNumberGenerator.new()
 
 func configure(settings: Dictionary) -> void:
 	options = settings.duplicate()
@@ -110,6 +111,7 @@ func configure(settings: Dictionary) -> void:
 func _ready() -> void:
 	name = "Match"
 	_rng.randomize()
+	_order_rng.randomize()
 	arena = RelayYard.new()
 	add_child(arena)
 	_build_device_visual()
@@ -127,6 +129,7 @@ func _ready() -> void:
 	var stock_defend_spawns: Array[Vector3] = arena.defend_spawns.duplicate()
 	if not initial_conditions.is_empty():
 		_rng.seed = int(initial_conditions.seed)
+		_order_rng.seed = int(initial_conditions.seed) * 131 + 17
 		arena.attack_spawns.assign(initial_conditions.attack_spawns)
 		arena.defend_spawns.assign(initial_conditions.defend_spawns)
 	if _authority:
@@ -265,15 +268,16 @@ func _authority_tick(delta: float) -> void:
 		# existing 300 ms silence guard below releases controls on sustained loss.
 	if not _handshake_drops.is_empty():
 		_drop_rejected_peers()
+	var order: Array = _tick_order()
 	_bot_clock -= delta
 	if _bot_clock <= 0:
 		_bot_clock = 0.12
-		for actor: SBActor in actors.values():
+		for actor: SBActor in order:
 			if _is_bot(actor.actor_id):
 				_bot_input(actor, 0.12)
 	if local_actor() != null:
 		local_actor().input_state = _local_input.duplicate()
-	for actor: SBActor in actors.values():
+	for actor: SBActor in order:
 		var suspended_edges: Array = []
 		if phase != "live":
 			actor.input_state = {"move": Vector2.ZERO, "look": actor.input_state.get("look", Vector2(actor.yaw, actor.pitch))}
@@ -314,6 +318,21 @@ func _authority_tick(delta: float) -> void:
 		for peer_id: int in _active_peers():
 			var packed: PackedByteArray = var_to_bytes(_snapshot(int(_peer_actors[peer_id]))).compress(FileAccess.COMPRESSION_DEFLATE)
 			_snapshot_rpc.rpc_id(peer_id, packed)
+
+## The actors in the order this tick processes them. A shot lands the moment its actor is processed, so a fixed
+## order lets the first actor in it win every same-tick trade: in all-bot matches actors 1-5 won about 71% of
+## rounds whichever side they played (46% with the order reversed). A uniform shuffle each tick gives every pair of
+## actors an even chance of going first. Rotating the start by one place per tick does not: it makes each actor lead
+## equally often, but ids 5 and 6 would still go in that order nine ticks in ten. The shuffle has its own generator
+## so it never moves the gameplay random stream.
+func _tick_order() -> Array:
+	var ordered: Array = actors.values()
+	for index in range(ordered.size() - 1, 0, -1):
+		var other: int = _order_rng.randi_range(0, index)
+		var held: Variant = ordered[index]
+		ordered[index] = ordered[other]
+		ordered[other] = held
+	return ordered
 
 func _is_bot(id: int) -> bool:
 	return id != local_id and not (_peer_actors.values() if _authority else _connected_actor_ids).has(id)

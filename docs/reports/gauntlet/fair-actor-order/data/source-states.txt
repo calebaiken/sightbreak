@@ -1,0 +1,13 @@
+Source state of each measured set. "diff" is sha256 of `git diff` (tracked files) recorded when the run started.
+The same hash is reproduced afterwards from the committed diff, so the run used exactly that code.
+
+A  db3981e (codex/desktop-playability-p1), harness files from a5ad1e9 copied in; no change to game files
+B  base a5ad1e9, uncommitted tracked diff sha256 6c5bddd33e900efa9082b835b886b0562313709acd826550b629b363ce3c8987
+   reproduced by: git diff a5ad1e9 6ed3ee0 -- game/scripts scripts/validate.sh | sha256sum      (6ed3ee0 = shuffle commit)
+C  base a5ad1e9, uncommitted tracked diff sha256 e26538d45b372fe0858269fdb21e10eee07ad45b7538f760957911542ad68454
+   reproduced by: git diff a5ad1e9 0871bc9 -- game/scripts scripts/validate.sh | sha256sum      (0871bc9 = bot-habit commit)
+D  HEAD 298feef, clean tracked tree (a local commit with the same tree as 0871bc9; later reworded, game/ and scripts/validate.sh identical)
+E  HEAD 298feef, same as D
+
+The commits 6ed3ee0 and 0871bc9 are the reworded copies of 54ca262 and 298feef; messages changed, trees did not
+(git diff between old and new branch tips is empty for game/ and scripts/validate.sh).
