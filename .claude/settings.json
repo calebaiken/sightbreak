@@ -1,0 +1,29 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$CLAUDE_PROJECT_DIR/scripts/session_brief.sh\""
+          }
+        ]
+      }
+    ]
+  },
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git branch:*)",
+      "Bash(git worktree list:*)",
+      "Bash(git fetch origin:*)",
+      "Bash(./scripts/godot.sh:*)",
+      "Bash(./scripts/validate.sh:*)",
+      "Bash(python3 scripts/test_:*)",
+      "Bash(sha256sum:*)"
+    ]
+  }
+}
