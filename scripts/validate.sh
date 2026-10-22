@@ -57,6 +57,7 @@ run_godot cosmetics --headless --script res://tests/cosmetic_presentation_test.g
 run_godot weapon-art --headless --script res://tests/weapon_art_test.gd
 run_godot integration-actor-lifecycle --headless --script res://tests/integration_actor_lifecycle_test.gd
 python3 scripts/test_account_network_output.py
+python3 scripts/test_account_match_output.py
 run_godot reload-sequence --headless --script res://tests/reload_sequence_test.gd
 run_godot reload-audio --headless --script res://tests/reload_audio_test.gd
 # The real mix of a real-time reload through an AudioEffectCapture on the Dummy driver (it mixes in real time, no speaker).

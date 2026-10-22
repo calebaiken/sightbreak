@@ -24,9 +24,6 @@ import threading
 import time
 import urllib.request
 
-import psycopg
-from psycopg import sql
-
 ROOT = Path(__file__).resolve().parents[1]
 IMAGE = 'postgres:17@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3'
 DOCKER = ['docker', '--host=unix:///var/run/docker.sock']
@@ -114,7 +111,34 @@ def verify_match(server, clients, identities):
         assert observed['team'] == (1 if index < 5 else 0), 'stock halftime did not switch sides'
 
 
+def verify_earned_payload(payload, server, clients):
+    """Tie outgoing awards to the independently observed scenario and replicas."""
+    end = server['latest']
+    assert payload['match_id'] == end['match_id'] and payload['mode'] == 'ranked_5v5'
+    participants = {p['player_id']: p for p in payload['participants']}
+    assert len(payload['participants']) == len(participants) == 10
+    assert set(participants) == set(end['accounts'].values())
+    scoreboard = {s['id']: s for s in end['summary']['scoreboard']}
+    assert set(scoreboard) == set(range(1, 11))
+    for index, client in enumerate(clients):
+        actor_id = index + 1
+        participant = participants[end['accounts'][str(actor_id)]]
+        summary = client['latest']['summary']
+        assert participant['won'] == summary['won'] == (actor_id <= 5)
+        objectives = 6 if actor_id == 1 else 0
+        assert participant['objective_contributions'] == summary['objectives'] == scoreboard[actor_id]['objectives'] == objectives
+        assert participant['active_seconds'] == int(end['activity_seconds'][str(actor_id)])
+        assert participant['abandoned'] is False and scoreboard[actor_id]['bot'] is False
+        assert summary['kills'] == summary['deaths'] == summary['assists'] == 0
+    started = datetime.fromisoformat(payload['started_at'])
+    ended = datetime.fromisoformat(payload['ended_at'])
+    assert started.tzinfo and ended.tzinfo and 300 <= (ended - started).total_seconds() <= 7200
+
+
 def main():
+    import psycopg
+    from psycopg import sql
+
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--out', type=Path, required=True)
     parser.add_argument('--timeout', type=float, default=1200, help='Wall seconds after all ten admissions; incomplete runs fail and retain reports')
@@ -327,6 +351,7 @@ def main():
         assert len(files) == 1
         raw = files[0].read_bytes()
         payload = json.loads(raw)
+        verify_earned_payload(payload, server_report, client_reports)
         assert payload['match_id'] == server_report['latest']['match_id']
         assert {p['player_id'] for p in payload['participants']} == set(identities)
         assert sum(p['won'] for p in payload['participants']) == 5

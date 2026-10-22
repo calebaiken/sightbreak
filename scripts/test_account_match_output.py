@@ -3,7 +3,7 @@
 from copy import deepcopy
 import unittest
 
-from test_account_match import RULES, verify_match
+from test_account_match import RULES, verify_earned_payload, verify_match
 
 
 def fixture():
@@ -12,6 +12,7 @@ def fixture():
     bindings = {str(i + 100): i for i in range(1, 11)}
     base = dict(protocol=6, stock_rules=RULES.copy(), ranked_started=True, ranked_eligible=True,
                 accounts=accounts, bindings=bindings, attack=0, defend=0, match_duration=523,
+                match_id='synthetic-match', summary={'scoreboard': [dict(id=i, objectives=6 if i == 1 else 0, bot=False) for i in range(1, 11)]},
                 activity_seconds={str(i): 520 for i in range(1, 11)},
                 reward_status='eligible_pending_completion')
     transitions = [dict(base, phase='waiting', round=0, elapsed=0, ranked_started=False)]
@@ -29,7 +30,8 @@ def fixture():
     for index in range(10):
         client_states = [dict(s, joined=True, connection='connected', initial_id=index + 1,
                              local_id=index + 1, display_name=f'Account Match {index}',
-                             summary=dict(offline=False, rounds=7, attack_score=0, defend_score=7, won=index < 5, draw=False),
+                             summary=dict(offline=False, rounds=7, attack_score=0, defend_score=7, won=index < 5, draw=False,
+                                          objectives=6 if index == 0 else 0, kills=0, deaths=0, assists=0),
                              snapshots=1000, team=(0 if index < 5 else 1) if s['round'] <= 6 else (1 if index < 5 else 0))
                          for s in transitions if s['round'] >= 1]
         clients.append({'latest': client_states[-1], 'transitions': client_states})
@@ -106,6 +108,18 @@ class EvidenceControls(unittest.TestCase):
     def test_contradictory_client_summary(self):
         self.clients[0]['latest']['summary'].update(won=False, draw=True, attack_score=99, defend_score=-5)
         self.rejects()
+
+    def test_payload_awards_must_agree_with_observations(self):
+        payload = dict(match_id='synthetic-match', mode='ranked_5v5', started_at='2026-10-22T00:00:00Z', ended_at='2026-10-22T00:10:00Z',
+                       participants=[dict(player_id=identity, won=i < 5, active_seconds=520,
+                                          objective_contributions=6 if i == 0 else 0, abandoned=False)
+                                     for i, identity in enumerate(self.identities)])
+        verify_earned_payload(payload, self.server, self.clients)
+        for key, value in [('won', False), ('objective_contributions', 7), ('active_seconds', 599), ('abandoned', True)]:
+            changed = deepcopy(payload)
+            changed['participants'][0][key] = value
+            with self.assertRaises(AssertionError):
+                verify_earned_payload(changed, self.server, self.clients)
 
 
 if __name__ == '__main__': unittest.main()
