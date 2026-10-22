@@ -49,3 +49,45 @@ builder cannot approve this work. Whole G4/G5/G6/G9/G18 remain open.
 The ten-account qualification owns the local engine/render/CPU lane. No Godot,
 native capture, renderer or OCR process has been started for this increment.
 The root must explicitly release that lane before native execution.
+
+## Inspected rules and coverage
+
+The stock definitions are in `game/scripts/gameplay/weapons.gd`. These are source
+values, not measured output:
+
+| Weapon | Trigger | Interval (s) | Magazine / reserve | Reload (s) | Body / head multiplier | Range / terminal falloff |
+| --- | --- | ---: | ---: | ---: | ---: | ---: |
+| Kestrel 9 | Semi | 0.23 | 15 / 60 | 1.45 | 27 / 3.3 | 45 / 0.55 |
+| Vectorline | Auto | 0.085 | 30 / 120 | 1.85 | 22 / 3.1 | 35 / 0.5 |
+| Relay AR | Auto | 0.105 | 30 / 90 | 2.25 | 35 / 3.5 | 70 / 0.72 |
+| Longwatch | Semi | 0.82 | 8 / 32 | 2.8 | 74 / 2.2 | 100 / 0.86 |
+
+`weapon_integrity_test.gd` already measures all-four mean cadence, rifle
+held-trigger reload resumption and marksman-to-sidearm cycle/deploy timing.
+`actor_test.gd` checks rifle reload transfer, six-metre lethal rifle head hits,
+cosmetic noninterference and round refill. `hit_feedback_test.gd` checks authority
+and recipient restrictions, feedback flags/expiry and gameplay noninterference.
+`authority_order_test.gd` checks phased combat, mutual lethal fire, movement and
+shielding; this probe does not replace that match-level test. A separate read-only
+source reader found the same matrix gap and no established gameplay defect.
+
+The reload timer repeatedly subtracts a float step and completes on zero. A pure
+float64 transcription predicts nominal tick counts plus one tick for all four
+weapons. This is a question for native measurement, not a confirmed defect; the
+declared policy accepts completion within one step after the data duration.
+
+## Next native commands
+
+Only after the root releases the lane, use pinned Godot 4.7.2 and private state.
+Run each command sequentially, retaining stdout/stderr and exit status under a
+fresh evidence directory. Check source identity before and after. Import may
+create the new probe's UID; stabilize and freeze that file before measured runs.
+
+```sh
+SIGHTBREAK_TOOLS_DIR=/workspace/tools SIGHTBREAK_STATE_DIR="$PWD/.local/m4-probe" ./scripts/godot.sh --headless --editor --import --quit
+SIGHTBREAK_TOOLS_DIR=/workspace/tools SIGHTBREAK_STATE_DIR="$PWD/.local/m4-probe" ./scripts/godot.sh --headless --audio-driver Dummy --script res://tests/gunplay_rules_probe.gd
+```
+
+Relevant existing controls are `weapon_integrity_test.gd`, `actor_test.gd`,
+`hit_feedback_test.gd` and `authority_order_test.gd`. The root owns the next
+combined-source aggregate. No test pass or product acceptance is claimed here.
