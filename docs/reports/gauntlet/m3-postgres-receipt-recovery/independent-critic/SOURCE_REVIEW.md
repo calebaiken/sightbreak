@@ -1,6 +1,8 @@
 # Independent production market boundary review
 
-Status: SOURCE REVIEW IN PROGRESS. No new PostgreSQL/API/native result is accepted.
+Status: SOURCE AND BOUNDED RUNTIME PASS at `882931dd`. The initial prereview
+below is retained; [RUNTIME_REVIEW.md](RUNTIME_REVIEW.md) records the actual
+production PostgreSQL/API/native evidence and its limits.
 
 The inspected root is `05277154c6b8c92b80fd7c25e8365de9efdc4fae`. Its game
 tree is `1f3616afdfaaed0fb7c9ffbd0aa8e4947f7d2a48`, backend tree
