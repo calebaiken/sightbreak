@@ -2,24 +2,16 @@
 """Recompute frozen M4 raw records. This script never launches the engine."""
 import argparse
 from collections import Counter
-import datetime as dt
 from fractions import Fraction
 import hashlib
 import json
 import math
-import os
 from pathlib import Path
 import re
 import subprocess
-import tarfile
-import zipfile
 
 ROOT = Path(__file__).resolve().parents[4]
-OUT = Path(__file__).resolve().parent
 MEASURED = "05277154c6b8c92b80fd7c25e8365de9efdc4fae"
-REVIEWED = "d1e89edfbd474a04d6759300141880566b1559e3"
-REGISTRATION = "26871f76dafb30854294e09d6377340a631fa0da"
-GAME = "41abd17652a89c554463faa5b216a7af59aec0e7"
 STEP = 1 / 60
 errors = []
 checks = 0
