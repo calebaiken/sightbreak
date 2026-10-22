@@ -216,7 +216,7 @@ def main():
             raise RuntimeError('Tesseract failed: ' + label + '; raw stderr retained')
         return completed.stdout.decode('utf-8', errors='replace')
 
-    def read_hud(name, *, resume_after=True):
+    def read_hud(name, *, resume_after=True, require_context=None):
         # Analyze the already captured native pixels while ordinary Escape
         # pause protects the living player from time spent in external OCR.
         native = ui.diagnostics()
@@ -228,10 +228,19 @@ def main():
                 or before_analysis.get('ui', {}).get('focused') is not True
                 or before_analysis.get('time_scale') != 1 or actor.get('alive') is not True):
             raise RuntimeError('HUD analysis requires the actual living, focused offline player')
+        if require_context is not None:
+            require_context(before_analysis)
         if before_analysis.get('ui', {}).get('paused') is True:
-            return read_hud_pixels(out / (name + '.png'), ocr)
+            reading = read_hud_pixels(out / (name + '.png'), ocr)
+            if require_context is not None:
+                after_analysis = observed(lambda state: state.get('ui', {}).get('paused') is True,
+                                          5, 'Fresh existing pause after saved-HUD OCR: ' + name, before_analysis['wall_msec'])
+                require_context(after_analysis)
+            return reading
 
         def require_analysis_context(state):
+            if require_context is not None:
+                require_context(state)
             current = state.get('local_actor', {})
             if (state.get('phase') != before_analysis['phase']
                     or state.get('round_number') != before_analysis['round_number'] or state.get('time_scale') != 1
@@ -612,9 +621,11 @@ def main():
                                  and state.get('drawn_frames', -1) >= resumed_frames + 2,
                                  resume_budget(), 'Two drawn frames after explicit native settings resume', resumed['wall_msec'])
         capture('07d-explicit-resume')
-        resumed_hud = read_hud('07d-explicit-resume', resume_after=False)
+        resumed_after_capture = offline_observation()
+        require_resume_context(resumed_after_capture)
+        resumed_hud = read_hud('07d-explicit-resume', resume_after=False, require_context=require_resume_context)
         result['native_settings_resume'] = {'paused_before_settings': settings_pause, 'paused_after_settings': settings_ready,
-                                             'resumed': resumed, 'capture_ready': resumed_ready,
+                                             'resumed': resumed, 'capture_ready': resumed_ready, 'after_capture': resumed_after_capture,
                                              'transition_watchdog_seconds': 10, 'same_living_player_required': True}
         click_text('LEAVE')
         wait_for(ui.menu_visible, 30, 'Return from offline match', client)
