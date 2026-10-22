@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-22, 06:13 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-22, 06:15 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue25](https://github.com/calebaiken/sightbreak/issues/25).
 No native Codex goal API is exposed. Read AGENTS.md, the mission and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
@@ -9,7 +9,7 @@ implementation after each verified increment; these corrections do not finish v1
 ## Root and source checkpoints
 
 - Root: `/workspace/sightbreak-v1-execution`, `codex/v1-mission-playability`.
-  Current checkpoint before this note: `e2c61ac`; last pushed: `3b97a00`.
+  Current checkpoint before this note: `c8d04f1`; last pushed: `3b97a00`.
 - [Draft PR27](https://github.com/calebaiken/sightbreak/pull/27) targets PR24
   `c84eaf3` → PR23 `db3981e` → PR22 `82a03fc` → PR16 `d2439ac`.
   No shared branch was merged or rewritten. Fetch live refs before integration.
@@ -35,7 +35,7 @@ implementation after each verified increment; these corrections do not finish v1
 | --- | --- |
 | [39725980732](https://github.com/calebaiken/sightbreak/actions/runs/39725980732), `872a576`, single Linux119649852989 | Raw independent source/input/ordinary journey, defuse,9-round stock match/earned restart and four-size201.314 s pass. Player plants180 ticks, +1objective/+300credits, but later15 s role-guidance wait fails amid notifications before death. Natural resolution/restart in that plant scenario are unreached. FullQA46 MB untransferred; original per-size PNGs available. Evidence `b85f936`, report `m1-native-ci-39725980732/remote`. |
 | [39727011693](https://github.com/calebaiken/sightbreak/actions/runs/39727011693), `e7718ee`, single ARM119653125533 | Actual no-event readiness and unsigned iOS compile independently pass. All four permission APIs true; exact preflight PID6968/window34/internal PNG valid, profile absent, normal0/no remaining group. No input posted. Evidence `e6c323a`, `m2-macos-input/native-run-39727011693`. |
-| [39728129445](https://github.com/calebaiken/sightbreak/actions/runs/39728129445), `a8eb7eb`, single Windows119656711230 | Overall FAIL only plant by final metadata. Independent raw ordinary journey now passes, all16 original OCR outputs/strict LEAVE call retained. Defuse/full match pass; raw archive is being finalized. Its own180-tick plant/reward/living PNG pass, followed by notification starvation/death in15 s role wait. Critic `native_ci_outcome_critic` retains original fullQA22.7 MB and bounded3.3 MB. |
+| [39728129445](https://github.com/calebaiken/sightbreak/actions/runs/39728129445), `a8eb7eb`, single Windows119656711230 | Overall FAIL only plant, independently audited. Original ordinary journey passes233.547 s; all16 original OCR outputs/strict LEAVE call retained. Defuse/full ten-round match and exact120 XP /325 credits restart pass; raw archives and independent review are committed as3f74e20/317410a (`m1-native-ci-39728129445/REPORT.md`). Its own180-tick plant/reward/living PNG pass, followed by notification starvation/death in15 s role wait. Critic `native_ci_outcome_critic` retains original fullQA22.7 MB and bounded3.3 MB. |
 | [39729489971](https://github.com/calebaiken/sightbreak/actions/runs/39729489971), `3b97a00`, single ARM119661018459 | New real-menu attempt FAILS before events. Swift compiles; gamePID3996 cannot be verified foreground within5 s (last observedPID3721),0CGpost attempts, no helper invocation/OS capture. Ordinary close0/groups gone. Own helper permission/geometry/Vision unreached. Separate preflightPID3571/window35 cannot stand in for3996. All12 native suites actually pass4,461 assertions. Independent raw rejection is committed as `a172934`/`5378b1f`; report `m2-macos-menu-input/native-run-39729489971/REPORT.md`. |
 
 Earlier `0ca125d` run39719407304 and `6a0d8d5` run39712752860 failures remain
@@ -92,10 +92,11 @@ Installation, runtime, older OS and physical mobile play remain open.
    background capture may decouple capture permission/geometry from focus; critique
    revised criteria before native use. Never substitute window order for focus,
    bypass/request TCC, mutate securityDB or use unsupported flags/alternate identity.
-   Candidatef184c4c plus raw-sample correctioneab9882 is frozen; fresh source critic
-   is active. Nine new and eleven existing pure controls pass. No native attempt
-   for this revision yet. Integrate only after review, then root dispatches ARM
-   lane on clean source. A separate exact-owned background capture precedes focus
+   Candidatef184c4c/eab9882/1260217 is independently accepted for one bounded
+   actual ARM retry, source-only (eight independent controls, twenty packaged).
+   Integrated asbabf0b4/3544db0/dd7f057/c8d04f1. Root reran all twenty pure controls
+   successfully. No native attempt for this revision yet; push clean checkpoint
+   and dispatch ARM lane, then verify actual returned SHA and single job. A separate exact-owned background capture precedes focus
    and is explicitly capture-only; any failure stops input.
 4. **M6 touch transition accepted.** Integrated `66bcc5e`/`a06017b`, final native
    source589a52a. Initial candidate visually wins but is rejected for existing-row
@@ -105,6 +106,19 @@ Installation, runtime, older OS and physical mobile play remain open.
    `9efaf63`, `4a1205c`/followup and `93ec98b`; report `m6-touch-hud-transition`.
    Control contrast over weapon/pavement remains open. Full game tree is covered by
    the b85 aggregate; no G7/G10/physical/8.5 presentation closure.
+
+5. **M1 capture phase fences.** `/root/offline_journey_builder` owns sparse
+   `/workspace/sightbreak-capture-fences`, `fix/offline-capture-phase-fences`, from
+   `9d11f1d`. Actual Windows a8 captures06c/10 show old POST/menu phases despite
+   later functional journey success. Repair only observer drawn-frame/context
+   guards under unchanged budgets, then fresh critic and exact native slice.
+   No local engine work while account owns that lane. Canonical docs untouched.
+6. **M4 gunplay invariants.** `/root/gunplay_timing_builder` investigates actual
+   four-weapon fire/reload/switch/ammo/damage/feedback contracts in sparse
+   `/workspace/sightbreak-gunplay-invariants`, `codex/m4-gunplay-invariants`,
+   source317410a. Declare measurable rules/behavior benchmark before a supported
+   correction; no arbitrary feel tuning or CS2/human parity claim. Source/pure
+   work only until account cleanup. Fresh critic required before integration.
 
 ## Tools, recovery and constraints
 
@@ -126,7 +140,11 @@ gh workflow run desktop-alpha.yml --repo calebaiken/sightbreak --ref codex/v1-mi
 SIGHTBREAK_TOOLS_DIR=/workspace/tools SIGHTBREAK_BACKEND_PYTHON=/workspace/sightbreak/.venv/bin/python ./scripts/validate.sh
 ```
 
-Safe sparse updates recovered6.69 GB from eleven clean completed own worktrees;
+Earlier safe sparse updates recovered6.69 GB from eleven clean completed own worktrees;
+a third pass on five additional clean completed checkouts recovered at least1.804 GB
+more, plus an unmeasured partial first pass. Its initial cone-path error and exact
+HEAD/untracked-size preservation receipts are retained in third JSON. No payload
+was deleted. Disk has about5.2 GB free. In all passes,
 all HEADs and ignored/untracked builds were preserved. Root receipts are
 `builds/session-storage-recovery*.json`. Restore omitted tracked docs with
 `git sparse-checkout disable` if space permits. New worktrees should be created
