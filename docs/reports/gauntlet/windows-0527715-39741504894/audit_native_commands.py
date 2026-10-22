@@ -18,7 +18,7 @@ def audit(root):
     base = root / 'evidence/regressions'
     isolation = READ(base / 'isolation.json')
     results = READ(base / 'results.json')
-    checks, rows = {}, []
+    checks, rows, competing = {}, [], []
     checks['actual_fourteen_order'] = [r['suite'] for r in results] == SUITES
     checks['original_limits_and_pinned_engine'] = (isolation['suite_timeout_seconds'] == 120
         and isolation['probe_timeout_seconds'] == 30
@@ -45,7 +45,13 @@ def audit(root):
             counts = [(r['checks'], len(r['failures'])) for r in native]
         checks[prefix + 'single_expected_native_summary'] = counts == [(EXPECTED[SUITES.index(suite)], 0)]
         if suite == 'transaction_journal':
-            checks[prefix + 'actual_competing_child'] = 'COMPETING_PROCESS ' in log and 'OWNER_BLOCKED' in log
+            children = [json.loads(line.removeprefix('COMPETING_PROCESS ')) for line in log.splitlines() if line.startswith('COMPETING_PROCESS ')]
+            for child in children:
+                for stream in child:
+                    competing.extend(json.loads(line.removeprefix('OWNER_BLOCKED ')) for line in stream.splitlines() if line.startswith('OWNER_BLOCKED '))
+            checks[prefix + 'actual_competing_child'] = (len(children) == len(competing) == 1
+                and competing[0]['unchanged'] is True and competing[0]['pid'] > 0
+                and all(competing[0][key] == 22 for key in ('claim','clear','stage')))
         producers = []
         for stage in ('before', 'after'):
             receipt = item[stage]
@@ -70,6 +76,7 @@ def audit(root):
         and isolation['finalization_failures'] == [] and isolation['temporary_project_removed'] is True
         and len(isolation['cleanup']) == 1 and all(r['removed'] is True and NORMAL(r['user_namespace']).endswith('/'+isolation['namespace'].lower()) for r in isolation['cleanup']))
     return {'checks':checks,'all_checks_passed':all(checks.values()),'actual_suite_records':rows,
+            'journal_competing_process_receipts':competing,
             'native_assertion_total':sum(EXPECTED) if all(checks.values()) else None,
             'scope':'Actual source-suite and producer file audit. Exported OS input and fixtures are separate evidence; no local engine/OCR.'}
 

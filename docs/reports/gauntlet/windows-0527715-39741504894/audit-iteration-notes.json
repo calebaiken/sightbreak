@@ -11,7 +11,8 @@
   "corrected_exploratory_assumptions": [
     "A source-scope exploration guessed scripts/verify_export_input.py; Git correctly rejected that absent path. The final source audit uses the discovered maintained scripts/verify_integration_export.py.",
     "A historical archive exploration guessed evidence/results.json; ZIP correctly rejected that absent member. Native verification is under evidence/verification/results.json.",
-    "A source search named absent scripts/inspect_packages.py; rg reported it missing. Actual embedded-pack inspection is in scripts/verify_builds.py."
+    "A source search named absent scripts/inspect_packages.py; rg reported it missing. Actual embedded-pack inspection is in scripts/verify_builds.py.",
+    "The first final sha256sum invocation ran from the repository root against paths relative to the evidence directory, so it reported absent paths. The same manifest was then checked from its documented evidence directory; no source or evidence bytes were repaired."
   ],
   "native_runs_launched_by_reviewer": 0,
   "OCR_or_service_runs_launched_by_reviewer": 0
