@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-22, 05:21 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-22, 05:33 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue25](https://github.com/calebaiken/sightbreak/issues/25).
 No native Codex goal API is exposed. Read AGENTS.md, the mission and the single
 G1–G20 progress matrix; reuse both original installed quality skills. Continue
@@ -12,10 +12,10 @@ implementation after each verified increment. No whole RC gate is closed here.
 - [Draft PR27](https://github.com/calebaiken/sightbreak/pull/27) targets PR24
   `claude/mission-foundation-v1` (`c84eaf3`), then PR23 `db3981e` → PR22 `82a03fc`
   → PR16 `d2439ac`. Do not merge or rewrite shared/contributor branches.
-- Integrated checkpoint before this documentation commit: `a5bd530`. This includes
+- Integrated checkpoint before this documentation commit: `0e63ada`. This includes
   accepted account validator/recovery evidence, layout OCR/PNG packaging/Linux
   workflow lane, latest Windows raw review and six bot habit corrections.
-- Current Linux-only CI source is `872a57618c079c5854dea47d361cc7da732378ec`, run39725980732/job119649852989. Current ARM-only CI source is `e7718ee42fd67a65bcb83061c868b34bd9a2c3d2`, run39727011693/job119653125533. Last Windows-only source remains `dc2a198372b2e5da51ca1618f16d8249e44ec485`.
+- Current Linux-only CI source is `872a57618c079c5854dea47d361cc7da732378ec`, run39725980732/job119649852989. Current ARM-only CI source is `e7718ee42fd67a65bcb83061c868b34bd9a2c3d2`, run39727011693/job119653125533. Current Windows-only source is `a8eb7eb81c74f306a9600820cb6e78f98a5e1630`, run39728129445/job119656711230. Earlier Windows failure source remains `dc2a198372b2e5da51ca1618f16d8249e44ec485`.
   Later source must receive its own export and receipts; never relabel old builds.
 - Fetch live refs before integration. Main last observed `4d8cdb3`. PR17 V3 and
   PR18/19/21 remain unqualified. PR26 map at `778c89a` is not integrated. PR28
@@ -110,30 +110,31 @@ implementation after each verified increment. No whole RC gate is closed here.
 
 ## Immediate execution queue
 
-1. Combined maintained validation is running on frozen `a23e349`, worktree
-   `/workspace/sightbreak-validate-a23e349`, log `builds/combined-validation/validate.log`.
-   It includes account validator, bot habits, corrected LEAVE OCR/raw receipts,
-   accepted consumed-command activity and the Mac preflight. Product/runtime and
-   validation files are unchanged through root documentation head `a5bd530`.
-   Source-before/after and exit are recorded. No DISPLAY or backend SQL is enabled;
-   real backend Python is supplied for catalog drift. Preserve every skip/failure.
-   After pass, commit/push a clean checkpoint and dispatch `lane=windows` for the
-   original complete journey. New native matrix includes activity and squad suites;
-   do not relabel the old ten-suite/1,281 results.
+1. Combined maintained validation at frozen `a23e349` STOPPED, exit1: root's
+   sparse checkout omitted tracked reload-contact CSV/hash files. All preceding
+   game/server/UI/account/reload/audio steps pass, including9,217 landscape and
+   2,227 UX checks. Remaining network/catalog/build/observation steps were unreached.
+   Raw failure/source/log archive is committed `0e63ada` under
+   `docs/reports/gauntlet/combined-validation-a23e349/attempt-1` (57 files).
+   Root restored `docs/reports/media/art-v9/hands/logs` in the frozen checkout;
+   exact reload-contact retry passes24 checks. No whole aggregate pass is claimed.
+   After final UI acceptance, freeze combined source and rerun the complete
+   unmodified aggregate with this fixture directory present. Existing checkout
+   `/workspace/sightbreak-validate-a23e349` retains original attempt logs; preserve
+   them before any HEAD change. No DISPLAY/backend SQL; real backend Python can
+   qualify catalog drift. Current Windows retry is already running separately.
 2. Exact local `872a576` export/four-size capture PASSES 280.215 s, original520/120 s
    limits, source unchanged. Independent evidence `844982d` verifies 22 named PNGs,
    102 OCR calls/TSVs, 16 frame fences, twelve clean child exits and cleanup. Report
    `docs/reports/gauntlet/m1-native-ci-39725980732/local/README.md`. Remote run
    39725980732 is separate: input/source/full journey pass by actual metadata,
-   player plant step FAILS, defuse passes, full stock match currently running.
-   Critic `native_ci_outcome_critic` will download bounded receipts/per-size PNGs
-   and reconstruct the plant failure and all remaining outcomes. Do not infer cause.
+   player plant gate FAILS; defuse, full stock match/restart and four-size capture pass by metadata and raw review. Actual planting succeeds180 ticks and correct reward; the failure is the later15 s role-guidance wait under repeated notifications, then player death. Natural resolution/restart in that plant scenario are unreached. Remote layouts pass201.314 s and all original PNG/TSV bindings; full match is9 rounds7:2 local defeat,120 XP/250 offline credits exactly reopened.
+   Critic `native_ci_outcome_critic` is committing the separate raw remote evidence. Full QA exceeds32 MiB and was not downloaded; plant PNGs are unavailable, so no pixel/OCR claim follows from the authority trace.
 3. LEAVE correction integrated `015deb6`/`f747864`/`a4f767c`, independent `a00564c`.
    Frozen builder `85d6101` exact native Linux settings/LEAVE block passes 61.955 s,
    seven original OCR outputs match hashes and exact main-menu return is visible.
    Two actual Windows field-menu frames and shared query/negative controls support
-   the glyph repair. Full Windows retry remains required; later journey gates
-   have not yet passed on this correction. Evidence: `m1-offline-leave-observation`.
+   the glyph repair. Full Windows retry39728129445 is running at source `a8eb7eb`; later journey gates have not yet passed on this correction. Evidence: `m1-offline-leave-observation`.
 4. Activity authority integrated `140a366`, native registration `a23e349`, builder
    evidence `c3b92ce`, independent evidence `8de1253`/`a5bd530`. Real ENet baseline
    has 93 stale discarded-tail renewals with no aim changes; candidate zero,
@@ -142,21 +143,29 @@ implementation after each verified increment. No whole RC gate is closed here.
    Full corrected account match and remote-host participation remain unqualified.
    Evidence: `docs/reports/gauntlet/m3-activity-integrity`.
 5. Mac bounded preflight source is accepted and integrated through `e7718ee`.
-   Actual ARM run39727011693 reports source/default startup/preflight steps pass;
-   final raw permission/window/PNG/profile/cache/cleanup and unsigned iOS output
-   await independent review. No input events are posted by that helper. Builder
+   Actual ARM run39727011693 independently PASSES bounded readiness and unsigned iOS compile; evidence `e6c323a`. All four permissions true, owned PID6968/window34 [40,32,960,568]points, internal960×540PNG valid, normal exit0/no group, profiles absent and native inventories unchanged. This posts zero events and proves no focus/input delivery. Raw compile/link/PCK/source/codesign agree; full binaries remain untransferred. No input events are posted by that helper. Builder
    `mac_input_builder` is preparing the next supported native keyboard/pointer
    journey from root `a5bd530`; no event attempt before raw permissions review and
-   fresh source critique. Never request/bypass TCC or delete unknown profiles.
-6. UI builder `touch_transition_builder`, worktree `/workspace/sightbreak-touch-transition`,
-   branch `fix/touch-hud-mode-transition`, preregistration `e9ee49b`, frozen UNTESTED
-   candidate `bc01a069fb600b7e10fe9310a5a97f08c726a60b`. Existing native frame shows
-   MENU/device-label overlap and keyboard footer after touch opt-in. Candidate
-   syncs only existing HUD margin/footer when selected touch mode changes, preserving
-   inputs/overlay/touch instance/saved layouts. Fresh `touch_transition_critic`
-   starts source review; focused tests/exported before/after wait until root broad
-   suite releases CPU. Do not accept solely from assigned node values.
-7. Continue the highest-impact supported blocker after these outputs. Preserve
+   fresh source critique. Native input candidate ordered `0b81725`→`aa309a1` is under fresh source review in `/workspace/sightbreak-macos-menu-input`; eight Linux controls pass, actual Swift compile/event/focus/OS pixels remain unobserved. Never request/bypass TCC or delete unknown profiles.
+6. UI builder `touch_transition_builder`, `/workspace/sightbreak-touch-transition`,
+   branch `fix/touch-hud-mode-transition`, criteria `e9ee49b`. First candidate
+   `bc01a06` passes336 checks vs baseline20 failures and real native on/off72.252 s;
+   blind judge chooses it for spacing/hints (root `da4123a`). Fresh critic then
+   reproduces4/4 existing long-feed clipping cases, so it remains rejected.
+   Revised frozen `589a52a` refits preserved rows when frame width changes:
+   462/0 versus prior462/16, touch34/HUD overflow2,435/objective33/lifecycle3 pass.
+   Its fresh native capture is running; critic will rerun unchanged4-case probe
+   after lane release. Final independent acceptance/implementation are not yet
+   integrated. Preserve source-review rejection commits132efbd/5b7152b/443d88a.
+   Root's fresh full aggregate follows final accepted source.
+7. Objective-guidance investigation: `offline_journey_builder` is reading actual
+   failed Linux plant timeline and contract in its own sparse branch at `a8eb7eb`.
+   `show_notification` resets a five-second status hold on every combat message;
+   no quiet interval occurs before death. Determine bounded guidance/observer
+   requirements before changing code. Do not relax15 s wait, remove role assertion,
+   add invincibility, inject authority or mislabel plant failure. Coordinate any
+   later main.gd change with touch builder's separate functions. No native work yet.
+8. Continue the highest-impact supported blocker after these outputs. Preserve
    unintegrated PR26 map and PR28 shuffle ownership. Refresh mobile exports after
    new core changes when resources permit; physical/simulator gaps remain open.
 
@@ -186,7 +195,7 @@ Frozen `/workspace/sightbreak-v1-qualification`, `...-mobile6a`, `...-ios-compil
 and several completed review worktrees now omit docs. Git retains those files;
 `git sparse-checkout disable` restores them if space permits. Create new worktrees
 with `--no-checkout` then sparse patterns (all game/scripts/.github/.claude/backend/
-server, root instructions and required docs); avoid copying600 MB of old archives.
+server, root instructions, required docs and `docs/reports/media/art-v9/hands/logs` for aggregate validation); avoid copying600 MB of old archives.
 Root/contributor active worktrees remain intact. Check `df -h` before exports.
 
 Physical GPU/input latency, mobile/controller devices, human play/listening and
