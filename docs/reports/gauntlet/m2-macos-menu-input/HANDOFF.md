@@ -30,6 +30,12 @@ cleanup/profile/window receipts before launch; a previous run cannot authorize
 an unmatched build. A fresh critic must review source before root dispatch and
 actual native PNGs/state/source/cleanup before acceptance.
 
+The [independent source review](independent-review/REVIEW.md) accepts exact
+implementation `800d36c` for that first ARM compile and guarded attempt. Eleven
+packaged and thirteen independent frozen-source controls pass. The original
+`aa309a1` rejection, its three failing guard probes, intermediate logs and exact
+source hashes remain in the review archive. This approves no unseen native run.
+
 Eleven Linux observer controls pass. These cover titlebar/Retina coordinate
 mapping, unknown geometry, ambiguous/low-confidence OCR targets, outcome
 recognition, preflight identity/permissions/cleanup, refusal before a down event,
