@@ -62,14 +62,14 @@ class DeclaredCallbacks:
 def round_sequence():
     state = REFERENCE['round_2_buy']
     return [deepcopy(REFERENCE['old_post']), deepcopy(state), advanced(state, 1),
-            advanced(state, 2), advanced(state, 3), advanced(state, 4)]
+            advanced(state, 2), advanced(state, 3), advanced(state, 4), advanced(state, 5)]
 
 
 def reopened_sequence():
     menu = REFERENCE['restart_initial']
     game = advanced(menu, 1)
     game['ui'].update(screen='game', mouse_mode=2)
-    return [deepcopy(menu), game, advanced(game, 1), advanced(game, 2), advanced(game, 3), advanced(game, 4)]
+    return [deepcopy(menu), game, advanced(game, 1), advanced(game, 2), advanced(game, 3), advanced(game, 4), advanced(game, 5)]
 
 
 class CaptureFenceTests(unittest.TestCase):
@@ -90,7 +90,8 @@ class CaptureFenceTests(unittest.TestCase):
         self.assertEqual(receipt['acknowledged']['drawn_frames'], 1142)
         self.assertEqual(receipt['ready']['drawn_frames'], 1144)
         self.assertEqual(receipt['before_capture']['drawn_frames'], 1145)
-        self.assertEqual(receipt['after_capture']['drawn_frames'], 1146)
+        self.assertEqual(receipt['after_capture_barrier']['drawn_frames'], 1146)
+        self.assertEqual(receipt['after_capture']['drawn_frames'], 1147)
         self.assertFalse(REFERENCE['old_post']['local_actor']['alive'])
 
     def test_declared_reopened_trace_requires_game_hud_after_initial_profile_event(self):
@@ -133,7 +134,7 @@ class CaptureFenceTests(unittest.TestCase):
         states = round_sequence()
         states[3]['drawn_frames'] += 3
         callbacks = DeclaredCallbacks(states)
-        with self.assertRaisesRegex(RuntimeError, 'backward before'):
+        with self.assertRaisesRegex(RuntimeError, 'moved backward'):
             callbacks.run()
         self.assertEqual(callbacks.captures, [])
 
@@ -141,7 +142,7 @@ class CaptureFenceTests(unittest.TestCase):
         states = round_sequence()
         states[-1]['drawn_frames'] = states[-2]['drawn_frames'] - 1
         callbacks = DeclaredCallbacks(states)
-        with self.assertRaisesRegex(RuntimeError, 'backward during'):
+        with self.assertRaisesRegex(RuntimeError, 'moved backward'):
             callbacks.run()
         self.assertEqual(callbacks.captures, ['declared-capture'])
         self.assertNotIn('binding_after_capture', callbacks.receipt)
@@ -153,14 +154,14 @@ class CaptureFenceTests(unittest.TestCase):
                    ('', 'round_number', 3), ('', 'phase', 'post'), ('', 'time_scale', 2),
                    ('', 'scenario', 'plant'), ('', 'scope', 'other'), ('', 'schema', 2)]
         for section, field, value in changes:
-            for index in (2, 4, 5):
+            for index in (2, 4, 5, 6):
                 with self.subTest(field=field, stage=index):
                     states = round_sequence()
                     (states[index][section] if section else states[index])[field] = value
                     callbacks = DeclaredCallbacks(states)
                     with self.assertRaises(RuntimeError):
                         callbacks.run()
-                    self.assertEqual(bool(callbacks.captures), index == 5)
+                    self.assertEqual(bool(callbacks.captures), index >= 5)
                     self.assertNotIn('binding_after_capture', callbacks.receipt)
 
     def test_source_process_trace_and_loaded_settings_races_cannot_pass(self):
@@ -199,6 +200,28 @@ class CaptureFenceTests(unittest.TestCase):
                                  expected_binding=callbacks.expected, receipt=callbacks.receipt,
                                  clock=lambda: callbacks.elapsed)
         self.assertEqual(callbacks.captures, ['declared-capture'])
+        self.assertNotIn('after_capture', callbacks.receipt)
+
+    def test_unready_intermediate_counter_regression_is_rejected(self):
+        state = REFERENCE['round_2_buy']
+        for field in ('drawn_frames', 'simulation_tick', 'wall_msec'):
+            with self.subTest(field=field):
+                rollback = advanced(state, 1, wall_msec=state['wall_msec'] + 150)
+                rollback[field] = state[field] + (50 if field == 'wall_msec' else 0)
+                states = [deepcopy(state), advanced(state, 1), rollback,
+                          advanced(state, 2), advanced(state, 3), advanced(state, 4), advanced(state, 5)]
+                callbacks = DeclaredCallbacks(states)
+                with self.assertRaisesRegex(RuntimeError, 'moved backward'):
+                    callbacks.run()
+                self.assertEqual(callbacks.captures, [])
+                self.assertEqual(callbacks.receipt['counter_regression']['current'], rollback)
+
+    def test_state_available_before_capture_cannot_be_sole_after_proof(self):
+        callbacks = DeclaredCallbacks(round_sequence()[:-1])
+        with self.assertRaises(TimeoutError):
+            callbacks.run()
+        self.assertEqual(callbacks.captures, ['declared-capture'])
+        self.assertIn('after_capture_barrier', callbacks.receipt)
         self.assertNotIn('after_capture', callbacks.receipt)
 
 

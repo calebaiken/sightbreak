@@ -151,11 +151,16 @@ def capture_living_phase(name, *, actor_id, round_number, after, until,
     require_binding()
     acknowledged = observed(acknowledge, budget(), 'Named living buy phase: ' + name, after)
     receipt['acknowledged'] = acknowledged
+    latest_render_observation = acknowledged
 
     def rendered(state):
+        nonlocal latest_render_observation
         require_living_capture_phase(state, actor_id, round_number)
-        if any(state[field] < acknowledged[field] for field in ('drawn_frames', 'wall_msec', 'simulation_tick')):
+        if any(state[field] < latest_render_observation[field]
+               for field in ('drawn_frames', 'wall_msec', 'simulation_tick')):
+            receipt['counter_regression'] = {'previous': latest_render_observation, 'current': state}
             raise RuntimeError('Named capture observation or frame counter moved backward: ' + name)
+        latest_render_observation = state
         return (state['wall_msec'] > acknowledged['wall_msec']
                 and state['drawn_frames'] >= acknowledged['drawn_frames'] + 2)
 
@@ -163,29 +168,21 @@ def capture_living_phase(name, *, actor_id, round_number, after, until,
                      acknowledged['wall_msec'])
     receipt['ready'] = ready
 
-    def before_capture_context(state):
-        if not rendered(state):
-            return False
-        if any(state[field] < ready[field] for field in ('drawn_frames', 'wall_msec', 'simulation_tick')):
-            raise RuntimeError('Named capture context moved backward before raw capture: ' + name)
-        return True
-
-    before_capture = observed(before_capture_context, budget(), 'Fresh named context immediately before capture: ' + name,
+    before_capture = observed(rendered, budget(), 'Fresh named context immediately before capture: ' + name,
                               ready['wall_msec'])
     receipt['before_capture'] = before_capture
     receipt['binding_before_capture'] = require_binding()
     budget()
     capture(name)
 
-    def after_capture_context(state):
-        if not rendered(state):
-            return False
-        if any(state[field] < before_capture[field] for field in ('drawn_frames', 'wall_msec', 'simulation_tick')):
-            raise RuntimeError('Named capture context moved backward during raw capture: ' + name)
-        return True
-
-    receipt['after_capture'] = observed(after_capture_context, budget(), 'Fresh named context after raw capture: ' + name,
-                                        before_capture['wall_msec'])
+    # Source/profile verification can take time before capture. Read a barrier
+    # after the actual screenshot, then require another publication beyond it;
+    # a state already available before capture cannot be the sole after proof.
+    barrier = observed(rendered, budget(), 'Observation barrier after raw capture: ' + name,
+                       before_capture['wall_msec'])
+    receipt['after_capture_barrier'] = barrier
+    receipt['after_capture'] = observed(rendered, budget(), 'Fresh named context beyond post-capture barrier: ' + name,
+                                        barrier['wall_msec'])
     receipt['binding_after_capture'] = require_binding()
     receipt['remaining_original_budget_seconds'] = budget()
     return receipt

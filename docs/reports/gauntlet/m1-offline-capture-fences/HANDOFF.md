@@ -119,3 +119,29 @@ require Windows. Raw Python logs and exact command/hash receipts are in round 1.
 No Godot, rendering, OCR or native workload ran for this candidate. Pure controls
 do not qualify the named pixels; independent source review and a later exact
 native slice remain required.
+
+## Rejected source iteration and correction
+
+Fresh critic `/root/offline_journey_builder/capture_phase_critic` rejected the
+first frozen candidate `aaa1929`, despite its 13 passing test groups. An
+intermediate unready sample could advance one frame and then regress to the
+acknowledgment counter, after which later frames still authorized capture. The
+same gap applied to simulation ticks. A second scheduling counterexample showed
+that a status published during the pre-capture source/profile check could later
+serve as the only nominal post-capture observation. The original candidate and
+its incomplete passing controls remain in history and round 1; no native run or
+pixel acceptance belongs to it.
+
+The revision checks frame, physics and observer counters against every previous
+validated sample, including unready samples, and retains the rejected pair on a
+regression. After the screenshot it reads a named-context observation barrier,
+then requires a strictly newer publication beyond that barrier before accepting
+the post-capture state. This prevents one state already available before the
+screenshot from being the sole after proof. All waits still share the original
+160-second or 30-second absolute deadline.
+
+Fifteen pure groups now pass, including the critic's intermediate frame/tick
+rollback, an observer-clock rollback, and a buffered pre-capture state followed
+by no new publication. Round 2 retains the exact revised command and raw output.
+These remain declared scheduling controls, not a native pixel result. Independent
+reevaluation and actual native captures are pending; account still owns the lane.
