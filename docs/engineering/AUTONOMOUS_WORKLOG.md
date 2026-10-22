@@ -18,4 +18,22 @@ Chronological record of what Claude did on the SIGHTBREAK v1.0 mission: investig
 
 **Gun data read.** `game/scripts/gameplay/weapons.gd` defines four weapons (interval in s, so Kestrel 9 semi 0.23, Vectorline 0.085 auto, Relay AR 0.105 auto, Longwatch 0.82 semi). `actor.gd:728-758`: spread is uniform random per axis around the aim; recoil climbs pitch by `spec.recoil` per shot up to 0.16 rad, adds a deterministic horizontal term `sin(shot_index * 1.7) * recoil * 0.55`, and recovers at 0.11 rad/s. Only the Relay AR has authored meshes and rigged arms; the other three are procedural.
 
-**Baseline run.** `scripts/validate.sh` started on `db3981e` under Xvfb with `DISPLAY=:99`. Result recorded in the next entry.
+
+**Baseline run (M1), commit `db3981e`.** `DISPLAY=:99 ./scripts/validate.sh` on the unmodified base, Godot 4.7.2 official, Xvfb 1920x1080x24, Mesa llvmpipe. It ran to its final line ("Validation completed") with no failing step, about 8 minutes of wall clock. Because the script runs under `set -e`, a failing suite would have stopped it earlier. Selected results from the 59 per-suite logs:
+
+| Suite | Result |
+| --- | --- |
+| actor / world / hit-feedback / weapon-integrity / hit-volume / hit-history | 73 / 25 / 10 / 28 / 40 / 638 checks, 0 failures |
+| match | 75/75 |
+| state-privacy, snapshot-buffer, input-stream, movement-replay, input-lifecycle, peer-lifecycle, result-outbox | all 0 failures; movement replay max error 0.0758 m |
+| reconnect (policy, independent, admission, alias, auth-loss, lost-welcome) | all pass |
+| landscape-ui / hud-overflow / ux-contract / touch / main | 9217 / 2437 / 2227 / 34 / 42 checks, 0 failures |
+| armory-ui / armory-state / economy-ui / economy-recovery | pass (746 / 2936 checks) |
+| weapon-art / reload-sequence / reload-audio (+3 captures) / reload-contact | 179 / 92 / 29 / 24 checks, 0 failures |
+| reload-visibility, reload-finish (sun, shade, skin), viewmodel-light | rendered probes pass |
+| bot-ai-regression | `BOT_AI_REGRESSION_TESTS_OK` |
+| bot-lifecycle (normal, seed 1847, real engine) | passed=true, 12 rounds, 6:6, 78 kills, **plant_observed=false** |
+
+Not run: the catalog-fixture drift check (it needs the backend Python environment, absent here) and the Windows-only observation tests (skipped by the suite). The only `WARNING` lines are the Xvfb V-Sync one. No ObjectDB leak lines in any log.
+
+**Finding F1 (bots never plant).** In the lifecycle test, 12 rounds took 26-43 simulated seconds each against a 100-second round timer, and the attackers never reached the `planted` state. Every round ended by elimination. The test still reports `passed=true` because it checks completion, halftime and a single report, not objective play. An older baseline recorded in `docs/ai/BOT_BEHAVIOR_QA.md` showed `plant_observed=true` on the main-line code (`148760e`). This has to be measured over many seeds and difficulties before a cause is claimed.

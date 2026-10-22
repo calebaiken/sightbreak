@@ -9,7 +9,7 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 | ID | Gate | Status | Evidence on record | Verified by | Next action |
 | --- | --- | --- | --- | --- | --- |
 | G1 | Offline 5v5 match runs start to finish (objectives, combat, economy, results, progression) | IN PROGRESS | Scripted native matches finish on Linux (6:6, 7:5) and Windows (6:6, 7:0) with earned XP/Credits reloaded after restart ([playability report](../reports/DESKTOP_PLAYABILITY_REPORT.md)). Several CI scenarios still fail: Linux plant approach and offline round observation, Windows offline OCR and reload timing. | Reported by Codex CI | Re-run the suite natively here (M1). No human has played a full match. |
-| G2 | Bots: reliable navigation, objectives, cooperation, difficulty | IN PROGRESS | PR #14 frozen at `d66e72c` is inside the base. Independent review: "AI / objectives / difficulty: FAIL acceptance" ([three-agent report](../reports/THREE_AGENT_INTEGRATION_REPORT.md)). Tip of the Gemini branch (`48eb058`) is newer and not integrated. | Reported | Review the newer tip with `integration-reviewer`, then measure full matches. |
+| G2 | Bots: reliable navigation, objectives, cooperation, difficulty | IN PROGRESS (F1: no plants in a 12-round match) | PR #14 frozen at `d66e72c` is inside the base. Independent review: "AI / objectives / difficulty: FAIL acceptance" ([three-agent report](../reports/THREE_AGENT_INTEGRATION_REPORT.md)). Tip of the Gemini branch (`48eb058`) is newer and not integrated. | Reported | Review the newer tip with `integration-reviewer`, then measure full matches. |
 | G3 | Ten-client authoritative match: reliability, privacy, identity, integrity, impairment | IN PROGRESS | 12/12 ten-client loopback conditions pass at frozen `4316c58`; resume soaks pass. PRs #18-#21 (recovery, trade reads, input freshness, ACK diagnostics) not integrated. No ten-human run. | Reported by Codex | Codex-owned. Claude reviews #18-#21 when asked. |
 | G4 | Gunplay: recoil, spread, fire cadence, hit and elimination feedback | IN PROGRESS | Rules are tested (`actor_test`, `hit_feedback_test`, `weapon_integrity_test`). No measurement of feel, no human assessment, no comparison to a shipped title. | Reported | Build a measurement harness for all four weapons (milestone candidate). |
 | G5 | Viewmodel, reload and weapon switch animation | FAILED | Relay AR has authored art. Same-family review scored the weapon and hands slice 5.5/10 against 8.5. Kestrel 9, Vectorline and Longwatch are still procedural. | Reported (same-model reviewer, stills) | Native recapture, critic round, author the other three weapons. |
@@ -36,7 +36,8 @@ Filled in as runs complete. Commit under test: `db3981e` (`codex/desktop-playabi
 | Item | Result |
 | --- | --- |
 | Asset import (`--import`) | Completed, exit 0 |
-| `scripts/validate.sh` | Running; see worklog for the result |
+| `scripts/validate.sh` | Ran to completion on `db3981e`, no failing step, no leak warnings (worklog has the table). Skipped: backend-Python fixture drift check, Windows-only tests. |
+| Bot match objective play | **Finding F1**: 12-round real-engine bot match, `plant_observed=false`, all rounds ended by elimination in 26-43 s. Under investigation. |
 
 ## Branch and PR map (verified 2026-10-21 with `git fetch` and ancestry checks)
 
