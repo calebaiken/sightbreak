@@ -60,19 +60,26 @@ Retain these separate phases without deduplicating equal SQL snapshots:
    read-only SQL query must see the committed operation, full business effects
    and exact response before the proxy drops any response and before client kill.
 3. Kill the still-live original native process before it receives any response
-   headers; retain PID/start identity, kill acknowledgment and journal bytes.
+   headers; retain PID/start identity, Linux return -9 and journal bytes.
+   Prove actual backend 200 received < retained committed SQL < native alive
+   observation < kill request < kill acknowledgment on both retained clocks.
+   Revoke its old actual session through production `/auth/logout` using only
+   the in-memory token, then prove the old token receives 401 without logging it.
 4. Fresh native wrong-account and second-owned-origin attempts must retain the
-   journal and issue zero keyed mutation requests. Separate production API replay
+   byte-identical journal and issue zero keyed mutation requests. Separate production API replay
    with outsider authentication must not return the buyer's receipt or item.
    Before/after business SQL stays unchanged. The second proxy origin forwards
    to the same owned backend, isolating the client origin check from account ID.
 5. A fresh correctly authenticated native retry reuses the exact endpoint, method,
    raw request body, parsed payload, UUID key and expected price. Withhold its
    actual production 200 again, retain unchanged SQL, kill this second process,
-   and prove the saved journal is byte-identical to the first capture.
+   and prove the saved journal is byte-identical to the first capture. Retain
+   actual recovery 200 < SQL witness < second native alive observation < kill
+   request < acknowledgment, then revoke that killed session through the API.
 6. A third correctly authenticated native process recovers the original response,
    clears the journal and refreshes ownership/balance from actual API reads.
-   Retain a distinct SQL query requested after final replay. A second post-clear
+   Retain a distinct SQL query requested after the final response and completed
+   account/inventory refresh. A second post-clear
    restart has no receipt and sends no purchase. Business SQL remains unchanged.
 7. A changed expected price with the original key must receive production 409
    without changing business SQL. No altered or fresh request may replace an
@@ -112,6 +119,8 @@ state, probe configuration, retained request headers, logs or evidence. Native
 bootstrap credentials and proxy-observed session tokens stay in process memory;
 scan all owned persistent client/output bytes against those values. Backend
 password/session hashes are the unchanged production authentication storage.
+Unexpected authentication failures must also redact bodies, replies and header
+values; exceptions may not dump request objects, raw fixtures or environments.
 The ephemeral fixture database password stays in runtime configuration and is
 redacted from retained commands/outputs; removing its owned container/volume is
 part of cleanup. Do not read saved credentials or dump process environments.

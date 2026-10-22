@@ -32,7 +32,9 @@ market response and another for its first recovery response hold after the
 production API has returned 200 and SQL has been retained. The driver proves
 the native process is still alive, kills it, captures the journal and then closes
 the held client socket without transmitting response headers. Barriers fail on
-timeout; no fabricated backend status enters the product path.
+timeout; no fabricated backend status enters the product path. Revoke each killed
+process's old session with actual `/auth/logout` and verify actual 401 before the
+next fresh login. These token values remain only in the driver's/proxy's memory.
 
 Use one new owned labelled PostgreSQL volume/container, a fixed digest with
 `--pull=never`, and an OS-assigned loopback host port. Use the explicit managed
