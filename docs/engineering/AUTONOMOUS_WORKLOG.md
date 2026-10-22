@@ -206,3 +206,17 @@ startup gates, adds reviewed Intel feature attribution and unsigned iOS compile,
 and uploads bounded raw receipts alongside the full artifacts. The standalone new
 workflow 404 is retained; no shared merge was used to register it. Mission #25 and
 draft PR27 remain open. No release, deployment or background execution is claimed.
+
+## Codex combined qualification checkpoint — 2026-10-22 04:10 UTC
+
+Frozen source 0ca125d is running desktop-alpha 39719407304. All four native
+source-suite steps pass; independent ARM raw review verifies 1,281 checks.
+Windows/Linux plant and defuse pass, Linux ordinary journey passes, Windows
+journey fails with raw diagnosis pending. Intel default and explicit OpenGL
+startup fail. ARM iOS build reaches the linker but exits 65 under Xcode 16.4 /
+SDK 18.5 on five iOS 26 framework symbols. An installed Xcode 26 selection and
+actual symbol-link preflight are being built without changing the pinned engine.
+Ten-client soak passes 80 recoveries; all twelve synthetic campaign conditions
+pass, with independent raw recomputation underway. Follow-up protocol/hostile
+probes and historical lost-close overlap qualification continue. These partial
+results do not close complete gameplay, platform, prediction-feel or human gates.
