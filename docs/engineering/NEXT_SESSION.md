@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-22, 06:29 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-22, 06:48 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native Codex goal API is exposed. Read AGENTS.md, the mission and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
@@ -9,11 +9,17 @@ implementation after each verified increment; these corrections do not finish v1
 ## Root and source checkpoints
 
 - Root: `/workspace/sightbreak-v1-execution`, `codex/v1-mission-playability`.
-  Current checkpoint before this note: `f8b7e82`; last pushed: `b09cfe1`.
+  Current checkpoint before this note: `961aa73`; last pushed: `3b5cf76`.
 - [Draft PR27](https://github.com/calebaiken/sightbreak/pull/27) targets PR24
   `c84eaf3` → PR23 `db3981e` → PR22 `82a03fc` → PR16 `d2439ac`.
   No shared branch was merged or rewritten. Fetch live refs before integration.
-- Complete unmodified aggregate **PASSES at `b85f93600e122b36e8dcd70edd9bc168e9820b08`**.
+- Latest complete unmodified aggregate **PASSES at exact `b09cfe1`**, including
+  the new guidance source, in 465.033 seconds. Independent evidence `c4c38a7`:
+  `docs/reports/gauntlet/combined-validation-b09cfe1/independent-critic/REVIEW.md`.
+  All 52 required Godot logs, seven Python groups, ENet, lifecycle and catalog
+  checks pass. Source stays clean and identical. Linux input_mode is 462/0 with
+  no leak warning; this does not clear the separate actual Mac failure.
+- Earlier complete aggregate **PASSES at `b85f93600e122b36e8dcd70edd9bc168e9820b08`**.
   Frozen worktree `/workspace/sightbreak-validate-a23e349` has that actual HEAD;
   its directory name is historical. Raw output `builds/combined-validation-r2`,
   logs `.local/validation/run-utj57N`. Game tree `e877ba16bdc7f63994930a77f32e484e8f12d890`,
@@ -59,8 +65,8 @@ Installation, runtime, older OS and physical mobile play remain open.
    cause is supported. Both explicitly select LP_NUM_THREADS=2/llvmpipe; outer
    parent env is not client readback. No fixed-fps/physics override. Arena/sky
    blobs and graphics selection lines match pre-integration9f730dc; source-only
-   comparison cannot establish a UI/render regression. Full candidate aggregate
-   and exact-source Windows run remain required. No unbounded retry or deadline
+   comparison cannot establish a UI/render regression. The b09 candidate aggregate now passes independently; exact-source Windows
+   output is under review. No unbounded retry or deadline
    increase is authorized merely to find a pass.
    Original H.264 video 130.400 s  / 1,304 frames  / 7,961,368 bytes is retained, SHA256
    `9527ba7f05d288c1545ea8dbc3723a83d5e19774118af099119fb6c7b0dfb7cc`.
@@ -77,15 +83,24 @@ Installation, runtime, older OS and physical mobile play remain open.
    post-replay witness: qualification stays BLOCKED. All resources are removed;
    local engine lane is released. Evidence: `f8b7e82`, independent rejection
    `71f430e`, reports `m3-account-activity` and `m3-account-activity-qualification`.
-   Critic `/root/account_activity_qualification_critic` prepares separate v2
-   observer, retaining every recovery row plus a distinct owned read-only query
-   initiated after replay. Seven pure controls pass; a fresh source critic is
-   active. Original flawed observer/hash and trial remain unchanged. Builder
-   `/root/account_match_builder` is idle after archiving. Authorize a fresh
-   account/resource/output run only after observer review and aggregate cleanup.
+   Separate v2 observer is independently source-accepted (16 controls), hash
+   `d1ec8562d95f614cb6e3e996febb66cf6e4dda1cce5ab8a3e94f7639fd949179`;
+   oracle 09599411… requires every recovery stream row and a distinct owned
+   read-only query started after replay. Original v1 remains unchanged.
+   **Trial2 is executing**, source `3b5cf7640e256dff404b401bf2b27ffaff157bdd`,
+   game fb6be859…, new worktree `/workspace/sightbreak-account-activity-r2`,
+   output `builds/account-activity-stock-2`, driver 108257 / session 5448,
+   started 06:38:57 UTC. New container `sightbreak-account-match-f1672c68d71a`,
+   API 127.0.0.1:36727, game UDP 40937. Critic was armed before runtime and has
+   independently seen ten disjoint zero-wallet IDs/tickets, eleven engine
+   children and socket ownership. Match reaches automatic halftime; final
+   recovery/SQL/cleanup acceptance remains pending. This run owns local CPU.
+   Builder `/root/account_match_builder`; critic `/root/account_activity_qualification_critic`.
+   Preserve source until critic source-after, then archive originals; never
+   infer the pre-ACK/post-replay SQL or successful cleanup.
    Keep stock rules, yaw policy, no AFK-resistance or whole G3/G16 claim.
 3. **M2 actual Mac focus/capture advances; automatic journey still FAILS.**
-   Run39732825169 at exact `b09cfe1b661ec153f2bd57d45e695cc70e9717b0`, single
+   Run 39732825169 at exact `b09cfe1b661ec153f2bd57d45e695cc70e9717b0`, single
    ARM job 119671543697, now observes current PID 4062/window 45 [40,32,960,568],
    background capture-only success, accepted public activation, exact foreground
    and five actual events. Original 01/02/03 PNGs visibly show menu/settings/menu.
@@ -94,59 +109,71 @@ Installation, runtime, older OS and physical mobile play remain open.
    A separate source gate runs only seven suites  / 1,584 assertions: input_mode
    is 462/0, exit 0 but strict log rejects two ObjectDB instances leaked at exit.
    Five later suites are UNREACHED. No verbose object types/cause are known.
-   iOS unsigned compile passes separately. Native critic is finishing raw report.
+   iOS unsigned compile passes separately. Independent raw report is committed
+   as `b72badd`; all 127 receipts and original phase PNGs are audited.
    Original base: `/workspace/sightbreak-mac-menu-native-review/docs/reports/gauntlet/m2-macos-focus/native-run-39732825169/full-qa`.
-   Source builder `/root/mac_input_builder` starts next bounded iteration from
-   `f8b7e82`: accurate exact high-confidence home identity against actual receipts,
-   plus bounded failure-followup verbose input_mode diagnostic. Preserve every
-   original confidence, source/window/profile/focus/input/cleanup guard and the
-   strict failed gate. Source/pure work only; fresh critic before next native run.
+   Next source is independently accepted: a866c73, integrated through `961aa73`.
+   Home identity requires unique exact SIGHTBREAK / OPERATOR RECORD / SETTINGS,
+   unchanged confidence 0.8 and original geometry, rejecting settings/mixed
+   screens. Separate verbose input_mode repeat runs only after the evidenced
+   strict leak failure, on an isolated private project/user namespace, within
+   240 seconds. Original strict gate stays failed. All 35 root controls pass;
+   fresh critic 146 screen cases  / 14 mocked lifecycle runs pass. Prior rejected
+   bounds/diagnostic cases are retained. Push clean source and dispatch one ARM
+   attempt, verify returned exact SHA/job, then independently review actual
+   navigation and verbose object types. Failed bootstrap preserves unvalidated
+   namespace honestly. No new native result or leak cause is claimed.
 4. **M6 touch transition accepted.** Integrated `66bcc5e`/`a06017b`, final native
-   source589a52a. Initial candidate visually wins but is rejected for existing-row
-   clipping. Revision passes462 checks vs prior16 failures, independent4/4 clipping
-   probe, and original71.891 s native on/off flow. Fresh final blind judge chooses
+   source 589a52a. Initial candidate visually wins but is rejected for existing-row
+   clipping. Revision passes 462 checks vs prior 16 failures, independent 4/4 clipping
+   probe, and original 71.891 s native on/off flow. Fresh final blind judge chooses
    final candidate for clear MENU/device spacing and correct hints. Evidence
    `9efaf63`, `4a1205c`/followup and `93ec98b`; report `m6-touch-hud-transition`.
    Control contrast over weapon/pavement remains open. Full game tree is covered by
    the b85 aggregate; no G7/G10/physical/8.5 presentation closure.
 
-5. **M1 capture phase fences.** `/root/offline_journey_builder` owns sparse
-   `/workspace/sightbreak-capture-fences`, `fix/offline-capture-phase-fences`, from
-   `9d11f1d`. Actual Windows a8 captures06c/10 show old POST/menu phases despite
-   later functional journey success. Repair only observer drawn-frame/context
-   guards under unchanged budgets, then fresh critic and exact native slice.
-   No local engine work while account owns that lane. Canonical docs untouched.
-6. **M4 gunplay invariants.** `/root/gunplay_timing_builder` investigates actual
-   four-weapon fire/reload/switch/ammo/damage/feedback contracts in sparse
-   `/workspace/sightbreak-gunplay-invariants`, `codex/m4-gunplay-invariants`,
-   source 317410a. Criteria 395b602, probe b6c2ccd, docs 68587d0. No shipping change
-   or product defect established. Fresh critic 5606f1e requires harness revision:
-   cadence permits truncated firing; damage events lack health delta; initial
-   deploy events and reload timelines are missing. Retain those counterexamples.
-   Builder is idle awaiting reactivation; source repair then actual measured
-   output under a coordinated engine lane, independent recomputation afterward.
-   No arbitrary feel tuning, CS2/human parity or product completion claim.
-
-7. **New combined aggregate executing.** Frozen clean checkout
-   `/workspace/sightbreak-validate-b09cfe1`, exact `b09cfe1`, own private state,
-   original `./scripts/validate.sh`; command session 5200, raw
-   `builds/combined-validation`, logs `.local/validation/run-3uEIWG`.
-   Source/engine/environment before receipt retained; after/result pending.
-   Includes restored tracked hands CSV/hash fixture. This run owns local CPU
-   until it finishes; do not overlap Godot/native/OCR. Input_mode passes 462/0
-   without the Mac warning in this Linux log. Entire result still pending;
-   fresh independent aggregate review required. Optional backend/physical/render
-   gates do not silently pass from this headless run.
+5. **M1 capture phase fences source accepted and integrated.** Source 65c3b8b
+   integrates as 802ce4c, independent archive d72c815. Fifteen groups plus eight
+   independent scheduling controls pass. Rejected aaa1929 is preserved. Only
+   observation changes; original 160/30/300 budgets and input contracts remain.
+   Actual output is running in Windows CI 39735001567 at exact 3b5cf764, single
+   job 119678513156. Metadata passes source/input/journey/plant/defuse and reaches
+   stock full match; raw evidence is not yet available. Critic
+   `/root/native_ci_outcome_critic` owns source/PID/frame/phase/profile/OCR and
+   original PNG review in sparse `codex/review-native-ci-39735001567`.
+   Neither corrected 06c nor 10 pixels are accepted from metadata alone.
+6. **M4 gunplay rules measurement awaits actual engine output.** Own worktree
+   `/workspace/sightbreak-gunplay-invariants`, `codex/m4-gunplay-invariants`.
+   Criteria 395b602, rejected probe b6c2ccd, revised source
+   `d1e89edfbd474a04d6759300141880566b1559e3`, game tree 20b03e37….
+   No shipping change or supported product defect. Fresh review 890d87d accepts
+   revised harness for bounded measurement: forty independent pure controls,
+   complete stock schedules 129/353/286/36, real health/alive and feedback
+   predicates, raw reload/deploy timelines, all-four lethal and friendly shield
+   cases. These are source controls/predictions, not actual engine results.
+   Preserve original rejection 5606f1e. Builder is idle; reactivate after account
+   cleanup, authorize one import/probe plus relevant authority/weapon/feedback
+   controls, then separate critic recomputes all 52 actual records. No feel,
+   latency, device, CS2 parity or whole M4 acceptance claim.
+7. **Combined aggregate independently accepted.** Exact frozen
+   `/workspace/sightbreak-validate-b09cfe1`, source b09cfe1; raw
+   `builds/combined-validation`, `.local/validation/run-3uEIWG`. Exit 0 in 465.033 s,
+   before/after clean/identical. Root session 5200 is completed and closed; no
+   engine remains. Source and engine hashes are in the command receipts.
+   Independent 72-file archive (68 Linux  + 4 clearly separate Mac context files)
+   is `c4c38a7`. Five rendered/three Windows/optional backend checks remain
+   outside this run. Later capture/Mac observer revisions have focused controls
+   and their own identity; don't relabel the b09 full pass as latest whole HEAD.
 
 ## Tools, recovery and constraints
 
-Pinned engine4.7.2 is `/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64`
-through `scripts/godot.sh`; `/usr/local/bin/godot` is wrong4.6.3. Tools are shared.
+Pinned engine 4.7.2 is `/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64`
+through `scripts/godot.sh`; `/usr/local/bin/godot` is wrong 4.6.3. Tools are shared.
 Exports can use `SIGHTBREAK_STATE_DIR=/workspace/sightbreak/.local` for templates;
 aggregate tests use a private per-checkout state. Never expose development keys.
 Xvfb: `/workspace/tools/xvfb/usr/bin/Xvfb`. Use fresh output directories and clean,
 unchanging source; validators reject dirty/changed HEAD. Coordinate local native
-workloads. All7 agent slots can be occupied; reactivate waiting builders after
+workloads. All 7 agent slots can be occupied; reactivate waiting builders after
 completed critics free slots, without inventing independent reviews.
 
 ```sh
