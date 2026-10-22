@@ -20,10 +20,9 @@ main-run-loop turn. That exposes a real risk in sleep/poll observation; it does
 not establish the cause of the observed failure. This candidate introduces no
 new activation path and keeps the same single public request/options. It records
 the API return, selected current window, target application properties, and each
-raw before/public-run-loop/after sample. The public CoreFoundation default mode
-is accompanied by the controller's own PID, so a foreground observation can be
-compared with that caller without guessing what an unrelated PID represented.
-The run loop
+raw before/public-run-loop/after sample. Snapshots include the controller's own
+PID, so a foreground observation can be compared with that caller without
+guessing what an unrelated PID represented. Public CoreFoundation default mode
 is processed only on the controller main run loop. Foreground guard reads also
 process it. Exact foreground PID and the five-second deadline stay mandatory;
 request success, active flags and window order never substitute for focus.
@@ -43,6 +42,13 @@ five-second boundary, newer focus loss, main-thread refusal, refreshed guard
 ordering and independent failed capture/focus. They establish observer readiness
 only. Actual CoreFoundation/AppKit timing, helper permission/capture/geometry,
 event delivery and navigation remain unverified.
+
+The [fresh source review](independent-review/REVIEW.md) accepts exact
+implementation `1260217` for one bounded ARM retry. It retains the 20 packaged
+control outputs from `eab9882`, the metadata-only extension and eight independent
+controls at final `1260217`. This does not accept native behavior or establish
+the old failure's cause. Root must review/integrate and dispatch its own exact
+clean source, followed by a fresh native output critic.
 
 The first source critic identified that background success logging called fresh
 diagnostics and could process an unrecorded run-loop turn before the main
