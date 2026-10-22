@@ -118,5 +118,19 @@ Full JSON results, raw TSVs and logs are losslessly compressed in each attempt's
 folder. The failing settings PNG and both passing HUD modes remain unmodified.
 Only 1280×720 was rerun here. The other layout sizes, actual desktop hardware,
 accessibility, full matches and other platforms retain their separate gates.
-Independent critic review is pending; this builder result does not grant visual
-quality or release acceptance.
+At this checkpoint independent critic review was pending; this builder result
+does not grant visual quality or release acceptance.
+
+## Independent review and next iteration
+
+Fresh critic `/root/layout_ocr_critic` independently accepted `3a847af` over the
+baseline for the bounded 1280×720 observer correction, after inspecting actual
+native screenshots, running six image tests and checking source/ELF hashes,
+two-frame fences and clean exits. The complete report and controls are retained
+in `independent-review-r1/`.
+
+The critic also found a real 1280×800 saved-image false negative. Its broad crop
+misread `MENU` as `EN`. The assigned follow-up keeps every required word and
+extends actual positive/wrong-screen controls to every declared size. See
+`ITERATION_2.md` for the specific correction, before/after observations and
+remaining native/independent-review gates.

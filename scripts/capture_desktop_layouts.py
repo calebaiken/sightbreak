@@ -61,8 +61,14 @@ def ocr_lines(text, factor, *, origin=(0, 0)):
 
 
 def hud_footer_region(size):
+    """Map the rendered hint strip through the game's fixed 1280x720 content."""
     width, height = size
-    return (width // 4, height * 4 // 5, width * 3 // 4, height)
+    scale = min(width / 1280, height / 720)
+    left, top = (width - 1280 * scale) / 2, (height - 720 * scale) / 2
+    # Keep the actual footer and its padding. Including the world/gun below it
+    # merges MENU with a background edge in the retained 1280x800 native frame.
+    return (math.floor(left + 320 * scale), math.floor(top + 658 * scale),
+            math.ceil(left + 960 * scale), math.ceil(top + 690 * scale))
 
 
 def rendered_hud_matches(groups, touch_enabled, footer_groups=()):

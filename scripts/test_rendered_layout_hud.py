@@ -13,7 +13,7 @@ import time
 import unittest
 
 from PIL import Image
-from capture_desktop_layouts import hud_footer_region, ocr_input, ocr_lines, rendered_hud_matches
+from capture_desktop_layouts import DEFAULT_SIZES, hud_footer_region, ocr_input, ocr_lines, rendered_hud_matches
 
 FIXTURES = Path(__file__).resolve().parents[1] / 'docs/reports/gauntlet/native-layout-ocr'
 
@@ -43,7 +43,7 @@ class RenderedLayoutHUDTests(unittest.TestCase):
 
     @classmethod
     def analyze(cls, raw, name, footer):
-        factor = 4 if footer else 2
+        factor = 4 if footer else (3 if raw.width < 1100 else 2)
         region = hud_footer_region(raw.size) if footer else None
         data = ocr_input(raw, factor, region=region, threshold=None if footer else 145)
         label = name + ('-footer' if footer else '-full')
@@ -82,6 +82,20 @@ class RenderedLayoutHUDTests(unittest.TestCase):
                 full, footer = self.groups[name]
                 self.assertFalse(rendered_hud_matches(full, False, footer))
                 self.assertFalse(rendered_hud_matches(full, True))
+
+    def test_every_declared_native_size_has_positive_and_wrong_screen_controls(self):
+        coverage = {}
+        for fixture in self.manifest['raw_native_fixtures']:
+            size = 'x'.join(map(str, fixture['size']))
+            coverage.setdefault(size, set()).add(fixture['screen'])
+            with self.subTest(size=size, screen=fixture['screen'], path=fixture['path']):
+                full, footer = self.groups[Path(fixture['path']).stem]
+                self.assertEqual(rendered_hud_matches(full, False, footer), fixture['expected'] == 'desktop')
+                self.assertEqual(rendered_hud_matches(full, True), fixture['expected'] == 'touch')
+        self.assertEqual(set(coverage), set(DEFAULT_SIZES))
+        for size, screens in coverage.items():
+            with self.subTest(size=size):
+                self.assertEqual(screens, {'hud', 'menu', 'roster', 'field-menu', 'settings'})
 
     def test_missing_footer_pixels_cannot_be_replaced_by_health_or_settings(self):
         with Image.open(FIXTURES / 'fixtures/desktop.png') as raw:
