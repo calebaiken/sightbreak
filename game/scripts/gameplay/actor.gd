@@ -624,10 +624,20 @@ func reset_for_round(spawn: Vector3) -> void:
 	ammo = int(spec["magazine"])
 	reserve = int(spec["reserve"])
 
+## Standalone callers retain immediate movement/combat/damage behavior.
 func tick_authority(delta: float) -> void:
+	tick_authority_movement(delta)
+	tick_authority_actions(delta)
+
+func tick_authority_movement(delta: float) -> void:
+	if alive:
+		SBMovementStep.advance(self, input_state, delta)
+
+## The match supplies a server-local hit sink after advancing every actor's pose.
+## No damage is applied until every eligible actor has consumed this tick's action.
+func tick_authority_actions(delta: float, hit_sink: Callable = Callable()) -> void:
 	if not alive:
 		return
-	SBMovementStep.advance(self, input_state, delta)
 	_deploy_remaining = maxf(0, _deploy_remaining - delta)
 	for id in _weapon_cooldowns:
 		_weapon_cooldowns[id] = float(_weapon_cooldowns[id]) - delta
@@ -649,7 +659,7 @@ func tick_authority(delta: float) -> void:
 	if firing and (automatic or not _fire_previous) and weapon_ready() and reload_remaining <= 0:
 		if ammo > 0:
 			fired_weapon = weapon_id
-			_fire()
+			_fire(hit_sink)
 		else:
 			start_reload()
 	# A held trigger carries at most this tick's remainder into the next interval,
@@ -721,7 +731,7 @@ func buy_weapon(id: String) -> bool:
 	_equip(id)
 	return true
 
-func _fire() -> void:
+func _fire(hit_sink: Callable = Callable()) -> void:
 	var spec := Weapons.get_weapon(weapon_id)
 	ammo -= 1
 	# Only a continuously held trigger carries the sub-tick remainder; every burst
@@ -746,9 +756,10 @@ func _fire() -> void:
 			var amount := float(spec["damage"]) * lerpf(1, float(spec["falloff"]), distance_ratio)
 			if headshot:
 				amount *= float(spec["head"])
-			target.apply_damage(amount, actor_id, headshot)
-			show_hit_feedback(headshot, not target.alive)
-			hit_confirmed.emit(actor_id, headshot, not target.alive)
+			if hit_sink.is_valid():
+				hit_sink.call(self, target, amount, headshot)
+			else:
+				resolve_shot_hit(target, amount, headshot)
 		_impact(trace.position, trace.normal, target != null)
 		impact_created.emit(trace.position, trace.normal, target != null)
 	shot_fired.emit(actor_id, origin, direction)
@@ -756,6 +767,15 @@ func _fire() -> void:
 	_shot_index += 1
 	recoil.y = minf(recoil.y + float(spec["recoil"]), 0.16)
 	recoil.x += sin(_shot_index * 1.7) * float(spec["recoil"]) * 0.55
+
+## Called immediately for standalone actors or once per queued contact by the match.
+## A prior contact may already have eliminated this victim; never duplicate rewards.
+func resolve_shot_hit(target: SBActor, amount: float, headshot: bool) -> void:
+	if not is_instance_valid(target) or not target.alive or target.team == team:
+		return
+	target.apply_damage(amount, actor_id, headshot)
+	show_hit_feedback(headshot, not target.alive)
+	hit_confirmed.emit(actor_id, headshot, not target.alive)
 
 ## Authoritative shot trace. World geometry uses the physics ray; operators use
 ## their drawn head/body volumes, so a ray through the empty corners of another

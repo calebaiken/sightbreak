@@ -100,6 +100,9 @@ var _device_audio: AudioStreamPlayer3D
 var _beep_clock: float = 0.0
 var _remote_utilities: Dictionary = {}
 var _rng := RandomNumberGenerator.new()
+## At most one hitscan contact per actor per authoritative tick (ten-actor roster).
+## Cleared before/after each tick; never replicated or consulted by prediction.
+var _pending_hitscan_hits: Array[Dictionary] = []
 
 func configure(settings: Dictionary) -> void:
 	options = settings.duplicate()
@@ -273,15 +276,22 @@ func _authority_tick(delta: float) -> void:
 				_bot_input(actor, 0.12)
 	if local_actor() != null:
 		local_actor().input_state = _local_input.duplicate()
+	var suspended_actor_edges: Dictionary = {}
+	_pending_hitscan_hits.clear()
+	# Shared post-movement shot geometry: no actor fires at a later actor's old pose.
 	for actor: SBActor in actors.values():
-		var suspended_edges: Array = []
 		if phase != "live":
 			actor.input_state = {"move": Vector2.ZERO, "look": actor.input_state.get("look", Vector2(actor.yaw, actor.pitch))}
 		elif not _is_bot(actor.actor_id) and actor.actor_id != local_id:
 			if _elapsed - float(_last_peer_input.get(actor.actor_id, -10.0)) > 0.3:
-				suspended_edges = [actor._fire_previous, actor._jump_previous, actor._grenade_previous, actor._smoke_previous]
+				suspended_actor_edges[actor.actor_id] = [actor._fire_previous, actor._jump_previous, actor._grenade_previous, actor._smoke_previous]
 				actor.input_state = {"move": Vector2.ZERO, "look": Vector2(actor.yaw, actor.pitch)}
-		actor.tick_authority(delta)
+		actor.tick_authority_movement(delta)
+	# All traces precede this tick's hitscan damage, so eligible return fire and
+	# front-actor shielding cannot disappear because of Dictionary insertion order.
+	for actor: SBActor in actors.values():
+		actor.tick_authority_actions(delta, _queue_hitscan_hit)
+		var suspended_edges: Array = suspended_actor_edges.get(actor.actor_id, [])
 		if not suspended_edges.is_empty():
 			# Silence stops movement/actions, but is not a real button release.
 			actor._fire_previous = suspended_edges[0]
@@ -291,6 +301,10 @@ func _authority_tick(delta: float) -> void:
 		if _ranked_started and phase != "match_over" and _peer_actors.values().has(actor.actor_id):
 			if _elapsed - float(_last_activity.get(actor.actor_id, -100)) <= 10:
 				_activity_seconds[actor.actor_id] = float(_activity_seconds.get(actor.actor_id, 0)) + delta
+	for hit: Dictionary in _pending_hitscan_hits:
+		var source: SBActor = hit.source
+		source.resolve_shot_hit(hit.target, hit.amount, hit.headshot)
+	_pending_hitscan_hits.clear()
 	# Opt-in diagnostics only: no live shot ever consults historical state.
 	if options.get("mode", "offline") == "server" and bool(options.get("record_hit_history", false)):
 		_hit_history.record(_simulation_tick, _snapshot_generation, actors)
@@ -314,6 +328,9 @@ func _authority_tick(delta: float) -> void:
 		for peer_id: int in _active_peers():
 			var packed: PackedByteArray = var_to_bytes(_snapshot(int(_peer_actors[peer_id]))).compress(FileAccess.COMPRESSION_DEFLATE)
 			_snapshot_rpc.rpc_id(peer_id, packed)
+
+func _queue_hitscan_hit(source: SBActor, target: SBActor, amount: float, headshot: bool) -> void:
+	_pending_hitscan_hits.append({"source": source, "target": target, "amount": amount, "headshot": headshot})
 
 func _is_bot(id: int) -> bool:
 	return id != local_id and not (_peer_actors.values() if _authority else _connected_actor_ids).has(id)

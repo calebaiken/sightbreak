@@ -119,3 +119,26 @@ ARM startup/controls pass without gameplay acceptance. Isolated builders immedia
 began the suite isolation, OCR, offline journey and Mac render follow-ups. No shared
 merge, production deployment or release was performed. CS2 reference fetch again
 returned proxy CONNECT 403; hardware, human, listening and release gates remain open.
+
+## 2026-10-22 — M3 authority order candidate
+
+Builder branch `codex/v1-authority-tick-fairness` starts from frozen `6a0d8d5`.
+Reused the retained gauntlet/no-ai-slop instructions and isolated git workflow.
+Inspected Claude-owned PR26 `5288a69` reports via git blobs; no map/bot integration.
+The declared bar is the frozen native Godot 4.7.2 implementation plus explicit
+same-tick correctness invariants, recorded before gameplay edits. The engine
+benchmark reproduces first-processed wins in 32/32 mirrored duels and conflicting
+moving/stance traces. The final identical harness intentionally fails 152/162
+checks on baseline (exit 1) and passes 162/162 on the staged candidate. It also
+checks shielding, bounded deaths/rewards, dead actors, nonlethal falloff and cadence.
+
+The candidate separates all movement from action tracing and commits bounded
+hitscan contacts after every actor's eligible action. Standalone actor ticks stay
+immediate. Initial CPU cost increased about 30%; a repeat without gameplay edits
+was +0.5% against adjacent baseline. Raw samples and failed fixture iterations are
+retained; shared-host timings cannot establish isolated overhead or latency.
+Full maintained validation is running. Independent acceptance is PENDING. Largest
+remaining gap: same-victim multiattacker kill/assist/lethal-feedback attribution
+still follows contact order. Existing mutual-wipe, utility and collision rules
+also remain unresolved. Evidence and exact commands:
+`docs/reports/gauntlet/m3-authority-order/README.md`.
