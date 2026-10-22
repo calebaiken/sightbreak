@@ -21,6 +21,9 @@ not establish the cause of the observed failure. This candidate introduces no
 new activation path and keeps the same single public request/options. It records
 the API return, selected current window, target application properties, and each
 raw before/public-run-loop/after sample. The public CoreFoundation default mode
+is accompanied by the controller's own PID, so a foreground observation can be
+compared with that caller without guessing what an unrelated PID represented.
+The run loop
 is processed only on the controller main run loop. Foreground guard reads also
 process it. Exact foreground PID and the five-second deadline stay mandatory;
 request success, active flags and window order never substitute for focus.

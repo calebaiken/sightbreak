@@ -7,6 +7,7 @@ only; the actual run's raw images/results need a fresh independent critic.
 """
 import argparse
 import json
+import os
 from pathlib import Path
 import signal
 import subprocess
@@ -105,7 +106,8 @@ def run(output, preflight_path, timeout=150):
     profile_before = native_before = None
     helper_processes, actions = [], []
     result = {'scope': 'Actual ARM Mac ordinary menu pointer/Escape navigation only; no gameplay/device acceptance',
-              'passed': False, 'permission_requests_made': 0, 'captures': [], 'actions': actions}
+              'passed': False, 'permission_requests_made': 0, 'captures': [], 'actions': actions,
+              'controller_pid': os.getpid()}
 
     def remaining():
         value = deadline - time.monotonic()

@@ -7,6 +7,7 @@ down event. OS state and later native pixels, not a void post, prove delivery.
 import ctypes as C
 from ctypes.util import find_library
 import math
+import os
 import time
 
 from probe_macos_input import MacReadOnly, Point, NativePrerequisiteBlocked, require_absent_profile
@@ -134,7 +135,9 @@ class MacMenuUI(MacReadOnly):
 
     def focus_state(self):
         application = self.application()
-        state = {'foreground_pid': self.foreground_pid(), 'target_pid': self.pid,
+        foreground = self.foreground_pid()
+        state = {'foreground_pid': foreground, 'controller_pid': os.getpid(), 'target_pid': self.pid,
+                 'foreground_is_controller': foreground == os.getpid(),
                  'target_window': self.window, 'pinned_bounds_points': self.bounds,
                  'target_application_available': bool(application),
                  'state_source': 'Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn'}
