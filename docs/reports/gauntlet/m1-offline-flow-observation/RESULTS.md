@@ -100,3 +100,33 @@ Largest unresolved gap: actual exported reruns on Linux and Windows, especially
 under hosted render contention. Independent evaluation must inspect actual
 outputs and assess whether the narrowed HUD crop retains sufficient platform
 layout tolerance. No builder approval or overall gameplay-quality score is given.
+
+## First new native Linux full-flow attempt
+
+Exact clean source: `94dc6bb`, pinned Godot 4.7.2; separate new build directory
+`builds/native-r2`. Export passed. The full original 300-second controller ran
+with its original assertions/deadlines and failed after 161.160 seconds at
+`Second active round for weapon switching` (35-second stage budget). This is a
+failed native journey, not a pass or a demonstrated product input defect.
+
+The actual run reached living movement, fire decrement, reload, natural first
+round completion and purchased-SMG HUD 30/120. At the resumed post-purchase
+observation, round 2 had 13.117 simulation seconds of buy phase remaining.
+The 35-second wall wait advanced the simulation about 12.783 seconds; the final
+status remained in buy with roughly 0.23 seconds remaining. No deadline or game
+rule was changed. The target settings/restart/focus block was not reached.
+
+`evidence-native-r1.tar.gz` preserves the complete failed attempt, source/export
+receipts and setup failures. An initial missing-template failure and refusal to
+reuse an existing export directory were resolved with the pinned local template
+setup and a new output directory. The first launch also correctly rejected a
+missing Xvfb path before creating a client. Native observation Python regression:
+seven tests, four passed and three native-Windows tests skipped on Linux.
+
+A separate `verify_native_focus_only.py` probe is prepared to execute the exact
+production focus block verbatim in the first ordinary stock match. It retains
+the original 60-second stock-live wait, ten-second per-observation gates, held
+W/LMB safety checks, explicit resume, live actor/round checks and fresh movement.
+It performs no settings/restart or full-journey acceptance and injects no match
+state. The probe records hashes of its driver, original block and executed text.
+New native focus-only output and independent review remain pending.
