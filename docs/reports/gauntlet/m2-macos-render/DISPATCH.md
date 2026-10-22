@@ -15,8 +15,9 @@ branch merge is authorized or performed to make it discoverable.
 The existing registered `desktop-alpha.yml` now invokes the same reviewed runner
 only on `macos-15-intel`, after the unchanged shipping startup qualification and
 existing minimal/frozen/candidate diagnosis. Its default driver and 120-second
-per-case bounds remain unchanged. This adds up to ten minutes to the Intel job,
-inside its existing 60-minute cap. Diagnostic outcomes cannot turn a failed
+per-case bounds remain unchanged. Five feature trials each retain a 120-second bound; private import and export
+each have another 120-second bound plus preparation overhead. These diagnostics
+run inside the existing 60-minute job cap. Diagnostic outcomes cannot turn a failed
 shipping gate into a pass.
 
 Output is nested under `macos-diagnostics/render-features`, so the existing full
