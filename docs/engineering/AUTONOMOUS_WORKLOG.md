@@ -357,3 +357,27 @@ Fresh independent review `6a40900d7903b23a266256c4fa239d07529dbe13` subsequently
 accepts the declared six-habit scope at source `1b88349`, retaining all failed
 fixtures and nine focused native steps. This records its verdict, not builder
 self-approval or root integration. Whole-match quality remains open.
+
+## Codex continuation checkpoint — 2026-10-22, 07:22 UTC
+
+Independent Windows run 39735001567 at 3b5cf764 passes all selected native gates,
+including corrected phase captures, plant / natural resolution / next round,
+stock full match and earned disk reload. Root evidence b97fd81 retains raw PNGs
+and source/PID/frame/profile joins. Account trial 2 at the same source independently
+passes actual pre-ACK and post-replay SQL / cleanup; trial 1 stays blocked. Root
+archive acceptance a3b7070. Backend 61-case regression accepted in 8b5f40d; no
+backend product changes. Four-weapon native probe at fc5d677 passes independent
+recomputation; registration adds one mandatory check, no shipping weapon tuning.
+
+Mac run 39736389634 at 20464da independently passes menu navigation but strict
+source fails actor first with six leaks / 73 assertions and eleven suites unreached.
+Fresh source review accepts first-leak diagnostic f3896c6; root 271a346 / a09f0d6.
+All fourteen maintained controls rerun successfully. Prepare one new ARM attempt;
+actual object types/cause remain unknown. Linux original next-round failure remains.
+
+Immediately continued M3 with narrow PR18 keyed store/armory receipt recovery,
+separate from postmatch rewards. Builder and fresh critic are implementing and
+measuring durable exact-key recovery on private local fixtures, with source
+attribution and route / payload / account isolation. Local engine CPU belongs
+to that builder. Next full aggregate follows accepted integration; b09cfe1's
+older full pass is not relabeled as current whole HEAD. Mission stays IN PROGRESS.

@@ -19,3 +19,9 @@ and include a documented Steam staging process. Human experience, physical devic
 signing, credentials and unavailable hosts stay explicitly blocked until observed.
 A script, simulated match, software render or successful export cannot silently
 satisfy a different gate. No deployment, Steam publication or paid action is implied.
+
+Current bounded evidence includes the independently passing Windows selected native
+gates, corrected-activity ten-account settlement/recovery, backend regression and
+four-weapon engineering probe. Linux next-round timing and Mac strict source leaks
+remain failures. The canonical matrix records their exact sources and reviewers;
+none of these increments closes the full release-candidate gates.
