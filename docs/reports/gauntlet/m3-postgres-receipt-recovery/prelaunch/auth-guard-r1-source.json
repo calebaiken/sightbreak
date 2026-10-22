@@ -1,0 +1,7 @@
+{
+  "status": "failed source-only auth exception guard",
+  "exit": 1,
+  "runner_sha256": "6420581b792d63111fe1d03232440f3eddfc6d8898261d1b3888f538e767d835",
+  "request_function": "    def request(self, path, payload=None, token=None, method=None):\n        connection = http.client.HTTPConnection(\"127.0.0.1\", self.api_port, timeout=self.remaining(10))\n        headers = {\"Content-Type\": \"application/json\"}\n        if token: headers[\"Authorization\"] = \"Bearer \" + token\n        data = None if payload is None else json.dumps(payload).encode()\n        try:\n            connection.request(method or (\"GET\" if payload is None else \"POST\"), path, body=data, headers=headers)\n            response = connection.getresponse(); raw = response.read()\n            parsed = json.loads(raw)\n            if path.startswith(\"/auth/\") and isinstance(parsed, dict): self.add_secret(parsed.get(\"token\"))\n            return response.status, parsed\n        except BaseException as error:\n            if path.startswith(\"/auth/\"):\n                raise RuntimeError(\"authentication transport failed: \" + type(error).__name__) from None\n            raise\n        finally:\n            connection.close()\n\n",
+  "cause": "HTTPConnection construction happened before the sanitized authentication exception boundary, allowing unexpected constructor error text into a retained traceback. No service or product runtime ran."
+}

@@ -59,8 +59,8 @@ Retain these separate phases without deduplicating equal SQL snapshots:
    the transparent proxy. The production API returns its actual 200. A fresh
    read-only SQL query must see the committed operation, full business effects
    and exact response before the proxy drops any response and before client kill.
-3. Kill the still-live original native process before it receives any response
-   headers; retain PID/start identity, Linux return -9 and journal bytes.
+3. Kill the still-live original native process before it receives any purchase
+   response headers; retain PID/start identity, Linux return -9 and journal bytes.
    Prove actual backend 200 received < retained committed SQL < native alive
    observation < kill request < kill acknowledgment on both retained clocks.
    Revoke its old actual session through production `/auth/logout` using only

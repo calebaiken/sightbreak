@@ -86,7 +86,11 @@ cd /workspace/sightbreak-postgres-receipt-recovery
   --out /workspace/sightbreak-postgres-receipt-market-r1
 ```
 
-That command is a design target, not an existing runnable harness. Before any
-launch, provide its implemented CLI, exact frozen SHA/hashes, pure results,
-resource/timeout plan and critic witness commands to root and the fresh critic.
-The root's currently running aggregate remains the sole local engine owner.
+The runner and native probe now exist as source. Before any launch, provide
+the exact frozen SHA/hashes, pure results, resource/timeout plan and critic
+witness commands to root and the fresh critic. The implemented driver checks
+fixture state before dispatch and binds the API to an inherited owned loopback
+socket, avoiding a reserve/close/rebind gap. Cleanup gets its own bounded window
+after the work deadline, and authentication construction/read/close failures
+withhold raw credential-bearing exception contents.
+Root controls the local native lane; further engine use requires coordination.

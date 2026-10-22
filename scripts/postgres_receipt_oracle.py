@@ -43,13 +43,10 @@ def require(value: bool, message: str) -> None:
         raise AssertionError(message)
 
 
-def verify_market(before: dict, settled: dict, spec: dict, actual_response: dict) -> None:
-    """Require the one declared market effect and no unexplained business rows."""
-    require(before["database"] == settled["database"] and before["database"].endswith("_test"), "database changed")
-    require(before["system_identifier"] == settled["system_identifier"], "cluster changed")
-    require(all(before[k] == settled[k] for k in ("role", "postmaster_started")), "SQL owner/postmaster changed")
-    require(before["schema_versions"] == settled["schema_versions"] == [1, 2, 3, 4], "schema mismatch")
-    a, b = before["business"], settled["business"]
+def verify_market_fixture(before: dict, spec: dict) -> None:
+    """Fail before the original mutation if the declared synthetic fixture differs."""
+    require(before["database"].endswith("_test") and before["schema_versions"] == [1, 2, 3, 4], "fixture DB/schema mismatch")
+    a = before["business"]
     buyer, seller, outsider = spec["buyer"], spec["seller"], spec["outsider"]
     require(len({buyer, seller, outsider}) == 3, "fixture accounts overlap")
     require(spec["price"] == 400 and spec["fee"] == 12, "undeclared fixture price or fee")
@@ -69,6 +66,18 @@ def verify_market(before: dict, settled: dict, spec: dict, actual_response: dict
     seeds = {(r["player_id"], r["amount"], r["balance_after"], r["reason"]) for r in a["ledger"]}
     require(len(a["ledger"]) == 2 and seeds == {(buyer, 1000, 1000, "fictional_test_fixture"),
                                                (seller, 100, 100, "fictional_test_fixture")}, "seed ledger mismatch")
+
+
+def verify_market(before: dict, settled: dict, spec: dict, actual_response: dict) -> None:
+    """Require the one declared market effect and no unexplained business rows."""
+    verify_market_fixture(before, spec)
+    require(before["database"] == settled["database"], "database changed")
+    require(before["system_identifier"] == settled["system_identifier"], "cluster changed")
+    require(all(before[k] == settled[k] for k in ("role", "postmaster_started")), "SQL owner/postmaster changed")
+    require(before["schema_versions"] == settled["schema_versions"] == [1, 2, 3, 4], "schema mismatch")
+    a, b = before["business"], settled["business"]
+    buyer, seller, outsider = spec["buyer"], spec["seller"], spec["outsider"]
+    item = a["items"][0]
     expected = deepcopy(a)
     for player in expected["players"]:
         player["credits"] = {buyer: 600, seller: 488, outsider: 0}[player["id"]]
