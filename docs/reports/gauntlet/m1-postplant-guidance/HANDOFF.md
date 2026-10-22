@@ -223,3 +223,33 @@ The largest remaining deficiency is the unchanged full native next-round gate,
 followed by the unreached restart checks and an exact-source Windows rerun.
 The engine/CPU lane has been released to the account qualification. No further
 runtime is running for this branch. Canonical mission documents remain untouched.
+
+## Graphics configuration and source-only diagnosis
+
+The exact executed controller explicitly assigns `LIBGL_ALWAYS_SOFTWARE=1` and
+`LP_NUM_THREADS=2` to the client environment in both native runs. Its recorded
+SHA-256 matches the frozen controller bytes; both original client logs identify
+Mesa llvmpipe through GL Compatibility. Both recorded client commands omit fixed
+frame-rate and physics-override flags, and both final observations retain
+`time_scale=1`. No separate OS readback of the child's complete environment was
+retained. Round 4's outer-process snapshot has `LP_NUM_THREADS=null`; that is not
+the client selection, because the controller subsequently sets it explicitly.
+`selected-graphics-configuration.json` preserves the source fragment, hashes,
+actual commands and renderer lines. Default unrestricted llvmpipe threads is
+therefore not supported as an explanation for these runs.
+
+For a bounded source comparison, `9f730dc` is the named parent of the frozen
+Relay AR graphics integration `0345a18`. This is an explicit pre-integration
+anchor, not a repository tag named pre-M6. Between that anchor and `3c4d921`,
+the entire arena and referenced sky/material assets are unchanged. The existing
+graphics-selection block in `apply_settings`, from its FPS selection through
+MSAA, render scale, shadow and detail choices, is byte-identical. The function
+adds display/pointer synchronization before that block. Project GL Compatibility,
+MSAA and 60 Hz physics settings are unchanged; the project diff changes version
+and unfocused-joypad policy. Main-controller changes cover menu/economy UI,
+focus/input, diagnostic hooks, objective guidance, touch-mode synchronization
+and feed refitting. Exact hashes and the main/project diff are retained in
+`pre-integration-source-comparison.json` and `pre-integration-main-arena.diff`.
+This inspection does not establish the timing cost of any UI change or a
+performance regression; that would require matched runtime trials. No additional
+runtime is authorized or running for this diagnosis.
