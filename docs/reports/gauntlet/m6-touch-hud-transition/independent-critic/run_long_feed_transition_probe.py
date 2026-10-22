@@ -7,13 +7,13 @@ from pathlib import Path
 import subprocess
 import sys
 
-ROOT = Path(__file__).resolve().parents[5]
-sys.path.insert(0, str(ROOT / "scripts"))
-from run_native_regressions import NativeSceneSuites, inventory
-
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--output", type=Path, required=True)
+parser.add_argument("--source-root", type=Path, default=Path(__file__).resolve().parents[5])
 args = parser.parse_args()
+ROOT = args.source_root.resolve()
+sys.path.insert(0, str(ROOT / "scripts"))
+from run_native_regressions import NativeSceneSuites, inventory
 probe = Path(__file__).with_name("long_feed_transition_probe.gd")
 try:
     with NativeSceneSuites(args.output) as runner:

@@ -1,11 +1,13 @@
 # Independent live touch HUD transition review
 
-Status: revision required. The primary visual correction works, but an independent source probe reproduces clipped existing kill-feed text in all four cases.
+Status: final source, regression and native transaction review accepted at
+`589a52a`; root owns the fresh blind pixel verdict and integrated suite gate.
 This does not close G7, G10 or a platform gate.
 
 Reviewer: `/root/touch_transition_critic`, with a separate read-only source
 adversary `/root/touch_transition_critic/source_adversary`. Builder:
-`/root/touch_transition_builder`. Frozen candidate: `bc01a069fb600b7e10fe9310a5a97f08c726a60b`.
+`/root/touch_transition_builder`. First candidate: `bc01a069fb600b7e10fe9310a5a97f08c726a60b`.
+Final frozen candidate: `589a52a4c621503d76383d411b6d3ed07c5e267c`.
 Preregistered criteria: `e9ee49b9fcfb7cabac5621e972a71156771186b2`.
 Baseline source: `e7718ee42fd67a65bcb83061c868b34bd9a2c3d2`.
 The full source hashes and candidate patch are retained beside this report.
@@ -98,12 +100,63 @@ candidate production main/touch source and reported unchanged resources and
 successful temporary/native namespace cleanup. This headless geometry result
 does not claim physical or native pixel acceptance.
 
-## Open evidence
+## Final revision
 
-The root coordinates the shared CPU lane. This critic ran only the explicitly
-released short headless adversarial probe; no critic render or OCR was launched.
-The candidate still requires fresh exact-source export/capture receipts,
-direct original on/off PNG review,
-and the maintained suite on the integrated source. Source inspection alone does
-not pass the presentation gate. The largest remaining gap is the reproduced existing-feed clipping defect.
-The final revision requires fresh native transition evidence after that fix.
+The revision connects actual kill-feed frame resize to an in-place row refit.
+It reads each saved `full_name` again and preserves headshot meaning through
+entry metadata, so narrowing fits the names and widening can restore them. Row
+instances, birth times and the four-row cap stay intact. I inspected this patch
+and found no further source counterexample.
+
+The same independent GDScript probe, with its hash checked against the rejected
+run, now passes all four cases. The final fitted row widths are 357, 333, 199 and
+182 pixels, inside frame widths 375, 356, 215 and 196 respectively. No name label
+crosses the frame, and the original row survives. The actual engine inventory
+matches the final frozen main.gd hash; source/copied resources and cleanup checks
+pass. Full raw outputs are retained in `passed-round-2-long-feed/`.
+
+I independently inspected the maintained revised test and its controls: final
+462/0 versus first-candidate 462/16, with all sixteen negative failures naming
+row or text clipping. The identical revised test hashes match on both runs.
+Touch 34/0, HUD overflow 2,435/0, objective HUD 33/0 and input lifecycle 3/0 pass
+with isolation receipts. Raw logs and JSON are in `round-2-maintained/`. The
+builder also retains its initial driver refusal at the maintained-suite
+allowlist; no source suite ran during that failed invocation. The successful
+driver adds the three maintained suite identifiers only in its own process.
+
+## Final native transaction
+
+I directly viewed the final exported original live, settings, opt-in and opt-out
+PNGs, and recomputed all seven original PNG SHA-256 hashes against the raw
+receipt. The selected-mode transition is visibly better than the actual
+872a576 regression bar: MENU clears DEVICE / CARRIED, the B / E / TAB / ESC
+footer disappears in touch mode, and it returns when touch targets disappear.
+The score remains centered; health and ammunition remain bounded.
+
+The exact-source export and capture both identify clean `589a52a`, with ELF
+SHA-256 `3d28f41d0c5221742a435247bb6d7bcfc6aafc8d97af9de7dbb712e95f176438`.
+The unchanged capture command uses the original 120-second case and 520-second
+whole limits and completes in 71.987 seconds. Actual native input receipts record
+the settings clicks in both directions and explicit resumes. Drawn-frame fences
+show mouse mode 0 (visible) while paused and after touch resume, then mode 2
+(captured) after keyboard resume. Both native processes exit zero through
+WM_DELETE_WINDOW; cleanup reports no errors. Original frames, full transaction
+JSON and export source receipt are retained in `native-589a52a/`.
+
+This was a disclosed independent comparison, not a blind verdict: I had already
+seen the baseline and source patch. The root arranged a separate fresh blind
+pixel judgment, whose result must be recorded separately.
+
+## Remaining limits
+
+The largest evidence gap within this component is native coverage: exported
+pixels cover 1280×720 at 100 percent text. The 960×720 and 130 percent text
+transition geometry passes headless source checks; these are not additional
+exported or physical-device captures. Saved custom positions, mobile behavior
+and held-input safety are source simulations. Human feel, physical touch and
+controller input, accessibility, performance and CS2 comparison remain open.
+The maintained suite must still run on the final integrated source. This
+bounded correction does not close G7, G10 or any whole-platform gate.
+
+The root coordinated both short independent headless probe slots. This critic
+launched no rendering or OCR process and preserved all observed failed rounds.
