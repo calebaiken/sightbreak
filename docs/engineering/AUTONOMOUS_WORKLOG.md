@@ -19,7 +19,7 @@ Chronological record of what Claude did on the SIGHTBREAK v1.0 mission: investig
 **Gun data read.** `game/scripts/gameplay/weapons.gd` defines four weapons (interval in s, so Kestrel 9 semi 0.23, Vectorline 0.085 auto, Relay AR 0.105 auto, Longwatch 0.82 semi). `actor.gd:728-758`: spread is uniform random per axis around the aim; recoil climbs pitch by `spec.recoil` per shot up to 0.16 rad, adds a deterministic horizontal term `sin(shot_index * 1.7) * recoil * 0.55`, and recovers at 0.11 rad/s. Only the Relay AR has authored meshes and rigged arms; the other three are procedural.
 
 
-**Baseline run (M1), commit `db3981e`.** `DISPLAY=:99 ./scripts/validate.sh` on the unmodified base, Godot 4.7.2 official, Xvfb 1920x1080x24, Mesa llvmpipe. It ran to its final line ("Validation completed") with no failing step, about 8 minutes of wall clock. Because the script runs under `set -e`, a failing suite would have stopped it earlier. Selected results from the 59 per-suite logs:
+**Baseline run (M1), commit `db3981e`.** `DISPLAY=:99 ./scripts/validate.sh` on the unmodified base, Godot 4.7.2 official, Xvfb 1920x1080x24, Mesa llvmpipe. It ran to its final line ("Validation completed") with no failing step, about 12 minutes of wall clock (23:55 to 00:07 UTC). Because the script runs under `set -e`, a failing suite would have stopped it earlier. Selected results from the 59 per-suite logs:
 
 | Suite | Result |
 | --- | --- |
