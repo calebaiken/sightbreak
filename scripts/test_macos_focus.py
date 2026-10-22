@@ -106,7 +106,7 @@ class FocusControls(unittest.TestCase):
             self.assertIsNone(args[1])
             order.append('read_only_capture')
             raise NativePrerequisiteBlocked('helper capture denied')
-        ui = types.SimpleNamespace(focus=lambda: order.append('focus_diagnostic'))
+        ui = types.SimpleNamespace(focus=lambda: order.append('focus_diagnostic'), focus_state=lambda: {'foreground_pid': 4000})
         with self.assertRaisesRegex(NativePrerequisiteBlocked, 'helper capture denied'):
             driver.background_then_focus(ui, capture, result, lambda *args, **kwargs: None)
         self.assertEqual(order, ['read_only_capture', 'focus_diagnostic'])
@@ -116,10 +116,19 @@ class FocusControls(unittest.TestCase):
         result = {}
         def focus():
             raise RuntimeError('exact foreground PID absent')
-        ui = types.SimpleNamespace(focus=focus)
+        ui = types.SimpleNamespace(focus=focus, focus_state=lambda: {'foreground_pid': 4000})
         with self.assertRaisesRegex(RuntimeError, 'exact foreground PID absent'):
             driver.background_then_focus(ui, lambda *args, **kwargs: None, result, lambda *args, **kwargs: None)
         self.assertEqual(result['background_capture_status'], 'PASS_CAPTURE_ONLY_NO_FOCUS_OR_INPUT')
+
+    def test_background_receipt_does_not_silently_refresh_raw_observer(self):
+        calls = []
+        ui = types.SimpleNamespace(focus_state=lambda: calls.append('raw') or {'foreground_pid': 4000},
+                                   diagnostics=lambda: calls.append('refreshed') or {'foreground_pid': 4100})
+        self.assertEqual(driver.capture_observation(ui, False)['foreground_pid'], 4000)
+        self.assertEqual(calls, ['raw'])
+        self.assertEqual(driver.capture_observation(ui, True)['foreground_pid'], 4100)
+        self.assertEqual(calls, ['raw', 'refreshed'])
 
 
 if __name__ == '__main__':

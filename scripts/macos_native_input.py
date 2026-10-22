@@ -136,7 +136,8 @@ class MacMenuUI(MacReadOnly):
         application = self.application()
         state = {'foreground_pid': self.foreground_pid(), 'target_pid': self.pid,
                  'target_window': self.window, 'pinned_bounds_points': self.bounds,
-                 'target_application_available': bool(application)}
+                 'target_application_available': bool(application),
+                 'state_source': 'Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn'}
         if application:
             for label, selector in (('target_active', 'isActive'), ('target_hidden', 'isHidden'),
                                     ('target_terminated', 'isTerminated'),

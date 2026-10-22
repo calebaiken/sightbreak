@@ -71,6 +71,7 @@ def ordinary_failure_close(ui, client):
 
 def background_then_focus(ui, capture, result, trace):
     """Keep read-only capture and focus evidence separate; require both for input."""
+    trace('observer_before_background_capture', native_state=ui.focus_state())
     background_error = None
     try:
         capture('00-background-window', None, require_focus=False)
@@ -83,6 +84,12 @@ def background_then_focus(ui, capture, result, trace):
     ui.focus()
     if background_error is not None:
         raise background_error  # Focus diagnostics never authorize input after capture failure.
+
+
+def capture_observation(ui, require_focus):
+    # Preserve raw pre-activation state until the explicitly recorded focus-loop
+    # experiment. Background receipt logging must not silently refresh it.
+    return ui.diagnostics() if require_focus else ui.focus_state()
 
 
 def run(output, preflight_path, timeout=150):
@@ -149,7 +156,8 @@ def run(output, preflight_path, timeout=150):
                                    'receipt_sha256': digest(receipt), 'window_id': ui.window,
                                    'foreground_required': require_focus, 'screen_checked': screen})
         trace('screen_confirmed' if screen is not None else 'background_capture_observed',
-              screen=screen, capture=name, foreground_required=require_focus, native_state=ui.diagnostics())
+              screen=screen, capture=name, foreground_required=require_focus,
+              native_state=capture_observation(ui, require_focus))
         return data
 
     try:

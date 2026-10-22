@@ -33,13 +33,20 @@ input afterward. Successful background capture cannot pass failed focus.
 Foreground menu, Settings and returned-menu captures and all existing
 neutral/profile/source/export/down/up/cleanup gates remain unchanged.
 
-Eight new pure focus/capture-boundary controls and eleven original menu controls
+Nine new pure focus/capture-boundary controls and eleven original menu controls
 pass. They use invented identities and fake clocks/APIs. They cover stale-to-
 refreshed sample recording, false request/active/window proxies, the unchanged
 five-second boundary, newer focus loss, main-thread refusal, refreshed guard
 ordering and independent failed capture/focus. They establish observer readiness
 only. Actual CoreFoundation/AppKit timing, helper permission/capture/geometry,
 event delivery and navigation remain unverified.
+
+The first source critic identified that background success logging called fresh
+diagnostics and could process an unrecorded run-loop turn before the main
+contrast. That was an evidence limitation, not a bypass. The correction records
+a raw pre-background snapshot and retains raw background state, reserving the
+first explicit refresh for the recorded focus-loop experiment. Foreground
+capture/guard diagnostics remain fresh.
 
 Before root dispatch, require a fresh source critic. The next actual ARM review
 must inspect selected game window identity, activation return/options, complete
