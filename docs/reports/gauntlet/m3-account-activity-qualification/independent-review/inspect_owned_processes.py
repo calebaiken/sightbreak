@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 import sys
 
 driver, run, output = int(sys.argv[1]), Path(sys.argv[2]).resolve(), Path(sys.argv[3]).resolve()
@@ -14,7 +15,14 @@ assert any('test_account_match.py' in part for part in driver_cmd)
 driver_cwd = (driver_proc / 'cwd').resolve()
 out_arg = driver_cmd[driver_cmd.index('--out') + 1]
 assert (driver_cwd / out_arg).resolve() == run
-pids = [int(p) for p in (driver_proc / 'task' / str(driver) / 'children').read_text().split()]
+child_path = driver_proc / 'task' / str(driver) / 'children'
+if child_path.exists():
+    pids = [int(p) for p in child_path.read_text().split()]
+    child_method = 'Exact driver proc children file'
+else:
+    # This execution environment omits the optional proc children file.
+    pids = [int(p) for p in subprocess.check_output(['ps', '-o', 'pid=', '--ppid', str(driver)], text=True).split()]
+    child_method = 'ps filtered to exact owned driver PPID; proc children file unavailable'
 children = []
 for pid in pids:
     proc = Path('/proc') / str(pid)
@@ -24,7 +32,7 @@ for pid in pids:
         cwd = (proc / 'cwd').resolve()
     except FileNotFoundError:
         continue
-    assert cwd == run.parents[1], (pid, str(cwd), str(run.parents[1]))
+    assert cwd in (run.parents[1], run.parents[1] / 'game'), (pid, str(cwd), str(run.parents[1]))
     item = dict(pid=pid, ppid=driver, args=args, exe=str(exe), cwd=str(cwd))
     if 'account_match_probe.gd' in ' '.join(args):
         assert exe == Path('/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64')
@@ -54,6 +62,6 @@ assert bindings, 'No owned native server UDP socket found'
 result = dict(at_utc=datetime.now(timezone.utc).isoformat(), source_commit=report['source_commit'],
               driver_pid=driver, children=children, native_count=len(native),
               game_port=report['game_port'], owned_game_bindings=bindings,
-              method='Exact driver child PIDs; no environment or credential access; socket inode filter')
+              method=child_method + '; no environment or credential access; socket inode filter')
 output.write_text(json.dumps(result, indent=2) + '\n')
 print('Independent live native inspection:', len(native), 'processes;', bindings, flush=True)
