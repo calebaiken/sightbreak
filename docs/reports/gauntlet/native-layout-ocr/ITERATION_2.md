@@ -48,7 +48,64 @@ PNG hashes remain unchanged. Exact raw test output is in `iteration-2-tests.txt.
 all TSVs and transform/timing receipts are in `saved-image-r2/`. Compilation and
 whitespace checks pass.
 
-Fresh independent review of this revision and native generation with this new
-crop remain pending. The earlier 3a847af native result remains bound to its own
-source; it does not attest this later crop. Full four-size workflow acceptance,
-physical hardware and visual/readability quality remain separate gates.
+The earlier 3a847af native result remains bound to its own source; it does not
+attest this later crop. The following exact-source run verifies this revision.
+
+## Exact-source four-size generation and independent review
+
+Clean commit `afe7b5454572b3f14f8b9dbdbc47c5bfa7bc8331` exported with pinned
+Godot 4.7.2 and unchanged game tree `13079ab8a3de9b18252a652ed57157e0776cf394`.
+Validation digest is
+`2b9d7ee068e9b12e0444bed6e33db16545074eb62654d122c1519412e0813883`;
+the actual exported ELF SHA-256 is
+`2187c9c316ab6e45b17f64028c7345e3efab3f4ebfbffc9fbd2ebb7e09af998f`.
+
+With the same pinned-tool environment recorded in `native-four-size-r1/evidence.json`,
+the fresh export used `SIGHTBREAK_BUILDS_DIR="$PWD/builds/native-candidate-r2"`.
+The native controller command was:
+
+```sh
+python3 scripts/capture_desktop_layouts.py \
+  --output builds/native-layout-four-size-r1 --display-base 232 --touch-toggle
+```
+
+It requested all default sizes with the original 120-second case and 520-second
+whole-flow limits. Full generation passed in 304.692 seconds; source and ELF
+identities remained unchanged. All eight menu/live exits were zero and cleanup
+errors were empty.
+
+| Native size | Case wall seconds | Result |
+| --- | ---: | --- |
+| 960×540 | 49.220 | Passed |
+| 1280×720 | 78.299 | Passed, including real touch opt-in/off |
+| 1920×1080 | 113.278 | Passed |
+| 1280×800 | 63.723 | Passed, native letterboxing retained |
+
+`native-four-size-r1/` retains all 22 original capture PNGs, all 85 distinct raw
+OCR-original PNGs, complete results/logs, export receipts and every raw TSV in
+lossless per-size archives. The evidence manifest binds each retained artifact
+to its original bytes; all 218 artifact receipts were checked during retention.
+This later documentation commit does not re-attest the export as its own build.
+
+Fresh critic `/root/gameplay_recon/layout_revision_critic` independently accepts
+`afe7b54` over `3a847af` for the declared four-size observer correction and
+verifies the exact-source native generation. Its verbatim report, separate
+source-audit report, scripts, raw TSVs, logs and result receipts are retained in
+`independent-review-r2/`. It independently ran all seven tests, checked original
+pixels across all four sizes and verified source/ELF/payload hashes, all native
+capture and OCR-receipt hashes, exits and all 16 two-drawn-frame fences. It also
+classified all 22 fresh capture PNGs and four analysis-only erased-footer
+counterexamples: all 26 probes passed using 59 actual Tesseract calls. The
+previous crop still reproduces the 1280×800 MENU failure on the same raw input.
+The four fresh initial HUD captures have the same bytes as the corresponding
+baseline fixtures; they establish new native generation without adding new
+world compositions.
+
+No blocking correction was found within that scope. The largest remaining
+coverage limit is explicit: native HUD classification inside its frame fence
+runs only for the 1280×720 touch-toggle case. Other sizes have actual native
+captures and independent saved-pixel checks, not four-size live classifier
+execution. The 1920 case has 6.722 seconds left under its existing cap. Physical
+hardware performance, human readability, external presentation comparison,
+accessibility, full matches and other platforms retain separate acceptance
+gates. The original failures remain retained; this pass does not erase them.

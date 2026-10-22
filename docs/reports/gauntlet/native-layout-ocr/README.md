@@ -133,4 +133,7 @@ The critic also found a real 1280×800 saved-image false negative. Its broad cro
 misread `MENU` as `EN`. The assigned follow-up keeps every required word and
 extends actual positive/wrong-screen controls to every declared size. See
 `ITERATION_2.md` for the specific correction, before/after observations and
-remaining native/independent-review gates.
+the subsequent independently verified four-size native run. The fresh critic
+accepts the revised observer and exact-source generation. The remaining
+1280-only live-classifier coverage boundary and all separate product gates
+remain explicit there.
