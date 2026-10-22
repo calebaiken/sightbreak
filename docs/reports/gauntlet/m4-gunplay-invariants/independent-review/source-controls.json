@@ -1,0 +1,272 @@
+{
+  "mode": "source-only; no engine or native measurements",
+  "reviewed_commit": "68587d006a2f96d9586e5f133c91f23d9cce02d0",
+  "reviewed_game_tree": "9aee5364ecf87e2ec7bc12d7b7b26c738353317d",
+  "baseline_commit": "317410aff6f1a85b4f8c1b5b344c7ec50dd363d2",
+  "changed_game_or_runtime_paths": [
+    "game/tests/gunplay_rules_probe.gd"
+  ],
+  "files": {
+    "game/scripts/gameplay/actor.gd": {
+      "git_blob": "430169676a1fedef687bd156d579e827cf0e6182",
+      "sha256": "38155fb501bfb8db7fb2a0c72352d247cfb66afddb8ec7f18f0585b20d29f872"
+    },
+    "game/scripts/gameplay/weapons.gd": {
+      "git_blob": "89431953e3fc9c34341c43cdc24ca858bc2d44e2",
+      "sha256": "e5038af222b3dc91bc727cae5b3bc2735c68f0f1da4b75091ecc8ba421ca8932"
+    },
+    "game/scripts/gameplay/match.gd": {
+      "git_blob": "b994a2cd40be160dc29bd8ed63646c7ceb01190a",
+      "sha256": "2db21ed6eb27d2095e899db836b417288c8a96e5e3239c8aa7affa6bb6a54173"
+    },
+    "game/tests/gunplay_rules_probe.gd": {
+      "git_blob": "38e7f3abd3d89c5555ad7acabb0dbe9c27840df5",
+      "sha256": "99399c87ce2b968aadda4c2ae1e3da1b5db0a5cca7fe00e9ba5e5ae82ab505c0"
+    },
+    "docs/reports/gauntlet/m4-gunplay-invariants/README.md": {
+      "git_blob": "1b0c70f4080f99cab04d637e5b3908d5ceb2fcd2",
+      "sha256": "5bb9ce81464bfaeb1a4ca6edf5a9a13ca56640fcb66651e865c0bc4e4a167f34"
+    }
+  },
+  "pure_controls": {
+    "sidearm": {
+      "stock_source": {
+        "interval": 0.23,
+        "reload": 1.45,
+        "damage": 27.0,
+        "head": 3.3,
+        "range": 45.0,
+        "falloff": 0.55,
+        "magazine": 15.0,
+        "reserve": 60.0,
+        "automatic": false
+      },
+      "predicted_shot_count": 129,
+      "predicted_first_ticks": [
+        0,
+        14,
+        28,
+        42,
+        56,
+        70,
+        84,
+        98
+      ],
+      "predicted_last_tick": 1792,
+      "predicted_semi_gap_ticks": 14,
+      "predicted_reload_float64_ticks": 88,
+      "false_accept_control": {
+        "truncated_shot_ticks": [
+          0,
+          14
+        ],
+        "matching_ammo": 9998,
+        "original_cadence_predicates_pass": true,
+        "expected_count_predicate_pass": false,
+        "silence_after_tick": 14
+      },
+      "damage_event_only_control": {
+        "sample": {
+          "distance": 1.7,
+          "shots": 1,
+          "ammo_after": 14,
+          "damage_events": [
+            26.541
+          ],
+          "impact_events": 1,
+          "last_hit_headshot": false,
+          "confirmations": [
+            {
+              "head": false,
+              "lethal": false
+            }
+          ],
+          "health_before": 100,
+          "health_after": 100
+        },
+        "original_damage_predicates_pass": true,
+        "actual_health_delta_matches_emitted_damage": false,
+        "reason": "probe reads damage signal but never target health after a positive hit"
+      }
+    },
+    "smg": {
+      "stock_source": {
+        "interval": 0.085,
+        "reload": 1.85,
+        "damage": 22.0,
+        "head": 3.1,
+        "range": 35.0,
+        "falloff": 0.5,
+        "magazine": 30.0,
+        "reserve": 120.0,
+        "automatic": true
+      },
+      "predicted_shot_count": 353,
+      "predicted_first_ticks": [
+        0,
+        6,
+        11,
+        16,
+        21,
+        26,
+        31,
+        36
+      ],
+      "predicted_last_tick": 1796,
+      "predicted_semi_gap_ticks": null,
+      "predicted_reload_float64_ticks": 112,
+      "false_accept_control": {
+        "truncated_shot_ticks": [
+          0
+        ],
+        "matching_ammo": 9999,
+        "original_cadence_predicates_pass": true,
+        "expected_count_predicate_pass": false,
+        "silence_after_tick": 0
+      },
+      "damage_event_only_control": {
+        "sample": {
+          "distance": 1.7,
+          "shots": 1,
+          "ammo_after": 29,
+          "damage_events": [
+            21.465714285714288
+          ],
+          "impact_events": 1,
+          "last_hit_headshot": false,
+          "confirmations": [
+            {
+              "head": false,
+              "lethal": false
+            }
+          ],
+          "health_before": 100,
+          "health_after": 100
+        },
+        "original_damage_predicates_pass": true,
+        "actual_health_delta_matches_emitted_damage": false,
+        "reason": "probe reads damage signal but never target health after a positive hit"
+      }
+    },
+    "rifle": {
+      "stock_source": {
+        "interval": 0.105,
+        "reload": 2.25,
+        "damage": 35.0,
+        "head": 3.5,
+        "range": 70.0,
+        "falloff": 0.72,
+        "magazine": 30.0,
+        "reserve": 90.0,
+        "automatic": true
+      },
+      "predicted_shot_count": 286,
+      "predicted_first_ticks": [
+        0,
+        7,
+        13,
+        19,
+        26,
+        32,
+        38,
+        45
+      ],
+      "predicted_last_tick": 1796,
+      "predicted_semi_gap_ticks": null,
+      "predicted_reload_float64_ticks": 136,
+      "false_accept_control": {
+        "truncated_shot_ticks": [
+          0
+        ],
+        "matching_ammo": 9999,
+        "original_cadence_predicates_pass": true,
+        "expected_count_predicate_pass": false,
+        "silence_after_tick": 0
+      },
+      "damage_event_only_control": {
+        "sample": {
+          "distance": 1.7,
+          "shots": 1,
+          "ammo_after": 29,
+          "damage_events": [
+            34.762
+          ],
+          "impact_events": 1,
+          "last_hit_headshot": false,
+          "confirmations": [
+            {
+              "head": false,
+              "lethal": false
+            }
+          ],
+          "health_before": 100,
+          "health_after": 100
+        },
+        "original_damage_predicates_pass": true,
+        "actual_health_delta_matches_emitted_damage": false,
+        "reason": "probe reads damage signal but never target health after a positive hit"
+      }
+    },
+    "marksman": {
+      "stock_source": {
+        "interval": 0.82,
+        "reload": 2.8,
+        "damage": 74.0,
+        "head": 2.2,
+        "range": 100.0,
+        "falloff": 0.86,
+        "magazine": 8.0,
+        "reserve": 32.0,
+        "automatic": false
+      },
+      "predicted_shot_count": 36,
+      "predicted_first_ticks": [
+        0,
+        50,
+        100,
+        150,
+        200,
+        250,
+        300,
+        350
+      ],
+      "predicted_last_tick": 1750,
+      "predicted_semi_gap_ticks": 50,
+      "predicted_reload_float64_ticks": 169,
+      "false_accept_control": {
+        "truncated_shot_ticks": [
+          0,
+          50
+        ],
+        "matching_ammo": 9998,
+        "original_cadence_predicates_pass": true,
+        "expected_count_predicate_pass": false,
+        "silence_after_tick": 50
+      },
+      "damage_event_only_control": {
+        "sample": {
+          "distance": 1.7,
+          "shots": 1,
+          "ammo_after": 7,
+          "damage_events": [
+            73.82388
+          ],
+          "impact_events": 1,
+          "last_hit_headshot": false,
+          "confirmations": [
+            {
+              "head": false,
+              "lethal": false
+            }
+          ],
+          "health_before": 100,
+          "health_after": 100
+        },
+        "original_damage_predicates_pass": true,
+        "actual_health_delta_matches_emitted_damage": false,
+        "reason": "probe reads damage signal but never target health after a positive hit"
+      }
+    }
+  },
+  "control_verdict": "all four truncated runs falsely pass original cadence predicates"
+}
