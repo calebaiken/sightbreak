@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/reviews/hud-fixture-cleanup-critic/builds/independent-hud-cleanup/extra_controls.py", line 94, in <module>
+    print(json.dumps({label: value.get('cleanup', value) for label, value in results.items() if label != 'runner_finalization'}, indent=2))
+                             ^^^^^^^^^
+AttributeError: 'bool' object has no attribute 'get'
