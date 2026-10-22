@@ -7,6 +7,9 @@ func _initialize() -> void:
 
 func run() -> void:
 	var config: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(OS.get_environment("SIGHTBREAK_RECEIPT_FIXTURE")))
+	if config.payload.has("expected_price"):
+		# The real buy button captures an integer; fixture JSON otherwise parses it as a float.
+		config.payload.expected_price = int(config.payload.expected_price)
 	var ui := UI.new()
 	# Baseline has no journal; both use the same probe and isolated state location.
 	for property in ui.get_property_list():
@@ -27,6 +30,6 @@ func run() -> void:
 			return
 		result = await ui._retry_pending()
 	print("RECEIPT_PROBE " + JSON.stringify({"recovered": not result.has("_error") and result.has("item"), "result": result, "pending": not ui.pending_transaction.is_empty()}))
-	ui.free()
+	ui.queue_free()
 	await process_frame
 	quit(0)

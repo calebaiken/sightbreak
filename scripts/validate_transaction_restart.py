@@ -57,11 +57,11 @@ def run_case(exe: Path, root: Path, directory: Path, kind: str, boundary: str) -
 
         def respond(self, value, status=200):
             data = json.dumps(value).encode()
-            self.send_response(status)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Content-Length", str(len(data)))
-            self.end_headers()
             try:
+                self.send_response(status)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(data)))
+                self.end_headers()
                 self.wfile.write(data)
             except (BrokenPipeError, ConnectionResetError, ConnectionAbortedError):
                 pass  # Expected: the first client is deliberately terminated.
