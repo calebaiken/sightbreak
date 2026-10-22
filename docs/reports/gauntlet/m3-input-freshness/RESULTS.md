@@ -59,8 +59,8 @@ one repetition each: eight pairs per source, 32 peer process exits in total.
 | Original nine focused groups | 1,673 passing assertions | 1,678 passing assertions |
 
 Both source identities remain clean and unchanged before/after measurement. All
-32 peer exits and all focused processes exit 0, without script/runtime/resource
-leak errors. The intentional empty-barrier control is exercised by every peer
+32 peer exits and every process in the original nine-group regressions exit 0,
+without script/runtime/resource leak errors. The intentional empty-barrier control is exercised by every peer
 outside the measurement interval. Controlled movement prediction maximum error
 remains 0.075834 m on both sources.
 
