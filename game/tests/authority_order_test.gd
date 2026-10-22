@@ -13,6 +13,8 @@ var observe := false
 var shots: Array = []
 var eliminations: Array = []
 var duel_references: Dictionary = {}
+var duel_reference_poses: Dictionary = {}
+var damage_events := 0
 
 func _initialize() -> void:
 	observe = OS.get_cmdline_user_args().has("--observe")
@@ -45,10 +47,19 @@ func _run() -> void:
 	for id in range(1, 11):
 		var actor := match_node._spawn_actor(id, 0 if id <= 5 else 1, "order-%d" % id)
 		actor.shot_fired.connect(func(source: int, _at: Vector3, _dir: Vector3) -> void: shots.append(source))
+		actor.damage_taken.connect(func(_victim: int, _attacker: int, _amount: float) -> void: damage_events += 1)
 		actor.eliminated.connect(func(victim: int, killer: int) -> void: eliminations.append([victim, killer]))
 		match_node._peer_actors[100 + id] = id
 		match_node._last_peer_input[id] = 0.0
 	await physics_frame
+	if OS.get_cmdline_user_args().has("--benchmark-only"):
+		await _benchmark()
+		await create_timer(0.6).timeout
+		match_node.queue_free()
+		await process_frame
+		print("AUTHORITY_ORDER_BENCHMARK checks=%d failures=%d" % [checks, failures.size()])
+		quit(0 if failures.is_empty() else 1)
+		return
 	for seed_value in range(8):
 		for mirror in [false, true]:
 			for reverse in [false, true]:
@@ -125,8 +136,11 @@ func _duel(seed_value: int, mirror: bool, reverse: bool) -> void:
 	var key := "%d/%s" % [seed_value, mirror]
 	if reverse:
 		check(equivalent == duel_references[key], label + " agrees with original insertion order")
+		var poses: Array = duel_reference_poses[key]
+		check(a.position.distance_to(poses[0]) <= 0.0001 and b.position.distance_to(poses[1]) <= 0.0001, label + " poses agree within 0.1 mm physics settling tolerance")
 	else:
 		duel_references[key] = equivalent
+		duel_reference_poses[key] = [a.position, b.position]
 	check(not a.alive and not b.alive, label + " accepts both lethal shots")
 	check(a.ammo == 29 and b.ammo == 29 and shots.size() == 2, label + " consumes each eligible shot once")
 	check(eliminations.size() == 2 and a.deaths == 1 and b.deaths == 1 and a.kills == 1 and b.kills == 1 and a.credits == 1100 and b.credits == 1100, label + " records each death and reward once")
@@ -220,6 +234,13 @@ func _nonlethal(reverse: bool) -> void:
 	match_node._authority_tick(DT)
 	check(a.ammo == 29 and b.ammo == 29 and shots.size() == 2, "same-tick batch cannot bypass weapon cooldown reverse=%s" % reverse)
 
+## Performance fixture controls compensate the actual recovered recoil before
+## each authority tick. Setup/input generation is excluded from timed tick calls.
+func _benchmark_controls(firing: bool) -> void:
+	for actor: SBActor in match_node.actors.values():
+		var recovered := actor.recoil.move_toward(Vector2.ZERO, DT * 0.11)
+		actor.input_state = {"look": Vector2((PI if actor.team == 0 else 0.0) - recovered.x, -recovered.y), "fire": firing}
+
 func _benchmark() -> void:
 	await process_frame
 	_prepare(712, false)
@@ -234,10 +255,30 @@ func _benchmark() -> void:
 		b.health = 1000000000
 	await _settle()
 	for firing in [false, true]:
-		for actor: SBActor in match_node.actors.values(): actor.input_state.fire = firing
-		for tick in range(300): match_node._authority_tick(DT)
+		# Benchmark-only supply avoids depletion/reload so active shot/trace/hit
+		# cost is measured throughout every sample. Production magazine data stays intact.
+		for actor: SBActor in match_node.actors.values():
+			actor.ammo = 1000000
+			actor.reserve = 1000000
+		for tick in range(300):
+			_benchmark_controls(firing)
+			match_node._authority_tick(DT)
 		for sample in range(7):
-			var start := Time.get_ticks_usec()
-			for tick in range(2000): match_node._authority_tick(DT)
-			var elapsed := Time.get_ticks_usec() - start
-			print("CPU " + JSON.stringify({"fire": firing, "sample": sample, "ticks": 2000, "total_usec": elapsed, "usec_per_tick": float(elapsed) / 2000}))
+			var elapsed := 0
+			var shots_before := shots.size()
+			var damage_before := damage_events
+			for tick in range(2000):
+				_benchmark_controls(firing)
+				var start := Time.get_ticks_usec()
+				match_node._authority_tick(DT)
+				elapsed += Time.get_ticks_usec() - start
+			var shot_count := shots.size() - shots_before
+			var hit_count := damage_events - damage_before
+			print("CPU " + JSON.stringify({"fire": firing, "sample": sample, "ticks": 2000, "total_usec": elapsed, "usec_per_tick": float(elapsed) / 2000, "shots": shot_count, "damage_events": hit_count, "fixture": "ammo_sufficient_recoil_compensated"}))
+			if firing:
+				check(shot_count >= 3170 and shot_count <= 3180 and hit_count == shot_count, "active benchmark preserves cadence and every shot exercises damage")
+			else:
+				check(shot_count == 0 and hit_count == 0, "idle benchmark has no shots or damage")
+			# Release deferred presentation/audio work outside the timed samples.
+			await process_frame
+			await process_frame

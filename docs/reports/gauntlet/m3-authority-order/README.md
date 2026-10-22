@@ -12,7 +12,10 @@ reverses every winner. The same tick's moving and crouching targets are hit befo
 they advance in one insertion order and missed in the other. The corrected
 candidate accepts both lethal shots in all 32 duels and uses the post-movement
 pose in either order. The identical final harness passes 162 checks on the
-candidate and intentionally fails 152 checks on the frozen baseline.
+candidate and intentionally fails 152 checks on the frozen baseline. After fresh
+review, 16 explicit paired-pose assertions raise the oracle to 178 checks with a
+0.1 mm tolerance; the observed first-pair floor difference was 78 µm. See
+`after-reviewed.txt` and `before-reviewed-assertion.txt` for that revised oracle.
 
 The match now advances all actor movement and stance, then runs existing action
 logic and traces with a server-local hit sink, then resolves queued contacts before
@@ -52,23 +55,31 @@ motivate this reproduction; they do not establish role or map balance.
 ## Ten-actor CPU cost
 
 The harness warms 300 ticks and records seven sample means of 2,000 authoritative
-ticks per condition. No-fire and held-rifle conditions have identical ten-actor
+ticks per condition. No-fire and held-trigger conditions have identical ten-actor
 commands across builds. [cpu-summary.json](cpu-summary.json) retains every sample;
 p95 below is the nearest-rank p95 of those seven sample means, not individual-tick
 tail latency.
 
-| Run pair | Baseline idle median / p95 (µs) | Candidate idle median / p95 (µs) | Baseline firing median / p95 (µs) | Candidate firing median / p95 (µs) |
+| Run pair | Baseline idle median / p95 (µs) | Candidate idle median / p95 (µs) | Baseline depleted-trigger median / p95 (µs) | Candidate depleted-trigger median / p95 (µs) |
 | --- | --- | --- | --- | --- |
 | Initial | 236.46 / 251.02 | 311.75 / 343.02 | 253.43 / 299.86 | 326.31 / 383.05 |
 | Repeated expanded harness | 239.33 / 240.90 | 240.64 / 252.64 | 255.23 / 304.73 | 256.51 / 300.33 |
 
-The initial increase exceeded the declared 25% investigation threshold. Repeating
-the same benchmark code without further gameplay edits gave +0.55% idle and
-+0.50% firing medians. The large initial increase did not reproduce. These shared
-host runs cannot isolate scheduler/CPU contention or establish an exact overhead.
-The final run gave 243.40 / 257.13 µs medians and may overlap root's Android/iOS
-exports, so it is supplementary. No hardware frame rate or input-latency claim
-follows from any of these samples.
+The fresh critic found that these original `fire=true` loops depleted the stock
+ammunition during the first sample. The table therefore measures mostly empty
+held-trigger attempts; it provides **no sustained-fire cost evidence**. The initial
+increase exceeded the 25% investigation threshold and did not reproduce in the
+adjacent repeat (+0.55% idle, +0.50% depleted trigger). Shared-host contention is
+uncontrolled; an exact isolated overhead cannot be established from these runs.
+
+The reviewed benchmark adds sufficient fixture ammunition, recoil-compensating
+authoritative look inputs, and shot/damage event counts. It checks 3,170–3,180 shots
+and equal damage events in every active 2,000-tick sample. Actual authority calls
+are timed individually; control generation and deferred presentation/audio frame
+flushes occur outside the measured intervals. The earlier unflushed active trial
+is retained as `before-reviewed-cpu.txt` / `after-reviewed-cpu.txt`; final reviewed
+measurements will be recorded separately. These are CPU measurements on a shared
+headless host, never hardware frame rate or input latency.
 
 ## Remaining limitations and design questions
 
@@ -106,6 +117,9 @@ To reproduce the baseline, create a detached worktree at `6a0d8d5`, copy the exa
 final `game/tests/authority_order_test.gd` into it, import, and run the same command.
 Expect assertion exit 1. `--observe` reports the failed checks while exiting 0 and
 is for exploratory observations only. It is never a passing maintained regression.
-Full maintained validation is running; [validate.txt](validate.txt) retains actual
-output. A fresh independent critic must judge source, evidence and limitations
+Full default maintained validation on product commit `470fad5` completed with
+exit 0; [validate.txt](validate.txt) retains actual output. No rendered display was
+used, catalog drift lacked backend Python, and three Windows publication checks
+were skipped on Linux. Backend service validation was not requested by the default
+command. The reviewed pose/benchmark harness is a subsequent test-only change. A fresh independent critic must judge source, evidence and limitations
 before root considers integration. The builder has issued no acceptance verdict.

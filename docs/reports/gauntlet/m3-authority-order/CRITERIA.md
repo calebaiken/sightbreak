@@ -31,7 +31,8 @@ The intended bounded correctness contract is:
 Pass criteria: all mirrored lethal duel cases consume one round per eligible
 shooter and eliminate both, independent of insertion order. A target that moves
 outside a head ray before this tick's combat must miss in either order. Paired
-results must agree on health, ammunition, pose and shot/elimination counts. Dead
+results must agree on health, ammunition and shot/elimination counts, with paired
+positions within 0.0001 m (0.1 mm) for native floor-solver settling. Dead
 actors must not produce extra shots or duplicate deaths/rewards on the next tick.
 Include a front-target shielding regression and preserve weapon/actor/input,
 privacy, movement, match and bot regression suites. Keep any baseline failing
@@ -48,3 +49,14 @@ team-wipe result, utility detonation ordering, and contact/collision permutation
 invariance. This benchmark cannot prove bot/human match balance, network fairness,
 sub-tick ordering or parity with a shipped tactical shooter. Builder cannot approve
 this candidate; a separate fresh-context critic must inspect it.
+
+## Review-driven benchmark correction
+
+The critic found that original `fire=true` samples depleted their reserve in the
+first sample. They remain evidence of an empty held-trigger loop, not sustained
+firing. The reviewed benchmark supplies sufficient ammunition only in its fixture,
+compensates actual recovered recoil through authoritative look inputs, and records
+shots and damage events per sample. Every active 2,000-tick sample must produce
+3,170–3,180 shots with one damage event per shot. Input generation and deferred
+presentation/audio frame flushes occur outside timed authority calls. Product
+magazine, reload, recoil and cadence code stays unchanged.
