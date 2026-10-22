@@ -37,3 +37,30 @@ Chronological record of what Claude did on the SIGHTBREAK v1.0 mission: investig
 Not run: the catalog-fixture drift check (it needs the backend Python environment, absent here) and the Windows-only observation tests (skipped by the suite). The only `WARNING` lines are the Xvfb V-Sync one. No ObjectDB leak lines in any log.
 
 **Finding F1 (bots never plant).** In the lifecycle test, 12 rounds took 26-43 simulated seconds each against a 100-second round timer, and the attackers never reached the `planted` state. Every round ended by elimination. The test still reports `passed=true` because it checks completion, halftime and a single report, not objective play. An older baseline recorded in `docs/ai/BOT_BEHAVIOR_QA.md` showed `plant_observed=true` on the main-line code (`148760e`). This has to be measured over many seeds and difficulties before a cause is claimed.
+
+## 2026-10-22 - Independent M1 menu evidence preserved
+
+`/root/menu_critic`, separate from the builder, reproduced baseline 561d0cb's
+missing field-menu focus (9 checks/3 failures) and candidate 8de7331's scene pass
+(30/0), plus the input-mode regression (31/0). The independent Linux OS keyboard
+comparison chooses the candidate for initial RESUME focus, full Tab/Shift-Tab
+navigation, explicit Return resume and observed pause/focus-recovery input safety.
+Fresh import exposed the omitted test UID; root's aa0b0a4 repair was cherry-picked
+onto the detached review candidate as 6767e97 with identical shipping main.gd bytes.
+Exact561d0cb and 6767e97 clean source-bound exports supplied the native proof.
+
+The [original review](../reports/gauntlet/m1-menu-focus/independent-review.md),
+brief and commands are preserved verbatim with a bounded 123-file compressed
+[archive](../reports/gauntlet/m1-menu-focus/INDEPENDENT_ARCHIVE.md). It includes
+original screenshots/videos, OS actions, observer traces, source/ELF hash receipts,
+the successful baseline and later candidate attempts, and the failed setup/export
+and first native observer attempt. Separate manifests document excluded compiled
+ELFs, launcher and caches. No downloaded template archive, key or cache is
+committed. The archive branch starts at 6a0d8d5 and changes no implementation.
+
+This is limited menu evidence. Root separately reports integrated validate.sh
+PASS at 6a0d8d5 with intentional skips; that broader run was not re-reviewed by the
+menu critic. Latest desktop CI 39712752860 has a reported source-suite isolation
+failure, so no overall CI pass is recorded. Hardware/controller, complete
+journeys/matches, visual quality and all complete G1–G20 acceptances stay outside
+this verdict. Root owns the later aggregate mission-matrix update.
