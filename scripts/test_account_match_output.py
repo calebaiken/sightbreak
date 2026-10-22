@@ -12,7 +12,7 @@ def fixture():
     bindings = {str(i + 100): i for i in range(1, 11)}
     base = dict(protocol=6, stock_rules=RULES.copy(), ranked_started=True, ranked_eligible=True,
                 accounts=accounts, bindings=bindings, attack=0, defend=0, match_duration=523,
-                match_id='synthetic-match', summary={'scoreboard': [dict(id=i, objectives=6 if i == 1 else 0, bot=False) for i in range(1, 11)]},
+                match_id='synthetic-match', summary={'duration': 523, 'scoreboard': [dict(id=i, objectives=6 if i == 1 else 0, bot=False) for i in range(1, 11)]},
                 activity_seconds={str(i): 520 for i in range(1, 11)},
                 reward_status='eligible_pending_completion')
     transitions = [dict(base, phase='waiting', round=0, elapsed=0, ranked_started=False)]
@@ -120,6 +120,28 @@ class EvidenceControls(unittest.TestCase):
             changed['participants'][0][key] = value
             with self.assertRaises(AssertionError):
                 verify_earned_payload(changed, self.server, self.clients)
+
+    def test_activity_is_capped_at_terminal_duration(self):
+        end = self.server['latest']
+        end.update(elapsed=524, match_duration=501)
+        end['summary']['duration'] = 522.9  # terminal duration 499.9
+        end['activity_seconds'] = {str(i): 500.1 for i in range(1, 11)}
+        payload = dict(match_id='synthetic-match', mode='ranked_5v5', started_at='2026-10-22T00:00:00Z', ended_at='2026-10-22T00:10:00Z',
+                       participants=[dict(player_id=identity, won=i < 5, active_seconds=499,
+                                          objective_contributions=6 if i == 0 else 0, abandoned=False)
+                                     for i, identity in enumerate(self.identities)])
+        verify_earned_payload(payload, self.server, self.clients)
+        payload['participants'][0]['active_seconds'] = 500
+        with self.assertRaises(AssertionError):
+            verify_earned_payload(payload, self.server, self.clients)
+        # At an actual serialization boundary, either adjacent floor can be the
+        # original authority value; a full second above both remains invalid.
+        end['summary']['duration'] = 523 - 1e-10
+        end['activity_seconds'] = {str(i): 500 + 1e-10 for i in range(1, 11)}
+        verify_earned_payload(payload, self.server, self.clients)
+        payload['participants'][0]['active_seconds'] = 501
+        with self.assertRaises(AssertionError):
+            verify_earned_payload(payload, self.server, self.clients)
 
 
 if __name__ == '__main__': unittest.main()

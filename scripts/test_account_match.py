@@ -120,6 +120,19 @@ def verify_earned_payload(payload, server, clients):
     assert set(participants) == set(end['accounts'].values())
     scoreboard = {s['id']: s for s in end['summary']['scoreboard']}
     assert set(scoreboard) == set(range(1, 11))
+    # Latest reports may arrive after match over. Reconstruct the duration at
+    # result emission, where production caps integer activity by match duration.
+    terminal_duration = end['match_duration'] - (end['elapsed'] - end['summary']['duration'])
+
+    def serialized_floors(value):
+        floors = {int(value)}
+        nearest = round(value)
+        # Float accumulation and JSON serialization can straddle an integer.
+        # Allow both adjacent floors only within 0.1 microseconds of that edge.
+        if abs(value - nearest) <= 1e-7:
+            floors.update((max(0, nearest - 1), nearest))
+        return floors
+
     for index, client in enumerate(clients):
         actor_id = index + 1
         participant = participants[end['accounts'][str(actor_id)]]
@@ -127,7 +140,9 @@ def verify_earned_payload(payload, server, clients):
         assert participant['won'] == summary['won'] == (actor_id <= 5)
         objectives = 6 if actor_id == 1 else 0
         assert participant['objective_contributions'] == summary['objectives'] == scoreboard[actor_id]['objectives'] == objectives
-        assert participant['active_seconds'] == int(end['activity_seconds'][str(actor_id)])
+        possible_active = {min(duration, activity) for duration in serialized_floors(terminal_duration)
+                           for activity in serialized_floors(end['activity_seconds'][str(actor_id)])}
+        assert participant['active_seconds'] in possible_active
         assert participant['abandoned'] is False and scoreboard[actor_id]['bot'] is False
         assert summary['kills'] == summary['deaths'] == summary['assists'] == 0
     started = datetime.fromisoformat(payload['started_at'])
