@@ -1,7 +1,8 @@
 # M4 stock weapon benchmark
 
-Status: initial harness rejected by independent source review; revised harness
-awaiting source review and the shared engine lane. No native result exists.
+Status: revised source accepted for measurement; native stock-rule checks pass.
+Independent raw-output and maintained-registration review is pending. The initial
+harness rejection remains retained. No product correction is established.
 
 The comparison source is `317410aff6f1a85b4f8c1b5b344c7ec50dd363d2`, game tree
 `fb6be859e05812d8707be1ef5c6f747d2588c1e9`. The benchmark uses the actual
@@ -56,10 +57,10 @@ builder cannot approve this work. Whole G4/G5/G6/G9/G18 remain open.
 
 ## Execution boundary
 
-The root reserves the local engine/render/CPU lane for the combined aggregate
-and account qualification. No Godot, native capture, renderer or OCR process has
-been started for this increment. The root must explicitly release that lane
-before native execution.
+The root released the local engine lane after account qualification. The bounded
+headless native measurement is complete and all seven owned process groups are
+gone. The lane has been returned to the root. Any further native run requires a
+new coordinated window.
 
 ## Inspected rules and coverage
 
@@ -101,7 +102,8 @@ SIGHTBREAK_TOOLS_DIR=/workspace/tools SIGHTBREAK_STATE_DIR="$PWD/.local/m4-probe
 
 Relevant existing controls are `weapon_integrity_test.gd`, `actor_test.gd`,
 `hit_feedback_test.gd` and `authority_order_test.gd`. The root owns the next
-combined-source aggregate. No test pass or product acceptance is claimed here.
+combined-source aggregate. The actual focused passes and limits are recorded in
+[NATIVE_RESULTS.md](NATIVE_RESULTS.md); whole product acceptance remains open.
 
 ## Rejected first harness and source-only revision
 
@@ -133,3 +135,20 @@ retain truncated, missing-shot and event-without-health-change counterexamples.
 do not establish that the revised GDScript compiles or runs. The expected native
 case matrix is 13 cases per weapon: cadence, finite magazine, partial reload,
 reload switch, switch cycle, three damage cases and five negative cases.
+
+## Actual native measurement
+
+Source review `890d87d1ef0afa232c26fc4e254b6ddff6d5dd7e` accepted `d1e89ed`
+for bounded measurement. The one import generated the probe UID; metadata-only
+commit `fc5d677396930f1e84523b3726525dcbf6ea6b83` stabilized it before actual
+measurement. The measured game tree is `41abd17652a89c554463faa5b216a7af59aec0e7`.
+The critic's source-after check rehashed all 309 tracked game files and confirmed
+clean, equal before/after identities and the UID-only delta.
+
+The actual probe emits all 52 unique records and passes 2,840 assertions; the four
+existing controls pass another 289. [Raw output and receipts](native-round-2/)
+retain exact commands, exits, engine/source identities and cleanup. The one-line
+`validate.sh` registration matches the measured command and passes `bash -n`;
+[registration receipt](VALIDATION_REGISTRATION.json). Raw-output recomputation
+and registration review are pending. No additional native run or broad aggregate
+is claimed for that line.
