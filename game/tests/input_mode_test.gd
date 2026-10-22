@@ -87,7 +87,7 @@ func run() -> void:
 	var key := InputEventKey.new()
 	key.physical_keycode = KEY_W
 	key.pressed = true
-	Input.parse_input_event(key)
+	Input.parse_input_event(key.duplicate())
 	main._notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
 	main._physics_process(1.0/60)
 	check(game._local_input.move == Vector2.ZERO, "Focus loss releases local held keyboard movement")
@@ -104,8 +104,29 @@ func run() -> void:
 	main.close_overlay()
 	var release := key.duplicate()
 	release.pressed = false
-	Input.parse_input_event(release)
+	# Source ordering reproduction: snapshots can see neutral input before a
+	# controller tick acknowledges physical release. No native acceptance claim.
+	var observer = preload("res://scripts/offline_diagnostics.gd").new()
+	main.set_physics_process(false)
+	check(main.waiting_for_input_release, "Held key retains focus-release guard before acknowledgment")
+	Input.parse_input_event(release.duplicate())
+	var released_before_tick: Dictionary = observer._snapshot(game)
+	check(released_before_tick.ui.waiting_for_input_release and game._local_input.move == Vector2.ZERO and not game._local_input.fire, "Neutral command observation alone can precede controller release acknowledgment")
+	Input.parse_input_event(key.duplicate())
 	main._physics_process(1.0/60)
+	check(main.waiting_for_input_release and game._local_input.move == Vector2.ZERO, "A premature fresh press before controller release acknowledgment remains safely blocked")
+	var premature: Dictionary = observer._snapshot(game)
+	Input.parse_input_event(release.duplicate())
+	main._physics_process(1.0/60)
+	var acknowledged: Dictionary = observer._snapshot(game)
+	check(not acknowledged.ui.waiting_for_input_release, "Read-only observation distinguishes actual controller release acknowledgment")
+	Input.parse_input_event(key.duplicate())
+	main._physics_process(1.0/60)
+	check(game._local_input.move.y == 1.0 and not main.waiting_for_input_release, "A fresh key press after acknowledged release reaches actual controller input")
+	print("FOCUS_RELEASE_ORDERING " + JSON.stringify({"before_controller_tick": released_before_tick, "premature_press": premature, "acknowledged_release": acknowledged, "fresh_input": [game._local_input.move.x, game._local_input.move.y]}))
+	Input.parse_input_event(release.duplicate())
+	main._physics_process(1.0/60)
+	main.set_physics_process(true)
 	main.simulated_pads.assign([7])
 	main.simulated_axes[Vector2i(7,JOY_AXIS_TRIGGER_RIGHT)] = 0.8
 	await frames()

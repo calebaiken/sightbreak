@@ -33,6 +33,40 @@ import toolchain
 REFERENCE = (1280, 720)
 
 
+def read_hud_pixels(path, ocr):
+    with Image.open(path) as image:
+        def text(box, health_contrast=False, psm=6):
+            # Crop coordinates describe the reference layout; raw captures
+            # retain the actual native client dimensions and pixels.
+            crop = image.crop(tuple(round(value * image.size[index % 2] / REFERENCE[index % 2])
+                                    for index, value in enumerate(box)))
+            crop = crop.resize(((box[2] - box[0]) * 3, (box[3] - box[1]) * 3))
+            if health_contrast:
+                # Critical health is red. Ordinary grayscale OCR can erase
+                # that text against the dark HUD; analyze channel brightness
+                # without changing the original native screenshot.
+                red, green, blue = crop.convert('RGB').split()
+                crop = ImageChops.lighter(ImageChops.lighter(red, green), blue).point(lambda value: 0 if value > 145 else 255)
+            return ocr(crop, psm, Path(path).stem + ':' + str(box))
+        status = text((0, 630, 450, 720), health_contrast=True)
+        health = re.search(r'(?<!\d)(\d{1,3})\s*[^A-Z0-9]*HEALTH', status.upper())
+        # One text line: exclude the grenade inventory beneath the ammunition.
+        ammo_text = text((980, 648, 1280, 680), psm=7)
+    match = re.search(r'(\d+)\s*/\s*(\d+)', ammo_text)
+    if health is None or not 0 < int(health[1]) <= 100 or 'ELIMINATED' in status.upper() or 'SPECTATING' in status.upper() or match is None:
+        raise RuntimeError('Rendered living-player/ammunition check failed: ' + repr((status, ammo_text)))
+    return {'health': int(health[1]), 'ammo': int(match[1]), 'reserve': int(match[2]),
+            'status_ocr': status, 'ammo_ocr': ammo_text}
+
+
+def focus_controls_released(state):
+    # Neutral commands also occur while the held-input safety guard is engaged.
+    # Wait for the controller itself to acknowledge the physical release.
+    return (state.get('ui', {}).get('waiting_for_input_release') is False
+            and state.get('local_input', {}).get('move') == [0, 0]
+            and state.get('local_input', {}).get('fire') is False)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
@@ -182,30 +216,6 @@ def main():
             raise RuntimeError('Tesseract failed: ' + label + '; raw stderr retained')
         return completed.stdout.decode('utf-8', errors='replace')
 
-    def read_hud_pixels(name):
-        with Image.open(out / (name + '.png')) as image:
-            def text(box, health_contrast=False):
-                # Crop coordinates describe the reference layout; raw captures
-                # retain the actual native client dimensions and pixels.
-                crop = image.crop(tuple(round(value * image.size[index % 2] / REFERENCE[index % 2])
-                                        for index, value in enumerate(box)))
-                crop = crop.resize(((box[2] - box[0]) * 3, (box[3] - box[1]) * 3))
-                if health_contrast:
-                    # Critical health is red. Ordinary grayscale OCR can erase
-                    # that text against the dark HUD; analyze channel brightness
-                    # without changing the original native screenshot.
-                    red, green, blue = crop.convert('RGB').split()
-                    crop = ImageChops.lighter(ImageChops.lighter(red, green), blue).point(lambda value: 0 if value > 145 else 255)
-                return ocr(crop, 6, name + ':' + str(box))
-            status = text((0, 630, 450, 720), health_contrast=True)
-            health = re.search(r'(?<!\d)(\d{1,3})\s*[^A-Z0-9]*HEALTH', status.upper())
-            ammo_text = text((980, 625, 1280, 710))
-        match = re.search(r'(\d+)\s*/\s*(\d+)', ammo_text)
-        if health is None or not 0 < int(health[1]) <= 100 or 'ELIMINATED' in status.upper() or 'SPECTATING' in status.upper() or match is None:
-            raise RuntimeError('Rendered living-player/ammunition check failed: ' + repr((status, ammo_text)))
-        return {'health': int(health[1]), 'ammo': int(match[1]), 'reserve': int(match[2]),
-                'status_ocr': status, 'ammo_ocr': ammo_text}
-
     def read_hud(name):
         # Analyze the already captured native pixels while ordinary Escape
         # pause protects the living player from time spent in external OCR.
@@ -215,7 +225,7 @@ def main():
         before_analysis = offline_observation()
         actor = before_analysis.get('local_actor', {})
         if before_analysis.get('ui', {}).get('paused') is True:
-            return read_hud_pixels(name)
+            return read_hud_pixels(out / (name + '.png'), ocr)
         if (before_analysis.get('ui', {}).get('screen') != 'game'
                 or before_analysis.get('ui', {}).get('focused') is not True
                 or before_analysis.get('time_scale') != 1 or actor.get('alive') is not True):
@@ -258,7 +268,7 @@ def main():
                                     10, 'Native pause before saved-HUD OCR: ' + name, before_analysis['wall_msec'])
             require_analysis_context(paused_state)
             receipt['paused'] = paused_state
-            reading = read_hud_pixels(name)
+            reading = read_hud_pixels(out / (name + '.png'), ocr)
             after_analysis = observed(lambda state: state.get('ui', {}).get('paused') is True,
                                       5, 'Fresh paused observation after saved-HUD OCR: ' + name, paused_state['wall_msec'])
             require_analysis_context(after_analysis)
@@ -675,8 +685,7 @@ def main():
         finally:
             key('w', False)
             button(False)
-        released = observed(lambda state: state.get('local_input', {}).get('move') == [0, 0]
-                            and state.get('local_input', {}).get('fire') is False,
+        released = observed(focus_controls_released,
                             10, 'Released held focus-test controls', guarded['wall_msec'])
         require_focus_context(released)
         try:

@@ -153,6 +153,7 @@ func _snapshot(game) -> Dictionary:
 			"status_text": controller.status_label.text if is_instance_valid(controller.status_label) else "",
 			"scoreboard_visible": is_instance_valid(controller.score_panel) and controller.score_panel.is_visible_in_tree(),
 			"focused": controller.application_focused, "touch_controls": controller.uses_touch_controls(),
+			"waiting_for_input_release": controller.waiting_for_input_release,
 			"capabilities": controller.input_capabilities(), "mouse_mode": Input.mouse_mode,
 			"window_mode": DisplayServer.window_get_mode(),
 			"window_size": [DisplayServer.window_get_size().x, DisplayServer.window_get_size().y]}
