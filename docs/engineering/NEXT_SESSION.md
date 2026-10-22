@@ -209,3 +209,19 @@ controls and frozen-raw replay pass; see separate validator-cap receipts. Native
 execution remains `471fbd8`. Final independent followup `e0d3996` accepts the
 bounded scope after checking all 15 controls, raw replay, boundary/semantic
 counterexamples and all 58 archive hashes. Both builder/review worktrees are clean.
+## M5 bot squad habit candidate
+
+Isolated `/workspace/sightbreak-bot-symmetry`, branch `codex/v1-bot-squad-symmetry`,
+starts at `42ff3dc`. Source chain `643d022` (preregistered oracle) → `06092d0`
+(Claude-authored `0871bc9` adaptation) → `c2b3ded` (our two sine phases) →
+`8ef757e` (optional observation tooling) → `1b88349` (final idle/repeated-smoke
+controls). Final actual Godot oracle: 960 samples/2,722 checks, zero candidate
+failures/480 equal pairs; baseline 300 expected failures/181 unequal pairs.
+Full validate.sh passes at `8ef757e`; final fixture independently reruns
+bot/combat/privacy checks. Raw artifacts, source manifest, omitted-measurement
+decision and failed fixtures are in `docs/reports/gauntlet/m5-bot-squad-symmetry`.
+Product code is bot_ai.gd only; phased authority, arena, protocol 6, privacy,
+earned economy and platforms preserved. Fresh independent critic owns the
+verdict; builder cannot approve. Whole G2, F1 complete-match quality and competitive
+fairness remain open. CPU/native lane is explicitly released; next timed native
+work belongs to root's layout rerun.

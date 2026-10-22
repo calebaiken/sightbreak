@@ -308,3 +308,21 @@ Final independent followup `e0d3996` accepts the bounded source/archive scope:
 15 controls, separate boundary and semantic mutations, frozen-raw settlement
 recomputation, all 58 archive hashes and exact native/preflight byte equality.
 Root integration remains separate; G3/G16 and the named remaining limits stay open.
+## Codex M5 bot squad habits — 2026-10-22
+
+From root `42ff3dc`, inspected Claude PR28 authored bot delta `0871bc9` and head
+`2641ddf`, preregistered real-engine gates in `643d022`, then retained Claude
+authorship in bot-only adaptation `06092d0`. Root authorized the two remaining
+raw-ID sine phases; own adaptation `c2b3ded` makes those squad-relative too. No
+shuffle, arena, authority, protocol, privacy, platform or economy product changes.
+Final oracle `1b88349` checks 960 actual Godot samples/2,722 checks: independently
+zero candidate failures and 480 equal paired full commands/roles/destinations;
+identical final baseline has 300 expected failures and 181 unequal pairs. Earlier
+fixture defects (30 m beyond easy vision, nominal idle samples moving) and all raw
+outputs remain in [M5 evidence](../reports/gauntlet/m5-bot-squad-symmetry/README.md).
+Full maintained validate.sh exits 0 on frozen `8ef757e`; later fixture additions
+pass the independent focused bot/combat/privacy suite. Optional fixed eight-match
+measurement was omitted before any sample; no broad match fairness or objective
+quality acceptance. CPU lane released explicitly to root for the original-budget
+layout rerun. Builder does not approve; fresh critic verdict is separate. Whole
+G2 remains open.
