@@ -240,7 +240,7 @@ try:
     POSTMASTER = proc_identity(owned['pid'])
     assert POSTMASTER
     for attempt in range(30):
-        _, ready = docker(f'readiness-{attempt:02d}', ['exec', CID, 'pg_isready', '-U', ROLE, '-d', DB], check=False)
+        _, ready = docker(f'readiness-{attempt:02d}', ['exec', CID, 'pg_isready', '-h', '127.0.0.1', '-U', ROLE, '-d', DB], check=False)
         if ready['exit_code'] == 0:
             break
         time.sleep(1)
