@@ -1,0 +1,139 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.14, pytest-9.1.1, pluggy-1.6.0 -- /workspace/sightbreak/.venv/bin/python
+rootdir: /workspace/sightbreak-backend-regression-a3b7070/backend
+configfile: pyproject.toml
+collecting ... collected 61 items
+
+tests/test_economy.py::test_new_account_has_no_value_and_rejects_client_balance PASSED [  1%]
+tests/test_economy.py::test_password_is_argon2_and_tokens_are_hashed PASSED [  3%]
+tests/test_economy.py::test_store_replay_and_changed_payload PASSED      [  4%]
+tests/test_economy.py::test_concurrent_double_spend PASSED               [  6%]
+tests/test_economy.py::test_case_open_replay_consumes_once PASSED        [  8%]
+tests/test_economy.py::test_case_open_rejects_unowned_or_fake_selection PASSED [  9%]
+tests/test_economy.py::test_concurrent_market_purchase_one_owner PASSED  [ 11%]
+tests/test_economy.py::test_market_reservation_cancel_and_ownership PASSED [ 13%]
+tests/test_economy.py::test_market_expected_price_rejects_mismatch_atomically[399] PASSED [ 14%]
+tests/test_economy.py::test_market_expected_price_rejects_mismatch_atomically[401] PASSED [ 16%]
+tests/test_economy.py::test_market_guarded_replay_is_exact_and_applies_once PASSED [ 18%]
+tests/test_economy.py::test_market_pre_guard_receipt_hash_still_replays PASSED [ 19%]
+tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[0] PASSED [ 21%]
+tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[-1] PASSED [ 22%]
+tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[10000001] PASSED [ 24%]
+tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[True] PASSED [ 26%]
+tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[400] PASSED [ 27%]
+tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[400.0] PASSED [ 29%]
+tests/test_economy.py::test_trade_revision_invalidates_confirmation_and_transfers_once PASSED [ 31%]
+tests/test_economy.py::test_trade_rejects_duplicates_unowned_and_releases_cancel PASSED [ 32%]
+tests/test_economy.py::test_forged_rewards_rejected_and_trusted_replay_idempotent PASSED [ 34%]
+tests/test_economy.py::test_bot_count_and_afk_no_rewards PASSED          [ 36%]
+tests/test_economy.py::test_history_append_only_and_rollback_disconnect PASSED [ 37%]
+tests/test_economy.py::test_rate_limit_persisted PASSED                  [ 39%]
+tests/test_economy.py::test_overlapping_matches_and_duplicate_humans_rejected PASSED [ 40%]
+tests/test_economy.py::test_concurrent_case_open_exactly_one_draw PASSED [ 42%]
+tests/test_economy.py::test_trade_inspection_contains_metadata_without_exposing_to_third_party PASSED [ 44%]
+tests/test_economy.py::test_database_negative_wallet_constraint PASSED   [ 45%]
+tests/test_economy.py::test_ticket_is_scoped_single_use_and_hash_only PASSED [ 47%]
+tests/test_economy.py::test_ticket_requires_server_secret_and_account_session PASSED [ 49%]
+tests/test_economy.py::test_ticket_expiry_and_server_scope_are_enforced PASSED [ 50%]
+tests/test_economy.py::test_concurrent_ticket_consumption_only_one_admission PASSED [ 52%]
+tests/test_economy.py::test_ticket_rejects_disabled_account_and_expired_parent_session PASSED [ 54%]
+tests/test_economy.py::test_loadout_owned_compatible_cosmetic_and_unequip PASSED [ 55%]
+tests/test_economy.py::test_market_transfer_unequips_source_atomically PASSED [ 57%]
+tests/test_economy.py::test_trade_transfer_unequips_both_cosmetic_slots PASSED [ 59%]
+tests/test_economy.py::test_loadout_read_filters_stale_ownership_and_rejects_other_slots PASSED [ 60%]
+tests/test_economy.py::test_published_case_odds_match_every_boundary[0-Common] PASSED [ 62%]
+tests/test_economy.py::test_published_case_odds_match_every_boundary[5799-Common] PASSED [ 63%]
+tests/test_economy.py::test_published_case_odds_match_every_boundary[5800-Uncommon] PASSED [ 65%]
+tests/test_economy.py::test_published_case_odds_match_every_boundary[8399-Uncommon] PASSED [ 67%]
+tests/test_economy.py::test_published_case_odds_match_every_boundary[8400-Rare] PASSED [ 68%]
+tests/test_economy.py::test_published_case_odds_match_every_boundary[9499-Rare] PASSED [ 70%]
+tests/test_economy.py::test_published_case_odds_match_every_boundary[9500-Epic] PASSED [ 72%]
+tests/test_economy.py::test_published_case_odds_match_every_boundary[9899-Epic] PASSED [ 73%]
+tests/test_economy.py::test_published_case_odds_match_every_boundary[9900-Legendary] PASSED [ 75%]
+tests/test_economy.py::test_published_case_odds_match_every_boundary[9989-Legendary] PASSED [ 77%]
+tests/test_economy.py::test_published_case_odds_match_every_boundary[9990-Mythic] PASSED [ 78%]
+tests/test_economy.py::test_published_case_odds_match_every_boundary[9999-Mythic] PASSED [ 80%]
+tests/test_economy.py::test_market_filters_apply_before_result_cap PASSED [ 81%]
+tests/test_economy.py::test_market_read_uses_bounded_queries PASSED      [ 83%]
+tests/test_economy.py::test_server_key_with_non_ascii_header_is_rejected_not_crashed PASSED [ 85%]
+tests/test_economy.py::test_login_verifies_a_hash_even_for_unknown_usernames PASSED [ 86%]
+tests/test_economy.py::test_login_with_unusable_stored_hash_is_rejected_cleanly PASSED [ 88%]
+tests/test_economy.py::test_history_lists_most_recent_match_first PASSED [ 90%]
+tests/test_economy.py::test_trade_exposes_participant_display_names_for_confirmation PASSED [ 91%]
+tests/test_economy.py::test_display_names_must_be_one_visible_line PASSED [ 93%]
+tests/test_economy.py::test_history_orders_by_instant_across_utc_offsets PASSED [ 95%]
+tests/test_economy.py::test_ticket_inspection_is_trusted_read_only_preflight PASSED [ 96%]
+tests/test_economy.py::test_ticket_inspection_rechecks_revocation_and_expiry PASSED [ 98%]
+tests/test_economy.py::test_match_replay_after_freshness_window_does_not_award_again PASSED [100%]
+
+=============================== warnings summary ===============================
+../../sightbreak/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /workspace/sightbreak/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+==================================== PASSES ====================================
+- generated xml file: /workspace/sightbreak-backend-regression-a3b7070/builds/sightbreak-backend-regression-0876b2c83512/pytest-junit.xml -
+=========================== short test summary info ============================
+PASSED tests/test_economy.py::test_new_account_has_no_value_and_rejects_client_balance
+PASSED tests/test_economy.py::test_password_is_argon2_and_tokens_are_hashed
+PASSED tests/test_economy.py::test_store_replay_and_changed_payload
+PASSED tests/test_economy.py::test_concurrent_double_spend
+PASSED tests/test_economy.py::test_case_open_replay_consumes_once
+PASSED tests/test_economy.py::test_case_open_rejects_unowned_or_fake_selection
+PASSED tests/test_economy.py::test_concurrent_market_purchase_one_owner
+PASSED tests/test_economy.py::test_market_reservation_cancel_and_ownership
+PASSED tests/test_economy.py::test_market_expected_price_rejects_mismatch_atomically[399]
+PASSED tests/test_economy.py::test_market_expected_price_rejects_mismatch_atomically[401]
+PASSED tests/test_economy.py::test_market_guarded_replay_is_exact_and_applies_once
+PASSED tests/test_economy.py::test_market_pre_guard_receipt_hash_still_replays
+PASSED tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[0]
+PASSED tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[-1]
+PASSED tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[10000001]
+PASSED tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[True]
+PASSED tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[400]
+PASSED tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[400.0]
+PASSED tests/test_economy.py::test_trade_revision_invalidates_confirmation_and_transfers_once
+PASSED tests/test_economy.py::test_trade_rejects_duplicates_unowned_and_releases_cancel
+PASSED tests/test_economy.py::test_forged_rewards_rejected_and_trusted_replay_idempotent
+PASSED tests/test_economy.py::test_bot_count_and_afk_no_rewards
+PASSED tests/test_economy.py::test_history_append_only_and_rollback_disconnect
+PASSED tests/test_economy.py::test_rate_limit_persisted
+PASSED tests/test_economy.py::test_overlapping_matches_and_duplicate_humans_rejected
+PASSED tests/test_economy.py::test_concurrent_case_open_exactly_one_draw
+PASSED tests/test_economy.py::test_trade_inspection_contains_metadata_without_exposing_to_third_party
+PASSED tests/test_economy.py::test_database_negative_wallet_constraint
+PASSED tests/test_economy.py::test_ticket_is_scoped_single_use_and_hash_only
+PASSED tests/test_economy.py::test_ticket_requires_server_secret_and_account_session
+PASSED tests/test_economy.py::test_ticket_expiry_and_server_scope_are_enforced
+PASSED tests/test_economy.py::test_concurrent_ticket_consumption_only_one_admission
+PASSED tests/test_economy.py::test_ticket_rejects_disabled_account_and_expired_parent_session
+PASSED tests/test_economy.py::test_loadout_owned_compatible_cosmetic_and_unequip
+PASSED tests/test_economy.py::test_market_transfer_unequips_source_atomically
+PASSED tests/test_economy.py::test_trade_transfer_unequips_both_cosmetic_slots
+PASSED tests/test_economy.py::test_loadout_read_filters_stale_ownership_and_rejects_other_slots
+PASSED tests/test_economy.py::test_published_case_odds_match_every_boundary[0-Common]
+PASSED tests/test_economy.py::test_published_case_odds_match_every_boundary[5799-Common]
+PASSED tests/test_economy.py::test_published_case_odds_match_every_boundary[5800-Uncommon]
+PASSED tests/test_economy.py::test_published_case_odds_match_every_boundary[8399-Uncommon]
+PASSED tests/test_economy.py::test_published_case_odds_match_every_boundary[8400-Rare]
+PASSED tests/test_economy.py::test_published_case_odds_match_every_boundary[9499-Rare]
+PASSED tests/test_economy.py::test_published_case_odds_match_every_boundary[9500-Epic]
+PASSED tests/test_economy.py::test_published_case_odds_match_every_boundary[9899-Epic]
+PASSED tests/test_economy.py::test_published_case_odds_match_every_boundary[9900-Legendary]
+PASSED tests/test_economy.py::test_published_case_odds_match_every_boundary[9989-Legendary]
+PASSED tests/test_economy.py::test_published_case_odds_match_every_boundary[9990-Mythic]
+PASSED tests/test_economy.py::test_published_case_odds_match_every_boundary[9999-Mythic]
+PASSED tests/test_economy.py::test_market_filters_apply_before_result_cap
+PASSED tests/test_economy.py::test_market_read_uses_bounded_queries
+PASSED tests/test_economy.py::test_server_key_with_non_ascii_header_is_rejected_not_crashed
+PASSED tests/test_economy.py::test_login_verifies_a_hash_even_for_unknown_usernames
+PASSED tests/test_economy.py::test_login_with_unusable_stored_hash_is_rejected_cleanly
+PASSED tests/test_economy.py::test_history_lists_most_recent_match_first
+PASSED tests/test_economy.py::test_trade_exposes_participant_display_names_for_confirmation
+PASSED tests/test_economy.py::test_display_names_must_be_one_visible_line
+PASSED tests/test_economy.py::test_history_orders_by_instant_across_utc_offsets
+PASSED tests/test_economy.py::test_ticket_inspection_is_trusted_read_only_preflight
+PASSED tests/test_economy.py::test_ticket_inspection_rechecks_revocation_and_expiry
+PASSED tests/test_economy.py::test_match_replay_after_freshness_window_does_not_award_again
+======================== 61 passed, 1 warning in 6.43s =========================
