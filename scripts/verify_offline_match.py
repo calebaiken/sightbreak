@@ -28,6 +28,7 @@ from PIL import Image
 from build_manifest import BUILDS, OUTPUTS, source, validate_record
 from native_log import failed
 from native_observation import read_observation_json
+from native_approach import approach_floor
 from verify_integration_export import NativeUI, WinUI, windows_job
 import toolchain
 
@@ -310,66 +311,9 @@ def main():
         raise TimeoutError('Native mouse aiming did not reach the observed orientation')
 
     def move_to(x, z, seconds=15):
-        origin = local()['position'][:]
         until = min(deadline, time.monotonic() + seconds)
-        while time.monotonic() < until:
-            state = observe()
-            if time.monotonic() >= until:
-                break
-            actor = local(state)
-            dx, dz = x - actor['position'][0], z - actor['position'][2]
-            if math.hypot(dx, dz) < .45:
-                released_after_tick = state['simulation_tick']
-                for name in ('w', 'a', 's', 'd'):
-                    key(name, False)
-                record('movement_settle_begin', requested=[x, z], released_after_tick=released_after_tick)
-                settled_ticks = []
-                last_tick = released_after_tick
-                # Native release and a fixed sleep do not prove that the
-                # authority consumed neutral input or stopped. Observe newer
-                # physics ticks and recheck the actual endpoint before return.
-                # Corrections share the original movement deadline.
-                while time.monotonic() < until:
-                    state = observe()
-                    if time.monotonic() >= until:
-                        break
-                    actor = local(state)
-                    tick = state['simulation_tick']
-                    if tick > last_tick:
-                        last_tick = tick
-                        velocity = actor['velocity']
-                        speed = math.hypot(velocity[0], velocity[2])
-                        neutral = state.get('local_input', {}).get('move') == [0, 0]
-                        if neutral and speed <= .05:
-                            end = actor['position'][:]
-                            distance = math.hypot(x - end[0], z - end[2])
-                            if distance >= .45:
-                                record('movement_recorrect', requested=[x, z], destination=end,
-                                       target_distance=distance, horizontal_speed=speed,
-                                       released_after_tick=released_after_tick)
-                                break
-                            settled_ticks.append(tick)
-                            if len(settled_ticks) == 2:
-                                record('movement_completed', origin=origin, destination=end, requested=[x, z],
-                                       target_distance=distance, horizontal_speed=speed,
-                                       settled_simulation_ticks=settled_ticks)
-                                return end
-                        else:
-                            settled_ticks.clear()
-                    pause(.05)
-                continue
-            yaw = actor['yaw']
-            mx, my = math.cos(yaw) * dx - math.sin(yaw) * dz, -math.sin(yaw) * dx - math.cos(yaw) * dz
-            wanted = set()
-            if abs(mx) > .25:
-                wanted.add('d' if mx > 0 else 'a')
-            if abs(my) > .25:
-                wanted.add('w' if my > 0 else 's')
-            for name in ('w', 'a', 's', 'd'):
-                key(name, name in wanted)
-            pause(.1)
-        stop()
-        raise TimeoutError('Legitimate native movement did not reach the requested floor position')
+        return approach_floor(x, z, observe=observe, key=key, pause=pause,
+                              record=record, deadline=until)
 
     def invalid_interaction():
         before_count = observe()['local_contribution']
