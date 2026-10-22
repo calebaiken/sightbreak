@@ -6,7 +6,7 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-Updated 2026-10-22, 05:33 UTC. The mission remains **IN PROGRESS / PRIMARY**.
+Updated 2026-10-22, 05:58 UTC. The mission remains **IN PROGRESS / PRIMARY**.
 Branch `codex/v1-mission-playability`, [draft PR27](https://github.com/calebaiken/sightbreak/pull/27),
 is based on PR24 `c84eaf3` → PR23 `db3981e` → PR22 `82a03fc` → PR16 `d2439ac`.
 Initialization is committed as `561d0cb`; [issue25](https://github.com/calebaiken/sightbreak/issues/25)
@@ -26,7 +26,7 @@ is the actual persistent tracker, not a native Codex goal registration.
   default/OpenGL and all five feature ablations still time out at 120 s; minimal
   2D/3D controls pass. No shipping graphics correction is supported by those
   results. ARM graphical startup passes; actual keyboard/pointer qualification
-  now starts with a non-requesting permission/window preflight. Actual ARM run39727011693 at `e7718ee` reports that step successful; independent raw review accepts all four positive permissions, exact owned window/internal PNG and clean profile/process outcome. No events were posted. Source-reviewed native menu-input candidate is next; actual input remains unverified.
+  now starts with a non-requesting permission/window preflight. Actual ARM run39727011693 at `e7718ee` reports that step successful; independent raw review accepts all four positive permissions, exact owned window/internal PNG and clean profile/process outcome. No events were posted. Actual source3b97a00 menu attempt fails before input at foreground verification (zero events). Swift compiles; helper permission/capture/Vision are unreached. Focus diagnostics and supported run-loop observation are the next M2 iteration.
 - ARM source `2a2b732`, [run39721286005](https://github.com/calebaiken/sightbreak/actions/runs/39721286005),
   passes actual unsigned generic-device iOS compilation under Xcode26.3/SDK26.2
   after a forced-symbol SDK probe. [Independent review](../reports/gauntlet/m2-native-mac-ci-39721286005/independent-review/README.md)
@@ -52,7 +52,7 @@ is the actual persistent tracker, not a native Codex goal registration.
   stays 13/13. A fresh critic accepts source and adversarial controls. The
   reward formula, real-yaw policy, ten-second window and qualification thresholds
   are unchanged. [Review](../reports/gauntlet/m3-activity-integrity/independent-critic/REVIEW.md).
-  Combined aggregate at `a23e349` stopped on an omitted tracked CSV/hash in root’s sparse checkout; 57 raw files are retained. The fixture is restored and its24 checks pass. A complete new aggregate follows the final UI revision.
+  Complete unmodified aggregate retry PASSES at frozen `b85f936`, source unchanged, independently audited in `609913e` (52 mandatory Godot logs, ENet/lifecycle/catalog/Python). Five rendered checks, three Windows cases and optional backend SQL remain outside this run. The earlier sparse-fixture failure and57 raw files remain retained.
 - M5: six bot habits now use corresponding squad slots, preserving the reviewed
   authority implementation and Claude authorship. Final independent engine
   oracle: 2,722 checks, zero candidate failures / zero unequal pairs versus
@@ -67,7 +67,7 @@ is the actual persistent tracker, not a native Codex goal registration.
 
 Historical failures, original raw archives and earlier fixture rejections remain
 in the worklog and milestone reports. Later commits do not relabel old binaries.
-The reviewed local touch-enabled frame also exposes a MENU/device-label overlap and stale keyboard footer after live opt-in. First candidate wins a fresh blind still comparison, then a critic rejects its existing long-feed clipping. Revised candidate `589a52a` passes462 transition checks; actual final capture and independent acceptance are pending. Saved touch targets stay intact. No whole product gate below is closed by these bounded engineering results.
+The reviewed local touch-enabled frame also exposes a MENU/device-label overlap and stale keyboard footer after live opt-in. First candidate wins a fresh blind still comparison, then a critic rejects its existing long-feed clipping. Final `589a52a` passes462 transition checks, independent4/4 clipping controls and actual71.891 s on/off capture. A fresh blinded still judge selects it; control contrast and whole UX quality remain open. Saved touch targets stay intact. No whole product gate below is closed by these bounded engineering results.
 
 ## Acceptance matrix
 
@@ -151,3 +151,15 @@ gameplay/backend/worker files remain identical to frozen `0ca125d`.
 Final pure-validator followup `b38508e` corrects terminal-duration activity capping
 and adds a float-boundary negative control. All 15 controls and frozen-raw replay
 pass; no additional native execution or gate promotion is claimed.
+
+## Current objective-guidance and account qualification
+
+New M1 source `3c4d921` prioritizes operational planted roles while preserving
+typed critical connection feedback. Independent source/flood review is positive;
+actual recorded native plant and living guidance pass, followed by genuine
+defuse. The complete gate still FAILS at unchanged12 s next-round wait under
+recording. A single same-source/no-recorder retry is running; no budget increase
+or state injection is authorized. The first real130.6 s MP4 and original failures
+are retained. Post-activity ten-account/backend qualification is prepared with a
+fresh live-DB critic and waits for the final source/exclusive lane. Neither is a
+whole G1/G3/G16 completion. See NEXT_SESSION for exact branches and outputs.
