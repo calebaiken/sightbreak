@@ -84,7 +84,7 @@ class IndependentControls(unittest.TestCase):
         with patch.object(LinuxFrameSampler, '_environment', replace):
             summary, rows = self.sample()
         self.assertEqual(summary['reason'], 'target_identity_changed')
-        self.assertFalse(summary['complete'])
+        self.assertFalse(summary['sampling_completed'])
         self.assertEqual([row['event'] for row in rows], ['end'])
 
     def test_identity_replaced_mid_sample_discards_entire_row(self):
@@ -104,7 +104,7 @@ class IndependentControls(unittest.TestCase):
         (self.target / 'cgroup').unlink()
         with patch('linux_frame_sampler.os.sched_getaffinity', side_effect=PermissionError(errno.EPERM, 'hidden-marker')):
             summary, rows = self.sample()
-        self.assertTrue(summary['complete'])
+        self.assertTrue(summary['sampling_completed'])
         row = next(row for row in rows if row['event'] == 'sample')
         self.assertEqual(row['process_cpu']['value'], dict(user_ticks=101, system_ticks=23, start_time_ticks=810))
         self.assertEqual(row['allowed_cpus']['errno'], errno.EPERM)
@@ -115,8 +115,8 @@ class IndependentControls(unittest.TestCase):
     def test_partial_cgroup_fields_and_privacy_are_retained_honestly(self):
         summary, rows = self.sample()
         row = next(row for row in rows if row['event'] == 'sample')
-        self.assertTrue(summary['complete'])
-        self.assertEqual(rows[0]['environment']['LIBGL_ALWAYS_SOFTWARE']['reason'], 'not_set')
+        self.assertTrue(summary['sampling_completed'])
+        self.assertEqual(rows[0]['environment']['value']['LIBGL_ALWAYS_SOFTWARE']['reason'], 'not_set')
         fields = row['cgroup_cpu']['value'][0]['cpu_stat']['value']
         self.assertIn('nr_throttled', fields['unavailable_fields'])
         self.assertNotIn('nr_throttled', fields['counters'])
@@ -132,7 +132,7 @@ class IndependentControls(unittest.TestCase):
             original(sampler, row)
         with patch.object(LinuxFrameSampler, '_write', fail_sample):
             summary, rows = self.sample()
-        self.assertFalse(summary['complete'])
+        self.assertFalse(summary['sampling_completed'])
         self.assertEqual(summary['reason'], 'sampling_error')
         self.assertEqual(summary['error']['errno'], errno.ENOSPC)
         self.assertEqual(rows[-1]['event'], 'end')
@@ -142,7 +142,7 @@ class IndependentControls(unittest.TestCase):
         self.state['frame_diagnostics']['process_frames'] = float('nan')
         self.observation.write_text(json.dumps(self.state))
         summary, rows = self.sample()
-        self.assertTrue(summary['complete'])
+        self.assertTrue(summary['sampling_completed'])
         row = next(row for row in rows if row['event'] == 'sample')
         self.assertTrue(row['process_cpu']['available'])
         self.assertFalse(row['offline_frame']['available'])

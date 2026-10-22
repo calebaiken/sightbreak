@@ -1,0 +1,26 @@
+{
+  "base": "9616f52723666e651ca8ae839420cf2b308e5c5a",
+  "candidate": "8afe0cc6b4c9051d3649a82bbcb4c8de8f947f9c",
+  "checks": {
+    "exact_source_paths": true,
+    "snapshot_addition_only": true,
+    "snapshot_lines": true,
+    "snapshot_contains_no_new_callback_or_file_io": true,
+    "controller_original_ast_unchanged": true,
+    "helper_no_process_network_or_native_imports": true,
+    "helper_no_scheduling_or_signal_calls": true,
+    "helper_process_only_numeric_owned_path": true,
+    "helper_whitelist_environment": true,
+    "helper_one_second_wait": true,
+    "helper_lifetime_guard": true,
+    "helper_fresh_output": true
+  },
+  "source_sha256": {
+    "game/scripts/offline_diagnostics.gd": "f3c08ac3cdfd7acca59662caebf579812573fcb6267306aa916522bcba24217c",
+    "scripts/linux_frame_sampler.py": "9fa5d7134e66031872cef7463bc730f17756a696165a31e6fd55da30a48a553b",
+    "scripts/test_linux_frame_sampler.py": "9d5e6898480b96e3704e109da0db721bb40f9e6953a3bdea1c1b06d78b0d6bfb",
+    "scripts/verify_offline_match.py": "dd4558ebd1bbdeea94f2261613aac347b7ac1c80c41df73d69eb885f7ea66688"
+  },
+  "original_budget_proof": "Original controller AST is identical after removing only new opt-in statements.",
+  "passed": true
+}

@@ -1,0 +1,22 @@
+test_identity_replaced_during_environment_discards_begin (__main__.IndependentControls.test_identity_replaced_during_environment_discards_begin) ... ok
+test_identity_replaced_mid_sample_discards_entire_row (__main__.IndependentControls.test_identity_replaced_mid_sample_discards_entire_row) ... ok
+test_nonfinite_observation_is_unavailable_and_does_not_stop_cpu (__main__.IndependentControls.test_nonfinite_observation_is_unavailable_and_does_not_stop_cpu) ... ok
+test_partial_cgroup_fields_and_privacy_are_retained_honestly (__main__.IndependentControls.test_partial_cgroup_fields_and_privacy_are_retained_honestly) ... ERROR
+test_read_bound_is_exact_and_excess_is_not_echoed (__main__.IndependentControls.test_read_bound_is_exact_and_excess_is_not_echoed) ... ok
+test_real_cadence_and_early_stop (__main__.IndependentControls.test_real_cadence_and_early_stop) ... ok
+test_sample_write_failure_does_not_claim_complete (__main__.IndependentControls.test_sample_write_failure_does_not_claim_complete) ... ok
+test_unavailable_counters_preserve_process_and_explicit_reasons (__main__.IndependentControls.test_unavailable_counters_preserve_process_and_explicit_reasons) ... ok
+
+======================================================================
+ERROR: test_partial_cgroup_fields_and_privacy_are_retained_honestly (__main__.IndependentControls.test_partial_cgroup_fields_and_privacy_are_retained_honestly)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/linux-frame-sampling-critic/docs/reports/gauntlet/m1-linux-frame-sampling/independent-review/controls.py", line 119, in test_partial_cgroup_fields_and_privacy_are_retained_honestly
+    self.assertEqual(rows[0]['environment']['LIBGL_ALWAYS_SOFTWARE']['reason'], 'not_set')
+                     ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyError: 'LIBGL_ALWAYS_SOFTWARE'
+
+----------------------------------------------------------------------
+Ran 8 tests in 1.170s
+
+FAILED (errors=1)
