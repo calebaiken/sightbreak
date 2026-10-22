@@ -1,0 +1,246 @@
+{
+  "comparison_base": "ecc2690dc783a3243291f8ac3438d44fe0151117",
+  "original_suites": [
+    "actor",
+    "match",
+    "authority_order",
+    "state_privacy",
+    "movement_prediction",
+    "peer_lifecycle",
+    "input_mode",
+    "menu_focus",
+    "offline_diagnostics",
+    "hud_objective_hint",
+    "activity_provenance",
+    "bot_squad_symmetry"
+  ],
+  "candidate_suites": [
+    "actor",
+    "match",
+    "authority_order",
+    "state_privacy",
+    "movement_prediction",
+    "peer_lifecycle",
+    "input_mode",
+    "menu_focus",
+    "offline_diagnostics",
+    "hud_objective_hint",
+    "activity_provenance",
+    "bot_squad_symmetry",
+    "transaction_journal",
+    "gunplay_rules"
+  ],
+  "command_records": [
+    {
+      "suite": "actor",
+      "arguments": [
+        "--headless",
+        "--script",
+        "res://tests/actor_test.gd"
+      ],
+      "timeout": 120,
+      "failure": null,
+      "results_and_userdata_retained": true
+    },
+    {
+      "suite": "match",
+      "arguments": [
+        "--headless",
+        "--script",
+        "res://tests/match_test.gd"
+      ],
+      "timeout": 120,
+      "failure": null,
+      "results_and_userdata_retained": true
+    },
+    {
+      "suite": "authority_order",
+      "arguments": [
+        "--headless",
+        "--script",
+        "res://tests/authority_order_test.gd"
+      ],
+      "timeout": 120,
+      "failure": null,
+      "results_and_userdata_retained": true
+    },
+    {
+      "suite": "state_privacy",
+      "arguments": [
+        "--headless",
+        "--script",
+        "res://tests/state_privacy_test.gd"
+      ],
+      "timeout": 120,
+      "failure": null,
+      "results_and_userdata_retained": true
+    },
+    {
+      "suite": "movement_prediction",
+      "arguments": [
+        "--headless",
+        "--script",
+        "res://tests/movement_prediction_test.gd"
+      ],
+      "timeout": 120,
+      "failure": null,
+      "results_and_userdata_retained": true
+    },
+    {
+      "suite": "peer_lifecycle",
+      "arguments": [
+        "--headless",
+        "--script",
+        "res://tests/peer_lifecycle_test.gd"
+      ],
+      "timeout": 120,
+      "failure": null,
+      "results_and_userdata_retained": true
+    },
+    {
+      "suite": "input_mode",
+      "arguments": [
+        "--headless",
+        "--script",
+        "res://tests/input_mode_test.gd"
+      ],
+      "timeout": 120,
+      "failure": null,
+      "results_and_userdata_retained": true
+    },
+    {
+      "suite": "menu_focus",
+      "arguments": [
+        "--headless",
+        "--script",
+        "res://tests/menu_focus_test.gd"
+      ],
+      "timeout": 120,
+      "failure": null,
+      "results_and_userdata_retained": true
+    },
+    {
+      "suite": "offline_diagnostics",
+      "arguments": [
+        "--headless",
+        "--script",
+        "res://tests/offline_diagnostics_test.gd"
+      ],
+      "timeout": 120,
+      "failure": null,
+      "results_and_userdata_retained": true
+    },
+    {
+      "suite": "hud_objective_hint",
+      "arguments": [
+        "--headless",
+        "--script",
+        "res://tests/hud_objective_hint_test.gd"
+      ],
+      "timeout": 120,
+      "failure": null,
+      "results_and_userdata_retained": true
+    },
+    {
+      "suite": "activity_provenance",
+      "arguments": [
+        "--headless",
+        "--script",
+        "res://tests/activity_provenance_test.gd"
+      ],
+      "timeout": 120,
+      "failure": null,
+      "results_and_userdata_retained": true
+    },
+    {
+      "suite": "bot_squad_symmetry",
+      "arguments": [
+        "--headless",
+        "--script",
+        "res://tests/bot_squad_symmetry_test.gd"
+      ],
+      "timeout": 120,
+      "failure": null,
+      "results_and_userdata_retained": true
+    },
+    {
+      "suite": "transaction_journal",
+      "arguments": [
+        "--headless",
+        "--script",
+        "res://tests/transaction_journal_test.gd"
+      ],
+      "timeout": 120,
+      "failure": null,
+      "results_and_userdata_retained": true
+    },
+    {
+      "suite": "gunplay_rules",
+      "arguments": [
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "res://tests/gunplay_rules_probe.gd"
+      ],
+      "timeout": 120,
+      "failure": null,
+      "results_and_userdata_retained": true
+    }
+  ],
+  "cli": {
+    "default": [
+      "actor",
+      "match",
+      "authority_order",
+      "state_privacy",
+      "movement_prediction",
+      "peer_lifecycle",
+      "input_mode",
+      "menu_focus",
+      "offline_diagnostics",
+      "hud_objective_hint",
+      "activity_provenance",
+      "bot_squad_symmetry",
+      "transaction_journal",
+      "gunplay_rules"
+    ],
+    "explicit": [
+      "gunplay_rules",
+      "transaction_journal"
+    ]
+  },
+  "unknown_identifiers_rejected_before_configuration": 5,
+  "negative_retention_controls": [
+    {
+      "suite": "transaction_journal",
+      "arguments": [
+        "--headless",
+        "--script",
+        "res://tests/transaction_journal_test.gd"
+      ],
+      "timeout": 120,
+      "failure": "transaction_journal failed; raw output retained",
+      "results_and_userdata_retained": true
+    },
+    {
+      "suite": "gunplay_rules",
+      "arguments": [
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "res://tests/gunplay_rules_probe.gd"
+      ],
+      "timeout": 120,
+      "failure": "gunplay_rules failed; raw output retained",
+      "results_and_userdata_retained": true
+    },
+    {
+      "suite": "gunplay_rules",
+      "stale_rejected_before_execute": true
+    }
+  ],
+  "all_other_runner_methods_ast_identical": true,
+  "native_and_server_entrypoints_launched": 0
+}

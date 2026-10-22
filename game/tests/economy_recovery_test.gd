@@ -13,7 +13,7 @@ class RecoveryAPI extends EconomyAPI:
 			if fail_next:
 				fail_next = false
 				return {"_error": "Simulated lost response after commit", "_uncertain": true}
-			return {"item": {"id": "already-committed-instance"}}
+			return {"item": {"id": "already-committed-instance"}, "credits": 0}
 		match path:
 			"/me": return {"credits": 0}
 			"/inventory": return {"items": [{"id": "already-committed-instance"}]}
@@ -32,6 +32,7 @@ func check(value: bool, message: String) -> void:
 
 func run() -> void:
 	var ui := UI.new()
+	ui.transaction_journal.path = "user://economy_recovery_test_%d.json" % OS.get_process_id()
 	root.add_child(ui)
 	await process_frame
 	ui.api.free()

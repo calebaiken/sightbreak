@@ -1,0 +1,84 @@
+{
+  "source": "b09cfe1b661ec153f2bd57d45e695cc70e9717b0",
+  "reviewed": "12602178d11ae9e16785c828d0baab0a7bd64aa5",
+  "files": [
+    {
+      "path": "scripts/macos_native_input.py",
+      "bytes": 16651,
+      "sha256": "8b731187b1db49f945d39565545e669af7e8dce7c8e77e9b4c674c2ef6224b5e",
+      "matches_reviewed_bytes": true,
+      "matches_recorded_hash": true
+    },
+    {
+      "path": "scripts/verify_macos_menu.py",
+      "bytes": 18146,
+      "sha256": "022b0aa64af2bf6c9cf8b5f6121db7206434119b62b5fde4109ab69a268236bf",
+      "matches_reviewed_bytes": true,
+      "matches_recorded_hash": true
+    },
+    {
+      "path": "scripts/test_macos_focus.py",
+      "bytes": 7237,
+      "sha256": "45d19c668f13105c0c33eb2e61d1935885748e0ecdbb93a1e059d9c35d17124b",
+      "matches_reviewed_bytes": true,
+      "matches_recorded_hash": true
+    },
+    {
+      "path": "scripts/test_macos_menu.py",
+      "bytes": 9812,
+      "sha256": "ead2717a10cef14d1f0681f2bc1b14a86e5f1b7be371c0e536979cb364ed85fe",
+      "matches_reviewed_bytes": true,
+      "matches_recorded_hash": true
+    },
+    {
+      "path": "scripts/probe_macos_input.py",
+      "bytes": 16175,
+      "sha256": "6b675b7fa98448ee33ab77d24af201293bc0dac3ed14733eb26165cba7c1d134",
+      "matches_reviewed_bytes": true,
+      "matches_recorded_hash": true
+    },
+    {
+      "path": "scripts/macos_window_capture.swift",
+      "bytes": 7749,
+      "sha256": "af6576bbda2deac290a418cdbf0fef8894376372e934d617ee2bc1bdecb524b9",
+      "matches_reviewed_bytes": true,
+      "matches_recorded_hash": true
+    },
+    {
+      "path": ".github/workflows/desktop-alpha.yml",
+      "bytes": 16182,
+      "sha256": "02e22491c670b9e72fab48e073764e6d91df21064c06d2a7ea39220e43080a31",
+      "matches_reviewed_bytes": true,
+      "matches_recorded_hash": true
+    },
+    {
+      "path": "scripts/build_manifest.py",
+      "bytes": 11707,
+      "sha256": "64482563194b3a0bcbc766fa7bedbb064f055e2bba34f82bb743f221aa6f0560",
+      "matches_reviewed_bytes": true
+    },
+    {
+      "path": "scripts/toolchain.py",
+      "bytes": 8024,
+      "sha256": "69245ee9ee8772ea1e77eab18983f40979cf6fd6087f5114e15375127de16733",
+      "matches_reviewed_bytes": true
+    },
+    {
+      "path": "scripts/native_log.py",
+      "bytes": 220,
+      "sha256": "a037692315df8364843efbd9f29d5b425302f10a3a7cf347d663169f3eb0e7a1",
+      "matches_reviewed_bytes": true
+    }
+  ],
+  "implementation_matches_review": true,
+  "changed_source_paths": [
+    "game/scripts/gameplay/match.gd",
+    "game/scripts/main.gd",
+    "game/tests/hud_objective_hint_test.gd",
+    "scripts/test_offline_role_guidance.py",
+    "scripts/validate.sh",
+    "scripts/verify_offline_match.py"
+  ],
+  "independent_source_critic": "/root/mac_native_menu_outcome_critic/source_identity_audit",
+  "source_critic_limit": "Background capture is capture-only; exact focus deadline and fresh native guards remain required; new run cannot establish prior failure cause."
+}

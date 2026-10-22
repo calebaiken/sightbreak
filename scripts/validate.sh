@@ -15,14 +15,17 @@ run_godot actor --headless --script res://tests/actor_test.gd
 run_godot world --headless --script res://tests/world_test.gd
 run_godot hit-feedback --headless --script res://tests/hit_feedback_test.gd
 run_godot weapon-integrity --headless --script res://tests/weapon_integrity_test.gd
+run_godot gunplay-rules --headless --audio-driver Dummy --script res://tests/gunplay_rules_probe.gd
 run_godot hit-volume --headless --script res://tests/hit_volume_test.gd
 run_godot hit-history --headless --script res://tests/hit_history_test.gd
 run_godot render-budget --headless --script res://tests/render_budget_test.gd
 run_godot smoke-presentation --headless --script res://tests/smoke_presentation_test.gd
 run_godot match --headless --script res://tests/match_test.gd
+run_godot authority-order --headless --script res://tests/authority_order_test.gd
 run_godot state-privacy --headless --script res://tests/state_privacy_test.gd
 run_godot snapshot-buffer --headless --script res://tests/snapshot_buffer_test.gd
 run_godot input-stream --headless --script res://tests/input_stream_test.gd
+run_godot activity-provenance --headless --script res://tests/activity_provenance_test.gd
 run_godot movement-replay --headless --script res://tests/movement_prediction_test.gd
 run_godot input-lifecycle --headless --script res://tests/input_lifecycle_test.gd
 run_godot peer-lifecycle --headless --script res://tests/peer_lifecycle_test.gd
@@ -35,12 +38,14 @@ run_godot lost-welcome --headless --script res://tests/lost_welcome_test.gd
 run_godot resume-alias --headless --script res://tests/independent_resume_alias_test.gd
 run_godot resume-auth-loss --headless --script res://tests/resume_auth_loss_test.gd
 run_godot bot-ai-regression --headless --script res://tests/bot_ai_regression_test.gd
+run_godot bot-squad-symmetry --headless --script res://tests/bot_squad_symmetry_test.gd
 run_godot bots --headless --script res://tests/bot_match_test.gd
 run_godot bot-lifecycle --headless --script res://tests/bot_lifecycle_test.gd
 SIGHTBREAK_STATE_DIR="$validation_dir/profile-state" run_godot profile --headless --script res://tests/profile_test.gd
 run_godot touch --headless --script res://tests/touch_test.gd
 run_godot main --headless --script res://tests/main_test.gd
 SIGHTBREAK_STATE_DIR="$validation_dir/input-mode-state" run_godot input-mode --headless --script res://tests/input_mode_test.gd
+SIGHTBREAK_STATE_DIR="$validation_dir/menu-focus-state" run_godot menu-focus --headless --script res://tests/menu_focus_test.gd
 SIGHTBREAK_STATE_DIR="$validation_dir/offline-diagnostics-state" run_godot offline-diagnostics --headless --script res://tests/offline_diagnostics_test.gd
 SIGHTBREAK_STATE_DIR="$validation_dir/objective-hud-state" run_godot objective-hud --headless --script res://tests/hud_objective_hint_test.gd
 run_godot landscape --headless --script res://tests/landscape_ui_test.gd
@@ -51,10 +56,13 @@ run_godot armory-ui --headless --script res://tests/armory_ui_test.gd
 run_godot armory-state --headless --script res://tests/armory_state_test.gd
 run_godot menu-state --headless --script res://tests/menu_state_test.gd
 run_godot economy-recovery --headless --script res://tests/economy_recovery_test.gd
+SIGHTBREAK_STATE_DIR="$validation_dir/transaction-journal-state" run_godot transaction-journal --headless --script res://tests/transaction_journal_test.gd
+python3 scripts/test_transaction_restart_oracle.py
 run_godot cosmetics --headless --script res://tests/cosmetic_presentation_test.gd
 run_godot weapon-art --headless --script res://tests/weapon_art_test.gd
 run_godot integration-actor-lifecycle --headless --script res://tests/integration_actor_lifecycle_test.gd
 python3 scripts/test_account_network_output.py
+python3 scripts/test_account_match_output.py
 run_godot reload-sequence --headless --script res://tests/reload_sequence_test.gd
 run_godot reload-audio --headless --script res://tests/reload_audio_test.gd
 # The real mix of a real-time reload through an AudioEffectCapture on the Dummy driver (it mixes in real time, no speaker).
@@ -99,4 +107,7 @@ if [[ "${1:-}" == --backend ]]; then
 fi
 python3 scripts/test_build_manifest.py
 python3 scripts/test_native_observation.py -v
+python3 scripts/test_offline_role_guidance.py -v
+python3 scripts/test_offline_export_ocr.py -v
+python3 scripts/test_offline_capture_fences.py -v
 printf 'Validation completed. Logs: %s\n' "$validation_dir"

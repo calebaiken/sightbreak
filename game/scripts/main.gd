@@ -56,6 +56,9 @@ var funds_label: Label
 var health_label: Label
 var health_bar: ProgressBar
 var action_label: Label
+var hud_action_margin: MarginContainer
+var hud_controls: Label
+var hud_touch_mode := -1
 var crosshair: Control
 var radar: Control
 var attack_pips: Control
@@ -162,10 +165,21 @@ func uses_touch_controls() -> bool:
 	return bool(input_capabilities().mobile) or bool(profile.data.settings.touch_visible)
 
 func update_pointer_mode() -> void:
+	sync_hud_input_mode()
 	var capture := application_focused and screen == "game" and not paused and not uses_touch_controls()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if capture else Input.MOUSE_MODE_VISIBLE
 	if is_instance_valid(touch) and not touch.editing:
 		touch.enabled = uses_touch_controls() and not paused and application_focused
+
+## Selected mode also controls the HUD while a menu temporarily disables touch.
+## Preserve the current HUD, overlay, feed and saved touch layout on a mode change.
+func sync_hud_input_mode() -> void:
+	if not is_instance_valid(hud_action_margin) or not is_instance_valid(hud_controls): return
+	var touch_mode := uses_touch_controls()
+	if hud_touch_mode == int(touch_mode): return
+	hud_touch_mode = int(touch_mode)
+	hud_action_margin.add_theme_constant_override("margin_right", 80 if touch_mode else 0)
+	hud_controls.visible = not touch_mode
 
 func connected_controllers() -> Array[int]:
 	return Input.get_connected_joypads()
@@ -229,6 +243,9 @@ func clear_ui() -> void:
 	status_label = null
 	status_row = null
 	status_fit_key = []
+	hud_action_margin = null
+	hud_controls = null
+	hud_touch_mode = -1
 	overlay = null
 	touch = null
 	crosshair = null
@@ -928,14 +945,13 @@ func build_hud() -> void:
 	side.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	side.custom_minimum_size.x = 240
 	top.add_child(side)
-	var action_margin := MarginContainer.new()
-	action_margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	action_margin.add_theme_constant_override("margin_right", 80 if uses_touch_controls() else 0)
-	side.add_child(action_margin)
+	hud_action_margin = MarginContainer.new()
+	hud_action_margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	side.add_child(hud_action_margin)
 	var side_stack := VBoxContainer.new()
 	side_stack.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	side_stack.add_theme_constant_override("separation", Design.SPACE_S)
-	action_margin.add_child(side_stack)
+	hud_action_margin.add_child(side_stack)
 	action_label = wrapped_label("", Design.TYPE_BODY, GOLD)
 	action_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	side_stack.add_child(action_label)
@@ -961,6 +977,7 @@ func build_hud() -> void:
 	kill_feed.add_theme_constant_override("separation", KILL_FEED_GAP)
 	kill_feed.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	kill_feed_frame.add_child(kill_feed)
+	kill_feed_frame.resized.connect(_refit_kill_feed_rows)
 	var space := Control.new()
 	space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	space.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -1021,11 +1038,10 @@ func build_hud() -> void:
 	health_bar.value = 100
 	health_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	vitals.add_child(health_bar)
-	var controls := wrapped_label("BUY  EQUIP     USE  OBJECTIVE     TEAM  ROSTER     II  MENU" if uses_touch_controls() else "B  BUY     E  OBJECTIVE     TAB  ROSTER     ESC  MENU", Design.TYPE_MICRO + 1, MUTED)
-	controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	controls.visible = not uses_touch_controls()
-	controls.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
-	bottom.add_child(controls)
+	hud_controls = wrapped_label("B  BUY     E  OBJECTIVE     TAB  ROSTER     ESC  MENU", Design.TYPE_MICRO + 1, MUTED)
+	hud_controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hud_controls.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+	bottom.add_child(hud_controls)
 	var loadout := _hud_block(HORIZONTAL_ALIGNMENT_RIGHT)
 	bottom.add_child(loadout)
 	ammo_label = wrapped_label("12 / 36", 22)
@@ -1054,6 +1070,7 @@ func build_hud() -> void:
 	touch.scoreboard_pressed.connect(func(): touch_score_until = elapsed + 4.0)
 	touch.layout_changed.connect(func(layout: Dictionary): profile.data.settings.hud_positions = layout; profile.save())
 	ui.add_child(touch)
+	sync_hud_input_mode()
 
 ## Reticle gap follows the actual authoritative spread cone of the next shot.
 func crosshair_gap(actor) -> float:
@@ -1107,14 +1124,40 @@ func add_kill_feed(killer_id: int, victim_id: int, headshot: bool) -> void:
 	names.append(_kill_feed_name(victim))
 	row.add_child(names[-1])
 	entry.set_meta("born", elapsed)
+	entry.set_meta("headshot", headshot)
 	kill_feed.add_child(entry)
+	_fit_kill_feed_row(entry)
+	while kill_feed.get_child_count() > KILL_FEED_ROWS:
+		var oldest := kill_feed.get_child(0)
+		kill_feed.remove_child(oldest)
+		oldest.queue_free()
+	_fit_kill_feed_frame()
+
+## Mode changes resize the frame without replacing existing rows. Always fit
+## from the stored names so widening can recover text that now fits again.
+func _refit_kill_feed_rows() -> void:
+	if not is_instance_valid(kill_feed): return
+	for entry: PanelContainer in kill_feed.get_children():
+		if not entry.is_queued_for_deletion(): _fit_kill_feed_row(entry)
+	_fit_kill_feed_frame()
+
+func _fit_kill_feed_row(entry: PanelContainer) -> void:
+	var row: HBoxContainer = entry.get_child(0)
+	var names: Array[Label] = []
+	var marker: Label
+	for child: Label in row.get_children():
+		if child.has_meta("full_name"): names.append(child)
+		else: marker = child
+	var headshot := bool(entry.get_meta("headshot", false))
+	marker.text = "HEADSHOT" if headshot else "›"
+	var style := entry.get_theme_stylebox("panel")
 	# Fit the row to the frame: names keep their natural width when they fit and
 	# otherwise share the remaining space, ending in an ellipsis. When space is
 	# tight the headshot marker shortens to "HS" before any name is cut.
 	var frame_width := kill_feed_frame.size.x if kill_feed_frame.size.x > 1.0 else 220.0
 	var widths: Array[float] = []
 	for name_label in names:
-		widths.append(_text_width(name_label, name_label.text) + 1.0)
+		widths.append(_text_width(name_label, str(name_label.get_meta("full_name"))) + 1.0)
 	var fixed := KILL_FEED_SEPARATION * names.size() + style.get_minimum_size().x + 2.0
 	if headshot and widths.reduce(func(total, width): return total + width, 0.0) + _text_width(marker, marker.text) + fixed > frame_width:
 		marker.text = "HS"
@@ -1127,14 +1170,9 @@ func add_kill_feed(killer_id: int, victim_id: int, headshot: bool) -> void:
 	elif names.size() == 1:
 		widths[0] = minf(widths[0], budget)
 	for index in range(names.size()):
-		var fitted := _fit_text(names[index], names[index].text, maxf(24.0, floorf(widths[index])))
+		var fitted := _fit_text(names[index], str(names[index].get_meta("full_name")), maxf(24.0, floorf(widths[index])))
 		names[index].text = fitted
 		names[index].custom_minimum_size.x = ceilf(_text_width(names[index], fitted))
-	while kill_feed.get_child_count() > KILL_FEED_ROWS:
-		var oldest := kill_feed.get_child(0)
-		kill_feed.remove_child(oldest)
-		oldest.queue_free()
-	_fit_kill_feed_frame()
 
 ## A row is as tall as the tallest face its text is shaped with. A name in a script
 ## the default font lacks is drawn in a system fallback face whose line height is
@@ -1339,6 +1377,7 @@ func _process(delta: float) -> void:
 			print("SIGHTBREAK_DEMO_CAPTURED")
 			get_tree().quit(0)
 	if screen != "game" or not is_instance_valid(match_game) or not is_instance_valid(score_label): return
+	sync_hud_input_mode()
 	var actor = match_game.local_actor()
 	score_label.text = "%02d  :  %02d" % [match_game.attack_score, match_game.defend_score]
 	var seconds := int(ceil(match_game.time_left))
@@ -1354,7 +1393,12 @@ func _process(delta: float) -> void:
 			pair[0].queue_redraw()
 	action_label.text = "DEVICE  %02d s" % int(match_game.objective_timer) if match_game.objective_state == "planted" else "DEVICE  /  " + str(match_game.objective_state).to_upper()
 	if match_game.objective_state == "dropped": action_label.text = "DEVICE DROPPED  /  RECOVER"
-	if match_game.phase == "waiting":
+	# Connection callbacks retain their typed reason separately from combat notices.
+	var connection_blocked: bool = match_game.connection_state not in ["offline", "hosting", "connected"]
+	var critical_notice: String = match_game.connection_notice if connection_blocked else ""
+	if not critical_notice.is_empty():
+		status_label.text = critical_notice
+	elif match_game.phase == "waiting":
 		var humans := 0
 		for row in match_game.scoreboard():
 			if not row.get("bot", true): humans += 1
@@ -1388,7 +1432,13 @@ func _process(delta: float) -> void:
 		funds_label.text = "%d  ·  FUNDS" % actor.credits
 		utility_label.text = "FRAG ×%d    SMOKE ×%d" % [actor.grenades, actor.smokes]
 		if touch != null: touch.counts = {"grenade": actor.grenades, "smoke": actor.smokes}
-		if match_game.phase == "buy": status_label.text = "BUY PHASE   /   %s TO EQUIP" % ("TAP BUY" if uses_touch_controls() else "PRESS B")
+		if connection_blocked:
+			pass # Never replace a current connection/recovery reason with a tactical hint.
+		elif match_game.phase == "buy": status_label.text = "BUY PHASE   /   %s TO EQUIP" % ("TAP BUY" if uses_touch_controls() else "PRESS B")
+		elif match_game.phase == "live" and match_game.objective_state == "planted":
+			# The armed device creates an urgent role. Combat already has its own feed;
+			# successive notices cannot postpone this guidance until after the player dies.
+			status_label.text = objective_hint(actor)
 		elif match_game.phase != "waiting" and elapsed > float(status_label.get_meta("until", 0.0)):
 			status_label.text = objective_hint(actor)
 		_fit_status_line()
@@ -1564,10 +1614,12 @@ func toggle_pause() -> void:
 	var rows := make_overlay("FIELD MENU")
 	set_match_suspended(true)
 	rows.add_child(label("Training is paused." if match_suspended else "The match continues while this menu is open.", Design.TYPE_BODY, MUTED))
-	rows.add_child(button("RESUME", close_overlay, Design.TOUCH_MIN, "primary"))
+	var resume := button("RESUME", close_overlay, Design.TOUCH_MIN, "primary")
+	rows.add_child(resume)
 	rows.add_child(button("SETTINGS", show_match_settings))
 	rows.add_child(button("EDIT TOUCH HUD", open_touch_editor))
 	rows.add_child(button("LEAVE MATCH", leave_match, Design.TOUCH_MIN, "ghost"))
+	resume.grab_focus()
 
 func show_match_settings() -> void:
 	var rows := make_overlay("FIELD SETTINGS")

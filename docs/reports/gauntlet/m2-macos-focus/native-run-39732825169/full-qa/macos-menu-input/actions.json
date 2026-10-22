@@ -1,0 +1,453 @@
+[
+  {
+    "event": "helper_command",
+    "seconds": 0.4777077090000148,
+    "name": "compile-capture-helper",
+    "command": [
+      "xcrun",
+      "swiftc",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-target",
+      "arm64-apple-macos14.0",
+      "/Users/runner/work/sightbreak/sightbreak/scripts/macos_window_capture.swift",
+      "-framework",
+      "AppKit",
+      "-framework",
+      "CoreGraphics",
+      "-framework",
+      "ScreenCaptureKit",
+      "-framework",
+      "Vision",
+      "-framework",
+      "ImageIO",
+      "-framework",
+      "UniformTypeIdentifiers",
+      "-o",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-menu-input/macos-window-capture"
+    ]
+  },
+  {
+    "event": "client_window_selected",
+    "seconds": 16.64481679200003,
+    "client_pid": 4062,
+    "window": {
+      "window_id": 45,
+      "owner_pid": 4062,
+      "bounds_points_including_chrome": [
+        40.0,
+        32.0,
+        960.0,
+        568.0
+      ],
+      "onscreen": true
+    }
+  },
+  {
+    "event": "observer_before_background_capture",
+    "seconds": 16.663718500000016,
+    "native_state": {
+      "foreground_pid": 344,
+      "controller_pid": 3656,
+      "target_pid": 4062,
+      "foreground_is_controller": false,
+      "target_window": 45,
+      "pinned_bounds_points": [
+        40.0,
+        32.0,
+        960.0,
+        568.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": false,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    }
+  },
+  {
+    "event": "helper_command",
+    "seconds": 16.672739708999984,
+    "name": "00-background-window",
+    "command": [
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-menu-input/macos-window-capture",
+      "--pid",
+      "4062",
+      "--window",
+      "45",
+      "--png",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-menu-input/00-background-window.png",
+      "--report",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-menu-input/00-background-window.json"
+    ]
+  },
+  {
+    "event": "background_capture_observed",
+    "seconds": 19.950898875000007,
+    "screen": null,
+    "capture": "00-background-window",
+    "foreground_required": false,
+    "native_state": {
+      "foreground_pid": 344,
+      "controller_pid": 3656,
+      "target_pid": 4062,
+      "foreground_is_controller": false,
+      "target_window": 45,
+      "pinned_bounds_points": [
+        40.0,
+        32.0,
+        960.0,
+        568.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": true,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    }
+  },
+  {
+    "event": "focus_before_request",
+    "seconds": 19.952688792000004,
+    "focus_budget_seconds": 5,
+    "native_state": {
+      "foreground_pid": 344,
+      "controller_pid": 3656,
+      "target_pid": 4062,
+      "foreground_is_controller": false,
+      "target_window": 45,
+      "pinned_bounds_points": [
+        40.0,
+        32.0,
+        960.0,
+        568.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": true,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    }
+  },
+  {
+    "event": "focus_request_returned",
+    "seconds": 20.006958542000007,
+    "api": "NSRunningApplication.activateWithOptions:",
+    "activation_options": 3,
+    "request_accepted": true,
+    "native_state": {
+      "foreground_pid": 344,
+      "controller_pid": 3656,
+      "target_pid": 4062,
+      "foreground_is_controller": false,
+      "target_window": 45,
+      "pinned_bounds_points": [
+        40.0,
+        32.0,
+        960.0,
+        568.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": true,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    }
+  },
+  {
+    "event": "focus_sample",
+    "seconds": 20.213231834,
+    "focus_seconds": 0.2611589999999637,
+    "before_run_loop": {
+      "foreground_pid": 344,
+      "controller_pid": 3656,
+      "target_pid": 4062,
+      "foreground_is_controller": false,
+      "target_window": 45,
+      "pinned_bounds_points": [
+        40.0,
+        32.0,
+        960.0,
+        568.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": true,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    },
+    "run_loop": {
+      "api": "CFRunLoopRunInMode",
+      "mode": "kCFRunLoopDefaultMode",
+      "requested_seconds": 0.05,
+      "elapsed_seconds": 0.19863641599999937,
+      "return_code": 3,
+      "controller_main_run_loop": true
+    },
+    "after_run_loop": {
+      "foreground_pid": 4062,
+      "controller_pid": 3656,
+      "target_pid": 4062,
+      "foreground_is_controller": false,
+      "target_window": 45,
+      "pinned_bounds_points": [
+        40.0,
+        32.0,
+        960.0,
+        568.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": true,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    }
+  },
+  {
+    "event": "focus_observed",
+    "seconds": 20.24278025000001,
+    "request_accepted": true,
+    "native_state": {
+      "foreground_pid": 4062,
+      "target_pid": 4062,
+      "lmb_down": false,
+      "escape_down": false,
+      "pointer_points": [
+        10.0,
+        10.0
+      ],
+      "held_by_driver": [],
+      "state_source": "NSWorkspace/CGEventSource combined-session state/CGEventGetLocation"
+    }
+  },
+  {
+    "event": "helper_command",
+    "seconds": 20.26664249999999,
+    "name": "01-menu-0",
+    "command": [
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-menu-input/macos-window-capture",
+      "--pid",
+      "4062",
+      "--window",
+      "45",
+      "--png",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-menu-input/01-menu-0.png",
+      "--report",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-menu-input/01-menu-0.json"
+    ]
+  },
+  {
+    "event": "screen_confirmed",
+    "seconds": 22.933003541999994,
+    "screen": "menu",
+    "capture": "01-menu-0",
+    "foreground_required": true,
+    "native_state": {
+      "foreground_pid": 4062,
+      "target_pid": 4062,
+      "lmb_down": false,
+      "escape_down": false,
+      "pointer_points": [
+        10.0,
+        10.0
+      ],
+      "held_by_driver": [],
+      "state_source": "NSWorkspace/CGEventSource combined-session state/CGEventGetLocation"
+    }
+  },
+  {
+    "event": "cg_event_post_attempt",
+    "seconds": 22.949917667000022,
+    "event_kind": "pointer_move",
+    "attempt": 1,
+    "held_by_driver": []
+  },
+  {
+    "event": "settings_pointer_observed",
+    "seconds": 23.223812375000023,
+    "target_points": [
+      307.9310337342623,
+      478.13818193180816
+    ],
+    "actual_pointer_points": [
+      307.9310302734375,
+      478.13818359375
+    ]
+  },
+  {
+    "event": "cg_event_post_attempt",
+    "seconds": 23.23636504199999,
+    "event_kind": "lmb_down",
+    "attempt": 2,
+    "held_by_driver": [
+      "lmb"
+    ]
+  },
+  {
+    "event": "native_control_observed",
+    "seconds": 23.242063959000006,
+    "control": "lmb",
+    "down": true,
+    "native_state": {
+      "foreground_pid": 4062,
+      "target_pid": 4062,
+      "lmb_down": true,
+      "escape_down": false,
+      "pointer_points": [
+        307.9310302734375,
+        478.13818359375
+      ],
+      "held_by_driver": [
+        "lmb"
+      ],
+      "state_source": "NSWorkspace/CGEventSource combined-session state/CGEventGetLocation"
+    }
+  },
+  {
+    "event": "cg_event_post_attempt",
+    "seconds": 23.46164383400003,
+    "event_kind": "lmb_up",
+    "attempt": 3,
+    "held_by_driver": [
+      "lmb"
+    ]
+  },
+  {
+    "event": "native_control_observed",
+    "seconds": 23.546381250000024,
+    "control": "lmb",
+    "down": false,
+    "native_state": {
+      "foreground_pid": 4062,
+      "target_pid": 4062,
+      "lmb_down": false,
+      "escape_down": false,
+      "pointer_points": [
+        307.9310302734375,
+        478.13818359375
+      ],
+      "held_by_driver": [],
+      "state_source": "NSWorkspace/CGEventSource combined-session state/CGEventGetLocation"
+    }
+  },
+  {
+    "event": "helper_command",
+    "seconds": 23.994757417000017,
+    "name": "02-field-settings",
+    "command": [
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-menu-input/macos-window-capture",
+      "--pid",
+      "4062",
+      "--window",
+      "45",
+      "--png",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-menu-input/02-field-settings.png",
+      "--report",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-menu-input/02-field-settings.json"
+    ]
+  },
+  {
+    "event": "screen_confirmed",
+    "seconds": 26.00342920899999,
+    "screen": "settings",
+    "capture": "02-field-settings",
+    "foreground_required": true,
+    "native_state": {
+      "foreground_pid": 4062,
+      "target_pid": 4062,
+      "lmb_down": false,
+      "escape_down": false,
+      "pointer_points": [
+        307.9310302734375,
+        478.13818359375
+      ],
+      "held_by_driver": [],
+      "state_source": "NSWorkspace/CGEventSource combined-session state/CGEventGetLocation"
+    }
+  },
+  {
+    "event": "cg_event_post_attempt",
+    "seconds": 26.037463542000012,
+    "event_kind": "escape_down",
+    "attempt": 4,
+    "held_by_driver": [
+      "escape"
+    ]
+  },
+  {
+    "event": "native_control_observed",
+    "seconds": 26.04233737499999,
+    "control": "escape",
+    "down": true,
+    "native_state": {
+      "foreground_pid": 4062,
+      "target_pid": 4062,
+      "lmb_down": false,
+      "escape_down": true,
+      "pointer_points": [
+        307.9310302734375,
+        478.13818359375
+      ],
+      "held_by_driver": [
+        "escape"
+      ],
+      "state_source": "NSWorkspace/CGEventSource combined-session state/CGEventGetLocation"
+    }
+  },
+  {
+    "event": "cg_event_post_attempt",
+    "seconds": 26.265888625000002,
+    "event_kind": "escape_up",
+    "attempt": 5,
+    "held_by_driver": [
+      "escape"
+    ]
+  },
+  {
+    "event": "native_control_observed",
+    "seconds": 26.364945041999988,
+    "control": "escape",
+    "down": false,
+    "native_state": {
+      "foreground_pid": 4062,
+      "target_pid": 4062,
+      "lmb_down": false,
+      "escape_down": false,
+      "pointer_points": [
+        307.9310302734375,
+        478.13818359375
+      ],
+      "held_by_driver": [],
+      "state_source": "NSWorkspace/CGEventSource combined-session state/CGEventGetLocation"
+    }
+  },
+  {
+    "event": "helper_command",
+    "seconds": 26.791795208999986,
+    "name": "03-returned-menu",
+    "command": [
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-menu-input/macos-window-capture",
+      "--pid",
+      "4062",
+      "--window",
+      "45",
+      "--png",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-menu-input/03-returned-menu.png",
+      "--report",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-menu-input/03-returned-menu.json"
+    ]
+  }
+]

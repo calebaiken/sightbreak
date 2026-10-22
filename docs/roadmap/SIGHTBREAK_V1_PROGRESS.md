@@ -1,33 +1,109 @@
 # SIGHTBREAK v1.0 progress
 
-Last updated: 2026-10-21 (Claude, session `01K8r1xMjGNZtUR5CdGpJK3x`). Mission and gates: [SIGHTBREAK_V1_MISSION.md](SIGHTBREAK_V1_MISSION.md). Resume point: [../engineering/NEXT_SESSION.md](../engineering/NEXT_SESSION.md). Log: [../engineering/AUTONOMOUS_WORKLOG.md](../engineering/AUTONOMOUS_WORKLOG.md).
+Last updated: 2026-10-22 (Codex mission activation). Permanent tracker: [issue #25](https://github.com/calebaiken/sightbreak/issues/25), IN PROGRESS / PRIMARY. Existing Claude baseline and worklog remain historical evidence. Mission and gates: [SIGHTBREAK_V1_MISSION.md](SIGHTBREAK_V1_MISSION.md). Resume point: [../engineering/NEXT_SESSION.md](../engineering/NEXT_SESSION.md). Log: [../engineering/AUTONOMOUS_WORKLOG.md](../engineering/AUTONOMOUS_WORKLOG.md).
 
 Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALLY`. **Verified by** says who ran it. "Reported" means a source document says so and nobody on this line has re-run it. Reported results are not promoted to `VERIFIED` until someone re-runs them.
+
+## Current execution
+
+Updated 2026-10-22, 08:56 UTC. **IN PROGRESS / PRIMARY**. Persistent tracker
+[issue #25](https://github.com/calebaiken/sightbreak/issues/25); initialization
+`561d0cb`. No native Codex goal API is exposed. Branch `codex/v1-mission-playability`,
+[draft PR27](https://github.com/calebaiken/sightbreak/pull/27), preserves
+PR24 → PR23 → PR22 → PR16 dependencies and contributor ownership.
+
+- **M1 Windows selected native gates independently pass at `0527715`**, run
+  [39741504894](https://github.com/calebaiken/sightbreak/actions/runs/39741504894).
+  Fourteen source suites / 8,844 checks, all OS-input schedules, ordinary journey
+  139.219 s, living 180-tick plant / natural defuse / next buy within 4.750 s,
+  300-tick player defuse, ten-round stock match and exact 120 XP / 250 offline
+  credits saved/reloaded. Critic `cf66046b` verifies original receipts and PNGs.
+  That full match has zero bot plants; it does not qualify bot objective reliability.
+- **M2 ARM independently passes fourteen suites / 8,844 checks and actual menu
+  navigation at the same `0527715`**, run 39741565795, root review `94100342`.
+  Real Windows and Mac journal tests block competing native owners; all-four
+  gunplay probes pass. Separate unsigned iOS compile receipts pass in 97.446 s;
+  final app/PCK bytes were not transferred/reparsed, and two ibtoold orphans were
+  later reaped by the runner. Earlier Mac actor / input_mode leak failures remain
+  unresolved. Both latest clean strict attempts skip the verbose diagnostic;
+  no leaked object types or cause are known. Intel rendering/full Mac gameplay
+  and physical-device gates remain open.
+- **M1 Linux instrumentation is independently accepted, gameplay gate still fails.**
+  Exact `8afe0cc` actual plant ends after 132.337 s in POST / round 1, tick 2,625,
+  timer 0.383333 s; genuine plant, living DEFEND and natural defuse precede it,
+  restart unreached. Readbacks show limit 8, 60 Hz physics, full 1280x720 / Standard;
+  near-eight ticks/process-frame with process/draw agreement supports catch-up
+  saturation. Mesa workers dominate sampled CPU; observed throttling delta is zero.
+  Coarse engine maxima and thread CPU do not identify function cost or a fix.
+  Root `de3c699b` adds only debug/offline readbacks and opt-in owned sampling;
+  separate actual review `81eb8d74` verifies 132 rows, source/ELF/PCK and cleanup.
+  Earlier failures/video remain. Matched source and sampler-overhead attribution
+  is the next performance boundary; graphics/timing requirements are unchanged.
+- **M3 durable keyed store/case/market receipts are integrated and independently
+  accepted.** Native `79e076e` recovers 12/12 crash cases versus baseline 0/12;
+  exact HTTP bytes/key/price, one fixture mutation, credential-free journals,
+  account/origin isolation and cleanup pass. Original PR18 authorship retained.
+  Production PostgreSQL/API market recovery independently passes at exact
+  `882931dd`: nine SQL snapshots, six fresh native logins, two held-response
+  SIGKILLs, one original operation / two ledger rows / one item transfer,
+  buyer 600 / seller 488 / fee 12. Both independent live read-only witnesses,
+  account/origin guards, unchanged journals, revocation, price conflict and actual
+  cleanup pass. Root `4150ad0a`; [report](../reports/gauntlet/m3-postgres-receipt-recovery/REPORT.md).
+  These are synthetic fixture balances. Store/case and rendered consent remain
+  separate; the next store component has begun in its own source branch.
+- **M3 current-source ten-account trial 2 passes strict independent SQL recovery**
+  at `3b5cf764`: one operation / ten rewards / ten ledger rows, 2,875 credits /
+  2,650 XP, pre-ACK / post-replay / distinct final-query witnesses and cleanup.
+  Trial 1 stays blocked. Yaw-only policy is unchanged; no AFK-resistance claim.
+  Separate backend regression passes all 61 cases / 44 existing functions on
+  owned PostgreSQL 17.11; its critic reviewed recorded SQL, not live queries.
+- **M4 engineering probe passes** all four weapons / 52 native records, with
+  independent cadence, reload/deploy, health and shield recomputation. Current
+  Windows/ARM fourteen-suite runs include it. No shipping tuning, physical
+  latency, listening, human feel or CS2 comparison acceptance is inferred.
+- **Latest complete aggregate independently passes at frozen `0527715`** in
+  469.486 s: 54 mandatory Godot logs, nine Python groups, ENet/lifecycle/catalog /
+  tracked fixtures, clean unchanged source and no remaining owned processes.
+  Root `14efb54a`, 2,129 independent audit predicates; selected strict private
+  journal/gunplay run separately passes in 13.003 s. Later Linux diagnostic source
+  has its own focused/native evidence, not a relabeled aggregate pass.
+- **M6 touch contrast is in evaluation**, own branch `codex/m6-touch-contrast`.
+  First blind comparison chooses candidate for label/icon clarity, then identifies
+  a disappearing joystick. Revision preserves input/layout geometry and adds
+  contrasting movement drawing. Second native fixture captures 84 original PNGs;
+  touch 34 / input-mode 462 pass, source unchanged. Fresh blind and continuous
+  full-glyph pixel checks are pending; actual live HUD/occlusion remains required.
+  No contrast, whole-accessibility or presentation gate is closed yet.
+- **M5 objective investigation continues from real stock output.** One natural
+  100-second timeout has a living carrier with a full SMG magazine and no plant.
+  Actual LOS/navigation/target cause is unproven; a bounded reconstruction is
+  being preregistered. Six accepted squad-relative habits do not establish tactical
+  quality. No bot tuning or new native measurement is claimed yet.
 
 ## Acceptance matrix
 
 | ID | Gate | Status | Evidence on record | Verified by | Next action |
 | --- | --- | --- | --- | --- | --- |
-| G1 | Offline 5v5 match runs start to finish (objectives, combat, economy, results, progression) | IN PROGRESS | Scripted native matches finish on Linux (6:6, 7:5) and Windows (6:6, 7:0) with earned XP/Credits reloaded after restart ([playability report](../reports/DESKTOP_PLAYABILITY_REPORT.md)). Several CI scenarios still fail: Linux plant approach and offline round observation, Windows offline OCR and reload timing. | Reported by Codex CI | Re-run the suite natively here (M1). No human has played a full match. |
-| G2 | Bots: reliable navigation, objectives, cooperation, difficulty | IN PROGRESS (F1: no plants in a 12-round match) | PR #14 frozen at `d66e72c` is inside the base. Independent review: "AI / objectives / difficulty: FAIL acceptance" ([three-agent report](../reports/THREE_AGENT_INTEGRATION_REPORT.md)). Tip of the Gemini branch (`48eb058`) is newer and not integrated. | Reported | Review the newer tip with `integration-reviewer`, then measure full matches. |
-| G3 | Ten-client authoritative match: reliability, privacy, identity, integrity, impairment | IN PROGRESS | 12/12 ten-client loopback conditions pass at frozen `4316c58`; resume soaks pass. PRs #18-#21 (recovery, trade reads, input freshness, ACK diagnostics) not integrated. No ten-human run. | Reported by Codex | Codex-owned. Claude reviews #18-#21 when asked. |
-| G4 | Gunplay: recoil, spread, fire cadence, hit and elimination feedback | IN PROGRESS | Rules are tested (`actor_test`, `hit_feedback_test`, `weapon_integrity_test`). No measurement of feel, no human assessment, no comparison to a shipped title. | Reported | Build a measurement harness for all four weapons (milestone candidate). |
+| G1 | Offline 5v5 match runs start to finish (objectives, combat, economy, results, progression) | IN PROGRESS | Frozen 0527715 Windows selected native gates pass actual controls, plant / natural resolution / next buy, defuse, stock full match and exact earned restart. Instrumented Linux 8afe0cc still fails original next-buy deadline; restart unreached. [Windows evidence](../reports/gauntlet/windows-0527715-39741504894/REPORT.md). | Fresh independent native critics | Preserve Linux failure, qualify final combined candidate and human full matches. |
+| G2 | Bots: reliable navigation, objectives, cooperation, difficulty | IN PROGRESS | Six squad-habit corrections independently accepted: final engine oracle 2,722 checks, candidate zero failures / zero unequal pairs versus baseline 300 / 181 of 480. Nine independent focused steps pass. One lifecycle observes a plant; historical F1 is retained. [Review](../reports/gauntlet/m5-bot-squad-symmetry/independent-critic/REVIEW.md). | Fresh independent native critic | Measure representative full matches, objective reliability, navigation and cooperation; shared roster RNG and same-tick reports remain open. |
+| G3 | Ten-client authoritative match: reliability, privacy, identity, integrity, impairment | IN PROGRESS | Reviewed replay freshness, phased combat authority, ten-client soak/campaign, protocol and hostile probes. Short impaired lost-close trial fails; separate full-deadline diagnostic recovers ten. Ten actual accounts complete stock rules and recover one earned result exactly once under outage/kill/lost reply. [Account evidence](../reports/gauntlet/m3-account-match/RESULTS.md). | Fresh independent source, blind-output and native/database critics | Qualify remote-host impairment, substantive activity, competitive policies and prediction feel. Complete V3, remaining PR18 components and PR19/21 remain unqualified; narrow keyed receipts are accepted separately. |
+| G4 | Gunplay: recoil, spread, fire cadence, hit and elimination feedback | IN PROGRESS | Current Windows/ARM native suites also verify the probe. All four stock weapons measured at fc5d677: 2,840 native probe checks / 52 records and 289 existing controls pass; independent critic recomputes 5,121 predicates including complete cadence, actual health, friendly shielding and reload/deploy timelines. [Evidence](../reports/gauntlet/m4-gunplay-invariants/NATIVE_RESULTS.md). | Fresh independent source and native-output critics | Measure actual rendered handling, device latency and human feel against accessible shipped-game references. No tuning or feel acceptance inferred. |
 | G5 | Viewmodel, reload and weapon switch animation | FAILED | Relay AR has authored art. Same-family review scored the weapon and hands slice 5.5/10 against 8.5. Kestrel 9, Vectorline and Longwatch are still procedural. | Reported (same-model reviewer, stills) | Native recapture, critic round, author the other three weapons. |
-| G6 | Input responsiveness (mouse, movement, fire) measured | NOT STARTED | Movement prediction error is tested (max 0.0758 m). There is no input-to-photon or input-to-fire measurement. | none | Define a measurable proxy under llvmpipe; label it relative. |
-| G7 | UI/UX across journeys (menu, deploy, LAN, settings, HUD, buy, scoreboard, pause, inventory, cases, results, error states) | IN PROGRESS | Native UI landed (PR #12) with state, layout and overflow suites. Independent review left four findings open on `2b2731a`; whether the base fixed them is unchecked. | Reported | Capture every journey at 1280x720, 1920x1080, 960x720, 1560x720; critic round. |
+| G6 | Input responsiveness (mouse, movement, fire) measured | IN PROGRESS | Keyboard FIELD MENU focus and safe resume independently verified with OS input. Replay-silence stopping measured at 316–334 ms in eight two-peer trials. Prediction error max 0.075834 m. No physical input-to-photon or input-to-fire measurement. | Fresh native/menu and blind network critics | Keep engineering measurements scoped; obtain device latency and human feel evidence. |
+| G7 | UI/UX across journeys (menu, deploy, LAN, settings, HUD, buy, scoreboard, pause, inventory, cases, results, error states) | IN PROGRESS | FIELD MENU input and safe resume reviewed. Four-size native layouts pass original limits. Final live touch-mode candidate passes 462 checks, independent clipping controls and native on/off capture; fresh blinded judge chooses it. Planted-role guidance survives all 1,458 declared flood frames and actual living gameplay. | Fresh independent native/menu/layout/blind critics | Control contrast, all journeys, accessibility and shipped-game presentation comparison remain open. |
 | G8 | Visual quality at least 8.5/10 in each applicable category | FAILED | 0.3 aggregate 8.1 (geometry, materials, lighting, models, effects below 8.5). Fresh sequence review about 5.5. | Reported (AI reviewers, not human) | Per-category rounds after G4-G7. |
 | G9 | Audio: fire, reload, hit, objective cues consistent with animation | IN PROGRESS | All sound is synthesized in code. Capture-based tests pass; exit-time AudioStream leaks and one nondeterministic timing control were reported. Nobody has listened. | Reported | Check leaks in baseline; add timing measurements. A listening review needs a person. |
 | G10 | Accessibility (contrast, text scale, reduced motion, controller/keyboard reach) | IN PROGRESS | Text scale and reduced motion exist. No audit, no screen-reader or physical-controller evidence. | none | Compute WCAG contrast from captures (bar B4). |
-| G11 | Linux native package | IN PROGRESS | Exports and extracted-content inspection pass; Linux CI job FAILS on offline round observation, plant approach, layout. | Reported | Re-run export here. |
-| G12 | Windows native package | IN PROGRESS | Full match and earned restart pass; offline OCR and controlled reload timing fail in CI. | Reported | Windows is not available here; track Codex CI. |
-| G13 | macOS native package (Intel and Apple Silicon) | FAILED | ARM menu and controls pass, gameplay unverified. Intel game startup times out at 120 s in every trial. | Reported | Codex-owned diagnosis. Needs Mac hardware. |
-| G14 | Android and iOS keep building | IN PROGRESS | Debug APK exports and unsigned Xcode project inspected structurally. No device, no Xcode build. | Reported | Re-export Android here when M-infra allows. Physical gates are `BLOCKED EXTERNALLY`. |
+| G11 | Linux native package | IN PROGRESS | Historical ordinary journey / layouts / defuse / stock earned restart pass. Actual 8afe0cc preserves original next-buy failure while readbacks support catch-up saturation and Mesa CPU dominance. No function-cost fix or physical performance acceptance. [Evidence](../reports/gauntlet/m1-linux-frame-sampling/NATIVE_RESULTS.md). | Fresh independent native and instrumentation critics | Matched source / overhead-aware cost attribution; preserve original deadlines and actual failed result. |
+| G12 | Windows native package | IN PROGRESS | Actual run 39741504894 at 0527715 independently passes fourteen suites / 8,844 checks and all selected exported input, objectives, full-match / earned-reload gates. [Evidence](../reports/gauntlet/windows-0527715-39741504894/REPORT.md). | Fresh independent native critic | Qualify final combined source and physical / human release acceptance; stock zero-plant match leaves bot reliability open. |
+| G13 | macOS native package (Intel and Apple Silicon) | FAILED | Latest 0527715 run 39741565795 independently passes fourteen suites / 8,844 checks and real menu navigation. Verbose diagnostic skipped. Earlier actor six-leak / input_mode two-leak failures remain unresolved; Intel rendering still times out. [Latest evidence](../reports/gauntlet/m2-native-mac-ci-39741565795/independent-review/REPORT.md). | Fresh independent native critics | Actual full gameplay, stable leak resolution, Intel and physical qualification; obtain verbose types if a supported failure recurs. |
+| G14 | Android and iOS keep building | IN PROGRESS | Fresh frozen 6a Android debug APK and unsigned iOS project export and structural inspection pass. Independent 48/49 package checks: simulator metadata claims ARM64+x86_64 but pinned debug archive contains x86_64 only; device archive is ARM64. [Evidence](../reports/gauntlet/m2-mobile-preservation/independent-package-critic/REPORT.md). Actual Xcode 16.4 / SDK 18.5 link fails on five iOS 26 framework globals. Reviewed SDK selection is integrated; retries39721286005 at2a2b732 and39727011693 ate7718ee pass independent unsigned-device compile review, with exact source/PCK and raw unsigned codesign evidence. Final binary reparse and runtime remain open. | Fresh independent mobile package critic | Preserve accepted exact-source unsigned compile; qualify simulator metadata, installation, older OS behavior and physical play. No credential/signing action is authorized. |
 | G15 | Packaging, build provenance, Steam staging procedure | IN PROGRESS | Source-bound manifests exist. `STEAM_RELEASE_READINESS.md` is design only: no SteamPipe template, no App ID, Steamworks docs not retrievable (host denied). | Reported | Owner approval is needed for any upload or account step. |
-| G16 | Economy and progression integrity | IN PROGRESS | PostgreSQL suites and HTTP economy checks pass in frozen runs. Production deployment review not done. | Reported | Codex-owned. |
+| G16 | Economy and progression integrity | IN PROGRESS | Corrected-source trial 2 at 3b5cf764 independently passes stock ten-account settlement and pre-ACK / post-replay SQL witnesses: one operation / ten rewards / ten ledger rows, 2,875 credits / 2,650 XP. Trial 1 remains blocked. Separate backend regression passes 61 cases. [Trial evidence](../reports/gauntlet/m3-account-activity/TRIAL_2_HANDOFF.md). | Fresh independent native / live-database and regression critics | Keyed store/armory receipt component independently passes 12/12 native fixture recoveries versus baseline 0/12. Production PostgreSQL/API market lost-response recovery independently passes at 882931dd with two live SQL witnesses and owned cleanup; synthetic fixture value only. Next qualify store/case and rendered player recovery; meaningful activity, AFK policy, remote recovery and deployment security remain separate. |
 | G17 | Human playtesting | BLOCKED EXTERNALLY | No human feedback exists. | none | Needs people. Use `docs/research/HUMAN_AND_DEVICE_TESTING_PLAN.md`. |
 | G18 | Counter-Strike 2 comparison for weapon feel, animation, readability | BLOCKED EXTERNALLY | Steam, YouTube and counter-strike.net hosts denied by the network policy (see [BARS.md](BARS.md)). | none | Owner allows the hosts, or supplies reference captures. |
 | G19 | Physical-device performance (frame pacing, thermals, memory) | BLOCKED EXTERNALLY | Only llvmpipe software-render timings exist. | none | Needs hardware. |
-| G20 | Skills, agents, memory and session brief for the mission | IN PROGRESS | This branch adds them (M0). | Claude | Merge path: draft PR into `codex/desktop-playability-p1`. |
+| G20 | Skills, agents, memory and session brief for the mission | VERIFIED (initialization scope) | Existing originals verified, AGENTS.md and mission/acceptance/progress/resume records committed `561d0cb`. Continuing task registered as [issue #25](https://github.com/calebaiken/sightbreak/issues/25); actual separate builder/critic cycles and evidence retained. No native Codex goal API claimed. | Codex, repository commits and supported GitHub issue | Continue updating after each increment; this does not complete the product. |
 
 ## Native baseline by Claude (M1)
 
@@ -39,7 +115,7 @@ Filled in as runs complete. Commit under test: `db3981e` (`codex/desktop-playabi
 | `scripts/validate.sh` | Ran to completion on `db3981e`, no failing step, no leak warnings (worklog has the table). Skipped: backend-Python fixture drift check, Windows-only tests. |
 | Bot match objective play | **Finding F1**: 12-round real-engine bot match, `plant_observed=false`, all rounds ended by elimination in 26-43 s. Under investigation. |
 
-## Branch and PR map (verified 2026-10-21 with `git fetch` and ancestry checks)
+## Branch and PR map (baseline 2026-10-21; live fetch updated 2026-10-22)
 
 `main` is `4d8cdb3`. No PR has merged. Every other line stacks on `e67f2c8`.
 
@@ -54,10 +130,43 @@ Filled in as runs complete. Commit under test: `db3981e` (`codex/desktop-playabi
 | PR #14 `gemini/tactical-bot-intelligence-v1` | `48eb058` | Newer than the frozen copy inside PR #16. |
 | `claude/reconcile-v10-on-pr16` (no PR) | `79a9591` | PR #16 plus the PR #2 tip. Superseded by PR #23 for everything except the nine art commits. |
 | `claude/wip-gauntlet-T1-sunmetal`, `...T2-lowlight` | `0cb8239`, `43854ff` | Earlier Claude work-in-progress on metal and low-light viewmodel lighting. |
-| `claude/mission-foundation-v1` (this work) | see worklog | M0 on top of PR #23. |
+| PR24 `claude/mission-foundation-v1` | `c84eaf3` | Existing mission foundation, base for the Codex execution stack. |
+| PR26 `claude/relay-yard-tactical-layout-v1` | `778c89a` | Separate map candidate and bot measurements; not integrated. Reports F2 actor-order bias. |
+| PR27 `codex/v1-mission-playability` | see worklog / NEXT_SESSION | Active Codex mission, native input/validation, replay freshness and platform follow-ups, based on PR24. |
+
+| PR28 `claude/fair-actor-order-v1` | `2641ddf` | Bot-only delta `0871bc9` adapted with attribution; authority shuffle is excluded in favor of independently reviewed phased authority. |
 
 ## Known blockers and limits
 
 - Reference footage hosts are denied; CS2 parity cannot be measured here (G18).
-- No GPU, no audio device, no humans, no Mac or Windows host in this container.
-- Parallel contributors: Codex has PRs #18-#23 in flight. Avoid their files unless you coordinate (`PARALLEL_WORK.md`).
+- No GPU, audio device, humans or local Mac/Windows host. Actual native GitHub runners are available; their observed results and failures remain distinct from local proof.
+- Parallel contributors: preserve PR18–24 dependencies and Claude-owned PR26 map work; do not integrate newer bots or map changes without independent qualification (`PARALLEL_WORK.md`).
+
+## M3 controlled account match, 2026-10-22
+
+G3 and G16 remain **IN PROGRESS**. Frozen test source `471fbd8` completed a real
+ten-account seven-round stock match in 525.962 wall seconds, then delivered its
+earned production payload after Godot/worker SIGKILL, owned PostgreSQL outage,
+lost acknowledgment, restart and duplicate spool replay. Exactly one match
+operation, ten rewards and ten ledger rows produced 2,875 credits / 2,650 XP.
+Independent critic `93f6b68` recomputed raw outputs, queried the actual temporary
+database and verified cleanup. [Evidence and limits](../reports/gauntlet/m3-account-match/RESULTS.md).
+
+This is scripted no-combat, current-policy look activity with loopback client
+traffic; it does not verify substantive participation, AFK resistance, fairness,
+prediction feel, impairment, remote hosting or human play. The game listener uses
+inherited wildcard UDP; API/database use loopback. Followup `0aae3f8` strengthens
+only pure validation/registration and was unit-tested/raw-replayed. Product
+gameplay/backend/worker files remain identical to frozen `0ca125d`.
+
+Final pure-validator followup `b38508e` corrects terminal-duration activity capping
+and adds a float-boundary negative control. All 15 controls and frozen-raw replay
+pass; no additional native execution or gate promotion is claimed.
+
+## Current objective-guidance and account qualification
+
+The current execution block and gate table above supersede the earlier pending
+states. Original Linux objective failures, account trial 1's missing post-replay
+witness and all rejected fixtures remain unchanged. Trial 2 independently closes
+its declared current-source stock settlement/recovery scope, and Windows independently
+passes its selected native gates. Neither result closes whole G1/G3/G12/G16.

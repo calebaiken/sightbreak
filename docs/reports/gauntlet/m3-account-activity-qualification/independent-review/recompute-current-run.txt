@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/sightbreak-account-activity-review/docs/reports/gauntlet/m3-account-activity-qualification/independent-review/recompute_current_run.py", line 223, in <module>
+    assert any(parse_time(item['database_utc']) >= replay_at for item in committed), 'No live SQL sample after duplicate replay'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: No live SQL sample after duplicate replay

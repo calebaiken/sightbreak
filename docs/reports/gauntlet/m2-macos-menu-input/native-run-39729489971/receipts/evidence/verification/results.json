@@ -1,0 +1,57 @@
+{
+  "source_dirty": false,
+  "source_validation_sha256": "9886d8d90e3499936798c6169f0c2664912033f6dd590fdb0a26ccf47f9becba",
+  "source_commit": "3b97a0043fc415c2408ed774f38710ac022cfd72",
+  "source_game_tree": "e877ba16bdc7f63994930a77f32e484e8f12d890",
+  "source_content_sha256": "db3c976711ef8d91b75604fdfe05309599445cfc5bdf59e5f6fbdf669a859fc5",
+  "source_game_dirty": false,
+  "host": "macOS-15.7.9-arm64-arm-64bit",
+  "targets": {
+    "macos": {
+      "artifact_inspection": true,
+      "native_execution": "PASS (headless startup only)",
+      "pck_resources": 132,
+      "native_graphical_menu": "PASS"
+    }
+  },
+  "runs": [
+    {
+      "label": "macos-menu",
+      "command": [
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+        "--headless",
+        "--",
+        "--smoke"
+      ],
+      "exit_code": 0,
+      "clean_log": true
+    },
+    {
+      "label": "macos-demo",
+      "command": [
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+        "--headless",
+        "--quit-after",
+        "120",
+        "--",
+        "--demo"
+      ],
+      "exit_code": 0,
+      "clean_log": true
+    },
+    {
+      "label": "macos-graphical-menu",
+      "command": [
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+        "--audio-driver",
+        "Dummy",
+        "--",
+        "--smoke",
+        "--capture=/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/verification/macos-menu.png"
+      ],
+      "exit_code": 0,
+      "clean_log": true
+    }
+  ],
+  "gameplay": "See separate real-input evidence; startup is not gameplay acceptance."
+}

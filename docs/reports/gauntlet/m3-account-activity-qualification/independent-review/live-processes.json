@@ -1,0 +1,289 @@
+{
+  "at_utc": "2026-10-22T06:11:32.956056+00:00",
+  "source_commit": "e2c61ac2ecbd38ab55bc9edb712b028322c1490f",
+  "driver_pid": 98374,
+  "children": [
+    {
+      "pid": 98629,
+      "ppid": 98374,
+      "args": [
+        "/workspace/sightbreak/.venv/bin/python",
+        "-m",
+        "uvicorn",
+        "app:app",
+        "--app-dir",
+        "backend",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "33895"
+      ],
+      "exe": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "cwd": "/workspace/sightbreak-account-activity"
+    },
+    {
+      "pid": 99164,
+      "ppid": 98374,
+      "args": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-account-activity/game",
+        "--headless",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/account_match_probe.gd",
+        "--",
+        "--port=37622",
+        "--control=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/stop",
+        "--role=server",
+        "--output=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/server.json"
+      ],
+      "exe": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "cwd": "/workspace/sightbreak-account-activity/game",
+      "exe_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+      "role": "server"
+    },
+    {
+      "pid": 99176,
+      "ppid": 98374,
+      "args": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-account-activity/game",
+        "--headless",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/account_match_probe.gd",
+        "--",
+        "--port=37622",
+        "--control=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/stop",
+        "--role=client",
+        "--output=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/client-0.json"
+      ],
+      "exe": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "cwd": "/workspace/sightbreak-account-activity/game",
+      "exe_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+      "role": "client"
+    },
+    {
+      "pid": 99188,
+      "ppid": 98374,
+      "args": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-account-activity/game",
+        "--headless",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/account_match_probe.gd",
+        "--",
+        "--port=37622",
+        "--control=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/stop",
+        "--role=client",
+        "--output=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/client-1.json"
+      ],
+      "exe": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "cwd": "/workspace/sightbreak-account-activity/game",
+      "exe_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+      "role": "client"
+    },
+    {
+      "pid": 99200,
+      "ppid": 98374,
+      "args": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-account-activity/game",
+        "--headless",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/account_match_probe.gd",
+        "--",
+        "--port=37622",
+        "--control=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/stop",
+        "--role=client",
+        "--output=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/client-2.json"
+      ],
+      "exe": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "cwd": "/workspace/sightbreak-account-activity/game",
+      "exe_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+      "role": "client"
+    },
+    {
+      "pid": 99212,
+      "ppid": 98374,
+      "args": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-account-activity/game",
+        "--headless",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/account_match_probe.gd",
+        "--",
+        "--port=37622",
+        "--control=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/stop",
+        "--role=client",
+        "--output=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/client-3.json"
+      ],
+      "exe": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "cwd": "/workspace/sightbreak-account-activity/game",
+      "exe_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+      "role": "client"
+    },
+    {
+      "pid": 99224,
+      "ppid": 98374,
+      "args": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-account-activity/game",
+        "--headless",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/account_match_probe.gd",
+        "--",
+        "--port=37622",
+        "--control=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/stop",
+        "--role=client",
+        "--output=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/client-4.json"
+      ],
+      "exe": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "cwd": "/workspace/sightbreak-account-activity/game",
+      "exe_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+      "role": "client"
+    },
+    {
+      "pid": 99240,
+      "ppid": 98374,
+      "args": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-account-activity/game",
+        "--headless",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/account_match_probe.gd",
+        "--",
+        "--port=37622",
+        "--control=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/stop",
+        "--role=client",
+        "--output=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/client-5.json"
+      ],
+      "exe": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "cwd": "/workspace/sightbreak-account-activity/game",
+      "exe_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+      "role": "client"
+    },
+    {
+      "pid": 99252,
+      "ppid": 98374,
+      "args": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-account-activity/game",
+        "--headless",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/account_match_probe.gd",
+        "--",
+        "--port=37622",
+        "--control=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/stop",
+        "--role=client",
+        "--output=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/client-6.json"
+      ],
+      "exe": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "cwd": "/workspace/sightbreak-account-activity/game",
+      "exe_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+      "role": "client"
+    },
+    {
+      "pid": 99264,
+      "ppid": 98374,
+      "args": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-account-activity/game",
+        "--headless",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/account_match_probe.gd",
+        "--",
+        "--port=37622",
+        "--control=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/stop",
+        "--role=client",
+        "--output=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/client-7.json"
+      ],
+      "exe": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "cwd": "/workspace/sightbreak-account-activity/game",
+      "exe_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+      "role": "client"
+    },
+    {
+      "pid": 99276,
+      "ppid": 98374,
+      "args": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-account-activity/game",
+        "--headless",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/account_match_probe.gd",
+        "--",
+        "--port=37622",
+        "--control=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/stop",
+        "--role=client",
+        "--output=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/client-8.json"
+      ],
+      "exe": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "cwd": "/workspace/sightbreak-account-activity/game",
+      "exe_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+      "role": "client"
+    },
+    {
+      "pid": 99291,
+      "ppid": 98374,
+      "args": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-account-activity/game",
+        "--headless",
+        "--max-fps",
+        "60",
+        "--script",
+        "res://tests/account_match_probe.gd",
+        "--",
+        "--port=37622",
+        "--control=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/stop",
+        "--role=client",
+        "--output=/workspace/sightbreak-account-activity/builds/account-activity-stock-1/client-9.json"
+      ],
+      "exe": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "cwd": "/workspace/sightbreak-account-activity/game",
+      "exe_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+      "role": "client"
+    }
+  ],
+  "native_count": 11,
+  "game_port": 37622,
+  "owned_game_bindings": [
+    {
+      "protocol": "udp6",
+      "local_hex": "00000000000000000000000000000000:92F6",
+      "remote_hex": "00000000000000000000000000000000:0000",
+      "inode": "209898"
+    }
+  ],
+  "method": "ps filtered to exact owned driver PPID; proc children file unavailable; no environment or credential access; socket inode filter"
+}

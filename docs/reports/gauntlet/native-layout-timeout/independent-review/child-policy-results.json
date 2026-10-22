@@ -1,0 +1,42 @@
+{
+  "scope": "Actual child environment/error handling; no Godot or image recognition claim.",
+  "source_commit": "77836f39413577053cea5a3431a12ecd586efdbe",
+  "capture_script_sha256": "9d1ca1d2b727d5488942b1fee0470e232ce8b6b1c618e739bcb7dc9fc2f6782c",
+  "success_receipt": {
+    "timeout_seconds": 2,
+    "thread_environment": {
+      "OMP_THREAD_LIMIT": "1"
+    },
+    "exit_code": 0,
+    "elapsed_seconds": 0.018692563000513474
+  },
+  "child_limit_one_parent_limit_eight_other_environment_preserved": true,
+  "nonzero_receipt": {
+    "timeout_seconds": 2,
+    "thread_environment": {
+      "OMP_THREAD_LIMIT": "1"
+    },
+    "exit_code": 7,
+    "elapsed_seconds": 0.019174683002347592
+  },
+  "nonzero_exit_and_streams_preserved": true,
+  "timeout_receipt": {
+    "timeout_seconds": 0.01,
+    "thread_environment": {
+      "OMP_THREAD_LIMIT": "1"
+    },
+    "error_type": "TimeoutExpired",
+    "error": "Command '['/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3', '-c', 'import time; time.sleep(1)']' timed out after 0.01 seconds",
+    "elapsed_seconds": 0.01083031600137474
+  },
+  "exact_timeout_exception_parent_environment_preserved": true,
+  "missing_executable_receipt": {
+    "timeout_seconds": 2,
+    "thread_environment": {
+      "OMP_THREAD_LIMIT": "1"
+    },
+    "error_type": "FileNotFoundError",
+    "error": "[Errno 2] No such file or directory: '/nonexistent-sightbreak-critic-child'",
+    "elapsed_seconds": 0.00035962100082542747
+  }
+}

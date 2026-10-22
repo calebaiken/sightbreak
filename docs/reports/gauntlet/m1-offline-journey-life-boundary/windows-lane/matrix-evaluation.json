@@ -1,0 +1,178 @@
+{
+  "baseline_ref": "90740e0",
+  "pyyaml_version": "6.0.3",
+  "baseline_workflow_sha256": "36cccc5d6a2bee002bd7ab8ab0641ffd7c969943101468ba2d02e9843cf267c0",
+  "candidate_workflow_sha256": "8b71789eb4f2cf085013ee7f483301fdd0a32c61e93170ff1639d2d4680dd06a",
+  "exact_expression": "${{ fromJSON(github.event_name == 'workflow_dispatch' && inputs.lane == 'windows' && '[{\"os\":\"windows-latest\",\"target\":\"windows\"}]' || github.event_name == 'workflow_dispatch' && inputs.lane == 'arm-macos-ios' && '[{\"os\":\"macos-15\",\"target\":\"macos\"}]' || '[{\"os\":\"ubuntu-24.04\",\"target\":\"linux\"},{\"os\":\"windows-latest\",\"target\":\"windows\"},{\"os\":\"macos-15\",\"target\":\"macos\"},{\"os\":\"macos-15-intel\",\"target\":\"macos\"}]') }}",
+  "cases": [
+    {
+      "case": "default dispatch",
+      "event": "workflow_dispatch",
+      "lane": null,
+      "matrix_include": [
+        {
+          "os": "ubuntu-24.04",
+          "target": "linux"
+        },
+        {
+          "os": "windows-latest",
+          "target": "windows"
+        },
+        {
+          "os": "macos-15",
+          "target": "macos"
+        },
+        {
+          "os": "macos-15-intel",
+          "target": "macos"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "push",
+      "event": "push",
+      "lane": null,
+      "matrix_include": [
+        {
+          "os": "ubuntu-24.04",
+          "target": "linux"
+        },
+        {
+          "os": "windows-latest",
+          "target": "windows"
+        },
+        {
+          "os": "macos-15",
+          "target": "macos"
+        },
+        {
+          "os": "macos-15-intel",
+          "target": "macos"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "explicit all",
+      "event": "workflow_dispatch",
+      "lane": "all",
+      "matrix_include": [
+        {
+          "os": "ubuntu-24.04",
+          "target": "linux"
+        },
+        {
+          "os": "windows-latest",
+          "target": "windows"
+        },
+        {
+          "os": "macos-15",
+          "target": "macos"
+        },
+        {
+          "os": "macos-15-intel",
+          "target": "macos"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "explicit ARM",
+      "event": "workflow_dispatch",
+      "lane": "arm-macos-ios",
+      "matrix_include": [
+        {
+          "os": "macos-15",
+          "target": "macos"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "push cannot select ARM",
+      "event": "push",
+      "lane": "arm-macos-ios",
+      "matrix_include": [
+        {
+          "os": "ubuntu-24.04",
+          "target": "linux"
+        },
+        {
+          "os": "windows-latest",
+          "target": "windows"
+        },
+        {
+          "os": "macos-15",
+          "target": "macos"
+        },
+        {
+          "os": "macos-15-intel",
+          "target": "macos"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "explicit Windows",
+      "event": "workflow_dispatch",
+      "lane": "windows",
+      "matrix_include": [
+        {
+          "os": "windows-latest",
+          "target": "windows"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "push cannot select Windows",
+      "event": "push",
+      "lane": "windows",
+      "matrix_include": [
+        {
+          "os": "ubuntu-24.04",
+          "target": "linux"
+        },
+        {
+          "os": "windows-latest",
+          "target": "windows"
+        },
+        {
+          "os": "macos-15",
+          "target": "macos"
+        },
+        {
+          "os": "macos-15-intel",
+          "target": "macos"
+        }
+      ],
+      "pass": true
+    },
+    {
+      "case": "unknown lane",
+      "event": "workflow_dispatch",
+      "lane": "unknown",
+      "matrix_include": [
+        {
+          "os": "ubuntu-24.04",
+          "target": "linux"
+        },
+        {
+          "os": "windows-latest",
+          "target": "windows"
+        },
+        {
+          "os": "macos-15",
+          "target": "macos"
+        },
+        {
+          "os": "macos-15-intel",
+          "target": "macos"
+        }
+      ],
+      "pass": true
+    }
+  ],
+  "all_unrelated_yaml_fields_identical": true
+}

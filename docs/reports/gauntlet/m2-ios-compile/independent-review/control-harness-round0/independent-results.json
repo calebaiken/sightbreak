@@ -1,0 +1,249 @@
+{
+  "scope": "Linux fixtures and implementation readiness only, not Apple compiler evidence",
+  "cases": [
+    {
+      "case": "accept unsigned ARM64 device fixture carrying actual source-bound 132-resource PCK",
+      "passed": true,
+      "detail": {
+        "executable": {
+          "architecture": "arm64",
+          "format": "Mach-O MH_EXECUTE",
+          "platform": "iOS device",
+          "code_signature_load_command": false,
+          "bytes": 56,
+          "sha256": "c9690b304ec3e18f10360bea7fcc0d5674a17424775d52c19bf6ac00fa94e91b"
+        },
+        "bundle_id": "com.sightbreak.game",
+        "pck_sha256": "e006ce4ffee64d8cd5c3386e8a1116231409504b6e25034a984218434280dc98",
+        "pck_resources": 132,
+        "signature_directory": false,
+        "embedded_profile": false
+      }
+    },
+    {
+      "case": "reject ARM64 simulator Mach-O",
+      "passed": true,
+      "detail": "Expected one device-iOS build platform (2)"
+    },
+    {
+      "case": "reject x86_64 Mach-O even with device plist",
+      "passed": true,
+      "detail": "Expected arm64 MH_EXECUTE"
+    },
+    {
+      "case": "reject inline LC_CODE_SIGNATURE with zero data size",
+      "passed": true,
+      "detail": "Code signature present in executable"
+    },
+    {
+      "case": "reject embedded provisioning profile",
+      "passed": true,
+      "detail": "Signature or provisioning profile found in app"
+    },
+    {
+      "case": "reject nested signature directory",
+      "passed": true,
+      "detail": "Signature or provisioning profile found in app"
+    },
+    {
+      "case": "reject symlink executable",
+      "passed": true,
+      "detail": "Symlinked app executable"
+    },
+    {
+      "case": "reject changed app CFBundleIdentifier",
+      "passed": true,
+      "detail": "Wrong compiled bundle ID"
+    },
+    {
+      "case": "reject changed app CFBundleShortVersionString",
+      "passed": true,
+      "detail": "Wrong compiled app version"
+    },
+    {
+      "case": "reject changed app CFBundleVersion",
+      "passed": true,
+      "detail": "Wrong compiled app version"
+    },
+    {
+      "case": "reject changed app DTPlatformName",
+      "passed": true,
+      "detail": "Compiled app is not an iPhoneOS device product"
+    },
+    {
+      "case": "reject changed app CFBundleSupportedPlatforms",
+      "passed": true,
+      "detail": "Compiled app is not an iPhoneOS device product"
+    },
+    {
+      "case": "reject changed app CFBundleExecutable",
+      "passed": true,
+      "detail": "Unexpected app executable"
+    },
+    {
+      "case": "reject same-size one-byte built PCK tamper",
+      "passed": true,
+      "detail": "Compiled app PCK differs from exact exported source"
+    },
+    {
+      "case": "reject same-size exported PCK tamper",
+      "passed": true,
+      "detail": "Exported PCK changed from source manifest"
+    },
+    {
+      "case": "reject duplicate manifest PCK provenance",
+      "passed": true,
+      "detail": "Missing exact exported PCK provenance"
+    },
+    {
+      "case": "timed-out leader with TERM-resistant child",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-c",
+          "import subprocess,sys,time,pathlib; subprocess.Popen([sys.executable,\"-c\",'import os,pathlib,signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); pathlib.Path(\\'/tmp/critic-ios-process-atr8ayul/child.pid\\').write_text(str(os.getpid())); time.sleep(1.2);pathlib.Path(\\'/tmp/critic-ios-process-atr8ayul/survival-marker\\').write_text(\"escaped\");time.sleep(10)']);\nwhile not pathlib.Path('/tmp/critic-ios-process-atr8ayul/child.pid').exists():time.sleep(.01)\nprint(\"parent-ready\",flush=True);time.sleep(10)"
+        ],
+        "timeout_seconds": 0.25,
+        "timed_out": true,
+        "exit_code": -15,
+        "cleanup_errors": [],
+        "owned_process_group": 43114,
+        "group_before_cleanup": [
+          "43114   43114 Ss",
+          "43115   43114 S"
+        ],
+        "unexpected_descendants": false,
+        "group_after_cleanup": [
+          "43115   43114 Z"
+        ],
+        "surviving_owned_processes": [],
+        "seconds": 0.25982758600002853,
+        "log": "timeout-child.log",
+        "cleanup_complete": true
+      }
+    },
+    {
+      "case": "leader exits0 with child stdout closed",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-c",
+          "import subprocess,sys,time,pathlib; subprocess.Popen([sys.executable,\"-c\",'import os,pathlib,signal,time; signal.signal(signal.SIGTERM,signal.SIG_IGN); os.close(1);os.close(2); pathlib.Path(\\'/tmp/critic-ios-process-mk144ypt/child.pid\\').write_text(str(os.getpid())); time.sleep(1.2);pathlib.Path(\\'/tmp/critic-ios-process-mk144ypt/survival-marker\\').write_text(\"escaped\");time.sleep(10)']);\nwhile not pathlib.Path('/tmp/critic-ios-process-mk144ypt/child.pid').exists():time.sleep(.01)\n"
+        ],
+        "timeout_seconds": 2,
+        "timed_out": false,
+        "exit_code": 0,
+        "cleanup_errors": [],
+        "owned_process_group": 43121,
+        "group_before_cleanup": [
+          "43122   43121 S"
+        ],
+        "unexpected_descendants": true,
+        "group_after_cleanup": [
+          "43122   43121 Z"
+        ],
+        "surviving_owned_processes": [],
+        "seconds": 0.0729948529988178,
+        "log": "zero-exit-child.log",
+        "cleanup_complete": true
+      }
+    },
+    {
+      "case": "killpg failure retains timeout and failed cleanup",
+      "passed": true,
+      "detail": {
+        "command": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "-c",
+          "import os,pathlib,time;pathlib.Path('/tmp/critic-ios-kill-failure-5nms9kif/leader.pid').write_text(str(os.getpid()));time.sleep(10)"
+        ],
+        "timeout_seconds": 0.1,
+        "timed_out": true,
+        "exit_code": null,
+        "cleanup_errors": [
+          "critic injected killpg denial",
+          "critic injected killpg denial",
+          "Owned command leader did not exit"
+        ],
+        "owned_process_group": 43128,
+        "group_before_cleanup": [
+          "43128   43128 Ss"
+        ],
+        "unexpected_descendants": false,
+        "group_after_cleanup": [
+          "43128   43128 Ss"
+        ],
+        "surviving_owned_processes": [
+          "43128   43128 Ss"
+        ],
+        "seconds": 6.110778758000379,
+        "log": "killpg-denied.log",
+        "cleanup_complete": false
+      }
+    },
+    {
+      "case": "real CLI SIGTERM unwinds owned descendant and preserves FAILED receipt",
+      "passed": true,
+      "detail": {
+        "exit_code": 1,
+        "report": {
+          "schema": 1,
+          "compile_completed": false,
+          "status": "FAILED",
+          "scope": "Unsigned generic-device Debug compile only; no installation or runtime qualification.",
+          "simulator": "UNVERIFIED; upstream debug simulator archive architecture mismatch remains separate.",
+          "physical_device": "UNVERIFIED",
+          "total_command_budget_seconds": 30.0,
+          "commands": [],
+          "host": {
+            "system": "Darwin",
+            "machine": "arm64",
+            "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+          },
+          "failure": "Interrupted by signal 15",
+          "seconds": 0.059579912001936464
+        },
+        "child_stopped": true,
+        "marker_absent": true
+      }
+    },
+    {
+      "case": "actual Linux helper exits1 with failure receipt, no export or Apple command",
+      "passed": true,
+      "detail": {
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+          "/workspace/reviews/ios-compile-critic/source571e8c7/scripts/qualify_ios_compile.py",
+          "--output",
+          "/workspace/reviews/ios-compile-critic/evidence/actual-linux-rejection",
+          "--builds",
+          "/workspace/reviews/ios-compile-critic/evidence/unused-linux-export",
+          "--derived-data",
+          "/workspace/reviews/ios-compile-critic/evidence/unused-linux-derived",
+          "--timeout",
+          "30"
+        ],
+        "exit_code": 1,
+        "report": {
+          "schema": 1,
+          "compile_completed": false,
+          "status": "FAILED",
+          "scope": "Unsigned generic-device Debug compile only; no installation or runtime qualification.",
+          "simulator": "UNVERIFIED; upstream debug simulator archive architecture mismatch remains separate.",
+          "physical_device": "UNVERIFIED",
+          "total_command_budget_seconds": 30.0,
+          "commands": [],
+          "host": {
+            "system": "Linux",
+            "machine": "x86_64",
+            "platform": "Linux-6.18.55-x86_64-with-glibc2.41"
+          },
+          "failure": "Requires native ARM macOS; no test skip",
+          "seconds": 0.001506811000581365
+        }
+      }
+    }
+  ]
+}

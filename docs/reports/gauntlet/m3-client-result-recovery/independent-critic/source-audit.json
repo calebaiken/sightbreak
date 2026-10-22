@@ -1,0 +1,67 @@
+{
+  "observed_utc_ns": 1792653749597545663,
+  "pull_request": {
+    "number": 18,
+    "url": "https://github.com/calebaiken/sightbreak/pull/18",
+    "head": "ccd0955a2cf5d8bcad4e9e9e2fba8ad399591f5e",
+    "base": "d2439acdd5f73df7bae5ada62ee1e3dec2cf30db",
+    "state": "open",
+    "draft": true
+  },
+  "candidate": "79e076ed83651aea3ff8e439a64c0f979d35ecf2",
+  "baseline": "b97fd81b0f10f45bda92f4a873314b0d270086db",
+  "candidate_status": "",
+  "candidate_game_tree": "1f3616afdfaaed0fb7c9ffbd0aa8e4947f7d2a48",
+  "baseline_game_tree": "41abd17652a89c554463faa5b216a7af59aec0e7",
+  "baseline_files_equal_pr18_base": {
+    "game/scripts/ui/economy_ui.gd": true,
+    "game/scripts/ui/economy_api.gd": true,
+    "game/tests/armory_state_test.gd": true,
+    "game/tests/economy_recovery_test.gd": true,
+    "game/tests/native_economy_test.gd": true
+  },
+  "production_equal_original_pr18": {
+    "game/scripts/ui/economy_ui.gd": true,
+    "game/scripts/ui/transaction_journal.gd": true
+  },
+  "boundary_trees_unchanged": {
+    "backend": true,
+    "server": true
+  },
+  "changed_paths": [
+    "docs/reports/gauntlet/m3-client-result-recovery/CRITERIA.md",
+    "docs/reports/gauntlet/m3-client-result-recovery/RUNTIME_PLAN.md",
+    "game/scripts/ui/economy_ui.gd",
+    "game/scripts/ui/transaction_journal.gd",
+    "game/scripts/ui/transaction_journal.gd.uid",
+    "game/tests/armory_state_test.gd",
+    "game/tests/economy_recovery_test.gd",
+    "game/tests/native_economy_test.gd",
+    "game/tests/receipt_lifecycle_probe.gd",
+    "game/tests/receipt_lifecycle_probe.gd.uid",
+    "game/tests/transaction_crash_probe.gd",
+    "game/tests/transaction_crash_probe.gd.uid",
+    "game/tests/transaction_journal_test.gd",
+    "game/tests/transaction_journal_test.gd.uid",
+    "game/tests/transaction_lock_probe.gd",
+    "game/tests/transaction_lock_probe.gd.uid",
+    "scripts/test_transaction_restart_oracle.py",
+    "scripts/validate.sh",
+    "scripts/validate_transaction_restart.py"
+  ],
+  "provenance": "79e076ed83651aea3ff8e439a64c0f979d35ecf2\nCaleb Aiken <calebaiken07@gmail.com>\ntest: retain failed receipt process output and verify forced kills\n\na9aa5e00ceffba1508b82a1abee8ecfb382f5ec5\nCaleb Aiken <calebaiken07@gmail.com>\ntest: qualify original receipt recovery across retry logout and restart\n\nAdd source-bound private fixture state and strict route, raw-body, authority-result and debit observations. Preserve PR18 runtime bytes and the existing strict transport gate; register the journal suite for the final aggregate.\n\n7f4d360b5542eed6a22b838bfc71060b3fc490df\ncalebaiken <calebaiken07@gmail.com>\ntest: kill rejected recovery before native teardown\n\n(cherry picked from commit e0cd1e4f746dcb5cdec9e977e672ba4b2e88658a)\n\n499b3054876c16be4734b6d0fd01f9c27b827fce\ncalebaiken <calebaiken07@gmail.com>\ntest: preserve receipt probe integer consent and killed-socket capture\n\nAdapt only the crash-probe and harness hunks from 223ec0cdcb4549503734abe6b156b057b01b577a. Keep the existing strict armory closed-port transport assertion; its Windows calibration is outside this source-only adaptation.\n\nce2b1287eab3f476a2739b88dd6d1fcfdd5b1971\ncalebaiken <calebaiken07@gmail.com>\nfix: release stale receipt claims and enforce crash ordering\n\n(cherry picked from commit 7b6f379a3f8c809d0985a64e883cbadfdd78d135)\n\n5d04aa62b7a1d31a868a7239cf3793166b74cf2b\ncalebaiken <calebaiken07@gmail.com>\nfix: serialize durable receipt owners and preserve unresolved retries\n\n(cherry picked from commit cda63723e6d9fe43e13fb39aa029b54cc63ecf24)\n\na0c413aa05b75549106711c0c8a728b6976a17c5\ncalebaiken <calebaiken07@gmail.com>\nfix: persist client receipts before keyed economy requests\n\n(cherry picked from commit ac48342e9aa9f557a23eb6fa5c67b3549b1d0ee7)",
+  "hashes": {
+    "game/scripts/ui/economy_ui.gd": "a6580d176216af48c447eacaf3d293d7862fb8af0f56db7a4a3b9fd4398f450b",
+    "game/scripts/ui/transaction_journal.gd": "3a7e060f7d5c3a65f4b983edf3c56d008cb070a8948bdcb128681bd4ce562d03",
+    "scripts/validate_transaction_restart.py": "9a6c82d7267eab42f084d47c3dc96066d648e19849b94a4e83ad6510716435a4",
+    "game/tests/transaction_crash_probe.gd": "a7f8cdf098c758eca347d2239a1416d403fadaa19c435e603290d886dc475797",
+    "game/tests/receipt_lifecycle_probe.gd": "544d2b6b7907c8bd1e90361d077c6ba4123b3e54371e6f9668ea7266a353bf46",
+    "game/tests/transaction_journal_test.gd": "5d459648d8794ae0eaa024ed993a52e71144523bbf783f5196e42d370599d38b",
+    "scripts/validate.sh": "896601b49bb48cef0487d161d9ef1338448afcd5e0e37cdded59bf6fbb62fc93"
+  },
+  "engine": {
+    "path": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+    "sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+    "bytes": 146414384
+  }
+}

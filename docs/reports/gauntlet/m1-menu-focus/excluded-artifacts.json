@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "excluded_artifacts": [
+    {
+      "original_path": "/workspace/sightbreak-menu-review/builds/menu-critic/clean-export/linux/sightbreak.sh",
+      "relative_path": "clean-export/linux/sightbreak.sh",
+      "bytes": 125,
+      "sha256": "a0db3f835983003639ef11b7738df7c53ec7ff16eabfb826b6f4b1fce507f411",
+      "reason": "generated app launcher; receipt retained"
+    },
+    {
+      "original_path": "/workspace/sightbreak-menu-review/builds/menu-critic/clean-export/linux/sightbreak.x86_64",
+      "relative_path": "clean-export/linux/sightbreak.x86_64",
+      "bytes": 84221896,
+      "sha256": "8680ef47aab4e024eee0d5581e804fd4e08a76aa61a2cc2456df83c27f3c836b",
+      "reason": "compiled app ELF"
+    },
+    {
+      "original_path": "/workspace/sightbreak-menu-baseline/builds/menu-critic/clean-export/linux/sightbreak.x86_64",
+      "bytes": 84221848,
+      "sha256": "3a0d35a55d6ddc1cb461b1bb1087b2f562ada61ae82b4355d189151e6020cc4f",
+      "reason": "compiled baseline app ELF outside source evidence root; exact source receipt retained in baseline-export-receipts/source.json"
+    },
+    {
+      "original_path": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "bytes": 146414384,
+      "sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e",
+      "reason": "shared compiled Godot editor outside source evidence root; version/pinned download checksums retained by exact source scripts/toolchain.py"
+    }
+  ],
+  "excluded_cache_roots": [
+    {
+      "path": "/workspace/sightbreak-menu-review/builds/menu-critic/native-baseline/state",
+      "reason": "font/Mesa/shader caches; raw state/.../logs/godot.log is retained",
+      "files": 120,
+      "bytes": 11953639
+    },
+    {
+      "path": "/workspace/sightbreak-menu-review/builds/menu-critic/native-candidate/state",
+      "reason": "font/Mesa/shader caches; raw state/.../logs/godot.log is retained",
+      "files": 120,
+      "bytes": 11953639
+    },
+    {
+      "path": "/workspace/sightbreak-menu-review/builds/menu-critic/native-candidate-r2/state",
+      "reason": "font/Mesa/shader caches; raw state/.../logs/godot.log is retained",
+      "files": 122,
+      "bytes": 13909038
+    },
+    {
+      "path": "/workspace/sightbreak-menu-review/builds/menu-critic/native-candidate-r3/state",
+      "reason": "font/Mesa/shader caches; raw state/.../logs/godot.log is retained",
+      "files": 122,
+      "bytes": 14211864
+    }
+  ],
+  "downloaded_template_archives": "No tools directory, downloaded archive or export template payload was selected; setup/export logs and exact source receipts are retained.",
+  "license_texts": "GODOT-LICENSE.txt and GODOT-COPYRIGHT.txt are retained as plain text so every entry in the original historical117-file sha256.txt remains checkable.",
+  "raw_native_state_logs": "All four state/.../logs/godot.log raw logs are retained; no other state files are admitted."
+}

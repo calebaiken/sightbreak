@@ -1,0 +1,37 @@
+[
+  {
+    "name": "xvfb",
+    "command": [
+      "/workspace/tools/xvfb/usr/bin/Xvfb",
+      ":122",
+      "-screen",
+      "0",
+      "1280x720x24",
+      "-nolisten",
+      "tcp"
+    ],
+    "pid": 137043,
+    "started_seconds": 0.27406624799914425,
+    "exit_code": 0
+  },
+  {
+    "name": "client",
+    "command": [
+      "/workspace/sightbreak-linux-frame-sampling/builds/linux/sightbreak.x86_64",
+      "--audio-driver",
+      "Dummy",
+      "--accessibility",
+      "disabled",
+      "--accessibility-driver",
+      "dummy",
+      "--",
+      "--offline-validation",
+      "--offline-trace-dir=/workspace/sightbreak-linux-frame-sampling/.local/linux-frame-sampling/runtime-r1/native-plant/trace",
+      "--offline-scenario=plant",
+      "--offline-seed=42"
+    ],
+    "pid": 137048,
+    "started_seconds": 0.3843152959998406,
+    "exit_code": -15
+  }
+]

@@ -1,0 +1,157 @@
+{
+  "candidate": "aaa192903a8e5e333abcf9ada7741e13145a123e",
+  "scope": "Pure declared scheduling; neither native execution nor pixel evidence",
+  "controls": [
+    {
+      "case": "drawn_frames_regresses_inside_frame_wait",
+      "false_accepted": true,
+      "sample_history": [
+        {
+          "label": "Named living buy phase: declared-only",
+          "driver_seconds": 0.1,
+          "wall_msec": 162604,
+          "drawn_frames": 1142,
+          "simulation_tick": 6814
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.2,
+          "wall_msec": 162704,
+          "drawn_frames": 1143,
+          "simulation_tick": 6815
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.30000000000000004,
+          "wall_msec": 162804,
+          "drawn_frames": 1142,
+          "simulation_tick": 6815
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.4,
+          "wall_msec": 162904,
+          "drawn_frames": 1144,
+          "simulation_tick": 6816
+        },
+        {
+          "label": "Fresh named context immediately before capture: declared-only",
+          "driver_seconds": 0.5,
+          "wall_msec": 163004,
+          "drawn_frames": 1145,
+          "simulation_tick": 6817
+        },
+        {
+          "label": "Fresh named context after raw capture: declared-only",
+          "driver_seconds": 0.6,
+          "wall_msec": 163104,
+          "drawn_frames": 1146,
+          "simulation_tick": 6818
+        }
+      ],
+      "receipt_counters": {
+        "acknowledged": 1142,
+        "ready": 1144,
+        "before_capture": 1145,
+        "after_capture": 1146
+      }
+    },
+    {
+      "case": "simulation_tick_regresses_inside_frame_wait",
+      "false_accepted": true,
+      "sample_history": [
+        {
+          "label": "Named living buy phase: declared-only",
+          "driver_seconds": 0.1,
+          "wall_msec": 162604,
+          "drawn_frames": 1142,
+          "simulation_tick": 6814
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.2,
+          "wall_msec": 162704,
+          "drawn_frames": 1143,
+          "simulation_tick": 6815
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.30000000000000004,
+          "wall_msec": 162804,
+          "drawn_frames": 1143,
+          "simulation_tick": 6814
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.4,
+          "wall_msec": 162904,
+          "drawn_frames": 1144,
+          "simulation_tick": 6816
+        },
+        {
+          "label": "Fresh named context immediately before capture: declared-only",
+          "driver_seconds": 0.5,
+          "wall_msec": 163004,
+          "drawn_frames": 1145,
+          "simulation_tick": 6817
+        },
+        {
+          "label": "Fresh named context after raw capture: declared-only",
+          "driver_seconds": 0.6,
+          "wall_msec": 163104,
+          "drawn_frames": 1146,
+          "simulation_tick": 6818
+        }
+      ],
+      "receipt_counters": {
+        "acknowledged": 6814,
+        "ready": 6816,
+        "before_capture": 6817,
+        "after_capture": 6818
+      }
+    },
+    {
+      "case": "post_capture_accepts_state_published_before_capture",
+      "false_accepted": true,
+      "publication_driver_seconds": 0.4,
+      "capture_begin_driver_seconds": 0.5,
+      "capture_end_driver_seconds": 0.6,
+      "declared_context_during_capture": {
+        "phase": "live",
+        "local_actor_alive": false,
+        "scope": "Declared context loss; no image was captured"
+      },
+      "accepted_after_equals_pre_capture_publication": true,
+      "sample_history": [
+        {
+          "label": "Named living buy phase: declared-only",
+          "driver_seconds": 0.1,
+          "wall_msec": 162604,
+          "drawn_frames": 1142,
+          "simulation_tick": 6814
+        },
+        {
+          "label": "Two drawn frames before named capture: declared-only",
+          "driver_seconds": 0.2,
+          "wall_msec": 162804,
+          "drawn_frames": 1144,
+          "simulation_tick": 6816
+        },
+        {
+          "label": "Fresh named context immediately before capture: declared-only",
+          "driver_seconds": 0.30000000000000004,
+          "wall_msec": 162904,
+          "drawn_frames": 1145,
+          "simulation_tick": 6817
+        },
+        {
+          "label": "Fresh named context after raw capture: declared-only",
+          "driver_seconds": 0.7,
+          "wall_msec": 163004,
+          "drawn_frames": 1146,
+          "simulation_tick": 6818
+        }
+      ]
+    }
+  ]
+}

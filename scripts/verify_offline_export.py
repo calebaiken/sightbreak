@@ -31,6 +31,161 @@ import toolchain
 
 
 REFERENCE = (1280, 720)
+MAX_OCR_STDOUT_BYTES = 2 * 1024 * 1024
+
+
+def read_hud_pixels(path, ocr):
+    with Image.open(path) as image:
+        def text(box, health_contrast=False, psm=6):
+            # Crop coordinates describe the reference layout; raw captures
+            # retain the actual native client dimensions and pixels.
+            crop = image.crop(tuple(round(value * image.size[index % 2] / REFERENCE[index % 2])
+                                    for index, value in enumerate(box)))
+            crop = crop.resize(((box[2] - box[0]) * 3, (box[3] - box[1]) * 3))
+            if health_contrast:
+                # Critical health is red. Ordinary grayscale OCR can erase
+                # that text against the dark HUD; analyze channel brightness
+                # without changing the original native screenshot.
+                red, green, blue = crop.convert('RGB').split()
+                crop = ImageChops.lighter(ImageChops.lighter(red, green), blue).point(lambda value: 0 if value > 145 else 255)
+            return ocr(crop, psm, Path(path).stem + ':' + str(box))
+        status = text((0, 630, 450, 720), health_contrast=True)
+        health = re.search(r'(?<!\d)(\d{1,3})\s*[^A-Z0-9]*HEALTH', status.upper())
+        # One text line: exclude the grenade inventory beneath the ammunition.
+        ammo_text = text((980, 648, 1280, 680), psm=7)
+    match = re.search(r'(\d+)\s*/\s*(\d+)', ammo_text)
+    if health is None or not 0 < int(health[1]) <= 100 or 'ELIMINATED' in status.upper() or 'SPECTATING' in status.upper() or match is None:
+        raise RuntimeError('Rendered living-player/ammunition check failed: ' + repr((status, ammo_text)))
+    return {'health': int(health[1]), 'ammo': int(match[1]), 'reserve': int(match[2]),
+            'status_ocr': status, 'ammo_ocr': ammo_text}
+
+
+def exact_ocr_caption(rows, caption):
+    """Locate one complete caption on one OCR line; ambiguous/missing fails."""
+    lines = {}
+    for row in rows:
+        identity = tuple(row.get(key) for key in ('page_num', 'block_num', 'par_num', 'line_num'))
+        if any(value in (None, '') for value in identity):
+            continue
+        lines.setdefault(identity, []).append(row)
+    matches = []
+    for line in lines.values():
+        line.sort(key=lambda row: row['left'])
+        if [row['text'].upper() for row in line] != caption.upper().split():
+            continue
+        left, top = min(row['left'] for row in line), min(row['top'] for row in line)
+        right = max(row['left'] + row['width'] for row in line)
+        bottom = max(row['top'] + row['height'] for row in line)
+        matches.append({'left': left, 'top': top, 'width': right-left, 'height': bottom-top, 'text': caption})
+    return matches[0] if len(matches) == 1 else None
+
+
+def focus_controls_released(state):
+    # Neutral commands also occur while the held-input safety guard is engaged.
+    # Wait for the controller itself to acknowledge the physical release.
+    return (state.get('ui', {}).get('waiting_for_input_release') is False
+            and state.get('local_input', {}).get('move') == [0, 0]
+            and state.get('local_input', {}).get('fire') is False)
+
+
+def require_living_capture_phase(state, actor_id, round_number):
+    """Validate the named buy HUD; a later life or stale menu cannot replace it."""
+    actor, ui = state.get('local_actor', {}), state.get('ui', {})
+    if (state.get('schema') != 1 or isinstance(state.get('schema'), bool)
+            or state.get('scope') != 'debug_offline_read_only_observation'
+            or state.get('scenario') != 'standard' or state.get('time_scale') != 1
+            or isinstance(state.get('time_scale'), bool)
+            or state.get('phase') != 'buy' or state.get('round_number') != round_number
+            or isinstance(state.get('round_number'), bool) or actor.get('id') != actor_id
+            or isinstance(actor.get('id'), bool) or actor.get('alive') is not True
+            or isinstance(actor.get('health'), bool) or not isinstance(actor.get('health'), (int, float))
+            or not 0 < actor['health'] <= 100 or ui.get('screen') != 'game'
+            or ui.get('focused') is not True or ui.get('paused') is not False
+            or ui.get('scoreboard_visible') is not False):
+        raise RuntimeError('Named capture lost its living buy-phase actor/round/focus context')
+    for field in ('drawn_frames', 'wall_msec', 'simulation_tick'):
+        value = state.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            raise RuntimeError('Named capture requires a valid nonnegative integer ' + field)
+
+
+def capture_living_phase(name, *, actor_id, round_number, after, until,
+                         observed, capture, binding, expected_binding, receipt,
+                         clock=time.monotonic):
+    """Fence two real drawn frames inside the caller's existing absolute budget.
+
+    Callbacks use the native controller in production. Declared observation
+    sequences can test this scheduling logic but cannot establish rendered pixels.
+    """
+    receipt.update(capture=name, expected_actor_id=actor_id, expected_round=round_number,
+                   expected_phase='buy', expected_binding=expected_binding,
+                   absolute_deadline_monotonic=until, additional_drawn_frames_required=2)
+
+    def budget():
+        value = until - clock()
+        if value <= 0:
+            raise TimeoutError('Original transition budget expired before named capture: ' + name)
+        return value
+
+    def require_binding():
+        current = binding()
+        if current != expected_binding:
+            receipt['rejected_binding'] = current
+            raise RuntimeError('Named capture changed source, native process, trace, or loaded settings: ' + name)
+        budget()
+        return current
+
+    def acknowledge(state):
+        if not state:
+            return False
+        # Preserve the actual old POST/dead state while the natural round turns.
+        # The reopened initial event can also precede build_hud on the menu.
+        number = state.get('round_number')
+        if isinstance(number, int) and not isinstance(number, bool) and 1 <= number < round_number:
+            return False
+        if number == round_number and state.get('ui', {}).get('screen') == 'menu':
+            return False
+        require_living_capture_phase(state, actor_id, round_number)
+        return True
+
+    require_binding()
+    acknowledged = observed(acknowledge, budget(), 'Named living buy phase: ' + name, after)
+    receipt['acknowledged'] = acknowledged
+    latest_render_observation = acknowledged
+
+    def rendered(state):
+        nonlocal latest_render_observation
+        require_living_capture_phase(state, actor_id, round_number)
+        if any(state[field] < latest_render_observation[field]
+               for field in ('drawn_frames', 'wall_msec', 'simulation_tick')):
+            receipt['counter_regression'] = {'previous': latest_render_observation, 'current': state}
+            raise RuntimeError('Named capture observation or frame counter moved backward: ' + name)
+        latest_render_observation = state
+        return (state['wall_msec'] > acknowledged['wall_msec']
+                and state['drawn_frames'] >= acknowledged['drawn_frames'] + 2)
+
+    ready = observed(rendered, budget(), 'Two drawn frames before named capture: ' + name,
+                     acknowledged['wall_msec'])
+    receipt['ready'] = ready
+
+    before_capture = observed(rendered, budget(), 'Fresh named context immediately before capture: ' + name,
+                              ready['wall_msec'])
+    receipt['before_capture'] = before_capture
+    receipt['binding_before_capture'] = require_binding()
+    budget()
+    capture(name)
+
+    # Source/profile verification can take time before capture. Read a barrier
+    # after the actual screenshot, then require another publication beyond it;
+    # a state already available before capture cannot be the sole after proof.
+    barrier = observed(rendered, budget(), 'Observation barrier after raw capture: ' + name,
+                       before_capture['wall_msec'])
+    receipt['after_capture_barrier'] = barrier
+    receipt['after_capture'] = observed(rendered, budget(), 'Fresh named context beyond post-capture barrier: ' + name,
+                                        barrier['wall_msec'])
+    receipt['binding_after_capture'] = require_binding()
+    receipt['remaining_original_budget_seconds'] = budget()
+    return receipt
 
 
 def main():
@@ -85,6 +240,12 @@ def main():
         value = deadline - time.monotonic()
         if value <= 0:
             raise TimeoutError('Whole offline-input flow deadline exceeded')
+        return value
+
+    def transition_budget(until, label):
+        value = min(remaining(), until - time.monotonic())
+        if value <= 0:
+            raise TimeoutError('Original transition budget expired: ' + label)
         return value
 
     def pause(seconds):
@@ -166,47 +327,39 @@ def main():
         image.save(data, format='PNG')
         entry = {'command': command, 'label': label, 'started_seconds': time.monotonic() - started}
         ocr_commands.append(entry)
+        def retain_stdout(payload, complete):
+            # Raw .log files remain in the existing bounded QA receipt pack.
+            # Keep bytes even on timeout, without letting a receipt grow freely.
+            retained = payload[:MAX_OCR_STDOUT_BYTES]
+            path = out / 'ocr-stdout' / (str(len(ocr_commands)).zfill(3) + '.log')
+            path.parent.mkdir(exist_ok=True)
+            path.write_bytes(retained)
+            entry.update(stdout_path=path.relative_to(out).as_posix(), stdout_total_bytes=len(payload),
+                         stdout_retained_bytes=len(retained), stdout_sha256=hashlib.sha256(retained).hexdigest(),
+                         stdout_complete=complete and len(retained) == len(payload),
+                         stdout_truncated=len(retained) != len(payload))
         with (out / 'ocr-stderr.log').open('ab') as stderr:
             stderr.write(('\nOCR ' + label + '\n').encode('utf-8'))
             try:
                 completed = subprocess.run(command, input=data.getvalue(), stdout=subprocess.PIPE, stderr=stderr,
                                            timeout=min(20, remaining()))
-            except subprocess.TimeoutExpired:
+            except subprocess.TimeoutExpired as error:
+                retain_stdout(error.output or b'', False)
                 entry.update(timed_out=True, exit_code=None)
                 raise
+            else:
+                retain_stdout(completed.stdout, True)
+                entry['exit_code'] = completed.returncode
             finally:
                 entry['finished_seconds'] = time.monotonic() - started
                 (out / 'ocr-commands.json').write_text(json.dumps(ocr_commands, indent=2) + '\n')
-        entry['exit_code'] = completed.returncode
+        if entry['stdout_truncated']:
+            raise RuntimeError('OCR stdout exceeded its bounded receipt budget; prefix retained')
         if completed.returncode:
             raise RuntimeError('Tesseract failed: ' + label + '; raw stderr retained')
         return completed.stdout.decode('utf-8', errors='replace')
 
-    def read_hud_pixels(name):
-        with Image.open(out / (name + '.png')) as image:
-            def text(box, health_contrast=False):
-                # Crop coordinates describe the reference layout; raw captures
-                # retain the actual native client dimensions and pixels.
-                crop = image.crop(tuple(round(value * image.size[index % 2] / REFERENCE[index % 2])
-                                        for index, value in enumerate(box)))
-                crop = crop.resize(((box[2] - box[0]) * 3, (box[3] - box[1]) * 3))
-                if health_contrast:
-                    # Critical health is red. Ordinary grayscale OCR can erase
-                    # that text against the dark HUD; analyze channel brightness
-                    # without changing the original native screenshot.
-                    red, green, blue = crop.convert('RGB').split()
-                    crop = ImageChops.lighter(ImageChops.lighter(red, green), blue).point(lambda value: 0 if value > 145 else 255)
-                return ocr(crop, 6, name + ':' + str(box))
-            status = text((0, 630, 450, 720), health_contrast=True)
-            health = re.search(r'(?<!\d)(\d{1,3})\s*[^A-Z0-9]*HEALTH', status.upper())
-            ammo_text = text((980, 625, 1280, 710))
-        match = re.search(r'(\d+)\s*/\s*(\d+)', ammo_text)
-        if health is None or not 0 < int(health[1]) <= 100 or 'ELIMINATED' in status.upper() or 'SPECTATING' in status.upper() or match is None:
-            raise RuntimeError('Rendered living-player/ammunition check failed: ' + repr((status, ammo_text)))
-        return {'health': int(health[1]), 'ammo': int(match[1]), 'reserve': int(match[2]),
-                'status_ocr': status, 'ammo_ocr': ammo_text}
-
-    def read_hud(name):
+    def read_hud(name, *, resume_after=True, require_context=None):
         # Analyze the already captured native pixels while ordinary Escape
         # pause protects the living player from time spent in external OCR.
         native = ui.diagnostics()
@@ -214,14 +367,23 @@ def main():
             raise RuntimeError('HUD analysis requires physically released controls')
         before_analysis = offline_observation()
         actor = before_analysis.get('local_actor', {})
-        if before_analysis.get('ui', {}).get('paused') is True:
-            return read_hud_pixels(name)
         if (before_analysis.get('ui', {}).get('screen') != 'game'
                 or before_analysis.get('ui', {}).get('focused') is not True
                 or before_analysis.get('time_scale') != 1 or actor.get('alive') is not True):
             raise RuntimeError('HUD analysis requires the actual living, focused offline player')
+        if require_context is not None:
+            require_context(before_analysis)
+        if before_analysis.get('ui', {}).get('paused') is True:
+            reading = read_hud_pixels(out / (name + '.png'), ocr)
+            if require_context is not None:
+                after_analysis = observed(lambda state: state.get('ui', {}).get('paused') is True,
+                                          5, 'Fresh existing pause after saved-HUD OCR: ' + name, before_analysis['wall_msec'])
+                require_context(after_analysis)
+            return reading
 
         def require_analysis_context(state):
+            if require_context is not None:
+                require_context(state)
             current = state.get('local_actor', {})
             if (state.get('phase') != before_analysis['phase']
                     or state.get('round_number') != before_analysis['round_number'] or state.get('time_scale') != 1
@@ -250,7 +412,8 @@ def main():
                 held_keys.discard('Escape')
                 trace('key_after', key='Escape', down=False, scope='saved_hud_analysis')
 
-        receipt = {'capture': name, 'before': before_analysis, 'scope': 'ordinary native pause for saved-pixel OCR'}
+        receipt = {'capture': name, 'before': before_analysis, 'scope': 'ordinary native pause for saved-pixel OCR',
+                   'resume_after_analysis': resume_after}
         result.setdefault('hud_analysis_pauses', []).append(receipt)
         try:
             analysis_escape()
@@ -258,7 +421,7 @@ def main():
                                     10, 'Native pause before saved-HUD OCR: ' + name, before_analysis['wall_msec'])
             require_analysis_context(paused_state)
             receipt['paused'] = paused_state
-            reading = read_hud_pixels(name)
+            reading = read_hud_pixels(out / (name + '.png'), ocr)
             after_analysis = observed(lambda state: state.get('ui', {}).get('paused') is True,
                                       5, 'Fresh paused observation after saved-HUD OCR: ' + name, paused_state['wall_msec'])
             require_analysis_context(after_analysis)
@@ -268,7 +431,7 @@ def main():
             receipt['after_analysis'] = after_analysis
             return reading
         finally:
-            if client.poll() is None and offline_observation().get('ui', {}).get('paused') is True:
+            if resume_after and client.poll() is None and offline_observation().get('ui', {}).get('paused') is True:
                 analysis_escape(cleanup=True)
                 resumed_state = observed(lambda state: state.get('ui', {}).get('paused') is False,
                                          10, 'Explicit native resume after saved-HUD OCR: ' + name)
@@ -281,8 +444,10 @@ def main():
         # Analysis only: scale text coordinates into the shared1280x720 layout.
         # The saved native screenshot itself is never resized or thresholded.
         with Image.open(out / 'ocr-current.png') as native:
-            image = native.convert('L').point(lambda value: 0 if value > 145 else 255)
-            image = image.resize((REFERENCE[0] * 2, REFERENCE[1] * 2))
+            # Preserve native antialiasing while scaling. Saved-pixel replay
+            # read LEAYE when tiny native glyphs were thresholded first.
+            image = native.convert('L').resize((REFERENCE[0] * 2, REFERENCE[1] * 2))
+            image = image.point(lambda value: 0 if value > 145 else 255)
         raw = ocr(image, 11, 'current-native-ui')
         rows = [row for row in csv.DictReader(io.StringIO(raw), delimiter='\t') if row.get('text', '').strip()]
         for row in rows:
@@ -290,12 +455,20 @@ def main():
                 row[name] = int(row[name]) // 2
         return rows
 
-    def click_text(word):
-        row = next((row for row in ocr_words() if row['text'].upper() == word), None)
+    def click_text(word, *, caption=None, heading=None, require_context=None):
+        if require_context is not None:
+            require_context(offline_observation())
+        rows = ocr_words()
+        if heading is not None and exact_ocr_caption(rows, heading) is None:
+            raise RuntimeError('Native UI heading not found: ' + heading)
+        row = (exact_ocr_caption(rows, caption) if caption is not None
+               else next((row for row in rows if row['text'].upper() == word), None))
         if row is None:
             raise RuntimeError('Native UI text not found: ' + word)
+        if require_context is not None:
+            require_context(offline_observation())
         ui.click(row['left'] + row['width'] // 2, row['top'] + row['height'] // 2)
-        trace('click_text', text=word)
+        trace('click_text', text=word, caption=caption, heading=heading)
         pause(1)
 
     def client_has(message):
@@ -387,6 +560,16 @@ def main():
             wait_for(ready, seconds, label, client)
             trace('offline_observation', label=label, state=latest)
             return latest
+
+        def phase_capture_binding(*, loaded_event=None):
+            current = {'source': source(), 'process_pid': client.pid,
+                       'process_running': client.poll() is None,
+                       'trace_directory': str(initial_trace.resolve())}
+            if loaded_event is not None:
+                with (initial_trace / 'events.jsonl').open(encoding='utf-8') as stream:
+                    current['loaded_initial_event'] = json.loads(stream.readline())
+                current['stored_profile'] = json.loads(saved_path.read_text(encoding='utf-8'))
+            return current
 
         initial_offline = observed(lambda state: state.get('ui', {}).get('screen') == 'game' and bool(state.get('local_actor')),
                                    30, 'Real offline match readiness after one Deploy click')
@@ -518,8 +701,16 @@ def main():
         pause(.8)
         capture('06b-scoreboard')
         key('Tab', False)
-        wait_for(lambda: client_has('MATCH: Round 2'), 160, 'Natural exported round completion', client)
-        capture('06c-next-round')
+        next_round_until = min(deadline, time.monotonic() + 160)
+        wait_for(lambda: client_has('MATCH: Round 2'), transition_budget(next_round_until, 'Natural exported round completion'),
+                 'Natural exported round completion', client)
+        next_round_receipt = {'transition_watchdog_seconds': 160}
+        result.setdefault('phase_capture_fences', {})['06c-next-round'] = next_round_receipt
+        capture_living_phase('06c-next-round', actor_id=initial_offline['local_actor']['id'], round_number=2,
+                             after=initial_offline['wall_msec'], until=next_round_until,
+                             observed=observed, capture=capture, binding=phase_capture_binding,
+                             expected_binding={'source': before, 'process_pid': client.pid, 'process_running': True,
+                                               'trace_directory': str(initial_trace.resolve())}, receipt=next_round_receipt)
         tap('b')
         capture('06d-funded-requisition')
         click_text('VECTORLINE')
@@ -536,10 +727,13 @@ def main():
             raise RuntimeError('Native sidearm switch did not reach the HUD')
         tap('1')
         capture('06g-switched-primary')
-        primary_hud = read_hud('06g-switched-primary')
+        # The next action is FIELD MENU. Retain the ordinary native pause
+        # established for this OCR rather than briefly exposing the player to
+        # combat between two consecutive uses of the same menu.
+        primary_hud = read_hud('06g-switched-primary', resume_after=False)
+        settings_pause = result['hud_analysis_pauses'][-1]['after_analysis']
         if primary_hud['ammo'] != 30 or primary_hud['reserve'] != 120:
             raise RuntimeError('Native primary switch did not restore the purchased weapon')
-        tap('Escape')
         capture('07-field-menu')
         click_text('SETTINGS')
         capture('07b-field-settings')
@@ -552,11 +746,63 @@ def main():
         saved = json.loads(saved_path.read_text(encoding='utf-8'))
         if saved['scope'] != 'offline_training' or saved['settings']['sensitivity'] == 0.0028:
             raise RuntimeError('Native settings input was not persisted')
-        tap('Escape')
+        # Settings must inherit the very same living paused transaction. A menu
+        # that only hides input but leaves the offline authority running fails.
+        settings_ready = observed(lambda state: state.get('ui', {}).get('paused') is True,
+                                  5, 'Fresh paused player after native settings change', settings_pause['wall_msec'])
+        def require_resume_context(state):
+            actor, original = state.get('local_actor', {}), settings_pause['local_actor']
+            if (state.get('ui', {}).get('screen') != 'game' or state.get('ui', {}).get('focused') is not True
+                    or state.get('time_scale') != 1 or state.get('phase') != settings_pause['phase']
+                    or state.get('round_number') != settings_pause['round_number'] or actor.get('alive') is not True
+                    or any(actor.get(field) != original.get(field) for field in ('id', 'weapon', 'ammo', 'reserve'))):
+                raise RuntimeError('Explicit resume changed living player, focus, round, weapon, ammunition, or simulation speed')
+        require_resume_context(settings_ready)
+        if (settings_ready.get('elapsed') != settings_pause.get('elapsed')
+                or settings_ready['local_actor'].get('health') != settings_pause['local_actor'].get('health')):
+            raise RuntimeError('Ordinary offline field settings did not retain the paused player')
+        # A physical Escape is acknowledged by the actual game. The old generic
+        # tap left the player idle in combat for one second before any capture.
+        # Acknowledgment and the rendered-frame fence share one existing 10s
+        # native transition budget; all surrounding deadlines stay unchanged.
+        resume_until = min(deadline, time.monotonic() + 10)
+        def resume_budget():
+            value = resume_until - time.monotonic()
+            if value <= 0:
+                raise TimeoutError('Explicit native resume and rendered-frame acknowledgement')
+            return value
+        def resume_acknowledged(state):
+            if not state:
+                return False
+            require_resume_context(state)
+            return state.get('ui', {}).get('paused') is False
+        key('Escape', True)
+        try:
+            resumed = observed(resume_acknowledged, resume_budget(),
+                               'Actual living player explicitly resumes after field settings', settings_ready['wall_msec'])
+        finally:
+            # Always physically release Escape, including a failed/dead context.
+            ui.key('Escape', False)
+            held_keys.discard('Escape')
+            trace('key_after', key='Escape', down=False, scope='field_settings_resume')
+        resumed_frames = resumed.get('drawn_frames')
+        if not isinstance(resumed_frames, int) or isinstance(resumed_frames, bool) or resumed_frames < 0:
+            raise RuntimeError('Explicit native resume requires a valid drawn-frame observation')
+        resumed_ready = observed(lambda state: resume_acknowledged(state)
+                                 and state.get('drawn_frames', -1) >= resumed_frames + 2,
+                                 resume_budget(), 'Two drawn frames after explicit native settings resume', resumed['wall_msec'])
         capture('07d-explicit-resume')
-        resumed_hud = read_hud('07d-explicit-resume')
-        tap('Escape')
-        click_text('LEAVE')
+        resumed_after_capture = offline_observation()
+        require_resume_context(resumed_after_capture)
+        resumed_hud = read_hud('07d-explicit-resume', resume_after=False, require_context=require_resume_context)
+        result['native_settings_resume'] = {'paused_before_settings': settings_pause, 'paused_after_settings': settings_ready,
+                                             'resumed': resumed, 'capture_ready': resumed_ready, 'after_capture': resumed_after_capture,
+                                             'transition_watchdog_seconds': 10, 'same_living_player_required': True}
+        def require_leave_context(state):
+            require_resume_context(state)
+            if state.get('ui', {}).get('paused') is not True:
+                raise RuntimeError('Native LEAVE input requires the same living paused field menu')
+        click_text('LEAVE', caption='LEAVE MATCH', heading='FIELD MENU', require_context=require_leave_context)
         wait_for(ui.menu_visible, 30, 'Return from offline match', client)
         capture('08-return-menu')
         ui.request_close()
@@ -582,16 +828,26 @@ def main():
         trace('reopened_deploy_click_before', x=248, y=319)
         ui.click(248, 319)
         trace('reopened_deploy_click_after', x=248, y=319)
-        wait_for(lambda: (loaded_trace / 'events.jsonl').is_file(), 30,
+        loaded_until = min(deadline, time.monotonic() + 30)
+        wait_for(lambda: (loaded_trace / 'events.jsonl').is_file(), transition_budget(loaded_until, 'Reopened profile load'),
                  'Reopened process loaded profile into ordinary offline match', reopened)
         with (loaded_trace / 'events.jsonl').open(encoding='utf-8') as stream:
             loaded = json.loads(stream.readline())
         if loaded.get('initial_conditions') != 'stock_spawns_teams_random_seeds' or loaded.get('initial_profile') != saved:
             raise RuntimeError('Reopened process did not load saved settings/training')
-        capture('10-reopened-loaded-settings')
+        # The initial profile event is published before build_hud. Observe this
+        # reopened process, never the retired client's trace or last observation.
+        initial_trace = loaded_trace
+        loaded_receipt = {'transition_watchdog_seconds': 30}
+        result.setdefault('phase_capture_fences', {})['10-reopened-loaded-settings'] = loaded_receipt
+        capture_living_phase('10-reopened-loaded-settings', actor_id=loaded['local_actor']['id'], round_number=1,
+                             after=loaded['wall_msec'], until=loaded_until,
+                             observed=observed, capture=capture, binding=lambda: phase_capture_binding(loaded_event=loaded),
+                             expected_binding={'source': before, 'process_pid': reopened.pid, 'process_running': True,
+                                               'trace_directory': str(loaded_trace.resolve()),
+                                               'loaded_initial_event': loaded, 'stored_profile': saved}, receipt=loaded_receipt)
         # The earlier round already exercises weapons and settings. Prove
         # focus recovery with a living player in this new, ordinary stock match.
-        initial_trace = loaded_trace
         focus_start = observed(lambda state: state.get('ui', {}).get('focused') is True
                                and state.get('ui', {}).get('paused') is False
                                and state.get('time_scale') == 1
@@ -675,8 +931,7 @@ def main():
         finally:
             key('w', False)
             button(False)
-        released = observed(lambda state: state.get('local_input', {}).get('move') == [0, 0]
-                            and state.get('local_input', {}).get('fire') is False,
+        released = observed(focus_controls_released,
                             10, 'Released held focus-test controls', guarded['wall_msec'])
         require_focus_context(released)
         try:

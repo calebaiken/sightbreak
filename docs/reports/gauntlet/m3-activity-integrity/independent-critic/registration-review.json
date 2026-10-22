@@ -1,0 +1,5 @@
+{
+  "a9fbdf0_game_tree": "8428e992a11e1d3f2763a88435ad0bf985f2d716",
+  "b166863_game_tree": "8428e992a11e1d3f2763a88435ad0bf985f2d716",
+  "native_runner_followup_diff": "commit b166863993dfb228290eab3924c82265ffb92ac7\nAuthor: Caleb Aiken <calebaiken07@gmail.com>\nDate:   Thu Oct 22 05:17:04 2026 +0000\n\n    test: run activity and squad checks in native desktop suites\n\ndiff --git a/scripts/run_native_regressions.py b/scripts/run_native_regressions.py\nindex 038103a..c4cedb1 100644\n--- a/scripts/run_native_regressions.py\n+++ b/scripts/run_native_regressions.py\n@@ -21,7 +21,8 @@ from native_log import failed\n \n \n SUITES = ('actor', 'match', 'authority_order', 'state_privacy', 'movement_prediction', 'peer_lifecycle',\n-          'input_mode', 'menu_focus', 'offline_diagnostics', 'hud_objective_hint')\n+          'input_mode', 'menu_focus', 'offline_diagnostics', 'hud_objective_hint',\n+          'activity_provenance', 'bot_squad_symmetry')\n PROBE = '''extends SceneTree\n func _initialize() -> void:\n     var destination := \"\"\n"
+}

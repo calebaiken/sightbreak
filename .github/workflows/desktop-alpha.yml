@@ -4,6 +4,13 @@ on:
     branches: [codex/desktop-playability-p1]
     paths: ["game/**", "scripts/**", ".github/workflows/desktop-alpha.yml"]
   workflow_dispatch:
+    inputs:
+      lane:
+        description: Native qualification hosts
+        type: choice
+        required: true
+        default: all
+        options: [all, arm-macos-ios, windows, linux]
 permissions:
   contents: read
   actions: read
@@ -14,15 +21,7 @@ jobs:
       fail-fast: false
       max-parallel: 3
       matrix:
-        include:
-          - os: ubuntu-24.04
-            target: linux
-          - os: windows-latest
-            target: windows
-          - os: macos-15
-            target: macos
-          - os: macos-15-intel
-            target: macos
+        include: ${{ fromJSON(github.event_name == 'workflow_dispatch' && inputs.lane == 'linux' && '[{"os":"ubuntu-24.04","target":"linux"}]' || github.event_name == 'workflow_dispatch' && inputs.lane == 'windows' && '[{"os":"windows-latest","target":"windows"}]' || github.event_name == 'workflow_dispatch' && inputs.lane == 'arm-macos-ios' && '[{"os":"macos-15","target":"macos"}]' || '[{"os":"ubuntu-24.04","target":"linux"},{"os":"windows-latest","target":"windows"},{"os":"macos-15","target":"macos"},{"os":"macos-15-intel","target":"macos"}]') }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     env:
@@ -55,6 +54,10 @@ jobs:
         run: python scripts/test_build_manifest.py -v
       - name: Atomic observation reader filesystem semantics
         run: python scripts/test_native_observation.py -v
+      - name: Verify strict native menu captions
+        run: python scripts/test_offline_export_ocr.py -v
+      - name: QA receipt packaging controls
+        run: python scripts/test_package_qa_receipts.py -v
       - name: Export exact clean source
         id: export
         run: python scripts/export.py ${{ matrix.target }}
@@ -88,38 +91,37 @@ jobs:
         if: runner.os == 'Linux'
         run: xvfb-run -a python scripts/verify_builds.py --targets linux --graphical
       - name: Native authority and compatibility regressions
+        id: native_regressions
         if: always() && steps.export.outcome == 'success'
-        shell: python
+        run: python scripts/run_native_regressions.py --output builds/desktop-playability/regressions
+      - name: ARM Mac first failed leak suite diagnostic controls
+        id: macos_leak_diagnostic_controls
+        if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15' && steps.native_regressions.outcome == 'failure'
         run: |
-          import os, pathlib, subprocess, sys, json
-          sys.path.insert(0, 'scripts')
-          import toolchain
-          from native_log import failed
-          out = pathlib.Path(os.environ['SIGHTBREAK_BUILDS_DIR']) / 'regressions'
-          out.mkdir(parents=True)
-          receipts = []
-          for suite in ('actor', 'match', 'state_privacy', 'movement_prediction', 'peer_lifecycle', 'input_mode', 'offline_diagnostics', 'hud_objective_hint'):
-              command = toolchain.command('--headless', '--script', 'res://tests/' + suite + '_test.gd')
-              with (out / (suite + '.log')).open('w', encoding='utf-8') as log:
-                  environment = toolchain.environment()
-                  if suite in ('input_mode', 'offline_diagnostics'):
-                      environment['SIGHTBREAK_STATE_DIR'] = str((out / (suite + '-state')).resolve())
-                      if os.name == 'nt':
-                          for key, part in (('APPDATA', 'roaming'), ('LOCALAPPDATA', 'local')):
-                              directory = out / 'input-mode-state' / part
-                              directory.mkdir(parents=True, exist_ok=True)
-                              environment[key] = str(directory.resolve())
-                      elif sys.platform != 'darwin':
-                          for key, part in (('XDG_DATA_HOME', 'data'), ('XDG_CONFIG_HOME', 'config'), ('XDG_CACHE_HOME', 'cache')):
-                              directory = out / 'input-mode-state' / part
-                              directory.mkdir(parents=True, exist_ok=True)
-                              environment[key] = str(directory.resolve())
-                  result = subprocess.run(command, env=environment, stdout=log, stderr=subprocess.STDOUT, timeout=120)
-              text = (out / (suite + '.log')).read_text(encoding='utf-8', errors='replace')
-              receipts.append({'command': command, 'exit': result.returncode, 'clean_log': not failed(text)})
-              (out / 'results.json').write_text(json.dumps(receipts, indent=2))
-              if result.returncode or failed(text):
-                  raise SystemExit(suite + ' failed; raw output retained')
+          python scripts/test_diagnose_native_input_mode.py -v
+          python scripts/test_native_first_leak.py -v
+      - name: ARM Mac retain verbose first failed leak suite after strict failure
+        if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15' && steps.native_regressions.outcome == 'failure' && steps.macos_leak_diagnostic_controls.outcome == 'success'
+        timeout-minutes: 6
+        run: python scripts/diagnose_native_input_mode.py --failed-output builds/desktop-playability/regressions --output builds/desktop-playability/source-leak-verbose
+      - name: ARM Mac read-only input preflight observer controls
+        if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15'
+        run: python scripts/test_probe_macos_input.py -v
+      - name: ARM Mac permission queries and ordinary exported-window preflight
+        id: macos_input_preflight
+        if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15'
+        run: python scripts/probe_macos_input.py --output builds/desktop-playability/macos-input-preflight
+      - name: ARM Mac native menu input source controls
+        id: macos_menu_controls
+        if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15'
+        run: |
+          python scripts/test_macos_menu.py -v
+          python scripts/test_macos_focus.py -v
+          python scripts/test_macos_screen_identity.py -v
+      - name: ARM Mac real exported Settings pointer and Escape navigation
+        if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15' && steps.macos_input_preflight.outcome == 'success' && steps.macos_menu_controls.outcome == 'success'
+        timeout-minutes: 5
+        run: python scripts/verify_macos_menu.py --preflight builds/desktop-playability/macos-input-preflight/results.json --output builds/desktop-playability/macos-menu-input
       - name: Real exported keyboard and pointer input (Windows/Linux)
         if: always() && steps.export.outcome == 'success' && runner.os != 'macOS'
         run: python scripts/verify_integration_export.py --target ${{ matrix.target }} --visit-armory --timeout 240 --output builds/desktop-playability/native-input
@@ -160,6 +162,16 @@ jobs:
       - name: Native macOS minimal/frozen/candidate graphical diagnosis
         if: always() && steps.export.outcome == 'success' && runner.os == 'macOS'
         run: python scripts/diagnose_macos_startup.py --output builds/desktop-playability/macos-diagnostics --baseline-archive "$RUNNER_TEMP/sightbreak-macos-frozen.zip"
+      - name: Intel macOS render feature attribution after the unchanged startup gate
+        if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15-intel'
+        run: python scripts/diagnose_macos_render.py --output builds/desktop-playability/macos-diagnostics/render-features
+      - name: iOS compile qualification controls (ARM macOS)
+        if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15'
+        run: python scripts/test_qualify_ios_compile.py -v
+      - name: Unsigned generic-device iOS compiler and linker qualification (ARM macOS)
+        if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15'
+        timeout-minutes: 17
+        run: python scripts/qualify_ios_compile.py --output builds/desktop-playability/ios-compile --builds builds/ios-device-export --derived-data builds/ios-device-derived --timeout 900
       - name: Preserve source-bound development package including failed qualification attempts
         if: always() && steps.export.outcome == 'success' && steps.package_inspection.outcome == 'success'
         run: python scripts/build_manifest.py package --targets ${{ matrix.target }}
@@ -170,6 +182,18 @@ jobs:
           name: sightbreak-playability-${{ matrix.target }}-${{ matrix.os }}-${{ github.sha }}
           path: builds/desktop-playability/
           include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Package bounded raw QA receipts
+        if: always()
+        run: python scripts/package_qa_receipts.py --source builds/desktop-playability --output builds/qa-receipts/qa-receipts.zip
+      - name: Preserve separately downloadable raw QA receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-qa-receipts-${{ matrix.target }}-${{ matrix.os }}-${{ github.sha }}
+          path: builds/qa-receipts/qa-receipts.zip
+          compression-level: 0
           if-no-files-found: warn
           retention-days: 14
       - name: Preserve separately downloadable QA evidence
@@ -184,5 +208,60 @@ jobs:
             builds/desktop-playability/macos-diagnostics/*.txt
             builds/desktop-playability/**/*.png
             !builds/desktop-playability/offline-full-match/round-*.png
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Package bounded original Linux layout PNGs by native size
+        if: always() && runner.os == 'Linux'
+        shell: python
+        run: |
+          import json, pathlib, sys
+          sys.path.insert(0, 'scripts')
+          from package_qa_receipts import package
+          failures = []
+          for size in ('960x540', '1280x720', '1920x1080', '1280x800'):
+              source = pathlib.Path('builds/desktop-playability/layouts') / size
+              if not source.is_dir() or not any(source.glob('*.png')):
+                  print('No original layout PNGs for ' + size)
+                  continue
+              try:
+                  print(json.dumps(package(source, pathlib.Path('builds/layout-images') / (size + '.zip'), layout_pngs=True)))
+              except Exception as error:
+                  failures.append(size + ': ' + str(error))
+          if failures:
+              raise SystemExit('\n'.join(failures))
+      - name: Preserve original Linux layout PNGs at 960x540
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-layout-images-960x540-${{ github.sha }}
+          path: builds/layout-images/960x540.zip
+          compression-level: 0
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Preserve original Linux layout PNGs at 1280x720
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-layout-images-1280x720-${{ github.sha }}
+          path: builds/layout-images/1280x720.zip
+          compression-level: 0
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Preserve original Linux layout PNGs at 1920x1080
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-layout-images-1920x1080-${{ github.sha }}
+          path: builds/layout-images/1920x1080.zip
+          compression-level: 0
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Preserve original Linux layout PNGs at 1280x800
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-layout-images-1280x800-${{ github.sha }}
+          path: builds/layout-images/1280x800.zip
+          compression-level: 0
           if-no-files-found: warn
           retention-days: 14

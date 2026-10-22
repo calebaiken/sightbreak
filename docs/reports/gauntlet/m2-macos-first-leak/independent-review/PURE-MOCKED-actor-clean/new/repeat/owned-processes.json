@@ -1,0 +1,125 @@
+[
+  {
+    "label": "producer-01-bootstrap",
+    "command": [
+      "/pure/fake-pinned-engine",
+      "--path",
+      "/tmp/sightbreak-native-tests-3qzw18ve/project",
+      "--headless",
+      "--script",
+      "/tmp/sightbreak-native-tests-3qzw18ve/user_directory_probe.gd",
+      "--",
+      "--receipt=/workspace/reviews/mac-first-leak-source-f3896c6/PURE-MOCKED-actor-clean/new/repeat/producer-01-bootstrap.json"
+    ],
+    "timeout_seconds": 30,
+    "timed_out": false,
+    "exit": 0,
+    "clean_log": true,
+    "pid": 70001,
+    "cleanup": {
+      "owned_group_gone": true,
+      "signals_sent": [],
+      "exit_code": 0
+    },
+    "wall_seconds": 0,
+    "log": "/workspace/reviews/mac-first-leak-source-f3896c6/PURE-MOCKED-actor-clean/new/repeat/producer-01-bootstrap.log"
+  },
+  {
+    "label": "private-import",
+    "command": [
+      "/pure/fake-pinned-engine",
+      "--path",
+      "/tmp/sightbreak-native-tests-3qzw18ve/project",
+      "--headless",
+      "--editor",
+      "--import",
+      "--quit"
+    ],
+    "timeout_seconds": 120,
+    "timed_out": false,
+    "exit": 0,
+    "clean_log": true,
+    "pid": 70002,
+    "cleanup": {
+      "owned_group_gone": true,
+      "signals_sent": [],
+      "exit_code": 0
+    },
+    "wall_seconds": 0,
+    "log": "/workspace/reviews/mac-first-leak-source-f3896c6/PURE-MOCKED-actor-clean/new/repeat/private-import.log"
+  },
+  {
+    "label": "producer-02-before-actor",
+    "command": [
+      "/pure/fake-pinned-engine",
+      "--path",
+      "/tmp/sightbreak-native-tests-3qzw18ve/project",
+      "--headless",
+      "--script",
+      "/tmp/sightbreak-native-tests-3qzw18ve/user_directory_probe.gd",
+      "--",
+      "--receipt=/workspace/reviews/mac-first-leak-source-f3896c6/PURE-MOCKED-actor-clean/new/repeat/producer-02-before-actor.json"
+    ],
+    "timeout_seconds": 30,
+    "timed_out": false,
+    "exit": 0,
+    "clean_log": true,
+    "pid": 70003,
+    "cleanup": {
+      "owned_group_gone": true,
+      "signals_sent": [],
+      "exit_code": 0
+    },
+    "wall_seconds": 0,
+    "log": "/workspace/reviews/mac-first-leak-source-f3896c6/PURE-MOCKED-actor-clean/new/repeat/producer-02-before-actor.log"
+  },
+  {
+    "label": "actor",
+    "command": [
+      "/pure/fake-pinned-engine",
+      "--path",
+      "/tmp/sightbreak-native-tests-3qzw18ve/project",
+      "--headless",
+      "--verbose",
+      "--script",
+      "res://tests/actor_test.gd"
+    ],
+    "timeout_seconds": 120,
+    "timed_out": false,
+    "exit": 0,
+    "clean_log": true,
+    "pid": 70004,
+    "cleanup": {
+      "owned_group_gone": true,
+      "signals_sent": [],
+      "exit_code": 0
+    },
+    "wall_seconds": 0,
+    "log": "/workspace/reviews/mac-first-leak-source-f3896c6/PURE-MOCKED-actor-clean/new/repeat/actor.log"
+  },
+  {
+    "label": "producer-03-after-actor",
+    "command": [
+      "/pure/fake-pinned-engine",
+      "--path",
+      "/tmp/sightbreak-native-tests-3qzw18ve/project",
+      "--headless",
+      "--script",
+      "/tmp/sightbreak-native-tests-3qzw18ve/user_directory_probe.gd",
+      "--",
+      "--receipt=/workspace/reviews/mac-first-leak-source-f3896c6/PURE-MOCKED-actor-clean/new/repeat/producer-03-after-actor.json"
+    ],
+    "timeout_seconds": 30,
+    "timed_out": false,
+    "exit": 0,
+    "clean_log": true,
+    "pid": 70005,
+    "cleanup": {
+      "owned_group_gone": true,
+      "signals_sent": [],
+      "exit_code": 0
+    },
+    "wall_seconds": 0,
+    "log": "/workspace/reviews/mac-first-leak-source-f3896c6/PURE-MOCKED-actor-clean/new/repeat/producer-03-after-actor.log"
+  }
+]

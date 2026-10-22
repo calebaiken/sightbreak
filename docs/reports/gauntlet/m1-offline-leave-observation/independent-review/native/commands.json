@@ -1,0 +1,35 @@
+[
+  {
+    "name": "xvfb",
+    "command": [
+      "/workspace/tools/xvfb/usr/bin/Xvfb",
+      ":195",
+      "-screen",
+      "0",
+      "1280x720x24",
+      "-nolisten",
+      "tcp"
+    ],
+    "pid": 74442,
+    "started_seconds": 0.27573182500054827,
+    "exit_code": 0
+  },
+  {
+    "name": "client",
+    "command": [
+      "/workspace/sightbreak-offline-leave/builds/leave-native-r1/linux/sightbreak.x86_64",
+      "--audio-driver",
+      "Dummy",
+      "--accessibility",
+      "disabled",
+      "--accessibility-driver",
+      "dummy",
+      "--",
+      "--offline-validation",
+      "--offline-trace-dir=/workspace/sightbreak-offline-leave/builds/leave-native-r1-probe/initial-offline-trace"
+    ],
+    "pid": 74447,
+    "started_seconds": 0.3857695730002888,
+    "exit_code": 0
+  }
+]

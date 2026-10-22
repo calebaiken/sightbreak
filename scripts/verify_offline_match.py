@@ -28,12 +28,31 @@ from PIL import Image
 from build_manifest import BUILDS, OUTPUTS, source, validate_record
 from native_log import failed
 from native_observation import read_observation_json
+from native_approach import approach_floor
+from linux_frame_sampler import LinuxFrameSampler
 from verify_integration_export import NativeUI, WinUI, windows_job
 import toolchain
 
 
 RULES = {'buy_seconds': 15, 'round_seconds': 100, 'device_seconds': 35,
          'plant_seconds': 3, 'defuse_seconds': 5, 'win_score': 7}
+
+
+def require_planted_guidance_context(item, actor_id, round_number):
+    """A delayed role observation cannot accept a dead or replacement attacker."""
+    current = item.get('local_actor', {})
+    context = {name: item.get(name) for name in ('simulation_tick', 'phase', 'round_number', 'objective_state')}
+    context.update(actor_id=current.get('id'), alive=current.get('alive'), health=current.get('health'))
+    health = current.get('health')
+    if (current.get('alive') is False
+            or (isinstance(health, (int, float)) and not isinstance(health, bool) and health <= 0)):
+        raise RuntimeError('Player died before post-plant role guidance capture: ' + repr(context))
+    if (current.get('alive') is not True or isinstance(health, bool)
+            or not isinstance(health, (int, float)) or not 0 < health <= 100
+            or item.get('phase') != 'live' or item.get('round_number') != round_number
+            or item.get('objective_state') != 'planted' or current.get('id') != actor_id
+            or current.get('team') != 0):
+        raise RuntimeError('Post-plant role guidance lost its actual attacker context: ' + repr(context))
 
 
 def verify_hold_edges(observations, prior, required, message):
@@ -72,6 +91,8 @@ def main():
     parser.add_argument('--display', default=':106', help='Free isolated X11 display (Linux only)')
     parser.add_argument('--xvfb', default=os.environ.get('XVFB_BIN') or shutil.which('Xvfb'))
     parser.add_argument('--hosted-render-priority', choices=('inherited', 'below-normal'), default='inherited')
+    parser.add_argument('--linux-frame-diagnostics', action='store_true',
+                        help='Sample the owned Linux plant client CPU once per second; requires --timeout 180')
     args = parser.parse_args()
     if platform.system() not in ('Linux', 'Windows') or args.target != ('windows' if os.name == 'nt' else 'linux'):
         parser.error('Execute the selected package on native Linux/Windows; macOS gameplay remains UNVERIFIED')
@@ -81,6 +102,9 @@ def main():
         parser.error('Full-match must retain stock random seeds; omit --seed')
     if args.hosted_render_priority != 'inherited' and args.target != 'windows':
         parser.error('Hosted render priority requires native Windows; other targets retain inherited priority')
+    if args.linux_frame_diagnostics and (args.target != 'linux' or args.scenario != 'plant'
+                                        or args.timeout != 180 or args.seed not in (None, 42)):
+        parser.error('Linux frame diagnostics requires Linux plant, seed 42 and original --timeout 180')
     socket = None
     if args.target == 'linux':
         if not args.xvfb or not re.fullmatch(r':[0-9]+', args.display):
@@ -98,6 +122,7 @@ def main():
     logs, processes, commands, captures = [], [], [], []
     held = set()
     before = manifest = ui = job = client = None
+    frame_sampler = None
     last_state, last_update = {}, started
     initial_exit = reopened_exit = None
     result = {'passed': False, 'scenario': args.scenario, 'target': args.target,
@@ -310,66 +335,9 @@ def main():
         raise TimeoutError('Native mouse aiming did not reach the observed orientation')
 
     def move_to(x, z, seconds=15):
-        origin = local()['position'][:]
         until = min(deadline, time.monotonic() + seconds)
-        while time.monotonic() < until:
-            state = observe()
-            if time.monotonic() >= until:
-                break
-            actor = local(state)
-            dx, dz = x - actor['position'][0], z - actor['position'][2]
-            if math.hypot(dx, dz) < .45:
-                released_after_tick = state['simulation_tick']
-                for name in ('w', 'a', 's', 'd'):
-                    key(name, False)
-                record('movement_settle_begin', requested=[x, z], released_after_tick=released_after_tick)
-                settled_ticks = []
-                last_tick = released_after_tick
-                # Native release and a fixed sleep do not prove that the
-                # authority consumed neutral input or stopped. Observe newer
-                # physics ticks and recheck the actual endpoint before return.
-                # Corrections share the original movement deadline.
-                while time.monotonic() < until:
-                    state = observe()
-                    if time.monotonic() >= until:
-                        break
-                    actor = local(state)
-                    tick = state['simulation_tick']
-                    if tick > last_tick:
-                        last_tick = tick
-                        velocity = actor['velocity']
-                        speed = math.hypot(velocity[0], velocity[2])
-                        neutral = state.get('local_input', {}).get('move') == [0, 0]
-                        if neutral and speed <= .05:
-                            end = actor['position'][:]
-                            distance = math.hypot(x - end[0], z - end[2])
-                            if distance >= .45:
-                                record('movement_recorrect', requested=[x, z], destination=end,
-                                       target_distance=distance, horizontal_speed=speed,
-                                       released_after_tick=released_after_tick)
-                                break
-                            settled_ticks.append(tick)
-                            if len(settled_ticks) == 2:
-                                record('movement_completed', origin=origin, destination=end, requested=[x, z],
-                                       target_distance=distance, horizontal_speed=speed,
-                                       settled_simulation_ticks=settled_ticks)
-                                return end
-                        else:
-                            settled_ticks.clear()
-                    pause(.05)
-                continue
-            yaw = actor['yaw']
-            mx, my = math.cos(yaw) * dx - math.sin(yaw) * dz, -math.sin(yaw) * dx - math.cos(yaw) * dz
-            wanted = set()
-            if abs(mx) > .25:
-                wanted.add('d' if mx > 0 else 'a')
-            if abs(my) > .25:
-                wanted.add('w' if my > 0 else 's')
-            for name in ('w', 'a', 's', 'd'):
-                key(name, name in wanted)
-            pause(.1)
-        stop()
-        raise TimeoutError('Legitimate native movement did not reach the requested floor position')
+        return approach_floor(x, z, observe=observe, key=key, pause=pause,
+                              record=record, deadline=until)
 
     def invalid_interaction():
         before_count = observe()['local_contribution']
@@ -518,12 +486,13 @@ def main():
         result['partial_checks']['player_' + args.scenario] = True
         capture('06-player-objective-completed')
         if args.scenario == 'plant':
+            guidance_actor_id = actor['id']
             def planted_role_guidance(item):
-                if item.get('phase') != 'live' or item.get('round_number') != round_number:
-                    raise RuntimeError('Round resolved before post-plant role guidance could be captured')
+                require_planted_guidance_context(item, guidance_actor_id, round_number)
                 return item.get('ui', {}).get('status_text') == 'DEFEND THE DEVICE'
             wait(planted_role_guidance, 15, 'Actual attacker HUD restores post-plant role guidance')
             capture('06b-postplant-role-guidance')
+            require_planted_guidance_context(observe(), guidance_actor_id, round_number)
             result['partial_checks']['postplant_attacker_role_guidance'] = True
         resolved = wait(lambda item: item.get('phase') in ('post', 'match_over'), 50, 'Natural objective round resolution')
         notices = [item.get('message', '') for item in events() if item.get('event') == 'notification']
@@ -695,6 +664,8 @@ def main():
         if args.scenario != 'full-match':
             command += ['--offline-scenario=' + args.scenario, '--offline-seed=' + str(42 if args.seed is None else args.seed)]
         client = launch('client', command, env)
+        if args.linux_frame_diagnostics:
+            frame_sampler = LinuxFrameSampler(client, out / 'linux-frame-samples.jsonl', trace_dir / 'status.json', min(180.0, remaining()))
         if args.target == 'windows': ui.pid = client.pid
         wait_ui(native_menu_ready, 60, 'Real exported main menu', client)
         capture('01-main-menu')
@@ -814,6 +785,10 @@ def main():
                 except ProcessLookupError: pass
                 except Exception as error: cleanup_errors.append(name + ' descendant cleanup: ' + str(error))
         for entry, (_, process) in zip(commands, processes): entry['exit_code'] = process.returncode
+        if frame_sampler is not None:
+            result['linux_frame_diagnostics'] = frame_sampler.stop()
+            if result['linux_frame_diagnostics']['thread_alive']:
+                cleanup_errors.append('Owned Linux frame sampler did not stop')
         for log in logs: log.close()
         result.update(initial_exit=initial_exit, reopened_exit=reopened_exit, commands=commands,
                       cleanup_errors=cleanup_errors, elapsed_seconds=time.monotonic() - started,

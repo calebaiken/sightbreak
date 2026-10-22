@@ -1,0 +1,946 @@
+{
+  "validated_source": {
+    "source_dirty": false,
+    "source_validation_sha256": "0fd96995226efdf47fb351860eedda3a8ca1b0086b3ef291a5e99f640766abc3",
+    "source_commit": "b85f93600e122b36e8dcd70edd9bc168e9820b08",
+    "source_game_tree": "e877ba16bdc7f63994930a77f32e484e8f12d890",
+    "source_content_sha256": "db3c976711ef8d91b75604fdfe05309599445cfc5bdf59e5f6fbdf669a859fc5",
+    "source_game_dirty": false
+  },
+  "matching_before_after": true,
+  "exit": 0,
+  "validate_sh_sha256": "97a04cb5c12fa8e2c2e9ef35a6b4ce71d6476db9c0743f163f2e0a537dc08c98",
+  "validation_directory": "/workspace/sightbreak-validate-a23e349/.local/validation/run-utj57N",
+  "commands": [
+    {
+      "line": 13,
+      "label": "import",
+      "command": "run_godot import --headless --editor --import --quit",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/import.log",
+      "bytes": 1294,
+      "sha256": "1f6afb48483d4997cd847c536fbb5ab3c08008392a93a71193c35c4da347bca3",
+      "summaries": []
+    },
+    {
+      "line": 14,
+      "label": "actor",
+      "command": "run_godot actor --headless --script res://tests/actor_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/actor.log",
+      "bytes": 108,
+      "sha256": "b8e2168531c1e39291f053a26c132e01527769d91b30ae36a0e32ed55f3862a0",
+      "summaries": [
+        "ACTOR TESTS: 73 checks, 0 failures"
+      ]
+    },
+    {
+      "line": 15,
+      "label": "world",
+      "command": "run_godot world --headless --script res://tests/world_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/world.log",
+      "bytes": 228,
+      "sha256": "c42c934833cdcd6768bc6dd1f0da18ab6fcdb508058d0c7b8ebb6cfaef401141",
+      "summaries": [
+        "WORLD_TEST 25 checks; 0 failures"
+      ]
+    },
+    {
+      "line": 16,
+      "label": "hit-feedback",
+      "command": "run_godot hit-feedback --headless --script res://tests/hit_feedback_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/hit-feedback.log",
+      "bytes": 112,
+      "sha256": "66b821a29b85c0a0a72e6c23c06fc2b679db898945eb5cbdd9261f53471eae4f",
+      "summaries": [
+        "HIT_FEEDBACK_TEST checks=10 failures=0"
+      ]
+    },
+    {
+      "line": 17,
+      "label": "weapon-integrity",
+      "command": "run_godot weapon-integrity --headless --script res://tests/weapon_integrity_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/weapon-integrity.log",
+      "bytes": 116,
+      "sha256": "122bdcf1c99593655e4113485f06ef77257deb3c45e9217ce3d2da1c4c5eb0f2",
+      "summaries": [
+        "WEAPON_INTEGRITY_TEST checks=28 failures=0"
+      ]
+    },
+    {
+      "line": 18,
+      "label": "hit-volume",
+      "command": "run_godot hit-volume --headless --script res://tests/hit_volume_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/hit-volume.log",
+      "bytes": 110,
+      "sha256": "33de0459fbc1a1d16301b61afc9a849159e01248a41af1018d858b2b4668a728",
+      "summaries": [
+        "HIT_VOLUME_TEST checks=40 failures=0"
+      ]
+    },
+    {
+      "line": 19,
+      "label": "hit-history",
+      "command": "run_godot hit-history --headless --script res://tests/hit_history_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/hit-history.log",
+      "bytes": 112,
+      "sha256": "4c183ce1aa341573f2c9d36996a7dbea2470898de3272388601b8df598b6bf58",
+      "summaries": [
+        "HIT_HISTORY_TEST checks=638 failures=0"
+      ]
+    },
+    {
+      "line": 20,
+      "label": "render-budget",
+      "command": "run_godot render-budget --headless --script res://tests/render_budget_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/render-budget.log",
+      "bytes": 113,
+      "sha256": "495efc69088f3bce89899d9a4f28e55133a4db3d867ce39949e6881d9e2417ca",
+      "summaries": [
+        "RENDER_BUDGET_TEST checks=21 failures=0"
+      ]
+    },
+    {
+      "line": 21,
+      "label": "smoke-presentation",
+      "command": "run_godot smoke-presentation --headless --script res://tests/smoke_presentation_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/smoke-presentation.log",
+      "bytes": 118,
+      "sha256": "65e240d2b88ae69bf01fd452adf91d4bc49e310628cbdf4a31d2ba3213ad0f33",
+      "summaries": [
+        "SMOKE_PRESENTATION_TEST checks=26 failures=0"
+      ]
+    },
+    {
+      "line": 22,
+      "label": "match",
+      "command": "run_godot match --headless --script res://tests/match_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/match.log",
+      "bytes": 98,
+      "sha256": "b11b15756a6eef96df83c685da3c13eeaf90e590e9ed25a9e1c9889e8c0c3e5d",
+      "summaries": [
+        "MATCH_TEST: 75/75 passed"
+      ]
+    },
+    {
+      "line": 23,
+      "label": "authority-order",
+      "command": "run_godot authority-order --headless --script res://tests/authority_order_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/authority-order.log",
+      "bytes": 14441,
+      "sha256": "2d9869d0b91829a65d5b639a553e4c7eb24139d3ac59f9e86f804b4bb101c574",
+      "summaries": [
+        "AUTHORITY_ORDER checks=178 failures=0 mode=assertion"
+      ]
+    },
+    {
+      "line": 24,
+      "label": "state-privacy",
+      "command": "run_godot state-privacy --headless --script res://tests/state_privacy_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/state-privacy.log",
+      "bytes": 113,
+      "sha256": "969f048e66207cb6a404485b99551a5bef91a9b82cdb461a11d4188a6946e089",
+      "summaries": [
+        "STATE_PRIVACY_TEST checks=55 failures=0"
+      ]
+    },
+    {
+      "line": 25,
+      "label": "snapshot-buffer",
+      "command": "run_godot snapshot-buffer --headless --script res://tests/snapshot_buffer_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/snapshot-buffer.log",
+      "bytes": 115,
+      "sha256": "9bf50714dea7dcbdae09b1e5ee734c99e13768b0debec6cbcc3388a6f4853900",
+      "summaries": [
+        "SNAPSHOT_BUFFER_TEST checks=15 failures=0"
+      ]
+    },
+    {
+      "line": 26,
+      "label": "input-stream",
+      "command": "run_godot input-stream --headless --script res://tests/input_stream_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/input-stream.log",
+      "bytes": 112,
+      "sha256": "8a000141cabb053800a83f050c8d49c13039eec97d08ce3ecc177e65a33b43ea",
+      "summaries": [
+        "INPUT_STREAM_TEST checks=22 failures=0"
+      ]
+    },
+    {
+      "line": 27,
+      "label": "activity-provenance",
+      "command": "run_godot activity-provenance --headless --script res://tests/activity_provenance_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/activity-provenance.log",
+      "bytes": 119,
+      "sha256": "8709901203dc52ce0e6b72daf64a9ff7738d084348661e682731010255915dab",
+      "summaries": [
+        "ACTIVITY_PROVENANCE_TEST checks=32 failures=0"
+      ]
+    },
+    {
+      "line": 28,
+      "label": "movement-replay",
+      "command": "run_godot movement-replay --headless --script res://tests/movement_prediction_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/movement-replay.log",
+      "bytes": 145,
+      "sha256": "3915d3bd005f9b7080eb91e09b23dc98da4969c27f357feec56816be248b3b12",
+      "summaries": [
+        "MOVEMENT_PREDICTION_TEST checks=725 failures=0 maximum_error_m=0.075834"
+      ]
+    },
+    {
+      "line": 29,
+      "label": "input-lifecycle",
+      "command": "run_godot input-lifecycle --headless --script res://tests/input_lifecycle_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/input-lifecycle.log",
+      "bytes": 277,
+      "sha256": "758e944c7eb3390bb269b60966e2225fc2f029f4c86d4b2edbf4abc1e41c8c0e",
+      "summaries": [
+        "INPUT_LIFECYCLE_TEST checks=3 failures=0"
+      ]
+    },
+    {
+      "line": 30,
+      "label": "peer-lifecycle",
+      "command": "run_godot peer-lifecycle --headless --script res://tests/peer_lifecycle_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/peer-lifecycle.log",
+      "bytes": 114,
+      "sha256": "8c9dd9672fd512b281a03a7738a3b317de457b9f8067d535fd4a976ab05ff59b",
+      "summaries": [
+        "PEER_LIFECYCLE_TEST checks=16 failures=0"
+      ]
+    },
+    {
+      "line": 31,
+      "label": "result-outbox",
+      "command": "run_godot result-outbox --headless --script res://tests/result_outbox_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/result-outbox.log",
+      "bytes": 112,
+      "sha256": "a7e8d8a1b97d1cac1fe534c9ba89d97ecd29d674fd4d062552469855c7135ead",
+      "summaries": [
+        "RESULT_OUTBOX_TEST checks=9 failures=0"
+      ]
+    },
+    {
+      "line": 33,
+      "label": "reconnect-policy",
+      "command": "run_godot reconnect-policy --headless --script res://tests/reconnect_policy_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/reconnect-policy.log",
+      "bytes": 116,
+      "sha256": "89f38f68cc2368dd82e8a87101e20d808631a59efd69695c3bb8c4892e101826",
+      "summaries": [
+        "RECONNECT_POLICY_TEST checks=21 failures=0"
+      ]
+    },
+    {
+      "line": 34,
+      "label": "reconnect-independent",
+      "command": "run_godot reconnect-independent --headless --script res://tests/independent_reconnect_review_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/reconnect-independent.log",
+      "bytes": 2034,
+      "sha256": "83fbcf6159ebfcf59ab713ea0aeef3560679eb6705f216cfe96867f84ef1949a",
+      "summaries": [
+        "REVIEW_CHECK PASS duplicate disconnect callbacks do not consume or renew recovery",
+        "REVIEW_CHECK PASS unadmitted client without resume credential cannot start recovery",
+        "REVIEW_CHECK PASS native transport setup for stale-close test",
+        "REVIEW_CHECK PASS stale deferred close cannot terminate replacement transport",
+        "INDEPENDENT_RECONNECT_REVIEW checks=24 failures=0"
+      ]
+    },
+    {
+      "line": 35,
+      "label": "resume-admission",
+      "command": "run_godot resume-admission --headless --script res://tests/independent_resume_admission_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/resume-admission.log",
+      "bytes": 1386,
+      "sha256": "e7907a519b6c62dcd8b49ed0351115d39f6c96a31ddf8e1e702b4fdb554b7587",
+      "summaries": [
+        "REVIEW_ADMISSION PASS wrong guest token cannot acquire unrelated free actor",
+        "REVIEW_ADMISSION PASS expired guest resume token is terminal",
+        "REVIEW_ADMISSION PASS expired reservation cannot acquire actor and is retired",
+        "REVIEW_ADMISSION PASS negative probes did not expand authority capacity",
+        "INDEPENDENT_RESUME_ADMISSION checks=13 failures=0"
+      ]
+    },
+    {
+      "line": 36,
+      "label": "lost-welcome",
+      "command": "run_godot lost-welcome --headless --script res://tests/lost_welcome_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/lost-welcome.log",
+      "bytes": 412,
+      "sha256": "aa3ef30f409f2fa4654ac5714dd08d1ad246a6feebbca2cffc16ffae121ae70f",
+      "summaries": []
+    },
+    {
+      "line": 37,
+      "label": "resume-alias",
+      "command": "run_godot resume-alias --headless --script res://tests/independent_resume_alias_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/resume-alias.log",
+      "bytes": 1832,
+      "sha256": "578969ed56d3e455e210c662f66568450ba25a71aaaa2a8b1c03cdcebf204a73",
+      "summaries": [
+        "REVIEW_ALIAS PASS expiry fixture owner retired",
+        "REVIEW_ALIAS PASS elapsed alias deadline rejects original token",
+        "REVIEW_ALIAS PASS expired alias has no actor authority and is removed",
+        "REVIEW_ALIAS PASS credential tables remain bounded by actor count",
+        "INDEPENDENT_RESUME_ALIAS checks=23 failures=0"
+      ]
+    },
+    {
+      "line": 38,
+      "label": "resume-auth-loss",
+      "command": "run_godot resume-auth-loss --headless --script res://tests/resume_auth_loss_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/resume-auth-loss.log",
+      "bytes": 599,
+      "sha256": "8808dbb30e97253c73c28961b9f7bbed227f495d4d1ad58892fb389d2f672c76",
+      "summaries": [
+        "AUTH_LOSS_REVIEW {\"elapsed_msec\":7085,\"fixture_valid\":true,\"fresh_accepted_tick\":442,\"notifications\":[\"Version check interrupted; retrying the reserved session\u2026\",\"Connecting to Relay Yard\u2026\",\"Connected \u2022 LAN practice session\",\"Operator joined Relay Yard\"],\"original_deadline_msec\":20632,\"passed\":true,\"recovered_same_actor\":true,\"scope\":\"one native process; ENet; one application hello reply suppressed\",\"state\":\"connected\",\"suppressed_server_hellos\":1}"
+      ]
+    },
+    {
+      "line": 39,
+      "label": "bot-ai-regression",
+      "command": "run_godot bot-ai-regression --headless --script res://tests/bot_ai_regression_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/bot-ai-regression.log",
+      "bytes": 100,
+      "sha256": "06f433725b9d4fd7ffcd4b7f20c2fc5740ac80f30ad5e451953bd663a5df3f20",
+      "summaries": []
+    },
+    {
+      "line": 40,
+      "label": "bot-squad-symmetry",
+      "command": "run_godot bot-squad-symmetry --headless --script res://tests/bot_squad_symmetry_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/bot-squad-symmetry.log",
+      "bytes": 305671,
+      "sha256": "3725f195e56368a8b33e38291f73bb06db8e64dbcc1bad071a23a91bb5c461f6",
+      "summaries": [
+        "BOT_SQUAD_SYMMETRY_RESULT samples=960 checks=2722 failures=0 mode=assertion"
+      ]
+    },
+    {
+      "line": 41,
+      "label": "bots",
+      "command": "run_godot bots --headless --script res://tests/bot_match_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/bots.log",
+      "bytes": 771,
+      "sha256": "117126a94bd06748811053c4c2212d0b44316a08704cb47c266749102603f450",
+      "summaries": []
+    },
+    {
+      "line": 42,
+      "label": "bot-lifecycle",
+      "command": "run_godot bot-lifecycle --headless --script res://tests/bot_lifecycle_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/bot-lifecycle.log",
+      "bytes": 759,
+      "sha256": "063dbe5b8089065b04c5607c3570f380bc76a08af6ac203300fc0f7ea0678a88",
+      "summaries": [
+        "BOT_LIFECYCLE_RESULT passed=true rounds=10 score=7:3 kills=60 halftime=true plant_observed=true reports=1 simulated_seconds=325.9"
+      ]
+    },
+    {
+      "line": 43,
+      "label": "profile",
+      "command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/profile-state\" run_godot profile --headless --script res://tests/profile_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/profile.log",
+      "bytes": 107,
+      "sha256": "a42589882c017b4830612248189462dfb9d0663120b2472f556971b63ecd97b2",
+      "summaries": [
+        "PROFILE_TEST checks=10 failures=0"
+      ]
+    },
+    {
+      "line": 44,
+      "label": "touch",
+      "command": "run_godot touch --headless --script res://tests/touch_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/touch.log",
+      "bytes": 105,
+      "sha256": "687691b446bc7005574cdf6b7b3ef4bd6ab59bce5c686a78a9de81bcdf7c920e",
+      "summaries": [
+        "TOUCH_TEST checks=34 failures=0"
+      ]
+    },
+    {
+      "line": 45,
+      "label": "main",
+      "command": "run_godot main --headless --script res://tests/main_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/main.log",
+      "bytes": 142,
+      "sha256": "8a4f8c614fbeef63068d73b0601848f66b0092f89b04484b0966fe04b8bad555",
+      "summaries": [
+        "MAIN_TEST checks=42 failures=0"
+      ]
+    },
+    {
+      "line": 46,
+      "label": "input-mode",
+      "command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/input-mode-state\" run_godot input-mode --headless --script res://tests/input_mode_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/input-mode.log",
+      "bytes": 12990,
+      "sha256": "bde253ca3de66cf9f426245de202fcf48d859e5d054f0e31730c2affe9cb8c08",
+      "summaries": [
+        "INPUT_MODE_TEST checks=462 failures=0 graphical_pointer=false scope=simulated_capabilities_and_input_not_physical_hardware baseline=false"
+      ]
+    },
+    {
+      "line": 47,
+      "label": "menu-focus",
+      "command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/menu-focus-state\" run_godot menu-focus --headless --script res://tests/menu_focus_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/menu-focus.log",
+      "bytes": 168,
+      "sha256": "4edfc0577795adcaeffcc3d825432a2050032f0bdfe17cc27174ff4c67cb3562",
+      "summaries": [
+        "MENU_FOCUS_TEST checks=30 failures=0 scope=scene_focus_synthetic_actions_not_physical_hardware"
+      ]
+    },
+    {
+      "line": 48,
+      "label": "offline-diagnostics",
+      "command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/offline-diagnostics-state\" run_godot offline-diagnostics --headless --script res://tests/offline_diagnostics_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/offline-diagnostics.log",
+      "bytes": 757,
+      "sha256": "e669c97a8c3db430d4dfce67a5abe8c8a7ebbe69f74eaadef8f1e9d93ccd3d30",
+      "summaries": [
+        "OFFLINE_DIAGNOSTICS_TEST checks=60 failures=0 scope=source_initialization_and_read_only_observer_not_exported_gameplay"
+      ]
+    },
+    {
+      "line": 49,
+      "label": "objective-hud",
+      "command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/objective-hud-state\" run_godot objective-hud --headless --script res://tests/hud_objective_hint_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/objective-hud.log",
+      "bytes": 988,
+      "sha256": "80a7fca173af217994cb5ef9b6a8f04174ba5f85ae72dac069e9268bd7cd1301",
+      "summaries": [
+        "HUD_OBJECTIVE_HINT_TEST source=res://scripts/main.gd scope=frozen_source_ui checks=33 failures=0"
+      ]
+    },
+    {
+      "line": 50,
+      "label": "landscape",
+      "command": "run_godot landscape --headless --script res://tests/landscape_ui_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/landscape.log",
+      "bytes": 33794,
+      "sha256": "c64d0877cfb600ea799624ac87bcc5d3776dd107b4dae30f9f7a337b44c9d493",
+      "summaries": [
+        "LANDSCAPE_UI_TEST checks=9217 failures=0"
+      ]
+    },
+    {
+      "line": 51,
+      "label": "ux-contract",
+      "command": "run_godot ux-contract --headless --script res://tests/ux_contract_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/ux-contract.log",
+      "bytes": 22634,
+      "sha256": "70fb84ed6fb173c0e5ef4b89791541a7a8217273d76a529a0fe97d0721776a1c",
+      "summaries": [
+        "UX_CONTRACT_TEST checks=2227 failures=0"
+      ]
+    },
+    {
+      "line": 52,
+      "label": "hud-overflow",
+      "command": "run_godot hud-overflow --headless --script res://tests/hud_overflow_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/hud-overflow.log",
+      "bytes": 114,
+      "sha256": "1c606fd963d2c473bb8da661d284a966c1a04d26fe617b016ba303adc9a49b6c",
+      "summaries": [
+        "HUD_OVERFLOW_TEST checks=2435 failures=0"
+      ]
+    },
+    {
+      "line": 53,
+      "label": "economy-ui",
+      "command": "run_godot economy-ui --headless --script res://tests/economy_ui_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/economy-ui.log",
+      "bytes": 141,
+      "sha256": "36b8f035abdc39d0ea8dc0a0e8eea24451a5b99e492b0b47a33fa5d96b525847",
+      "summaries": [
+        "PASS: Economy native screens, offline separation, URL policy, UUIDs"
+      ]
+    },
+    {
+      "line": 54,
+      "label": "armory-ui",
+      "command": "run_godot armory-ui --headless --script res://tests/armory_ui_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/armory-ui.log",
+      "bytes": 207,
+      "sha256": "c30dd4c908bf427c1e663fe7809bca233d991cfa212cf5ce8f8baadf8aa99bef",
+      "summaries": [
+        "PASS: Armory states, money terms, trade sides and collection order (2936 checks)"
+      ]
+    },
+    {
+      "line": 55,
+      "label": "armory-state",
+      "command": "run_godot armory-state --headless --script res://tests/armory_state_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/armory-state.log",
+      "bytes": 3604,
+      "sha256": "9645f3d80f9fadd728c54c87594691a1a63089a6e9bb42525f66a2358e5cfdf0",
+      "summaries": [
+        "PASS: Armory account, text-size and transaction behaviour (746 checks)"
+      ]
+    },
+    {
+      "line": 56,
+      "label": "menu-state",
+      "command": "run_godot menu-state --headless --script res://tests/menu_state_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/menu-state.log",
+      "bytes": 130,
+      "sha256": "7c61dc9993612e7db2c644e6de49cca2ffd99ada45f16af7ac7106e52a20ad4b",
+      "summaries": [
+        "PASS: Menu account lines and resize handling (51 checks)"
+      ]
+    },
+    {
+      "line": 57,
+      "label": "economy-recovery",
+      "command": "run_godot economy-recovery --headless --script res://tests/economy_recovery_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/economy-recovery.log",
+      "bytes": 132,
+      "sha256": "1867764ec7c460ae4288dbf43743cbe51c92ec8a9d0885c37b440601a7b6578c",
+      "summaries": [
+        "PASS: 12 economy recovery and cosmetic material assertions"
+      ]
+    },
+    {
+      "line": 58,
+      "label": "cosmetics",
+      "command": "run_godot cosmetics --headless --script res://tests/cosmetic_presentation_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/cosmetics.log",
+      "bytes": 123,
+      "sha256": "e67b3b0bddda0c16b8298f6aaf6303501880bf1922f95ff7dbac11ff6499c90b",
+      "summaries": [
+        "Cosmetic presentation: 26 assertions / 0 failures"
+      ]
+    },
+    {
+      "line": 59,
+      "label": "weapon-art",
+      "command": "run_godot weapon-art --headless --script res://tests/weapon_art_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/weapon-art.log",
+      "bytes": 111,
+      "sha256": "9bca3b04f09960f0dcb9ba8c5b1a36d70f32f14cb80dad66361190d38b61309c",
+      "summaries": [
+        "WEAPON_ART_TEST checks=179 failures=0"
+      ]
+    },
+    {
+      "line": 60,
+      "label": "integration-actor-lifecycle",
+      "command": "run_godot integration-actor-lifecycle --headless --script res://tests/integration_actor_lifecycle_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/integration-actor-lifecycle.log",
+      "bytes": 124,
+      "sha256": "2f2fd5f65dee3ff3d335587dcbba7ac4dca225149a5490d0245e26aed2d521a6",
+      "summaries": [
+        "INTEGRATION_ACTOR_LIFECYCLE checks=183 failures=[]"
+      ]
+    },
+    {
+      "line": 63,
+      "label": "reload-sequence",
+      "command": "run_godot reload-sequence --headless --script res://tests/reload_sequence_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/reload-sequence.log",
+      "bytes": 115,
+      "sha256": "ad7a5d1c391e6924796fcf5b32640e9983d88681c390502e93bc2b611d19e98b",
+      "summaries": [
+        "RELOAD_SEQUENCE_TEST checks=92 failures=0"
+      ]
+    },
+    {
+      "line": 64,
+      "label": "reload-audio",
+      "command": "run_godot reload-audio --headless --script res://tests/reload_audio_test.gd",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/reload-audio.log",
+      "bytes": 112,
+      "sha256": "2406f0d573e35ff2dfe6b204373272dcbec1ff854ed715448494faf2f2286d56",
+      "summaries": [
+        "RELOAD_AUDIO_TEST checks=29 failures=0"
+      ]
+    },
+    {
+      "line": 66,
+      "label": "reload-audio-capture",
+      "command": "run_godot reload-audio-capture --headless --audio-driver Dummy --script res://tests/reload_audio_capture.gd -- --scenario=reload",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/reload-audio-capture.log",
+      "bytes": 2102,
+      "sha256": "8c1badbb38dabefecc523bf2a2ba9aceb3e7c8df639b4d744b73f46cfe8edd0e",
+      "summaries": [
+        "RELOAD_AUDIO_CAPTURE scenario=reload reduced=false checks=14 failures=0"
+      ]
+    },
+    {
+      "line": 67,
+      "label": "reload-audio-cancel",
+      "command": "run_godot reload-audio-cancel --headless --audio-driver Dummy --script res://tests/reload_audio_capture.gd -- --scenario=cancel",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/reload-audio-cancel.log",
+      "bytes": 1610,
+      "sha256": "58b9d45b17621e436fd9f538c7550baba21c3abd725724262b89f71558a8405a",
+      "summaries": [
+        "RELOAD_AUDIO_CAPTURE scenario=cancel reduced=false checks=11 failures=0"
+      ]
+    },
+    {
+      "line": 68,
+      "label": "reload-audio-shot",
+      "command": "run_godot reload-audio-shot --headless --audio-driver Dummy --script res://tests/reload_audio_capture.gd -- --scenario=shot",
+      "scope": "unconditional",
+      "result": "reached; nonempty original log; no engine-error signature",
+      "log": ".local/validation/run-utj57N/reload-audio-shot.log",
+      "bytes": 2244,
+      "sha256": "d1587e488bfb2bf0b8dc9da643651053475398176ce17d157190055dac2e8005",
+      "summaries": [
+        "RELOAD_AUDIO_CAPTURE scenario=shot reduced=false checks=15 failures=0"
+      ]
+    },
+    {
+      "line": 72,
+      "label": "reload-visibility",
+      "command": "run_godot reload-visibility --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_visibility_test.gd -- --step=2",
+      "scope": "DISPLAY",
+      "result": "skipped: no DISPLAY"
+    },
+    {
+      "line": 74,
+      "label": "reload-finish-sunlit",
+      "command": "run_godot reload-finish-sunlit --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base",
+      "scope": "DISPLAY",
+      "result": "skipped: no DISPLAY"
+    },
+    {
+      "line": 75,
+      "label": "reload-finish-shade",
+      "command": "run_godot reload-finish-shade --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --view=shade",
+      "scope": "DISPLAY",
+      "result": "skipped: no DISPLAY"
+    },
+    {
+      "line": 78,
+      "label": "viewmodel-light",
+      "command": "run_godot viewmodel-light --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/viewmodel_light_probe.gd -- --assert --poses=ready,grab",
+      "scope": "DISPLAY",
+      "result": "skipped: no DISPLAY"
+    },
+    {
+      "line": 79,
+      "label": "reload-finish-skin",
+      "command": "run_godot reload-finish-skin --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --skin",
+      "scope": "DISPLAY",
+      "result": "skipped: no DISPLAY"
+    }
+  ],
+  "display_skips": [
+    "reload-visibility",
+    "reload-finish-sunlit",
+    "reload-finish-shade",
+    "viewmodel-light",
+    "reload-finish-skin"
+  ],
+  "python_unittest_summaries": [
+    "Ran 11 tests in 0.639s",
+    "OK",
+    "Ran 4 tests in 0.001s",
+    "OK",
+    "Ran 15 tests in 0.089s",
+    "OK",
+    "Ran 24 tests in 0.036s",
+    "OK",
+    "Ran 7 tests in 0.004s",
+    "OK (skipped=3)",
+    "Ran 5 tests in 0.000s",
+    "OK"
+  ],
+  "catalog_serializer_check": "backend_world.json matches the backend (29 definitions)",
+  "fixtures": [
+    {
+      "path": "scripts/test_reload_contact.py",
+      "bytes": 6566,
+      "sha256": "1419254561bcdc1ebbe2fdd012f62007862d509532eaa47ff04013bd35167ac6",
+      "matches_git_head": true
+    },
+    {
+      "path": "docs/reports/media/art-v9/hands/logs/clip_contact.csv",
+      "bytes": 4310,
+      "sha256": "f0b6f2df0caa9de10b29f6a2998f038598fc80c55834a0582034cc0ddc1840ea",
+      "matches_git_head": true
+    },
+    {
+      "path": "docs/reports/media/art-v9/hands/logs/clip_contact.glb.sha256",
+      "bytes": 113,
+      "sha256": "dcc2027256224b376620ad2f2252dc06399f51cac718edf8b5185e8fec8c9fbb",
+      "matches_git_head": true
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms.glb",
+      "bytes": 466968,
+      "sha256": "7c5fedb29d6dade6170493a6db0fd82b3c7343a1d92e83247ac8be9a2bf056fe",
+      "matches_git_head": true
+    }
+  ],
+  "backend_server_actual_files_matching_git": [
+    {
+      "path": "backend/app.py",
+      "bytes": 29815,
+      "sha256": "478440d35840f2a60dad08793b73ec1aa983ce5b5cc2414445cf78f79ea19549"
+    },
+    {
+      "path": "backend/bridge_fixture.py",
+      "bytes": 3702,
+      "sha256": "ae889701f38f8d4674d91ced0b42184e0870eda56d5efcacc966e446fe24557d"
+    },
+    {
+      "path": "backend/config/economy.json",
+      "bytes": 604,
+      "sha256": "c019cc326b1f986f4b550d5f2d02e8adc133551f46ae470e93f28e81f2aec900"
+    },
+    {
+      "path": "backend/config/simulation-baseline.json",
+      "bytes": 1440,
+      "sha256": "64bb3eaef083cac8b00ba84bbb608036156bcedae06cc32bfe454d250f813951"
+    },
+    {
+      "path": "backend/dev-api.sh",
+      "bytes": 960,
+      "sha256": "a8f885fc87fd495d467897b136b066816065bf24d2bb88eae11c7b579b7cff40"
+    },
+    {
+      "path": "backend/dev-db.sh",
+      "bytes": 715,
+      "sha256": "94c7274e1d2408de85eb4584e7cd500a9291692b2e74b38d48a782f3e2900fc1"
+    },
+    {
+      "path": "backend/migrate.py",
+      "bytes": 474,
+      "sha256": "a0a777c16a8e24bb3aed10f9172ef4c9ff00b0fb11bdd36e5afda4356eb9057a"
+    },
+    {
+      "path": "backend/migrations/001_integrity.sql",
+      "bytes": 867,
+      "sha256": "5cc44b7f5741c03fe789fe511d89f3078403b13c3c449fe7c48299efeba2d3fc"
+    },
+    {
+      "path": "backend/migrations/002_game_tickets.sql",
+      "bytes": 604,
+      "sha256": "512164b2c24b8b4a9fe9cddd6f47b3b30c00690589d003b3fb056287b66fd8eb"
+    },
+    {
+      "path": "backend/migrations/003_loadouts.sql",
+      "bytes": 301,
+      "sha256": "4a112a8624560448c883ccc68471f0cdd70b86ea740393dcee1e0a3928a64b90"
+    },
+    {
+      "path": "backend/migrations/004_market_index.sql",
+      "bytes": 253,
+      "sha256": "5f07aa686d3b8afee2c34263f5c85ab97579dad63298fe5343fa06ccf7806dc0"
+    },
+    {
+      "path": "backend/models.py",
+      "bytes": 5710,
+      "sha256": "06833d10fa0b0764e9f24221e61b61868c4ca7c75aca60aca090cdfc62264c03"
+    },
+    {
+      "path": "backend/pyproject.toml",
+      "bytes": 322,
+      "sha256": "d36318f38cf14ddc4c7acad1a1d0dddfc00edfebb22b11f5cb757916f27ed27d"
+    },
+    {
+      "path": "backend/simulate.py",
+      "bytes": 4751,
+      "sha256": "e5d492ed94b55030d9d1c9786e568ceba564a0f54d61aed0a7013a5a31f62d4f"
+    },
+    {
+      "path": "backend/tests/test_economy.py",
+      "bytes": 34533,
+      "sha256": "0deead5a97d515650134cbe3a1f7eca497eff45facdf69a099ac221585a6ace3"
+    },
+    {
+      "path": "backend/uv.lock",
+      "bytes": 122287,
+      "sha256": "2119d77cf759dd11a184feda49f8ac791459d76fa76127889a9415cb28060a5c"
+    },
+    {
+      "path": "server/result_outbox.py",
+      "bytes": 11823,
+      "sha256": "fba748d01c29208419f33ed4f76f194ebde1ff495c915bf76b73381386b226ce"
+    },
+    {
+      "path": "server/tests/test_result_outbox.py",
+      "bytes": 6268,
+      "sha256": "880efe28185793c2d74f83d5433c175f8ea2bcdd7637269c810ea811448ce09b"
+    },
+    {
+      "path": "server/tests/test_supervision.py",
+      "bytes": 2864,
+      "sha256": "468cf8e6f3485f2554b39c572a1593e8ce30596c908a708ec1f32ef5e898af40"
+    }
+  ],
+  "connection_lifecycle_actual_last_observations": {
+    "silent-server": {
+      "ok": true,
+      "peer_entries": 0
+    },
+    "silent-client": {
+      "admitted": false,
+      "drop_seconds": 20.172,
+      "ok": true,
+      "scenario": "silent"
+    },
+    "idle-server": {
+      "ok": true,
+      "peer_entries": 0
+    },
+    "idle-client": {
+      "admitted": true,
+      "drop_seconds": 30.166,
+      "ok": true,
+      "scenario": "idle"
+    },
+    "reject-server": {
+      "ok": true,
+      "peer_entries": 0
+    },
+    "reject-client": {
+      "admitted": false,
+      "drop_seconds": 0.97,
+      "ok": true,
+      "scenario": "reject"
+    }
+  },
+  "failed_attempt": {
+    "source": "a23e3492bf59b370f6fb1411f585ae1de0431787",
+    "exit": 1,
+    "archive_files": 57,
+    "all_manifest_hashes_match": true,
+    "sha256": "30f9f362a8f60ab8c36531e03fdfe9d4e4acf4a1582959539674181dea78ed55"
+  },
+  "comparison_commit": "3b97a0043fc415c2408ed774f38710ac022cfd72",
+  "compared_tree_ids": {
+    "game": {
+      "validated": "e877ba16bdc7f63994930a77f32e484e8f12d890",
+      "comparison": "e877ba16bdc7f63994930a77f32e484e8f12d890"
+    },
+    "backend": {
+      "validated": "67027b4fa17674ef067c84401af76eb1524419ac",
+      "comparison": "67027b4fa17674ef067c84401af76eb1524419ac"
+    },
+    "server": {
+      "validated": "667e900f73c12d75f6824d4befcadeae4223050e",
+      "comparison": "667e900f73c12d75f6824d4befcadeae4223050e"
+    },
+    "scripts": {
+      "validated": "42bf35e8834760597ce7d8241551be7b58176ef3",
+      "comparison": "80e59366fe7b3ac48b82036c07143f0897010723"
+    },
+    ".github": {
+      "validated": "2bae7ba40a0ea967a865b4ba22224867901de3e2",
+      "comparison": "4627c260fa470e40643ca9092847a3d9e92f5163"
+    }
+  },
+  "code_changes_after_validated_source": [
+    "M\t.github/workflows/desktop-alpha.yml",
+    "A\tscripts/macos_native_input.py",
+    "A\tscripts/macos_window_capture.swift",
+    "A\tscripts/test_macos_menu.py",
+    "A\tscripts/verify_macos_menu.py"
+  ],
+  "raw_inventory_files": 67
+}

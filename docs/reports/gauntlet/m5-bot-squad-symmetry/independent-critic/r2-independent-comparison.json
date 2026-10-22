@@ -1,0 +1,6897 @@
+[
+  {
+    "log": "/workspace/sightbreak-bot-symmetry/docs/reports/gauntlet/m5-bot-squad-symmetry/baseline/commands-r2.log",
+    "sha256": "594cb19ea9b99a1c8bebf5162d12190cf0ff4aca83ba7cdd7c66fbd901bc28e2",
+    "samples": 960,
+    "pairs": 480,
+    "unequal_pairs": 172,
+    "unequal_by_kind": {
+      "close": 30,
+      "long": 18,
+      "stuck": 30,
+      "stuck_jump": 30,
+      "travel": 13,
+      "stuck_low": 13,
+      "idle": 15,
+      "carrier": 13,
+      "smoke": 10
+    },
+    "unequal_by_difficulty": {
+      "easy": 60,
+      "normal": 56,
+      "hard": 56
+    },
+    "idle_moving": [
+      [
+        "easy",
+        0,
+        1,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        6,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        2,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        7,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        3,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        8,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        4,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        9,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        5,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        10,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        1,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        6,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        3,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        8,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        4,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        9,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        5,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        10,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        1,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        6,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        3,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        8,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        4,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        9,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        5,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        10,
+        "(0.0, 1.0)"
+      ]
+    ],
+    "engine_summary": [
+      "BOT_SQUAD_SYMMETRY_RESULT samples=960 checks=2566 failures=279 mode=observation"
+    ],
+    "failure_lines": 279,
+    "differences": [
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "close",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(-0.338488, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(0.108362, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "close",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(-0.362231, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(-0.265454, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "close",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(-0.052941, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(-0.395213, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "close",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(0.305023, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(-0.161615, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "close",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(0.38255, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(0.220571, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "long",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(-0.338488, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(0.108362, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "long",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(-0.362231, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(-0.265454, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "long",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(-0.052941, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(-0.395213, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "long",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(0.305023, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(-0.161615, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "long",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(0.38255, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(0.220571, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "stuck",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "stuck",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "stuck",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "stuck",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "stuck",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "stuck_jump",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "stuck_jump",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "stuck_jump",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "stuck_jump",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 0,
+        "kind": "stuck_jump",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "close",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(-0.338488, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(0.108362, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "close",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(-0.362231, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(-0.265454, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "close",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(-0.052941, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(-0.395213, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "close",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(0.305023, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(-0.161615, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "close",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(0.38255, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.029158)",
+            "move": "(0.220571, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "long",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(-0.338488, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(0.108362, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "long",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(-0.362231, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(-0.265454, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "long",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(-0.052941, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(-0.395213, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "long",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(0.305023, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(-0.161615, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "long",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(0.38255, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.177214, -0.013461)",
+            "move": "(0.220571, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "travel",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "travel",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "travel",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "travel",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "travel",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "stuck",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "stuck",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "stuck",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "stuck",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "stuck",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "stuck_low",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "stuck_low",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "stuck_low",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "stuck_low",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "stuck_low",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "stuck_jump",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "stuck_jump",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "stuck_jump",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "stuck_jump",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "stuck_jump",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "idle",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(0.731809, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.386895, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "idle",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.251809, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(0.731809, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "idle",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(0.290277, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.251809, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "idle",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.731809, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(0.485613, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "idle",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(0.251809, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.731809, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "carrier",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-1.570796, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.381593, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "carrier",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.381593, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-1.570796, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "carrier",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-1.570796, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(2.901593, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "carrier",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.381593, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-1.570796, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "easy",
+        "team": 1,
+        "kind": "carrier",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-1.570796, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 10.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.381593, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "close",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(-0.338488, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(0.108362, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "close",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(-0.362231, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-3.0, 0.0, -3.0)",
+          "role": "split_flank"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(-0.265454, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-3.0, 0.0, -3.0)",
+          "role": "split_flank"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "close",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(-0.052941, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(-0.395213, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "close",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(0.305023, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(-0.161615, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "close",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(0.38255, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(0.220571, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "stuck",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "stuck",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-3.0, 0.0, -3.0)",
+          "role": "split_flank"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-3.0, 0.0, -3.0)",
+          "role": "split_flank"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "stuck",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "stuck",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "stuck",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "stuck_jump",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "stuck_jump",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-3.0, 0.0, -3.0)",
+          "role": "split_flank"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-3.0, 0.0, -3.0)",
+          "role": "split_flank"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "stuck_jump",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "stuck_jump",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "stuck_jump",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "smoke",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-3.141593, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 6.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-3.141593, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": true,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 6.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "smoke",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.432966, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": true,
+            "weapon": ""
+          },
+          "destination": "(-9.0, 0.0, 9.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.432966, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-9.0, 0.0, 9.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "smoke",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(2.498091, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-18.0, 0.0, 6.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(2.498091, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": true,
+            "weapon": ""
+          },
+          "destination": "(-18.0, 0.0, 6.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "smoke",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.914794, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": true,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 15.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.914794, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 15.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 0,
+        "kind": "smoke",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.850136, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 12.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.850136, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": true,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 12.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "close",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(-0.338488, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(0.108362, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "close",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(-0.362231, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(-0.265454, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "close",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(-0.052941, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(-0.395213, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "close",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(0.305023, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(-0.161615, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "close",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(0.38255, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.029158)",
+            "move": "(0.220571, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "long",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "long",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "long",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "long",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.159007, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "travel",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "travel",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "travel",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "travel",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "stuck",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "stuck",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "stuck",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "stuck",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "stuck",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "stuck_low",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "stuck_low",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "stuck_low",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "stuck_low",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "stuck_jump",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "stuck_jump",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "stuck_jump",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "stuck_jump",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "stuck_jump",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "idle",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.223648, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.358734, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "idle",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.223648, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(0.703648, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "idle",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(0.262115, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.223648, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "idle",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.24, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(0.457452, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "idle",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.703648, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.24, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "carrier",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.643501, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-1.644735, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "carrier",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-1.703348, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.643501, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "carrier",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-1.487655, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-1.703348, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "normal",
+        "team": 1,
+        "kind": "carrier",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(0.0, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-1.487655, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "close",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(-0.338488, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(0.108362, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "close",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(-0.362231, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-3.0, 0.0, -3.0)",
+          "role": "split_flank"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(-0.265454, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-3.0, 0.0, -3.0)",
+          "role": "split_flank"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "close",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(-0.052941, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(-0.395213, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "close",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(0.305023, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(-0.161615, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "close",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(0.38255, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(0.220571, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "stuck",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "stuck",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-3.0, 0.0, -3.0)",
+          "role": "split_flank"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-3.0, 0.0, -3.0)",
+          "role": "split_flank"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "stuck",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "stuck",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "stuck",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "stuck_jump",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "stuck_jump",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-3.0, 0.0, -3.0)",
+          "role": "split_flank"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-3.0, 0.0, -3.0)",
+          "role": "split_flank"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "stuck_jump",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "stuck_jump",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "stuck_jump",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 10.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "smoke",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-3.141593, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 6.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-3.141593, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": true,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 6.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "smoke",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.432966, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": true,
+            "weapon": ""
+          },
+          "destination": "(-9.0, 0.0, 9.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.432966, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-9.0, 0.0, 9.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "smoke",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(2.498091, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-18.0, 0.0, 6.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(2.498091, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": true,
+            "weapon": ""
+          },
+          "destination": "(-18.0, 0.0, 6.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "smoke",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.914794, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": true,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 15.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.914794, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 15.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 0,
+        "kind": "smoke",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.850136, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 12.0)",
+          "role": "escort"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.850136, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": true,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 12.0)",
+          "role": "escort"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "close",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(-0.338488, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(0.108362, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "close",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(-0.362231, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(-0.265454, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "close",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(-0.052941, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(-0.395213, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "close",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(0.305023, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(-0.161615, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "close",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(0.38255, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.029158)",
+            "move": "(0.220571, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "long",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "long",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "long",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "long",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": true,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(3.147925, -0.013461)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "travel",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "travel",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "travel",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "travel",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "stuck",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "stuck",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "stuck",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "stuck",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "stuck",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, -0.6)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "stuck_low",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "stuck_low",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "stuck_low",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.289626, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "stuck_low",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-2.034444, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "stuck_jump",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "stuck_jump",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "stuck_jump",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "stuck_jump",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.289626, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "stuck_jump",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(-1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": true,
+            "look": "(-2.034444, 0.0)",
+            "move": "(1.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "idle",
+        "slot": 0,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.223648, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.358734, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "idle",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.223648, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(0.703648, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "idle",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(0.262115, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.223648, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "idle",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.24, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(0.457452, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "idle",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.703648, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.24, 0.0)",
+            "move": "(0.0, 0.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "carrier",
+        "slot": 1,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.643501, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-1.644735, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(15.0, 0.0, 12.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "carrier",
+        "slot": 2,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-1.703348, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-0.643501, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "carrier",
+        "slot": 3,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-1.487655, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-1.703348, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(12.0, 0.0, 6.0)",
+          "role": "anchor"
+        }
+      },
+      {
+        "difficulty": "hard",
+        "team": 1,
+        "kind": "carrier",
+        "slot": 4,
+        "a": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(0.0, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(-15.0, 0.0, 12.0)",
+          "role": "anchor"
+        },
+        "b": {
+          "command": {
+            "crouch": false,
+            "fire": false,
+            "grenade": false,
+            "interact": false,
+            "jump": false,
+            "look": "(-1.487655, 0.0)",
+            "move": "(0.0, 1.0)",
+            "reload": false,
+            "smoke": false,
+            "weapon": ""
+          },
+          "destination": "(0.0, 0.0, 9.0)",
+          "role": "anchor"
+        }
+      }
+    ]
+  },
+  {
+    "log": "/workspace/sightbreak-bot-symmetry/docs/reports/gauntlet/m5-bot-squad-symmetry/candidate/commands-r2.log",
+    "sha256": "203fff738e17bf696d165926da26a7b2764290ef9608c48715a5a4d6d0f6c914",
+    "samples": 960,
+    "pairs": 480,
+    "unequal_pairs": 0,
+    "unequal_by_kind": {},
+    "unequal_by_difficulty": {},
+    "idle_moving": [
+      [
+        "easy",
+        0,
+        1,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        6,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        2,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        7,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        3,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        8,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        4,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        9,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        5,
+        "(0.0, 1.0)"
+      ],
+      [
+        "easy",
+        0,
+        10,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        1,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        6,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        3,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        8,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        4,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        9,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        5,
+        "(0.0, 1.0)"
+      ],
+      [
+        "normal",
+        0,
+        10,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        1,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        6,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        3,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        8,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        4,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        9,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        5,
+        "(0.0, 1.0)"
+      ],
+      [
+        "hard",
+        0,
+        10,
+        "(0.0, 1.0)"
+      ]
+    ],
+    "engine_summary": [
+      "BOT_SQUAD_SYMMETRY_RESULT samples=960 checks=2566 failures=0 mode=assertion"
+    ],
+    "failure_lines": 0,
+    "differences": []
+  }
+]

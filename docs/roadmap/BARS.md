@@ -26,5 +26,15 @@ To unblock, the owner edits the cloud environment's network access (environment 
 | B3 | The previous verified SIGHTBREAK build (`codex/desktop-playability-p1` at `db3981e`) | Any change that claims improvement | FETCHABLE | Proves improvement and catches regressions. Does not prove parity with a shipped title. Say so in the report. |
 | B4 | Accessibility rules: WCAG 2.2 contrast (4.5:1 body text, 3:1 large text and UI components) | HUD and menu text and controls | FETCHABLE (computed locally) | Measure from captured pixels; no network needed. |
 | B5 | Measured frame time and input latency on the same fixed scene | Performance claims | FETCHABLE | Software rendering only. Relative numbers; never device FPS. |
+| B6 | SIGHTBREAK stock account/result implementation at `2a2b732` (product gameplay equals frozen `0ca125d`), plus its account network and durable outbox tests | Real ten-account stock completion and recovery of the resulting earned payload | FETCHABLE (local Git inspection, 2026-10-22) | Existing tests were read before criteria: movement probe overrides phase/timer; crash probe injects account/score/activity/duration. New controlled no-combat run uses ordinary client inputs and production completion. [Criteria, exact source, raw evidence and limits](../reports/gauntlet/m3-account-match/RESULTS.md). No external-title parity claim. |
 
 Add rows as bars are proven fetchable. Change a status only after a real fetch attempt, and keep the date.
+
+## B6: M5 squad habits, 2026-10-22
+
+Inspected local Git source: root `42ff3dc`, Claude PR28 head `2641ddf` and authored
+bot-only delta `0871bc9`. These are fetchable code/behavior regression bars for
+actual native Godot command and role outputs, with [declared gates and raw
+comparison](../reports/gauntlet/m5-bot-squad-symmetry/README.md). Final native
+oracle compares 480 paired outputs: 181 unequal on baseline, zero on candidate.
+This establishes bounded habit symmetry, not CS2 parity or complete-match balance.

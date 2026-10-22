@@ -1,0 +1,60 @@
+{
+  "checks": {
+    "source_clean_and_identity_matches_native_bytes": true,
+    "all_native_game_resource_hashes_match": true,
+    "only_declared_fixture_resource_needs_CRLF": true,
+    "actual_controller_digest_matches_frozen_python": true
+  },
+  "all_checks_passed": true,
+  "native_identity": {
+    "source_commit": "3b5cf7640e256dff404b401bf2b27ffaff157bdd",
+    "source_game_tree": "fb6be859e05812d8707be1ef5c6f747d2588c1e9",
+    "source_content_sha256": "f148106d4ed189f2a5d49e798f55bf0fb30f612126ec203037377f88d332855e",
+    "source_validation_sha256": "c5cf2b30b7ce0899a07eb1549524eb2ea494a474677fce04b989d0ca76bc473c"
+  },
+  "LF_identity": {
+    "source_commit": "3b5cf7640e256dff404b401bf2b27ffaff157bdd",
+    "source_game_tree": "fb6be859e05812d8707be1ef5c6f747d2588c1e9",
+    "source_content_sha256": "f148106d4ed189f2a5d49e798f55bf0fb30f612126ec203037377f88d332855e",
+    "source_validation_sha256": "57a3fa3851c924152d63e62992d7eb50f48b15df815dd6ea4a33e6cb6357d4fe"
+  },
+  "CRLF_validation_paths": [
+    {
+      "path": "scripts/diagnostics/render_feature_probe.gd",
+      "LF_sha256": "7ffcc1451ae46226b8efe76cf8924e697d7c8268b434af827bfd4bba339670f3",
+      "CRLF_sha256": "b6c4bb2ec1018c0bc47bba42453b4da725b2579655ac3ceb1dfeee1ad5e07027"
+    },
+    {
+      "path": "scripts/fixtures/export_integration.gd",
+      "LF_sha256": "b5621ad5e52d17b938e81a285b4e690dc2bf10ae5955c0ae43442c78e0c079e4",
+      "CRLF_sha256": "ed1875272901297c922afcb396ec42da7f538c6f66f5fee6275d54fee329692d"
+    },
+    {
+      "path": "scripts/fixtures/network_soak.gd",
+      "LF_sha256": "ff34af512c23f9ed5c68654b6b2e278e7678f69a170c7678045d38d7c8a88efb",
+      "CRLF_sha256": "76aff8d3c818f58c2d4dec8643b72dda59f362fe5ce7f199bf52177440e10065"
+    },
+    {
+      "path": "scripts/fixtures/offline_capture_observations.json",
+      "LF_sha256": "9c6aaae17954d8abc7ec8b16aec00ebd76ba36ecc591666d672af2d80cbc23cf",
+      "CRLF_sha256": "ae52ea073a10213c7bee58a239237803c26fbe70a3f4a7b75989c4b28fb854be"
+    },
+    {
+      "path": "scripts/macos_window_capture.swift",
+      "LF_sha256": "af6576bbda2deac290a418cdbf0fef8894376372e934d617ee2bc1bdecb524b9",
+      "CRLF_sha256": "f2802c1cc95b3e359b38dc0126952a37a3449fe27db49e0d9a437268eee79136"
+    },
+    {
+      "path": "game/tests/fixtures/backend_world.json",
+      "LF_sha256": "3d5b1b5c440414b01316109a85edd127f49fbdcd860e78ca862f2fbaeb70dfa6",
+      "CRLF_sha256": "55e0d932690ff50413cf7e343fddb793089a421a07addce22e8585c94b8234ea"
+    }
+  ],
+  "native_game_resources": 307,
+  "game_resource_CRLF_paths": [
+    "tests/fixtures/backend_world.json"
+  ],
+  "resource_mismatches": [],
+  "controller_sha256": "7a99ff38c93d769941750276aa051f809cff320ce330117141bf37da641b3ed4",
+  "scope": "Independent frozen Git-object byte comparison. Native executable bytes are not supplied by the bounded QA artifact."
+}

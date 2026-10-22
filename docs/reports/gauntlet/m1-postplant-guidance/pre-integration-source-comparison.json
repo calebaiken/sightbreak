@@ -1,0 +1,48 @@
+{
+  "baseline": "9f730dc5e8079279a431ac78375e0e9098747e4a",
+  "candidate": "3c4d921ffc31d849d1a70d095a31d9845307f963",
+  "anchor_definition": "Parent of 0345a18 frozen Relay AR graphics integration; an explicit pre-integration source anchor, not a repository pre-M6 tag.",
+  "scope": "Read-only shipping-source diagnosis; no matched native performance trial or UI regression conclusion.",
+  "files": [
+    {
+      "path": "game/scripts/main.gd",
+      "baseline_sha256": "64bc644434bc1656c313a09865013b7a977e1345318463ec6fb90b0096ff2740",
+      "candidate_sha256": "0e94a4580715011f9b2f425de34c03a3843b9e10d6ce7637ce41bff9a25da320",
+      "byte_identical": false
+    },
+    {
+      "path": "game/scripts/gameplay/arena.gd",
+      "baseline_sha256": "ba0b4545931b2bdf77cb0e1e6ae0662e5c7c7345c4f6436cca665faddb4265c5",
+      "candidate_sha256": "ba0b4545931b2bdf77cb0e1e6ae0662e5c7c7345c4f6436cca665faddb4265c5",
+      "byte_identical": true
+    },
+    {
+      "path": "game/project.godot",
+      "baseline_sha256": "33bf7ebb34966918999c029c384f20c8710a6a4fe414e46b291505ea02aba84d",
+      "candidate_sha256": "2916998610c4fa397b853c8f0e7a89b6c8a947177bc69202d6b034b6bf163465",
+      "byte_identical": false
+    },
+    {
+      "path": "game/assets/environments/relay_sky.tres",
+      "baseline_sha256": "bc0591de17eca1bc24d3d6d8e47916bc81ffc5cca42518fa68547c544a55bbd3",
+      "candidate_sha256": "bc0591de17eca1bc24d3d6d8e47916bc81ffc5cca42518fa68547c544a55bbd3",
+      "byte_identical": true
+    }
+  ],
+  "graphics_selection_block": {
+    "function": "apply_settings",
+    "scope": "From Engine.max_fps assignment through the last detail-quality loop; excludes earlier added display/pointer synchronization calls",
+    "byte_identical": true,
+    "baseline_sha256": "a61a141bd66278f953450a92445d4e68f5abee06562919d1e9939bc6af878787",
+    "candidate_sha256": "a61a141bd66278f953450a92445d4e68f5abee06562919d1e9939bc6af878787"
+  },
+  "changed_main_areas": [
+    "menu/economy screens and contrast",
+    "focus, display and input handling",
+    "read-only offline diagnostics hooks",
+    "objective status selection",
+    "selected touch-mode synchronization",
+    "retained kill-feed row refitting"
+  ],
+  "settings_note": "Project GL Compatibility, MSAA 2x, render settings and 60 Hz physics selection are unchanged; project diff changes application version and adds unfocused joypad policy."
+}

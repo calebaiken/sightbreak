@@ -1,0 +1,25 @@
+{
+  "observed_utc_ns": 1792653560218619559,
+  "processes": [
+    {
+      "pid": 122828,
+      "ppid": 558,
+      "cmd": "/bin/bash -lc python3 -u scripts/validate_transaction_restart.py --godot /workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64 --baseline /workspace/sightbreak-client-receipt-baseline --candidate /workspace/sightbreak-client-result-recovery --out /workspace/sightbreak-client-receipt-runtime-r1 --repetitions 1 --boundaries before_commit after_commit late_commit recovery_kill > /workspace/sightbreak-client-receipt-runtime-r1-driver.log 2>&1"
+    },
+    {
+      "pid": 122834,
+      "ppid": 122828,
+      "cmd": "python3 -u scripts/validate_transaction_restart.py --godot /workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64 --baseline /workspace/sightbreak-client-receipt-baseline --candidate /workspace/sightbreak-client-result-recovery --out /workspace/sightbreak-client-receipt-runtime-r1 --repetitions 1 --boundaries before_commit after_commit late_commit recovery_kill"
+    },
+    {
+      "pid": 123778,
+      "ppid": 122834,
+      "cmd": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64 --headless --path /workspace/sightbreak-client-result-recovery/game --script /workspace/sightbreak-client-result-recovery/game/tests/transaction_crash_probe.gd"
+    }
+  ],
+  "sockets": "State  Recv-Q Send-Q Local Address:Port  Peer Address:PortProcess                                \nLISTEN 0      0            0.0.0.0:1040       0.0.0.0:*    users:((\"caas-prefix-tra\",pid=3,fd=3))\nLISTEN 0      0          127.0.0.1:42463      0.0.0.0:*    users:((\"python3\",pid=122834,fd=14))  \n",
+  "source": {
+    "/workspace/sightbreak-client-result-recovery": "79e076ed83651aea3ff8e439a64c0f979d35ecf2",
+    "/workspace/sightbreak-client-receipt-baseline": "b97fd81b0f10f45bda92f4a873314b0d270086db"
+  }
+}

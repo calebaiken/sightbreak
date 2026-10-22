@@ -21,6 +21,7 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
+import threading
 import time
 from urllib.parse import quote
 
@@ -30,6 +31,26 @@ import toolchain
 from native_log import failed as native_log_failed
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+class X11ProtocolError(RuntimeError):
+    def __init__(self, operation, errors):
+        self.errors = errors
+        super().__init__('X11 ' + operation + ' failed: ' + json.dumps(errors))
+
+
+class NativeWindowUnavailable(X11ProtocolError):
+    """A specific target disappeared during a checked native request."""
+
+
+class _XErrorEvent(C.Structure):
+    _fields_ = [('type', C.c_int), ('display', C.c_void_p), ('resourceid', C.c_ulong),
+                ('serial', C.c_ulong), ('error_code', C.c_ubyte),
+                ('request_code', C.c_ubyte), ('minor_code', C.c_ubyte)]
+
+
+_X_ERROR_HANDLER = C.CFUNCTYPE(C.c_int, C.c_void_p, C.POINTER(_XErrorEvent))
+_X_ERROR_LOCK = threading.RLock()  # XSetErrorHandler is process-wide.
 
 
 class NativeUI:
@@ -45,6 +66,9 @@ class NativeUI:
         self.x.XFetchName.argtypes = [C.c_void_p, C.c_ulong, C.POINTER(C.c_char_p)]
         self.x.XGetGeometry.argtypes = [C.c_void_p, C.c_ulong, C.POINTER(C.c_ulong), C.POINTER(C.c_int), C.POINTER(C.c_int), C.POINTER(C.c_uint), C.POINTER(C.c_uint), C.POINTER(C.c_uint), C.POINTER(C.c_uint)]
         self.x.XSetInputFocus.argtypes = [C.c_void_p, C.c_ulong, C.c_int, C.c_ulong]
+        self.x.XGetInputFocus.argtypes = [C.c_void_p, C.POINTER(C.c_ulong), C.POINTER(C.c_int)]
+        self.x.XSetErrorHandler.argtypes = [C.c_void_p]
+        self.x.XSetErrorHandler.restype = C.c_void_p
         self.x.XFlush.argtypes = [C.c_void_p]
         self.x.XKeysymToKeycode.argtypes = [C.c_void_p, C.c_ulong]
         self.x.XKeysymToKeycode.restype = C.c_uint
@@ -56,6 +80,7 @@ class NativeUI:
         self.t.XTestFakeButtonEvent.argtypes = [C.c_void_p, C.c_uint, C.c_int, C.c_ulong]
         self.t.XTestFakeKeyEvent.argtypes = [C.c_void_p, C.c_uint, C.c_int, C.c_ulong]
         self.d = self.x.XOpenDisplay(display.encode())
+        self.window = None
         if not self.d:
             raise RuntimeError('Cannot open native display ' + display)
         # A desktop WM normally creates these atoms. Bare Xvfb does not, while
@@ -65,27 +90,76 @@ class NativeUI:
         self.x.XInternAtom.argtypes = [C.c_void_p, C.c_char_p, C.c_int]
         self.x.XInternAtom.restype = C.c_ulong
         self.x.XSync.argtypes = [C.c_void_p, C.c_int]
-        self.wm_delete = self.x.XInternAtom(self.d, b'WM_DELETE_WINDOW', 0)
-        self.wm_protocols = self.x.XInternAtom(self.d, b'WM_PROTOCOLS', 0)
-        self.x.XSync(self.d, 0)
+        self.wm_delete = self._x_call(self.x.XInternAtom, b'WM_DELETE_WINDOW', 0)
+        self.wm_protocols = self._x_call(self.x.XInternAtom, b'WM_PROTOCOLS', 0)
+
+    def _x_call(self, function, *arguments, window=None, missing_requests=()):
+        """Drain and check errors while the callback is alive; never raise in C."""
+        if self.d is None:
+            raise RuntimeError('Native display is closed')
+        errors = []
+        @_X_ERROR_HANDLER
+        def capture(display, pointer):
+            event = pointer.contents
+            errors.append({'display': display, 'resourceid': event.resourceid,
+                           'serial': event.serial, 'error_code': event.error_code,
+                           'request_code': event.request_code, 'minor_code': event.minor_code})
+            return 0
+        with _X_ERROR_LOCK:
+            previous = self.x.XSetErrorHandler(C.cast(capture, C.c_void_p))
+            try:
+                # A pending unrelated error must not inherit this call's missing-window exception.
+                self.x.XSync(self.d, 0)
+                if errors:
+                    raise X11ProtocolError('pending requests', errors)
+                result = function(self.d, *arguments)
+                self.x.XSync(self.d, 0)
+            finally:
+                self.x.XSetErrorHandler(previous)
+        if errors:
+            # BadDrawable is the missing-resource reply for GetGeometry; all
+            # other recoverable requests below specifically require BadWindow.
+            missing = window is not None and all(
+                error['display'] == self.d and error['resourceid'] == window
+                and (error['error_code'], error['request_code']) in missing_requests
+                for error in errors)
+            error_type = NativeWindowUnavailable if missing else X11ProtocolError
+            raise error_type('window request' if missing else getattr(function, '__name__', 'request'), errors)
+        return result
+
+    def window_geometry(self, window=None):
+        target = self.window if window is None else window
+        if target is None:
+            raise RuntimeError('No native window selected for geometry')
+        root, x, y = C.c_ulong(), C.c_int(), C.c_int()
+        width, height, border, depth = C.c_uint(), C.c_uint(), C.c_uint(), C.c_uint()
+        if not self._x_call(self.x.XGetGeometry, target, C.byref(root), C.byref(x), C.byref(y),
+                            C.byref(width), C.byref(height), C.byref(border), C.byref(depth),
+                            window=target, missing_requests=((9, 14),)):
+            raise RuntimeError('Cannot inspect native window geometry')
+        return x.value, y.value, width.value, height.value
 
     def focus_game(self):
+        self.window = None
         root, parent, count = C.c_ulong(), C.c_ulong(), C.c_uint()
         children = C.POINTER(C.c_ulong)()
-        self.x.XQueryTree(self.d, self.x.XDefaultRootWindow(self.d), C.byref(root), C.byref(parent), C.byref(children), C.byref(count))
+        if not self._x_call(self.x.XQueryTree, self.x.XDefaultRootWindow(self.d),
+                            C.byref(root), C.byref(parent), C.byref(children), C.byref(count)):
+            raise RuntimeError('Cannot enumerate native windows')
         largest, selected = 0, None
         try:
             for index in range(count.value):
                 name = C.c_char_p()
-                self.x.XFetchName(self.d, children[index], C.byref(name))
                 try:
+                    self._x_call(self.x.XFetchName, children[index], C.byref(name),
+                                 window=children[index], missing_requests=((3, 20),))
                     if not name.value or b'SIGHTBREAK' not in name.value:
                         continue
-                    wr, wx, wy = C.c_ulong(), C.c_int(), C.c_int()
-                    ww, wh, border, depth = C.c_uint(), C.c_uint(), C.c_uint(), C.c_uint()
-                    self.x.XGetGeometry(self.d, children[index], C.byref(wr), C.byref(wx), C.byref(wy), C.byref(ww), C.byref(wh), C.byref(border), C.byref(depth))
-                    if ww.value * wh.value > largest:
-                        largest, selected = ww.value * wh.value, children[index]
+                    _, _, width, height = self.window_geometry(children[index])
+                    if width * height > largest:
+                        largest, selected = width * height, children[index]
+                except NativeWindowUnavailable:
+                    continue
                 finally:
                     if name:
                         self.x.XFree(name)
@@ -94,9 +168,16 @@ class NativeUI:
                 self.x.XFree(children)
         if selected is None:
             return False
+        try:
+            self._x_call(self.x.XSetInputFocus, selected, 1, 0,
+                         window=selected, missing_requests=((3, 42),))
+        except NativeWindowUnavailable:
+            return False
+        focused, revert = C.c_ulong(), C.c_int()
+        self._x_call(self.x.XGetInputFocus, C.byref(focused), C.byref(revert))
+        if focused.value != selected:
+            return False
         self.window = selected
-        self.x.XSetInputFocus(self.d, selected, 1, 0)
-        self.x.XFlush(self.d)
         return True
 
     def button(self, down):
@@ -139,26 +220,32 @@ class NativeUI:
 
     def diagnostics(self):
         """Observe native focus/button/key state without changing focus or input."""
-        self.x.XGetInputFocus.argtypes = [C.c_void_p, C.POINTER(C.c_ulong), C.POINTER(C.c_int)]
         focused, revert = C.c_ulong(), C.c_int()
-        self.x.XGetInputFocus(self.d, C.byref(focused), C.byref(revert))
+        self._x_call(self.x.XGetInputFocus, C.byref(focused), C.byref(revert))
         self.x.XQueryKeymap.argtypes = [C.c_void_p, C.c_void_p]
         keys = (C.c_ubyte * 32)()
-        self.x.XQueryKeymap(self.d, keys)
+        self._x_call(self.x.XQueryKeymap, keys)
         states = {}
         for name in ('r', 'd', 'w'):
             code = self.x.XKeysymToKeycode(self.d, self.x.XStringToKeysym(name.encode()))
             states[name] = bool(code and keys[code // 8] & (1 << (code % 8)))
         self.x.XQueryPointer.argtypes = [C.c_void_p, C.c_ulong, C.POINTER(C.c_ulong), C.POINTER(C.c_ulong), C.POINTER(C.c_int), C.POINTER(C.c_int), C.POINTER(C.c_int), C.POINTER(C.c_int), C.POINTER(C.c_uint)]
         root, child, rx, ry, wx, wy, mask = C.c_ulong(), C.c_ulong(), C.c_int(), C.c_int(), C.c_int(), C.c_int(), C.c_uint()
-        pointer = self.x.XQueryPointer(self.d, self.x.XDefaultRootWindow(self.d), C.byref(root), C.byref(child), C.byref(rx), C.byref(ry), C.byref(wx), C.byref(wy), C.byref(mask))
+        pointer = self._x_call(self.x.XQueryPointer, self.x.XDefaultRootWindow(self.d), C.byref(root), C.byref(child), C.byref(rx), C.byref(ry), C.byref(wx), C.byref(wy), C.byref(mask))
         window = getattr(self, 'window', None)
+        if window is not None:
+            try:
+                self.window_geometry(window)
+            except NativeWindowUnavailable:
+                self.window = window = None
         return {'target_window': window, 'foreground_window': focused.value,
                 'target_focused': window is not None and focused.value == window,
                 'lmb_down': bool(mask.value & (1 << 8)) if pointer else None,
                 'keys_down': states, 'state_source': 'XGetInputFocus/XQueryPointer/XQueryKeymap'}
 
     def request_close(self):
+        if self.window is None:
+            raise RuntimeError('No native window selected for close')
         class MessageData(C.Union):
             _fields_ = [('b', C.c_char * 20), ('s', C.c_short * 10), ('l', C.c_long * 5)]
         class ClientMessage(C.Structure):
@@ -169,7 +256,8 @@ class NativeUI:
             _fields_ = [('message', ClientMessage), ('padding', C.c_long * 24)]
         self.x.XGetWMProtocols.argtypes = [C.c_void_p, C.c_ulong, C.POINTER(C.POINTER(C.c_ulong)), C.POINTER(C.c_int)]
         protocols, count = C.POINTER(C.c_ulong)(), C.c_int()
-        advertised = self.x.XGetWMProtocols(self.d, self.window, C.byref(protocols), C.byref(count))
+        advertised = self._x_call(self.x.XGetWMProtocols, self.window, C.byref(protocols), C.byref(count),
+                                  window=self.window, missing_requests=((3, 20),))
         try:
             supports_close = advertised and self.wm_delete in [protocols[index] for index in range(count.value)]
         finally:
@@ -186,12 +274,17 @@ class NativeUI:
         event.message.format = 32
         event.message.data.l[0] = self.wm_delete
         event.message.data.l[1] = 0  # CurrentTime
-        if not self.x.XSendEvent(self.d, self.window, 0, 0, C.byref(event)):
+        if not self._x_call(self.x.XSendEvent, self.window, 0, 0, C.byref(event),
+                            window=self.window, missing_requests=((3, 25),)):
             raise RuntimeError('XSendEvent rejected the desktop close request')
-        self.x.XSync(self.d, 0)
 
     def close(self):
-        self.x.XCloseDisplay(self.d)
+        if self.d is not None:
+            try:
+                self._x_call(self.x.XSync, 0)
+            finally:
+                self.x.XCloseDisplay(self.d)
+                self.d = self.window = None
 
 
 class WinUI:

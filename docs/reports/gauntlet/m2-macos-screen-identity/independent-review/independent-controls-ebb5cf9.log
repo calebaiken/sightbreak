@@ -1,0 +1,103 @@
+test_additional_malformed_boxes_fail_closed (__main__.IndependentControls.test_additional_malformed_boxes_fail_closed) ... ok
+test_confusable_decorated_and_merged_labels_cannot_substitute (__main__.IndependentControls.test_confusable_decorated_and_merged_labels_cannot_substitute) ... ok
+test_each_single_home_label_blocks_settings (__main__.IndependentControls.test_each_single_home_label_blocks_settings) ... ok
+test_exact_edge_boxes_normalization_and_row_order_remain_valid (__main__.IndependentControls.test_exact_edge_boxes_normalization_and_row_order_remain_valid) ... ok
+test_malformed_text_rows_fail_closed (__main__.IndependentControls.test_malformed_text_rows_fail_closed) ... ok
+test_normalized_duplicates_are_ambiguous_for_every_role (__main__.IndependentControls.test_normalized_duplicates_are_ambiguous_for_every_role) ... ok
+test_opposite_heading_blocks_home_even_with_bad_geometry (__main__.IndependentControls.test_opposite_heading_blocks_home_even_with_bad_geometry) ... ok
+test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) ... 
+  test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='SIGHTBREAK', box=[1.0, 0.1, 1e-20, 0.1]) ... FAIL
+  test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='SIGHTBREAK', box=[0.1, 1.0, 0.1, 1e-20]) ... FAIL
+  test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='OPERATOR RECORD', box=[1.0, 0.1, 1e-20, 0.1]) ... FAIL
+  test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='OPERATOR RECORD', box=[0.1, 1.0, 0.1, 1e-20]) ... FAIL
+  test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='SETTINGS', box=[1.0, 0.1, 1e-20, 0.1]) ... FAIL
+  test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='SETTINGS', box=[0.1, 1.0, 0.1, 1e-20]) ... FAIL
+  test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='FIELD SETTINGS', box=[1.0, 0.1, 1e-20, 0.1]) ... FAIL
+  test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='FIELD SETTINGS', box=[0.1, 1.0, 0.1, 1e-20]) ... FAIL
+test_required_confidence_values_fail_closed (__main__.IndependentControls.test_required_confidence_values_fail_closed) ... ok
+test_screen_check_does_not_replace_exact_owner_window_pointer_guard (__main__.IndependentControls.test_screen_check_does_not_replace_exact_owner_window_pointer_guard) ... ok
+
+======================================================================
+FAIL: test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='SIGHTBREAK', box=[1.0, 0.1, 1e-20, 0.1])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 108, in test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding
+    self.check('float rounded outside '+label+' '+repr(box),capture,'settings' if settings else 'menu',False)
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 44, in check
+    self.assertEqual(accepted, expected, case)
+AssertionError: True != False : float rounded outside SIGHTBREAK [1.0, 0.1, 1e-20, 0.1]
+
+======================================================================
+FAIL: test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='SIGHTBREAK', box=[0.1, 1.0, 0.1, 1e-20])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 108, in test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding
+    self.check('float rounded outside '+label+' '+repr(box),capture,'settings' if settings else 'menu',False)
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 44, in check
+    self.assertEqual(accepted, expected, case)
+AssertionError: True != False : float rounded outside SIGHTBREAK [0.1, 1.0, 0.1, 1e-20]
+
+======================================================================
+FAIL: test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='OPERATOR RECORD', box=[1.0, 0.1, 1e-20, 0.1])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 108, in test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding
+    self.check('float rounded outside '+label+' '+repr(box),capture,'settings' if settings else 'menu',False)
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 44, in check
+    self.assertEqual(accepted, expected, case)
+AssertionError: True != False : float rounded outside OPERATOR RECORD [1.0, 0.1, 1e-20, 0.1]
+
+======================================================================
+FAIL: test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='OPERATOR RECORD', box=[0.1, 1.0, 0.1, 1e-20])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 108, in test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding
+    self.check('float rounded outside '+label+' '+repr(box),capture,'settings' if settings else 'menu',False)
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 44, in check
+    self.assertEqual(accepted, expected, case)
+AssertionError: True != False : float rounded outside OPERATOR RECORD [0.1, 1.0, 0.1, 1e-20]
+
+======================================================================
+FAIL: test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='SETTINGS', box=[1.0, 0.1, 1e-20, 0.1])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 108, in test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding
+    self.check('float rounded outside '+label+' '+repr(box),capture,'settings' if settings else 'menu',False)
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 44, in check
+    self.assertEqual(accepted, expected, case)
+AssertionError: True != False : float rounded outside SETTINGS [1.0, 0.1, 1e-20, 0.1]
+
+======================================================================
+FAIL: test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='SETTINGS', box=[0.1, 1.0, 0.1, 1e-20])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 108, in test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding
+    self.check('float rounded outside '+label+' '+repr(box),capture,'settings' if settings else 'menu',False)
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 44, in check
+    self.assertEqual(accepted, expected, case)
+AssertionError: True != False : float rounded outside SETTINGS [0.1, 1.0, 0.1, 1e-20]
+
+======================================================================
+FAIL: test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='FIELD SETTINGS', box=[1.0, 0.1, 1e-20, 0.1])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 108, in test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding
+    self.check('float rounded outside '+label+' '+repr(box),capture,'settings' if settings else 'menu',False)
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 44, in check
+    self.assertEqual(accepted, expected, case)
+AssertionError: True != False : float rounded outside FIELD SETTINGS [1.0, 0.1, 1e-20, 0.1]
+
+======================================================================
+FAIL: test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding (__main__.IndependentControls.test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding) (label='FIELD SETTINGS', box=[0.1, 1.0, 0.1, 1e-20])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 108, in test_positive_boxes_starting_on_outside_edge_fail_despite_float_rounding
+    self.check('float rounded outside '+label+' '+repr(box),capture,'settings' if settings else 'menu',False)
+  File "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/test_screen_identity_independent.py", line 44, in check
+    self.assertEqual(accepted, expected, case)
+AssertionError: True != False : float rounded outside FIELD SETTINGS [0.1, 1.0, 0.1, 1e-20]
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.031s
+
+FAILED (failures=8)

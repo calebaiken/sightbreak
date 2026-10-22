@@ -1,0 +1,35 @@
+{
+  "fault": "namespace",
+  "actual_native_failure": null,
+  "raised": {
+    "type": "PermissionError",
+    "message": "Control injected namespace cleanup failure"
+  },
+  "passed": false,
+  "failure": {
+    "stage": "user_namespace_cleanup",
+    "type": "PermissionError",
+    "message": "Control injected namespace cleanup failure"
+  },
+  "cleanup": [
+    {
+      "user_namespace": "/workspace/sightbreak-ci-isolation/.local/cleanup-controls/data/SIGHTBREAK-native-tests-926af9951ec140d49e09af271bc306af",
+      "removed": false,
+      "error": {
+        "stage": "user_namespace_cleanup",
+        "type": "PermissionError",
+        "message": "Control injected namespace cleanup failure"
+      }
+    }
+  ],
+  "temporary_project_removed": true,
+  "finalization_failures": [
+    {
+      "stage": "user_namespace_cleanup",
+      "type": "PermissionError",
+      "message": "Control injected namespace cleanup failure"
+    }
+  ],
+  "control_assertions_passed": true,
+  "control_teardown_removed_resources": true
+}

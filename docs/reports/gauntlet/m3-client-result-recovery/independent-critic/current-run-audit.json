@@ -1,0 +1,447 @@
+{
+  "observed_utc_ns": 1792653710245563392,
+  "method": "independent raw-file and read-only immutable SQLite audit",
+  "sources": {
+    "baseline": {
+      "commit": "b97fd81b0f10f45bda92f4a873314b0d270086db",
+      "game_tree": "41abd17652a89c554463faa5b216a7af59aec0e7",
+      "status": ""
+    },
+    "candidate": {
+      "commit": "79e076ed83651aea3ff8e439a64c0f979d35ecf2",
+      "game_tree": "1f3616afdfaaed0fb7c9ffbd0aa8e4947f7d2a48",
+      "status": ""
+    }
+  },
+  "rows": [
+    {
+      "label": "baseline",
+      "kind": "case",
+      "boundary": "after_commit",
+      "recovered": false,
+      "debit": 100,
+      "mutations": 1,
+      "inbound_requests": 1,
+      "pids": [
+        123261,
+        123272
+      ]
+    },
+    {
+      "label": "baseline",
+      "kind": "case",
+      "boundary": "before_commit",
+      "recovered": false,
+      "debit": 0,
+      "mutations": 0,
+      "inbound_requests": 1,
+      "pids": [
+        123239,
+        123250
+      ]
+    },
+    {
+      "label": "baseline",
+      "kind": "case",
+      "boundary": "late_commit",
+      "recovered": false,
+      "debit": 100,
+      "mutations": 1,
+      "inbound_requests": 1,
+      "pids": [
+        123283,
+        123294,
+        123304
+      ]
+    },
+    {
+      "label": "baseline",
+      "kind": "case",
+      "boundary": "recovery_kill",
+      "recovered": false,
+      "debit": 100,
+      "mutations": 1,
+      "inbound_requests": 1,
+      "pids": [
+        123315,
+        123326,
+        123337
+      ]
+    },
+    {
+      "label": "baseline",
+      "kind": "market",
+      "boundary": "after_commit",
+      "recovered": false,
+      "debit": 10000000,
+      "mutations": 1,
+      "inbound_requests": 1,
+      "pids": [
+        123370,
+        123381
+      ]
+    },
+    {
+      "label": "baseline",
+      "kind": "market",
+      "boundary": "before_commit",
+      "recovered": false,
+      "debit": 0,
+      "mutations": 0,
+      "inbound_requests": 1,
+      "pids": [
+        123348,
+        123359
+      ]
+    },
+    {
+      "label": "baseline",
+      "kind": "market",
+      "boundary": "late_commit",
+      "recovered": false,
+      "debit": 10000000,
+      "mutations": 1,
+      "inbound_requests": 1,
+      "pids": [
+        123392,
+        123403,
+        123413
+      ]
+    },
+    {
+      "label": "baseline",
+      "kind": "market",
+      "boundary": "recovery_kill",
+      "recovered": false,
+      "debit": 10000000,
+      "mutations": 1,
+      "inbound_requests": 1,
+      "pids": [
+        123424,
+        123435,
+        123467
+      ]
+    },
+    {
+      "label": "baseline",
+      "kind": "store",
+      "boundary": "after_commit",
+      "recovered": false,
+      "debit": 100,
+      "mutations": 1,
+      "inbound_requests": 1,
+      "pids": [
+        123152,
+        123163
+      ]
+    },
+    {
+      "label": "baseline",
+      "kind": "store",
+      "boundary": "before_commit",
+      "recovered": false,
+      "debit": 0,
+      "mutations": 0,
+      "inbound_requests": 1,
+      "pids": [
+        123130,
+        123141
+      ]
+    },
+    {
+      "label": "baseline",
+      "kind": "store",
+      "boundary": "late_commit",
+      "recovered": false,
+      "debit": 100,
+      "mutations": 1,
+      "inbound_requests": 1,
+      "pids": [
+        123174,
+        123185,
+        123195
+      ]
+    },
+    {
+      "label": "baseline",
+      "kind": "store",
+      "boundary": "recovery_kill",
+      "recovered": false,
+      "debit": 100,
+      "mutations": 1,
+      "inbound_requests": 1,
+      "pids": [
+        123206,
+        123217,
+        123228
+      ]
+    },
+    {
+      "label": "candidate",
+      "kind": "case",
+      "boundary": "after_commit",
+      "recovered": true,
+      "debit": 100,
+      "mutations": 1,
+      "inbound_requests": 2,
+      "pids": [
+        123939,
+        123950
+      ]
+    },
+    {
+      "label": "candidate",
+      "kind": "case",
+      "boundary": "before_commit",
+      "recovered": true,
+      "debit": 100,
+      "mutations": 1,
+      "inbound_requests": 2,
+      "pids": [
+        123912,
+        123923
+      ]
+    },
+    {
+      "label": "candidate",
+      "kind": "case",
+      "boundary": "late_commit",
+      "recovered": true,
+      "debit": 100,
+      "mutations": 1,
+      "inbound_requests": 3,
+      "pids": [
+        123966,
+        123977,
+        123988
+      ]
+    },
+    {
+      "label": "candidate",
+      "kind": "case",
+      "boundary": "recovery_kill",
+      "recovered": true,
+      "debit": 100,
+      "mutations": 1,
+      "inbound_requests": 3,
+      "pids": [
+        124004,
+        124021,
+        124033
+      ]
+    },
+    {
+      "label": "candidate",
+      "kind": "market",
+      "boundary": "after_commit",
+      "recovered": true,
+      "debit": 10000000,
+      "mutations": 1,
+      "inbound_requests": 2,
+      "pids": [
+        124076,
+        124087
+      ]
+    },
+    {
+      "label": "candidate",
+      "kind": "market",
+      "boundary": "before_commit",
+      "recovered": true,
+      "debit": 10000000,
+      "mutations": 1,
+      "inbound_requests": 2,
+      "pids": [
+        124049,
+        124060
+      ]
+    },
+    {
+      "label": "candidate",
+      "kind": "market",
+      "boundary": "late_commit",
+      "recovered": true,
+      "debit": 10000000,
+      "mutations": 1,
+      "inbound_requests": 3,
+      "pids": [
+        124103,
+        124120,
+        124133
+      ]
+    },
+    {
+      "label": "candidate",
+      "kind": "market",
+      "boundary": "recovery_kill",
+      "recovered": true,
+      "debit": 10000000,
+      "mutations": 1,
+      "inbound_requests": 3,
+      "pids": [
+        124153,
+        124165,
+        124179
+      ]
+    },
+    {
+      "label": "candidate",
+      "kind": "store",
+      "boundary": "after_commit",
+      "recovered": true,
+      "debit": 100,
+      "mutations": 1,
+      "inbound_requests": 2,
+      "pids": [
+        123801,
+        123812
+      ]
+    },
+    {
+      "label": "candidate",
+      "kind": "store",
+      "boundary": "before_commit",
+      "recovered": true,
+      "debit": 100,
+      "mutations": 1,
+      "inbound_requests": 2,
+      "pids": [
+        123767,
+        123778
+      ]
+    },
+    {
+      "label": "candidate",
+      "kind": "store",
+      "boundary": "late_commit",
+      "recovered": true,
+      "debit": 100,
+      "mutations": 1,
+      "inbound_requests": 3,
+      "pids": [
+        123835,
+        123846,
+        123857
+      ]
+    },
+    {
+      "label": "candidate",
+      "kind": "store",
+      "boundary": "recovery_kill",
+      "recovered": true,
+      "debit": 100,
+      "mutations": 1,
+      "inbound_requests": 3,
+      "pids": [
+        123873,
+        123884,
+        123896
+      ]
+    }
+  ],
+  "lifecycle": {
+    "baseline": {
+      "logout": {
+        "account": {},
+        "account_cleared": true,
+        "calls": [],
+        "pending_after_confirmation": false,
+        "pending_after_logout": false,
+        "pending_after_recreation": false,
+        "result": {},
+        "token_cleared": true
+      },
+      "retry": {
+        "calls": [
+          {
+            "method": 2,
+            "path": "/store/buy",
+            "payload": {
+              "definition_id": "key",
+              "idempotency_key": "d53cbec2-9551-458a-973c-538442a3209f"
+            }
+          },
+          {
+            "method": 2,
+            "path": "/store/buy",
+            "payload": {
+              "definition_id": "key",
+              "idempotency_key": "d53cbec2-9551-458a-973c-538442a3209f"
+            }
+          }
+        ],
+        "journal_after_rejected_retry": false,
+        "pending_after_lost_response": true,
+        "pending_after_rejected_retry": false,
+        "retry_status": 409
+      }
+    },
+    "candidate": {
+      "logout": {
+        "account": {
+          "credits": 0,
+          "xp": 0
+        },
+        "account_cleared": true,
+        "calls": [
+          {
+            "method": 2,
+            "path": "/store/buy",
+            "payload": {
+              "definition_id": "key",
+              "idempotency_key": "112a501d-3ca0-4811-9783-385cdecb073e"
+            }
+          }
+        ],
+        "pending_after_confirmation": false,
+        "pending_after_logout": true,
+        "pending_after_recreation": true,
+        "result": {
+          "credits": 0,
+          "item": {
+            "id": "fixture-server-confirmed-item"
+          }
+        },
+        "token_cleared": true
+      },
+      "retry": {
+        "calls": [
+          {
+            "method": 2,
+            "path": "/store/buy",
+            "payload": {
+              "definition_id": "key",
+              "idempotency_key": "d53cbec2-9551-458a-973c-538442a3209f"
+            }
+          },
+          {
+            "method": 2,
+            "path": "/store/buy",
+            "payload": {
+              "definition_id": "key",
+              "idempotency_key": "d53cbec2-9551-458a-973c-538442a3209f"
+            }
+          }
+        ],
+        "journal_after_rejected_retry": true,
+        "pending_after_lost_response": true,
+        "pending_after_rejected_retry": true,
+        "retry_status": 409
+      }
+    }
+  },
+  "totals": {
+    "baseline": {
+      "recovered": 0,
+      "cases": 12,
+      "mutations": 9,
+      "debit": 30000600
+    },
+    "candidate": {
+      "recovered": 12,
+      "cases": 12,
+      "mutations": 12,
+      "debit": 40000800
+    }
+  }
+}

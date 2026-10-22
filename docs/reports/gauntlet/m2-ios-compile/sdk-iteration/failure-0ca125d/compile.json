@@ -1,0 +1,250 @@
+{
+  "schema": 1,
+  "compile_completed": false,
+  "status": "FAILED",
+  "scope": "Unsigned generic-device Debug compile only; no installation or runtime qualification.",
+  "simulator": "UNVERIFIED; upstream debug simulator archive architecture mismatch remains separate.",
+  "physical_device": "UNVERIFIED",
+  "total_command_budget_seconds": 900.0,
+  "commands": [
+    {
+      "label": "source-before",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python",
+        "/Users/runner/work/sightbreak/sightbreak/scripts/qualify_ios_compile.py",
+        "--source-snapshot"
+      ],
+      "timeout_seconds": 30,
+      "timed_out": false,
+      "exit_code": 0,
+      "cleanup_errors": [],
+      "owned_process_group": 3167,
+      "group_before_cleanup": [],
+      "unexpected_descendants": false,
+      "group_after_cleanup": [],
+      "surviving_owned_processes": [],
+      "seconds": 0.33128154199999926,
+      "log": "source-before.log",
+      "cleanup_complete": true
+    },
+    {
+      "label": "xcode-version",
+      "command": [
+        "xcodebuild",
+        "-version"
+      ],
+      "timeout_seconds": 30,
+      "timed_out": false,
+      "exit_code": 0,
+      "cleanup_errors": [],
+      "owned_process_group": 3175,
+      "group_before_cleanup": [],
+      "unexpected_descendants": false,
+      "group_after_cleanup": [],
+      "surviving_owned_processes": [],
+      "seconds": 0.2943320419999793,
+      "log": "xcode-version.log",
+      "cleanup_complete": true
+    },
+    {
+      "label": "xcode-select",
+      "command": [
+        "xcode-select",
+        "-p"
+      ],
+      "timeout_seconds": 30,
+      "timed_out": false,
+      "exit_code": 0,
+      "cleanup_errors": [],
+      "owned_process_group": 3178,
+      "group_before_cleanup": [],
+      "unexpected_descendants": false,
+      "group_after_cleanup": [],
+      "surviving_owned_processes": [],
+      "seconds": 0.06109008399999993,
+      "log": "xcode-select.log",
+      "cleanup_complete": true
+    },
+    {
+      "label": "iphoneos-sdk",
+      "command": [
+        "xcrun",
+        "--sdk",
+        "iphoneos",
+        "--show-sdk-path"
+      ],
+      "timeout_seconds": 30,
+      "timed_out": false,
+      "exit_code": 0,
+      "cleanup_errors": [],
+      "owned_process_group": 3181,
+      "group_before_cleanup": [],
+      "unexpected_descendants": false,
+      "group_after_cleanup": [],
+      "surviving_owned_processes": [],
+      "seconds": 1.207352458999992,
+      "log": "iphoneos-sdk.log",
+      "cleanup_complete": true
+    },
+    {
+      "label": "iphoneos-sdk-version",
+      "command": [
+        "xcrun",
+        "--sdk",
+        "iphoneos",
+        "--show-sdk-version"
+      ],
+      "timeout_seconds": 30,
+      "timed_out": false,
+      "exit_code": 0,
+      "cleanup_errors": [],
+      "owned_process_group": 3187,
+      "group_before_cleanup": [],
+      "unexpected_descendants": false,
+      "group_after_cleanup": [],
+      "surviving_owned_processes": [],
+      "seconds": 0.4195572080000147,
+      "log": "iphoneos-sdk-version.log",
+      "cleanup_complete": true
+    },
+    {
+      "label": "clang-version",
+      "command": [
+        "xcrun",
+        "--sdk",
+        "iphoneos",
+        "clang",
+        "--version"
+      ],
+      "timeout_seconds": 30,
+      "timed_out": false,
+      "exit_code": 0,
+      "cleanup_errors": [],
+      "owned_process_group": 3192,
+      "group_before_cleanup": [],
+      "unexpected_descendants": false,
+      "group_after_cleanup": [],
+      "surviving_owned_processes": [],
+      "seconds": 0.6168543330000205,
+      "log": "clang-version.log",
+      "cleanup_complete": true
+    },
+    {
+      "label": "install-ios-template",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python",
+        "/Users/runner/work/sightbreak/sightbreak/scripts/toolchain.py",
+        "setup",
+        "--targets",
+        "ios"
+      ],
+      "timeout_seconds": 180,
+      "timed_out": false,
+      "exit_code": 0,
+      "cleanup_errors": [],
+      "owned_process_group": 3295,
+      "group_before_cleanup": [],
+      "unexpected_descendants": false,
+      "group_after_cleanup": [],
+      "surviving_owned_processes": [],
+      "seconds": 3.428225124999983,
+      "log": "install-ios-template.log",
+      "cleanup_complete": true
+    },
+    {
+      "label": "export-command",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python",
+        "/Users/runner/work/sightbreak/sightbreak/scripts/export.py",
+        "ios"
+      ],
+      "timeout_seconds": 420,
+      "timed_out": false,
+      "exit_code": 0,
+      "cleanup_errors": [],
+      "owned_process_group": 3307,
+      "group_before_cleanup": [],
+      "unexpected_descendants": false,
+      "group_after_cleanup": [],
+      "surviving_owned_processes": [],
+      "seconds": 16.65019608399996,
+      "log": "export-command.log",
+      "cleanup_complete": true
+    },
+    {
+      "label": "inspect-project",
+      "command": [
+        "/Library/Frameworks/Python.framework/Versions/3.12/bin/python",
+        "/Users/runner/work/sightbreak/sightbreak/scripts/verify_builds.py",
+        "--targets",
+        "ios"
+      ],
+      "timeout_seconds": 60,
+      "timed_out": false,
+      "exit_code": 0,
+      "cleanup_errors": [],
+      "owned_process_group": 3485,
+      "group_before_cleanup": [],
+      "unexpected_descendants": false,
+      "group_after_cleanup": [],
+      "surviving_owned_processes": [],
+      "seconds": 1.2162639580000132,
+      "log": "inspect-project.log",
+      "cleanup_complete": true
+    },
+    {
+      "label": "xcodebuild-device",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/runner/work/sightbreak/sightbreak/builds/ios-device-export/ios/sightbreak.xcodeproj",
+        "-scheme",
+        "sightbreak",
+        "-configuration",
+        "Debug",
+        "-sdk",
+        "iphoneos",
+        "-destination",
+        "generic/platform=iOS",
+        "-derivedDataPath",
+        "/Users/runner/work/sightbreak/sightbreak/builds/ios-device-derived",
+        "CODE_SIGNING_ALLOWED=NO",
+        "build"
+      ],
+      "timeout_seconds": 600,
+      "timed_out": false,
+      "exit_code": 65,
+      "cleanup_errors": [],
+      "owned_process_group": 3502,
+      "group_before_cleanup": [],
+      "unexpected_descendants": false,
+      "group_after_cleanup": [],
+      "surviving_owned_processes": [],
+      "seconds": 36.095238499999994,
+      "log": "xcodebuild-device.log",
+      "cleanup_complete": true
+    }
+  ],
+  "host": {
+    "system": "Darwin",
+    "machine": "arm64",
+    "platform": "macOS-15.7.9-arm64-arm-64bit"
+  },
+  "source": {
+    "source_dirty": false,
+    "source_validation_sha256": "95844559cde01c1f9785d2835ea9f92a5e09e0315f87f0e7aa5029352456196c",
+    "source_commit": "0ca125dfba637868e6e8e9772ff9c40400413e32",
+    "source_game_tree": "782c26464631f86ad63ddab9de36a969d4e44534",
+    "source_content_sha256": "f8a849b90df3ff214037cace7bc32c0c7b5e184911558b424b0a6c0f798db781",
+    "source_game_dirty": false
+  },
+  "xcode_version": "Xcode 16.4\nBuild version 16F6",
+  "developer_directory": "/Applications/Xcode_16.4.app/Contents/Developer",
+  "iphoneos_sdk": "/Applications/Xcode_16.4.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.5.sdk",
+  "iphoneos_sdk_version": "18.5",
+  "clang_version": "Apple clang version 17.0.0 (clang-1700.0.13.5)\nTarget: arm64-apple-darwin24.6.0\nThread model: posix\nInstalledDir: /Applications/Xcode_16.4.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin",
+  "templates_sha512": "ca4d71c4d7b81dfc15d1a98baa07534aa95b03fdda78a0075b06672e1648d2e5f40980c9adc28d23e1b92e732ee7bf3461997aa804af74ec2fcd7a93ccb84079",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "failure": "Command failed: xcodebuild-device",
+  "seconds": 61.98272458400001
+}

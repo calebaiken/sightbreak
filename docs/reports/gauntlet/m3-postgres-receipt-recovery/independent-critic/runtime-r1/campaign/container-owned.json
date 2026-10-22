@@ -1,0 +1,30 @@
+{
+  "id": "98a71b3273263cf7ad395e17915c60b60bf9b73ac1bf204e439e1dcd66faa78a",
+  "image": "sha256:327daa8fae7178d61f93142f146b098467b345e10997b9eb79f63bd58e5c8f3c",
+  "labels": {
+    "io.sightbreak.owner": "client_result_recovery_builder",
+    "io.sightbreak.receipt-run": "sightbreak-pg-receipt-5f9ae87bdf8e"
+  },
+  "mounts": [
+    {
+      "Destination": "/var/lib/postgresql/data",
+      "Driver": "local",
+      "Mode": "z",
+      "Name": "sightbreak-pg-receipt-5f9ae87bdf8e-data",
+      "Propagation": "",
+      "RW": true,
+      "Source": "/var/lib/docker/volumes/sightbreak-pg-receipt-5f9ae87bdf8e-data/_data",
+      "Type": "volume"
+    }
+  ],
+  "name": "/sightbreak-pg-receipt-5f9ae87bdf8e",
+  "pid": 149326,
+  "ports": {
+    "5432/tcp": [
+      {
+        "HostIp": "127.0.0.1",
+        "HostPort": "32774"
+      }
+    ]
+  }
+}

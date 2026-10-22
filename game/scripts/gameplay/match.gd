@@ -38,6 +38,8 @@ var actors: Dictionary = {}
 var options: Dictionary = {}
 var local_id: int = 1
 var connection_state: String = "offline"
+# Presentation-only reason for the current connection/recovery state; never sent in snapshots.
+var connection_notice: String = ""
 var reconnect_token: String = ""
 var _authority: bool = true
 var _bot_state: Dictionary = {}
@@ -100,6 +102,9 @@ var _device_audio: AudioStreamPlayer3D
 var _beep_clock: float = 0.0
 var _remote_utilities: Dictionary = {}
 var _rng := RandomNumberGenerator.new()
+## At most one hitscan contact per actor per authoritative tick (ten-actor roster).
+## Cleared before/after each tick; never replicated or consulted by prediction.
+var _pending_hitscan_hits: Array[Dictionary] = []
 
 func configure(settings: Dictionary) -> void:
 	options = settings.duplicate()
@@ -258,6 +263,12 @@ func _authority_tick(delta: float) -> void:
 		var id: int = _peer_actors[peer_id]
 		var command := _input_stream.pop(peer_id)
 		if not command.is_empty():
+			# Only immutable consumed intent can qualify activity. Packet tails may
+			# contain acknowledged, replaced or backlog-discarded commands.
+			var old_look: Vector2 = actors[id].input_state.get("look", Vector2.ZERO)
+			var new_look: Vector2 = command.look
+			if old_look.distance_to(new_look) > 0.004 or ((command.move as Vector2).length() > 0.1 and actors[id].velocity.length() > 0.2) or (bool(command.interact) and _interactions.has(id)):
+				_last_activity[id] = _elapsed
 			actors[id].input_state = command
 			_last_input_sequence[id] = int(command.sequence)
 		# On a short packet gap keep held controls, as before input sequencing.
@@ -273,15 +284,22 @@ func _authority_tick(delta: float) -> void:
 				_bot_input(actor, 0.12)
 	if local_actor() != null:
 		local_actor().input_state = _local_input.duplicate()
+	var suspended_actor_edges: Dictionary = {}
+	_pending_hitscan_hits.clear()
+	# Shared post-movement shot geometry: no actor fires at a later actor's old pose.
 	for actor: SBActor in actors.values():
-		var suspended_edges: Array = []
 		if phase != "live":
 			actor.input_state = {"move": Vector2.ZERO, "look": actor.input_state.get("look", Vector2(actor.yaw, actor.pitch))}
 		elif not _is_bot(actor.actor_id) and actor.actor_id != local_id:
 			if _elapsed - float(_last_peer_input.get(actor.actor_id, -10.0)) > 0.3:
-				suspended_edges = [actor._fire_previous, actor._jump_previous, actor._grenade_previous, actor._smoke_previous]
+				suspended_actor_edges[actor.actor_id] = [actor._fire_previous, actor._jump_previous, actor._grenade_previous, actor._smoke_previous]
 				actor.input_state = {"move": Vector2.ZERO, "look": Vector2(actor.yaw, actor.pitch)}
-		actor.tick_authority(delta)
+		actor.tick_authority_movement(delta)
+	# All traces precede this tick's hitscan damage, so eligible return fire and
+	# front-actor shielding cannot disappear because of Dictionary insertion order.
+	for actor: SBActor in actors.values():
+		actor.tick_authority_actions(delta, _queue_hitscan_hit)
+		var suspended_edges: Array = suspended_actor_edges.get(actor.actor_id, [])
 		if not suspended_edges.is_empty():
 			# Silence stops movement/actions, but is not a real button release.
 			actor._fire_previous = suspended_edges[0]
@@ -291,6 +309,10 @@ func _authority_tick(delta: float) -> void:
 		if _ranked_started and phase != "match_over" and _peer_actors.values().has(actor.actor_id):
 			if _elapsed - float(_last_activity.get(actor.actor_id, -100)) <= 10:
 				_activity_seconds[actor.actor_id] = float(_activity_seconds.get(actor.actor_id, 0)) + delta
+	for hit: Dictionary in _pending_hitscan_hits:
+		var source: SBActor = hit.source
+		source.resolve_shot_hit(hit.target, hit.amount, hit.headshot)
+	_pending_hitscan_hits.clear()
 	# Opt-in diagnostics only: no live shot ever consults historical state.
 	if options.get("mode", "offline") == "server" and bool(options.get("record_hit_history", false)):
 		_hit_history.record(_simulation_tick, _snapshot_generation, actors)
@@ -314,6 +336,9 @@ func _authority_tick(delta: float) -> void:
 		for peer_id: int in _active_peers():
 			var packed: PackedByteArray = var_to_bytes(_snapshot(int(_peer_actors[peer_id]))).compress(FileAccess.COMPRESSION_DEFLATE)
 			_snapshot_rpc.rpc_id(peer_id, packed)
+
+func _queue_hitscan_hit(source: SBActor, target: SBActor, amount: float, headshot: bool) -> void:
+	_pending_hitscan_hits.append({"source": source, "target": target, "amount": amount, "headshot": headshot})
 
 func _is_bot(id: int) -> bool:
 	return id != local_id and not (_peer_actors.values() if _authority else _connected_actor_ids).has(id)
@@ -594,7 +619,7 @@ func _host() -> void:
 	var error: Error = peer.create_server(int(options.get("port", 27020)), 10)
 	if error != OK:
 		connection_state = "failed"
-		notification.emit("Cannot bind dedicated server port: %s" % error_string(error))
+		_notify_connection_status("Cannot bind dedicated server port: %s" % error_string(error))
 		return
 	# Clients only exchange inputs/snapshots with this authority. Disabling the
 	# implicit peer relay also avoids peer-list traffic to simultaneously closing
@@ -609,6 +634,7 @@ func _host() -> void:
 	multiplayer.peer_disconnected.connect(_peer_disconnected)
 	multiplayer.peer_connected.connect(_peer_connected)
 	connection_state = "hosting"
+	connection_notice = ""
 	print("SIGHTBREAK_SERVER_READY port=%d" % int(options.get("port", 27020)))
 
 func _connect_client() -> void:
@@ -630,7 +656,7 @@ func _connect_client() -> void:
 		_connection_failed()
 		return
 	multiplayer.multiplayer_peer = peer
-	notification.emit("Connecting to Relay Yard…")
+	_notify_connection_status("Connecting to Relay Yard…")
 
 func _connected() -> void:
 	connection_state = "joining"
@@ -737,10 +763,16 @@ func _drop_rejected_peers() -> void:
 		if api.get_authenticating_peers().has(peer_id):
 			api.disconnect_peer(peer_id)
 
+## Keep the typed connection reason separate from ordinary match notices. A late
+## combat notice must not hide a transport failure or recovery instruction.
+func _notify_connection_status(message: String) -> void:
+	connection_notice = message
+	notification.emit(message)
+
 ## Terminal client failure: shows the reason and never retries on its own.
 func _fail_connection(message: String) -> void:
 	connection_state = "failed"
-	notification.emit(message)
+	_notify_connection_status(message)
 	print("PROTOCOL_CLIENT_FAILED " + message)
 	_recovery.clear()
 	var retired := multiplayer.multiplayer_peer
@@ -769,7 +801,7 @@ func _retry_resume(message: String) -> bool:
 		_reconnect_at_msec = 0
 		var retired := multiplayer.multiplayer_peer
 		_close_retired_client.call_deferred(retired)
-		notification.emit(message)
+		_notify_connection_status(message)
 	return true
 
 func _server_disconnected() -> void:
@@ -783,7 +815,7 @@ func _server_disconnected() -> void:
 	_replica_buffer.clear()
 	_reconnect_clock = 2
 	_reconnect_at_msec = 0
-	notification.emit("Server disconnected. Attempting to reconnect…")
+	_notify_connection_status("Server disconnected. Attempting to reconnect…")
 
 func _client_tick(delta: float) -> void:
 	for utility: SBUtility in _remote_utilities.values():
@@ -1014,17 +1046,12 @@ func _input_rpc(packed: PackedByteArray) -> void:
 	if not _input_stream.accept(peer_id, data, _snapshot_generation, Time.get_ticks_msec()):
 		return
 	_peer_lifecycle.active(peer_id, Time.get_ticks_msec())
-	var clean: Dictionary = SBInputStream.sanitize(data.commands.back())
 	var id: int = int(_peer_actors[peer_id])
 	var alias: Dictionary = _resume_aliases.get(id, {})
 	if int(alias.get("peer", -1)) == peer_id and int(alias.get("generation", -1)) == int(_peer_lifecycle.peers[peer_id].generation):
 		# The stock client cannot send these inputs before processing its welcome.
 		# Retire the previous credential only after this generation proves delivery.
 		_resume_aliases.erase(id)
-	var old_look: Vector2 = actors[id].input_state.get("look", Vector2.ZERO)
-	var new_look: Vector2 = clean.look
-	if old_look.distance_to(new_look) > 0.004 or ((clean.move as Vector2).length() > 0.1 and actors[id].velocity.length() > 0.2) or (bool(clean.interact) and _interactions.has(id)):
-		_last_activity[id] = _elapsed
 	_last_peer_input[id] = _elapsed
 
 @rpc("any_peer", "call_remote", "reliable", 2)
@@ -1045,6 +1072,7 @@ func _welcome_rpc(id: int, token: String, data: Dictionary) -> void:
 	reconnect_token = token
 	_recovery.clear()
 	connection_state = "connected"
+	connection_notice = ""
 	_apply_snapshot(data)
 	notification.emit("Connected • account session" if reward_status != "unranked" else "Connected • LAN practice session")
 

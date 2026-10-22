@@ -9,7 +9,6 @@ OCR preprocesses copies only, leaving original PNGs untouched.
 """
 import argparse
 import csv
-import ctypes as C
 import hashlib
 import io
 import json
@@ -25,13 +24,82 @@ import sys
 import time
 from urllib.parse import quote
 
-from PIL import Image, ImageGrab
+from PIL import Image, ImageGrab, ImageOps
 from build_manifest import BUILDS, OUTPUTS, source, validate_record
 from native_log import failed as native_log_failed
 from verify_integration_export import NativeUI
 import toolchain
 
 DEFAULT_SIZES = ("960x540", "1280x720", "1920x1080", "1280x800")
+
+
+def run_layout_ocr(command, data, *, stderr, timeout, receipt):
+    """Limit only the OCR child; retain its original budget and failed attempts."""
+    env = dict(os.environ, OMP_THREAD_LIMIT="1")
+    receipt.update(timeout_seconds=timeout, thread_environment={"OMP_THREAD_LIMIT": "1"})
+    started = time.monotonic()
+    try:
+        completed = subprocess.run(command, input=data, stdout=subprocess.PIPE,
+                                   stderr=stderr, timeout=timeout, env=env)
+        receipt["exit_code"] = completed.returncode
+        return completed
+    except Exception as error:
+        receipt.update(error_type=type(error).__name__, error=str(error))
+        raise
+    finally:
+        receipt["elapsed_seconds"] = time.monotonic() - started
+
+
+def ocr_input(raw, factor, *, region=None, threshold=145):
+    """Prepare an analysis copy; muted footer strokes need grayscale values."""
+    image = raw.crop(region) if region is not None else raw
+    gray = image.convert("L")
+    analysis = (gray.point(lambda value: 0 if value > threshold else 255)
+                if threshold is not None else ImageOps.invert(gray))
+    dimensions = (image.width * factor, image.height * factor)
+    analysis = (analysis.resize(dimensions, Image.Resampling.LANCZOS)
+                if threshold is None else analysis.resize(dimensions))
+    data = io.BytesIO()
+    analysis.save(data, format="PNG")
+    return data.getvalue()
+
+
+def ocr_lines(text, factor, *, origin=(0, 0)):
+    groups = {}
+    for row in csv.DictReader(io.StringIO(text), delimiter="\t"):
+        if not row.get("text", "").strip():
+            continue
+        identity = tuple(row[key] for key in ("block_num", "par_num", "line_num"))
+        row = {**row, **{key: int(row[key]) / factor for key in ("left", "top", "width", "height")}}
+        row["left"] += origin[0]
+        row["top"] += origin[1]
+        groups.setdefault(identity, []).append(row)
+    return list(groups.values())
+
+
+def hud_footer_region(size):
+    """Map the rendered hint strip through the game's fixed 1280x720 content."""
+    width, height = size
+    scale = min(width / 1280, height / 720)
+    left, top = (width - 1280 * scale) / 2, (height - 720 * scale) / 2
+    # Keep the actual footer and its padding. Including the world/gun below it
+    # merges MENU with a background edge in the retained 1280x800 native frame.
+    return (math.floor(left + 320 * scale), math.floor(top + 658 * scale),
+            math.ceil(left + 960 * scale), math.ceil(top + 690 * scale))
+
+
+def rendered_hud_matches(groups, touch_enabled, footer_groups=()):
+    normalized = lambda word: re.sub("[^A-Z]", "", word.upper())
+    text_lines = ["".join(normalized(row["text"]) for row in line) for line in groups]
+    words = [normalized(row["text"]) for line in groups for row in line]
+    if (any("FIELDSETTINGS" in line or "FIELDMENU" in line for line in text_lines)
+            or words.count("BOT") >= 4):
+        return False
+    if touch_enabled:
+        return {"FIRE", "RELOAD", "USE"}.issubset(words)
+    footer = {normalized(row["text"]) for line in footer_groups for row in line}
+    return ({"TAB", "ROSTER", "ESC", "MENU"}.issubset(footer)
+            and bool({"HEALTH", "ELIMINATED"} & set(words)) and "FIRE" not in words)
 
 
 
@@ -104,14 +172,10 @@ class LayoutUI(NativeUI):
         self.image().save(path)
 
     def window_size(self):
-        root, x, y = C.c_ulong(), C.c_int(), C.c_int()
-        width, height, border, depth = C.c_uint(), C.c_uint(), C.c_uint(), C.c_uint()
-        if not self.x.XGetGeometry(self.d, self.window, C.byref(root), C.byref(x), C.byref(y),
-                                  C.byref(width), C.byref(height), C.byref(border), C.byref(depth)):
-            raise RuntimeError("Cannot inspect native export window geometry")
-        if x.value != 0 or y.value != 0:
+        x, y, width, height = self.window_geometry()
+        if x != 0 or y != 0:
             raise RuntimeError("Native export is offset/clipped within its exact-sized display")
-        return width.value, height.value
+        return width, height
 
 
 def size_value(text):
@@ -224,42 +288,45 @@ def capture_case(args, size, display, out, executable, expected, before, whole_d
         key(name, False)
         pause(.5)
 
-    def lines(label):
-        nonlocal ocr_sequence
-        remaining()
-        ocr_sequence += 1
-        label = label + "-" + str(ocr_sequence)
-        raw_path = out / (label + "-ocr-original.png")
-        ui.capture(raw_path)
+    def analyze(raw_path, label, *, region=None, factor=None, threshold=145):
+        factor = factor or (3 if size[0] < 1100 else 2)
         with Image.open(raw_path) as raw:
-            factor = 3 if size[0] < 1100 else 2
-            analysis = raw.convert("L").point(lambda value: 0 if value > 145 else 255)
-            analysis = analysis.resize((raw.width * factor, raw.height * factor))
-            data = io.BytesIO()
-            analysis.save(data, format="PNG")
+            data = ocr_input(raw, factor, region=region, threshold=threshold)
         command = [args.tesseract, "stdin", "stdout", "--psm", "11", "tsv"]
         ocr_budget = min(12, remaining())
         if ocr_deadline is not None:
             ocr_budget = min(ocr_budget, ocr_deadline - time.monotonic())
             if ocr_budget <= 0:
                 raise TimeoutError("Rendered UI OCR confirmation exceeded its wall budget")
-        with (out / "ocr-stderr.log").open("ab") as stderr:
-            completed = subprocess.run(command, input=data.getvalue(), stdout=subprocess.PIPE, stderr=stderr,
-                                       timeout=ocr_budget)
-        result["ocr_commands"].append({"command": command, "label": label, "exit_code": completed.returncode,
-                                       "original_sha256": sha256(raw_path), "analysis_scale": factor})
+        receipt = {"command": command, "label": label, "analysis_scale": factor,
+                   "analysis_region": region, "analysis_threshold": threshold}
+        try:
+            with (out / "ocr-stderr.log").open("ab") as stderr:
+                completed = run_layout_ocr(command, data, stderr=stderr, timeout=ocr_budget, receipt=receipt)
+        finally:
+            receipt["original_sha256"] = sha256(raw_path)
+            result["ocr_commands"].append(receipt)
         if completed.returncode:
             raise RuntimeError("Native UI OCR failed")
         text = completed.stdout.decode("utf-8", errors="replace")
         (out / (label + ".tsv")).write_text(text)
-        groups = {}
-        for row in csv.DictReader(io.StringIO(text), delimiter="\t"):
-            if not row.get("text", "").strip():
-                continue
-            identity = tuple(row[key] for key in ("block_num", "par_num", "line_num"))
-            row = {**row, **{key: int(row[key]) / factor for key in ("left", "top", "width", "height")}}
-            groups.setdefault(identity, []).append(row)
-        return list(groups.values())
+        return ocr_lines(text, factor, origin=region[:2] if region else (0, 0))
+
+    def lines(label, *, footer=False):
+        nonlocal ocr_sequence
+        remaining()
+        ocr_sequence += 1
+        label = label + "-" + str(ocr_sequence)
+        raw_path = out / (label + "-ocr-original.png")
+        ui.capture(raw_path)
+        groups = analyze(raw_path, label)
+        if footer:
+            # Reuse the identical captured frame. A second capture could mix a
+            # new HUD/footer with the earlier health/overlay evidence.
+            footer_groups = analyze(raw_path, label + "-footer", region=hud_footer_region(size),
+                                    factor=4, threshold=None)
+            return groups, footer_groups
+        return groups
 
     def click_text(word, label):
         for attempt in range(2):
@@ -315,15 +382,10 @@ def capture_case(args, size, display, out, executable, expected, before, whole_d
                    for line in lines("field-menu-check"))
 
     def rendered_hud(touch_enabled):
-        groups = lines("touch-hud-check" if touch_enabled else "keyboard-hud-check")
-        text_lines = ["".join(re.sub("[^A-Z]", "", row["text"].upper()) for row in line) for line in groups]
-        words = {re.sub("[^A-Z]", "", row["text"].upper()) for line in groups for row in line}
-        if any("FIELDSETTINGS" in line or "FIELDMENU" in line for line in text_lines):
-            return False
         if touch_enabled:
-            return {"FIRE", "RELOAD", "USE"}.issubset(words)
-        return ({"TAB", "ROSTER", "ESC"}.issubset(words)
-                and bool({"HEALTH", "ELIMINATED"} & words) and "FIRE" not in words)
+            return rendered_hud_matches(lines("touch-hud-check"), True)
+        groups, footer = lines("keyboard-hud-check", footer=True)
+        return rendered_hud_matches(groups, False, footer)
 
     def wait_rendered_ui(paused, label, rendered, seconds=5, touch_enabled=None, scoreboard_visible=None):
         nonlocal ocr_deadline
