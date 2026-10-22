@@ -1,6 +1,6 @@
 # Autonomous worklog
 
-Chronological record of what Claude did on the SIGHTBREAK v1.0 mission: investigations, decisions, failed experiments, tests, reviews and source revisions. Newest entry last. Results in the acceptance matrix ([SIGHTBREAK_V1_PROGRESS.md](../roadmap/SIGHTBREAK_V1_PROGRESS.md)) must trace back to an entry here.
+Chronological record of work on the SIGHTBREAK v1.0 mission: investigations, decisions, failed experiments, tests, reviews and source revisions. Newest entry last. Results in the acceptance matrix ([SIGHTBREAK_V1_PROGRESS.md](../roadmap/SIGHTBREAK_V1_PROGRESS.md)) must trace back to an entry here.
 
 ## 2026-10-21 - Session 1: orientation and M0
 
@@ -64,3 +64,58 @@ menu critic. Latest desktop CI 39712752860 has a reported source-suite isolation
 failure, so no overall CI pass is recorded. Hardware/controller, complete
 journeys/matches, visual quality and all complete G1–G20 acceptances stay outside
 this verdict. Root owns the later aggregate mission-matrix update.
+
+
+## 2026-10-22 — Codex product execution checkpoint
+
+Goal registered through the supported GitHub connector as issue #25. The native
+Codex tool list has no persistent goal API; connected Linear requires reauthentication.
+Mission initialization `561d0cb` reused PR24 records and added the Codex resume contract.
+The old `/workspace/sightbreak` quality-only branch was left intact.
+
+Implemented and committed FIELD MENU keyboard focus (`8de7331`, UID repair `aa0b0a4`),
+ordinary native objective approach (`44cb081`), checked X11 lifetime handling
+(`2e158e2`), and consumed-input replay clock correction (`0917771`). The frozen
+integrated test/export source is `6a0d8d5`; later evidence commits do not re-attest
+those binary bytes to a new HEAD. Menu independent evidence is in `bcdc93a` and
+network blind/repeat evidence in `954c1d7`.
+
+Real fresh baseline planting failed after 68.384 s due to movement overshoot.
+Candidate plant r1 passed but its external sampler started too late to prove the
+exact settled ticks; r2 repeated unchanged criteria with retention active before
+launch, passing in 124.299 s. Defuse passed in 103.392 s. A fresh critic recomputed
+source/ELF identities, all raw snapshot hashes, neutral settled ticks, objective
+hold durations (180/300 ticks), progression restart and clean process ownership.
+The helper's dynamics coverage is bounded to 0–0.2 simulation seconds input delay;
+a separate source review found queued-pulse false arrival at 1.5 s, retained as an
+explicit limit rather than hidden or certified away.
+
+The same critic independently reproduced nine real X11 controls, baseline fatal
+BadWindow discovery/focus races, and the checked candidate. Actual full layout
+capture then passed 960×540, 1920×1080 and 1280×800, but FAILED 1280×720 after touch
+opt-out: the actual desktop HUD is visible, while small footer OCR misses required
+labels. All owned processes were reaped; failed live session needed SIGTERM and
+was not counted as success. Whole run 289.346 s, per-case budget unchanged 120 s;
+configured whole budget 600 s differed from original 520 s, both exceed actual.
+No visual-quality score or shipped-game parity is inferred.
+
+`validate.sh` completed exit 0 at clean `6a0d8d5`, logs run-as4Oaj: 16,355 reported
+checks including privacy, replay/prediction, UI, input, objectives and reload audio.
+Rendered reload visibility and Windows-only cases skipped; backend SQL not run.
+Catalog fixture drift was checked separately with the existing backend Python and
+matches all 29 definitions. Bot lifecycle still has F1: 12 rounds/78 kills, no plant.
+
+Network blind critic independently selected candidate A (revealed after verdict),
+8/8 native conditions versus baseline 4/8, 32 clean peer exits. Six follow-up pairs
+preserved unchanged gates: eight total snapshot trials stop in 316–334 ms with
+zero stale-authority travel. Same-host minimum 16 ms margin and limited trial count
+remain limitations. These two-peer results do not satisfy G3 ten-client RC gates.
+
+Desktop CI 39712752860 was dispatched on published `6a0d8d5`. Windows and Linux
+objective/full-stock match/earned restart steps pass; independent receipt review is
+underway. Jobs still fail ordinary offline journey and reused suite save data.
+Intel Mac still fails original 120 s startup despite minimal native controls passing;
+ARM startup/controls pass without gameplay acceptance. Isolated builders immediately
+began the suite isolation, OCR, offline journey and Mac render follow-ups. No shared
+merge, production deployment or release was performed. CS2 reference fetch again
+returned proxy CONNECT 403; hardware, human, listening and release gates remain open.
