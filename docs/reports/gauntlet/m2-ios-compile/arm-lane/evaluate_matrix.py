@@ -21,13 +21,21 @@ WORKFLOW = ".github/workflows/desktop-alpha.yml"
 def evaluate(expression, event, lane):
     # Interpret the actual limited GitHub Actions expression, rather than a
     # second independently configured matrix. JSON strings are nonempty/truthy.
-    grammar = (r"\$\{\{ fromJSON\(github\.event_name == '([^']+)' && "
-               r"inputs\.lane == '([^']+)' && '([^']+)' \|\| '([^']+)'\) \}\}")
-    match = re.fullmatch(grammar, expression)
+    match = re.fullmatch(r"\$\{\{ fromJSON\((.*)\) \}\}", expression)
     if not match:
         raise AssertionError("Unexpected matrix expression grammar")
-    wanted_event, wanted_lane, selected, default = match.groups()
-    return json.loads(selected if event == wanted_event and lane == wanted_lane else default)
+    for clause in match.group(1).split(" || "):
+        choice = re.fullmatch(r"github\.event_name == '([^']+)' && inputs\.lane == '([^']+)' && '([^']+)'", clause)
+        if choice:
+            wanted_event, wanted_lane, selected = choice.groups()
+            if event == wanted_event and lane == wanted_lane:
+                return json.loads(selected)
+        else:
+            default = re.fullmatch(r"'([^']+)'", clause)
+            if not default:
+                raise AssertionError("Unexpected matrix clause")
+            return json.loads(default.group(1))
+    raise AssertionError("Missing default matrix")
 
 
 def main():
@@ -40,7 +48,7 @@ def main():
     before, after = [yaml.load(text, Loader=yaml.BaseLoader) for text in (before_text, after_text)]
     assert after["on"]["workflow_dispatch"]["inputs"]["lane"] == {
         "description": "Native qualification hosts", "type": "choice", "required": "true",
-        "default": "all", "options": ["all", "arm-macos-ios"]}
+        "default": "all", "options": ["all", "arm-macos-ios", "windows"]}
     original = before["jobs"]["native"]["strategy"]["matrix"]["include"]
     arm = [{"os": "macos-15", "target": "macos"}]
     assert original == [{"os": "ubuntu-24.04", "target": "linux"}, {"os": "windows-latest", "target": "windows"},
@@ -50,6 +58,8 @@ def main():
              ("explicit all", "workflow_dispatch", "all", original),
              ("explicit ARM", "workflow_dispatch", "arm-macos-ios", arm),
              ("push cannot select ARM", "push", "arm-macos-ios", original),
+             ("explicit Windows", "workflow_dispatch", "windows", [{"os": "windows-latest", "target": "windows"}]),
+             ("push cannot select Windows", "push", "windows", original),
              ("unknown lane", "workflow_dispatch", "unknown", original)]
     results = []
     for name, event, lane, wanted in cases:
