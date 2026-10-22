@@ -59,6 +59,27 @@ def read_hud_pixels(path, ocr):
             'status_ocr': status, 'ammo_ocr': ammo_text}
 
 
+
+def exact_ocr_caption(rows, caption):
+    """Locate one complete caption on one OCR line; ambiguous/missing fails."""
+    lines = {}
+    for row in rows:
+        identity = tuple(row.get(key) for key in ('page_num', 'block_num', 'par_num', 'line_num'))
+        if any(value in (None, '') for value in identity):
+            continue
+        lines.setdefault(identity, []).append(row)
+    matches = []
+    for line in lines.values():
+        line.sort(key=lambda row: row['left'])
+        if [row['text'].upper() for row in line] != caption.upper().split():
+            continue
+        left, top = min(row['left'] for row in line), min(row['top'] for row in line)
+        right = max(row['left'] + row['width'] for row in line)
+        bottom = max(row['top'] + row['height'] for row in line)
+        matches.append({'left': left, 'top': top, 'width': right-left, 'height': bottom-top, 'text': caption})
+    return matches[0] if len(matches) == 1 else None
+
+
 def focus_controls_released(state):
     # Neutral commands also occur while the held-input safety guard is engaged.
     # Wait for the controller itself to acknowledge the physical release.
@@ -301,8 +322,10 @@ def main():
         # Analysis only: scale text coordinates into the shared1280x720 layout.
         # The saved native screenshot itself is never resized or thresholded.
         with Image.open(out / 'ocr-current.png') as native:
-            image = native.convert('L').point(lambda value: 0 if value > 145 else 255)
-            image = image.resize((REFERENCE[0] * 2, REFERENCE[1] * 2))
+            # Preserve native antialiasing while scaling. Thresholding tiny
+            # native glyphs first changed the actual LEAVE V into an OCR Y.
+            image = native.convert('L').resize((REFERENCE[0] * 2, REFERENCE[1] * 2))
+            image = image.point(lambda value: 0 if value > 145 else 255)
         raw = ocr(image, 11, 'current-native-ui')
         rows = [row for row in csv.DictReader(io.StringIO(raw), delimiter='\t') if row.get('text', '').strip()]
         for row in rows:
@@ -310,12 +333,20 @@ def main():
                 row[name] = int(row[name]) // 2
         return rows
 
-    def click_text(word):
-        row = next((row for row in ocr_words() if row['text'].upper() == word), None)
+    def click_text(word, *, caption=None, heading=None, require_context=None):
+        if require_context is not None:
+            require_context(offline_observation())
+        rows = ocr_words()
+        if heading is not None and exact_ocr_caption(rows, heading) is None:
+            raise RuntimeError('Native UI heading not found: ' + heading)
+        row = (exact_ocr_caption(rows, caption) if caption is not None
+               else next((row for row in rows if row['text'].upper() == word), None))
         if row is None:
             raise RuntimeError('Native UI text not found: ' + word)
+        if require_context is not None:
+            require_context(offline_observation())
         ui.click(row['left'] + row['width'] // 2, row['top'] + row['height'] // 2)
-        trace('click_text', text=word)
+        trace('click_text', text=word, caption=caption, heading=heading)
         pause(1)
 
     def client_has(message):
@@ -627,7 +658,11 @@ def main():
         result['native_settings_resume'] = {'paused_before_settings': settings_pause, 'paused_after_settings': settings_ready,
                                              'resumed': resumed, 'capture_ready': resumed_ready, 'after_capture': resumed_after_capture,
                                              'transition_watchdog_seconds': 10, 'same_living_player_required': True}
-        click_text('LEAVE')
+        def require_leave_context(state):
+            require_resume_context(state)
+            if state.get('ui', {}).get('paused') is not True:
+                raise RuntimeError('Native LEAVE input requires the same living paused field menu')
+        click_text('LEAVE', caption='LEAVE MATCH', heading='FIELD MENU', require_context=require_leave_context)
         wait_for(ui.menu_visible, 30, 'Return from offline match', client)
         capture('08-return-menu')
         ui.request_close()
