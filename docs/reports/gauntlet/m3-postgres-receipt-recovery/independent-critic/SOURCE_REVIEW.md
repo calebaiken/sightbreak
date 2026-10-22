@@ -89,3 +89,74 @@ socket and a known fixture role/database. It avoids a persisted password or DSN.
 The builder will supply nonsecret ownership/identity handoffs before the original
 native mutation and after the final response plus authoritative refresh. The
 critic will retain its own selected-field query results and clock observations.
+
+## Corrected frozen harness review
+
+Source/pure verdict: ACCEPT `882931dd7024c2b200a72b2a52017dd98b95ee6a` for
+one bounded market attempt after root releases the runtime lane. Actual
+PostgreSQL/API/native recovery remains UNVERIFIED. This review started no
+engine, Docker command, service, socket, HTTP request or SQL session.
+
+The rejected `f5bea86141c66e4753d2ef3d2e49f122ad9398bc` remains recorded in
+`independent-f5bea861-falsifiers.json`. Its two original independent falsifiers
+show matching poisoned stored/HTTP item metadata passing the oracle and a
+forwarded wrong-route purchase missing from evidence. Additional mocked tests
+also exposed missing new-process/listener/query deadline checks, unrecorded
+failed/PUT mutations and missing initial postmaster binding. These are harness
+failures; they are not production product defects or failed native campaigns.
+
+The corrected clean freeze passes the preserved two falsifiers and nine new
+independent guard groups in `source_guards_v2.py`. The critic also reran all nine
+maintained oracle groups and seventeen maintained guard groups. Exact outputs,
+component SHA-256 values and clean before/after receipts are retained in
+`independent-882931dd-falsifiers.json`. The new startup probe drives `execute`
+through mocked setup: valid owned metadata reaches the migration boundary;
+wrong volume label, mount name, destination or write mode stops before it.
+Every external entrypoint is mocked and the migration itself is never executed.
+
+The corrected recorder retains attempts before validation/forwarding, including
+wrong routes, refused responses, upstream errors, PUT, PATCH and DELETE.
+Wrong-account/origin and post-clear gates count all non-auth mutation attempts.
+The SQL oracle now joins the full returned item to selected SQL metadata,
+including wear, seed, variant, definition, eligibility and acquisition timestamp.
+The initial cluster/postmaster/role are bound to subsequent SQL snapshots.
+New processes, listeners, requests and queries check the work deadline; cleanup
+has a separate bounded allowance. Authentication construction, request, read and
+close failures suppress credential-bearing details. The deterministic journal
+listener is bound to each killed native PID/inode and included in closure checks.
+
+Runner SHA-256 is
+`1cc2a4167534a4fd27938b8993f4265f4f365faeb0534cdd0d7c83e337bc621b`;
+oracle SHA-256 is
+`6052d8923a33918ba9a21d26a7ca3ebd4b8b6113fe8adba88f1eea4980604019`.
+The only game differences from accepted `89393f3` are the new native test and
+its UID; production game, backend and server files remain equal.
+
+## Independent live witness plan
+
+At both `pre_original` and `post_final_refresh`, inspect the exact ready marker,
+verify the frozen source, run identity and full CID, then query only that owned
+container. Inspect selected Docker fields for run/owner labels, image identity,
+loopback mapping and exact named writable data volume; separately verify its
+volume labels. Never inspect Docker `.Config.Env`, process environments or
+credential files. Preserve Docker config/proxy identity and clear only endpoint,
+context and TLS selectors for the explicit managed local socket.
+
+Use the frozen `BUSINESS_SQL` with `psql -X -At --set=ON_ERROR_STOP=1` under
+`PGOPTIONS=-c default_transaction_read_only=on -c statement_timeout=5000`, role
+`sb_receipt`, exact owned test database and the verified CID. Internal local
+socket authentication needs no password/DSN in argv or evidence. Retain the
+selected SQL text/hash, raw selected result, independently requested/completed
+monotonic and wall clocks, actual SQL clock, phase/query ID, source, cluster and
+postmaster. Check pre-original fixture state independently. The post-final
+query must begin after the final response and fresh native account/inventory
+refresh, and independently recompute the one settlement against the first
+witness and actual original response. Do not reuse a prior query.
+
+Only after each retained witness passes should the critic write its matching
+release JSON (`run`, `phase`, `status: observed`). Both checkpoints remain under
+the runner's existing 60-second/240-second bounds. After completion inspect all
+raw native/proxy/API/journal/SQL/source/cleanup outputs and retain failures.
+Fictional owned fixture value, local process kills and native method calls do
+not qualify earned progression, remote hosts, host power loss or rendered player
+consent. Those acceptance boundaries stay open.
