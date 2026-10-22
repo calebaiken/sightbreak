@@ -27,7 +27,7 @@ func _run() -> void:
 	m.local_id = 0
 	for difficulty in ["easy", "normal", "hard"]:
 		for team in [0, 1]:
-			for kind in ["close", "long", "travel", "stuck", "idle", "smoke", "spent_smoke", "carrier", "defuser", "cover"]:
+			for kind in ["close", "long", "travel", "stuck", "stuck_low", "stuck_jump", "idle", "smoke", "spent_smoke", "empty_smoke", "smoke_near", "smoke_far", "carrier_smoke", "carrier", "defuser", "cover"]:
 				for slot in range(5):
 					var a := await _sample(slot + 1, difficulty, team, kind)
 					var b := await _sample(slot + 6, difficulty, team, kind)
@@ -38,6 +38,7 @@ func _run() -> void:
 	m.queue_free()
 	await process_frame
 	await create_timer(0.6).timeout
+	for failure in failures: print("BOT_SQUAD_FAILURE " + failure)
 	print("BOT_SQUAD_SYMMETRY_RESULT samples=%d checks=%d failures=%d mode=%s" % [samples, checks, failures.size(), "observation" if observe else "assertion"])
 	quit(0 if observe or failures.is_empty() else 1)
 
@@ -71,11 +72,15 @@ func _sample(id: int, difficulty: String, team: int, kind: String) -> Dictionary
 		enemy.reset_for_round(Vector3(-14, 0, 2))
 		if kind == "long":
 			bot.position = Vector3(-22, 0, -18)
-			enemy.position = Vector3(-22, 0, 12)
-	elif kind in ["smoke", "spent_smoke"]:
+			enemy.position = Vector3(-22, 0, 8)
+	elif kind in ["smoke", "spent_smoke", "empty_smoke", "smoke_near", "smoke_far", "carrier_smoke"]:
 		bot.position = m.arena.sites[0] + Vector3(0, 0, -8)
 		if team == 1: m.objective_state = "planted"
 		if kind == "spent_smoke": state.smoke_used = true
+		if kind == "empty_smoke": bot.smokes = 0
+		if kind == "smoke_near": bot.position = m.arena.sites[0] + Vector3(0, 0, -5.0 if team == 0 else -3.5)
+		if kind == "smoke_far": bot.position = m.arena.sites[0] + Vector3(0, 0, -14.0 if team == 0 else -11.0)
+		if kind == "carrier_smoke" and team == 0: m.objective_carrier = id
 	elif kind == "carrier":
 		m.objective_carrier = id
 		bot.position = m.arena.sites[0]
@@ -94,6 +99,8 @@ func _sample(id: int, difficulty: String, team: int, kind: String) -> Dictionary
 		bot.yaw = atan2(-toward.x, -toward.z)
 	state.last_position = bot.position
 	if kind == "stuck": state.stuck = 1.9
+	if kind == "stuck_low": state.stuck = 0.7
+	if kind == "stuck_jump": state.stuck = 1.5
 	await physics_frame
 	await physics_frame
 	if kind in ["close", "long"]:
@@ -114,10 +121,16 @@ func _sample(id: int, difficulty: String, team: int, kind: String) -> Dictionary
 	elif kind == "smoke":
 		var expected := difficulty != "easy" and (team == 1 or slot % 2 == 0)
 		check(command.smoke == expected, "%s id=%d team=%d utility role gate" % [difficulty, id, team])
-	elif kind == "spent_smoke":
-		check(not command.smoke, "%s id=%d smoke already used" % [difficulty, id])
+	elif kind in ["spent_smoke", "empty_smoke", "smoke_near", "smoke_far"]:
+		check(not command.smoke, "%s id=%d %s suppresses smoke" % [difficulty, id, kind])
+	elif kind == "carrier_smoke":
+		check(command.smoke == (difficulty != "easy"), "%s id=%d carrier utility exception" % [difficulty, id])
 	elif kind == "stuck":
 		check(command.jump and is_equal_approx(command.move.x, 1.0 if slot % 2 == 0 else -1.0) and is_equal_approx(command.move.y, -0.6), "%s id=%d stuck recovery" % [difficulty, id])
+	elif kind == "stuck_low":
+		check(not command.jump and command.move == Vector2(0, 1), "%s id=%d below recovery threshold" % [difficulty, id])
+	elif kind == "stuck_jump":
+		check(command.jump and is_equal_approx(command.move.x, 1.0 if slot % 2 == 0 else -1.0) and is_equal_approx(command.move.y, 1.0), "%s id=%d jump before reverse threshold" % [difficulty, id])
 	elif kind == "carrier" and team == 0:
 		check(role == "carrier" and command.interact and command.move == Vector2.ZERO and not command.fire and not command.smoke, "%s id=%d carrier stops to plant" % [difficulty, id])
 	elif kind == "defuser" and team == 1:
@@ -130,6 +143,13 @@ func _sample(id: int, difficulty: String, team: int, kind: String) -> Dictionary
 	# Normalize only ID-valued target bookkeeping; every emitted input field is compared.
 	var result := {"command": command, "role": role, "destination": plan.destination}
 	print("BOT_SQUAD_SAMPLE " + JSON.stringify({"id": id, "slot": slot, "difficulty": difficulty, "team": team, "kind": kind, "output": result}))
+	if kind == "close":
+		var first_fire := 1 if command.fire else 0
+		for tick in range(2, 7):
+			if first_fire > 0: break
+			m._bot_input(bot, DT)
+			if bot.input_state.fire: first_fire = tick
+		check(first_fire == {"easy": 5, "normal": 3, "hard": 2}[difficulty], "%s id=%d actual reaction cadence first fire tick=%d" % [difficulty, id, first_fire])
 	samples += 1
 	return result
 

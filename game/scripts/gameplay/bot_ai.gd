@@ -619,7 +619,7 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) ->
 		elif bool(profile.get("counter_strafe", false)) and target_distance > 20.0 and aligned:
 			move = Vector2.ZERO
 		else:
-			move = Vector2(sin(match_node._elapsed * 1.1 + float(actor.actor_id)) * 0.4, 0.0)
+			move = Vector2(sin(match_node._elapsed * 1.1 + float(squad_index(actor))) * 0.4, 0.0)
 
 		crouch = (squad_index(actor) % 3 == 0) or (bool(profile.get("counter_strafe", false)) and target_distance > 18.0 and aligned)
 	else:
@@ -673,7 +673,7 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) ->
 			if match_node._elapsed - float(state.get("heard_at", -100.0)) < SOUND_MEMORY_SECONDS:
 				approach = state.get("heard_pos", approach)
 			var toward_approach: Vector3 = approach - actor.position
-			var scan_yaw: float = atan2(-toward_approach.x, -toward_approach.z) + sin(match_node._elapsed * 0.65 + float(actor.actor_id)) * 0.7
+			var scan_yaw: float = atan2(-toward_approach.x, -toward_approach.z) + sin(match_node._elapsed * 0.65 + float(squad_index(actor))) * 0.7
 			look = Vector2(rotate_toward(actor.yaw, scan_yaw, delta * 2.0), 0.0)
 
 	# Stuck detection and multi-stage recovery.
