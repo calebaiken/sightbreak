@@ -11,25 +11,28 @@ def fixture():
     accounts = {str(i + 1): identity for i, identity in enumerate(identities)}
     bindings = {str(i + 100): i for i in range(1, 11)}
     base = dict(protocol=6, stock_rules=RULES.copy(), ranked_started=True, ranked_eligible=True,
-                accounts=accounts, bindings=bindings, attack=0, defend=7, match_duration=523,
+                accounts=accounts, bindings=bindings, attack=0, defend=0, match_duration=523,
                 activity_seconds={str(i): 520 for i in range(1, 11)},
                 reward_status='eligible_pending_completion')
     transitions = [dict(base, phase='waiting', round=0, elapsed=0, ranked_started=False)]
     for number in range(1, 8):
         start = (number - 1) * 68
-        transitions.extend([dict(base, phase='buy', round=number, elapsed=start, objective='carried'),
-                            dict(base, phase='live', round=number, elapsed=start + 15, objective='carried')])
+        score = {'attack': number - 1, 'defend': 0} if number <= 6 else {'attack': 0, 'defend': 6}
+        transitions.extend([dict(base, **score, phase='buy', round=number, elapsed=start, objective='carried'),
+                            dict(base, **score, phase='live', round=number, elapsed=start + 15, objective='carried')])
         if number <= 6:
-            transitions.extend([dict(base, phase='live', round=number, elapsed=start + 28, objective='planted'),
-                                dict(base, phase='post', round=number, elapsed=start + 63, objective='planted')])
-    end = dict(base, phase='match_over', round=7, elapsed=523, reward_status='queued_for_delivery')
+            transitions.extend([dict(base, **score, phase='live', round=number, elapsed=start + 28, objective='planted'),
+                                dict(base, attack=number, phase='post', round=number, elapsed=start + 63, objective='planted')])
+    end = dict(base, attack=0, defend=7, phase='match_over', round=7, elapsed=523, reward_status='queued_for_delivery')
     transitions.append(end)
     clients = []
     for index in range(10):
-        latest = dict(end, joined=True, connection='connected', initial_id=index + 1,
-                      local_id=index + 1, display_name=f'Account Match {index}',
-                      summary=dict(offline=False, rounds=7), snapshots=1000, team=1 if index < 5 else 0)
-        clients.append({'latest': latest, 'transitions': [dict(latest, round=1, team=0 if index < 5 else 1), latest]})
+        client_states = [dict(s, joined=True, connection='connected', initial_id=index + 1,
+                             local_id=index + 1, display_name=f'Account Match {index}',
+                             summary=dict(offline=False, rounds=7, attack_score=0, defend_score=7, won=index < 5, draw=False),
+                             snapshots=1000, team=(0 if index < 5 else 1) if s['round'] <= 6 else (1 if index < 5 else 0))
+                         for s in transitions if s['round'] >= 1]
+        clients.append({'latest': client_states[-1], 'transitions': client_states})
     return deepcopy((dict(latest=end, transitions=transitions), clients, identities))
 
 
@@ -85,6 +88,23 @@ class EvidenceControls(unittest.TestCase):
 
     def test_missing_halftime(self):
         self.clients[0]['latest']['team'] = 0
+        self.rejects()
+
+    def test_premature_score(self):
+        for state in self.server['transitions']:
+            state['attack'], state['defend'] = 0, 7
+        self.rejects()
+
+    def test_missing_client_rounds(self):
+        self.clients[0]['transitions'] = [self.clients[0]['latest']]
+        self.rejects()
+
+    def test_unrelated_activity_actor_keys(self):
+        self.server['latest']['activity_seconds'] = {str(i): 520 for i in range(1000, 1010)}
+        self.rejects()
+
+    def test_contradictory_client_summary(self):
+        self.clients[0]['latest']['summary'].update(won=False, draw=True, attack_score=99, defend_score=-5)
         self.rejects()
 
 

@@ -7,6 +7,7 @@ claim. Requires the pinned engine, cached postgres image, and existing backend v
 """
 import argparse
 from contextlib import closing
+from datetime import datetime, timezone
 import hashlib
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
@@ -42,6 +43,18 @@ def read_report(path):
     return json.loads(path.read_text()) if path.exists() else {}
 
 
+def verify_score_timeline(states):
+    for state in states:
+        number, phase = state['round'], state['phase']
+        if number == 0:
+            assert (state['attack'], state['defend']) == (0, 0)
+        elif number <= 6:
+            assert (state['attack'], state['defend']) == (number if phase == 'post' else number - 1, 0)
+        else:
+            assert number == 7
+            assert (state['attack'], state['defend']) == (0, 7 if phase == 'match_over' else 6)
+
+
 def verify_match(server, clients, identities):
     """Fail closed on incomplete observations, altered rules, identity or eligibility."""
     end = server['latest']
@@ -55,8 +68,9 @@ def verify_match(server, clients, identities):
     assert len(set(end['bindings'].values())) == 10
     assert set(end['bindings'].values()) == set(range(1, 11))
     assert all(value / end['match_duration'] >= .75 for value in end['activity_seconds'].values())
-    assert len(end['activity_seconds']) == 10
+    assert set(end['activity_seconds']) == set(end['accounts'])
     transitions = server['transitions']
+    verify_score_timeline(transitions)
     assert any(s['phase'] == 'waiting' and s['round'] == 0 and not s['ranked_started'] for s in transitions)
     for state in transitions:
         if state['ranked_started']:
@@ -83,10 +97,19 @@ def verify_match(server, clients, identities):
         assert observed['initial_id'] == observed['local_id'] == index + 1
         assert observed['display_name'] == f'Account Match {index}'
         assert observed['phase'] == 'match_over' and observed['summary']['offline'] is False
-        assert observed['summary']['rounds'] == end['round'] and observed['snapshots'] > 100
+        summary = observed['summary']
+        assert summary['rounds'] == end['round'] and observed['snapshots'] > 100
+        assert (summary['attack_score'], summary['defend_score']) == (end['attack'], end['defend'])
+        assert summary['won'] == (index < 5) and summary['draw'] is False
         assert observed['reward_status'] == 'queued_for_delivery'
         assert observed['attack'] == end['attack'] and observed['defend'] == end['defend']
         assert not any(s['connection'] in ('failed', 'reconnecting') for s in client['transitions'])
+        connected_states = [s for s in client['transitions'] if s['joined'] and s['round'] >= 1]
+        verify_score_timeline(connected_states)
+        for number in range(1, end['round'] + 1):
+            states = [s for s in connected_states if s['round'] == number]
+            assert any(s['phase'] == 'buy' for s in states), ('client missing buy', index, number)
+            assert any(s['phase'] == 'live' for s in states), ('client missing live', index, number)
         assert next(s for s in client['transitions'] if s['round'] == 1 and s.get('team') is not None)['team'] == (0 if index < 5 else 1)
         assert observed['team'] == (1 if index < 5 else 0), 'stock halftime did not switch sides'
 
@@ -119,6 +142,10 @@ def main():
     env.update(SIGHTBREAK_SERVER_KEY=key, SIGHTBREAK_SERVER_ID='local-relay',
                SIGHTBREAK_RESULT_SPOOL=str(spool), SIGHTBREAK_TEST_ECONOMY_URL=f'http://127.0.0.1:{api_port}',
                SIGHTBREAK_STATE_DIR=str(out / 'state'), SIGHTBREAK_TOOLS_DIR='/workspace/tools')
+    engine = Path('/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64')
+    env['GODOT_BIN'] = str(engine)
+    engine_version = subprocess.check_output([str(engine), '--headless', '--version'], env=env, text=True).strip()
+    assert engine_version == '4.7.2.stable.official.ed1daf0bf'
     processes, logs, accounts = [], [], []
     proxy = None
     committed, release = threading.Event(), threading.Event()
@@ -127,6 +154,8 @@ def main():
               'source_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
               'game_tree': subprocess.check_output(['git', 'rev-parse', 'HEAD:game'], cwd=ROOT, text=True).strip(),
               'source_dirty': bool(subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip()),
+              'started_at_utc': datetime.now(timezone.utc).isoformat(),
+              'engine': {'path': str(engine), 'version': engine_version, 'sha256': hashlib.sha256(engine.read_bytes()).hexdigest()},
               'platform': platform.platform(), 'timeout_seconds': args.timeout, 'container': container,
               'api_port': api_port, 'game_port': game_port,
               'sha256': {p: hashlib.sha256((ROOT / p).read_bytes()).hexdigest() for p in
@@ -183,6 +212,20 @@ def main():
             db.execute(sql.SQL('ALTER DATABASE {} ALLOW_CONNECTIONS {}').format(sql.Identifier(database), sql.SQL('true' if enabled else 'false')))
             if not enabled:
                 db.execute('SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname=%s', (database,))
+
+    def checkpoint(label, economy_snapshot=None):
+        current_row = row()
+        if current_row:
+            for column in ('payload', 'response'):
+                value = current_row[column]
+                current_row[column + '_sha256'] = hashlib.sha256(value).hexdigest() if value else None
+                current_row[column] = value.decode() if value else None
+        receipt = {'at_utc': datetime.now(timezone.utc).isoformat(), 'wall_seconds': time.monotonic() - started,
+                   'sqlite': current_row, 'economy': economy_snapshot,
+                   'spool': [{'name': p.name, 'bytes': p.stat().st_size, 'sha256': hashlib.sha256(p.read_bytes()).hexdigest()}
+                             for p in spool.glob('*.json')],
+                   'processes': [{'name': name, 'pid': child.pid, 'returncode': child.poll()} for name, child in processes]}
+        (out / (label + '.json')).write_text(json.dumps(receipt, indent=2) + '\n')
 
     class LostAck(BaseHTTPRequestHandler):
         def do_POST(self):
@@ -289,11 +332,15 @@ def main():
         assert sum(p['won'] for p in payload['participants']) == 5
         report['match_id'] = payload['match_id']
         report['earned_payload_sha256'] = hashlib.sha256(raw).hexdigest()
+        (out / 'earned-result.json').write_bytes(raw)
+        (out / 'earned-result.json').chmod(0o600)
         # No worker ran during gameplay: the game process is killed after its real
         # earned handoff, before any backend grant. Nothing can recompute a result.
         assert economy() == report['initial_economy']
+        checkpoint('earned-staged', economy())
         server.kill()
         assert server.wait(timeout=10) == -signal.SIGKILL
+        checkpoint('earned-godot-killed', economy())
         control.touch()
         for client in clients: assert client.wait(timeout=20) == 0
         report['checks']['godot_sigkill_after_earned_handoff'] = True
@@ -302,10 +349,12 @@ def main():
         outage = start('worker-outage', worker_cmd + ['--backend=' + env['SIGHTBREAK_TEST_ECONOMY_URL']])
         wait_for(lambda: row() is not None and row()['attempts'] >= 1, 'owned database outage retry')
         assert row()['state'] == 'pending' and row()['status'] == 500 and not list(spool.glob('*.json'))
+        checkpoint('database-outage-pending')
         outage.kill()
         outage.wait(timeout=10)
         database_available(True)
         assert economy() == report['initial_economy']
+        checkpoint('database-restored-zero', economy())
         report['checks']['database_outage_durable_pending'] = True
         proxy = ThreadingHTTPServer(('127.0.0.1', 0), LostAck)
         threading.Thread(target=proxy.serve_forever, daemon=True).start()
@@ -313,16 +362,20 @@ def main():
         assert committed.wait(timeout=30), 'Backend did not commit earned match'
         before = economy()
         assert before['counts'] == [10, 10, 1] and row()['state'] == 'pending'
+        checkpoint('backend-committed-ack-held', before)
         lost.kill()
         assert lost.wait(timeout=10) == -signal.SIGKILL
+        checkpoint('lost-ack-worker-killed', economy())
         release.set()
         restart = start('worker-restart', worker_cmd + ['--backend=' + env['SIGHTBREAK_TEST_ECONOMY_URL'], '--once'])
         assert restart.wait(timeout=30) == 0 and row()['state'] == 'committed'
         assert economy() == before and json.loads(row()['payload']) == payload and row()['fingerprint'] == forwarded[0]
+        checkpoint('worker-restarted-committed', economy())
         report['checks']['lost_ack_worker_sigkill_exact_restart'] = True
         files[0].write_bytes(raw)
         replay = start('worker-replay', worker_cmd + ['--backend=' + env['SIGHTBREAK_TEST_ECONOMY_URL'], '--once'])
         assert replay.wait(timeout=30) == 0 and economy() == before and not list(spool.glob('*.json'))
+        checkpoint('duplicate-replayed-unchanged', economy())
         report['checks']['duplicate_spool_no_second_grant'] = True
         rewards = {r[0]: r[1] for r in before['rewards']}
         participants = {p['player_id']: p for p in payload['participants']}
@@ -340,6 +393,9 @@ def main():
         assert sorted((p['player_id'], p['credits'], p['xp']) for p in report['http_profiles']) == [tuple(w) for w in before['wallets']]
         assert all(len(request('/history', token=a['token'])['matches']) == 1 for a in accounts)
         assert key.encode() not in row()['payload'] and key.encode() not in sqlite_path.read_bytes()
+        assert report['source_commit'] == subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
+        assert not subprocess.check_output(['git', 'status', '--porcelain'], cwd=ROOT, text=True).strip()
+        assert all(hashlib.sha256((ROOT / p).read_bytes()).hexdigest() == digest for p, digest in report['sha256'].items())
         report['checks']['earned_rates_wallet_ledger_history_agree'] = True
         report['status'] = 'passed'
     except BaseException as error:
@@ -361,6 +417,7 @@ def main():
                 child.wait(timeout=10)
         for log in logs: log.close()
         report['cleanup']['children_reaped'] = all(p.poll() is not None for _, p in processes)
+        report['process_exits'] = [{'name': name, 'pid': child.pid, 'returncode': child.returncode} for name, child in processes]
         errors = [name for name, _ in processes if (name == 'server' or name.startswith('client-')) and
                   any(marker in (out / (name + '.log')).read_text() for marker in ('SCRIPT ERROR', 'ERROR:', 'Parse Error'))]
         report['godot_errors'] = errors
@@ -371,6 +428,7 @@ def main():
             removed = subprocess.run(DOCKER + ['rm', '-f', container], env=env, text=True, capture_output=True)
             report['cleanup']['owned_container_removed'] = removed.returncode == 0 or 'No such container' in removed.stderr
         report['wall_seconds'] = time.monotonic() - started
+        report['finished_at_utc'] = datetime.now(timezone.utc).isoformat()
         if not all(report['cleanup'].values()): report['status'] = 'failed'
         save()
     assert report['status'] == 'passed', report.get('failure', 'Cleanup failed')
