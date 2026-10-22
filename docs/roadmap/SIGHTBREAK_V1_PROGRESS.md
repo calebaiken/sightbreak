@@ -6,7 +6,7 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-Updated 2026-10-22, 05:06 UTC. The mission remains **IN PROGRESS / PRIMARY**.
+Updated 2026-10-22, 05:21 UTC. The mission remains **IN PROGRESS / PRIMARY**.
 Branch `codex/v1-mission-playability`, [draft PR27](https://github.com/calebaiken/sightbreak/pull/27),
 is based on PR24 `c84eaf3` → PR23 `db3981e` → PR22 `82a03fc` → PR16 `d2439ac`.
 Initialization is committed as `561d0cb`; [issue25](https://github.com/calebaiken/sightbreak/issues/25)
@@ -21,12 +21,12 @@ is the actual persistent tracker, not a native Codex goal registration.
   all ten source suites, inner HUD cleanup, objective holds, a stock 12-round
   match and exact earned restart. The complete journey **fails** later at LEAVE
   lookup despite visible LEAVE MATCH. [Independent raw review](../reports/gauntlet/m1-native-ci-39723283770/README.md).
-  A saved-pixel replay reads LEAYE MATCH; the original Windows TSV was not retained.
+  A saved-pixel replay reads LEAYE MATCH; the original Windows TSV was not retained. The independently accepted correction now preserves glyphs, requires exact FIELD MENU / LEAVE MATCH captions and living context, and retains raw TSVs. Its focused native Linux slice passes 61.955 s; full Windows retry remains required.
 - M2: all four native hosts pass 1,281 source checks at `0ca125d`. Intel full-game
   default/OpenGL and all five feature ablations still time out at 120 s; minimal
   2D/3D controls pass. No shipping graphics correction is supported by those
   results. ARM graphical startup passes; actual keyboard/pointer qualification
-  now starts with a non-requesting permission/window preflight.
+  now starts with a non-requesting permission/window preflight. Actual ARM run39727011693 at `e7718ee` reports that step successful; raw permission/window/source receipts remain under independent review.
 - ARM source `2a2b732`, [run39721286005](https://github.com/calebaiken/sightbreak/actions/runs/39721286005),
   passes actual unsigned generic-device iOS compilation under Xcode26.3/SDK26.2
   after a forced-symbol SDK probe. [Independent review](../reports/gauntlet/m2-native-mac-ci-39721286005/independent-review/README.md)
@@ -46,6 +46,13 @@ is the actual persistent tracker, not a native Codex goal registration.
   Separate critic queried the live owned database and checked raw receipts and
   cleanup. Final validator has 15 passing controls. [Account evidence](../reports/gauntlet/m3-account-match/RESULTS.md).
   Nine clients turn at spawn: this does not qualify meaningful activity or AFK resistance.
+- A further M3 correction moves participation checks from discarded packet tails
+  to immutable consumed commands. Actual ENet baseline renews activity 93 times
+  without aim changes; candidate renews it zero times, while legitimate aim
+  stays 13/13. A fresh critic accepts source and adversarial controls. The
+  reward formula, real-yaw policy, ten-second window and qualification thresholds
+  are unchanged. [Review](../reports/gauntlet/m3-activity-integrity/independent-critic/REVIEW.md).
+  Combined maintained validation is running on frozen `a23e349`.
 - M5: six bot habits now use corresponding squad slots, preserving the reviewed
   authority implementation and Claude authorship. Final independent engine
   oracle: 2,722 checks, zero candidate failures / zero unequal pairs versus
@@ -56,11 +63,11 @@ is the actual persistent tracker, not a native Codex goal registration.
   one-thread OCR correction reduces measured CPU by 52.94% on 176 actual calls
   with identical TSVs; wall time changes only 1.5%, so a timeout fix is unproven.
   Separate per-size original-PNG artifacts and a Linux-only workflow lane are
-  independently accepted. A new exact-source four-size/native CI run is next.
+  independently accepted. The new exact-source local four-size run at `872a576` passes in 280.215 s under the original limits; [independent raw/image review](../reports/gauntlet/m1-native-ci-39725980732/local/README.md) verifies all 22 named frames. Remote Linux run39725980732 passes the ordinary journey but its plant step fails; raw diagnosis is pending.
 
 Historical failures, original raw archives and earlier fixture rejections remain
 in the worklog and milestone reports. Later commits do not relabel old binaries.
-No whole product gate below is closed by these bounded engineering results.
+The reviewed local touch-enabled frame also exposes a MENU/device-label overlap and stale keyboard footer after live opt-in. A builder and fresh critic are correcting that transition without moving saved touch targets. No whole product gate below is closed by these bounded engineering results.
 
 ## Acceptance matrix
 
@@ -72,16 +79,16 @@ No whole product gate below is closed by these bounded engineering results.
 | G4 | Gunplay: recoil, spread, fire cadence, hit and elimination feedback | IN PROGRESS | Rules are tested (`actor_test`, `hit_feedback_test`, `weapon_integrity_test`). No measurement of feel, no human assessment, no comparison to a shipped title. | Reported | Build a measurement harness for all four weapons (milestone candidate). |
 | G5 | Viewmodel, reload and weapon switch animation | FAILED | Relay AR has authored art. Same-family review scored the weapon and hands slice 5.5/10 against 8.5. Kestrel 9, Vectorline and Longwatch are still procedural. | Reported (same-model reviewer, stills) | Native recapture, critic round, author the other three weapons. |
 | G6 | Input responsiveness (mouse, movement, fire) measured | IN PROGRESS | Keyboard FIELD MENU focus and safe resume independently verified with OS input. Replay-silence stopping measured at 316–334 ms in eight two-peer trials. Prediction error max 0.075834 m. No physical input-to-photon or input-to-fire measurement. | Fresh native/menu and blind network critics | Keep engineering measurements scoped; obtain device latency and human feel evidence. |
-| G7 | UI/UX across journeys (menu, deploy, LAN, settings, HUD, buy, scoreboard, pause, inventory, cases, results, error states) | IN PROGRESS | FIELD MENU OS keyboard/safe-resume review passes. Critic-driven footer correction now passes exact four-size native generation in 304.692s with clean exits and original limits; all 22 images and wrong-screen controls independently checked. [Evidence](../reports/gauntlet/native-layout-ocr/ITERATION_2.md). Live HUD classification runs at 1280×720 only. | Fresh menu and separate layout revision critics | Verify combined native journeys; accessibility, full UX and aesthetic quality remain open. |
+| G7 | UI/UX across journeys (menu, deploy, LAN, settings, HUD, buy, scoreboard, pause, inventory, cases, results, error states) | IN PROGRESS | FIELD MENU OS keyboard/safe-resume review passes. Exact 872a576 local four-size capture passes 280.215 s under unchanged limits, all 22 named frames independently inspected. Touch opt-in reveals device-label overlap and stale keyboard footer; correction is being independently evaluated. | Fresh independent native/menu/layout critics | Qualify live mode transitions with native before/after images; full journeys, accessibility and aesthetic quality remain open. |
 | G8 | Visual quality at least 8.5/10 in each applicable category | FAILED | 0.3 aggregate 8.1 (geometry, materials, lighting, models, effects below 8.5). Fresh sequence review about 5.5. | Reported (AI reviewers, not human) | Per-category rounds after G4-G7. |
 | G9 | Audio: fire, reload, hit, objective cues consistent with animation | IN PROGRESS | All sound is synthesized in code. Capture-based tests pass; exit-time AudioStream leaks and one nondeterministic timing control were reported. Nobody has listened. | Reported | Check leaks in baseline; add timing measurements. A listening review needs a person. |
 | G10 | Accessibility (contrast, text scale, reduced motion, controller/keyboard reach) | IN PROGRESS | Text scale and reduced motion exist. No audit, no screen-reader or physical-controller evidence. | none | Compute WCAG contrast from captures (bar B4). |
-| G11 | Linux native package | IN PROGRESS | Exact-source objectives, stock match/earned restart and ordinary 0ca journey independently pass. Ten native suites pass. Three combined layout cases fail original timing gates; separately accepted OCR CPU/PNG packaging changes await exact native rerun. | Fresh independent native/layout critics | Run new frozen four-size capture and Linux-only CI, inspect original PNGs and all receipts. |
-| G12 | Windows native package | IN PROGRESS | Latest dc2 run39723283770 passes startup/input/reload, ten source suites/inner HUD cleanup, plant/defuse, 12-round stock match and exact earned restart. Settings/resume preserves the same living actor. Full journey fails at visible LEAVE MATCH lookup; focus/restart later in that journey are unreached. [Raw review](../reports/gauntlet/m1-native-ci-39723283770/README.md). | Fresh independent native output critic | Repair supported observer deficiency, review and rerun original full Windows journey. Preserve earlier death/OCR failures. |
+| G11 | Linux native package | IN PROGRESS | Exact-source objectives, stock match/restart and ordinary 0ca journey independently pass. New 872a576 local four-size capture passes 280.215 s. New remote run39725980732 passes input/source/full journey but plant step fails; full match/layout/raw diagnosis pending. | Fresh independent native/layout critics; current metadata provisional | Inspect failed plant raw trace and remaining remote gates, then qualify corrected frozen source. |
+| G12 | Windows native package | IN PROGRESS | Latest dc2 run39723283770 passes startup/input/reload, ten source suites/inner HUD cleanup, plant/defuse, 12-round stock match and exact earned restart. Settings/resume preserves the same living actor. Full journey fails at visible LEAVE MATCH lookup; focus/restart later in that journey are unreached. [Raw review](../reports/gauntlet/m1-native-ci-39723283770/README.md). | Fresh independent native output critic | LEAVE observer correction independently accepted after exact Linux native slice and actual Windows pixel replay; rerun original full Windows journey. Preserve earlier death/OCR failures. |
 | G13 | macOS native package (Intel and Apple Silicon) | FAILED | 0ca ARM startup and all ten source suites pass. Intel minimal 2D/3D controls pass; full default/OpenGL and five feature ablations time out at 120 s with no captured frame. No winning feature variant. Actual ARM input preflight is being implemented; no gameplay qualification. | Fresh independent native output critic | Read-only ARM permission/window preflight, then legitimate native input if allowed. Intel device/render diagnosis remains separate and open. |
 | G14 | Android and iOS keep building | IN PROGRESS | Fresh frozen 6a Android debug APK and unsigned iOS project export and structural inspection pass. Independent 48/49 package checks: simulator metadata claims ARM64+x86_64 but pinned debug archive contains x86_64 only; device archive is ARM64. [Evidence](../reports/gauntlet/m2-mobile-preservation/independent-package-critic/REPORT.md). Actual Xcode 16.4 / SDK 18.5 link fails on five iOS 26 framework globals. Reviewed SDK selection is integrated; retry 39721286005 at 2a2b732 passes independent unsigned-device compile review, with exact source/PCK and raw unsigned codesign evidence. Final binary reparse and runtime remain open. | Fresh independent mobile package critic | Preserve accepted exact-source unsigned compile; qualify simulator metadata, installation, older OS behavior and physical play. No credential/signing action is authorized. |
 | G15 | Packaging, build provenance, Steam staging procedure | IN PROGRESS | Source-bound manifests exist. `STEAM_RELEASE_READINESS.md` is design only: no SteamPipe template, no App ID, Steamworks docs not retrievable (host denied). | Reported | Owner approval is needed for any upload or account step. |
-| G16 | Economy and progression integrity | IN PROGRESS | Earned offline progression persists in actual Windows/Linux exports. Ten-account stock match creates a production payload and recovers exactly once after process/database/lost-reply failures: one operation, ten rewards/ledger rows, 2,875 credits / 2,650 XP. Independent live database queries, raw replay and 15 validator controls pass. | Fresh independent native/database critic | Qualify substantive activity/AFK policy, remote-host recovery and production deployment security separately; no deployment performed. |
+| G16 | Economy and progression integrity | IN PROGRESS | Earned offline progression persists in actual Windows/Linux exports. Ten-account stock match creates a production payload and recovers exactly once after process/database/lost-reply failures: one operation, ten rewards/ledger rows, 2,875 credits / 2,650 XP. Independent live database queries, raw replay and 15 validator controls pass. A further accepted consumed-command correction prevents discarded packet tails renewing activity (93 baseline versus zero candidate); real aim remains eligible. | Fresh independent native/database critic | Qualify substantive activity/AFK policy, remote-host recovery and production deployment security separately; no deployment performed. |
 | G17 | Human playtesting | BLOCKED EXTERNALLY | No human feedback exists. | none | Needs people. Use `docs/research/HUMAN_AND_DEVICE_TESTING_PLAN.md`. |
 | G18 | Counter-Strike 2 comparison for weapon feel, animation, readability | BLOCKED EXTERNALLY | Steam, YouTube and counter-strike.net hosts denied by the network policy (see [BARS.md](BARS.md)). | none | Owner allows the hosts, or supplies reference captures. |
 | G19 | Physical-device performance (frame pacing, thermals, memory) | BLOCKED EXTERNALLY | Only llvmpipe software-render timings exist. | none | Needs hardware. |
