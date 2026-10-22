@@ -252,3 +252,19 @@ observation scheduling, including a newly found same-life capture race.
 Account-backed match harness is under independent source review; critic found
 four evidence-validator false positives before its long actual run. They must
 be corrected rather than counted as proof. No result or G3 completion yet.
+
+## Codex settings correction and live dependencies — 2026-10-22 04:36 UTC
+
+Integrated faac3bb + 3be6492 after independent actual Linux settings transaction
+review (62.373 s, same living context through capture/OCR). Original full-journey
+failures and critic-found capture race remain in dcbca8c + df6eb64. Optional
+manual Windows lane 47b142d preserves every host gate and default four-host matrix;
+independent 18-case replay accepts it for a native retry.
+Linux raw combined gameplay passes: journey 229.587 s, player plant/defuse and
+12-round draw with exact 120 XP / 250 offline credits and restart. Three layout
+cases fail unchanged recognition/remaining-time deadlines. New OCR/resource and
+per-size screenshot preservation work is separate from earlier footer fix.
+Native Mac evidence 7d46d2e finds all five Intel feature cases time out; no graphics
+change is supported. Live Claude PR28 has an alternative authority shuffle and
+separate bot habits; no import. Account-backed stock match 471fbd8 is in round 6
+with actual ten-account admission and no injected production match fields.

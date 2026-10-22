@@ -1,5 +1,21 @@
 # Parallel engineering work
 
+## Mission execution ownership — 2026-10-22
+
+Active Codex draft PR27 is `codex/v1-mission-playability`, based on PR24 → PR23 →
+PR22 → PR16. Read NEXT_SESSION for current exact source and acceptance, rather
+than applying historical main/protocol identities below. Main remains 4d8cdb3.
+
+Live ref refresh finds Claude PR26 at 778c89a (game/scripts unchanged from 5288a69)
+and new PR28 `claude/fair-actor-order-v1` at 2641ddf, based directly on PR23.
+PR28 proposes authority shuffle 6ed3ee0 and separate bot habits 0871bc9. Neither is
+integrated here. Codex f13ed03 already resolves the reproduced duel-order defect
+with movement/action/contact phases, independently reviewed in 178 checks. Do not
+replace it with a blind shuffle cherry-pick. Squad-symmetric bot habits are a
+separate M5 candidate requiring exact-source qualification against this stack;
+PR28 statistics on shuffle do not automatically qualify the two-phase stack.
+Keep both authors' branches, evidence and shared-file contracts intact.
+
 ## Current integration checkpoint — 2026-10-14
 
 - Active Codex validation branch: `integration/sightbreak-network-art-preview`, draft [PR9](https://github.com/calebaiken/sightbreak/pull/9), base `codex/network-validation-builds`. Tested/export source60cf125; later documentation commits retain that identity.

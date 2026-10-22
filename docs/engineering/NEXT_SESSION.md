@@ -36,11 +36,16 @@ defuse pass; Linux ordinary journey passes. Independent Windows raw review verif
 10 stock rounds (3:7, local victory), 120 XP / 325 offline credits and exact
 completed/restarted profiles. The scripted player earns no kills/objectives.
 Windows ordinary journey fails because the player dies during settings/resume,
-before living HUD analysis; narrow scheduling correction is executing. Linux
-full-match/restart and layout stages are still running.
+before living HUD analysis; reviewed scheduling correction is integrated as faac3bb + 3be6492, with independent evidence df6eb64. Exact Windows retry is next. Linux raw review now verifies a 12-round 6:6 draw, 120 XP / 250 offline credits,
+exact restart and ordinary journey in 229.587 s. The Linux job still FAILS: three
+layout cases exceed unchanged OCR/menu-confirmation limits. A builder is measuring
+child-local OCR resource use and adding separately retrievable original screenshots.
 ARM default graphical startup and all ten source suites pass. Independent ARM
 review verifies 136 indexed receipts and 1,281 checks. Intel unchanged startup
-fails; retain upcoming explicit OpenGL/feature results before choosing a fix.
+and explicit OpenGL fail. All five feature cases also time out at 120 s, with no
+logged completed frame or capture. Independent evidence 7d46d2e supports no
+shipping graphics change. Apple Software Renderer samples show both fragment
+execution and shader preparation; actual Intel GPU/device qualification is open.
 
 ARM unsigned iOS build fails exit 65 after 36.095 s: `_CADynamicRangeAutomatic`,
 `_CADynamicRangeConstrainedHigh`, `_CADynamicRangeHigh`, `_CADynamicRangeStandard`
@@ -97,7 +102,7 @@ actual full stock match may take 9–15 min. It is not yet accepted or integrate
 ## Candidates executing; continue them
 
 1. Layout: `/workspace/sightbreak-layout-ocr`, `codex/v1-layout-ocr`. Candidate `afe7b54` uses an aspect-correct narrow footer strip, retaining all words/exclusions/timeouts. Earlier `3a847af` native 1280 touch pass exposed a 1280×800 pixel limitation; afe fixes it. Full exact-source four-size run PASSES 304.692s under original 520/120s limits, independently reviewed. Code integrated as 3b76d26→285f6c8; final evidence 2b4f22b. See ITERATION_2.md; live classifier remains 1280-only, other sizes have actual native/saved-pixel proof.
-2. Offline observer: `/workspace/sightbreak-offline-flow`, `codex/v1-offline-flow-observation`, commits `94dc6bb` → `ccfba93` → `0a12135`. Narrow ammo OCR and read-only release-guard acknowledgment. Source/pixel checks and strict native focus-only probe pass (58.943 s, fresh movement 0.427778 m, clean exit). Full local journey still fails its unchanged 35 s second-round wait under software rendering. Fresh critic accepted the scoped correction; integrated 785ece8→1afbdda plus corrected time wording e930ba4. New combined Linux journey passes by CI metadata; Windows still fails from death before HUD analysis. New builder /workspace/sightbreak-offline-journey, criteria c30f5a3, is preserving the existing pause across settings and using a same-life observation fence; no game-rule edits. Candidate source is isolated in /workspace/sightbreak-offline-candidate; exact code/test outcome pending.
+2. Offline observer: `/workspace/sightbreak-offline-flow`, `codex/v1-offline-flow-observation`, commits `94dc6bb` → `ccfba93` → `0a12135`. Narrow ammo OCR and read-only release-guard acknowledgment. Source/pixel checks and strict native focus-only probe pass (58.943 s, fresh movement 0.427778 m, clean exit). Full local journey still fails its unchanged 35 s second-round wait under software rendering. Fresh critic accepted the scoped correction; integrated 785ece8→1afbdda plus corrected time wording e930ba4. New combined Linux journey passes by CI metadata; Windows still fails from death before HUD analysis. Scheduling correction faac3bb + 3be6492 is independently accepted for its Linux settings transaction: 62.373 s, original living context held throughout. Evidence dcbca8c + df6eb64 retains failed full journeys, pixel negatives and capture-race correction. Exact complete Windows retry remains required; optional Windows lane 47b142d is independently approved with every Windows gate unchanged.
 3. F2 authority order: product `f13ed03`, reviewed oracle `8571c78`, native CI registration `40ffbae` are integrated. Fresh independent native/source review accepts the bounded correction: 178 checks pass versus 152 intentional baseline failures. Full maintained validation on exact product 470fad5 passes; corrected active CPU samples count real shots/damage with stable bounded pools. Earlier depleted-trigger and missing-pose benchmark defects are retained. See `docs/reports/gauntlet/m3-authority-order/README.md` and its independent report. Simultaneous multiattacker credit, wipe, utility and contact policies remain open; no full competitive fairness claim.
 4. Separate Claude-owned [PR26](https://github.com/calebaiken/sightbreak/pull/26), `claude/relay-yard-tactical-layout-v1` at `5288a69`, is not integrated. Its map changes require protocol/build compatibility and native route review. Do not edit arena/bot files concurrently or blindly import the newer bot rewrite.
 5. After reviewed observer integration, commit a clean candidate and dispatch registered `desktop-alpha.yml` on the own branch. Verify nine suites on actual Windows/Mac, unchanged offline journeys, objective/full-match/progression and four-size captures. Download/review bounded receipts and Mac attribution. If one Mac ablation succeeds while full fails, repeat a warm full reference before choosing a shipping correction.
@@ -156,3 +161,15 @@ round-2 approval 02a24f2 are retained. Ordinary HUD checks stay 33, caller state
 is preserved, creation/cleanup reject the shared namespace link, and removal
 receipts are entry-aware. Corrected Windows/macOS execution remains pending;
 controlled Linux exits do not establish hard-kill or atomic filesystem safety.
+
+## Current build-tool follow-up
+
+`/workspace/sightbreak-layout-timeout`, branch `codex/v1-layout-timeout`, starts at
+7d46d2e. Actual combined Linux layout failures are main-menu confirmation at
+960×540 / 1920×1080 and a remaining-budget OCR timeout at 1280×720; 1280×800 passes.
+This is distinct from the fixed footer false negative. Keep all existing deadlines
+and recognition/source/frame guards; investigate performance before choosing a
+fix. Full QA PNG artifact is 36,909,293 bytes, above transfer cap. New per-size
+original PNG artifacts must preserve existing receipts/full artifacts. No new
+rendered comparison is possible from the unavailable current images alone.
+Account match owns the local native lane until its stock run finishes.
