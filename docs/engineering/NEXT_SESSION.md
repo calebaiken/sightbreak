@@ -225,3 +225,8 @@ earned economy and platforms preserved. Fresh independent critic owns the
 verdict; builder cannot approve. Whole G2, F1 complete-match quality and competitive
 fairness remain open. CPU/native lane is explicitly released; next timed native
 work belongs to root's layout rerun.
+
+Fresh critic evidence-only commit `6a40900d7903b23a266256c4fa239d07529dbe13`
+accepts the declared six habits at exact `1b88349`. Review checkout is
+`/workspace/sightbreak-bot-symmetry-review`; root should integrate the builder
+chain and separate critic evidence while preserving the still-open whole G2 gate.

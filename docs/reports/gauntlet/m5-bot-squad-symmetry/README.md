@@ -60,6 +60,9 @@ The later fixture-only changes in `1b88349` were independently rerun with source
 and hash guards: final oracle, bot AI, authority, match (75), actor (73), weapon,
 hit-volume and privacy all pass. Independent evidence and verdict live on the
 critic's branch under the same milestone's `independent-critic` directory.
+The fresh critic accepts the declared six-habit scope in evidence-only commit
+`6a40900d7903b23a266256c4fa239d07529dbe13`; its `independent-critic/REVIEW.md`
+preserves the exact source and raw recomputation. Root integration remains separate.
 
 Full validation retains its ordinary omissions: no DISPLAY means rendered
 reload checks are skipped; backend SQL is not requested, the new worktree has no
@@ -88,7 +91,7 @@ The largest remaining deficiency is complete-match bot objective/cooperation
 quality and competitive balance on this phased stack. Equal commands under
 equal fixture state do not establish equal random exposure, player feel, match
 balance, device performance or earned online progression. The builder does not
-approve this change; integration depends on the fresh independent critic.
+approve this change. The fresh independent acceptance above covers the six habits.
 
 ## Reproduce
 

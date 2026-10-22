@@ -326,3 +326,8 @@ measurement was omitted before any sample; no broad match fairness or objective
 quality acceptance. CPU lane released explicitly to root for the original-budget
 layout rerun. Builder does not approve; fresh critic verdict is separate. Whole
 G2 remains open.
+
+Fresh independent review `6a40900d7903b23a266256c4fa239d07529dbe13` subsequently
+accepts the declared six-habit scope at source `1b88349`, retaining all failed
+fixtures and nine focused native steps. This records its verdict, not builder
+self-approval or root integration. Whole-match quality remains open.
