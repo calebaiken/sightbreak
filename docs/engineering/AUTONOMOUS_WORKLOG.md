@@ -171,3 +171,38 @@ with known identities, not blinded. `independent/REPORT.md` and the complete raw
 review archive retain its 178-check pair, 28-check independent negative probe,
 11 regression groups and allocation/message counters. Root owns integration and
 the native CI registration. General fairness and ten-client gates remain open.
+
+
+## 2026-10-22 — Combined native qualification checkpoint
+
+The critic-driven layout revision passes all four actual native sizes in 304.692s
+under original 520/120 second limits; 22 captures, 86 OCR originals and frame receipts
+are independently verified. The 1280×800 counterexample and earlier failures are
+retained. Live HUD classification remains 1280-only; other sizes have actual
+captures plus independent saved-pixel checks. This is functional evidence, not
+a visual 8.5 score.
+
+The reviewed observer correction handles actual Windows ammo pixels and requires
+an observed release-guard clear before fresh W. The strict Linux focus-only probe
+passes 58.943s with 0.427778m movement and clean exit. Full local journey still fails
+its original 35 second second-round deadline; no timeout or rule was widened.
+
+Combat movement/actions/hit commits are integrated as f13ed03, oracle 8571c78 and
+native matrix registration 40ffbae. Original worklog append conflicts were resolved
+by preserving both histories and the newer multi-milestone resume state. Root's
+combined ten-suite run at 77147c5 exits 0, all logs clean, source/copy inventories
+unchanged, cleanup complete. The fresh critic accepted 178checks versus 152 baseline
+failures, and corrected depleted-trigger/missing-pose evidence before acceptance.
+Multiplayer attribution/wipe/utility/contact policies remain explicit follow-ups.
+
+Fresh Android/iOS exports and independent mobile inspection are retained 25e889e:
+48/49 checks, with upstream simulator metadata/payload mismatch open. Device
+archive is ARM64; no device/Xcode pass is inferred. ARM Mac unsigned generic-device
+compile implementation 883cda0→8f61180 passed independent local controls and review;
+actual native compilation is pending. Root ten helper controls also pass.
+
+A combined registered desktop CI run is next. It retains original gameplay and
+startup gates, adds reviewed Intel feature attribution and unsigned iOS compile,
+and uploads bounded raw receipts alongside the full artifacts. The standalone new
+workflow 404 is retained; no shared merge was used to register it. Mission #25 and
+draft PR27 remain open. No release, deployment or background execution is claimed.
