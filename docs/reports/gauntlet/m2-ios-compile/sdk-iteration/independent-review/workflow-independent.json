@@ -1,0 +1,151 @@
+{
+  "candidate_commit": "33d6aa56d2e203ce624e3c331c8ea36f5ff16fca",
+  "comparison_commit": "90740e0",
+  "candidate_workflow_sha256": "185e9b6589fd338e5a3c42183ddd0092d4bc5e60b7091845b7077ee03a46e51a",
+  "all_unrelated_yaml_fields_identical": true,
+  "independent_cases": [
+    {
+      "event": "workflow_dispatch",
+      "lane": null,
+      "matrix": [
+        {
+          "os": "ubuntu-24.04",
+          "target": "linux"
+        },
+        {
+          "os": "windows-latest",
+          "target": "windows"
+        },
+        {
+          "os": "macos-15",
+          "target": "macos"
+        },
+        {
+          "os": "macos-15-intel",
+          "target": "macos"
+        }
+      ]
+    },
+    {
+      "event": "workflow_dispatch",
+      "lane": "",
+      "matrix": [
+        {
+          "os": "ubuntu-24.04",
+          "target": "linux"
+        },
+        {
+          "os": "windows-latest",
+          "target": "windows"
+        },
+        {
+          "os": "macos-15",
+          "target": "macos"
+        },
+        {
+          "os": "macos-15-intel",
+          "target": "macos"
+        }
+      ]
+    },
+    {
+      "event": "workflow_dispatch",
+      "lane": "all",
+      "matrix": [
+        {
+          "os": "ubuntu-24.04",
+          "target": "linux"
+        },
+        {
+          "os": "windows-latest",
+          "target": "windows"
+        },
+        {
+          "os": "macos-15",
+          "target": "macos"
+        },
+        {
+          "os": "macos-15-intel",
+          "target": "macos"
+        }
+      ]
+    },
+    {
+      "event": "workflow_dispatch",
+      "lane": "arm-macos-ios",
+      "matrix": [
+        {
+          "os": "macos-15",
+          "target": "macos"
+        }
+      ]
+    },
+    {
+      "event": "push",
+      "lane": null,
+      "matrix": [
+        {
+          "os": "ubuntu-24.04",
+          "target": "linux"
+        },
+        {
+          "os": "windows-latest",
+          "target": "windows"
+        },
+        {
+          "os": "macos-15",
+          "target": "macos"
+        },
+        {
+          "os": "macos-15-intel",
+          "target": "macos"
+        }
+      ]
+    },
+    {
+      "event": "push",
+      "lane": "arm-macos-ios",
+      "matrix": [
+        {
+          "os": "ubuntu-24.04",
+          "target": "linux"
+        },
+        {
+          "os": "windows-latest",
+          "target": "windows"
+        },
+        {
+          "os": "macos-15",
+          "target": "macos"
+        },
+        {
+          "os": "macos-15-intel",
+          "target": "macos"
+        }
+      ]
+    },
+    {
+      "event": "workflow_dispatch",
+      "lane": "unknown",
+      "matrix": [
+        {
+          "os": "ubuntu-24.04",
+          "target": "linux"
+        },
+        {
+          "os": "windows-latest",
+          "target": "windows"
+        },
+        {
+          "os": "macos-15",
+          "target": "macos"
+        },
+        {
+          "os": "macos-15-intel",
+          "target": "macos"
+        }
+      ]
+    }
+  ],
+  "dispatch": "UNVERIFIED; no GitHub dispatch performed by reviewer"
+}
