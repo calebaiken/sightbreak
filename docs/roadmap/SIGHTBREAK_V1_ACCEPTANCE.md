@@ -20,8 +20,8 @@ signing, credentials and unavailable hosts stay explicitly blocked until observe
 A script, simulated match, software render or successful export cannot silently
 satisfy a different gate. No deployment, Steam publication or paid action is implied.
 
-Current bounded evidence includes the independently passing Windows selected native
-gates, corrected-activity ten-account settlement/recovery, backend regression and
-four-weapon engineering probe. Linux next-round timing and Mac strict source leaks
-remain failures. The canonical matrix records their exact sources and reviewers;
+Current bounded evidence includes the independently passing frozen 0527715 aggregate,
+fourteen-suite Windows/ARM runs, Windows selected gameplay gates, corrected-activity
+ten-account settlement/recovery, backend regression and four-weapon probe. Linux
+next-round timing and earlier unexplained Mac strict leaks remain failures. The canonical matrix records their exact sources and reviewers;
 none of these increments closes the full release-candidate gates.
