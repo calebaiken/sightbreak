@@ -1,37 +1,43 @@
 # Next session
 
-Updated 2026-10-21 by Claude. A fresh session should be able to continue from this file alone.
+Updated 2026-10-22 by Codex. The mission is IN PROGRESS / PRIMARY, tracked by
+[GitHub issue #25](https://github.com/calebaiken/sightbreak/issues/25).
+No native Codex goal API is exposed; Linear requires reauthentication.
 
-## State
+## Active state
 
-- Mission branch: `claude/mission-foundation-v1`, based on `origin/codex/desktop-playability-p1` (`db3981e`, PR #23). Draft PR target is that same branch.
-- Contents: `CLAUDE.md`, `.claude/skills/{gauntlet-loop,no-ai-slop,sightbreak-gauntlet}`, `.claude/agents/*`, `.claude/settings.json` (SessionStart brief, narrow read-only permissions), `scripts/session_brief.sh`, `docs/roadmap/*`, `docs/engineering/{AUTONOMOUS_WORKLOG,NEXT_SESSION}.md`.
-- Worktree used in the first session: `/home/user/wt/mission-foundation`. Toolchain: `/home/user/tools/godot-4.7.2`, state dir `/home/user/sightbreak/.local`. Neither survives a container reset; `./scripts/setup.sh` rebuilds them.
-- Baseline suite result and the first player-experience milestone are in the worklog. If the worklog has no M1 result, the run did not finish: re-run it.
+- Branch: `codex/v1-mission-playability`; worktree: `/workspace/sightbreak-v1-execution`.
+- Base: PR24 `c84eaf3ce89105d071254f0654f9adbe50275e9e`, descendant of PR23 `db3981e` → PR22 `82a03fc` → PR16 `d2439ac`.
+- The existing mission/progress/quality skills were reused. G1–G20 remain the canonical acceptance matrix; the new acceptance file links that matrix.
+- Current milestone: M1 Linux exported-client playability. Latest CI has offline/plant/layout failures; Windows controlled reload and Intel Mac startup also remain failed.
+- No new gameplay pass is claimed at this initialization checkpoint. The retained Claude baseline and worklog remain intact.
 
-## Do next, in order
+## Continue now
 
-1. `git fetch origin` and check whether PR #23 or any of #16-#22 moved. If the base moved, merge it into your branch (no rebase, no force-push) and re-run the targeted tests.
-2. Recheck reference hosts (`docs/roadmap/BARS.md`). If `*.steamstatic.com` or `youtube.com` now answer, fetch the CS2 references first, record URL, date and SHA-256, and start the viewmodel gauntlet against B1.
-3. Take the top open row of the acceptance matrix in `docs/roadmap/SIGHTBREAK_V1_PROGRESS.md`. Current order: G4/G5 gunplay and viewmodel measurement and the three procedural weapons, then G7 UI journeys, then G2 bots (review the newer Gemini tip first).
-4. Run it through `.claude/skills/sightbreak-gauntlet`: builder agent, native capture, blind pair, `harsh-critic` with fresh context, regression suite.
-5. Append to the worklog, update the matrix, commit, push with `git push -u origin <branch>`.
+1. Fetch live branches and check PR24/23 movement and other ownership before modifying shared surfaces.
+2. Read AGENTS.md and the mission/acceptance matrix. Reproduce Linux exported input/plant failures against the exact base; retain failing outputs before fixing.
+3. Implement the smallest supported product correction, run targeted and exported regressions, obtain a separate fresh-context critic’s review of actual outputs, improve and reverify.
+4. Commit, update evidence and matrix, then immediately begin the next achievable milestone. Do not treat a roadmap or one correction as mission completion.
 
-## Commands
+## Current environment commands
 
 ```sh
-export SIGHTBREAK_TOOLS_DIR=/home/user/tools SIGHTBREAK_STATE_DIR=/home/user/sightbreak/.local
-./scripts/setup.sh && ./scripts/godot.sh --headless --editor --import --quit
-Xvfb :99 -screen 0 1920x1080x24 +extension GLX +render -noreset &
-DISPLAY=:99 ./scripts/validate.sh 2>&1 | tee /tmp/validate.log
+cd /workspace/sightbreak-v1-execution
+export SIGHTBREAK_TOOLS_DIR=/workspace/tools
+export SIGHTBREAK_STATE_DIR=/workspace/sightbreak-v1-execution/.local
+python3 scripts/toolchain.py setup --targets linux
+./scripts/godot.sh --headless --editor --import --quit
+python3 scripts/export.py linux
+XVFB_BIN=/workspace/tools/xvfb/usr/bin/Xvfb python3 scripts/verify_offline_match.py --target linux --scenario plant --display :181 --timeout 180 --output builds/mission-m1/plant-baseline
 ```
 
-## Evidence locations
+Use new evidence directories for each attempt. `/usr/local/bin/godot` is 4.6.3 and
+must not substitute for the pinned 4.7.2 toolchain. Xvfb is locally available at the
+path above. Software-render timing is relative, never physical-device FPS.
 
-- Gauntlet rounds: `docs/reports/gauntlet/<milestone>/round-<n>/` (with `sha256.txt`).
-- Baseline log of the first session: summarized in the worklog; the raw log lived in the session scratchpad and is not preserved unless the worklog says where it was copied.
+## External blockers
 
-## Blocked on the owner
-
-- Allow the reference hosts in the cloud environment's network settings (`BARS.md`) for CS2 comparison.
-- Human playtesters, Mac and Windows hardware, physical Android and iPhone, Steam account actions and signing are outside this container.
+Windows/Mac gameplay and physical Android/iOS, human playtests, actual GPU timing,
+Steam credentials/signing and denied CS2 reference hosts require their missing
+resources. Available Linux and correctness work must continue while those remain
+blocked. No background execution or future CI result is claimed.

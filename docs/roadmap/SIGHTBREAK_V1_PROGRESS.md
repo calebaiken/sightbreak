@@ -1,8 +1,16 @@
 # SIGHTBREAK v1.0 progress
 
-Last updated: 2026-10-21 (Claude, session `01K8r1xMjGNZtUR5CdGpJK3x`). Mission and gates: [SIGHTBREAK_V1_MISSION.md](SIGHTBREAK_V1_MISSION.md). Resume point: [../engineering/NEXT_SESSION.md](../engineering/NEXT_SESSION.md). Log: [../engineering/AUTONOMOUS_WORKLOG.md](../engineering/AUTONOMOUS_WORKLOG.md).
+Last updated: 2026-10-22 (Codex mission activation). Permanent tracker: [issue #25](https://github.com/calebaiken/sightbreak/issues/25), IN PROGRESS / PRIMARY. Existing Claude baseline and worklog remain historical evidence. Mission and gates: [SIGHTBREAK_V1_MISSION.md](SIGHTBREAK_V1_MISSION.md). Resume point: [../engineering/NEXT_SESSION.md](../engineering/NEXT_SESSION.md). Log: [../engineering/AUTONOMOUS_WORKLOG.md](../engineering/AUTONOMOUS_WORKLOG.md).
 
 Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALLY`. **Verified by** says who ran it. "Reported" means a source document says so and nobody on this line has re-run it. Reported results are not promoted to `VERIFIED` until someone re-runs them.
+
+## Current execution
+
+- Active branch: `codex/v1-mission-playability`, worktree `/workspace/sightbreak-v1-execution`.
+- Base: PR24 `c84eaf3ce89105d071254f0654f9adbe50275e9e`, stacked on PR23 `db3981e` → PR22 `82a03fc` → PR16 `d2439ac`. No shared branch was merged or rewritten.
+- M0: existing original skill bytes match the previously independently checked snapshots. No skill installation repeated. GitHub issue #25 registered; native Codex goal tool unavailable and Linear reauthentication blocked.
+- M1 IN PROGRESS: reproduce Linux exported objective/offline failures first; preserve strict assertions, timers, earned-only progression and existing failed evidence.
+- Latest desktop CI: [39678945538](https://github.com/calebaiken/sightbreak/actions/runs/39678945538), Windows/Linux/Intel jobs failed; ARM job passed startup/controls only. No current local run is claimed yet.
 
 ## Acceptance matrix
 

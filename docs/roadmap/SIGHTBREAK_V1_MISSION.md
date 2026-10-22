@@ -4,6 +4,16 @@ This file holds the goal, the gates and the constraints. Current status lives in
 
 ## Goal
 
+Title: SIGHTBREAK — Steam-Ready v1.0. Status: IN PROGRESS. Priority: PRIMARY.
+Completion condition: every defined v1.0 release-candidate acceptance gate is independently verified.
+Scope: full product development, integration, stability, player experience and release preparation.
+
+Persistent tracker: [GitHub issue #25](https://github.com/calebaiken/sightbreak/issues/25).
+No native Codex goal-registration API is exposed in this session. The connected Linear
+project service requires reauthentication; no goal was registered there. Issue #25 is
+the supported external task record, with status/priority declared in its description.
+Repository records remain the authoritative recoverable development state.
+
 Ship a Steam-ready v1.0 release candidate of SIGHTBREAK: a native Godot 4.7.2 tactical 5v5 first-person shooter with the responsiveness, gameplay depth, presentation, reliability and competitive integrity of an excellent tactical FPS. Counter-Strike 2 is the genre-quality reference for weapon feel, animation, visual readability, competitive clarity and presentation. SIGHTBREAK keeps its own identity, mechanics, environments and assets. No Counter-Strike asset, name, image, map, sound or animation is copied.
 
 The game at release candidate provides:
@@ -56,17 +66,23 @@ Details: `.claude/skills/sightbreak-gauntlet/SKILL.md`. Writing goes through `.c
 
 Codex tends toward network, backend, native desktop platform work and build tooling. Claude tends toward gunplay feel, UI/UX, visuals, animation, audio feedback, bots and independent criticism. Read `docs/engineering/PARALLEL_WORK.md` and the open PRs before picking work. Do not duplicate an implementation another agent has in flight. Review their work independently before incorporating it. Draft PRs stay drafts until their gates pass.
 
-## Roadmap order
+## Roadmap and dependencies
 
-Ordered by release-blocking severity, then player-visible impact, then dependencies. Re-rank after each milestone from evidence.
+Re-rank after each verified increment. A completed task never completes the product mission.
 
-1. **Foundation**: mission records, skills, agents, session brief (M0).
-2. **Native baseline**: run the real build, capture menu, HUD and viewmodel states, run the maintained suite, list the worst player-visible gaps (M1).
-3. **Gunplay and viewmodel**: measurable fire, recoil, reload and switch behavior for all four weapons. Only the Relay AR has authored art; the other three are procedural.
-4. **HUD and menus**: audit each player journey at the supported resolutions and text scales. Fix by evidence.
-5. **Bots**: evaluate complete matches against objective metrics. Review the unintegrated tactical-AI tip before touching bot code.
-6. **Audio feel**: timing and consistency of fire, reload, hit and objective sounds, with the limits of having no listener.
-7. **Environment and characters**: Relay Yard readability and lighting, then an authored operator.
-8. **Integration**: independently review and bring in the unmerged Claude art tip and the networking PRs #18-#21 in coordination with Codex.
-9. **Copy**: audit every player-facing surface with `no-ai-slop`.
-10. **Release candidate**: re-run every gate on one frozen commit, then hand off what hardware, humans and credentials still owe.
+| Milestone | Product result and dependency | Acceptance gates |
+| --- | --- | --- |
+| M0 Mission activation | Reuse mission records and quality skills, register the continuing goal, commit the exact resume state. | G20; documentation scope only |
+| M1 Exported desktop playability | Close real-client Linux/Windows input, plant/defuse, full-match and earned-training restart failures. Builds on PR24 → PR23 → PR22 → PR16. | G1, G6, G11, G12, G16 |
+| M2 Native platform stability | Isolate Intel macOS startup; qualify ARM/Intel Mac and Windows actual gameplay, preserve mobile build regressions. Can proceed alongside M1 on available hosts. | G11–G14, G19 |
+| M3 Network qualification/integration | Independently qualify PR18–21 and V3 on the desktop base. Preserve authority, privacy, protocol compatibility, recovery and prediction opt-in. | G3, G16 |
+| M4 Weapon handling and feedback | Fire/reload/switch/movement timing, animation and audiovisual feedback with actual rendered comparisons. Depends on stable input and capture. | G4–G6, G8, G9, G18 |
+| M5 Tactical match quality | Measure objective behavior, perception, navigation and difficulty over reproducible matches; independently review newer bot work before integrating. | G1, G2, G17 |
+| M6 Presentation and usability | Player journeys, accessibility, original environment/characters, audio and measured performance. Preserve readability and engineering gates. | G7–G10, G18, G19 |
+| M7 Distribution and frozen RC | Reproducible source-bound packages for all targets, Steam staging preparation, no P0/P1, independent full-gate review on one frozen candidate. Depends on all preceding applicable gates. | G1–G20 |
+
+For each milestone: investigate, implement, test, critique, improve, verify, commit,
+update acceptance and select the next achievable increment. Keep working while the
+session and authorized resources permit. On a session limit or external blocker,
+commit recoverable work and leave exact commands, failures and next actions in
+`docs/engineering/NEXT_SESSION.md`. Never claim work continues after execution stops.
