@@ -49,7 +49,8 @@ def main():
     assert after["on"]["workflow_dispatch"]["inputs"]["lane"] == {
         "description": "Native qualification hosts", "type": "choice", "required": "true",
         "default": "all", "options": ["all", "arm-macos-ios", "windows", "linux"]}
-    original = before["jobs"]["native"]["strategy"]["matrix"]["include"]
+    before_matrix = before["jobs"]["native"]["strategy"]["matrix"]["include"]
+    original = evaluate(before_matrix, "push", None) if isinstance(before_matrix, str) else before_matrix
     arm = [{"os": "macos-15", "target": "macos"}]
     assert original == [{"os": "ubuntu-24.04", "target": "linux"}, {"os": "windows-latest", "target": "windows"},
                         {"os": "macos-15", "target": "macos"}, {"os": "macos-15-intel", "target": "macos"}]
@@ -70,7 +71,7 @@ def main():
         results.append({"case": name, "event": event, "lane": lane, "matrix_include": actual, "pass": True})
     stripped = copy.deepcopy(after)
     stripped["on"]["workflow_dispatch"] = before["on"]["workflow_dispatch"]
-    stripped["jobs"]["native"]["strategy"]["matrix"]["include"] = original
+    stripped["jobs"]["native"]["strategy"]["matrix"]["include"] = before_matrix
     assert stripped == before, "A step, gate, permission, timeout, artifact or unrelated workflow field changed"
     print(json.dumps({"baseline_ref": args.baseline_ref, "pyyaml_version": yaml.__version__,
                       "baseline_workflow_sha256": hashlib.sha256(before_text.encode()).hexdigest(),
