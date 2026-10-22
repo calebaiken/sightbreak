@@ -130,3 +130,37 @@ W/LMB safety checks, explicit resume, live actor/round checks and fresh movement
 It performs no settings/restart or full-journey acceptance and injects no match
 state. The probe records hashes of its driver, original block and executed text.
 New native focus-only output and independent review remain pending.
+
+## Strict native focus-only result
+
+Clean source `ccfba936327c64e531e5230ae56eb934bc353650`, game tree
+`82b1d4551913b11995dd3fdcda78fbdc8a6663dc`. The new source-bound Linux export
+passed and the separate focus-only run completed in **58.943 seconds**, client
+exit 0 and no cleanup errors. It used the real X11 root-window focus loss,
+physical W/LMB and an ordinary stock first match, with no seed/spawn/rule edits.
+
+The production focus block was executed verbatim; its SHA-256 is
+`da33a9123b5c97ded7424b22afdccb1e6b7fd28dc665969ce3e74281569a91a8`.
+The receipt retains the original controller, driver and transformed-execution
+hashes. The full source/export identity is in the raw result and build receipt.
+
+- Actual input acknowledged before focus loss: W forward and fire, ammo 14.
+- Focus loss paused the match; restored focus stayed paused with visible pointer.
+- Explicit resume retained three neutral held-input samples, unchanged ammo 14,
+  yaw/pitch and a stable position after ordinary inertia settled.
+- Physical release was acknowledged with `waiting_for_input_release=false` at
+  tick 989. A fresh W press reached actual movement at tick 1002, with **0.427778
+  metres** of observed displacement and 729 ms between those observer samples.
+- Actor remained alive in the same live round at time scale 1. The process
+  closed normally and no descendants or cleanup errors remained.
+
+`evidence-focus-r1.tar.gz` retains every native capture, action, trace, source
+receipt and process log from the focused run. Generated cache/config files are
+omitted; the archive manifest describes this selection and hashes every file.
+Five untouched native PNGs were available; the builder inspected the neutral and
+fresh-movement images. A separate critic must evaluate the packet and source.
+
+This is one software-rendered local Linux focus-only pass. The full Linux
+journey remains failed at its unrelated second-round wall deadline. Settings
+restart and the Windows full journey still need actual reruns. No platform,
+visual-quality or performance acceptance is inferred from this focused result.
