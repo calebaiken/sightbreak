@@ -137,7 +137,7 @@ class MenuControls(unittest.TestCase):
         for control in ('lmb', 'escape'):
             ui = self.fake_ui()
             ui.require_target = lambda: None
-            ui.diagnostics = lambda: {'lmb_down': True, 'escape_down': False}
+            ui.diagnostics = lambda: {'foreground_pid': 123, 'lmb_down': True, 'escape_down': False}
             with self.subTest(control=control), patch.object(ui, 'post') as post:
                 with self.assertRaisesRegex(RuntimeError, 'not neutral'):
                     if control == 'lmb':
@@ -146,6 +146,16 @@ class MenuControls(unittest.TestCase):
                         ui.escape(True)
                 post.assert_not_called()
                 self.assertEqual(ui.held, set())
+
+    def test_fresh_neutral_observation_cannot_ignore_lost_foreground(self):
+        ui = self.fake_ui()
+        ui.require_target = lambda: None
+        ui.diagnostics = lambda: {'foreground_pid': 999, 'lmb_down': False, 'escape_down': False}
+        with patch.object(ui, 'post') as post:
+            with self.assertRaisesRegex(RuntimeError, 'Foreground process changed'):
+                ui.escape(True)
+            post.assert_not_called()
+            self.assertEqual(ui.held, set())
 
     def test_non_mac_host_never_launches_helper_or_client(self):
         with tempfile.TemporaryDirectory() as temporary:

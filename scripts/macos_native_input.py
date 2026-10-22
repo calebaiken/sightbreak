@@ -127,11 +127,13 @@ class MacMenuUI(MacReadOnly):
 
     def neutral(self):
         state = self.diagnostics()
+        if state['foreground_pid'] != self.pid:
+            raise RuntimeError('Foreground process changed during neutral-state observation')
         if state['lmb_down'] or state['escape_down'] or self.held:
             raise RuntimeError('Native controls are not neutral before input transaction')
         # Modifier keys could change menu semantics. Never release a modifier
         # this driver did not press; refuse the transaction instead.
-        if any(self.cg.CGEventSourceKeyState(0, code) for code in (54, 55, 56, 57, 58, 59, 60, 61, 62)):
+        if any(self.cg.CGEventSourceKeyState(0, code) for code in (54, 55, 56, 57, 58, 59, 60, 61, 62, 63)):
             raise RuntimeError('Native modifier key is held; no input transaction attempted')
 
     def post(self, event, kind):
