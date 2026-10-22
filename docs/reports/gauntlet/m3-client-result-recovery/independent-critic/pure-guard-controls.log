@@ -1,0 +1,49 @@
+test_clean_but_changed_commit_or_game_rejects (__main__.Guards.test_clean_but_changed_commit_or_game_rejects) ... baseline 0 store before_commit recovered False
+baseline 0 store after_commit recovered False
+baseline 0 store late_commit recovered False
+baseline 0 case before_commit recovered False
+baseline 0 case after_commit recovered False
+baseline 0 case late_commit recovered False
+baseline 0 market before_commit recovered False
+baseline 0 market after_commit recovered False
+baseline 0 market late_commit recovered False
+baseline 0 store before_commit recovered False
+baseline 0 store after_commit recovered False
+baseline 0 store late_commit recovered False
+baseline 0 case before_commit recovered False
+baseline 0 case after_commit recovered False
+baseline 0 case late_commit recovered False
+baseline 0 market before_commit recovered False
+baseline 0 market after_commit recovered False
+baseline 0 market late_commit recovered False
+ok
+test_dirty_source_rejects (__main__.Guards.test_dirty_source_rejects) ... ok
+test_import_stdout_error_rejects_and_retains_output (__main__.Guards.test_import_stdout_error_rejects_and_retains_output) ... ok
+test_output_inside_either_source_rejects (__main__.Guards.test_output_inside_either_source_rejects) ... usage: campaign [-h] --godot GODOT --baseline BASELINE --candidate CANDIDATE
+                --out OUT [--repetitions REPETITIONS]
+                [--boundaries {before_commit,after_commit,late_commit,recovery_kill} [{before_commit,after_commit,late_commit,recovery_kill} ...]]
+campaign: error: --out must be outside both source checkouts
+usage: campaign [-h] --godot GODOT --baseline BASELINE --candidate CANDIDATE
+                --out OUT [--repetitions REPETITIONS]
+                [--boundaries {before_commit,after_commit,late_commit,recovery_kill} [{before_commit,after_commit,late_commit,recovery_kill} ...]]
+campaign: error: --out must be outside both source checkouts
+ok
+test_wrong_engine_rejects_before_output_creation (__main__.Guards.test_wrong_engine_rejects_before_output_creation) ... usage: campaign [-h] --godot GODOT --baseline BASELINE --candidate CANDIDATE
+                --out OUT [--repetitions REPETITIONS]
+                [--boundaries {before_commit,after_commit,late_commit,recovery_kill} [{before_commit,after_commit,late_commit,recovery_kill} ...]]
+campaign: error: Expected pinned Godot 4.7.2.stable.official.ed1daf0bf; got 4.6.3.stable
+ok
+test_zero_and_negative_repetitions_reject (__main__.Guards.test_zero_and_negative_repetitions_reject) ... usage: campaign [-h] --godot GODOT --baseline BASELINE --candidate CANDIDATE
+                --out OUT [--repetitions REPETITIONS]
+                [--boundaries {before_commit,after_commit,late_commit,recovery_kill} [{before_commit,after_commit,late_commit,recovery_kill} ...]]
+campaign: error: --repetitions must be positive
+usage: campaign [-h] --godot GODOT --baseline BASELINE --candidate CANDIDATE
+                --out OUT [--repetitions REPETITIONS]
+                [--boundaries {before_commit,after_commit,late_commit,recovery_kill} [{before_commit,after_commit,late_commit,recovery_kill} ...]]
+campaign: error: --repetitions must be positive
+ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.012s
+
+OK
