@@ -18,7 +18,8 @@ def capture_fixture():
             'owner_pid': 123, 'window_id': 34, 'bounds_points_including_chrome': [40, 32, 960, 568],
             'scwindow_frame_points': [40, 32, 960, 568], 'filter_content_rect_points': [0, 0, 960, 568],
             'point_pixel_scale': 2, 'image_dimensions': [1920, 1136],
-            'text': [{'text': 'TACTICAL OPERATIONS', 'confidence': .99},
+            'text': [{'text': 'SIGHTBREAK', 'confidence': .99, 'box_normalized_bottom_left': [.1, .6, .3, .1]},
+                     {'text': 'OPERATOR RECORD', 'confidence': .99, 'box_normalized_bottom_left': [.1, .3, .2, .05]},
                      {'text': 'SETTINGS', 'confidence': .99, 'box_normalized_bottom_left': [.1, .2, .2, .05]}]}
 
 
@@ -46,7 +47,7 @@ class MenuControls(unittest.TestCase):
     def test_target_requires_unique_exact_confident_in_bounds_text(self):
         for change in ('duplicate', 'partial', 'confidence', 'outside', 'nonfinite'):
             capture = capture_fixture()
-            entry = capture['text'][1]
+            entry = capture['text'][-1]
             if change == 'duplicate':
                 capture['text'].append(copy.deepcopy(entry))
             elif change == 'partial':
@@ -66,7 +67,7 @@ class MenuControls(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             driver.require_screen(menu, 'settings')
         settings = capture_fixture()
-        settings['text'] = [{'text': 'FIELD SETTINGS', 'confidence': .95}]
+        settings['text'] = [{'text': 'FIELD SETTINGS', 'confidence': .95, 'box_normalized_bottom_left': [.1, .8, .3, .1]}]
         driver.require_screen(settings, 'settings')
         with self.assertRaises(RuntimeError):
             driver.require_screen(settings, 'menu')

@@ -106,6 +106,7 @@ jobs:
         run: |
           python scripts/test_macos_menu.py -v
           python scripts/test_macos_focus.py -v
+          python scripts/test_macos_screen_identity.py -v
       - name: ARM Mac real exported Settings pointer and Escape navigation
         if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15' && steps.macos_input_preflight.outcome == 'success' && steps.macos_menu_controls.outcome == 'success'
         timeout-minutes: 5

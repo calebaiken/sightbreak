@@ -7,6 +7,7 @@ only; the actual run's raw images/results need a fresh independent critic.
 """
 import argparse
 import json
+import math
 import os
 from pathlib import Path
 import signal
@@ -22,6 +23,7 @@ import toolchain
 
 
 CAPTURE_SOURCE = Path(__file__).with_name('macos_window_capture.swift')
+HOME_LABELS = ('SIGHTBREAK', 'OPERATOR RECORD', 'SETTINGS')
 
 
 def require_preflight(receipt, current, manifest):
@@ -40,19 +42,38 @@ def require_preflight(receipt, current, manifest):
         raise NativePrerequisiteBlocked('Accepted same-source native permission/window preflight required before menu input')
 
 
-def screen_text(capture, phrase, *, exact=False):
+def screen_text(capture, phrase):
+    """Exact normalized text at the unchanged native confidence threshold."""
     wanted = ' '.join(phrase.upper().split())
-    return [entry for entry in capture.get('text', []) if entry.get('confidence', 0) >= .8
-            and ((' '.join(entry.get('text', '').upper().split()) == wanted) if exact
-                 else wanted in ' '.join(entry.get('text', '').upper().split()))]
+    return [entry for entry in capture.get('text', [])
+            if isinstance(entry.get('confidence'), (int, float))
+            and not isinstance(entry['confidence'], bool) and math.isfinite(entry['confidence'])
+            and entry['confidence'] >= .8
+            and ' '.join(entry.get('text', '').upper().split()) == wanted]
+
+
+def unique_screen_label(capture, phrase):
+    entries = screen_text(capture, phrase)
+    if len(entries) != 1:
+        return False
+    box = entries[0].get('box_normalized_bottom_left', [])
+    return (isinstance(box, list) and len(box) == 4
+            and all(isinstance(value, (int, float)) and not isinstance(value, bool)
+                    and math.isfinite(value) for value in box)
+            and min(box[2:]) > 0 and min(box[:2]) >= 0
+            and box[0] + box[2] <= 1 and box[1] + box[3] <= 1)
 
 
 def require_screen(capture, name):
     if capture.get('passed') is not True:
         raise RuntimeError('OS screenshot helper failed: ' + json.dumps(capture.get('failure')))
-    menu = bool(screen_text(capture, 'TACTICAL OPERATIONS')) and len(screen_text(capture, 'SETTINGS', exact=True)) == 1
-    settings = bool(screen_text(capture, 'FIELD SETTINGS'))
-    if (name == 'menu' and (not menu or settings)) or (name == 'settings' and (not settings or menu)):
+    if name not in ('menu', 'settings'):
+        raise ValueError('Unknown native screenshot screen: ' + name)
+    home_observed = any(screen_text(capture, label) for label in HOME_LABELS)
+    settings_observed = bool(screen_text(capture, 'FIELD SETTINGS'))
+    menu = all(unique_screen_label(capture, label) for label in HOME_LABELS)
+    settings = unique_screen_label(capture, 'FIELD SETTINGS')
+    if (name == 'menu' and (not menu or settings_observed)) or (name == 'settings' and (not settings or home_observed)):
         raise RuntimeError('Original OS screenshot did not confirm ' + name + ' screen')
 
 
