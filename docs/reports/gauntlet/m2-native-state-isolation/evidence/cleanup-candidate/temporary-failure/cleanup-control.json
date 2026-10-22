@@ -1,0 +1,30 @@
+{
+  "fault": "temporary",
+  "actual_native_failure": null,
+  "raised": {
+    "type": "PermissionError",
+    "message": "Control injected temporary-project cleanup failure"
+  },
+  "passed": false,
+  "failure": {
+    "stage": "temporary_project_cleanup",
+    "type": "PermissionError",
+    "message": "Control injected temporary-project cleanup failure"
+  },
+  "cleanup": [
+    {
+      "user_namespace": "/workspace/sightbreak-ci-isolation/.local/cleanup-controls/data/SIGHTBREAK-native-tests-1a13a2488efe40cead4f648693d63450",
+      "removed": true
+    }
+  ],
+  "temporary_project_removed": false,
+  "finalization_failures": [
+    {
+      "stage": "temporary_project_cleanup",
+      "type": "PermissionError",
+      "message": "Control injected temporary-project cleanup failure"
+    }
+  ],
+  "control_assertions_passed": true,
+  "control_teardown_removed_resources": true
+}

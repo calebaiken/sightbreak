@@ -153,33 +153,77 @@ class NativeSceneSuites:
         return receipt
 
     def __exit__(self, _type, _value, _traceback):
-        self.report['source_resources_unchanged'] = inventory(self.source) == self.original
-        if self.temporary is not None:
-            current = inventory(self.project) if self.project.exists() else {}
-            self.report['copied_resources_unchanged'] = (
-                {name: digest for name, digest in current.items() if name != 'project.godot'}
-                == {name: digest for name, digest in self.original.items() if name != 'project.godot'})
-        cleanup = []
+        errors = []
+        self.report.update(passed=False, source_resources_unchanged=False,
+                           copied_resources_unchanged=False,
+                           temporary_project_removed=self.temporary is None,
+                           cleanup=[], finalization_failures=[])
+
+        def record(stage, error):
+            failure = {'stage': stage, 'type': type(error).__name__, 'message': str(error)}
+            self.report['finalization_failures'].append(failure)
+            errors.append(error)
+            return failure
+
         try:
-            for root in sorted(self.user_roots):
+            self.report['source_resources_unchanged'] = inventory(self.source) == self.original
+            if not self.report['source_resources_unchanged']:
+                raise RuntimeError('Source resource bytes changed during isolated source tests')
+        except BaseException as error:
+            record('source_resource_inventory', error)
+        if self.temporary is not None:
+            try:
+                current = inventory(self.project) if self.project.exists() else {}
+                self.report['copied_resources_unchanged'] = (
+                    {name: digest for name, digest in current.items() if name != 'project.godot'}
+                    == {name: digest for name, digest in self.original.items() if name != 'project.godot'})
+                if not self.report['copied_resources_unchanged']:
+                    raise RuntimeError('Copied resource bytes changed during isolated source tests')
+            except BaseException as error:
+                record('copied_resource_inventory', error)
+        for root in sorted(self.user_roots):
+            outcome = {'user_namespace': str(root), 'removed': False}
+            self.report['cleanup'].append(outcome)
+            try:
                 if root.name != self.namespace or root.is_symlink():
                     raise RuntimeError('Refusing cleanup outside the unique owned namespace')
                 shutil.rmtree(root)
-                cleanup.append({'user_namespace': str(root), 'removed': not root.exists()})
-        finally:
-            if self.temporary is not None:
+                outcome['removed'] = not root.exists()
+                if not outcome['removed']:
+                    raise RuntimeError('Owned user-data namespace remained after cleanup')
+            except BaseException as error:
+                outcome['error'] = record('user_namespace_cleanup', error)
+        if self.temporary is not None:
+            try:
                 private = Path(self.temporary.name)
                 self.temporary.cleanup()
                 self.report['temporary_project_removed'] = not private.exists()
-            self.report['cleanup'] = cleanup
-            self.report['failure'] = None if _type is None else {'type': _type.__name__, 'message': str(_value)}
-            self.report['passed'] = (_type is None and bool(self.receipts) and self.report['source_resources_unchanged']
-                                    and self.report.get('copied_resources_unchanged', False)
-                                    and all(item['exit'] == 0 and item['clean_log'] for item in self.receipts)
-                                    and all(item['removed'] for item in cleanup))
-            (self.output / 'isolation.json').write_text(json.dumps(self.report, indent=2) + '\n', encoding='utf-8')
-        if not self.report['source_resources_unchanged'] or not self.report.get('copied_resources_unchanged', False):
-            raise RuntimeError('Source or copied resource bytes changed during isolated source tests')
+                if not self.report['temporary_project_removed']:
+                    raise RuntimeError('Temporary project remained after cleanup')
+            except BaseException as error:
+                self.report['temporary_project_cleanup_error'] = record('temporary_project_cleanup', error)
+        self.report['failure'] = ({'type': _type.__name__, 'message': str(_value)} if _type is not None
+                                  else self.report['finalization_failures'][0] if errors else None)
+        self.report['passed'] = (_type is None and not errors and bool(self.receipts) and bool(self.user_roots)
+                                and self.report['source_resources_unchanged'] and self.report['copied_resources_unchanged']
+                                and self.report['temporary_project_removed']
+                                and all(item['exit'] == 0 and item['clean_log'] for item in self.receipts)
+                                and len(self.report['cleanup']) == len(self.user_roots)
+                                and all(item['removed'] for item in self.report['cleanup']))
+        try:
+            pending = self.output / 'isolation.json.pending'
+            pending.write_text(json.dumps(self.report, indent=2) + '\n', encoding='utf-8')
+            pending.replace(self.output / 'isolation.json')
+        except BaseException as error:
+            # Cleanup has already been attempted. Preserve an existing native
+            # exception if writing the receipt also fails.
+            failure = record('receipt_write', error)
+            self.report['passed'] = False
+            if self.report['failure'] is None:
+                self.report['failure'] = failure
+        if _type is None and errors:
+            raise errors[0]
+        return False
 
 
 def main():
