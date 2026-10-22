@@ -10,7 +10,7 @@ the mission and the canonical G1–G20 progress matrix. Reuse installed quality 
 - Worktree: `/workspace/sightbreak-v1-execution`; branch: `codex/v1-mission-playability`.
 - [Draft PR #27](https://github.com/calebaiken/sightbreak/pull/27) targets PR24 `claude/mission-foundation-v1` (`c84eaf3`), then PR23 `db3981e` → PR22 `82a03fc` → PR16 `d2439ac`.
 - Combined native CI source: **`0ca125dfba637868e6e8e9772ff9c40400413e32`**, [run 39719407304](https://github.com/calebaiken/sightbreak/actions/runs/39719407304). It includes combat f13ed03/oracle 8571c78/native registration 40ffbae and iOS stack through 8f61180. Game tree `782c26464631f86ad63ddab9de36a969d4e44534`; content SHA256 `f8a849b90df3ff214037cace7bc32c0c7b5e184911558b424b0a6c0f798db781`; validation SHA256 `95844559cde01c1f9785d2835ea9f92a5e09e0315f87f0e7aa5029352456196c`. Later evidence commits do not relabel this build. Fetch live refs before integration; do not rewrite or merge shared branches.
-- Last full integrated regression/export/CI source: **`6a0d8d5d85b4fb37943903886982f51b4ed230b0`**. Later tooling/evidence commits do not re-attest that binary to a new HEAD.
+- Earlier full validation/export checkpoint: **`6a0d8d5d85b4fb37943903886982f51b4ed230b0`**. Later tooling/evidence commits do not re-attest that binary to a new HEAD.
 - That game tree is `13079ab8a3de9b18252a652ed57157e0776cf394`; content SHA256 `954b0a73cff89483a9270434da7902b2d128f1b9a99c30290dfe03862c038873`; validation SHA256 `9155b9c6a68fbeb459c4d0654b49ec4b250d1e11bea667747dfc4056e1ea2f03`.
 - Its Linux ELF is `builds/mission-m1/candidate-build/linux/sightbreak.x86_64`, SHA256 `ef4ab16a1b7f13fe96822a102c139fb5964275701f1e92fe8bdcfacfbf29d9a4`.
 
@@ -31,9 +31,13 @@ Separate catalog drift check matches 29 definitions. Bot F1 persists: 12 rounds,
 ## Current CI and failures
 
 [Run 39719407304](https://github.com/calebaiken/sightbreak/actions/runs/39719407304),
-frozen 0ca125d, is active. As of 04:05 UTC: Windows/Linux source suites, plant and
-defuse steps pass; Linux ordinary journey passes; Windows ordinary journey fails
-with raw diagnosis pending. Full-match/restart and layout stages are still running.
+frozen 0ca125d, is active. As of 04:19 UTC: all four source-suite steps pass. Windows/Linux plant and
+defuse pass; Linux ordinary journey passes. Independent Windows raw review verifies
+10 stock rounds (3:7, local victory), 120 XP / 325 offline credits and exact
+completed/restarted profiles. The scripted player earns no kills/objectives.
+Windows ordinary journey fails because the player dies during settings/resume,
+before living HUD analysis; narrow scheduling correction is executing. Linux
+full-match/restart and layout stages are still running.
 ARM default graphical startup and all ten source suites pass. Independent ARM
 review verifies 136 indexed receipts and 1,281 checks. Intel unchanged startup
 fails; retain upcoming explicit OpenGL/feature results before choosing a fix.
@@ -41,11 +45,17 @@ fails; retain upcoming explicit OpenGL/feature results before choosing a fix.
 ARM unsigned iOS build fails exit 65 after 36.095 s: `_CADynamicRangeAutomatic`,
 `_CADynamicRangeConstrainedHigh`, `_CADynamicRangeHigh`, `_CADynamicRangeStandard`
 and `_MTLTensorDomain` are unresolved in pinned Godot metal_cpp. Xcode 16.4 uses
-SDK 18.5; exact runner image also supplies Xcode 26.3 / SDK 26.2. Builder worktree
-`/workspace/sightbreak-ios-compile` is selecting an actually installed compatible
-SDK through child-process DEVELOPER_DIR, preserving the pinned engine and budget.
-The real Ld action omits `arm64` on its summary line; fix that observer assumption,
-then require the app Mach-O inspection to establish architecture/platform.
+SDK 18.5; exact runner image also supplies Xcode 26.3 / SDK 26.2. Accepted correction 6b7e97f selects an installed SDK only after a real forced-symbol
+arm64 link probe; the actual Ld-line observer is also corrected. Both were
+independently reviewed with native-source failure controls retained. Explicit ARM
+workflow selection 2a2b732 preserves default four-host behavior.
+[Retry 39721286005](https://github.com/calebaiken/sightbreak/actions/runs/39721286005)
+is frozen to `2a2b732c9f4637e9c2c68890cdd0f13d8fa89906`, exactly one ARM job
+119635074896. Startup, all source suites and iOS compile step pass; actual app
+receipt/binary/signature/source review is pending artifact upload. Its game/content
+hashes match 0ca; validation SHA256 is
+`0238d679d40e1623ba3fbf95ba3c273b515135476488c930b508c92bf3366f05`.
+No physical-device or unsigned-app claim follows from step metadata alone.
 
 Previous [run 39712752860](https://github.com/calebaiken/sightbreak/actions/runs/39712752860)
 at 6a failed all four jobs. Its shared-save, ammo OCR, focus and Intel failures
@@ -56,20 +66,35 @@ failures or claim current raw review from step metadata.
 ## Live local qualification
 
 Frozen detached checkout `/workspace/sightbreak-v1-qualification` is 0ca125d.
-Ten-client soak passes 11 reports and 80 forced recoveries. Twelve-condition
-18-second campaign passes all conditions. Fresh critic is recomputing all raw
-reports; same-actor welcome timing and final fresh-input ACK are distinct gates.
-Protocol and hostile-handshake scripts run next, followed by the historical
-lost-close overlap case (blackout 7.8–9.3 s, close 8 s, retry 2 s). Do not run
-concurrent local Godot workloads during timed network trials. Raw output is under
-`builds/session-qualification`; preserve the self-matched first process-inventory
-receipt and its corrected argv-aware inventory. Ten residual reservations after
-an eight-second drain are expected under the 60-second expiry, not proof of expiry.
+Ten-client soak passes 11 reports and 80 forced recoveries; all twelve 18-second
+synthetic conditions pass. Independent evidence is committed as 066b31c under
+`docs/reports/gauntlet/m3-network-qualification/independent-critic`: one verified
+17.7 MB raw archive, source reconciliation, protocol 8/8 and hostile probes 8/8.
+Seven historical legacy interoperability engine diagnostics remain in the logs.
+
+The targeted 18-second impaired lost-close overlap FAILS (3/10 recovered). It
+observes only ten seconds after closure; the existing recovery episode allows
+20 seconds. A separate 30-second diagnostic recovers all ten in 6.233–14.657 s,
+with restored server-input ACK upper bounds 6.474–14.890 s, unique original actors
+and fresh final snapshots. It does not retroactively pass the shorter trial.
+No runtime correction was justified. Prediction hard corrections and feel remain
+open. Ten residual reservations after an eight-second soak drain are expected
+under 60-second expiry, not proof of expiry. Corrected argv-aware process inventory
+supersedes an original observer self-match; both receipts are preserved.
+
+Next M3 implementation is in `/workspace/sightbreak-account-match`, branch
+`codex/m3-account-complete-match`, based on 2a2b732. Builder declared ten actual
+local HTTP identities, real protocol admission, automatic waiting→ranked/buy,
+stock match rules and legitimate inputs; production result submission must feed
+the durable outbox and exactly-once PostgreSQL grants. Existing guest simulation
+and injected outbox unit fixtures cannot establish this. The new harness uses
+only isolated local resources/fake accounts. Minimum earned duration is 300 s;
+actual full stock match may take 9–15 min. It is not yet accepted or integrated.
 
 ## Candidates executing; continue them
 
 1. Layout: `/workspace/sightbreak-layout-ocr`, `codex/v1-layout-ocr`. Candidate `afe7b54` uses an aspect-correct narrow footer strip, retaining all words/exclusions/timeouts. Earlier `3a847af` native 1280 touch pass exposed a 1280×800 pixel limitation; afe fixes it. Full exact-source four-size run PASSES 304.692s under original 520/120s limits, independently reviewed. Code integrated as 3b76d26→285f6c8; final evidence 2b4f22b. See ITERATION_2.md; live classifier remains 1280-only, other sizes have actual native/saved-pixel proof.
-2. Offline observer: `/workspace/sightbreak-offline-flow`, `codex/v1-offline-flow-observation`, commits `94dc6bb` → `ccfba93` → `0a12135`. Narrow ammo OCR and read-only release-guard acknowledgment. Source/pixel checks and strict native focus-only probe pass (58.943 s, fresh movement 0.427778 m, clean exit). Full local journey still fails its unchanged 35 s second-round wait under software rendering. Fresh critic accepted the scoped correction; integrated 785ece8→1afbdda plus corrected time wording e930ba4. New combined Linux journey passes by CI metadata; Windows still fails. Independent raw reviews are pending.
+2. Offline observer: `/workspace/sightbreak-offline-flow`, `codex/v1-offline-flow-observation`, commits `94dc6bb` → `ccfba93` → `0a12135`. Narrow ammo OCR and read-only release-guard acknowledgment. Source/pixel checks and strict native focus-only probe pass (58.943 s, fresh movement 0.427778 m, clean exit). Full local journey still fails its unchanged 35 s second-round wait under software rendering. Fresh critic accepted the scoped correction; integrated 785ece8→1afbdda plus corrected time wording e930ba4. New combined Linux journey passes by CI metadata; Windows still fails from death before HUD analysis. New builder /workspace/sightbreak-offline-journey, criteria c30f5a3, is preserving the existing pause across settings and using a same-life observation fence; no game-rule edits. Candidate source is isolated in /workspace/sightbreak-offline-candidate; exact code/test outcome pending.
 3. F2 authority order: product `f13ed03`, reviewed oracle `8571c78`, native CI registration `40ffbae` are integrated. Fresh independent native/source review accepts the bounded correction: 178 checks pass versus 152 intentional baseline failures. Full maintained validation on exact product 470fad5 passes; corrected active CPU samples count real shots/damage with stable bounded pools. Earlier depleted-trigger and missing-pose benchmark defects are retained. See `docs/reports/gauntlet/m3-authority-order/README.md` and its independent report. Simultaneous multiattacker credit, wipe, utility and contact policies remain open; no full competitive fairness claim.
 4. Separate Claude-owned [PR26](https://github.com/calebaiken/sightbreak/pull/26), `claude/relay-yard-tactical-layout-v1` at `5288a69`, is not integrated. Its map changes require protocol/build compatibility and native route review. Do not edit arena/bot files concurrently or blindly import the newer bot rewrite.
 5. After reviewed observer integration, commit a clean candidate and dispatch registered `desktop-alpha.yml` on the own branch. Verify nine suites on actual Windows/Mac, unchanged offline journeys, objective/full-match/progression and four-size captures. Download/review bounded receipts and Mac attribution. If one Mac ablation succeeds while full fails, repeat a warm full reference before choosing a shipping correction.
@@ -117,3 +142,13 @@ Every subsequent remote run must identify its own exact commit/artifacts. It inc
 Windows/Linux original full journeys/objectives/match/restart, four-size layouts,
 Intel feature attribution and ARM unsigned iOS compilation. Preserve every failed
 step; no whole RC gate is passed by implementation readiness.
+
+## HUD fixture follow-up under review
+
+Builder b899972 fixes the inner-marker orphan but the fresh critic rejected a
+dangling-link `removed: true` receipt and followed shared-parent link. Root
+correction is frozen at `2b06960` in `/workspace/sightbreak-hud-finalizer`, branch
+`codex/v1-hud-finalizer-review-fixes`. All six standard native controls and six
+edge controls pass locally; independent round-2 review is pending. Integrate both
+implementation commits and retained round-1 rejection only after acceptance.
+The fix is test cleanup, not gameplay or filesystem race-proof security.

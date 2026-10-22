@@ -1,6 +1,6 @@
 # M3: same-tick hitscan order candidate
 
-Status: **Independent critic accepted the bounded correction; root integration pending.** This is a bounded
+Status: **Independent critic accepted the bounded correction; integrated as f13ed03 with reviewed oracle 8571c78.** This is a bounded
 correctness correction, not a claim that SIGHTBREAK matches are balanced.
 Criteria were recorded before gameplay edits in [CRITERIA.md](CRITERIA.md).
 

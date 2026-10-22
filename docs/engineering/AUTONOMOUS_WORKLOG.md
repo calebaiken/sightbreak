@@ -220,3 +220,19 @@ Ten-client soak passes 80 recoveries; all twelve synthetic campaign conditions
 pass, with independent raw recomputation underway. Follow-up protocol/hostile
 probes and historical lost-close overlap qualification continue. These partial
 results do not close complete gameplay, platform, prediction-feel or human gates.
+
+## Codex M3 qualification and M2 SDK retry — 2026-10-22 04:19 UTC
+
+Independent network evidence integrated as 066b31c: 80 soak recoveries, twelve
+campaign conditions and protocol/hostile eight cases each pass. Targeted impaired
+18-second lost-close trial remains failed; separate full-20-second-episode
+diagnostic recovers ten identities and server input ACKs within 14.890 s. No
+runtime patch was justified by this observation-window result. Account-backed
+stock match and actual earned durable result are the next builder slice.
+SDK correction 6b7e97f and independent controls 8e9b0d7 address actual missing
+iOS 26 globals through a real installed-SDK symbol link probe. ARM-only manual
+selection 2a2b732 is independently reviewed (4418161); actual run 39721286005
+confirms exactly one ARM job and compile-step success, pending artifact review.
+Windows combined raw match/restart is independently verified, but ordinary
+journey still fails from player death during settings/resume. A scheduling-only
+builder correction and independent HUD cleanup revision review continue.
