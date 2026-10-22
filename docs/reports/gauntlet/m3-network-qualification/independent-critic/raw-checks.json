@@ -1,0 +1,4175 @@
+{
+  "soak": {
+    "checks": {
+      "source_clean": true,
+      "summary_equals_raw": true,
+      "all_process_reports_pass": true,
+      "eight_reconnects_each": true,
+      "same_actor_each": true,
+      "ten_distinct_actors": true,
+      "all_recovery_acks_positive": true,
+      "bounded_transport_peak": true,
+      "six_forced_round_resets": true,
+      "eleven_clean_472_logs": true
+    },
+    "recovery_count": 80,
+    "recovery_seconds": {
+      "minimum": 0.433,
+      "median": 0.45,
+      "p95_lower_rank": 0.517,
+      "maximum": 0.517
+    },
+    "ack_range": [
+      1,
+      2
+    ],
+    "server": {
+      "max_peers": 10,
+      "max_temporary_claims": 0,
+      "max_transports": 10,
+      "passed": true,
+      "reconnects": 0,
+      "recoveries": [],
+      "reservations_after": 10,
+      "resets": 6,
+      "role": "server",
+      "same_actor_id": true,
+      "scope": "short synthetic lifecycle exercise; forced round transitions, no rewards",
+      "static_memory_samples": [
+        92434248.0,
+        92434328.0,
+        92434328.0,
+        92434352.0,
+        92434400.0,
+        93307368.0
+      ]
+    },
+    "memory_sample_delta_bytes": 873120.0,
+    "logs": [
+      {
+        "path": "client-0.log",
+        "godot_4_7_2": true,
+        "error": false,
+        "resource_leak": false
+      },
+      {
+        "path": "client-1.log",
+        "godot_4_7_2": true,
+        "error": false,
+        "resource_leak": false
+      },
+      {
+        "path": "client-2.log",
+        "godot_4_7_2": true,
+        "error": false,
+        "resource_leak": false
+      },
+      {
+        "path": "client-3.log",
+        "godot_4_7_2": true,
+        "error": false,
+        "resource_leak": false
+      },
+      {
+        "path": "client-4.log",
+        "godot_4_7_2": true,
+        "error": false,
+        "resource_leak": false
+      },
+      {
+        "path": "client-5.log",
+        "godot_4_7_2": true,
+        "error": false,
+        "resource_leak": false
+      },
+      {
+        "path": "client-6.log",
+        "godot_4_7_2": true,
+        "error": false,
+        "resource_leak": false
+      },
+      {
+        "path": "client-7.log",
+        "godot_4_7_2": true,
+        "error": false,
+        "resource_leak": false
+      },
+      {
+        "path": "client-8.log",
+        "godot_4_7_2": true,
+        "error": false,
+        "resource_leak": false
+      },
+      {
+        "path": "client-9.log",
+        "godot_4_7_2": true,
+        "error": false,
+        "resource_leak": false
+      },
+      {
+        "path": "server.log",
+        "godot_4_7_2": true,
+        "error": false,
+        "resource_leak": false
+      }
+    ],
+    "limits": [
+      "End-of-run empty temporary/binding dictionaries are asserted by fixture but their raw counts are not emitted.",
+      "Ten reservations remain within the source-defined 60 simulation-second expiry window.",
+      "Six memory samples over 64 simulation seconds do not establish leak freedom."
+    ]
+  },
+  "campaign": {
+    "source_expected": "0ca125dfba637868e6e8e9772ff9c40400413e32",
+    "twelve_conditions_present": true,
+    "rows": [
+      {
+        "name": "rtt-0",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.056,
+        "final_input_ack_range": [
+          1139,
+          1150
+        ],
+        "maximum_final_input_idle_msec": 33,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 208,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.016
+        },
+        "maximum_stop_lateness_seconds": 0.0219999999999985,
+        "tick_usec": {
+          "p50": 554,
+          "p95": 6631,
+          "maximum": 11181
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16695,
+          "maximum": 18414
+        },
+        "prediction_error_p95_m": 0.553845286369324,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 241320,
+        "traffic": {
+          "up": {
+            "received_packets": 6478,
+            "forwarded_packets": 6478,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1244981,
+            "max_datagram_bytes": 256,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4422,
+            "forwarded_packets": 4422,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 2812188,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 33
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "rtt-50",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.044,
+        "final_input_ack_range": [
+          1142,
+          1159
+        ],
+        "maximum_final_input_idle_msec": 29,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 209,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.015
+        },
+        "maximum_stop_lateness_seconds": 0.0249999999999986,
+        "tick_usec": {
+          "p50": 533,
+          "p95": 6819,
+          "maximum": 10343
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16699,
+          "maximum": 17531
+        },
+        "prediction_error_p95_m": 0.436468124389648,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 241068,
+        "traffic": {
+          "up": {
+            "received_packets": 6521,
+            "forwarded_packets": 6521,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1302273,
+            "max_datagram_bytes": 256,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4737,
+            "forwarded_packets": 4737,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 3096682,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "rtt-100",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.039,
+        "final_input_ack_range": [
+          1143,
+          1156
+        ],
+        "maximum_final_input_idle_msec": 30,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 211,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.002,
+          "maximum": 0.015
+        },
+        "maximum_stop_lateness_seconds": 0.0300000000000011,
+        "tick_usec": {
+          "p50": 555,
+          "p95": 6522,
+          "maximum": 11917
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16695,
+          "maximum": 19155
+        },
+        "prediction_error_p95_m": 0.53275990486145,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 242500,
+        "traffic": {
+          "up": {
+            "received_packets": 6408,
+            "forwarded_packets": 6408,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1384480,
+            "max_datagram_bytes": 261,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4691,
+            "forwarded_packets": 4691,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 3089911,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "rtt-150",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.039,
+        "final_input_ack_range": [
+          1139,
+          1156
+        ],
+        "maximum_final_input_idle_msec": 32,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 211,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.014
+        },
+        "maximum_stop_lateness_seconds": 0.0199999999999996,
+        "tick_usec": {
+          "p50": 581,
+          "p95": 6871,
+          "maximum": 15492
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16710,
+          "maximum": 18791
+        },
+        "prediction_error_p95_m": 0.297472506761551,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 241332,
+        "traffic": {
+          "up": {
+            "received_packets": 6452,
+            "forwarded_packets": 6452,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1406149,
+            "max_datagram_bytes": 259,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4652,
+            "forwarded_packets": 4652,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 3101163,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "rtt-200",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.045,
+        "final_input_ack_range": [
+          1139,
+          1152
+        ],
+        "maximum_final_input_idle_msec": 29,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 213,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.014
+        },
+        "maximum_stop_lateness_seconds": 0.0249999999999986,
+        "tick_usec": {
+          "p50": 533,
+          "p95": 6394,
+          "maximum": 13052
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16694,
+          "maximum": 20961
+        },
+        "prediction_error_p95_m": 0.516579806804657,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 241552,
+        "traffic": {
+          "up": {
+            "received_packets": 6377,
+            "forwarded_packets": 6375,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1402797,
+            "max_datagram_bytes": 262,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4628,
+            "forwarded_packets": 4628,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 3107957,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "jitter",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.043,
+        "final_input_ack_range": [
+          1139,
+          1183
+        ],
+        "maximum_final_input_idle_msec": 49,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 211,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.001,
+          "maximum": 0.016
+        },
+        "maximum_stop_lateness_seconds": 0.0210000000000008,
+        "tick_usec": {
+          "p50": 558,
+          "p95": 6364,
+          "maximum": 10703
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16701,
+          "maximum": 19449
+        },
+        "prediction_error_p95_m": 0.340120881795883,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 241316,
+        "traffic": {
+          "up": {
+            "received_packets": 6481,
+            "forwarded_packets": 6481,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1398642,
+            "max_datagram_bytes": 262,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4659,
+            "forwarded_packets": 4659,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 3051832,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "loss",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.103,
+        "final_input_ack_range": [
+          1139,
+          1166
+        ],
+        "maximum_final_input_idle_msec": 45,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 212,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.015
+        },
+        "maximum_stop_lateness_seconds": 0.0279999999999987,
+        "tick_usec": {
+          "p50": 526,
+          "p95": 6295,
+          "maximum": 11568
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16991,
+          "maximum": 17868
+        },
+        "prediction_error_p95_m": 0.482183009386063,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 241068,
+        "traffic": {
+          "up": {
+            "received_packets": 6498,
+            "forwarded_packets": 6307,
+            "dropped_packets": 191,
+            "udp_payload_bytes": 1366150,
+            "max_datagram_bytes": 262,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4735,
+            "forwarded_packets": 4594,
+            "dropped_packets": 141,
+            "udp_payload_bytes": 3033524,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 32
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "reorder",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.045,
+        "final_input_ack_range": [
+          1141,
+          1164
+        ],
+        "maximum_final_input_idle_msec": 48,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 214,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.001,
+          "maximum": 0.024
+        },
+        "maximum_stop_lateness_seconds": 0.0259999999999998,
+        "tick_usec": {
+          "p50": 506,
+          "p95": 6286,
+          "maximum": 12111
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16685,
+          "maximum": 19762
+        },
+        "prediction_error_p95_m": 0.339496701955795,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 241232,
+        "traffic": {
+          "up": {
+            "received_packets": 6489,
+            "forwarded_packets": 6489,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1409237,
+            "max_datagram_bytes": 261,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4719,
+            "forwarded_packets": 4719,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 3104953,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "impaired",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.066,
+        "final_input_ack_range": [
+          1135,
+          1197
+        ],
+        "maximum_final_input_idle_msec": 66,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 217,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.015
+        },
+        "maximum_stop_lateness_seconds": 0.027000000000001,
+        "tick_usec": {
+          "p50": 554,
+          "p95": 6425,
+          "maximum": 8275
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16693,
+          "maximum": 19464
+        },
+        "prediction_error_p95_m": 0.349819868803024,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 241776,
+        "traffic": {
+          "up": {
+            "received_packets": 6663,
+            "forwarded_packets": 6467,
+            "dropped_packets": 196,
+            "udp_payload_bytes": 1394538,
+            "max_datagram_bytes": 261,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4855,
+            "forwarded_packets": 4711,
+            "dropped_packets": 144,
+            "udp_payload_bytes": 3083864,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 31
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "blackout",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.046,
+        "final_input_ack_range": [
+          1124,
+          1162
+        ],
+        "maximum_final_input_idle_msec": 28,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 210,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.013
+        },
+        "maximum_stop_lateness_seconds": 0.0300000000000011,
+        "tick_usec": {
+          "p50": 674,
+          "p95": 5932,
+          "maximum": 11575
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16704,
+          "maximum": 19277
+        },
+        "prediction_error_p95_m": 0.521426975727081,
+        "hard_corrections": 10,
+        "server_rss_peak_kib": 241676,
+        "traffic": {
+          "up": {
+            "received_packets": 6448,
+            "forwarded_packets": 5799,
+            "dropped_packets": 649,
+            "udp_payload_bytes": 1236161,
+            "max_datagram_bytes": 262,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4664,
+            "forwarded_packets": 4216,
+            "dropped_packets": 448,
+            "udp_payload_bytes": 2818336,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "reconnect",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true,
+          "all_reconnect_pass": true
+        },
+        "maximum_accepted_age_seconds": 0.1,
+        "final_input_ack_range": [
+          410,
+          445
+        ],
+        "maximum_final_input_idle_msec": 66,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 215,
+        "same_actor_welcome_recovery_seconds": {
+          "minimum": 2.44,
+          "maximum": 2.999
+        },
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.016
+        },
+        "maximum_stop_lateness_seconds": 0.0240000000000009,
+        "tick_usec": {
+          "p50": 526,
+          "p95": 6750,
+          "maximum": 12751
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16691,
+          "maximum": 17756
+        },
+        "prediction_error_p95_m": 0.555707573890686,
+        "hard_corrections": 9,
+        "server_rss_peak_kib": 241044,
+        "traffic": {
+          "up": {
+            "received_packets": 5817,
+            "forwarded_packets": 5029,
+            "dropped_packets": 788,
+            "udp_payload_bytes": 1050903,
+            "max_datagram_bytes": 259,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4359,
+            "forwarded_packets": 3791,
+            "dropped_packets": 568,
+            "udp_payload_bytes": 2381463,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 62
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ],
+        "first_ack_bounds": {
+          "method": "Last server occupancy precedes the report callback wall-time read. Therefore first positive ACK sample A is no later than report.wall_elapsed_seconds+(A.msec-last_occupancy.msec)/1000. Subtract nominal close time; actual close is at or after that time. Bounds apply only to emitted final bindings and do not measure client ACK delivery.",
+          "rows": [
+            {
+              "actor": 10,
+              "initial_peer": 496570902,
+              "final_peer": 480832502,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.9139999999999997
+            },
+            {
+              "actor": 7,
+              "initial_peer": 2024407843,
+              "final_peer": 1107685835,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.613999999999999
+            },
+            {
+              "actor": 1,
+              "initial_peer": 1507112796,
+              "final_peer": 521284617,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.9139999999999997
+            },
+            {
+              "actor": 3,
+              "initial_peer": 785614187,
+              "final_peer": 1204781887,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.613999999999999
+            },
+            {
+              "actor": 5,
+              "initial_peer": 804085141,
+              "final_peer": 1304607056,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.613999999999999
+            },
+            {
+              "actor": 2,
+              "initial_peer": 1953336458,
+              "final_peer": 697741433,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.7139999999999986
+            },
+            {
+              "actor": 4,
+              "initial_peer": 630714525,
+              "final_peer": 172015101,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.7139999999999986
+            },
+            {
+              "actor": 9,
+              "initial_peer": 1173965519,
+              "final_peer": 1608648753,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.7139999999999986
+            },
+            {
+              "actor": 6,
+              "initial_peer": 102135791,
+              "final_peer": 1164223047,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.7139999999999986
+            },
+            {
+              "actor": 8,
+              "initial_peer": 70379480,
+              "final_peer": 785711682,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 3.2139999999999986
+            }
+          ]
+        }
+      },
+      {
+        "name": "prediction-disabled",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.05,
+        "final_input_ack_range": [
+          1139,
+          1180
+        ],
+        "maximum_final_input_idle_msec": 49,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 211,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.001,
+          "maximum": 0.015
+        },
+        "maximum_stop_lateness_seconds": 0.0189999999999984,
+        "tick_usec": {
+          "p50": 702,
+          "p95": 6609,
+          "maximum": 8949
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16714,
+          "maximum": 17476
+        },
+        "prediction_error_p95_m": 1.02000045776367,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 241064,
+        "traffic": {
+          "up": {
+            "received_packets": 6516,
+            "forwarded_packets": 6516,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1393007,
+            "max_datagram_bytes": 260,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4691,
+            "forwarded_packets": 4691,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 3093292,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      }
+    ]
+  },
+  "extra_conditions": [
+    {
+      "name": "lost-close-clean",
+      "checks": {
+        "source_clean": true,
+        "ten_clients": true,
+        "no_reported_failures": true,
+        "measurement_shared_stop": true,
+        "all_clients_fresh": true,
+        "all_clients_moved": true,
+        "unique_initial_actor_ids": true,
+        "all_final_actor_ids_match": true,
+        "sampled_transport_and_authority_bounds": true,
+        "ten_final_bindings": true,
+        "fresh_final_input_authority": true,
+        "eleven_clean_472_logs": true,
+        "traffic_reconciles": true,
+        "tick_p95_reconciles": true,
+        "interval_p95_reconciles": true,
+        "prediction_error_p95_reconciles": true,
+        "all_reconnect_pass": true
+      },
+      "maximum_accepted_age_seconds": 0.043,
+      "final_input_ack_range": [
+        14,
+        249
+      ],
+      "maximum_final_input_idle_msec": 56,
+      "maximum_sampled_transports": 10,
+      "maximum_sampled_bindings": 10,
+      "occupancy_samples": 228,
+      "same_actor_welcome_recovery_seconds": {
+        "minimum": 5.688,
+        "maximum": 9.648
+      },
+      "start_offset_seconds": {
+        "minimum": 0.0,
+        "maximum": 0.016
+      },
+      "maximum_stop_lateness_seconds": 0.0249999999999986,
+      "tick_usec": {
+        "p50": 530,
+        "p95": 6222,
+        "maximum": 11126
+      },
+      "tick_interval_usec": {
+        "p50": 16666,
+        "p95": 16698,
+        "maximum": 17681
+      },
+      "prediction_error_p95_m": 0.554541766643524,
+      "hard_corrections": 0,
+      "server_rss_peak_kib": 240528,
+      "traffic": {
+        "up": {
+          "received_packets": 4563,
+          "forwarded_packets": 4487,
+          "dropped_packets": 76,
+          "udp_payload_bytes": 824981,
+          "max_datagram_bytes": 255,
+          "datagrams_over_1200": 0
+        },
+        "down": {
+          "received_packets": 4313,
+          "forwarded_packets": 3964,
+          "dropped_packets": 349,
+          "udp_payload_bytes": 2456484,
+          "max_datagram_bytes": 1392,
+          "datagrams_over_1200": 60
+        }
+      },
+      "logs": [
+        {
+          "path": "client-0.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-1.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-2.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-3.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-4.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-5.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-6.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-7.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-8.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-9.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "server.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        }
+      ],
+      "first_ack_bounds": {
+        "method": "Last server occupancy precedes the report callback wall-time read. Therefore first positive ACK sample A is no later than report.wall_elapsed_seconds+(A.msec-last_occupancy.msec)/1000. Subtract nominal close time; actual close is at or after that time. Bounds apply only to emitted final bindings and do not measure client ACK delivery.",
+        "rows": [
+          {
+            "actor": 5,
+            "initial_peer": 363457390,
+            "final_peer": 395317910,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 5.82
+          },
+          {
+            "actor": 1,
+            "initial_peer": 448248114,
+            "final_peer": 722372192,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 5.92
+          },
+          {
+            "actor": 10,
+            "initial_peer": 824472683,
+            "final_peer": 334840886,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 5.92
+          },
+          {
+            "actor": 6,
+            "initial_peer": 1678731809,
+            "final_peer": 326914570,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 5.92
+          },
+          {
+            "actor": 7,
+            "initial_peer": 1847697093,
+            "final_peer": 847031586,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 5.92
+          },
+          {
+            "actor": 8,
+            "initial_peer": 1557800193,
+            "final_peer": 1756442677,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 5.92
+          },
+          {
+            "actor": 2,
+            "initial_peer": 799552657,
+            "final_peer": 1519134821,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 5.92
+          },
+          {
+            "actor": 3,
+            "initial_peer": 2725273,
+            "final_peer": 2001313715,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 8.52
+          },
+          {
+            "actor": 9,
+            "initial_peer": 2127307807,
+            "final_peer": 497592821,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 9.82
+          },
+          {
+            "actor": 4,
+            "initial_peer": 1193258531,
+            "final_peer": 649562604,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 9.82
+          }
+        ]
+      }
+    },
+    {
+      "name": "lost-close-impaired",
+      "checks": {
+        "source_clean": true,
+        "ten_clients": true,
+        "no_reported_failures": false,
+        "measurement_shared_stop": true,
+        "all_clients_fresh": false,
+        "all_clients_moved": true,
+        "unique_initial_actor_ids": true,
+        "all_final_actor_ids_match": true,
+        "sampled_transport_and_authority_bounds": true,
+        "ten_final_bindings": false,
+        "fresh_final_input_authority": true,
+        "eleven_clean_472_logs": true,
+        "traffic_reconciles": true,
+        "tick_p95_reconciles": true,
+        "interval_p95_reconciles": true,
+        "prediction_error_p95_reconciles": true,
+        "all_reconnect_pass": false
+      },
+      "maximum_accepted_age_seconds": 10.256,
+      "final_input_ack_range": [
+        10,
+        210
+      ],
+      "maximum_final_input_idle_msec": 66,
+      "maximum_sampled_transports": 10,
+      "maximum_sampled_bindings": 10,
+      "occupancy_samples": 222,
+      "same_actor_welcome_recovery_seconds": {
+        "minimum": 6.296,
+        "maximum": 9.671
+      },
+      "start_offset_seconds": {
+        "minimum": 0.005,
+        "maximum": 0.016
+      },
+      "maximum_stop_lateness_seconds": 0.0249999999999986,
+      "tick_usec": {
+        "p50": 510,
+        "p95": 6346,
+        "maximum": 16023
+      },
+      "tick_interval_usec": {
+        "p50": 16666,
+        "p95": 16702,
+        "maximum": 17871
+      },
+      "prediction_error_p95_m": 0.425000190734863,
+      "hard_corrections": 0,
+      "server_rss_peak_kib": 240548,
+      "traffic": {
+        "up": {
+          "received_packets": 3701,
+          "forwarded_packets": 3484,
+          "dropped_packets": 212,
+          "udp_payload_bytes": 708156,
+          "max_datagram_bytes": 256,
+          "datagrams_over_1200": 0
+        },
+        "down": {
+          "received_packets": 4111,
+          "forwarded_packets": 3648,
+          "dropped_packets": 454,
+          "udp_payload_bytes": 2421540,
+          "max_datagram_bytes": 1392,
+          "datagrams_over_1200": 43
+        }
+      },
+      "logs": [
+        {
+          "path": "client-0.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-1.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-2.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-3.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-4.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-5.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-6.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-7.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-8.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-9.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "server.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        }
+      ],
+      "first_ack_bounds": {
+        "method": "Last server occupancy precedes the report callback wall-time read. Therefore first positive ACK sample A is no later than report.wall_elapsed_seconds+(A.msec-last_occupancy.msec)/1000. Subtract nominal close time; actual close is at or after that time. Bounds apply only to emitted final bindings and do not measure client ACK delivery.",
+        "rows": [
+          {
+            "actor": 1,
+            "initial_peer": 1302417985,
+            "final_peer": 234125321,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 6.493
+          },
+          {
+            "actor": 10,
+            "initial_peer": 1357613866,
+            "final_peer": 1658879587,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 7.393000000000001
+          },
+          {
+            "actor": 4,
+            "initial_peer": 1587833806,
+            "final_peer": 676463660,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 9.908999999999999
+          }
+        ]
+      }
+    },
+    {
+      "name": "lost-close-impaired-contract-window",
+      "checks": {
+        "source_clean": true,
+        "ten_clients": true,
+        "no_reported_failures": true,
+        "measurement_shared_stop": true,
+        "all_clients_fresh": true,
+        "all_clients_moved": true,
+        "unique_initial_actor_ids": true,
+        "all_final_actor_ids_match": true,
+        "sampled_transport_and_authority_bounds": true,
+        "ten_final_bindings": true,
+        "fresh_final_input_authority": true,
+        "eleven_clean_472_logs": true,
+        "traffic_reconciles": true,
+        "tick_p95_reconciles": true,
+        "interval_p95_reconciles": true,
+        "prediction_error_p95_reconciles": true,
+        "all_reconnect_pass": true
+      },
+      "maximum_accepted_age_seconds": 0.099,
+      "final_input_ack_range": [
+        428,
+        933
+      ],
+      "maximum_final_input_idle_msec": 77,
+      "maximum_sampled_transports": 10,
+      "maximum_sampled_bindings": 10,
+      "occupancy_samples": 350,
+      "same_actor_welcome_recovery_seconds": {
+        "minimum": 6.233,
+        "maximum": 14.657
+      },
+      "start_offset_seconds": {
+        "minimum": 0.0,
+        "maximum": 0.014
+      },
+      "maximum_stop_lateness_seconds": 0.027000000000001,
+      "tick_usec": {
+        "p50": 594,
+        "p95": 6318,
+        "maximum": 14881
+      },
+      "tick_interval_usec": {
+        "p50": 16666,
+        "p95": 16700,
+        "maximum": 19558
+      },
+      "prediction_error_p95_m": 0.425000190734863,
+      "hard_corrections": 0,
+      "server_rss_peak_kib": 245356,
+      "traffic": {
+        "up": {
+          "received_packets": 7692,
+          "forwarded_packets": 7366,
+          "dropped_packets": 326,
+          "udp_payload_bytes": 1557337,
+          "max_datagram_bytes": 261,
+          "datagrams_over_1200": 0
+        },
+        "down": {
+          "received_packets": 7096,
+          "forwarded_packets": 6530,
+          "dropped_packets": 564,
+          "udp_payload_bytes": 4430698,
+          "max_datagram_bytes": 1392,
+          "datagrams_over_1200": 62
+        }
+      },
+      "logs": [
+        {
+          "path": "client-0.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-1.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-2.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-3.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-4.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-5.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-6.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-7.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-8.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "client-9.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        },
+        {
+          "path": "server.log",
+          "godot_4_7_2": true,
+          "error": false,
+          "resource_leak": false
+        }
+      ],
+      "first_ack_bounds": {
+        "method": "Last server occupancy precedes the report callback wall-time read. Therefore first positive ACK sample A is no later than report.wall_elapsed_seconds+(A.msec-last_occupancy.msec)/1000. Subtract nominal close time; actual close is at or after that time. Bounds apply only to emitted final bindings and do not measure client ACK delivery.",
+        "rows": [
+          {
+            "actor": 4,
+            "initial_peer": 1811564174,
+            "final_peer": 1224187553,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 6.474000000000002
+          },
+          {
+            "actor": 3,
+            "initial_peer": 250809198,
+            "final_peer": 1497752340,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 6.674000000000001
+          },
+          {
+            "actor": 9,
+            "initial_peer": 1653970457,
+            "final_peer": 637449826,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 10.474000000000004
+          },
+          {
+            "actor": 1,
+            "initial_peer": 1260935863,
+            "final_peer": 161005650,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 11.174
+          },
+          {
+            "actor": 10,
+            "initial_peer": 923787192,
+            "final_peer": 622080235,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 10.474000000000004
+          },
+          {
+            "actor": 5,
+            "initial_peer": 1019375336,
+            "final_peer": 488131056,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 10.674
+          },
+          {
+            "actor": 7,
+            "initial_peer": 94541413,
+            "final_peer": 1392661160,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 10.674
+          },
+          {
+            "actor": 8,
+            "initial_peer": 1775203101,
+            "final_peer": 113641572,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 11.874000000000002
+          },
+          {
+            "actor": 2,
+            "initial_peer": 1958378356,
+            "final_peer": 1411087173,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 11.774000000000001
+          },
+          {
+            "actor": 6,
+            "initial_peer": 1034257248,
+            "final_peer": 542161788,
+            "peer_changed": true,
+            "first_positive_ack_close_relative_upper_bound_seconds": 14.89
+          }
+        ]
+      }
+    }
+  ],
+  "baseline": {
+    "source_expected": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+    "twelve_conditions_present": true,
+    "rows": [
+      {
+        "name": "rtt-0",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.04,
+        "final_input_ack_range": [
+          1145,
+          1208
+        ],
+        "maximum_final_input_idle_msec": 41,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 208,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.002,
+          "maximum": 0.016
+        },
+        "maximum_stop_lateness_seconds": 0.0300000000000011,
+        "tick_usec": {
+          "p50": 802,
+          "p95": 7611,
+          "maximum": 20884
+        },
+        "tick_interval_usec": {
+          "p50": 16665,
+          "p95": 17257,
+          "maximum": 27742
+        },
+        "prediction_error_p95_m": 0.340000152587891,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 163796,
+        "traffic": {
+          "up": {
+            "received_packets": 6520,
+            "forwarded_packets": 6520,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1234464,
+            "max_datagram_bytes": 257,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4644,
+            "forwarded_packets": 4644,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 2989078,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "rtt-50",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.067,
+        "final_input_ack_range": [
+          1141,
+          1184
+        ],
+        "maximum_final_input_idle_msec": 6,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 215,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.001,
+          "maximum": 0.017
+        },
+        "maximum_stop_lateness_seconds": 0.027000000000001,
+        "tick_usec": {
+          "p50": 695,
+          "p95": 9658,
+          "maximum": 22343
+        },
+        "tick_interval_usec": {
+          "p50": 16667,
+          "p95": 17061,
+          "maximum": 24342
+        },
+        "prediction_error_p95_m": 0.485635101795197,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 164488,
+        "traffic": {
+          "up": {
+            "received_packets": 6599,
+            "forwarded_packets": 6599,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1338646,
+            "max_datagram_bytes": 257,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4776,
+            "forwarded_packets": 4776,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 3113778,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "rtt-100",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.037,
+        "final_input_ack_range": [
+          1137,
+          1187
+        ],
+        "maximum_final_input_idle_msec": 45,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 211,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.015
+        },
+        "maximum_stop_lateness_seconds": 0.0259999999999998,
+        "tick_usec": {
+          "p50": 778,
+          "p95": 8576,
+          "maximum": 21979
+        },
+        "tick_interval_usec": {
+          "p50": 16667,
+          "p95": 17429,
+          "maximum": 25092
+        },
+        "prediction_error_p95_m": 0.519256293773651,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 164484,
+        "traffic": {
+          "up": {
+            "received_packets": 6542,
+            "forwarded_packets": 6542,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1409204,
+            "max_datagram_bytes": 262,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4746,
+            "forwarded_packets": 4746,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 3135451,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "rtt-150",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.069,
+        "final_input_ack_range": [
+          1135,
+          1198
+        ],
+        "maximum_final_input_idle_msec": 28,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 213,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.016
+        },
+        "maximum_stop_lateness_seconds": 0.0410000000000004,
+        "tick_usec": {
+          "p50": 689,
+          "p95": 9091,
+          "maximum": 28717
+        },
+        "tick_interval_usec": {
+          "p50": 16667,
+          "p95": 17140,
+          "maximum": 30502
+        },
+        "prediction_error_p95_m": 0.566248297691345,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 163780,
+        "traffic": {
+          "up": {
+            "received_packets": 6540,
+            "forwarded_packets": 6540,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1422902,
+            "max_datagram_bytes": 262,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4686,
+            "forwarded_packets": 4686,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 3107137,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "rtt-200",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.049,
+        "final_input_ack_range": [
+          1135,
+          1182
+        ],
+        "maximum_final_input_idle_msec": 32,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 210,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.014
+        },
+        "maximum_stop_lateness_seconds": 0.0259999999999998,
+        "tick_usec": {
+          "p50": 636,
+          "p95": 6210,
+          "maximum": 16966
+        },
+        "tick_interval_usec": {
+          "p50": 16665,
+          "p95": 17214,
+          "maximum": 21207
+        },
+        "prediction_error_p95_m": 0.523982763290405,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 164044,
+        "traffic": {
+          "up": {
+            "received_packets": 6439,
+            "forwarded_packets": 6439,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1411740,
+            "max_datagram_bytes": 262,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4631,
+            "forwarded_packets": 4631,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 3119273,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "jitter",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.074,
+        "final_input_ack_range": [
+          1137,
+          1194
+        ],
+        "maximum_final_input_idle_msec": 59,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 210,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.015
+        },
+        "maximum_stop_lateness_seconds": 0.0279999999999987,
+        "tick_usec": {
+          "p50": 738,
+          "p95": 9029,
+          "maximum": 30761
+        },
+        "tick_interval_usec": {
+          "p50": 16664,
+          "p95": 17341,
+          "maximum": 44577
+        },
+        "prediction_error_p95_m": 0.428465366363525,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 163664,
+        "traffic": {
+          "up": {
+            "received_packets": 6523,
+            "forwarded_packets": 6523,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1404725,
+            "max_datagram_bytes": 261,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4724,
+            "forwarded_packets": 4724,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 3113171,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "loss",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.024,
+        "final_input_ack_range": [
+          1141,
+          1211
+        ],
+        "maximum_final_input_idle_msec": 30,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 220,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.016
+        },
+        "maximum_stop_lateness_seconds": 0.0240000000000009,
+        "tick_usec": {
+          "p50": 782,
+          "p95": 7160,
+          "maximum": 20630
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 17085,
+          "maximum": 22263
+        },
+        "prediction_error_p95_m": 0.39743447303772,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 163804,
+        "traffic": {
+          "up": {
+            "received_packets": 6694,
+            "forwarded_packets": 6487,
+            "dropped_packets": 207,
+            "udp_payload_bytes": 1398177,
+            "max_datagram_bytes": 263,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4845,
+            "forwarded_packets": 4710,
+            "dropped_packets": 135,
+            "udp_payload_bytes": 3080433,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "reorder",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.075,
+        "final_input_ack_range": [
+          1139,
+          1212
+        ],
+        "maximum_final_input_idle_msec": 45,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 215,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.013
+        },
+        "maximum_stop_lateness_seconds": 0.0279999999999987,
+        "tick_usec": {
+          "p50": 730,
+          "p95": 8647,
+          "maximum": 21310
+        },
+        "tick_interval_usec": {
+          "p50": 16667,
+          "p95": 17216,
+          "maximum": 24625
+        },
+        "prediction_error_p95_m": 0.5155029296875,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 164032,
+        "traffic": {
+          "up": {
+            "received_packets": 6534,
+            "forwarded_packets": 6534,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1414878,
+            "max_datagram_bytes": 260,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4742,
+            "forwarded_packets": 4742,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 3118229,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "impaired",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.089,
+        "final_input_ack_range": [
+          1135,
+          1194
+        ],
+        "maximum_final_input_idle_msec": 49,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 213,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.017
+        },
+        "maximum_stop_lateness_seconds": 0.027000000000001,
+        "tick_usec": {
+          "p50": 603,
+          "p95": 5729,
+          "maximum": 9591
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16715,
+          "maximum": 63730
+        },
+        "prediction_error_p95_m": 0.469582945108414,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 163792,
+        "traffic": {
+          "up": {
+            "received_packets": 6552,
+            "forwarded_packets": 6372,
+            "dropped_packets": 180,
+            "udp_payload_bytes": 1371891,
+            "max_datagram_bytes": 262,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4799,
+            "forwarded_packets": 4646,
+            "dropped_packets": 153,
+            "udp_payload_bytes": 3044380,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 31
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "blackout",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.024,
+        "final_input_ack_range": [
+          1124,
+          1154
+        ],
+        "maximum_final_input_idle_msec": 33,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 209,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.009
+        },
+        "maximum_stop_lateness_seconds": 0.0159999999999982,
+        "tick_usec": {
+          "p50": 600,
+          "p95": 5314,
+          "maximum": 17231
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16721,
+          "maximum": 19051
+        },
+        "prediction_error_p95_m": 0.609489738941193,
+        "hard_corrections": 9,
+        "server_rss_peak_kib": 165216,
+        "traffic": {
+          "up": {
+            "received_packets": 6443,
+            "forwarded_packets": 5784,
+            "dropped_packets": 659,
+            "udp_payload_bytes": 1227185,
+            "max_datagram_bytes": 262,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4641,
+            "forwarded_packets": 4198,
+            "dropped_packets": 443,
+            "udp_payload_bytes": 2800109,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      },
+      {
+        "name": "reconnect",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true,
+          "all_reconnect_pass": true
+        },
+        "maximum_accepted_age_seconds": 0.083,
+        "final_input_ack_range": [
+          409,
+          446
+        ],
+        "maximum_final_input_idle_msec": 78,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 222,
+        "same_actor_welcome_recovery_seconds": {
+          "minimum": 2.446,
+          "maximum": 3.076
+        },
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.013
+        },
+        "maximum_stop_lateness_seconds": 0.0219999999999985,
+        "tick_usec": {
+          "p50": 637,
+          "p95": 6754,
+          "maximum": 11211
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16971,
+          "maximum": 19430
+        },
+        "prediction_error_p95_m": 0.517435014247894,
+        "hard_corrections": 8,
+        "server_rss_peak_kib": 163092,
+        "traffic": {
+          "up": {
+            "received_packets": 6121,
+            "forwarded_packets": 5302,
+            "dropped_packets": 819,
+            "udp_payload_bytes": 1095792,
+            "max_datagram_bytes": 261,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4555,
+            "forwarded_packets": 4004,
+            "dropped_packets": 551,
+            "udp_payload_bytes": 2509221,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 63
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ],
+        "first_ack_bounds": {
+          "method": "Last server occupancy precedes the report callback wall-time read. Therefore first positive ACK sample A is no later than report.wall_elapsed_seconds+(A.msec-last_occupancy.msec)/1000. Subtract nominal close time; actual close is at or after that time. Bounds apply only to emitted final bindings and do not measure client ACK delivery.",
+          "rows": [
+            {
+              "actor": 8,
+              "initial_peer": 1485242938,
+              "final_peer": 1244828676,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.5700000000000003
+            },
+            {
+              "actor": 2,
+              "initial_peer": 1599717193,
+              "final_peer": 1571727982,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.870000000000001
+            },
+            {
+              "actor": 5,
+              "initial_peer": 1085112757,
+              "final_peer": 1503692526,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.5700000000000003
+            },
+            {
+              "actor": 3,
+              "initial_peer": 1955349716,
+              "final_peer": 1289354011,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.5700000000000003
+            },
+            {
+              "actor": 7,
+              "initial_peer": 1290133711,
+              "final_peer": 378057998,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.67
+            },
+            {
+              "actor": 4,
+              "initial_peer": 1032152795,
+              "final_peer": 1399023103,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.7699999999999996
+            },
+            {
+              "actor": 10,
+              "initial_peer": 1796110128,
+              "final_peer": 1236030126,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.67
+            },
+            {
+              "actor": 1,
+              "initial_peer": 488116158,
+              "final_peer": 58640522,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 3.17
+            },
+            {
+              "actor": 9,
+              "initial_peer": 666884672,
+              "final_peer": 536624034,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 2.969999999999999
+            },
+            {
+              "actor": 6,
+              "initial_peer": 770839578,
+              "final_peer": 405992744,
+              "peer_changed": true,
+              "first_positive_ack_close_relative_upper_bound_seconds": 3.17
+            }
+          ]
+        }
+      },
+      {
+        "name": "prediction-disabled",
+        "checks": {
+          "campaign_exit_zero": true,
+          "campaign_summary_equals_raw": true,
+          "source_clean": true,
+          "ten_clients": true,
+          "no_reported_failures": true,
+          "measurement_shared_stop": true,
+          "all_clients_fresh": true,
+          "all_clients_moved": true,
+          "unique_initial_actor_ids": true,
+          "all_final_actor_ids_match": true,
+          "sampled_transport_and_authority_bounds": true,
+          "ten_final_bindings": true,
+          "fresh_final_input_authority": true,
+          "eleven_clean_472_logs": true,
+          "traffic_reconciles": true,
+          "tick_p95_reconciles": true,
+          "interval_p95_reconciles": true,
+          "prediction_error_p95_reconciles": true
+        },
+        "maximum_accepted_age_seconds": 0.061,
+        "final_input_ack_range": [
+          1142,
+          1184
+        ],
+        "maximum_final_input_idle_msec": 30,
+        "maximum_sampled_transports": 10,
+        "maximum_sampled_bindings": 10,
+        "occupancy_samples": 211,
+        "same_actor_welcome_recovery_seconds": null,
+        "start_offset_seconds": {
+          "minimum": 0.0,
+          "maximum": 0.016
+        },
+        "maximum_stop_lateness_seconds": 0.0279999999999987,
+        "tick_usec": {
+          "p50": 629,
+          "p95": 6239,
+          "maximum": 21074
+        },
+        "tick_interval_usec": {
+          "p50": 16666,
+          "p95": 16732,
+          "maximum": 23531
+        },
+        "prediction_error_p95_m": 1.02000045776367,
+        "hard_corrections": 0,
+        "server_rss_peak_kib": 164500,
+        "traffic": {
+          "up": {
+            "received_packets": 6473,
+            "forwarded_packets": 6473,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 1379776,
+            "max_datagram_bytes": 262,
+            "datagrams_over_1200": 0
+          },
+          "down": {
+            "received_packets": 4702,
+            "forwarded_packets": 4702,
+            "dropped_packets": 0,
+            "udp_payload_bytes": 3118767,
+            "max_datagram_bytes": 1392,
+            "datagrams_over_1200": 30
+          }
+        },
+        "logs": [
+          {
+            "path": "client-0.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-1.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-2.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-3.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-4.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-5.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-6.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-7.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-8.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "client-9.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          },
+          {
+            "path": "server.log",
+            "godot_4_7_2": true,
+            "error": false,
+            "resource_leak": false
+          }
+        ]
+      }
+    ]
+  }
+}
