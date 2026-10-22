@@ -54,7 +54,7 @@ For every candidate case I independently joined original/retry method, endpoint,
 raw HTTP body bytes, parsed payload and original expected price to the journal
 and SQLite receipt. Every final native result equals the stored response; every
 candidate ledger has exactly one mutation and expected debit. Candidate totals
-12 mutations/40,000,800 synthetic cost units. Baseline totals9 mutations/
+12 mutations and 40,000,800 synthetic cost units. Baseline totals 9 mutations and
 30,000,600 units because its three before-commit originals are dropped and it
 never recovers. These are fixture costs, not PostgreSQL wallets.
 
@@ -124,3 +124,17 @@ block later mutations rather than silently discarding an uncertain action.
 The final integrated aggregate is still required. Postmatch server outbox,
 earned-only/offline separation, protocol 6, prediction opt-in and live rewind-off
 boundaries remain unchanged.
+
+## Committed archive check
+
+Builder evidence `08b0d66` and root integration `89393f3` contain identical Git
+blob bytes for all 11 `sha256.txt` entries. The 83,552-byte archive SHA256 is
+`63da9d60b064f7375ee351b3b6405fb99ddaf52aae957fd6eff13d6ae755fd20`.
+All 373 safe, unique regular-file members match their declared sizes and hashes.
+Every original file in the critic's 372-file current-output manifest matches the
+375-file raw manifest exactly. The three additions are the outside campaign
+driver log and two separately labelled historical preflight files. Excluding
+only two generated editor-documentation caches produces the 373-member archive;
+their original files remain outside and their hashes also match. No native log,
+SQLite database, source/finalization receipt, journal snapshot or cleanup evidence
+is excluded. See [archive-verification.json](archive-verification.json).
