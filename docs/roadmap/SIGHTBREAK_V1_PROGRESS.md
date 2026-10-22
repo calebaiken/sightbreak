@@ -6,7 +6,7 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-Updated 2026-10-22, 07:30 UTC. The mission remains **IN PROGRESS / PRIMARY**.
+Updated 2026-10-22, 07:39 UTC. The mission remains **IN PROGRESS / PRIMARY**.
 Branch `codex/v1-mission-playability`, [draft PR27](https://github.com/calebaiken/sightbreak/pull/27),
 retains PR24 → PR23 → PR22 → PR16 dependencies. Initialization is `561d0cb`;
 [issue #25](https://github.com/calebaiken/sightbreak/issues/25) is the supported
@@ -27,18 +27,17 @@ persistent tracker. No native Codex goal registration is claimed.
   deadline; the no-recorder repeat also fails. Original video and failed receipts
   remain in `m1-postplant-guidance`. Earlier ordinary journey, layouts, defuse and
   stock full-match / earned restart passes remain exact-source historical results.
-- **M2 ARM Mac menu navigation independently passes**, run
-  [39736389634](https://github.com/calebaiken/sightbreak/actions/runs/39736389634)
-  at `20464da`: actual owned focus, five events, home/settings/home pixels,
-  exact high-confidence home identity, normal exit and cleanup. The same run's
-  strict source gate **fails on actor first**, 73 assertions / zero failures but
-  six ObjectDB leaks; eleven suites are unreached. Input-mode diagnostic honestly
-  skips because that suite was not reached. Earlier `b09cfe1` fails on input_mode
-  after six clean suites, with two leaks. Actual object types and cause are unknown.
-  Fresh source review accepts `f3896c6` for one bounded actor/input_mode diagnostic;
-  root integrations `271a346` / `a09f0d6` preserve the strict failed gate. Intel
-  full-game rendering still times out; minimal controls pass. Unsigned iOS
-  compilation passes separately, without installation or physical-play acceptance.
+- **M2 ARM Mac latest clean native attempt independently passes**, run
+  [39739927334](https://github.com/calebaiken/sightbreak/actions/runs/39739927334)
+  at `ba5013d`: all original twelve suites / 5,963 checks, menu pointer/Escape
+  navigation and separate unsigned iOS compilation. Root review `097b1e7` retains
+  original PNGs, source/producer receipts and cleanup limits. The leak diagnostic
+  did not run because strict suites passed. Prior actor six-leak and input_mode
+  two-leak failures remain failures; types and cause are still unknown. This
+  clean attempt does not establish stable leak resolution or full Mac gameplay.
+  New ARM run 39741565795 at `0527715` qualifies the changed receipt source and
+  fourteen-suite registration separately. Intel rendering still times out;
+  mobile installation and physical play remain open.
 - **M3 corrected-activity account trial 2 independently passes**, source
   `3b5cf764`, 521.837 s. Seven stock rounds / six plants / halftime deliver one
   operation, ten rewards and ten ledger rows: 2,875 credits / 2,650 XP. Actual SQL
@@ -63,7 +62,9 @@ persistent tracker. No native Codex goal registration is claimed.
   `89393f3` retain findings, fixes and actual outputs. This uses local SQLite
   fixtures and a separate stub lifecycle, not production PostgreSQL or rendered
   player consent. Those boundaries are next; postmatch rewards remain separate.
-  New maintained native registration is being reviewed before final aggregate.
+  New fourteen-suite native registration is independently accepted. The strict
+  selected Linux journal/gunplay run passes in 13.003 s; the new full aggregate
+  is running at frozen `0527715`, with separate independent review.
 - **M4 four-weapon engineering measurement independently passes**, exact source
   `fc5d677`: 2,840 native probe checks / 52 records plus 289 affected existing
   checks. Critic recomputes 5,121 predicates, real ray damage, friendly shielding,
@@ -78,8 +79,9 @@ persistent tracker. No native Codex goal registration is claimed.
   465.033 s, 52 mandatory Godot logs plus seven Python groups, ENet, lifecycle,
   catalog and fixture checks; source remains clean and identical. Later M4 adds
   a mandatory probe, and receipt work will add further checks. Do not relabel
-  this older whole-source result as the latest HEAD. A new frozen aggregate
-  follows receipt integration; the builder currently owns local engine CPU.
+  this older whole-source result as the latest HEAD. The new frozen aggregate
+  at `0527715` is running; root owns local engine CPU. New Windows and ARM runs
+  at that source independently qualify the fourteen-suite default and exports.
 
 ## Acceptance matrix
 
@@ -97,7 +99,7 @@ persistent tracker. No native Codex goal registration is claimed.
 | G10 | Accessibility (contrast, text scale, reduced motion, controller/keyboard reach) | IN PROGRESS | Text scale and reduced motion exist. No audit, no screen-reader or physical-controller evidence. | none | Compute WCAG contrast from captures (bar B4). |
 | G11 | Linux native package | IN PROGRESS | Source872 local/remote layouts pass 280.215/201.314 s; ordinary journey, defuse and full match/restart pass. New source3c4d921 fixes notification-starved planted roles, with independently inspected living pixels/video and natural defuse. Both full plant attempts fail the original next-round12 s deadline. | Fresh independent native/layout critic | Preserve failures; diagnose performance and verify next-round/restart on an exact corrected candidate. Whole Linux release gate stays open. |
 | G12 | Windows native package | IN PROGRESS | Actual run 39735001567 at 3b5cf764 independently passes all selected native gates, 5,963 source assertions, corrected phase captures, plant / natural defuse / next buy, ordinary defuse, stock full match and earned disk reload. [Evidence](../reports/gauntlet/m1-native-ci-39735001567/REPORT.md). | Fresh independent native critic | Preserve exact frozen qualification; repeat on final integrated candidate and obtain physical / human release evidence. |
-| G13 | macOS native package (Intel and Apple Silicon) | FAILED | Actual run 39736389634 at 20464da independently passes real menu navigation. Strict source gate fails actor first: 73 checks / zero assertions, six leaked objects, eleven suites unreached. Earlier b09 input_mode fails with two leaks. Intel rendering still times out. [Evidence](../reports/gauntlet/m2-macos-screen-identity/native-run-39736389634/REPORT.md). | Fresh independent native critics | Execute the independently accepted first-leak verbose diagnostic; identify actual object types before fixing. Strict failure stays failed. Full gameplay, Intel and physical-device gates remain open. |
+| G13 | macOS native package (Intel and Apple Silicon) | FAILED | Latest ba5013d run 39739927334 independently passes original twelve suites / 5,963 checks and real menu navigation. Diagnostic not run because strict passed. Earlier actor six-leak and input_mode two-leak failures remain unresolved; Intel rendering still times out. [Latest evidence](../reports/gauntlet/m2-native-mac-ci-39739927334/independent-review/REPORT.md). | Fresh independent native critics | Qualify new receipt source / fourteen suites in run 39741565795; retain historical failures and obtain verbose types if a supported failure recurs. Full gameplay, stable leak resolution, Intel and physical-device gates remain open. |
 | G14 | Android and iOS keep building | IN PROGRESS | Fresh frozen 6a Android debug APK and unsigned iOS project export and structural inspection pass. Independent 48/49 package checks: simulator metadata claims ARM64+x86_64 but pinned debug archive contains x86_64 only; device archive is ARM64. [Evidence](../reports/gauntlet/m2-mobile-preservation/independent-package-critic/REPORT.md). Actual Xcode 16.4 / SDK 18.5 link fails on five iOS 26 framework globals. Reviewed SDK selection is integrated; retries39721286005 at2a2b732 and39727011693 ate7718ee pass independent unsigned-device compile review, with exact source/PCK and raw unsigned codesign evidence. Final binary reparse and runtime remain open. | Fresh independent mobile package critic | Preserve accepted exact-source unsigned compile; qualify simulator metadata, installation, older OS behavior and physical play. No credential/signing action is authorized. |
 | G15 | Packaging, build provenance, Steam staging procedure | IN PROGRESS | Source-bound manifests exist. `STEAM_RELEASE_READINESS.md` is design only: no SteamPipe template, no App ID, Steamworks docs not retrievable (host denied). | Reported | Owner approval is needed for any upload or account step. |
 | G16 | Economy and progression integrity | IN PROGRESS | Corrected-source trial 2 at 3b5cf764 independently passes stock ten-account settlement and pre-ACK / post-replay SQL witnesses: one operation / ten rewards / ten ledger rows, 2,875 credits / 2,650 XP. Trial 1 remains blocked. Separate backend regression passes 61 cases. [Trial evidence](../reports/gauntlet/m3-account-activity/TRIAL_2_HANDOFF.md). | Fresh independent native / live-database and regression critics | Keyed store/armory receipt component independently passes 12/12 native fixture recoveries versus baseline 0/12. Next qualify production PostgreSQL lost-response settlement and rendered player recovery; meaningful activity, AFK policy, remote recovery and deployment security remain separate. |
