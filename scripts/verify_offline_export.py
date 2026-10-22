@@ -216,7 +216,7 @@ def main():
             raise RuntimeError('Tesseract failed: ' + label + '; raw stderr retained')
         return completed.stdout.decode('utf-8', errors='replace')
 
-    def read_hud(name):
+    def read_hud(name, *, resume_after=True):
         # Analyze the already captured native pixels while ordinary Escape
         # pause protects the living player from time spent in external OCR.
         native = ui.diagnostics()
@@ -224,12 +224,12 @@ def main():
             raise RuntimeError('HUD analysis requires physically released controls')
         before_analysis = offline_observation()
         actor = before_analysis.get('local_actor', {})
-        if before_analysis.get('ui', {}).get('paused') is True:
-            return read_hud_pixels(out / (name + '.png'), ocr)
         if (before_analysis.get('ui', {}).get('screen') != 'game'
                 or before_analysis.get('ui', {}).get('focused') is not True
                 or before_analysis.get('time_scale') != 1 or actor.get('alive') is not True):
             raise RuntimeError('HUD analysis requires the actual living, focused offline player')
+        if before_analysis.get('ui', {}).get('paused') is True:
+            return read_hud_pixels(out / (name + '.png'), ocr)
 
         def require_analysis_context(state):
             current = state.get('local_actor', {})
@@ -260,7 +260,8 @@ def main():
                 held_keys.discard('Escape')
                 trace('key_after', key='Escape', down=False, scope='saved_hud_analysis')
 
-        receipt = {'capture': name, 'before': before_analysis, 'scope': 'ordinary native pause for saved-pixel OCR'}
+        receipt = {'capture': name, 'before': before_analysis, 'scope': 'ordinary native pause for saved-pixel OCR',
+                   'resume_after_analysis': resume_after}
         result.setdefault('hud_analysis_pauses', []).append(receipt)
         try:
             analysis_escape()
@@ -278,7 +279,7 @@ def main():
             receipt['after_analysis'] = after_analysis
             return reading
         finally:
-            if client.poll() is None and offline_observation().get('ui', {}).get('paused') is True:
+            if resume_after and client.poll() is None and offline_observation().get('ui', {}).get('paused') is True:
                 analysis_escape(cleanup=True)
                 resumed_state = observed(lambda state: state.get('ui', {}).get('paused') is False,
                                          10, 'Explicit native resume after saved-HUD OCR: ' + name)
@@ -546,10 +547,13 @@ def main():
             raise RuntimeError('Native sidearm switch did not reach the HUD')
         tap('1')
         capture('06g-switched-primary')
-        primary_hud = read_hud('06g-switched-primary')
+        # The next action is FIELD MENU. Retain the ordinary native pause
+        # established for this OCR rather than briefly exposing the player to
+        # combat between two consecutive uses of the same menu.
+        primary_hud = read_hud('06g-switched-primary', resume_after=False)
+        settings_pause = result['hud_analysis_pauses'][-1]['after_analysis']
         if primary_hud['ammo'] != 30 or primary_hud['reserve'] != 120:
             raise RuntimeError('Native primary switch did not restore the purchased weapon')
-        tap('Escape')
         capture('07-field-menu')
         click_text('SETTINGS')
         capture('07b-field-settings')
@@ -562,10 +566,56 @@ def main():
         saved = json.loads(saved_path.read_text(encoding='utf-8'))
         if saved['scope'] != 'offline_training' or saved['settings']['sensitivity'] == 0.0028:
             raise RuntimeError('Native settings input was not persisted')
-        tap('Escape')
+        # Settings must inherit the very same living paused transaction. A menu
+        # that only hides input but leaves the offline authority running fails.
+        settings_ready = observed(lambda state: state.get('ui', {}).get('paused') is True,
+                                  5, 'Fresh paused player after native settings change', settings_pause['wall_msec'])
+        def require_resume_context(state):
+            actor, original = state.get('local_actor', {}), settings_pause['local_actor']
+            if (state.get('ui', {}).get('screen') != 'game' or state.get('ui', {}).get('focused') is not True
+                    or state.get('time_scale') != 1 or state.get('phase') != settings_pause['phase']
+                    or state.get('round_number') != settings_pause['round_number'] or actor.get('alive') is not True
+                    or any(actor.get(field) != original.get(field) for field in ('id', 'weapon', 'ammo', 'reserve'))):
+                raise RuntimeError('Explicit resume changed living player, focus, round, weapon, ammunition, or simulation speed')
+        require_resume_context(settings_ready)
+        if (settings_ready.get('elapsed') != settings_pause.get('elapsed')
+                or settings_ready['local_actor'].get('health') != settings_pause['local_actor'].get('health')):
+            raise RuntimeError('Ordinary offline field settings did not retain the paused player')
+        # A physical Escape is acknowledged by the actual game. The old generic
+        # tap left the player idle in combat for one second before any capture.
+        # Acknowledgment and the rendered-frame fence share one existing 10s
+        # native transition budget; all surrounding deadlines stay unchanged.
+        resume_until = min(deadline, time.monotonic() + 10)
+        def resume_budget():
+            value = resume_until - time.monotonic()
+            if value <= 0:
+                raise TimeoutError('Explicit native resume and rendered-frame acknowledgement')
+            return value
+        def resume_acknowledged(state):
+            if not state:
+                return False
+            require_resume_context(state)
+            return state.get('ui', {}).get('paused') is False
+        key('Escape', True)
+        try:
+            resumed = observed(resume_acknowledged, resume_budget(),
+                               'Actual living player explicitly resumes after field settings', settings_ready['wall_msec'])
+        finally:
+            # Always physically release Escape, including a failed/dead context.
+            ui.key('Escape', False)
+            held_keys.discard('Escape')
+            trace('key_after', key='Escape', down=False, scope='field_settings_resume')
+        resumed_frames = resumed.get('drawn_frames')
+        if not isinstance(resumed_frames, int) or isinstance(resumed_frames, bool) or resumed_frames < 0:
+            raise RuntimeError('Explicit native resume requires a valid drawn-frame observation')
+        resumed_ready = observed(lambda state: resume_acknowledged(state)
+                                 and state.get('drawn_frames', -1) >= resumed_frames + 2,
+                                 resume_budget(), 'Two drawn frames after explicit native settings resume', resumed['wall_msec'])
         capture('07d-explicit-resume')
-        resumed_hud = read_hud('07d-explicit-resume')
-        tap('Escape')
+        resumed_hud = read_hud('07d-explicit-resume', resume_after=False)
+        result['native_settings_resume'] = {'paused_before_settings': settings_pause, 'paused_after_settings': settings_ready,
+                                             'resumed': resumed, 'capture_ready': resumed_ready,
+                                             'transition_watchdog_seconds': 10, 'same_living_player_required': True}
         click_text('LEAVE')
         wait_for(ui.menu_visible, 30, 'Return from offline match', client)
         capture('08-return-menu')
