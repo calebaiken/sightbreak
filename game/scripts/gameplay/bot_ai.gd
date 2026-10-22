@@ -98,6 +98,12 @@ const ATTACK_SPLIT_WAYPOINTS := {
 	1: Vector3(3.0, 0.0, -3.0)
 }
 
+## Position of an actor inside its squad, 0 to 4, identical for ids 1-5 and ids 6-10. Per-bot habits (crouching, who
+## throws smoke, the unstick direction, the defender anchor) key on this, never on the raw id: raw parity gave ids 6-10
+## two crouchers to one in ids 1-5, and handed the two squads different anchors for the same spawn slot.
+static func squad_index(actor: SBActor) -> int:
+	return (actor.actor_id - 1) % 5
+
 static func profile_for(difficulty: String) -> Dictionary:
 	return PROFILES.get(difficulty, PROFILES["normal"])
 
@@ -499,10 +505,8 @@ static func _select_objective_and_destination(match_node: Node, actor: SBActor, 
 						role = "investigate_sound"
 	else:
 		# Defender logic before plant
-		var anchor_idx: int = (actor.actor_id - 6) % DEFENDER_ANCHORS.size()
-		if anchor_idx < 0:
-			anchor_idx = actor.actor_id % DEFENDER_ANCHORS.size()
-		destination = DEFENDER_ANCHORS[anchor_idx] if bool(profile.get("team_comms", true)) else match_node.arena.sites[actor.actor_id % 2]
+		var anchor_idx: int = squad_index(actor) % DEFENDER_ANCHORS.size()
+		destination = DEFENDER_ANCHORS[anchor_idx] if bool(profile.get("team_comms", true)) else match_node.arena.sites[squad_index(actor) % 2]
 		role = "anchor"
 		# Rotate toward confirmed team sightings or recent enemy gunfire.
 		if match_node._elapsed - float(state.get("heard_at", -100.0)) < SOUND_MEMORY_SECONDS:
@@ -617,7 +621,7 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) ->
 		else:
 			move = Vector2(sin(match_node._elapsed * 1.1 + float(actor.actor_id)) * 0.4, 0.0)
 
-		crouch = (actor.actor_id % 3 == 0) or (bool(profile.get("counter_strafe", false)) and target_distance > 18.0 and aligned)
+		crouch = (squad_index(actor) % 3 == 0) or (bool(profile.get("counter_strafe", false)) and target_distance > 18.0 and aligned)
 	else:
 		state["target"] = 0
 		state["reaction"] = 0.0
@@ -634,7 +638,7 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) ->
 		# Tactical utility: carrier or support deploys smoke when approaching site or before defusing.
 		if bool(profile.get("utility_use", false)) and actor.smokes > 0 and not bool(state.get("smoke_used", false)) and not interact:
 			if actor.team == 0 and actor.position.distance_to(match_node.arena.sites[int(plan.primary_site)]) < 14.0 and actor.position.distance_to(match_node.arena.sites[int(plan.primary_site)]) > 5.0:
-				if actor.actor_id == match_node.objective_carrier or actor.actor_id % 2 == 0:
+				if actor.actor_id == match_node.objective_carrier or squad_index(actor) % 2 == 0:
 					use_smoke = true
 					state["smoke_used"] = true
 			elif actor.team == 1 and match_node.objective_state == "planted" and actor.position.distance_to(match_node.objective_position) < 11.0 and actor.position.distance_to(match_node.objective_position) > 3.5:
@@ -679,7 +683,7 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) ->
 		state["stuck"] = 0.0
 	state["last_position"] = actor.position
 	if float(state.get("stuck", 0.0)) > 0.9:
-		move.x = 1.0 if actor.actor_id % 2 == 0 else -1.0
+		move.x = 1.0 if squad_index(actor) % 2 == 0 else -1.0
 		if float(state.get("stuck", 0.0)) > 1.8 and target == null and not interact:
 			move.y = -0.6
 
