@@ -56,7 +56,8 @@ device performance evidence.
 ## Evidence and exact reproduction
 
 [The evidence index](builder-evidence/index.json) hashes 14 verbatim original PNGs
-and raw source/native JSON, log and TSV receipts. It preserves both negative
+and raw source/native JSON, log and TSV receipts. TSV/log files are losslessly
+gzip-compressed, with original-byte hashes in the index. It preserves both negative
 controls and the failed first candidate. OCR working-image copies, fixture user
 data and exported binaries remain at the raw workspace paths recorded in the
 receipts. No retained original image was cropped or altered.
