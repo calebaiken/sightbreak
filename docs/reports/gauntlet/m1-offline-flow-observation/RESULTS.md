@@ -113,8 +113,8 @@ The actual run reached living movement, fire decrement, reload, natural first
 round completion and purchased-SMG HUD 30/120. At the resumed post-purchase
 observation, round 2 had 13.117 simulation seconds of buy phase remaining.
 The 35-second wall wait advanced the simulation about 12.783 seconds; the final
-status remained in buy with roughly 0.23 seconds remaining. No deadline or game
-rule was changed. The target settings/restart/focus block was not reached.
+status remained in buy at tick 3005 with 0.333333 simulation seconds remaining
+(`time_left=0.333333333333009`). No deadline or game rule was changed. The target settings/restart/focus block was not reached.
 
 `evidence-native-r1.tar.gz` preserves the complete failed attempt, source/export
 receipts and setup failures. An initial missing-template failure and refusal to
