@@ -10,7 +10,7 @@ on:
         type: choice
         required: true
         default: all
-        options: [all, arm-macos-ios, windows]
+        options: [all, arm-macos-ios, windows, linux]
 permissions:
   contents: read
   actions: read
@@ -21,7 +21,7 @@ jobs:
       fail-fast: false
       max-parallel: 3
       matrix:
-        include: ${{ fromJSON(github.event_name == 'workflow_dispatch' && inputs.lane == 'windows' && '[{"os":"windows-latest","target":"windows"}]' || github.event_name == 'workflow_dispatch' && inputs.lane == 'arm-macos-ios' && '[{"os":"macos-15","target":"macos"}]' || '[{"os":"ubuntu-24.04","target":"linux"},{"os":"windows-latest","target":"windows"},{"os":"macos-15","target":"macos"},{"os":"macos-15-intel","target":"macos"}]') }}
+        include: ${{ fromJSON(github.event_name == 'workflow_dispatch' && inputs.lane == 'linux' && '[{"os":"ubuntu-24.04","target":"linux"}]' || github.event_name == 'workflow_dispatch' && inputs.lane == 'windows' && '[{"os":"windows-latest","target":"windows"}]' || github.event_name == 'workflow_dispatch' && inputs.lane == 'arm-macos-ios' && '[{"os":"macos-15","target":"macos"}]' || '[{"os":"ubuntu-24.04","target":"linux"},{"os":"windows-latest","target":"windows"},{"os":"macos-15","target":"macos"},{"os":"macos-15-intel","target":"macos"}]') }}
     runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     env:

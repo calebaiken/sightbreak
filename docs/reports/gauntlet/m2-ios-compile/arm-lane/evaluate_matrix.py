@@ -48,7 +48,7 @@ def main():
     before, after = [yaml.load(text, Loader=yaml.BaseLoader) for text in (before_text, after_text)]
     assert after["on"]["workflow_dispatch"]["inputs"]["lane"] == {
         "description": "Native qualification hosts", "type": "choice", "required": "true",
-        "default": "all", "options": ["all", "arm-macos-ios", "windows"]}
+        "default": "all", "options": ["all", "arm-macos-ios", "windows", "linux"]}
     original = before["jobs"]["native"]["strategy"]["matrix"]["include"]
     arm = [{"os": "macos-15", "target": "macos"}]
     assert original == [{"os": "ubuntu-24.04", "target": "linux"}, {"os": "windows-latest", "target": "windows"},
@@ -60,6 +60,8 @@ def main():
              ("push cannot select ARM", "push", "arm-macos-ios", original),
              ("explicit Windows", "workflow_dispatch", "windows", [{"os": "windows-latest", "target": "windows"}]),
              ("push cannot select Windows", "push", "windows", original),
+             ("explicit Linux", "workflow_dispatch", "linux", [{"os": "ubuntu-24.04", "target": "linux"}]),
+             ("push cannot select Linux", "push", "linux", original),
              ("unknown lane", "workflow_dispatch", "unknown", original)]
     results = []
     for name, event, lane, wanted in cases:
