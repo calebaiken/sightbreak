@@ -18,8 +18,9 @@ and confidence 1 in both actual home captures. The actual settings capture has
 `FIELD SETTINGS` at confidence 1 and lacks that home trio. The title bar reads
 `SIGHTBREAK (DEBUG)` on both screens and cannot establish home identity.
 
-Source `game/scripts/main.gd` declares the home hero and controls in `show_menu`
-and the settings heading in `show_settings`. The new criterion uses those visible
+Source `game/scripts/main.gd` constructs the home hero and controls through
+`show_menu`, `menu_columns`, and `_wordmark`, and the settings heading in
+`show_settings`. The new criterion uses those visible
 screen roles. It does not infer navigation from artifact names or event attempts.
 The original JSON fixtures are retained byte for byte with a provenance manifest.
 
