@@ -1,0 +1,26 @@
+{
+  "id": "7882d664142b76adea4144b72da267d9614ede8e43f5dfa3b95861fb2e24721e",
+  "name": "/sightbreak-account-match-f1672c68d71a",
+  "image": "postgres:17@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3",
+  "auto_remove": true,
+  "ports": {
+    "5432/tcp": [
+      {
+        "HostIp": "127.0.0.1",
+        "HostPort": "32770"
+      }
+    ]
+  },
+  "mounts": [
+    {
+      "Destination": "/var/lib/postgresql/data",
+      "Driver": "local",
+      "Mode": "",
+      "Name": "4ada8f5e2948b1f631e6a5905503d133fb60be98a7b2518f81f9805ddaea450e",
+      "Propagation": "",
+      "RW": true,
+      "Source": "/var/lib/docker/volumes/4ada8f5e2948b1f631e6a5905503d133fb60be98a7b2518f81f9805ddaea450e/_data",
+      "Type": "volume"
+    }
+  ]
+}
