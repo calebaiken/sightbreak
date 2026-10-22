@@ -13,6 +13,11 @@ database before cleanup, verified the actual engine bytes and independently
 confirmed that all owned children, container and listeners were gone. The builder
 does not approve the candidate. Full G3 and G16 remain in progress.
 
+Final independent followup `e0d3996` accepts the pure validator corrections and
+archive through builder `6a4a955`: all 15 controls, independent boundary/semantic
+counterexamples, raw settlement replay and all 58 indexed hashes/Git blobs pass.
+The original native/preflight bytes remain unchanged.
+
 ## Frozen execution
 
 Command:

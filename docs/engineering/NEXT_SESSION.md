@@ -206,4 +206,6 @@ Final pure-verifier correction `b38508e` mirrors production's terminal-duration
 activity cap, with a 0.1-microsecond serialization-boundary tolerance. The critic
 found the earlier false rejection before integration. All 15 standard-Python
 controls and frozen-raw replay pass; see separate validator-cap receipts. Native
-execution remains `471fbd8`. Final independent followup review is in progress.
+execution remains `471fbd8`. Final independent followup `e0d3996` accepts the
+bounded scope after checking all 15 controls, raw replay, boundary/semantic
+counterexamples and all 58 archive hashes. Both builder/review worktrees are clean.

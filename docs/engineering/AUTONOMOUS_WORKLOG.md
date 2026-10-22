@@ -303,3 +303,8 @@ activity duration. `b38508e` reconstructs terminal duration from the emitted
 summary, applies the production cap and limits serialization ambiguity to 0.1
 microseconds. All 15 standard-Python controls and frozen-raw replay pass; separate
 validator-cap receipts retain this correction without relabeling the native run.
+
+Final independent followup `e0d3996` accepts the bounded source/archive scope:
+15 controls, separate boundary and semantic mutations, frozen-raw settlement
+recomputation, all 58 archive hashes and exact native/preflight byte equality.
+Root integration remains separate; G3/G16 and the named remaining limits stay open.
