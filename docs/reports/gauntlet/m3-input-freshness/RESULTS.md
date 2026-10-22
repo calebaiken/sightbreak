@@ -1,10 +1,11 @@
 # Desktop-base input freshness comparison
 
 The six-line input-stream correction prevents consumed command replays from
-renewing authority silence and peer-idle clocks. A fresh source critic prefers
-the correction and finds no source blocker. Native Linux measurements meet all
-eight declared cases. **Independent native-outcome review and aggregate integration
-acceptance remain pending.** No release or whole G3 acceptance is claimed.
+renewing authority silence and peer-idle clocks. Separate fresh source and blind
+outcome critics prefer the correction, with no observed blocker in this scope.
+Initial native Linux measurements meet all eight declared cases; six focused
+snapshot-gap repeats also pass unchanged gates and independent review. Aggregate
+integration acceptance remains separate. No release or whole G3 acceptance is claimed.
 
 ## Sources and inspected reference
 
@@ -84,6 +85,53 @@ snapshot timeout or improved frozen-state feedback. This change prevents stale
 traffic from extending existing expiry; it does not shorten the 30-second policy.
 That deficiency remains open for a separate milestone.
 
+## Blind outcome critique and supported iteration
+
+The separate fresh-context `/root/freshness_outcome_critic` inspected only the
+anonymous initial packet. It [selected A](OUTCOME_CRITIC.md), independently checking
+81 file hashes, 32 logs, 27,874 raw rows and 384 assertions. A meets snapshot-stop
+and hostile-replay retirement requirements in both modes; B fails them. Both
+labels preserve ordinary input, recovery, shot edges and the declared invariants.
+Its [exact task](OUTCOME_CRITIC_BRIEF.txt) and unchanged verdict are retained.
+
+The [mapping](OUTCOME_LABELS.json) is disclosed after that frozen verdict: A is
+candidate `8e10df0`; B is baseline `561d0cb`. The initial packet is preserved byte
+for byte inside [post-verdict-evidence.tar.gz](post-verdict-evidence.tar.gz), with
+its original manifest and separately retained original key. The first evidence
+archive remains unchanged. Blinding is partial: launch commands were withheld,
+while measured behavioral differences remained visible. The critic could check
+internal integrity but could not independently authenticate source launch history
+from that anonymous packet alone. Full original receipts remain available.
+
+The critic's largest concern was repeatability: one trial per condition and only
+17 ms of margin in the prediction-on stop. In response, three additional native
+snapshot-gap trials per prediction mode ran on clean `4bed2f5`. That documentation
+head has the identical game tree, driver, probe and engine bytes as measured
+candidate `8e10df0`; no runtime code, timing limit or trial condition changed.
+
+| Additional trial | Prediction off stop delay | Prediction on stop delay |
+| --- | --- | --- |
+| 1 | 0.316 s | 0.332 s |
+| 2 | 0.334 s | 0.316 s |
+| 3 | 0.333 s | 0.317 s |
+
+All six repeat pairs meet the original 0.350 s stop bound, zero stale-window
+movement/speed, 120-command cap, fresh signed recovery, two genuine shot edges,
+ammunition conservation, protocol/privacy and clean-exit requirements. The
+[supplemental verifier](verify_snapshot_repeats.py) recomputes the
+[results](snapshot-repeats-verification.json) from retained raw rows. Including
+the two original candidate snapshot cases gives eight observed trials, four per
+mode, ranging from 0.316 to 0.334 s, with a smallest observed margin of 16 ms.
+
+The same critic performed a separate, explicitly unblinded [repeat review](OUTCOME_REPEAT_CRITIC.md),
+using the [retained follow-up task](OUTCOME_REPEAT_BRIEF.txt). It checked 2,886
+authority rows, 2,887 client rows, 12 native logs and 324 raw-data/control assertions.
+It independently checked source/test identity and the corrected verifier's fields,
+found no blocker, and confirmed that the repeats address the requested same-host
+consistency concern. The original blind verdict was not rewritten. The remaining
+timing limit is a small sequential sample on one host, with narrow margin and
+sampling intervals as large as 40 ms; no failure rate or worst-case guarantee is established.
+
 ## Retained failures and limits
 
 - The new stream oracle's two baseline failures and four baseline native outcome
@@ -92,12 +140,21 @@ That deficiency remains open for a separate milestone.
   the extraction directory also contained the downloaded ZIP and output log.
   The verifier correctly rejected extra files. A new clean extraction passes;
   both reports are retained. No upstream packet defect is asserted.
+- The first supplemental repeat verifier incorrectly required strictly increasing
+  millisecond timestamps. One repeat has two authority clock ties while simulation
+  and ACK advance; two other repeats each have one client tie. The original
+  comparison allowed nondecreasing clocks. The corrected verifier uses that rule
+  and reports ties separately for both roles. The independent critic confirmed
+  that ties lie outside measurement/recovery windows and change no selected ACK,
+  stop, history-cap or firing event. The failed assumption, first report and
+  corrected analysis are retained; no native gate or raw row was changed.
 - These are headless, two-peer loopback tests with a collision-only measurement
   platform and suspended bots. They do not establish rendered controls, animation,
   ten-client load, adverse WAN conditions, physical-platform performance or human
   play quality. No CS2 graphical comparison is claimed.
-- Runtime source review has passed; a separate fresh-context outcome critic still
-  needs to inspect the actual A/B rows and logs. No builder may close this gate.
+- Source, initial outcome and focused repeat reviews pass their stated scopes.
+  Full integrated regressions, ten-client/WAN qualification and product acceptance
+  remain separate. These reviews cannot close those gates.
 
 ## Evidence and reproduction
 
@@ -107,6 +164,13 @@ commands, driver output, targeted negative oracle, initial import, historical
 neutral verification reports and source-critic logs. Verify the extracted file
 bytes with its `SHA256SUMS`, then run `verify_comparison.py` from the extracted root.
 The same verifier and its output are also provided beside this report.
+
+Extract the separate [post-verdict archive](post-verdict-evidence.tar.gz) for the
+unchanged initial blind packet, disclosed key, exact outcome-review tasks/reports,
+all six supplemental trial receipts/logs, failed verifier assumption and corrected
+analysis. Check its `SHA256SUMS`, then run `verify_snapshot_repeats.py` from that
+extracted root. The original candidate summary is included so the comparison of
+test identities and the eight-trial stopping range can be reproduced.
 
 For a fresh native rerun, import each frozen source, use the identical driver/probe
 from `c6690fa`, and write evidence outside either checkout:
