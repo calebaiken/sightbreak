@@ -134,3 +134,92 @@ retain its output even if the gate fails. This adds capture load under the
 unchanged original budgets. The video is qualitative evidence, with no audio,
 speaker-listening, frame-rate or latency qualification. No native or engine run
 has yet been performed on this candidate.
+
+## Actual source and native results
+
+Frozen implementation: `3c4d921ffc31d849d1a70d095a31d9845307f963`.
+The criteria preceded it. All runtime results below belong to this exact source,
+not to the later evidence commit. `export-source.json` binds the Linux package;
+both native runs use executable SHA-256
+`0be9a93015afea6bc979edcad9bd8f77b4b5b377079876cd5a55f68849ba6741`.
+
+The actual Godot frozen-fixture comparison reproduces starvation in the baseline
+selector. Across desktop and touch, each side has 1,458 role samples from the
+preregistered flood. Baseline `93ec98b` misses all 1,458; candidate misses zero.
+The complete fixture reports 1,535 checks: baseline fails 1,492, candidate fails
+zero. The extra baseline failures are typed critical-message and recovery-role
+checks. Both fixture runs stay at gameplay tick zero, write no progression,
+remove their owned native directory and restore the caller's original directory.
+These are HUD-selector results, not objective-authority or rendered-layout proof.
+
+Eight focused source suites pass without engine errors: match 75, reconnect
+policy 21, independent reconnect 24, resume admission 13, resume alias 23 and main
+42 checks, plus the actual ENet lost-welcome and authentication-loss fixtures.
+Four Python observation controls pass. Replaying the original CI's actual final
+dead observation now rejects it with its tick 1988, round 1, planted, actor 1,
+alive false and health zero in the diagnostic; it does not pass that old gate.
+Original status bytes and their hash are retained in round 1.
+
+Two external recorder setup failures also remain. Round 1 stopped before a
+display or recorder started because this environment omits the Linux
+`/proc/<pid>/task/<pid>/children` file. Round 2 stopped at the validator's argument
+check because Xvfb is installed outside PATH. The final one-off recorder verifies
+the actual PPid and exact command of the validator-owned fresh display and passes
+the installed Xvfb path explicitly. Neither setup failure is a gameplay result.
+
+| Exact exported plant run | Recorded round 3 | No-recorder round 4 |
+| --- | --- | --- |
+| Whole result | FAIL, 130.871 seconds | FAIL, 129.636 seconds |
+| Ordinary plant | 180 ticks / 3.0 simulation seconds | 180 ticks / 3.0 simulation seconds |
+| Contribution / funds | +1 / 800 to 1100 | +1 / 800 to 1100 |
+| Living rendered role capture | PASS | PASS |
+| Natural objective resolution | Defenders defuse | Defenders defuse |
+| Blocking failure | Original 12-second next-round wait | Original 12-second next-round wait |
+| Final state | Post, round 1, 0.65 seconds left | Post, round 1, 0.65 seconds left |
+| Cleanup errors | None | None |
+
+Both runs preserve the complete original gate, including its 180-second total,
+15-second role guidance, 12-second next-round, ordinary objective and interaction
+deadlines. Both complete the changed living role-guidance slice and then fail
+later. Neither reaches the next-round, restart or persistence checks; the full
+plant journey remains failed. No budget, predicate, seed, timer or game state was
+changed for the retry. Round 4 has fresh output, user directory and display;
+two contemporaneous process inventories show no ffmpeg process.
+
+The next-round trajectory is measured directly in `native-comparison.json`.
+After the resolved capture ends, the driver waits 12.053 seconds in each run;
+the associated match observations advance 247 ticks / 4.1167 simulation seconds.
+Both final observations are tick 2625, elapsed 43.75, post, defused, with a
+0.65-second post-round timer. The driver and match clocks remain distinct. These
+two sequential observations do not establish a causal performance effect from
+the recorder. The same next-round failure persists without recording load.
+
+The complete original silent video is
+`round-3/native-plant-silent.mp4`, SHA-256
+`9527ba7f05d288c1545ea8dbc3723a83d5e19774118af099119fb6c7b0dfb7cc`.
+It is a 7,961,368-byte H.264 file with one 1280 by 720 video stream, 1,304 frames,
+10 Hz declared capture and 130.400 seconds duration. There is no audio stream.
+The external recorder's wall lifetime is slightly longer; its original commands,
+ownership, timestamps, ffmpeg log and ffprobe output are retained separately.
+The video remains qualitative evidence, not a device frame-rate or latency test.
+
+Every native top-level input/result/process log, trace and original screenshot is
+retained in rounds 3 and 4. Generated shader and platform state caches are omitted
+from this report; no authority or input receipt is omitted. `sha256.txt` indexes
+the retained payloads. The 87 other main-controller function bodies, including
+touch/feed helpers, and 72 other match function bodies, including RPC/snapshot,
+authority and objective functions, match integrated `93ec98b` byte for byte.
+`source-equivalence.json` records the hashes and its precise function scope.
+
+Fresh critic `/root/postplant_guidance_critic` independently recomputed the flood
+counts and raw log hashes, inspected the original role/resolution PNGs and the
+complete MP4's stream/hash plus seven extracted frames, and ran 24 additional
+actual connection-callback, snapshot-epoch and life/objective transition controls
+with the inherited private fixture. That probe reports 1,559 checks, no failures,
+tick zero and restored cleanup. Its separate report/verdict is pending; the
+builder makes no acceptance decision here.
+
+The largest remaining deficiency is the unchanged full native next-round gate,
+followed by the unreached restart checks and an exact-source Windows rerun.
+The engine/CPU lane has been released to the account qualification. No further
+runtime is running for this branch. Canonical mission documents remain untouched.
