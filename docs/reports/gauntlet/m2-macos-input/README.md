@@ -22,6 +22,10 @@ the permission queries, not all ordinary engine startup behavior. The first
 candidate `ecb3070` was independently rejected for failing to distinguish these
 side effects and allowing existing profile data into its smoke PNG. Revision 2
 fixes both issues; the original criteria and first controls remain in Git.
+The [fresh round 2 review](independent-review/round-2/REPORT.md) accepts exact
+implementation `946446f` for one bounded ARM preflight run. Nine packaged and
+ten independent Linux flow controls pass. This is source readiness; actual Mac
+permissions, window observations and native input remain unverified.
 
 The existing registered desktop workflow gains two separate ARM-only steps.
 Every existing Windows/Linux and Mac gate remains in place. Parent review must

@@ -1,5 +1,31 @@
 # Autonomous worklog
 
+## ARM Mac input preflight source readiness, 2026-10-22
+
+Builder branch `codex/m2-macos-native-input` begins at `e38ec3c`. Existing actual
+ARM run 39721286005 at `2a2b732` is the inspected startup/source/iOS baseline;
+none of those results qualifies keyboard or pointer delivery. Criteria were
+declared before implementation. Initial `ecb3070` was independently rejected
+because ordinary Godot startup can write logs/caches and its smoke PNG can show
+an existing callsign/training profile. Correction `946446f` refuses canonical
+profile and temporary entries before spawn, uses supported `--log-file`, and
+observes native directory/cache side effects without removing them.
+
+Fresh source review accepts `946446f` for one bounded native ARM preflight, with
+9 packaged and 10 independent Linux controls. These controls do not qualify Mac
+APIs or native input. The observer makes only read-only permission/display/window/
+control queries and ordinary exported smoke; it posts no events, requests no
+access, and takes no OS screenshot. Two separate ARM-only workflow steps retain
+all existing platform gates. No CI was dispatched by the builder and no native
+render workload was run locally. The next step is a root-reviewed exact-source
+ARM run, followed by a fresh critic on the actual results. Required permission
+denial stays an explicit external blocker. Largest remaining gap is actual Mac
+TCC/window evidence, followed by real pointer Settings navigation and Escape
+back to the menu with supported ScreenCaptureKit screenshots.
+
+Evidence and retained rejection:
+`docs/reports/gauntlet/m2-macos-input/README.md`.
+
 Chronological record of work on the SIGHTBREAK v1.0 mission: investigations, decisions, failed experiments, tests, reviews and source revisions. Newest entry last. Results in the acceptance matrix ([SIGHTBREAK_V1_PROGRESS.md](../roadmap/SIGHTBREAK_V1_PROGRESS.md)) must trace back to an entry here.
 
 ## 2026-10-21 - Session 1: orientation and M0
