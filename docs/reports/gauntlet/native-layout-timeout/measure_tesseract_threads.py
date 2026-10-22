@@ -75,6 +75,8 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--rounds', type=int, default=2)
     args = parser.parse_args()
+    if not 1 <= args.rounds <= 3:
+        parser.error('Use one to three bounded serial rounds')
     args.output.mkdir(parents=True, exist_ok=False)
     fixtures = ROOT / 'docs/reports/gauntlet/native-layout-ocr'
     manifest = json.loads((fixtures / 'fixtures.json').read_text())
@@ -103,11 +105,13 @@ def main():
                 for footer in (False, True):
                     factor = 4 if footer else (3 if fixture['size'][0] < 1100 else 2)
                     region = hud_footer_region(fixture['size']) if footer else None
+                    preprocessing_started = time.monotonic()
                     with Image.open(io.BytesIO(original)) as raw:
                         data = ocr_input(raw, factor, region=region, threshold=None if footer else 145)
+                    preprocessing_seconds = time.monotonic() - preprocessing_started
                     label = f'r{repetition}-{path.stem}-{variant}-' + ('footer' if footer else 'full')
                     receipt, text = trial(command, data, env, args.output, label)
-                    receipt.update(variant=variant, fixture=fixture['path'], original_sha256=fixture['sha256'], factor=factor, region=region)
+                    receipt.update(preprocessing_seconds=preprocessing_seconds, variant=variant, fixture=fixture['path'], original_sha256=fixture['sha256'], factor=factor, region=region)
                     report['trials'].append(receipt)
                     receipts[variant].append(receipt)
                     groups[variant].append(ocr_lines(text, factor, origin=region[:2] if region else (0, 0)))
