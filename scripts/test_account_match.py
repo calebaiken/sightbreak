@@ -224,12 +224,10 @@ def main():
         assert migration.wait(timeout=30) == 0, 'Migration failed; see migration.log'
         start('api', [str(args.python), '-m', 'uvicorn', 'app:app', '--app-dir', 'backend', '--host', '127.0.0.1', '--port', str(api_port)])
         wait_for(lambda: 'Application startup complete' in (out / 'api.log').read_text(), 'API startup')
-        tickets = []
         for index in range(10):
             account = request('/auth/register', {'username': 'match_' + secrets.token_hex(6),
                               'password': secrets.token_urlsafe(24), 'display_name': f'Account Match {index}'})
             accounts.append(account)
-            tickets.append(request('/auth/game-ticket', {'server_id': 'local-relay'}, account['token'])['ticket'])
         identities = [a['player_id'] for a in accounts]
         assert len(set(identities)) == 10
         report['initial_economy'] = economy()
@@ -240,7 +238,10 @@ def main():
         server = start('server', command + ['--role=server', '--output=' + str(out / 'server.json')])
         wait_for(lambda: 'SIGHTBREAK_SERVER_READY' in (out / 'server.log').read_text(), 'server readiness', 60)
         clients = []
-        for index, ticket in enumerate(tickets):
+        for index, account in enumerate(accounts):
+            # Tickets expire in 60 seconds. Mint immediately before each actual
+            # admission so slow engine startup cannot age later clients' tickets.
+            ticket = request('/auth/game-ticket', {'server_id': 'local-relay'}, account['token'])['ticket']
             child_env = env.copy()
             child_env.pop('SIGHTBREAK_SERVER_KEY')
             child_env.pop('SIGHTBREAK_RESULT_SPOOL')
@@ -249,6 +250,11 @@ def main():
             name = 'client-' + str(index)
             clients.append(start(name, command + ['--role=client', '--output=' + str(out / (name + '.json'))], child_env))
             wait_for(lambda: 'ACCOUNT_MATCH_ADMITTED ' + str(index + 1) + '\n' in (out / (name + '.log')).read_text(), name + ' exact actor admission', 60)
+        with psycopg.connect(**{**admin, 'dbname': database}) as db:
+            consumed = list(db.execute('SELECT player_id,server_id,consumed_at IS NOT NULL FROM game_tickets ORDER BY player_id'))
+        assert len(consumed) == 10 and {r[0] for r in consumed} == set(identities)
+        assert all(r[1:] == ('local-relay', True) for r in consumed)
+        report['consumed_tickets'] = [list(r) for r in consumed]
         report['checks']['ten_authenticated_admissions'] = True
         save()
         deadline = time.monotonic() + args.timeout
