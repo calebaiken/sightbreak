@@ -1,0 +1,35 @@
+[
+  {
+    "label": "pure-controls",
+    "command": [
+      "python3",
+      "scripts/test_offline_capture_fences.py",
+      "-v"
+    ],
+    "seconds": 0.3150680230028229,
+    "exit_code": 0,
+    "sha256": "ab4085052355461b9de8eb51d311047c511d10c76ac9668d1f5e1679467d0e92"
+  },
+  {
+    "label": "caption-controls",
+    "command": [
+      "python3",
+      "scripts/test_offline_export_ocr.py",
+      "-v"
+    ],
+    "seconds": 0.11464930899819592,
+    "exit_code": 0,
+    "sha256": "27654309c972a44f9308d625cb595fc08e60613a43bbd5d7e5a6bab259deb0c8"
+  },
+  {
+    "label": "native-observation-controls",
+    "command": [
+      "python3",
+      "scripts/test_native_observation.py",
+      "-v"
+    ],
+    "seconds": 0.11447152699838625,
+    "exit_code": 0,
+    "sha256": "fb6fc5a599ab08670c70ff59a5daa749ff3971c465ce6a71321af0351b1a1088"
+  }
+]

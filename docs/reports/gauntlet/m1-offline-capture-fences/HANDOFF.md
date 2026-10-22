@@ -84,3 +84,38 @@ observation mechanism at these two boundaries. Product rendering is not changed.
 
 Next: implement and run pure negative controls. Native proof and independent
 acceptance are pending; account retains the engine lane.
+
+## Candidate source and pure controls
+
+The candidate changes `verify_offline_export.py` and registers a pure observer
+test in maintained validation. It adds a capture transaction at only these two
+boundaries. The existing Round 2 log and loaded-profile checks remain. Their
+original 160-second and 30-second absolute budgets now also contain the named
+phase acknowledgment, two drawn frames, fresh before/after observations and
+binding checks; no new grace period is added.
+
+Each receipt retains expected actor/round/phase, native PID, trace directory,
+source identity, acknowledgment, ready, immediately-before and fresh-after
+states, and remaining original budget. Source/PID/trace binding is checked before
+acknowledgment and on both sides of capture. At restart the trace switches to
+the reopened process before any state query; its initial event and disk profile
+are read again around capture and must equal the originally accepted loaded
+event and saved settings. A failed transaction retains the raw image and partial
+receipt without calling it accepted evidence. Other native input/capture paths
+and all product files are unchanged.
+
+`scripts/fixtures/offline_capture_observations.json` contains extracted actual
+event objects from this Windows run, with source/run and original event-file
+hashes. Its old POST/dead and initial menu objects remain unchanged by tests.
+Declared mutations model subsequent frames and negative context changes only;
+they never enter a game process or modify authority.
+
+Thirteen pure test groups pass, including actual old-context rejection,
+one-frame/stalled/backward/invalid counters, fresh-wall requirements, life/actor/
+phase/focus/pause/speed loss before and after capture, source/PID/trace/profile
+races, and expiry of the original shared deadlines. Five strict caption controls
+also pass. Native-observation controls pass four cases and skip three cases that
+require Windows. Raw Python logs and exact command/hash receipts are in round 1.
+No Godot, rendering, OCR or native workload ran for this candidate. Pure controls
+do not qualify the named pixels; independent source review and a later exact
+native slice remain required.

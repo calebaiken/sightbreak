@@ -88,6 +88,109 @@ def focus_controls_released(state):
             and state.get('local_input', {}).get('fire') is False)
 
 
+def require_living_capture_phase(state, actor_id, round_number):
+    """Validate the named buy HUD; a later life or stale menu cannot replace it."""
+    actor, ui = state.get('local_actor', {}), state.get('ui', {})
+    if (state.get('schema') != 1 or isinstance(state.get('schema'), bool)
+            or state.get('scope') != 'debug_offline_read_only_observation'
+            or state.get('scenario') != 'standard' or state.get('time_scale') != 1
+            or isinstance(state.get('time_scale'), bool)
+            or state.get('phase') != 'buy' or state.get('round_number') != round_number
+            or isinstance(state.get('round_number'), bool) or actor.get('id') != actor_id
+            or isinstance(actor.get('id'), bool) or actor.get('alive') is not True
+            or isinstance(actor.get('health'), bool) or not isinstance(actor.get('health'), (int, float))
+            or not 0 < actor['health'] <= 100 or ui.get('screen') != 'game'
+            or ui.get('focused') is not True or ui.get('paused') is not False
+            or ui.get('scoreboard_visible') is not False):
+        raise RuntimeError('Named capture lost its living buy-phase actor/round/focus context')
+    for field in ('drawn_frames', 'wall_msec', 'simulation_tick'):
+        value = state.get(field)
+        if not isinstance(value, int) or isinstance(value, bool) or value < 0:
+            raise RuntimeError('Named capture requires a valid nonnegative integer ' + field)
+
+
+def capture_living_phase(name, *, actor_id, round_number, after, until,
+                         observed, capture, binding, expected_binding, receipt,
+                         clock=time.monotonic):
+    """Fence two real drawn frames inside the caller's existing absolute budget.
+
+    Callbacks use the native controller in production. Declared observation
+    sequences can test this scheduling logic but cannot establish rendered pixels.
+    """
+    receipt.update(capture=name, expected_actor_id=actor_id, expected_round=round_number,
+                   expected_phase='buy', expected_binding=expected_binding,
+                   absolute_deadline_monotonic=until, additional_drawn_frames_required=2)
+
+    def budget():
+        value = until - clock()
+        if value <= 0:
+            raise TimeoutError('Original transition budget expired before named capture: ' + name)
+        return value
+
+    def require_binding():
+        current = binding()
+        if current != expected_binding:
+            receipt['rejected_binding'] = current
+            raise RuntimeError('Named capture changed source, native process, trace, or loaded settings: ' + name)
+        budget()
+        return current
+
+    def acknowledge(state):
+        if not state:
+            return False
+        # Preserve the actual old POST/dead state while the natural round turns.
+        # The reopened initial event can also precede build_hud on the menu.
+        number = state.get('round_number')
+        if isinstance(number, int) and not isinstance(number, bool) and 1 <= number < round_number:
+            return False
+        if number == round_number and state.get('ui', {}).get('screen') == 'menu':
+            return False
+        require_living_capture_phase(state, actor_id, round_number)
+        return True
+
+    require_binding()
+    acknowledged = observed(acknowledge, budget(), 'Named living buy phase: ' + name, after)
+    receipt['acknowledged'] = acknowledged
+
+    def rendered(state):
+        require_living_capture_phase(state, actor_id, round_number)
+        if any(state[field] < acknowledged[field] for field in ('drawn_frames', 'wall_msec', 'simulation_tick')):
+            raise RuntimeError('Named capture observation or frame counter moved backward: ' + name)
+        return (state['wall_msec'] > acknowledged['wall_msec']
+                and state['drawn_frames'] >= acknowledged['drawn_frames'] + 2)
+
+    ready = observed(rendered, budget(), 'Two drawn frames before named capture: ' + name,
+                     acknowledged['wall_msec'])
+    receipt['ready'] = ready
+
+    def before_capture_context(state):
+        if not rendered(state):
+            return False
+        if any(state[field] < ready[field] for field in ('drawn_frames', 'wall_msec', 'simulation_tick')):
+            raise RuntimeError('Named capture context moved backward before raw capture: ' + name)
+        return True
+
+    before_capture = observed(before_capture_context, budget(), 'Fresh named context immediately before capture: ' + name,
+                              ready['wall_msec'])
+    receipt['before_capture'] = before_capture
+    receipt['binding_before_capture'] = require_binding()
+    budget()
+    capture(name)
+
+    def after_capture_context(state):
+        if not rendered(state):
+            return False
+        if any(state[field] < before_capture[field] for field in ('drawn_frames', 'wall_msec', 'simulation_tick')):
+            raise RuntimeError('Named capture context moved backward during raw capture: ' + name)
+        return True
+
+    receipt['after_capture'] = observed(after_capture_context, budget(), 'Fresh named context after raw capture: ' + name,
+                                        before_capture['wall_msec'])
+    receipt['binding_after_capture'] = require_binding()
+    receipt['remaining_original_budget_seconds'] = budget()
+    return receipt
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
@@ -140,6 +243,12 @@ def main():
         value = deadline - time.monotonic()
         if value <= 0:
             raise TimeoutError('Whole offline-input flow deadline exceeded')
+        return value
+
+    def transition_budget(until, label):
+        value = min(remaining(), until - time.monotonic())
+        if value <= 0:
+            raise TimeoutError('Original transition budget expired: ' + label)
         return value
 
     def pause(seconds):
@@ -455,6 +564,16 @@ def main():
             trace('offline_observation', label=label, state=latest)
             return latest
 
+        def phase_capture_binding(*, loaded_event=None):
+            current = {'source': source(), 'process_pid': client.pid,
+                       'process_running': client.poll() is None,
+                       'trace_directory': str(initial_trace.resolve())}
+            if loaded_event is not None:
+                with (initial_trace / 'events.jsonl').open(encoding='utf-8') as stream:
+                    current['loaded_initial_event'] = json.loads(stream.readline())
+                current['stored_profile'] = json.loads(saved_path.read_text(encoding='utf-8'))
+            return current
+
         initial_offline = observed(lambda state: state.get('ui', {}).get('screen') == 'game' and bool(state.get('local_actor')),
                                    30, 'Real offline match readiness after one Deploy click')
         pause(3)
@@ -585,8 +704,16 @@ def main():
         pause(.8)
         capture('06b-scoreboard')
         key('Tab', False)
-        wait_for(lambda: client_has('MATCH: Round 2'), 160, 'Natural exported round completion', client)
-        capture('06c-next-round')
+        next_round_until = min(deadline, time.monotonic() + 160)
+        wait_for(lambda: client_has('MATCH: Round 2'), transition_budget(next_round_until, 'Natural exported round completion'),
+                 'Natural exported round completion', client)
+        next_round_receipt = {'transition_watchdog_seconds': 160}
+        result.setdefault('phase_capture_fences', {})['06c-next-round'] = next_round_receipt
+        capture_living_phase('06c-next-round', actor_id=initial_offline['local_actor']['id'], round_number=2,
+                             after=initial_offline['wall_msec'], until=next_round_until,
+                             observed=observed, capture=capture, binding=phase_capture_binding,
+                             expected_binding={'source': before, 'process_pid': client.pid, 'process_running': True,
+                                               'trace_directory': str(initial_trace.resolve())}, receipt=next_round_receipt)
         tap('b')
         capture('06d-funded-requisition')
         click_text('VECTORLINE')
@@ -704,16 +831,26 @@ def main():
         trace('reopened_deploy_click_before', x=248, y=319)
         ui.click(248, 319)
         trace('reopened_deploy_click_after', x=248, y=319)
-        wait_for(lambda: (loaded_trace / 'events.jsonl').is_file(), 30,
+        loaded_until = min(deadline, time.monotonic() + 30)
+        wait_for(lambda: (loaded_trace / 'events.jsonl').is_file(), transition_budget(loaded_until, 'Reopened profile load'),
                  'Reopened process loaded profile into ordinary offline match', reopened)
         with (loaded_trace / 'events.jsonl').open(encoding='utf-8') as stream:
             loaded = json.loads(stream.readline())
         if loaded.get('initial_conditions') != 'stock_spawns_teams_random_seeds' or loaded.get('initial_profile') != saved:
             raise RuntimeError('Reopened process did not load saved settings/training')
-        capture('10-reopened-loaded-settings')
+        # The initial profile event is published before build_hud. Observe this
+        # reopened process, never the retired client's trace or last observation.
+        initial_trace = loaded_trace
+        loaded_receipt = {'transition_watchdog_seconds': 30}
+        result.setdefault('phase_capture_fences', {})['10-reopened-loaded-settings'] = loaded_receipt
+        capture_living_phase('10-reopened-loaded-settings', actor_id=loaded['local_actor']['id'], round_number=1,
+                             after=loaded['wall_msec'], until=loaded_until,
+                             observed=observed, capture=capture, binding=lambda: phase_capture_binding(loaded_event=loaded),
+                             expected_binding={'source': before, 'process_pid': reopened.pid, 'process_running': True,
+                                               'trace_directory': str(loaded_trace.resolve()),
+                                               'loaded_initial_event': loaded, 'stored_profile': saved}, receipt=loaded_receipt)
         # The earlier round already exercises weapons and settings. Prove
         # focus recovery with a living player in this new, ordinary stock match.
-        initial_trace = loaded_trace
         focus_start = observed(lambda state: state.get('ui', {}).get('focused') is True
                                and state.get('ui', {}).get('paused') is False
                                and state.get('time_scale') == 1
