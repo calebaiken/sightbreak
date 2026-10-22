@@ -1,0 +1,31 @@
+[
+  {
+    "event": "helper_command",
+    "seconds": 0.5202625420000118,
+    "name": "compile-capture-helper",
+    "command": [
+      "xcrun",
+      "swiftc",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-target",
+      "arm64-apple-macos14.0",
+      "/Users/runner/work/sightbreak/sightbreak/scripts/macos_window_capture.swift",
+      "-framework",
+      "AppKit",
+      "-framework",
+      "CoreGraphics",
+      "-framework",
+      "ScreenCaptureKit",
+      "-framework",
+      "Vision",
+      "-framework",
+      "ImageIO",
+      "-framework",
+      "UniformTypeIdentifiers",
+      "-o",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-menu-input/macos-window-capture"
+    ]
+  }
+]
