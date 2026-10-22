@@ -56,6 +56,9 @@ var funds_label: Label
 var health_label: Label
 var health_bar: ProgressBar
 var action_label: Label
+var hud_action_margin: MarginContainer
+var hud_controls: Label
+var hud_touch_mode := -1
 var crosshair: Control
 var radar: Control
 var attack_pips: Control
@@ -162,10 +165,21 @@ func uses_touch_controls() -> bool:
 	return bool(input_capabilities().mobile) or bool(profile.data.settings.touch_visible)
 
 func update_pointer_mode() -> void:
+	sync_hud_input_mode()
 	var capture := application_focused and screen == "game" and not paused and not uses_touch_controls()
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if capture else Input.MOUSE_MODE_VISIBLE
 	if is_instance_valid(touch) and not touch.editing:
 		touch.enabled = uses_touch_controls() and not paused and application_focused
+
+## Selected mode also controls the HUD while a menu temporarily disables touch.
+## Preserve the current HUD, overlay, feed and saved touch layout on a mode change.
+func sync_hud_input_mode() -> void:
+	if not is_instance_valid(hud_action_margin) or not is_instance_valid(hud_controls): return
+	var touch_mode := uses_touch_controls()
+	if hud_touch_mode == int(touch_mode): return
+	hud_touch_mode = int(touch_mode)
+	hud_action_margin.add_theme_constant_override("margin_right", 80 if touch_mode else 0)
+	hud_controls.visible = not touch_mode
 
 func connected_controllers() -> Array[int]:
 	return Input.get_connected_joypads()
@@ -229,6 +243,9 @@ func clear_ui() -> void:
 	status_label = null
 	status_row = null
 	status_fit_key = []
+	hud_action_margin = null
+	hud_controls = null
+	hud_touch_mode = -1
 	overlay = null
 	touch = null
 	crosshair = null
@@ -928,14 +945,13 @@ func build_hud() -> void:
 	side.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	side.custom_minimum_size.x = 240
 	top.add_child(side)
-	var action_margin := MarginContainer.new()
-	action_margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	action_margin.add_theme_constant_override("margin_right", 80 if uses_touch_controls() else 0)
-	side.add_child(action_margin)
+	hud_action_margin = MarginContainer.new()
+	hud_action_margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	side.add_child(hud_action_margin)
 	var side_stack := VBoxContainer.new()
 	side_stack.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	side_stack.add_theme_constant_override("separation", Design.SPACE_S)
-	action_margin.add_child(side_stack)
+	hud_action_margin.add_child(side_stack)
 	action_label = wrapped_label("", Design.TYPE_BODY, GOLD)
 	action_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	side_stack.add_child(action_label)
@@ -1021,11 +1037,10 @@ func build_hud() -> void:
 	health_bar.value = 100
 	health_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	vitals.add_child(health_bar)
-	var controls := wrapped_label("BUY  EQUIP     USE  OBJECTIVE     TEAM  ROSTER     II  MENU" if uses_touch_controls() else "B  BUY     E  OBJECTIVE     TAB  ROSTER     ESC  MENU", Design.TYPE_MICRO + 1, MUTED)
-	controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	controls.visible = not uses_touch_controls()
-	controls.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
-	bottom.add_child(controls)
+	hud_controls = wrapped_label("B  BUY     E  OBJECTIVE     TAB  ROSTER     ESC  MENU", Design.TYPE_MICRO + 1, MUTED)
+	hud_controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hud_controls.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+	bottom.add_child(hud_controls)
 	var loadout := _hud_block(HORIZONTAL_ALIGNMENT_RIGHT)
 	bottom.add_child(loadout)
 	ammo_label = wrapped_label("12 / 36", 22)
@@ -1054,6 +1069,7 @@ func build_hud() -> void:
 	touch.scoreboard_pressed.connect(func(): touch_score_until = elapsed + 4.0)
 	touch.layout_changed.connect(func(layout: Dictionary): profile.data.settings.hud_positions = layout; profile.save())
 	ui.add_child(touch)
+	sync_hud_input_mode()
 
 ## Reticle gap follows the actual authoritative spread cone of the next shot.
 func crosshair_gap(actor) -> float:
@@ -1339,6 +1355,7 @@ func _process(delta: float) -> void:
 			print("SIGHTBREAK_DEMO_CAPTURED")
 			get_tree().quit(0)
 	if screen != "game" or not is_instance_valid(match_game) or not is_instance_valid(score_label): return
+	sync_hud_input_mode()
 	var actor = match_game.local_actor()
 	score_label.text = "%02d  :  %02d" % [match_game.attack_score, match_game.defend_score]
 	var seconds := int(ceil(match_game.time_left))
