@@ -32,6 +32,13 @@ zero-grant baseline, a committed observation before worker acknowledgement, and
 an unchanged observation after duplicate replay. Failure to observe one of these
 boundaries remains an evidence gap even if the builder reports success.
 
+A fresh static tooling critic found that comparing SQL time to the restart
+checkpoint could accept a first sample after acknowledgement. The corrected
+oracle requires the real committed SQL sample no later than the lost-worker-killed
+checkpoint, which precedes the proxy reply release. The observer samples every
+50 ms during gameplay, then reconnects at 1 ms after the intentional outage,
+when all native game processes have exited. The builder harness stays unchanged.
+
 The independent recomputation imports no builder validator. It uses the new raw
 server/client transitions, original earned payload, SQLite bytes, HTTP profiles,
 logs, recovery checkpoints and fresh live SQL samples. It derives objective

@@ -94,7 +94,12 @@ def main():
                             '-v', 'ON_ERROR_STOP=1', '-U', 'sightbreak', '-d', 'sightbreak_match_test']
         child = subprocess.Popen(command, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=errors, text=True)
         summary['psql_pids'].append(child.pid)
-        child.stdin.write('SET default_transaction_read_only=on;\n' + QUERY + '\n\\watch 0.05\n')
+        # The intentional outage closes the gameplay observer connection. On
+        # reconnect, all Godot processes have exited and recovery is brief. Use
+        # a tighter interval to observe commit before the held reply is released.
+        recovery = (run / 'earned-staged.json').exists()
+        interval = '.001' if recovery else '.05'
+        child.stdin.write('SET default_transaction_read_only=on;\n' + QUERY + '\n\\watch ' + interval + '\n')
         child.stdin.flush()
         child.stdin.close()
         try:
@@ -132,7 +137,7 @@ def main():
                 child.kill()
                 child.wait(timeout=5)
             child.stdout.close()
-        time.sleep(.05)
+        time.sleep(.005 if (run / 'earned-staged.json').exists() else .05)
     samples.close()
     errors.close()
     summary.update(status='finished', finished_at_utc=now(), wall_seconds=time.monotonic() - start,

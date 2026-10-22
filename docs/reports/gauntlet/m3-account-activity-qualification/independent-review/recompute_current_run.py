@@ -217,10 +217,9 @@ for item in committed:
 # UTC samples prove that the real commit was visible before acknowledgement and
 # that no additional grant appeared through the replay boundary.
 parse_time = lambda s: datetime.fromisoformat(s.replace('Z', '+00:00'))
-ack_hold_at = parse_time(checkpoints['backend-committed-ack-held']['at_utc'])
-restart_at = parse_time(checkpoints['worker-restarted-committed']['at_utc'])
+lost_worker_killed_at = parse_time(checkpoints['lost-ack-worker-killed']['at_utc'])
 replay_at = parse_time(checkpoints['duplicate-replayed-unchanged']['at_utc'])
-assert any(parse_time(item['database_utc']) <= restart_at for item in committed), 'No live SQL sample before worker acknowledgement'
+assert any(parse_time(item['database_utc']) <= lost_worker_killed_at for item in committed), 'No live SQL commit sample before lost-worker kill and proxy reply release'
 assert any(parse_time(item['database_utc']) >= replay_at for item in committed), 'No live SQL sample after duplicate replay'
 assert sha(raw) != '462402a697b38c9628771384802fec3e3bdee3e3e2434a2cef7ad29ee9fadf6d', 'Historical payload must never qualify current source'
 assert all(report['cleanup'].values()) and report['godot_errors'] == []
