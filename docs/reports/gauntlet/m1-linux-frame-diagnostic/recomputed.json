@@ -1,0 +1,1163 @@
+{
+  "scope": "CPU-free recomputation of archived observations; no new native result",
+  "linux": [
+    {
+      "source": {
+        "source_dirty": false,
+        "source_validation_sha256": "52a4ea561c65025d048c4e83f4de9ddca370b3c7322dbe2d5db592353a0ce4ab",
+        "source_commit": "3c4d921ffc31d849d1a70d095a31d9845307f963",
+        "source_game_tree": "fb6be859e05812d8707be1ef5c6f747d2588c1e9",
+        "source_content_sha256": "f148106d4ed189f2a5d49e798f55bf0fb30f612126ec203037377f88d332855e",
+        "source_game_dirty": false
+      },
+      "passed": false,
+      "error": "Natural next round after objective resolution",
+      "partial_checks": {
+        "native_smoke_deployed": true,
+        "interrupted_E_reset": true,
+        "player_plant": true,
+        "postplant_attacker_role_guidance": true
+      },
+      "initial_settings": {
+        "crosshair_color": "d9eac6",
+        "crosshair_size": 5.0,
+        "difficulty": 1,
+        "fov": 78.0,
+        "fps_limit": 60,
+        "graphics_quality": 1,
+        "gyro": false,
+        "gyro_sensitivity": 1.2,
+        "hud_positions": {},
+        "hud_scale": 1.0,
+        "reduced_motion": false,
+        "render_scale": 1.0,
+        "sensitivity": 0.0028,
+        "touch_sensitivity": 0.004,
+        "touch_visible": false,
+        "ui_text_scale": 1.0,
+        "volume": 0.65,
+        "window_mode": 0
+      },
+      "capture_dimensions": [
+        [
+          1280,
+          720
+        ]
+      ],
+      "renderer_lines": [
+        "OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)"
+      ],
+      "initial_capture_to_terminal": {
+        "start_driver_seconds": 12.751347622997855,
+        "end_driver_seconds": 130.8351326459997,
+        "driver_wall_seconds": 118.08378502300184,
+        "start_observation": {
+          "wall_msec": 12112,
+          "drawn_frames": 6,
+          "phase": "buy",
+          "round_number": 1,
+          "elapsed": 0.416666666666667,
+          "simulation_tick": 25,
+          "objective_state": "carried",
+          "interaction_progress": 0.0,
+          "local_contribution": 0,
+          "local_actor": {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              -15.0,
+              6.0761347413063e-05,
+              2.0
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.14159256616701
+          }
+        },
+        "end_observation": {
+          "wall_msec": 130317,
+          "drawn_frames": 331,
+          "phase": "post",
+          "round_number": 1,
+          "elapsed": 43.7499999999988,
+          "simulation_tick": 2625,
+          "objective_state": "defused",
+          "interaction_progress": 0.0,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": false,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 3000,
+            "deaths": 1,
+            "grenades": 1,
+            "health": 0.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.800400078296661,
+            "position": [
+              -15.0,
+              6.0761347413063e-05,
+              7.93777942657471
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 0,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.14159256616701
+          }
+        },
+        "observed_tick_delta": 2600,
+        "observed_simulation_seconds": 43.333333333332135,
+        "observed_drawn_frame_delta": 325,
+        "observed_ticks_per_drawn_frame": 8.0,
+        "observed_drawn_frames_per_driver_wall_second": 2.752283050011417,
+        "observed_simulation_seconds_per_driver_wall_second": 0.36697107333484547,
+        "clock_scope": "Driver-clock action bracket; engine observations may precede actions. No clock domains equated."
+      },
+      "resolution_capture_to_terminal": {
+        "start_driver_seconds": 118.78208454799824,
+        "end_driver_seconds": 130.8351326459997,
+        "driver_wall_seconds": 12.053048098001454,
+        "start_observation": {
+          "wall_msec": 118106,
+          "drawn_frames": 300,
+          "phase": "post",
+          "round_number": 1,
+          "elapsed": 39.6333333333324,
+          "simulation_tick": 2378,
+          "objective_state": "defused",
+          "interaction_progress": 0.0,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": false,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 3000,
+            "deaths": 1,
+            "grenades": 1,
+            "health": 0.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.800400078296661,
+            "position": [
+              -15.0,
+              6.0761347413063e-05,
+              7.93777942657471
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 0,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.14159256616701
+          }
+        },
+        "end_observation": {
+          "wall_msec": 130317,
+          "drawn_frames": 331,
+          "phase": "post",
+          "round_number": 1,
+          "elapsed": 43.7499999999988,
+          "simulation_tick": 2625,
+          "objective_state": "defused",
+          "interaction_progress": 0.0,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": false,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 3000,
+            "deaths": 1,
+            "grenades": 1,
+            "health": 0.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.800400078296661,
+            "position": [
+              -15.0,
+              6.0761347413063e-05,
+              7.93777942657471
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 0,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.14159256616701
+          }
+        },
+        "observed_tick_delta": 247,
+        "observed_simulation_seconds": 4.116666666666397,
+        "observed_drawn_frame_delta": 31,
+        "observed_ticks_per_drawn_frame": 7.967741935483871,
+        "observed_drawn_frames_per_driver_wall_second": 2.5719635189326246,
+        "observed_simulation_seconds_per_driver_wall_second": 0.3415456931055466,
+        "clock_scope": "Driver-clock action bracket; engine observations may precede actions. No clock domains equated."
+      },
+      "round": 3,
+      "input_sha256": {
+        "actions.jsonl": "4d7b1b4feb911f879224f7bcd5162447da09c552f5eb5cb8293278225c1ea096",
+        "results.json": "ee148ef64661e8765739c2fc3e9c8c77b35bb6c9ff997c9277b16110dcf5bea0",
+        "client.log": "fe3968113707ee0d9055104305cdf699c62ee4fee6892d6286cc62deda517464",
+        "trace/status.json": "cc9de372cfd2d803518585b360412ea8f85c1ea10c614d961f4b9817ac563b33"
+      },
+      "final_time_left": 0.650000000000013,
+      "final_window_size": [
+        1280,
+        720
+      ]
+    },
+    {
+      "source": {
+        "source_dirty": false,
+        "source_validation_sha256": "52a4ea561c65025d048c4e83f4de9ddca370b3c7322dbe2d5db592353a0ce4ab",
+        "source_commit": "3c4d921ffc31d849d1a70d095a31d9845307f963",
+        "source_game_tree": "fb6be859e05812d8707be1ef5c6f747d2588c1e9",
+        "source_content_sha256": "f148106d4ed189f2a5d49e798f55bf0fb30f612126ec203037377f88d332855e",
+        "source_game_dirty": false
+      },
+      "passed": false,
+      "error": "Natural next round after objective resolution",
+      "partial_checks": {
+        "native_smoke_deployed": true,
+        "interrupted_E_reset": true,
+        "player_plant": true,
+        "postplant_attacker_role_guidance": true
+      },
+      "initial_settings": {
+        "crosshair_color": "d9eac6",
+        "crosshair_size": 5.0,
+        "difficulty": 1,
+        "fov": 78.0,
+        "fps_limit": 60,
+        "graphics_quality": 1,
+        "gyro": false,
+        "gyro_sensitivity": 1.2,
+        "hud_positions": {},
+        "hud_scale": 1.0,
+        "reduced_motion": false,
+        "render_scale": 1.0,
+        "sensitivity": 0.0028,
+        "touch_sensitivity": 0.004,
+        "touch_visible": false,
+        "ui_text_scale": 1.0,
+        "volume": 0.65,
+        "window_mode": 0
+      },
+      "capture_dimensions": [
+        [
+          1280,
+          720
+        ]
+      ],
+      "renderer_lines": [
+        "OpenGL API 4.5 (Core Profile) Mesa 25.0.7-2+deb13u1 - Compatibility - Using Device: Mesa - llvmpipe (LLVM 19.1.7, 256 bits)"
+      ],
+      "initial_capture_to_terminal": {
+        "start_driver_seconds": 12.325977133001288,
+        "end_driver_seconds": 129.59989870100253,
+        "driver_wall_seconds": 117.27392156800124,
+        "start_observation": {
+          "wall_msec": 11675,
+          "drawn_frames": 6,
+          "phase": "buy",
+          "round_number": 1,
+          "elapsed": 0.416666666666667,
+          "simulation_tick": 25,
+          "objective_state": "carried",
+          "interaction_progress": 0.0,
+          "local_contribution": 0,
+          "local_actor": {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              -15.0,
+              6.0761347413063e-05,
+              2.0
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.14159256616701
+          }
+        },
+        "end_observation": {
+          "wall_msec": 129024,
+          "drawn_frames": 331,
+          "phase": "post",
+          "round_number": 1,
+          "elapsed": 43.7499999999988,
+          "simulation_tick": 2625,
+          "objective_state": "defused",
+          "interaction_progress": 0.0,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": false,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 3000,
+            "deaths": 1,
+            "grenades": 1,
+            "health": 0.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.800400078296661,
+            "position": [
+              -15.0,
+              6.0761347413063e-05,
+              7.93777942657471
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 0,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.14159256616701
+          }
+        },
+        "observed_tick_delta": 2600,
+        "observed_simulation_seconds": 43.333333333332135,
+        "observed_drawn_frame_delta": 325,
+        "observed_ticks_per_drawn_frame": 8.0,
+        "observed_drawn_frames_per_driver_wall_second": 2.7712896068845865,
+        "observed_simulation_seconds_per_driver_wall_second": 0.36950528091793466,
+        "clock_scope": "Driver-clock action bracket; engine observations may precede actions. No clock domains equated."
+      },
+      "resolution_capture_to_terminal": {
+        "start_driver_seconds": 117.54752927300069,
+        "end_driver_seconds": 129.59989870100253,
+        "driver_wall_seconds": 12.052369428001839,
+        "start_observation": {
+          "wall_msec": 116877,
+          "drawn_frames": 300,
+          "phase": "post",
+          "round_number": 1,
+          "elapsed": 39.6333333333324,
+          "simulation_tick": 2378,
+          "objective_state": "defused",
+          "interaction_progress": 0.0,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": false,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 3000,
+            "deaths": 1,
+            "grenades": 1,
+            "health": 0.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.800400078296661,
+            "position": [
+              -15.0,
+              6.0761347413063e-05,
+              7.93777942657471
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 0,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.14159256616701
+          }
+        },
+        "end_observation": {
+          "wall_msec": 129024,
+          "drawn_frames": 331,
+          "phase": "post",
+          "round_number": 1,
+          "elapsed": 43.7499999999988,
+          "simulation_tick": 2625,
+          "objective_state": "defused",
+          "interaction_progress": 0.0,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": false,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 3000,
+            "deaths": 1,
+            "grenades": 1,
+            "health": 0.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.800400078296661,
+            "position": [
+              -15.0,
+              6.0761347413063e-05,
+              7.93777942657471
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 0,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.14159256616701
+          }
+        },
+        "observed_tick_delta": 247,
+        "observed_simulation_seconds": 4.116666666666397,
+        "observed_drawn_frame_delta": 31,
+        "observed_ticks_per_drawn_frame": 7.967741935483871,
+        "observed_drawn_frames_per_driver_wall_second": 2.5721083464282333,
+        "observed_simulation_seconds_per_driver_wall_second": 0.34156492557404944,
+        "clock_scope": "Driver-clock action bracket; engine observations may precede actions. No clock domains equated."
+      },
+      "round": 4,
+      "input_sha256": {
+        "actions.jsonl": "d0e0385363f4e9cbcf9839157c88ae3fdc56e530173c6757b41bd7b3720de04b",
+        "results.json": "e617a848efb100ec13592cefcc1aea29a7e95b741078f792891ff5d8521da3ca",
+        "client.log": "fe3968113707ee0d9055104305cdf699c62ee4fee6892d6286cc62deda517464",
+        "trace/status.json": "f42e7b2b1e777e35458d37f7650b300bca2ce86186bb8842b348162183ef21ca"
+      },
+      "final_time_left": 0.650000000000013,
+      "final_window_size": [
+        1280,
+        720
+      ]
+    }
+  ],
+  "windows": {
+    "source": {
+      "source_dirty": false,
+      "source_validation_sha256": "c5cf2b30b7ce0899a07eb1549524eb2ea494a474677fce04b989d0ca76bc473c",
+      "source_commit": "3b5cf7640e256dff404b401bf2b27ffaff157bdd",
+      "source_game_tree": "fb6be859e05812d8707be1ef5c6f747d2588c1e9",
+      "source_content_sha256": "f148106d4ed189f2a5d49e798f55bf0fb30f612126ec203037377f88d332855e",
+      "source_game_dirty": false
+    },
+    "passed": true,
+    "error": null,
+    "partial_checks": {
+      "native_smoke_deployed": true,
+      "interrupted_E_reset": true,
+      "player_plant": true,
+      "postplant_attacker_role_guidance": true,
+      "objective_resolution_and_next_round": true
+    },
+    "initial_settings": {
+      "crosshair_color": "d9eac6",
+      "crosshair_size": 5.0,
+      "difficulty": 1,
+      "fov": 78.0,
+      "fps_limit": 60,
+      "graphics_quality": 1,
+      "gyro": false,
+      "gyro_sensitivity": 1.2,
+      "hud_positions": {},
+      "hud_scale": 1.0,
+      "reduced_motion": false,
+      "render_scale": 1.0,
+      "sensitivity": 0.0028,
+      "touch_sensitivity": 0.004,
+      "touch_visible": false,
+      "ui_text_scale": 1.0,
+      "volume": 0.65,
+      "window_mode": 0
+    },
+    "capture_dimensions": [
+      [
+        976,
+        549
+      ]
+    ],
+    "renderer_lines": [
+      "OpenGL API OpenGL ES 3.0 (ANGLE 2.1.1 git hash: aaebda1c5a40) - Compatibility - Using Device: Google Inc. (Microsoft) - ANGLE (Microsoft, Microsoft Basic Render Driver (0x0000008C) Direct3D11 vs_5_0 ps_5_0, D3D11-10.0.26100.33648)"
+    ],
+    "initial_capture_to_terminal": {
+      "start_driver_seconds": 15.890999999999963,
+      "end_driver_seconds": 65.25,
+      "driver_wall_seconds": 49.35900000000004,
+      "start_observation": {
+        "wall_msec": 15325,
+        "drawn_frames": 22,
+        "phase": "buy",
+        "round_number": 1,
+        "elapsed": 0.416666666666667,
+        "simulation_tick": 25,
+        "objective_state": "carried",
+        "interaction_progress": 0.0,
+        "local_contribution": 0,
+        "local_actor": {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 800,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            -15.0,
+            6.0761347413063e-05,
+            2.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -3.14159256616701
+        }
+      },
+      "end_observation": {
+        "wall_msec": 64659,
+        "drawn_frames": 587,
+        "phase": "buy",
+        "round_number": 2,
+        "elapsed": 44.3999999999988,
+        "simulation_tick": 2664,
+        "objective_state": "carried",
+        "interaction_progress": 0.0,
+        "local_contribution": 1,
+        "local_actor": {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 3000,
+          "deaths": 1,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            -4.40000009536743,
+            -0.000745564699172974,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -3.14159256616701
+        }
+      },
+      "observed_tick_delta": 2639,
+      "observed_simulation_seconds": 43.98333333333213,
+      "observed_drawn_frame_delta": 565,
+      "observed_ticks_per_drawn_frame": 4.670796460176991,
+      "observed_drawn_frames_per_driver_wall_second": 11.446747300391005,
+      "observed_simulation_seconds_per_driver_wall_second": 0.8910904461867563,
+      "clock_scope": "Driver-clock action bracket; engine observations may precede actions. No clock domains equated."
+    },
+    "resolution_capture_to_terminal": {
+      "start_driver_seconds": 60.406999999999925,
+      "end_driver_seconds": 65.25,
+      "driver_wall_seconds": 4.843000000000075,
+      "start_observation": {
+        "wall_msec": 59759,
+        "drawn_frames": 528,
+        "phase": "post",
+        "round_number": 1,
+        "elapsed": 39.6333333333324,
+        "simulation_tick": 2378,
+        "objective_state": "defused",
+        "interaction_progress": 0.0,
+        "local_contribution": 1,
+        "local_actor": {
+          "alive": false,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 3000,
+          "deaths": 1,
+          "grenades": 1,
+          "health": 0.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": -0.800800025463104,
+          "position": [
+            -15.0,
+            6.0761347413063e-05,
+            7.95000171661377
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 0,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -3.14159256616701
+        }
+      },
+      "end_observation": {
+        "wall_msec": 64659,
+        "drawn_frames": 587,
+        "phase": "buy",
+        "round_number": 2,
+        "elapsed": 44.3999999999988,
+        "simulation_tick": 2664,
+        "objective_state": "carried",
+        "interaction_progress": 0.0,
+        "local_contribution": 1,
+        "local_actor": {
+          "alive": true,
+          "ammo": 15,
+          "assists": 0,
+          "credits": 3000,
+          "deaths": 1,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            -4.40000009536743,
+            -0.000745564699172974,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 60,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "sidearm",
+          "yaw": -3.14159256616701
+        }
+      },
+      "observed_tick_delta": 286,
+      "observed_simulation_seconds": 4.766666666666396,
+      "observed_drawn_frame_delta": 59,
+      "observed_ticks_per_drawn_frame": 4.8474576271186445,
+      "observed_drawn_frames_per_driver_wall_second": 12.182531488746458,
+      "observed_simulation_seconds_per_driver_wall_second": 0.9842384197122285,
+      "clock_scope": "Driver-clock action bracket; engine observations may precede actions. No clock domains equated."
+    },
+    "run_id": 39735001567,
+    "archive_sha256": "16d2eb10f599593394af0aa85c12ac9774f1c0c1ab5e693b6376e69913617a2c",
+    "inner_archive_sha256": "1ec46da3b37712fc547ccd7a5cb9046e49678d93eb8c641c5348e6e371aa87fc",
+    "input_sha256": {
+      "actions.jsonl": "372479ac56da002928ca21e71946fe2320e1db38155186e0bfdb9a4309a99f19",
+      "results.json": "4c2f65c3f3816b5ccbfff577b541ef0ddb2134cd9eb93b287b8f577b21f124c7",
+      "client.log": "4f61f80c54d214a7c76980d800eb069e26d38fbaf767d9f87f09809f5bd428b0",
+      "trace/status.json": "54f9a372e2b003e94c3fdcee8a19e54ea9c4d68ae54a28f529185e2d4c321ca0"
+    },
+    "final_window_size": [
+      976,
+      549
+    ],
+    "client_commands": [
+      [
+        "D:\\a\\sightbreak\\sightbreak\\builds\\desktop-playability\\windows\\SIGHTBREAK.exe",
+        "--audio-driver",
+        "Dummy",
+        "--position",
+        "0,0",
+        "--resolution",
+        "976x549",
+        "--",
+        "--offline-validation",
+        "--offline-trace-dir=D:\\a\\sightbreak\\sightbreak\\builds\\desktop-playability\\offline-plant\\trace",
+        "--offline-scenario=plant",
+        "--offline-seed=42"
+      ]
+    ]
+  },
+  "same_shipping_content_and_initial_settings": true,
+  "legacy_fixed_work_profiles": [
+    {
+      "path": "docs/reports/evidence-v03/render-profile/before-summary.json",
+      "source_blob_sha256": "a686f806fdda38ee2131e6fab28c33651a59b3898f7f97e08728a46fc7ee029c",
+      "context": "Linux Xvfb / Mesa llvmpipe CPU rendering; fixed synthetic camera/actors. NOT physical GPU/mobile FPS, thermal or battery evidence.",
+      "quality": "standard",
+      "cpus": "0,1",
+      "mesa_workers": 2,
+      "runs": 3,
+      "frames_per_view_per_run": 24,
+      "views": [
+        {
+          "view": "approach",
+          "median_of_run_medians_ms": 463.606,
+          "run_medians_ms": [
+            443.618,
+            466.868,
+            463.606
+          ],
+          "p95_ms": [
+            698.218,
+            580.211,
+            719.194
+          ],
+          "draw_calls": [
+            353.0,
+            353.0,
+            353.0
+          ],
+          "primitives": [
+            24782.0,
+            24782.0,
+            24782.0
+          ],
+          "texture_bytes": [
+            50568122,
+            50568122,
+            50568122
+          ]
+        },
+        {
+          "view": "site",
+          "median_of_run_medians_ms": 431.488,
+          "run_medians_ms": [
+            430.225,
+            434.976,
+            431.488
+          ],
+          "p95_ms": [
+            773.859,
+            795.65,
+            773.358
+          ],
+          "draw_calls": [
+            178.0,
+            178.0,
+            178.0
+          ],
+          "primitives": [
+            16650.0,
+            16650.0,
+            16650.0
+          ],
+          "texture_bytes": [
+            50568122,
+            50568122,
+            50568122
+          ]
+        },
+        {
+          "view": "overview",
+          "median_of_run_medians_ms": 337.987,
+          "run_medians_ms": [
+            316.016,
+            337.987,
+            421.023
+          ],
+          "p95_ms": [
+            691.02,
+            505.506,
+            698.41
+          ],
+          "draw_calls": [
+            332.0,
+            332.0,
+            332.0
+          ],
+          "primitives": [
+            26154.0,
+            26154.0,
+            26154.0
+          ],
+          "texture_bytes": [
+            50568122,
+            50568122,
+            50568122
+          ]
+        },
+        {
+          "view": "operators",
+          "median_of_run_medians_ms": 452.032,
+          "run_medians_ms": [
+            441.105,
+            462.94,
+            452.032
+          ],
+          "p95_ms": [
+            798.253,
+            593.163,
+            570.108
+          ],
+          "draw_calls": [
+            296.0,
+            296.0,
+            296.0
+          ],
+          "primitives": [
+            23068.0,
+            23068.0,
+            23068.0
+          ],
+          "texture_bytes": [
+            50568122,
+            50568122,
+            50568122
+          ]
+        }
+      ]
+    },
+    {
+      "path": "docs/reports/evidence-v03/render-profile/standard-summary.json",
+      "source_blob_sha256": "d93b5f20bffe199bcba4b4633f73decb5861cded2edec272bf1cb72872455caf",
+      "context": "Linux Xvfb / Mesa llvmpipe CPU rendering; fixed synthetic camera/actors. NOT physical GPU/mobile FPS, thermal or battery evidence.",
+      "quality": "standard",
+      "cpus": "0,1",
+      "mesa_workers": 2,
+      "runs": 3,
+      "frames_per_view_per_run": 24,
+      "views": [
+        {
+          "view": "approach",
+          "median_of_run_medians_ms": 561.95,
+          "run_medians_ms": [
+            561.95,
+            560.257,
+            568.641
+          ],
+          "p95_ms": [
+            572.722,
+            568.828,
+            575.866
+          ],
+          "draw_calls": [
+            444.0,
+            444.0,
+            444.0
+          ],
+          "primitives": [
+            136954.0,
+            136954.0,
+            136954.0
+          ],
+          "texture_bytes": [
+            55942068,
+            55942068,
+            55942068
+          ]
+        },
+        {
+          "view": "site",
+          "median_of_run_medians_ms": 494.209,
+          "run_medians_ms": [
+            498.09,
+            492.265,
+            494.209
+          ],
+          "p95_ms": [
+            534.887,
+            505.614,
+            531.976
+          ],
+          "draw_calls": [
+            239.0,
+            239.0,
+            239.0
+          ],
+          "primitives": [
+            63966.0,
+            63966.0,
+            63966.0
+          ],
+          "texture_bytes": [
+            55942068,
+            55942068,
+            55942068
+          ]
+        },
+        {
+          "view": "overview",
+          "median_of_run_medians_ms": 472.588,
+          "run_medians_ms": [
+            472.131,
+            472.588,
+            479.891
+          ],
+          "p95_ms": [
+            486.304,
+            481.637,
+            557.987
+          ],
+          "draw_calls": [
+            451.0,
+            451.0,
+            451.0
+          ],
+          "primitives": [
+            120622.0,
+            120622.0,
+            120622.0
+          ],
+          "texture_bytes": [
+            55942068,
+            55942068,
+            55942068
+          ]
+        },
+        {
+          "view": "operators",
+          "median_of_run_medians_ms": 532.717,
+          "run_medians_ms": [
+            532.717,
+            532.22,
+            684.009
+          ],
+          "p95_ms": [
+            558.213,
+            537.131,
+            1349.32
+          ],
+          "draw_calls": [
+            383.0,
+            383.0,
+            383.0
+          ],
+          "primitives": [
+            113648.0,
+            113648.0,
+            113648.0
+          ],
+          "texture_bytes": [
+            55942068,
+            55942068,
+            55942068
+          ]
+        }
+      ]
+    },
+    {
+      "path": "docs/reports/evidence-v03/render-profile/low-summary.json",
+      "source_blob_sha256": "621ba62cd5000fe7114e16415c65ee9a93060872e4ffeebbab557bbff25fac69",
+      "context": "Linux Xvfb / Mesa llvmpipe CPU rendering; fixed synthetic camera/actors. NOT physical GPU/mobile FPS, thermal or battery evidence.",
+      "quality": "low",
+      "cpus": "0,1",
+      "mesa_workers": 2,
+      "runs": 3,
+      "frames_per_view_per_run": 24,
+      "views": [
+        {
+          "view": "approach",
+          "median_of_run_medians_ms": 88.181,
+          "run_medians_ms": [
+            87.414,
+            102.18,
+            88.181
+          ],
+          "p95_ms": [
+            118.061,
+            107.145,
+            94.549
+          ],
+          "draw_calls": [
+            170.0,
+            170.0,
+            170.0
+          ],
+          "primitives": [
+            40070.0,
+            40070.0,
+            40070.0
+          ],
+          "texture_bytes": [
+            41196468,
+            41196468,
+            41196468
+          ]
+        },
+        {
+          "view": "site",
+          "median_of_run_medians_ms": 81.068,
+          "run_medians_ms": [
+            80.403,
+            81.307,
+            81.068
+          ],
+          "p95_ms": [
+            82.867,
+            104.407,
+            82.933
+          ],
+          "draw_calls": [
+            90.0,
+            90.0,
+            90.0
+          ],
+          "primitives": [
+            19866.0,
+            19866.0,
+            19866.0
+          ],
+          "texture_bytes": [
+            41196468,
+            41196468,
+            41196468
+          ]
+        },
+        {
+          "view": "overview",
+          "median_of_run_medians_ms": 87.158,
+          "run_medians_ms": [
+            87.158,
+            86.676,
+            88.51
+          ],
+          "p95_ms": [
+            97.182,
+            88.013,
+            89.565
+          ],
+          "draw_calls": [
+            185.0,
+            185.0,
+            185.0
+          ],
+          "primitives": [
+            37602.0,
+            37602.0,
+            37602.0
+          ],
+          "texture_bytes": [
+            41196468,
+            41196468,
+            41196468
+          ]
+        },
+        {
+          "view": "operators",
+          "median_of_run_medians_ms": 82.728,
+          "run_medians_ms": [
+            82.728,
+            81.816,
+            83.031
+          ],
+          "p95_ms": [
+            88.264,
+            88.185,
+            96.174
+          ],
+          "draw_calls": [
+            156.0,
+            156.0,
+            156.0
+          ],
+          "primitives": [
+            36820.0,
+            36820.0,
+            36820.0
+          ],
+          "texture_bytes": [
+            41196468,
+            41196468,
+            41196468
+          ]
+        }
+      ]
+    }
+  ]
+}
