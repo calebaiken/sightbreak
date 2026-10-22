@@ -135,6 +135,13 @@ jobs:
       - name: Intel macOS render feature attribution after the unchanged startup gate
         if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15-intel'
         run: python scripts/diagnose_macos_render.py --output builds/desktop-playability/macos-diagnostics/render-features
+      - name: iOS compile qualification controls (ARM macOS)
+        if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15'
+        run: python scripts/test_qualify_ios_compile.py -v
+      - name: Unsigned generic-device iOS compiler and linker qualification (ARM macOS)
+        if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15'
+        timeout-minutes: 17
+        run: python scripts/qualify_ios_compile.py --output builds/desktop-playability/ios-compile --builds builds/ios-device-export --derived-data builds/ios-device-derived --timeout 900
       - name: Preserve source-bound development package including failed qualification attempts
         if: always() && steps.export.outcome == 'success' && steps.package_inspection.outcome == 'success'
         run: python scripts/build_manifest.py package --targets ${{ matrix.target }}
