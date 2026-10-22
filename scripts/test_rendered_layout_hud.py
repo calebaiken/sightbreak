@@ -13,7 +13,7 @@ import time
 import unittest
 
 from PIL import Image
-from capture_desktop_layouts import DEFAULT_SIZES, hud_footer_region, ocr_input, ocr_lines, rendered_hud_matches
+from capture_desktop_layouts import DEFAULT_SIZES, hud_footer_region, ocr_input, ocr_lines, rendered_hud_matches, run_layout_ocr
 
 FIXTURES = Path(__file__).resolve().parents[1] / 'docs/reports/gauntlet/native-layout-ocr'
 
@@ -50,14 +50,17 @@ class RenderedLayoutHUDTests(unittest.TestCase):
         (cls.output / (label + '-analysis.png')).write_bytes(data)
         command = [cls.tesseract, 'stdin', 'stdout', '--psm', '11', 'tsv']
         started = time.monotonic()
-        result = subprocess.run(command, input=data, capture_output=True, timeout=5, check=True)
+        receipt = {}
+        result = run_layout_ocr(command, data, stderr=subprocess.PIPE, timeout=5, receipt=receipt)
+        result.check_returncode()
         duration = time.monotonic() - started
         text = result.stdout.decode('utf-8')
         (cls.output / (label + '.tsv')).write_text(text)
         cls.measurements.append({'label': label, 'seconds': duration, 'exit_code': result.returncode,
                                  'analysis_region': region, 'scale': factor,
                                  'analysis_sha256': hashlib.sha256(data).hexdigest(),
-                                 'words': [r['text'] for r in csv.DictReader(io.StringIO(text), delimiter='\t') if r['text'].strip()]})
+                                 'words': [r['text'] for r in csv.DictReader(io.StringIO(text), delimiter='\t') if r['text'].strip()],
+                                 'child_receipt': receipt})
         return ocr_lines(text, factor, origin=region[:2] if region else (0, 0))
 
     def test_actual_failed_desktop_png_is_recognized_from_full_and_footer_pixels(self):
@@ -117,6 +120,21 @@ class RenderedLayoutHUDTests(unittest.TestCase):
     def test_original_native_pngs_remain_byte_identical_after_analysis(self):
         for fixture in self.manifest['raw_native_fixtures']:
             self.assertEqual(hashlib.sha256((FIXTURES / fixture['path']).read_bytes()).hexdigest(), fixture['sha256'])
+
+    def test_real_ocr_timeout_retains_budget_failure_and_parent_thread_setting(self):
+        before = os.environ.get('OMP_THREAD_LIMIT')
+        receipt = {}
+        with Image.open(FIXTURES / 'fixtures/menu.png') as raw:
+            data = ocr_input(raw, 2)
+        with self.assertRaises(subprocess.TimeoutExpired):
+            run_layout_ocr([self.tesseract, 'stdin', 'stdout', '--psm', '11', 'tsv'], data,
+                           stderr=subprocess.PIPE, timeout=.000001, receipt=receipt)
+        self.assertEqual(receipt['timeout_seconds'], .000001)
+        self.assertEqual(receipt['error_type'], 'TimeoutExpired')
+        self.assertEqual(receipt['thread_environment'], {'OMP_THREAD_LIMIT': '1'})
+        self.assertGreater(receipt['elapsed_seconds'], 0)
+        self.assertNotIn('exit_code', receipt)
+        self.assertEqual(os.environ.get('OMP_THREAD_LIMIT'), before)
 
     @classmethod
     def tearDownClass(cls):

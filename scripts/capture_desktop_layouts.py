@@ -33,6 +33,23 @@ import toolchain
 DEFAULT_SIZES = ("960x540", "1280x720", "1920x1080", "1280x800")
 
 
+def run_layout_ocr(command, data, *, stderr, timeout, receipt):
+    """Limit only the OCR child; retain its original budget and failed attempts."""
+    env = dict(os.environ, OMP_THREAD_LIMIT="1")
+    receipt.update(timeout_seconds=timeout, thread_environment={"OMP_THREAD_LIMIT": "1"})
+    started = time.monotonic()
+    try:
+        completed = subprocess.run(command, input=data, stdout=subprocess.PIPE,
+                                   stderr=stderr, timeout=timeout, env=env)
+        receipt["exit_code"] = completed.returncode
+        return completed
+    except Exception as error:
+        receipt.update(error_type=type(error).__name__, error=str(error))
+        raise
+    finally:
+        receipt["elapsed_seconds"] = time.monotonic() - started
+
+
 def ocr_input(raw, factor, *, region=None, threshold=145):
     """Prepare an analysis copy; muted footer strokes need grayscale values."""
     image = raw.crop(region) if region is not None else raw
@@ -281,12 +298,14 @@ def capture_case(args, size, display, out, executable, expected, before, whole_d
             ocr_budget = min(ocr_budget, ocr_deadline - time.monotonic())
             if ocr_budget <= 0:
                 raise TimeoutError("Rendered UI OCR confirmation exceeded its wall budget")
-        with (out / "ocr-stderr.log").open("ab") as stderr:
-            completed = subprocess.run(command, input=data, stdout=subprocess.PIPE, stderr=stderr,
-                                       timeout=ocr_budget)
-        result["ocr_commands"].append({"command": command, "label": label, "exit_code": completed.returncode,
-                                       "original_sha256": sha256(raw_path), "analysis_scale": factor,
-                                       "analysis_region": region, "analysis_threshold": threshold})
+        receipt = {"command": command, "label": label, "analysis_scale": factor,
+                   "analysis_region": region, "analysis_threshold": threshold}
+        try:
+            with (out / "ocr-stderr.log").open("ab") as stderr:
+                completed = run_layout_ocr(command, data, stderr=stderr, timeout=ocr_budget, receipt=receipt)
+        finally:
+            receipt["original_sha256"] = sha256(raw_path)
+            result["ocr_commands"].append(receipt)
         if completed.returncode:
             raise RuntimeError("Native UI OCR failed")
         text = completed.stdout.decode("utf-8", errors="replace")
