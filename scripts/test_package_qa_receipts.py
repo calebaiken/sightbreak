@@ -71,6 +71,34 @@ class ReceiptsTest(unittest.TestCase):
             package(self.source, output, max_bytes=200)
         self.assertFalse(output.exists())
 
+    def test_layout_pngs_retain_failed_frames_byte_for_byte_with_hash_index(self):
+        expected = {'01-menu.png': b'Original completed native capture',
+                    'menu-ready-1-ocr-original.png': b'Original failed startup frame'}
+        for name, value in expected.items():
+            self.write(name, value)
+        self.write('results.json', b'{}')
+        report = package(self.source, self.root / 'layout.zip', layout_pngs=True)
+        self.assertEqual(report['files'], 2)
+        self.assertLess(report['bytes'], 30 * 1024 * 1024)
+        with zipfile.ZipFile(report['archive']) as bundle:
+            index = json.loads(bundle.read('qa-receipts-index.json'))
+            self.assertIn('Original layout PNGs', index['scope'])
+            self.assertEqual({entry['path'] for entry in index['files']}, set(expected))
+            for entry in index['files']:
+                value = bundle.read(entry['archive_path'])
+                self.assertEqual(value, expected[entry['path']])
+                self.assertEqual(entry['sha256'], hashlib.sha256(value).hexdigest())
+                self.assertEqual((self.source / entry['path']).read_bytes(), value)
+
+    def test_oversized_layout_png_group_publishes_no_partial_archive(self):
+        path = self.write('failed-ocr-original.png', random.Random(23).randbytes(4096))
+        before = path.read_bytes()
+        output = self.root / 'layout.zip'
+        with self.assertRaisesRegex(RuntimeError, 'download bound'):
+            package(self.source, output, max_bytes=1024, layout_pngs=True)
+        self.assertFalse(output.exists())
+        self.assertEqual(path.read_bytes(), before)
+
     def test_existing_output_and_source_output_are_rejected(self):
         self.write('source.json', b'{}')
         output = self.root / 'preserved.zip'

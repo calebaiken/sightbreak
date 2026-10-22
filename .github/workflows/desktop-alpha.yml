@@ -179,3 +179,58 @@ jobs:
             !builds/desktop-playability/offline-full-match/round-*.png
           if-no-files-found: warn
           retention-days: 14
+      - name: Package bounded original Linux layout PNGs by native size
+        if: always() && runner.os == 'Linux'
+        shell: python
+        run: |
+          import json, pathlib, sys
+          sys.path.insert(0, 'scripts')
+          from package_qa_receipts import package
+          failures = []
+          for size in ('960x540', '1280x720', '1920x1080', '1280x800'):
+              source = pathlib.Path('builds/desktop-playability/layouts') / size
+              if not source.is_dir() or not any(source.glob('*.png')):
+                  print('No original layout PNGs for ' + size)
+                  continue
+              try:
+                  print(json.dumps(package(source, pathlib.Path('builds/layout-images') / (size + '.zip'), layout_pngs=True)))
+              except Exception as error:
+                  failures.append(size + ': ' + str(error))
+          if failures:
+              raise SystemExit('\n'.join(failures))
+      - name: Preserve original Linux layout PNGs at 960x540
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-layout-images-960x540-${{ github.sha }}
+          path: builds/layout-images/960x540.zip
+          compression-level: 0
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Preserve original Linux layout PNGs at 1280x720
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-layout-images-1280x720-${{ github.sha }}
+          path: builds/layout-images/1280x720.zip
+          compression-level: 0
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Preserve original Linux layout PNGs at 1920x1080
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-layout-images-1920x1080-${{ github.sha }}
+          path: builds/layout-images/1920x1080.zip
+          compression-level: 0
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Preserve original Linux layout PNGs at 1280x800
+        if: always() && runner.os == 'Linux'
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-layout-images-1280x800-${{ github.sha }}
+          path: builds/layout-images/1280x800.zip
+          compression-level: 0
+          if-no-files-found: warn
+          retention-days: 14

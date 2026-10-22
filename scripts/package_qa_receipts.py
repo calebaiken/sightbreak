@@ -17,7 +17,7 @@ SUFFIXES = {'.json', '.jsonl', '.log'}
 EXCLUDED = {'.git', '.godot', '__pycache__', 'node_modules', 'cache', '.cache'}
 
 
-def selected(source):
+def selected(source, *, layout_pngs=False):
     paths = []
     for path in sorted(source.rglob('*'), key=lambda item: item.relative_to(source).as_posix()):
         relative = path.relative_to(source)
@@ -25,7 +25,8 @@ def selected(source):
             continue
         if path.is_symlink():
             raise RuntimeError('Symlinked QA receipt rejected: ' + relative.as_posix())
-        eligible = path.suffix.lower() in SUFFIXES or (relative.parts[0] == 'macos-diagnostics' and path.suffix.lower() == '.txt')
+        eligible = (path.suffix.lower() == '.png' if layout_pngs else
+                    path.suffix.lower() in SUFFIXES or (relative.parts[0] == 'macos-diagnostics' and path.suffix.lower() == '.txt'))
         if not eligible:
             continue
         if path.is_file():
@@ -41,7 +42,7 @@ def zip_info(name):
     return info
 
 
-def package(source, output, max_bytes=MAX_ARCHIVE_BYTES):
+def package(source, output, max_bytes=MAX_ARCHIVE_BYTES, *, layout_pngs=False):
     source, output = Path(source).resolve(), Path(output).resolve()
     if not source.is_dir():
         raise RuntimeError('QA source directory does not exist')
@@ -49,13 +50,16 @@ def package(source, output, max_bytes=MAX_ARCHIVE_BYTES):
         raise RuntimeError('Keep packaged QA output outside the evidence source')
     if output.exists():
         raise RuntimeError('Preserve existing packaged QA receipts; choose a fresh output')
-    paths = selected(source)
+    paths = selected(source, layout_pngs=layout_pngs)
     if not paths:
         raise RuntimeError('No QA receipts found; no evidence artifact was created')
     output.parent.mkdir(parents=True, exist_ok=True)
     index = {'schema': 1, 'scope': 'Raw QA receipts; screenshots remain in the full QA artifact. Packaging does not establish test acceptance.',
              'source_directory': str(source), 'max_archive_bytes': max_bytes,
              'excluded': ['screenshots', 'native payloads', 'archives', 'developer/import caches'], 'files': []}
+    if layout_pngs:
+        index.update(scope='Original layout PNGs, including failed OCR frames; packaging does not establish visual or test acceptance.',
+                     excluded=['non-PNG files', 'native payloads', 'archives', 'developer/import caches'])
     with tempfile.TemporaryDirectory(prefix='sightbreak-qa-receipts-', dir=output.parent) as temporary:
         archive = Path(temporary) / 'receipts.zip'
         with zipfile.ZipFile(archive, 'w') as bundle:
@@ -92,8 +96,9 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--source', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--layout-pngs', action='store_true', help='Package all original PNGs from one native layout size instead of receipts')
     arguments = parser.parse_args()
-    print(json.dumps(package(arguments.source, arguments.output), indent=2))
+    print(json.dumps(package(arguments.source, arguments.output, layout_pngs=arguments.layout_pngs), indent=2))
 
 
 if __name__ == '__main__':
