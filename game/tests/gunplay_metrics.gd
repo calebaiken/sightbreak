@@ -12,14 +12,22 @@ extends SceneTree
 ##   --seed=<int>     base seed (default 7)
 ##   --verbose        also print one GUNPLAY_DUEL_TRIAL line per duel (health, ammo, ticks)
 ##
-## Fixtures, not matches: a bare floor, one standing target that does not move or shoot back (accuracy), perfect
-## aim at the chest from a standing start, no armour. What it measures is the weapon, not a player.
+## Fixtures, not matches: a bare floor, one standing target that does not move or shoot back (accuracy), aim at the
+## chest from a standing start, no armour. What it measures is the weapon, not a player. Modes: hold (trigger held,
+## recoil not countered: a beginner), comp (trigger held, the shooter pulls down by exactly the accumulated recoil: the
+## weapon's ceiling under perfect spray control), head (the same, aimed at the centre of the head), burst3, advance
+## (walking at the target, re-aimed every tick).
+## In a duel a tick resolves one actor at a time, so a same-tick trade cannot happen: the first actor processed fires
+## and the dead cannot answer. The duel loop shuffles that order per tick, as the match does since the order fix.
 const Actor = preload("res://scripts/gameplay/actor.gd")
 const Weapons = preload("res://scripts/gameplay/weapons.gd")
 const DT := 1.0 / 60.0
 const EYE := 1.62
 const CHEST := 1.1
-const FEET := 0.05
+const HEAD := 1.6
+## Feet on the floor surface (y = 0): an actor spawned above it falls while only the ticked actor moves, which put
+## the first version's aim 5 cm low.
+const FEET := 0.0
 const DISTANCES := [5.0, 10.0, 20.0, 30.0, 45.0, 70.0]
 const DUEL_DISTANCES := [8.0, 20.0, 40.0]
 const MAX_SECONDS := 6.0
@@ -131,7 +139,11 @@ func _park_all() -> void:
 
 func _modes(weapon: String) -> Array:
 	var automatic: bool = Weapons.get_weapon(weapon)["automatic"]
-	return ["hold", "burst3", "advance"] if automatic else ["hold", "advance"]
+	return ["hold", "comp", "head", "burst3", "advance"] if automatic else ["hold", "comp", "head", "advance"]
+
+## A stable number per measurement cell, so two cells never reuse the same random draws.
+func _cell_salt(parts: Array) -> int:
+	return int("|".join(parts).hash() & 0x3fffffff)
 
 func _median(values: Array) -> float:
 	if values.is_empty():
@@ -158,6 +170,12 @@ func _profile(weapon: String) -> void:
 	var peak_y := 0.0
 	var peak_x := 0.0
 	var capped_at := -1
+	var at_fire_y: Array = []
+	var at_fire_x: Array = []
+	var note_recoil := func(_id: int, _origin: Vector3, _direction: Vector3) -> void:
+		at_fire_y.append(snappedf(shooter.recoil.y, 0.0001))
+		at_fire_x.append(snappedf(shooter.recoil.x, 0.0001))
+	shooter.shot_fired.connect(note_recoil)
 	while shooter.ammo > 0 and ticks < 1200:
 		var before := shooter.ammo
 		shooter.input_state = {"look": Vector2(0.0, 0.0), "fire": true if automatic else ticks % 2 == 0}
@@ -171,6 +189,7 @@ func _profile(weapon: String) -> void:
 			if capped_at < 0 and shooter.recoil.y >= 0.1599:
 				capped_at = shot_ticks.size()
 		ticks += 1
+	shooter.shot_fired.disconnect(note_recoil)
 	var shots := shot_ticks.size()
 	var span := float(shot_ticks[-1] - shot_ticks[0]) * DT if shots > 1 else 0.0
 	var recovery_ticks := 0
@@ -184,7 +203,7 @@ func _profile(weapon: String) -> void:
 		"interval_data": spec["interval"], "interval_measured": snappedf(span / float(maxi(shots - 1, 1)), 0.0001),
 		"seconds_to_empty": snappedf(float(shot_ticks[-1]) * DT, 0.001) if shots > 0 else 0.0,
 		"recoil_peak_y_rad": snappedf(peak_y, 0.0001), "recoil_peak_x_rad": snappedf(peak_x, 0.0001),
-		"recoil_after_shot_y": recoil_y.slice(0, 12), "shots_to_cap": capped_at,
+		"recoil_after_shot_y": recoil_y.slice(0, 12), "recoil_at_fire_y": at_fire_y.slice(0, 12), "recoil_at_fire_x": at_fire_x.slice(0, 12), "recoil_at_fire_y_last": at_fire_y[-1] if not at_fire_y.is_empty() else 0.0, "shots_to_cap": capped_at,
 		"recoil_at_release_rad": snappedf(recoil_at_release, 0.0001), "recovery_seconds": snappedf(float(recovery_ticks) * DT, 0.01),
 	})
 
@@ -220,7 +239,22 @@ func _timing(weapon: String) -> void:
 		shooter.tick_authority(DT)
 		ticks += 1
 	var spec := Weapons.get_weapon(weapon)
-	_emit("TIMING", {"weapon": weapon, "reload_data": spec["reload"], "reload_measured": snappedf(float(ticks) * DT, 0.001), "magazine": spec["magazine"], "ammo_after": shooter.ammo, "deploy_seconds": Actor.DEPLOY_SECONDS})
+	# Draw: from the tick the switch is requested to the first tick the weapon is ready to fire. Every shooter owns
+	# the sidearm; the sidearm's own draw is measured coming from the SMG, which is bought for the purpose.
+	var from_weapon := "sidearm" if weapon != "sidearm" else "smg"
+	if not shooter.inventory.has(from_weapon):
+		shooter.credits = 99999
+		shooter.buy_weapon(from_weapon)
+	shooter.input_state = {"look": Vector2(0.0, 0.0), "weapon": from_weapon}
+	for _tick in range(40):
+		shooter.tick_authority(DT)
+	var draw_ticks := 1  # the tick that requests the switch counts
+	shooter.input_state = {"look": Vector2(0.0, 0.0), "weapon": weapon}
+	shooter.tick_authority(DT)
+	while not shooter.weapon_ready() and draw_ticks < 600:
+		shooter.tick_authority(DT)
+		draw_ticks += 1
+	_emit("TIMING", {"weapon": weapon, "reload_data": spec["reload"], "reload_ticks": ticks, "reload_measured": snappedf(float(ticks) * DT, 0.001), "magazine": spec["magazine"], "ammo_after": shooter.ammo, "deploy_data": Actor.DEPLOY_SECONDS, "draw_ticks": draw_ticks, "draw_measured": snappedf(float(draw_ticks) * DT, 0.001)})
 	await physics_frame
 
 ## One standing target, perfect chest aim. Modes: hold (trigger held, or clicked at the weapon's own rate),
@@ -241,9 +275,8 @@ func _accuracy(weapon: String, distance: float, mode: String) -> void:
 	for trial in range(trials):
 		shooter.reset_for_round(Vector3(0, FEET, 0))
 		target.reset_for_round(Vector3(0, FEET, -distance))
-		shooter._rng.seed = base_seed * 100003 + trial * 31 + int(distance)
+		shooter._rng.seed = base_seed * 100003 + trial * 31 + _cell_salt([weapon, str(distance), mode])
 		shooter.ammo = int(spec["magazine"])
-		var aim := atan2(target.global_position.y + CHEST - (shooter.global_position.y + EYE), distance)
 		var stats := {"shots": 0, "hits": 0, "heads": 0, "dead_tick": -1, "first_tick": -1, "shots_at_kill": 0}
 		var tick_box := [0]
 		var on_shot := func(_id: int, _origin: Vector3, _direction: Vector3) -> void:
@@ -275,6 +308,11 @@ func _accuracy(weapon: String, distance: float, mode: String) -> void:
 					pause = 18
 					fire = false
 			var move := Vector2(0.0, 1.0) if mode == "advance" else Vector2.ZERO
+			# Aim at the chest from where the shooter stands now; in comp mode also pull down by the recoil carried.
+			var here := absf(target.global_position.z - shooter.global_position.z)
+			var aim := atan2(target.global_position.y + (HEAD if mode == "head" else CHEST) - (shooter.global_position.y + EYE), here)
+			if mode == "comp" or mode == "head":
+				aim -= shooter.recoil.y
 			shooter.input_state = {"look": Vector2(0.0, aim), "fire": fire, "move": move}
 			shooter.tick_authority(DT)
 			if int(stats["shots"]) > last_shots:
@@ -297,7 +335,7 @@ func _accuracy(weapon: String, distance: float, mode: String) -> void:
 		"shots_per_trial": snappedf(float(shots_total) / float(trials), 0.1), "walked_m_mean": snappedf(travelled_total / float(trials), 0.01),
 		"hit_rate": snappedf(float(hits_total) / float(maxi(shots_total, 1)), 0.001),
 		"head_share_of_hits": snappedf(float(heads_total) / float(maxi(hits_total, 1)), 0.001),
-		"kill_rate": snappedf(float(kills) / float(trials), 0.001),
+		"kill_rate": snappedf(float(kills) / float(trials), 0.001), "kills": kills,
 		"kill_time_median_s": snappedf(_median(kill_times), 0.001), "kill_shots_median": _median(kill_shots),
 	})
 
@@ -316,9 +354,10 @@ func _duel(weapon_a: String, weapon_b: String, distance: float) -> void:
 		var second: SBActor = red[weapon_b]
 		first.reset_for_round(Vector3(0, FEET, 0))
 		second.reset_for_round(Vector3(0, FEET, -distance))
-		first._rng.seed = base_seed * 7919 + trial * 2
-		second._rng.seed = base_seed * 7919 + trial * 2 + 1
-		order.seed = base_seed * 104729 + trial
+		var salt := _cell_salt([weapon_a, weapon_b, str(distance)])
+		first._rng.seed = base_seed * 7919 + trial * 2 + salt
+		second._rng.seed = base_seed * 7919 + trial * 2 + 1 + salt
+		order.seed = base_seed * 104729 + trial + salt
 		first.ammo = int(Weapons.get_weapon(weapon_a)["magazine"])
 		second.ammo = int(Weapons.get_weapon(weapon_b)["magazine"])
 		var aim_first := atan2(second.global_position.y + CHEST - (first.global_position.y + EYE), distance)
