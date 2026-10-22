@@ -977,6 +977,7 @@ func build_hud() -> void:
 	kill_feed.add_theme_constant_override("separation", KILL_FEED_GAP)
 	kill_feed.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	kill_feed_frame.add_child(kill_feed)
+	kill_feed_frame.resized.connect(_refit_kill_feed_rows)
 	var space := Control.new()
 	space.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	space.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -1123,14 +1124,40 @@ func add_kill_feed(killer_id: int, victim_id: int, headshot: bool) -> void:
 	names.append(_kill_feed_name(victim))
 	row.add_child(names[-1])
 	entry.set_meta("born", elapsed)
+	entry.set_meta("headshot", headshot)
 	kill_feed.add_child(entry)
+	_fit_kill_feed_row(entry)
+	while kill_feed.get_child_count() > KILL_FEED_ROWS:
+		var oldest := kill_feed.get_child(0)
+		kill_feed.remove_child(oldest)
+		oldest.queue_free()
+	_fit_kill_feed_frame()
+
+## Mode changes resize the frame without replacing existing rows. Always fit
+## from the stored names so widening can recover text that now fits again.
+func _refit_kill_feed_rows() -> void:
+	if not is_instance_valid(kill_feed): return
+	for entry: PanelContainer in kill_feed.get_children():
+		if not entry.is_queued_for_deletion(): _fit_kill_feed_row(entry)
+	_fit_kill_feed_frame()
+
+func _fit_kill_feed_row(entry: PanelContainer) -> void:
+	var row: HBoxContainer = entry.get_child(0)
+	var names: Array[Label] = []
+	var marker: Label
+	for child: Label in row.get_children():
+		if child.has_meta("full_name"): names.append(child)
+		else: marker = child
+	var headshot := bool(entry.get_meta("headshot", false))
+	marker.text = "HEADSHOT" if headshot else "›"
+	var style := entry.get_theme_stylebox("panel")
 	# Fit the row to the frame: names keep their natural width when they fit and
 	# otherwise share the remaining space, ending in an ellipsis. When space is
 	# tight the headshot marker shortens to "HS" before any name is cut.
 	var frame_width := kill_feed_frame.size.x if kill_feed_frame.size.x > 1.0 else 220.0
 	var widths: Array[float] = []
 	for name_label in names:
-		widths.append(_text_width(name_label, name_label.text) + 1.0)
+		widths.append(_text_width(name_label, str(name_label.get_meta("full_name"))) + 1.0)
 	var fixed := KILL_FEED_SEPARATION * names.size() + style.get_minimum_size().x + 2.0
 	if headshot and widths.reduce(func(total, width): return total + width, 0.0) + _text_width(marker, marker.text) + fixed > frame_width:
 		marker.text = "HS"
@@ -1143,14 +1170,9 @@ func add_kill_feed(killer_id: int, victim_id: int, headshot: bool) -> void:
 	elif names.size() == 1:
 		widths[0] = minf(widths[0], budget)
 	for index in range(names.size()):
-		var fitted := _fit_text(names[index], names[index].text, maxf(24.0, floorf(widths[index])))
+		var fitted := _fit_text(names[index], str(names[index].get_meta("full_name")), maxf(24.0, floorf(widths[index])))
 		names[index].text = fitted
 		names[index].custom_minimum_size.x = ceilf(_text_width(names[index], fitted))
-	while kill_feed.get_child_count() > KILL_FEED_ROWS:
-		var oldest := kill_feed.get_child(0)
-		kill_feed.remove_child(oldest)
-		oldest.queue_free()
-	_fit_kill_feed_frame()
 
 ## A row is as tall as the tallest face its text is shaped with. A name in a script
 ## the default font lacks is drawn in a system fallback face whose line height is

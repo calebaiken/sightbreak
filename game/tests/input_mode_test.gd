@@ -208,6 +208,13 @@ func check_hud_mode(main: Node, expected: bool, context: String) -> void:
 	for node: Control in [main.health_label, main.ammo_label]:
 		var rect := node.get_global_rect()
 		check(rect.position.x >= 0 and rect.end.x <= main.ui.size.x + 1 and rect.position.y >= 0 and rect.end.y <= main.ui.size.y + 1, context + " keeps health/ammunition on screen")
+	var frame: Rect2 = main.kill_feed_frame.get_global_rect()
+	for entry: Control in main.kill_feed.get_children():
+		var rect := entry.get_global_rect()
+		check(rect.position.x >= frame.position.x - 1 and rect.end.x <= frame.end.x + 1, context + " keeps the preserved feed row inside its clipped frame")
+		for name_label: Label in entry.find_children("*", "Label", true, false):
+			var drawn: float = main._text_width(name_label, name_label.text)
+			check(name_label.global_position.x >= frame.position.x - 1 and name_label.global_position.x + drawn <= frame.end.x + 1, context + " draws the complete fitted feed text inside its frame")
 
 ## Exercise live settings signals without rebuilding the HUD. Pausing disables
 ## touch input independently of the selected presentation; mobile forces touch.
@@ -240,8 +247,15 @@ func hud_mode_transitions(main: Node) -> void:
 		var original_status: Label = main.status_label
 		var original_layout: Dictionary = main.touch.exported_layout()
 		var ids: Array = main.match_game.actors.keys()
-		main.add_kill_feed(ids[0], ids[1], false)
+		main.match_game.actors[ids[0]].display_name = "W".repeat(24)
+		main.match_game.actors[ids[1]].display_name = "M".repeat(24)
+		main.add_kill_feed(ids[0], ids[1], true)
+		await frames(4)
 		var original_feed: Node = main.kill_feed.get_child(0)
+		var original_born: float = original_feed.get_meta("born")
+		var original_names: Array[String] = []
+		for name_label: Label in original_feed.find_children("*", "Label", true, false):
+			original_names.append(name_label.text)
 		for requested in [not item.initial, item.initial]:
 			main.toggle_pause()
 			main.show_match_settings()
@@ -257,13 +271,17 @@ func hud_mode_transitions(main: Node) -> void:
 			var expected: bool = item.mobile or requested
 			check(main.profile.data.settings.touch_visible == requested, context + " setting signal changes the preference")
 			check(main.paused and main.match_suspended and not main.touch.enabled, context + " settings keeps input disabled and training suspended")
-			check(main.overlay == settings_overlay and main.touch == original_touch and main.action_label == original_action and main.status_label == original_status and original_feed.get_parent() == main.kill_feed, context + " mode change preserves active overlay and HUD nodes")
+			check(main.overlay == settings_overlay and main.touch == original_touch and main.action_label == original_action and main.status_label == original_status and original_feed.get_parent() == main.kill_feed and original_feed.get_meta("born") == original_born, context + " mode change preserves active overlay and HUD nodes and feed age")
 			check_hud_mode(main, expected, context + " paused preference=%s" % requested)
 			main.close_overlay()
 			await frames(4)
 			check(main.touch.enabled == expected and not main.paused and not main.match_suspended, context + " explicit resume follows selected mode")
 			check(main.touch.exported_layout() == original_layout and main.profile.data.settings.hud_positions == saved and is_equal_approx(main.touch.hud_scale, 1.5), context + " mode change preserves saved custom layout and button scale")
 			check_hud_mode(main, expected, context + " resumed preference=%s" % requested)
+		var restored_names: Array[String] = []
+		for name_label: Label in original_feed.find_children("*", "Label", true, false):
+			restored_names.append(name_label.text)
+		check(restored_names == original_names, context + " round trip restores the fitted names and headshot marker")
 		# A focus interruption must not reinterpret temporary input disablement as
 		# a desktop-mode selection or bypass the existing neutral-input guard.
 		main.touch.actions.fire = true
