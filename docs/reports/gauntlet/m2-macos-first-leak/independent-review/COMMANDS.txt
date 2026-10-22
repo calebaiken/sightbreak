@@ -1,0 +1,17 @@
+Source-only commands. No engine or native API execution.
+
+Snapshot: git archive f3896c6 scripts .github game docs/reports/gauntlet/m2-macos-first-leak AGENTS.md CLAUDE.md .claude, extracted outside the checkout.
+
+Independent controls:
+PYTHONDONTWRITEBYTECODE=1 python /workspace/reviews/mac-first-leak-source-f3896c6/review_controls.py
+Result: 17 tests, OK.
+
+Maintained controls (cwd snapshot/scripts):
+PYTHONDONTWRITEBYTECODE=1 python -m unittest -v test_diagnose_native_input_mode test_native_first_leak
+Result: 14 tests, OK.
+
+Source freeze:
+git diff --exit-code f3896c6 -- scripts .github game docs/reports/gauntlet/m2-macos-first-leak/CRITERIA.md docs/reports/gauntlet/m2-macos-first-leak/fixtures
+Result: exit 0.
+
+Original raw fixture equality and committed Git blob validation: pure Python byte/hash checks; see actual-fixture-verification.json and committed-blobs.json.
