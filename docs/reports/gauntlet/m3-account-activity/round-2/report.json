@@ -1,0 +1,557 @@
+{
+  "status": "passed",
+  "scope": "loopback headless scripted no-combat stock match; fake accounts; no performance or human-play claim",
+  "source_commit": "3b5cf7640e256dff404b401bf2b27ffaff157bdd",
+  "game_tree": "fb6be859e05812d8707be1ef5c6f747d2588c1e9",
+  "source_dirty": false,
+  "started_at_utc": "2026-10-22T06:38:57.317822+00:00",
+  "engine": {
+    "path": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+    "version": "4.7.2.stable.official.ed1daf0bf",
+    "sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e"
+  },
+  "platform": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "timeout_seconds": 1200.0,
+  "container": "sightbreak-account-match-f1672c68d71a",
+  "api_port": 36727,
+  "game_port": 40937,
+  "sha256": {
+    "scripts/test_account_match.py": "ca19b4eb60e389f611564d7bc2f64a86455d0d722948ae86dd076d9b64fde45b",
+    "game/tests/account_match_probe.gd": "0c93ad592ece35a67e270364ab0642f68db76efcd5a20851674e12833830c728",
+    "game/scripts/gameplay/match.gd": "2db21ed6eb27d2095e899db836b417288c8a96e5e3239c8aa7affa6bb6a54173"
+  },
+  "checks": {
+    "ten_authenticated_admissions": true,
+    "stock_match_completed": true,
+    "godot_sigkill_after_earned_handoff": true,
+    "database_outage_durable_pending": true,
+    "lost_ack_worker_sigkill_exact_restart": true,
+    "duplicate_spool_no_second_grant": true,
+    "earned_rates_wallet_ledger_history_agree": true
+  },
+  "cleanup": {
+    "children_reaped": true,
+    "owned_container_removed": true
+  },
+  "postgres_port": 32770,
+  "initial_economy": {
+    "counts": [
+      0,
+      0,
+      0
+    ],
+    "wallets": [
+      [
+        "10f41f54-42a0-43c5-a852-c8f81379be80",
+        0,
+        0
+      ],
+      [
+        "21ac3c33-cc0b-4c82-a98e-125f3817e9ec",
+        0,
+        0
+      ],
+      [
+        "3b7e94a6-b442-439f-a1ce-a34bc8659446",
+        0,
+        0
+      ],
+      [
+        "56753aa1-ec64-4580-b694-8c2c7e316fc6",
+        0,
+        0
+      ],
+      [
+        "575ae7c9-89bb-4451-a991-7addfebb0fba",
+        0,
+        0
+      ],
+      [
+        "5a7aad96-2855-4fd4-b8cf-eaf9adeb26d5",
+        0,
+        0
+      ],
+      [
+        "6060453c-32e4-43c3-8543-709ac82bcfc7",
+        0,
+        0
+      ],
+      [
+        "8d422dcb-ae2f-47af-bb8d-693a9dc95e31",
+        0,
+        0
+      ],
+      [
+        "99f1d16c-6612-440c-8cfb-6283db6f212e",
+        0,
+        0
+      ],
+      [
+        "db121675-f26d-4fbd-a20c-948bbb6299ce",
+        0,
+        0
+      ]
+    ],
+    "ledger": [],
+    "rewards": []
+  },
+  "consumed_tickets": [
+    [
+      "10f41f54-42a0-43c5-a852-c8f81379be80",
+      "local-relay",
+      true
+    ],
+    [
+      "21ac3c33-cc0b-4c82-a98e-125f3817e9ec",
+      "local-relay",
+      true
+    ],
+    [
+      "3b7e94a6-b442-439f-a1ce-a34bc8659446",
+      "local-relay",
+      true
+    ],
+    [
+      "56753aa1-ec64-4580-b694-8c2c7e316fc6",
+      "local-relay",
+      true
+    ],
+    [
+      "575ae7c9-89bb-4451-a991-7addfebb0fba",
+      "local-relay",
+      true
+    ],
+    [
+      "5a7aad96-2855-4fd4-b8cf-eaf9adeb26d5",
+      "local-relay",
+      true
+    ],
+    [
+      "6060453c-32e4-43c3-8543-709ac82bcfc7",
+      "local-relay",
+      true
+    ],
+    [
+      "8d422dcb-ae2f-47af-bb8d-693a9dc95e31",
+      "local-relay",
+      true
+    ],
+    [
+      "99f1d16c-6612-440c-8cfb-6283db6f212e",
+      "local-relay",
+      true
+    ],
+    [
+      "db121675-f26d-4fbd-a20c-948bbb6299ce",
+      "local-relay",
+      true
+    ]
+  ],
+  "match_id": "a209820c-31d7-4903-9fbe-ae72ddab9434",
+  "earned_payload_sha256": "12d6dd70a601297bd57b7b3c236c783e2a6681eddf03e0731e394d40c97dff58",
+  "final_economy": {
+    "counts": [
+      10,
+      10,
+      1
+    ],
+    "wallets": [
+      [
+        "10f41f54-42a0-43c5-a852-c8f81379be80",
+        325,
+        300
+      ],
+      [
+        "21ac3c33-cc0b-4c82-a98e-125f3817e9ec",
+        325,
+        300
+      ],
+      [
+        "3b7e94a6-b442-439f-a1ce-a34bc8659446",
+        250,
+        200
+      ],
+      [
+        "56753aa1-ec64-4580-b694-8c2c7e316fc6",
+        325,
+        300
+      ],
+      [
+        "575ae7c9-89bb-4451-a991-7addfebb0fba",
+        250,
+        200
+      ],
+      [
+        "5a7aad96-2855-4fd4-b8cf-eaf9adeb26d5",
+        250,
+        200
+      ],
+      [
+        "6060453c-32e4-43c3-8543-709ac82bcfc7",
+        250,
+        200
+      ],
+      [
+        "8d422dcb-ae2f-47af-bb8d-693a9dc95e31",
+        325,
+        300
+      ],
+      [
+        "99f1d16c-6612-440c-8cfb-6283db6f212e",
+        325,
+        450
+      ],
+      [
+        "db121675-f26d-4fbd-a20c-948bbb6299ce",
+        250,
+        200
+      ]
+    ],
+    "ledger": [
+      [
+        "10f41f54-42a0-43c5-a852-c8f81379be80",
+        325,
+        325,
+        "verified_match",
+        "a209820c-31d7-4903-9fbe-ae72ddab9434"
+      ],
+      [
+        "21ac3c33-cc0b-4c82-a98e-125f3817e9ec",
+        325,
+        325,
+        "verified_match",
+        "a209820c-31d7-4903-9fbe-ae72ddab9434"
+      ],
+      [
+        "3b7e94a6-b442-439f-a1ce-a34bc8659446",
+        250,
+        250,
+        "verified_match",
+        "a209820c-31d7-4903-9fbe-ae72ddab9434"
+      ],
+      [
+        "56753aa1-ec64-4580-b694-8c2c7e316fc6",
+        325,
+        325,
+        "verified_match",
+        "a209820c-31d7-4903-9fbe-ae72ddab9434"
+      ],
+      [
+        "575ae7c9-89bb-4451-a991-7addfebb0fba",
+        250,
+        250,
+        "verified_match",
+        "a209820c-31d7-4903-9fbe-ae72ddab9434"
+      ],
+      [
+        "5a7aad96-2855-4fd4-b8cf-eaf9adeb26d5",
+        250,
+        250,
+        "verified_match",
+        "a209820c-31d7-4903-9fbe-ae72ddab9434"
+      ],
+      [
+        "6060453c-32e4-43c3-8543-709ac82bcfc7",
+        250,
+        250,
+        "verified_match",
+        "a209820c-31d7-4903-9fbe-ae72ddab9434"
+      ],
+      [
+        "8d422dcb-ae2f-47af-bb8d-693a9dc95e31",
+        325,
+        325,
+        "verified_match",
+        "a209820c-31d7-4903-9fbe-ae72ddab9434"
+      ],
+      [
+        "99f1d16c-6612-440c-8cfb-6283db6f212e",
+        325,
+        325,
+        "verified_match",
+        "a209820c-31d7-4903-9fbe-ae72ddab9434"
+      ],
+      [
+        "db121675-f26d-4fbd-a20c-948bbb6299ce",
+        250,
+        250,
+        "verified_match",
+        "a209820c-31d7-4903-9fbe-ae72ddab9434"
+      ]
+    ],
+    "rewards": [
+      [
+        "10f41f54-42a0-43c5-a852-c8f81379be80",
+        {
+          "xp": 300,
+          "won": true,
+          "credits": 325,
+          "eligible": true,
+          "ended_at": "2026-10-22T06:47:34+00:00",
+          "started_at": "2026-10-22T06:39:14+00:00"
+        }
+      ],
+      [
+        "21ac3c33-cc0b-4c82-a98e-125f3817e9ec",
+        {
+          "xp": 300,
+          "won": true,
+          "credits": 325,
+          "eligible": true,
+          "ended_at": "2026-10-22T06:47:34+00:00",
+          "started_at": "2026-10-22T06:39:14+00:00"
+        }
+      ],
+      [
+        "3b7e94a6-b442-439f-a1ce-a34bc8659446",
+        {
+          "xp": 200,
+          "won": false,
+          "credits": 250,
+          "eligible": true,
+          "ended_at": "2026-10-22T06:47:34+00:00",
+          "started_at": "2026-10-22T06:39:14+00:00"
+        }
+      ],
+      [
+        "56753aa1-ec64-4580-b694-8c2c7e316fc6",
+        {
+          "xp": 300,
+          "won": true,
+          "credits": 325,
+          "eligible": true,
+          "ended_at": "2026-10-22T06:47:34+00:00",
+          "started_at": "2026-10-22T06:39:14+00:00"
+        }
+      ],
+      [
+        "575ae7c9-89bb-4451-a991-7addfebb0fba",
+        {
+          "xp": 200,
+          "won": false,
+          "credits": 250,
+          "eligible": true,
+          "ended_at": "2026-10-22T06:47:34+00:00",
+          "started_at": "2026-10-22T06:39:14+00:00"
+        }
+      ],
+      [
+        "5a7aad96-2855-4fd4-b8cf-eaf9adeb26d5",
+        {
+          "xp": 200,
+          "won": false,
+          "credits": 250,
+          "eligible": true,
+          "ended_at": "2026-10-22T06:47:34+00:00",
+          "started_at": "2026-10-22T06:39:14+00:00"
+        }
+      ],
+      [
+        "6060453c-32e4-43c3-8543-709ac82bcfc7",
+        {
+          "xp": 200,
+          "won": false,
+          "credits": 250,
+          "eligible": true,
+          "ended_at": "2026-10-22T06:47:34+00:00",
+          "started_at": "2026-10-22T06:39:14+00:00"
+        }
+      ],
+      [
+        "8d422dcb-ae2f-47af-bb8d-693a9dc95e31",
+        {
+          "xp": 300,
+          "won": true,
+          "credits": 325,
+          "eligible": true,
+          "ended_at": "2026-10-22T06:47:34+00:00",
+          "started_at": "2026-10-22T06:39:14+00:00"
+        }
+      ],
+      [
+        "99f1d16c-6612-440c-8cfb-6283db6f212e",
+        {
+          "xp": 450,
+          "won": true,
+          "credits": 325,
+          "eligible": true,
+          "ended_at": "2026-10-22T06:47:34+00:00",
+          "started_at": "2026-10-22T06:39:14+00:00"
+        }
+      ],
+      [
+        "db121675-f26d-4fbd-a20c-948bbb6299ce",
+        {
+          "xp": 200,
+          "won": false,
+          "credits": 250,
+          "eligible": true,
+          "ended_at": "2026-10-22T06:47:34+00:00",
+          "started_at": "2026-10-22T06:39:14+00:00"
+        }
+      ]
+    ]
+  },
+  "http_profiles": [
+    {
+      "player_id": "99f1d16c-6612-440c-8cfb-6283db6f212e",
+      "display_name": "Account Match 0",
+      "xp": 450,
+      "level": 1,
+      "credits": 325
+    },
+    {
+      "player_id": "21ac3c33-cc0b-4c82-a98e-125f3817e9ec",
+      "display_name": "Account Match 1",
+      "xp": 300,
+      "level": 1,
+      "credits": 325
+    },
+    {
+      "player_id": "8d422dcb-ae2f-47af-bb8d-693a9dc95e31",
+      "display_name": "Account Match 2",
+      "xp": 300,
+      "level": 1,
+      "credits": 325
+    },
+    {
+      "player_id": "56753aa1-ec64-4580-b694-8c2c7e316fc6",
+      "display_name": "Account Match 3",
+      "xp": 300,
+      "level": 1,
+      "credits": 325
+    },
+    {
+      "player_id": "10f41f54-42a0-43c5-a852-c8f81379be80",
+      "display_name": "Account Match 4",
+      "xp": 300,
+      "level": 1,
+      "credits": 325
+    },
+    {
+      "player_id": "3b7e94a6-b442-439f-a1ce-a34bc8659446",
+      "display_name": "Account Match 5",
+      "xp": 200,
+      "level": 1,
+      "credits": 250
+    },
+    {
+      "player_id": "5a7aad96-2855-4fd4-b8cf-eaf9adeb26d5",
+      "display_name": "Account Match 6",
+      "xp": 200,
+      "level": 1,
+      "credits": 250
+    },
+    {
+      "player_id": "6060453c-32e4-43c3-8543-709ac82bcfc7",
+      "display_name": "Account Match 7",
+      "xp": 200,
+      "level": 1,
+      "credits": 250
+    },
+    {
+      "player_id": "575ae7c9-89bb-4451-a991-7addfebb0fba",
+      "display_name": "Account Match 8",
+      "xp": 200,
+      "level": 1,
+      "credits": 250
+    },
+    {
+      "player_id": "db121675-f26d-4fbd-a20c-948bbb6299ce",
+      "display_name": "Account Match 9",
+      "xp": 200,
+      "level": 1,
+      "credits": 250
+    }
+  ],
+  "process_exits": [
+    {
+      "name": "migration",
+      "pid": 108514,
+      "returncode": 0
+    },
+    {
+      "name": "api",
+      "pid": 108564,
+      "returncode": -15
+    },
+    {
+      "name": "server",
+      "pid": 109096,
+      "returncode": -9
+    },
+    {
+      "name": "client-0",
+      "pid": 109108,
+      "returncode": 0
+    },
+    {
+      "name": "client-1",
+      "pid": 109120,
+      "returncode": 0
+    },
+    {
+      "name": "client-2",
+      "pid": 109132,
+      "returncode": 0
+    },
+    {
+      "name": "client-3",
+      "pid": 109144,
+      "returncode": 0
+    },
+    {
+      "name": "client-4",
+      "pid": 109156,
+      "returncode": 0
+    },
+    {
+      "name": "client-5",
+      "pid": 109168,
+      "returncode": 0
+    },
+    {
+      "name": "client-6",
+      "pid": 109180,
+      "returncode": 0
+    },
+    {
+      "name": "client-7",
+      "pid": 109192,
+      "returncode": 0
+    },
+    {
+      "name": "client-8",
+      "pid": 109204,
+      "returncode": 0
+    },
+    {
+      "name": "client-9",
+      "pid": 109216,
+      "returncode": 0
+    },
+    {
+      "name": "worker-outage",
+      "pid": 111193,
+      "returncode": -9
+    },
+    {
+      "name": "worker-lost-ack",
+      "pid": 111228,
+      "returncode": -9
+    },
+    {
+      "name": "worker-restart",
+      "pid": 111234,
+      "returncode": 0
+    },
+    {
+      "name": "worker-replay",
+      "pid": 111237,
+      "returncode": 0
+    }
+  ],
+  "godot_errors": [],
+  "wall_seconds": 521.837094647999,
+  "finished_at_utc": "2026-10-22T06:47:39.310979+00:00"
+}
