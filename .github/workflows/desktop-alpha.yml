@@ -94,14 +94,16 @@ jobs:
         id: native_regressions
         if: always() && steps.export.outcome == 'success'
         run: python scripts/run_native_regressions.py --output builds/desktop-playability/regressions
-      - name: ARM Mac verbose input-mode leak diagnostic controls
+      - name: ARM Mac first failed leak suite diagnostic controls
         id: macos_leak_diagnostic_controls
         if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15' && steps.native_regressions.outcome == 'failure'
-        run: python scripts/test_diagnose_native_input_mode.py -v
-      - name: ARM Mac retain verbose input-mode leak repeat after strict failure
+        run: |
+          python scripts/test_diagnose_native_input_mode.py -v
+          python scripts/test_native_first_leak.py -v
+      - name: ARM Mac retain verbose first failed leak suite after strict failure
         if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15' && steps.native_regressions.outcome == 'failure' && steps.macos_leak_diagnostic_controls.outcome == 'success'
         timeout-minutes: 6
-        run: python scripts/diagnose_native_input_mode.py --failed-output builds/desktop-playability/regressions --output builds/desktop-playability/input-mode-verbose
+        run: python scripts/diagnose_native_input_mode.py --failed-output builds/desktop-playability/regressions --output builds/desktop-playability/source-leak-verbose
       - name: ARM Mac read-only input preflight observer controls
         if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15'
         run: python scripts/test_probe_macos_input.py -v

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Retain one bounded verbose ARM input_mode repeat; never repair its strict gate."""
+"""Retain one bounded verbose ARM actor/input_mode leak repeat; keep strict failure."""
 import argparse
 import hashlib
 import json
@@ -12,18 +12,65 @@ import time
 from build_manifest import BUILDS, clean, same_source, source
 from native_log import failed
 from probe_macos_input import reap
-from run_native_regressions import NativeSceneSuites, inventory
+from run_native_regressions import NativeSceneSuites, SUITES, inventory
 import toolchain
+
+
+LEAK_SUITES = ('actor', 'input_mode')
 
 
 def evidence(directory):
     return {name: hashlib.sha256((directory / name).read_bytes()).hexdigest() if (directory / name).is_file() else None
-            for name in ('results.json', 'isolation.json', 'input_mode.log')}
+            for name in ('results.json', 'isolation.json', 'actor.log', 'input_mode.log')}
 
 
-def select_failure(directory):
-    """Select only the retained exit-zero input_mode leak, without changing it."""
-    missing = [name for name in ('results.json', 'isolation.json', 'input_mode.log') if not (directory / name).is_file()]
+def same_native_path(left, right):
+    return (isinstance(left, str) and isinstance(right, str) and Path(left).is_absolute()
+            and Path(right).is_absolute() and Path(left).resolve() == Path(right).resolve())
+
+
+def selected_identity(row, isolation):
+    """Validate original argv/native producer identities; never launch their paths."""
+    suite, namespace = row['suite'], isolation.get('namespace', '')
+    command = row.get('command', [])
+    if (not re.fullmatch(r'SIGHTBREAK-native-tests-[0-9a-f]{32}', namespace)
+            or not isinstance(command, list) or len(command) != 6
+            or not all(isinstance(arg, str) for arg in command)
+            or command[0] != toolchain.binary() or command[1] != '--path'
+            or command[3:] != ['--headless', '--script', 'res://tests/' + suite + '_test.gd']
+            or not Path(command[2]).is_absolute() or Path(command[2]).name != 'project'
+            or not Path(command[2]).parent.name.startswith('sightbreak-native-tests-')
+            or isolation.get('engine') != toolchain.ENGINE):
+        return False
+    native_root = None
+    for phase in ('before', 'after'):
+        receipt = row.get(phase, {})
+        if not isinstance(receipt, dict):
+            return False
+        data_dir, user_dir = receipt.get('data_dir'), receipt.get('user_data_dir')
+        if (not isinstance(data_dir, str) or not isinstance(user_dir, str)
+                or receipt.get('uses_custom_user_dir') is not True
+                or receipt.get('custom_user_dir') != namespace + '/' + suite
+                or not same_native_path(receipt.get('project_path'), command[2])
+                or not same_native_path(user_dir, str(Path(data_dir) / namespace / suite))
+                or receipt.get('run', {}).get('exit') != 0
+                or receipt.get('run', {}).get('clean_log') is not True):
+            return False
+        current_root = str(Path(user_dir).parent)
+        if native_root is not None and not same_native_path(native_root, current_root):
+            return False
+        native_root = current_root
+        if phase == 'before' and (receipt.get('profile_exists') is not False or receipt.get('diagnostics_exist') is not False):
+            return False
+    cleanup = isolation.get('cleanup', [])
+    return (isinstance(cleanup, list) and len(cleanup) == 1 and isinstance(cleanup[0], dict)
+            and cleanup[0].get('removed') is True
+            and same_native_path(cleanup[0].get('user_namespace'), native_root))
+
+
+def select_failure(directory, selection=None):
+    """Select the first retained whitelisted leak; preserve the reason-only API."""
+    missing = [name for name in ('results.json', 'isolation.json') if not (directory / name).is_file()]
     if missing:
         return 'Original failure evidence is absent: ' + ', '.join(missing)
     try:
@@ -34,14 +81,25 @@ def select_failure(directory):
     if (not isinstance(results, list) or not all(isinstance(row, dict) for row in results)
             or not isinstance(isolation, dict) or not isinstance(isolation.get('failure'), dict)):
         return 'Original failure receipt shape does not establish the required strict failure'
-    matches = [row for row in results if row.get('suite') == 'input_mode']
-    if (len(matches) != 1 or results[-1] != matches[0] or matches[0].get('exit') != 0
-            or matches[0].get('clean_log') is not False or isolation.get('passed') is not False
-            or isolation.get('failure', {}).get('message') != 'input_mode failed; raw output retained'):
-        return 'Original strict failure is not the exit-zero input_mode log failure'
-    text = (directory / 'input_mode.log').read_text(errors='replace')
+    names = [row.get('suite') for row in results]
+    if any(name not in SUITES for name in names) or len(set(names)) != len(names):
+        return 'Original suite identifiers are unknown or duplicated'
+    failures = [index for index, row in enumerate(results)
+                if type(row.get('exit')) is not int or row['exit'] != 0 or row.get('clean_log') is not True]
+    if len(failures) != 1 or failures[0] != len(results) - 1:
+        return 'Original results do not establish one first failure at the terminal result'
+    row = results[failures[0]]
+    suite = row['suite']
+    if (suite not in LEAK_SUITES or type(row.get('exit')) is not int or row['exit'] != 0
+            or row.get('clean_log') is not False or isolation.get('passed') is not False
+            or isolation['failure'].get('message') != suite + ' failed; raw output retained'):
+        return 'Original first strict failure is not a whitelisted exit-zero leak candidate'
+    log = directory / (suite + '.log')
+    if not log.is_file():
+        return 'Original failed-suite log is absent: ' + log.name
+    text = log.read_text(errors='replace')
     if not re.search(r'ObjectDB.*leaked', text) or not failed(text):
-        return 'Original input_mode log does not establish the ObjectDB leak'
+        return 'Original failed-suite log does not establish the ObjectDB leak'
     if (isolation.get('source_resources_unchanged') is not True
             or isolation.get('copied_resources_unchanged') is not True
             or isolation.get('temporary_project_removed') is not True
@@ -50,15 +108,24 @@ def select_failure(directory):
         return 'Original source or owned cleanup receipt was not clean'
     if isolation.get('source_resources_sha256') != inventory(toolchain.ROOT / 'game'):
         return 'Current source bytes differ from the original failed strict suite'
+    if not selected_identity(row, isolation):
+        return 'Original failed-suite argv or native producer/cleanup identity is foreign or unproven'
+    if selection is not None:
+        selection['suite'] = suite
     return None
 
 
 class VerboseInputMode(NativeSceneSuites):
-    def __init__(self, output, deadline):
+    """Legacy class name retained; optional suite defaults to input_mode."""
+    def __init__(self, output, deadline, suite='input_mode'):
+        if suite not in LEAK_SUITES:
+            raise ValueError('Unsupported diagnostic suite')
         super().__init__(output)
+        self.suite = suite
         self.deadline = deadline
         self.processes = []
-        self.report.update(scope='Diagnostic-only verbose input_mode repeat; original strict gate remains failed',
+        self.report.update(scope='Diagnostic-only verbose first failed leak suite; original strict gate remains failed',
+                           selected_suite=suite,
                            whole_deadline_seconds=240, process_receipts='owned-processes.json')
 
     def execute(self, label, arguments, timeout):
@@ -66,9 +133,9 @@ class VerboseInputMode(NativeSceneSuites):
         if remaining <= 0:
             raise TimeoutError('Whole verbose diagnostic deadline exceeded')
         arguments = list(arguments)
-        if label == 'input_mode':
-            if arguments != ['--headless', '--script', 'res://tests/input_mode_test.gd']:
-                raise RuntimeError('Diagnostic must repeat the exact maintained input_mode suite')
+        if label in SUITES:
+            if label != self.suite or arguments != ['--headless', '--script', 'res://tests/' + self.suite + '_test.gd']:
+                raise RuntimeError('Diagnostic must repeat only the exact selected maintained suite')
             arguments.insert(1, '--verbose')
         command = [toolchain.binary(), '--path', str(self.project), *arguments]
         started = time.monotonic()
@@ -125,14 +192,24 @@ def run(failed_output, output):
         report['source'] = before
         original = evidence(failed_output)
         report['original_evidence_sha256'] = original
-        reason = select_failure(failed_output)
+        selection = {}
+        reason = select_failure(failed_output, selection)
         if reason is not None:
             report.update(status='SKIPPED_DIFFERENT_OR_UNPROVEN_FAILURE', skip_reason=reason)
         else:
-            runner = VerboseInputMode(output / 'repeat', started + 240)
+            suite = selection['suite']
+            report['selected_suite'] = suite
+            if evidence(failed_output) != original:
+                raise RuntimeError('Original strict failure evidence changed before repeat; no launch')
+            current = source()
+            if not same_source(before, current) or current['source_dirty'] or current['source_game_dirty']:
+                raise RuntimeError('Source changed before verbose repeat; no launch')
+            if time.monotonic() - started >= 240:
+                raise TimeoutError('Whole verbose diagnostic deadline exceeded before repeat; no launch')
+            runner = VerboseInputMode(output / 'repeat', started + 240, suite)
             try:
                 with runner:
-                    runner.run('input_mode')
+                    runner.run(suite)
             finally:
                 report['isolation'] = runner.report
                 report['owned_processes'] = runner.processes

@@ -18,16 +18,26 @@ class Clock:
 
 
 class DiagnosticControls(unittest.TestCase):
-    def failure_fixture(self, directory):
-        result = [{'suite': 'input_mode', 'exit': 0, 'clean_log': False}]
-        isolation = {'passed': False, 'failure': {'message': 'input_mode failed; raw output retained'},
+    def failure_fixture(self, directory, suite='input_mode'):
+        namespace = 'SIGHTBREAK-native-tests-' + 'a' * 32
+        project = '/invented/sightbreak-native-tests-fixture/project'
+        native_root = '/invented/native-data/' + namespace
+        producer = {'project_path': project, 'data_dir': '/invented/native-data',
+                    'user_data_dir': native_root + '/' + suite, 'uses_custom_user_dir': True,
+                    'custom_user_dir': namespace + '/' + suite, 'profile_exists': False,
+                    'diagnostics_exist': False, 'run': {'exit': 0, 'clean_log': True}}
+        result = [{'suite': suite, 'exit': 0, 'clean_log': False,
+                   'command': ['/invented/pinned-engine', '--path', project, '--headless', '--script', 'res://tests/' + suite + '_test.gd'],
+                   'before': copy.deepcopy(producer), 'after': copy.deepcopy(producer)}]
+        isolation = {'passed': False, 'failure': {'message': suite + ' failed; raw output retained'},
+                     'namespace': namespace, 'engine': diagnostic.toolchain.ENGINE,
                      'source_resources_unchanged': True, 'copied_resources_unchanged': True,
                      'temporary_project_removed': True, 'finalization_failures': [],
-                     'cleanup': [{'removed': True}], 'source_resources_sha256': {'source': 'invented-hash'}}
+                     'cleanup': [{'removed': True, 'user_namespace': native_root}], 'source_resources_sha256': {'source': 'invented-hash'}}
         directory.mkdir()
         (directory / 'results.json').write_text(json.dumps(result))
         (directory / 'isolation.json').write_text(json.dumps(isolation))
-        (directory / 'input_mode.log').write_text('WARNING: 2 ObjectDB instances were leaked at exit\n')
+        (directory / (suite + '.log')).write_text('WARNING: 2 ObjectDB instances were leaked at exit\n')
         return result, isolation
 
     def test_only_proven_original_failure_selects_and_original_bytes_are_untouched(self):
@@ -35,7 +45,8 @@ class DiagnosticControls(unittest.TestCase):
             directory = Path(temporary) / 'original'
             result, isolation = self.failure_fixture(directory)
             original = diagnostic.evidence(directory)
-            with patch.object(diagnostic, 'inventory', return_value={'source': 'invented-hash'}):
+            with (patch.object(diagnostic, 'inventory', return_value={'source': 'invented-hash'}),
+                  patch.object(diagnostic.toolchain, 'binary', return_value='/invented/pinned-engine')):
                 self.assertIsNone(diagnostic.select_failure(directory))
                 for key, value in [('passed', True), ('failure', {}), ('failure', None), ('cleanup', []),
                                    ('source_resources_unchanged', False), ('copied_resources_unchanged', False),
@@ -64,6 +75,7 @@ class DiagnosticControls(unittest.TestCase):
         runner = object.__new__(diagnostic.VerboseInputMode)
         runner.output, runner.project = directory, directory / 'private-project'
         runner.deadline, runner.processes, runner.report = deadline, [], {}
+        runner.suite = 'input_mode'
         return runner
 
     def test_verbose_only_changes_exact_input_mode_command_and_retains_leak_gate(self):
@@ -152,10 +164,15 @@ class DiagnosticControls(unittest.TestCase):
                     def __exit__(self, *args): return False
                     def run(self, suite):
                         if suite != 'input_mode': raise AssertionError('Wrong suite')
+                def select(_directory, selection):
+                    if selected:
+                        selection['suite'] = 'input_mode'
+                        return None
+                    return 'unrelated'
                 with (patch.object(diagnostic.platform, 'system', return_value='Darwin'),
                       patch.object(diagnostic.platform, 'machine', return_value='arm64'),
                       patch.object(diagnostic, 'source', return_value=identity),
-                      patch.object(diagnostic, 'select_failure', return_value=None if selected else 'unrelated'),
+                      patch.object(diagnostic, 'select_failure', side_effect=select),
                       patch.object(diagnostic, 'VerboseInputMode', side_effect=Runner) as launch):
                     self.assertEqual(diagnostic.run(original, directory / 'new'), 0)
                     report = json.loads((directory / 'new/diagnostic.json').read_text())
@@ -188,7 +205,7 @@ class DiagnosticControls(unittest.TestCase):
                 report = json.loads((Path(temporary) / 'new/diagnostic.json').read_text())
                 self.assertEqual(report['status'], 'SKIPPED_DIFFERENT_OR_UNPROVEN_FAILURE')
                 self.assertIn('absent', report['skip_reason'])
-                self.assertEqual(report['original_evidence_sha256'], {'results.json': None, 'isolation.json': None, 'input_mode.log': None})
+                self.assertEqual(report['original_evidence_sha256'], {'results.json': None, 'isolation.json': None, 'actor.log': None, 'input_mode.log': None})
                 self.assertTrue(report['original_evidence_unchanged'])
                 self.assertFalse(report['passed'])
                 launch.assert_not_called()
@@ -211,7 +228,7 @@ class DiagnosticControls(unittest.TestCase):
                   patch.object(diagnostic.platform, 'machine', return_value='arm64'),
                   patch.object(diagnostic, 'source', return_value=identity),
                   patch.object(diagnostic.time, 'monotonic', clock.monotonic),
-                  patch.object(diagnostic, 'select_failure', return_value=None),
+                  patch.object(diagnostic, 'select_failure', side_effect=lambda _directory, selection: selection.update(suite='input_mode')),
                   patch.object(diagnostic, 'VerboseInputMode', Runner)):
                 self.assertEqual(diagnostic.run(original, Path(temporary) / 'new'), 1)
                 report = json.loads((Path(temporary) / 'new/diagnostic.json').read_text())
