@@ -261,6 +261,12 @@ func _authority_tick(delta: float) -> void:
 		var id: int = _peer_actors[peer_id]
 		var command := _input_stream.pop(peer_id)
 		if not command.is_empty():
+			# Only immutable consumed intent can qualify activity. Packet tails may
+			# contain acknowledged, replaced or backlog-discarded commands.
+			var old_look: Vector2 = actors[id].input_state.get("look", Vector2.ZERO)
+			var new_look: Vector2 = command.look
+			if old_look.distance_to(new_look) > 0.004 or ((command.move as Vector2).length() > 0.1 and actors[id].velocity.length() > 0.2) or (bool(command.interact) and _interactions.has(id)):
+				_last_activity[id] = _elapsed
 			actors[id].input_state = command
 			_last_input_sequence[id] = int(command.sequence)
 		# On a short packet gap keep held controls, as before input sequencing.
@@ -1031,17 +1037,12 @@ func _input_rpc(packed: PackedByteArray) -> void:
 	if not _input_stream.accept(peer_id, data, _snapshot_generation, Time.get_ticks_msec()):
 		return
 	_peer_lifecycle.active(peer_id, Time.get_ticks_msec())
-	var clean: Dictionary = SBInputStream.sanitize(data.commands.back())
 	var id: int = int(_peer_actors[peer_id])
 	var alias: Dictionary = _resume_aliases.get(id, {})
 	if int(alias.get("peer", -1)) == peer_id and int(alias.get("generation", -1)) == int(_peer_lifecycle.peers[peer_id].generation):
 		# The stock client cannot send these inputs before processing its welcome.
 		# Retire the previous credential only after this generation proves delivery.
 		_resume_aliases.erase(id)
-	var old_look: Vector2 = actors[id].input_state.get("look", Vector2.ZERO)
-	var new_look: Vector2 = clean.look
-	if old_look.distance_to(new_look) > 0.004 or ((clean.move as Vector2).length() > 0.1 and actors[id].velocity.length() > 0.2) or (bool(clean.interact) and _interactions.has(id)):
-		_last_activity[id] = _elapsed
 	_last_peer_input[id] = _elapsed
 
 @rpc("any_peer", "call_remote", "reliable", 2)

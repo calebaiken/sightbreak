@@ -24,6 +24,7 @@ run_godot authority-order --headless --script res://tests/authority_order_test.g
 run_godot state-privacy --headless --script res://tests/state_privacy_test.gd
 run_godot snapshot-buffer --headless --script res://tests/snapshot_buffer_test.gd
 run_godot input-stream --headless --script res://tests/input_stream_test.gd
+run_godot activity-provenance --headless --script res://tests/activity_provenance_test.gd
 run_godot movement-replay --headless --script res://tests/movement_prediction_test.gd
 run_godot input-lifecycle --headless --script res://tests/input_lifecycle_test.gd
 run_godot peer-lifecycle --headless --script res://tests/peer_lifecycle_test.gd
