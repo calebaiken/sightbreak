@@ -192,6 +192,9 @@ Physical-GPU pacing, human
 playability and the full Linux/RC gates remain open. Arena/PR26 content,
 authority, protocol and canonical mission files are unchanged by this branch.
 
-The fresh critic has independently recomputed the actual receipt and witnessed
-owned identity/cleanup; its separate final archive verdict will remain the
+Fresh independent actual-output review `95851e6`, preregistered in `97a5945`,
+accepts this diagnostic receipt while retaining the failed next-buy gate and
+unreached restart. It verifies all 33 archived files against their original
+bytes, source/export identity, actual living/POST images, sampler values and
+cadence, and the live identity/cleanup witness. Its separate review is the
 acceptance record. This builder report does not approve itself.
