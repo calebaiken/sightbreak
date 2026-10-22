@@ -9,7 +9,7 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 | ID | Gate | Status | Evidence on record | Verified by | Next action |
 | --- | --- | --- | --- | --- | --- |
 | G1 | Offline 5v5 match runs start to finish (objectives, combat, economy, results, progression) | IN PROGRESS | Scripted native matches finish on Linux (6:6, 7:5) and Windows (6:6, 7:0) with earned XP/Credits reloaded after restart ([playability report](../reports/DESKTOP_PLAYABILITY_REPORT.md)). Several CI scenarios still fail: Linux plant approach and offline round observation, Windows offline OCR and reload timing. | Reported by Codex CI | Re-run the suite natively here (M1). No human has played a full match. |
-| G2 | Bots: reliable navigation, objectives, cooperation, difficulty | IN PROGRESS (F1: no plants in a 12-round match) | PR #14 frozen at `d66e72c` is inside the base. Independent review: "AI / objectives / difficulty: FAIL acceptance" ([three-agent report](../reports/THREE_AGENT_INTEGRATION_REPORT.md)). Tip of the Gemini branch (`48eb058`) is newer and not integrated. | Reported | Review the newer tip with `integration-reviewer`, then measure full matches. |
+| G2 | Bots: reliable navigation, objectives, cooperation, difficulty | IN PROGRESS | PR #14 frozen at `d66e72c` is inside the base. Independent review: "AI / objectives / difficulty: FAIL acceptance" ([three-agent report](../reports/THREE_AGENT_INTEGRATION_REPORT.md)). Tip of the Gemini branch (`48eb058`) is newer and not integrated. Claude measured all-bot matches (M2): on the old map attackers planted in 9% of normal rounds and first kills landed at spawn; on layout revision 2 plants reach 75% (normal) and 15% (hard). Hard bots still rarely plant. | Claude native, bots only | Hard-difficulty staging and utility; review the newer Gemini tip first. |
 | G3 | Ten-client authoritative match: reliability, privacy, identity, integrity, impairment | IN PROGRESS | 12/12 ten-client loopback conditions pass at frozen `4316c58`; resume soaks pass. PRs #18-#21 (recovery, trade reads, input freshness, ACK diagnostics) not integrated. No ten-human run. | Reported by Codex | Codex-owned. Claude reviews #18-#21 when asked. |
 | G4 | Gunplay: recoil, spread, fire cadence, hit and elimination feedback | IN PROGRESS | Rules are tested (`actor_test`, `hit_feedback_test`, `weapon_integrity_test`). No measurement of feel, no human assessment, no comparison to a shipped title. | Reported | Build a measurement harness for all four weapons (milestone candidate). |
 | G5 | Viewmodel, reload and weapon switch animation | FAILED | Relay AR has authored art. Same-family review scored the weapon and hands slice 5.5/10 against 8.5. Kestrel 9, Vectorline and Longwatch are still procedural. | Reported (same-model reviewer, stills) | Native recapture, critic round, author the other three weapons. |
@@ -28,6 +28,8 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 | G18 | Counter-Strike 2 comparison for weapon feel, animation, readability | BLOCKED EXTERNALLY | Steam, YouTube and counter-strike.net hosts denied by the network policy (see [BARS.md](BARS.md)). | none | Owner allows the hosts, or supplies reference captures. |
 | G19 | Physical-device performance (frame pacing, thermals, memory) | BLOCKED EXTERNALLY | Only llvmpipe software-render timings exist. | none | Needs hardware. |
 | G20 | Skills, agents, memory and session brief for the mission | IN PROGRESS | This branch adds them (M0). | Claude | Merge path: draft PR into `codex/desktop-playability-p1`. |
+| G21 | Relay Yard tactical layout: spawn protection, routes, cover, round pacing | IN PROGRESS | Revision 2 (branch `claude/relay-yard-tactical-layout-v1`): 0 sightlines to the attacker spawn (was 1-3), route exposure 28-41% (was 97-100%), first kills out of spawn zones 94% -> 0%, normal plants 9% -> 75%, four blind critic rounds won (5.5 to 6 out of 10), full suite exit 0. [Design](../design/RELAY_YARD_LAYOUT.md), [evidence](../reports/gauntlet/relay-yard-layout/README.md). | Claude native (bots, stills); data independently recomputed | Sites need a plant pocket, a second entry and post-plant cover. No long lane, no elevation. Human playtest. Codex to confirm the native plant scenario route and the mixed-layout handshake. |
+| G22 | Authoritative tick fairness: no actor id wins same-tick trades | FAILED | Finding F2. Actors 1-5 win 71% of normal rounds (62% hard) in either role under the stock id order, 46% with the order reversed (87 rounds). Reproduced on the old and the new layout. | Claude native, bots only | Rotate or shuffle processing order per tick in `match.gd` with a regression test; coordinate with Codex (shared authority code). Then re-measure side balance. |
 
 ## Native baseline by Claude (M1)
 
@@ -37,7 +39,7 @@ Filled in as runs complete. Commit under test: `db3981e` (`codex/desktop-playabi
 | --- | --- |
 | Asset import (`--import`) | Completed, exit 0 |
 | `scripts/validate.sh` | Ran to completion on `db3981e`, no failing step, no leak warnings (worklog has the table). Skipped: backend-Python fixture drift check, Windows-only tests. |
-| Bot match objective play | **Finding F1**: 12-round real-engine bot match, `plant_observed=false`, all rounds ended by elimination in 26-43 s. Under investigation. |
+| Bot match objective play | **Finding F1** (explained): 12-round real-engine bot match, `plant_observed=false`, rounds of 26-43 s. Cause: the 48 m open pad (see G21). On layout revision 2 the same maintained test observes a plant. |
 
 ## Branch and PR map (verified 2026-10-21 with `git fetch` and ancestry checks)
 
@@ -54,7 +56,8 @@ Filled in as runs complete. Commit under test: `db3981e` (`codex/desktop-playabi
 | PR #14 `gemini/tactical-bot-intelligence-v1` | `48eb058` | Newer than the frozen copy inside PR #16. |
 | `claude/reconcile-v10-on-pr16` (no PR) | `79a9591` | PR #16 plus the PR #2 tip. Superseded by PR #23 for everything except the nine art commits. |
 | `claude/wip-gauntlet-T1-sunmetal`, `...T2-lowlight` | `0cb8239`, `43854ff` | Earlier Claude work-in-progress on metal and low-light viewmodel lighting. |
-| `claude/mission-foundation-v1` (this work) | see worklog | M0 on top of PR #23. |
+| `claude/mission-foundation-v1` (draft PR #24) | `c84eaf3` and later | M0 on top of PR #23. |
+| `claude/relay-yard-tactical-layout-v1` | see worklog | M2 on top of `claude/mission-foundation-v1`. |
 
 ## Known blockers and limits
 
