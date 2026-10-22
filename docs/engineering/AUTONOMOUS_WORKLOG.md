@@ -236,3 +236,19 @@ confirms exactly one ARM job and compile-step success, pending artifact review.
 Windows combined raw match/restart is independently verified, but ordinary
 journey still fails from player death during settings/resume. A scheduling-only
 builder correction and independent HUD cleanup revision review continue.
+
+## Codex verified native build and cleanup increments — 2026-10-22 04:26 UTC
+
+Independent actual iOS evidence integrated as 6eba3d3: source2a2b732, run
+39721286005, Xcode26.3/SDK26.2, CompileC/Ld/BUILD SUCCEEDED, strict native unsigned
+arm64 device receipt, exact source/PCK and raw unsigned codesign. Binary itself
+is too large for transfer; independent binary reparse/runtime remain open.
+HUD cleanup integrated as f7d1779+483a8b0 after independent critic rejected and
+root corrected two link cases. Round1 rejection1f39be2 and round2 acceptance
+02a24f2 retain actual14 native controls; only controlled Linux scope is accepted.
+Windows raw outcome integrated c089edf: objective/full-match/restart pass,
+ordinary journey death failure retained. Builder/critic are correcting only
+observation scheduling, including a newly found same-life capture race.
+Account-backed match harness is under independent source review; critic found
+four evidence-validator false positives before its long actual run. They must
+be corrected rather than counted as proof. No result or G3 completion yet.

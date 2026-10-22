@@ -51,11 +51,14 @@ independently reviewed with native-source failure controls retained. Explicit AR
 workflow selection 2a2b732 preserves default four-host behavior.
 [Retry 39721286005](https://github.com/calebaiken/sightbreak/actions/runs/39721286005)
 is frozen to `2a2b732c9f4637e9c2c68890cdd0f13d8fa89906`, exactly one ARM job
-119635074896. Startup, all source suites and iOS compile step pass; actual app
-receipt/binary/signature/source review is pending artifact upload. Its game/content
+119635074896. Startup, all source suites and unsigned iOS compile slice pass independent raw
+review, retained in 6eba3d3. Xcode 26.3 / SDK 26.2 links in 36.953 s; codesign
+confirms unsigned. Source/PCK/strict native Mach-O receipts agree. The 102 MB
+executable was not transferred for independent reparse; physical installation,
+runtime, simulator and older-device behavior remain open. Its game/content
 hashes match 0ca; validation SHA256 is
 `0238d679d40e1623ba3fbf95ba3c273b515135476488c930b508c92bf3366f05`.
-No physical-device or unsigned-app claim follows from step metadata alone.
+No physical-device or runtime claim follows from this bounded build acceptance.
 
 Previous [run 39712752860](https://github.com/calebaiken/sightbreak/actions/runs/39712752860)
 at 6a failed all four jobs. Its shared-save, ammo OCR, focus and Intel failures
@@ -98,7 +101,7 @@ actual full stock match may take 9–15 min. It is not yet accepted or integrate
 3. F2 authority order: product `f13ed03`, reviewed oracle `8571c78`, native CI registration `40ffbae` are integrated. Fresh independent native/source review accepts the bounded correction: 178 checks pass versus 152 intentional baseline failures. Full maintained validation on exact product 470fad5 passes; corrected active CPU samples count real shots/damage with stable bounded pools. Earlier depleted-trigger and missing-pose benchmark defects are retained. See `docs/reports/gauntlet/m3-authority-order/README.md` and its independent report. Simultaneous multiattacker credit, wipe, utility and contact policies remain open; no full competitive fairness claim.
 4. Separate Claude-owned [PR26](https://github.com/calebaiken/sightbreak/pull/26), `claude/relay-yard-tactical-layout-v1` at `5288a69`, is not integrated. Its map changes require protocol/build compatibility and native route review. Do not edit arena/bot files concurrently or blindly import the newer bot rewrite.
 5. After reviewed observer integration, commit a clean candidate and dispatch registered `desktop-alpha.yml` on the own branch. Verify nine suites on actual Windows/Mac, unchanged offline journeys, objective/full-match/progression and four-size captures. Download/review bounded receipts and Mac attribution. If one Mac ablation succeeds while full fails, repeat a warm full reference before choosing a shipping correction.
-6. Mobile preservation: detached `/workspace/sightbreak-v1-mobile6a` is clean 6a. Both exports and package inspection pass; fresh critic reports 48/49 checks with upstream simulator architecture mismatch. Evidence 25e889e. Actual generic-device Xcode compile is now wired to ARM Mac CI; physical play remains unavailable. Do not treat simulator metadata as a device failure or mark all G14 passed.
+6. Mobile preservation: detached `/workspace/sightbreak-v1-mobile6a` is clean 6a. Both exports and package inspection pass; fresh critic reports 48/49 checks with upstream simulator architecture mismatch. Evidence 25e889e. Actual unsigned generic-device Xcode compile passes independent review at 2a2b732; physical play remains unavailable. Do not treat simulator metadata as a device failure or mark all G14 passed.
 
 Update progress, evidence, worklog and this resume point after each increment.
 Commit/push recoverable changes, keep PR27 draft, then immediately continue the
@@ -143,12 +146,13 @@ Windows/Linux original full journeys/objectives/match/restart, four-size layouts
 Intel feature attribution and ARM unsigned iOS compilation. Preserve every failed
 step; no whole RC gate is passed by implementation readiness.
 
-## HUD fixture follow-up under review
+## HUD fixture correction integrated
 
-Builder b899972 fixes the inner-marker orphan but the fresh critic rejected a
+Builder b899972 fixed the inner-marker orphan, then the fresh critic rejected a
 dangling-link `removed: true` receipt and followed shared-parent link. Root
-correction is frozen at `2b06960` in `/workspace/sightbreak-hud-finalizer`, branch
-`codex/v1-hud-finalizer-review-fixes`. All six standard native controls and six
-edge controls pass locally; independent round-2 review is pending. Integrate both
-implementation commits and retained round-1 rejection only after acceptance.
-The fix is test cleanup, not gameplay or filesystem race-proof security.
+correction `2b06960` independently passes six standard, six edge and two additional
+native controls. Integrated as f7d1779 + 483a8b0; round-1 rejection 1f39be2 and
+round-2 approval 02a24f2 are retained. Ordinary HUD checks stay 33, caller state
+is preserved, creation/cleanup reject the shared namespace link, and removal
+receipts are entry-aware. Corrected Windows/macOS execution remains pending;
+controlled Linux exits do not establish hard-kill or atomic filesystem safety.

@@ -54,7 +54,9 @@ filesystem assertions; `IDENTITIES.json` records source and evidence digests.
 Raw logs preserve their trailing blank lines. No HUD expectations, progression
 guard, shipping setting, gameplay behavior or watchdog changed.
 
-This is a builder candidate for a fresh critic. Windows/macOS execution of the
+Initial candidate b899972 was rejected for two independent link counterexamples.
+Correction 2b06960 passes fourteen independent native controls; see
+[independent round-2 report](independent-critic/round-2/REPORT.md). Windows/macOS execution of the
 correction remains unverified. The tests cover controlled native exits; they do
 not establish cleanup after a hard process kill. No visual or gameplay acceptance
 gate is closed by this fixture correction.
