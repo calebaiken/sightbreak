@@ -132,6 +132,9 @@ jobs:
       - name: Native macOS minimal/frozen/candidate graphical diagnosis
         if: always() && steps.export.outcome == 'success' && runner.os == 'macOS'
         run: python scripts/diagnose_macos_startup.py --output builds/desktop-playability/macos-diagnostics --baseline-archive "$RUNNER_TEMP/sightbreak-macos-frozen.zip"
+      - name: Intel macOS render feature attribution after the unchanged startup gate
+        if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15-intel'
+        run: python scripts/diagnose_macos_render.py --output builds/desktop-playability/macos-diagnostics/render-features
       - name: Preserve source-bound development package including failed qualification attempts
         if: always() && steps.export.outcome == 'success' && steps.package_inspection.outcome == 'success'
         run: python scripts/build_manifest.py package --targets ${{ matrix.target }}
