@@ -13,6 +13,8 @@ run_godot() {
 run_godot import --headless --editor --import --quit
 run_godot actor --headless --script res://tests/actor_test.gd
 run_godot world --headless --script res://tests/world_test.gd
+# Relay Yard layout rules: spawn protection, route length and route exposure (see the probe's ASSERT_ constants).
+run_godot map-sightlines --headless --script res://tests/map_sightline_probe.gd -- --assert
 run_godot hit-feedback --headless --script res://tests/hit_feedback_test.gd
 run_godot weapon-integrity --headless --script res://tests/weapon_integrity_test.gd
 run_godot hit-volume --headless --script res://tests/hit_volume_test.gd

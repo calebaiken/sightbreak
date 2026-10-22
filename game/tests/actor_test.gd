@@ -37,7 +37,7 @@ func _run() -> void:
 	check(arena.is_at_site(Vector3(15, 0, 10)) == 1, "site B detection")
 	check(arena.is_at_site(Vector3.ZERO) == -1, "center not objective")
 	check(arena.waypoints.size() > 100, "walkable navigation graph")
-	check(arena._obstacles.size() == 25, "surface polish preserves all 25 navigation obstacles")
+	check(arena._obstacles.size() == 25 + arena.layout_solids, "surface polish preserves the original 25 navigation obstacles beside the layout solids")
 	var rough: StandardMaterial3D = arena._material(Color.WHITE, 0.94)
 	var smooth: StandardMaterial3D = arena._material(Color.WHITE, 0.24)
 	check(rough != smooth and is_equal_approx(smooth.roughness, 0.24), "material cache distinguishes roughness")
