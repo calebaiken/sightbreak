@@ -3,6 +3,13 @@ extends SceneTree
 ## Exercise the actual _process status Label, never objective_hint directly.
 var checks := 0
 var failures := 0
+var original_user_dir := ""
+var original_custom_user_dir: Variant
+var original_custom_user_dir_name: Variant
+var fixture_name := ""
+var fixture_user_dir := ""
+var fixture_created := false
+var marker_created := false
 
 func check(value: bool, message: String) -> void:
 	checks += 1
@@ -13,33 +20,84 @@ func check(value: bool, message: String) -> void:
 func _initialize() -> void:
 	# Environment-only state roots do not redirect Godot's native macOS user://.
 	# Use a private native directory before constructing any controller/profile.
-	var original_user_dir := OS.get_user_data_dir()
-	var fixture_name := "SIGHTBREAK_QA/hud-objective-hint-%d-%d" % [OS.get_process_id(), Time.get_ticks_usec()]
+	original_user_dir = OS.get_user_data_dir()
+	original_custom_user_dir = ProjectSettings.get_setting("application/config/use_custom_user_dir")
+	original_custom_user_dir_name = ProjectSettings.get_setting("application/config/custom_user_dir_name")
+	fixture_name = "SIGHTBREAK_QA/hud-objective-hint-%d-%d" % [OS.get_process_id(), Time.get_ticks_usec()]
 	ProjectSettings.set_setting("application/config/use_custom_user_dir", true)
 	ProjectSettings.set_setting("application/config/custom_user_dir_name", fixture_name)
-	var fixture_user_dir := OS.get_user_data_dir()
+	fixture_user_dir = OS.get_user_data_dir()
 	if fixture_user_dir == original_user_dir or not fixture_user_dir.replace("\\", "/").ends_with("/" + fixture_name) or DirAccess.dir_exists_absolute(fixture_user_dir):
 		push_error("HUD fixture requires a new, distinct native user-data directory: " + fixture_user_dir)
-		quit(2)
+		finish(2)
 		return
 	if DirAccess.make_dir_recursive_absolute(fixture_user_dir) != OK:
 		push_error("Cannot create private HUD fixture directory: " + fixture_user_dir)
-		quit(2)
+		finish(2)
 		return
+	fixture_created = true
 	var marker_path := fixture_user_dir.path_join("hud-fixture-owner.txt")
 	var marker := FileAccess.open(marker_path, FileAccess.WRITE)
 	if marker == null:
 		push_error("Cannot create private HUD fixture ownership marker: " + marker_path)
-		quit(2)
+		finish(2)
 		return
+	marker_created = true
 	marker.store_string(fixture_name)
 	marker.close()
 	if FileAccess.get_file_as_string("user://hud-fixture-owner.txt") != fixture_name:
 		push_error("HUD fixture user:// does not resolve to its private native directory")
-		quit(2)
+		finish(2)
 		return
 	print("HUD_OBJECTIVE_HINT_TEST_STATE native_user_dir=%s original_user_dir=%s owner=%s" % [fixture_user_dir, original_user_dir, fixture_name])
 	run.call_deferred()
+
+func cleanup_fixture() -> String:
+	if not fixture_created:
+		return ""
+	var expected := OS.get_data_dir().path_join(fixture_name).simplify_path()
+	if fixture_user_dir.simplify_path() != expected or fixture_user_dir == original_user_dir:
+		return "Refusing HUD cleanup outside its private native directory"
+	var parent := DirAccess.open(fixture_user_dir.get_base_dir())
+	if parent == null or parent.is_link(fixture_user_dir.get_file()):
+		return "Refusing HUD cleanup for an unavailable or linked fixture directory"
+	var directory := DirAccess.open(fixture_user_dir)
+	if directory == null:
+		return "Cannot inspect private HUD fixture directory"
+	directory.include_hidden = true
+	directory.include_navigational = false
+	if directory.list_dir_begin() != OK:
+		return "Cannot list private HUD fixture directory"
+	var entries: Array[String] = []
+	var entry := directory.get_next()
+	while not entry.is_empty():
+		entries.append(entry)
+		entry = directory.get_next()
+	directory.list_dir_end()
+	var marker_path := fixture_user_dir.path_join("hud-fixture-owner.txt")
+	if marker_created:
+		if entries != ["hud-fixture-owner.txt"] or directory.is_link("hud-fixture-owner.txt") or FileAccess.get_file_as_string(marker_path) != fixture_name:
+			return "Refusing HUD cleanup because ownership changed or protected files remain"
+		if DirAccess.remove_absolute(marker_path) != OK:
+			return "Cannot remove private HUD fixture ownership marker"
+	elif not entries.is_empty():
+		return "Refusing HUD cleanup because unowned files remain"
+	if DirAccess.remove_absolute(fixture_user_dir) != OK:
+		return "Cannot remove empty private HUD fixture directory"
+	return ""
+
+func finish(exit_code: int) -> void:
+	var reason := cleanup_fixture()
+	ProjectSettings.set_setting("application/config/use_custom_user_dir", original_custom_user_dir)
+	ProjectSettings.set_setting("application/config/custom_user_dir_name", original_custom_user_dir_name)
+	var restored := OS.get_user_data_dir() == original_user_dir
+	if not restored:
+		reason += " Original native user directory was not restored"
+	var final_exit := exit_code if exit_code != 0 or reason.is_empty() else 2
+	print("HUD_OBJECTIVE_HINT_TEST_CLEANUP " + JSON.stringify({"native_user_dir":fixture_user_dir, "owner":fixture_name, "owned":fixture_created, "removed":fixture_created and not DirAccess.dir_exists_absolute(fixture_user_dir), "original_user_dir_restored":restored, "reason":reason, "original_exit":exit_code, "exit":final_exit}))
+	if not reason.is_empty():
+		push_error(reason)
+	quit(final_exit)
 
 func expect_status(main: Node, game: Node, actor: Node, item: Dictionary, context: String) -> void:
 	# These are declared HUD-only state inputs. Physics is disabled before its
@@ -60,7 +118,7 @@ func expect_status(main: Node, game: Node, actor: Node, item: Dictionary, contex
 func run() -> void:
 	if FileAccess.file_exists("user://offline_training.json"):
 		push_error("Use fresh isolated SIGHTBREAK_STATE_DIR; player saves are never overwritten")
-		quit(2)
+		finish(2)
 		return
 	var source := "res://scripts/main.gd"
 	for argument in OS.get_cmdline_user_args():
@@ -69,7 +127,7 @@ func run() -> void:
 	var script: Script = load(source)
 	if script == null or not script.can_instantiate():
 		push_error("HUD main source did not compile: " + source)
-		quit(2)
+		finish(2)
 		return
 	var main = script.new()
 	main.set_process(false)
@@ -117,4 +175,4 @@ func run() -> void:
 	main.queue_free()
 	await process_frame
 	print("HUD_OBJECTIVE_HINT_TEST source=%s scope=frozen_source_ui checks=%d failures=%d" % [source, checks, failures])
-	quit(1 if failures else 0)
+	finish(1 if failures else 0)
