@@ -37,6 +37,23 @@ RULES = {'buy_seconds': 15, 'round_seconds': 100, 'device_seconds': 35,
          'plant_seconds': 3, 'defuse_seconds': 5, 'win_score': 7}
 
 
+def require_planted_guidance_context(item, actor_id, round_number):
+    """A delayed role observation cannot accept a dead or replacement attacker."""
+    current = item.get('local_actor', {})
+    context = {name: item.get(name) for name in ('simulation_tick', 'phase', 'round_number', 'objective_state')}
+    context.update(actor_id=current.get('id'), alive=current.get('alive'), health=current.get('health'))
+    health = current.get('health')
+    if (current.get('alive') is False
+            or (isinstance(health, (int, float)) and not isinstance(health, bool) and health <= 0)):
+        raise RuntimeError('Player died before post-plant role guidance capture: ' + repr(context))
+    if (current.get('alive') is not True or isinstance(health, bool)
+            or not isinstance(health, (int, float)) or not 0 < health <= 100
+            or item.get('phase') != 'live' or item.get('round_number') != round_number
+            or item.get('objective_state') != 'planted' or current.get('id') != actor_id
+            or current.get('team') != 0):
+        raise RuntimeError('Post-plant role guidance lost its actual attacker context: ' + repr(context))
+
+
 def verify_hold_edges(observations, prior, required, message):
     """Measure exact consumed-input/notification edges, independently of progress."""
     completions = [item for item in observations if item.get('event') == 'notification'
@@ -462,12 +479,13 @@ def main():
         result['partial_checks']['player_' + args.scenario] = True
         capture('06-player-objective-completed')
         if args.scenario == 'plant':
+            guidance_actor_id = actor['id']
             def planted_role_guidance(item):
-                if item.get('phase') != 'live' or item.get('round_number') != round_number:
-                    raise RuntimeError('Round resolved before post-plant role guidance could be captured')
+                require_planted_guidance_context(item, guidance_actor_id, round_number)
                 return item.get('ui', {}).get('status_text') == 'DEFEND THE DEVICE'
             wait(planted_role_guidance, 15, 'Actual attacker HUD restores post-plant role guidance')
             capture('06b-postplant-role-guidance')
+            require_planted_guidance_context(observe(), guidance_actor_id, round_number)
             result['partial_checks']['postplant_attacker_role_guidance'] = True
         resolved = wait(lambda item: item.get('phase') in ('post', 'match_over'), 50, 'Natural objective round resolution')
         notices = [item.get('message', '') for item in events() if item.get('event') == 'notification']

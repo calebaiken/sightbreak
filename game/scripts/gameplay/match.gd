@@ -38,6 +38,8 @@ var actors: Dictionary = {}
 var options: Dictionary = {}
 var local_id: int = 1
 var connection_state: String = "offline"
+# Presentation-only reason for the current connection/recovery state; never sent in snapshots.
+var connection_notice: String = ""
 var reconnect_token: String = ""
 var _authority: bool = true
 var _bot_state: Dictionary = {}
@@ -617,7 +619,7 @@ func _host() -> void:
 	var error: Error = peer.create_server(int(options.get("port", 27020)), 10)
 	if error != OK:
 		connection_state = "failed"
-		notification.emit("Cannot bind dedicated server port: %s" % error_string(error))
+		_notify_connection_status("Cannot bind dedicated server port: %s" % error_string(error))
 		return
 	# Clients only exchange inputs/snapshots with this authority. Disabling the
 	# implicit peer relay also avoids peer-list traffic to simultaneously closing
@@ -632,6 +634,7 @@ func _host() -> void:
 	multiplayer.peer_disconnected.connect(_peer_disconnected)
 	multiplayer.peer_connected.connect(_peer_connected)
 	connection_state = "hosting"
+	connection_notice = ""
 	print("SIGHTBREAK_SERVER_READY port=%d" % int(options.get("port", 27020)))
 
 func _connect_client() -> void:
@@ -653,7 +656,7 @@ func _connect_client() -> void:
 		_connection_failed()
 		return
 	multiplayer.multiplayer_peer = peer
-	notification.emit("Connecting to Relay Yard…")
+	_notify_connection_status("Connecting to Relay Yard…")
 
 func _connected() -> void:
 	connection_state = "joining"
@@ -760,10 +763,16 @@ func _drop_rejected_peers() -> void:
 		if api.get_authenticating_peers().has(peer_id):
 			api.disconnect_peer(peer_id)
 
+## Keep the typed connection reason separate from ordinary match notices. A late
+## combat notice must not hide a transport failure or recovery instruction.
+func _notify_connection_status(message: String) -> void:
+	connection_notice = message
+	notification.emit(message)
+
 ## Terminal client failure: shows the reason and never retries on its own.
 func _fail_connection(message: String) -> void:
 	connection_state = "failed"
-	notification.emit(message)
+	_notify_connection_status(message)
 	print("PROTOCOL_CLIENT_FAILED " + message)
 	_recovery.clear()
 	var retired := multiplayer.multiplayer_peer
@@ -792,7 +801,7 @@ func _retry_resume(message: String) -> bool:
 		_reconnect_at_msec = 0
 		var retired := multiplayer.multiplayer_peer
 		_close_retired_client.call_deferred(retired)
-		notification.emit(message)
+		_notify_connection_status(message)
 	return true
 
 func _server_disconnected() -> void:
@@ -806,7 +815,7 @@ func _server_disconnected() -> void:
 	_replica_buffer.clear()
 	_reconnect_clock = 2
 	_reconnect_at_msec = 0
-	notification.emit("Server disconnected. Attempting to reconnect…")
+	_notify_connection_status("Server disconnected. Attempting to reconnect…")
 
 func _client_tick(delta: float) -> void:
 	for utility: SBUtility in _remote_utilities.values():
@@ -1063,6 +1072,7 @@ func _welcome_rpc(id: int, token: String, data: Dictionary) -> void:
 	reconnect_token = token
 	_recovery.clear()
 	connection_state = "connected"
+	connection_notice = ""
 	_apply_snapshot(data)
 	notification.emit("Connected • account session" if reward_status != "unranked" else "Connected • LAN practice session")
 

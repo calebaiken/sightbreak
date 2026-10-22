@@ -133,6 +133,73 @@ func expect_status(main: Node, game: Node, actor: Node, item: Dictionary, contex
 	var actual: String = main.status_label.text
 	check(actual == item.expected, "%s %s: expected '%s', actual '%s'" % [context, item.name, item.expected, actual])
 
+func notification_priority_benchmark(main: Node, game: Node, actor: Node, touch_enabled: bool) -> void:
+	# Declared HUD-only inputs. Repeated _process calls do not advance gameplay.
+	var control := "USE" if touch_enabled else "E"
+	var combat := ["Relay device armed — defend the site", "Echo  ›  Rook", "Sable  ›  Morrow", "Sable  ›  Slate", "Ember  ›  Operator", "Sable  ›  Echo"]
+	var wrong_frames := 0
+	var samples := 0
+	for state in ["offline", "hosting", "connected"]:
+		game.connection_state = state
+		game.connection_notice = ""
+		for role in [
+			{"name": "attacker", "team": 0, "alive": true, "expected": "DEFEND THE DEVICE"},
+			{"name": "defender", "team": 1, "alive": true, "expected": "HOLD %s NEAR THE DEVICE TO DEFUSE" % control},
+			{"name": "spectator", "team": 0, "alive": false, "expected": "SPECTATING YOUR SQUAD"},
+		]:
+			game.phase = "live"
+			game.objective_state = "planted"
+			actor.team = role.team
+			actor.alive = role.alive
+			actor.health = 100 if actor.alive else 0
+			for index in range(81):
+				main.elapsed = 2000.0 + index * 0.25
+				main.show_notification(combat[index % combat.size()])
+				main._process(0.0)
+				var correct: bool = main.status_label.text == role.expected
+				samples += 1
+				if not correct: wrong_frames += 1
+				check(correct, "planted priority touch=%s state=%s role=%s sample=%d: expected '%s', actual '%s'" % [touch_enabled, state, role.name, index, role.expected, main.status_label.text])
+				print("HUD_PRIORITY_SAMPLE " + JSON.stringify({"touch":touch_enabled, "connection":state, "role":role.name, "sample":index, "ui_elapsed":main.elapsed, "until":main.status_label.get_meta("until", 0.0), "actual":main.status_label.text, "expected":role.expected, "correct":correct, "game_tick":game._simulation_tick}))
+	# Critical reasons use typed state/callback data, not matching message text.
+	actor.team = 0
+	actor.alive = true
+	actor.health = 100
+	for state in ["connecting", "joining", "authenticating", "reconnecting", "failed"]:
+		game.connection_state = state
+		var reason := "QA typed %s reason — 接続" % state
+		game._notify_connection_status(reason)
+		for index in range(3):
+			main.elapsed = 2100.0 + index * 10.0
+			main.show_notification(combat[index])
+			main._process(0.0)
+			check(main.status_label.text == reason, "typed %s reason survives ordinary notice beyond expiry touch=%s sample=%d" % [state, touch_enabled, index])
+	game.connection_state = "connected"
+	# An inactive connection reason must never leak after recovery.
+	main._process(0.0)
+	check(main.status_label.text == "DEFEND THE DEVICE", "connected role replaces obsolete critical reason touch=%s" % touch_enabled)
+	# Exercise the actual welcome callback with this frozen fixture's valid snapshot.
+	var snapshot: Dictionary = game._snapshot()
+	game.connection_state = "reconnecting"
+	game.connection_notice = "QA retained recovery reason"
+	game._authority = false
+	game._welcome_rpc(actor.actor_id, "", snapshot)
+	check(game.connection_state == "connected" and game.connection_notice.is_empty(), "successful welcome clears the retained critical reason touch=%s" % touch_enabled)
+	main._process(0.0)
+	check(main.status_label.text == "DEFEND THE DEVICE", "welcome restores the current planted role touch=%s" % touch_enabled)
+	game._authority = true
+	game._pending_reconciliation.clear()
+	game.connection_state = "offline"
+	game.connection_notice = ""
+	for item in [
+		{"name": "waiting after flood", "phase": "waiting", "expected": "WAITING FOR AUTHENTICATED PLAYERS   1 / 10"},
+		{"name": "buy after flood", "phase": "buy", "expected": "BUY PHASE   /   %s TO EQUIP" % ("TAP BUY" if touch_enabled else "PRESS B")},
+		{"name": "post after flood", "phase": "post", "objective": "planted", "expected": "ROUND COMPLETE"},
+		{"name": "completed after flood", "phase": "match_over", "objective": "planted", "expected": "OPERATION COMPLETE"},
+	]:
+		expect_status(main, game, actor, item, "touch=%s" % touch_enabled)
+	print("HUD_PRIORITY_BENCHMARK " + JSON.stringify({"touch":touch_enabled, "samples":samples, "wrong_frames":wrong_frames, "scope":"frozen HUD fixture; no gameplay tick advanced"}))
+
 func run() -> void:
 	if FileAccess.file_exists("user://offline_training.json"):
 		push_error("Use fresh isolated SIGHTBREAK_STATE_DIR; player saves are never overwritten")
@@ -188,6 +255,7 @@ func run() -> void:
 		main.elapsed = 1006.0
 		main._process(0.0)
 		check(main.status_label.text == cases[0].expected, context + ": expired live notification returns to the correct hint")
+		notification_priority_benchmark(main, game, actor, touch_enabled)
 	check(game._simulation_tick == 0 and game._elapsed == 0.0, "Status rendering never advances the frozen gameplay fixture")
 	check(main.profile.data.matches == 0 and not FileAccess.file_exists("user://offline_training.json"), "HUD fixture never awards or saves training progression")
 	main.queue_free()

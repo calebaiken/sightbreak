@@ -1393,7 +1393,12 @@ func _process(delta: float) -> void:
 			pair[0].queue_redraw()
 	action_label.text = "DEVICE  %02d s" % int(match_game.objective_timer) if match_game.objective_state == "planted" else "DEVICE  /  " + str(match_game.objective_state).to_upper()
 	if match_game.objective_state == "dropped": action_label.text = "DEVICE DROPPED  /  RECOVER"
-	if match_game.phase == "waiting":
+	# Connection callbacks retain their typed reason separately from combat notices.
+	var connection_blocked: bool = match_game.connection_state not in ["offline", "hosting", "connected"]
+	var critical_notice: String = match_game.connection_notice if connection_blocked else ""
+	if not critical_notice.is_empty():
+		status_label.text = critical_notice
+	elif match_game.phase == "waiting":
 		var humans := 0
 		for row in match_game.scoreboard():
 			if not row.get("bot", true): humans += 1
@@ -1427,7 +1432,13 @@ func _process(delta: float) -> void:
 		funds_label.text = "%d  ·  FUNDS" % actor.credits
 		utility_label.text = "FRAG ×%d    SMOKE ×%d" % [actor.grenades, actor.smokes]
 		if touch != null: touch.counts = {"grenade": actor.grenades, "smoke": actor.smokes}
-		if match_game.phase == "buy": status_label.text = "BUY PHASE   /   %s TO EQUIP" % ("TAP BUY" if uses_touch_controls() else "PRESS B")
+		if connection_blocked:
+			pass # Never replace a current connection/recovery reason with a tactical hint.
+		elif match_game.phase == "buy": status_label.text = "BUY PHASE   /   %s TO EQUIP" % ("TAP BUY" if uses_touch_controls() else "PRESS B")
+		elif match_game.phase == "live" and match_game.objective_state == "planted":
+			# The armed device creates an urgent role. Combat already has its own feed;
+			# successive notices cannot postpone this guidance until after the player dies.
+			status_label.text = objective_hint(actor)
 		elif match_game.phase != "waiting" and elapsed > float(status_label.get_meta("until", 0.0)):
 			status_label.text = objective_hint(actor)
 		_fit_status_line()

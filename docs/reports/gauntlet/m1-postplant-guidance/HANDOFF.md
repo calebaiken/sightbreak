@@ -101,3 +101,36 @@ mission files will be changed by this branch.
 Next: implement this bounded scope, then request a focused/native CPU window.
 Touch builder/critic currently own the execution lane. Runtime verification and
 independent acceptance are pending.
+
+## Integrated source checkpoint
+
+The criteria commit is preserved from the investigation branch as `aedb7e6`.
+The implementation branch is now `fix/postplant-guidance-priority`, worktree
+`/workspace/sightbreak-postplant-priority`, based on integrated source `93ec98b`.
+This includes the accepted touch synchronization and feed refitting. Those
+functions are unchanged by this candidate; its main-controller diff only changes
+status selection. The original investigation branch and unexecuted prototype
+remain recoverable, without rewriting either history.
+
+The candidate adds a presentation-only connection reason at the existing typed
+callbacks, clears it on successful hosting/welcome, and selects the current role
+on each processed operational live/planted HUD frame. It retains ordinary
+notification expiry outside that phase. Its observer reports actual death or
+context loss before accepting the existing exact role predicate, then checks
+the original living actor/round/objective again after the rendered capture.
+The 15-second role deadline and all gameplay/input timers are unchanged.
+
+The baseline comparison will load `93ec98b`'s actual main controller through the
+fixture's existing `--baseline-source` option. Both sides use the candidate's
+same frozen match fixture and declared typed connection fields. This isolates
+the status selector; it is not a whole-product gameplay comparison. The source
+benchmark also exercises the actual successful welcome callback with a valid
+frozen snapshot and checks waiting, buy, post and completion after the flood.
+
+The next exported plant run will retain a genuine, silent X11 recording from
+the validator's own fresh Xvfb display, alongside original screenshots and
+authority/input receipts. Record the recorder command, timestamps and hashes;
+retain its output even if the gate fails. This adds capture load under the
+unchanged original budgets. The video is qualitative evidence, with no audio,
+speaker-listening, frame-rate or latency qualification. No native or engine run
+has yet been performed on this candidate.
