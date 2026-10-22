@@ -103,4 +103,5 @@ if [[ "${1:-}" == --backend ]]; then
 fi
 python3 scripts/test_build_manifest.py
 python3 scripts/test_native_observation.py -v
+python3 scripts/test_offline_export_ocr.py -v
 printf 'Validation completed. Logs: %s\n' "$validation_dir"

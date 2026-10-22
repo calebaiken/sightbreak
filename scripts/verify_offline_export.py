@@ -59,7 +59,6 @@ def read_hud_pixels(path, ocr):
             'status_ocr': status, 'ammo_ocr': ammo_text}
 
 
-
 def exact_ocr_caption(rows, caption):
     """Locate one complete caption on one OCR line; ambiguous/missing fails."""
     lines = {}
@@ -322,8 +321,8 @@ def main():
         # Analysis only: scale text coordinates into the shared1280x720 layout.
         # The saved native screenshot itself is never resized or thresholded.
         with Image.open(out / 'ocr-current.png') as native:
-            # Preserve native antialiasing while scaling. Thresholding tiny
-            # native glyphs first changed the actual LEAVE V into an OCR Y.
+            # Preserve native antialiasing while scaling. Saved-pixel replay
+            # read LEAYE when tiny native glyphs were thresholded first.
             image = native.convert('L').resize((REFERENCE[0] * 2, REFERENCE[1] * 2))
             image = image.point(lambda value: 0 if value > 145 else 255)
         raw = ocr(image, 11, 'current-native-ui')
