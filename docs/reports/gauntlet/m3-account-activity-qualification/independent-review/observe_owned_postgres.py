@@ -48,7 +48,8 @@ def main():
     parser.add_argument('output', type=Path)
     args = parser.parse_args()
     run, output = args.run.resolve(), args.output.resolve()
-    output.mkdir(parents=True, exist_ok=True)
+    # Each observation attempt is immutable evidence, including failures.
+    output.mkdir(parents=True, exist_ok=False)
     start = time.monotonic()
     deadline = start + 1800
     summary = dict(started_at_utc=now(), run=str(run), method='Independent docker exec psql; no credential or environment access',
