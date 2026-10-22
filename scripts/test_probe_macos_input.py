@@ -97,6 +97,35 @@ class PreflightControls(unittest.TestCase):
                 probe.run(temporary)
             self.assertEqual(original.read_text(), 'original')
 
+    def test_existing_profile_and_dangling_entries_block_without_reading(self):
+        with tempfile.TemporaryDirectory() as temporary, patch.object(probe, 'user_directory', return_value=Path(temporary)):
+            self.assertEqual(probe.require_absent_profile(), {'offline_training.json': False, 'offline_training.json.tmp': False})
+            profile = Path(temporary) / 'offline_training.json'
+            profile.write_bytes(b'private profile bytes')
+            with self.assertRaisesRegex(probe.NativePrerequisiteBlocked, 'Existing native player profile'):
+                probe.require_absent_profile()
+            self.assertEqual(profile.read_bytes(), b'private profile bytes')
+            if sys.platform != 'win32':
+                profile.unlink()
+                profile.symlink_to(Path(temporary) / 'missing')
+                with self.assertRaises(probe.NativePrerequisiteBlocked):
+                    probe.require_absent_profile()
+
+    def test_native_cache_inventory_is_observed_without_deletion(self):
+        with tempfile.TemporaryDirectory() as temporary, patch.object(probe, 'user_directory', return_value=Path(temporary) / 'user'):
+            self.assertEqual(probe.user_directory_inventory(), {'directory_exists': False, 'directories': [], 'files': {}})
+            path = Path(temporary) / 'user/logs/godot.log'
+            path.parent.mkdir(parents=True)
+            path.write_text('native log')
+            inventory = probe.user_directory_inventory()
+            self.assertEqual(inventory['files']['logs/godot.log']['bytes'], 10)
+            self.assertEqual(inventory['directories'], ['logs'])
+            self.assertTrue(path.is_file())
+            if sys.platform != 'win32':
+                (path.parent / 'link').symlink_to(path)
+                with self.assertRaisesRegex(probe.NativePrerequisiteBlocked, 'symlink'):
+                    probe.user_directory_inventory()
+
     @unittest.skipIf(sys.platform == 'win32', 'POSIX owned-group cleanup control')
     def test_actual_owned_process_is_reaped(self):
         process = subprocess.Popen([sys.executable, '-c', 'import time; time.sleep(30)'], start_new_session=True)

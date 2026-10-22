@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""Read-only native ARM Mac input readiness; never post events or request access.
+"""Native ARM Mac input readiness; never post events or request access.
 
-The export's smoke PNG is internal rendered output, not an OS screenshot.
+Permission queries are read-only. Ordinary smoke launch may write native caches;
+its PNG is internal rendered output, not an OS screenshot. Existing native player
+profiles block launch. Native user-directory side effects are retained, not erased.
 READY means the observed preflights permit a later input attempt; it does not
 qualify delivery, focus, gameplay, physical devices, or human play.
 """
@@ -33,6 +35,10 @@ class Size(C.Structure):
 
 class Rect(C.Structure):
     _fields_ = [('origin', Point), ('size', Size)]
+
+
+class NativePrerequisiteBlocked(RuntimeError):
+    pass
 
 
 class MacReadOnly:
@@ -138,10 +144,39 @@ def digest(path):
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
-def profile_inventory():
-    directory = Path.home() / 'Library/Application Support/Godot/app_userdata/SIGHTBREAK'
-    return {name: digest(directory / name) if (directory / name).is_file() else None
+def user_directory():
+    return Path.home() / 'Library/Application Support/Godot/app_userdata/SIGHTBREAK'
+
+
+def profile_entries():
+    # Entry-aware: an existing symlink, even dangling, blocks smoke launch too.
+    return {name: os.path.lexists(user_directory() / name)
             for name in ('offline_training.json', 'offline_training.json.tmp')}
+
+
+def require_absent_profile():
+    entries = profile_entries()
+    if any(entries.values()):
+        raise NativePrerequisiteBlocked('Existing native player profile or temporary entry; no launch attempted')
+    return entries
+
+
+def user_directory_inventory():
+    directory = user_directory()
+    if directory.is_symlink():
+        raise NativePrerequisiteBlocked('Native user directory is a symlink; no launch attempted')
+    files, directories = {}, []
+    if directory.exists():
+        for path in sorted(directory.rglob('*')):
+            if path.is_symlink():
+                raise NativePrerequisiteBlocked('Native user directory contains a symlink; no file followed')
+            if len(files) + len(directories) >= 8192:
+                raise NativePrerequisiteBlocked('Native user directory exceeds the bounded inventory')
+            if path.is_file():
+                files[path.relative_to(directory).as_posix()] = {'bytes': path.stat().st_size, 'sha256': digest(path)}
+            elif path.is_dir():
+                directories.append(path.relative_to(directory).as_posix())
+    return {'directory_exists': directory.exists(), 'directories': directories, 'files': files}
 
 
 def group_exists(pid):
@@ -178,8 +213,8 @@ def run(output, timeout=60):
     if output.is_relative_to(toolchain.ROOT / 'game') or output.is_relative_to(BUILDS / 'macos'):
         raise RuntimeError('Keep diagnostic evidence outside source and the native export')
     output.mkdir(parents=True, exist_ok=True)
-    started, process, before, saved = time.monotonic(), None, None, None
-    report = {'scope': 'Read-only ARM Mac preflight; no native input or OS screenshot acceptance',
+    started, process, before, saved, user_before = time.monotonic(), None, None, None, None
+    report = {'scope': 'Read-only permission queries plus ordinary exported smoke; no native input or OS screenshot acceptance',
               'status': 'FAILED', 'native_input_verified': False, 'input_events_posted': 0,
               'permission_requests_made': 0, 'host': platform.platform(), 'architecture': platform.machine()}
     try:
@@ -194,21 +229,26 @@ def run(output, timeout=60):
         report['blocked_apis'] = denied_permissions(report['permissions'])
         if report['executable_sha256'] != manifest['artifact']['sha256']:
             raise RuntimeError('Export executable differs from its source-bound receipt')
-        saved = profile_inventory()
-        report['profile_sha256_before'] = saved
+        saved = profile_entries()
+        report['profile_entries_before'] = saved
+        require_absent_profile()
+        user_before = user_directory_inventory()
+        report['native_user_directory_before'] = user_before
         capture = output / 'exported-smoke.png'
         report['capture_scope'] = 'Original export viewport PNG; not an OS screenshot'
-        command = [str(executable), '--audio-driver', 'Dummy', '--windowed', '--resolution', '960x540',
+        command = [str(executable), '--audio-driver', 'Dummy', '--log-file', str(output / 'engine.log'),
+                   '--windowed', '--resolution', '960x540',
                    '--position', '40,60', '--', '--smoke', '--capture=' + str(capture)]
         report['command'] = command
         observations = []
         report['window_observations'] = observations
         with (output / 'client.log').open('w', encoding='utf-8') as log:
+            require_absent_profile()
             process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
             report['client_pid'] = process.pid
             while process.poll() is None:
                 if time.monotonic() - started >= timeout:
-                    raise TimeoutError('Read-only Mac preflight exceeded ' + str(timeout) + ' seconds')
+                    raise TimeoutError('Mac preflight exceeded ' + str(timeout) + ' seconds')
                 windows = api.windows(process.pid)
                 if windows and (not observations or observations[-1]['windows'] != windows):
                     observations.append({'seconds': time.monotonic() - started, 'windows': windows})
@@ -216,12 +256,17 @@ def run(output, timeout=60):
         report['normal_exit_code'] = process.returncode
         report['final_controls'] = api.controls()
         text = (output / 'client.log').read_text(encoding='utf-8', errors='replace')
-        if process.returncode or failed(text) or 'SIGHTBREAK_MAIN_READY screen=menu' not in text or not capture.is_file():
+        engine_text = (output / 'engine.log').read_text(encoding='utf-8', errors='replace')
+        report['engine_log_clean'] = not failed(engine_text)
+        if process.returncode or failed(text) or not report['engine_log_clean'] or 'SIGHTBREAK_MAIN_READY screen=menu' not in text or not capture.is_file():
             raise RuntimeError('Exported Mac smoke failed; retain raw log and startup capture')
         if not any(window['onscreen'] for entry in observations for window in entry['windows']):
             raise RuntimeError('No visible layer-zero window observed for the exact exported PID')
         report['capture_sha256'] = digest(capture)
         report['status'] = 'BLOCKED_EXTERNALLY' if report['blocked_apis'] else 'READY_FOR_INPUT_ATTEMPT'
+    except NativePrerequisiteBlocked as error:
+        report['blocker'] = {'type': type(error).__name__, 'message': str(error)}
+        report['status'] = 'BLOCKED_EXTERNALLY'
     except BaseException as error:
         report['failure'] = {'type': type(error).__name__, 'message': str(error)}
         report['status'] = 'FAILED'
@@ -231,10 +276,22 @@ def run(output, timeout=60):
             if not report['cleanup']['owned_group_gone']:
                 raise RuntimeError('Owned native process group remains alive after cleanup')
             if saved is not None:
-                report['profile_sha256_after'] = profile_inventory()
-                report['profile_unchanged'] = report['profile_sha256_after'] == saved
-                if not report['profile_unchanged']:
-                    raise RuntimeError('Native player profile changed during read-only launch')
+                report['profile_entries_after'] = profile_entries()
+                report['profile_entries_unchanged'] = report['profile_entries_after'] == saved
+                if not report['profile_entries_unchanged']:
+                    raise RuntimeError('Native player-profile entries changed during smoke launch')
+            if user_before is not None:
+                user_after = user_directory_inventory()
+                report['native_user_directory_after'] = user_after
+                previous, current = user_before['files'], user_after['files']
+                report['native_user_directory_side_effects'] = {
+                    'created_files': sorted(current.keys() - previous.keys()),
+                    'removed_files': sorted(previous.keys() - current.keys()),
+                    'changed_files': sorted(name for name in current.keys() & previous.keys() if current[name] != previous[name]),
+                    'created_directories': sorted(set(user_after['directories']) - set(user_before['directories'])),
+                    'removed_directories': sorted(set(user_before['directories']) - set(user_after['directories'])),
+                    'directory_created': not user_before['directory_exists'] and user_after['directory_exists'],
+                    'cleanup_scope': 'Owned process group only; native user-directory files are preserved'}
             if before is not None:
                 report['source_unchanged'] = source() == before
                 validate_record('macos', before)

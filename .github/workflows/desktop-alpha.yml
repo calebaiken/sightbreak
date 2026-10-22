@@ -94,7 +94,7 @@ jobs:
       - name: ARM Mac read-only input preflight observer controls
         if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15'
         run: python scripts/test_probe_macos_input.py -v
-      - name: ARM Mac read-only permissions and owned exported-window preflight
+      - name: ARM Mac permission queries and ordinary exported-window preflight
         if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15'
         run: python scripts/probe_macos_input.py --output builds/desktop-playability/macos-input-preflight
       - name: Real exported keyboard and pointer input (Windows/Linux)
