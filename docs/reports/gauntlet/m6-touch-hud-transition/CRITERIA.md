@@ -48,3 +48,23 @@ lane. Shared tools live outside this sparse worktree. No art, bot, arena, protoc
 economy, prediction or rewind change is included. Software-rendered timings are
 functional diagnostics, not physical-device performance acceptance. Human feel,
 physical touch/controller input and all other release blockers remain open.
+
+## Iteration 2: preserve readable existing feed rows
+
+Declared after independent source-bound probing of frozen `bc01a06`, before its
+revision. The first native run passes generation in 72.252 seconds and visibly
+fixes the original overlap/footer pair, but a fresh critic reproduces clipped
+long-name feed rows in all four 960/1280 by 720, 100/130% text cases. At 1280/100%,
+the frame narrows from 455 to 375 pixels while the retained row stays 435 pixels;
+the victim text extends past the frame's right edge at 1178 to 1230. At 960/130%,
+the frame narrows from 276 to 196 pixels while the row stays 249 pixels. Raw
+independent evidence is in `/workspace/reviews/touch-transition-critic/builds/independent-long-feed-bc01a06`.
+
+Keep that failure and the first native outputs. Refit each retained feed row when
+its frame changes width, using the stored original name. Preserve row instances,
+ages, headshot meaning and explicit ellipses; widening must recover the text that
+fits again. Add actual row and drawn-text bounds to the transition oracle, then
+repeat the focused source suite, baseline negative control and existing overflow
+test. Freeze the revised source and obtain a new native settings on/off capture
+under the unchanged limits. The first frozen native pass does not establish the
+revised source's result.
