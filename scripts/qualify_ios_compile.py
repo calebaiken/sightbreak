@@ -239,6 +239,10 @@ def main():
         manifest.clean(current)
         print(json.dumps(current))
         return 0
+    def interrupted(signum, _frame):
+        # GitHub cancellation must unwind the owned command's finally block.
+        raise SystemExit("Interrupted by signal " + str(signum))
+    signal.signal(signal.SIGTERM, interrupted)
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--builds", type=Path, required=True)
