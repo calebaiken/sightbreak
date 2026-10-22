@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-22, 05:58 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-22, 06:13 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue25](https://github.com/calebaiken/sightbreak/issues/25).
 No native Codex goal API is exposed. Read AGENTS.md, the mission and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
@@ -9,7 +9,7 @@ implementation after each verified increment; these corrections do not finish v1
 ## Root and source checkpoints
 
 - Root: `/workspace/sightbreak-v1-execution`, `codex/v1-mission-playability`.
-  Current checkpoint before this note: `609913e`; last pushed: `3b97a00`.
+  Current checkpoint before this note: `e2c61ac`; last pushed: `3b97a00`.
 - [Draft PR27](https://github.com/calebaiken/sightbreak/pull/27) targets PR24
   `c84eaf3` → PR23 `db3981e` → PR22 `82a03fc` → PR16 `d2439ac`.
   No shared branch was merged or rewritten. Fetch live refs before integration.
@@ -36,7 +36,7 @@ implementation after each verified increment; these corrections do not finish v1
 | [39725980732](https://github.com/calebaiken/sightbreak/actions/runs/39725980732), `872a576`, single Linux119649852989 | Raw independent source/input/ordinary journey, defuse,9-round stock match/earned restart and four-size201.314 s pass. Player plants180 ticks, +1objective/+300credits, but later15 s role-guidance wait fails amid notifications before death. Natural resolution/restart in that plant scenario are unreached. FullQA46 MB untransferred; original per-size PNGs available. Evidence `b85f936`, report `m1-native-ci-39725980732/remote`. |
 | [39727011693](https://github.com/calebaiken/sightbreak/actions/runs/39727011693), `e7718ee`, single ARM119653125533 | Actual no-event readiness and unsigned iOS compile independently pass. All four permission APIs true; exact preflight PID6968/window34/internal PNG valid, profile absent, normal0/no remaining group. No input posted. Evidence `e6c323a`, `m2-macos-input/native-run-39727011693`. |
 | [39728129445](https://github.com/calebaiken/sightbreak/actions/runs/39728129445), `a8eb7eb`, single Windows119656711230 | Overall FAIL only plant by final metadata. Independent raw ordinary journey now passes, all16 original OCR outputs/strict LEAVE call retained. Defuse/full match pass; raw archive is being finalized. Its own180-tick plant/reward/living PNG pass, followed by notification starvation/death in15 s role wait. Critic `native_ci_outcome_critic` retains original fullQA22.7 MB and bounded3.3 MB. |
-| [39729489971](https://github.com/calebaiken/sightbreak/actions/runs/39729489971), `3b97a00`, single ARM119661018459 | New real-menu attempt FAILS before events. Swift compiles; gamePID3996 cannot be verified foreground within5 s (last observedPID3721),0CGpost attempts, no helper invocation/OS capture. Ordinary close0/groups gone. Own helper permission/geometry/Vision unreached. Separate preflightPID3571/window35 cannot stand in for3996. All12 native suites actually pass4,461 assertions. Fresh critic `mac_native_menu_outcome_critic` is committing raw report. |
+| [39729489971](https://github.com/calebaiken/sightbreak/actions/runs/39729489971), `3b97a00`, single ARM119661018459 | New real-menu attempt FAILS before events. Swift compiles; gamePID3996 cannot be verified foreground within5 s (last observedPID3721),0CGpost attempts, no helper invocation/OS capture. Ordinary close0/groups gone. Own helper permission/geometry/Vision unreached. Separate preflightPID3571/window35 cannot stand in for3996. All12 native suites actually pass4,461 assertions. Independent raw rejection is committed as `a172934`/`5378b1f`; report `m2-macos-menu-input/native-run-39729489971/REPORT.md`. |
 
 Earlier `0ca125d` run39719407304 and `6a0d8d5` run39712752860 failures remain
 historical. Intel default/OpenGL and all five feature ablations time out120 s;
@@ -48,36 +48,39 @@ Installation, runtime, older OS and physical mobile play remain open.
 
 ## Active execution queue
 
-1. **M1 objective-guidance priority.** Builder `/root/offline_journey_builder`,
-   `/workspace/sightbreak-postplant-priority`, branch `fix/postplant-guidance-priority`.
-   Criteria `aedb7e6`, candidate `3c4d921` based on integrated `93ec98b`.
-   Only status selection and typed presentation connection-notice callbacks change;
-   RPC/privacy/economy/authority/timers and accepted touch/feed functions stay intact.
-   Actual HUD flood comparison: candidate1,535/0 versus baseline1,492 failures;
-   fresh critic independently recomputes all1,458 flood frames, plus1,559 controls.
-   Recorded native round3 passes180-tick plant, living DEFEND THE DEVICE pixels and
-   genuine natural defuse, but FAILS unchanged12 s next-round wait with0.65sim left.
-   Genuine130.6 s/10Hz silent X11 MP47,961,368 bytes is retained; SHA256
+1. **M1 planted-role source accepted; complete journey FAILS.** Source `3c4d921`
+   is integrated as `d7dc1be`; criteria7686a7e, builder evidence87c12d4/21f99e2,
+   independent reviewe2c61ac. Review: `m1-postplant-guidance/independent-critic/REVIEW.md`.
+   All 1,458 flood frames are correct versus none on baseline; 1,559 independent
+   controls pass. Both native rounds3/4 pass 180-tick ordinary plant, +1/+300,
+   living DEFEND pixels and natural defender defuse, then FAIL unchanged12 s
+   next-round wait: only247 ticks /4.116667 sim seconds in12.053 wall, POST0.65 left.
+   Restart is unreached. Round4 has no recorder and also fails; no recorder-only
+   cause is supported. Both explicitly select LP_NUM_THREADS=2/llvmpipe; outer
+   parent env is not client readback. No fixed-fps/physics override. Arena/sky
+   blobs and graphics selection lines match pre-integration9f730dc; source-only
+   comparison cannot establish a UI/render regression. Full candidate aggregate
+   and exact-source Windows run remain required. No unbounded retry or deadline
+   increase is authorized merely to find a pass.
+   Original H.264 video130.400 s /1,304 frames /7,961,368 bytes is retained, SHA256
    `9527ba7f05d288c1545ea8dbc3723a83d5e19774118af099119fb6c7b0dfb7cc`.
-   Raw `.local/postplant-priority/round-3`. One final same-source/no-recorder retry
-   is authorized under unchanged180/15/12 s budgets. No timer/seed/state injection.
-   Critic `/root/postplant_guidance_critic` owns independent source/pixels/video
-   review. Integrate only after scoped independent acceptance; whole plant gate
-   stays failed until actual resolution/next-round/restart pass. Preserve two
-   external recorder setup failures (no gameplay started) and round3 failure.
-2. **M3 corrected account match.** Prepared `/workspace/sightbreak-account-activity`,
-   branch `codex/m3-account-activity-qualification`, provisional `3b97a00`, no runtime.
-   Builder `/root/account_match_builder` is idle and needs reactivation after a
-   slot frees. Fresh `/root/account_activity_qualification_critic` has read-only
-   live-DB observer ready; prep commit `664a699` is not acceptance.
-   After M1 releases its lane, name exact integrated final source, freeze it, and
-   run unchanged final `scripts/test_account_match.py` with ten NEW fake accounts,
-   isolated owned PostgreSQL/API/ports/spool and original stock rules/recovery.
-   Roughly9 min plus import. Critic must query actual ownedDB before ACK and after
-   replay, then verify cleanup. Fifteen controls already pass; do not repeat unless
-   source changes. Prior471fbd8 result (one operation/10rewards/2,875credits/2,650XP)
-   does not qualify post-activity product. Yaw-only policy remains allowed, with no
-   AFK-resistance/human-participation claim; inherited UDP listener is wildcard.
+   Builder and critic have exited their engine lane; preserve both failures.
+2. **M3 corrected account match executing.** Builder `/root/account_match_builder`
+   is reactivated in `/workspace/sightbreak-account-activity`, branch
+   `codex/m3-account-activity-qualification`, authorized immutable source
+   `e2c61ac2ecbd38ab55bc9edb712b028322c1490f`, game tree
+   `fb6be859e05812d8707be1ef5c6f747d2588c1e9`. Coordinate before launch with fresh
+   `/root/account_activity_qualification_critic`; it owns a read-only live SQL
+   observer. Exact stock harness, ten NEW fake accounts, own PostgreSQL/API/ports/
+   spool, pinned engine and no gameplay/score/activity injection. Exclusive local
+   engine/CPU lane belongs to this run until cleanup. Runtime roughly9 min plus
+   import. Fifteen validator controls already pass; no redundant repeat needed.
+   Critic must see committed SQL no later than lost-worker-killed checkpoint,
+   BEFORE proxy ACK release, plus replay state. Missing that live window stays
+   blocked. Source/eleven native process/socket provenance and cleanup required.
+   Prior471fbd8 one operation/10rewards/2,875credits/2,650XP is a benchmark, not this
+   run's assumed output. Yaw-only activity remains permitted; no AFK-resistance or
+   whole G3/G16 claim. Local inherited UDP listener remains wildcard.
 3. **M2 Mac focus observer.** Builder `/root/mac_input_builder`, own sparse
    `/workspace/sightbreak-macos-focus`, branch `codex/m2-macos-focus-observer`,
    base609913e. Inspect actual run39729489971 before revising. Original raw base:
@@ -89,7 +92,11 @@ Installation, runtime, older OS and physical mobile play remain open.
    background capture may decouple capture permission/geometry from focus; critique
    revised criteria before native use. Never substitute window order for focus,
    bypass/request TCC, mutate securityDB or use unsupported flags/alternate identity.
-   Need fresh source critic, then root dispatches ARM lane on clean source.
+   Candidatef184c4c plus raw-sample correctioneab9882 is frozen; fresh source critic
+   is active. Nine new and eleven existing pure controls pass. No native attempt
+   for this revision yet. Integrate only after review, then root dispatches ARM
+   lane on clean source. A separate exact-owned background capture precedes focus
+   and is explicitly capture-only; any failure stops input.
 4. **M6 touch transition accepted.** Integrated `66bcc5e`/`a06017b`, final native
    source589a52a. Initial candidate visually wins but is rejected for existing-row
    clipping. Revision passes462 checks vs prior16 failures, independent4/4 clipping
