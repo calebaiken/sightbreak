@@ -32,8 +32,11 @@ The original JSON fixtures are retained byte for byte with a provenance manifest
   title-bar suffixes, and low-confidence masthead text cannot qualify.
 - Settings requires exactly one normalized, exact, in-bounds `FIELD SETTINGS`
   observation at the same 0.8 threshold. Home rejects that settings heading;
-  settings rejects any qualifying home identity label. Missing, foreign, mixed,
-  duplicate, malformed, nonfinite, low-confidence, and out-of-bounds evidence fails.
+  settings rejects any qualifying home identity label. Uniqueness and opposing
+  labels concern qualifying finite numeric observations at confidence at least
+  0.8, as in the existing target gate. A required label cannot be supplied by
+  missing, foreign, partial, malformed, nonfinite, low-confidence, or out-of-bounds
+  evidence; duplicate qualifying labels and mixed screens fail.
 - Retained actual 01 and 03 receipts must qualify home and reject settings;
   actual 02 must qualify settings and reject home. Invented counterexamples must
   remain explicitly synthetic. Helper success, exact current owner/window/bounds,
@@ -61,7 +64,7 @@ records engine-reported paths before/after, preserves raw logs and produced-file
 hashes, and records source/owned-process/private-path cleanup. It never reuses or
 deletes unknown user state. Timeout cleanup targets only newly owned process
 groups. Strict import/probe/log/cleanup failures remain failures in the diagnostic.
-The diagnostic has a whole-run deadline below the workflow timeout, and the
+The diagnostic has a 240 s whole-run deadline and a 6 min workflow timeout, and the
 original strict step remains failed even if the repeat is clean. A missing or
 different original failure skips execution honestly. Pure controls cover this
 selection, verbose command, deadlines, cleanup, and failure preservation without
