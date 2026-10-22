@@ -19,8 +19,8 @@ balance. It does not claim an HTTP, PostgreSQL or rendered-input result.
 
 The process-kill campaign uses a loopback HTTP server with a new durable SQLite
 ledger per case. There are three routes (store, case, market) and four boundaries
-(before commit, after commit, delayed original commit after retry409, and forced
-kill after the observed409 before teardown), one declared repetition each:
+(before commit, after commit, delayed original commit after retry 409, and forced
+kill after the observed 409 before teardown), one declared repetition each:
 12 cases per source. Each candidate case must reuse the original key, route,
 method, parsed payload and raw body bytes; recover the ledger's exact confirmed
 result; have exactly one mutation/debit; exclude the synthetic credential from
@@ -31,9 +31,9 @@ The baseline is expected to lose all restart receipts and both lifecycle intents
 All values are synthetic: fixture account `fixture-account`, memory-only token
 `fixture-memory-only-credential`, store/key definition `key`, synthetic case/key
 and market listing identities, fixture item `one-authoritative-instance`, initial
-balance 10,000,000 units, store/case cost100, market cost10,000,000 and fee300,000.
+balance 10,000,000 units, store/case cost 100, market cost 10,000,000 and fee 300,000.
 These SQLite cost rows are not authoritative PostgreSQL wallets or real items.
-The lifecycle stub uses a separate synthetic account/token and server balance0.
+The lifecycle stub uses a separate synthetic account/token and server balance 0.
 
 From the clean candidate checkout, with a fresh outside output path:
 
