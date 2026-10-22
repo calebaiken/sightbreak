@@ -1,0 +1,403 @@
+{
+  "scope": "Unchanged actual candidate Linux captures, local OCR only",
+  "rows": [
+    {
+      "path": "native-r1/native-candidate-r2/02-offline-spawn.png",
+      "expected_ammo_reserve": [
+        15,
+        60
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 60,
+        "status_ocr": "800 - FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/60\n"
+      },
+      "passed": true,
+      "sha256": "e0b4da269e4351526c30850072cfe56193445ecdf8e877a3302e8cce4f4668de"
+    },
+    {
+      "path": "native-r1/native-candidate-r2/04-move-aim.png",
+      "expected_ammo_reserve": [
+        15,
+        60
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 60,
+        "status_ocr": "800 - FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/60\n"
+      },
+      "passed": true,
+      "sha256": "3c13350af3336172b134f698a2f98e9227c19ff014e287224ecbd3dd93f99f44"
+    },
+    {
+      "path": "native-r1/native-candidate-r2/05-after-fire.png",
+      "expected_ammo_reserve": [
+        14,
+        60
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 14,
+        "reserve": 60,
+        "status_ocr": "800 - FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 14/60\n"
+      },
+      "passed": true,
+      "sha256": "083e5bdba611f30fb3d08dd36e5247e8ed1417174782b2ae37f96c594f46b78a"
+    },
+    {
+      "path": "native-r1/native-candidate-r2/06-after-reload.png",
+      "expected_ammo_reserve": [
+        15,
+        59
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 59,
+        "status_ocr": "800 - FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/59\n"
+      },
+      "passed": true,
+      "sha256": "b1d0f1e0902dbe1b369b145868f324fc9a3d2616a02bf9ebb7d9ff9189426b97"
+    },
+    {
+      "path": "native-r1/native-candidate-r2/06b-scoreboard.png",
+      "expected_ammo_reserve": [
+        15,
+        59
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 59,
+        "status_ocr": "800 - FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/59\n"
+      },
+      "passed": true,
+      "sha256": "485d107324c5599a6e4a22989cd7b7d6a44129c5e36e6eec28f06927b13114f3"
+    },
+    {
+      "path": "native-r1/native-candidate-r2/06e-purchased-smg.png",
+      "expected_ammo_reserve": [
+        30,
+        120
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 30,
+        "reserve": 120,
+        "status_ocr": "1600 - FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SMG 30/120\n"
+      },
+      "passed": true,
+      "sha256": "426d8f8a2692a0d2f31f78d424df2bb1c072a631ec59afcce2452e5c9e9951e2"
+    },
+    {
+      "path": "focus-r1/native-focus-r1/02-offline-spawn.png",
+      "expected_ammo_reserve": [
+        15,
+        60
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 60,
+        "status_ocr": "800 - FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/60\n"
+      },
+      "passed": true,
+      "sha256": "e0b4da269e4351526c30850072cfe56193445ecdf8e877a3302e8cce4f4668de"
+    },
+    {
+      "path": "focus-r1/native-focus-r1/11b-resumed-held-input-neutral.png",
+      "expected_ammo_reserve": [
+        14,
+        60
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 14,
+        "reserve": 60,
+        "status_ocr": "800 - FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 14/60\n"
+      },
+      "passed": true,
+      "sha256": "bf009ce4c9391e6c82a77c6ed36d76d462ca2b1b64a835cc2b854ef8e5defbcf"
+    },
+    {
+      "path": "focus-r1/native-focus-r1/11c-fresh-press-movement.png",
+      "expected_ammo_reserve": [
+        14,
+        60
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 14,
+        "reserve": 60,
+        "status_ocr": "800 - FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 14/60\n"
+      },
+      "passed": true,
+      "sha256": "730eb560456aa0a23663904ed91255891e2a1991ff9336ac238f3d89a5405cbc"
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "02-offline-spawn:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.12595754399990255,
+      "exit": 0,
+      "stdout": "800 - FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "02-offline-spawn:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.15384439900117286,
+      "exit": 0,
+      "stdout": "SIDEARM 15/60\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "04-move-aim:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.12206789699848741,
+      "exit": 0,
+      "stdout": "800 - FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "04-move-aim:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.13835999100047047,
+      "exit": 0,
+      "stdout": "SIDEARM 15/60\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "05-after-fire:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.11894095900061075,
+      "exit": 0,
+      "stdout": "800 - FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "05-after-fire:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.1354015730012179,
+      "exit": 0,
+      "stdout": "SIDEARM 14/60\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06-after-reload:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.1225781890007056,
+      "exit": 0,
+      "stdout": "800 - FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "06-after-reload:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.13734595000096306,
+      "exit": 0,
+      "stdout": "SIDEARM 15/59\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06b-scoreboard:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.12402554999971471,
+      "exit": 0,
+      "stdout": "800 - FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "06b-scoreboard:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.13486374999956752,
+      "exit": 0,
+      "stdout": "SIDEARM 15/59\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06e-purchased-smg:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.12034076799864124,
+      "exit": 0,
+      "stdout": "1600 - FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "06e-purchased-smg:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.12958658399838896,
+      "exit": 0,
+      "stdout": "SMG 30/120\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "02-offline-spawn:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.12416533100076776,
+      "exit": 0,
+      "stdout": "800 - FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "02-offline-spawn:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.13756227399971976,
+      "exit": 0,
+      "stdout": "SIDEARM 15/60\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "11b-resumed-held-input-neutral:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.12149829499867337,
+      "exit": 0,
+      "stdout": "800 - FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "11b-resumed-held-input-neutral:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.13247316900014994,
+      "exit": 0,
+      "stdout": "SIDEARM 14/60\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "11c-fresh-press-movement:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.11898168900006567,
+      "exit": 0,
+      "stdout": "800 - FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "11c-fresh-press-movement:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.13275949300077627,
+      "exit": 0,
+      "stdout": "SIDEARM 14/60\n",
+      "stderr": ""
+    }
+  ]
+}
