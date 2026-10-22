@@ -381,3 +381,27 @@ measuring durable exact-key recovery on private local fixtures, with source
 attribution and route / payload / account isolation. Local engine CPU belongs
 to that builder. Next full aggregate follows accepted integration; b09cfe1's
 older full pass is not relabeled as current whole HEAD. Mission stays IN PROGRESS.
+
+## Codex accepted receipt continuation — 2026-10-22, 07:40 UTC
+
+Imported the narrow PR18 runtime with original authorship, root 52973a5 / e51816c /
+e8c701a. Fresh critic ecc2690 accepts actual native source 79e076e: twelve crash
+recoveries against zero baseline, exact route/body/key/price and one SQLite
+fixture mutation per candidate, plus five affected suites and owned cleanup.
+Archive 89393f3 independently verified in cdd87ca; all 373 entries / Git bytes
+match. No production PostgreSQL, rendered consent or whole release claim.
+
+Immediately continued with native registration: original twelve preserved, journal
+and measured gunplay appended, source accepted by separate critic 7b64975. Root
+0527715 is frozen for actual strict selected Linux two-suite execution (passes
+13.002678 s) and complete unmodified aggregate (still executing). New Windows
+39741504894 and ARM39741565795 use that same exact source and fresh independent
+raw reviewers. Source-only production PostgreSQL market recovery and readback-only
+Linux performance diagnostics proceed on separate own branches; runtime not yet
+released. Mac ba5013d actual original twelve suites and menu pass independently
+in 097b1e7, but no verbose diagnostic ran; earlier leak failures/cause remain open.
+
+A resume-note update initially stopped after updating the progress matrix because
+its old text anchor had changed. The partial documentation commit402120b is retained;
+this checkpoint replaces the active resume block with the actual owners/sources.
+No product code or raw evidence was changed by that editing error.

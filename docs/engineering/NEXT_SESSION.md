@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-22, 07:30 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-22, 07:40 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native Codex goal API is exposed. Read AGENTS.md, the mission and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
@@ -9,11 +9,11 @@ implementation after each verified increment; these corrections do not finish v1
 ## Root and accepted checkpoints
 
 - Root `/workspace/sightbreak-v1-execution`, branch `codex/v1-mission-playability`.
-  Checkpoint before this note `89393f3` plus archive verification `4fdcdfa`;
-  last pushed `ba5013d`. New ARM run is already executing. No protected/shared branch merged or rewritten.
+  Checkpoint before this note `402120b`; last pushed and frozen validation source
+  `05277154c6b8c92b80fd7c25e8365de9efdc4fae`. No shared branch merged or rewritten.
 - [Draft PR27](https://github.com/calebaiken/sightbreak/pull/27) targets PR24
   `c84eaf3` → PR23 `db3981e` → PR22 `82a03fc` → PR16 `d2439ac`.
-  Last live fetch 07:00 UTC: main `4d8cdb3`, PR26 map `778c89a`, PR28 `2641ddf`.
+  Last live fetch 07:24 UTC: main `4d8cdb3`, PR26 map `778c89a`, PR28 `2641ddf`.
   Fetch live refs again before integration; preserve contributor ownership.
 - Latest complete unmodified aggregate passes at exact `b09cfe1` in 465.033 s,
   independently archived as `c4c38a7`: 52 mandatory Godot logs, seven Python
@@ -75,51 +75,78 @@ implementation after each verified increment; these corrections do not finish v1
 
 ## Active execution queue and exact next actions
 
-1. **M2 first-leak diagnostic ready for actual ARM attempt.** Source `f3896c6`
-   integrated as `271a346`, evidence `a09f0d6`. Fresh critic accepts exact source
-   for one bounded attempt: 17 independent pure methods + 14 maintained methods.
-   Root reran all 14 successfully. Output `builds/desktop-playability/source-leak-verbose`.
-   Whitelist actor/input_mode only, first terminal failed suite, original log /
-   clean source / private namespace / producer / owned cleanup proof, exact argv
-   plus --verbose, shared 240 s. Original strict gate remains failed; no warning
-   suppression. Failed bootstrap preserves unvalidated namespace honestly.
-   Actual run 39736389634 at `20464da` independently PASS_MENU_NAVIGATION_ONLY:
-   PID 10678 / window 42, five events, three correct OS images, home trio all
-   confidence 1, exit 0 and cleanup. Strict gate FAILS actor first: 73 assertions,
-   zero failures, six leaks, eleven suites unreached. Previous input_mode-specific
-   diagnostic honestly SKIPS. Earlier b09 run fails input_mode with two leaks.
-   Cause/types/nondeterminism UNKNOWN. Dispatched one ARM lane: run 39739927334 at exact ba5013d9de939f9897f7b5cb63dd4323a3ff043f,
-   single job 119694416545. Latest metadata reports strict suites and menu success,
-   verbose diagnostic honestly skipped; no raw verdict yet. Fresh critic
-   `/root/mac_first_leak_native_critic` owns raw/source/PNG/cleanup review.
-   No actual verbose types or cause may be inferred from the skipped repeat.
-   Source builder `/root/mac_input_builder` completed; reactivate only on evidence.
+1. **M2 latest ARM twelve-suite attempt independently PASS**, run 39739927334
+   at exact ba5013d9de939f9897f7b5cb63dd4323a3ff043f, job 119694416545.
+   Root report 097b1e7: all twelve suites / 5,963 checks, no retained errors or
+   leaks; actual menu navigation 32.369 s, PID 4357 / window 41, five events and
+   original home/settings/home PNGs. Strict success honestly skips the diagnostic;
+   this is not a verbose repeat and yields no leaked types/cause. Earlier actor
+   six-leak and input_mode two-leak failures remain unresolved. Separate unsigned
+   iOS compile passes 55.901 s with native source/PCK/linker attestation; final
+   app/PCK not transferred/reparsed. Runner later reaps two ibtoold orphans, so
+   command-group receipts do not establish whole-system Xcode cleanup.
+   First-leak source f3896c6 remains accepted and unchanged for actor/input_mode
+   only, exact evidence/source/private namespace, --verbose and 240 s. Failed
+   bootstrap preserves unvalidated namespaces; strict failures are never repaired
+   by diagnostic repeats. Source builder /root/mac_input_builder completed.
 2. **M3 store/armory receipt component independently accepted and integrated.**
-   Native-tested source `79e076e`, game 1f3616afdfaaed0fb7c9ffbd0aa8e4947f7d2a48,
-   root runtime 52973a5 / e51816c / e8c701a; original PR18 authorship preserved.
-   Exact current source recovers 12/12 versus baseline b97fd81 0/12, with real
-   native HTTP / SQLite / process-kill evidence. Five affected suites pass:
-   journal 41, recovery 12, armory 748, menu 51 and economy / offline / URL / UUID.
-   Critic ecc2690 audits all route/body/price/ledger/journal joins and cleanup;
-   builder archive 89393f3 retains 373 files / 83,552 bytes. Followup 4fdcdfa
-   independently verifies original bytes, manifests, exclusions and finalization.
-   Reports `m3-client-result-recovery/RESULTS.md` and `independent-critic/REVIEW.md`.
-   No whole V3, rendered consent, PostgreSQL, power-loss or whole G3/G7/G16 claim.
-   Builder `/root/client_result_recovery_builder` immediately continues production
-   PostgreSQL/API lost-response settlement, source/fixture criteria only until
-   root releases runtime lane. No services or engine authorized yet.
-   Native coverage builder `/root/native_new_systems_coverage_builder` is adding
-   only journal + measured gunplay probe to the original twelve native suites;
-   separate critic `/root/transaction_receipt_critic` will review. Preserve old
-   commands/order/strict log/private namespace/120 s limits. New count is fourteen.
-   Root owns local engine CPU for the two-suite strict native check and aggregate.
-3. **After native registration review**, freeze clean root in a new sparse checkout,
-   restore tracked hands/log fixtures and run complete unmodified validate.sh.
-   Expected 54 mandatory Godot logs (verify maintained script), plus new pure
-   receipt oracle group. Also run strict private native journal/gunplay suites.
-   Capture exit, exact source/engine, before/after cleanliness, logs and actual
-   cleanup. Use a separate fresh critic for raw archive and failures. Do not
-   relabel b09's older full pass. Then select next release blocker immediately.
+   Native-tested source 79e076e, game 1f3616afdfaaed0fb7c9ffbd0aa8e4947f7d2a48;
+   root runtime 52973a5 / e51816c / e8c701a preserves original PR18 authorship.
+   Actual candidate 12/12 recoveries versus baseline b97fd81 0/12, real native
+   HTTP / SQLite / process-kill evidence. Journal 41, recovery 12, armory 748,
+   menu 51 and economy / offline / URL / UUID checks pass. Critic ecc2690 audits
+   raw route/body/price/ledger/journal joins and cleanup; builder archive 89393f3
+   retains 373 files / 83,552 bytes. Independent archive verification cdd87ca
+   finds no finalization gaps. Reports m3-client-result-recovery/RESULTS.md and
+   independent-critic/REVIEW.md. No whole V3, rendered consent, PostgreSQL,
+   power-loss or whole G3/G7/G16 claim.
+3. **Native registration accepted; full aggregate executing at frozen 0527715.**
+   Native coverage source fb059e4, critic 7b64975, root 291fafe / 0527715. Default
+   fourteen suites append journal and gunplay after original twelve; original
+   commands/order, strict parser, private namespace/producers and 120 s limits
+   remain. Actual selected Linux journal/gunplay passes 13.002678 s, 41 / 2,840
+   checks, unchanged source and removed private project/namespace.
+   Clean worktree /workspace/sightbreak-validate-0527715, branch
+   codex/validation-0527715; tracked hands/log fixtures restored. Root wrapper
+   /workspace/sightbreak-final-validation-driver.py is copied into
+   builds/final-validation-0527715/driver.py; root session 42655.
+   Unmodified ./scripts/validate.sh runs without DISPLAY / --backend. Expected
+   54 mandatory Godot logs and nine Python groups (11, 7, 4, 15, 24, 7, 4, 5, 15),
+   ENet/lifecycle/catalog/fixture checks. Source/engine/tracked inputs/before-after
+   and process receipts are retained. No full-run result yet. Fresh critic
+   /root/final_combined_validation_critic preregistered 53119a0 before output and
+   provisionally verifies selected two-suite receipts; final verdict is pending.
+   Root owns local engine CPU until completion, then releases a coordinated lane.
+4. **New exact-source platform runs at 0527715 are executing.** Windows
+   39741504894 / job 119699561669, fresh critic /root/windows_0527715_native_critic,
+   preregistration 2e580a6. ARM 39741565795 / job 119699758860, separate
+   preregistration 31ba71c by /root/mac_first_leak_native_critic. Both include
+   fourteen native suites and original platform gates. No metadata-only acceptance.
+5. **Next actual boundary: production PostgreSQL market recovery.** Builder
+   /root/client_result_recovery_builder, own /workspace/sightbreak-postgres-receipt-recovery,
+   codex/m3-postgres-receipt-recovery from 89393f3, criteria 8e9de18. Fresh critic
+   /root/postgres_market_receipt_critic prereview 8df78b7 accepts implementation
+   contract only, and has ended its turn to free a slot. Reactivate on clean
+   driver/probe freeze for independent pure/source review and live SQL witness.
+   Owned local PostgreSQL/API/proxies, synthetic buyer 1,000 / seller 100 /
+   listing 400; expected buyer 600 / seller 488 / fee 12 / one operation, item
+   transfer and seller loadout removal. Require actual 200 → retained committed
+   SQL → alive client → SIGKILL, repeated lost reply, fresh login, exact-key/body
+   replay, zero-POST account/origin controls, distinct final SQL and cleanup.
+   No saved credentials or historical token-bearing fixture files. Runtime is
+   not released by root coordination yet; this is scheduling, not a request for
+   user permission. No services started. Store/case and rendered consent separate.
+6. **Linux scheduling diagnostic source is developing**, builder
+   /root/linux_frame_diagnostic, criteria e71e5d4 before code. Root report 48045c8
+   retains CPU-free audit: both attempts 2,600 ticks / 325 draws = 8.000 across
+   all phases. Windows 976x549 ANGLE software versus Linux 1280x720 llvmpipe is
+   not a matched performance comparison. Root reproduced exact audit bytes.
+   Readback-only existing offline snapshots plus owned one-second proc/cgroup
+   samples; unchanged cadence, settings, privacy and deadlines. No engine/export/
+   OCR/runtime released yet. Fresh separate source critic required before one
+   original-budget diagnostic. Actual timing monitors are roughly one-second
+   maxima, not current-frame samples; internal 3D-target size unavailable through
+   the inspected public API. No performance fix is inferred.
 
 ## Tools, recovery and constraints
 
