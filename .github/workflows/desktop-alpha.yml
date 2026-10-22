@@ -55,6 +55,8 @@ jobs:
         run: python scripts/test_build_manifest.py -v
       - name: Atomic observation reader filesystem semantics
         run: python scripts/test_native_observation.py -v
+      - name: QA receipt packaging controls
+        run: python scripts/test_package_qa_receipts.py -v
       - name: Export exact clean source
         id: export
         run: python scripts/export.py ${{ matrix.target }}
@@ -140,6 +142,18 @@ jobs:
           name: sightbreak-playability-${{ matrix.target }}-${{ matrix.os }}-${{ github.sha }}
           path: builds/desktop-playability/
           include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Package bounded raw QA receipts
+        if: always()
+        run: python scripts/package_qa_receipts.py --source builds/desktop-playability --output builds/qa-receipts/qa-receipts.zip
+      - name: Preserve separately downloadable raw QA receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-qa-receipts-${{ matrix.target }}-${{ matrix.os }}-${{ github.sha }}
+          path: builds/qa-receipts/qa-receipts.zip
+          compression-level: 0
           if-no-files-found: warn
           retention-days: 14
       - name: Preserve separately downloadable QA evidence
