@@ -10,6 +10,7 @@ var fixture_name := ""
 var fixture_user_dir := ""
 var fixture_created := false
 var marker_created := false
+var fixture_removed := false
 
 func check(value: bool, message: String) -> void:
 	checks += 1
@@ -27,6 +28,10 @@ func _initialize() -> void:
 	ProjectSettings.set_setting("application/config/use_custom_user_dir", true)
 	ProjectSettings.set_setting("application/config/custom_user_dir_name", fixture_name)
 	fixture_user_dir = OS.get_user_data_dir()
+	if fixture_parent_is_link():
+		push_error("Refusing HUD fixture creation through a linked shared namespace")
+		finish(2)
+		return
 	if fixture_user_dir == original_user_dir or not fixture_user_dir.replace("\\", "/").ends_with("/" + fixture_name) or DirAccess.dir_exists_absolute(fixture_user_dir):
 		push_error("HUD fixture requires a new, distinct native user-data directory: " + fixture_user_dir)
 		finish(2)
@@ -52,12 +57,22 @@ func _initialize() -> void:
 	print("HUD_OBJECTIVE_HINT_TEST_STATE native_user_dir=%s original_user_dir=%s owner=%s" % [fixture_user_dir, original_user_dir, fixture_name])
 	run.call_deferred()
 
+func fixture_parent_is_link() -> bool:
+	var data_directory := DirAccess.open(OS.get_data_dir())
+	return data_directory != null and data_directory.is_link("SIGHTBREAK_QA")
+
+func fixture_entry_exists() -> bool:
+	var parent := DirAccess.open(fixture_user_dir.get_base_dir())
+	return DirAccess.dir_exists_absolute(fixture_user_dir) or FileAccess.file_exists(fixture_user_dir) or (parent != null and parent.is_link(fixture_user_dir.get_file()))
+
 func cleanup_fixture() -> String:
 	if not fixture_created:
 		return ""
 	var expected := OS.get_data_dir().path_join(fixture_name).simplify_path()
 	if fixture_user_dir.simplify_path() != expected or fixture_user_dir == original_user_dir:
 		return "Refusing HUD cleanup outside its private native directory"
+	if fixture_parent_is_link():
+		return "Refusing HUD cleanup through a linked shared namespace"
 	var parent := DirAccess.open(fixture_user_dir.get_base_dir())
 	if parent == null or parent.is_link(fixture_user_dir.get_file()):
 		return "Refusing HUD cleanup for an unavailable or linked fixture directory"
@@ -84,6 +99,9 @@ func cleanup_fixture() -> String:
 		return "Refusing HUD cleanup because unowned files remain"
 	if DirAccess.remove_absolute(fixture_user_dir) != OK:
 		return "Cannot remove empty private HUD fixture directory"
+	fixture_removed = not fixture_entry_exists()
+	if not fixture_removed:
+		return "Private HUD fixture entry remains after removal"
 	return ""
 
 func finish(exit_code: int) -> void:
@@ -94,7 +112,7 @@ func finish(exit_code: int) -> void:
 	if not restored:
 		reason += " Original native user directory was not restored"
 	var final_exit := exit_code if exit_code != 0 or reason.is_empty() else 2
-	print("HUD_OBJECTIVE_HINT_TEST_CLEANUP " + JSON.stringify({"native_user_dir":fixture_user_dir, "owner":fixture_name, "owned":fixture_created, "removed":fixture_created and not DirAccess.dir_exists_absolute(fixture_user_dir), "original_user_dir_restored":restored, "reason":reason, "original_exit":exit_code, "exit":final_exit}))
+	print("HUD_OBJECTIVE_HINT_TEST_CLEANUP " + JSON.stringify({"native_user_dir":fixture_user_dir, "owner":fixture_name, "owned":fixture_created, "removed":fixture_removed, "original_user_dir_restored":restored, "reason":reason, "original_exit":exit_code, "exit":final_exit}))
 	if not reason.is_empty():
 		push_error(reason)
 	quit(final_exit)
