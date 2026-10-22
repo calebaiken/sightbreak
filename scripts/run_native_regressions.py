@@ -21,7 +21,8 @@ from native_log import failed
 
 
 SUITES = ('actor', 'match', 'authority_order', 'state_privacy', 'movement_prediction', 'peer_lifecycle',
-          'input_mode', 'menu_focus', 'offline_diagnostics', 'hud_objective_hint')
+          'input_mode', 'menu_focus', 'offline_diagnostics', 'hud_objective_hint',
+          'activity_provenance', 'bot_squad_symmetry')
 PROBE = '''extends SceneTree
 func _initialize() -> void:
     var destination := ""
