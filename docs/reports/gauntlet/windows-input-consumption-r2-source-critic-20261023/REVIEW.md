@@ -97,3 +97,8 @@ input_send_called is invocation only; input_consumed means pop/input assignment
 before actor action gates. The old failed Windows logs lack trace and remain
 insufficient, with cause UNRESOLVED. Neither passing frozen controls nor a future
 source-only acceptance releases a native run or qualifies combined source.
+
+Final ancillary evidence is committed locally at52dc54e489ed4c65844a79d7a37fec488df832ef.
+Two ordinary Git pushes failed with the exact authentication error retained in
+publication-failures.json. Initial rejection8cd68f81 is already pushed. No
+credentials were read or changed; root explicitly took publication ownership.

@@ -1,0 +1,24 @@
+{
+  "scope": "Preserved final ancillary publication failures; local evidence committed and source unchanged",
+  "local_evidence_commit": "52dc54e489ed4c65844a79d7a37fec488df832ef",
+  "already_pushed_rejection_commit": "8cd68f818d8642953c4d4bda38ee14cccb55a9c5",
+  "own_branch": "codex/windows-input-consumption-r2-fresh-source-critic-20261023",
+  "attempts": [
+    {
+      "command": "git push origin codex/windows-input-consumption-r2-fresh-source-critic-20261023",
+      "exit_code": 128,
+      "output": "fatal: could not read Username for 'https://github.com': No such device or address\n",
+      "scope": "First ordinary push after local final evidence commit; subsequent chained rev/status commands unreached."
+    },
+    {
+      "command": "git rev-parse HEAD && git status --short && git push origin codex/windows-input-consumption-r2-fresh-source-critic-20261023",
+      "exit_code": 128,
+      "output": "52dc54e489ed4c65844a79d7a37fec488df832ef\nfatal: could not read Username for 'https://github.com': No such device or address\n",
+      "scope": "Second ordinary push; HEAD verified and status clean before failure."
+    }
+  ],
+  "credentials_read_or_changed": false,
+  "root_handoff": "Root explicitly took publication ownership after these failures; no further critic push attempt.",
+  "gitHub_connector_discovery_only": true,
+  "connector_write_performed": false
+}
