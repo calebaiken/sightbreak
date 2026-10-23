@@ -33,7 +33,7 @@ No game, backend, production service, original raw archive or accepted report
 changes. No merge. New native/runtime or whole-gate acceptance is not implied.
 Independent criticism is required after the candidate is frozen.
 
-Execution and independent verdict are pending.
+At preregistration, execution and independent verdict were pending.
 
 ## Actual execution
 
@@ -87,9 +87,28 @@ accepted raw archive or accepted market report changed. Later evidence commits
 retain logs and handoff documentation only. CI emitted one checkout-action
 Node 20 deprecation warning; checkout and all test steps succeeded.
 
+## Independent verdict
+
+Fresh critic source/pure verdict: PASS at the exact tested
+`985a9d71be546723adfb38f406302537a0a3f751`. The critic independently fetched
+the baseline, corrected files, original archive and both actual CI job logs.
+Its separate own branch is `codex/m3-market-refresh-critic-20261023-0342`,
+review evidence commit `c00f38a3fc58a7909f5f09c664b8023dfe6c2669`.
+[Independent report](https://github.com/calebaiken/sightbreak/tree/c00f38a3fc58a7909f5f09c664b8023dfe6c2669/docs/reports/gauntlet/m3-market-refresh-guard/independent-critic)
+retains the initial queued-deadline criticism and corrected verdict. The builder
+does not approve its own work.
+
+The filesystem environment ultimately failed provisioning:
+`container_creation / container_service_failed / transport_timeout`, reported
+while querying executor configuration capabilities. This component's concrete
+source edits, CI execution and independent review used connected GitHub tools.
+Root owns canonical resume updates on its separate
+`codex/v1-resume-checkpoint-20261023-0338` branch; this component leaves
+`NEXT_SESSION.md` byte-identical to its baseline. No merge occurred.
+
 ## Remaining scope
 
-Independent final criticism is pending. These mocked controls do not execute
+ These mocked controls do not execute
 Godot, PostgreSQL, Docker or the production API, and no new native or service
 qualification is claimed. Settlement predicates are mocked inside the full
 orchestration counterexample; the unchanged separate oracle suite still tests
