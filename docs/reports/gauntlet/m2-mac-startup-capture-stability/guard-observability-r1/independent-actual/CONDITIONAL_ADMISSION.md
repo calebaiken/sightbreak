@@ -36,7 +36,8 @@ owned frame; the new evidence fields cannot establish its destination or cause.
 In exact new source, image dimension disagreement fails before the original
 post-capture ownership read. Dimension agreement performs that same one read;
 native ownership errors propagate without invented bounds. Its successful
-CGRect is retained before the original 0.5-point comparison. Stage `complete`+means that guard passed, before PNG construction, Vision or overall success.
+CGRect is retained before the original 0.5-point comparison. Stage `complete`
+means that guard passed, before PNG construction, Vision or overall success.
 No native call, retry, focus/input/prompt, exception catch, tolerance, budget,
 success path or private read is added. Fixed field values must be interpreted
 with the original failure/result/exit and actually reached boundary.
