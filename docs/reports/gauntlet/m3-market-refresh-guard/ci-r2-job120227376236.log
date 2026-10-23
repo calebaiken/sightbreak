@@ -1,0 +1,272 @@
+﻿2026-10-23T03:40:41.9739629Z Current runner version: '2.338.0'
+2026-10-23T03:40:41.9757556Z ##[group]Runner Image Provisioner
+2026-10-23T03:40:41.9758102Z Hosted Compute Agent
+2026-10-23T03:40:41.9758513Z Version: 20261012.601
+2026-10-23T03:40:41.9758920Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-23T03:40:41.9759324Z Build Date: 2026-10-12T17:48:21Z
+2026-10-23T03:40:41.9759765Z Worker ID: {07572464-67bb-41c9-881d-bb2e0b5c9db6}
+2026-10-23T03:40:41.9760203Z Region: westus3
+2026-10-23T03:40:41.9760564Z Cloud: Azure
+2026-10-23T03:40:41.9760896Z ##[endgroup]
+2026-10-23T03:40:41.9761867Z ##[group]Operating System
+2026-10-23T03:40:41.9762266Z Ubuntu
+2026-10-23T03:40:41.9762600Z 24.04.5
+2026-10-23T03:40:41.9762892Z LTS
+2026-10-23T03:40:41.9763240Z ##[endgroup]
+2026-10-23T03:40:41.9763586Z ##[group]Runner Image
+2026-10-23T03:40:41.9764050Z Image: ubuntu-24.04
+2026-10-23T03:40:41.9764387Z Version: 20261012.334.1
+2026-10-23T03:40:41.9765387Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-23T03:40:41.9766264Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-23T03:40:41.9766884Z ##[endgroup]
+2026-10-23T03:40:41.9767524Z ##[group]GITHUB_TOKEN Permissions
+2026-10-23T03:40:41.9768732Z Contents: read
+2026-10-23T03:40:41.9769065Z Metadata: read
+2026-10-23T03:40:41.9769384Z ##[endgroup]
+2026-10-23T03:40:41.9770775Z Secret source: Actions
+2026-10-23T03:40:41.9771308Z Cache mode: write
+2026-10-23T03:40:41.9771791Z Prepare workflow directory
+2026-10-23T03:40:41.9985920Z Prepare all required actions
+2026-10-23T03:40:42.0016347Z Getting action download info
+2026-10-23T03:40:42.3137492Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2026-10-23T03:40:42.4875355Z Complete job name: pure
+2026-10-23T03:40:42.5313001Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2026-10-23T03:40:42.5313493Z with:
+2026-10-23T03:40:42.5313760Z   ref: 985a9d71be546723adfb38f406302537a0a3f751
+2026-10-23T03:40:42.5314075Z   fetch-depth: 0
+2026-10-23T03:40:42.5314325Z   persist-credentials: false
+2026-10-23T03:40:42.5314608Z   repository: calebaiken/sightbreak
+2026-10-23T03:40:42.5316644Z   token: ***
+2026-10-23T03:40:42.5316869Z   ssh-strict: true
+2026-10-23T03:40:42.5317106Z   ssh-user: git
+2026-10-23T03:40:42.5317333Z   clean: true
+2026-10-23T03:40:42.5317574Z   sparse-checkout-cone-mode: true
+2026-10-23T03:40:42.5317850Z   fetch-tags: false
+2026-10-23T03:40:42.5318087Z   show-progress: true
+2026-10-23T03:40:42.5318328Z   lfs: false
+2026-10-23T03:40:42.5318607Z   submodules: false
+2026-10-23T03:40:42.5318847Z   set-safe-directory: true
+2026-10-23T03:40:42.5319172Z ##[endgroup]
+2026-10-23T03:40:42.5943699Z Syncing repository: calebaiken/sightbreak
+2026-10-23T03:40:42.5945370Z ##[group]Getting Git version info
+2026-10-23T03:40:42.5945976Z Working directory is '/home/runner/work/sightbreak/sightbreak'
+2026-10-23T03:40:42.5946901Z [command]/usr/bin/git version
+2026-10-23T03:40:42.5991661Z git version 2.55.0
+2026-10-23T03:40:42.6004294Z ##[endgroup]
+2026-10-23T03:40:42.6024553Z Temporarily overriding HOME='/home/runner/work/_temp/5bd5b76b-4c5a-4839-a698-4b2c9871d7a5' before making global git config changes
+2026-10-23T03:40:42.6026191Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-23T03:40:42.6027561Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sightbreak/sightbreak
+2026-10-23T03:40:42.6071566Z Deleting the contents of '/home/runner/work/sightbreak/sightbreak'
+2026-10-23T03:40:42.6074056Z ##[group]Initializing the repository
+2026-10-23T03:40:42.6076939Z [command]/usr/bin/git init /home/runner/work/sightbreak/sightbreak
+2026-10-23T03:40:42.6168978Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-23T03:40:42.6170021Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-23T03:40:42.6171002Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-23T03:40:42.6172079Z hint: call:
+2026-10-23T03:40:42.6172943Z hint:
+2026-10-23T03:40:42.6173493Z hint: 	git config --global init.defaultBranch <name>
+2026-10-23T03:40:42.6174144Z hint:
+2026-10-23T03:40:42.6174836Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-23T03:40:42.6175740Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-23T03:40:42.6176456Z hint:
+2026-10-23T03:40:42.6176826Z hint: 	git branch -m <name>
+2026-10-23T03:40:42.6177240Z hint:
+2026-10-23T03:40:42.6177817Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-23T03:40:42.6178728Z Initialized empty Git repository in /home/runner/work/sightbreak/sightbreak/.git/
+2026-10-23T03:40:42.6181019Z [command]/usr/bin/git remote add origin https://github.com/calebaiken/sightbreak
+2026-10-23T03:40:42.6229764Z ##[endgroup]
+2026-10-23T03:40:42.6230510Z ##[group]Disabling automatic garbage collection
+2026-10-23T03:40:42.6232429Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-23T03:40:42.6266905Z ##[endgroup]
+2026-10-23T03:40:42.6267589Z ##[group]Setting up auth
+2026-10-23T03:40:42.6271665Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T03:40:42.6307653Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T03:40:42.6602229Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T03:40:42.6635310Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T03:40:42.6815618Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-23T03:40:42.6852201Z ##[endgroup]
+2026-10-23T03:40:42.6852939Z ##[group]Fetching the repository
+2026-10-23T03:40:42.6859129Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-10-23T03:40:54.8808353Z From https://github.com/calebaiken/sightbreak
+2026-10-23T03:40:54.8809171Z  * [new branch]        astra/backend-trade-read-v3 -> origin/astra/backend-trade-read-v3
+2026-10-23T03:40:54.8809782Z  * [new branch]        astra/network-input-freshness-v3 -> origin/astra/network-input-freshness-v3
+2026-10-23T03:40:54.8810378Z  * [new branch]        astra/pr18-native-pg-evidence -> origin/astra/pr18-native-pg-evidence
+2026-10-23T03:40:54.8810963Z  * [new branch]        astra/pr18-native-transaction-restart -> origin/astra/pr18-native-transaction-restart
+2026-10-23T03:40:54.8811721Z  * [new branch]        astra/prediction-reconciliation-v3 -> origin/astra/prediction-reconciliation-v3
+2026-10-23T03:40:54.8812294Z  * [new branch]        astra/systems-v3-recovery -> origin/astra/systems-v3-recovery
+2026-10-23T03:40:54.8812854Z  * [new branch]        claude/cs2-fidelity-art-production -> origin/claude/cs2-fidelity-art-production
+2026-10-23T03:40:54.8813493Z  * [new branch]        claude/design-research-synthesis -> origin/claude/design-research-synthesis
+2026-10-23T03:40:54.8814071Z  * [new branch]        claude/fair-actor-order-v1 -> origin/claude/fair-actor-order-v1
+2026-10-23T03:40:54.8814694Z  * [new branch]        claude/independent-audit-visual-v04 -> origin/claude/independent-audit-visual-v04
+2026-10-23T03:40:54.8815465Z  * [new branch]        claude/mission-foundation-v1 -> origin/claude/mission-foundation-v1
+2026-10-23T03:40:54.8816125Z  * [new branch]        claude/native-ui-production-v1 -> origin/claude/native-ui-production-v1
+2026-10-23T03:40:54.8816712Z  * [new branch]        claude/reconcile-v10-on-pr16 -> origin/claude/reconcile-v10-on-pr16
+2026-10-23T03:40:54.8817471Z  * [new branch]        claude/relay-yard-tactical-layout-v1 -> origin/claude/relay-yard-tactical-layout-v1
+2026-10-23T03:40:54.8818450Z  * [new branch]        claude/wip-gauntlet-T1-sunmetal -> origin/claude/wip-gauntlet-T1-sunmetal
+2026-10-23T03:40:54.8819054Z  * [new branch]        claude/wip-gauntlet-T2-lowlight -> origin/claude/wip-gauntlet-T2-lowlight
+2026-10-23T03:40:54.8819624Z  * [new branch]        codex/combat-history-foundation -> origin/codex/combat-history-foundation
+2026-10-23T03:40:54.8820264Z  * [new branch]        codex/competitive-network-systems -> origin/codex/competitive-network-systems
+2026-10-23T03:40:54.8820853Z  * [new branch]        codex/desktop-playability-p1 -> origin/codex/desktop-playability-p1
+2026-10-23T03:40:54.8821587Z  * [new branch]        codex/desktop-steam-readiness -> origin/codex/desktop-steam-readiness
+2026-10-23T03:40:54.8822167Z  * [new branch]        codex/durable-match-results -> origin/codex/durable-match-results
+2026-10-23T03:40:54.8822834Z  * [new branch]        codex/m3-market-refresh-guard-20261023-0322 -> origin/codex/m3-market-refresh-guard-20261023-0322
+2026-10-23T03:40:54.8823468Z  * [new branch]        codex/market-expected-price -> origin/codex/market-expected-price
+2026-10-23T03:40:54.8823969Z  * [new branch]        codex/network-lifecycle-v2 -> origin/codex/network-lifecycle-v2
+2026-10-23T03:40:54.8824471Z  * [new branch]        codex/network-movement-v2 -> origin/codex/network-movement-v2
+2026-10-23T03:40:54.8825148Z  * [new branch]        codex/network-validation-builds -> origin/codex/network-validation-builds
+2026-10-23T03:40:54.8825700Z  * [new branch]        codex/qa-artifact-slices -> origin/codex/qa-artifact-slices
+2026-10-23T03:40:54.8826198Z  * [new branch]        codex/reconnect-recovery -> origin/codex/reconnect-recovery
+2026-10-23T03:40:54.8826978Z  * [new branch]        codex/state-privacy-v2 -> origin/codex/state-privacy-v2
+2026-10-23T03:40:54.8827499Z  * [new branch]        codex/v1-mission-playability -> origin/codex/v1-mission-playability
+2026-10-23T03:40:54.8828126Z  * [new branch]        codex/v1-resume-checkpoint-20261023-0338 -> origin/codex/v1-resume-checkpoint-20261023-0338
+2026-10-23T03:40:54.8828792Z  * [new branch]        codex/windows-fire-ack-validation -> origin/codex/windows-fire-ack-validation
+2026-10-23T03:40:54.8829581Z  * [new branch]        codex/windows-observation-probe -> origin/codex/windows-observation-probe
+2026-10-23T03:40:54.8830003Z  * [new branch]        codex/windows-ocr-diagnosis -> origin/codex/windows-ocr-diagnosis
+2026-10-23T03:40:54.8830370Z  * [new branch]        codex/windows-playability-diagnosis -> origin/codex/windows-playability-diagnosis
+2026-10-23T03:40:54.8830802Z  * [new branch]        codex/windows-priority-playability-validation -> origin/codex/windows-priority-playability-validation
+2026-10-23T03:40:54.8831241Z  * [new branch]        gemini/tactical-bot-intelligence-v1 -> origin/gemini/tactical-bot-intelligence-v1
+2026-10-23T03:40:54.8831660Z  * [new branch]        integration/sightbreak-network-art-preview -> origin/integration/sightbreak-network-art-preview
+2026-10-23T03:40:54.8832107Z  * [new branch]        integration/sightbreak-reliability-refresh -> origin/integration/sightbreak-reliability-refresh
+2026-10-23T03:40:54.8832544Z  * [new branch]        integration/sightbreak-three-agent-alpha -> origin/integration/sightbreak-three-agent-alpha
+2026-10-23T03:40:54.8832984Z  * [new branch]        integration/sightbreak-three-agent-artifacts -> origin/integration/sightbreak-three-agent-artifacts
+2026-10-23T03:40:54.8833417Z  * [new branch]        integration/sightbreak-v3-validation -> origin/integration/sightbreak-v3-validation
+2026-10-23T03:40:54.8833738Z  * [new branch]        main                   -> origin/main
+2026-10-23T03:40:54.8835011Z [command]/usr/bin/git rev-parse --verify --quiet 985a9d71be546723adfb38f406302537a0a3f751^{object}
+2026-10-23T03:40:54.8847334Z 985a9d71be546723adfb38f406302537a0a3f751
+2026-10-23T03:40:54.8851143Z ##[endgroup]
+2026-10-23T03:40:54.8851577Z ##[group]Determining the checkout info
+2026-10-23T03:40:54.8852332Z ##[endgroup]
+2026-10-23T03:40:54.8856923Z [command]/usr/bin/git sparse-checkout disable
+2026-10-23T03:40:54.8903661Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-23T03:40:54.8929355Z ##[group]Checking out the ref
+2026-10-23T03:40:54.8932281Z [command]/usr/bin/git checkout --progress --force 985a9d71be546723adfb38f406302537a0a3f751
+2026-10-23T03:40:55.9199288Z Updating files:  68% (5909/8671)
+2026-10-23T03:40:55.9432100Z Updating files:  69% (5983/8671)
+2026-10-23T03:40:55.9627561Z Updating files:  70% (6070/8671)
+2026-10-23T03:40:55.9957828Z Updating files:  71% (6157/8671)
+2026-10-23T03:40:56.0174878Z Updating files:  72% (6244/8671)
+2026-10-23T03:40:56.0238697Z Updating files:  73% (6330/8671)
+2026-10-23T03:40:56.0286884Z Updating files:  74% (6417/8671)
+2026-10-23T03:40:56.0314679Z Updating files:  75% (6504/8671)
+2026-10-23T03:40:56.0336877Z Updating files:  76% (6590/8671)
+2026-10-23T03:40:56.0381934Z Updating files:  77% (6677/8671)
+2026-10-23T03:40:56.0592542Z Updating files:  78% (6764/8671)
+2026-10-23T03:40:56.0619006Z Updating files:  79% (6851/8671)
+2026-10-23T03:40:56.0654657Z Updating files:  80% (6937/8671)
+2026-10-23T03:40:56.0810415Z Updating files:  81% (7024/8671)
+2026-10-23T03:40:56.0939808Z Updating files:  82% (7111/8671)
+2026-10-23T03:40:56.0986167Z Updating files:  83% (7197/8671)
+2026-10-23T03:40:56.1129208Z Updating files:  84% (7284/8671)
+2026-10-23T03:40:56.1727109Z Updating files:  85% (7371/8671)
+2026-10-23T03:40:56.2222916Z Updating files:  86% (7458/8671)
+2026-10-23T03:40:56.2755860Z Updating files:  87% (7544/8671)
+2026-10-23T03:40:56.2991941Z Updating files:  88% (7631/8671)
+2026-10-23T03:40:56.3033993Z Updating files:  89% (7718/8671)
+2026-10-23T03:40:56.3072458Z Updating files:  90% (7804/8671)
+2026-10-23T03:40:56.3106917Z Updating files:  91% (7891/8671)
+2026-10-23T03:40:56.3143559Z Updating files:  92% (7978/8671)
+2026-10-23T03:40:56.3350673Z Updating files:  93% (8065/8671)
+2026-10-23T03:40:56.3640175Z Updating files:  94% (8151/8671)
+2026-10-23T03:40:56.3785260Z Updating files:  95% (8238/8671)
+2026-10-23T03:40:56.3816591Z Updating files:  96% (8325/8671)
+2026-10-23T03:40:56.3848209Z Updating files:  97% (8411/8671)
+2026-10-23T03:40:56.3883601Z Updating files:  98% (8498/8671)
+2026-10-23T03:40:56.3931190Z Updating files:  99% (8585/8671)
+2026-10-23T03:40:56.3931454Z Updating files: 100% (8671/8671)
+2026-10-23T03:40:56.3931686Z Updating files: 100% (8671/8671), done.
+2026-10-23T03:40:56.3998011Z Note: switching to '985a9d71be546723adfb38f406302537a0a3f751'.
+2026-10-23T03:40:56.3998378Z 
+2026-10-23T03:40:56.3998706Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-23T03:40:56.3999098Z changes and commit them, and you can discard any commits you make in this
+2026-10-23T03:40:56.3999423Z state without impacting any branches by switching back to a branch.
+2026-10-23T03:40:56.3999574Z 
+2026-10-23T03:40:56.3999749Z If you want to create a new branch to retain commits you create, you may
+2026-10-23T03:40:56.4000134Z do so (now or later) by using -c with the switch command. Example:
+2026-10-23T03:40:56.4000354Z 
+2026-10-23T03:40:56.4000450Z   git switch -c <new-branch-name>
+2026-10-23T03:40:56.4000606Z 
+2026-10-23T03:40:56.4000698Z Or undo this operation with:
+2026-10-23T03:40:56.4000809Z 
+2026-10-23T03:40:56.4000865Z   git switch -
+2026-10-23T03:40:56.4000939Z 
+2026-10-23T03:40:56.4001058Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-23T03:40:56.4001219Z 
+2026-10-23T03:40:56.4001321Z HEAD is now at 985a9d71 test: reject expired queued proxy publication
+2026-10-23T03:40:56.4103521Z ##[endgroup]
+2026-10-23T03:40:56.4143127Z [command]/usr/bin/git log -1 --format=%H
+2026-10-23T03:40:56.4168066Z 985a9d71be546723adfb38f406302537a0a3f751
+2026-10-23T03:40:56.4175997Z ##[group]Removing auth
+2026-10-23T03:40:56.4178072Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T03:40:56.4211746Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T03:40:56.4418036Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T03:40:56.4445726Z http.https://github.com/.extraheader
+2026-10-23T03:40:56.4459834Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-23T03:40:56.4485952Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T03:40:56.4716262Z ##[endgroup]
+2026-10-23T03:40:56.4850029Z ##[group]Run git show ad6cdc20db2a2f3ac179ba3cf3bed502620b6171:scripts/test_postgres_receipt_recovery.py > "$RUNNER_TEMP/market-refresh-baseline.py"
+2026-10-23T03:40:56.4850635Z [36;1mgit show ad6cdc20db2a2f3ac179ba3cf3bed502620b6171:scripts/test_postgres_receipt_recovery.py > "$RUNNER_TEMP/market-refresh-baseline.py"[0m
+2026-10-23T03:40:56.5073091Z shell: /usr/bin/bash -e {0}
+2026-10-23T03:40:56.5073258Z ##[endgroup]
+2026-10-23T03:40:56.5281982Z ##[group]Run python3 -B -m unittest -v test_postgres_receipt_oracle test_postgres_receipt_guards test_postgres_receipt_refresh
+2026-10-23T03:40:56.5282746Z [36;1mpython3 -B -m unittest -v test_postgres_receipt_oracle test_postgres_receipt_guards test_postgres_receipt_refresh[0m
+2026-10-23T03:40:56.5335656Z shell: /usr/bin/bash -e {0}
+2026-10-23T03:40:56.5335810Z env:
+2026-10-23T03:40:56.5335942Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-23T03:40:56.5336163Z   SIGHTBREAK_REFRESH_BASELINE: /home/runner/work/_temp/market-refresh-baseline.py
+2026-10-23T03:40:56.5336391Z ##[endgroup]
+2026-10-23T03:40:56.6503806Z test_declared_effect_and_repeat_observation (test_postgres_receipt_oracle.MarketOracleTests.test_declared_effect_and_repeat_observation) ... ok
+2026-10-23T03:40:56.6509422Z test_duplicate_missing_and_changed_ledger_rows_reject (test_postgres_receipt_oracle.MarketOracleTests.test_duplicate_missing_and_changed_ledger_rows_reject) ... ok
+2026-10-23T03:40:56.6521100Z test_matched_poisoned_response_and_operation_metadata_rejects (test_postgres_receipt_oracle.MarketOracleTests.test_matched_poisoned_response_and_operation_metadata_rejects) ... ok
+2026-10-23T03:40:56.6522526Z test_missing_duplicate_old_query_and_clock_disagreement_reject (test_postgres_receipt_oracle.MarketOracleTests.test_missing_duplicate_old_query_and_clock_disagreement_reject) ... ok
+2026-10-23T03:40:56.6528267Z test_operation_key_hash_result_and_audit_poison (test_postgres_receipt_oracle.MarketOracleTests.test_operation_key_hash_result_and_audit_poison) ... ok
+2026-10-23T03:40:56.6533069Z test_replay_business_change_rejects (test_postgres_receipt_oracle.MarketOracleTests.test_replay_business_change_rejects) ... ok
+2026-10-23T03:40:56.6534382Z test_sql_witness_must_be_fresh_complete_and_inside_real_query (test_postgres_receipt_oracle.MarketOracleTests.test_sql_witness_must_be_fresh_complete_and_inside_real_query) ... ok
+2026-10-23T03:40:56.6544117Z test_wallet_owner_metadata_listing_loadout_and_match_value_poison (test_postgres_receipt_oracle.MarketOracleTests.test_wallet_owner_metadata_listing_loadout_and_match_value_poison) ... ok
+2026-10-23T03:40:56.6547681Z test_wrong_cluster_database_schema_and_seed_reject (test_postgres_receipt_oracle.MarketOracleTests.test_wrong_cluster_database_schema_and_seed_reject) ... ok
+2026-10-23T03:40:56.6578020Z test_auth_failure_does_not_log_unknown_reply_or_exception_contents (test_postgres_receipt_guards.GuardTests.test_auth_failure_does_not_log_unknown_reply_or_exception_contents) ... ok
+2026-10-23T03:40:56.6591862Z test_auth_response_and_header_never_enter_retained_proxy_log (test_postgres_receipt_guards.GuardTests.test_auth_response_and_header_never_enter_retained_proxy_log) ... ok
+2026-10-23T03:40:56.6611974Z test_direct_auth_failure_suppresses_raw_exception_context (test_postgres_receipt_guards.GuardTests.test_direct_auth_failure_suppresses_raw_exception_context) ... ok
+2026-10-23T03:40:56.6630737Z test_dirty_or_production_changed_source_rejects (test_postgres_receipt_guards.GuardTests.test_dirty_or_production_changed_source_rejects) ... ok
+2026-10-23T03:40:56.6644442Z test_docker_selectors_removed_and_explicit_local_socket_preserved (test_postgres_receipt_guards.GuardTests.test_docker_selectors_removed_and_explicit_local_socket_preserved) ... ok
+2026-10-23T03:40:56.6678238Z test_every_wrong_route_mutation_is_observed_before_upstream_even_on_failure (test_postgres_receipt_guards.GuardTests.test_every_wrong_route_mutation_is_observed_before_upstream_even_on_failure) ... ok
+2026-10-23T03:40:56.6687618Z test_expired_deadline_blocks_all_new_runtime_entrypoints (test_postgres_receipt_guards.GuardTests.test_expired_deadline_blocks_all_new_runtime_entrypoints) ... ok
+2026-10-23T03:40:56.6702926Z test_expired_work_deadline_still_allows_owned_cleanup (test_postgres_receipt_guards.GuardTests.test_expired_work_deadline_still_allows_owned_cleanup) ... ok
+2026-10-23T03:40:56.6717708Z test_invalid_or_expired_mutation_still_counted_without_upstream_dispatch (test_postgres_receipt_guards.GuardTests.test_invalid_or_expired_mutation_still_counted_without_upstream_dispatch) ... ok
+2026-10-23T03:40:56.6739073Z test_mutation_body_credential_redacted_before_hex_encoding_and_privacy_fails (test_postgres_receipt_guards.GuardTests.test_mutation_body_credential_redacted_before_hex_encoding_and_privacy_fails) ... ok
+2026-10-23T03:40:56.6765689Z test_ownership_failure_prevents_destructive_command (test_postgres_receipt_guards.GuardTests.test_ownership_failure_prevents_destructive_command) ... ok
+2026-10-23T03:40:56.6766615Z test_secret_attempt_is_redacted_and_recorded_as_failure (test_postgres_receipt_guards.GuardTests.test_secret_attempt_is_redacted_and_recorded_as_failure) ... ok
+2026-10-23T03:40:56.6788789Z test_sql_snapshot_rejects_initial_identity_postmaster_and_role_replacement (test_postgres_receipt_guards.GuardTests.test_sql_snapshot_rejects_initial_identity_postmaster_and_role_replacement) ... ok
+2026-10-23T03:40:56.6801599Z test_timeout_retains_sanitized_output_argv_pid_and_reaps_owned_command (test_postgres_receipt_guards.GuardTests.test_timeout_retains_sanitized_output_argv_pid_and_reaps_owned_command) ... ok
+2026-10-23T03:40:56.6811970Z test_volume_labels_and_exact_mount_required_before_use (test_postgres_receipt_guards.GuardTests.test_volume_labels_and_exact_mount_required_before_use) ... ok
+2026-10-23T03:40:56.6822838Z test_wrong_cached_image_rejects_before_volume_or_container (test_postgres_receipt_guards.GuardTests.test_wrong_cached_image_rejects_before_volume_or_container) ... ok
+2026-10-23T03:40:56.6832954Z test_wrong_engine_rejects_before_any_command_or_service (test_postgres_receipt_guards.GuardTests.test_wrong_engine_rejects_before_any_command_or_service) ... ok
+2026-10-23T03:40:56.6962993Z test_exact_baseline_full_execute_false_accepts_stale_values (test_postgres_receipt_refresh.RefreshTests.test_exact_baseline_full_execute_false_accepts_stale_values) ... ok
+2026-10-23T03:40:56.7006467Z test_full_execute_accepts_fresh_response_bound_reads (test_postgres_receipt_refresh.RefreshTests.test_full_execute_accepts_fresh_response_bound_reads) ... ok
+2026-10-23T03:40:56.7057935Z test_full_execute_rejects_failed_refresh_with_stale_matching_login_values (test_postgres_receipt_refresh.RefreshTests.test_full_execute_rejects_failed_refresh_with_stale_matching_login_values) ... ok
+2026-10-23T03:40:56.7206741Z test_full_execute_rejects_invalid_refresh_before_final_sql (test_postgres_receipt_refresh.RefreshTests.test_full_execute_rejects_invalid_refresh_before_final_sql) ... ok
+2026-10-23T03:40:56.7212275Z test_oracle_rejects_inflight_stale_duplicate_mismatch_and_bad_order (test_postgres_receipt_refresh.RefreshTests.test_oracle_rejects_inflight_stale_duplicate_mismatch_and_bad_order) ... ok
+2026-10-23T03:40:56.7224089Z test_proxy_failed_write_does_not_publish_successful_read (test_postgres_receipt_refresh.RefreshTests.test_proxy_failed_write_does_not_publish_successful_read) ... ok
+2026-10-23T03:40:56.7236950Z test_proxy_keeps_ingress_phase_when_upstream_crosses_phase_boundary (test_postgres_receipt_refresh.RefreshTests.test_proxy_keeps_ingress_phase_when_upstream_crosses_phase_boundary) ... ok
+2026-10-23T03:40:56.7256554Z test_proxy_market_marker_precedes_concurrent_followup_ingress (test_postgres_receipt_refresh.RefreshTests.test_proxy_market_marker_precedes_concurrent_followup_ingress) ... ok
+2026-10-23T03:40:56.7280815Z test_proxy_short_write_does_not_publish_successful_read (test_postgres_receipt_refresh.RefreshTests.test_proxy_short_write_does_not_publish_successful_read) ... ok
+2026-10-23T03:40:56.7294390Z test_queued_response_rechecks_work_deadline_after_publication_lock (test_postgres_receipt_refresh.RefreshTests.test_queued_response_rechecks_work_deadline_after_publication_lock) ... ok
+2026-10-23T03:40:56.7337689Z test_retained_market_timeline_legacy_schema_is_explicit_and_unchanged (test_postgres_receipt_refresh.RefreshTests.test_retained_market_timeline_legacy_schema_is_explicit_and_unchanged) ... ok
+2026-10-23T03:40:56.7338413Z 
+2026-10-23T03:40:56.7338857Z ----------------------------------------------------------------------
+2026-10-23T03:40:56.7339249Z Ran 37 tests in 0.084s
+2026-10-23T03:40:56.7339383Z 
+2026-10-23T03:40:56.7339452Z OK
+2026-10-23T03:40:56.7339835Z BASELINE ad6cdc20db2a2f3ac179ba3cf3bed502620b6171 full mocked execute falsely accepts stale login reads
+2026-10-23T03:40:56.7340522Z RETAINED 882931dd timeline accepted as original success-only schema; strict future schema rejects absent provenance
+2026-10-23T03:40:56.7632960Z Post job cleanup.
+2026-10-23T03:40:56.8222711Z [command]/usr/bin/git version
+2026-10-23T03:40:56.8256664Z git version 2.55.0
+2026-10-23T03:40:56.8283166Z Temporarily overriding HOME='/home/runner/work/_temp/09a9f8d0-be91-4d2a-a6f6-53fd02af103a' before making global git config changes
+2026-10-23T03:40:56.8284136Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-23T03:40:56.8288018Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sightbreak/sightbreak
+2026-10-23T03:40:56.8327218Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T03:40:56.8361457Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T03:40:56.8586767Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T03:40:56.8618278Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T03:40:56.8937942Z Cleaning up orphan processes
+2026-10-23T03:40:56.9127797Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

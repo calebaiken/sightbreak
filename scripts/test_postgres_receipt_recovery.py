@@ -27,7 +27,7 @@ import traceback
 from uuid import uuid4
 
 from postgres_receipt_oracle import (BUSINESS_SQL, IDENTITY_SQL, fingerprint, require,
-                                     verify_market, verify_market_fixture, verify_order, verify_sql_witness, verify_unchanged)
+                                     verify_final_market_refresh, verify_market, verify_market_fixture, verify_order, verify_sql_witness, verify_unchanged)
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = "89393f3d1e059a3da35533e0bd84e98a098c691c"
@@ -130,8 +130,8 @@ class Run:
             (self.out / name).write_text(raw)
 
     def event(self, phase, **fields):
-        row = dict(phase=phase, monotonic_ns=time.monotonic_ns(), wall_ns=time.time_ns(), **fields)
         with self.lock:
+            row = dict(phase=phase, monotonic_ns=time.monotonic_ns(), wall_ns=time.time_ns(), **fields)
             self.events.append(row)
             with (self.out / "timeline.jsonl").open("a") as log:
                 log.write(self.redact(json.dumps(row, sort_keys=True)) + "\n")
@@ -300,11 +300,16 @@ class Run:
             def log_message(self, *_args): pass
             def forward(self):
                 connection, attempt, attempt_retained, index = None, None, False, None
+                # Freeze provenance at ingress. Another native phase may start
+                # while this threaded upstream request is still in flight.
+                with run.lock:
+                    native_phase = run.current_phase
+                    requested = dict(requested_monotonic_ns=time.monotonic_ns(), requested_wall_ns=time.time_ns())
                 auth = self.path.startswith("/auth/")
                 # Count all non-auth mutations before parsing, validation or an
                 # upstream connection; refused/wrong-route attempts cannot hide.
                 if not auth and self.command in ("POST", "PUT", "PATCH", "DELETE"):
-                    attempt = dict(method=self.command, path=self.path, origin=name, native_phase=run.current_phase,
+                    attempt = dict(method=self.command, path=self.path, origin=name, native_phase=native_phase,
                                    authorization_present=bool(self.headers.get("Authorization")),
                                    raw_body_hex=None, payload=None, body_complete=False)
                     with run.lock: run.mutation_attempts.append(attempt)
@@ -335,13 +340,12 @@ class Run:
                         parsed = json.loads(raw)
                         if isinstance(parsed, dict) and parsed.get("token"):
                             run.add_secret(parsed["token"])
-                            run.sessions[run.current_phase] = parsed["token"]
-                        run.event("auth_response", native_phase=run.current_phase, origin=name, path=self.path,
+                            run.sessions[native_phase] = parsed["token"]
+                        run.event("auth_response", native_phase=native_phase, origin=name, path=self.path,
                                   status=response.status, body_and_headers_redacted=True)
-                    elif self.command == "GET" and self.path in ("/me", "/inventory") and response.status == 200:
+                    business_read = self.command == "GET" and self.path in ("/me", "/inventory")
+                    if business_read:
                         value = json.loads(raw)
-                        run.reads.setdefault(run.current_phase, {})[self.path] = value
-                        run.event("business_read", native_phase=run.current_phase, origin=name, path=self.path, response=value)
                     if market:
                         parsed = json.loads(raw)
                         run.responses[index] = parsed
@@ -357,11 +361,23 @@ class Run:
                             except OSError: pass
                             self.close_connection = True
                             return
-                    self.send_response(response.status)
-                    self.send_header("Content-Type", response.getheader("Content-Type", "application/json"))
-                    self.send_header("Content-Length", str(len(raw))); self.end_headers()
-                    self.wfile.write(raw)
-                    if market: run.event("market_" + str(index) + "_response_forwarded")
+                    # Publish the write and its marker under the ingress lock.
+                    # A client can dispatch its next GET as soon as write returns;
+                    # it must not overtake the replay response marker.
+                    with run.lock:
+                        self.connection.settimeout(run.remaining(10))
+                        self.send_response(response.status)
+                        self.send_header("Content-Type", response.getheader("Content-Type", "application/json"))
+                        self.send_header("Content-Length", str(len(raw))); self.end_headers()
+                        written = self.wfile.write(raw)
+                        require(written == len(raw), "downstream response write incomplete")
+                        if market:
+                            run.event("market_" + str(index) + "_response_forwarded", native_phase=native_phase, origin=name)
+                        if business_read:
+                            if response.status == 200:
+                                run.reads.setdefault(native_phase, {})[self.path] = value
+                            run.event("business_read", native_phase=native_phase, origin=name, method=self.command,
+                                      path=self.path, status=response.status, response=value, **requested)
                 except BaseException as error:
                     if attempt is not None and not attempt_retained:
                         run.event("mutation_attempt", **attempt)
@@ -390,7 +406,8 @@ class Run:
         return "http://127.0.0.1:" + str(server.server_port)
 
     def native(self, phase, mode, account, url, held=None):
-        self.current_phase = phase
+        with self.lock:
+            self.current_phase = phase
         config = dict(mode=mode, url=url, expected_account=account["id"], journal=str(self.out / "client" / "pending.json"),
                       path=self.spec["path"], payload=dict(idempotency_key=self.spec["key"], expected_price=400))
         path = self.out / (phase + "-config.json"); path.write_text(json.dumps(config))
@@ -601,7 +618,8 @@ class Run:
         result = self.native("final_recovery", "retry", accounts["buyer"], origin)
         require(result["result"] == self.responses[1] and not result["pending_after"] and not journal.exists(), "final recovery did not clear original receipt")
         require(result["account"]["credits"] == 600 and [i["id"] for i in result["inventory"]] == [item_id], "native fresh account/inventory mismatch")
-        require(result["account"] == self.reads["final_recovery"]["/me"] and result["inventory"] == self.reads["final_recovery"]["/inventory"]["items"], "native values not equal to fresh production reads")
+        with self.lock:
+            verify_final_market_refresh(list(self.events), result)
         require(self.responses[1] == self.responses[2] == self.responses[3], "production replay response differs from original")
         final_event = next(e for e in self.events if e["phase"] == "final_recovery_response_and_refresh_complete")
         final_sql = self.sql_snapshot("after_final_refresh"); verify_sql_witness(final_sql, "after_final_refresh", final_event); verify_unchanged(settled, final_sql)

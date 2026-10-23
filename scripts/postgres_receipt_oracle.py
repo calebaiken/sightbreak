@@ -161,3 +161,41 @@ def verify_order(events: list[dict], phases: list[str]) -> None:
     for previous, current in zip(positions, positions[1:]):
         require(previous["monotonic_ns"] < current["monotonic_ns"] and previous["wall_ns"] < current["wall_ns"],
                 "event order mismatch")
+
+
+def verify_final_market_refresh(events: list[dict], observation: dict, *,
+                                legacy_success_only_schema: bool = False) -> dict:
+    """Bind native completion to fresh reads, rather than the login-value cache.
+
+    Legacy mode is only for auditing retained 882931dd evidence: that source
+    emitted business_read only for successful GETs, without ingress timestamps.
+    New campaigns always use the default strict schema.
+    """
+    phases = ["market_3_response_forwarded", "final_recovery_response_and_refresh_complete"]
+    verify_order(events, phases)
+    start, end = [next(e for e in events if e["phase"] == phase) for phase in phases]
+    require(events.index(start) < events.index(end), "final refresh markers out of retained order")
+    require(end.get("observation") == observation, "native completion observation mismatch")
+    if not legacy_success_only_schema:
+        require(start.get("native_phase") == "final_recovery" and start.get("origin") == "origin1",
+                "final replay marker phase/origin mismatch")
+    selected = {}
+    for path in ("/me", "/inventory"):
+        rows = [e for e in events[events.index(start) + 1:events.index(end)]
+                if e.get("phase") == "business_read" and e.get("path") == path
+                and e.get("native_phase") == "final_recovery" and e.get("origin") == "origin1"]
+        require(len(rows) == 1, "missing/duplicate fresh final refresh read: " + path)
+        row = rows[0]
+        require(all(start[k] < row[k] < end[k] for k in ("monotonic_ns", "wall_ns")),
+                "final refresh read outside response/completion interval")
+        if not legacy_success_only_schema:
+            require(row.get("method") == "GET" and row.get("status") == 200,
+                    "final refresh read was not a successful GET")
+            require(all(start[k] < row.get("requested_" + k, -1) <= row[k]
+                        for k in ("monotonic_ns", "wall_ns")),
+                    "final refresh request started before replay response")
+        selected[path] = row["response"]
+    require(observation["account"] == selected["/me"]
+            and observation["inventory"] == selected["/inventory"]["items"],
+            "native values not equal to selected fresh production reads")
+    return selected
