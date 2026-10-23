@@ -245,27 +245,83 @@ def geometry_identity(info, receipt):
 
 def audit_ownership(info,components,variant):
     rows,errors=[],[]
-    if set(info.get("ownership",{})) != set(ACTIONS): return {"pass":False,"errors":["missing native action_at ownership records"],"rows":[]}
-    order=sorted(ACTIONS) if variant=="r4b" else [a for a in info["action_order"] if a!="move"]
+    if set(info.get("ownership",{})) != set(ACTIONS) or set(components) != set(ACTIONS):
+        return {"pass":False,"errors":["incomplete native ownership/component identities"],"rows":[]}
+    native_order=info.get("action_order",[])
+    if not isinstance(native_order,list) or not all(isinstance(a,str) for a in native_order):
+        return {"pass":False,"errors":["malformed native action order"],"rows":[]}
+    action_order=[a for a in native_order if a!="move"]
+    if variant not in ("r3","r4b") or len(action_order)!=len(ACTIONS) or set(action_order)!=set(ACTIONS):
+        return {"pass":False,"errors":["invalid native replay policy/action order"],"rows":[]}
+    order=sorted(ACTIONS) if variant=="r4b" else action_order
+    try:
+        for action in ACTIONS:
+            point=np.asarray(info["geometry"][action]["point"],dtype=float)
+            hit=float(info["geometry"][action]["hit_radius"])
+            if point.shape!=(2,) or not np.isfinite(point).all() or not np.isfinite(hit) or hit<=0:raise ValueError("invalid target")
+    except (KeyError,TypeError,ValueError):
+        return {"pass":False,"errors":["invalid native ownership replay geometry"],"rows":[]}
     for action,image in components.items():
+        image=np.asarray(image)
+        if image.ndim!=3 or image.shape[-1]!=3:
+            errors.append(action+": invalid native component footprint shape")
+            continue
         yy,xx=np.where(image.max(axis=-1)>=1)
         distances=np.array([np.hypot(xx+.5-info["geometry"][a]["point"][0],yy+.5-info["geometry"][a]["point"][1])/info["geometry"][a]["hit_radius"] for a in order])
         indices=distances.argmin(axis=0); minimum=distances.min(axis=0)
         winners=np.array(order)[indices]; winners[minimum>1]=""
         bad=winners!=action
+        replay={(int(x),int(y)):str(winner) for x,y,winner in zip(xx[bad],yy[bad],winners[bad])}
+        replay_unclaimed=int((winners=="").sum())
         record=info["ownership"][action]
-        witnesses=record.get("wrong_owner_witnesses_xy_action",[])
-        valid=(record.get("support_pixels")==len(xx) and record.get("wrong_owner_pixels")==len(witnesses) and record.get("unclaimed_pixels")==sum(w[2]=="" for w in witnesses))
-        seen=set()
-        for x,y,winner in witnesses:
-            if (x,y) in seen or not 0<=y<image.shape[0] or not 0<=x<image.shape[1] or image[y,x].max()<1 or winner==action:valid=False
+        schema_errors=[]
+        if not isinstance(record,dict):
+            schema_errors.append("ownership record is not an object")
+            record={}
+        for field in ("support_pixels","wrong_owner_pixels","unclaimed_pixels"):
+            if type(record.get(field)) is not int or record[field]<0:schema_errors.append("invalid "+field)
+        witnesses=record.get("wrong_owner_witnesses_xy_action")
+        if not isinstance(witnesses,list):
+            schema_errors.append("missing native witness list")
+            witnesses=[]
+        native,seen={},set()
+        for sample in witnesses:
+            if not isinstance(sample,list) or len(sample)!=3:
+                schema_errors.append("malformed native witness")
+                continue
+            x,y,winner=sample
+            if type(x) is not int or type(y) is not int:
+                schema_errors.append("non-integer native sample coordinate")
+                continue
+            if (x,y) in seen:schema_errors.append("duplicate native sample coordinate")
             seen.add((x,y))
+            if not 0<=y<image.shape[0] or not 0<=x<image.shape[1] or image[y,x].max()<1:
+                schema_errors.append("native sample outside complete footprint")
+                continue
+            if not isinstance(winner,str) or winner not in (*ACTIONS,"") or winner==action:
+                schema_errors.append("invalid native wrong-owner identity")
+                continue
+            native.setdefault((x,y),winner)
+        if record.get("support_pixels")!=len(xx):schema_errors.append("native support count differs from footprint")
+        if record.get("wrong_owner_pixels")!=len(witnesses):schema_errors.append("native wrong-owner count differs from witnesses")
+        if record.get("unclaimed_pixels")!=sum(winner=="" for winner in native.values()):schema_errors.append("native unclaimed count differs from witnesses")
+        missing=sorted(set(replay)-set(native),key=lambda p:(p[1],p[0]))
+        extra=sorted(set(native)-set(replay),key=lambda p:(p[1],p[0]))
+        different=sorted((p for p in set(native)&set(replay) if native[p]!=replay[p]),key=lambda p:(p[1],p[0]))
+        reconciled=bool(not schema_errors and not missing and not extra and not different and
+            record.get("wrong_owner_pixels")==len(replay) and record.get("unclaimed_pixels")==replay_unclaimed)
+        errors.extend(action+": "+error for error in schema_errors)
+        if not reconciled:
+            errors.append(action+": native ownership receipt contradicts complete independent replay")
         rows.append({"action":action,"support_pixels":len(xx),"actual_native_wrong_owner_pixels":record.get("wrong_owner_pixels"),
-            "independent_normalized_hit_replay_wrong_pixels":int(bad.sum()),"native_record_well_formed":bool(valid),
-            "pass":bool(valid and not record.get("wrong_owner_pixels") and not bad.any())})
-        if not valid:errors.append(action+": malformed native ownership record")
+            "independent_normalized_hit_replay_wrong_pixels":len(replay),"independent_replay_unclaimed_pixels":replay_unclaimed,
+            "native_record_well_formed":not schema_errors,"native_receipt_matches_replay":reconciled,
+            "missing_native_witnesses_xy_action":[[x,y,replay[(x,y)]] for x,y in missing],
+            "extra_native_witnesses_xy_action":[[x,y,native[(x,y)]] for x,y in extra],
+            "wrong_native_winners_xy_native_replay":[[x,y,native[(x,y)],replay[(x,y)]] for x,y in different],
+            "pass":bool(reconciled and not replay)})
     return {"rows":rows,"errors":errors,"pass":not errors and all(r["pass"] for r in rows),
-        "scope":"Actual source action_at over every native isolated component pixel plus independent normalized-hit replay; no decoration/count/hidden-pixel exception."}
+        "scope":"The complete native sample map (own action except explicit wrong/unclaimed witnesses) must exactly match independent replay for BOTH sources. Contradictions invalidate provenance; correctly recorded baseline product failures remain comparable."}
 
 
 def read(path):

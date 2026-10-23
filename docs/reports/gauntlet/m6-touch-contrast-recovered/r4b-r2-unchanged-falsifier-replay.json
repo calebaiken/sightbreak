@@ -1,0 +1,110 @@
+{
+  "scope": "UNCHANGED INDEPENDENT FALSIFIER EXPRESSIONS, SYNTHETIC ONLY",
+  "critic_commit": "ce3510e3776c8fec42ef1de648b14a453c221724",
+  "original_falsifier_sha256": "82d9f52fca8e5af6c8296b3bc32ac6532df09cd69a2b912e9b7691c75b778266",
+  "unchanged_blocker_sha256": "0dd4dfa18dd5b603c98a62200fa38a13173142a0cec1473ab21083d6bc9e788c",
+  "rejected_method_commit": "2ea23f947aec6085449bced53c9b061618a67029",
+  "rejected": {
+    "conditions": {
+      "invalid_baseline_ownership_receipt_counterexample_reproduces": {
+        "condition": true,
+        "synthetic_only": true,
+        "ownership_errors": [],
+        "fire_row": {
+          "action": "fire",
+          "support_pixels": 1,
+          "actual_native_wrong_owner_pixels": 0,
+          "independent_normalized_hit_replay_wrong_pixels": 1,
+          "native_record_well_formed": true,
+          "pass": false
+        },
+        "comparison_accepts_invalid_baseline": true,
+        "requirement": "Invalid baseline ownership receipt blocks comparison; legitimate baseline geometry failure remains comparable."
+      },
+      "invalid_baseline_recorded_winner_not_reconciled": {
+        "condition": true,
+        "synthetic_only": true,
+        "supplied_wrong_winner": "pause",
+        "independently_selected_winner": "jump",
+        "fire_row": {
+          "action": "fire",
+          "support_pixels": 1,
+          "actual_native_wrong_owner_pixels": 1,
+          "independent_normalized_hit_replay_wrong_pixels": 1,
+          "native_record_well_formed": true,
+          "pass": false
+        }
+      }
+    },
+    "comparison_accepts_invalid_baseline": true,
+    "false_zero_errors": [],
+    "wrong_winner_errors": []
+  },
+  "corrected": {
+    "conditions": {
+      "invalid_baseline_ownership_receipt_counterexample_reproduces": {
+        "condition": false,
+        "synthetic_only": true,
+        "ownership_errors": [
+          "fire: native ownership receipt contradicts complete independent replay"
+        ],
+        "fire_row": {
+          "action": "fire",
+          "support_pixels": 1,
+          "actual_native_wrong_owner_pixels": 0,
+          "independent_normalized_hit_replay_wrong_pixels": 1,
+          "independent_replay_unclaimed_pixels": 0,
+          "native_record_well_formed": true,
+          "native_receipt_matches_replay": false,
+          "missing_native_witnesses_xy_action": [
+            [
+              100,
+              50,
+              "jump"
+            ]
+          ],
+          "extra_native_witnesses_xy_action": [],
+          "wrong_native_winners_xy_native_replay": [],
+          "pass": false
+        },
+        "comparison_accepts_invalid_baseline": false,
+        "requirement": "Invalid baseline ownership receipt blocks comparison; legitimate baseline geometry failure remains comparable."
+      },
+      "invalid_baseline_recorded_winner_not_reconciled": {
+        "condition": false,
+        "synthetic_only": true,
+        "supplied_wrong_winner": "pause",
+        "independently_selected_winner": "jump",
+        "fire_row": {
+          "action": "fire",
+          "support_pixels": 1,
+          "actual_native_wrong_owner_pixels": 1,
+          "independent_normalized_hit_replay_wrong_pixels": 1,
+          "independent_replay_unclaimed_pixels": 0,
+          "native_record_well_formed": true,
+          "native_receipt_matches_replay": false,
+          "missing_native_witnesses_xy_action": [],
+          "extra_native_witnesses_xy_action": [],
+          "wrong_native_winners_xy_native_replay": [
+            [
+              100,
+              50,
+              "pause",
+              "jump"
+            ]
+          ],
+          "pass": false
+        }
+      }
+    },
+    "comparison_accepts_invalid_baseline": false,
+    "false_zero_errors": [
+      "fire: native ownership receipt contradicts complete independent replay"
+    ],
+    "wrong_winner_errors": [
+      "fire: native ownership receipt contradicts complete independent replay"
+    ]
+  },
+  "correction_observed": true,
+  "engine_invocations": 0
+}
