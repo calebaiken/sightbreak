@@ -1,6 +1,6 @@
 # ONE fresh Linux R3 acquisition release
 
-Issued 2026-10-23 11:50 UTC. Root authorizes exactly one invocation at source
+Issued 2026-10-23 11:49 UTC. Root authorizes exactly one invocation at source
 `ec6b34ce9af4db1199cd5266b2f7cfcc9831f5ef`, in
 `/workspace/sightbreak-linux-packed-import-boundary`, using the exact recipe in
 HANDOFF.md. This release becomes active only after this commit is pushed and the
@@ -25,3 +25,7 @@ setup failure remains distinct from its sole real supervisor. Full archive and
 actual analysis require separate root clearance after native termination.
 No artifact, seal, condition, cadence, H1, gameplay or release gate is accepted
 by this authorization.
+
+The first committed prose timestamp incorrectly anticipated 11:50 UTC; the tool
+clock after that push read 11:49:05 UTC. This correction precedes observer
+activation and the sole invocation. It creates no second execution permission.
