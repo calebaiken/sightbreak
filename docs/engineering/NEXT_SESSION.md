@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-23, 06:19 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 06:39 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. The automatic goal remains active. Read AGENTS.md and the canonical
@@ -11,7 +11,7 @@ implementation after each verified increment; these corrections do not finish v1
 
 The mission is ACTIVE. Root is `/workspace/sightbreak-v1-recovered`, own branch
 `codex/v1-executor-recovery-20261023`, [draft PR31](https://github.com/calebaiken/sightbreak/pull/31).
-Committed integration before this note is `e1c70e6`. Inspect actual HEAD/status;
+Committed integration before this note is `c08889b`. Inspect actual HEAD/status;
 never reset a newer local checkpoint. No shared release branch is merged.
 
 1. **Complete aggregate independently ACCEPTED at exact `afca2f1`.** Original
@@ -40,12 +40,18 @@ never reset a newer local checkpoint. No shared release branch is merged.
    Startup freeze 0146497 is independently REJECTED by bfe7b5a (root f350588):
    three runnable falsifiers allow an additional same-PID visible window at pin,
    later target guard and synthetic Deploy. Original zero-event pin=true rows
-   are retained. Correction is frozen at 3efe35d on builder branch; 70 maintained
-   pure tests pass, unchanged independent replay is completing under a distinct
-   pure-test wrapper. Retain its initial incomplete 60s wrapper separately.
-   Re-review exact 3efe35d with the preserved counterexamples before integration.
-   Original 60s menu/5s focus and strict later guards remain unchanged. Root has
-   not integrated either rejected controller or approved a third ARM dispatch.
+   are retained. Correction 3efe35d is independently source-APPROVED by 12ecda91:
+   70 maintained tests, four alias commands, 11 unchanged falsifiers and three
+   added input-guard groups pass. Original failures/incomplete wrapper stay
+   separate. Root source integration is 06d3bb4, review 57b61bc. Exact combined
+   c08889b retains game tree 55691684d31d44f1680141954bbe530443de9d1f; its only
+   code/workflow delta from actual b2e0293 is five reviewed Mac files.
+   Independent combined approval 45a6e5d is root 67669c0. One ARM attempt is
+   active: run 39912086121 / job 120277159133, created 06:32:13 UTC, immutable ref
+   `codex/v1-qualify-mac-c08889b` at exact c08889b. Fresh actual critic
+   `/root/mac_native_c088_fresh_critic` owns run/export/preflight/menu/native
+   gameplay/pixel/cleanup review. Original 60s menu/5s focus/graphics/private-input
+   and cleanup contracts remain unchanged. No further dispatch is approved.
 3. **First ARM attempt remains FAILED.** Run 39904830917 at 34dbd97 failed four
    test-owned /var alias paths, skipping mocked-controller and ordinary play.
    Native 15 suites/9,434 checks, menu 39.591s and unsigned iOS compile 88.643s
@@ -64,14 +70,21 @@ never reset a newer local checkpoint. No shared release branch is merged.
    a missed fresh input on a living actor. Plant 78.985s genuinely arms device
    and captures living DEFEND guidance, then all defenders are eliminated while
    still planted; device resolution/next-buy/restart are unqualified.
-   Both failure receipts have cleanup_errors=[]. Separate partial independent
-   audit verifies 15 suites/9,434 checks, four-weapon and dry-fixture outputs,
-   and stock full match: 12 natural rounds/7:5, exact 120 XP/250 offline credits
-   saved and reloaded. Complete source/pixel/receipt/cleanup verdict is pending.
+   Final independent d0514d8 is root c08889b, [report](../reports/gauntlet/windows-combined-recovered-20261023/REPORT.md).
+   It accepts separate 15-suite/9,434-check, three OS-input schedules, defuse and
+   stock-match scopes: 12 natural rounds/7:5, exact 120 XP/250 offline credits
+   saved/reloaded. One bot plant occurs in round 12; no device terminal occurs.
+   Both failed receipts have cleanup_errors=[] but clients had forced exit 1,
+   not normal closes. All 140 transferred native logs are strict-clean; 36
+   original PNGs were viewed and six exact witnesses retained. Missing
+   success-only controller/HUD fields and unreached phases remain gaps.
    No rerun is approved. Source-only liveness fence is being built in
    `/workspace/sightbreak-windows-focus-liveness`, branch
    `codex/windows-focus-liveness-fence-20261023`; preserve original captures,
    deadlines, health/AI/rules and distinguish precondition loss from input failure.
+   Candidate 19304d5 / report 0823cee has fresh critic findings requiring correction:
+   malformed timestamps can bypass the fence; malformed raw values lose their
+   rejection receipt. No liveness candidate is integrated or retry approved.
 5. **Touch R3 combined pixel gate FAILED; native/raw review is complete.** Own
    `/workspace/sightbreak-touch-contrast-recovered`, branch
    `codex/m6-touch-contrast-recovered`, code a520221, report f527e01; independent
@@ -119,11 +132,14 @@ never reset a newer local checkpoint. No shared release branch is merged.
    holstered unknown/default controls, target acquisition and objective guards.
    Diagnostic freeze 114150a has 567 decisions / 576 steps but independent
    critic fb9b113 REJECTS its obstructed rays and vacuous action witnesses, root
-   9d44367. R2 source correction preserves that matrix and adds settled clear-line
-   positive shot/damage/ordinary-kill-reward and completed-reload controls, plus
-   full target/objective decision-boundary snapshots. Source work is active in
-   `/workspace/sightbreak-exhausted-primary-benchmark`. No engine or product edit
-   is approved. Re-review exact R2 source before a bounded baseline run.
+   9d44367. R2 b87afb7 adds 96 positive-control steps and complete raw decision
+   fences (1,239 total rows). Fresh source critic 5fbf3ac permits ONE baseline.
+   Builder `/workspace/sightbreak-exhausted-primary-benchmark` now owns the local
+   native lane: one staged/private preparation import 120s cap, then one unchanged
+   probe 120s cap, wrapper 240s plus bounded cleanup. Stop if import fails; no
+   retry/product edit is approved. Pin/source/UID/process/raw output receipts
+   and a separate full actual-output audit are required. The partial synthetic
+   witness oracle alone cannot certify resources, lane or authority behavior.
 
 Official released Luanti Android/AssaultCube reference research is integrated as
 62e6134, B8 in BARS. Actual images/clip stay outside Git in

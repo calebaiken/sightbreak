@@ -23,11 +23,14 @@ satisfy a different gate. No deployment, Steam publication or paid action is imp
 Current bounded evidence includes the independently passing recovered afca2f1
 aggregate and narrow bot dry-primary comparison, earlier Windows selected gameplay
 gates, corrected-activity ten-account settlement/recovery, backend regression and
-four-weapon probe. Combined Windows b2e0293 is under actual native qualification.
+four-weapon probe. Combined Windows b2e0293 has a failed overall verdict, with
+separate passing suites/input schedules/defuse/12-round earned-reload scopes.
 ARM repeat 39906639650 passes 15 suites/menu/unsigned iOS within reviewed scopes,
 but ordinary play fails before input; its splash/window-context failure and forced
-cleanup remain recorded. Touch R3 native captures/regressions await independent
-pixel and blind verdicts. Linux next-round timing and earlier unexplained Mac
+cleanup remain recorded. A corrected source-bound ARM attempt at c08889b is
+running after independent source/pure review. Touch R3's combined pixel gate
+fails independent review; the blind clarity preference retains small-text and
+occlusion limits. R4 is source-only. Linux timing and earlier unexplained Mac
 strict leaks remain failures. The canonical matrix records sources and reviewers;
 none of these increments closes the full release-candidate gates.
 
