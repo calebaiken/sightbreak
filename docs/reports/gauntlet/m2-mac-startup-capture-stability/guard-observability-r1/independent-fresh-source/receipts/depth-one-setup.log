@@ -1,0 +1,18 @@
+COMMAND ["git", "clone", "--no-checkout", "--shared", "/workspace/reviews/mac-capture-stability-depth1", "/workspace/reviews/m2-mac-capture-guard-fresh-source-depth-one"]
+Cloning into '/workspace/reviews/m2-mac-capture-guard-fresh-source-depth-one'...
+EXIT 0
+COMMAND ["git", "sparse-checkout", "init", "--cone"]
+EXIT 0
+COMMAND ["git", "sparse-checkout", "set", "scripts", ".github", ".claude", "docs/engineering", "docs/roadmap", "docs/reports/gauntlet/m2-mac-startup-capture-stability", "docs/reports/gauntlet/m2-macos-screen-identity/fixtures", "docs/reports/gauntlet/m2-mac-derived-ocr/original-native-39912086121/macos-ordinary-input"]
+EXIT 0
+COMMAND ["git", "checkout", "--detach", "d5277180a7705befd64d2f40a362ad566e83d91b"]
+HEAD is now at d527718 diagnostic(macos): retain same-read capture guard geometry
+EXIT 0
+COMMAND ["git", "status", "--short"]
+EXIT 0
+COMMAND ["git", "rev-parse", "--is-shallow-repository"]
+true
+EXIT 0
+COMMAND ["git", "rev-list", "--count", "HEAD"]
+1
+EXIT 0
