@@ -1,0 +1,22 @@
+{
+  "source": "86fe3cbe3f191b328c1e08bf8d5adc0a937e39b1",
+  "analyzer_sha256": "555632cafffa24f9ffc8514bba530f138feea455a83f42b2600d77d27d6aa23e",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/sightbreak-windows-input-consumption-r2/scripts/analyze_input_consumption.py",
+    "--client",
+    "/workspace/sightbreak-windows-input-consumption-r2/docs/reports/gauntlet/windows-input-consumption-r2-20261023/original-native-log-bytes/client.log",
+    "--authority",
+    "/workspace/sightbreak-windows-input-consumption-r2/docs/reports/gauntlet/windows-input-consumption-r2-20261023/original-native-log-bytes/server.log",
+    "--output",
+    "/workspace/sightbreak-windows-input-consumption-r2/docs/reports/gauntlet/windows-input-consumption-r2-20261023/original-native-raw-replay/analysis.json"
+  ],
+  "cpu_affinity": [
+    4
+  ],
+  "expected_exit": 1,
+  "actual_exit": 1,
+  "expected_diagnostic_complete": false,
+  "actual_diagnostic_complete": false,
+  "passed": true
+}

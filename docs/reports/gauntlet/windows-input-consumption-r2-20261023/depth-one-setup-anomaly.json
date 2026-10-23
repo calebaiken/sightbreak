@@ -1,0 +1,8 @@
+{
+  "scope": "Retained first builder depth-one setup anomaly; not the initialized verification",
+  "head": "86fe3cbe3f191b328c1e08bf8d5adc0a937e39b1",
+  "tracked_index_paths_before": 0,
+  "status_rows_before": 11178,
+  "cause": "Clone --no-checkout had an empty index; worktree-only restore materialized source without initializing its index. The passing first pure run is retained but not counted as initialized proof.",
+  "correction": "Restore the exact HEAD index in the isolated clone, reapply sparse checkout, require clean status, then repeat pure and independent controls."
+}

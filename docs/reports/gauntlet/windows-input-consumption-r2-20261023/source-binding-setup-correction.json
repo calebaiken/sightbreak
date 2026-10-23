@@ -1,0 +1,8 @@
+{
+  "scope": "Builder packaging checker correction; no candidate change",
+  "initial_assertion": "Attempted a raw-byte equality comparison between official CRLF logs and the unchanged critic rig text-mode derivative. It failed, as the sealed rig uses read_text/write_text newline normalization.",
+  "correction": "Keep the critic rig and its normalized derivatives unchanged. Retain separate byte-identical copies of both official logs, bind their original hashes, and replay the CLI directly on raw copies.",
+  "raw_logs": "original-native-log-bytes/",
+  "raw_replay": "original-native-raw-replay/",
+  "candidate_source_unchanged": true
+}

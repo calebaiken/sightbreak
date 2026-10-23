@@ -1,0 +1,42 @@
+{
+  "scope": "Unchanged independent synthetic falsifiers; no native run or source approval",
+  "source": "86fe3cbe3f191b328c1e08bf8d5adc0a937e39b1",
+  "analyzer_sha256": "555632cafffa24f9ffc8514bba530f138feea455a83f42b2600d77d27d6aa23e",
+  "cpu_affinity": [
+    4
+  ],
+  "groups": [
+    {
+      "rig": "independent_controls.py",
+      "rig_sha256": "0a9d9117abb25bb995e385b689d3d860df346ae07145241508c94bf80c255e80",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/sightbreak-windows-input-consumption-r2/docs/reports/gauntlet/windows-input-consumption-r2-20261023/unchanged-critic-controls/independent_controls.py",
+        "--source",
+        "/workspace/sightbreak-windows-input-consumption-r2/.local/depth-one-source",
+        "--output",
+        "/workspace/sightbreak-windows-input-consumption-r2/docs/reports/gauntlet/windows-input-consumption-r2-20261023/depth-one-controls/independent-25"
+      ],
+      "exit_code": 0,
+      "cases": 25,
+      "expectations_met": 25,
+      "passed": true
+    },
+    {
+      "rig": "supplemental_controls.py",
+      "rig_sha256": "250fea854a64e932c50f4468f46834b20c62c0f587521a1b267ceeacd3bfffd5",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/sightbreak-windows-input-consumption-r2/docs/reports/gauntlet/windows-input-consumption-r2-20261023/unchanged-critic-controls/supplemental_controls.py",
+        "/workspace/sightbreak-windows-input-consumption-r2/.local/depth-one-source",
+        "/workspace/sightbreak-windows-input-consumption-r2/docs/reports/gauntlet/windows-input-consumption-r2-20261023/depth-one-controls/supplemental-4"
+      ],
+      "exit_code": 0,
+      "cases": 4,
+      "expectations_met": 4,
+      "passed": true
+    }
+  ],
+  "note": "The rigs retain original hardcoded candidate c0738163 labels. Actual source and analyzer bytes are independently bound by this wrapper and each rig checkout_head.",
+  "passed": true
+}
