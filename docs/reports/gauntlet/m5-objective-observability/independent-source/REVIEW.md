@@ -188,6 +188,12 @@ pack PID and exited 1 after signaling its verified clone/upload-pack. Those
 failures are retained, not counted as test passes. The final bounded fixture and
 all substantive reproduced tests ran on CPU 4. No broad process signal was used.
 
+Report hygiene check: the first staged `git diff --check` exited 2 on three
+trailing spaces in the preserved process command strings (`fixture-setup-initial.txt`
+lines 15–17). I issued the report commit despite that failed check. The raw
+metadata remains unchanged, and `report-checks.json` retains the failure; no
+passing aggregate whitespace check is claimed.
+
 Largest unresolved uncertainty: source controls and grammar parsing cannot
 establish pinned Godot 4.7.2 compilation, actual debug/release/online isolation,
 engine-driven decision/authority parity, performance overhead or tactical
