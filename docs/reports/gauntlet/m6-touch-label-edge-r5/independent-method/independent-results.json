@@ -1,0 +1,1189 @@
+{
+  "scope": "SOURCE_AND_SYNTHETIC_ONLY_NO_NEW_NATIVE_EVIDENCE",
+  "attribution": {
+    "controls": [
+      {
+        "case": "complete distinct controls preserve 1/64/255 code coverage",
+        "expected_accept": true,
+        "actual_accept": true,
+        "matched": true,
+        "errors": []
+      },
+      {
+        "case": "one-code deletion while label remains nonempty",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "active_label: missing=1 duplicate=0 extra=0"
+        ]
+      },
+      {
+        "case": "intensity change with identical binary support",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "jump: incomplete or foreign source label support"
+        ]
+      },
+      {
+        "case": "single-channel forged footprint",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "isolated white footprint is not neutral"
+        ]
+      },
+      {
+        "case": "extra low-code foreground",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "jump: incomplete or foreign source label support",
+          "active_label: missing=0 duplicate=0 extra=1"
+        ]
+      },
+      {
+        "case": "component drops only AA pixel",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "jump: incomplete or foreign source label support"
+        ]
+      },
+      {
+        "case": "paint inside component but outside actual hit",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "jump: incomplete or foreign source label support"
+        ]
+      },
+      {
+        "case": "closer overlapping foreign control",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "fire: incomplete or foreign source label support",
+          "jump: incomplete or foreign source label support"
+        ]
+      },
+      {
+        "case": "duplicate same-group AA pixel",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "fire: incomplete or foreign source label support",
+          "active_label: missing=0 duplicate=1 extra=0"
+        ]
+      },
+      {
+        "case": "same native pixel claimed across active/inactive groups",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "grenade: incomplete or foreign source label support"
+        ]
+      },
+      {
+        "case": "inactive label falsely classified active",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "grenade: incomplete or foreign source label support",
+          "active_label: missing=0 duplicate=0 extra=3",
+          "inactive_label: missing=3 duplicate=0 extra=0"
+        ]
+      },
+      {
+        "case": "missing original hit geometry",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "missing original physical geometry"
+        ]
+      },
+      {
+        "case": "nonfinite geometry",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "invalid original physical geometry"
+        ]
+      },
+      {
+        "case": "old evidence without one required new action image",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "missing exact source action evidence"
+        ]
+      },
+      {
+        "case": "non-RGB8 float mask",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "native RGB8 image dimensions/type differ"
+        ]
+      },
+      {
+        "case": "wrong native dimensions",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "native RGB8 image dimensions/type differ"
+        ]
+      },
+      {
+        "case": "empty action evidence",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "jump: incomplete or foreign source label support",
+          "active_label: missing=3 duplicate=0 extra=0"
+        ]
+      },
+      {
+        "case": "normalized-distance exact tie uses lexical owner",
+        "expected_accept": false,
+        "actual_accept": false,
+        "matched": true,
+        "errors": [
+          "jump: incomplete or foreign source label support",
+          "buy: incomplete or foreign source label support"
+        ]
+      }
+    ],
+    "all_matched": true,
+    "delegated_metadata_examples": [
+      {
+        "case": "nonfinite active-action count",
+        "prototype_accepts": true,
+        "scope": "requires unchanged full scene_identity before this helper",
+        "unchanged_full_scene_errors": [
+          "incorrect counts"
+        ],
+        "unchanged_full_scene_rejects": true
+      },
+      {
+        "case": "unknown count identity",
+        "prototype_accepts": true,
+        "scope": "requires unchanged full scene_identity before this helper",
+        "unchanged_full_scene_errors": [
+          "incorrect counts"
+        ],
+        "unchanged_full_scene_rejects": true
+      }
+    ]
+  },
+  "quantization": {
+    "independent_clipped_cell_cases": 1058,
+    "feasible_cell_cases": 254,
+    "false_exclusions": [],
+    "maximum_cell_overbound_codes": 0.5,
+    "selected_boundaries": [
+      {
+        "black": [
+          0,
+          0,
+          0
+        ],
+        "white": [
+          0,
+          0,
+          0
+        ],
+        "result": {
+          "lower": 0.0,
+          "upper": 1.0,
+          "feasible": true,
+          "width": 1.0,
+          "endpoint_only": false,
+          "observed_difference": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "quantization_half_width": 0.5,
+          "scope": "NECESSARY_FINAL_QUANTIZATION_CONDITION_ONLY_NOT_CURRENT_ACCEPTANCE"
+        }
+      },
+      {
+        "black": [
+          255,
+          255,
+          255
+        ],
+        "white": [
+          255,
+          255,
+          255
+        ],
+        "result": {
+          "lower": 0.0,
+          "upper": 1.0,
+          "feasible": true,
+          "width": 1.0,
+          "endpoint_only": false,
+          "observed_difference": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "quantization_half_width": 0.5,
+          "scope": "NECESSARY_FINAL_QUANTIZATION_CONDITION_ONLY_NOT_CURRENT_ACCEPTANCE"
+        }
+      },
+      {
+        "black": [
+          0,
+          0,
+          0
+        ],
+        "white": [
+          255,
+          255,
+          255
+        ],
+        "result": {
+          "lower": 254.0,
+          "upper": 255.0,
+          "feasible": true,
+          "width": 1.0,
+          "endpoint_only": false,
+          "observed_difference": [
+            255.0,
+            255.0,
+            255.0
+          ],
+          "quantization_half_width": 0.5,
+          "scope": "NECESSARY_FINAL_QUANTIZATION_CONDITION_ONLY_NOT_CURRENT_ACCEPTANCE"
+        }
+      },
+      {
+        "black": [
+          0,
+          0,
+          0
+        ],
+        "white": [
+          28,
+          29,
+          30
+        ],
+        "result": {
+          "lower": 29.0,
+          "upper": 29.0,
+          "feasible": true,
+          "width": 0.0,
+          "endpoint_only": true,
+          "observed_difference": [
+            28.0,
+            29.0,
+            30.0
+          ],
+          "quantization_half_width": 0.5,
+          "scope": "NECESSARY_FINAL_QUANTIZATION_CONDITION_ONLY_NOT_CURRENT_ACCEPTANCE"
+        }
+      },
+      {
+        "black": [
+          0,
+          0,
+          0
+        ],
+        "white": [
+          28,
+          29,
+          31
+        ],
+        "result": {
+          "lower": 30.0,
+          "upper": 29.0,
+          "feasible": false,
+          "width": 0.0,
+          "endpoint_only": false,
+          "observed_difference": [
+            28.0,
+            29.0,
+            31.0
+          ],
+          "quantization_half_width": 0.5,
+          "scope": "NECESSARY_FINAL_QUANTIZATION_CONDITION_ONLY_NOT_CURRENT_ACCEPTANCE"
+        }
+      },
+      {
+        "black": [
+          255,
+          255,
+          255
+        ],
+        "white": [
+          254,
+          254,
+          254
+        ],
+        "result": {
+          "lower": 0.0,
+          "upper": 0.0,
+          "feasible": true,
+          "width": 0.0,
+          "endpoint_only": true,
+          "observed_difference": [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          "quantization_half_width": 0.5,
+          "scope": "NECESSARY_FINAL_QUANTIZATION_CONDITION_ONLY_NOT_CURRENT_ACCEPTANCE"
+        }
+      },
+      {
+        "black": [
+          255,
+          255,
+          255
+        ],
+        "white": [
+          253,
+          253,
+          253
+        ],
+        "result": {
+          "lower": 0.0,
+          "upper": -1.0,
+          "feasible": false,
+          "width": 0.0,
+          "endpoint_only": false,
+          "observed_difference": [
+            -2.0,
+            -2.0,
+            -2.0
+          ],
+          "quantization_half_width": 0.5,
+          "scope": "NECESSARY_FINAL_QUANTIZATION_CONDITION_ONLY_NOT_CURRENT_ACCEPTANCE"
+        }
+      }
+    ],
+    "six_malformed_inputs_rejected": true,
+    "fractional_code_acceptance": {
+      "feasible": true,
+      "limitation": "helper does not itself require integer RGB8 code metadata"
+    },
+    "contrast_scope": "No ratio or 3:1/4.5:1 acceptance is calculated by this helper. W=B has feasible D=0."
+  },
+  "preservation": {
+    "retained_files": 322,
+    "retained_bytes": 11370602,
+    "original_vs_retained_mismatches": [],
+    "frozen_files": 340,
+    "freeze_mismatches": [],
+    "source_tree_diff": "",
+    "all_changes_since_original_handoff_are_proposal_reports": true,
+    "changed_report_files": 342
+  },
+  "original_witnesses": {
+    "mobile_label_witnesses": [
+      {
+        "scene": "mobile-max-arena-held",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              535
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              536
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              537
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      },
+      {
+        "scene": "mobile-max-arena-idle",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              535
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              536
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              537
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      },
+      {
+        "scene": "mobile-max-gray-held",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              535
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              536
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              537
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      },
+      {
+        "scene": "mobile-max-gray-idle",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              535
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              536
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              537
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      },
+      {
+        "scene": "mobile-max-smoke-held",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              535
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              536
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              537
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      },
+      {
+        "scene": "mobile-max-smoke-idle",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              535
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              536
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              537
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      },
+      {
+        "scene": "mobile-max-white-held",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              535
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              536
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              537
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      },
+      {
+        "scene": "mobile-max-white-idle",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              535
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              536
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              537
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      },
+      {
+        "scene": "mobile-min-arena-held",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              524
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              525
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              526
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      },
+      {
+        "scene": "mobile-min-arena-idle",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              524
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              525
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              526
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      },
+      {
+        "scene": "mobile-min-gray-held",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              524
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              525
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              526
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      },
+      {
+        "scene": "mobile-min-gray-idle",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              524
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              525
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              526
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      },
+      {
+        "scene": "mobile-min-smoke-held",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              524
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              525
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              526
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      },
+      {
+        "scene": "mobile-min-smoke-idle",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              524
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              525
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              526
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      },
+      {
+        "scene": "mobile-min-white-held",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              524
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              525
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              526
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      },
+      {
+        "scene": "mobile-min-white-idle",
+        "nominal_rectangle_failed_pixels": [
+          {
+            "xy": [
+              830,
+              524
+            ],
+            "footprint_rgb": [
+              6,
+              6,
+              6
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              525
+            ],
+            "footprint_rgb": [
+              44,
+              44,
+              44
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          },
+          {
+            "xy": [
+              830,
+              526
+            ],
+            "footprint_rgb": [
+              4,
+              4,
+              4
+            ],
+            "inside_jump_component": true,
+            "independent_hit_owner": "jump"
+          }
+        ]
+      }
+    ],
+    "seven_gated_pixel_witnesses": [
+      {
+        "scene": "desktop-min-white-held",
+        "group": "ready_count",
+        "xy": [
+          893,
+          560
+        ],
+        "all_reported_pixel_inputs_match_original": true,
+        "difference_channel_spread": 2,
+        "original_frozen_resolved": false
+      },
+      {
+        "scene": "desktop-min-white-idle",
+        "group": "ready_count",
+        "xy": [
+          893,
+          560
+        ],
+        "all_reported_pixel_inputs_match_original": true,
+        "difference_channel_spread": 2,
+        "original_frozen_resolved": false
+      },
+      {
+        "scene": "mobile-max-arena-idle",
+        "group": "component_fire",
+        "xy": [
+          841,
+          392
+        ],
+        "all_reported_pixel_inputs_match_original": true,
+        "difference_channel_spread": 2,
+        "original_frozen_resolved": false
+      },
+      {
+        "scene": "mobile-min-arena-idle",
+        "group": "component_fire",
+        "xy": [
+          841,
+          392
+        ],
+        "all_reported_pixel_inputs_match_original": true,
+        "difference_channel_spread": 2,
+        "original_frozen_resolved": false
+      },
+      {
+        "scene": "mobile-min-smoke-idle",
+        "group": "component_interact",
+        "xy": [
+          606,
+          442
+        ],
+        "all_reported_pixel_inputs_match_original": true,
+        "difference_channel_spread": 2,
+        "original_frozen_resolved": false
+      },
+      {
+        "scene": "mobile-min-white-held",
+        "group": "ready_count",
+        "xy": [
+          660,
+          560
+        ],
+        "all_reported_pixel_inputs_match_original": true,
+        "difference_channel_spread": 2,
+        "original_frozen_resolved": false
+      },
+      {
+        "scene": "mobile-min-white-idle",
+        "group": "ready_count",
+        "xy": [
+          660,
+          560
+        ],
+        "all_reported_pixel_inputs_match_original": true,
+        "difference_channel_spread": 2,
+        "original_frozen_resolved": false
+      }
+    ]
+  },
+  "wall_seconds": 4.968603732002521
+}

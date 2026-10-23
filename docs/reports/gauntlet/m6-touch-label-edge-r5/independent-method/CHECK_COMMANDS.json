@@ -1,0 +1,19 @@
+{
+  "scope": "SOURCE_PURE_ONLY_NO_NATIVE_OR_NEW_MASK_ACCEPTANCE",
+  "reviewed_candidate": "163daa53c24b214af79725a6c59adc75183b8c5d",
+  "preregistration": "883f1b63",
+  "commands": [
+    {
+      "command": "timeout 60s taskset -c 4 env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=scripts python3 docs/reports/gauntlet/m6-touch-label-edge-r5/checks.py",
+      "exit_code": 0,
+      "reported_unittest_seconds": 29.139,
+      "log": "builder-controls.log"
+    },
+    {
+      "command": "timeout 60s taskset -c 4 env PYTHONDONTWRITEBYTECODE=1 python3 docs/reports/gauntlet/m6-touch-label-edge-r5/independent-method/independent_checks.py",
+      "exit_code": 0,
+      "script_wall_seconds": 4.968603732002521,
+      "log": "independent-checks.log"
+    }
+  ]
+}
