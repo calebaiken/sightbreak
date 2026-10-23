@@ -27,8 +27,12 @@ helper could exceed its stage budget, and OS acknowledgement could extend the
 original fire holds. `bd9ac47` gives helper calls explicit post-return deadlines,
 keeps each LMB hold/release slot at one second / 0.35 seconds including OS receipts,
 and fixes reload completion's 15-second deadline before R-up acknowledgement.
-The critic retains the rejected draft's reproductions separately. Final independent
-source approval is pending; the builder does not approve this component.
+The critic retains the rejected draft's reproductions separately. Independent
+source review `cd906e8` accepts exact `bd9ac47` after nine additional controller
+falsifier groups and all 57 candidate/original Mac pure tests from an immutable
+archive. Its registration is `1462512` on
+`codex/m2-mac-ordinary-independent-review`. This approval covers source only;
+combined-source integration and native raw-output review remain open.
 
 `scope-audit.json` compares all original tracked scripts and the game tree to the
 base. Every original script byte is unchanged; the game tree is unchanged. All
