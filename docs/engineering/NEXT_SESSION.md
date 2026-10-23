@@ -1,5 +1,22 @@
 # Next session
 
+## Own R3 source-only checkpoint — 2026-10-23
+
+This note belongs to isolated branch `codex/m2-mac-ax-untitled-r3`; root's active
+mission queue is in `/workspace/sightbreak-v1-recovered`. Candidate source
+`4854aed946d25d27482af66c332f84aa51cea8fb` adds bounded no-value handling for
+untitled AXButtons after actual d6 diagnostic run `39939989024` failed at node 2.
+Read [the exact R3 handoff](../reports/gauntlet/m2-mac-ax-read-only/r3/HANDOFF.md).
+Registration `90f77959` preceded edits. All 14 source-only commands / 131 top-level
+methods pass in a clean one-commit depth-one checkout on CPU 4; original d6
+rejection and two sparse setup mistakes are retained separately. There are no
+uncommitted runtime edits or failing candidate tests. The builder gives no source
+approval; fresh `/root/mac_ax_untitled_fresh_source_critic` is preparing review.
+No native/CI execution or integration is authorized by this checkpoint. Next:
+independently review exact source and retained failures; any later diagnostic
+needs root's separate release. Actual Deploy exposure, ordinary gameplay and
+all broader Mac gates remain unverified. The canonical mission continues.
+
 Updated 2026-10-23, 07:25 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
