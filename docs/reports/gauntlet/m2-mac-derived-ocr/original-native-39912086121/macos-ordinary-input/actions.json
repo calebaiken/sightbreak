@@ -1,0 +1,990 @@
+[
+  {
+    "event": "helper_command",
+    "seconds": 1.1738305830000115,
+    "name": "compile-capture-helper",
+    "command": [
+      "xcrun",
+      "swiftc",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-target",
+      "arm64-apple-macos14.0",
+      "/Users/runner/work/sightbreak/sightbreak/scripts/macos_window_capture.swift",
+      "-framework",
+      "AppKit",
+      "-framework",
+      "CoreGraphics",
+      "-framework",
+      "ScreenCaptureKit",
+      "-framework",
+      "Vision",
+      "-framework",
+      "ImageIO",
+      "-framework",
+      "UniformTypeIdentifiers",
+      "-o",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/macos-window-capture"
+    ],
+    "budget_seconds": 60
+  },
+  {
+    "event": "stage_begin",
+    "seconds": 2.7333210829999928,
+    "label": "Exact owned visible native window",
+    "budget_seconds": 30
+  },
+  {
+    "event": "stage_complete",
+    "seconds": 9.427091458000007,
+    "label": "Exact owned visible native window"
+  },
+  {
+    "event": "startup_window_observation",
+    "seconds": 9.503588999999977,
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1024.0,
+          684.0
+        ],
+        "onscreen": true
+      }
+    ]
+  },
+  {
+    "event": "startup_window_candidate",
+    "seconds": 9.511700874999974,
+    "window": {
+      "window_id": 55,
+      "owner_pid": 3247,
+      "bounds_points_including_chrome": [
+        0.0,
+        25.0,
+        1024.0,
+        684.0
+      ],
+      "onscreen": true
+    },
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "owned_window_guard",
+    "seconds": 9.551154999999994,
+    "target_pid": 3247,
+    "expected_window": 55,
+    "expected_bounds_points": [
+      0.0,
+      25.0,
+      1024.0,
+      684.0
+    ],
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1024.0,
+          684.0
+        ],
+        "onscreen": true
+      }
+    ],
+    "input_geometry_pinned": false,
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "helper_command",
+    "seconds": 9.5516255,
+    "name": "00-startup-menu-1",
+    "command": [
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/macos-window-capture",
+      "--pid",
+      "3247",
+      "--window",
+      "55",
+      "--png",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-startup-menu-1.png",
+      "--report",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-startup-menu-1.json"
+    ],
+    "budget_seconds": 25
+  },
+  {
+    "event": "startup_candidate_rejected",
+    "seconds": 11.818846457999996,
+    "attempt": 1,
+    "failure": "Original OS screenshot did not confirm menu screen"
+  },
+  {
+    "event": "startup_window_observation",
+    "seconds": 11.953996040999982,
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ]
+  },
+  {
+    "event": "startup_window_candidate",
+    "seconds": 11.955240041000025,
+    "window": {
+      "window_id": 55,
+      "owner_pid": 3247,
+      "bounds_points_including_chrome": [
+        0.0,
+        25.0,
+        1004.0,
+        664.0
+      ],
+      "onscreen": true
+    },
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "owned_window_guard",
+    "seconds": 11.987392750000026,
+    "target_pid": 3247,
+    "expected_window": 55,
+    "expected_bounds_points": [
+      0.0,
+      25.0,
+      1004.0,
+      664.0
+    ],
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ],
+    "input_geometry_pinned": false,
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "helper_command",
+    "seconds": 11.98804979099998,
+    "name": "00-startup-menu-2",
+    "command": [
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/macos-window-capture",
+      "--pid",
+      "3247",
+      "--window",
+      "55",
+      "--png",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-startup-menu-2.png",
+      "--report",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-startup-menu-2.json"
+    ],
+    "budget_seconds": 25
+  },
+  {
+    "event": "startup_candidate_rejected",
+    "seconds": 14.051220333000003,
+    "attempt": 2,
+    "failure": "Original OS screenshot did not confirm menu screen"
+  },
+  {
+    "event": "startup_window_observation",
+    "seconds": 14.142705250000006,
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ]
+  },
+  {
+    "event": "startup_window_candidate",
+    "seconds": 14.14376091600002,
+    "window": {
+      "window_id": 55,
+      "owner_pid": 3247,
+      "bounds_points_including_chrome": [
+        0.0,
+        25.0,
+        1004.0,
+        664.0
+      ],
+      "onscreen": true
+    },
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "owned_window_guard",
+    "seconds": 14.187441540999998,
+    "target_pid": 3247,
+    "expected_window": 55,
+    "expected_bounds_points": [
+      0.0,
+      25.0,
+      1004.0,
+      664.0
+    ],
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ],
+    "input_geometry_pinned": false,
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "helper_command",
+    "seconds": 14.187853915999995,
+    "name": "00-startup-menu-3",
+    "command": [
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/macos-window-capture",
+      "--pid",
+      "3247",
+      "--window",
+      "55",
+      "--png",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-startup-menu-3.png",
+      "--report",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-startup-menu-3.json"
+    ],
+    "budget_seconds": 25
+  },
+  {
+    "event": "startup_candidate_rejected",
+    "seconds": 15.696052541000029,
+    "attempt": 3,
+    "failure": "Original OS screenshot did not confirm menu screen"
+  },
+  {
+    "event": "startup_window_observation",
+    "seconds": 15.814843250000024,
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ]
+  },
+  {
+    "event": "startup_window_candidate",
+    "seconds": 15.815947290999986,
+    "window": {
+      "window_id": 55,
+      "owner_pid": 3247,
+      "bounds_points_including_chrome": [
+        0.0,
+        25.0,
+        1004.0,
+        664.0
+      ],
+      "onscreen": true
+    },
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "owned_window_guard",
+    "seconds": 15.846584833000009,
+    "target_pid": 3247,
+    "expected_window": 55,
+    "expected_bounds_points": [
+      0.0,
+      25.0,
+      1004.0,
+      664.0
+    ],
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ],
+    "input_geometry_pinned": false,
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "helper_command",
+    "seconds": 15.847047916000008,
+    "name": "00-startup-menu-4",
+    "command": [
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/macos-window-capture",
+      "--pid",
+      "3247",
+      "--window",
+      "55",
+      "--png",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-startup-menu-4.png",
+      "--report",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-startup-menu-4.json"
+    ],
+    "budget_seconds": 25
+  },
+  {
+    "event": "startup_candidate_rejected",
+    "seconds": 17.56590995800002,
+    "attempt": 4,
+    "failure": "Original OS screenshot did not confirm menu screen"
+  },
+  {
+    "event": "startup_window_observation",
+    "seconds": 17.699721582999985,
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ]
+  },
+  {
+    "event": "startup_window_candidate",
+    "seconds": 17.700815583000008,
+    "window": {
+      "window_id": 55,
+      "owner_pid": 3247,
+      "bounds_points_including_chrome": [
+        0.0,
+        25.0,
+        1004.0,
+        664.0
+      ],
+      "onscreen": true
+    },
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "owned_window_guard",
+    "seconds": 17.735785791000012,
+    "target_pid": 3247,
+    "expected_window": 55,
+    "expected_bounds_points": [
+      0.0,
+      25.0,
+      1004.0,
+      664.0
+    ],
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ],
+    "input_geometry_pinned": false,
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "helper_command",
+    "seconds": 17.73629625000001,
+    "name": "00-startup-menu-5",
+    "command": [
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/macos-window-capture",
+      "--pid",
+      "3247",
+      "--window",
+      "55",
+      "--png",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-startup-menu-5.png",
+      "--report",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-startup-menu-5.json"
+    ],
+    "budget_seconds": 25
+  },
+  {
+    "event": "startup_candidate_rejected",
+    "seconds": 19.806845582999983,
+    "attempt": 5,
+    "failure": "Original OS screenshot did not confirm menu screen"
+  },
+  {
+    "event": "startup_window_observation",
+    "seconds": 19.926363332999983,
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ]
+  },
+  {
+    "event": "startup_window_candidate",
+    "seconds": 19.928107624999996,
+    "window": {
+      "window_id": 55,
+      "owner_pid": 3247,
+      "bounds_points_including_chrome": [
+        0.0,
+        25.0,
+        1004.0,
+        664.0
+      ],
+      "onscreen": true
+    },
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "owned_window_guard",
+    "seconds": 19.97320720800002,
+    "target_pid": 3247,
+    "expected_window": 55,
+    "expected_bounds_points": [
+      0.0,
+      25.0,
+      1004.0,
+      664.0
+    ],
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ],
+    "input_geometry_pinned": false,
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "helper_command",
+    "seconds": 19.973802250000006,
+    "name": "00-startup-menu-6",
+    "command": [
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/macos-window-capture",
+      "--pid",
+      "3247",
+      "--window",
+      "55",
+      "--png",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-startup-menu-6.png",
+      "--report",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-startup-menu-6.json"
+    ],
+    "budget_seconds": 25
+  },
+  {
+    "event": "startup_candidate_rejected",
+    "seconds": 21.840165958,
+    "attempt": 6,
+    "failure": "Original OS screenshot did not confirm menu screen"
+  },
+  {
+    "event": "startup_window_observation",
+    "seconds": 21.929192166000007,
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ]
+  },
+  {
+    "event": "startup_window_candidate",
+    "seconds": 21.93259016600001,
+    "window": {
+      "window_id": 55,
+      "owner_pid": 3247,
+      "bounds_points_including_chrome": [
+        0.0,
+        25.0,
+        1004.0,
+        664.0
+      ],
+      "onscreen": true
+    },
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "owned_window_guard",
+    "seconds": 22.002088249999986,
+    "target_pid": 3247,
+    "expected_window": 55,
+    "expected_bounds_points": [
+      0.0,
+      25.0,
+      1004.0,
+      664.0
+    ],
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ],
+    "input_geometry_pinned": false,
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "helper_command",
+    "seconds": 22.00348624999998,
+    "name": "00-startup-menu-7",
+    "command": [
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/macos-window-capture",
+      "--pid",
+      "3247",
+      "--window",
+      "55",
+      "--png",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-startup-menu-7.png",
+      "--report",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-startup-menu-7.json"
+    ],
+    "budget_seconds": 25
+  },
+  {
+    "event": "owned_window_guard",
+    "seconds": 24.677721415999997,
+    "target_pid": 3247,
+    "expected_window": 55,
+    "expected_bounds_points": [
+      0.0,
+      25.0,
+      1004.0,
+      664.0
+    ],
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ],
+    "input_geometry_pinned": false,
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "native_capture",
+    "seconds": 24.679880165999975,
+    "capture": "00-startup-menu-7",
+    "screen": "menu",
+    "native_state": {
+      "foreground_pid": 3247,
+      "controller_pid": 3233,
+      "target_pid": 3247,
+      "foreground_is_controller": false,
+      "target_window": 55,
+      "pinned_bounds_points": [
+        0.0,
+        25.0,
+        1004.0,
+        664.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": true,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    }
+  },
+  {
+    "event": "focus_before_request",
+    "seconds": 24.682149125000024,
+    "focus_budget_seconds": 4.99997024999999,
+    "native_state": {
+      "foreground_pid": 3247,
+      "controller_pid": 3233,
+      "target_pid": 3247,
+      "foreground_is_controller": false,
+      "target_window": 55,
+      "pinned_bounds_points": [
+        0.0,
+        25.0,
+        1004.0,
+        664.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": true,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    }
+  },
+  {
+    "event": "focus_request_returned",
+    "seconds": 24.70836787500002,
+    "api": "NSRunningApplication.activateWithOptions:",
+    "activation_options": 3,
+    "request_accepted": true,
+    "native_state": {
+      "foreground_pid": 3247,
+      "controller_pid": 3233,
+      "target_pid": 3247,
+      "foreground_is_controller": false,
+      "target_window": 55,
+      "pinned_bounds_points": [
+        0.0,
+        25.0,
+        1004.0,
+        664.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": true,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    }
+  },
+  {
+    "event": "focus_sample",
+    "seconds": 24.839394707999986,
+    "focus_seconds": 0.1575226250000128,
+    "before_run_loop": {
+      "foreground_pid": 3247,
+      "controller_pid": 3233,
+      "target_pid": 3247,
+      "foreground_is_controller": false,
+      "target_window": 55,
+      "pinned_bounds_points": [
+        0.0,
+        25.0,
+        1004.0,
+        664.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": true,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    },
+    "run_loop": {
+      "api": "CFRunLoopRunInMode",
+      "mode": "kCFRunLoopDefaultMode",
+      "requested_seconds": 0.05,
+      "elapsed_seconds": 0.12360083300001179,
+      "return_code": 3,
+      "controller_main_run_loop": true
+    },
+    "after_run_loop": {
+      "foreground_pid": 3247,
+      "controller_pid": 3233,
+      "target_pid": 3247,
+      "foreground_is_controller": false,
+      "target_window": 55,
+      "pinned_bounds_points": [
+        0.0,
+        25.0,
+        1004.0,
+        664.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": true,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    }
+  },
+  {
+    "event": "owned_window_guard",
+    "seconds": 24.899335915999984,
+    "target_pid": 3247,
+    "expected_window": 55,
+    "expected_bounds_points": [
+      0.0,
+      25.0,
+      1004.0,
+      664.0
+    ],
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ],
+    "input_geometry_pinned": false,
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "focus_observed",
+    "seconds": 24.908980999999983,
+    "request_accepted": true,
+    "native_state": {
+      "foreground_pid": 3247,
+      "target_pid": 3247,
+      "lmb_down": false,
+      "escape_down": false,
+      "pointer_points": [
+        307.9310302734375,
+        478.13818359375
+      ],
+      "held_by_driver": [],
+      "state_source": "NSWorkspace/CGEventSource combined-session state/CGEventGetLocation",
+      "reload_down": false
+    }
+  },
+  {
+    "event": "owned_window_guard",
+    "seconds": 24.962638458000015,
+    "target_pid": 3247,
+    "expected_window": 55,
+    "expected_bounds_points": [
+      0.0,
+      25.0,
+      1004.0,
+      664.0
+    ],
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ],
+    "input_geometry_pinned": false,
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "helper_command",
+    "seconds": 24.968696040999987,
+    "name": "01-focused-menu",
+    "command": [
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/macos-window-capture",
+      "--pid",
+      "3247",
+      "--window",
+      "55",
+      "--png",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/01-focused-menu.png",
+      "--report",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/01-focused-menu.json"
+    ],
+    "budget_seconds": 25
+  },
+  {
+    "event": "owned_window_guard",
+    "seconds": 27.138668333,
+    "target_pid": 3247,
+    "expected_window": 55,
+    "expected_bounds_points": [
+      0.0,
+      25.0,
+      1004.0,
+      664.0
+    ],
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ],
+    "input_geometry_pinned": false,
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "native_capture",
+    "seconds": 27.14693295799998,
+    "capture": "01-focused-menu",
+    "screen": "menu",
+    "native_state": {
+      "foreground_pid": 3247,
+      "target_pid": 3247,
+      "lmb_down": false,
+      "escape_down": false,
+      "pointer_points": [
+        307.9310302734375,
+        478.13818359375
+      ],
+      "held_by_driver": [],
+      "state_source": "NSWorkspace/CGEventSource combined-session state/CGEventGetLocation",
+      "reload_down": false
+    }
+  },
+  {
+    "event": "owned_window_guard",
+    "seconds": 27.197557458000006,
+    "target_pid": 3247,
+    "expected_window": 55,
+    "expected_bounds_points": [
+      0.0,
+      25.0,
+      1004.0,
+      664.0
+    ],
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ],
+    "input_geometry_pinned": false,
+    "cg_event_post_attempts": 0
+  },
+  {
+    "event": "input_geometry_pinned",
+    "seconds": 27.208147124999982,
+    "target_pid": 3247,
+    "window_id": 55,
+    "bounds_points_including_chrome": [
+      0.0,
+      25.0,
+      1004.0,
+      664.0
+    ],
+    "native_state": {
+      "foreground_pid": 3247,
+      "target_pid": 3247,
+      "lmb_down": false,
+      "escape_down": false,
+      "pointer_points": [
+        307.9310302734375,
+        478.13818359375
+      ],
+      "held_by_driver": [],
+      "state_source": "NSWorkspace/CGEventSource combined-session state/CGEventGetLocation",
+      "reload_down": false
+    }
+  },
+  {
+    "event": "owned_window_guard",
+    "seconds": 27.247744124999997,
+    "target_pid": 3247,
+    "expected_window": 55,
+    "expected_bounds_points": [
+      0.0,
+      25.0,
+      1004.0,
+      664.0
+    ],
+    "observed_owned_layer_zero_windows": [
+      {
+        "window_id": 55,
+        "owner_pid": 3247,
+        "bounds_points_including_chrome": [
+          0.0,
+          25.0,
+          1004.0,
+          664.0
+        ],
+        "onscreen": true
+      }
+    ],
+    "input_geometry_pinned": true,
+    "cg_event_post_attempts": 0
+  }
+]
