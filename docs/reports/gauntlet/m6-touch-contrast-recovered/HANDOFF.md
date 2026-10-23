@@ -1,5 +1,14 @@
 # Touch contrast source handoff
 
+R3 native acquisition has completed under the explicit root release. The declared
+pixel gate FAILED. [Actual outputs, limits and cleanup](native-r3/RESULTS.md) and
+[verified archive/part hashes](native-r3/ARCHIVE.json) are retained. No new native
+run, live HUD export or product/method edit is released. The pre-acquisition
+record below remains as history; its source freeze and commands were executed
+by the recorded immutable controller.
+
+## Pre-acquisition record
+
 Native execution is BLOCKED on independent R3 source/method review and the root's
 single shared CPU/render-lane release. No engine, import, export, render, OCR or
 recording ran. Product improvement and contrast remain unverified.
