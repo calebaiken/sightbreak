@@ -43,7 +43,8 @@ def audit(root):
         'same_living_actor_through_resume_frame_fence_and_after_capture_before_analysis': all(same_living(s) for s in states),
         'settings_stay_frozen_until_explicit_resume': primary['resume_after_analysis'] is False and 'resumed' not in primary and all(primary['after_analysis'][k] == base[k] for k in ('elapsed', 'simulation_tick'))
             and base['elapsed'] == settings['state']['elapsed'] and base['simulation_tick'] == settings['state']['simulation_tick']
-            and base['local_actor']['health'] == settings['state']['local_actor']['health'] == 100,
+            and all(s['ui']['paused'] is True for s in (base, primary['after_analysis'], settings['state']))
+            and primary['after_analysis']['local_actor']['health'] == base['local_actor']['health'] == settings['state']['local_actor']['health'] == 100,
         'physical_Escape_ACK_release_and_two_frame_fence': down['seconds'] < resumed['seconds'] < release['seconds'] < ready['seconds'] < begin['seconds'] < end['seconds']
             and resumed['state']['ui']['paused'] is False and ready['state']['ui']['paused'] is False
             and ready['state']['drawn_frames'] >= resumed['state']['drawn_frames'] + 2,
