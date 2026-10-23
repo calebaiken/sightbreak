@@ -8,6 +8,7 @@ import unittest
 from verify_integration_export import WinUI
 from native_approach import approach_floor
 from native_settings_route import relocate_settings_actor
+from test_native_approach import SampledWalker
 from test_native_settings_route import SettingsWalker
 
 
@@ -103,6 +104,120 @@ class RealKeyPulse(MockPulse):
                            'visible': self.visible, 'flags': event.data.key.flags})
         self.key(name, down)
         return 1
+
+
+class TracedSettingsWalker(SettingsWalker):
+    """Declared diagnostic costs, not a reconstruction of native scheduling.
+
+    Keep the independent 60 Hz plant and 13-tick publications. Traced key
+    callbacks advance motion before/after each edge, as synchronous controller
+    diagnostics can. The pulse has no diagnostic writes between its edges.
+    """
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.fallback_downs, self.pulses = [], []
+
+    def key(self, name, down):
+        self.pause(.06)
+        if down:
+            self.fallback_downs.append((name, self.wall))
+        super().key(name, down)
+        self.pause(.06)
+
+    def record(self, event, **data):
+        self.pause(.06)
+        super().record(event, **data)
+
+    def observe(self):
+        self.pause(.03)
+        return super().observe()
+
+    def pulse(self, names, seconds, deadline):
+        row = {'start': self.wall, 'seconds': seconds, 'deadline': deadline,
+               'keys': names, 'position': self.position[:]}
+        self.pulses.append(row)
+        for name in names:
+            SampledWalker.key(self, name, True)
+        try:
+            self.pause(min(seconds, max(0, deadline - self.wall)))
+        finally:
+            for name in names:
+                SampledWalker.key(self, name, False)
+            row['released'] = self.wall
+
+    def route_with_pulse(self, deadline=35):
+        return relocate_settings_actor(self.observe(), actor_id=1, round_number=2,
+                                       observe=self.observe, key=self.key, pause=self.pause,
+                                       record=self.record, deadline=deadline, receipt=self.receipt,
+                                       clock=self.clock, pulse=self.pulse)
+
+
+class FirstDisplacementPulseControls(unittest.TestCase):
+    def test_original_continuous_walk_loses_unchanged_corridor_with_slow_diagnostics(self):
+        world = TracedSettingsWalker(rate=.7, delivery=.1, publication_lag=.1)
+        with self.assertRaisesRegex(RuntimeError, 'left_declared_clear_corridor'):
+            world.route()
+        self.assertTrue(world.fallback_downs)
+        self.assertFalse(world.requested)
+        self.assertNotIn('endpoint', world.receipt)
+        self.assertLess(world.receipt['precondition_loss']['rejected_state']['local_actor']['position'][0], -8.5)
+
+    def test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint(self):
+        for rate in (.4, .7, 1):
+            for delivery in (0, .1, .2):
+                with self.subTest(rate=rate, delivery=delivery):
+                    world = TracedSettingsWalker(rate=rate, delivery=delivery, publication_lag=.1)
+                    endpoint = world.route_with_pulse()
+                    self.assertTrue(world.pulses)
+                    self.assertEqual(world.pulses[0]['position'], [-4.4, -21])
+                    self.assertFalse(world.fallback_downs)
+                    self.assertFalse(world.requested)
+                    self.assertEqual(world.receipt['status'], 'FIXED_ROUTE_REACHED')
+                    self.assertLess(abs(endpoint[0] + 7.8), .45)
+                    self.assertLess(world.wall, 35)
+                    for row in world.pulses:
+                        self.assertEqual(row['deadline'], 35)
+                        self.assertLessEqual(row['seconds'], 2.5)
+                        self.assertLessEqual(row['released'] - row['start'], row['seconds'] + 1e-8)
+                    states = world.receipt['observations']
+                    for state in states:
+                        self.assertGreaterEqual(state['local_actor']['position'][0], -8.5)
+                    stopped = states[-2:]
+                    self.assertLess(stopped[0]['simulation_tick'], stopped[1]['simulation_tick'])
+                    for state in stopped:
+                        self.assertEqual(state['local_input']['move'], [0, 0])
+                        self.assertLessEqual(abs(state['local_actor']['velocity'][0]), .05)
+
+    def test_pulse_route_block_or_read_failure_keeps_original_cap_and_releases(self):
+        for failure in ('blocked', 'unreadable'):
+            with self.subTest(failure=failure):
+                world = TracedSettingsWalker(blocked=failure == 'blocked')
+                if failure == 'unreadable':
+                    world.failure = 2
+                with self.assertRaises((TimeoutError, OSError)):
+                    world.route_with_pulse(deadline=5)
+                self.assertFalse(world.requested)
+                self.assertFalse(world.fallback_downs)
+                self.assertNotIn('endpoint', world.receipt)
+                self.assertEqual(world.receipt['original_second_live_absolute_deadline'], 5)
+                self.assertTrue(all(row['deadline'] == 5 for row in world.pulses))
+
+    def test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route(self):
+        for section, field, value in (('local_actor', 'deaths', 2), ('', 'round_number', 3),
+                                      ('ui', 'focused', False), ('local_actor', 'alive', False)):
+            with self.subTest(field=field):
+                world = TracedSettingsWalker()
+                def changed(state):
+                    if world.pulses:
+                        (state[section] if section else state)[field] = value
+                    return state
+                world.mutation = changed
+                with self.assertRaisesRegex(RuntimeError, 'lost precondition'):
+                    world.route_with_pulse()
+                self.assertEqual(len(world.pulses), 1)
+                self.assertFalse(world.requested)
+                self.assertFalse(world.fallback_downs)
+                self.assertNotIn('endpoint', world.receipt)
 
 
 class NativeRoutePulseControls(unittest.TestCase):

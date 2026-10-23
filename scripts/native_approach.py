@@ -9,6 +9,8 @@ def approach_floor(x, z, *, observe, key, pause, record, deadline, clock=time.mo
 
     The final pulses use the inspected 28 m/s² ground acceleration to limit
     travel, and the observed simulation/wall ratio to time native key releases.
+    An explicit native pulse callback owns every displacement from rest, so
+    traced coarse steering cannot hold keys across delayed readbacks.
     Success is determined only from actual later neutral stopped observations.
     """
     directions = ('w', 'a', 's', 'd')
@@ -20,7 +22,7 @@ def approach_floor(x, z, *, observe, key, pause, record, deadline, clock=time.mo
     released_tick = -1
     settled = []
     driving = False
-    fine = False
+    fine = pulse is not None
 
     def steer(dx, dz, yaw):
         mx, my = math.cos(yaw) * dx - math.sin(yaw) * dz, -math.sin(yaw) * dx - math.cos(yaw) * dz
