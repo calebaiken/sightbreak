@@ -1,14 +1,14 @@
 # Independent diagnostic source admission
 
-Verdict: **CONDITIONAL ACCEPT for one root-owned read-only ARM AX diagnostic** at exact source `d6cb78aa4b0bc5a8265d9b82a0d379b4ee386e53`. Preregistration `6cfc5d8d` was committed and pushed before any new dispatch or output was inspected. No actual native output has been inspected for this decision.
+Verdict: **ACCEPT for one root-owned read-only ARM AX diagnostic on the independently bound frozen ref below** at exact source `d6cb78aa4b0bc5a8265d9b82a0d379b4ee386e53`. Preregistration `6cfc5d8d` was committed and pushed before any new dispatch or output was inspected. No actual native output has been inspected for this decision.
 
-The root may create the fresh frozen qualifier ref `qualifier/m2-mac-ax-r2-read-only-d6cb78aa` at that source and issue exactly:
+Root created `qualifier/m2-mac-ax-r2-read-only-d6cb78aa` after checking absence and declared it immutable. Independent connected GitHub metadata resolves it to exact `d6cb78aa4b0bc5a8265d9b82a0d379b4ee386e53`; see [remote-qualifier-binding.json](remote-qualifier-binding.json). Root may issue exactly:
 
 ```sh
 gh workflow run desktop-alpha.yml -R calebaiken/sightbreak --ref qualifier/m2-mac-ax-r2-read-only-d6cb78aa -f lane=arm-macos-ax-read-only
 ```
 
-Root must verify and record the remote qualifier object and the run's full head SHA. This admission does not cover a different combined commit until its full SHA and exact source binding have been independently checked. A rejected dispatch request does not authorize a fallback normal lane or full-journey retry. This critic will not dispatch.
+The remote object is now verified and recorded. Root must still verify and record the run's full head SHA after dispatch. This admission does not cover a different combined commit until its full SHA and exact source binding have been independently checked. A rejected dispatch request does not authorize a fallback normal lane or full-journey retry. This critic will not dispatch.
 
 ## Inspected route and controls
 
