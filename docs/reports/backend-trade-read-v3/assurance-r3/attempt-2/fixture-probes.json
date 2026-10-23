@@ -1,0 +1,193 @@
+[
+  {
+    "name": "fixture-positive",
+    "kind": "current_import_control",
+    "command": [
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\venv312\\Scripts\\python.exe",
+      "-B",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3\\scripts\\check_trade_read_assurance.py",
+      "--probe-fixture",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3",
+      "--fixture-root",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3",
+      "--expected-fixture-sha",
+      "5eb5d4a45484b26514edddf214e8ae81e7ab9186f262857fe64845abe215e595"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "actual": {
+      "source_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3",
+      "fixture_root": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3",
+      "actual_module_file": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3\\backend\\tests\\test_trade_reads.py",
+      "actual_sha256": "5eb5d4a45484b26514edddf214e8ae81e7ab9186f262857fe64845abe215e595",
+      "expected_sha256": "5eb5d4a45484b26514edddf214e8ae81e7ab9186f262857fe64845abe215e595",
+      "database_connect_calls": 0,
+      "checked_identity": {
+        "module": "test_trade_reads",
+        "module_file": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3\\backend\\tests\\test_trade_reads.py",
+        "resolved_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3\\backend\\tests\\test_trade_reads.py",
+        "sha256": "5eb5d4a45484b26514edddf214e8ae81e7ab9186f262857fe64845abe215e595",
+        "expected_sha256": "5eb5d4a45484b26514edddf214e8ae81e7ab9186f262857fe64845abe215e595"
+      },
+      "mismatch_rejected": false
+    }
+  },
+  {
+    "name": "fixture-mismatch",
+    "kind": "source_fixture_shadowing_control",
+    "command": [
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\venv312\\Scripts\\python.exe",
+      "-B",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3\\scripts\\check_trade_read_assurance.py",
+      "--probe-fixture",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\fixture-mismatch",
+      "--fixture-root",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3",
+      "--expected-fixture-sha",
+      "5eb5d4a45484b26514edddf214e8ae81e7ab9186f262857fe64845abe215e595"
+    ],
+    "exit": 1,
+    "expected_exit": 1,
+    "actual": {
+      "source_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\fixture-mismatch",
+      "fixture_root": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3",
+      "actual_module_file": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\fixture-mismatch\\backend\\tests\\test_trade_reads.py",
+      "actual_sha256": "a2d93bdeed15293bf2541fdddeed3ccacf6e038994156ac6842112ba5a586206",
+      "expected_sha256": "5eb5d4a45484b26514edddf214e8ae81e7ab9186f262857fe64845abe215e595",
+      "database_connect_calls": 0,
+      "mismatch_rejected": true
+    }
+  },
+  {
+    "name": "round1-baseline-posthoc",
+    "kind": "posthoc_import_replay_not_original_capture",
+    "command": [
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\venv312\\Scripts\\python.exe",
+      "-B",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3\\scripts\\check_trade_read_assurance.py",
+      "--probe-fixture",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-701ce2c",
+      "--fixture-root",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-4a8e9ea",
+      "--expected-fixture-sha",
+      "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "actual": {
+      "source_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-701ce2c",
+      "fixture_root": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-4a8e9ea",
+      "actual_module_file": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-4a8e9ea\\backend\\tests\\test_trade_reads.py",
+      "actual_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+      "expected_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+      "database_connect_calls": 0,
+      "checked_identity": {
+        "module": "test_trade_reads",
+        "module_file": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-4a8e9ea\\backend\\tests\\test_trade_reads.py",
+        "resolved_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-4a8e9ea\\backend\\tests\\test_trade_reads.py",
+        "sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+        "expected_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1"
+      },
+      "mismatch_rejected": false
+    }
+  },
+  {
+    "name": "round1-candidate-posthoc",
+    "kind": "posthoc_import_replay_not_original_capture",
+    "command": [
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\venv312\\Scripts\\python.exe",
+      "-B",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3\\scripts\\check_trade_read_assurance.py",
+      "--probe-fixture",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-4a8e9ea",
+      "--fixture-root",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-4a8e9ea",
+      "--expected-fixture-sha",
+      "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "actual": {
+      "source_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-4a8e9ea",
+      "fixture_root": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-4a8e9ea",
+      "actual_module_file": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-4a8e9ea\\backend\\tests\\test_trade_reads.py",
+      "actual_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+      "expected_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+      "database_connect_calls": 0,
+      "checked_identity": {
+        "module": "test_trade_reads",
+        "module_file": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-4a8e9ea\\backend\\tests\\test_trade_reads.py",
+        "resolved_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-4a8e9ea\\backend\\tests\\test_trade_reads.py",
+        "sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+        "expected_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1"
+      },
+      "mismatch_rejected": false
+    }
+  },
+  {
+    "name": "round2-baseline-posthoc",
+    "kind": "posthoc_import_replay_not_original_capture",
+    "command": [
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\venv312\\Scripts\\python.exe",
+      "-B",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3\\scripts\\check_trade_read_assurance.py",
+      "--probe-fixture",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-701ce2c",
+      "--fixture-root",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-8070436",
+      "--expected-fixture-sha",
+      "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "actual": {
+      "source_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-701ce2c",
+      "fixture_root": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-8070436",
+      "actual_module_file": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-8070436\\backend\\tests\\test_trade_reads.py",
+      "actual_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+      "expected_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+      "database_connect_calls": 0,
+      "checked_identity": {
+        "module": "test_trade_reads",
+        "module_file": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-8070436\\backend\\tests\\test_trade_reads.py",
+        "resolved_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-8070436\\backend\\tests\\test_trade_reads.py",
+        "sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+        "expected_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1"
+      },
+      "mismatch_rejected": false
+    }
+  },
+  {
+    "name": "round2-candidate-posthoc",
+    "kind": "posthoc_import_replay_not_original_capture",
+    "command": [
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\venv312\\Scripts\\python.exe",
+      "-B",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3\\scripts\\check_trade_read_assurance.py",
+      "--probe-fixture",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-8070436",
+      "--fixture-root",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-8070436",
+      "--expected-fixture-sha",
+      "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "actual": {
+      "source_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-8070436",
+      "fixture_root": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-8070436",
+      "actual_module_file": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-8070436\\backend\\tests\\test_trade_reads.py",
+      "actual_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+      "expected_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+      "database_connect_calls": 0,
+      "checked_identity": {
+        "module": "test_trade_reads",
+        "module_file": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-8070436\\backend\\tests\\test_trade_reads.py",
+        "resolved_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\trade-assurance-r3-4e16a7a9422e-scratch-f27e6958\\pinned-8070436\\backend\\tests\\test_trade_reads.py",
+        "sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+        "expected_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1"
+      },
+      "mismatch_rejected": false
+    }
+  }
+]

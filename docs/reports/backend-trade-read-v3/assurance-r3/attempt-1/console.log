@@ -1,0 +1,11 @@
+{"variant": "candidate", "exit": 0, "targeted_cases": 2}
+{"variant": "batch-5000", "exit": 1, "targeted_cases": 2}
+{"probe": "fixture-positive", "exit": 0, "kind": "current_import_control"}
+{"probe": "fixture-mismatch", "exit": 1, "kind": "source_fixture_shadowing_control"}
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-read-v3\scripts\check_trade_read_assurance.py", line 233, in <module>
+    run_controls(args.out.resolve())
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-read-v3\scripts\check_trade_read_assurance.py", line 201, in run_controls
+    assert result.returncode == expected_exit
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

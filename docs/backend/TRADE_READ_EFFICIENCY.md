@@ -71,6 +71,11 @@ controls are reproducible with `scripts/check_trade_read_assurance.py --out
 fixture provenance controls and explicitly post-hoc frozen import replays.
 The runtime in the working checkout is not mutated.
 
+The [source-assurance follow-up](../reports/BACKEND_TRADE_READ_ASSURANCE_R3.md)
+records the executed 500-to-5000 failures, fixture mismatch rejection, explicitly
+post-hoc original import bindings, retained CRLF reconstruction failure and exact
+runtime/test/harness/control/evidence identities.
+
 The original `backend/tests/test_economy.py` has 44 functions / **61 parametrized
 cases**. Run it on the frozen baseline in the same interpreter/database version,
 then run all **74** backend cases on the candidate. The old implementation is
