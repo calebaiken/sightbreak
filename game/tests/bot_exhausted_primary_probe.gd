@@ -66,7 +66,7 @@ func emit_row(kind: String, value: Dictionary) -> void:
 	print("BOT_EXHAUSTED_" + kind + " " + JSON.stringify(_json_value(value)))
 
 func _run() -> void:
-	emit_row("HEADER", {"engine": Engine.get_version_info(), "dt": DT, "seed": SEED,
+	emit_row("HEADER", {"engine": Engine.get_version_info(), "dt": DT, "seed": SEED, "deploy_seconds": SBActor.DEPLOY_SECONDS,
 		"weapon_definitions": SBWeapons.DATA, "profiles": SBBotAI.PROFILES,
 		"matrix_cases_expected": 567, "sequences_expected": 72, "sequence_steps_expected": 576,
 		"positive_controls_expected": 5, "control_steps_expected": 96,

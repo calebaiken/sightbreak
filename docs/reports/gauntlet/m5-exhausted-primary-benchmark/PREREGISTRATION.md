@@ -1,5 +1,11 @@
 # Exhausted active-primary benchmark, source stage
 
+This is the original R1 registration at rejected freeze `114150a`. Independent
+review through `fb9b113` requires changes before any baseline run. Its original
+source/hash record remains in `SOURCE_FREEZE.json`. Current R2 changes and
+mandatory positive controls are registered in [REVISION_2.md](REVISION_2.md) and
+`SOURCE_FREEZE_R2.json`; neither revision has engine qualification yet.
+
 Base source is `b2e0293a546961230afbd73e5cd2a1a307d69e94`. The accepted
 known-dry primary-return correction is present. Its bot, actor and weapon
 definition bytes match tested `8e8d13e`. This is a new component; the previous
