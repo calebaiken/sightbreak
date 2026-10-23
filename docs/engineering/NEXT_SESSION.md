@@ -32,7 +32,9 @@ rejection 2198721a. Actual prereg206e2a11 precedes dispatch. This is not a test 
   export/Xvfb/measurement. Bounded 231-member archive 19,739,886B is committed.
   Narrow Array/hash/output correction 216d39ad is source-only in
   /workspace/sightbreak-linux-profile-fixture-native-types; new fresh critic
-  /root/linux_type_fresh_source_critic is reviewing it. No native retry released.
+  /root/linux_type_fresh_source_critic accepts it in f8659bba (root 3ca4bf8e):
+  31 + 22 maintained tests, 81 independent predicates, 18 mutation and six reuse
+  controls. Compilation remains unobserved; no native retry released.
 - Windows pulse source 977633e4 is independently REJECTED by bf47f7c9, root 5c779633:
   after first key-down changes foreground/owner, a second key-down still sends.
   Existing 93 methods have 90 passes / 3 existing skips; two independent real-key-path
