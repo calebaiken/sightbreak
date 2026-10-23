@@ -16,13 +16,13 @@ import uuid
 
 from build_manifest import BUILDS, OUTPUTS, clean, source, validate_record
 from macos_native_input import same_bounds
-from macos_ordinary_input import (MacOrdinaryUI, account_home, capture_geometry, default_inventory, hud_values, inventory,
+from macos_ordinary_input import (MacOrdinaryUI, OwnedWindowChanged, account_home, capture_geometry, default_inventory, hud_values, inventory,
     living_context, no_symlinks, require_field_menu, require_initial, require_private_userdir,
     stage_app, verify_staged_app)
 from native_log import failed
 from native_observation import read_observation_json
 from probe_macos_input import MacReadOnly, NativePrerequisiteBlocked, digest, reap, require_absent_profile
-from verify_macos_menu import (CAPTURE_SOURCE, background_then_focus, ordinary_failure_close,
+from verify_macos_menu import (CAPTURE_SOURCE, ordinary_failure_close,
                                require_preflight, require_screen)
 import toolchain
 
@@ -40,6 +40,36 @@ ENVIRONMENT_KEYS = ('HOME', 'PATH', 'DISPLAY', 'DEVELOPER_DIR', 'SDKROOT', 'MACO
                     'SIGHTBREAK_STATE_DIR', 'SIGHTBREAK_BUILDS_DIR')
 
 
+class StartupMenuNotReady(RuntimeError):
+    pass
+
+
+def discover_startup_menu(api, client, select_candidate, capture, remaining, trace, until):
+    """Read-only discovery under one deadline; no candidate authorizes input."""
+    attempt = 0
+    while True:
+        remaining(until)
+        if client.poll() is not None:
+            raise RuntimeError('Exact native client exited before startup menu readiness')
+        rows = api.windows(client.pid)
+        trace('startup_window_observation', observed_owned_layer_zero_windows=rows)
+        owned = [row for row in rows if row.get('owner_pid') == client.pid and row.get('onscreen') is True]
+        if len(owned) == 1:
+            ui = select_candidate(owned[0])
+            if ui.event_post_attempts:
+                raise RuntimeError('Startup discovery cannot select after any CGEvent attempt')
+            attempt += 1
+            try:
+                menu = capture('00-startup-menu-'+str(attempt), 'menu', require_focus=False, until=until)
+                remaining(until)
+                return ui, menu
+            except NativePrerequisiteBlocked:
+                raise
+            except (StartupMenuNotReady, OwnedWindowChanged) as error:
+                trace('startup_candidate_rejected', attempt=attempt, failure=str(error))
+        time.sleep(min(.05, remaining(until)))
+
+
 def run(output, preflight_path):
     output = Path(output).absolute()
     no_symlinks(output)
@@ -55,7 +85,7 @@ def run(output, preflight_path):
     result = {'scope': 'ARM Mac stock Deploy/living sidearm fire+reload/FIELD MENU/leave/ordinary close only; '
                        'no objectives, full match, restart, Intel or physical-device acceptance',
               'passed': False, 'permission_requests_made': 0, 'controller_pid': os.getpid(),
-              'budgets_seconds': BUDGETS, 'actions': actions, 'captures': []}
+              'budgets_seconds': BUDGETS, 'actions': actions, 'captures': [], 'capture_attempts': []}
 
     def remaining(until=None):
         value = min(deadline, until if until is not None else deadline) - time.monotonic()
@@ -89,32 +119,50 @@ def run(output, preflight_path):
 
     def capture(name, screen=None, *, require_focus=True, until=None):
         remaining(until)
-        (ui.require_target if require_focus else ui.require_window)()
         png, receipt = output / (name+'.png'), output / (name+'.json')
-        status = command(name, [str(helper), '--pid', str(client.pid), '--window', str(ui.window),
-                         '--png', str(png), '--report', str(receipt)],
-                         min(BUDGETS['capture'], remaining(until)), allow_failure=True)
-        data = json.loads(receipt.read_text())
-        if data.get('permissions', {}).get('CGPreflightScreenCaptureAccess') is not True:
-            raise NativePrerequisiteBlocked('Native screenshot helper lacks current capture permission')
-        if (status or data.get('passed') is not True or data.get('owner_pid') != client.pid
-                or data.get('window_id') != ui.window
-                or not same_bounds(data.get('bounds_points_including_chrome', []), ui.bounds)
-                or data.get('input_events_posted') != 0 or data.get('permission_requests_made') != 0):
-            raise RuntimeError('OS screenshot does not bind the exact successful owned window')
-        capture_geometry(data)
-        if screen in ('menu', 'settings'):
-            require_screen(data, screen)
-        elif screen == 'field_menu':
-            require_field_menu(data)
-        elif screen is not None:
-            raise ValueError('Unknown native screenshot screen')
-        (ui.require_target if require_focus else ui.require_window)()
-        remaining(until)
-        result['captures'].append({'name': name, 'screen': screen, 'png_sha256': digest(png),
-                                   'receipt_sha256': digest(receipt), 'window_id': ui.window})
-        trace('native_capture', capture=name, screen=screen, native_state=ui.diagnostics() if require_focus else ui.focus_state())
-        return data
+        attempt = {'name': name, 'screen': screen, 'foreground_required': require_focus,
+                   'started_seconds': time.monotonic()-started, 'accepted': False}
+        result['capture_attempts'].append(attempt)
+        try:
+            (ui.require_target if require_focus else ui.require_window)()
+            status = command(name, [str(helper), '--pid', str(client.pid), '--window', str(ui.window),
+                             '--png', str(png), '--report', str(receipt)],
+                             min(BUDGETS['capture'], remaining(until)), allow_failure=True)
+            data = json.loads(receipt.read_text())
+            if data.get('permissions', {}).get('CGPreflightScreenCaptureAccess') is not True:
+                raise NativePrerequisiteBlocked('Native screenshot helper lacks current capture permission')
+            if (status or data.get('passed') is not True or data.get('owner_pid') != client.pid
+                    or data.get('window_id') != ui.window
+                    or not same_bounds(data.get('bounds_points_including_chrome', []), ui.bounds)
+                    or data.get('input_events_posted') != 0 or data.get('permission_requests_made') != 0):
+                raise RuntimeError('OS screenshot does not bind the exact successful owned window')
+            capture_geometry(data)
+            if screen in ('menu', 'settings'):
+                try:
+                    require_screen(data, screen)
+                except RuntimeError as error:
+                    if screen == 'menu' and not require_focus and not getattr(ui, 'input_geometry_pinned', False):
+                        raise StartupMenuNotReady(str(error)) from error
+                    raise
+            elif screen == 'field_menu':
+                require_field_menu(data)
+            elif screen is not None:
+                raise ValueError('Unknown native screenshot screen')
+            (ui.require_target if require_focus else ui.require_window)()
+            remaining(until)
+            result['captures'].append({'name': name, 'screen': screen, 'png_sha256': digest(png),
+                                       'receipt_sha256': digest(receipt), 'window_id': ui.window,
+                                       'foreground_required': require_focus})
+            attempt['accepted'] = True
+            trace('native_capture', capture=name, screen=screen, native_state=ui.diagnostics() if require_focus else ui.focus_state())
+            return data
+        except BaseException as error:
+            attempt['failure'] = {'type': type(error).__name__, 'message': str(error)}
+            raise
+        finally:
+            attempt['finished_seconds'] = time.monotonic()-started
+            attempt['retained_files'] = {path.name: {'bytes': path.stat().st_size, 'sha256': digest(path)}
+                                         for path in (png, receipt) if path.is_file()}
 
     def wait(predicate, budget, label):
         until = min(deadline, time.monotonic()+budget)
@@ -217,26 +265,32 @@ def run(output, preflight_path):
             client = subprocess.Popen(arguments, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
             processes.append(('client', client))
             result['client_pid'] = client.pid
-            window = wait(lambda: next(iter([entry for entry in api.windows(client.pid) if entry['onscreen']]), None),
+            window = wait(lambda: next(iter([entry for entry in api.windows(client.pid)
+                                            if entry['owner_pid'] == client.pid and entry['onscreen']]), None),
                           BUDGETS['window'], 'Exact owned visible native window')
-            result['selected_client_window'] = window
+            result['first_client_window'] = window
             result['private_user_directory_before_input'] = require_private_userdir(private_directory, default_before)
-            ui = MacOrdinaryUI(client.pid, window['window_id'], window['bounds_points_including_chrome'], trace)
-            ui.private_directory, ui.default_before = private_directory, default_before
-            background_then_focus(ui, capture, result, trace)
-            ui.neutral()
             menu_deadline = min(deadline, time.monotonic()+BUDGETS['menu'])
-            menu = None
-            for attempt in range(2):
-                try:
-                    menu = capture('01-menu-'+str(attempt), 'menu', until=menu_deadline)
-                    break
-                except NativePrerequisiteBlocked:
-                    raise
-                except RuntimeError:
-                    if attempt:
-                        raise
-                    pause(min(1, remaining(menu_deadline)))
+            def select_candidate(candidate):
+                nonlocal ui
+                if ui is not None:
+                    if ui.event_post_attempts or getattr(ui, 'input_geometry_pinned', False):
+                        raise RuntimeError('Startup geometry cannot be replaced after pinning or any event attempt')
+                    ui.close()
+                ui = MacOrdinaryUI(client.pid, candidate['window_id'], candidate['bounds_points_including_chrome'], trace)
+                ui.private_directory, ui.default_before = private_directory, default_before
+                trace('startup_window_candidate', window=candidate, cg_event_post_attempts=ui.event_post_attempts)
+                return ui
+            ui, _background_menu = discover_startup_menu(api, client, select_candidate, capture, remaining, trace, menu_deadline)
+            focus_deadline = min(menu_deadline, time.monotonic()+BUDGETS['focus'])
+            ui.focus(seconds=remaining(focus_deadline))
+            remaining(focus_deadline)
+            ui.neutral()
+            menu = capture('01-focused-menu', 'menu', until=menu_deadline)
+            ui.pin_for_input(menu)
+            remaining(menu_deadline)
+            result['selected_client_window'] = {'owner_pid': ui.pid, 'window_id': ui.window,
+                                                'bounds_points_including_chrome': list(ui.bounds)}
             ui.click_label(menu, 'DEPLOY · OFFLINE 5V5')
             ready = observed(lambda state: state.get('ui', {}).get('screen') == 'game' and bool(state.get('local_actor')),
                              BUDGETS['deploy'], 'Stock match after one native Deploy click')

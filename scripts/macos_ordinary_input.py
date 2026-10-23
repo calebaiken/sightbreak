@@ -13,12 +13,16 @@ import time
 from macos_native_input import MacMenuUI, same_bounds
 from probe_macos_input import (NativePrerequisiteBlocked, Point, digest,
                                require_absent_profile, user_directory)
-from verify_macos_menu import screen_text, unique_screen_label
+from verify_macos_menu import require_screen, screen_text, unique_screen_label
 
 
 RULES = {'buy_seconds': 15, 'round_seconds': 100, 'device_seconds': 35,
          'plant_seconds': 3, 'defuse_seconds': 5, 'win_score': 7}
 OVERRIDE_RELATIVE = 'Contents/MacOS/override.cfg'
+
+
+class OwnedWindowChanged(RuntimeError):
+    pass
 
 
 def no_symlinks(path):
@@ -229,15 +233,49 @@ def hud_values(capture):
 
 
 class MacOrdinaryUI(MacMenuUI):
+    def post(self, event, kind):
+        if not getattr(self, 'input_geometry_pinned', False):
+            if event:
+                self.cf.CFRelease(event)
+            raise RuntimeError('No CGEvent attempt is allowed before permanent input geometry pinning')
+        super().post(event, kind)
+
+    def pin_for_input(self, capture):
+        if getattr(self, 'input_geometry_pinned', False) or self.event_post_attempts or self.held:
+            raise RuntimeError('Input geometry may be pinned only once before any owned event')
+        require_screen(capture, 'menu')
+        capture_geometry(capture)
+        if (capture.get('owner_pid') != self.pid or capture.get('window_id') != self.window
+                or not same_bounds(capture.get('bounds_points_including_chrome', []), self.bounds)):
+            raise RuntimeError('Fresh post-focus menu does not match the candidate owned window')
+        self.require_target()
+        self.neutral()
+        self.input_geometry_pinned = True
+        self.trace('input_geometry_pinned', target_pid=self.pid, window_id=self.window,
+                   bounds_points_including_chrome=self.bounds, native_state=self.diagnostics())
+
     def diagnostics(self):
         result = super().diagnostics()
         result['reload_down'] = bool(self.cg.CGEventSourceKeyState(0, 15))
         return result
 
     def require_window(self):
-        # The accepted default-profile absence guard remains in the base method.
+        # Retain exactly the base permission/window conditions, while recording
+        # the actual rows used by this component's decision, including failures.
         require_private_userdir(self.private_directory, self.default_before)
-        super().require_window()
+        permissions = self.preflight()
+        denied = [name for name in ('CGPreflightPostEventAccess', 'CGPreflightScreenCaptureAccess')
+                  if permissions[name] is not True]
+        if denied:
+            raise NativePrerequisiteBlocked('Current controller permission denied: ' + ', '.join(denied))
+        current = self.windows(self.pid)
+        self.trace('owned_window_guard', target_pid=self.pid, expected_window=self.window,
+                   expected_bounds_points=self.bounds, observed_owned_layer_zero_windows=current,
+                   input_geometry_pinned=bool(getattr(self, 'input_geometry_pinned', False)),
+                   cg_event_post_attempts=self.event_post_attempts)
+        matched = [row for row in current if row['window_id'] == self.window and row['onscreen']]
+        if len(matched) != 1 or not same_bounds(matched[0]['bounds_points_including_chrome'], self.bounds):
+            raise OwnedWindowChanged('Owned visible window or its geometry changed before input')
 
     def neutral(self):
         super().neutral()
