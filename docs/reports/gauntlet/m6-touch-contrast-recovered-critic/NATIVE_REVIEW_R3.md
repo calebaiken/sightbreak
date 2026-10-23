@@ -83,6 +83,12 @@ Evidence: [read-only audit script](audit_native_r3.py),
 [ten exact original PNG witnesses](native-selected-r3/RECEIPT.json), 251,098
 bytes total. These are unmodified copies, not recrops or reconstructed images.
 The complete originals remain at
-`/workspace/sightbreak-touch-contrast-native-recovered-r3` while the builder
-finishes its member-verified archive handoff. No engine, import, export, OCR or
-new native acquisition was run for this review.
+`/workspace/sightbreak-touch-contrast-native-recovered-r3`. I independently
+verified the complete archive and eight parts, every one of the 3,075 raw files,
+the embedded manifest, and unchanged staged source/UID bytes. The archive is
+177,345,716 bytes, SHA-256
+`36c6e7ac9126c1d265a67bd2aab95e69c74d68fde57d99239ed852ed302026d6`.
+The separate [archive audit](archive-audit-r3.json) has zero missing files,
+member mismatches or source changes. The builder retains the archive/parts under
+`m6-touch-contrast-recovered/native-r3/`. No engine, import, export, OCR or new
+native acquisition was run for this review.
