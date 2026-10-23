@@ -10,7 +10,7 @@ import subprocess
 import zipfile
 
 EXPECTED = '28a3e294c850482475b7ab74067c08538ae6310d'
-BUILDER_COMMIT = '6ffe338495eaa86f8cbf2a1e2319679450486d54'
+BUILDER_COMMIT = 'bcfc7c3c57b33ad373b0a9e787eb187bc38d463f'
 ROOT = Path('/workspace/sightbreak-aggregate-frozen-28a3e294')
 BUILDER = Path('/workspace/sightbreak-aggregate-combined-28a3e294')
 RELATIVE = Path('docs/reports/gauntlet/aggregate-combined-28a3e294-20261023')
@@ -59,7 +59,7 @@ check(len(inventory) == 808, 'all 808 tracked input paths')
 check(sum(r['path'].endswith('.uid') and r['path'].startswith('game/') for r in inventory) == 138, 'all 138 tracked game UID paths')
 for scope in SCOPES:
     check(any(r['path'].startswith(scope + '/') for r in inventory), 'scope populated: ' + scope)
-prepared = json.loads((BUILDER / RELATIVE / 'preparation-r2/source-before.json').read_text())
+prepared = json.loads((BUILDER / RELATIVE / 'preparation-r3/source-before.json').read_text())
 check({r['path']:dict(bytes=r['bytes'],sha256=r['sha256']) for r in inventory} == prepared['inputs'], 'independent input inventory equals builder preparation')
 shipping, validation = hashlib.sha256(), hashlib.sha256()
 for path in sorted((ROOT/'game').rglob('*')):
