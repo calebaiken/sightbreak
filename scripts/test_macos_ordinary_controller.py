@@ -1,0 +1,308 @@
+#!/usr/bin/env python3
+"""Mock the complete controller to falsify gates; these are never native receipts."""
+from contextlib import ExitStack
+import copy
+import io
+import json
+from pathlib import Path
+import struct
+import tempfile
+import types
+import unittest
+from unittest.mock import patch
+
+import verify_macos_ordinary as driver
+from macos_deploy_ocr import PROFILE, SCOPE
+from test_macos_ordinary import capture, hud_capture, initial, state
+
+SYNTHETIC_DIGEST = '1'*64
+
+
+def synthetic_analysis(image):
+    """Fixture metadata only; no OCR, native pixels or real file hash is claimed."""
+    width, height = image['image_dimensions']
+    return {'schema': 1, 'profile': PROFILE, 'scope': SCOPE,
+            'source_png_sha256': SYNTHETIC_DIGEST, 'analysis_png_sha256': SYNTHETIC_DIGEST,
+            'owner_pid': image['owner_pid'], 'window_id': image['window_id'],
+            'bounds_points_including_chrome': copy.deepcopy(image['bounds_points_including_chrome']),
+            'source_point_pixel_scale': image['point_pixel_scale'],
+            'source_image_dimensions': [width, height], 'analysis_image_dimensions': [width*2, height*2],
+            'source_crop_pixels_top_left': [0, 0, width, height], 'scale': 2,
+            'normalized_box_space': 'native-full-window-bottom-left', 'resampling': 'CoreGraphics-high',
+            'recognition_level': 'accurate', 'recognition_languages': ['en-US'],
+            'uses_language_correction': False, 'custom_words': [], 'text': copy.deepcopy(image['text'])}
+
+
+class SyntheticController:
+    """All processes, permissions, screenshots and authority samples are mocked."""
+    def __init__(self, directory, fault=None):
+        self.directory, self.fault = Path(directory), fault
+        self.now, self.wall, self.frames, self.tick, self.elapsed = 0., 100, 20, 5, .1
+        self.deployed, self.paused, self.reload_mode, self.shots = False, False, 'idle', 0
+        self.ammo, self.reserve, self.reload_elapsed = 15, 60, None
+        self.reads, self.next_pid, self.client = 0, 9000, None
+        self.default_reads, self.source_reads = 0, 0
+        self.startup_captures, self.focus_calls, self.window_id, self.active_ui = 0, 0, 34, None
+        self.identity = {'source_commit': 'synthetic', 'source_game_tree': 'synthetic-game',
+                         'source_content_sha256': 'synthetic-content', 'source_validation_sha256': 'synthetic-tools',
+                         'source_dirty': False, 'source_game_dirty': False}
+        self.default = {'directory_exists': False, 'directories': [], 'files': {}}
+        self.ui = self.make_ui()
+
+    def source(self):
+        self.source_reads += 1
+        return dict(self.identity, source_commit='changed') if self.fault == 'source' and self.source_reads > 1 else self.identity
+
+    def default_inventory(self):
+        self.default_reads += 1
+        if self.fault == 'default' and self.default_reads > 1:
+            return {'directory_exists': True, 'directories': [], 'files': {'unexpected.cache': {}}}
+        return copy.deepcopy(self.default)
+
+    def snapshot(self, _path):
+        self.reads += 1
+        if self.fault != 'stale' or not self.shots:
+            self.wall += 1
+        if self.fault != 'frames' and not (self.fault == 'reload_frames' and self.reload_mode == 'done'):
+            self.frames += 1
+        if not self.paused:
+            self.tick += 1
+            self.elapsed += 2
+        sample = state()
+        sample.update(wall_msec=self.wall, drawn_frames=self.frames, simulation_tick=self.tick, elapsed=self.elapsed)
+        sample['phase'] = 'buy' if self.reads == 1 else 'live'
+        sample['local_actor'].update(ammo=self.ammo, reserve=self.reserve)
+        sample['ui']['paused'] = self.paused
+        if self.reload_mode == 'started':
+            sample['local_actor']['reload'] = 0 if self.fault == 'reload_start' else 1.3
+            self.reload_elapsed = sample['elapsed']
+        if self.reload_mode == 'done' and self.fault == 'reload_early':
+            sample['elapsed'] = self.reload_elapsed+.1
+        if self.fault == 'dead' and self.shots and any(path.name == '05-after-fire.json' for path in self.directory.glob('*.json')):
+            sample['local_actor']['alive'] = False
+        return sample
+
+    def native_capture(self, name):
+        if name.startswith(('05-', '06-')):
+            image = hud_capture()
+            image['text'][-1]['text'] = f'SIDEARM {self.ammo} / {self.reserve}'
+            if self.fault == 'hud':
+                image['text'][-1]['text'] = 'SIDEARM 01 / 99'
+        elif name.startswith('07-'):
+            image = capture()
+            image['text'] = [dict(image['text'][0], text='FIELD MENU'), dict(image['text'][1], text='LEAVE MATCH')]
+        else:
+            image = capture()
+        image['owner_pid'] = self.client.pid
+        image['window_id'] = self.active_ui.window
+        if name.startswith('00-startup'):
+            self.startup_captures += 1
+            if self.fault == 'startup_splash' and self.startup_captures == 1:
+                image['text'] = [dict(image['text'][0], text='GODOT')]
+            if self.fault in ('startup_change', 'startup_churn') and (self.startup_captures == 1 or self.fault == 'startup_churn'):
+                self.window_id += 1
+            if self.fault == 'startup_foreign': image['owner_pid'] += 1
+            if self.fault == 'startup_mapping': image['point_pixel_scale'] = True
+        if name == '01-focused-menu' and self.fault == 'focused_change':
+            self.window_id += 1
+        image.update(input_events_posted=0, permission_requests_made=0)
+        return image
+
+    def popen(self, arguments, **kwargs):
+        harness = self
+        self.next_pid += 1
+        is_client = not any(flag in arguments for flag in ('--pid', '-parse-as-library'))
+        class Process:
+            pid = harness.next_pid
+            returncode = None
+            def poll(process):
+                return process.returncode
+            def wait(process, timeout):
+                if not is_client:
+                    if harness.fault == 'helper_deadline' and '-parse-as-library' in arguments:
+                        harness.now += 61
+                    if harness.fault in ('startup_churn', 'startup_foreign', 'startup_mapping') and '--pid' in arguments:
+                        harness.now += 1
+                    process.returncode = 0
+                return process.returncode
+        process = Process()
+        if is_client:
+            self.client = process
+            trace_directory = Path(next(arg.split('=', 1)[1] for arg in arguments if arg.startswith('--offline-trace-dir=')))
+            trace_directory.mkdir()
+            (trace_directory / 'events.jsonl').write_text(json.dumps(initial())+'\n')
+            if self.fault == 'leak':
+                kwargs['stdout'].write('ObjectDB instances leaked at exit\n')
+        elif '--pid' in arguments:
+            receipt = Path(arguments[arguments.index('--report')+1])
+            image = self.native_capture(receipt.stem)
+            if '--analysis-mode' in arguments:
+                image['derived_deploy_analysis'] = synthetic_analysis(image)
+                for flag, dimensions in (('--png', image['image_dimensions']),
+                                         ('--deploy-analysis-png', image['derived_deploy_analysis']['analysis_image_dimensions'])):
+                    # Only IHDR headers for pure dimension validation. These
+                    # bytes are synthetic fixtures, never captured PNG evidence.
+                    Path(arguments[arguments.index(flag)+1]).write_bytes(
+                        b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR'+struct.pack('>II', *dimensions)+b'SYNTHETIC FIXTURE ONLY')
+            receipt.write_text(json.dumps(image))
+            if self.fault == 'startup_helper_error':
+                kwargs['stdout'].write('ERROR: synthetic helper error\n')
+        return process
+
+    def make_ui(self):
+        harness = self
+        class UI:
+            event_post_attempts = 0
+            held = set()
+            def __init__(self, pid, window, bounds, trace):
+                self.pid, self.window, self.bounds = pid, window, bounds
+                self.event_post_attempts, self.input_geometry_pinned = 0, False
+                harness.active_ui = self
+            def require_target(self): self.require_window()
+            def require_window(self):
+                if self.window != harness.window_id:
+                    raise driver.OwnedWindowChanged('synthetic current owned window changed')
+            def focus_state(self): return {'foreground_pid': self.pid}
+            def diagnostics(self):
+                return {'foreground_pid': self.pid, 'lmb_down': False, 'escape_down': False, 'reload_down': False}
+            def neutral(self): pass
+            def focus(self, seconds=5):
+                harness.focus_calls += 1
+                if harness.fault == 'focus_late': harness.now += seconds+.001
+            def pin_for_input(self, image):
+                if self.event_post_attempts or self.input_geometry_pinned:
+                    raise RuntimeError('synthetic repeated/late pin')
+                self.require_target()
+                self.input_geometry_pinned = True
+            def observed_state(self, control, down, **kwargs):
+                if harness.fault == 'fire_ack_delay' and control == 'lmb' and down:
+                    harness.now += 1.01
+                if harness.fault == 'fire_release_delay' and control == 'lmb' and not down:
+                    harness.now += .36
+                if harness.fault == 'reload_release_delay' and control == 'reload' and not down:
+                    harness.now += 15.01
+            def click_label(self, image, label):
+                if not self.input_geometry_pinned:
+                    raise RuntimeError('synthetic input before pin')
+                self.event_post_attempts += 1
+                if label.startswith('DEPLOY'):
+                    harness.deployed = True
+            def fire_button(self, down):
+                if not down:
+                    harness.shots += 1
+                    if harness.fault != 'depletion':
+                        harness.ammo -= 1
+            def reload_key(self, down):
+                if down:
+                    harness.reload_mode = 'started'
+                else:
+                    harness.reload_mode = 'done'
+                    harness.reserve -= 15-harness.ammo
+                    harness.ammo = 15
+            def tap_escape(self): harness.paused = True
+            def release_owned(self):
+                return {'held_after_release': [], 'errors': [], 'native_state': self.diagnostics()}
+            def request_close(self):
+                if harness.fault == 'close': return False
+                harness.client.returncode = 0
+                return True
+            def close(self): pass
+        return UI
+
+    def execute(self):
+        api = types.SimpleNamespace(preflight=lambda: {'CGPreflightPostEventAccess': True, 'CGPreflightScreenCaptureAccess': True},
+            windows=lambda pid: [{'owner_pid': pid, 'onscreen': True, 'window_id': self.window_id,
+                                  'bounds_points_including_chrome': [40, 32, 960, 568]}])
+        manifest = {**self.identity, 'artifact': {'sha256': SYNTHETIC_DIGEST}}
+        preflight = self.directory.parent / 'synthetic-preflight.json'
+        preflight.write_text('{}')
+        staged = {'staged': str(self.directory / 'native/SIGHTBREAK.app'), 'executable_sha256': SYNTHETIC_DIGEST}
+        def reap(process):
+            return {'pid': process.pid, 'exit_code': process.returncode, 'owned_group_gone': True,
+                    'signals_sent': ['SIGTERM'] if self.fault == 'cleanup' else []}
+        def payload(receipt):
+            if self.fault == 'payload':
+                raise RuntimeError('synthetic payload mutation')
+        with ExitStack() as stack:
+            patches = [(driver, 'MacReadOnly', lambda: api), (driver, 'source', self.source),
+                       (driver, 'clean', lambda value: None), (driver, 'validate_record', lambda *args: manifest),
+                       (driver, 'require_preflight', lambda *args: None), (driver, 'account_home', lambda: self.directory.parent / 'account'),
+                       (driver, 'default_inventory', self.default_inventory), (driver, 'require_absent_profile', lambda: None),
+                       (driver, 'inventory', lambda *args: copy.deepcopy(self.default)),
+                       (driver, 'stage_app', lambda *args: staged), (driver, 'verify_staged_app', payload),
+                       (driver, 'require_private_userdir', lambda *args: {'scope': 'synthetic only'}),
+                       (driver, 'MacOrdinaryUI', self.ui), (driver, 'digest', lambda *args: SYNTHETIC_DIGEST),
+                       (driver, 'read_observation_json', self.snapshot), (driver, 'reap', reap),
+                       (driver.toolchain, 'verify_engine', lambda: {'scope': 'synthetic only'}),
+                       (driver.subprocess, 'Popen', self.popen), (driver.time, 'monotonic', lambda: self.now),
+                       (driver.time, 'sleep', lambda seconds: setattr(self, 'now', self.now+seconds))]
+            for target, attribute, replacement in patches:
+                stack.enter_context(patch.object(target, attribute, replacement))
+            stack.enter_context(patch('sys.stdout', new_callable=io.StringIO))
+            status = driver.run(self.directory, preflight)
+        return status, json.loads((self.directory / 'results.json').read_text())
+
+
+class ControllerFalsifiers(unittest.TestCase):
+    def test_complete_synthetic_schedule_exercises_all_acceptance_stages(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            harness = SyntheticController(Path(temporary).resolve(strict=True) / 'synthetic')
+            code, report = harness.execute()
+        self.assertEqual(code, 0)
+        self.assertTrue(report['passed'])
+        self.assertEqual(report['status'], 'PASS_ORDINARY_MAC_COMPONENT_ONLY')
+        self.assertEqual(report['native_reload']['completed']['local_actor']['reserve'], 58)
+        self.assertEqual([row['name'] for row in report['living_hud_captures']], ['05-after-fire', '06-after-reload'])
+        self.assertTrue(report['source_unchanged'])
+        self.assertTrue(report['default_user_directory_unchanged'])
+
+    def test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail(self):
+        for fault in ('stale', 'depletion', 'frames', 'reload_frames'):
+            with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temporary:
+                code, report = SyntheticController(Path(temporary).resolve(strict=True) / 'synthetic', fault).execute()
+                self.assertEqual(code, 1)
+                self.assertFalse(report['passed'])
+                self.assertEqual(report['failure']['type'], 'TimeoutError')
+
+    def test_unobserved_reload_or_early_transfer_never_pass(self):
+        for fault in ('reload_start', 'reload_early'):
+            with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temporary:
+                code, report = SyntheticController(Path(temporary).resolve(strict=True) / 'synthetic', fault).execute()
+                self.assertEqual(code, 1)
+                self.assertFalse(report['passed'])
+                self.assertIn('failure', report)
+
+    def test_dead_or_mismatched_native_hud_never_pass(self):
+        for fault in ('dead', 'hud'):
+            with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temporary:
+                code, report = SyntheticController(Path(temporary).resolve(strict=True) / 'synthetic', fault).execute()
+                self.assertEqual(code, 1)
+                self.assertFalse(report['passed'])
+
+    def test_zero_exit_after_helper_stage_deadline_is_rejected(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            code, report = SyntheticController(Path(temporary).resolve(strict=True) / 'synthetic', 'helper_deadline').execute()
+        self.assertEqual(code, 1)
+        self.assertEqual(report['failure']['type'], 'TimeoutError')
+        self.assertFalse(report['passed'])
+        self.assertEqual(report['captures'], [])
+
+    def test_delayed_os_acknowledgement_cannot_extend_original_input_slots(self):
+        for fault in ('fire_ack_delay', 'fire_release_delay', 'reload_release_delay'):
+            with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temporary:
+                code, report = SyntheticController(Path(temporary).resolve(strict=True) / 'synthetic', fault).execute()
+                self.assertEqual(code, 1)
+                self.assertEqual(report['failure']['type'], 'TimeoutError')
+                self.assertFalse(report['passed'])
+
+    def test_finalization_checks_cannot_be_replaced_by_completed_gameplay(self):
+        for fault in ('cleanup', 'payload', 'source', 'default', 'leak', 'close'):
+            with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temporary:
+                code, report = SyntheticController(Path(temporary).resolve(strict=True) / 'synthetic', fault).execute()
+                self.assertEqual(code, 1)
+                self.assertFalse(report['passed'])
+                self.assertTrue(report.get('failure') or report.get('finalization_failures'))
+
+
+if __name__ == '__main__':
+    unittest.main()

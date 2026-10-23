@@ -1,0 +1,94 @@
+{
+  "scope": "AST-executed production guards with saved native state and deliberate mutations; no native input proof",
+  "source_commit": "171169e545a91e271ad8c73a571aeee6fe37dd90",
+  "source_sha256": "595648147e1395b865672a21bc2ef0a6f6b6477dc42818ccf13cb8937d66aa77",
+  "checks": [
+    {
+      "label": "actual living paused Windows boundary",
+      "expected_accept": true,
+      "accepted": true,
+      "passed": true
+    },
+    {
+      "label": "actual final Windows dead observation",
+      "expected_accept": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "reject changed ui.screen",
+      "expected_accept": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "reject changed ui.focused",
+      "expected_accept": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "reject changed time_scale",
+      "expected_accept": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "reject changed phase",
+      "expected_accept": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "reject changed round_number",
+      "expected_accept": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "reject changed local_actor.alive",
+      "expected_accept": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "reject changed local_actor.id",
+      "expected_accept": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "reject changed local_actor.weapon",
+      "expected_accept": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "reject changed local_actor.ammo",
+      "expected_accept": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "reject changed local_actor.reserve",
+      "expected_accept": false,
+      "accepted": false,
+      "passed": true
+    },
+    {
+      "label": "actual dead Windows observation also rejects when already paused",
+      "accepted": false,
+      "passed": true,
+      "error": "HUD analysis requires the actual living, focused offline player"
+    },
+    {
+      "label": "game source unchanged",
+      "passed": true
+    },
+    {
+      "label": "final reader AST identical to the baseline reader exercised on Windows frames",
+      "passed": true
+    }
+  ],
+  "all_checks_pass": true
+}

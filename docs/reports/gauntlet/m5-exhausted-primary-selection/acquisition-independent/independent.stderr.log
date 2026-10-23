@@ -1,0 +1,35 @@
+test_candidate_success_exact_argv_caps_and_authority_order (__main__.IndependentControls.test_candidate_success_exact_argv_caps_and_authority_order) ... ok
+test_explicit_squad_failure_must_not_pass_with_success_marker (__main__.IndependentControls.test_explicit_squad_failure_must_not_pass_with_success_marker) ... FAIL
+test_native_receipt_write_cannot_exceed_phase_bound_and_stay_passed (__main__.IndependentControls.test_native_receipt_write_cannot_exceed_phase_bound_and_stay_passed) ... FAIL
+test_preparation_rejects_original_deletion_change_and_unexpected_uid (__main__.IndependentControls.test_preparation_rejects_original_deletion_change_and_unexpected_uid) ... ok
+test_regressions_success_exact_order_and_distinct_real_state_contract (__main__.IndependentControls.test_regressions_success_exact_order_and_distinct_real_state_contract) ... ok
+test_whole_bound_includes_overall_receipt_and_claim_finalization (__main__.IndependentControls.test_whole_bound_includes_overall_receipt_and_claim_finalization) ... FAIL
+
+======================================================================
+FAIL: test_explicit_squad_failure_must_not_pass_with_success_marker (__main__.IndependentControls.test_explicit_squad_failure_must_not_pass_with_success_marker)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/m5-acquisition-source-critic/docs/reports/gauntlet/m5-exhausted-primary-selection/acquisition-independent/test_independent.py", line 143, in test_explicit_squad_failure_must_not_pass_with_success_marker
+    self.assertFalse(result['report']['passed'], 'Explicit BOT_SQUAD_FAILURE coexisting with success marker is accepted')
+AssertionError: True is not false : Explicit BOT_SQUAD_FAILURE coexisting with success marker is accepted
+
+======================================================================
+FAIL: test_native_receipt_write_cannot_exceed_phase_bound_and_stay_passed (__main__.IndependentControls.test_native_receipt_write_cannot_exceed_phase_bound_and_stay_passed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/m5-acquisition-source-critic/docs/reports/gauntlet/m5-exhausted-primary-selection/acquisition-independent/test_independent.py", line 190, in test_native_receipt_write_cannot_exceed_phase_bound_and_stay_passed
+    self.assertFalse(runner.receipts[0]['passed'], 'Phase receipt reports pass after 121 seconds under a 120-second phase cap')
+AssertionError: True is not false : Phase receipt reports pass after 121 seconds under a 120-second phase cap
+
+======================================================================
+FAIL: test_whole_bound_includes_overall_receipt_and_claim_finalization (__main__.IndependentControls.test_whole_bound_includes_overall_receipt_and_claim_finalization)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/m5-acquisition-source-critic/docs/reports/gauntlet/m5-exhausted-primary-selection/acquisition-independent/test_independent.py", line 138, in test_whole_bound_includes_overall_receipt_and_claim_finalization
+    self.assertFalse(result['report']['passed'], 'run() accepts success after its final receipt write exceeds the 240-second whole bound')
+AssertionError: True is not false : run() accepts success after its final receipt write exceeds the 240-second whole bound
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.036s
+
+FAILED (failures=3)

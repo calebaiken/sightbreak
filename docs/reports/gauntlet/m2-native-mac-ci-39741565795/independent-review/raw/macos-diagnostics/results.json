@@ -1,0 +1,568 @@
+{
+  "source": {
+    "source_dirty": false,
+    "source_validation_sha256": "c126856c6e596c067783e51fa5e6cd3190d04f92a3bf3f6295733454c9543228",
+    "source_commit": "05277154c6b8c92b80fd7c25e8365de9efdc4fae",
+    "source_game_tree": "1f3616afdfaaed0fb7c9ffbd0aa8e4947f7d2a48",
+    "source_content_sha256": "6bebcf50351c29d4c9959bfe4b33418f8f7b4a2e963e65336f361e99891f07b5",
+    "source_game_dirty": false
+  },
+  "scope": "Native graphical startup comparison only; no gameplay, physical GPU, signing/notarization or quality acceptance",
+  "default_gate_unchanged": true,
+  "baseline_comparison": "Original retained artifact bytes verified",
+  "trials": [
+    {
+      "label": "editor-minimal-2d-default",
+      "command": [
+        "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+        "--path",
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/minimal-project",
+        "--verbose",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/editor-minimal-2d-default.godot.log",
+        "--",
+        "--capture=/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/editor-minimal-2d-default.png"
+      ],
+      "budget_seconds": 120,
+      "native_exit_code": 0,
+      "timed_out": false,
+      "surviving_owned_group": [],
+      "pid": 7710,
+      "elapsed_before_cleanup": 8.161366999999984,
+      "owned_group_after_native_exit": [],
+      "exit_code_after_cleanup": 0,
+      "elapsed_total": 8.406710167000028,
+      "process_states": [],
+      "samples": [],
+      "capture": {
+        "valid_png": true,
+        "width": 1024,
+        "height": 656,
+        "sha256": "7b4d87f94cd14522d33ba68ca32fb9b7ff361b559b5d34c4a9e78edba14d1ea1"
+      },
+      "marker_observed": true,
+      "clean_log": true,
+      "renderer_lines": [
+        "WARNING: Virtual Machine detected, switching to ANGLE.",
+        "OpenGL API OpenGL ES 3.0 (ANGLE 2.1.1 git hash: aaebda1c5a40) - Compatibility - Using Device: Google Inc. (Apple) - ANGLE (Apple, ANGLE Metal Renderer: Apple Paravirtual device, Version 15.7.9 (Build 24G830))"
+      ],
+      "phase_lines": [
+        "MINIMAL_DIAG_INIT msec=6603",
+        "MINIMAL_DIAG_READY msec=6663",
+        "MINIMAL_DIAG_FIRST_PROCESS msec=6682",
+        "MINIMAL_DIAG_BEFORE_DRAW msec=7201",
+        "MINIMAL_DIAG_AFTER_DRAW msec=7218",
+        "MINIMAL_DIAG_EXIT capture_error=0 msec=7286"
+      ],
+      "passed": true
+    },
+    {
+      "label": "editor-minimal-3d-default",
+      "command": [
+        "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+        "--path",
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/minimal-project",
+        "--verbose",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/editor-minimal-3d-default.godot.log",
+        "--",
+        "--probe-3d",
+        "--capture=/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/editor-minimal-3d-default.png"
+      ],
+      "budget_seconds": 120,
+      "native_exit_code": 0,
+      "timed_out": false,
+      "surviving_owned_group": [],
+      "pid": 7929,
+      "elapsed_before_cleanup": 2.4935092910000094,
+      "owned_group_after_native_exit": [],
+      "exit_code_after_cleanup": 0,
+      "elapsed_total": 2.576109040999995,
+      "process_states": [],
+      "samples": [],
+      "capture": {
+        "valid_png": true,
+        "width": 1024,
+        "height": 656,
+        "sha256": "88732a66cf27bd86f1c387655c45bee8229539fdc0ac98c1f1a0a99468e0ef63"
+      },
+      "marker_observed": true,
+      "clean_log": true,
+      "renderer_lines": [
+        "WARNING: Virtual Machine detected, switching to ANGLE.",
+        "OpenGL API OpenGL ES 3.0 (ANGLE 2.1.1 git hash: aaebda1c5a40) - Compatibility - Using Device: Google Inc. (Apple) - ANGLE (Apple, ANGLE Metal Renderer: Apple Paravirtual device, Version 15.7.9 (Build 24G830))"
+      ],
+      "phase_lines": [
+        "MINIMAL_DIAG_INIT msec=406",
+        "MINIMAL_DIAG_READY msec=456",
+        "MINIMAL_DIAG_FIRST_PROCESS msec=471",
+        "MINIMAL_DIAG_BEFORE_DRAW msec=1918",
+        "MINIMAL_DIAG_AFTER_DRAW msec=1935",
+        "MINIMAL_DIAG_EXIT capture_error=0 msec=1979"
+      ],
+      "passed": true
+    },
+    {
+      "label": "export-minimal-3d-default",
+      "command": [
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/MinimalGraphics.app/Contents/MacOS/SIGHTBREAK Native Graphics Control",
+        "--verbose",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/export-minimal-3d-default.godot.log",
+        "--",
+        "--probe-3d",
+        "--capture=/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/export-minimal-3d-default.png"
+      ],
+      "budget_seconds": 120,
+      "native_exit_code": 0,
+      "timed_out": false,
+      "surviving_owned_group": [],
+      "pid": 7938,
+      "elapsed_before_cleanup": 9.997663499999987,
+      "owned_group_after_native_exit": [],
+      "exit_code_after_cleanup": 0,
+      "elapsed_total": 10.131865333000007,
+      "process_states": [],
+      "samples": [],
+      "capture": {
+        "valid_png": true,
+        "width": 1024,
+        "height": 656,
+        "sha256": "88732a66cf27bd86f1c387655c45bee8229539fdc0ac98c1f1a0a99468e0ef63"
+      },
+      "marker_observed": true,
+      "clean_log": true,
+      "renderer_lines": [
+        "WARNING: Virtual Machine detected, switching to ANGLE.",
+        "OpenGL API OpenGL ES 3.0 (ANGLE 2.1.1 git hash: aaebda1c5a40) - Compatibility - Using Device: Google Inc. (Apple) - ANGLE (Apple, ANGLE Metal Renderer: Apple Paravirtual device, Version 15.7.9 (Build 24G830))"
+      ],
+      "phase_lines": [
+        "MINIMAL_DIAG_INIT msec=7938",
+        "MINIMAL_DIAG_READY msec=8056",
+        "MINIMAL_DIAG_FIRST_PROCESS msec=8085",
+        "MINIMAL_DIAG_BEFORE_DRAW msec=9574",
+        "MINIMAL_DIAG_AFTER_DRAW msec=9590",
+        "MINIMAL_DIAG_EXIT capture_error=0 msec=9630"
+      ],
+      "passed": true
+    },
+    {
+      "label": "frozen-game-default",
+      "command": [
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-baseline/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+        "--verbose",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-game-default.godot.log",
+        "--",
+        "--smoke",
+        "--capture=/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-game-default.png"
+      ],
+      "budget_seconds": 120,
+      "native_exit_code": 0,
+      "timed_out": false,
+      "surviving_owned_group": [],
+      "pid": 8161,
+      "elapsed_before_cleanup": 21.153853708000042,
+      "owned_group_after_native_exit": [],
+      "exit_code_after_cleanup": 0,
+      "elapsed_total": 21.30192583300004,
+      "process_states": [
+        {
+          "seconds": 15.027008540999987,
+          "owned_group": [
+            " 8161  7211  8161 S<s  00:15   0.8 /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-baseline/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK"
+          ]
+        }
+      ],
+      "samples": [
+        {
+          "command": [
+            "sample",
+            "8161",
+            "2",
+            "1",
+            "-file",
+            "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-game-default-15s.sample.txt"
+          ],
+          "exit_code": 0,
+          "timed_out": false,
+          "output": "Sampling process 8161 for 2 seconds with 1 millisecond of run time between samples\nSampling completed, processing symbols...\nSample analysis of process 8161 written to file /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-game-default-15s.sample.txt\n",
+          "descendants_after_root_exit": [],
+          "surviving_owned_group": [],
+          "sample_path": "frozen-game-default-15s.sample.txt"
+        }
+      ],
+      "capture": {
+        "valid_png": true,
+        "width": 1004,
+        "height": 564,
+        "sha256": "9c1caa7bb96d0e93696b65172096819ed6fd34ea12080cd1453c2b9a9492f6a7"
+      },
+      "marker_observed": true,
+      "clean_log": true,
+      "renderer_lines": [
+        "WARNING: Virtual Machine detected, switching to ANGLE.",
+        "OpenGL API OpenGL ES 3.0 (ANGLE 2.1.1 git hash: aaebda1c5a40) - Compatibility - Using Device: Google Inc. (Apple) - ANGLE (Apple, ANGLE Metal Renderer: Apple Paravirtual device, Version 15.7.9 (Build 24G830))"
+      ],
+      "phase_lines": [
+        "SIGHTBREAK_MAIN_READY screen=menu"
+      ],
+      "passed": true
+    },
+    {
+      "label": "candidate-game-default",
+      "command": [
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+        "--verbose",
+        "--audio-driver",
+        "Dummy",
+        "--log-file",
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/candidate-game-default.godot.log",
+        "--",
+        "--smoke",
+        "--capture=/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/candidate-game-default.png"
+      ],
+      "budget_seconds": 120,
+      "native_exit_code": 0,
+      "timed_out": false,
+      "surviving_owned_group": [],
+      "pid": 8692,
+      "elapsed_before_cleanup": 3.5815689160000375,
+      "owned_group_after_native_exit": [],
+      "exit_code_after_cleanup": 0,
+      "elapsed_total": 3.7852375830000256,
+      "process_states": [],
+      "samples": [],
+      "capture": {
+        "valid_png": true,
+        "width": 1004,
+        "height": 564,
+        "sha256": "1e5c96c149e9f4b4f74df23f60d4f20d1d5f249e89221e544bf3bebf630fb597"
+      },
+      "marker_observed": true,
+      "clean_log": true,
+      "renderer_lines": [
+        "WARNING: Virtual Machine detected, switching to ANGLE.",
+        "OpenGL API OpenGL ES 3.0 (ANGLE 2.1.1 git hash: aaebda1c5a40) - Compatibility - Using Device: Google Inc. (Apple) - ANGLE (Apple, ANGLE Metal Renderer: Apple Paravirtual device, Version 15.7.9 (Build 24G830))"
+      ],
+      "phase_lines": [
+        "SIGHTBREAK_STARTUP phase=ready_enter msec=756",
+        "SIGHTBREAK_STARTUP phase=settings_applied msec=760",
+        "SIGHTBREAK_STARTUP phase=menu_begin msec=761",
+        "SIGHTBREAK_STARTUP phase=menu_constructed msec=1200",
+        "SIGHTBREAK_STARTUP phase=first_process msec=1585",
+        "SIGHTBREAK_MAIN_READY screen=menu"
+      ],
+      "passed": true
+    }
+  ],
+  "preparation": [
+    {
+      "command": [
+        "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+        "--headless",
+        "--path",
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/minimal-project",
+        "--editor",
+        "--import",
+        "--quit"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "output": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\n\n[   0% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Started Project initialization (5 steps)\u001b[39m\u001b[0m\n[   0% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Scanning file structure...\u001b[39m\u001b[0m\n[  16% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Loading global class names...\u001b[39m\u001b[0m\n[  33% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Verifying GDExtensions...\u001b[39m\u001b[0m\n[  50% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Creating autoload scripts...\u001b[39m\u001b[0m\n[  66% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Initializing plugins...\u001b[39m\u001b[0m\n[  83% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Starting file scan...\u001b[39m\u001b[0m\n\u001b[92m[ DONE ]\u001b[39m \u001b[1mfirst_scan_filesystem\u001b[22m\n\u001b[0m\n[   0% ] \u001b[90m\u001b[1mloading_editor_layout\u001b[22m | Started Loading editor (5 steps)\u001b[39m\u001b[0m\n[   0% ] \u001b[90m\u001b[1mloading_editor_layout\u001b[22m | Loading editor layout...\u001b[39m\u001b[0m\n[  16% ] \u001b[90m\u001b[1mloading_editor_layout\u001b[22m | Loading docks...\u001b[39m\u001b[0m\n\u001b[92m[ DONE ]\u001b[39m \u001b[1mloading_editor_layout\u001b[22m\n\u001b[0m\n",
+      "descendants_after_root_exit": [],
+      "surviving_owned_group": []
+    },
+    {
+      "command": [
+        "/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot",
+        "--headless",
+        "--path",
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/minimal-project",
+        "--export-debug",
+        "macOS",
+        "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/MinimalGraphics.app"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "output": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\n\n[   0% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Started Project initialization (5 steps)\u001b[39m\u001b[0m\n[   0% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Scanning file structure...\u001b[39m\u001b[0m\n[  16% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Loading global class names...\u001b[39m\u001b[0m\n[  33% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Verifying GDExtensions...\u001b[39m\u001b[0m\n[  50% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Creating autoload scripts...\u001b[39m\u001b[0m\n[  66% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Initializing plugins...\u001b[39m\u001b[0m\n[  83% ] \u001b[90m\u001b[1mfirst_scan_filesystem\u001b[22m | Starting file scan...\u001b[39m\u001b[0m\n\u001b[92m[ DONE ]\u001b[39m \u001b[1mfirst_scan_filesystem\u001b[22m\n\u001b[0m\n[   0% ] \u001b[90m\u001b[1mexport\u001b[22m | Started Exporting for macOS (3 steps)\u001b[39m\u001b[0m\n[   0% ] \u001b[90m\u001b[1mexport\u001b[22m | Creating app bundle\u001b[39m\u001b[0m\n[  25% ] \u001b[90m\u001b[1mexport\u001b[22m | Making PKG\u001b[39m\u001b[0m\n[   0% ] \u001b[90m\u001b[1msavepack\u001b[22m | Started Packing (102 steps)\u001b[39m\u001b[0m\n[   1% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://main.gdc\u001b[39m\u001b[0m\n[  50% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://.godot/exported/133200997/export-3070c538c03ee49b7677ff960a3f5195-main.scn\u001b[39m\u001b[0m\n[  50% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://main.gd.remap\u001b[39m\u001b[0m\n[  50% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://main.tscn.remap\u001b[39m\u001b[0m\n[  50% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://.godot/global_script_class_cache.cfg\u001b[39m\u001b[0m\n[  50% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://.godot/uid_cache.bin\u001b[39m\u001b[0m\n[  50% ] \u001b[90m\u001b[1msavepack\u001b[22m | Storing File: res://project.binary\u001b[39m\u001b[0m\n\u001b[92m[ DONE ]\u001b[39m \u001b[1msavepack\u001b[22m\n\u001b[0m\n[  50% ] \u001b[90m\u001b[1mexport\u001b[22m | Code signing bundle\u001b[39m\u001b[0m\n\u001b[92m[ DONE ]\u001b[39m \u001b[1mexport\u001b[22m\n\u001b[0m\n",
+      "descendants_after_root_exit": [],
+      "surviving_owned_group": []
+    }
+  ],
+  "cache_scope": "No existing caches are deleted; ordered warm/cold differences are not performance acceptance",
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "editor_sha256": "c7cccbf8fb143e34e02fd6521e09be2c2b974f0d5db080b19071c9c570718ccf",
+  "host": {
+    "platform": "macOS-15.7.9-arm64-arm-64bit",
+    "machine": "arm64",
+    "commands": [
+      {
+        "command": [
+          "sw_vers"
+        ],
+        "exit_code": 0,
+        "timed_out": false,
+        "output": "ProductName:\t\tmacOS\nProductVersion:\t\t15.7.9\nBuildVersion:\t\t24G830\n",
+        "descendants_after_root_exit": [],
+        "surviving_owned_group": []
+      },
+      {
+        "command": [
+          "uname",
+          "-a"
+        ],
+        "exit_code": 0,
+        "timed_out": false,
+        "output": "Darwin iad20-gt1025-62c81b4a-4995-4e95-b16c-21f7323b2578-16794B215A5B.local 24.6.0 Darwin Kernel Version 24.6.0: Tue Jul 21 20:51:34 PDT 2026; root:xnu-11417.140.69.711.44~1/RELEASE_ARM64_VMAPPLE arm64\n",
+        "descendants_after_root_exit": [],
+        "surviving_owned_group": []
+      },
+      {
+        "command": [
+          "sysctl",
+          "-n",
+          "hw.model",
+          "hw.machine",
+          "hw.memsize",
+          "hw.ncpu"
+        ],
+        "exit_code": 0,
+        "timed_out": false,
+        "output": "VirtualMac2,1\narm64\n7516192768\n3\n",
+        "descendants_after_root_exit": [],
+        "surviving_owned_group": []
+      }
+    ],
+    "displays": {
+      "command": [
+        "system_profiler",
+        "SPDisplaysDataType",
+        "-json"
+      ],
+      "exit_code": 0,
+      "timed_out": false,
+      "descendants_after_root_exit": [],
+      "surviving_owned_group": [],
+      "gpu_capabilities": []
+    },
+    "runner_labels": {
+      "RUNNER_OS": "macOS",
+      "RUNNER_ARCH": "ARM64",
+      "ImageOS": "macos15",
+      "ImageVersion": "20260907.0337.1"
+    }
+  },
+  "candidate_receipt": {
+    "source_dirty": false,
+    "source_validation_sha256": "c126856c6e596c067783e51fa5e6cd3190d04f92a3bf3f6295733454c9543228",
+    "source_commit": "05277154c6b8c92b80fd7c25e8365de9efdc4fae",
+    "source_game_tree": "1f3616afdfaaed0fb7c9ffbd0aa8e4947f7d2a48",
+    "source_content_sha256": "6bebcf50351c29d4c9959bfe4b33418f8f7b4a2e963e65336f361e99891f07b5",
+    "source_game_dirty": false,
+    "target": "macos",
+    "version": "0.3.3-dev",
+    "build_number": 6,
+    "export_completed": true,
+    "built_at_utc": "2026-10-22T07:36:47.042679+00:00",
+    "artifact": {
+      "path": "macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+      "bytes": 187121136,
+      "sha256": "b75dc94311f3efb33f0025a38d078215181a54d5567dbb8cfbd1a2791b29fd29",
+      "mode": 493,
+      "archive_mode": 493
+    },
+    "payload": [
+      {
+        "path": "macos/GODOT-COPYRIGHT.txt",
+        "bytes": 100108,
+        "sha256": "cb1980c88089573bcacd7221d777c689bb8bbd778799f24c27fca0fe5f774d6d",
+        "mode": 420,
+        "archive_mode": 420
+      },
+      {
+        "path": "macos/GODOT-LICENSE.txt",
+        "bytes": 1149,
+        "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+        "mode": 420,
+        "archive_mode": 420
+      },
+      {
+        "path": "macos/SIGHTBREAK.app/Contents/Info.plist",
+        "bytes": 1793,
+        "sha256": "61f5f8110ffd074aa62abcdd56d23d66bda33b9224f0bf4031cfe559d20b9e5f",
+        "mode": 420,
+        "archive_mode": 420
+      },
+      {
+        "path": "macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+        "bytes": 187121136,
+        "sha256": "b75dc94311f3efb33f0025a38d078215181a54d5567dbb8cfbd1a2791b29fd29",
+        "mode": 493,
+        "archive_mode": 493
+      },
+      {
+        "path": "macos/SIGHTBREAK.app/Contents/PkgInfo",
+        "bytes": 9,
+        "sha256": "7e50a30efad50208a173203ced60818d693bb61266b75aa10927d1a2adce80cb",
+        "mode": 420,
+        "archive_mode": 420
+      },
+      {
+        "path": "macos/SIGHTBREAK.app/Contents/Resources/PrivacyInfo.xcprivacy",
+        "bytes": 229,
+        "sha256": "0535353bb08c25b8ce5ed9ac7e442a5994f402e0f6cbc4bed668cfc63c2ceac3",
+        "mode": 420,
+        "archive_mode": 420
+      },
+      {
+        "path": "macos/SIGHTBREAK.app/Contents/Resources/SIGHTBREAK.pck",
+        "bytes": 10527528,
+        "sha256": "cb0759ab34e424da7d9d5ed566ab291e054905d296f354d23d9a359494878d3d",
+        "mode": 420,
+        "archive_mode": 420
+      },
+      {
+        "path": "macos/SIGHTBREAK.app/Contents/Resources/icon.icns",
+        "bytes": 121661,
+        "sha256": "5e8a6414d6e04bc7348e55b8cc3dae325d1798373a87bec34ffb49acc77d8e54",
+        "mode": 420,
+        "archive_mode": 420
+      },
+      {
+        "path": "macos/SIGHTBREAK.app/Contents/_CodeSignature/CodeResources",
+        "bytes": 3177,
+        "sha256": "be1c0f1436a5a21a5cfeabae0b9e8e237c21609624f96817ca83a11f356f7651",
+        "mode": 420,
+        "archive_mode": 420
+      },
+      {
+        "path": "macos/SIGHTBREAK.command",
+        "bytes": 430,
+        "sha256": "fdd8cfd353001655c75d07e1b74a5453635d6fd0dba23971b53ee47330315c25",
+        "mode": 493,
+        "archive_mode": 493
+      }
+    ]
+  },
+  "fixture_sha256": {
+    "main.tscn": "fdcf2535b6792b5b04756992c967476fce51992b8ad000a990eb1446aeee37b7",
+    "main.gd": "d6ddae9e9fbf9f5bb1f87e562e4cfca9e30e5852f24aca951f4ae4d8963bbb82",
+    "project.godot": "827561396e5b3b6672678ae7dce9c066dcce64dcede8575d11254bd253744319",
+    "export_presets.cfg": "54bc8dc3b41afea77890a417b2180ab3be616d74d0fe73b7b250171554397c91"
+  },
+  "fixture_sha256_after_preparation": {
+    "main.tscn": "fdcf2535b6792b5b04756992c967476fce51992b8ad000a990eb1446aeee37b7",
+    "main.gd": "d6ddae9e9fbf9f5bb1f87e562e4cfca9e30e5852f24aca951f4ae4d8963bbb82",
+    "main.gd.uid": "5bf4ce3cff8142d309d4c1752f3ddbf32ffd00768b8231b38ceaf5ff0b9534a5",
+    "project.godot": "827561396e5b3b6672678ae7dce9c066dcce64dcede8575d11254bd253744319",
+    "export_presets.cfg": "54bc8dc3b41afea77890a417b2180ab3be616d74d0fe73b7b250171554397c91"
+  },
+  "binaries": [
+    {
+      "label": "minimal",
+      "path": "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/MinimalGraphics.app/Contents/MacOS/SIGHTBREAK Native Graphics Control",
+      "sha256": "01ee714f2862777d662b720970712543039e0490d104340b940445e709a161a8",
+      "architectures": {
+        "command": [
+          "lipo",
+          "-archs",
+          "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/MinimalGraphics.app/Contents/MacOS/SIGHTBREAK Native Graphics Control"
+        ],
+        "exit_code": 0,
+        "timed_out": false,
+        "output": "x86_64 arm64\n",
+        "descendants_after_root_exit": [],
+        "surviving_owned_group": []
+      },
+      "signature_check": {
+        "command": [
+          "codesign",
+          "--verify",
+          "--deep",
+          "--strict",
+          "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/MinimalGraphics.app"
+        ],
+        "exit_code": 0,
+        "timed_out": false,
+        "output": "",
+        "descendants_after_root_exit": [],
+        "surviving_owned_group": []
+      }
+    },
+    {
+      "label": "candidate",
+      "path": "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+      "sha256": "b75dc94311f3efb33f0025a38d078215181a54d5567dbb8cfbd1a2791b29fd29",
+      "architectures": {
+        "command": [
+          "lipo",
+          "-archs",
+          "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK"
+        ],
+        "exit_code": 0,
+        "timed_out": false,
+        "output": "x86_64 arm64\n",
+        "descendants_after_root_exit": [],
+        "surviving_owned_group": []
+      },
+      "signature_check": {
+        "command": [
+          "codesign",
+          "--verify",
+          "--deep",
+          "--strict",
+          "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos/SIGHTBREAK.app"
+        ],
+        "exit_code": 0,
+        "timed_out": false,
+        "output": "",
+        "descendants_after_root_exit": [],
+        "surviving_owned_group": []
+      }
+    },
+    {
+      "label": "baseline",
+      "path": "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-baseline/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+      "sha256": "a1b6d4102a3a87348e4e8d94a755cd935698a72e2867ef07889ae41f3e7af328",
+      "architectures": {
+        "command": [
+          "lipo",
+          "-archs",
+          "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-baseline/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK"
+        ],
+        "exit_code": 0,
+        "timed_out": false,
+        "output": "x86_64 arm64\n",
+        "descendants_after_root_exit": [],
+        "surviving_owned_group": []
+      },
+      "signature_check": {
+        "command": [
+          "codesign",
+          "--verify",
+          "--deep",
+          "--strict",
+          "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/frozen-baseline/macos/SIGHTBREAK.app"
+        ],
+        "exit_code": 0,
+        "timed_out": false,
+        "output": "",
+        "descendants_after_root_exit": [],
+        "surviving_owned_group": []
+      }
+    }
+  ],
+  "universal2_checks_passed": true,
+  "exact_source_unchanged": true,
+  "all_default_graphical_passed": true,
+  "status": "PASS startup controls only"
+}

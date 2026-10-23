@@ -1,0 +1,150 @@
+{
+  "passed": true,
+  "target": "linux",
+  "host": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "artifact_source": {
+    "source_dirty": false,
+    "source_validation_sha256": "35cbf7d559e1e732ac4344a6584b44bfbd27c05b84570bd50874f515c2954bfe",
+    "source_commit": "0fb74800cffb96077069144028d113e308ef1744",
+    "source_game_tree": "ce6ac523e5882302bf95f53314b388f5cd7805a3",
+    "source_content_sha256": "7db95847f40a5b3a4a286493d8536f36c7d595fe0e778993bb9b2d4da8785f0e",
+    "source_game_dirty": false,
+    "target": "linux",
+    "version": "0.3.2-dev",
+    "build_number": 5,
+    "export_completed": true,
+    "built_at_utc": "2026-10-20T07:06:03.040982+00:00",
+    "artifact": {
+      "path": "linux/sightbreak.x86_64",
+      "bytes": 84207848,
+      "sha256": "75762e4791223ae02a4ba94b466c665e0ebcd5fc5e088f674ddab41b25019ef2",
+      "mode": 493,
+      "archive_mode": 493
+    },
+    "payload": [
+      {
+        "path": "linux/GODOT-COPYRIGHT.txt",
+        "bytes": 100108,
+        "sha256": "cb1980c88089573bcacd7221d777c689bb8bbd778799f24c27fca0fe5f774d6d",
+        "mode": 384,
+        "archive_mode": 384
+      },
+      {
+        "path": "linux/GODOT-LICENSE.txt",
+        "bytes": 1149,
+        "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+        "mode": 384,
+        "archive_mode": 384
+      },
+      {
+        "path": "linux/sightbreak.sh",
+        "bytes": 125,
+        "sha256": "a0db3f835983003639ef11b7738df7c53ec7ff16eabfb826b6f4b1fce507f411",
+        "mode": 493,
+        "archive_mode": 493
+      },
+      {
+        "path": "linux/sightbreak.x86_64",
+        "bytes": 84207848,
+        "sha256": "75762e4791223ae02a4ba94b466c665e0ebcd5fc5e088f674ddab41b25019ef2",
+        "mode": 493,
+        "archive_mode": 493
+      }
+    ]
+  },
+  "authority_source": {
+    "source_dirty": false,
+    "source_validation_sha256": "35cbf7d559e1e732ac4344a6584b44bfbd27c05b84570bd50874f515c2954bfe",
+    "source_commit": "0fb74800cffb96077069144028d113e308ef1744",
+    "source_game_tree": "ce6ac523e5882302bf95f53314b388f5cd7805a3",
+    "source_content_sha256": "7db95847f40a5b3a4a286493d8536f36c7d595fe0e778993bb9b2d4da8785f0e",
+    "source_game_dirty": false
+  },
+  "engine": "4.7.2.stable.official.ed1daf0bf",
+  "executable_sha256": "75762e4791223ae02a4ba94b466c665e0ebcd5fc5e088f674ddab41b25019ef2",
+  "authority": {
+    "joined_id": 1,
+    "largest_ack": 249,
+    "lowest_ammo": 24,
+    "passed": true,
+    "prediction_default": false,
+    "protocol": 6,
+    "reload_command_seen": true,
+    "reload_completed": true,
+    "reload_seen": true,
+    "reload_trigger": "native client input",
+    "scope": "source Godot authority fixture; client is actual exported desktop binary driven through native UI; no rewards",
+    "shots": 6
+  },
+  "client_exit": 0,
+  "server_exit": 0,
+  "capture_method": "raw X11 desktop",
+  "rendered_capture_stages": "Require visual inspection; authority timing is not rendered timing",
+  "capture_dimensions": [
+    1280,
+    720
+  ],
+  "reload_trigger": "native client input",
+  "inventory_navigation_captured": true,
+  "desktop_R_key_input": "VERIFIED via server-observed reload command",
+  "movement_aim_input": "Native input delivered; authoritative displacement not measured by this fixture",
+  "exit_method": "completion-driven WM_DELETE_WINDOW",
+  "automation_accessibility": "Disabled with dummy driver and unavailable test-session bus; screen-reader/desktop portals UNVERIFIED",
+  "scope": "Actual exported native desktop client; source Godot authority on loopback; no physical hardware or internet-security acceptance",
+  "cleanup_errors": [],
+  "commands": [
+    {
+      "name": "xvfb",
+      "command": [
+        "/workspace/tools/xvfb/usr/bin/Xvfb",
+        ":118",
+        "-screen",
+        "0",
+        "1280x720x24",
+        "-nolisten",
+        "tcp"
+      ],
+      "pid": 17041,
+      "started_seconds": 0.18194732599977215,
+      "exit_code": 0
+    },
+    {
+      "name": "server",
+      "command": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak/game",
+        "--headless",
+        "--accessibility",
+        "disabled",
+        "--accessibility-driver",
+        "dummy",
+        "--script",
+        "/workspace/sightbreak/scripts/fixtures/export_integration.gd",
+        "--",
+        "--output=/workspace/desktop-evidence/native-network-final"
+      ],
+      "pid": 17046,
+      "started_seconds": 0.28787203199999567,
+      "exit_code": 0
+    },
+    {
+      "name": "client",
+      "command": [
+        "/workspace/sightbreak/builds/desktop-alpha-final/linux/sightbreak.x86_64",
+        "--audio-driver",
+        "Dummy",
+        "--position",
+        "0,0",
+        "--accessibility",
+        "disabled",
+        "--accessibility-driver",
+        "dummy"
+      ],
+      "pid": 17056,
+      "started_seconds": 0.6935905919999641,
+      "exit_code": 0
+    }
+  ],
+  "elapsed_seconds": 27.96979242799989
+}

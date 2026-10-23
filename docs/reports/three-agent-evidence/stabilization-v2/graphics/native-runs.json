@@ -1,0 +1,245 @@
+[
+  {
+    "name": "import-network-enabled",
+    "source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics/scripts/godot.sh",
+      "--headless",
+      "--editor",
+      "--import",
+      "--quit"
+    ],
+    "exit": 0,
+    "seconds": 7.008890099000382
+  },
+  {
+    "name": "weapon-art-native",
+    "source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics/scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/weapon_art_test.gd"
+    ],
+    "exit": 0,
+    "seconds": 12.70862118399964
+  },
+  {
+    "name": "reload-sequence-headless",
+    "source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics/scripts/godot.sh",
+      "--headless",
+      "--script",
+      "res://tests/reload_sequence_test.gd"
+    ],
+    "exit": 0,
+    "seconds": 5.631517679999888
+  },
+  {
+    "name": "sunlit",
+    "source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics/scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_sequence_capture.gd",
+      "--",
+      "--out=/workspace/reviews/stabilization-v2-20261016/graphics/sunlit",
+      "--fire",
+      "--tail=0.55",
+      "--only=0,14,28,34,44,52,58,66,69,72,74,78,80,82,84,90,98,104,110,118,126,134,137,141,146"
+    ],
+    "exit": 0,
+    "seconds": 77.90242664699963
+  },
+  {
+    "name": "shade",
+    "source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics/scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_sequence_capture.gd",
+      "--",
+      "--out=/workspace/reviews/stabilization-v2-20261016/graphics/shade",
+      "--fire",
+      "--tail=0.55",
+      "--only=0,14,28,34,44,52,58,66,69,72,74,78,80,82,84,90,98,104,110,118,126,134,137,141,146",
+      "--view=shade"
+    ],
+    "exit": 0,
+    "seconds": 71.07251215799988
+  },
+  {
+    "name": "backlight",
+    "source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics/scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_sequence_capture.gd",
+      "--",
+      "--out=/workspace/reviews/stabilization-v2-20261016/graphics/backlight",
+      "--fire",
+      "--tail=0.55",
+      "--only=0,14,28,34,44,52,58,66,69,72,74,78,80,82,84,90,98,104,110,118,126,134,137,141,146",
+      "--view=backlight"
+    ],
+    "exit": 0,
+    "seconds": 84.81096434099982
+  },
+  {
+    "name": "dark",
+    "source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics/scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_sequence_capture.gd",
+      "--",
+      "--out=/workspace/reviews/stabilization-v2-20261016/graphics/dark",
+      "--fire",
+      "--tail=0.55",
+      "--only=0,14,28,34,44,52,58,66,69,72,74,78,80,82,84,90,98,104,110,118,126,134,137,141,146",
+      "--view=dark"
+    ],
+    "exit": 0,
+    "seconds": 70.23500093100029
+  },
+  {
+    "name": "reduced-current",
+    "source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics/scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_sequence_capture.gd",
+      "--",
+      "--out=/workspace/reviews/stabilization-v2-20261016/graphics/reduced-current",
+      "--fire",
+      "--tail=0.55",
+      "--only=0,14,28,34,44,52,58,66,69,72,74,78,80,82,84,90,98,104,110,118,126,134,137,141,146",
+      "--reduced"
+    ],
+    "exit": 0,
+    "seconds": 62.53038555100011
+  },
+  {
+    "name": "reduced-calm",
+    "source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics/scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_sequence_capture.gd",
+      "--",
+      "--out=/workspace/reviews/stabilization-v2-20261016/graphics/reduced-calm",
+      "--fire",
+      "--tail=0.55",
+      "--only=0,14,28,34,44,52,58,66,69,72,74,78,80,82,84,90,98,104,110,118,126,134,137,141,146",
+      "--reduced",
+      "--variant=calm"
+    ],
+    "exit": 0,
+    "seconds": 66.91920640799981
+  },
+  {
+    "name": "reduced-still",
+    "source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics/scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_sequence_capture.gd",
+      "--",
+      "--out=/workspace/reviews/stabilization-v2-20261016/graphics/reduced-still",
+      "--fire",
+      "--tail=0.55",
+      "--only=0,14,28,34,44,52,58,66,69,72,74,78,80,82,84,90,98,104,110,118,126,134,137,141,146",
+      "--reduced",
+      "--variant=still"
+    ],
+    "exit": 0,
+    "seconds": 65.46204269400005
+  },
+  {
+    "name": "snapshot20hz",
+    "source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics/scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_sequence_capture.gd",
+      "--",
+      "--out=/workspace/reviews/stabilization-v2-20261016/graphics/snapshot20hz",
+      "--fire",
+      "--tail=0.55",
+      "--only=0,14,28,34,44,52,58,66,69,72,74,78,80,82,84,90,98,104,110,118,126,134,137,141,146",
+      "--authority=snapshot20hz"
+    ],
+    "exit": 0,
+    "seconds": 65.24259197599986
+  },
+  {
+    "name": "weapon-art-capture",
+    "source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics/scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/weapon_art_capture.gd",
+      "--",
+      "--capture-dir=/workspace/reviews/stabilization-v2-20261016/graphics/weapon-art-capture"
+    ],
+    "exit": 0,
+    "seconds": 18.634157174999928
+  },
+  {
+    "name": "perf-new",
+    "source": "5357329fa06136ac0d81b58ace97f872f37bebfa",
+    "command": [
+      "/workspace/sightbreak-stab2-graphics/scripts/godot.sh",
+      "--audio-driver",
+      "Dummy",
+      "--rendering-method",
+      "gl_compatibility",
+      "--script",
+      "res://tests/reload_perf_probe.gd",
+      "--",
+      "--samples=10"
+    ],
+    "exit": 0,
+    "seconds": 29.452945827000804
+  }
+]

@@ -1,0 +1,107 @@
+{
+  "scope": "Exact-ref local shallow Git checkout and pure tests only; no native/CI execution",
+  "head": "3973447175370d64ef2d790a3551102a89bb3a8e",
+  "shallow": "true",
+  "test_source_sha256": "e5b46bc4aa739e80ba53e9e4d4c01f3efe1ee48e17344c6e29ba3750646d9d16",
+  "exit_code": 0,
+  "expected_exit_code": 0,
+  "commands": [
+    {
+      "label": "init",
+      "command": [
+        "git",
+        "init"
+      ],
+      "exit_code": 0,
+      "log": "init.txt",
+      "sha256": "8c1f16a87713af5004cd6ad900e4f7a0d72e4b051bd4f538e997b82eb14314f6"
+    },
+    {
+      "label": "remote",
+      "command": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "file:///workspace/sightbreak-mac-derived-ocr"
+      ],
+      "exit_code": 0,
+      "log": "remote.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "fetch",
+      "command": [
+        "git",
+        "fetch",
+        "--depth=1",
+        "--filter=blob:none",
+        "--upload-pack=git -c uploadpack.allowFilter=true upload-pack",
+        "origin",
+        "3973447175370d64ef2d790a3551102a89bb3a8e"
+      ],
+      "exit_code": 0,
+      "log": "fetch.txt",
+      "sha256": "72e023f36462164b9cb7301f11aee22f007777cdb042ee21c1f6c92735d68aaa"
+    },
+    {
+      "label": "sparse",
+      "command": [
+        "git",
+        "sparse-checkout",
+        "set",
+        "--cone",
+        "scripts",
+        "docs/reports/gauntlet/m2-mac-derived-ocr"
+      ],
+      "exit_code": 0,
+      "log": "sparse.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "checkout",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "FETCH_HEAD"
+      ],
+      "exit_code": 0,
+      "log": "checkout.txt",
+      "sha256": "27e493d3ccecaeda5d41cce2ea51e17b9bab84ee06723f8a73b430c7d48256b8"
+    },
+    {
+      "label": "head",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "log": "head.txt",
+      "sha256": "5969d31648f70c6d9fa378327bf8e1f9f7503e46250065017e6fb45985a305d9"
+    },
+    {
+      "label": "shallow",
+      "command": [
+        "git",
+        "rev-parse",
+        "--is-shallow-repository"
+      ],
+      "exit_code": 0,
+      "log": "shallow.txt",
+      "sha256": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74"
+    },
+    {
+      "label": "deploy-controls",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_deploy_ocr.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "deploy-controls.txt",
+      "sha256": "145cd398e15ce1f3d31038ea623a16cdbcccb6da34704177beded7916b5830f6"
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "supported_underlay_mismatch": {
+    "true_contrast": 1.5444704597058323,
+    "changed": {
+      "footprint_present": false,
+      "support_pixels": 54,
+      "outside_changed": 0,
+      "unexpected_support_pixels": 0,
+      "underlay_compositing_errors": 36,
+      "missing_footprint_pixels": 0,
+      "negative_diagnostic_pixels": 0,
+      "nonneutral_coverage_pixels": 0,
+      "max_fit_residual_codes": 0.0,
+      "inferred_rgb": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "inferred_rgb_interval": [
+        [
+          0.9844357976653697,
+          0.9844357976653697,
+          0.9844357976653697
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "primitive_alpha": 1.0,
+      "contrast_lower_bound": 18.72418043364822,
+      "worst_pixel_yx": [
+        1,
+        1
+      ],
+      "worst_underlay_rgb": [
+        13,
+        13,
+        13
+      ],
+      "low_coverage_pixels": 18,
+      "strong_coverage_pixels": 18,
+      "observed_strong_min": 19.435548355403956,
+      "resolved": false
+    },
+    "false_accept": false,
+    "required": "Reject changed suppressed underlay on glyph support."
+  },
+  "outside_diagnostics_mismatch": {
+    "changed": {
+      "footprint_present": false,
+      "support_pixels": 54,
+      "outside_changed": 1,
+      "unexpected_support_pixels": 0,
+      "underlay_compositing_errors": 0,
+      "missing_footprint_pixels": 0,
+      "negative_diagnostic_pixels": 0,
+      "nonneutral_coverage_pixels": 0,
+      "max_fit_residual_codes": 0.0,
+      "inferred_rgb": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "inferred_rgb_interval": [
+        [
+          0.9844357976653697,
+          0.9844357976653697,
+          0.9844357976653697
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "primitive_alpha": 1.0,
+      "contrast_lower_bound": 18.72418043364822,
+      "worst_pixel_yx": [
+        1,
+        1
+      ],
+      "worst_underlay_rgb": [
+        13,
+        13,
+        13
+      ],
+      "low_coverage_pixels": 18,
+      "strong_coverage_pixels": 18,
+      "observed_strong_min": 19.435548355403956,
+      "resolved": false
+    },
+    "false_accept": false,
+    "required": "Reject black/white diagnostic changes outside their support."
+  },
+  "later_layer_occlusion": {
+    "actual_full_glyph_contrast": 1.191236415402931,
+    "changed": {
+      "footprint_present": false,
+      "support_pixels": 53,
+      "outside_changed": 0,
+      "unexpected_support_pixels": 0,
+      "underlay_compositing_errors": 0,
+      "missing_footprint_pixels": 0,
+      "negative_diagnostic_pixels": 0,
+      "nonneutral_coverage_pixels": 0,
+      "max_fit_residual_codes": 0.0,
+      "inferred_rgb": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "inferred_rgb_interval": [
+        [
+          0.8571428571428571,
+          0.8571428571428571,
+          0.8571428571428571
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "primitive_alpha": 1.0,
+      "contrast_lower_bound": 14.96875806971673,
+      "worst_pixel_yx": [
+        1,
+        2
+      ],
+      "worst_underlay_rgb": [
+        1,
+        1,
+        1
+      ],
+      "low_coverage_pixels": 53,
+      "strong_coverage_pixels": 0,
+      "observed_strong_min": null,
+      "resolved": false
+    },
+    "false_accept": false,
+    "required": "Separate AA from later-layer occlusion or fail unresolved."
+  },
+  "invented_matrix_missing_binding_and_unresolved_inactive": {
+    "scenes": 32,
+    "errors": [
+      "scene identities differ from exact preregistered 32-scene matrix",
+      "missing frozen source receipt or native background folder",
+      "invented-00-idle: unknown scene",
+      "invented-01-idle: unknown scene",
+      "invented-02-idle: unknown scene",
+      "invented-03-idle: unknown scene",
+      "invented-04-idle: unknown scene",
+      "invented-05-idle: unknown scene",
+      "invented-06-idle: unknown scene",
+      "invented-07-idle: unknown scene",
+      "invented-08-idle: unknown scene",
+      "invented-09-idle: unknown scene",
+      "invented-10-idle: unknown scene",
+      "invented-11-idle: unknown scene",
+      "invented-12-idle: unknown scene",
+      "invented-13-idle: unknown scene",
+      "invented-14-idle: unknown scene",
+      "invented-15-idle: unknown scene",
+      "invented-16-idle: unknown scene",
+      "invented-17-idle: unknown scene",
+      "invented-18-idle: unknown scene",
+      "invented-19-idle: unknown scene",
+      "invented-20-idle: unknown scene",
+      "invented-21-idle: unknown scene",
+      "invented-22-idle: unknown scene",
+      "invented-23-idle: unknown scene",
+      "invented-24-idle: unknown scene",
+      "invented-25-idle: unknown scene",
+      "invented-26-idle: unknown scene",
+      "invented-27-idle: unknown scene",
+      "invented-28-idle: unknown scene",
+      "invented-29-idle: unknown scene",
+      "invented-30-idle: unknown scene",
+      "invented-31-idle: unknown scene"
+    ],
+    "pass": false,
+    "inactive_rows": 0,
+    "unresolved_inactive_rows": 0,
+    "false_accept": false,
+    "required": "Require exact matrix, source/native/background binding, and resolved inactive rows."
+  }
+}

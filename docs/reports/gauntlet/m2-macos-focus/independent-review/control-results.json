@@ -1,0 +1,42 @@
+[
+  {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "scripts/test_macos_focus.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "output": "candidate-focus-controls.txt",
+    "source_commit": "eab9882502d11400dd4eda9c7e6ad5ecd35e6d3a"
+  },
+  {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "scripts/test_macos_menu.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "output": "candidate-menu-controls.txt",
+    "source_commit": "eab9882502d11400dd4eda9c7e6ad5ecd35e6d3a"
+  },
+  {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "docs/reports/gauntlet/m2-macos-focus/independent-review/independent_controls.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "output": "independent-controls-eab9882.txt",
+    "source_commit": "eab9882502d11400dd4eda9c7e6ad5ecd35e6d3a"
+  },
+  {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+      "docs/reports/gauntlet/m2-macos-focus/independent-review/independent_controls.py",
+      "-v"
+    ],
+    "exit_code": 0,
+    "output": "independent-controls.txt",
+    "source_commit": "12602178d11ae9e16785c828d0baab0a7bd64aa5"
+  }
+]

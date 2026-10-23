@@ -1,0 +1,48 @@
+[
+  {
+    "name": "import",
+    "command": [
+      "/workspace/reviews/offline-flow-critic/source/scripts/godot.sh",
+      "--headless",
+      "--editor",
+      "--import",
+      "--quit"
+    ],
+    "environment": {
+      "SIGHTBREAK_TOOLS_DIR": "/workspace/tools",
+      "SIGHTBREAK_STATE_DIR": "/workspace/reviews/offline-flow-critic/state-import"
+    },
+    "exit": 0,
+    "elapsed_seconds": 7.064166586000283
+  },
+  {
+    "name": "input_mode",
+    "command": [
+      "/workspace/reviews/offline-flow-critic/source/scripts/godot.sh",
+      "--headless",
+      "--script",
+      "res://tests/input_mode_test.gd"
+    ],
+    "environment": {
+      "SIGHTBREAK_TOOLS_DIR": "/workspace/tools",
+      "SIGHTBREAK_STATE_DIR": "/workspace/reviews/offline-flow-critic/state-input_mode"
+    },
+    "exit": 0,
+    "elapsed_seconds": 2.3360513799998444
+  },
+  {
+    "name": "offline_diagnostics",
+    "command": [
+      "/workspace/reviews/offline-flow-critic/source/scripts/godot.sh",
+      "--headless",
+      "--script",
+      "res://tests/offline_diagnostics_test.gd"
+    ],
+    "environment": {
+      "SIGHTBREAK_TOOLS_DIR": "/workspace/tools",
+      "SIGHTBREAK_STATE_DIR": "/workspace/reviews/offline-flow-critic/state-offline_diagnostics"
+    },
+    "exit": 0,
+    "elapsed_seconds": 1.3540053750002699
+  }
+]

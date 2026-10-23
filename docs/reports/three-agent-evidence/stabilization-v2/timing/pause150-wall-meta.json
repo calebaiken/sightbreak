@@ -1,0 +1,24 @@
+{
+  "command": [
+    "scripts/godot.sh",
+    "--headless",
+    "--audio-driver",
+    "Dummy",
+    "--script",
+    "/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe.gd",
+    "--",
+    "--out=/workspace/reviews/stabilization-v2-20261016/timing/pause150-wall",
+    "--clock=wall",
+    "--scenario=reload",
+    "--negative="
+  ],
+  "code": 1,
+  "pause": {
+    "requested_ms": 150,
+    "elapsed_ms": 150.15083700018295
+  },
+  "elapsed_s": 3.7705874180001047,
+  "baseline_sha": "4316c58c8f5ae38ea924631fc48e4b1e7d5df873",
+  "probe_sha256": "beb4b46357dab2d47cf9c3873d6a760e2b12ae7baede42bec0d12b84e3343279",
+  "baseline_status": ""
+}

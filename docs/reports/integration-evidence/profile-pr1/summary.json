@@ -1,0 +1,132 @@
+{
+  "context": "Linux Xvfb / Mesa llvmpipe CPU rendering; fixed synthetic camera/actors. NOT physical GPU/mobile FPS, thermal or battery evidence.",
+  "project": "/workspace/sightbreak-pr1-current/game",
+  "cpus": "0,1",
+  "mesa_workers": 2,
+  "quality": "standard",
+  "runs": 3,
+  "frames_per_view_per_run": 24,
+  "construction_ms": [
+    236.47,
+    256.539,
+    229.497
+  ],
+  "views": [
+    {
+      "view": "approach",
+      "median_of_run_medians_ms": 447.422,
+      "run_medians_ms": [
+        447.417,
+        450.252,
+        447.422
+      ],
+      "p95_ms": [
+        455.756,
+        458.243,
+        452.092
+      ],
+      "draw_calls": [
+        152.0,
+        152.0,
+        152.0
+      ],
+      "primitives": [
+        78274.0,
+        78274.0,
+        78274.0
+      ],
+      "texture_bytes": [
+        55942068,
+        55942068,
+        55942068
+      ]
+    },
+    {
+      "view": "site",
+      "median_of_run_medians_ms": 401.768,
+      "run_medians_ms": [
+        403.319,
+        401.768,
+        397.44
+      ],
+      "p95_ms": [
+        411.798,
+        406.77,
+        402.308
+      ],
+      "draw_calls": [
+        45.0,
+        45.0,
+        45.0
+      ],
+      "primitives": [
+        40522.0,
+        40522.0,
+        40522.0
+      ],
+      "texture_bytes": [
+        55942068,
+        55942068,
+        55942068
+      ]
+    },
+    {
+      "view": "overview",
+      "median_of_run_medians_ms": 388.768,
+      "run_medians_ms": [
+        387.051,
+        389.063,
+        388.768
+      ],
+      "p95_ms": [
+        406.706,
+        391.237,
+        390.861
+      ],
+      "draw_calls": [
+        166.0,
+        166.0,
+        166.0
+      ],
+      "primitives": [
+        75674.0,
+        75674.0,
+        75674.0
+      ],
+      "texture_bytes": [
+        55942068,
+        55942068,
+        55942068
+      ]
+    },
+    {
+      "view": "operators",
+      "median_of_run_medians_ms": 428.248,
+      "run_medians_ms": [
+        432.427,
+        428.248,
+        427.579
+      ],
+      "p95_ms": [
+        446.656,
+        432.908,
+        430.163
+      ],
+      "draw_calls": [
+        138.0,
+        138.0,
+        138.0
+      ],
+      "primitives": [
+        75024.0,
+        75024.0,
+        75024.0
+      ],
+      "texture_bytes": [
+        55942068,
+        55942068,
+        55942068
+      ]
+    }
+  ]
+}

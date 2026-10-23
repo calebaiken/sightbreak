@@ -1,0 +1,78 @@
+[
+  {
+    "command": [
+      "python3",
+      "scripts/test_linux_gpu_profile.py",
+      "-v"
+    ],
+    "exit": 0,
+    "output": "pure-1.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/test_linux_frame_sampler.py",
+      "-v"
+    ],
+    "exit": 0,
+    "output": "pure-2.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/test_offline_role_guidance.py",
+      "-v"
+    ],
+    "exit": 0,
+    "output": "pure-3.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/test_offline_capture_fences.py",
+      "-v"
+    ],
+    "exit": 0,
+    "output": "pure-4.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/reports/gauntlet/m1-linux-gles-profile-recovered/source_audit.py"
+    ],
+    "exit": 0,
+    "output": "pure-5.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/reports/gauntlet/m1-linux-gles-profile-recovered/mutation_controls.py",
+      "--output",
+      "/workspace/reviews/linux-gles-profile-corrected/docs/reports/gauntlet/m1-linux-gles-profile-recovered/independent-review-r2/mutations"
+    ],
+    "exit": 0,
+    "output": "pure-6.txt"
+  },
+  {
+    "command": [
+      "python3",
+      "-m",
+      "py_compile",
+      "scripts/verify_offline_match.py",
+      "scripts/test_linux_gpu_profile.py",
+      "docs/reports/gauntlet/m1-linux-gles-profile-recovered/mutation_controls.py"
+    ],
+    "exit": 0,
+    "output": "pure-7.txt"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "917b143ba4e4b0d9644a7a0ddeee1dd64c139682",
+      "--check"
+    ],
+    "exit": 0,
+    "output": "pure-8.txt"
+  }
+]

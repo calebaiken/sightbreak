@@ -1,0 +1,244 @@
+{
+  "source": "3c4d921ffc31d849d1a70d095a31d9845307f963",
+  "command": [
+    "scripts/godot.sh",
+    "--headless",
+    "--script",
+    "/workspace/reviews/postplant-guidance-critic/docs/reports/gauntlet/m1-postplant-guidance/independent-critic/independent_priority_probe.gd"
+  ],
+  "env": {
+    "SIGHTBREAK_TOOLS_DIR": "/workspace/tools",
+    "SIGHTBREAK_STATE_DIR": "/workspace/reviews/postplant-guidance-critic/.local"
+  },
+  "project_workdir": "/workspace/sightbreak-postplant-priority",
+  "scope": "Private frozen HUD fixture only; no gameplay, render, network traffic or rewards",
+  "log_sha256": "5e9af661aa1f2717900bf3a0b11da34cb50de9306487eb567fc3dfe6499e0500",
+  "controls": [
+    {
+      "connection": "reconnecting",
+      "correct": true,
+      "epoch": -1,
+      "label": "actual disconnect callback retains typed reason after critical-looking ordinary text touch=false",
+      "notice": "Server disconnected. Attempting to reconnect\u2026",
+      "status": "Server disconnected. Attempting to reconnect\u2026",
+      "tick": 0
+    },
+    {
+      "connection": "reconnecting",
+      "correct": true,
+      "epoch": -1,
+      "label": "duplicate disconnect and late ordinary text preserve reason beyond five seconds touch=false",
+      "notice": "Server disconnected. Attempting to reconnect\u2026",
+      "status": "Server disconnected. Attempting to reconnect\u2026",
+      "tick": 0
+    },
+    {
+      "connection": "failed",
+      "correct": true,
+      "epoch": -1,
+      "label": "actual terminal callback survives late transport callbacks and ordinary combat touch=false",
+      "notice": "QA terminal admission reason with a player named Connected",
+      "status": "QA terminal admission reason with a player named Connected",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 10,
+      "label": "actual welcome clears terminal presentation and displays accepted snapshot role touch=false",
+      "notice": "",
+      "status": "DEFEND THE DEVICE",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 11,
+      "label": "new snapshot epoch immediately selects living defender role under combat touch=false",
+      "notice": "",
+      "status": "HOLD E NEAR THE DEVICE TO DEFUSE",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 11,
+      "label": "stale attacker epoch cannot restore attacker role touch=false",
+      "notice": "",
+      "status": "HOLD E NEAR THE DEVICE TO DEFUSE",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 12,
+      "label": "new death epoch removes attacker guidance under combat touch=false",
+      "notice": "",
+      "status": "SPECTATING YOUR SQUAD",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 12,
+      "label": "stale living epoch cannot revive attacker guidance touch=false",
+      "notice": "",
+      "status": "SPECTATING YOUR SQUAD",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 13,
+      "label": "new unplanted epoch preserves ordinary isolated notice touch=false",
+      "notice": "",
+      "status": "QA isolated unplanted notice",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 13,
+      "label": "unplanted notice expires under original five-second policy touch=false",
+      "notice": "",
+      "status": "HOLD E AT A SITE TO PLANT",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 14,
+      "label": "accepted dropped-device epoch restores recovery role touch=false",
+      "notice": "",
+      "status": "RECOVER THE RELAY DEVICE",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 15,
+      "label": "accepted post-round epoch removes live planted role touch=false",
+      "notice": "",
+      "status": "ROUND COMPLETE",
+      "tick": 0
+    },
+    {
+      "connection": "reconnecting",
+      "correct": true,
+      "epoch": -1,
+      "label": "actual disconnect callback retains typed reason after critical-looking ordinary text touch=true",
+      "notice": "Server disconnected. Attempting to reconnect\u2026",
+      "status": "Server disconnected. Attempting to reconnect\u2026",
+      "tick": 0
+    },
+    {
+      "connection": "reconnecting",
+      "correct": true,
+      "epoch": -1,
+      "label": "duplicate disconnect and late ordinary text preserve reason beyond five seconds touch=true",
+      "notice": "Server disconnected. Attempting to reconnect\u2026",
+      "status": "Server disconnected. Attempting to reconnect\u2026",
+      "tick": 0
+    },
+    {
+      "connection": "failed",
+      "correct": true,
+      "epoch": -1,
+      "label": "actual terminal callback survives late transport callbacks and ordinary combat touch=true",
+      "notice": "QA terminal admission reason with a player named Connected",
+      "status": "QA terminal admission reason with a player named Connected",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 10,
+      "label": "actual welcome clears terminal presentation and displays accepted snapshot role touch=true",
+      "notice": "",
+      "status": "DEFEND THE DEVICE",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 11,
+      "label": "new snapshot epoch immediately selects living defender role under combat touch=true",
+      "notice": "",
+      "status": "HOLD USE NEAR THE DEVICE TO DEFUSE",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 11,
+      "label": "stale attacker epoch cannot restore attacker role touch=true",
+      "notice": "",
+      "status": "HOLD USE NEAR THE DEVICE TO DEFUSE",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 12,
+      "label": "new death epoch removes attacker guidance under combat touch=true",
+      "notice": "",
+      "status": "SPECTATING YOUR SQUAD",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 12,
+      "label": "stale living epoch cannot revive attacker guidance touch=true",
+      "notice": "",
+      "status": "SPECTATING YOUR SQUAD",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 13,
+      "label": "new unplanted epoch preserves ordinary isolated notice touch=true",
+      "notice": "",
+      "status": "QA isolated unplanted notice",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 13,
+      "label": "unplanted notice expires under original five-second policy touch=true",
+      "notice": "",
+      "status": "HOLD USE AT A SITE TO PLANT",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 14,
+      "label": "accepted dropped-device epoch restores recovery role touch=true",
+      "notice": "",
+      "status": "RECOVER THE RELAY DEVICE",
+      "tick": 0
+    },
+    {
+      "connection": "connected",
+      "correct": true,
+      "epoch": 15,
+      "label": "accepted post-round epoch removes live planted role touch=true",
+      "notice": "",
+      "status": "ROUND COMPLETE",
+      "tick": 0
+    }
+  ],
+  "cleanup": {
+    "exit": 0,
+    "native_user_dir": "/workspace/reviews/postplant-guidance-critic/.local/data/SIGHTBREAK_QA/hud-objective-hint-94392-111453",
+    "original_exit": 0,
+    "original_user_dir_restored": true,
+    "owned": true,
+    "owner": "SIGHTBREAK_QA/hud-objective-hint-94392-111453",
+    "reason": "",
+    "removed": true
+  }
+}

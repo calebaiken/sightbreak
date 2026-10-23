@@ -1,0 +1,77 @@
+{
+  "passed": false,
+  "host": "Windows-2025Server-10.0.26100-SP0",
+  "source": {
+    "source_dirty": false,
+    "source_validation_sha256": "08c92b646c50118240af7048aa1cca844a5940c832cca15c6a5d70b616192dd1",
+    "source_commit": "b8d4d81ce71486dce8ff2469b1ed8d3deca50461",
+    "source_game_tree": "45b6c6ea9d3244700e324e90d6df4778ee28d18e",
+    "source_content_sha256": "0c471fb5c52826aa0391db7d4514429d08dc683f53d96e89f9176557d8a6f7ed",
+    "source_game_dirty": false
+  },
+  "controls": [
+    {
+      "name": "real foreign HWND with selected game PID",
+      "passed": true,
+      "error": "Hosted render priority requires the live owned child window/PID",
+      "before": {
+        "game": 32768,
+        "foreign": 16384,
+        "controller": 16384
+      },
+      "after": {
+        "game": 32768,
+        "foreign": 16384,
+        "controller": 16384
+      }
+    },
+    {
+      "name": "real foreign Popen with selected game HWND and PID",
+      "passed": true,
+      "error": "Hosted render priority requires the live owned child window/PID",
+      "before": {
+        "game": 32768,
+        "foreign": 16384,
+        "controller": 16384
+      },
+      "after": {
+        "game": 32768,
+        "foreign": 16384,
+        "controller": 16384
+      }
+    },
+    {
+      "name": "only matching real owned game is changed",
+      "passed": true,
+      "before": {
+        "game": 32768,
+        "foreign": 16384,
+        "controller": 16384
+      },
+      "after": {
+        "game": 16384,
+        "foreign": 16384,
+        "controller": 16384
+      },
+      "receipt": {
+        "pid": 3320,
+        "window_pid": 3320,
+        "before_priority_class": 32768,
+        "current_priority_class": 16384,
+        "scope": "Opt-in Windows hosted offline QA only; owned child below-normal, no affinity/rules/time-scale changes"
+      }
+    }
+  ],
+  "scope": "Native helper ownership only; no offline gameplay acceptance or timing/rule changes",
+  "error": "TimeoutExpired: Command '['D:\\\\a\\\\sightbreak\\\\sightbreak\\\\builds\\\\windows-hosted-priority-probe\\\\windows\\\\SIGHTBREAK.exe', '--audio-driver', 'Dummy', '--position', '0,0', '--resolution', '640x360']' timed out after 15 seconds",
+  "cleanup": [
+    {
+      "pid": 2916,
+      "forced_exit": 1
+    },
+    {
+      "pid": 3320,
+      "forced_exit": 1
+    }
+  ]
+}

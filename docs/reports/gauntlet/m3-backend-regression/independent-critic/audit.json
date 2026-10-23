@@ -1,0 +1,591 @@
+{
+  "archive_manifest_counts": {
+    "attempt-1-identity-rejected": 23,
+    "attempt-2-startup-rejected": 22,
+    "attempt-3": 35
+  },
+  "archived_third_attempt_equals_raw": true,
+  "backend_matches_b09cfe1": "67027b4fa17674ef067c84401af76eb1524419ac",
+  "builder_changed_paths": [
+    "docs/reports/gauntlet/m3-backend-regression/CRITERIA.md",
+    "docs/reports/gauntlet/m3-backend-regression/RESULTS.md",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/SHA256SUMS",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/cleanup.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/container-absence.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/container-before-cleanup.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/container-before-cleanup.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/container-before.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/container-before.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/create-owned-volume.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/identity-before-migration-container-sql.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/image-before.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/owned-label-container-absence.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/port-after-cleanup.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/readiness-00.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/readiness-01.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/readiness-02.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/remove-owned-container.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/remove-owned-volume.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/runtime.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/source-after.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/source-before.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/start-owned-container.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/state.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/volume-absence.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-1-identity-rejected/volume-before-cleanup.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/SHA256SUMS",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/cleanup.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/container-absence.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/container-before-cleanup.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/container-before-cleanup.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/container-before.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/container-before.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/create-owned-volume.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/identity-before-migration-container-sql.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/image-before.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/owned-label-container-absence.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/port-after-cleanup.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/readiness-00.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/readiness-01.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/remove-owned-container.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/remove-owned-volume.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/runtime.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/source-after.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/source-before.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/start-owned-container.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/state.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/volume-absence.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-2-startup-rejected/volume-before-cleanup.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/SHA256SUMS",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/cleanup.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/collection.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/container-absence.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/container-before-cleanup.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/container-before-cleanup.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/container-before.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/container-before.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/container-processes-after-tests.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/create-owned-volume.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/identity-after-tests-container-sql.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/identity-after-tests.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/identity-before-migration-container-sql.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/identity-before-migration.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/identity-before-tests-container-sql.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/identity-before-tests.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/image-before.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/migration.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/owned-label-container-absence.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/port-after-cleanup.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/pytest-junit.xml",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/pytest.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/readiness-00.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/readiness-01.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/readiness-02.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/remove-owned-container.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/remove-owned-volume.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/runtime.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/schema-after-migration.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/source-after.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/source-before.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/start-owned-container.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/state.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/test-inventory.json",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/volume-absence.log",
+    "docs/reports/gauntlet/m3-backend-regression/attempt-3/volume-before-cleanup.log",
+    "docs/reports/gauntlet/m3-backend-regression/run_qualification.py"
+  ],
+  "builder_evidence_commit": "79c52a97c289756452a1a1da453db2754afa0748",
+  "cached_image_observation": {
+    "argv": [
+      "docker",
+      "--host=unix:///var/run/docker.sock",
+      "image",
+      "inspect",
+      "--format",
+      "{{json .Id}}\n{{json .RepoDigests}}",
+      "sha256:327daa8fae7178d61f93142f146b098467b345e10997b9eb79f63bd58e5c8f3c"
+    ],
+    "exit_code": 0,
+    "stderr": "",
+    "stdout": "\"sha256:327daa8fae7178d61f93142f146b098467b345e10997b9eb79f63bd58e5c8f3c\"\n[\"postgres@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3\"]\n"
+  },
+  "case_count": 61,
+  "checked_utc": "2026-10-22T07:08:29.853796+00:00",
+  "complete_expected_cases": [
+    "tests/test_economy.py::test_new_account_has_no_value_and_rejects_client_balance",
+    "tests/test_economy.py::test_password_is_argon2_and_tokens_are_hashed",
+    "tests/test_economy.py::test_store_replay_and_changed_payload",
+    "tests/test_economy.py::test_concurrent_double_spend",
+    "tests/test_economy.py::test_case_open_replay_consumes_once",
+    "tests/test_economy.py::test_case_open_rejects_unowned_or_fake_selection",
+    "tests/test_economy.py::test_concurrent_market_purchase_one_owner",
+    "tests/test_economy.py::test_market_reservation_cancel_and_ownership",
+    "tests/test_economy.py::test_market_expected_price_rejects_mismatch_atomically[399]",
+    "tests/test_economy.py::test_market_expected_price_rejects_mismatch_atomically[401]",
+    "tests/test_economy.py::test_market_guarded_replay_is_exact_and_applies_once",
+    "tests/test_economy.py::test_market_pre_guard_receipt_hash_still_replays",
+    "tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[0]",
+    "tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[-1]",
+    "tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[10000001]",
+    "tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[True]",
+    "tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[400]",
+    "tests/test_economy.py::test_market_expected_price_is_a_bounded_strict_integer[400.0]",
+    "tests/test_economy.py::test_trade_revision_invalidates_confirmation_and_transfers_once",
+    "tests/test_economy.py::test_trade_rejects_duplicates_unowned_and_releases_cancel",
+    "tests/test_economy.py::test_forged_rewards_rejected_and_trusted_replay_idempotent",
+    "tests/test_economy.py::test_bot_count_and_afk_no_rewards",
+    "tests/test_economy.py::test_history_append_only_and_rollback_disconnect",
+    "tests/test_economy.py::test_rate_limit_persisted",
+    "tests/test_economy.py::test_overlapping_matches_and_duplicate_humans_rejected",
+    "tests/test_economy.py::test_concurrent_case_open_exactly_one_draw",
+    "tests/test_economy.py::test_trade_inspection_contains_metadata_without_exposing_to_third_party",
+    "tests/test_economy.py::test_database_negative_wallet_constraint",
+    "tests/test_economy.py::test_ticket_is_scoped_single_use_and_hash_only",
+    "tests/test_economy.py::test_ticket_requires_server_secret_and_account_session",
+    "tests/test_economy.py::test_ticket_expiry_and_server_scope_are_enforced",
+    "tests/test_economy.py::test_concurrent_ticket_consumption_only_one_admission",
+    "tests/test_economy.py::test_ticket_rejects_disabled_account_and_expired_parent_session",
+    "tests/test_economy.py::test_loadout_owned_compatible_cosmetic_and_unequip",
+    "tests/test_economy.py::test_market_transfer_unequips_source_atomically",
+    "tests/test_economy.py::test_trade_transfer_unequips_both_cosmetic_slots",
+    "tests/test_economy.py::test_loadout_read_filters_stale_ownership_and_rejects_other_slots",
+    "tests/test_economy.py::test_published_case_odds_match_every_boundary[0-Common]",
+    "tests/test_economy.py::test_published_case_odds_match_every_boundary[5799-Common]",
+    "tests/test_economy.py::test_published_case_odds_match_every_boundary[5800-Uncommon]",
+    "tests/test_economy.py::test_published_case_odds_match_every_boundary[8399-Uncommon]",
+    "tests/test_economy.py::test_published_case_odds_match_every_boundary[8400-Rare]",
+    "tests/test_economy.py::test_published_case_odds_match_every_boundary[9499-Rare]",
+    "tests/test_economy.py::test_published_case_odds_match_every_boundary[9500-Epic]",
+    "tests/test_economy.py::test_published_case_odds_match_every_boundary[9899-Epic]",
+    "tests/test_economy.py::test_published_case_odds_match_every_boundary[9900-Legendary]",
+    "tests/test_economy.py::test_published_case_odds_match_every_boundary[9989-Legendary]",
+    "tests/test_economy.py::test_published_case_odds_match_every_boundary[9990-Mythic]",
+    "tests/test_economy.py::test_published_case_odds_match_every_boundary[9999-Mythic]",
+    "tests/test_economy.py::test_market_filters_apply_before_result_cap",
+    "tests/test_economy.py::test_market_read_uses_bounded_queries",
+    "tests/test_economy.py::test_server_key_with_non_ascii_header_is_rejected_not_crashed",
+    "tests/test_economy.py::test_login_verifies_a_hash_even_for_unknown_usernames",
+    "tests/test_economy.py::test_login_with_unusable_stored_hash_is_rejected_cleanly",
+    "tests/test_economy.py::test_history_lists_most_recent_match_first",
+    "tests/test_economy.py::test_trade_exposes_participant_display_names_for_confirmation",
+    "tests/test_economy.py::test_display_names_must_be_one_visible_line",
+    "tests/test_economy.py::test_history_orders_by_instant_across_utc_offsets",
+    "tests/test_economy.py::test_ticket_inspection_is_trusted_read_only_preflight",
+    "tests/test_economy.py::test_ticket_inspection_rechecks_revocation_and_expiry",
+    "tests/test_economy.py::test_match_replay_after_freshness_window_does_not_award_again"
+  ],
+  "direct_resource_absence_observations": [
+    {
+      "checked_utc": "2026-10-22T07:08:29.632131+00:00",
+      "connect_ex": 111,
+      "docker": [
+        {
+          "argv": [
+            "docker",
+            "--host=unix:///var/run/docker.sock",
+            "inspect",
+            "--format",
+            "{{.Id}}",
+            "526cbb8e86a5964c54b7595cf5637dec5141bc9bbd17f0aa5cca3c877c19b82a"
+          ],
+          "exit_code": 1,
+          "stderr": "Error: No such object: 526cbb8e86a5964c54b7595cf5637dec5141bc9bbd17f0aa5cca3c877c19b82a\n",
+          "stdout": "\n"
+        },
+        {
+          "argv": [
+            "docker",
+            "--host=unix:///var/run/docker.sock",
+            "volume",
+            "inspect",
+            "--format",
+            "{{.Name}}",
+            "sightbreak-backend-regression-304618a2553f-data"
+          ],
+          "exit_code": 1,
+          "stderr": "Error response from daemon: get sightbreak-backend-regression-304618a2553f-data: no such volume\n",
+          "stdout": "\n"
+        },
+        {
+          "argv": [
+            "docker",
+            "--host=unix:///var/run/docker.sock",
+            "ps",
+            "-aq",
+            "--filter",
+            "label=io.sightbreak.qualification=sightbreak-backend-regression-304618a2553f"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": ""
+        }
+      ],
+      "listener": {
+        "argv": [
+          "ss",
+          "-ltnp",
+          "sport = :32771"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "stdout": "State Recv-Q Send-Q Local Address:Port Peer Address:PortProcess\n"
+      },
+      "live_recorded_child_group_members": [],
+      "port": 32771,
+      "postmaster_current": null,
+      "run": "sightbreak-backend-regression-304618a2553f"
+    },
+    {
+      "checked_utc": "2026-10-22T07:08:29.692503+00:00",
+      "connect_ex": 111,
+      "docker": [
+        {
+          "argv": [
+            "docker",
+            "--host=unix:///var/run/docker.sock",
+            "inspect",
+            "--format",
+            "{{.Id}}",
+            "279b92cf80f992ba805745da1b8cbe08b11a102cc9a4f1c935c17a4988fc4812"
+          ],
+          "exit_code": 1,
+          "stderr": "Error: No such object: 279b92cf80f992ba805745da1b8cbe08b11a102cc9a4f1c935c17a4988fc4812\n",
+          "stdout": "\n"
+        },
+        {
+          "argv": [
+            "docker",
+            "--host=unix:///var/run/docker.sock",
+            "volume",
+            "inspect",
+            "--format",
+            "{{.Name}}",
+            "sightbreak-backend-regression-913d23229e6a-data"
+          ],
+          "exit_code": 1,
+          "stderr": "Error response from daemon: get sightbreak-backend-regression-913d23229e6a-data: no such volume\n",
+          "stdout": "\n"
+        },
+        {
+          "argv": [
+            "docker",
+            "--host=unix:///var/run/docker.sock",
+            "ps",
+            "-aq",
+            "--filter",
+            "label=io.sightbreak.qualification=sightbreak-backend-regression-913d23229e6a"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": ""
+        }
+      ],
+      "listener": {
+        "argv": [
+          "ss",
+          "-ltnp",
+          "sport = :32772"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "stdout": "State Recv-Q Send-Q Local Address:Port Peer Address:PortProcess\n"
+      },
+      "live_recorded_child_group_members": [],
+      "port": 32772,
+      "postmaster_current": null,
+      "run": "sightbreak-backend-regression-913d23229e6a"
+    },
+    {
+      "checked_utc": "2026-10-22T07:08:29.755611+00:00",
+      "connect_ex": 111,
+      "docker": [
+        {
+          "argv": [
+            "docker",
+            "--host=unix:///var/run/docker.sock",
+            "inspect",
+            "--format",
+            "{{.Id}}",
+            "e130453452120c91d2047eef0ecdcc8e12b6942ff5eca324ee9d4e0389416802"
+          ],
+          "exit_code": 1,
+          "stderr": "Error: No such object: e130453452120c91d2047eef0ecdcc8e12b6942ff5eca324ee9d4e0389416802\n",
+          "stdout": "\n"
+        },
+        {
+          "argv": [
+            "docker",
+            "--host=unix:///var/run/docker.sock",
+            "volume",
+            "inspect",
+            "--format",
+            "{{.Name}}",
+            "sightbreak-backend-regression-0876b2c83512-data"
+          ],
+          "exit_code": 1,
+          "stderr": "Error response from daemon: get sightbreak-backend-regression-0876b2c83512-data: no such volume\n",
+          "stdout": "\n"
+        },
+        {
+          "argv": [
+            "docker",
+            "--host=unix:///var/run/docker.sock",
+            "ps",
+            "-aq",
+            "--filter",
+            "label=io.sightbreak.qualification=sightbreak-backend-regression-0876b2c83512"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": ""
+        }
+      ],
+      "listener": {
+        "argv": [
+          "ss",
+          "-ltnp",
+          "sport = :32773"
+        ],
+        "exit_code": 0,
+        "stderr": "",
+        "stdout": "State Recv-Q Send-Q Local Address:Port Peer Address:PortProcess\n"
+      },
+      "live_recorded_child_group_members": [],
+      "port": 32773,
+      "postmaster_current": null,
+      "run": "sightbreak-backend-regression-0876b2c83512"
+    }
+  ],
+  "function_count": 44,
+  "independent_live_sql": false,
+  "junit_attributes": {
+    "errors": "0",
+    "failures": "0",
+    "hostname": "63231b548d78",
+    "name": "pytest",
+    "skipped": "0",
+    "tests": "61",
+    "time": "6.426",
+    "timestamp": "2026-10-22T07:02:55.766272+00:00"
+  },
+  "native_identity_receipts": [
+    {
+      "checked_utc": "2026-10-22T07:02:53.512015+00:00",
+      "database": "sb_backend_0876b2c83512_test",
+      "external_host": "127.0.0.1",
+      "external_port": 32773,
+      "identity_checks_passed": true,
+      "postmaster_started": "2026-10-22 07:02:52.413451+00",
+      "role": "sb_regression",
+      "server_address": "172.17.0.2/32",
+      "server_port": 5432,
+      "system_identifier": "7699384166174421036",
+      "verified_container_id": "e130453452120c91d2047eef0ecdcc8e12b6942ff5eca324ee9d4e0389416802",
+      "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"
+    },
+    {
+      "checked_utc": "2026-10-22T07:02:55.605924+00:00",
+      "database": "sb_backend_0876b2c83512_test",
+      "external_host": "127.0.0.1",
+      "external_port": 32773,
+      "identity_checks_passed": true,
+      "postmaster_started": "2026-10-22 07:02:52.413451+00",
+      "role": "sb_regression",
+      "server_address": "172.17.0.2/32",
+      "server_port": 5432,
+      "system_identifier": "7699384166174421036",
+      "verified_container_id": "e130453452120c91d2047eef0ecdcc8e12b6942ff5eca324ee9d4e0389416802",
+      "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"
+    },
+    {
+      "checked_utc": "2026-10-22T07:03:02.518523+00:00",
+      "database": "sb_backend_0876b2c83512_test",
+      "external_host": "127.0.0.1",
+      "external_port": 32773,
+      "identity_checks_passed": true,
+      "postmaster_started": "2026-10-22 07:02:52.413451+00",
+      "role": "sb_regression",
+      "server_address": "172.17.0.2/32",
+      "server_port": 5432,
+      "system_identifier": "7699384166174421036",
+      "verified_container_id": "e130453452120c91d2047eef0ecdcc8e12b6942ff5eca324ee9d4e0389416802",
+      "version": "PostgreSQL 17.11 (Debian 17.11-1.pgdg13+2) on x86_64-pc-linux-gnu, compiled by gcc (Debian 14.2.0-19) 14.2.0, 64-bit"
+    }
+  ],
+  "preserved_failures": [
+    {
+      "failure": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-backend-regression-a3b7070/docs/reports/gauntlet/m3-backend-regression/run_qualification.py\", line 245, in <module>\n    identity('identity-before-migration')\n  File \"/workspace/sightbreak-backend-regression-a3b7070/docs/reports/gauntlet/m3-backend-regression/run_qualification.py\", line 153, in identity\n    assert value['server_port'] == 5432 and internal[4] == '5432'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+      "run": "sightbreak-backend-regression-304618a2553f",
+      "source_head": "741603ce7cd377afeb0b0d148e2085199864db05"
+    },
+    {
+      "failure": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-backend-regression-a3b7070/docs/reports/gauntlet/m3-backend-regression/run_qualification.py\", line 249, in <module>\n    identity('identity-before-migration')\n  File \"/workspace/sightbreak-backend-regression-a3b7070/docs/reports/gauntlet/m3-backend-regression/run_qualification.py\", line 146, in identity\n    container, _ = docker(name + '-container-sql', ['exec', '-e', 'PGPASSWORD', CID, 'psql', '-h', '127.0.0.1', '-X', '-At', '-F', '|', '-U', ROLE, '-d', DB, '-c', SQL],\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/sightbreak-backend-regression-a3b7070/docs/reports/gauntlet/m3-backend-regression/run_qualification.py\", line 113, in docker\n    return command(name, DOCKER + args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/workspace/sightbreak-backend-regression-a3b7070/docs/reports/gauntlet/m3-backend-regression/run_qualification.py\", line 107, in command\n    assert not timed_out and process.returncode == 0, f'{name} failed; inspect preserved log'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: identity-before-migration-container-sql failed; inspect preserved log\n",
+      "run": "sightbreak-backend-regression-913d23229e6a",
+      "source_head": "8e1ebbf5c76a02370f821e6531ad78febde98ddc"
+    }
+  ],
+  "raw_file_sha256": {
+    "cleanup.json": "e694fe6b2781d51c6c92a7a1608e12b3c565d9753dc4f703536e891616a97db3",
+    "collection.log": "95f782cde4a25aa88aea7ad86cbb267dd7740779dfd9b081eb2ce0b735bf2b83",
+    "container-absence.log": "da1efd4897e564ba894f91dc3255e65fad14fdd95d8a269b85a22d61f3668a3e",
+    "container-before-cleanup.json": "dabf85f3dd8208a831856a79ea871edb8ee011a0cb8952692e3236d84f416c46",
+    "container-before-cleanup.log": "3d5bb37ddac0361a90d0b648565588b9c3985d5b966952e44099532cb6250f30",
+    "container-before.json": "dabf85f3dd8208a831856a79ea871edb8ee011a0cb8952692e3236d84f416c46",
+    "container-before.log": "3d5bb37ddac0361a90d0b648565588b9c3985d5b966952e44099532cb6250f30",
+    "container-processes-after-tests.log": "3dac270db8ab6d8eba05878342e320338bce937d86d54a4e88b385965615a348",
+    "create-owned-volume.log": "bd4ff27c0e70940a9d37fdd9d731daf6cda324bcee2b3444bc9b96527dca32ac",
+    "identity-after-tests-container-sql.log": "5b02ee720a06c7f97c557abe1b57c7765c3431f2e8a1c9ebc1a2e0f003917648",
+    "identity-after-tests.json": "0ff58eaf2053e9f6c506ae52c6c598fa9e7bad32d05170186ae6d1afb81b094e",
+    "identity-before-migration-container-sql.log": "5b02ee720a06c7f97c557abe1b57c7765c3431f2e8a1c9ebc1a2e0f003917648",
+    "identity-before-migration.json": "29b0a38f920b76b0f65d7083ff14ec80f9e2084e8c6a4bad18bf5a98688dbfb2",
+    "identity-before-tests-container-sql.log": "5b02ee720a06c7f97c557abe1b57c7765c3431f2e8a1c9ebc1a2e0f003917648",
+    "identity-before-tests.json": "17c530fc4b48f2443ecf9ecea562b907e1f9f917f24dd86711ca71be05560899",
+    "image-before.log": "c43939121afb451331f4efa7cfdefd3fb7f2353fd9dfec446954a4cc7551e4ed",
+    "migration.log": "3e2f4a1564cae0d6baa0268ecb2df4944b25b2d62128c6531f48b505952c1d3f",
+    "owned-label-container-absence.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "port-after-cleanup.log": "14f4ea5bdea2bd6f8d856ec28619243555e53de100d4bca155a751876e97a843",
+    "pytest-junit.xml": "a350031468abca8e29d6a1b3bfe91555f63d88f3ae045f1831eb086bb24f0b3f",
+    "pytest.log": "dcea58051a9dc3dd18187396178209d1f0e29bcebed4004502eebd4c4cd3f226",
+    "readiness-00.log": "16ee3d174b642b39bda2af4b9be5ba53306922e073f3f9750a7f4b458cdfde1a",
+    "readiness-01.log": "16ee3d174b642b39bda2af4b9be5ba53306922e073f3f9750a7f4b458cdfde1a",
+    "readiness-02.log": "f65a06d12c78be4ce11dc662c4ebf525a1da13786331065f0fe973c6df5ddd29",
+    "remove-owned-container.log": "25b65222d054b67f00cc451a57a70be1db6778a4a8cb9b84e2de4affbb0b18ad",
+    "remove-owned-volume.log": "bd4ff27c0e70940a9d37fdd9d731daf6cda324bcee2b3444bc9b96527dca32ac",
+    "runtime.json": "423477541a614f433f3bc8820a47c5074de0f8b8687af54f70def4cb3ede6154",
+    "schema-after-migration.log": "bc3b5a234055fcd1a378b99435340ff0c2ea1f002b514eee387769b4fe058883",
+    "source-after.json": "084dd7786cc0194dfd2fe7a898842300f8dc05057de1d1f06254c7a9bf9b81b8",
+    "source-before.json": "084dd7786cc0194dfd2fe7a898842300f8dc05057de1d1f06254c7a9bf9b81b8",
+    "start-owned-container.log": "25b65222d054b67f00cc451a57a70be1db6778a4a8cb9b84e2de4affbb0b18ad",
+    "state.json": "639b5f6b30acfc47bc2f274dbac765990ac06ef0950bcec3f60c927320041fbb",
+    "test-inventory.json": "eddd1876f3181f44a86e8ff772f81636aced1dcc8c14b330365bee1d7c382565",
+    "volume-absence.log": "3723b19f00dbbb18d44ae98780ee51a905620f2627225e8acf9606be7c430e67",
+    "volume-before-cleanup.log": "bbc9163d65049293ede4becfb187412eabfff9f5c18814376aab0f308af2d72e"
+  },
+  "runtime_duplicated": false,
+  "source": {
+    "backend_sha256": {
+      "backend/app.py": "478440d35840f2a60dad08793b73ec1aa983ce5b5cc2414445cf78f79ea19549",
+      "backend/bridge_fixture.py": "ae889701f38f8d4674d91ced0b42184e0870eda56d5efcacc966e446fe24557d",
+      "backend/config/economy.json": "c019cc326b1f986f4b550d5f2d02e8adc133551f46ae470e93f28e81f2aec900",
+      "backend/config/simulation-baseline.json": "64bb3eaef083cac8b00ba84bbb608036156bcedae06cc32bfe454d250f813951",
+      "backend/dev-api.sh": "a8f885fc87fd495d467897b136b066816065bf24d2bb88eae11c7b579b7cff40",
+      "backend/dev-db.sh": "94c7274e1d2408de85eb4584e7cd500a9291692b2e74b38d48a782f3e2900fc1",
+      "backend/migrate.py": "a0a777c16a8e24bb3aed10f9172ef4c9ff00b0fb11bdd36e5afda4356eb9057a",
+      "backend/migrations/001_integrity.sql": "5cc44b7f5741c03fe789fe511d89f3078403b13c3c449fe7c48299efeba2d3fc",
+      "backend/migrations/002_game_tickets.sql": "512164b2c24b8b4a9fe9cddd6f47b3b30c00690589d003b3fb056287b66fd8eb",
+      "backend/migrations/003_loadouts.sql": "4a112a8624560448c883ccc68471f0cdd70b86ea740393dcee1e0a3928a64b90",
+      "backend/migrations/004_market_index.sql": "5f07aa686d3b8afee2c34263f5c85ab97579dad63298fe5343fa06ccf7806dc0",
+      "backend/models.py": "06833d10fa0b0764e9f24221e61b61868c4ca7c75aca60aca090cdfc62264c03",
+      "backend/pyproject.toml": "d36318f38cf14ddc4c7acad1a1d0dddfc00edfebb22b11f5cb757916f27ed27d",
+      "backend/simulate.py": "e5d492ed94b55030d9d1c9786e568ceba564a0f54d61aed0a7013a5a31f62d4f",
+      "backend/tests/test_economy.py": "0deead5a97d515650134cbe3a1f7eca497eff45facdf69a099ac221585a6ace3",
+      "backend/uv.lock": "2119d77cf759dd11a184feda49f8ac791459d76fa76127889a9415cb28060a5c"
+    },
+    "base_ancestor": true,
+    "base_trees": {
+      ".claude": "39872770602eb0af36d64d597d5ab83df7d11505",
+      ".github": "c963de500acc0838874991574ab48b68b4e7c016",
+      "backend": "67027b4fa17674ef067c84401af76eb1524419ac",
+      "game": "fb6be859e05812d8707be1ef5c6f747d2588c1e9",
+      "scripts": "7d235f09213ab42494bd6329e407bb457c50e788",
+      "server": "667e900f73c12d75f6824d4befcadeae4223050e"
+    },
+    "branch": "codex/m3-backend-regression-a3b7070",
+    "harness_sha256": {
+      "docs/reports/gauntlet/m3-backend-regression/CRITERIA.md": "01de5e13afc94ec4b3f08e470c0919ff75ef56070edcdcc28fab4649169c735c",
+      "docs/reports/gauntlet/m3-backend-regression/run_qualification.py": "a79f2fd1717df15cad163b9d1afa9a8d4ed2096c3709b3c2d7ef0da27569628b"
+    },
+    "head": "48da99428d01d9ea8164457428643aa740b0eacd",
+    "head_tree": "63e0ffc75904f7428af3852d895e0d8a5d11b22a",
+    "production_content_sha256": "8071166f98f588dd4f23131a3a8308becf272d040e5e856d897cf32a3d0d6251",
+    "production_file_count": 426,
+    "status": "",
+    "trees": {
+      ".claude": "39872770602eb0af36d64d597d5ab83df7d11505",
+      ".github": "c963de500acc0838874991574ab48b68b4e7c016",
+      "backend": "67027b4fa17674ef067c84401af76eb1524419ac",
+      "game": "fb6be859e05812d8707be1ef5c6f747d2588c1e9",
+      "scripts": "7d235f09213ab42494bd6329e407bb457c50e788",
+      "server": "667e900f73c12d75f6824d4befcadeae4223050e"
+    }
+  },
+  "steps": {
+    "collection": {
+      "argv": [
+        "/workspace/sightbreak/.venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "--collect-only",
+        "-q",
+        "-p",
+        "no:cacheprovider",
+        "tests/test_economy.py"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070/backend",
+      "duration_seconds": 1.0858405609978945,
+      "exit_code": 0,
+      "name": "collection",
+      "process": {
+        "pgrp": 117878,
+        "pid": 117878,
+        "ppid": 117400,
+        "start_ticks": 2841305,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 60
+    },
+    "migration": {
+      "argv": [
+        "/workspace/sightbreak/.venv/bin/python",
+        "-B",
+        "migrate.py"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070/backend",
+      "duration_seconds": 0.7359658589994069,
+      "exit_code": 0,
+      "name": "migration",
+      "process": {
+        "pgrp": 117798,
+        "pid": 117798,
+        "ppid": 117400,
+        "start_ticks": 2841215,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 60
+    },
+    "pytest": {
+      "argv": [
+        "/workspace/sightbreak/.venv/bin/python",
+        "-B",
+        "-m",
+        "pytest",
+        "-vv",
+        "-rA",
+        "-p",
+        "no:cacheprovider",
+        "--junitxml=/workspace/sightbreak-backend-regression-a3b7070/builds/sightbreak-backend-regression-0876b2c83512/pytest-junit.xml",
+        "tests/test_economy.py"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070/backend",
+      "duration_seconds": 6.797039205001056,
+      "exit_code": 0,
+      "name": "pytest",
+      "process": {
+        "pgrp": 117962,
+        "pid": 117962,
+        "ppid": 117400,
+        "start_ticks": 2841424,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 300
+    }
+  },
+  "verdict": "PASS: bounded unchanged PostgreSQL regression"
+}

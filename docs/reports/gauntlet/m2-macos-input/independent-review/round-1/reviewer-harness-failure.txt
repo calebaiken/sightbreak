@@ -1,0 +1,76 @@
+Subject: ecb30708e9b6d3765bcbe342c5887dd25f4a4cf0
+Frozen script SHA256: e9468c21aa984d7bd3bff6af17b4dcfbb2863bfb7592dad5af869f59627aed10
+Host is Linux; no native API, native export, or engine workload in these controls.
+test_actual_owned_process_is_reaped (frozen_controls.PreflightControls.test_actual_owned_process_is_reaped) ... ok
+test_actual_plist_bytes_decode_through_cf_boundary (frozen_controls.PreflightControls.test_actual_plist_bytes_decode_through_cf_boundary) ... ok
+test_native_framework_objects_are_released_on_bad_payload (frozen_controls.PreflightControls.test_native_framework_objects_are_released_on_bad_payload) ... ok
+test_non_native_run_retains_failure_and_never_launches (frozen_controls.PreflightControls.test_non_native_run_retains_failure_and_never_launches) ... ok
+test_only_owned_layer_zero_metadata_survives (frozen_controls.PreflightControls.test_only_owned_layer_zero_metadata_survives) ... ok
+test_prior_attempt_is_preserved (frozen_controls.PreflightControls.test_prior_attempt_is_preserved) ... ok
+test_required_permissions_fail_closed (frozen_controls.PreflightControls.test_required_permissions_fail_closed) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.004s
+
+OK
+{
+  "scope": "Read-only ARM Mac preflight; no native input or OS screenshot acceptance",
+  "status": "FAILED",
+  "native_input_verified": false,
+  "input_events_posted": 0,
+  "permission_requests_made": 0,
+  "host": "Linux observer control",
+  "architecture": "x86_64",
+  "failure": {
+    "type": "RuntimeError",
+    "message": "Requires native ARM macOS; no native-input claim from another host"
+  },
+  "cleanup": {
+    "owned_group_gone": true,
+    "process_started": false
+  },
+  "seconds": 4.93219995405525e-05
+}
+ctypes structure sizes: {'Point': 16, 'Size': 16, 'Rect': 32}
+Permission-request/input-post/obsolete-capture string audit: none in frozen candidate
+Traceback (most recent call last):
+  File "<stdin>", line 58, in <module>
+  File "<stdin>", line 52, in control
+  File "git:ecb30708e9b6d3765bcbe342c5887dd25f4a4cf0:scripts/probe_macos_input.py", line 184, in run
+    except ProcessLookupError:
+                               
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 1245, in platform
+    system, node, release, version, machine, processor = uname()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 865, in __iter__
+    (self.processor,)
+     ^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/functools.py", line 998, in __get__
+    val = self.func(instance)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 860, in processor
+    return _unknown_as_blank(_Processor.get())
+                             ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 800, in get
+    return func() or ''
+           ^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 828, in from_subprocess
+    return subprocess.check_output(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<stdin>", line 41, in launch
+AttributeError: 'int' object has no attribute 'write'

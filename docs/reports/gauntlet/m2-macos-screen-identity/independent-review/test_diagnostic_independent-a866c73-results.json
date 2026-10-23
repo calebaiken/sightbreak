@@ -1,0 +1,3397 @@
+{
+  "source": "/workspace/reviews/mac-screen-identity-critic-ebb5cf9/exact-source-a866c73",
+  "tests": 8,
+  "runs": 14,
+  "failed": 0,
+  "observations": [
+    {
+      "mode": "clean",
+      "missing": null,
+      "exit": 0,
+      "state": {
+        "commands": [
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-9gu76foa/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-9gu76foa/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmppmk3x4wv/new/repeat/producer-01-bootstrap.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-9gu76foa/project",
+            "--headless",
+            "--editor",
+            "--import",
+            "--quit"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-9gu76foa/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-9gu76foa/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmppmk3x4wv/new/repeat/producer-02-before-input_mode.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-9gu76foa/project",
+            "--headless",
+            "--verbose",
+            "--script",
+            "res://tests/input_mode_test.gd"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-9gu76foa/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-9gu76foa/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmppmk3x4wv/new/repeat/producer-03-after-input_mode.json"
+          ]
+        ],
+        "waits": [
+          30,
+          120,
+          30,
+          120,
+          30
+        ],
+        "reaped": [
+          74001,
+          74002,
+          74003,
+          74004,
+          74005
+        ],
+        "private_projects": [
+          "/tmp/sightbreak-native-tests-9gu76foa"
+        ],
+        "user_namespaces": [
+          "/tmp/tmppmk3x4wv/native-data/SIGHTBREAK-native-tests-257b239d08a047f49679f0077cf2d4f6"
+        ],
+        "original_unchanged": true,
+        "private_projects_removed": true,
+        "user_namespace_existence": {
+          "/tmp/tmppmk3x4wv/native-data/SIGHTBREAK-native-tests-257b239d08a047f49679f0077cf2d4f6": false
+        }
+      },
+      "report": {
+        "scope": "Diagnostic only; original strict native regression failure is retained",
+        "passed": true,
+        "strict_gate_repaired": false,
+        "status": "DIAGNOSTIC_CLEAN_REPEAT",
+        "original_output": "/tmp/tmppmk3x4wv/original",
+        "whole_deadline_seconds": 240,
+        "source": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "original_evidence_sha256": {
+          "results.json": "23364dbeb03dbc79b47495bcccfa97f82d4c676fd35fa0c69fc843ab9e3b222f",
+          "isolation.json": "3bfa6c533c937fa27070e86f7393828ad3aa6c4e9f405c05913c0845efd359e9",
+          "input_mode.log": "1f32aabc94e2a8fe3b4d31071a9e4a01e7f1469239a3bd585c85004c938bcb0e"
+        },
+        "isolation": {
+          "namespace": "SIGHTBREAK-native-tests-257b239d08a047f49679f0077cf2d4f6",
+          "source_resources_sha256": {
+            "project.godot": "c383af07fc03020315f2f46ce9e9251b98064f57e2914a7d39b4d794f0bf2e0d",
+            "tests/input_mode_test.gd": "c026df4b3e84c220d4d58b85b63862c15b31b60181943bafed62e9b57890150f"
+          },
+          "suite_timeout_seconds": 120,
+          "probe_timeout_seconds": 30,
+          "scope": "Diagnostic-only verbose input_mode repeat; original strict gate remains failed",
+          "whole_deadline_seconds": 240,
+          "process_receipts": "owned-processes.json",
+          "engine": {
+            "synthetic": true
+          },
+          "import": {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-9gu76foa/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmppmk3x4wv/new/repeat/private-import.log"
+          },
+          "passed": true,
+          "source_resources_unchanged": true,
+          "copied_resources_unchanged": true,
+          "temporary_project_removed": true,
+          "cleanup": [
+            {
+              "user_namespace": "/tmp/tmppmk3x4wv/native-data/SIGHTBREAK-native-tests-257b239d08a047f49679f0077cf2d4f6",
+              "removed": true
+            }
+          ],
+          "finalization_failures": [],
+          "failure": null
+        },
+        "owned_processes": [
+          {
+            "label": "producer-01-bootstrap",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-9gu76foa/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-9gu76foa/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmppmk3x4wv/new/repeat/producer-01-bootstrap.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74001,
+            "cleanup": {
+              "pid": 74001,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmppmk3x4wv/new/repeat/producer-01-bootstrap.log"
+          },
+          {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-9gu76foa/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmppmk3x4wv/new/repeat/private-import.log"
+          },
+          {
+            "label": "producer-02-before-input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-9gu76foa/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-9gu76foa/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmppmk3x4wv/new/repeat/producer-02-before-input_mode.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74003,
+            "cleanup": {
+              "pid": 74003,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmppmk3x4wv/new/repeat/producer-02-before-input_mode.log"
+          },
+          {
+            "label": "input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-9gu76foa/project",
+              "--headless",
+              "--verbose",
+              "--script",
+              "res://tests/input_mode_test.gd"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74004,
+            "cleanup": {
+              "pid": 74004,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmppmk3x4wv/new/repeat/input_mode.log",
+            "suite": "input_mode",
+            "before": {
+              "data_dir": "/tmp/tmppmk3x4wv/native-data",
+              "user_data_dir": "/tmp/tmppmk3x4wv/native-data/SIGHTBREAK-native-tests-257b239d08a047f49679f0077cf2d4f6/input_mode",
+              "custom_user_dir": "SIGHTBREAK-native-tests-257b239d08a047f49679f0077cf2d4f6/input_mode",
+              "uses_custom_user_dir": true,
+              "project_path": "/tmp/sightbreak-native-tests-9gu76foa/project",
+              "profile_exists": false,
+              "diagnostics_exist": false,
+              "os": "Synthetic no native API",
+              "producer_receipt": "/tmp/tmppmk3x4wv/new/repeat/producer-02-before-input_mode.json",
+              "run": {
+                "label": "producer-02-before-input_mode",
+                "command": [
+                  "never-executed-engine",
+                  "--path",
+                  "/tmp/sightbreak-native-tests-9gu76foa/project",
+                  "--headless",
+                  "--script",
+                  "/tmp/sightbreak-native-tests-9gu76foa/user_directory_probe.gd",
+                  "--",
+                  "--receipt=/tmp/tmppmk3x4wv/new/repeat/producer-02-before-input_mode.json"
+                ],
+                "timeout_seconds": 30,
+                "timed_out": false,
+                "exit": 0,
+                "clean_log": true,
+                "pid": 74003,
+                "cleanup": {
+                  "pid": 74003,
+                  "owned_group_gone": true,
+                  "signals_sent": [],
+                  "exit_code": 0
+                },
+                "wall_seconds": 1,
+                "log": "/tmp/tmppmk3x4wv/new/repeat/producer-02-before-input_mode.log"
+              }
+            },
+            "after": {
+              "data_dir": "/tmp/tmppmk3x4wv/native-data",
+              "user_data_dir": "/tmp/tmppmk3x4wv/native-data/SIGHTBREAK-native-tests-257b239d08a047f49679f0077cf2d4f6/input_mode",
+              "custom_user_dir": "SIGHTBREAK-native-tests-257b239d08a047f49679f0077cf2d4f6/input_mode",
+              "uses_custom_user_dir": true,
+              "project_path": "/tmp/sightbreak-native-tests-9gu76foa/project",
+              "profile_exists": true,
+              "diagnostics_exist": false,
+              "os": "Synthetic no native API",
+              "producer_receipt": "/tmp/tmppmk3x4wv/new/repeat/producer-03-after-input_mode.json",
+              "run": {
+                "label": "producer-03-after-input_mode",
+                "command": [
+                  "never-executed-engine",
+                  "--path",
+                  "/tmp/sightbreak-native-tests-9gu76foa/project",
+                  "--headless",
+                  "--script",
+                  "/tmp/sightbreak-native-tests-9gu76foa/user_directory_probe.gd",
+                  "--",
+                  "--receipt=/tmp/tmppmk3x4wv/new/repeat/producer-03-after-input_mode.json"
+                ],
+                "timeout_seconds": 30,
+                "timed_out": false,
+                "exit": 0,
+                "clean_log": true,
+                "pid": 74005,
+                "cleanup": {
+                  "pid": 74005,
+                  "owned_group_gone": true,
+                  "signals_sent": [],
+                  "exit_code": 0
+                },
+                "wall_seconds": 1,
+                "log": "/tmp/tmppmk3x4wv/new/repeat/producer-03-after-input_mode.log"
+              }
+            },
+            "produced_files_sha256": {
+              "offline_training.json": "cb8daed7b30399a1c3c8b83b3b7bee4b774a30fc389afc1d375e4c23a3cc4ae8"
+            }
+          },
+          {
+            "label": "producer-03-after-input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-9gu76foa/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-9gu76foa/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmppmk3x4wv/new/repeat/producer-03-after-input_mode.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74005,
+            "cleanup": {
+              "pid": 74005,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmppmk3x4wv/new/repeat/producer-03-after-input_mode.log"
+          }
+        ],
+        "source_after": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "source_unchanged": true,
+        "original_evidence_unchanged": true,
+        "seconds": 5
+      }
+    },
+    {
+      "mode": "cleanup_failure",
+      "missing": null,
+      "exit": 1,
+      "state": {
+        "commands": [
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-b8reekt7/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-b8reekt7/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpvjobdbcx/new/repeat/producer-01-bootstrap.json"
+          ]
+        ],
+        "waits": [
+          30
+        ],
+        "reaped": [
+          74001
+        ],
+        "private_projects": [
+          "/tmp/sightbreak-native-tests-b8reekt7"
+        ],
+        "user_namespaces": [
+          "/tmp/tmpvjobdbcx/native-data/SIGHTBREAK-native-tests-b92be23a753a47a797b7347809fc630e"
+        ],
+        "original_unchanged": true,
+        "private_projects_removed": true,
+        "user_namespace_existence": {
+          "/tmp/tmpvjobdbcx/native-data/SIGHTBREAK-native-tests-b92be23a753a47a797b7347809fc630e": true
+        }
+      },
+      "report": {
+        "scope": "Diagnostic only; original strict native regression failure is retained",
+        "passed": false,
+        "strict_gate_repaired": false,
+        "status": "FAILED",
+        "original_output": "/tmp/tmpvjobdbcx/original",
+        "whole_deadline_seconds": 240,
+        "source": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "original_evidence_sha256": {
+          "results.json": "23364dbeb03dbc79b47495bcccfa97f82d4c676fd35fa0c69fc843ab9e3b222f",
+          "isolation.json": "3bfa6c533c937fa27070e86f7393828ad3aa6c4e9f405c05913c0845efd359e9",
+          "input_mode.log": "1f32aabc94e2a8fe3b4d31071a9e4a01e7f1469239a3bd585c85004c938bcb0e"
+        },
+        "isolation": {
+          "namespace": "SIGHTBREAK-native-tests-b92be23a753a47a797b7347809fc630e",
+          "source_resources_sha256": {
+            "project.godot": "c383af07fc03020315f2f46ce9e9251b98064f57e2914a7d39b4d794f0bf2e0d",
+            "tests/input_mode_test.gd": "c026df4b3e84c220d4d58b85b63862c15b31b60181943bafed62e9b57890150f"
+          },
+          "suite_timeout_seconds": 120,
+          "probe_timeout_seconds": 30,
+          "scope": "Diagnostic-only verbose input_mode repeat; original strict gate remains failed",
+          "whole_deadline_seconds": 240,
+          "process_receipts": "owned-processes.json",
+          "engine": {
+            "synthetic": true
+          },
+          "passed": false,
+          "source_resources_unchanged": true,
+          "copied_resources_unchanged": true,
+          "temporary_project_removed": true,
+          "cleanup": [],
+          "finalization_failures": [],
+          "failure": {
+            "type": "RuntimeError",
+            "message": "Owned verbose diagnostic process group remained after cleanup"
+          }
+        },
+        "owned_processes": [
+          {
+            "label": "producer-01-bootstrap",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-b8reekt7/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-b8reekt7/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpvjobdbcx/new/repeat/producer-01-bootstrap.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74001,
+            "cleanup": {
+              "pid": 74001,
+              "owned_group_gone": false,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpvjobdbcx/new/repeat/producer-01-bootstrap.log"
+          }
+        ],
+        "failure": {
+          "type": "RuntimeError",
+          "message": "Owned verbose diagnostic process group remained after cleanup"
+        },
+        "source_after": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "source_unchanged": true,
+        "original_evidence_unchanged": true,
+        "seconds": 1
+      }
+    },
+    {
+      "mode": "dirty_after",
+      "missing": null,
+      "exit": 1,
+      "state": {
+        "commands": [
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-n0tjya1p/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-n0tjya1p/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpzd4rdt7q/new/repeat/producer-01-bootstrap.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-n0tjya1p/project",
+            "--headless",
+            "--editor",
+            "--import",
+            "--quit"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-n0tjya1p/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-n0tjya1p/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpzd4rdt7q/new/repeat/producer-02-before-input_mode.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-n0tjya1p/project",
+            "--headless",
+            "--verbose",
+            "--script",
+            "res://tests/input_mode_test.gd"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-n0tjya1p/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-n0tjya1p/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpzd4rdt7q/new/repeat/producer-03-after-input_mode.json"
+          ]
+        ],
+        "waits": [
+          30,
+          120,
+          30,
+          120,
+          30
+        ],
+        "reaped": [
+          74001,
+          74002,
+          74003,
+          74004,
+          74005
+        ],
+        "private_projects": [
+          "/tmp/sightbreak-native-tests-n0tjya1p"
+        ],
+        "user_namespaces": [
+          "/tmp/tmpzd4rdt7q/native-data/SIGHTBREAK-native-tests-d84acf128aea4339b8adf3ae6e43dcc2"
+        ],
+        "original_unchanged": true,
+        "private_projects_removed": true,
+        "user_namespace_existence": {
+          "/tmp/tmpzd4rdt7q/native-data/SIGHTBREAK-native-tests-d84acf128aea4339b8adf3ae6e43dcc2": false
+        }
+      },
+      "report": {
+        "scope": "Diagnostic only; original strict native regression failure is retained",
+        "passed": false,
+        "strict_gate_repaired": false,
+        "status": "FAILED",
+        "original_output": "/tmp/tmpzd4rdt7q/original",
+        "whole_deadline_seconds": 240,
+        "source": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "original_evidence_sha256": {
+          "results.json": "23364dbeb03dbc79b47495bcccfa97f82d4c676fd35fa0c69fc843ab9e3b222f",
+          "isolation.json": "3bfa6c533c937fa27070e86f7393828ad3aa6c4e9f405c05913c0845efd359e9",
+          "input_mode.log": "1f32aabc94e2a8fe3b4d31071a9e4a01e7f1469239a3bd585c85004c938bcb0e"
+        },
+        "isolation": {
+          "namespace": "SIGHTBREAK-native-tests-d84acf128aea4339b8adf3ae6e43dcc2",
+          "source_resources_sha256": {
+            "project.godot": "c383af07fc03020315f2f46ce9e9251b98064f57e2914a7d39b4d794f0bf2e0d",
+            "tests/input_mode_test.gd": "c026df4b3e84c220d4d58b85b63862c15b31b60181943bafed62e9b57890150f"
+          },
+          "suite_timeout_seconds": 120,
+          "probe_timeout_seconds": 30,
+          "scope": "Diagnostic-only verbose input_mode repeat; original strict gate remains failed",
+          "whole_deadline_seconds": 240,
+          "process_receipts": "owned-processes.json",
+          "engine": {
+            "synthetic": true
+          },
+          "import": {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-n0tjya1p/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpzd4rdt7q/new/repeat/private-import.log"
+          },
+          "passed": true,
+          "source_resources_unchanged": true,
+          "copied_resources_unchanged": true,
+          "temporary_project_removed": true,
+          "cleanup": [
+            {
+              "user_namespace": "/tmp/tmpzd4rdt7q/native-data/SIGHTBREAK-native-tests-d84acf128aea4339b8adf3ae6e43dcc2",
+              "removed": true
+            }
+          ],
+          "finalization_failures": [],
+          "failure": null
+        },
+        "owned_processes": [
+          {
+            "label": "producer-01-bootstrap",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-n0tjya1p/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-n0tjya1p/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpzd4rdt7q/new/repeat/producer-01-bootstrap.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74001,
+            "cleanup": {
+              "pid": 74001,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpzd4rdt7q/new/repeat/producer-01-bootstrap.log"
+          },
+          {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-n0tjya1p/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpzd4rdt7q/new/repeat/private-import.log"
+          },
+          {
+            "label": "producer-02-before-input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-n0tjya1p/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-n0tjya1p/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpzd4rdt7q/new/repeat/producer-02-before-input_mode.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74003,
+            "cleanup": {
+              "pid": 74003,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpzd4rdt7q/new/repeat/producer-02-before-input_mode.log"
+          },
+          {
+            "label": "input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-n0tjya1p/project",
+              "--headless",
+              "--verbose",
+              "--script",
+              "res://tests/input_mode_test.gd"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74004,
+            "cleanup": {
+              "pid": 74004,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpzd4rdt7q/new/repeat/input_mode.log",
+            "suite": "input_mode",
+            "before": {
+              "data_dir": "/tmp/tmpzd4rdt7q/native-data",
+              "user_data_dir": "/tmp/tmpzd4rdt7q/native-data/SIGHTBREAK-native-tests-d84acf128aea4339b8adf3ae6e43dcc2/input_mode",
+              "custom_user_dir": "SIGHTBREAK-native-tests-d84acf128aea4339b8adf3ae6e43dcc2/input_mode",
+              "uses_custom_user_dir": true,
+              "project_path": "/tmp/sightbreak-native-tests-n0tjya1p/project",
+              "profile_exists": false,
+              "diagnostics_exist": false,
+              "os": "Synthetic no native API",
+              "producer_receipt": "/tmp/tmpzd4rdt7q/new/repeat/producer-02-before-input_mode.json",
+              "run": {
+                "label": "producer-02-before-input_mode",
+                "command": [
+                  "never-executed-engine",
+                  "--path",
+                  "/tmp/sightbreak-native-tests-n0tjya1p/project",
+                  "--headless",
+                  "--script",
+                  "/tmp/sightbreak-native-tests-n0tjya1p/user_directory_probe.gd",
+                  "--",
+                  "--receipt=/tmp/tmpzd4rdt7q/new/repeat/producer-02-before-input_mode.json"
+                ],
+                "timeout_seconds": 30,
+                "timed_out": false,
+                "exit": 0,
+                "clean_log": true,
+                "pid": 74003,
+                "cleanup": {
+                  "pid": 74003,
+                  "owned_group_gone": true,
+                  "signals_sent": [],
+                  "exit_code": 0
+                },
+                "wall_seconds": 1,
+                "log": "/tmp/tmpzd4rdt7q/new/repeat/producer-02-before-input_mode.log"
+              }
+            },
+            "after": {
+              "data_dir": "/tmp/tmpzd4rdt7q/native-data",
+              "user_data_dir": "/tmp/tmpzd4rdt7q/native-data/SIGHTBREAK-native-tests-d84acf128aea4339b8adf3ae6e43dcc2/input_mode",
+              "custom_user_dir": "SIGHTBREAK-native-tests-d84acf128aea4339b8adf3ae6e43dcc2/input_mode",
+              "uses_custom_user_dir": true,
+              "project_path": "/tmp/sightbreak-native-tests-n0tjya1p/project",
+              "profile_exists": true,
+              "diagnostics_exist": false,
+              "os": "Synthetic no native API",
+              "producer_receipt": "/tmp/tmpzd4rdt7q/new/repeat/producer-03-after-input_mode.json",
+              "run": {
+                "label": "producer-03-after-input_mode",
+                "command": [
+                  "never-executed-engine",
+                  "--path",
+                  "/tmp/sightbreak-native-tests-n0tjya1p/project",
+                  "--headless",
+                  "--script",
+                  "/tmp/sightbreak-native-tests-n0tjya1p/user_directory_probe.gd",
+                  "--",
+                  "--receipt=/tmp/tmpzd4rdt7q/new/repeat/producer-03-after-input_mode.json"
+                ],
+                "timeout_seconds": 30,
+                "timed_out": false,
+                "exit": 0,
+                "clean_log": true,
+                "pid": 74005,
+                "cleanup": {
+                  "pid": 74005,
+                  "owned_group_gone": true,
+                  "signals_sent": [],
+                  "exit_code": 0
+                },
+                "wall_seconds": 1,
+                "log": "/tmp/tmpzd4rdt7q/new/repeat/producer-03-after-input_mode.log"
+              }
+            },
+            "produced_files_sha256": {
+              "offline_training.json": "cb8daed7b30399a1c3c8b83b3b7bee4b774a30fc389afc1d375e4c23a3cc4ae8"
+            }
+          },
+          {
+            "label": "producer-03-after-input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-n0tjya1p/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-n0tjya1p/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpzd4rdt7q/new/repeat/producer-03-after-input_mode.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74005,
+            "cleanup": {
+              "pid": 74005,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpzd4rdt7q/new/repeat/producer-03-after-input_mode.log"
+          }
+        ],
+        "source_after": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": true,
+          "source_game_dirty": false
+        },
+        "source_unchanged": false,
+        "finalization_failure": {
+          "type": "RuntimeError",
+          "message": "Source identity changed during verbose diagnostic"
+        },
+        "seconds": 5
+      }
+    },
+    {
+      "mode": "mutate_original",
+      "missing": null,
+      "exit": 1,
+      "state": {
+        "commands": [
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-12rw4s2h/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-12rw4s2h/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpa0h4he4k/new/repeat/producer-01-bootstrap.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-12rw4s2h/project",
+            "--headless",
+            "--editor",
+            "--import",
+            "--quit"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-12rw4s2h/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-12rw4s2h/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpa0h4he4k/new/repeat/producer-02-before-input_mode.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-12rw4s2h/project",
+            "--headless",
+            "--verbose",
+            "--script",
+            "res://tests/input_mode_test.gd"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-12rw4s2h/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-12rw4s2h/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpa0h4he4k/new/repeat/producer-03-after-input_mode.json"
+          ]
+        ],
+        "waits": [
+          30,
+          120,
+          30,
+          120,
+          30
+        ],
+        "reaped": [
+          74001,
+          74002,
+          74003,
+          74004,
+          74005
+        ],
+        "private_projects": [
+          "/tmp/sightbreak-native-tests-12rw4s2h"
+        ],
+        "user_namespaces": [
+          "/tmp/tmpa0h4he4k/native-data/SIGHTBREAK-native-tests-916013e9b76047a88fe79c92b20d25d6"
+        ],
+        "original_unchanged": false,
+        "private_projects_removed": true,
+        "user_namespace_existence": {
+          "/tmp/tmpa0h4he4k/native-data/SIGHTBREAK-native-tests-916013e9b76047a88fe79c92b20d25d6": false
+        }
+      },
+      "report": {
+        "scope": "Diagnostic only; original strict native regression failure is retained",
+        "passed": false,
+        "strict_gate_repaired": false,
+        "status": "FAILED",
+        "original_output": "/tmp/tmpa0h4he4k/original",
+        "whole_deadline_seconds": 240,
+        "source": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "original_evidence_sha256": {
+          "results.json": "23364dbeb03dbc79b47495bcccfa97f82d4c676fd35fa0c69fc843ab9e3b222f",
+          "isolation.json": "3bfa6c533c937fa27070e86f7393828ad3aa6c4e9f405c05913c0845efd359e9",
+          "input_mode.log": "1f32aabc94e2a8fe3b4d31071a9e4a01e7f1469239a3bd585c85004c938bcb0e"
+        },
+        "isolation": {
+          "namespace": "SIGHTBREAK-native-tests-916013e9b76047a88fe79c92b20d25d6",
+          "source_resources_sha256": {
+            "project.godot": "c383af07fc03020315f2f46ce9e9251b98064f57e2914a7d39b4d794f0bf2e0d",
+            "tests/input_mode_test.gd": "c026df4b3e84c220d4d58b85b63862c15b31b60181943bafed62e9b57890150f"
+          },
+          "suite_timeout_seconds": 120,
+          "probe_timeout_seconds": 30,
+          "scope": "Diagnostic-only verbose input_mode repeat; original strict gate remains failed",
+          "whole_deadline_seconds": 240,
+          "process_receipts": "owned-processes.json",
+          "engine": {
+            "synthetic": true
+          },
+          "import": {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-12rw4s2h/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpa0h4he4k/new/repeat/private-import.log"
+          },
+          "passed": true,
+          "source_resources_unchanged": true,
+          "copied_resources_unchanged": true,
+          "temporary_project_removed": true,
+          "cleanup": [
+            {
+              "user_namespace": "/tmp/tmpa0h4he4k/native-data/SIGHTBREAK-native-tests-916013e9b76047a88fe79c92b20d25d6",
+              "removed": true
+            }
+          ],
+          "finalization_failures": [],
+          "failure": null
+        },
+        "owned_processes": [
+          {
+            "label": "producer-01-bootstrap",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-12rw4s2h/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-12rw4s2h/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpa0h4he4k/new/repeat/producer-01-bootstrap.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74001,
+            "cleanup": {
+              "pid": 74001,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpa0h4he4k/new/repeat/producer-01-bootstrap.log"
+          },
+          {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-12rw4s2h/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpa0h4he4k/new/repeat/private-import.log"
+          },
+          {
+            "label": "producer-02-before-input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-12rw4s2h/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-12rw4s2h/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpa0h4he4k/new/repeat/producer-02-before-input_mode.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74003,
+            "cleanup": {
+              "pid": 74003,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpa0h4he4k/new/repeat/producer-02-before-input_mode.log"
+          },
+          {
+            "label": "input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-12rw4s2h/project",
+              "--headless",
+              "--verbose",
+              "--script",
+              "res://tests/input_mode_test.gd"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74004,
+            "cleanup": {
+              "pid": 74004,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpa0h4he4k/new/repeat/input_mode.log",
+            "suite": "input_mode",
+            "before": {
+              "data_dir": "/tmp/tmpa0h4he4k/native-data",
+              "user_data_dir": "/tmp/tmpa0h4he4k/native-data/SIGHTBREAK-native-tests-916013e9b76047a88fe79c92b20d25d6/input_mode",
+              "custom_user_dir": "SIGHTBREAK-native-tests-916013e9b76047a88fe79c92b20d25d6/input_mode",
+              "uses_custom_user_dir": true,
+              "project_path": "/tmp/sightbreak-native-tests-12rw4s2h/project",
+              "profile_exists": false,
+              "diagnostics_exist": false,
+              "os": "Synthetic no native API",
+              "producer_receipt": "/tmp/tmpa0h4he4k/new/repeat/producer-02-before-input_mode.json",
+              "run": {
+                "label": "producer-02-before-input_mode",
+                "command": [
+                  "never-executed-engine",
+                  "--path",
+                  "/tmp/sightbreak-native-tests-12rw4s2h/project",
+                  "--headless",
+                  "--script",
+                  "/tmp/sightbreak-native-tests-12rw4s2h/user_directory_probe.gd",
+                  "--",
+                  "--receipt=/tmp/tmpa0h4he4k/new/repeat/producer-02-before-input_mode.json"
+                ],
+                "timeout_seconds": 30,
+                "timed_out": false,
+                "exit": 0,
+                "clean_log": true,
+                "pid": 74003,
+                "cleanup": {
+                  "pid": 74003,
+                  "owned_group_gone": true,
+                  "signals_sent": [],
+                  "exit_code": 0
+                },
+                "wall_seconds": 1,
+                "log": "/tmp/tmpa0h4he4k/new/repeat/producer-02-before-input_mode.log"
+              }
+            },
+            "after": {
+              "data_dir": "/tmp/tmpa0h4he4k/native-data",
+              "user_data_dir": "/tmp/tmpa0h4he4k/native-data/SIGHTBREAK-native-tests-916013e9b76047a88fe79c92b20d25d6/input_mode",
+              "custom_user_dir": "SIGHTBREAK-native-tests-916013e9b76047a88fe79c92b20d25d6/input_mode",
+              "uses_custom_user_dir": true,
+              "project_path": "/tmp/sightbreak-native-tests-12rw4s2h/project",
+              "profile_exists": true,
+              "diagnostics_exist": false,
+              "os": "Synthetic no native API",
+              "producer_receipt": "/tmp/tmpa0h4he4k/new/repeat/producer-03-after-input_mode.json",
+              "run": {
+                "label": "producer-03-after-input_mode",
+                "command": [
+                  "never-executed-engine",
+                  "--path",
+                  "/tmp/sightbreak-native-tests-12rw4s2h/project",
+                  "--headless",
+                  "--script",
+                  "/tmp/sightbreak-native-tests-12rw4s2h/user_directory_probe.gd",
+                  "--",
+                  "--receipt=/tmp/tmpa0h4he4k/new/repeat/producer-03-after-input_mode.json"
+                ],
+                "timeout_seconds": 30,
+                "timed_out": false,
+                "exit": 0,
+                "clean_log": true,
+                "pid": 74005,
+                "cleanup": {
+                  "pid": 74005,
+                  "owned_group_gone": true,
+                  "signals_sent": [],
+                  "exit_code": 0
+                },
+                "wall_seconds": 1,
+                "log": "/tmp/tmpa0h4he4k/new/repeat/producer-03-after-input_mode.log"
+              }
+            },
+            "produced_files_sha256": {
+              "offline_training.json": "cb8daed7b30399a1c3c8b83b3b7bee4b774a30fc389afc1d375e4c23a3cc4ae8"
+            }
+          },
+          {
+            "label": "producer-03-after-input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-12rw4s2h/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-12rw4s2h/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpa0h4he4k/new/repeat/producer-03-after-input_mode.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74005,
+            "cleanup": {
+              "pid": 74005,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpa0h4he4k/new/repeat/producer-03-after-input_mode.log"
+          }
+        ],
+        "source_after": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "source_unchanged": true,
+        "original_evidence_unchanged": false,
+        "finalization_failure": {
+          "type": "RuntimeError",
+          "message": "Original strict failure evidence changed"
+        },
+        "seconds": 5
+      }
+    },
+    {
+      "mode": "finalization_overrun",
+      "missing": null,
+      "exit": 1,
+      "state": {
+        "commands": [
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-1l6wzcts/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-1l6wzcts/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmp7luovc82/new/repeat/producer-01-bootstrap.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-1l6wzcts/project",
+            "--headless",
+            "--editor",
+            "--import",
+            "--quit"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-1l6wzcts/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-1l6wzcts/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmp7luovc82/new/repeat/producer-02-before-input_mode.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-1l6wzcts/project",
+            "--headless",
+            "--verbose",
+            "--script",
+            "res://tests/input_mode_test.gd"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-1l6wzcts/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-1l6wzcts/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmp7luovc82/new/repeat/producer-03-after-input_mode.json"
+          ]
+        ],
+        "waits": [
+          30,
+          120,
+          30,
+          120,
+          30
+        ],
+        "reaped": [
+          74001,
+          74002,
+          74003,
+          74004,
+          74005
+        ],
+        "private_projects": [
+          "/tmp/sightbreak-native-tests-1l6wzcts"
+        ],
+        "user_namespaces": [
+          "/tmp/tmp7luovc82/native-data/SIGHTBREAK-native-tests-e77775fee0b4447cb5f1d492382e2c9a"
+        ],
+        "original_unchanged": true,
+        "private_projects_removed": true,
+        "user_namespace_existence": {
+          "/tmp/tmp7luovc82/native-data/SIGHTBREAK-native-tests-e77775fee0b4447cb5f1d492382e2c9a": false
+        }
+      },
+      "report": {
+        "scope": "Diagnostic only; original strict native regression failure is retained",
+        "passed": false,
+        "strict_gate_repaired": false,
+        "status": "FAILED",
+        "original_output": "/tmp/tmp7luovc82/original",
+        "whole_deadline_seconds": 240,
+        "source": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "original_evidence_sha256": {
+          "results.json": "23364dbeb03dbc79b47495bcccfa97f82d4c676fd35fa0c69fc843ab9e3b222f",
+          "isolation.json": "3bfa6c533c937fa27070e86f7393828ad3aa6c4e9f405c05913c0845efd359e9",
+          "input_mode.log": "1f32aabc94e2a8fe3b4d31071a9e4a01e7f1469239a3bd585c85004c938bcb0e"
+        },
+        "isolation": {
+          "namespace": "SIGHTBREAK-native-tests-e77775fee0b4447cb5f1d492382e2c9a",
+          "source_resources_sha256": {
+            "project.godot": "c383af07fc03020315f2f46ce9e9251b98064f57e2914a7d39b4d794f0bf2e0d",
+            "tests/input_mode_test.gd": "c026df4b3e84c220d4d58b85b63862c15b31b60181943bafed62e9b57890150f"
+          },
+          "suite_timeout_seconds": 120,
+          "probe_timeout_seconds": 30,
+          "scope": "Diagnostic-only verbose input_mode repeat; original strict gate remains failed",
+          "whole_deadline_seconds": 240,
+          "process_receipts": "owned-processes.json",
+          "engine": {
+            "synthetic": true
+          },
+          "import": {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-1l6wzcts/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmp7luovc82/new/repeat/private-import.log"
+          },
+          "passed": true,
+          "source_resources_unchanged": true,
+          "copied_resources_unchanged": true,
+          "temporary_project_removed": true,
+          "cleanup": [
+            {
+              "user_namespace": "/tmp/tmp7luovc82/native-data/SIGHTBREAK-native-tests-e77775fee0b4447cb5f1d492382e2c9a",
+              "removed": true
+            }
+          ],
+          "finalization_failures": [],
+          "failure": null
+        },
+        "owned_processes": [
+          {
+            "label": "producer-01-bootstrap",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-1l6wzcts/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-1l6wzcts/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmp7luovc82/new/repeat/producer-01-bootstrap.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74001,
+            "cleanup": {
+              "pid": 74001,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmp7luovc82/new/repeat/producer-01-bootstrap.log"
+          },
+          {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-1l6wzcts/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmp7luovc82/new/repeat/private-import.log"
+          },
+          {
+            "label": "producer-02-before-input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-1l6wzcts/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-1l6wzcts/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmp7luovc82/new/repeat/producer-02-before-input_mode.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74003,
+            "cleanup": {
+              "pid": 74003,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmp7luovc82/new/repeat/producer-02-before-input_mode.log"
+          },
+          {
+            "label": "input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-1l6wzcts/project",
+              "--headless",
+              "--verbose",
+              "--script",
+              "res://tests/input_mode_test.gd"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74004,
+            "cleanup": {
+              "pid": 74004,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmp7luovc82/new/repeat/input_mode.log",
+            "suite": "input_mode",
+            "before": {
+              "data_dir": "/tmp/tmp7luovc82/native-data",
+              "user_data_dir": "/tmp/tmp7luovc82/native-data/SIGHTBREAK-native-tests-e77775fee0b4447cb5f1d492382e2c9a/input_mode",
+              "custom_user_dir": "SIGHTBREAK-native-tests-e77775fee0b4447cb5f1d492382e2c9a/input_mode",
+              "uses_custom_user_dir": true,
+              "project_path": "/tmp/sightbreak-native-tests-1l6wzcts/project",
+              "profile_exists": false,
+              "diagnostics_exist": false,
+              "os": "Synthetic no native API",
+              "producer_receipt": "/tmp/tmp7luovc82/new/repeat/producer-02-before-input_mode.json",
+              "run": {
+                "label": "producer-02-before-input_mode",
+                "command": [
+                  "never-executed-engine",
+                  "--path",
+                  "/tmp/sightbreak-native-tests-1l6wzcts/project",
+                  "--headless",
+                  "--script",
+                  "/tmp/sightbreak-native-tests-1l6wzcts/user_directory_probe.gd",
+                  "--",
+                  "--receipt=/tmp/tmp7luovc82/new/repeat/producer-02-before-input_mode.json"
+                ],
+                "timeout_seconds": 30,
+                "timed_out": false,
+                "exit": 0,
+                "clean_log": true,
+                "pid": 74003,
+                "cleanup": {
+                  "pid": 74003,
+                  "owned_group_gone": true,
+                  "signals_sent": [],
+                  "exit_code": 0
+                },
+                "wall_seconds": 1,
+                "log": "/tmp/tmp7luovc82/new/repeat/producer-02-before-input_mode.log"
+              }
+            },
+            "after": {
+              "data_dir": "/tmp/tmp7luovc82/native-data",
+              "user_data_dir": "/tmp/tmp7luovc82/native-data/SIGHTBREAK-native-tests-e77775fee0b4447cb5f1d492382e2c9a/input_mode",
+              "custom_user_dir": "SIGHTBREAK-native-tests-e77775fee0b4447cb5f1d492382e2c9a/input_mode",
+              "uses_custom_user_dir": true,
+              "project_path": "/tmp/sightbreak-native-tests-1l6wzcts/project",
+              "profile_exists": true,
+              "diagnostics_exist": false,
+              "os": "Synthetic no native API",
+              "producer_receipt": "/tmp/tmp7luovc82/new/repeat/producer-03-after-input_mode.json",
+              "run": {
+                "label": "producer-03-after-input_mode",
+                "command": [
+                  "never-executed-engine",
+                  "--path",
+                  "/tmp/sightbreak-native-tests-1l6wzcts/project",
+                  "--headless",
+                  "--script",
+                  "/tmp/sightbreak-native-tests-1l6wzcts/user_directory_probe.gd",
+                  "--",
+                  "--receipt=/tmp/tmp7luovc82/new/repeat/producer-03-after-input_mode.json"
+                ],
+                "timeout_seconds": 30,
+                "timed_out": false,
+                "exit": 0,
+                "clean_log": true,
+                "pid": 74005,
+                "cleanup": {
+                  "pid": 74005,
+                  "owned_group_gone": true,
+                  "signals_sent": [],
+                  "exit_code": 0
+                },
+                "wall_seconds": 1,
+                "log": "/tmp/tmp7luovc82/new/repeat/producer-03-after-input_mode.log"
+              }
+            },
+            "produced_files_sha256": {
+              "offline_training.json": "cb8daed7b30399a1c3c8b83b3b7bee4b774a30fc389afc1d375e4c23a3cc4ae8"
+            }
+          },
+          {
+            "label": "producer-03-after-input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-1l6wzcts/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-1l6wzcts/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmp7luovc82/new/repeat/producer-03-after-input_mode.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74005,
+            "cleanup": {
+              "pid": 74005,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmp7luovc82/new/repeat/producer-03-after-input_mode.log"
+          }
+        ],
+        "failure": {
+          "type": "TimeoutError",
+          "message": "Whole verbose diagnostic deadline exceeded during finalization"
+        },
+        "source_after": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "source_unchanged": true,
+        "original_evidence_unchanged": true,
+        "finalization_failure": {
+          "type": "TimeoutError",
+          "message": "Whole verbose diagnostic deadline exceeded during receipt checks"
+        },
+        "seconds": 241
+      }
+    },
+    {
+      "mode": "sourcecheck_overrun",
+      "missing": null,
+      "exit": 1,
+      "state": {
+        "commands": [
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-rcgtneg_/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-rcgtneg_/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpi4ywo8tq/new/repeat/producer-01-bootstrap.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-rcgtneg_/project",
+            "--headless",
+            "--editor",
+            "--import",
+            "--quit"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-rcgtneg_/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-rcgtneg_/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpi4ywo8tq/new/repeat/producer-02-before-input_mode.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-rcgtneg_/project",
+            "--headless",
+            "--verbose",
+            "--script",
+            "res://tests/input_mode_test.gd"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-rcgtneg_/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-rcgtneg_/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpi4ywo8tq/new/repeat/producer-03-after-input_mode.json"
+          ]
+        ],
+        "waits": [
+          30,
+          120,
+          30,
+          120,
+          30
+        ],
+        "reaped": [
+          74001,
+          74002,
+          74003,
+          74004,
+          74005
+        ],
+        "private_projects": [
+          "/tmp/sightbreak-native-tests-rcgtneg_"
+        ],
+        "user_namespaces": [
+          "/tmp/tmpi4ywo8tq/native-data/SIGHTBREAK-native-tests-561eca93a3d349b1920bd1b59d2fc9b3"
+        ],
+        "original_unchanged": true,
+        "private_projects_removed": true,
+        "user_namespace_existence": {
+          "/tmp/tmpi4ywo8tq/native-data/SIGHTBREAK-native-tests-561eca93a3d349b1920bd1b59d2fc9b3": false
+        }
+      },
+      "report": {
+        "scope": "Diagnostic only; original strict native regression failure is retained",
+        "passed": false,
+        "strict_gate_repaired": false,
+        "status": "FAILED",
+        "original_output": "/tmp/tmpi4ywo8tq/original",
+        "whole_deadline_seconds": 240,
+        "source": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "original_evidence_sha256": {
+          "results.json": "23364dbeb03dbc79b47495bcccfa97f82d4c676fd35fa0c69fc843ab9e3b222f",
+          "isolation.json": "3bfa6c533c937fa27070e86f7393828ad3aa6c4e9f405c05913c0845efd359e9",
+          "input_mode.log": "1f32aabc94e2a8fe3b4d31071a9e4a01e7f1469239a3bd585c85004c938bcb0e"
+        },
+        "isolation": {
+          "namespace": "SIGHTBREAK-native-tests-561eca93a3d349b1920bd1b59d2fc9b3",
+          "source_resources_sha256": {
+            "project.godot": "c383af07fc03020315f2f46ce9e9251b98064f57e2914a7d39b4d794f0bf2e0d",
+            "tests/input_mode_test.gd": "c026df4b3e84c220d4d58b85b63862c15b31b60181943bafed62e9b57890150f"
+          },
+          "suite_timeout_seconds": 120,
+          "probe_timeout_seconds": 30,
+          "scope": "Diagnostic-only verbose input_mode repeat; original strict gate remains failed",
+          "whole_deadline_seconds": 240,
+          "process_receipts": "owned-processes.json",
+          "engine": {
+            "synthetic": true
+          },
+          "import": {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-rcgtneg_/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpi4ywo8tq/new/repeat/private-import.log"
+          },
+          "passed": true,
+          "source_resources_unchanged": true,
+          "copied_resources_unchanged": true,
+          "temporary_project_removed": true,
+          "cleanup": [
+            {
+              "user_namespace": "/tmp/tmpi4ywo8tq/native-data/SIGHTBREAK-native-tests-561eca93a3d349b1920bd1b59d2fc9b3",
+              "removed": true
+            }
+          ],
+          "finalization_failures": [],
+          "failure": null
+        },
+        "owned_processes": [
+          {
+            "label": "producer-01-bootstrap",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-rcgtneg_/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-rcgtneg_/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpi4ywo8tq/new/repeat/producer-01-bootstrap.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74001,
+            "cleanup": {
+              "pid": 74001,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpi4ywo8tq/new/repeat/producer-01-bootstrap.log"
+          },
+          {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-rcgtneg_/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpi4ywo8tq/new/repeat/private-import.log"
+          },
+          {
+            "label": "producer-02-before-input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-rcgtneg_/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-rcgtneg_/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpi4ywo8tq/new/repeat/producer-02-before-input_mode.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74003,
+            "cleanup": {
+              "pid": 74003,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpi4ywo8tq/new/repeat/producer-02-before-input_mode.log"
+          },
+          {
+            "label": "input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-rcgtneg_/project",
+              "--headless",
+              "--verbose",
+              "--script",
+              "res://tests/input_mode_test.gd"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74004,
+            "cleanup": {
+              "pid": 74004,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpi4ywo8tq/new/repeat/input_mode.log",
+            "suite": "input_mode",
+            "before": {
+              "data_dir": "/tmp/tmpi4ywo8tq/native-data",
+              "user_data_dir": "/tmp/tmpi4ywo8tq/native-data/SIGHTBREAK-native-tests-561eca93a3d349b1920bd1b59d2fc9b3/input_mode",
+              "custom_user_dir": "SIGHTBREAK-native-tests-561eca93a3d349b1920bd1b59d2fc9b3/input_mode",
+              "uses_custom_user_dir": true,
+              "project_path": "/tmp/sightbreak-native-tests-rcgtneg_/project",
+              "profile_exists": false,
+              "diagnostics_exist": false,
+              "os": "Synthetic no native API",
+              "producer_receipt": "/tmp/tmpi4ywo8tq/new/repeat/producer-02-before-input_mode.json",
+              "run": {
+                "label": "producer-02-before-input_mode",
+                "command": [
+                  "never-executed-engine",
+                  "--path",
+                  "/tmp/sightbreak-native-tests-rcgtneg_/project",
+                  "--headless",
+                  "--script",
+                  "/tmp/sightbreak-native-tests-rcgtneg_/user_directory_probe.gd",
+                  "--",
+                  "--receipt=/tmp/tmpi4ywo8tq/new/repeat/producer-02-before-input_mode.json"
+                ],
+                "timeout_seconds": 30,
+                "timed_out": false,
+                "exit": 0,
+                "clean_log": true,
+                "pid": 74003,
+                "cleanup": {
+                  "pid": 74003,
+                  "owned_group_gone": true,
+                  "signals_sent": [],
+                  "exit_code": 0
+                },
+                "wall_seconds": 1,
+                "log": "/tmp/tmpi4ywo8tq/new/repeat/producer-02-before-input_mode.log"
+              }
+            },
+            "after": {
+              "data_dir": "/tmp/tmpi4ywo8tq/native-data",
+              "user_data_dir": "/tmp/tmpi4ywo8tq/native-data/SIGHTBREAK-native-tests-561eca93a3d349b1920bd1b59d2fc9b3/input_mode",
+              "custom_user_dir": "SIGHTBREAK-native-tests-561eca93a3d349b1920bd1b59d2fc9b3/input_mode",
+              "uses_custom_user_dir": true,
+              "project_path": "/tmp/sightbreak-native-tests-rcgtneg_/project",
+              "profile_exists": true,
+              "diagnostics_exist": false,
+              "os": "Synthetic no native API",
+              "producer_receipt": "/tmp/tmpi4ywo8tq/new/repeat/producer-03-after-input_mode.json",
+              "run": {
+                "label": "producer-03-after-input_mode",
+                "command": [
+                  "never-executed-engine",
+                  "--path",
+                  "/tmp/sightbreak-native-tests-rcgtneg_/project",
+                  "--headless",
+                  "--script",
+                  "/tmp/sightbreak-native-tests-rcgtneg_/user_directory_probe.gd",
+                  "--",
+                  "--receipt=/tmp/tmpi4ywo8tq/new/repeat/producer-03-after-input_mode.json"
+                ],
+                "timeout_seconds": 30,
+                "timed_out": false,
+                "exit": 0,
+                "clean_log": true,
+                "pid": 74005,
+                "cleanup": {
+                  "pid": 74005,
+                  "owned_group_gone": true,
+                  "signals_sent": [],
+                  "exit_code": 0
+                },
+                "wall_seconds": 1,
+                "log": "/tmp/tmpi4ywo8tq/new/repeat/producer-03-after-input_mode.log"
+              }
+            },
+            "produced_files_sha256": {
+              "offline_training.json": "cb8daed7b30399a1c3c8b83b3b7bee4b774a30fc389afc1d375e4c23a3cc4ae8"
+            }
+          },
+          {
+            "label": "producer-03-after-input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-rcgtneg_/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-rcgtneg_/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpi4ywo8tq/new/repeat/producer-03-after-input_mode.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74005,
+            "cleanup": {
+              "pid": 74005,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpi4ywo8tq/new/repeat/producer-03-after-input_mode.log"
+          }
+        ],
+        "source_after": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "source_unchanged": true,
+        "original_evidence_unchanged": true,
+        "finalization_failure": {
+          "type": "TimeoutError",
+          "message": "Whole verbose diagnostic deadline exceeded during receipt checks"
+        },
+        "seconds": 241
+      }
+    },
+    {
+      "mode": "import_leak",
+      "missing": null,
+      "exit": 1,
+      "state": {
+        "commands": [
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-687uqbfe/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-687uqbfe/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpgisv95ha/new/repeat/producer-01-bootstrap.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-687uqbfe/project",
+            "--headless",
+            "--editor",
+            "--import",
+            "--quit"
+          ]
+        ],
+        "waits": [
+          30,
+          120
+        ],
+        "reaped": [
+          74001,
+          74002
+        ],
+        "private_projects": [
+          "/tmp/sightbreak-native-tests-687uqbfe"
+        ],
+        "user_namespaces": [
+          "/tmp/tmpgisv95ha/native-data/SIGHTBREAK-native-tests-8c185f85ed484441b45919b4a6624770"
+        ],
+        "original_unchanged": true,
+        "private_projects_removed": true,
+        "user_namespace_existence": {
+          "/tmp/tmpgisv95ha/native-data/SIGHTBREAK-native-tests-8c185f85ed484441b45919b4a6624770": false
+        }
+      },
+      "report": {
+        "scope": "Diagnostic only; original strict native regression failure is retained",
+        "passed": false,
+        "strict_gate_repaired": false,
+        "status": "FAILED",
+        "original_output": "/tmp/tmpgisv95ha/original",
+        "whole_deadline_seconds": 240,
+        "source": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "original_evidence_sha256": {
+          "results.json": "23364dbeb03dbc79b47495bcccfa97f82d4c676fd35fa0c69fc843ab9e3b222f",
+          "isolation.json": "3bfa6c533c937fa27070e86f7393828ad3aa6c4e9f405c05913c0845efd359e9",
+          "input_mode.log": "1f32aabc94e2a8fe3b4d31071a9e4a01e7f1469239a3bd585c85004c938bcb0e"
+        },
+        "isolation": {
+          "namespace": "SIGHTBREAK-native-tests-8c185f85ed484441b45919b4a6624770",
+          "source_resources_sha256": {
+            "project.godot": "c383af07fc03020315f2f46ce9e9251b98064f57e2914a7d39b4d794f0bf2e0d",
+            "tests/input_mode_test.gd": "c026df4b3e84c220d4d58b85b63862c15b31b60181943bafed62e9b57890150f"
+          },
+          "suite_timeout_seconds": 120,
+          "probe_timeout_seconds": 30,
+          "scope": "Diagnostic-only verbose input_mode repeat; original strict gate remains failed",
+          "whole_deadline_seconds": 240,
+          "process_receipts": "owned-processes.json",
+          "engine": {
+            "synthetic": true
+          },
+          "import": {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-687uqbfe/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": false,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpgisv95ha/new/repeat/private-import.log"
+          },
+          "passed": false,
+          "source_resources_unchanged": true,
+          "copied_resources_unchanged": true,
+          "temporary_project_removed": true,
+          "cleanup": [
+            {
+              "user_namespace": "/tmp/tmpgisv95ha/native-data/SIGHTBREAK-native-tests-8c185f85ed484441b45919b4a6624770",
+              "removed": true
+            }
+          ],
+          "finalization_failures": [],
+          "failure": {
+            "type": "RuntimeError",
+            "message": "private-import failed; raw output retained"
+          }
+        },
+        "owned_processes": [
+          {
+            "label": "producer-01-bootstrap",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-687uqbfe/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-687uqbfe/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpgisv95ha/new/repeat/producer-01-bootstrap.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74001,
+            "cleanup": {
+              "pid": 74001,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpgisv95ha/new/repeat/producer-01-bootstrap.log"
+          },
+          {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-687uqbfe/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": false,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpgisv95ha/new/repeat/private-import.log"
+          }
+        ],
+        "failure": {
+          "type": "RuntimeError",
+          "message": "private-import failed; raw output retained"
+        },
+        "source_after": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "source_unchanged": true,
+        "original_evidence_unchanged": true,
+        "seconds": 2
+      }
+    },
+    {
+      "mode": "probe_leak",
+      "missing": null,
+      "exit": 1,
+      "state": {
+        "commands": [
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-6voqgy78/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-6voqgy78/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpff1wr_a_/new/repeat/producer-01-bootstrap.json"
+          ]
+        ],
+        "waits": [
+          30
+        ],
+        "reaped": [
+          74001
+        ],
+        "private_projects": [
+          "/tmp/sightbreak-native-tests-6voqgy78"
+        ],
+        "user_namespaces": [
+          "/tmp/tmpff1wr_a_/native-data/SIGHTBREAK-native-tests-9309db8ccfb249c19e1bbc497813c7cc"
+        ],
+        "original_unchanged": true,
+        "private_projects_removed": true,
+        "user_namespace_existence": {
+          "/tmp/tmpff1wr_a_/native-data/SIGHTBREAK-native-tests-9309db8ccfb249c19e1bbc497813c7cc": true
+        }
+      },
+      "report": {
+        "scope": "Diagnostic only; original strict native regression failure is retained",
+        "passed": false,
+        "strict_gate_repaired": false,
+        "status": "FAILED",
+        "original_output": "/tmp/tmpff1wr_a_/original",
+        "whole_deadline_seconds": 240,
+        "source": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "original_evidence_sha256": {
+          "results.json": "23364dbeb03dbc79b47495bcccfa97f82d4c676fd35fa0c69fc843ab9e3b222f",
+          "isolation.json": "3bfa6c533c937fa27070e86f7393828ad3aa6c4e9f405c05913c0845efd359e9",
+          "input_mode.log": "1f32aabc94e2a8fe3b4d31071a9e4a01e7f1469239a3bd585c85004c938bcb0e"
+        },
+        "isolation": {
+          "namespace": "SIGHTBREAK-native-tests-9309db8ccfb249c19e1bbc497813c7cc",
+          "source_resources_sha256": {
+            "project.godot": "c383af07fc03020315f2f46ce9e9251b98064f57e2914a7d39b4d794f0bf2e0d",
+            "tests/input_mode_test.gd": "c026df4b3e84c220d4d58b85b63862c15b31b60181943bafed62e9b57890150f"
+          },
+          "suite_timeout_seconds": 120,
+          "probe_timeout_seconds": 30,
+          "scope": "Diagnostic-only verbose input_mode repeat; original strict gate remains failed",
+          "whole_deadline_seconds": 240,
+          "process_receipts": "owned-processes.json",
+          "engine": {
+            "synthetic": true
+          },
+          "passed": false,
+          "source_resources_unchanged": true,
+          "copied_resources_unchanged": true,
+          "temporary_project_removed": true,
+          "cleanup": [],
+          "finalization_failures": [],
+          "failure": {
+            "type": "RuntimeError",
+            "message": "Native user-directory probe failed; raw output retained"
+          }
+        },
+        "owned_processes": [
+          {
+            "label": "producer-01-bootstrap",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-6voqgy78/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-6voqgy78/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpff1wr_a_/new/repeat/producer-01-bootstrap.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": false,
+            "pid": 74001,
+            "cleanup": {
+              "pid": 74001,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpff1wr_a_/new/repeat/producer-01-bootstrap.log"
+          }
+        ],
+        "failure": {
+          "type": "RuntimeError",
+          "message": "Native user-directory probe failed; raw output retained"
+        },
+        "source_after": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "source_unchanged": true,
+        "original_evidence_unchanged": true,
+        "seconds": 1
+      }
+    },
+    {
+      "mode": "suite_leak",
+      "missing": null,
+      "exit": 1,
+      "state": {
+        "commands": [
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-_ulmjia2/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-_ulmjia2/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpue24uodw/new/repeat/producer-01-bootstrap.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-_ulmjia2/project",
+            "--headless",
+            "--editor",
+            "--import",
+            "--quit"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-_ulmjia2/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-_ulmjia2/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpue24uodw/new/repeat/producer-02-before-input_mode.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-_ulmjia2/project",
+            "--headless",
+            "--verbose",
+            "--script",
+            "res://tests/input_mode_test.gd"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-_ulmjia2/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-_ulmjia2/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpue24uodw/new/repeat/producer-03-after-input_mode.json"
+          ]
+        ],
+        "waits": [
+          30,
+          120,
+          30,
+          120,
+          30
+        ],
+        "reaped": [
+          74001,
+          74002,
+          74003,
+          74004,
+          74005
+        ],
+        "private_projects": [
+          "/tmp/sightbreak-native-tests-_ulmjia2"
+        ],
+        "user_namespaces": [
+          "/tmp/tmpue24uodw/native-data/SIGHTBREAK-native-tests-702b10c14f5c49c6b30c45e275f2da34"
+        ],
+        "original_unchanged": true,
+        "private_projects_removed": true,
+        "user_namespace_existence": {
+          "/tmp/tmpue24uodw/native-data/SIGHTBREAK-native-tests-702b10c14f5c49c6b30c45e275f2da34": false
+        }
+      },
+      "report": {
+        "scope": "Diagnostic only; original strict native regression failure is retained",
+        "passed": false,
+        "strict_gate_repaired": false,
+        "status": "FAILED",
+        "original_output": "/tmp/tmpue24uodw/original",
+        "whole_deadline_seconds": 240,
+        "source": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "original_evidence_sha256": {
+          "results.json": "23364dbeb03dbc79b47495bcccfa97f82d4c676fd35fa0c69fc843ab9e3b222f",
+          "isolation.json": "3bfa6c533c937fa27070e86f7393828ad3aa6c4e9f405c05913c0845efd359e9",
+          "input_mode.log": "1f32aabc94e2a8fe3b4d31071a9e4a01e7f1469239a3bd585c85004c938bcb0e"
+        },
+        "isolation": {
+          "namespace": "SIGHTBREAK-native-tests-702b10c14f5c49c6b30c45e275f2da34",
+          "source_resources_sha256": {
+            "project.godot": "c383af07fc03020315f2f46ce9e9251b98064f57e2914a7d39b4d794f0bf2e0d",
+            "tests/input_mode_test.gd": "c026df4b3e84c220d4d58b85b63862c15b31b60181943bafed62e9b57890150f"
+          },
+          "suite_timeout_seconds": 120,
+          "probe_timeout_seconds": 30,
+          "scope": "Diagnostic-only verbose input_mode repeat; original strict gate remains failed",
+          "whole_deadline_seconds": 240,
+          "process_receipts": "owned-processes.json",
+          "engine": {
+            "synthetic": true
+          },
+          "import": {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-_ulmjia2/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpue24uodw/new/repeat/private-import.log"
+          },
+          "passed": false,
+          "source_resources_unchanged": true,
+          "copied_resources_unchanged": true,
+          "temporary_project_removed": true,
+          "cleanup": [
+            {
+              "user_namespace": "/tmp/tmpue24uodw/native-data/SIGHTBREAK-native-tests-702b10c14f5c49c6b30c45e275f2da34",
+              "removed": true
+            }
+          ],
+          "finalization_failures": [],
+          "failure": {
+            "type": "RuntimeError",
+            "message": "input_mode failed; raw output retained"
+          }
+        },
+        "owned_processes": [
+          {
+            "label": "producer-01-bootstrap",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-_ulmjia2/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-_ulmjia2/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpue24uodw/new/repeat/producer-01-bootstrap.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74001,
+            "cleanup": {
+              "pid": 74001,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpue24uodw/new/repeat/producer-01-bootstrap.log"
+          },
+          {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-_ulmjia2/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpue24uodw/new/repeat/private-import.log"
+          },
+          {
+            "label": "producer-02-before-input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-_ulmjia2/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-_ulmjia2/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpue24uodw/new/repeat/producer-02-before-input_mode.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74003,
+            "cleanup": {
+              "pid": 74003,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpue24uodw/new/repeat/producer-02-before-input_mode.log"
+          },
+          {
+            "label": "input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-_ulmjia2/project",
+              "--headless",
+              "--verbose",
+              "--script",
+              "res://tests/input_mode_test.gd"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": false,
+            "pid": 74004,
+            "cleanup": {
+              "pid": 74004,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpue24uodw/new/repeat/input_mode.log",
+            "suite": "input_mode",
+            "before": {
+              "data_dir": "/tmp/tmpue24uodw/native-data",
+              "user_data_dir": "/tmp/tmpue24uodw/native-data/SIGHTBREAK-native-tests-702b10c14f5c49c6b30c45e275f2da34/input_mode",
+              "custom_user_dir": "SIGHTBREAK-native-tests-702b10c14f5c49c6b30c45e275f2da34/input_mode",
+              "uses_custom_user_dir": true,
+              "project_path": "/tmp/sightbreak-native-tests-_ulmjia2/project",
+              "profile_exists": false,
+              "diagnostics_exist": false,
+              "os": "Synthetic no native API",
+              "producer_receipt": "/tmp/tmpue24uodw/new/repeat/producer-02-before-input_mode.json",
+              "run": {
+                "label": "producer-02-before-input_mode",
+                "command": [
+                  "never-executed-engine",
+                  "--path",
+                  "/tmp/sightbreak-native-tests-_ulmjia2/project",
+                  "--headless",
+                  "--script",
+                  "/tmp/sightbreak-native-tests-_ulmjia2/user_directory_probe.gd",
+                  "--",
+                  "--receipt=/tmp/tmpue24uodw/new/repeat/producer-02-before-input_mode.json"
+                ],
+                "timeout_seconds": 30,
+                "timed_out": false,
+                "exit": 0,
+                "clean_log": true,
+                "pid": 74003,
+                "cleanup": {
+                  "pid": 74003,
+                  "owned_group_gone": true,
+                  "signals_sent": [],
+                  "exit_code": 0
+                },
+                "wall_seconds": 1,
+                "log": "/tmp/tmpue24uodw/new/repeat/producer-02-before-input_mode.log"
+              }
+            },
+            "after": {
+              "data_dir": "/tmp/tmpue24uodw/native-data",
+              "user_data_dir": "/tmp/tmpue24uodw/native-data/SIGHTBREAK-native-tests-702b10c14f5c49c6b30c45e275f2da34/input_mode",
+              "custom_user_dir": "SIGHTBREAK-native-tests-702b10c14f5c49c6b30c45e275f2da34/input_mode",
+              "uses_custom_user_dir": true,
+              "project_path": "/tmp/sightbreak-native-tests-_ulmjia2/project",
+              "profile_exists": true,
+              "diagnostics_exist": false,
+              "os": "Synthetic no native API",
+              "producer_receipt": "/tmp/tmpue24uodw/new/repeat/producer-03-after-input_mode.json",
+              "run": {
+                "label": "producer-03-after-input_mode",
+                "command": [
+                  "never-executed-engine",
+                  "--path",
+                  "/tmp/sightbreak-native-tests-_ulmjia2/project",
+                  "--headless",
+                  "--script",
+                  "/tmp/sightbreak-native-tests-_ulmjia2/user_directory_probe.gd",
+                  "--",
+                  "--receipt=/tmp/tmpue24uodw/new/repeat/producer-03-after-input_mode.json"
+                ],
+                "timeout_seconds": 30,
+                "timed_out": false,
+                "exit": 0,
+                "clean_log": true,
+                "pid": 74005,
+                "cleanup": {
+                  "pid": 74005,
+                  "owned_group_gone": true,
+                  "signals_sent": [],
+                  "exit_code": 0
+                },
+                "wall_seconds": 1,
+                "log": "/tmp/tmpue24uodw/new/repeat/producer-03-after-input_mode.log"
+              }
+            },
+            "produced_files_sha256": {
+              "offline_training.json": "cb8daed7b30399a1c3c8b83b3b7bee4b774a30fc389afc1d375e4c23a3cc4ae8"
+            }
+          },
+          {
+            "label": "producer-03-after-input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-_ulmjia2/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-_ulmjia2/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpue24uodw/new/repeat/producer-03-after-input_mode.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74005,
+            "cleanup": {
+              "pid": 74005,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpue24uodw/new/repeat/producer-03-after-input_mode.log"
+          }
+        ],
+        "failure": {
+          "type": "RuntimeError",
+          "message": "input_mode failed; raw output retained"
+        },
+        "source_after": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "source_unchanged": true,
+        "original_evidence_unchanged": true,
+        "seconds": 5
+      }
+    },
+    {
+      "mode": "clean",
+      "missing": "results.json",
+      "exit": 0,
+      "state": {
+        "commands": [],
+        "waits": [],
+        "reaped": [],
+        "private_projects": [],
+        "user_namespaces": [],
+        "original_unchanged": true,
+        "private_projects_removed": true,
+        "user_namespace_existence": {}
+      },
+      "report": {
+        "scope": "Diagnostic only; original strict native regression failure is retained",
+        "passed": false,
+        "strict_gate_repaired": false,
+        "status": "SKIPPED_DIFFERENT_OR_UNPROVEN_FAILURE",
+        "original_output": "/tmp/tmpvy153bpy/original",
+        "whole_deadline_seconds": 240,
+        "source": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "original_evidence_sha256": {
+          "results.json": null,
+          "isolation.json": "3bfa6c533c937fa27070e86f7393828ad3aa6c4e9f405c05913c0845efd359e9",
+          "input_mode.log": "1f32aabc94e2a8fe3b4d31071a9e4a01e7f1469239a3bd585c85004c938bcb0e"
+        },
+        "skip_reason": "Original failure evidence is absent: results.json",
+        "source_after": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "source_unchanged": true,
+        "original_evidence_unchanged": true,
+        "seconds": 0
+      }
+    },
+    {
+      "mode": "clean",
+      "missing": "isolation.json",
+      "exit": 0,
+      "state": {
+        "commands": [],
+        "waits": [],
+        "reaped": [],
+        "private_projects": [],
+        "user_namespaces": [],
+        "original_unchanged": true,
+        "private_projects_removed": true,
+        "user_namespace_existence": {}
+      },
+      "report": {
+        "scope": "Diagnostic only; original strict native regression failure is retained",
+        "passed": false,
+        "strict_gate_repaired": false,
+        "status": "SKIPPED_DIFFERENT_OR_UNPROVEN_FAILURE",
+        "original_output": "/tmp/tmp_s0ppe4x/original",
+        "whole_deadline_seconds": 240,
+        "source": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "original_evidence_sha256": {
+          "results.json": "23364dbeb03dbc79b47495bcccfa97f82d4c676fd35fa0c69fc843ab9e3b222f",
+          "isolation.json": null,
+          "input_mode.log": "1f32aabc94e2a8fe3b4d31071a9e4a01e7f1469239a3bd585c85004c938bcb0e"
+        },
+        "skip_reason": "Original failure evidence is absent: isolation.json",
+        "source_after": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "source_unchanged": true,
+        "original_evidence_unchanged": true,
+        "seconds": 0
+      }
+    },
+    {
+      "mode": "clean",
+      "missing": "input_mode.log",
+      "exit": 0,
+      "state": {
+        "commands": [],
+        "waits": [],
+        "reaped": [],
+        "private_projects": [],
+        "user_namespaces": [],
+        "original_unchanged": true,
+        "private_projects_removed": true,
+        "user_namespace_existence": {}
+      },
+      "report": {
+        "scope": "Diagnostic only; original strict native regression failure is retained",
+        "passed": false,
+        "strict_gate_repaired": false,
+        "status": "SKIPPED_DIFFERENT_OR_UNPROVEN_FAILURE",
+        "original_output": "/tmp/tmphvx8kruc/original",
+        "whole_deadline_seconds": 240,
+        "source": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "original_evidence_sha256": {
+          "results.json": "23364dbeb03dbc79b47495bcccfa97f82d4c676fd35fa0c69fc843ab9e3b222f",
+          "isolation.json": "3bfa6c533c937fa27070e86f7393828ad3aa6c4e9f405c05913c0845efd359e9",
+          "input_mode.log": null
+        },
+        "skip_reason": "Original failure evidence is absent: input_mode.log",
+        "source_after": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "source_unchanged": true,
+        "original_evidence_unchanged": true,
+        "seconds": 0
+      }
+    },
+    {
+      "mode": "suite_timeout",
+      "missing": null,
+      "exit": 1,
+      "state": {
+        "commands": [
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-tigppqns/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-tigppqns/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpw2gcis5s/new/repeat/producer-01-bootstrap.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-tigppqns/project",
+            "--headless",
+            "--editor",
+            "--import",
+            "--quit"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-tigppqns/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-tigppqns/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmpw2gcis5s/new/repeat/producer-02-before-input_mode.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-tigppqns/project",
+            "--headless",
+            "--verbose",
+            "--script",
+            "res://tests/input_mode_test.gd"
+          ]
+        ],
+        "waits": [
+          30,
+          120,
+          30,
+          120
+        ],
+        "reaped": [
+          74001,
+          74002,
+          74003,
+          74004
+        ],
+        "private_projects": [
+          "/tmp/sightbreak-native-tests-tigppqns"
+        ],
+        "user_namespaces": [
+          "/tmp/tmpw2gcis5s/native-data/SIGHTBREAK-native-tests-adab1fd6212146b78a8db37001441bea"
+        ],
+        "original_unchanged": true,
+        "private_projects_removed": true,
+        "user_namespace_existence": {
+          "/tmp/tmpw2gcis5s/native-data/SIGHTBREAK-native-tests-adab1fd6212146b78a8db37001441bea": false
+        }
+      },
+      "report": {
+        "scope": "Diagnostic only; original strict native regression failure is retained",
+        "passed": false,
+        "strict_gate_repaired": false,
+        "status": "FAILED",
+        "original_output": "/tmp/tmpw2gcis5s/original",
+        "whole_deadline_seconds": 240,
+        "source": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "original_evidence_sha256": {
+          "results.json": "23364dbeb03dbc79b47495bcccfa97f82d4c676fd35fa0c69fc843ab9e3b222f",
+          "isolation.json": "3bfa6c533c937fa27070e86f7393828ad3aa6c4e9f405c05913c0845efd359e9",
+          "input_mode.log": "1f32aabc94e2a8fe3b4d31071a9e4a01e7f1469239a3bd585c85004c938bcb0e"
+        },
+        "isolation": {
+          "namespace": "SIGHTBREAK-native-tests-adab1fd6212146b78a8db37001441bea",
+          "source_resources_sha256": {
+            "project.godot": "c383af07fc03020315f2f46ce9e9251b98064f57e2914a7d39b4d794f0bf2e0d",
+            "tests/input_mode_test.gd": "c026df4b3e84c220d4d58b85b63862c15b31b60181943bafed62e9b57890150f"
+          },
+          "suite_timeout_seconds": 120,
+          "probe_timeout_seconds": 30,
+          "scope": "Diagnostic-only verbose input_mode repeat; original strict gate remains failed",
+          "whole_deadline_seconds": 240,
+          "process_receipts": "owned-processes.json",
+          "engine": {
+            "synthetic": true
+          },
+          "import": {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-tigppqns/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpw2gcis5s/new/repeat/private-import.log"
+          },
+          "passed": false,
+          "source_resources_unchanged": true,
+          "copied_resources_unchanged": true,
+          "temporary_project_removed": true,
+          "cleanup": [
+            {
+              "user_namespace": "/tmp/tmpw2gcis5s/native-data/SIGHTBREAK-native-tests-adab1fd6212146b78a8db37001441bea",
+              "removed": true
+            }
+          ],
+          "finalization_failures": [],
+          "failure": {
+            "type": "TimeoutExpired",
+            "message": "Command '['never-executed-engine', '--path', '/tmp/sightbreak-native-tests-tigppqns/project', '--headless', '--verbose', '--script', 'res://tests/input_mode_test.gd']' timed out after 120 seconds"
+          }
+        },
+        "owned_processes": [
+          {
+            "label": "producer-01-bootstrap",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-tigppqns/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-tigppqns/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpw2gcis5s/new/repeat/producer-01-bootstrap.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74001,
+            "cleanup": {
+              "pid": 74001,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpw2gcis5s/new/repeat/producer-01-bootstrap.log"
+          },
+          {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-tigppqns/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpw2gcis5s/new/repeat/private-import.log"
+          },
+          {
+            "label": "producer-02-before-input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-tigppqns/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-tigppqns/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmpw2gcis5s/new/repeat/producer-02-before-input_mode.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74003,
+            "cleanup": {
+              "pid": 74003,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpw2gcis5s/new/repeat/producer-02-before-input_mode.log"
+          },
+          {
+            "label": "input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-tigppqns/project",
+              "--headless",
+              "--verbose",
+              "--script",
+              "res://tests/input_mode_test.gd"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": true,
+            "exit": -15,
+            "clean_log": true,
+            "pid": 74004,
+            "cleanup": {
+              "pid": 74004,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": -15
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmpw2gcis5s/new/repeat/input_mode.log"
+          }
+        ],
+        "failure": {
+          "type": "TimeoutExpired",
+          "message": "Command '['never-executed-engine', '--path', '/tmp/sightbreak-native-tests-tigppqns/project', '--headless', '--verbose', '--script', 'res://tests/input_mode_test.gd']' timed out after 120 seconds"
+        },
+        "source_after": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "source_unchanged": true,
+        "original_evidence_unchanged": true,
+        "seconds": 4
+      }
+    },
+    {
+      "mode": "deadline_overrun",
+      "missing": null,
+      "exit": 1,
+      "state": {
+        "commands": [
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-zcaef3p_/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-zcaef3p_/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmp24twrugk/new/repeat/producer-01-bootstrap.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-zcaef3p_/project",
+            "--headless",
+            "--editor",
+            "--import",
+            "--quit"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-zcaef3p_/project",
+            "--headless",
+            "--script",
+            "/tmp/sightbreak-native-tests-zcaef3p_/user_directory_probe.gd",
+            "--",
+            "--receipt=/tmp/tmp24twrugk/new/repeat/producer-02-before-input_mode.json"
+          ],
+          [
+            "never-executed-engine",
+            "--path",
+            "/tmp/sightbreak-native-tests-zcaef3p_/project",
+            "--headless",
+            "--verbose",
+            "--script",
+            "res://tests/input_mode_test.gd"
+          ]
+        ],
+        "waits": [
+          30,
+          120,
+          30,
+          120
+        ],
+        "reaped": [
+          74001,
+          74002,
+          74003,
+          74004
+        ],
+        "private_projects": [
+          "/tmp/sightbreak-native-tests-zcaef3p_"
+        ],
+        "user_namespaces": [
+          "/tmp/tmp24twrugk/native-data/SIGHTBREAK-native-tests-484646f13ba9420eb82cee7ecdcf3a84"
+        ],
+        "original_unchanged": true,
+        "private_projects_removed": true,
+        "user_namespace_existence": {
+          "/tmp/tmp24twrugk/native-data/SIGHTBREAK-native-tests-484646f13ba9420eb82cee7ecdcf3a84": false
+        }
+      },
+      "report": {
+        "scope": "Diagnostic only; original strict native regression failure is retained",
+        "passed": false,
+        "strict_gate_repaired": false,
+        "status": "FAILED",
+        "original_output": "/tmp/tmp24twrugk/original",
+        "whole_deadline_seconds": 240,
+        "source": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "original_evidence_sha256": {
+          "results.json": "23364dbeb03dbc79b47495bcccfa97f82d4c676fd35fa0c69fc843ab9e3b222f",
+          "isolation.json": "3bfa6c533c937fa27070e86f7393828ad3aa6c4e9f405c05913c0845efd359e9",
+          "input_mode.log": "1f32aabc94e2a8fe3b4d31071a9e4a01e7f1469239a3bd585c85004c938bcb0e"
+        },
+        "isolation": {
+          "namespace": "SIGHTBREAK-native-tests-484646f13ba9420eb82cee7ecdcf3a84",
+          "source_resources_sha256": {
+            "project.godot": "c383af07fc03020315f2f46ce9e9251b98064f57e2914a7d39b4d794f0bf2e0d",
+            "tests/input_mode_test.gd": "c026df4b3e84c220d4d58b85b63862c15b31b60181943bafed62e9b57890150f"
+          },
+          "suite_timeout_seconds": 120,
+          "probe_timeout_seconds": 30,
+          "scope": "Diagnostic-only verbose input_mode repeat; original strict gate remains failed",
+          "whole_deadline_seconds": 240,
+          "process_receipts": "owned-processes.json",
+          "engine": {
+            "synthetic": true
+          },
+          "import": {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-zcaef3p_/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmp24twrugk/new/repeat/private-import.log"
+          },
+          "passed": false,
+          "source_resources_unchanged": true,
+          "copied_resources_unchanged": true,
+          "temporary_project_removed": true,
+          "cleanup": [
+            {
+              "user_namespace": "/tmp/tmp24twrugk/native-data/SIGHTBREAK-native-tests-484646f13ba9420eb82cee7ecdcf3a84",
+              "removed": true
+            }
+          ],
+          "finalization_failures": [],
+          "failure": {
+            "type": "TimeoutError",
+            "message": "Whole verbose diagnostic deadline exceeded"
+          }
+        },
+        "owned_processes": [
+          {
+            "label": "producer-01-bootstrap",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-zcaef3p_/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-zcaef3p_/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmp24twrugk/new/repeat/producer-01-bootstrap.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74001,
+            "cleanup": {
+              "pid": 74001,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmp24twrugk/new/repeat/producer-01-bootstrap.log"
+          },
+          {
+            "label": "private-import",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-zcaef3p_/project",
+              "--headless",
+              "--editor",
+              "--import",
+              "--quit"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74002,
+            "cleanup": {
+              "pid": 74002,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmp24twrugk/new/repeat/private-import.log"
+          },
+          {
+            "label": "producer-02-before-input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-zcaef3p_/project",
+              "--headless",
+              "--script",
+              "/tmp/sightbreak-native-tests-zcaef3p_/user_directory_probe.gd",
+              "--",
+              "--receipt=/tmp/tmp24twrugk/new/repeat/producer-02-before-input_mode.json"
+            ],
+            "timeout_seconds": 30,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74003,
+            "cleanup": {
+              "pid": 74003,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 1,
+            "log": "/tmp/tmp24twrugk/new/repeat/producer-02-before-input_mode.log"
+          },
+          {
+            "label": "input_mode",
+            "command": [
+              "never-executed-engine",
+              "--path",
+              "/tmp/sightbreak-native-tests-zcaef3p_/project",
+              "--headless",
+              "--verbose",
+              "--script",
+              "res://tests/input_mode_test.gd"
+            ],
+            "timeout_seconds": 120,
+            "timed_out": false,
+            "exit": 0,
+            "clean_log": true,
+            "pid": 74004,
+            "cleanup": {
+              "pid": 74004,
+              "owned_group_gone": true,
+              "signals_sent": [],
+              "exit_code": 0
+            },
+            "wall_seconds": 238,
+            "log": "/tmp/tmp24twrugk/new/repeat/input_mode.log"
+          }
+        ],
+        "failure": {
+          "type": "TimeoutError",
+          "message": "Whole verbose diagnostic deadline exceeded"
+        },
+        "source_after": {
+          "source_commit": "invented-review-commit",
+          "source_game_tree": "invented-review-game",
+          "source_content_sha256": "invented-review-content",
+          "source_validation_sha256": "invented-review-validation",
+          "source_dirty": false,
+          "source_game_dirty": false
+        },
+        "source_unchanged": true,
+        "original_evidence_unchanged": true,
+        "finalization_failure": {
+          "type": "TimeoutError",
+          "message": "Whole verbose diagnostic deadline exceeded during receipt checks"
+        },
+        "seconds": 241
+      }
+    }
+  ]
+}

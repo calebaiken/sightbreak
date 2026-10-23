@@ -1,0 +1,80 @@
+{
+  "checks": {
+    "manifest_current_clean_source": true,
+    "one_current_completed_export": true,
+    "native_export_source_record_matches": true,
+    "native_verification_source_record_matches": true,
+    "debug_development_scope": true,
+    "manifest_embedded_executable_identity_join": true,
+    "same_native_executable:native-input/results.json": true,
+    "same_native_executable:offline-defuse/results.json": true,
+    "same_native_executable:offline-full-match/results.json": true,
+    "same_native_executable:offline-input/results.json": true,
+    "same_native_executable:offline-plant/results.json": true,
+    "same_native_executable:reload-legacy-delayed/results.json": true,
+    "same_native_executable:reload-release-first/results.json": true,
+    "actual_embedded_PCK_inspection_receipt": true,
+    "startup_headless_and_graphical_receipts": true,
+    "three_clean_native_startup_commands": true,
+    "actual_startup_strict_logs_clean": true
+  },
+  "all_checks_passed": true,
+  "native_executable_receipt": {
+    "path": "windows/SIGHTBREAK.exe",
+    "bytes": 113575576,
+    "sha256": "6a76393ae31964bcf8b7a367b48d66496b31851a0d75788cee2eaed791d379d2",
+    "mode": 511,
+    "archive_mode": 420
+  },
+  "embedded_PCK_resource_count_receipt": 134,
+  "runtime_executable_joins": [
+    {
+      "path": "native-input/results.json",
+      "executable_sha256": "6a76393ae31964bcf8b7a367b48d66496b31851a0d75788cee2eaed791d379d2"
+    },
+    {
+      "path": "offline-defuse/results.json",
+      "executable_sha256": "6a76393ae31964bcf8b7a367b48d66496b31851a0d75788cee2eaed791d379d2"
+    },
+    {
+      "path": "offline-full-match/results.json",
+      "executable_sha256": "6a76393ae31964bcf8b7a367b48d66496b31851a0d75788cee2eaed791d379d2"
+    },
+    {
+      "path": "offline-input/results.json",
+      "executable_sha256": "6a76393ae31964bcf8b7a367b48d66496b31851a0d75788cee2eaed791d379d2"
+    },
+    {
+      "path": "offline-plant/results.json",
+      "executable_sha256": "6a76393ae31964bcf8b7a367b48d66496b31851a0d75788cee2eaed791d379d2"
+    },
+    {
+      "path": "reload-legacy-delayed/results.json",
+      "executable_sha256": "6a76393ae31964bcf8b7a367b48d66496b31851a0d75788cee2eaed791d379d2"
+    },
+    {
+      "path": "reload-release-first/results.json",
+      "executable_sha256": "6a76393ae31964bcf8b7a367b48d66496b31851a0d75788cee2eaed791d379d2"
+    }
+  ],
+  "verification_logs": [
+    {
+      "path": "verification/windows-demo.log",
+      "sha256": "83cf0b082206af2aa236c83064fbcfa76be1e00a4aa3558574b2f65965d9481c",
+      "failure_lines": []
+    },
+    {
+      "path": "verification/windows-graphical-menu.log",
+      "sha256": "d5bcd0c1ac1f360f31f66da9722a4fcf87de55af02085e9e46d61d9ba8fafaa8",
+      "failure_lines": []
+    },
+    {
+      "path": "verification/windows-menu.log",
+      "sha256": "f860b0729734aca567974aa3910c6afd7dd0e77783c5e0ae196eaec8681f97d1",
+      "failure_lines": []
+    }
+  ],
+  "native_executable_bytes_independently_transferred": false,
+  "PCK_bytes_or_directory_independently_reparsed": false,
+  "scope": "Source/manifest/runtime hash joins and original native embedded-PCK inspection receipt; native binary above transfer cap is not downloaded or independently reparsed."
+}

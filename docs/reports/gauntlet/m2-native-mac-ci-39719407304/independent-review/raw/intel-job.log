@@ -1,0 +1,835 @@
+﻿2026-10-22T03:59:12.0526060Z Current runner version: '2.338.0'
+2026-10-22T03:59:12.0581130Z ##[group]Runner Image Provisioner
+2026-10-22T03:59:12.0582730Z Hosted Compute Agent
+2026-10-22T03:59:12.0583710Z Version: 20260819.586
+2026-10-22T03:59:12.0584850Z Commit: 3cc4a88dfa507ef76119ad1bb3eccc6378bb2b76
+2026-10-22T03:59:12.0586180Z Build Date: 2026-08-18T23:20:18Z
+2026-10-22T03:59:12.0587370Z Worker ID: {b0fa9f95-e4bf-49eb-a09a-5e61adc87b2a}
+2026-10-22T03:59:12.0588690Z Azure Region: westus
+2026-10-22T03:59:12.0589690Z ##[endgroup]
+2026-10-22T03:59:12.0592910Z ##[group]Operating System
+2026-10-22T03:59:12.0594030Z macOS
+2026-10-22T03:59:12.0594860Z 15.7.9
+2026-10-22T03:59:12.0595660Z 24G830
+2026-10-22T03:59:12.0596540Z ##[endgroup]
+2026-10-22T03:59:12.0597480Z ##[group]Runner Image
+2026-10-22T03:59:12.0598420Z Image: macos-15
+2026-10-22T03:59:12.0599360Z Version: 20260824.0482.1
+2026-10-22T03:59:12.0602860Z Included Software: https://github.com/actions/runner-images/blob/macos-15/20260824.0482/images/macos/macos-15-Readme.md
+2026-10-22T03:59:12.0605790Z Image Release: https://github.com/actions/runner-images/releases/tag/macos-15%2F20260824.0482
+2026-10-22T03:59:12.0607650Z ##[endgroup]
+2026-10-22T03:59:12.0610420Z ##[group]GITHUB_TOKEN Permissions
+2026-10-22T03:59:12.0614500Z Actions: read
+2026-10-22T03:59:12.0615190Z Contents: read
+2026-10-22T03:59:12.0615850Z Metadata: read
+2026-10-22T03:59:12.0616500Z ##[endgroup]
+2026-10-22T03:59:12.0619480Z Secret source: Actions
+2026-10-22T03:59:12.0625890Z Cache mode: write
+2026-10-22T03:59:12.0627560Z Prepare workflow directory
+2026-10-22T03:59:12.3285970Z Prepare all required actions
+2026-10-22T03:59:12.3391540Z Getting action download info
+2026-10-22T03:59:12.5638570Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2026-10-22T03:59:12.9489610Z Download action repository 'actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-22T03:59:13.2084440Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-22T03:59:13.7175940Z Complete job name: native (macos-15-intel, macos)
+2026-10-22T03:59:13.9698810Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2026-10-22T03:59:13.9704310Z with:
+2026-10-22T03:59:13.9705540Z   repository: calebaiken/sightbreak
+2026-10-22T03:59:13.9717830Z   token: ***
+2026-10-22T03:59:13.9719110Z   ssh-strict: true
+2026-10-22T03:59:13.9720190Z   ssh-user: git
+2026-10-22T03:59:13.9721310Z   persist-credentials: true
+2026-10-22T03:59:13.9722610Z   clean: true
+2026-10-22T03:59:13.9723880Z   sparse-checkout-cone-mode: true
+2026-10-22T03:59:13.9725260Z   fetch-depth: 1
+2026-10-22T03:59:13.9726360Z   fetch-tags: false
+2026-10-22T03:59:13.9727610Z   show-progress: true
+2026-10-22T03:59:13.9729170Z   lfs: false
+2026-10-22T03:59:13.9730420Z   submodules: false
+2026-10-22T03:59:13.9731610Z   set-safe-directory: true
+2026-10-22T03:59:13.9734340Z env:
+2026-10-22T03:59:13.9736210Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T03:59:13.9738430Z ##[endgroup]
+2026-10-22T03:59:14.6641380Z Syncing repository: calebaiken/sightbreak
+2026-10-22T03:59:14.6646060Z ##[group]Getting Git version info
+2026-10-22T03:59:14.6648030Z Working directory is '/Users/runner/work/sightbreak/sightbreak'
+2026-10-22T03:59:14.6650980Z [command]/usr/local/bin/git version
+2026-10-22T03:59:14.6652360Z git version 2.55.0
+2026-10-22T03:59:14.6657660Z ##[endgroup]
+2026-10-22T03:59:14.6667900Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/d42c11bf-75eb-4a02-bb11-b50620750918/.gitconfig'
+2026-10-22T03:59:14.6672390Z Temporarily overriding HOME='/Users/runner/work/_temp/d42c11bf-75eb-4a02-bb11-b50620750918' before making global git config changes
+2026-10-22T03:59:14.6676260Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-22T03:59:14.6679740Z [command]/usr/local/bin/git config --global --add safe.directory /Users/runner/work/sightbreak/sightbreak
+2026-10-22T03:59:14.6686640Z Deleting the contents of '/Users/runner/work/sightbreak/sightbreak'
+2026-10-22T03:59:14.6689900Z ##[group]Initializing the repository
+2026-10-22T03:59:14.6692950Z [command]/usr/local/bin/git init /Users/runner/work/sightbreak/sightbreak
+2026-10-22T03:59:14.6695880Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-22T03:59:14.6699320Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-22T03:59:14.6701930Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-22T03:59:14.6704090Z hint: call:
+2026-10-22T03:59:14.6705180Z hint:
+2026-10-22T03:59:14.6706590Z hint: 	git config --global init.defaultBranch <name>
+2026-10-22T03:59:14.6708260Z hint:
+2026-10-22T03:59:14.6709900Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-22T03:59:14.6712660Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-22T03:59:14.6714920Z hint:
+2026-10-22T03:59:14.6716070Z hint: 	git branch -m <name>
+2026-10-22T03:59:14.6717520Z hint:
+2026-10-22T03:59:14.6720550Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-22T03:59:14.6724010Z Initialized empty Git repository in /Users/runner/work/sightbreak/sightbreak/.git/
+2026-10-22T03:59:14.6729980Z [command]/usr/local/bin/git remote add origin https://github.com/calebaiken/sightbreak
+2026-10-22T03:59:14.6734520Z ##[endgroup]
+2026-10-22T03:59:14.6736620Z ##[group]Disabling automatic garbage collection
+2026-10-22T03:59:14.6738640Z [command]/usr/local/bin/git config --local gc.auto 0
+2026-10-22T03:59:14.6743130Z ##[endgroup]
+2026-10-22T03:59:14.6746550Z ##[group]Setting up auth
+2026-10-22T03:59:14.6748680Z [command]/usr/local/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-22T03:59:14.6755890Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-22T03:59:14.9119000Z [command]/usr/local/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-22T03:59:14.9279530Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-22T03:59:15.1915490Z [command]/usr/local/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-22T03:59:15.1920720Z ##[endgroup]
+2026-10-22T03:59:15.1922730Z ##[group]Fetching the repository
+2026-10-22T03:59:15.1926880Z [command]/usr/local/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +0ca125dfba637868e6e8e9772ff9c40400413e32:refs/remotes/origin/codex/v1-mission-playability
+2026-10-22T03:59:34.3143530Z From https://github.com/calebaiken/sightbreak
+2026-10-22T03:59:34.3213150Z  * [new ref]         0ca125dfba637868e6e8e9772ff9c40400413e32 -> origin/codex/v1-mission-playability
+2026-10-22T03:59:34.3426460Z ##[endgroup]
+2026-10-22T03:59:34.3463010Z ##[group]Determining the checkout info
+2026-10-22T03:59:34.3523670Z ##[endgroup]
+2026-10-22T03:59:34.3556710Z [command]/usr/local/bin/git sparse-checkout disable
+2026-10-22T03:59:34.3669390Z [command]/usr/local/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-22T03:59:34.3711630Z ##[group]Checking out the ref
+2026-10-22T03:59:34.3729700Z [command]/usr/local/bin/git checkout --progress --force -B codex/v1-mission-playability refs/remotes/origin/codex/v1-mission-playability
+2026-10-22T03:59:35.5700810Z Updating files:  14% (756/5288)
+2026-10-22T03:59:35.5958970Z Updating files:  15% (794/5288)
+2026-10-22T03:59:35.6314520Z Updating files:  16% (847/5288)
+2026-10-22T03:59:35.6482150Z Updating files:  17% (899/5288)
+2026-10-22T03:59:35.7092570Z Updating files:  18% (952/5288)
+2026-10-22T03:59:35.7182410Z Updating files:  19% (1005/5288)
+2026-10-22T03:59:35.7215240Z Updating files:  20% (1058/5288)
+2026-10-22T03:59:35.8029710Z Updating files:  21% (1111/5288)
+2026-10-22T03:59:35.8496350Z Updating files:  22% (1164/5288)
+2026-10-22T03:59:35.9208240Z Updating files:  23% (1217/5288)
+2026-10-22T03:59:35.9626470Z Updating files:  24% (1270/5288)
+2026-10-22T03:59:35.9896290Z Updating files:  25% (1322/5288)
+2026-10-22T03:59:36.3023890Z Updating files:  26% (1375/5288)
+2026-10-22T03:59:36.3456290Z Updating files:  27% (1428/5288)
+2026-10-22T03:59:36.3934270Z Updating files:  28% (1481/5288)
+2026-10-22T03:59:36.4896900Z Updating files:  28% (1490/5288)
+2026-10-22T03:59:36.5623560Z Updating files:  29% (1534/5288)
+2026-10-22T03:59:36.6571260Z Updating files:  30% (1587/5288)
+2026-10-22T03:59:36.7577000Z Updating files:  31% (1640/5288)
+2026-10-22T03:59:36.8216080Z Updating files:  32% (1693/5288)
+2026-10-22T03:59:36.8223030Z Updating files:  33% (1746/5288)
+2026-10-22T03:59:36.8891030Z Updating files:  34% (1798/5288)
+2026-10-22T03:59:36.9700710Z Updating files:  35% (1851/5288)
+2026-10-22T03:59:37.0138310Z Updating files:  36% (1904/5288)
+2026-10-22T03:59:37.0694360Z Updating files:  37% (1957/5288)
+2026-10-22T03:59:37.1943420Z Updating files:  38% (2010/5288)
+2026-10-22T03:59:37.3441300Z Updating files:  39% (2063/5288)
+2026-10-22T03:59:37.3989720Z Updating files:  40% (2116/5288)
+2026-10-22T03:59:37.5307040Z Updating files:  40% (2130/5288)
+2026-10-22T03:59:37.6227270Z Updating files:  41% (2169/5288)
+2026-10-22T03:59:37.6654830Z Updating files:  42% (2221/5288)
+2026-10-22T03:59:37.7176330Z Updating files:  43% (2274/5288)
+2026-10-22T03:59:37.7617430Z Updating files:  44% (2327/5288)
+2026-10-22T03:59:37.8092120Z Updating files:  45% (2380/5288)
+2026-10-22T03:59:37.8350480Z Updating files:  46% (2433/5288)
+2026-10-22T03:59:37.8692710Z Updating files:  47% (2486/5288)
+2026-10-22T03:59:37.9774670Z Updating files:  48% (2539/5288)
+2026-10-22T03:59:38.0615800Z Updating files:  49% (2592/5288)
+2026-10-22T03:59:38.1187170Z Updating files:  50% (2644/5288)
+2026-10-22T03:59:38.2015470Z Updating files:  51% (2697/5288)
+2026-10-22T03:59:38.2994660Z Updating files:  52% (2750/5288)
+2026-10-22T03:59:38.3948450Z Updating files:  53% (2803/5288)
+2026-10-22T03:59:38.4111240Z Updating files:  53% (2845/5288)
+2026-10-22T03:59:38.5232600Z Updating files:  54% (2856/5288)
+2026-10-22T03:59:38.6654950Z Updating files:  55% (2909/5288)
+2026-10-22T03:59:38.7072480Z Updating files:  56% (2962/5288)
+2026-10-22T03:59:38.7402580Z Updating files:  57% (3015/5288)
+2026-10-22T03:59:38.7706220Z Updating files:  58% (3068/5288)
+2026-10-22T03:59:38.8051290Z Updating files:  59% (3120/5288)
+2026-10-22T03:59:38.8535240Z Updating files:  60% (3173/5288)
+2026-10-22T03:59:38.8982720Z Updating files:  61% (3226/5288)
+2026-10-22T03:59:38.9284870Z Updating files:  62% (3279/5288)
+2026-10-22T03:59:38.9525470Z Updating files:  63% (3332/5288)
+2026-10-22T03:59:38.9954160Z Updating files:  64% (3385/5288)
+2026-10-22T03:59:39.3561400Z Updating files:  65% (3438/5288)
+2026-10-22T03:59:39.3764770Z Updating files:  66% (3491/5288)
+2026-10-22T03:59:39.3919240Z Updating files:  67% (3543/5288)
+2026-10-22T03:59:39.3974660Z Updating files:  67% (3593/5288)
+2026-10-22T03:59:39.4149200Z Updating files:  68% (3596/5288)
+2026-10-22T03:59:39.4388850Z Updating files:  69% (3649/5288)
+2026-10-22T03:59:39.4896400Z Updating files:  70% (3702/5288)
+2026-10-22T03:59:39.5556200Z Updating files:  71% (3755/5288)
+2026-10-22T03:59:39.5830320Z Updating files:  72% (3808/5288)
+2026-10-22T03:59:39.6016050Z Updating files:  73% (3861/5288)
+2026-10-22T03:59:39.6273110Z Updating files:  74% (3914/5288)
+2026-10-22T03:59:39.6781820Z Updating files:  75% (3966/5288)
+2026-10-22T03:59:39.9082420Z Updating files:  76% (4019/5288)
+2026-10-22T03:59:39.9425110Z Updating files:  77% (4072/5288)
+2026-10-22T03:59:40.0545260Z Updating files:  78% (4125/5288)
+2026-10-22T03:59:40.1670640Z Updating files:  79% (4178/5288)
+2026-10-22T03:59:40.2860790Z Updating files:  80% (4231/5288)
+2026-10-22T03:59:40.3950730Z Updating files:  81% (4284/5288)
+2026-10-22T03:59:40.3992210Z Updating files:  81% (4336/5288)
+2026-10-22T03:59:40.4238410Z Updating files:  82% (4337/5288)
+2026-10-22T03:59:40.4451230Z Updating files:  83% (4390/5288)
+2026-10-22T03:59:40.4731860Z Updating files:  84% (4442/5288)
+2026-10-22T03:59:40.5050980Z Updating files:  85% (4495/5288)
+2026-10-22T03:59:40.5233940Z Updating files:  86% (4548/5288)
+2026-10-22T03:59:40.5453790Z Updating files:  87% (4601/5288)
+2026-10-22T03:59:40.5689190Z Updating files:  88% (4654/5288)
+2026-10-22T03:59:40.6325400Z Updating files:  89% (4707/5288)
+2026-10-22T03:59:40.6436260Z Updating files:  90% (4760/5288)
+2026-10-22T03:59:40.7111510Z Updating files:  91% (4813/5288)
+2026-10-22T03:59:40.7678980Z Updating files:  92% (4865/5288)
+2026-10-22T03:59:40.8335600Z Updating files:  93% (4918/5288)
+2026-10-22T03:59:40.8546490Z Updating files:  94% (4971/5288)
+2026-10-22T03:59:40.8755580Z Updating files:  95% (5024/5288)
+2026-10-22T03:59:40.9173750Z Updating files:  96% (5077/5288)
+2026-10-22T03:59:41.1669220Z Updating files:  97% (5130/5288)
+2026-10-22T03:59:41.1850480Z Updating files:  98% (5183/5288)
+2026-10-22T03:59:41.2080140Z Updating files:  99% (5236/5288)
+2026-10-22T03:59:41.2082590Z Updating files: 100% (5288/5288)
+2026-10-22T03:59:41.2084270Z Updating files: 100% (5288/5288), done.
+2026-10-22T03:59:41.2305980Z Switched to a new branch 'codex/v1-mission-playability'
+2026-10-22T03:59:41.2362020Z branch 'codex/v1-mission-playability' set up to track 'origin/codex/v1-mission-playability'.
+2026-10-22T03:59:41.2791020Z ##[endgroup]
+2026-10-22T03:59:41.2828710Z [command]/usr/local/bin/git log -1 --format=%H
+2026-10-22T03:59:41.2959650Z 0ca125dfba637868e6e8e9772ff9c40400413e32
+2026-10-22T03:59:41.3439990Z ##[group]Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+2026-10-22T03:59:41.3441050Z with:
+2026-10-22T03:59:41.3441560Z   python-version: 3.12
+2026-10-22T03:59:41.3442120Z   check-latest: false
+2026-10-22T03:59:41.3450720Z   token: ***
+2026-10-22T03:59:41.3451330Z   update-environment: true
+2026-10-22T03:59:41.3451970Z   allow-prereleases: false
+2026-10-22T03:59:41.3452570Z   freethreaded: false
+2026-10-22T03:59:41.3453080Z env:
+2026-10-22T03:59:41.3454190Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T03:59:41.3455380Z ##[endgroup]
+2026-10-22T03:59:41.6976570Z (node:3470) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-22T03:59:41.7097960Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-22T03:59:41.7099480Z ##[group]Installed versions
+2026-10-22T03:59:41.7318500Z Successfully set up CPython (3.12.10)
+2026-10-22T03:59:41.7320560Z ##[endgroup]
+2026-10-22T03:59:41.7559990Z ##[group]Run python -m pip install Pillow==12.3.0
+2026-10-22T03:59:41.7561450Z [36;1mpython -m pip install Pillow==12.3.0[0m
+2026-10-22T03:59:41.7704890Z shell: /bin/bash -e {0}
+2026-10-22T03:59:41.7705680Z env:
+2026-10-22T03:59:41.7706680Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T03:59:41.7708210Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T03:59:41.7709620Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T03:59:41.7710870Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T03:59:41.7712020Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T03:59:41.7713290Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T03:59:41.7714300Z ##[endgroup]
+2026-10-22T03:59:44.9689930Z Collecting Pillow==12.3.0
+2026-10-22T03:59:45.1205550Z   Downloading pillow-12.3.0-cp312-cp312-macosx_10_13_x86_64.whl.metadata (9.1 kB)
+2026-10-22T03:59:45.1662840Z Downloading pillow-12.3.0-cp312-cp312-macosx_10_13_x86_64.whl (5.3 MB)
+2026-10-22T03:59:45.8279330Z    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.3/5.3 MB 8.8 MB/s  0:00:00
+2026-10-22T03:59:45.8990470Z Installing collected packages: Pillow
+2026-10-22T03:59:46.4139330Z Successfully installed Pillow-12.3.0
+2026-10-22T03:59:46.4238270Z 
+2026-10-22T03:59:46.4253600Z [notice] A new release of pip is available: 26.2.1 -> 26.2.2
+2026-10-22T03:59:46.4255410Z [notice] To update, run: python -m pip install --upgrade pip
+2026-10-22T03:59:46.5337450Z ##[group]Run python scripts/toolchain.py setup --targets macos
+2026-10-22T03:59:46.5338470Z [36;1mpython scripts/toolchain.py setup --targets macos[0m
+2026-10-22T03:59:46.5423270Z shell: /bin/bash -e {0}
+2026-10-22T03:59:46.5423910Z env:
+2026-10-22T03:59:46.5424950Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T03:59:46.5426480Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T03:59:46.5427820Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T03:59:46.5429130Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T03:59:46.5430480Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T03:59:46.5431700Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T03:59:46.5432670Z ##[endgroup]
+2026-10-22T04:00:09.6397950Z 4.7.2.stable.official.ed1daf0bf
+2026-10-22T04:00:09.7666700Z ##[group]Run python scripts/test_build_manifest.py -v
+2026-10-22T04:00:09.7667960Z [36;1mpython scripts/test_build_manifest.py -v[0m
+2026-10-22T04:00:09.7796840Z shell: /bin/bash -e {0}
+2026-10-22T04:00:09.7797510Z env:
+2026-10-22T04:00:09.7798610Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:00:09.7800260Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:09.7801680Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:00:09.7803070Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:09.7804370Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:09.7805700Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:09.7806700Z ##[endgroup]
+2026-10-22T04:00:10.1495700Z test_all_source_dirt_rejected (__main__.BuildManifestTests.test_all_source_dirt_rejected) ... ok
+2026-10-22T04:00:10.2120330Z test_all_targets_package_with_current_version_and_license (__main__.BuildManifestTests.test_all_targets_package_with_current_version_and_license) ... ok
+2026-10-22T04:00:10.2200420Z test_android_signature_sidecar_is_preserved (__main__.BuildManifestTests.test_android_signature_sidecar_is_preserved) ... ok
+2026-10-22T04:00:10.2377910Z test_apple_developer_files_rejected (__main__.BuildManifestTests.test_apple_developer_files_rejected) ... ok
+2026-10-22T04:00:10.2665190Z test_changed_secondary_payload_rejected (__main__.BuildManifestTests.test_changed_secondary_payload_rejected) ... ok
+2026-10-22T04:00:10.2913470Z test_completed_export_has_exact_digest (__main__.BuildManifestTests.test_completed_export_has_exact_digest) ... ok
+2026-10-22T04:00:10.3390650Z test_developer_file_cannot_be_attested (__main__.BuildManifestTests.test_developer_file_cannot_be_attested) ... ok
+2026-10-22T04:00:10.3796590Z test_executable_permission_change_rejected (__main__.BuildManifestTests.test_executable_permission_change_rejected) ... ok
+2026-10-22T04:00:10.4125610Z test_existing_export_and_reattestation_rejected (__main__.BuildManifestTests.test_existing_export_and_reattestation_rejected) ... ok
+2026-10-22T04:00:10.4349080Z test_export_versions_match_manifest (__main__.BuildManifestTests.test_export_versions_match_manifest) ... ok
+2026-10-22T04:00:10.4843430Z test_identical_runtime_different_commit_rejected (__main__.BuildManifestTests.test_identical_runtime_different_commit_rejected) ... ok
+2026-10-22T04:00:10.5070740Z test_missing_artifact_rejected (__main__.BuildManifestTests.test_missing_artifact_rejected) ... ok
+2026-10-22T04:00:10.5401480Z test_modified_artifact_rejected (__main__.BuildManifestTests.test_modified_artifact_rejected) ... ok
+2026-10-22T04:00:10.5510220Z test_packaged_executable_mode_matches_receipt (__main__.BuildManifestTests.test_packaged_executable_mode_matches_receipt) ... ok
+2026-10-22T04:00:10.5780690Z test_prebuilt_android_template_does_not_override_gradle_sdk (__main__.BuildManifestTests.test_prebuilt_android_template_does_not_override_gradle_sdk) ... ok
+2026-10-22T04:00:10.5844310Z test_receipt_version_tampering_rejected (__main__.BuildManifestTests.test_receipt_version_tampering_rejected) ... ok
+2026-10-22T04:00:10.5961910Z test_required_ios_asset_catalog_is_preserved (__main__.BuildManifestTests.test_required_ios_asset_catalog_is_preserved) ... ok
+2026-10-22T04:00:10.6038770Z test_single_target_needs_no_other_sdks (__main__.BuildManifestTests.test_single_target_needs_no_other_sdks) ... ok
+2026-10-22T04:00:10.6103320Z test_source_change_during_export_rejected (__main__.BuildManifestTests.test_source_change_during_export_rejected) ... ok
+2026-10-22T04:00:10.6114600Z test_stale_source_rejected (__main__.BuildManifestTests.test_stale_source_rejected) ... ok
+2026-10-22T04:00:10.6117610Z test_uncommitted_game_rejected (__main__.BuildManifestTests.test_uncommitted_game_rejected) ... ok
+2026-10-22T04:00:10.6122290Z test_validation_source_change_rejected (__main__.BuildManifestTests.test_validation_source_change_rejected) ... ok
+2026-10-22T04:00:10.6131210Z test_actual_engine_warning_and_errors_rejected (__main__.NativeLogTests.test_actual_engine_warning_and_errors_rejected) ... ok
+2026-10-22T04:00:10.6134300Z test_normal_log_and_vsync_warning_allowed (__main__.NativeLogTests.test_normal_log_and_vsync_warning_allowed) ... ok
+2026-10-22T04:00:10.6136500Z 
+2026-10-22T04:00:10.6138040Z ----------------------------------------------------------------------
+2026-10-22T04:00:10.6140120Z Ran 24 tests in 0.457s
+2026-10-22T04:00:10.6144190Z 
+2026-10-22T04:00:10.6145530Z OK
+2026-10-22T04:00:10.6441950Z ##[group]Run python scripts/test_native_observation.py -v
+2026-10-22T04:00:10.6443000Z [36;1mpython scripts/test_native_observation.py -v[0m
+2026-10-22T04:00:10.6532750Z shell: /bin/bash -e {0}
+2026-10-22T04:00:10.6533200Z env:
+2026-10-22T04:00:10.6534440Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:00:10.6535540Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:10.6536640Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:00:10.6538170Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:10.6539360Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:10.6542130Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:10.6542810Z ##[endgroup]
+2026-10-22T04:00:10.9266480Z test_byte_limit_counts_utf8_bytes_and_rejects_oversized_snapshot (__main__.NativeObservationTests.test_byte_limit_counts_utf8_bytes_and_rejects_oversized_snapshot) ... ok
+2026-10-22T04:00:10.9300850Z test_exception_inside_reader_closes_its_actual_descriptor (__main__.NativeObservationTests.test_exception_inside_reader_closes_its_actual_descriptor) ... ok
+2026-10-22T04:00:10.9525730Z test_missing_invalid_utf8_and_malformed_json_are_not_accepted (__main__.NativeObservationTests.test_missing_invalid_utf8_and_malformed_json_are_not_accepted) ... ok
+2026-10-22T04:00:10.9565640Z test_open_reader_allows_godot_publication_and_keeps_original_snapshot (__main__.NativeObservationTests.test_open_reader_allows_godot_publication_and_keeps_original_snapshot) ... ok
+2026-10-22T04:00:10.9571900Z test_ordinary_windows_reader_blocks_godot_publication_until_closed (__main__.NativeObservationTests.test_ordinary_windows_reader_blocks_godot_publication_until_closed) ... skipped 'Windows CRT delete-sharing baseline requires native Windows'
+2026-10-22T04:00:10.9587810Z test_shared_windows_reader_does_not_promise_legacy_os_replace (__main__.NativeObservationTests.test_shared_windows_reader_does_not_promise_legacy_os_replace) ... skipped 'Windows legacy replacement semantics require native Windows'
+2026-10-22T04:00:10.9594080Z test_windows_publication_gap_is_unreadable_then_new_snapshot_is_complete (__main__.NativeObservationTests.test_windows_publication_gap_is_unreadable_then_new_snapshot_is_complete) ... skipped 'Godot two-step publication interval requires native Windows'
+2026-10-22T04:00:10.9598480Z 
+2026-10-22T04:00:10.9601320Z ----------------------------------------------------------------------
+2026-10-22T04:00:10.9602890Z Ran 7 tests in 0.035s
+2026-10-22T04:00:10.9605360Z 
+2026-10-22T04:00:10.9607040Z OK (skipped=3)
+2026-10-22T04:00:11.0132020Z ##[group]Run python scripts/test_package_qa_receipts.py -v
+2026-10-22T04:00:11.0133860Z [36;1mpython scripts/test_package_qa_receipts.py -v[0m
+2026-10-22T04:00:11.0269070Z shell: /bin/bash -e {0}
+2026-10-22T04:00:11.0269880Z env:
+2026-10-22T04:00:11.0270970Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:00:11.0273070Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:11.0275130Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:00:11.0277000Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:11.0278250Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:11.0280810Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:11.0282070Z ##[endgroup]
+2026-10-22T04:00:11.3015380Z test_all_receipts_reconstruct_and_repeat_exactly (__main__.ReceiptsTest.test_all_receipts_reconstruct_and_repeat_exactly) ... ok
+2026-10-22T04:00:11.3047220Z test_existing_output_and_source_output_are_rejected (__main__.ReceiptsTest.test_existing_output_and_source_output_are_rejected) ... ok
+2026-10-22T04:00:11.3104730Z test_index_overhead_is_included_in_bound (__main__.ReceiptsTest.test_index_overhead_is_included_in_bound) ... ok
+2026-10-22T04:00:11.3149050Z test_no_receipts_cannot_create_evidence_artifact (__main__.ReceiptsTest.test_no_receipts_cannot_create_evidence_artifact) ... ok
+2026-10-22T04:00:11.3216530Z test_oversized_evidence_fails_without_partial_or_mutation (__main__.ReceiptsTest.test_oversized_evidence_fails_without_partial_or_mutation) ... ok
+2026-10-22T04:00:11.3250840Z test_selected_symlink_is_rejected (__main__.ReceiptsTest.test_selected_symlink_is_rejected) ... ok
+2026-10-22T04:00:11.3256840Z 
+2026-10-22T04:00:11.3307070Z ----------------------------------------------------------------------
+2026-10-22T04:00:11.3313510Z Ran 6 tests in 0.081s
+2026-10-22T04:00:11.3315290Z 
+2026-10-22T04:00:11.3318120Z OK
+2026-10-22T04:00:11.3514240Z ##[group]Run python scripts/export.py macos
+2026-10-22T04:00:11.3515250Z [36;1mpython scripts/export.py macos[0m
+2026-10-22T04:00:11.3598750Z shell: /bin/bash -e {0}
+2026-10-22T04:00:11.3599190Z env:
+2026-10-22T04:00:11.3599940Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:00:11.3601010Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:11.3601940Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:00:11.3602850Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:11.3604010Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:11.3604860Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:00:11.3605530Z ##[endgroup]
+2026-10-22T04:01:10.4460030Z Exported /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos/SIGHTBREAK.app
+2026-10-22T04:01:10.4825510Z ##[group]Run python scripts/verify_builds.py --targets macos
+2026-10-22T04:01:10.4827130Z [36;1mpython scripts/verify_builds.py --targets macos[0m
+2026-10-22T04:01:10.4944360Z shell: /bin/bash -e {0}
+2026-10-22T04:01:10.4945810Z env:
+2026-10-22T04:01:10.4947050Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:01:10.4949620Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:01:10.4950990Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:01:10.4952360Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:01:10.4953590Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:01:10.4954670Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:01:10.4955670Z ##[endgroup]
+2026-10-22T04:01:20.9514370Z {
+2026-10-22T04:01:20.9519160Z   "macos": {
+2026-10-22T04:01:20.9522200Z     "artifact_inspection": true,
+2026-10-22T04:01:20.9524290Z     "native_execution": "PASS (headless startup only)",
+2026-10-22T04:01:20.9526340Z     "pck_resources": 132
+2026-10-22T04:01:20.9601920Z   }
+2026-10-22T04:01:20.9664190Z }
+2026-10-22T04:01:20.9889640Z ##[group]Run python scripts/verify_builds.py --targets macos --graphical
+2026-10-22T04:01:20.9891180Z [36;1mpython scripts/verify_builds.py --targets macos --graphical[0m
+2026-10-22T04:01:20.9995430Z shell: /bin/bash -e {0}
+2026-10-22T04:01:20.9995890Z env:
+2026-10-22T04:01:20.9996910Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:01:20.9998630Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:01:20.9999910Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:01:21.0000880Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:01:21.0001730Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:01:21.0002930Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:01:21.0003930Z ##[endgroup]
+2026-10-22T04:03:28.8421040Z Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+2026-10-22T04:03:28.9605220Z OpenGL API 4.1 APPLE-21.1.1 - Compatibility - Using Device: Apple Inc. - Apple Software Renderer
+2026-10-22T04:03:29.0551730Z 
+2026-10-22T04:03:29.1595010Z SIGHTBREAK_STARTUP phase=ready_enter msec=2992
+2026-10-22T04:03:29.2589670Z Traceback (most recent call last):
+2026-10-22T04:03:29.2590790Z SIGHTBREAK_STARTUP phase=settings_applied msec=2993
+2026-10-22T04:03:29.3104750Z   File "/Users/runner/work/sightbreak/sightbreak/scripts/verify_builds.py", line 219, in <module>
+2026-10-22T04:03:29.3106920Z SIGHTBREAK_STARTUP phase=menu_begin msec=2993
+2026-10-22T04:03:29.3112770Z     main(args.targets, args.graphical)
+2026-10-22T04:03:29.3114540Z SIGHTBREAK_STARTUP phase=menu_constructed msec=3270
+2026-10-22T04:03:29.3119810Z   File "/Users/runner/work/sightbreak/sightbreak/scripts/verify_builds.py", line 163, in main
+2026-10-22T04:03:29.3122380Z SIGHTBREAK_STARTUP phase=first_process msec=3458
+2026-10-22T04:03:29.3126300Z     menu = run(target+"-graphical-menu", [executable, "--audio-driver", "Dummy", "--", "--smoke", "--capture="+str(capture)])
+2026-10-22T04:03:29.3127960Z 
+2026-10-22T04:03:29.3171400Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-22T04:03:29.3178760Z   File "/Users/runner/work/sightbreak/sightbreak/scripts/verify_builds.py", line 134, in run
+2026-10-22T04:03:29.3185210Z     result = subprocess.run(command, env=environment, stdout=stream, stderr=subprocess.STDOUT, timeout=120)
+2026-10-22T04:03:29.3192840Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-22T04:03:29.3198130Z   File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py", line 550, in run
+2026-10-22T04:03:29.3207200Z     stdout, stderr = process.communicate(input, timeout=timeout)
+2026-10-22T04:03:29.3211050Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-22T04:03:29.3215660Z   File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py", line 1209, in communicate
+2026-10-22T04:03:29.3224730Z     stdout, stderr = self._communicate(input, endtime, timeout)
+2026-10-22T04:03:29.3258680Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-22T04:03:29.3268090Z   File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py", line 2141, in _communicate
+2026-10-22T04:03:29.3274720Z     self.wait(timeout=self._remaining_time(endtime))
+2026-10-22T04:03:29.3280860Z   File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py", line 1264, in wait
+2026-10-22T04:03:29.3285960Z     return self._wait(timeout=timeout)
+2026-10-22T04:03:29.3290230Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-22T04:03:29.3295360Z   File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py", line 2045, in _wait
+2026-10-22T04:03:29.3310320Z     raise TimeoutExpired(self.args, timeout)
+2026-10-22T04:03:29.3321330Z subprocess.TimeoutExpired: Command '['/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK', '--audio-driver', 'Dummy', '--', '--smoke', '--capture=/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/verification/macos-menu.png']' timed out after 119.99994868900006 seconds
+2026-10-22T04:03:29.3383240Z ##[error]Process completed with exit code 1.
+2026-10-22T04:03:29.4119290Z ##[group]Run import os, pathlib, sys, subprocess, json
+2026-10-22T04:03:29.4122510Z [36;1mimport os, pathlib, sys, subprocess, json[0m
+2026-10-22T04:03:29.4128830Z [36;1msys.path.insert(0, 'scripts')[0m
+2026-10-22T04:03:29.4131150Z [36;1mfrom build_manifest import BUILDS, OUTPUTS, validate_record[0m
+2026-10-22T04:03:29.4132800Z [36;1mfrom native_log import failed[0m
+2026-10-22T04:03:29.4133920Z [36;1mrecord = validate_record('macos')[0m
+2026-10-22T04:03:29.4135450Z [36;1mout = BUILDS / 'verification'[0m
+2026-10-22T04:03:29.4136330Z [36;1mcapture = out / 'macos-opengl-diagnostic.png'[0m
+2026-10-22T04:03:29.4138780Z [36;1mcommand = [str(BUILDS / OUTPUTS['macos']), '--rendering-driver', 'opengl3', '--audio-driver', 'Dummy', '--', '--smoke', '--capture='+str(capture)][0m
+2026-10-22T04:03:29.4141120Z [36;1mwith (out / 'macos-opengl-diagnostic.log').open('w') as log:[0m
+2026-10-22T04:03:29.4144470Z [36;1m    result = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, timeout=120)[0m
+2026-10-22T04:03:29.4146420Z [36;1moutput = (out / 'macos-opengl-diagnostic.log').read_text(errors='replace')[0m
+2026-10-22T04:03:29.4150090Z [36;1mreport = {'default_driver_failure_retained': True, 'source_commit': record['source_commit'], 'command': command, 'exit': result.returncode, 'clean_log': not failed(output), 'capture_exists': capture.is_file(), 'scope': 'Diagnostic explicit OpenGL override on hosted virtual GPU; not default-launch acceptance'}[0m
+2026-10-22T04:03:29.4158440Z [36;1m(out / 'macos-opengl-diagnostic.json').write_text(json.dumps(report, indent=2))[0m
+2026-10-22T04:03:29.4160100Z [36;1mprint(output[-16000:])[0m
+2026-10-22T04:03:29.4161210Z [36;1mprint(json.dumps(report))[0m
+2026-10-22T04:03:29.4162710Z [36;1mif result.returncode or failed(output) or not capture.is_file(): raise SystemExit(1)[0m
+2026-10-22T04:03:29.4207820Z shell: /Users/runner/hostedtoolcache/Python/3.12.10/x64/bin/python {0}
+2026-10-22T04:03:29.4209110Z env:
+2026-10-22T04:03:29.4210110Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:03:29.4211510Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:03:29.4212850Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:03:29.4214120Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:03:29.4215230Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:03:29.4216580Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:03:29.4217620Z ##[endgroup]
+2026-10-22T04:05:31.4129970Z Traceback (most recent call last):
+2026-10-22T04:05:31.4301310Z   File "/Users/runner/work/_temp/c79e3bf6-0892-42a0-b2e5-080bfb9bfa1a.py", line 10, in <module>
+2026-10-22T04:05:31.4305160Z     result = subprocess.run(command, stdout=log, stderr=subprocess.STDOUT, timeout=120)
+2026-10-22T04:05:31.4309170Z              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-22T04:05:31.4312340Z   File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py", line 550, in run
+2026-10-22T04:05:31.4315320Z     stdout, stderr = process.communicate(input, timeout=timeout)
+2026-10-22T04:05:31.4317310Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-22T04:05:31.4319880Z   File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py", line 1209, in communicate
+2026-10-22T04:05:31.4322940Z     stdout, stderr = self._communicate(input, endtime, timeout)
+2026-10-22T04:05:31.4325730Z                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-22T04:05:31.4328950Z   File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py", line 2141, in _communicate
+2026-10-22T04:05:31.4337770Z     self.wait(timeout=self._remaining_time(endtime))
+2026-10-22T04:05:31.4343830Z   File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py", line 1264, in wait
+2026-10-22T04:05:31.4347090Z     return self._wait(timeout=timeout)
+2026-10-22T04:05:31.4348760Z            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+2026-10-22T04:05:31.4351860Z   File "/Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py", line 2045, in _wait
+2026-10-22T04:05:31.4354540Z     raise TimeoutExpired(self.args, timeout)
+2026-10-22T04:05:31.4359940Z subprocess.TimeoutExpired: Command '['/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK', '--rendering-driver', 'opengl3', '--audio-driver', 'Dummy', '--', '--smoke', '--capture=/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/verification/macos-opengl-diagnostic.png']' timed out after 119.99991455099996 seconds
+2026-10-22T04:05:31.4542420Z ##[error]Process completed with exit code 1.
+2026-10-22T04:05:31.4852240Z ##[group]Run python scripts/run_native_regressions.py --output builds/desktop-playability/regressions
+2026-10-22T04:05:31.4855040Z [36;1mpython scripts/run_native_regressions.py --output builds/desktop-playability/regressions[0m
+2026-10-22T04:05:31.5072830Z shell: /bin/bash -e {0}
+2026-10-22T04:05:31.5073530Z env:
+2026-10-22T04:05:31.5074560Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:05:31.5076070Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:05:31.5079090Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:05:31.5081000Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:05:31.5083280Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:05:31.5085000Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:05:31.5086180Z ##[endgroup]
+2026-10-22T04:06:27.6295940Z {"passed": true, "suites": ["actor", "match", "authority_order", "state_privacy", "movement_prediction", "peer_lifecycle", "input_mode", "menu_focus", "offline_diagnostics", "hud_objective_hint"], "source_resources_unchanged": true, "temporary_project_removed": true}
+2026-10-22T04:06:27.6693390Z ##[group]Run gh api repos/calebaiken/sightbreak/actions/artifacts/12247215871/zip > "$RUNNER_TEMP/sightbreak-macos-frozen.zip"
+2026-10-22T04:06:27.6695130Z [36;1mgh api repos/calebaiken/sightbreak/actions/artifacts/12247215871/zip > "$RUNNER_TEMP/sightbreak-macos-frozen.zip"[0m
+2026-10-22T04:06:27.6767090Z shell: /bin/bash -e {0}
+2026-10-22T04:06:27.6767480Z env:
+2026-10-22T04:06:27.6768180Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:06:27.6770150Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:06:27.6771280Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:06:27.6772600Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:06:27.6773450Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:06:27.6774350Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:06:27.6786400Z   GH_TOKEN: ***
+2026-10-22T04:06:27.6786820Z ##[endgroup]
+2026-10-22T04:06:29.6901200Z ##[group]Run python scripts/diagnose_macos_startup.py --output builds/desktop-playability/macos-diagnostics --baseline-archive "$RUNNER_TEMP/sightbreak-macos-frozen.zip"
+2026-10-22T04:06:29.6903590Z [36;1mpython scripts/diagnose_macos_startup.py --output builds/desktop-playability/macos-diagnostics --baseline-archive "$RUNNER_TEMP/sightbreak-macos-frozen.zip"[0m
+2026-10-22T04:06:29.6961180Z shell: /bin/bash -e {0}
+2026-10-22T04:06:29.6961630Z env:
+2026-10-22T04:06:29.6962370Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:06:29.6963410Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:06:29.6964310Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:06:29.6965210Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:06:29.6966030Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:06:29.6966960Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:06:29.6967650Z ##[endgroup]
+2026-10-22T04:06:40.6035500Z {"preparation": "minimal-import", "command": ["/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot", "--headless", "--path", "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/minimal-project", "--editor", "--import", "--quit"], "exit_code": 0, "timed_out": false, "clean_log": true}
+2026-10-22T04:06:58.9088650Z {"preparation": "minimal-export", "command": ["/Users/runner/work/sightbreak/tools/godot-4.7.2/Godot.app/Contents/MacOS/Godot", "--headless", "--path", "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/minimal-project", "--export-debug", "macOS", "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/MinimalGraphics.app"], "exit_code": 0, "timed_out": false, "clean_log": true}
+2026-10-22T04:07:12.5570740Z {"label": "editor-minimal-2d-default", "native_exit_code": 0, "timed_out": false, "passed": true, "renderer_lines": ["OpenGL debugging not supported!", "OpenGL API 4.1 APPLE-21.1.1 - Compatibility - Using Device: Apple Inc. - Apple Software Renderer"], "phase_lines": ["MINIMAL_DIAG_INIT msec=1012", "MINIMAL_DIAG_READY msec=1111", "MINIMAL_DIAG_FIRST_PROCESS msec=1129", "MINIMAL_DIAG_BEFORE_DRAW msec=1868", "MINIMAL_DIAG_AFTER_DRAW msec=1902", "MINIMAL_DIAG_EXIT capture_error=0 msec=1960"]}
+2026-10-22T04:07:43.4495700Z {"label": "editor-minimal-3d-default", "native_exit_code": 0, "timed_out": false, "passed": true, "renderer_lines": ["OpenGL debugging not supported!", "OpenGL API 4.1 APPLE-21.1.1 - Compatibility - Using Device: Apple Inc. - Apple Software Renderer"], "phase_lines": ["MINIMAL_DIAG_INIT msec=1014", "MINIMAL_DIAG_READY msec=1100", "MINIMAL_DIAG_FIRST_PROCESS msec=1116", "MINIMAL_DIAG_BEFORE_DRAW msec=29066", "MINIMAL_DIAG_AFTER_DRAW msec=29274", "MINIMAL_DIAG_EXIT capture_error=0 msec=29328"]}
+2026-10-22T04:07:52.1463300Z {"label": "export-minimal-3d-default", "native_exit_code": 0, "timed_out": false, "passed": true, "renderer_lines": ["OpenGL debugging not supported!", "OpenGL API 4.1 APPLE-21.1.1 - Compatibility - Using Device: Apple Inc. - Apple Software Renderer"], "phase_lines": ["MINIMAL_DIAG_INIT msec=1308", "MINIMAL_DIAG_READY msec=1407", "MINIMAL_DIAG_FIRST_PROCESS msec=1432", "MINIMAL_DIAG_BEFORE_DRAW msec=7308", "MINIMAL_DIAG_AFTER_DRAW msec=7505", "MINIMAL_DIAG_EXIT capture_error=0 msec=7556"]}
+2026-10-22T04:09:52.5450880Z {"label": "frozen-game-default", "native_exit_code": null, "timed_out": true, "passed": false, "renderer_lines": ["OpenGL debugging not supported!", "OpenGL API 4.1 APPLE-21.1.1 - Compatibility - Using Device: Apple Inc. - Apple Software Renderer"], "phase_lines": []}
+2026-10-22T04:11:53.0700760Z {"label": "candidate-game-default", "native_exit_code": null, "timed_out": true, "passed": false, "renderer_lines": ["OpenGL debugging not supported!", "OpenGL API 4.1 APPLE-21.1.1 - Compatibility - Using Device: Apple Inc. - Apple Software Renderer"], "phase_lines": ["SIGHTBREAK_STARTUP phase=ready_enter msec=6549", "SIGHTBREAK_STARTUP phase=settings_applied msec=6549", "SIGHTBREAK_STARTUP phase=menu_begin msec=6550", "SIGHTBREAK_STARTUP phase=menu_constructed msec=6729", "SIGHTBREAK_STARTUP phase=first_process msec=6928"]}
+2026-10-22T04:12:16.7830410Z {"label": "minimal-3d-opengl-diagnostic", "native_exit_code": 0, "timed_out": false, "passed": true, "renderer_lines": ["OpenGL debugging not supported!", "OpenGL API 4.1 APPLE-21.1.1 - Compatibility - Using Device: Apple Inc. - Apple Software Renderer"], "phase_lines": ["MINIMAL_DIAG_INIT msec=18428", "MINIMAL_DIAG_READY msec=18522", "MINIMAL_DIAG_FIRST_PROCESS msec=18529", "MINIMAL_DIAG_BEFORE_DRAW msec=22723", "MINIMAL_DIAG_AFTER_DRAW msec=22874", "MINIMAL_DIAG_EXIT capture_error=0 msec=22915"]}
+2026-10-22T04:14:17.4556650Z {"label": "candidate-opengl-diagnostic", "native_exit_code": null, "timed_out": true, "passed": false, "renderer_lines": ["OpenGL debugging not supported!", "OpenGL API 4.1 APPLE-21.1.1 - Compatibility - Using Device: Apple Inc. - Apple Software Renderer"], "phase_lines": ["SIGHTBREAK_STARTUP phase=ready_enter msec=1048", "SIGHTBREAK_STARTUP phase=settings_applied msec=1049", "SIGHTBREAK_STARTUP phase=menu_begin msec=1050", "SIGHTBREAK_STARTUP phase=menu_constructed msec=1209", "SIGHTBREAK_STARTUP phase=first_process msec=1352"]}
+2026-10-22T04:14:18.9998140Z {"status": "FAIL or INCOMPLETE; retain original default gate", "source": {"source_dirty": false, "source_validation_sha256": "95844559cde01c1f9785d2835ea9f92a5e09e0315f87f0e7aa5029352456196c", "source_commit": "0ca125dfba637868e6e8e9772ff9c40400413e32", "source_game_tree": "782c26464631f86ad63ddab9de36a969d4e44534", "source_content_sha256": "f8a849b90df3ff214037cace7bc32c0c7b5e184911558b424b0a6c0f798db781", "source_game_dirty": false}, "baseline_comparison": "Original retained artifact bytes verified", "all_default_graphical_passed": false, "error": null}
+2026-10-22T04:14:19.0231760Z ##[error]Process completed with exit code 1.
+2026-10-22T04:14:19.0343420Z ##[group]Run python scripts/diagnose_macos_render.py --output builds/desktop-playability/macos-diagnostics/render-features
+2026-10-22T04:14:19.0345900Z [36;1mpython scripts/diagnose_macos_render.py --output builds/desktop-playability/macos-diagnostics/render-features[0m
+2026-10-22T04:14:19.0452770Z shell: /bin/bash -e {0}
+2026-10-22T04:14:19.0453640Z env:
+2026-10-22T04:14:19.0454400Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:14:19.0455750Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:14:19.0456700Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:14:19.0457780Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:14:19.0458720Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:14:19.0459680Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:14:19.0461170Z ##[endgroup]
+2026-10-22T04:16:47.3483120Z {"label": "full", "native_exit_code": null, "timed_out": true, "passed": false, "renderer_lines": ["OpenGL debugging not supported!", "OpenGL API 4.1 APPLE-21.1.1 - Compatibility - Using Device: Apple Inc. - Apple Software Renderer"], "phase_lines": []}
+2026-10-22T04:18:47.9238570Z {"label": "shadows-off", "native_exit_code": null, "timed_out": true, "passed": false, "renderer_lines": ["OpenGL debugging not supported!", "OpenGL API 4.1 APPLE-21.1.1 - Compatibility - Using Device: Apple Inc. - Apple Software Renderer"], "phase_lines": []}
+2026-10-22T04:20:48.4979210Z {"label": "surface-detail-off", "native_exit_code": null, "timed_out": true, "passed": false, "renderer_lines": ["OpenGL debugging not supported!", "OpenGL API 4.1 APPLE-21.1.1 - Compatibility - Using Device: Apple Inc. - Apple Software Renderer"], "phase_lines": []}
+2026-10-22T04:22:49.4021950Z {"label": "sky-off", "native_exit_code": null, "timed_out": true, "passed": false, "renderer_lines": ["OpenGL debugging not supported!", "OpenGL API 4.1 APPLE-21.1.1 - Compatibility - Using Device: Apple Inc. - Apple Software Renderer"], "phase_lines": []}
+2026-10-22T04:24:49.8754850Z {"label": "materials-untextured", "native_exit_code": null, "timed_out": true, "passed": false, "renderer_lines": ["OpenGL debugging not supported!", "OpenGL API 4.1 APPLE-21.1.1 - Compatibility - Using Device: Apple Inc. - Apple Software Renderer"], "phase_lines": []}
+2026-10-22T04:24:53.6165140Z {"status": "COMPLETE diagnostic cases only", "results": "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/render-features/results.json"}
+2026-10-22T04:24:53.8057270Z ##[group]Run python scripts/build_manifest.py package --targets macos
+2026-10-22T04:24:53.8059210Z [36;1mpython scripts/build_manifest.py package --targets macos[0m
+2026-10-22T04:24:53.8168040Z shell: /bin/bash -e {0}
+2026-10-22T04:24:53.8169270Z env:
+2026-10-22T04:24:53.8170370Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:24:53.8171530Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:24:53.8172380Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:24:53.8173220Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:24:53.8173990Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:24:53.8174750Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:24:53.8175340Z ##[endgroup]
+2026-10-22T04:24:59.2288340Z {
+2026-10-22T04:24:59.2290490Z   "targets": [
+2026-10-22T04:24:59.2291190Z     "macos"
+2026-10-22T04:24:59.2292070Z   ],
+2026-10-22T04:24:59.2292750Z   "game": "SIGHTBREAK",
+2026-10-22T04:24:59.2293560Z   "version": "0.3.3-dev",
+2026-10-22T04:24:59.2294190Z   "engine": "Godot 4.7.2",
+2026-10-22T04:24:59.2294810Z   "build_type": "debug",
+2026-10-22T04:24:59.2295900Z   "source_dirty": false,
+2026-10-22T04:24:59.2297090Z   "source_validation_sha256": "95844559cde01c1f9785d2835ea9f92a5e09e0315f87f0e7aa5029352456196c",
+2026-10-22T04:24:59.2298890Z   "source_commit": "0ca125dfba637868e6e8e9772ff9c40400413e32",
+2026-10-22T04:24:59.2300220Z   "source_game_tree": "782c26464631f86ad63ddab9de36a969d4e44534",
+2026-10-22T04:24:59.2301780Z   "source_content_sha256": "f8a849b90df3ff214037cace7bc32c0c7b5e184911558b424b0a6c0f798db781",
+2026-10-22T04:24:59.2302840Z   "source_game_dirty": false,
+2026-10-22T04:24:59.2303540Z   "exports": [
+2026-10-22T04:24:59.2304350Z     {
+2026-10-22T04:24:59.2305260Z       "source_dirty": false,
+2026-10-22T04:24:59.2306420Z       "source_validation_sha256": "95844559cde01c1f9785d2835ea9f92a5e09e0315f87f0e7aa5029352456196c",
+2026-10-22T04:24:59.2307560Z       "source_commit": "0ca125dfba637868e6e8e9772ff9c40400413e32",
+2026-10-22T04:24:59.2308460Z       "source_game_tree": "782c26464631f86ad63ddab9de36a969d4e44534",
+2026-10-22T04:24:59.2309430Z       "source_content_sha256": "f8a849b90df3ff214037cace7bc32c0c7b5e184911558b424b0a6c0f798db781",
+2026-10-22T04:24:59.2310290Z       "source_game_dirty": false,
+2026-10-22T04:24:59.2310960Z       "target": "macos",
+2026-10-22T04:24:59.2311900Z       "version": "0.3.3-dev",
+2026-10-22T04:24:59.2312490Z       "build_number": 6,
+2026-10-22T04:24:59.2312950Z       "export_completed": true,
+2026-10-22T04:24:59.2314660Z       "built_at_utc": "2026-10-22T04:00:12.035706+00:00",
+2026-10-22T04:24:59.2315240Z       "artifact": {
+2026-10-22T04:24:59.2315780Z         "path": "macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+2026-10-22T04:24:59.2316440Z         "bytes": 187121136,
+2026-10-22T04:24:59.2317380Z         "sha256": "e8bec40f222e4d07467bc89888f19f2d63bbe770a07f9edfed101cea15059f9e",
+2026-10-22T04:24:59.2318470Z         "mode": 493,
+2026-10-22T04:24:59.2319050Z         "archive_mode": 493
+2026-10-22T04:24:59.2319640Z       },
+2026-10-22T04:24:59.2320030Z       "payload": [
+2026-10-22T04:24:59.2320410Z         {
+2026-10-22T04:24:59.2320810Z           "path": "macos/GODOT-COPYRIGHT.txt",
+2026-10-22T04:24:59.2321350Z           "bytes": 100108,
+2026-10-22T04:24:59.2322100Z           "sha256": "cb1980c88089573bcacd7221d777c689bb8bbd778799f24c27fca0fe5f774d6d",
+2026-10-22T04:24:59.2322870Z           "mode": 420,
+2026-10-22T04:24:59.2323290Z           "archive_mode": 420
+2026-10-22T04:24:59.2323730Z         },
+2026-10-22T04:24:59.2324090Z         {
+2026-10-22T04:24:59.2324480Z           "path": "macos/GODOT-LICENSE.txt",
+2026-10-22T04:24:59.2325010Z           "bytes": 1149,
+2026-10-22T04:24:59.2325670Z           "sha256": "b0435e3b3e4e55238f05f4b306f30524a1b2e20147810d436eaa554fa6855c80",
+2026-10-22T04:24:59.2327380Z           "mode": 420,
+2026-10-22T04:24:59.2327850Z           "archive_mode": 420
+2026-10-22T04:24:59.2328290Z         },
+2026-10-22T04:24:59.2328630Z         {
+2026-10-22T04:24:59.2329070Z           "path": "macos/SIGHTBREAK.app/Contents/Info.plist",
+2026-10-22T04:24:59.2329680Z           "bytes": 1793,
+2026-10-22T04:24:59.2330330Z           "sha256": "61f5f8110ffd074aa62abcdd56d23d66bda33b9224f0bf4031cfe559d20b9e5f",
+2026-10-22T04:24:59.2331090Z           "mode": 420,
+2026-10-22T04:24:59.2331480Z           "archive_mode": 420
+2026-10-22T04:24:59.2331930Z         },
+2026-10-22T04:24:59.2332270Z         {
+2026-10-22T04:24:59.2332740Z           "path": "macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+2026-10-22T04:24:59.2333380Z           "bytes": 187121136,
+2026-10-22T04:24:59.2334080Z           "sha256": "e8bec40f222e4d07467bc89888f19f2d63bbe770a07f9edfed101cea15059f9e",
+2026-10-22T04:24:59.2334840Z           "mode": 493,
+2026-10-22T04:24:59.2335260Z           "archive_mode": 493
+2026-10-22T04:24:59.2335700Z         },
+2026-10-22T04:24:59.2336040Z         {
+2026-10-22T04:24:59.2336500Z           "path": "macos/SIGHTBREAK.app/Contents/PkgInfo",
+2026-10-22T04:24:59.2337360Z           "bytes": 9,
+2026-10-22T04:24:59.2347730Z           "sha256": "7e50a30efad50208a173203ced60818d693bb61266b75aa10927d1a2adce80cb",
+2026-10-22T04:24:59.2348490Z           "mode": 420,
+2026-10-22T04:24:59.2348910Z           "archive_mode": 420
+2026-10-22T04:24:59.2349340Z         },
+2026-10-22T04:24:59.2349650Z         {
+2026-10-22T04:24:59.2350240Z           "path": "macos/SIGHTBREAK.app/Contents/Resources/PrivacyInfo.xcprivacy",
+2026-10-22T04:24:59.2350970Z           "bytes": 229,
+2026-10-22T04:24:59.2351600Z           "sha256": "0535353bb08c25b8ce5ed9ac7e442a5994f402e0f6cbc4bed668cfc63c2ceac3",
+2026-10-22T04:24:59.2352360Z           "mode": 420,
+2026-10-22T04:24:59.2352750Z           "archive_mode": 420
+2026-10-22T04:24:59.2353170Z         },
+2026-10-22T04:24:59.2353500Z         {
+2026-10-22T04:24:59.2354020Z           "path": "macos/SIGHTBREAK.app/Contents/Resources/SIGHTBREAK.pck",
+2026-10-22T04:24:59.2354700Z           "bytes": 10519036,
+2026-10-22T04:24:59.2355730Z           "sha256": "dbd7dead76dbd8d44aa8fada74e3dacb00993dccb01cd930c4fc490fc4659029",
+2026-10-22T04:24:59.2356490Z           "mode": 420,
+2026-10-22T04:24:59.2356940Z           "archive_mode": 420
+2026-10-22T04:24:59.2357350Z         },
+2026-10-22T04:24:59.2357700Z         {
+2026-10-22T04:24:59.2358210Z           "path": "macos/SIGHTBREAK.app/Contents/Resources/icon.icns",
+2026-10-22T04:24:59.2358850Z           "bytes": 121661,
+2026-10-22T04:24:59.2359520Z           "sha256": "5e8a6414d6e04bc7348e55b8cc3dae325d1798373a87bec34ffb49acc77d8e54",
+2026-10-22T04:24:59.2360290Z           "mode": 420,
+2026-10-22T04:24:59.2361410Z           "archive_mode": 420
+2026-10-22T04:24:59.2361840Z         },
+2026-10-22T04:24:59.2362190Z         {
+2026-10-22T04:24:59.2362780Z           "path": "macos/SIGHTBREAK.app/Contents/_CodeSignature/CodeResources",
+2026-10-22T04:24:59.2363500Z           "bytes": 3177,
+2026-10-22T04:24:59.2364160Z           "sha256": "e4d6808c89db2a1537fab38db17575bf8c88e692d155d527f08fc31197c8d14f",
+2026-10-22T04:24:59.2364910Z           "mode": 420,
+2026-10-22T04:24:59.2365310Z           "archive_mode": 420
+2026-10-22T04:24:59.2365750Z         },
+2026-10-22T04:24:59.2366100Z         {
+2026-10-22T04:24:59.2366500Z           "path": "macos/SIGHTBREAK.command",
+2026-10-22T04:24:59.2367020Z           "bytes": 430,
+2026-10-22T04:24:59.2367660Z           "sha256": "fdd8cfd353001655c75d07e1b74a5453635d6fd0dba23971b53ee47330315c25",
+2026-10-22T04:24:59.2368420Z           "mode": 493,
+2026-10-22T04:24:59.2368830Z           "archive_mode": 493
+2026-10-22T04:24:59.2369260Z         }
+2026-10-22T04:24:59.2369600Z       ]
+2026-10-22T04:24:59.2369930Z     }
+2026-10-22T04:24:59.2370270Z   ],
+2026-10-22T04:24:59.2370610Z   "artifacts": [
+2026-10-22T04:24:59.2370980Z     {
+2026-10-22T04:24:59.2371450Z       "path": "macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+2026-10-22T04:24:59.2372550Z       "bytes": 187121136,
+2026-10-22T04:24:59.2373250Z       "sha256": "e8bec40f222e4d07467bc89888f19f2d63bbe770a07f9edfed101cea15059f9e",
+2026-10-22T04:24:59.2374030Z       "mode": 493,
+2026-10-22T04:24:59.2374410Z       "archive_mode": 493
+2026-10-22T04:24:59.2374830Z     },
+2026-10-22T04:24:59.2375160Z     {
+2026-10-22T04:24:59.2375590Z       "path": "sightbreak-macos-debug.zip",
+2026-10-22T04:24:59.2376120Z       "bytes": 77661041,
+2026-10-22T04:24:59.2376760Z       "sha256": "bda49bb2897150fb0b68b05e1dbe63621f9148664d46feb7848d09ab74304877",
+2026-10-22T04:24:59.2377500Z       "mode": 420,
+2026-10-22T04:24:59.2377890Z       "archive_mode": 420
+2026-10-22T04:24:59.2378300Z     }
+2026-10-22T04:24:59.2378630Z   ],
+2026-10-22T04:24:59.2379000Z   "limitations": [
+2026-10-22T04:24:59.2379670Z     "Android debug signed; physical device installation and performance unverified.",
+2026-10-22T04:24:59.2381090Z     "iOS unsigned Xcode project; macOS/Xcode compilation and signing unverified.",
+2026-10-22T04:24:59.2382350Z     "See docs/reports/COMBINED_INTEGRATION_REPORT.md and CODEX_NETWORK_QA.md for measured results and open gates."
+2026-10-22T04:24:59.2383330Z   ]
+2026-10-22T04:24:59.2383710Z }
+2026-10-22T04:24:59.2624210Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-22T04:24:59.2625030Z with:
+2026-10-22T04:24:59.2625890Z   name: sightbreak-playability-macos-macos-15-intel-0ca125dfba637868e6e8e9772ff9c40400413e32
+2026-10-22T04:24:59.2626920Z   path: builds/desktop-playability/
+2026-10-22T04:24:59.2627510Z   include-hidden-files: true
+2026-10-22T04:24:59.2628060Z   if-no-files-found: warn
+2026-10-22T04:24:59.2628590Z   retention-days: 14
+2026-10-22T04:24:59.2629010Z   compression-level: 6
+2026-10-22T04:24:59.2629450Z   overwrite: false
+2026-10-22T04:24:59.2629810Z env:
+2026-10-22T04:24:59.2630500Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:24:59.2631510Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:24:59.2632730Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:24:59.2633940Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:24:59.2634710Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:24:59.2635500Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:24:59.2636130Z ##[endgroup]
+2026-10-22T04:24:59.8939790Z (node:27377) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-22T04:24:59.8941220Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-22T04:25:00.0826340Z With the provided path, there will be 420 files uploaded
+2026-10-22T04:25:00.0835990Z Artifact name is valid!
+2026-10-22T04:25:00.0837130Z Root directory input is valid!
+2026-10-22T04:25:00.5933660Z Beginning upload of artifact content to blob storage
+2026-10-22T04:25:01.4330740Z (node:27377) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-22T04:25:01.7914310Z Uploaded bytes 8388608
+2026-10-22T04:25:02.5599900Z Uploaded bytes 16777216
+2026-10-22T04:25:03.2425400Z Uploaded bytes 25165824
+2026-10-22T04:25:04.2783460Z Uploaded bytes 33554432
+2026-10-22T04:25:04.8571690Z Uploaded bytes 41943040
+2026-10-22T04:25:05.5992370Z Uploaded bytes 50331648
+2026-10-22T04:25:06.2119010Z Uploaded bytes 58720256
+2026-10-22T04:25:07.1240890Z Uploaded bytes 67108864
+2026-10-22T04:25:08.1705780Z Uploaded bytes 75497472
+2026-10-22T04:25:09.4645680Z Uploaded bytes 83886080
+2026-10-22T04:25:10.5797950Z Uploaded bytes 92274688
+2026-10-22T04:25:12.0486330Z Uploaded bytes 100663296
+2026-10-22T04:25:12.8829160Z Uploaded bytes 109051904
+2026-10-22T04:25:13.5931970Z Uploaded bytes 117440512
+2026-10-22T04:25:14.8460120Z Uploaded bytes 125829120
+2026-10-22T04:25:15.9308280Z Uploaded bytes 134217728
+2026-10-22T04:25:17.7177240Z Uploaded bytes 142606336
+2026-10-22T04:25:18.9438450Z Uploaded bytes 150994944
+2026-10-22T04:25:20.2235820Z Uploaded bytes 159383552
+2026-10-22T04:25:21.6979050Z Uploaded bytes 167772160
+2026-10-22T04:25:22.7603280Z Uploaded bytes 176160768
+2026-10-22T04:25:23.5311020Z Uploaded bytes 184549376
+2026-10-22T04:25:24.2748790Z Uploaded bytes 192937984
+2026-10-22T04:25:25.2255850Z Uploaded bytes 201326592
+2026-10-22T04:25:26.0954360Z Uploaded bytes 209715200
+2026-10-22T04:25:26.8004950Z Uploaded bytes 218103808
+2026-10-22T04:25:27.5060580Z Uploaded bytes 226492416
+2026-10-22T04:25:28.5310560Z Uploaded bytes 234881024
+2026-10-22T04:25:29.4965660Z Uploaded bytes 243269632
+2026-10-22T04:25:30.3328930Z Uploaded bytes 251658240
+2026-10-22T04:25:31.5656900Z Uploaded bytes 260046848
+2026-10-22T04:25:32.2821520Z Uploaded bytes 268435456
+2026-10-22T04:25:33.0582870Z Uploaded bytes 276824064
+2026-10-22T04:25:33.7784770Z Uploaded bytes 285212672
+2026-10-22T04:25:34.5999890Z Uploaded bytes 293601280
+2026-10-22T04:25:35.2474300Z Uploaded bytes 301989888
+2026-10-22T04:25:35.6751360Z Uploaded bytes 310378496
+2026-10-22T04:25:36.1859350Z Uploaded bytes 318767104
+2026-10-22T04:25:36.5282190Z Uploaded bytes 327155712
+2026-10-22T04:25:36.8460780Z Uploaded bytes 335544320
+2026-10-22T04:25:37.2191040Z Uploaded bytes 343932928
+2026-10-22T04:25:37.5687250Z Uploaded bytes 352321536
+2026-10-22T04:25:37.7917520Z Uploaded bytes 360710144
+2026-10-22T04:25:38.1292390Z Uploaded bytes 369098752
+2026-10-22T04:25:38.4347220Z Uploaded bytes 377487360
+2026-10-22T04:25:38.4877640Z Uploaded bytes 378469610
+2026-10-22T04:25:38.5138980Z Finished uploading artifact content to blob storage!
+2026-10-22T04:25:38.5143660Z SHA256 digest of uploaded artifact zip is 8e9c84fec55c122a5f671e7621cf13acf6b25413f8c87aa6fd5d396dc1d0d503
+2026-10-22T04:25:38.5145430Z Finalizing artifact upload
+2026-10-22T04:25:38.9594890Z Artifact sightbreak-playability-macos-macos-15-intel-0ca125dfba637868e6e8e9772ff9c40400413e32.zip successfully finalized. Artifact ID 12401706789
+2026-10-22T04:25:38.9597380Z Artifact sightbreak-playability-macos-macos-15-intel-0ca125dfba637868e6e8e9772ff9c40400413e32 has been successfully uploaded! Final size is 378469610 bytes. Artifact ID is 12401706789
+2026-10-22T04:25:38.9609950Z Artifact download URL: https://github.com/calebaiken/sightbreak/actions/runs/39719407304/artifacts/12401706789
+2026-10-22T04:25:38.9921170Z ##[group]Run python scripts/package_qa_receipts.py --source builds/desktop-playability --output builds/qa-receipts/qa-receipts.zip
+2026-10-22T04:25:38.9923690Z [36;1mpython scripts/package_qa_receipts.py --source builds/desktop-playability --output builds/qa-receipts/qa-receipts.zip[0m
+2026-10-22T04:25:39.0011620Z shell: /bin/bash -e {0}
+2026-10-22T04:25:39.0012050Z env:
+2026-10-22T04:25:39.0012710Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:25:39.0013900Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:25:39.0014860Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:25:39.0015780Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:25:39.0016790Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:25:39.0017820Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:25:39.0018820Z ##[endgroup]
+2026-10-22T04:25:39.3487090Z {
+2026-10-22T04:25:39.3559830Z   "archive": "/Users/runner/work/sightbreak/sightbreak/builds/qa-receipts/qa-receipts.zip",
+2026-10-22T04:25:39.3562190Z   "bytes": 5386870,
+2026-10-22T04:25:39.3564140Z   "sha256": "060f61fc3abe2c65db961e40b97d0806cedd34089a03f752046e5fb24036dbac",
+2026-10-22T04:25:39.3569360Z   "files": 164,
+2026-10-22T04:25:39.3571320Z   "bound_bytes": 31457280,
+2026-10-22T04:25:39.3574190Z   "scope": "Raw QA receipts; screenshots remain in the full QA artifact. Packaging does not establish test acceptance."
+2026-10-22T04:25:39.3577920Z }
+2026-10-22T04:25:39.3830670Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-22T04:25:39.3832230Z with:
+2026-10-22T04:25:39.3833700Z   name: sightbreak-qa-receipts-macos-macos-15-intel-0ca125dfba637868e6e8e9772ff9c40400413e32
+2026-10-22T04:25:39.3835360Z   path: builds/qa-receipts/qa-receipts.zip
+2026-10-22T04:25:39.3836340Z   compression-level: 0
+2026-10-22T04:25:39.3837100Z   if-no-files-found: warn
+2026-10-22T04:25:39.3844250Z   retention-days: 14
+2026-10-22T04:25:39.3845110Z   overwrite: false
+2026-10-22T04:25:39.3846220Z   include-hidden-files: false
+2026-10-22T04:25:39.3847400Z env:
+2026-10-22T04:25:39.3848390Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:25:39.3850020Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:25:39.3851370Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:25:39.3853810Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:25:39.3855150Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:25:39.3856860Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:25:39.3857830Z ##[endgroup]
+2026-10-22T04:25:39.6865590Z (node:28017) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-22T04:25:39.6867420Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-22T04:25:39.6925940Z With the provided path, there will be 1 file uploaded
+2026-10-22T04:25:39.6932520Z Artifact name is valid!
+2026-10-22T04:25:39.6933360Z Root directory input is valid!
+2026-10-22T04:25:39.9126810Z Beginning upload of artifact content to blob storage
+2026-10-22T04:25:40.0398570Z (node:28017) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-22T04:25:40.1846920Z Uploaded bytes 5387014
+2026-10-22T04:25:40.2039310Z Finished uploading artifact content to blob storage!
+2026-10-22T04:25:40.2043800Z SHA256 digest of uploaded artifact zip is 8f9d844a1f37e89b447f07e9febf5215600cbaa2b89f7dfe3884b1dfbc815a13
+2026-10-22T04:25:40.2050530Z Finalizing artifact upload
+2026-10-22T04:25:40.6007970Z Artifact sightbreak-qa-receipts-macos-macos-15-intel-0ca125dfba637868e6e8e9772ff9c40400413e32.zip successfully finalized. Artifact ID 12401532210
+2026-10-22T04:25:40.6010470Z Artifact sightbreak-qa-receipts-macos-macos-15-intel-0ca125dfba637868e6e8e9772ff9c40400413e32 has been successfully uploaded! Final size is 5387014 bytes. Artifact ID is 12401532210
+2026-10-22T04:25:40.6018710Z Artifact download URL: https://github.com/calebaiken/sightbreak/actions/runs/39719407304/artifacts/12401532210
+2026-10-22T04:25:40.6261130Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-22T04:25:40.6262040Z with:
+2026-10-22T04:25:40.6262750Z   name: sightbreak-qa-macos-macos-15-intel-0ca125dfba637868e6e8e9772ff9c40400413e32
+2026-10-22T04:25:40.6265100Z   path: builds/desktop-playability/**/*.json
+builds/desktop-playability/**/*.jsonl
+builds/desktop-playability/**/*.log
+builds/desktop-playability/macos-diagnostics/*.txt
+builds/desktop-playability/**/*.png
+!builds/desktop-playability/offline-full-match/round-*.png
+
+2026-10-22T04:25:40.6267150Z   if-no-files-found: warn
+2026-10-22T04:25:40.6267580Z   retention-days: 14
+2026-10-22T04:25:40.6268020Z   compression-level: 6
+2026-10-22T04:25:40.6268450Z   overwrite: false
+2026-10-22T04:25:40.6268870Z   include-hidden-files: false
+2026-10-22T04:25:40.6269410Z env:
+2026-10-22T04:25:40.6270120Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/desktop-playability
+2026-10-22T04:25:40.6271230Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:25:40.6272170Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/x64/lib/pkgconfig
+2026-10-22T04:25:40.6273100Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:25:40.6273970Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:25:40.6274810Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/x64
+2026-10-22T04:25:40.6275490Z ##[endgroup]
+2026-10-22T04:25:40.8701960Z (node:28134) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-22T04:25:40.8703910Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-22T04:25:41.0131310Z With the provided path, there will be 174 files uploaded
+2026-10-22T04:25:41.0137020Z Artifact name is valid!
+2026-10-22T04:25:41.0137740Z Root directory input is valid!
+2026-10-22T04:25:41.2140250Z Beginning upload of artifact content to blob storage
+2026-10-22T04:25:41.7624060Z (node:28134) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-22T04:25:42.0317960Z Uploaded bytes 7123068
+2026-10-22T04:25:42.0489360Z Finished uploading artifact content to blob storage!
+2026-10-22T04:25:42.0490890Z SHA256 digest of uploaded artifact zip is 9222e4391cf5f83ae5e57c0a83be894d75a1b9c53c4f04563960b31dfaaa8a3f
+2026-10-22T04:25:42.0492310Z Finalizing artifact upload
+2026-10-22T04:25:42.4762820Z Artifact sightbreak-qa-macos-macos-15-intel-0ca125dfba637868e6e8e9772ff9c40400413e32.zip successfully finalized. Artifact ID 12401691735
+2026-10-22T04:25:42.4765440Z Artifact sightbreak-qa-macos-macos-15-intel-0ca125dfba637868e6e8e9772ff9c40400413e32 has been successfully uploaded! Final size is 7123068 bytes. Artifact ID is 12401691735
+2026-10-22T04:25:42.4776960Z Artifact download URL: https://github.com/calebaiken/sightbreak/actions/runs/39719407304/artifacts/12401691735
+2026-10-22T04:25:42.5268930Z Post job cleanup.
+2026-10-22T04:25:42.7158120Z [command]/usr/local/bin/git version
+2026-10-22T04:25:42.7273440Z git version 2.55.0
+2026-10-22T04:25:42.7311470Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/931199ad-a980-46d6-b5f2-af9717b9913d/.gitconfig'
+2026-10-22T04:25:42.7328840Z Temporarily overriding HOME='/Users/runner/work/_temp/931199ad-a980-46d6-b5f2-af9717b9913d' before making global git config changes
+2026-10-22T04:25:42.7330470Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-22T04:25:42.7335860Z [command]/usr/local/bin/git config --global --add safe.directory /Users/runner/work/sightbreak/sightbreak
+2026-10-22T04:25:42.7485980Z [command]/usr/local/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-22T04:25:42.7606520Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-22T04:25:42.9319520Z [command]/usr/local/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-22T04:25:42.9408950Z http.https://github.com/.extraheader
+2026-10-22T04:25:42.9428800Z [command]/usr/local/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-22T04:25:42.9559380Z [command]/usr/local/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-22T04:25:43.4008820Z Cleaning up orphan processes
+2026-10-22T04:25:44.3449170Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683, actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

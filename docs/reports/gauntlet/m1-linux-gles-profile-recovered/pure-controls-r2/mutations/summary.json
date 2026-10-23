@@ -1,0 +1,97 @@
+{
+  "controller_sha256": "f6f45ed28feceb1140e02bf5faffc6293c7d3cac96e83a5e1ab2d70dd07baabf",
+  "test_sha256": "acfcf6d0f070b7169e1ebb7908adf1d236b37e1df52652298198a024b392eb08",
+  "native_engine_export_runs": 0,
+  "results": [
+    {
+      "case": "candidate",
+      "controller_sha256": "f6f45ed28feceb1140e02bf5faffc6293c7d3cac96e83a5e1ab2d70dd07baabf",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "test_linux_gpu_profile",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_pass": true,
+      "expectation_met": true,
+      "raw_bytes": 631,
+      "raw_sha256": "1f8d976a1585ded970aa2c1c2e0d4ee48c2e152485ca415f5b8a831aa4dae3da",
+      "gzip_path": "candidate.txt.gz",
+      "gzip_sha256": "97509d46d1eddf3cd2a86098d46e47de0bb5324e10cfb5c387e74e451bcd51eb"
+    },
+    {
+      "case": "allow-sampler",
+      "controller_sha256": "7a460886e4c2337bb5e7fce1de444cba00a6eadcf510d3cb7d061818da627e17",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "test_linux_gpu_profile",
+        "-v"
+      ],
+      "exit_code": 1,
+      "expected_pass": false,
+      "expectation_met": true,
+      "raw_bytes": 1756,
+      "raw_sha256": "6d086327525e9813711b34267de8f4e04de449872427a1f7eda5c9d690f2bf3d",
+      "gzip_path": "allow-sampler.txt.gz",
+      "gzip_sha256": "4e3a7f25fb498bf0fc738d2420133a57025b4429170d03846cd822cc5db440fb"
+    },
+    {
+      "case": "omit-engine-option",
+      "controller_sha256": "4c38f40f309fe8c57a732158f817d2c0351b37a636781783ad508e613a717e3a",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "test_linux_gpu_profile",
+        "-v"
+      ],
+      "exit_code": 1,
+      "expected_pass": false,
+      "expectation_met": true,
+      "raw_bytes": 3624,
+      "raw_sha256": "49384555f9a7d1dfe6a84155dfccb01a7568f9a5aeb5d5d5ef3c93e846b1a9bb",
+      "gzip_path": "omit-engine-option.txt.gz",
+      "gzip_sha256": "6770518dfd7af52761793a39ea9b96c00ae1579a1aae9ee353479be855c67dbe"
+    },
+    {
+      "case": "profile-default",
+      "controller_sha256": "b8a35e4903dab41f54694e7f2d6cb2e50f84983ed49ccb1a9aa05d1b41fc583b",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "test_linux_gpu_profile",
+        "-v"
+      ],
+      "exit_code": 1,
+      "expected_pass": false,
+      "expectation_met": true,
+      "raw_bytes": 2076,
+      "raw_sha256": "4a4a35cf56b0313ab4d33250aefeec33492e062b2eed780cc87687c0d57fdd79",
+      "gzip_path": "profile-default.txt.gz",
+      "gzip_sha256": "0d88157a8a93ddca784ea55d8582e52b41da5fd317314f2f4c733fd0e441f60b"
+    },
+    {
+      "case": "append-as-user-argument",
+      "controller_sha256": "a3b4bf62add0463199a03066890b8f7ed6eb3df6e3c7133d60f07c908a84cc92",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "test_linux_gpu_profile",
+        "-v"
+      ],
+      "exit_code": 1,
+      "expected_pass": false,
+      "expectation_met": true,
+      "raw_bytes": 3634,
+      "raw_sha256": "cf92d456949ea21a78f5e634a807461254219f955197ead166e30f1fcbeee380",
+      "gzip_path": "append-as-user-argument.txt.gz",
+      "gzip_sha256": "5de3360483869291b08b4ee5f229fe21ee6379236199dcac3b62cd6a987d7940"
+    }
+  ]
+}

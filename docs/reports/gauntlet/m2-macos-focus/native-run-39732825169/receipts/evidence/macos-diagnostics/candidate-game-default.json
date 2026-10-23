@@ -1,0 +1,46 @@
+{
+  "label": "candidate-game-default",
+  "command": [
+    "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK",
+    "--verbose",
+    "--audio-driver",
+    "Dummy",
+    "--log-file",
+    "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/candidate-game-default.godot.log",
+    "--",
+    "--smoke",
+    "--capture=/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-diagnostics/candidate-game-default.png"
+  ],
+  "budget_seconds": 120,
+  "native_exit_code": 0,
+  "timed_out": false,
+  "surviving_owned_group": [],
+  "pid": 4958,
+  "elapsed_before_cleanup": 2.2814179999999737,
+  "owned_group_after_native_exit": [],
+  "exit_code_after_cleanup": 0,
+  "elapsed_total": 2.375147374999983,
+  "process_states": [],
+  "samples": [],
+  "capture": {
+    "valid_png": true,
+    "width": 1004,
+    "height": 564,
+    "sha256": "35104a02cbca982edb4ea44ed2ee8b2c26ec24cb97e5ef0f824c220e3bc0e026"
+  },
+  "marker_observed": true,
+  "clean_log": true,
+  "renderer_lines": [
+    "WARNING: Virtual Machine detected, switching to ANGLE.",
+    "OpenGL API OpenGL ES 3.0 (ANGLE 2.1.1 git hash: aaebda1c5a40) - Compatibility - Using Device: Google Inc. (Apple) - ANGLE (Apple, ANGLE Metal Renderer: Apple Paravirtual device, Version 15.7.9 (Build 24G830))"
+  ],
+  "phase_lines": [
+    "SIGHTBREAK_STARTUP phase=ready_enter msec=401",
+    "SIGHTBREAK_STARTUP phase=settings_applied msec=402",
+    "SIGHTBREAK_STARTUP phase=menu_begin msec=403",
+    "SIGHTBREAK_STARTUP phase=menu_constructed msec=582",
+    "SIGHTBREAK_STARTUP phase=first_process msec=779",
+    "SIGHTBREAK_MAIN_READY screen=menu"
+  ],
+  "passed": true
+}

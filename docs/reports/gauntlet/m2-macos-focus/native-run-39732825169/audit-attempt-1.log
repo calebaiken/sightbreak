@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-menu-native-review/docs/reports/gauntlet/m2-macos-focus/native-run-39732825169/audit_receipts-attempt-1.py", line 128, in <module>
+    'regressions': regressions(args.receipts / 'evidence', args.checkout),
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-menu-native-review/docs/reports/gauntlet/m2-macos-focus/native-run-39732825169/audit_receipts-attempt-1.py", line 74, in regressions
+    hud_text = (base / 'regressions/hud_objective_hint.log').read_text()
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'docs/reports/gauntlet/m2-macos-focus/native-run-39732825169/receipts/evidence/regressions/hud_objective_hint.log'

@@ -1,0 +1,24 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+ok   the capture dropped no frames
+ok   the capture dropped no frames
+ok   the capture dropped no frames
+ok   the capture dropped no frames
+ok   the capture dropped no frames
+captured 139264 frames per bus at 44100 Hz; peaks [0.0664668828249, 0.07754355669022, 0.05278231948614, 0.03180443868041, 0.0]
+bus 0 onsets (ms from capture start): 565
+bus 1 onsets (ms from capture start): 591
+bus 2 onsets (ms from capture start): 1150
+bus 3 onsets (ms from capture start): 1311
+bus 4 onsets (ms from capture start): 
+logged unlatch at 553 ms from origin (voice 0)
+logged extract at 601 ms from origin (voice 1)
+logged pouch at 1133 ms from origin (voice 2)
+logged land at 1333 ms from origin (voice 3)
+ok   the cancelled reload logged only what came before the cancel (["unlatch", "extract", "pouch", "land"])
+ok   unlatch on voice 0: heard at 6 ms after the cue in capture frames with its 0 ms attack, -4 ms from the run's typical offset (peak 0.066)
+ok   extract on voice 1: heard at 21 ms after the cue in capture frames with its 19 ms attack, -8 ms from the run's typical offset (peak 0.078)
+ok   pouch on voice 2: heard at 33 ms after the cue in capture frames with its 0 ms attack, 23 ms from the run's typical offset (peak 0.053)
+ok   land on voice 3: heard at 10 ms after the cue in capture frames with its 0 ms attack, 0 ms from the run's typical offset (peak 0.032)
+ok   after the cancel (and 80 ms of mixer latency) every reload voice is silent (peak 0.00000)
+RELOAD_AUDIO_CAPTURE scenario=cancel reduced=false checks=11 failures=0

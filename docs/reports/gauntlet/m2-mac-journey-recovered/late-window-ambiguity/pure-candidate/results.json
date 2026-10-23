@@ -1,0 +1,228 @@
+{
+  "scope": "Pure source/controller controls only; no native API/input, engine, OCR, export or CI",
+  "source_freeze": "3efe35d1ee565dc8e654daa2d0b52481cc7ce5b6",
+  "tested_file_sha256": {
+    "scripts/macos_ordinary_input.py": "57992aad6a3748c23db19c81f13eb0744f9740545b16a1c59eb8b349a32b7f58",
+    "scripts/verify_macos_ordinary.py": "be14c175d0ffb155f07459c1d5ccffe5ab62452402e6ec911590b52e43d1c3a7",
+    "scripts/test_macos_ordinary_startup.py": "8f35cbef2186d87ef37937f2d35259e0fb405555ed3b83643409a84c5f5a4137",
+    "scripts/macos_native_input.py": "82e53581bd36a1c258bf67d9b3067cd7bcd639f44015c4723f4bf1f3b2a102d6",
+    "scripts/verify_macos_menu.py": "6a449cf49f553f1f89fc8c522cacaa62e43ea6e790b628ecca5e74f7c083b14c",
+    "scripts/macos_window_capture.swift": "af6576bbda2deac290a418cdbf0fef8894376372e934d617ee2bc1bdecb524b9",
+    ".github/workflows/desktop-alpha.yml": "9ec21d47574b3a78008e4d630557ab09fb47818a8ec4178a49e869645a552ff6"
+  },
+  "tested_files_unchanged": true,
+  "normal_top_level_tests": 70,
+  "aliased_control_commands": 4,
+  "commands": [
+    {
+      "label": "normal-test_macos_ordinary",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.18894489199919917,
+      "log": "pure-candidate/normal-test_macos_ordinary.txt",
+      "bytes": 3255,
+      "sha256": "d8d5dfa7b7397f0d98ef50f0f5f66feff716cf2e57681b0fe56b1a2bcd04c9b8"
+    },
+    {
+      "label": "normal-test_macos_ordinary_controller",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary_controller.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.48865366899917717,
+      "log": "pure-candidate/normal-test_macos_ordinary_controller.txt",
+      "bytes": 1199,
+      "sha256": "d695a38efd31b86ad141a9021b8c0f2b218bfcbad8ff0d98859f3466bd7f98b0"
+    },
+    {
+      "label": "normal-test_macos_ordinary_paths",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary_paths.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.5069046479984536,
+      "log": "pure-candidate/normal-test_macos_ordinary_paths.txt",
+      "bytes": 470,
+      "sha256": "131f50785f574946ab53eac7d8cc3306fa1c8b659d71d29c577670277b8d3cd5"
+    },
+    {
+      "label": "normal-test_macos_ordinary_startup",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary_startup.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.8135995979992003,
+      "log": "pure-candidate/normal-test_macos_ordinary_startup.txt",
+      "bytes": 2095,
+      "sha256": "f6dc7648f1da90448facc385acbfd89f93d95d8d8df657aee191056973402b6f"
+    },
+    {
+      "label": "normal-test_macos_menu",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_menu.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.20011159800014866,
+      "log": "pure-candidate/normal-test_macos_menu.txt",
+      "bytes": 2216,
+      "sha256": "5c3ff63278e597421a918eaf23446f05d11fb33c58f119e55e03ebbf74ba0838"
+    },
+    {
+      "label": "normal-test_macos_focus",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_focus.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.3339951790003397,
+      "log": "pure-candidate/normal-test_macos_focus.txt",
+      "bytes": 1494,
+      "sha256": "ca9abdf2c14612d87c75f9fb4894b7e5c662b341284b3fc6f49b60d5796a45c9"
+    },
+    {
+      "label": "normal-test_macos_screen_identity",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_screen_identity.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.19084198500058847,
+      "log": "pure-candidate/normal-test_macos_screen_identity.txt",
+      "bytes": 1235,
+      "sha256": "093fa902c242f0138a8c22c1f9c1161d4544f3f1de89ef6df21b5bed14fbdeb2"
+    },
+    {
+      "label": "normal-test_probe_macos_input",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_probe_macos_input.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.19830040200031362,
+      "log": "pure-candidate/normal-test_probe_macos_input.txt",
+      "bytes": 1844,
+      "sha256": "5287c0676dfec8ec77ddddbaefe439bda36bfae330a455196dc630148aa4e976"
+    },
+    {
+      "label": "alias-test_macos_ordinary",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.19321639700137894,
+      "log": "pure-candidate/alias-test_macos_ordinary.txt",
+      "bytes": 3255,
+      "sha256": "d6d7e66fdf6f20dc4119ef32d45b42841e6fe14b0384967628599b6ff17e8305"
+    },
+    {
+      "label": "alias-test_macos_ordinary_controller",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary_controller.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.4553617849996954,
+      "log": "pure-candidate/alias-test_macos_ordinary_controller.txt",
+      "bytes": 1199,
+      "sha256": "a3a799e0bb92e312e7f5dba9726abaa6fad20da0ddf6a5a222af72a285db0d87"
+    },
+    {
+      "label": "alias-test_macos_ordinary_paths",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary_paths.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.41635069599942653,
+      "log": "pure-candidate/alias-test_macos_ordinary_paths.txt",
+      "bytes": 470,
+      "sha256": "734d21a2f96af5fd30850ab156a138aac42244baf0dd231d882897fd5421627e"
+    },
+    {
+      "label": "alias-test_macos_ordinary_startup",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary_startup.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "seconds": 0.5864385669992771,
+      "log": "pure-candidate/alias-test_macos_ordinary_startup.txt",
+      "bytes": 2095,
+      "sha256": "87b96824137216756c2bd1feaf8ebb2dc505db8b4b04b1eab5e6e3533546bfc5"
+    },
+    {
+      "label": "compile",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "py_compile",
+        "scripts/macos_ordinary_input.py",
+        "scripts/verify_macos_ordinary.py",
+        "scripts/test_macos_ordinary_startup.py"
+      ],
+      "exit_code": 0,
+      "seconds": 0.05123481000009633,
+      "log": "pure-candidate/compile.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.007245253998917178,
+      "log": "pure-candidate/diff-check.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "source_changed_since_0146497": [
+    "scripts/macos_ordinary_input.py",
+    "scripts/test_macos_ordinary_startup.py",
+    "scripts/verify_macos_ordinary.py"
+  ],
+  "budgets_seconds": {
+    "total": 300,
+    "compile": 60,
+    "window": 30,
+    "focus": 5,
+    "menu": 60,
+    "deploy": 30,
+    "live": 60,
+    "fire": 5,
+    "reload_start": 5,
+    "reload_complete": 15,
+    "reload_frames": 5,
+    "field_menu": 10,
+    "return_menu": 30,
+    "close": 20,
+    "capture": 25
+  },
+  "deploy_through_teardown_identical_to_bd9ac47": true,
+  "original_helpers_and_workflow_identical_to_0146497": true,
+  "passed": true
+}

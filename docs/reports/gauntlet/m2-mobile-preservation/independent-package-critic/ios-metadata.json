@@ -1,0 +1,154 @@
+{
+  "Info.plist": {
+    "CFBundleDevelopmentRegion": "en",
+    "CFBundleDisplayName": "$(INFOPLIST_KEY_CFBundleDisplayName)",
+    "CFBundleExecutable": "$(EXECUTABLE_NAME)",
+    "CFBundleIcons": {},
+    "CFBundleIcons~ipad": {},
+    "CFBundleIdentifier": "$(PRODUCT_BUNDLE_IDENTIFIER)",
+    "CFBundleInfoDictionaryVersion": "6.0",
+    "CFBundleName": "$(PRODUCT_NAME)",
+    "CFBundlePackageType": "APPL",
+    "CFBundleShortVersionString": "$(MARKETING_VERSION)",
+    "CFBundleSignature": "",
+    "CFBundleVersion": "$(CURRENT_PROJECT_VERSION)",
+    "ITSAppUsesNonExemptEncryption": false,
+    "LSRequiresIPhoneOS": true,
+    "LSSupportsOpeningDocumentsInPlace": false,
+    "UIFileSharingEnabled": false,
+    "UIRequiredDeviceCapabilities": [
+      "wifi"
+    ],
+    "NSCameraUsageDescription": "",
+    "NSPhotoLibraryUsageDescription": "",
+    "NSMicrophoneUsageDescription": "",
+    "UIRequiresFullScreen": true,
+    "UIStatusBarHidden": true,
+    "UISupportedInterfaceOrientations": [
+      "UIInterfaceOrientationLandscapeLeft"
+    ],
+    "UISupportedInterfaceOrientations~ipad": [
+      "UIInterfaceOrientationLandscapeRight"
+    ],
+    "NSLocalNetworkUsageDescription": "Connect to your SIGHTBREAK match server on the local network.",
+    "UILaunchStoryboardName": "Launch Screen",
+    "CADisableMinimumFrameDurationOnPhone": true,
+    "UIApplicationSceneManifest": {
+      "UIApplicationSupportsMultipleScenes": false,
+      "UISceneConfigurations": {
+        "UIWindowSceneSessionRoleApplication": [
+          {
+            "UISceneConfigurationName": "Default Configuration"
+          }
+        ]
+      }
+    }
+  },
+  "export_options.plist": {
+    "method": "development",
+    "teamID": "",
+    "provisioningProfiles": {
+      "com.sightbreak.game": ""
+    },
+    "compileBitcode": false
+  },
+  "entitlements": {},
+  "xcframework": {
+    "AvailableLibraries": [
+      {
+        "LibraryIdentifier": "ios-arm64",
+        "LibraryPath": "libgodot.a",
+        "SupportedArchitectures": [
+          "arm64"
+        ],
+        "SupportedPlatform": "ios"
+      },
+      {
+        "LibraryIdentifier": "ios-arm64_x86_64-simulator",
+        "LibraryPath": "libgodot.a",
+        "SupportedArchitectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "SupportedPlatform": "ios",
+        "SupportedPlatformVariant": "simulator"
+      }
+    ],
+    "CFBundlePackageType": "XFWK",
+    "XCFrameworkFormatVersion": "1.0"
+  },
+  "pinned_template_xcframework": {
+    "AvailableLibraries": [
+      {
+        "LibraryIdentifier": "ios-arm64",
+        "LibraryPath": "libgodot.a",
+        "SupportedArchitectures": [
+          "arm64"
+        ],
+        "SupportedPlatform": "ios"
+      },
+      {
+        "LibraryIdentifier": "ios-arm64_x86_64-simulator",
+        "LibraryPath": "libgodot.a",
+        "SupportedArchitectures": [
+          "arm64",
+          "x86_64"
+        ],
+        "SupportedPlatform": "ios",
+        "SupportedPlatformVariant": "simulator"
+      }
+    ],
+    "CFBundlePackageType": "XFWK",
+    "XCFrameworkFormatVersion": "1.0"
+  },
+  "signing_selector_strings": [
+    "\"Apple Development\"",
+    "\"Apple Distribution\""
+  ],
+  "development_team_values": [
+    "\"\"",
+    "\"\""
+  ],
+  "provisioning_profile_values": [
+    "\"\"",
+    "\"\"",
+    "\"\"",
+    "\"\""
+  ],
+  "engine_template_matches": [
+    {
+      "path": "sightbreak.xcframework/ios-arm64/libgodot.a",
+      "sha256": "1523b1efe75016bc1f179227a1f25d7ab1d484c816fcd14da5ab34e2ae6bb03e",
+      "template_entry": "libgodot.ios.debug.xcframework/ios-arm64/libgodot.a"
+    },
+    {
+      "path": "sightbreak.xcframework/ios-arm64_x86_64-simulator/libgodot.a",
+      "sha256": "9ee798cee5dc9164490b50ed74a191dd784faa8651e27f10c247c92a6a2d120e",
+      "template_entry": "libgodot.ios.debug.xcframework/ios-arm64_x86_64-simulator/libgodot.a"
+    }
+  ],
+  "static_archive_members": {
+    "ios-arm64/libgodot.a": {
+      "mach_o_cpu_counts": {
+        "0x100000c": 2357
+      },
+      "other_members": [
+        {
+          "member": "__.SYMDEF",
+          "magic_hex": "c8d82500"
+        }
+      ]
+    },
+    "ios-arm64_x86_64-simulator/libgodot.a": {
+      "mach_o_cpu_counts": {
+        "0x1000007": 2292
+      },
+      "other_members": [
+        {
+          "member": "__.SYMDEF",
+          "magic_hex": "d0142400"
+        }
+      ]
+    }
+  }
+}

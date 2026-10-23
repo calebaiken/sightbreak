@@ -1,0 +1,190 @@
+{
+  "passed": true,
+  "expected_source_commit": "e3c1194a9c7bb2ff8a5e3b81ab122513dce4a32c",
+  "positive": [
+    {
+      "target": "linux",
+      "archive": "/workspace/sightbreak-playability/builds/playability-r12/sightbreak-linux-debug.zip",
+      "sha256": "a867001007b865fdb0c2cc091d0eb2e21c329eed512c9ad8a3da8f2b00575d70",
+      "archive_entries": 5,
+      "payload_files": 4,
+      "receipt_mode": "0o600",
+      "extracted_bytes_modes_resources_verified": true,
+      "resources": 132,
+      "format": "x86_64 ELF/embedded PCK"
+    },
+    {
+      "target": "windows",
+      "archive": "/workspace/sightbreak-playability/builds/playability-r12/sightbreak-windows-debug.zip",
+      "sha256": "6b402c3fbda241b17d3e8412973f0e0edfbaeb552400077e96684960fdd1ae5f",
+      "archive_entries": 5,
+      "payload_files": 4,
+      "receipt_mode": "0o600",
+      "extracted_bytes_modes_resources_verified": true,
+      "resources": 132,
+      "format": "AMD64 PE/icon/version/embedded PCK"
+    },
+    {
+      "target": "macos",
+      "archive": "/workspace/sightbreak-playability/builds/playability-r12/sightbreak-macos-debug.zip",
+      "sha256": "d4353e2d33c8fb63a4a4872b3f1a85e904e85292ecd7800758448bcf155f7e9a",
+      "archive_entries": 11,
+      "payload_files": 10,
+      "receipt_mode": "0o600",
+      "extracted_bytes_modes_resources_verified": true,
+      "resources": 132,
+      "format": "Universal2 Mach-O/metadata/icon/PCK"
+    },
+    {
+      "target": "android",
+      "archive": "/workspace/sightbreak-playability/builds/playability-r12/sightbreak-android-debug.zip",
+      "sha256": "d011d44680267728469fa057669f12e57499aba4843c77a555eec2cc90bb3809",
+      "archive_entries": 5,
+      "payload_files": 4,
+      "receipt_mode": "0o600",
+      "extracted_bytes_modes_resources_verified": true,
+      "resources": 134,
+      "format": "APK assets and arm64/x86_64 native libraries",
+      "signature_scope": "Prior same-source SDK v2/v3 verification retained; delivered APK bytes independently equal. SDK not rerun.",
+      "physical_device": "UNVERIFIED"
+    },
+    {
+      "target": "ios",
+      "archive": "/workspace/sightbreak-playability/builds/playability-r12/sightbreak-ios-xcode-project.zip",
+      "sha256": "af0baaa9dec4f0e13cf4ca344c1b8417c61541af0f102a62dac23ee5e62557d9",
+      "archive_entries": 51,
+      "payload_files": 50,
+      "receipt_mode": "0o600",
+      "extracted_bytes_modes_resources_verified": true,
+      "resources": 132,
+      "format": "Unsigned iOS Xcode project/PCK/catalogs",
+      "xcode_build": "UNVERIFIED",
+      "physical_device": "UNVERIFIED"
+    }
+  ],
+  "negative": [
+    {
+      "case": "modified-byte",
+      "rejected": true,
+      "reason": "Changed delivered bytes: linux/sightbreak.x86_64"
+    },
+    {
+      "case": "missing-launcher",
+      "rejected": true,
+      "reason": "Missing or unexpected delivered files"
+    },
+    {
+      "case": "missing-executable-bit",
+      "rejected": true,
+      "reason": "Changed delivered mode: linux/sightbreak.x86_64"
+    },
+    {
+      "case": "developer-file",
+      "rejected": true,
+      "reason": "Missing or unexpected delivered files"
+    },
+    {
+      "case": "changed-receipt",
+      "rejected": true,
+      "reason": "Delivered receipt changed"
+    }
+  ],
+  "method": "Bounded archive/filesystem/format/resource inspection and readonly frozen Git objects; no native process execution or source mutation",
+  "mode_policy": "Payload archive_mode stays exact; nonpayload source.json follows original receipt delivery_mode, not an invented0644 default.",
+  "prior_failure_scope": "S7 externalQA originally assumed0644receipt mode; originalfailure retained separately",
+  "source": {
+    "source_commit": "e3c1194a9c7bb2ff8a5e3b81ab122513dce4a32c",
+    "source_game_tree": "45b6c6ea9d3244700e324e90d6df4778ee28d18e",
+    "source_content_sha256": "0c471fb5c52826aa0391db7d4514429d08dc683f53d96e89f9176557d8a6f7ed",
+    "source_validation_sha256": "2f5ea31bacef994fd0a14b981e5b6abfca8e83a78da050c29d76c43a2fdc09fc",
+    "source_dirty": false,
+    "source_game_dirty": false
+  },
+  "manifest_sha256": "8a1301cb37b2c0db1136653d631d27e8cbe4b556e7dbcd97d288a7b2f538f5d1",
+  "independent_ci_receipt": null,
+  "export_receipt": "/workspace/playability-evidence/all-exports-r12.json",
+  "source_binding": "Readonly frozen Git commit/game tree and original clean export receipts; current worktree intentionally not qualified",
+  "input_snapshots": {
+    "/workspace/sightbreak-playability/builds/playability-r12/manifest.json": {
+      "sha256": "8a1301cb37b2c0db1136653d631d27e8cbe4b556e7dbcd97d288a7b2f538f5d1",
+      "mode": 384
+    },
+    "/workspace/sightbreak-playability/builds/playability-r12/checksums.txt": {
+      "sha256": "1991911cce5549bd0932ab463f3bd91e73a0cc1bd29219a7c97692b25d81bcee",
+      "mode": 384
+    },
+    "/workspace/playability-evidence/all-exports-r12.json": {
+      "sha256": "ebb5f04b418201184dbcd061a85bd755712e181195b9f6e01eaba7292f6610cb",
+      "mode": 384
+    },
+    "/workspace/sightbreak-playability/scripts/build_manifest.py": {
+      "sha256": "64482563194b3a0bcbc766fa7bedbb064f055e2bba34f82bb743f221aa6f0560",
+      "mode": 384
+    },
+    "/workspace/sightbreak-playability/scripts/verify_builds.py": {
+      "sha256": "b809b72aab14410b4f942d86ec8e4230c6ca1c4f94fcb682f17549e97a875ff1",
+      "mode": 384
+    },
+    "/workspace/sightbreak-playability/builds/playability-r12/linux/sightbreak.x86_64": {
+      "sha256": "fa05beef74745ddfe34145ac5beb7cac7f14f49e3205bf61cfe7b9fee69b729f",
+      "mode": 493
+    },
+    "/workspace/sightbreak-playability/builds/playability-r12/sightbreak-linux-debug.zip": {
+      "sha256": "a867001007b865fdb0c2cc091d0eb2e21c329eed512c9ad8a3da8f2b00575d70",
+      "mode": 384
+    },
+    "/workspace/sightbreak-playability/builds/playability-r12/windows/SIGHTBREAK.exe": {
+      "sha256": "8a101ff8cf696e338a1574bbe888e810a62797e297aa685932f0167928265fa7",
+      "mode": 420
+    },
+    "/workspace/sightbreak-playability/builds/playability-r12/sightbreak-windows-debug.zip": {
+      "sha256": "6b402c3fbda241b17d3e8412973f0e0edfbaeb552400077e96684960fdd1ae5f",
+      "mode": 384
+    },
+    "/workspace/sightbreak-playability/builds/playability-r12/macos/SIGHTBREAK.app/Contents/MacOS/SIGHTBREAK": {
+      "sha256": "d440798fdd6c99409048254963df860b680b77da7b900937139bfff015cded1e",
+      "mode": 493
+    },
+    "/workspace/sightbreak-playability/builds/playability-r12/sightbreak-macos-debug.zip": {
+      "sha256": "d4353e2d33c8fb63a4a4872b3f1a85e904e85292ecd7800758448bcf155f7e9a",
+      "mode": 384
+    },
+    "/workspace/sightbreak-playability/builds/playability-r12/android/sightbreak-debug.apk": {
+      "sha256": "a0cee33691f25923c998d0eeaf9d9b7a3b744e136e7d40c3c206eb6019cfa149",
+      "mode": 384
+    },
+    "/workspace/sightbreak-playability/builds/playability-r12/sightbreak-android-debug.zip": {
+      "sha256": "d011d44680267728469fa057669f12e57499aba4843c77a555eec2cc90bb3809",
+      "mode": 384
+    },
+    "/workspace/sightbreak-playability/builds/playability-r12/sightbreak-ios-xcode-project.zip": {
+      "sha256": "af0baaa9dec4f0e13cf4ca344c1b8417c61541af0f102a62dac23ee5e62557d9",
+      "mode": 384
+    },
+    "/workspace/sightbreak-playability/builds/playability-r12/linux/source.json": {
+      "sha256": "fffab13853dc6c9145de4bafdc4d315fa3da7dbcb8bae3f08b8ddb04f307c729",
+      "mode": 384
+    },
+    "/workspace/sightbreak-playability/builds/playability-r12/windows/source.json": {
+      "sha256": "c704ffea33999be94f8812f611f66ddaf882ce3425f423594538414ffc7c4104",
+      "mode": 384
+    },
+    "/workspace/sightbreak-playability/builds/playability-r12/macos/source.json": {
+      "sha256": "db2937917271d64441bce9430e2d60146baa0fd3b2afa1914d801d4098df5c0a",
+      "mode": 384
+    },
+    "/workspace/sightbreak-playability/builds/playability-r12/android/source.json": {
+      "sha256": "8c7e6e8f3a921ed8476be542923f42ecbb74b52db1fec8f2d5927629bfa2dee9",
+      "mode": 384
+    },
+    "/workspace/sightbreak-playability/builds/playability-r12/ios/source.json": {
+      "sha256": "f802d1072cede9fea6a35a862478ec1196b31e512ad3230777f078520443fc67",
+      "mode": 384
+    }
+  },
+  "qa_script_sha256": "8a42987471f0d4fa592d40e36ee3fcc30e2fe6d73fe3ae86ec9272868ad858bd",
+  "extracted_linux_executable": "/workspace/playability-evidence/packages-r12/extracted/linux/sightbreak.x86_64",
+  "extracted_linux_launcher": "/workspace/playability-evidence/packages-r12/extracted/linux/sightbreak.sh",
+  "extracted_linux_sha256": "fa05beef74745ddfe34145ac5beb7cac7f14f49e3205bf61cfe7b9fee69b729f",
+  "native_execution": "UNVERIFIED by this package qualification; use actual extracted executable for separate runs"
+}

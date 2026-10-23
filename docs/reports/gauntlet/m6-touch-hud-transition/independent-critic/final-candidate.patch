@@ -1,0 +1,292 @@
+diff --git a/game/scripts/main.gd b/game/scripts/main.gd
+index 340a7e1..7315524 100644
+--- a/game/scripts/main.gd
++++ b/game/scripts/main.gd
+@@ -56,6 +56,9 @@ var funds_label: Label
+ var health_label: Label
+ var health_bar: ProgressBar
+ var action_label: Label
++var hud_action_margin: MarginContainer
++var hud_controls: Label
++var hud_touch_mode := -1
+ var crosshair: Control
+ var radar: Control
+ var attack_pips: Control
+@@ -162,11 +165,22 @@ func uses_touch_controls() -> bool:
+ 	return bool(input_capabilities().mobile) or bool(profile.data.settings.touch_visible)
+ 
+ func update_pointer_mode() -> void:
++	sync_hud_input_mode()
+ 	var capture := application_focused and screen == "game" and not paused and not uses_touch_controls()
+ 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if capture else Input.MOUSE_MODE_VISIBLE
+ 	if is_instance_valid(touch) and not touch.editing:
+ 		touch.enabled = uses_touch_controls() and not paused and application_focused
+ 
++## Selected mode also controls the HUD while a menu temporarily disables touch.
++## Preserve the current HUD, overlay, feed and saved touch layout on a mode change.
++func sync_hud_input_mode() -> void:
++	if not is_instance_valid(hud_action_margin) or not is_instance_valid(hud_controls): return
++	var touch_mode := uses_touch_controls()
++	if hud_touch_mode == int(touch_mode): return
++	hud_touch_mode = int(touch_mode)
++	hud_action_margin.add_theme_constant_override("margin_right", 80 if touch_mode else 0)
++	hud_controls.visible = not touch_mode
++
+ func connected_controllers() -> Array[int]:
+ 	return Input.get_connected_joypads()
+ 
+@@ -229,6 +243,9 @@ func clear_ui() -> void:
+ 	status_label = null
+ 	status_row = null
+ 	status_fit_key = []
++	hud_action_margin = null
++	hud_controls = null
++	hud_touch_mode = -1
+ 	overlay = null
+ 	touch = null
+ 	crosshair = null
+@@ -928,14 +945,13 @@ func build_hud() -> void:
+ 	side.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+ 	side.custom_minimum_size.x = 240
+ 	top.add_child(side)
+-	var action_margin := MarginContainer.new()
+-	action_margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
+-	action_margin.add_theme_constant_override("margin_right", 80 if uses_touch_controls() else 0)
+-	side.add_child(action_margin)
++	hud_action_margin = MarginContainer.new()
++	hud_action_margin.mouse_filter = Control.MOUSE_FILTER_IGNORE
++	side.add_child(hud_action_margin)
+ 	var side_stack := VBoxContainer.new()
+ 	side_stack.mouse_filter = Control.MOUSE_FILTER_IGNORE
+ 	side_stack.add_theme_constant_override("separation", Design.SPACE_S)
+-	action_margin.add_child(side_stack)
++	hud_action_margin.add_child(side_stack)
+ 	action_label = wrapped_label("", Design.TYPE_BODY, GOLD)
+ 	action_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+ 	side_stack.add_child(action_label)
+@@ -961,6 +977,7 @@ func build_hud() -> void:
+ 	kill_feed.add_theme_constant_override("separation", KILL_FEED_GAP)
+ 	kill_feed.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+ 	kill_feed_frame.add_child(kill_feed)
++	kill_feed_frame.resized.connect(_refit_kill_feed_rows)
+ 	var space := Control.new()
+ 	space.mouse_filter = Control.MOUSE_FILTER_IGNORE
+ 	space.size_flags_vertical = Control.SIZE_EXPAND_FILL
+@@ -1021,11 +1038,10 @@ func build_hud() -> void:
+ 	health_bar.value = 100
+ 	health_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+ 	vitals.add_child(health_bar)
+-	var controls := wrapped_label("BUY  EQUIP     USE  OBJECTIVE     TEAM  ROSTER     II  MENU" if uses_touch_controls() else "B  BUY     E  OBJECTIVE     TAB  ROSTER     ESC  MENU", Design.TYPE_MICRO + 1, MUTED)
+-	controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+-	controls.visible = not uses_touch_controls()
+-	controls.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
+-	bottom.add_child(controls)
++	hud_controls = wrapped_label("B  BUY     E  OBJECTIVE     TAB  ROSTER     ESC  MENU", Design.TYPE_MICRO + 1, MUTED)
++	hud_controls.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
++	hud_controls.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
++	bottom.add_child(hud_controls)
+ 	var loadout := _hud_block(HORIZONTAL_ALIGNMENT_RIGHT)
+ 	bottom.add_child(loadout)
+ 	ammo_label = wrapped_label("12 / 36", 22)
+@@ -1054,6 +1070,7 @@ func build_hud() -> void:
+ 	touch.scoreboard_pressed.connect(func(): touch_score_until = elapsed + 4.0)
+ 	touch.layout_changed.connect(func(layout: Dictionary): profile.data.settings.hud_positions = layout; profile.save())
+ 	ui.add_child(touch)
++	sync_hud_input_mode()
+ 
+ ## Reticle gap follows the actual authoritative spread cone of the next shot.
+ func crosshair_gap(actor) -> float:
+@@ -1107,14 +1124,40 @@ func add_kill_feed(killer_id: int, victim_id: int, headshot: bool) -> void:
+ 	names.append(_kill_feed_name(victim))
+ 	row.add_child(names[-1])
+ 	entry.set_meta("born", elapsed)
++	entry.set_meta("headshot", headshot)
+ 	kill_feed.add_child(entry)
++	_fit_kill_feed_row(entry)
++	while kill_feed.get_child_count() > KILL_FEED_ROWS:
++		var oldest := kill_feed.get_child(0)
++		kill_feed.remove_child(oldest)
++		oldest.queue_free()
++	_fit_kill_feed_frame()
++
++## Mode changes resize the frame without replacing existing rows. Always fit
++## from the stored names so widening can recover text that now fits again.
++func _refit_kill_feed_rows() -> void:
++	if not is_instance_valid(kill_feed): return
++	for entry: PanelContainer in kill_feed.get_children():
++		if not entry.is_queued_for_deletion(): _fit_kill_feed_row(entry)
++	_fit_kill_feed_frame()
++
++func _fit_kill_feed_row(entry: PanelContainer) -> void:
++	var row: HBoxContainer = entry.get_child(0)
++	var names: Array[Label] = []
++	var marker: Label
++	for child: Label in row.get_children():
++		if child.has_meta("full_name"): names.append(child)
++		else: marker = child
++	var headshot := bool(entry.get_meta("headshot", false))
++	marker.text = "HEADSHOT" if headshot else "›"
++	var style := entry.get_theme_stylebox("panel")
+ 	# Fit the row to the frame: names keep their natural width when they fit and
+ 	# otherwise share the remaining space, ending in an ellipsis. When space is
+ 	# tight the headshot marker shortens to "HS" before any name is cut.
+ 	var frame_width := kill_feed_frame.size.x if kill_feed_frame.size.x > 1.0 else 220.0
+ 	var widths: Array[float] = []
+ 	for name_label in names:
+-		widths.append(_text_width(name_label, name_label.text) + 1.0)
++		widths.append(_text_width(name_label, str(name_label.get_meta("full_name"))) + 1.0)
+ 	var fixed := KILL_FEED_SEPARATION * names.size() + style.get_minimum_size().x + 2.0
+ 	if headshot and widths.reduce(func(total, width): return total + width, 0.0) + _text_width(marker, marker.text) + fixed > frame_width:
+ 		marker.text = "HS"
+@@ -1127,14 +1170,9 @@ func add_kill_feed(killer_id: int, victim_id: int, headshot: bool) -> void:
+ 	elif names.size() == 1:
+ 		widths[0] = minf(widths[0], budget)
+ 	for index in range(names.size()):
+-		var fitted := _fit_text(names[index], names[index].text, maxf(24.0, floorf(widths[index])))
++		var fitted := _fit_text(names[index], str(names[index].get_meta("full_name")), maxf(24.0, floorf(widths[index])))
+ 		names[index].text = fitted
+ 		names[index].custom_minimum_size.x = ceilf(_text_width(names[index], fitted))
+-	while kill_feed.get_child_count() > KILL_FEED_ROWS:
+-		var oldest := kill_feed.get_child(0)
+-		kill_feed.remove_child(oldest)
+-		oldest.queue_free()
+-	_fit_kill_feed_frame()
+ 
+ ## A row is as tall as the tallest face its text is shaped with. A name in a script
+ ## the default font lacks is drawn in a system fallback face whose line height is
+@@ -1339,6 +1377,7 @@ func _process(delta: float) -> void:
+ 			print("SIGHTBREAK_DEMO_CAPTURED")
+ 			get_tree().quit(0)
+ 	if screen != "game" or not is_instance_valid(match_game) or not is_instance_valid(score_label): return
++	sync_hud_input_mode()
+ 	var actor = match_game.local_actor()
+ 	score_label.text = "%02d  :  %02d" % [match_game.attack_score, match_game.defend_score]
+ 	var seconds := int(ceil(match_game.time_left))
+diff --git a/game/tests/input_mode_test.gd b/game/tests/input_mode_test.gd
+index 54ea474..e720077 100644
+--- a/game/tests/input_mode_test.gd
++++ b/game/tests/input_mode_test.gd
+@@ -42,6 +42,7 @@ func run() -> void:
+ 				main.simulated_capabilities = {"mobile":mobile,"touchscreen":capable}
+ 				main.profile.data.settings.touch_visible = requested
+ 				check(main.uses_touch_controls() == (mobile or requested), "Touch policy mobile=%s capability=%s explicit=%s" % [mobile,capable,requested])
++	await hud_mode_transitions(main)
+ 	main.simulated_capabilities = {"mobile":false,"touchscreen":true}
+ 	main.profile.data.settings.touch_visible = false
+ 	main.start_match({"mode":"offline","difficulty":"easy","name":"Input simulation"})
+@@ -187,3 +188,115 @@ func run() -> void:
+ 	await frames(3)
+ 	print("INPUT_MODE_TEST checks=%d failures=%d graphical_pointer=%s scope=simulated_capabilities_and_input_not_physical_hardware baseline=%s" % [checks,failures,graphical,not baseline.is_empty()])
+ 	quit(1 if failures else 0)
++
++func hud_footer(main: Node) -> Label:
++	for node in main.ui.find_children("*", "Label", true, false):
++		if "ROSTER" in node.text and "MENU" in node.text: return node
++	return null
++
++func check_hud_mode(main: Node, expected: bool, context: String) -> void:
++	var footer := hud_footer(main)
++	check(is_instance_valid(footer), context + " keeps its control-hint label")
++	if is_instance_valid(footer):
++		check(footer.visible == not expected, context + " shows keyboard hints only in desktop mode")
++		if not expected:
++			check(footer.text == "B  BUY     E  OBJECTIVE     TAB  ROSTER     ESC  MENU", context + " restores the actual keyboard bindings")
++	if expected:
++		var pause_left: float = main.touch.global_position.x + main.touch.control_point("pause").x - main.touch.radius("pause")
++		check(main.action_label.get_global_rect().end.x < pause_left, context + " clears the MENU target from device-state text")
++	check(absf(main.score_label.get_global_rect().get_center().x - main.ui.size.x * 0.5) < 1.0, context + " keeps the score centered")
++	for node: Control in [main.health_label, main.ammo_label]:
++		var rect := node.get_global_rect()
++		check(rect.position.x >= 0 and rect.end.x <= main.ui.size.x + 1 and rect.position.y >= 0 and rect.end.y <= main.ui.size.y + 1, context + " keeps health/ammunition on screen")
++	var frame: Rect2 = main.kill_feed_frame.get_global_rect()
++	for entry: Control in main.kill_feed.get_children():
++		var rect := entry.get_global_rect()
++		check(rect.position.x >= frame.position.x - 1 and rect.end.x <= frame.end.x + 1, context + " keeps the preserved feed row inside its clipped frame")
++		for name_label: Label in entry.find_children("*", "Label", true, false):
++			var drawn: float = main._text_width(name_label, name_label.text)
++			check(name_label.global_position.x >= frame.position.x - 1 and name_label.global_position.x + drawn <= frame.end.x + 1, context + " draws the complete fitted feed text inside its frame")
++
++## Exercise live settings signals without rebuilding the HUD. Pausing disables
++## touch input independently of the selected presentation; mobile forces touch.
++func hud_mode_transitions(main: Node) -> void:
++	var cases := [
++		{"size":Vector2i(1280,720), "scale":1.0, "initial":false, "mobile":false},
++		{"size":Vector2i(960,720), "scale":1.0, "initial":false, "mobile":false},
++		{"size":Vector2i(1280,720), "scale":1.3, "initial":false, "mobile":false},
++		{"size":Vector2i(960,720), "scale":1.3, "initial":false, "mobile":false},
++		{"size":Vector2i(1280,720), "scale":1.0, "initial":true, "mobile":false},
++		{"size":Vector2i(1280,720), "scale":1.3, "initial":false, "mobile":true},
++	]
++	var saved := {"fire":[0.86,0.57], "move":[0.18,0.76]}
++	for item in cases:
++		root.content_scale_size = item.size
++		root.size = item.size
++		main.simulated_capabilities = {"mobile":item.mobile,"touchscreen":true}
++		main.profile.data.settings.ui_text_scale = item.scale
++		main.profile.data.settings.touch_visible = item.initial
++		main.profile.data.settings.hud_positions = saved.duplicate(true)
++		main.profile.data.settings.hud_scale = 1.5
++		main.start_match({"mode":"offline","difficulty":"easy","name":"HUD mode simulation"})
++		main.match_game.process_mode = Node.PROCESS_MODE_DISABLED
++		main.set_physics_process(false)
++		await frames(4)
++		var context := "%s at %d%% mobile=%s initial=%s" % [item.size, roundi(item.scale * 100), item.mobile, item.initial]
++		check_hud_mode(main, item.mobile or item.initial, context + " initial")
++		var original_touch: Control = main.touch
++		var original_action: Label = main.action_label
++		var original_status: Label = main.status_label
++		var original_layout: Dictionary = main.touch.exported_layout()
++		var ids: Array = main.match_game.actors.keys()
++		main.match_game.actors[ids[0]].display_name = "W".repeat(24)
++		main.match_game.actors[ids[1]].display_name = "M".repeat(24)
++		main.add_kill_feed(ids[0], ids[1], true)
++		await frames(4)
++		var original_feed: Node = main.kill_feed.get_child(0)
++		var original_born: float = original_feed.get_meta("born")
++		var original_names: Array[String] = []
++		for name_label: Label in original_feed.find_children("*", "Label", true, false):
++			original_names.append(name_label.text)
++		for requested in [not item.initial, item.initial]:
++			main.toggle_pause()
++			main.show_match_settings()
++			await frames()
++			var settings_overlay: Control = main.overlay
++			var toggle: CheckButton
++			for node in main.overlay.find_children("*", "CheckButton", true, false):
++				if node.text == "SHOW TOUCH CONTROLS ON DESKTOP": toggle = node
++			check(is_instance_valid(toggle), context + " has the actual desktop touch preference")
++			if not is_instance_valid(toggle): continue
++			toggle.button_pressed = requested
++			await frames(4)
++			var expected: bool = item.mobile or requested
++			check(main.profile.data.settings.touch_visible == requested, context + " setting signal changes the preference")
++			check(main.paused and main.match_suspended and not main.touch.enabled, context + " settings keeps input disabled and training suspended")
++			check(main.overlay == settings_overlay and main.touch == original_touch and main.action_label == original_action and main.status_label == original_status and original_feed.get_parent() == main.kill_feed and original_feed.get_meta("born") == original_born, context + " mode change preserves active overlay and HUD nodes and feed age")
++			check_hud_mode(main, expected, context + " paused preference=%s" % requested)
++			main.close_overlay()
++			await frames(4)
++			check(main.touch.enabled == expected and not main.paused and not main.match_suspended, context + " explicit resume follows selected mode")
++			check(main.touch.exported_layout() == original_layout and main.profile.data.settings.hud_positions == saved and is_equal_approx(main.touch.hud_scale, 1.5), context + " mode change preserves saved custom layout and button scale")
++			check_hud_mode(main, expected, context + " resumed preference=%s" % requested)
++		var restored_names: Array[String] = []
++		for name_label: Label in original_feed.find_children("*", "Label", true, false):
++			restored_names.append(name_label.text)
++		check(restored_names == original_names, context + " round trip restores the fitted names and headshot marker")
++		# A focus interruption must not reinterpret temporary input disablement as
++		# a desktop-mode selection or bypass the existing neutral-input guard.
++		main.touch.actions.fire = true
++		main.touch.movement = Vector2.ONE
++		main._notification(Node.NOTIFICATION_APPLICATION_FOCUS_OUT)
++		await frames()
++		check_hud_mode(main, item.mobile or item.initial, context + " focus paused")
++		check(main.waiting_for_input_release and not main.touch.enabled and main.touch.actions.is_empty() and main.touch.movement == Vector2.ZERO, context + " focus loss retains input guard and clears held touch")
++		main._notification(Node.NOTIFICATION_APPLICATION_FOCUS_IN)
++		main.close_overlay()
++		main._physics_process(1.0/60)
++		check(not main.match_game._local_input.fire and main.match_game._local_input.move == Vector2.ZERO, context + " explicit resume has no stale touch movement/fire")
++		main.leave_match()
++		await frames(3)
++	main.set_physics_process(true)
++	main.profile.data.settings.ui_text_scale = 1.0
++	main.profile.data.settings.hud_scale = 1.0
++	main.profile.data.settings.hud_positions = {}

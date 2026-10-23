@@ -1,0 +1,86 @@
+{
+  "time": "2026-10-23T08:44:33.286117+00:00",
+  "result": "FAILED AT CANDIDATE IMPORT; NO RENDERED EVIDENCE",
+  "source_freeze": "b001fc5087960729535f63c896b40d6dc25bd272",
+  "recipe": "2ecc3083c149cfcbb035d113fbc1a4b40a10f27b",
+  "admission_time": "2026-10-23T08:40:32.995347+00:00",
+  "producer_end_time": "2026-10-23T08:41:14.919600+00:00",
+  "controller_exit": 1,
+  "acquisition_complete": false,
+  "error": "import-candidate failed; immutable raw log retained",
+  "engine_invocations": 3,
+  "engine_version": "4.7.2.stable.official.ed1daf0bf",
+  "renderer": "UNOBSERVED; render producer never started",
+  "producer_results": [
+    {
+      "label": "engine-version",
+      "pid": 96995,
+      "exit_code": 0,
+      "wall_seconds": 0.06549919299868634,
+      "engine_errors": []
+    },
+    {
+      "label": "import-baseline",
+      "pid": 96998,
+      "exit_code": 0,
+      "wall_seconds": 6.567399432999082,
+      "engine_errors": []
+    },
+    {
+      "label": "import-candidate",
+      "pid": 97238,
+      "exit_code": 0,
+      "wall_seconds": 6.388473417999194,
+      "engine_errors": [
+        "SCRIPT ERROR: Parse Error: Cannot infer the type of \"compact\" variable because the value doesn't have a set type.",
+        "SCRIPT ERROR: Compile Error: Failed to compile depended scripts.",
+        "ERROR: Failed to load script \"res://scripts/main.gd\" with error \"Parse error\"."
+      ]
+    }
+  ],
+  "native_captures": 0,
+  "png_counts": {
+    "baseline": 0,
+    "candidate": 0,
+    "backgrounds": 0
+  },
+  "backgrounds_ran": false,
+  "controls_ran": false,
+  "regressions_ran": false,
+  "analyzer_ran": false,
+  "post_source_exit": 1,
+  "source_hash_or_uid_errors": [],
+  "expected_capture_shortfalls_retained": [
+    {
+      "background_freeze_missing": true
+    },
+    {
+      "png_count": "baseline",
+      "expected": 2816,
+      "actual": 0
+    },
+    {
+      "png_count": "candidate",
+      "expected": 2816,
+      "actual": 0
+    },
+    {
+      "png_count": "backgrounds",
+      "expected": 16,
+      "actual": 0
+    },
+    {
+      "acquisition_complete": false,
+      "error": "import-candidate failed; immutable raw log retained"
+    }
+  ],
+  "terminal_cleanup_confirmed": true,
+  "strict_log_clean": false,
+  "orphan_unclaimed_resource_leak_matches": [],
+  "strict_log_note": "Three candidate parse/compile/load errors; import exit0 does not qualify success. No orphan/unclaimed/resource-leak line found in six recursively scanned original logs.",
+  "pgid_observation_limit": "Current owned PGID members were scanned and absent; short run ended before a live getpgid observation. PGID identities derive from unchanged start_new_session=True and actual launch PIDs.",
+  "no_retry": true,
+  "source_repaired": false,
+  "later_producer_run_manually": false,
+  "remaining": "Fresh independent failure/source/cleanup/archive audit. No pixel, ownership, input-regression, visual or shipped-title acceptance can follow from missing captures."
+}

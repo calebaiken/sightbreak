@@ -1,0 +1,66 @@
+{
+  "source_dirty": false,
+  "source_validation_sha256": "9155b9c6a68fbeb459c4d0654b49ec4b250d1e11bea667747dfc4056e1ea2f03",
+  "source_commit": "6a0d8d5d85b4fb37943903886982f51b4ed230b0",
+  "source_game_tree": "13079ab8a3de9b18252a652ed57157e0776cf394",
+  "source_content_sha256": "954b0a73cff89483a9270434da7902b2d128f1b9a99c30290dfe03862c038873",
+  "source_game_dirty": false,
+  "host": "Linux-6.18.55-x86_64-with-glibc2.41",
+  "targets": {
+    "android": {
+      "artifact_inspection": true,
+      "native_execution": "UNVERIFIED",
+      "assets": 134,
+      "debug_signature": [
+        "v2",
+        "v3"
+      ],
+      "physical_device": "UNVERIFIED"
+    },
+    "ios": {
+      "artifact_inspection": true,
+      "native_execution": "UNVERIFIED",
+      "pck_resources": 132,
+      "xcode_build": "UNVERIFIED",
+      "physical_device": "UNVERIFIED"
+    }
+  },
+  "runs": [
+    {
+      "label": "android-signature",
+      "command": [
+        "/workspace/tools/android-sdk/build-tools/36.0.0/apksigner",
+        "verify",
+        "--verbose",
+        "--print-certs",
+        "/workspace/sightbreak-v1-mobile6a/builds/mobile-preservation/android/sightbreak-debug.apk"
+      ],
+      "exit_code": 0,
+      "clean_log": true
+    },
+    {
+      "label": "android-manifest",
+      "command": [
+        "/workspace/tools/android-sdk/build-tools/36.0.0/aapt",
+        "dump",
+        "badging",
+        "/workspace/sightbreak-v1-mobile6a/builds/mobile-preservation/android/sightbreak-debug.apk"
+      ],
+      "exit_code": 0,
+      "clean_log": true
+    },
+    {
+      "label": "android-layout",
+      "command": [
+        "/workspace/tools/android-sdk/build-tools/36.0.0/aapt",
+        "dump",
+        "xmltree",
+        "/workspace/sightbreak-v1-mobile6a/builds/mobile-preservation/android/sightbreak-debug.apk",
+        "AndroidManifest.xml"
+      ],
+      "exit_code": 0,
+      "clean_log": true
+    }
+  ],
+  "gameplay": "See separate real-input evidence; startup is not gameplay acceptance."
+}

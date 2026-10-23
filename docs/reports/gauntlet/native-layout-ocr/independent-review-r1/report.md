@@ -1,0 +1,31 @@
+# Independent rendered-HUD OCR review
+
+Candidate `3a847afa0903827dfa510f9c3c343061797c6457` wins against baseline `6a0d8d5` for the bounded 1280×720 rendered keyboard-HUD observation. It recognizes the muted footer on the actual failed native PNG while continuing to reject touch controls, menus, settings, roster and a deliberately erased footer. This is an evidence-based, nonblind tooling comparison; it does not judge the game's visual presentation or CS2 parity.
+
+I accept the bounded 1280×720 observer correction. I do not accept a complete four-size native-layout workflow from this review: the candidate run requested only 1280×720, and the retained full four-size baseline remains failed. My additional saved-image probes also found a real 1280×800 false negative, described below.
+
+The reviewed implementation is code commit `931a35c`, evidence packaging commit `3a847af`. Builder commit `ebf301d48e3b18a81b75661e5255534d03e2b149` arrived during review and adds retained native evidence; I checked that it changes neither `scripts/` nor `game/` from the tested `3a847af` state. No implementation files were edited by this critic, and I launched no native renderer.
+
+## Evidence checked
+
+- Read repository instructions and the original gauntlet/no-slop skills, mission records and `docs/reports/gauntlet/native-layout-ocr/README.md` criteria. Inspected the source diff and actual original desktop, touch, menu, field-menu, settings and roster PNGs. Inspected the candidate's actual touch, restored-keyboard and same-frame keyboard OCR originals.
+- Independently ran `scripts/test_rendered_layout_hud.py -v` with actual Tesseract 5.5.0. All six tests passed in 4.256 seconds. The desktop's full-frame thresholded OCR misses its keyboard identifiers; the same PNG's inverted, four-times footer crop reads `TAB ROSTER’ ESC MENU`. The full/crop calls took 0.332/0.183 seconds in this saved-image run. These timings do not attest the native render workflow.
+- Tested 11 further real saved native PNGs: desktop, roster and settings at 960×540, 1920×1080 and 1280×800, plus the candidate's 1280×720 touch/restored captures. Ten classifications passed. The 1280×800 desktop failed; all added roster/settings negatives passed.
+- Verified builder native retry `builds/native-layout-touch-r2/results.json` against actual screenshot bytes, dimensions, ELF bytes, source receipt, OCR receipts, frame fences and exits. It requests exactly 1280×720, reports `capture_generation_passed=true` and `exact_source_unchanged=true`, takes 78.033 seconds for the case, records both menu/live exits as 0 and has no cleanup errors. I verified all seven retained capture hashes and 1280×720 dimensions.
+- Native touch and keyboard resume fences observed frames 138→141 and 162→164 respectively. Native input actions record actual touch-on and touch-off clicks; displayed PNGs contain touch controls and then the keyboard HUD as claimed. Full and footer keyboard OCR receipts bind to the same original SHA-256 `0bac4b03b61a10e53d2d6fa578c5738adfb0b39c8bafbb20fa6e3463b8cc3f97`, with threshold 145/full-frame and no-threshold/four-times/[320,576,960,720] crop respectively.
+
+The tested source is clean `3a847af`, validation digest `e466388af1b4b7b423e40458407bfd1865957fd61a6e825168790e57b482c786`. The actual exported ELF is x86-64 and hashes to `2187c9c316ab6e45b17f64028c7345e3efab3f4ebfbffc9fbd2ebb7e09af998f`. Both baseline and candidate game trees equal `13079ab8a3de9b18252a652ed57157e0776cf394`; the entire game diff is empty. The source retains the two-drawn-frame fence, five-second touch/keyboard confirmation budgets, eight-second settings/roster budget, 120-second case cap, native input path, global health/eliminated requirement, FIRE exclusion and menu/settings exclusions. The added roster rejection prevents visible background footer words from making the actual open roster count as active gameplay.
+
+## Largest remaining deficiency
+
+The observer still falsely rejects the actual 1280×800 desktop PNG `layout-candidate-r1/1280x800/02-live-hud.png`. Its keyboard footer and HEALTH are visibly present. The candidate's unchanged crop reads `TAB ROSTER’ ESC EN`, misreading MENU, so classification is false. The raw input, analysis copies and actual TSVs are retained in `extra-images-r2/`, and the first failed probe and traceback remain in `extra-images/` and `control-verification-first-failure.log`.
+
+This is a demonstrated limit of the helper's reliability at a letterboxed size. Current native control flow invokes the keyboard/touch detector only for `--touch-toggle` at 1280×720, so this saved-image finding is not a demonstrated regression in the existing 1280×800 native workflow. Extending the observer's supported size range requires correcting the crop/preprocessing from actual pixels while retaining its required words and negative controls. The full four-size candidate native workflow also still needs a fresh strict run; saved PNGs cannot replace it.
+
+## Failures and limits retained
+
+Baseline full four-size generation failed at 1280×720 keyboard resume with `Rendered UI OCR confirmation exceeded its wall budget`. Candidate native retry r1 also failed honestly, before reaching footer OCR: an existing full-frame settings Tesseract call exceeded its unchanged approximately 7.747-second remaining budget. The standalone 0.306-second OCR observation is builder exploratory evidence, not an independent critic rerun. The unchanged r2 pass does not erase either failure or prove timing reliability under other host loads.
+
+The reported preexisting native-observation and build tests (four runnable Linux cases plus three Windows skips, and 24 build tests) were inspected as builder evidence. This critic independently reran the six image tests, the 11 extra actual-image probes, source/game comparisons and receipt checks. No broad `validate.sh`, complete four-size candidate native run, physical-device test, human readability review or CS2 comparison was performed here.
+
+The reproducible commands, exact assignment, logs, transforms, raw TSVs and file hashes are in this review directory. `verification.json` records detailed receipts and each additional probe, including the failed one. The builder has been sent the concrete 1280×800 counterexample and has separate follow-up ownership.

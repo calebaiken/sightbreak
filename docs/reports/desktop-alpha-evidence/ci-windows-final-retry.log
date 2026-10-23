@@ -1,0 +1,616 @@
+﻿2026-10-20T07:14:16.7256523Z Current runner version: '2.337.0'
+2026-10-20T07:14:16.7279325Z ##[group]Runner Image Provisioner
+2026-10-20T07:14:16.7280049Z Hosted Compute Agent
+2026-10-20T07:14:16.7280523Z Version: 20261002.596
+2026-10-20T07:14:16.7281028Z Commit: c3d12f3313a95f25162a1503be624f3b0617f8c0
+2026-10-20T07:14:16.7281596Z Build Date: 2026-10-02T22:28:27Z
+2026-10-20T07:14:16.7282206Z Worker ID: {ea77ee35-7c6f-4e83-b7f3-6d2f6c686caf}
+2026-10-20T07:14:16.7282766Z Region: centralus
+2026-10-20T07:14:16.7283673Z Cloud: Azure
+2026-10-20T07:14:16.7284147Z ##[endgroup]
+2026-10-20T07:14:16.7285344Z ##[group]Operating System
+2026-10-20T07:14:16.7285878Z Microsoft Windows Server 2025
+2026-10-20T07:14:16.7286353Z 10.0.26100
+2026-10-20T07:14:16.7286738Z Datacenter
+2026-10-20T07:14:16.7287156Z ##[endgroup]
+2026-10-20T07:14:16.7287584Z ##[group]Runner Image
+2026-10-20T07:14:16.7288057Z Image: windows-2025-vs2026
+2026-10-20T07:14:16.7288562Z Version: 20261007.264.1
+2026-10-20T07:14:16.7289868Z Included Software: https://github.com/actions/runner-images/blob/win25-vs2026/20261007.264/images/windows/Windows2025-VS2026-Readme.md
+2026-10-20T07:14:16.7291243Z Image Release: https://github.com/actions/runner-images/releases/tag/win25-vs2026%2F20261007.264
+2026-10-20T07:14:16.7292031Z ##[endgroup]
+2026-10-20T07:14:16.7293140Z ##[group]GITHUB_TOKEN Permissions
+2026-10-20T07:14:16.7295432Z Contents: read
+2026-10-20T07:14:16.7296001Z Metadata: read
+2026-10-20T07:14:16.7296531Z ##[endgroup]
+2026-10-20T07:14:16.7298745Z Secret source: Actions
+2026-10-20T07:14:16.7299736Z Cache mode: write
+2026-10-20T07:14:16.7300493Z Prepare workflow directory
+2026-10-20T07:14:16.7852466Z Prepare all required actions
+2026-10-20T07:14:16.7903765Z Getting action download info
+2026-10-20T07:14:17.0351032Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2026-10-20T07:14:17.1693207Z Download action repository 'actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065' (SHA:a26af69be951a213d495a4c3e4e4022e16d87065)
+2026-10-20T07:14:17.3096685Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-20T07:14:17.6535016Z Complete job name: native (windows-latest, windows)
+2026-10-20T07:14:17.7768194Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2026-10-20T07:14:17.7769617Z with:
+2026-10-20T07:14:17.7770071Z   repository: calebaiken/sightbreak
+2026-10-20T07:14:17.7773411Z   token: ***
+2026-10-20T07:14:17.7773892Z   ssh-strict: true
+2026-10-20T07:14:17.7774373Z   ssh-user: git
+2026-10-20T07:14:17.7774734Z   persist-credentials: true
+2026-10-20T07:14:17.7775140Z   clean: true
+2026-10-20T07:14:17.7775994Z   sparse-checkout-cone-mode: true
+2026-10-20T07:14:17.7776688Z   fetch-depth: 1
+2026-10-20T07:14:17.7777165Z   fetch-tags: false
+2026-10-20T07:14:17.7777637Z   show-progress: true
+2026-10-20T07:14:17.7778183Z   lfs: false
+2026-10-20T07:14:17.7778776Z   submodules: false
+2026-10-20T07:14:17.7779319Z   set-safe-directory: true
+2026-10-20T07:14:17.7780351Z env:
+2026-10-20T07:14:17.7780988Z   SIGHTBREAK_BUILDS_DIR: D:\a\sightbreak\sightbreak/builds/desktop-alpha
+2026-10-20T07:14:17.7781666Z ##[endgroup]
+2026-10-20T07:14:17.9136989Z Syncing repository: calebaiken/sightbreak
+2026-10-20T07:14:17.9138910Z ##[group]Getting Git version info
+2026-10-20T07:14:17.9139671Z Working directory is 'D:\a\sightbreak\sightbreak'
+2026-10-20T07:14:17.9893498Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-20T07:14:18.2782276Z git version 2.56.0.windows.2
+2026-10-20T07:14:18.2835400Z ##[endgroup]
+2026-10-20T07:14:18.2853861Z Temporarily overriding HOME='D:\a\_temp\2ddd4dc7-5415-4750-9d0c-115596ee88a1' before making global git config changes
+2026-10-20T07:14:18.2855325Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-20T07:14:18.2864051Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\sightbreak\sightbreak
+2026-10-20T07:14:18.3498351Z Deleting the contents of 'D:\a\sightbreak\sightbreak'
+2026-10-20T07:14:18.3504157Z ##[group]Initializing the repository
+2026-10-20T07:14:18.3512225Z [command]"C:\Program Files\Git\bin\git.exe" init D:\a\sightbreak\sightbreak
+2026-10-20T07:14:18.4293680Z Initialized empty Git repository in D:/a/sightbreak/sightbreak/.git/
+2026-10-20T07:14:18.4342345Z [command]"C:\Program Files\Git\bin\git.exe" remote add origin https://github.com/calebaiken/sightbreak
+2026-10-20T07:14:18.5282587Z ##[endgroup]
+2026-10-20T07:14:18.5283901Z ##[group]Disabling automatic garbage collection
+2026-10-20T07:14:18.5288520Z [command]"C:\Program Files\Git\bin\git.exe" config --local gc.auto 0
+2026-10-20T07:14:18.5631046Z ##[endgroup]
+2026-10-20T07:14:18.5632219Z ##[group]Setting up auth
+2026-10-20T07:14:18.5642735Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-20T07:14:18.5985596Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-20T07:14:19.9148735Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-20T07:14:19.9479481Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-20T07:14:20.4762382Z [command]"C:\Program Files\Git\bin\git.exe" config --local http.https://github.com/.extraheader "AUTHORIZATION: basic ***"
+2026-10-20T07:14:20.5097847Z ##[endgroup]
+2026-10-20T07:14:20.5098949Z ##[group]Fetching the repository
+2026-10-20T07:14:20.5110814Z [command]"C:\Program Files\Git\bin\git.exe" -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +0fb74800cffb96077069144028d113e308ef1744:refs/remotes/origin/codex/desktop-steam-readiness
+2026-10-20T07:14:24.9442111Z From https://github.com/calebaiken/sightbreak
+2026-10-20T07:14:24.9446214Z  * [new ref]         0fb74800cffb96077069144028d113e308ef1744 -> origin/codex/desktop-steam-readiness
+2026-10-20T07:14:24.9491918Z ##[endgroup]
+2026-10-20T07:14:24.9492763Z ##[group]Determining the checkout info
+2026-10-20T07:14:24.9493584Z ##[endgroup]
+2026-10-20T07:14:24.9504166Z [command]"C:\Program Files\Git\bin\git.exe" sparse-checkout disable
+2026-10-20T07:14:25.0150386Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all extensions.worktreeConfig
+2026-10-20T07:14:25.0550411Z ##[group]Checking out the ref
+2026-10-20T07:14:25.0559469Z [command]"C:\Program Files\Git\bin\git.exe" checkout --progress --force -B codex/desktop-steam-readiness refs/remotes/origin/codex/desktop-steam-readiness
+2026-10-20T07:14:26.1332156Z Updating files:  21% (851/3963)
+2026-10-20T07:14:26.2085275Z Updating files:  22% (872/3963)
+2026-10-20T07:14:26.2339052Z Updating files:  23% (912/3963)
+2026-10-20T07:14:26.2427585Z Updating files:  24% (952/3963)
+2026-10-20T07:14:26.2524137Z Updating files:  25% (991/3963)
+2026-10-20T07:14:26.2617589Z Updating files:  26% (1031/3963)
+2026-10-20T07:14:26.2728709Z Updating files:  27% (1071/3963)
+2026-10-20T07:14:26.2830307Z Updating files:  28% (1110/3963)
+2026-10-20T07:14:26.2931052Z Updating files:  29% (1150/3963)
+2026-10-20T07:14:26.3050011Z Updating files:  30% (1189/3963)
+2026-10-20T07:14:26.3288045Z Updating files:  31% (1229/3963)
+2026-10-20T07:14:26.3897643Z Updating files:  32% (1269/3963)
+2026-10-20T07:14:26.4189377Z Updating files:  33% (1308/3963)
+2026-10-20T07:14:26.4378421Z Updating files:  34% (1348/3963)
+2026-10-20T07:14:26.4755455Z Updating files:  35% (1388/3963)
+2026-10-20T07:14:26.5099717Z Updating files:  36% (1427/3963)
+2026-10-20T07:14:26.5396757Z Updating files:  37% (1467/3963)
+2026-10-20T07:14:26.5784445Z Updating files:  38% (1506/3963)
+2026-10-20T07:14:26.6396998Z Updating files:  39% (1546/3963)
+2026-10-20T07:14:26.7043090Z Updating files:  40% (1586/3963)
+2026-10-20T07:14:26.7726842Z Updating files:  41% (1625/3963)
+2026-10-20T07:14:26.8149293Z Updating files:  42% (1665/3963)
+2026-10-20T07:14:26.8241651Z Updating files:  43% (1705/3963)
+2026-10-20T07:14:26.8351659Z Updating files:  44% (1744/3963)
+2026-10-20T07:14:26.8445820Z Updating files:  45% (1784/3963)
+2026-10-20T07:14:26.8534427Z Updating files:  46% (1823/3963)
+2026-10-20T07:14:26.8616085Z Updating files:  47% (1863/3963)
+2026-10-20T07:14:26.8658317Z Updating files:  48% (1903/3963)
+2026-10-20T07:14:26.8708507Z Updating files:  49% (1942/3963)
+2026-10-20T07:14:26.8746173Z Updating files:  50% (1982/3963)
+2026-10-20T07:14:26.8783245Z Updating files:  51% (2022/3963)
+2026-10-20T07:14:26.8876317Z Updating files:  52% (2061/3963)
+2026-10-20T07:14:26.8923249Z Updating files:  53% (2101/3963)
+2026-10-20T07:14:26.9153734Z Updating files:  54% (2141/3963)
+2026-10-20T07:14:26.9347338Z Updating files:  55% (2180/3963)
+2026-10-20T07:14:26.9405694Z Updating files:  56% (2220/3963)
+2026-10-20T07:14:26.9468589Z Updating files:  57% (2259/3963)
+2026-10-20T07:14:26.9521149Z Updating files:  58% (2299/3963)
+2026-10-20T07:14:26.9569405Z Updating files:  59% (2339/3963)
+2026-10-20T07:14:26.9659486Z Updating files:  60% (2378/3963)
+2026-10-20T07:14:26.9929964Z Updating files:  61% (2418/3963)
+2026-10-20T07:14:27.0201706Z Updating files:  62% (2458/3963)
+2026-10-20T07:14:27.0443238Z Updating files:  63% (2497/3963)
+2026-10-20T07:14:27.0530441Z Updating files:  64% (2537/3963)
+2026-10-20T07:14:27.0577757Z Updating files:  65% (2576/3963)
+2026-10-20T07:14:27.0673849Z Updating files:  66% (2616/3963)
+2026-10-20T07:14:27.1202960Z Updating files:  67% (2656/3963)
+2026-10-20T07:14:27.1221986Z Updating files:  67% (2676/3963)
+2026-10-20T07:14:27.1536042Z Updating files:  68% (2695/3963)
+2026-10-20T07:14:27.1916401Z Updating files:  69% (2735/3963)
+2026-10-20T07:14:27.2489224Z Updating files:  70% (2775/3963)
+2026-10-20T07:14:27.3092804Z Updating files:  71% (2814/3963)
+2026-10-20T07:14:27.3527176Z Updating files:  72% (2854/3963)
+2026-10-20T07:14:27.3946466Z Updating files:  73% (2893/3963)
+2026-10-20T07:14:27.4379604Z Updating files:  74% (2933/3963)
+2026-10-20T07:14:27.4874756Z Updating files:  75% (2973/3963)
+2026-10-20T07:14:27.5437785Z Updating files:  76% (3012/3963)
+2026-10-20T07:14:27.5531404Z Updating files:  77% (3052/3963)
+2026-10-20T07:14:27.5577063Z Updating files:  78% (3092/3963)
+2026-10-20T07:14:27.5663201Z Updating files:  79% (3131/3963)
+2026-10-20T07:14:27.5743612Z Updating files:  80% (3171/3963)
+2026-10-20T07:14:27.5806980Z Updating files:  81% (3211/3963)
+2026-10-20T07:14:27.5866980Z Updating files:  82% (3250/3963)
+2026-10-20T07:14:27.5925397Z Updating files:  83% (3290/3963)
+2026-10-20T07:14:27.5990271Z Updating files:  84% (3329/3963)
+2026-10-20T07:14:27.6060885Z Updating files:  85% (3369/3963)
+2026-10-20T07:14:27.6122377Z Updating files:  86% (3409/3963)
+2026-10-20T07:14:27.6267044Z Updating files:  87% (3448/3963)
+2026-10-20T07:14:27.6780949Z Updating files:  88% (3488/3963)
+2026-10-20T07:14:27.7151869Z Updating files:  89% (3528/3963)
+2026-10-20T07:14:27.7530133Z Updating files:  90% (3567/3963)
+2026-10-20T07:14:27.7943001Z Updating files:  91% (3607/3963)
+2026-10-20T07:14:27.8197530Z Updating files:  92% (3646/3963)
+2026-10-20T07:14:27.8247148Z Updating files:  93% (3686/3963)
+2026-10-20T07:14:27.8300562Z Updating files:  94% (3726/3963)
+2026-10-20T07:14:27.8348916Z Updating files:  95% (3765/3963)
+2026-10-20T07:14:27.8397363Z Updating files:  96% (3805/3963)
+2026-10-20T07:14:27.8446065Z Updating files:  97% (3845/3963)
+2026-10-20T07:14:27.8495542Z Updating files:  98% (3884/3963)
+2026-10-20T07:14:27.8557666Z Updating files:  99% (3924/3963)
+2026-10-20T07:14:27.8558208Z Updating files: 100% (3963/3963)
+2026-10-20T07:14:27.8558630Z Updating files: 100% (3963/3963), done.
+2026-10-20T07:14:27.8716998Z Switched to a new branch 'codex/desktop-steam-readiness'
+2026-10-20T07:14:27.8727542Z branch 'codex/desktop-steam-readiness' set up to track 'origin/codex/desktop-steam-readiness'.
+2026-10-20T07:14:27.9049106Z ##[endgroup]
+2026-10-20T07:14:27.9412727Z [command]"C:\Program Files\Git\bin\git.exe" log -1 --format=%H
+2026-10-20T07:14:27.9714671Z 0fb74800cffb96077069144028d113e308ef1744
+2026-10-20T07:14:28.0168043Z ##[group]Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+2026-10-20T07:14:28.0168729Z with:
+2026-10-20T07:14:28.0169122Z   python-version: 3.12
+2026-10-20T07:14:28.0169514Z   check-latest: false
+2026-10-20T07:14:28.0171510Z   token: ***
+2026-10-20T07:14:28.0171776Z   update-environment: true
+2026-10-20T07:14:28.0172071Z   allow-prereleases: false
+2026-10-20T07:14:28.0172356Z   freethreaded: false
+2026-10-20T07:14:28.0172637Z env:
+2026-10-20T07:14:28.0172954Z   SIGHTBREAK_BUILDS_DIR: D:\a\sightbreak\sightbreak/builds/desktop-alpha
+2026-10-20T07:14:28.0173662Z ##[endgroup]
+2026-10-20T07:14:28.1549538Z ##[group]Installed versions
+2026-10-20T07:14:28.1719009Z (node:6576) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-20T07:14:28.1719682Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-20T07:14:28.1720322Z Successfully set up CPython (3.12.10)
+2026-10-20T07:14:28.1721153Z ##[endgroup]
+2026-10-20T07:14:28.2024197Z ##[group]Run python -m pip install Pillow==12.3.0
+2026-10-20T07:14:28.2024863Z [36;1mpython -m pip install Pillow==12.3.0[0m
+2026-10-20T07:14:28.2763506Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-20T07:14:28.2763913Z env:
+2026-10-20T07:14:28.2764332Z   SIGHTBREAK_BUILDS_DIR: D:\a\sightbreak\sightbreak/builds/desktop-alpha
+2026-10-20T07:14:28.2764791Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:14:28.2765251Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-20T07:14:28.2765731Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:14:28.2766202Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:14:28.2766612Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:14:28.2766983Z ##[endgroup]
+2026-10-20T07:14:46.4948344Z Collecting Pillow==12.3.0
+2026-10-20T07:14:46.6984852Z   Downloading pillow-12.3.0-cp312-cp312-win_amd64.whl.metadata (9.3 kB)
+2026-10-20T07:14:46.7460185Z Downloading pillow-12.3.0-cp312-cp312-win_amd64.whl (7.2 MB)
+2026-10-20T07:14:47.3628679Z    ---------------------------------------- 7.2/7.2 MB 13.5 MB/s  0:00:00
+2026-10-20T07:14:47.6791586Z Installing collected packages: Pillow
+2026-10-20T07:14:48.2776584Z Successfully installed Pillow-12.3.0
+2026-10-20T07:14:49.3911663Z ##[group]Run python scripts/toolchain.py setup --targets windows
+2026-10-20T07:14:49.3912439Z [36;1mpython scripts/toolchain.py setup --targets windows[0m
+2026-10-20T07:14:49.3987483Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-20T07:14:49.3987881Z env:
+2026-10-20T07:14:49.3988295Z   SIGHTBREAK_BUILDS_DIR: D:\a\sightbreak\sightbreak/builds/desktop-alpha
+2026-10-20T07:14:49.3988756Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:14:49.3989255Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-20T07:14:49.3989733Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:14:49.3990146Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:14:49.3990559Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:14:49.3990905Z ##[endgroup]
+2026-10-20T07:15:06.3068280Z 4.7.2.stable.official.ed1daf0bf
+2026-10-20T07:15:06.4301467Z ##[group]Run python scripts/test_build_manifest.py -v
+2026-10-20T07:15:06.4302035Z [36;1mpython scripts/test_build_manifest.py -v[0m
+2026-10-20T07:15:06.4364131Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-20T07:15:06.4364728Z env:
+2026-10-20T07:15:06.4365093Z   SIGHTBREAK_BUILDS_DIR: D:\a\sightbreak\sightbreak/builds/desktop-alpha
+2026-10-20T07:15:06.4365556Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:06.4366012Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-20T07:15:06.4366494Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:06.4366888Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:06.4367305Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:06.4367640Z ##[endgroup]
+2026-10-20T07:15:07.0645687Z test_all_source_dirt_rejected (__main__.BuildManifestTests.test_all_source_dirt_rejected) ... ok
+2026-10-20T07:15:07.1153495Z test_all_targets_package_with_current_version_and_license (__main__.BuildManifestTests.test_all_targets_package_with_current_version_and_license) ... ok
+2026-10-20T07:15:07.1210575Z test_android_signature_sidecar_is_preserved (__main__.BuildManifestTests.test_android_signature_sidecar_is_preserved) ... ok
+2026-10-20T07:15:07.1286117Z test_apple_developer_files_rejected (__main__.BuildManifestTests.test_apple_developer_files_rejected) ... ok
+2026-10-20T07:15:07.1334647Z test_changed_secondary_payload_rejected (__main__.BuildManifestTests.test_changed_secondary_payload_rejected) ... ok
+2026-10-20T07:15:07.1369666Z test_completed_export_has_exact_digest (__main__.BuildManifestTests.test_completed_export_has_exact_digest) ... ok
+2026-10-20T07:15:07.1402425Z test_developer_file_cannot_be_attested (__main__.BuildManifestTests.test_developer_file_cannot_be_attested) ... ok
+2026-10-20T07:15:07.1405452Z test_executable_permission_change_rejected (__main__.BuildManifestTests.test_executable_permission_change_rejected) ... skipped 'POSIX mode check'
+2026-10-20T07:15:07.1443333Z test_existing_export_and_reattestation_rejected (__main__.BuildManifestTests.test_existing_export_and_reattestation_rejected) ... ok
+2026-10-20T07:15:07.1456813Z test_export_versions_match_manifest (__main__.BuildManifestTests.test_export_versions_match_manifest) ... ok
+2026-10-20T07:15:07.1488899Z test_identical_runtime_different_commit_rejected (__main__.BuildManifestTests.test_identical_runtime_different_commit_rejected) ... ok
+2026-10-20T07:15:07.1506761Z test_missing_artifact_rejected (__main__.BuildManifestTests.test_missing_artifact_rejected) ... ok
+2026-10-20T07:15:07.1544891Z test_modified_artifact_rejected (__main__.BuildManifestTests.test_modified_artifact_rejected) ... ok
+2026-10-20T07:15:07.1649008Z test_packaged_executable_mode_matches_receipt (__main__.BuildManifestTests.test_packaged_executable_mode_matches_receipt) ... ok
+2026-10-20T07:15:07.1661820Z test_prebuilt_android_template_does_not_override_gradle_sdk (__main__.BuildManifestTests.test_prebuilt_android_template_does_not_override_gradle_sdk) ... ok
+2026-10-20T07:15:07.1697656Z test_receipt_version_tampering_rejected (__main__.BuildManifestTests.test_receipt_version_tampering_rejected) ... ok
+2026-10-20T07:15:07.1761563Z test_required_ios_asset_catalog_is_preserved (__main__.BuildManifestTests.test_required_ios_asset_catalog_is_preserved) ... ok
+2026-10-20T07:15:07.1876773Z test_single_target_needs_no_other_sdks (__main__.BuildManifestTests.test_single_target_needs_no_other_sdks) ... ok
+2026-10-20T07:15:07.1896177Z test_source_change_during_export_rejected (__main__.BuildManifestTests.test_source_change_during_export_rejected) ... ok
+2026-10-20T07:15:07.1928715Z test_stale_source_rejected (__main__.BuildManifestTests.test_stale_source_rejected) ... ok
+2026-10-20T07:15:07.1934148Z test_uncommitted_game_rejected (__main__.BuildManifestTests.test_uncommitted_game_rejected) ... ok
+2026-10-20T07:15:07.1968047Z test_validation_source_change_rejected (__main__.BuildManifestTests.test_validation_source_change_rejected) ... ok
+2026-10-20T07:15:07.1969279Z test_actual_engine_warning_and_errors_rejected (__main__.NativeLogTests.test_actual_engine_warning_and_errors_rejected) ... ok
+2026-10-20T07:15:07.1971233Z test_normal_log_and_vsync_warning_allowed (__main__.NativeLogTests.test_normal_log_and_vsync_warning_allowed) ... ok
+2026-10-20T07:15:07.1972079Z 
+2026-10-20T07:15:07.1972305Z ----------------------------------------------------------------------
+2026-10-20T07:15:07.1972695Z Ran 24 tests in 0.135s
+2026-10-20T07:15:07.1972885Z 
+2026-10-20T07:15:07.1972967Z OK (skipped=1)
+2026-10-20T07:15:07.3338791Z ##[group]Run python scripts/export.py windows
+2026-10-20T07:15:07.3339383Z [36;1mpython scripts/export.py windows[0m
+2026-10-20T07:15:07.3402027Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-20T07:15:07.3402456Z env:
+2026-10-20T07:15:07.3402843Z   SIGHTBREAK_BUILDS_DIR: D:\a\sightbreak\sightbreak/builds/desktop-alpha
+2026-10-20T07:15:07.3403304Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:07.3403752Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-20T07:15:07.3404237Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:07.3404980Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:07.3405484Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:07.3405829Z ##[endgroup]
+2026-10-20T07:15:22.9518922Z Exported D:\a\sightbreak\sightbreak\builds\desktop-alpha\windows\SIGHTBREAK.exe
+2026-10-20T07:15:23.0657708Z ##[group]Run python scripts/verify_builds.py --targets windows --graphical
+2026-10-20T07:15:23.0658337Z [36;1mpython scripts/verify_builds.py --targets windows --graphical[0m
+2026-10-20T07:15:23.0719160Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-20T07:15:23.0719531Z env:
+2026-10-20T07:15:23.0719898Z   SIGHTBREAK_BUILDS_DIR: D:\a\sightbreak\sightbreak/builds/desktop-alpha
+2026-10-20T07:15:23.0720350Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:23.0720853Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-20T07:15:23.0721289Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:23.0721678Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:23.0722089Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:23.0722410Z ##[endgroup]
+2026-10-20T07:15:53.8143153Z {
+2026-10-20T07:15:53.8143811Z   "windows": {
+2026-10-20T07:15:53.8144161Z     "artifact_inspection": true,
+2026-10-20T07:15:53.8144608Z     "native_execution": "PASS (headless startup only)",
+2026-10-20T07:15:53.8145047Z     "pck_resources": 130,
+2026-10-20T07:15:53.8145385Z     "native_graphical_menu": "PASS"
+2026-10-20T07:15:53.8145738Z   }
+2026-10-20T07:15:53.8146041Z }
+2026-10-20T07:15:53.9304036Z ##[group]Run import os, pathlib, subprocess, sys, json
+2026-10-20T07:15:53.9304662Z [36;1mimport os, pathlib, subprocess, sys, json[0m
+2026-10-20T07:15:53.9305045Z [36;1msys.path.insert(0, 'scripts')[0m
+2026-10-20T07:15:53.9305353Z [36;1mimport toolchain[0m
+2026-10-20T07:15:53.9305640Z [36;1mfrom native_log import failed[0m
+2026-10-20T07:15:53.9306152Z [36;1mout = pathlib.Path(os.environ['SIGHTBREAK_BUILDS_DIR']) / 'regressions'[0m
+2026-10-20T07:15:53.9306588Z [36;1mout.mkdir(parents=True)[0m
+2026-10-20T07:15:53.9306882Z [36;1mreceipts = [][0m
+2026-10-20T07:15:53.9307288Z [36;1mfor suite in ('actor', 'match', 'state_privacy', 'movement_prediction', 'peer_lifecycle'):[0m
+2026-10-20T07:15:53.9307873Z [36;1m    command = toolchain.command('--headless', '--script', 'res://tests/' + suite + '_test.gd')[0m
+2026-10-20T07:15:53.9308373Z [36;1m    with (out / (suite + '.log')).open('w', encoding='utf-8') as log:[0m
+2026-10-20T07:15:53.9309077Z [36;1m        result = subprocess.run(command, env=toolchain.environment(), stdout=log, stderr=subprocess.STDOUT, timeout=120)[0m
+2026-10-20T07:15:53.9309677Z [36;1m    text = (out / (suite + '.log')).read_text(encoding='utf-8', errors='replace')[0m
+2026-10-20T07:15:53.9310456Z [36;1m    receipts.append({'command': command, 'exit': result.returncode, 'clean_log': not failed(text)})[0m
+2026-10-20T07:15:53.9311110Z [36;1m    (out / 'results.json').write_text(json.dumps(receipts, indent=2))[0m
+2026-10-20T07:15:53.9311534Z [36;1m    if result.returncode or failed(text):[0m
+2026-10-20T07:15:53.9312235Z [36;1m        raise SystemExit(suite + ' failed; raw output retained')[0m
+2026-10-20T07:15:53.9319561Z shell: C:\hostedtoolcache\windows\Python\3.12.10\x64\python.EXE {0}
+2026-10-20T07:15:53.9319939Z env:
+2026-10-20T07:15:53.9320294Z   SIGHTBREAK_BUILDS_DIR: D:\a\sightbreak\sightbreak/builds/desktop-alpha
+2026-10-20T07:15:53.9320743Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:53.9321187Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-20T07:15:53.9321680Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:53.9322108Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:53.9322509Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:15:53.9322850Z ##[endgroup]
+2026-10-20T07:16:04.9147710Z ##[group]Run python scripts/verify_integration_export.py --target windows --visit-armory --timeout 240 --output builds/desktop-alpha/native-input
+2026-10-20T07:16:04.9148744Z [36;1mpython scripts/verify_integration_export.py --target windows --visit-armory --timeout 240 --output builds/desktop-alpha/native-input[0m
+2026-10-20T07:16:04.9211919Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-20T07:16:04.9212319Z env:
+2026-10-20T07:16:04.9212695Z   SIGHTBREAK_BUILDS_DIR: D:\a\sightbreak\sightbreak/builds/desktop-alpha
+2026-10-20T07:16:04.9213169Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:16:04.9213641Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-20T07:16:04.9214097Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:16:04.9214522Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:16:04.9215042Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:16:04.9215381Z ##[endgroup]
+2026-10-20T07:17:11.5063953Z {
+2026-10-20T07:17:11.5068312Z   "passed": true,
+2026-10-20T07:17:11.5068976Z   "target": "windows",
+2026-10-20T07:17:11.5069800Z   "host": "Windows-2025Server-10.0.26100-SP0",
+2026-10-20T07:17:11.5070545Z   "artifact_source": {
+2026-10-20T07:17:11.5070879Z     "source_dirty": false,
+2026-10-20T07:17:11.5071559Z     "source_validation_sha256": "4ab5e4b5e4db2d263e59131670bb6383ed4c8662c9b7f78abb868be5212cae85",
+2026-10-20T07:17:11.5072204Z     "source_commit": "0fb74800cffb96077069144028d113e308ef1744",
+2026-10-20T07:17:11.5072694Z     "source_game_tree": "ce6ac523e5882302bf95f53314b388f5cd7805a3",
+2026-10-20T07:17:11.5073390Z     "source_content_sha256": "7db95847f40a5b3a4a286493d8536f36c7d595fe0e778993bb9b2d4da8785f0e",
+2026-10-20T07:17:11.5074056Z     "source_game_dirty": false,
+2026-10-20T07:17:11.5074408Z     "target": "windows",
+2026-10-20T07:17:11.5074728Z     "version": "0.3.2-dev",
+2026-10-20T07:17:11.5075063Z     "build_number": 5,
+2026-10-20T07:17:11.5075376Z     "export_completed": true,
+2026-10-20T07:17:11.5076131Z     "built_at_utc": "2026-10-20T07:15:08.960816+00:00",
+2026-10-20T07:17:11.5076463Z     "artifact": {
+2026-10-20T07:17:11.5076753Z       "path": "windows/SIGHTBREAK.exe",
+2026-10-20T07:17:11.5077063Z       "bytes": 113550712,
+2026-10-20T07:17:11.5077683Z       "sha256": "3a3fd9efb2901befb49e2c4d2130fea945726c571a81acf7b6427149a18abd7c",
+2026-10-20T07:17:11.5078104Z       "mode": 511,
+2026-10-20T07:17:11.5078364Z       "archive_mode": 420
+2026-10-20T07:17:11.5078615Z     },
+2026-10-20T07:17:11.5078865Z     "payload": [
+2026-10-20T07:17:11.5079111Z       {
+2026-10-20T07:17:11.5079369Z         "path": "windows/GODOT-COPYRIGHT.txt",
+2026-10-20T07:17:11.5080035Z         "bytes": 102487,
+2026-10-20T07:17:11.5080469Z         "sha256": "7ae231c4b877ac30c39c2a95d0f3ad7548dfaa917c79ad8e4f43c151ebe2312a",
+2026-10-20T07:17:11.5080886Z         "mode": 438,
+2026-10-20T07:17:11.5081146Z         "archive_mode": 420
+2026-10-20T07:17:11.5081397Z       },
+2026-10-20T07:17:11.5081640Z       {
+2026-10-20T07:17:11.5081898Z         "path": "windows/GODOT-LICENSE.txt",
+2026-10-20T07:17:11.5082272Z         "bytes": 1169,
+2026-10-20T07:17:11.5082638Z         "sha256": "0cc27400b8da8c06bb35350422c14715647cd2632c138921fd49caa6610a1ef6",
+2026-10-20T07:17:11.5083028Z         "mode": 438,
+2026-10-20T07:17:11.5083339Z         "archive_mode": 420
+2026-10-20T07:17:11.5083605Z       },
+2026-10-20T07:17:11.5083815Z       {
+2026-10-20T07:17:11.5084089Z         "path": "windows/SIGHTBREAK.console.exe",
+2026-10-20T07:17:11.5084404Z         "bytes": 60928,
+2026-10-20T07:17:11.5084766Z         "sha256": "257eb971d0e94c60e4cfa6360f17c9810176c68397bf10f35c33c22c88dbe3d0",
+2026-10-20T07:17:11.5085161Z         "mode": 511,
+2026-10-20T07:17:11.5085399Z         "archive_mode": 420
+2026-10-20T07:17:11.5085669Z       },
+2026-10-20T07:17:11.5085922Z       {
+2026-10-20T07:17:11.5088208Z         "path": "windows/SIGHTBREAK.exe",
+2026-10-20T07:17:11.5088575Z         "bytes": 113550712,
+2026-10-20T07:17:11.5088943Z         "sha256": "3a3fd9efb2901befb49e2c4d2130fea945726c571a81acf7b6427149a18abd7c",
+2026-10-20T07:17:11.5089372Z         "mode": 511,
+2026-10-20T07:17:11.5089622Z         "archive_mode": 420
+2026-10-20T07:17:11.5089881Z       }
+2026-10-20T07:17:11.5090114Z     ]
+2026-10-20T07:17:11.5090347Z   },
+2026-10-20T07:17:11.5090586Z   "authority_source": {
+2026-10-20T07:17:11.5090882Z     "source_dirty": false,
+2026-10-20T07:17:11.5091292Z     "source_validation_sha256": "4ab5e4b5e4db2d263e59131670bb6383ed4c8662c9b7f78abb868be5212cae85",
+2026-10-20T07:17:11.5091937Z     "source_commit": "0fb74800cffb96077069144028d113e308ef1744",
+2026-10-20T07:17:11.5092346Z     "source_game_tree": "ce6ac523e5882302bf95f53314b388f5cd7805a3",
+2026-10-20T07:17:11.5092841Z     "source_content_sha256": "7db95847f40a5b3a4a286493d8536f36c7d595fe0e778993bb9b2d4da8785f0e",
+2026-10-20T07:17:11.5093284Z     "source_game_dirty": false
+2026-10-20T07:17:11.5093533Z   },
+2026-10-20T07:17:11.5093814Z   "engine": "4.7.2.stable.official.ed1daf0bf",
+2026-10-20T07:17:11.5094292Z   "executable_sha256": "3a3fd9efb2901befb49e2c4d2130fea945726c571a81acf7b6427149a18abd7c",
+2026-10-20T07:17:11.5094711Z   "authority": {
+2026-10-20T07:17:11.5094986Z     "joined_id": 1,
+2026-10-20T07:17:11.5095239Z     "largest_ack": 887,
+2026-10-20T07:17:11.5095525Z     "lowest_ammo": 26,
+2026-10-20T07:17:11.5096092Z     "passed": true,
+2026-10-20T07:17:11.5096368Z     "prediction_default": false,
+2026-10-20T07:17:11.5096757Z     "protocol": 6,
+2026-10-20T07:17:11.5097000Z     "reload_command_seen": true,
+2026-10-20T07:17:11.5097301Z     "reload_completed": true,
+2026-10-20T07:17:11.5097575Z     "reload_seen": true,
+2026-10-20T07:17:11.5097848Z     "reload_trigger": "native client input",
+2026-10-20T07:17:11.5098385Z     "scope": "source Godot authority fixture; client is actual exported desktop binary driven through native UI; no rewards",
+2026-10-20T07:17:11.5098876Z     "shots": 4
+2026-10-20T07:17:11.5099345Z   },
+2026-10-20T07:17:11.5099620Z   "client_exit": 0,
+2026-10-20T07:17:11.5099941Z   "server_exit": 0,
+2026-10-20T07:17:11.5100364Z   "capture_method": "raw Windows client-area desktop capture",
+2026-10-20T07:17:11.5101070Z   "rendered_capture_stages": "Require visual inspection; authority timing is not rendered timing",
+2026-10-20T07:17:11.5101669Z   "capture_dimensions": [
+2026-10-20T07:17:11.5101999Z     976,
+2026-10-20T07:17:11.5102259Z     549
+2026-10-20T07:17:11.5102577Z   ],
+2026-10-20T07:17:11.5102854Z   "reload_trigger": "native client input",
+2026-10-20T07:17:11.5103186Z   "inventory_navigation_captured": true,
+2026-10-20T07:17:11.5103626Z   "desktop_R_key_input": "VERIFIED via server-observed reload command",
+2026-10-20T07:17:11.5104410Z   "movement_aim_input": "Native input delivered; authoritative displacement not measured by this fixture",
+2026-10-20T07:17:11.5105042Z   "exit_method": "completion-driven WM_CLOSE",
+2026-10-20T07:17:11.5105526Z   "automation_accessibility": "No automation override; screen-reader/desktop portals UNVERIFIED",
+2026-10-20T07:17:11.5106214Z   "scope": "Actual exported native desktop client; source Godot authority on loopback; no physical hardware or internet-security acceptance",
+2026-10-20T07:17:11.5106789Z   "cleanup_errors": [],
+2026-10-20T07:17:11.5107051Z   "commands": [
+2026-10-20T07:17:11.5107337Z     {
+2026-10-20T07:17:11.5107577Z       "name": "server",
+2026-10-20T07:17:11.5107822Z       "command": [
+2026-10-20T07:17:11.5108190Z         "D:\\a\\sightbreak\\tools\\godot-4.7.2\\Godot_v4.7.2-stable_win64.exe",
+2026-10-20T07:17:11.5108591Z         "--path",
+2026-10-20T07:17:11.5108879Z         "D:\\a\\sightbreak\\sightbreak\\game",
+2026-10-20T07:17:11.5109200Z         "--headless",
+2026-10-20T07:17:11.5109460Z         "--script",
+2026-10-20T07:17:11.5109842Z         "D:\\a\\sightbreak\\sightbreak\\scripts\\fixtures\\export_integration.gd",
+2026-10-20T07:17:11.5110960Z         "--",
+2026-10-20T07:17:11.5111827Z         "--output=D:\\a\\sightbreak\\sightbreak\\builds\\desktop-alpha\\native-input"
+2026-10-20T07:17:11.5112230Z       ],
+2026-10-20T07:17:11.5112446Z       "pid": 7704,
+2026-10-20T07:17:11.5112731Z       "started_seconds": 0.5310000000000059,
+2026-10-20T07:17:11.5113020Z       "exit_code": 0
+2026-10-20T07:17:11.5113294Z     },
+2026-10-20T07:17:11.5113566Z     {
+2026-10-20T07:17:11.5113802Z       "name": "client",
+2026-10-20T07:17:11.5114106Z       "command": [
+2026-10-20T07:17:11.5114583Z         "D:\\a\\sightbreak\\sightbreak\\builds\\desktop-alpha\\windows\\SIGHTBREAK.exe",
+2026-10-20T07:17:11.5114983Z         "--audio-driver",
+2026-10-20T07:17:11.5115260Z         "Dummy",
+2026-10-20T07:17:11.5115501Z         "--position",
+2026-10-20T07:17:11.5115754Z         "0,0",
+2026-10-20T07:17:11.5116397Z         "--resolution",
+2026-10-20T07:17:11.5116692Z         "976x549"
+2026-10-20T07:17:11.5116964Z       ],
+2026-10-20T07:17:11.5117270Z       "pid": 8036,
+2026-10-20T07:17:11.5117581Z       "started_seconds": 1.2339999999999804,
+2026-10-20T07:17:11.5117863Z       "exit_code": 0
+2026-10-20T07:17:11.5118160Z     }
+2026-10-20T07:17:11.5118422Z   ],
+2026-10-20T07:17:11.5118661Z   "elapsed_seconds": 66.156
+2026-10-20T07:17:11.5118925Z }
+2026-10-20T07:17:11.6328076Z ##[group]Run python scripts/build_manifest.py package --targets windows
+2026-10-20T07:17:11.6328850Z [36;1mpython scripts/build_manifest.py package --targets windows[0m
+2026-10-20T07:17:11.6401505Z shell: C:\Program Files\PowerShell\7\pwsh.EXE -command ". '{0}'"
+2026-10-20T07:17:11.6402046Z env:
+2026-10-20T07:17:11.6403424Z   SIGHTBREAK_BUILDS_DIR: D:\a\sightbreak\sightbreak/builds/desktop-alpha
+2026-10-20T07:17:11.6404133Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:17:11.6404801Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-20T07:17:11.6405432Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:17:11.6406048Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:17:11.6406644Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:17:11.6407185Z ##[endgroup]
+2026-10-20T07:17:15.0497312Z {
+2026-10-20T07:17:15.0497948Z   "targets": [
+2026-10-20T07:17:15.0498250Z     "windows"
+2026-10-20T07:17:15.0498547Z   ],
+2026-10-20T07:17:15.0498832Z   "game": "SIGHTBREAK",
+2026-10-20T07:17:15.0499163Z   "version": "0.3.2-dev",
+2026-10-20T07:17:15.0499442Z   "engine": "Godot 4.7.2",
+2026-10-20T07:17:15.0499687Z   "build_type": "debug",
+2026-10-20T07:17:15.0500369Z   "source_dirty": false,
+2026-10-20T07:17:15.0500804Z   "source_validation_sha256": "4ab5e4b5e4db2d263e59131670bb6383ed4c8662c9b7f78abb868be5212cae85",
+2026-10-20T07:17:15.0502190Z   "source_commit": "0fb74800cffb96077069144028d113e308ef1744",
+2026-10-20T07:17:15.0502623Z   "source_game_tree": "ce6ac523e5882302bf95f53314b388f5cd7805a3",
+2026-10-20T07:17:15.0503108Z   "source_content_sha256": "7db95847f40a5b3a4a286493d8536f36c7d595fe0e778993bb9b2d4da8785f0e",
+2026-10-20T07:17:15.0503653Z   "source_game_dirty": false,
+2026-10-20T07:17:15.0504005Z   "exports": [
+2026-10-20T07:17:15.0504238Z     {
+2026-10-20T07:17:15.0504490Z       "source_dirty": false,
+2026-10-20T07:17:15.0504928Z       "source_validation_sha256": "4ab5e4b5e4db2d263e59131670bb6383ed4c8662c9b7f78abb868be5212cae85",
+2026-10-20T07:17:15.0505681Z       "source_commit": "0fb74800cffb96077069144028d113e308ef1744",
+2026-10-20T07:17:15.0506112Z       "source_game_tree": "ce6ac523e5882302bf95f53314b388f5cd7805a3",
+2026-10-20T07:17:15.0506594Z       "source_content_sha256": "7db95847f40a5b3a4a286493d8536f36c7d595fe0e778993bb9b2d4da8785f0e",
+2026-10-20T07:17:15.0507116Z       "source_game_dirty": false,
+2026-10-20T07:17:15.0507396Z       "target": "windows",
+2026-10-20T07:17:15.0507670Z       "version": "0.3.2-dev",
+2026-10-20T07:17:15.0507938Z       "build_number": 5,
+2026-10-20T07:17:15.0508195Z       "export_completed": true,
+2026-10-20T07:17:15.0508524Z       "built_at_utc": "2026-10-20T07:15:08.960816+00:00",
+2026-10-20T07:17:15.0508830Z       "artifact": {
+2026-10-20T07:17:15.0509095Z         "path": "windows/SIGHTBREAK.exe",
+2026-10-20T07:17:15.0509420Z         "bytes": 113550712,
+2026-10-20T07:17:15.0509896Z         "sha256": "3a3fd9efb2901befb49e2c4d2130fea945726c571a81acf7b6427149a18abd7c",
+2026-10-20T07:17:15.0510315Z         "mode": 511,
+2026-10-20T07:17:15.0510570Z         "archive_mode": 420
+2026-10-20T07:17:15.0510819Z       },
+2026-10-20T07:17:15.0511069Z       "payload": [
+2026-10-20T07:17:15.0511305Z         {
+2026-10-20T07:17:15.0511566Z           "path": "windows/GODOT-COPYRIGHT.txt",
+2026-10-20T07:17:15.0511876Z           "bytes": 102487,
+2026-10-20T07:17:15.0512280Z           "sha256": "7ae231c4b877ac30c39c2a95d0f3ad7548dfaa917c79ad8e4f43c151ebe2312a",
+2026-10-20T07:17:15.0512700Z           "mode": 438,
+2026-10-20T07:17:15.0512958Z           "archive_mode": 420
+2026-10-20T07:17:15.0513216Z         },
+2026-10-20T07:17:15.0513439Z         {
+2026-10-20T07:17:15.0513676Z           "path": "windows/GODOT-LICENSE.txt",
+2026-10-20T07:17:15.0513996Z           "bytes": 1169,
+2026-10-20T07:17:15.0516423Z           "sha256": "0cc27400b8da8c06bb35350422c14715647cd2632c138921fd49caa6610a1ef6",
+2026-10-20T07:17:15.0516908Z           "mode": 438,
+2026-10-20T07:17:15.0517231Z           "archive_mode": 420
+2026-10-20T07:17:15.0517483Z         },
+2026-10-20T07:17:15.0517722Z         {
+2026-10-20T07:17:15.0517980Z           "path": "windows/SIGHTBREAK.console.exe",
+2026-10-20T07:17:15.0518285Z           "bytes": 60928,
+2026-10-20T07:17:15.0518660Z           "sha256": "257eb971d0e94c60e4cfa6360f17c9810176c68397bf10f35c33c22c88dbe3d0",
+2026-10-20T07:17:15.0519052Z           "mode": 511,
+2026-10-20T07:17:15.0519304Z           "archive_mode": 420
+2026-10-20T07:17:15.0519561Z         },
+2026-10-20T07:17:15.0519806Z         {
+2026-10-20T07:17:15.0520072Z           "path": "windows/SIGHTBREAK.exe",
+2026-10-20T07:17:15.0520371Z           "bytes": 113550712,
+2026-10-20T07:17:15.0520759Z           "sha256": "3a3fd9efb2901befb49e2c4d2130fea945726c571a81acf7b6427149a18abd7c",
+2026-10-20T07:17:15.0521151Z           "mode": 511,
+2026-10-20T07:17:15.0521394Z           "archive_mode": 420
+2026-10-20T07:17:15.0521679Z         }
+2026-10-20T07:17:15.0521898Z       ]
+2026-10-20T07:17:15.0522111Z     }
+2026-10-20T07:17:15.0522355Z   ],
+2026-10-20T07:17:15.0522615Z   "artifacts": [
+2026-10-20T07:17:15.0522882Z     {
+2026-10-20T07:17:15.0523129Z       "path": "windows/SIGHTBREAK.exe",
+2026-10-20T07:17:15.0523424Z       "bytes": 113550712,
+2026-10-20T07:17:15.0523888Z       "sha256": "3a3fd9efb2901befb49e2c4d2130fea945726c571a81acf7b6427149a18abd7c",
+2026-10-20T07:17:15.0524543Z       "mode": 511,
+2026-10-20T07:17:15.0524809Z       "archive_mode": 420
+2026-10-20T07:17:15.0525062Z     },
+2026-10-20T07:17:15.0525266Z     {
+2026-10-20T07:17:15.0525798Z       "path": "sightbreak-windows-debug.zip",
+2026-10-20T07:17:15.0526134Z       "bytes": 44502173,
+2026-10-20T07:17:15.0526516Z       "sha256": "ce9f7cd630de659fd3a1f7de9e671c8651169473df068f957339418677c46825",
+2026-10-20T07:17:15.0526903Z       "mode": 438,
+2026-10-20T07:17:15.0527143Z       "archive_mode": 420
+2026-10-20T07:17:15.0527437Z     }
+2026-10-20T07:17:15.0527664Z   ],
+2026-10-20T07:17:15.0527878Z   "limitations": [
+2026-10-20T07:17:15.0528260Z     "Android debug signed; physical device installation and performance unverified.",
+2026-10-20T07:17:15.0528787Z     "iOS unsigned Xcode project; macOS/Xcode compilation and signing unverified.",
+2026-10-20T07:17:15.0529392Z     "See docs/reports/COMBINED_INTEGRATION_REPORT.md and CODEX_NETWORK_QA.md for measured results and open gates."
+2026-10-20T07:17:15.0529849Z   ]
+2026-10-20T07:17:15.0530110Z }
+2026-10-20T07:17:15.1893368Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-20T07:17:15.1893919Z with:
+2026-10-20T07:17:15.1894383Z   name: sightbreak-desktop-windows-windows-latest-0fb74800cffb96077069144028d113e308ef1744
+2026-10-20T07:17:15.1895257Z   path: builds/desktop-alpha/
+2026-10-20T07:17:15.1895573Z   include-hidden-files: true
+2026-10-20T07:17:15.1895863Z   if-no-files-found: warn
+2026-10-20T07:17:15.1896165Z   retention-days: 14
+2026-10-20T07:17:15.1896442Z   compression-level: 6
+2026-10-20T07:17:15.1896719Z   overwrite: false
+2026-10-20T07:17:15.1896969Z env:
+2026-10-20T07:17:15.1897291Z   SIGHTBREAK_BUILDS_DIR: D:\a\sightbreak\sightbreak/builds/desktop-alpha
+2026-10-20T07:17:15.1897822Z   pythonLocation: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:17:15.1898287Z   PKG_CONFIG_PATH: C:\hostedtoolcache\windows\Python\3.12.10\x64/lib/pkgconfig
+2026-10-20T07:17:15.1899125Z   Python_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:17:15.1899563Z   Python2_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:17:15.1899996Z   Python3_ROOT_DIR: C:\hostedtoolcache\windows\Python\3.12.10\x64
+2026-10-20T07:17:15.1900344Z ##[endgroup]
+2026-10-20T07:17:15.3687049Z (node:9080) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-20T07:17:15.3687778Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-20T07:17:15.4306527Z With the provided path, there will be 186 files uploaded
+2026-10-20T07:17:15.4312505Z Artifact name is valid!
+2026-10-20T07:17:15.4313831Z Root directory input is valid!
+2026-10-20T07:17:15.6998830Z Beginning upload of artifact content to blob storage
+2026-10-20T07:17:16.2538082Z (node:9080) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-20T07:17:17.0721281Z Uploaded bytes 8388608
+2026-10-20T07:17:17.1926697Z Uploaded bytes 16777216
+2026-10-20T07:17:17.3034521Z Uploaded bytes 25165824
+2026-10-20T07:17:17.4746524Z Uploaded bytes 33554432
+2026-10-20T07:17:17.5944571Z Uploaded bytes 41943040
+2026-10-20T07:17:17.8237203Z Uploaded bytes 50331648
+2026-10-20T07:17:18.2603152Z Uploaded bytes 58720256
+2026-10-20T07:17:18.9120317Z Uploaded bytes 67108864
+2026-10-20T07:17:19.5696553Z Uploaded bytes 75497472
+2026-10-20T07:17:20.3301335Z Uploaded bytes 83886080
+2026-10-20T07:17:20.8953400Z Uploaded bytes 92274688
+2026-10-20T07:17:20.9524390Z Uploaded bytes 92873239
+2026-10-20T07:17:21.0013182Z Finished uploading artifact content to blob storage!
+2026-10-20T07:17:21.0016930Z SHA256 digest of uploaded artifact zip is ec672739b99bfddb86f8a791694d18c0183143bb75ec1a6703e533e687af21ba
+2026-10-20T07:17:21.0019133Z Finalizing artifact upload
+2026-10-20T07:17:21.3315794Z Artifact sightbreak-desktop-windows-windows-latest-0fb74800cffb96077069144028d113e308ef1744.zip successfully finalized. Artifact ID 12247885095
+2026-10-20T07:17:21.3317088Z Artifact sightbreak-desktop-windows-windows-latest-0fb74800cffb96077069144028d113e308ef1744 has been successfully uploaded! Final size is 92873239 bytes. Artifact ID is 12247885095
+2026-10-20T07:17:21.3328444Z Artifact download URL: https://github.com/calebaiken/sightbreak/actions/runs/39384250334/artifacts/12247885095
+2026-10-20T07:17:21.3915477Z Post job cleanup.
+2026-10-20T07:17:21.5288426Z (node:5584) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-20T07:17:21.5289191Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-20T07:17:21.5601895Z Post job cleanup.
+2026-10-20T07:17:21.7340279Z [command]"C:\Program Files\Git\bin\git.exe" version
+2026-10-20T07:17:21.7667298Z git version 2.56.0.windows.2
+2026-10-20T07:17:21.7733672Z Temporarily overriding HOME='D:\a\_temp\c04fe066-fa4d-4f7f-b351-f21a780f7477' before making global git config changes
+2026-10-20T07:17:21.7734702Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-20T07:17:21.7743941Z [command]"C:\Program Files\Git\bin\git.exe" config --global --add safe.directory D:\a\sightbreak\sightbreak
+2026-10-20T07:17:21.8107482Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp core\.sshCommand
+2026-10-20T07:17:21.8472526Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :\""
+2026-10-20T07:17:22.3787514Z [command]"C:\Program Files\Git\bin\git.exe" config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-20T07:17:22.4088029Z http.https://github.com/.extraheader
+2026-10-20T07:17:22.4135554Z [command]"C:\Program Files\Git\bin\git.exe" config --local --unset-all http.https://github.com/.extraheader
+2026-10-20T07:17:22.4488111Z [command]"C:\Program Files\Git\bin\git.exe" submodule foreach --recursive "sh -c \"git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :\""
+2026-10-20T07:17:23.0128781Z Cleaning up orphan processes
+2026-10-20T07:17:23.0773011Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683, actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+

@@ -1,0 +1,30 @@
+{
+  "baseline": {
+    "samples": 960,
+    "pairs": 480,
+    "unequal_pairs": 181,
+    "unequal_by_kind": {
+      "close": 30,
+      "long": 18,
+      "stuck": 30,
+      "stuck_jump": 30,
+      "idle": 24,
+      "travel": 13,
+      "stuck_low": 13,
+      "carrier": 13,
+      "smoke": 10
+    },
+    "terminal": "BOT_SQUAD_SYMMETRY_RESULT samples=960 checks=2722 failures=300 mode=observation",
+    "archive": "baseline/commands-r3.log.gz",
+    "raw_sha256": "b671d89232e8b3c14a4808f77aa93d3cd33c96ae02b38e9298bc0dd11bc9d29a"
+  },
+  "candidate": {
+    "samples": 960,
+    "pairs": 480,
+    "unequal_pairs": 0,
+    "unequal_by_kind": {},
+    "terminal": "BOT_SQUAD_SYMMETRY_RESULT samples=960 checks=2722 failures=0 mode=assertion",
+    "archive": "candidate/commands-r3-independent.log.gz",
+    "raw_sha256": "3725f195e56368a8b33e38291f73bb06db8e64dbcc1bad071a23a91bb5c461f6"
+  }
+}

@@ -1,0 +1,27 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+LAYOUT 80 screens (4 tabs x 5 sizes x 4 text scales)
+FAIL: 21 of 2252 armory checks
+  - A 3 % fee on 100 is 3, on 1,000 is 30, and rounds down to 0 on 1
+  - The fee rounds down: 33 -> 0, 34 -> 1
+  - The displayed fee equals price x basis points // 10000 for 24,000 price/rate pairs
+  - With no published fee rate, no fee is claimed
+  - A failed refresh shows an error card
+  - The error card states the actual failure
+  - The error card says nothing was changed
+  - The error card offers TRY AGAIN
+  - TRY AGAIN is wired to a refresh
+  - Obsidian finishes run common -> rare -> mythic: ["Finish_obsidian_mythic", "Finish_obsidian_common", "Finish_obsidian_rare"]
+  - Crimson Archive finishes run uncommon -> epic: ["Finish_crimson_archive_epic", "Finish_crimson_archive_uncommon"]
+  - A 100 listing at 3 % tells the buyer the seller gets 97 after a fee of 3: The seller receives 96 after a fee of 4 (3%).
+  - With 99 Credits a 100 listing is not buyable and says NEED 1 MORE
+  - The buy confirmation states "seller receives 97"
+  - The buy confirmation states "market fee of 3"
+  - A 1,250 listing pays the seller 1,213 after a fee of 37: You receive 1,212 after a fee of 38 (3%).
+  - The listing confirmation states the price, the fee and the proceeds: List Obsidian / Graphite for 100 earned Credits?  It will be reserved until sold or cancelled. On a sale the market fee is 4 (3%), so you receive 96.
+  - The gift trade lists what you give
+  - Only the one-sided trade carries the gift warning
+  - The gift warning is explicit
+  - The swap trade lists the right item on each side
+WARNING: 8 RIDs of type "CanvasItem" were leaked.
+WARNING: 134 ObjectDB instances were leaked at exit (run with `--verbose` for details).

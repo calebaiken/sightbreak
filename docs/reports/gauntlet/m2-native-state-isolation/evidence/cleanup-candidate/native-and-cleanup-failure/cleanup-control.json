@@ -1,0 +1,47 @@
+{
+  "fault": "namespace",
+  "actual_native_failure": {
+    "command": [
+      "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+      "--path",
+      "/tmp/sightbreak-native-tests-231cdigr/project",
+      "--headless",
+      "--script",
+      "/workspace/sightbreak-ci-isolation/builds/m2-isolation/cleanup-controls/native-and-cleanup-failure/intentional_native_failure.gd"
+    ],
+    "exit": 9,
+    "clean_log": false,
+    "wall_seconds": 0.3898780119998264,
+    "log": "/workspace/sightbreak-ci-isolation/builds/m2-isolation/cleanup-controls/native-and-cleanup-failure/intentional-native-failure.log"
+  },
+  "raised": {
+    "type": "RuntimeError",
+    "message": "Actual native cleanup control exited 9; raw output retained"
+  },
+  "passed": false,
+  "failure": {
+    "type": "RuntimeError",
+    "message": "Actual native cleanup control exited 9; raw output retained"
+  },
+  "cleanup": [
+    {
+      "user_namespace": "/workspace/sightbreak-ci-isolation/.local/cleanup-controls/data/SIGHTBREAK-native-tests-5d76b50615d74867a70757ed58a2b6bd",
+      "removed": false,
+      "error": {
+        "stage": "user_namespace_cleanup",
+        "type": "PermissionError",
+        "message": "Control injected namespace cleanup failure"
+      }
+    }
+  ],
+  "temporary_project_removed": true,
+  "finalization_failures": [
+    {
+      "stage": "user_namespace_cleanup",
+      "type": "PermissionError",
+      "message": "Control injected namespace cleanup failure"
+    }
+  ],
+  "control_assertions_passed": true,
+  "control_teardown_removed_resources": true
+}

@@ -1,0 +1,596 @@
+{
+  "bar": "ccd0955a2cf5d8bcad4e9e9e2fba8ad399591f5e",
+  "method": "Git blob/SQLite in-memory read-only audit; no new native execution",
+  "campaigns": {
+    "campaign-r6": {
+      "cases": 54,
+      "candidate_recovered": 27,
+      "baseline_recovered": 0,
+      "rows": [
+        {
+          "case": "0-case-after_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "0-case-before_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 0,
+          "debit": 0,
+          "request_count": 1
+        },
+        {
+          "case": "0-case-late_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "0-market-after_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 1
+        },
+        {
+          "case": "0-market-before_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 0,
+          "debit": 0,
+          "request_count": 1
+        },
+        {
+          "case": "0-market-late_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 1
+        },
+        {
+          "case": "0-store-after_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "0-store-before_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 0,
+          "debit": 0,
+          "request_count": 1
+        },
+        {
+          "case": "0-store-late_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "1-case-after_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "1-case-before_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 0,
+          "debit": 0,
+          "request_count": 1
+        },
+        {
+          "case": "1-case-late_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "1-market-after_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 1
+        },
+        {
+          "case": "1-market-before_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 0,
+          "debit": 0,
+          "request_count": 1
+        },
+        {
+          "case": "1-market-late_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 1
+        },
+        {
+          "case": "1-store-after_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "1-store-before_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 0,
+          "debit": 0,
+          "request_count": 1
+        },
+        {
+          "case": "1-store-late_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "2-case-after_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "2-case-before_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 0,
+          "debit": 0,
+          "request_count": 1
+        },
+        {
+          "case": "2-case-late_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "2-market-after_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 1
+        },
+        {
+          "case": "2-market-before_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 0,
+          "debit": 0,
+          "request_count": 1
+        },
+        {
+          "case": "2-market-late_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 1
+        },
+        {
+          "case": "2-store-after_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "2-store-before_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 0,
+          "debit": 0,
+          "request_count": 1
+        },
+        {
+          "case": "2-store-late_commit",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "0-case-after_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 2
+        },
+        {
+          "case": "0-case-before_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 2
+        },
+        {
+          "case": "0-case-late_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 3
+        },
+        {
+          "case": "0-market-after_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 2
+        },
+        {
+          "case": "0-market-before_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 2
+        },
+        {
+          "case": "0-market-late_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 3
+        },
+        {
+          "case": "0-store-after_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 2
+        },
+        {
+          "case": "0-store-before_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 2
+        },
+        {
+          "case": "0-store-late_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 3
+        },
+        {
+          "case": "1-case-after_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 2
+        },
+        {
+          "case": "1-case-before_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 2
+        },
+        {
+          "case": "1-case-late_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 3
+        },
+        {
+          "case": "1-market-after_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 2
+        },
+        {
+          "case": "1-market-before_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 2
+        },
+        {
+          "case": "1-market-late_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 3
+        },
+        {
+          "case": "1-store-after_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 2
+        },
+        {
+          "case": "1-store-before_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 2
+        },
+        {
+          "case": "1-store-late_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 3
+        },
+        {
+          "case": "2-case-after_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 2
+        },
+        {
+          "case": "2-case-before_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 2
+        },
+        {
+          "case": "2-case-late_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 3
+        },
+        {
+          "case": "2-market-after_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 2
+        },
+        {
+          "case": "2-market-before_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 2
+        },
+        {
+          "case": "2-market-late_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 3
+        },
+        {
+          "case": "2-store-after_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 2
+        },
+        {
+          "case": "2-store-before_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 2
+        },
+        {
+          "case": "2-store-late_commit",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 3
+        }
+      ]
+    },
+    "campaign-r7": {
+      "cases": 18,
+      "candidate_recovered": 9,
+      "baseline_recovered": 0,
+      "rows": [
+        {
+          "case": "0-case-recovery_kill",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "0-market-recovery_kill",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 1
+        },
+        {
+          "case": "0-store-recovery_kill",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "1-case-recovery_kill",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "1-market-recovery_kill",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 1
+        },
+        {
+          "case": "1-store-recovery_kill",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "2-case-recovery_kill",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "2-market-recovery_kill",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 1
+        },
+        {
+          "case": "2-store-recovery_kill",
+          "label": "baseline",
+          "recovered": false,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 1
+        },
+        {
+          "case": "0-case-recovery_kill",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 3
+        },
+        {
+          "case": "0-market-recovery_kill",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 3
+        },
+        {
+          "case": "0-store-recovery_kill",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 3
+        },
+        {
+          "case": "1-case-recovery_kill",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 3
+        },
+        {
+          "case": "1-market-recovery_kill",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 3
+        },
+        {
+          "case": "1-store-recovery_kill",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 3
+        },
+        {
+          "case": "2-case-recovery_kill",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 3
+        },
+        {
+          "case": "2-market-recovery_kill",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 10000000,
+          "request_count": 3
+        },
+        {
+          "case": "2-store-recovery_kill",
+          "label": "candidate",
+          "recovered": true,
+          "mutations": 1,
+          "debit": 100,
+          "request_count": 3
+        }
+      ]
+    }
+  }
+}

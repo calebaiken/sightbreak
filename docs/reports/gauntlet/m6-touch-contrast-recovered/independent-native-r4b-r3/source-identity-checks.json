@@ -1,0 +1,99 @@
+{
+  "kind": "READ_ONLY_SOURCE_IDENTITY_ONLY",
+  "time_utc": "2026-10-23T09:46:11.254482+00:00",
+  "handoff": "b9bd7e62c70d3f5a061c4177ede6c73c21dc9d35",
+  "source": "108d1cdc6cf471daa7390298c234bb1c087ae865",
+  "preregistration_commit": "86c2c9b3",
+  "checks": [
+    {
+      "name": "before_runtime_absence",
+      "pass": true,
+      "observation": {
+        "future_raw_absent": true,
+        "future_archive_absent": true,
+        "future_native_report_absent": true,
+        "engine_invocations": 0
+      }
+    },
+    {
+      "name": "freeze",
+      "pass": true,
+      "observation": {
+        "files": 24,
+        "freeze_sha256": "4282c67c984b1840ca43158b16c0ecb03f4254d01e5cb300478682cc8adbe921"
+      }
+    },
+    {
+      "name": "product_helper_analyzer",
+      "pass": true,
+      "observation": {
+        "product_sha256": "e0b7caeef4a2b8f7e176438be4bfd02af2e90da1b253ee2f88c1501ea3f246c9",
+        "game_changed_paths": [
+          "game/scripts/ui/touch_controls.gd"
+        ],
+        "helper_outside_paint_program_equal": true,
+        "analyzer_unchanged": true
+      }
+    },
+    {
+      "name": "new_and_old_stages",
+      "pass": true,
+      "observation": [
+        {
+          "name": "baseline",
+          "source": "a52022169241df9ff662039547a375e1c46ac1c5",
+          "manifest_sha256": "8769df11adb16daefd652d6694b2917cf4ecd95db59e77bccfb99cc5a651788f",
+          "paths": 327,
+          "original_git_paths": 323,
+          "unique_uids": 138,
+          "preimport_cache_absent": true,
+          "old_r2_paths_unchanged": 327
+        },
+        {
+          "name": "candidate",
+          "source": "108d1cdc6cf471daa7390298c234bb1c087ae865",
+          "manifest_sha256": "0c20422fbe00cad2179f02e7244fdbdb41c78bbf42b9f548cb4b89d3082383cc",
+          "paths": 327,
+          "original_git_paths": 323,
+          "unique_uids": 138,
+          "preimport_cache_absent": true,
+          "old_r2_paths_unchanged": 327
+        }
+      ]
+    },
+    {
+      "name": "recipe",
+      "pass": true,
+      "observation": {
+        "packet_files": 8,
+        "controller_only_three_freeze_literals": true,
+        "archive_only_report_source_identities": true,
+        "inline_snippets_syntax_checked_only": 3,
+        "whole_operation_hard_bound": false
+      }
+    },
+    {
+      "name": "old_r2_raw_preservation",
+      "pass": true,
+      "observation": {
+        "verified_files": 628,
+        "verified_bytes": 10619634,
+        "pngs": 0,
+        "acquisition_complete": false,
+        "archive_not_reaudited": true
+      }
+    },
+    {
+      "name": "after_runtime_absence",
+      "pass": true,
+      "observation": {
+        "future_raw_absent": true,
+        "future_archive_absent": true,
+        "future_native_report_absent": true,
+        "engine_invocations": 0
+      }
+    }
+  ],
+  "pass": true,
+  "wall_seconds": 2.6789821720012696
+}

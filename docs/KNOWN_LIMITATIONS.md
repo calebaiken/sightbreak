@@ -1,0 +1,102 @@
+# Known limitations
+
+## Desktop playability — 2026-10-21
+
+0.3.3-dev/build 6 corrects desktop touchscreen classification, held-input focus
+recovery and role/phase objective guidance. The [playability report](reports/DESKTOP_PLAYABILITY_REPORT.md)
+records source-bound Windows/Linux stock matches, objective and earned-save
+restart evidence, extracted packages and every remaining failed gate. Source
+fixtures simulate capabilities; physical touchscreen/controller input is unverified.
+
+Complete Windows offline automation and repeated objective qualification remain
+open. Hosted renderer contention can delay native observation/OCR; the historical
+network reload cause remains unresolved. A controlled trial reproduces its gate:
+2.333 observed simulation seconds take9.464 wall seconds, with completion observed
+0.795s after the unchanged timeout. The underlying host component and a shared
+historical cause remain unproven. Windows final plant/defuse/full-match scenarios
+pass separately; its offline flow still fails OCR lookup of a visibly present
+LEAVE MATCH button. Exact sources and failed gates are retained in the report. Intel
+macOS game startup still times out although official minimal 2D/3D controls work.
+Apple Silicon startup passes; macOS complete gameplay remains unverified. Neither
+virtual graphics nor cross-export proves physical GPU compatibility or frame pacing.
+
+Human full matches, high DPI/window modes, Wayland, controller-only UX, mobile
+hardware/Xcode compilation, signing/notarization, production security and every
+applicable 8.5 quality gate remain open. No new V3/bot/art integration, Steam SDK,
+authentication, paid economy or upload is included. Prediction/live rewind and
+offline/account economy boundaries retain their existing constraints. Sections
+below preserve older milestones, including defects since corrected.
+
+## Desktop continuation — 2026-10-20
+
+Native exports and desktop input/settings changes are development work, not Steam
+or commercial release acceptance. Native versus inspection-only results must be
+read from the [current desktop QA evidence](reports/DESKTOP_ALPHA_REPORT.md), not
+older scores below. Linux offline/restart and Windows native network-input checks
+pass; Windows first-attempt reload completion timed out before an unchanged-source
+retry passed. Root cause remains unresolved. macOS15 Apple Silicon startup passes;
+Intel graphical startup times out, and earlier macOS14 ARM ANGLE aborts remain
+retained. Both architectures still need complete gameplay qualification.
+Touchscreen-equipped desktops inherit automatic touch-HUD classification and
+suppressed mouse capture; this P1 input-selection defect needs correction and a
+native touchscreen test. Signing/notarization, physical
+GPU/frame pacing, controller-only UX, mixed-platform multiplayer and Steam Deck
+certification remain open. Current Steamworks documentation retrieval was blocked
+by host policy/OAuth; the [readiness plan](STEAM_RELEASE_READINESS.md) distinguishes
+retrieved Godot sources from official Steam review links. No Steam SDK integration
+or live upload is implemented. V3 #18–#21, new bot/art inputs and production
+security remain separately gated; prediction and live rewind remain disabled.
+
+## Combined preview update — 2026-10-14
+
+The isolated combined branch includes PR1=98ff57c, PR2=64ec598 and Codex PR3–8=89c0e9. See [integration report](reports/COMBINED_INTEGRATION_REPORT.md) for exact source/build identities and evidence. Full maintained47-group matrix passes; new custom-HUD adversarial tests and full-capacity close-loss reconnect fail. Unicode feed clipping is fixed; older references below are historical. Default rig works, static fallback projection is defective, and the independent weapon/arms visual slice scores5.5/10 (not the historical whole-game8.1 rubric). Device performance, physical touch, Xcode and production Internet security remain unverified. Next priority: owner corrections for HUD/fallback, a separate bounded reconnect fix with hostile account/capacity tests, then refreshed combined verification. Prediction stays opt-in, live rewind disabled, earned-only economy unchanged.
+
+## Historical record (superseded where noted above)
+
+SIGHTBREAK is a native development implementation. The full product described in [SPECIFICATION.md](SPECIFICATION.md) is not complete, and no milestone has earned the required independent 8.5/10 acceptance across all applicable categories. See the [0.3 independent QA review](reports/QA-0.3.md) and [historical review](reports/QA.md) for actual passing checks, reproduced defects and unverified gates.
+
+## Competitive engineering status
+
+The Codex stacked branches implement recipient snapshot authorization, remote interpolation, opt-in prediction, bounded lifecycle/admission and process-crash result recovery. These supersede the historical M-4/M-6/M-9/L-4 gaps below within their documented development scope. See [current QA](reports/CODEX_NETWORK_QA.md).
+
+Current blockers/limits: Claude PR1 still clips Unicode kill-feed rows in this environment; prediction remains opt-in (~0.4–0.6m p95 ack divergence in the recorded real-map fixture); ENet remains unencrypted; opaque-core visibility is conservative and modified clients can retain/infer legitimate information. Durable results cannot bypass15-minute new-result freshness after long outages. Hit history is disabled diagnostics only and needs possession-generation invalidation before live rewind. Short process simulations are not a long-term memory soak, ten physical phones or mobile GPU evidence. No applicable category is awarded8.5 solely from unit passes.
+
+## Current 0.3 release blockers
+
+- **Visual target remains open: 8.1/10.** The independent seven-part native-image rubric remains below the requested 8.5. Architectural detail, HUD hierarchy and cosmetic framing improve, but broad surfaces/lighting, simplified operator/weapon forms, animation breadth and spherical smoke cores still limit commercial polish.
+- **Device and human play gates remain open.** No physical Android/iPhone touch, FPS, frame pacing, thermal/battery or sustained memory session is certified. Native software-render observations and signed-format APK inspection cannot replace these measurements. Human gunplay enjoyment, sound quality and competitive balance need playtesting.
+- **Production online gates remain open.** Ten-human earning journeys, encrypted public game transport, abuse/load/security review and operational hardening remain incomplete.
+- **Independent audit branch (`claude/independent-audit-visual-v04`).** [CLAUDE_AUDIT_0.3](audits/CLAUDE_AUDIT_0.3.md) re-scored the 0.3 baseline (visual 6.6, not 8.1) and the follow-up [CLAUDE_REVIEW_0.4](audits/CLAUDE_REVIEW_0.4.md) records what that branch fixed and what remains. The spherical smoke core was replaced with a lobed, rim-softened cloud whose concealment radius shrinks with its visuals; the new cloud probably adds more frame time than the old core (repeated software-render probes; both presets share the core) and has no device measurement. Still open from that audit: snapshots broadcast every actor's state to every client (M-4), no snapshot interpolation buffer or client prediction (M-6), rejected/idle ENet peers are not disconnected (M-9), the input gate drops a newer packet within 12 ms (L-4), one inactive participant voids every reward (L-7), crouch squashes the whole operator model (L-8), and the body hit volume is the 0.3 movement capsule rather than the drawn limbs (review R-3). Builds with different network protocols now refuse each other before any gameplay RPC; an unmodified 0.3.0 client cannot show that message and keeps retrying (docs/network.md). Whether to keep H-2's halved headshot area and the hittable crouched helmet crown is an open design decision (audits/CODEX_REVIEW_RESPONSE.md). Display-name sanitising (unchanged since 0.3) cuts at 24 code points without an ellipsis and turns zero-width joiners into spaces, which splits family emoji and some Persian/Indic spellings.
+- **Fixed during this milestone:** floating rooftop equipment, occluded/mirrored signs, mixed-index mesh batching that hid the knife blade, blurred small item framing and oversized/default touch overlaps were corrected with native visual review and targeted regressions. The earlier shared-sky mitigation remains active; final renderer evidence is in the 0.3 QA report.
+
+## Major product boundaries
+
+- **The authenticated online earning bridge is a development feature.** Guest LAN sessions remain practice only. An optional account server consumes short-lived, server-scoped, single-use economy tickets and waits for ten authenticated identities; trusted result submission checks duration/activity and excludes sessions with disconnects. Ticket/account/transaction boundaries have automated evidence, but a complete ten-human match earning real account Credits remains unverified. Do not present that end-to-end journey as accepted or internet-ready.
+- **Offline training is separate.** Local XP/Credits are not authoritative and never become online inventory, currency or trade value. Numeric save/reload and match-summary defects found during review were corrected and independently retested; see QA-001/QA-004.
+- **Physical mobile release remains unverified.** Android export/signature evidence, if recorded in build docs, is not physical play or FPS certification. An unsigned Xcode project can be exported from Linux, but no Xcode compile, signed IPA, installation or iPhone validation has been performed. iOS still requires macOS/Xcode, an actual development team, signing and device testing.
+- **Progression features are partial.** Daily-first-match and level bonuses are calculated by the backend, but daily/weekly challenges, achievements, challenge menus/definitions, full career aggregates, account discovery and moderation are not implemented.
+- **Cosmetic breadth and loadouts are partial.** Four collections have six rifle-skin definitions each, plus cases and keys. There are no owned knife skins, gloves, stickers, charms or character accessories. The 0.3 armory includes an explicitly unowned original knife inspection reference; it is not a case reward, tradable item or implemented melee gameplay. A saved authoritative rifle cosmetic slot and local first-person material application are implemented; transfer clears the old owner’s equipped slot. Broader weapon slots, other cosmetic types and replicated cosmetic presentation to other players remain incomplete.
+- **Case presentation is partial.** Probabilities are displayed and the server commits one secure result before native reveal. The 0.3 native reveal uses an original hinged 3D hard case and lifts only the server-committed rifle, with rarity lighting, inspection, skip and reduced motion. An inspection-only knife reference has no ownership or reward value. Inspection and gameplay share collection/pattern/wear materials. Short landscape popup bounds and touch/mouse separation have synthetic coverage; physical-device visual polish, accessibility and frame-time behavior remain unverified. There is no invented near-miss mechanic.
+- **Marketplace/trade UX is initial.** Atomic backend transfers and reservations are implemented. The native marketplace's text filter covers names/rarities/collections, not complete per-weapon/finish/price filtering. Full transaction/item history/profile browsing UX, pagination and abandoned-trade expiry remain future work. Backend history exists for wallet/match records but is not a complete player activity interface.
+
+## Gameplay, networking and presentation
+
+- Map, weapons and characters are original native procedural geometry. The 0.3 work improves structural detail, surface response, chamfered weapons, articulated operators, bounded cosmetic effects and procedural animation/synthesized sound. Actual native comparisons are reviewed in the 0.3 QA report; full production character art, human animation/gunplay assessment and audio listening review remain incomplete.
+- Bots use waypoint navigation, sight/hearing, smooth aim alignment, short last-seen memory, cover decisions, safe reloads and a designated defuser. Independent natural full-match simulations reached halftime and one final result (including a 12-round 5–7 match); they do not establish enjoyable human opposition, balanced routes or recovery from every obstruction. Human competitive balance review is outstanding.
+- Mobile controls have synthetic multitouch coverage only. The touch layout save-routing defect was corrected and independently retested in QA-002. Safe-area coordinate conversion, full-button bounds, a movable joystick, deadzone, OS cancellation/focus cleanup and emulated-mouse separation have synthetic assertions. Landscape forms and scoreboards scroll and have bounds coverage at 1280×720, 1600×720, 960×720 and 1560×720. Physical notches/safe areas, text readability, gyroscope axes, simultaneous touch feel, controller mappings and actual background/resume still need real-device review. Broad settings/UI claims must not substitute for those checks.
+- A peer that completes the version handshake but never joins stays connected; Codex observed one still connected after 26 s. An idle-join timeout is part of the Phase D hardening work and is not implemented.
+- Kill-feed rows take the height of the face their text is drawn in. A system fallback face taller than the default font (Noto Sans CJK, for example) grows the clipped feed frame downward; it never shrinks below four Latin rows and never resizes anything else.
+- Multiplayer authority and two-client local reconnect/movement are tested. WAN latency/loss, ten-human soak, robust repeated outage recovery, full client movement prediction and bounded lag compensation are absent or unverified. Account binding does not encrypt ENet ticket/game transport or establish secure competitive internet deployment. A completed match rejects new admissions until existing players leave and pending reward submission completes, then resets to a fresh match/waiting lobby. This lifecycle has rule tests; repeated full human-session soak remains outstanding.
+- Early review runs emitted ObjectDB exit leak warnings in actor/bot harnesses. Cleanup corrections removed these in final independent validation; repeated real-session memory behavior still needs soak testing (QA-007).
+- **QA-012 mitigated in the project; upstream renderer defect remains:** independent standalone Godot 4.7.2 GLES3 reproduction isolates retiring a newly created procedural sky before its first rendered frame. Immediate retirement leaks two 349,524-byte texture allocations; waiting for the first rendered frame is clean. The project now shares one immutable preloaded sky, avoiding that lifetime path. Independent native demo and five menu/match cycles passed with scene weak references released and tracked texture allocations flat at 56,335,286 bytes in that run. See [diagnostic evidence](diagnostics/README.md). This is a verified local project mitigation, not an engine patch, real-GPU/mobile validation or indefinite memory-soak guarantee.
+- No representative device 60 FPS measurement, thermal/battery session, accessibility audit or production quality rating exists. A short Xvfb/llvmpipe software-render sample is recorded honestly in QA; it is not a mobile benchmark.
+
+## Economy and service deployment
+
+- The global PostgreSQL advisory transaction lock deliberately serializes mutations. Tests establish local transaction invariants, not production throughput. Rate checks no longer take that lock (one atomic upsert per check). `/market` filters in SQL, caps at 500 rows and is rate limited per address, but has no cursor pagination; other reads lack pagination/rate limits and rate buckets/session records need cleanup.
+- Development PostgreSQL uses an explicitly public loopback-only password and superuser role. Public deployment requires least-privilege credentials, TLS, secret management/rotation, request limits, protected server enrollment, operational monitoring and independently tested backup recovery. None of these is established by local fixtures.
+- Anti-farming controls validate basic duration, activity, ten unique IDs, overlap, replay and daily caps. They trust a privileged server; compromised server attestation can forge matches. This is not complete bot/AFK/anti-cheat protection.
+- For keyed purchases/openings, the native client retains an uncertain transaction in memory and retries the identical endpoint/body/key for the same account and server, blocking other mutations until resolved. Synthetic lost-response recovery and actual backend replay invariants pass. Pending receipts are not durable across sign-out/application exit, and unkeyed operations do not have the same receipt recovery UX. Backend replay safety does not close those lifecycle gaps.
+- Trusted result submission retries transport failures and HTTP 5xx up to three times with an identical UUID/payload. There is no durable result outbox for recovery after a server process crash; failed submissions require operator review.
+- Open trade reservations last until cancellation or settlement. No automatic expiration job or user recovery workflow for an unavailable/banned counterparty is implemented.
+- No production hosting, payment processor, IAP, real-money equivalence, redemption, cryptocurrency, cash withdrawal or external marketplace integration exists. Credits remain fictional gameplay currency.

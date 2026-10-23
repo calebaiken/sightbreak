@@ -1,0 +1,1023 @@
+{
+  "baseline_source": "6a0d8d5d85b4fb37943903886982f51b4ed230b0",
+  "candidate_source": "0a121357072228dd40e4dbea698bb1a5e47fea98",
+  "candidate_reader_sha256": "b47e15a12db8621a43ae888ef3824ceb87afbe7a70913c8a3bd56275862940b6",
+  "tesseract": "tesseract 5.5.0\n leptonica-1.84.1\n  libgif 5.2.2 : libjpeg 6b (libjpeg-turbo 2.1.5) : libpng 1.6.48 : libtiff 4.7.0 : zlib 1.3.1 : libwebp 1.5.0 : libopenjp2 2.5.3\n Found AVX2\n Found AVX\n Found FMA\n Found SSE4.1\n Found OpenMP 201511\n Found libarchive 3.7.4 zlib/1.3.1 liblzma/5.8.1 bz2lib/1.0.8 liblz4/1.10.0 libzstd/1.5.7\n Found libcurl/8.14.1 OpenSSL/3.5.7 zlib/1.3.1 brotli/1.1.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.2 libssh2/1.11.1 nghttp2/1.64.0 nghttp3/1.8.0 librtmp/2.3 OpenLDAP/2.6.10\n",
+  "scope": "unchanged Windows native screenshots replayed by local Linux Tesseract; no Windows rerun or full-flow acceptance",
+  "rows": [
+    {
+      "version": "baseline",
+      "capture": "02-offline-spawn",
+      "expected_ammo_reserve": [
+        15,
+        60
+      ],
+      "capture_sha256": "fc9f9bad294a68d909ae775464d0cade0294f57b8a95c4c6d97249b03b048908",
+      "ocr_commands": [
+        0,
+        2
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 60,
+        "status_ocr": "\u00a306 FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/60\nFRAG x1 SMOKE*1\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "candidate",
+      "capture": "02-offline-spawn",
+      "expected_ammo_reserve": [
+        15,
+        60
+      ],
+      "capture_sha256": "fc9f9bad294a68d909ae775464d0cade0294f57b8a95c4c6d97249b03b048908",
+      "ocr_commands": [
+        2,
+        4
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 60,
+        "status_ocr": "\u00a306 FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/60\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "baseline",
+      "capture": "04-move-aim",
+      "expected_ammo_reserve": [
+        15,
+        60
+      ],
+      "capture_sha256": "4887d53721369471586c4d1f405e54be4851e36876c9ddfd460e296fc065747e",
+      "ocr_commands": [
+        4,
+        6
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 60,
+        "status_ocr": "\u00a306 FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/60\nFRAG x1 SMOKE*1\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "candidate",
+      "capture": "04-move-aim",
+      "expected_ammo_reserve": [
+        15,
+        60
+      ],
+      "capture_sha256": "4887d53721369471586c4d1f405e54be4851e36876c9ddfd460e296fc065747e",
+      "ocr_commands": [
+        6,
+        8
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 60,
+        "status_ocr": "\u00a306 FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/60\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "baseline",
+      "capture": "05-after-fire",
+      "expected_ammo_reserve": [
+        14,
+        60
+      ],
+      "capture_sha256": "cb413da4a9a94d9ddd7c279de911ba5a48df7f3b6599e08e360aba1460a85583",
+      "ocr_commands": [
+        8,
+        10
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 14,
+        "reserve": 60,
+        "status_ocr": "BOG FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 14/60\nFRAG x1 SMOKE~1\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "candidate",
+      "capture": "05-after-fire",
+      "expected_ammo_reserve": [
+        14,
+        60
+      ],
+      "capture_sha256": "cb413da4a9a94d9ddd7c279de911ba5a48df7f3b6599e08e360aba1460a85583",
+      "ocr_commands": [
+        10,
+        12
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 14,
+        "reserve": 60,
+        "status_ocr": "BOG FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 14/60\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "baseline",
+      "capture": "06-after-reload",
+      "expected_ammo_reserve": [
+        15,
+        59
+      ],
+      "capture_sha256": "d98052922bc3ffc4da44b02857d002506004d1235408ecd0c18567db41850384",
+      "ocr_commands": [
+        12,
+        14
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 59,
+        "status_ocr": "BOG FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/59\nFRAG x1 SMOKE~1\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "candidate",
+      "capture": "06-after-reload",
+      "expected_ammo_reserve": [
+        15,
+        59
+      ],
+      "capture_sha256": "d98052922bc3ffc4da44b02857d002506004d1235408ecd0c18567db41850384",
+      "ocr_commands": [
+        14,
+        16
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 59,
+        "status_ocr": "BOG FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/59\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "baseline",
+      "capture": "06b-scoreboard",
+      "expected_ammo_reserve": [
+        15,
+        59
+      ],
+      "capture_sha256": "abc4e358937faac0e56b1bf41a97f84d781197ffc8b0b8bb99dc8eb3441b29a0",
+      "ocr_commands": [
+        16,
+        18
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 59,
+        "status_ocr": "BOG FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/59\nFRAG x1 SMOKE*1\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "candidate",
+      "capture": "06b-scoreboard",
+      "expected_ammo_reserve": [
+        15,
+        59
+      ],
+      "capture_sha256": "abc4e358937faac0e56b1bf41a97f84d781197ffc8b0b8bb99dc8eb3441b29a0",
+      "ocr_commands": [
+        18,
+        20
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 59,
+        "status_ocr": "BOG FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/59\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "baseline",
+      "capture": "06e-purchased-smg",
+      "expected_ammo_reserve": [
+        30,
+        120
+      ],
+      "capture_sha256": "73ee7edf8030441cd75be57bc914545a835555bdf53a1a77d72d11b7ad99492a",
+      "ocr_commands": [
+        20,
+        22
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 30,
+        "reserve": 120,
+        "status_ocr": "1609 FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SMG 30/120\nFRAG x1 SMOKE*t\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "candidate",
+      "capture": "06e-purchased-smg",
+      "expected_ammo_reserve": [
+        30,
+        120
+      ],
+      "capture_sha256": "73ee7edf8030441cd75be57bc914545a835555bdf53a1a77d72d11b7ad99492a",
+      "ocr_commands": [
+        22,
+        24
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 30,
+        "reserve": 120,
+        "status_ocr": "1609 FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SMG 30/120\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "baseline",
+      "capture": "06f-switched-sidearm",
+      "expected_ammo_reserve": [
+        15,
+        60
+      ],
+      "capture_sha256": "caaa5ae53e5b45312fd2d2a33ae3af2474b3045da6622d35d3b54f7d09b94967",
+      "ocr_commands": [
+        24,
+        26
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 60,
+        "status_ocr": "1609 FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/60\nFRAG x1 SMOKE*1\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "candidate",
+      "capture": "06f-switched-sidearm",
+      "expected_ammo_reserve": [
+        15,
+        60
+      ],
+      "capture_sha256": "caaa5ae53e5b45312fd2d2a33ae3af2474b3045da6622d35d3b54f7d09b94967",
+      "ocr_commands": [
+        26,
+        28
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 60,
+        "status_ocr": "1609 FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/60\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "baseline",
+      "capture": "06g-switched-primary",
+      "expected_ammo_reserve": [
+        30,
+        120
+      ],
+      "capture_sha256": "3b688a9afe23a0a8681cd7f08c7700a9f8bc7d40b86c107a6a03f4ceb2a5888c",
+      "ocr_commands": [
+        28,
+        30
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 30,
+        "reserve": 120,
+        "status_ocr": "1609 FUNDS\n100 - HEALTH \u00a9\n",
+        "ammo_ocr": "SMG 30/120\nFRAG x1 SMOKE*t\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "candidate",
+      "capture": "06g-switched-primary",
+      "expected_ammo_reserve": [
+        30,
+        120
+      ],
+      "capture_sha256": "3b688a9afe23a0a8681cd7f08c7700a9f8bc7d40b86c107a6a03f4ceb2a5888c",
+      "ocr_commands": [
+        30,
+        32
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 30,
+        "reserve": 120,
+        "status_ocr": "1609 FUNDS\n100 - HEALTH \u00a9\n",
+        "ammo_ocr": "SMG 30/120\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "baseline",
+      "capture": "07d-explicit-resume",
+      "expected_ammo_reserve": [
+        30,
+        120
+      ],
+      "capture_sha256": "6b524cec806b64e2de411bd2af7693b2fe773ae1206356f6baa6f8a692e67f51",
+      "ocr_commands": [
+        32,
+        34
+      ],
+      "error": "Rendered living-player/ammunition check failed: ('1609 FUNDS\\n100 - HEALTH\\n', ', Ee\\nNX FRAG =i SMOKEx1\\n')",
+      "passed": false
+    },
+    {
+      "version": "candidate",
+      "capture": "07d-explicit-resume",
+      "expected_ammo_reserve": [
+        30,
+        120
+      ],
+      "capture_sha256": "6b524cec806b64e2de411bd2af7693b2fe773ae1206356f6baa6f8a692e67f51",
+      "ocr_commands": [
+        34,
+        36
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 30,
+        "reserve": 120,
+        "status_ocr": "1609 FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SMG 30/120\n"
+      },
+      "passed": true
+    },
+    {
+      "version": "candidate",
+      "negative": "actual-menu",
+      "passed": true,
+      "error": "Rendered living-player/ammunition check failed: ('', 'DIN PLAY : NO REAL-MONEY PURCHASES\\n')"
+    },
+    {
+      "version": "candidate",
+      "negative": "actual-eliminated",
+      "passed": true,
+      "error": "Rendered living-player/ammunition check failed: ('2769 FUNDS\\nELIMINATED - SPECTATING\\n', 'SIDEARM 15/59\\n')"
+    },
+    {
+      "version": "candidate",
+      "negative": "removed-ammunition",
+      "passed": true,
+      "error": "Rendered living-player/ammunition check failed: ('1609 FUNDS\\n100 - HEALTH\\n', 're\\n')"
+    },
+    {
+      "version": "candidate",
+      "negative": "removed-health",
+      "passed": true,
+      "error": "Rendered living-player/ammunition check failed: ('', 'SMG 30/120\\n')"
+    }
+  ],
+  "commands": [
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "02-offline-spawn:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.2489401100010582,
+      "exit": 0,
+      "stdout": "\u00a306 FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "02-offline-spawn:(980, 625, 1280, 710)",
+      "elapsed_seconds": 0.7616521439995267,
+      "exit": 0,
+      "stdout": "SIDEARM 15/60\nFRAG x1 SMOKE*1\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "02-offline-spawn:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.6409591419997014,
+      "exit": 0,
+      "stdout": "\u00a306 FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "02-offline-spawn:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.7481506559997797,
+      "exit": 0,
+      "stdout": "SIDEARM 15/60\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "04-move-aim:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.7507918029987195,
+      "exit": 0,
+      "stdout": "\u00a306 FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "04-move-aim:(980, 625, 1280, 710)",
+      "elapsed_seconds": 0.7504959199995938,
+      "exit": 0,
+      "stdout": "SIDEARM 15/60\nFRAG x1 SMOKE*1\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "04-move-aim:(0, 630, 450, 720)",
+      "elapsed_seconds": 1.4831994569995004,
+      "exit": 0,
+      "stdout": "\u00a306 FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "04-move-aim:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.7061851959988417,
+      "exit": 0,
+      "stdout": "SIDEARM 15/60\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "05-after-fire:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.7225845100001607,
+      "exit": 0,
+      "stdout": "BOG FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "05-after-fire:(980, 625, 1280, 710)",
+      "elapsed_seconds": 0.7788408709984651,
+      "exit": 0,
+      "stdout": "SIDEARM 14/60\nFRAG x1 SMOKE~1\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "05-after-fire:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.7404811779997544,
+      "exit": 0,
+      "stdout": "BOG FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "05-after-fire:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.6791580460012483,
+      "exit": 0,
+      "stdout": "SIDEARM 14/60\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06-after-reload:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.712271882001005,
+      "exit": 0,
+      "stdout": "BOG FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06-after-reload:(980, 625, 1280, 710)",
+      "elapsed_seconds": 0.7578649949991814,
+      "exit": 0,
+      "stdout": "SIDEARM 15/59\nFRAG x1 SMOKE~1\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06-after-reload:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.6598546229997737,
+      "exit": 0,
+      "stdout": "BOG FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "06-after-reload:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.7910737250003876,
+      "exit": 0,
+      "stdout": "SIDEARM 15/59\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06b-scoreboard:(0, 630, 450, 720)",
+      "elapsed_seconds": 1.4775219350012776,
+      "exit": 0,
+      "stdout": "BOG FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06b-scoreboard:(980, 625, 1280, 710)",
+      "elapsed_seconds": 2.0740948530001333,
+      "exit": 0,
+      "stdout": "SIDEARM 15/59\nFRAG x1 SMOKE*1\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06b-scoreboard:(0, 630, 450, 720)",
+      "elapsed_seconds": 2.180626192001,
+      "exit": 0,
+      "stdout": "BOG FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "06b-scoreboard:(980, 648, 1280, 680)",
+      "elapsed_seconds": 2.532541411001148,
+      "exit": 0,
+      "stdout": "SIDEARM 15/59\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06e-purchased-smg:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.7211449679998623,
+      "exit": 0,
+      "stdout": "1609 FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06e-purchased-smg:(980, 625, 1280, 710)",
+      "elapsed_seconds": 0.7543221940013609,
+      "exit": 0,
+      "stdout": "SMG 30/120\nFRAG x1 SMOKE*t\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06e-purchased-smg:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.6944430830008059,
+      "exit": 0,
+      "stdout": "1609 FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "06e-purchased-smg:(980, 648, 1280, 680)",
+      "elapsed_seconds": 1.7211224269995,
+      "exit": 0,
+      "stdout": "SMG 30/120\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06f-switched-sidearm:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.7380051389991422,
+      "exit": 0,
+      "stdout": "1609 FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06f-switched-sidearm:(980, 625, 1280, 710)",
+      "elapsed_seconds": 0.757717850001427,
+      "exit": 0,
+      "stdout": "SIDEARM 15/60\nFRAG x1 SMOKE*1\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06f-switched-sidearm:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.766827295999974,
+      "exit": 0,
+      "stdout": "1609 FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "06f-switched-sidearm:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.7466521079986705,
+      "exit": 0,
+      "stdout": "SIDEARM 15/60\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06g-switched-primary:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.7081838009999046,
+      "exit": 0,
+      "stdout": "1609 FUNDS\n100 - HEALTH \u00a9\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06g-switched-primary:(980, 625, 1280, 710)",
+      "elapsed_seconds": 0.7177829239990388,
+      "exit": 0,
+      "stdout": "SMG 30/120\nFRAG x1 SMOKE*t\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06g-switched-primary:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.6787468700003956,
+      "exit": 0,
+      "stdout": "1609 FUNDS\n100 - HEALTH \u00a9\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "06g-switched-primary:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.7951518829995621,
+      "exit": 0,
+      "stdout": "SMG 30/120\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "07d-explicit-resume:(0, 630, 450, 720)",
+      "elapsed_seconds": 3.8145892859993182,
+      "exit": 0,
+      "stdout": "1609 FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "07d-explicit-resume:(980, 625, 1280, 710)",
+      "elapsed_seconds": 1.8327874210008304,
+      "exit": 0,
+      "stdout": ", Ee\nNX FRAG =i SMOKEx1\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "07d-explicit-resume:(0, 630, 450, 720)",
+      "elapsed_seconds": 1.763534398000047,
+      "exit": 0,
+      "stdout": "1609 FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "07d-explicit-resume:(980, 648, 1280, 680)",
+      "elapsed_seconds": 1.6051758260000497,
+      "exit": 0,
+      "stdout": "SMG 30/120\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "01-menu:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.11012362499968731,
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "01-menu:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.4161259520005842,
+      "exit": 0,
+      "stdout": "DIN PLAY : NO REAL-MONEY PURCHASES\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "06c-next-round:(0, 630, 450, 720)",
+      "elapsed_seconds": 1.1815906219999306,
+      "exit": 0,
+      "stdout": "2769 FUNDS\nELIMINATED - SPECTATING\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "06c-next-round:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.8619126330013387,
+      "exit": 0,
+      "stdout": "SIDEARM 15/59\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "removed-ammunition:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.7861590069987869,
+      "exit": 0,
+      "stdout": "1609 FUNDS\n100 - HEALTH\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "removed-ammunition:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.8892932329999894,
+      "exit": 0,
+      "stdout": "re\n",
+      "stderr": "Bottom=0, top=96, base=0, x=0\n\nTotal count=0\nMin=0.00 Really=0\nLower quartile=0.00\nMedian=0.00, ile(0.5)=0.00\nUpper quartile=0.00\nMax=0.00 Really=0\nRange=1\nMean= 0.00\nSD= 0.00\n"
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ],
+      "label": "removed-health:(0, 630, 450, 720)",
+      "elapsed_seconds": 0.10428528199918219,
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ],
+      "label": "removed-health:(980, 648, 1280, 680)",
+      "elapsed_seconds": 0.5094078700003593,
+      "exit": 0,
+      "stdout": "SMG 30/120\n",
+      "stderr": ""
+    }
+  ]
+}

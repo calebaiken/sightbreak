@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "description": "Command fields copied without modification from the archived original receipts. Raw per-process commands/PIDs and controller stdout are also in the archive.",
+  "commands": [
+    {
+      "original_path": "builds/mission-m1/plant-candidate-r1/results.json",
+      "field": "controller_command",
+      "value": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/verify_offline_match.py",
+        "--target",
+        "linux",
+        "--scenario",
+        "plant",
+        "--display",
+        ":181",
+        "--timeout",
+        "180",
+        "--output",
+        "builds/mission-m1/plant-candidate-r1"
+      ]
+    },
+    {
+      "original_path": "builds/mission-m1/plant-candidate-r2/results.json",
+      "field": "controller_command",
+      "value": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/verify_offline_match.py",
+        "--target",
+        "linux",
+        "--scenario",
+        "plant",
+        "--display",
+        ":181",
+        "--timeout",
+        "180",
+        "--output",
+        "builds/mission-m1/plant-candidate-r2"
+      ]
+    },
+    {
+      "original_path": "builds/mission-m1/defuse-candidate-r1/results.json",
+      "field": "controller_command",
+      "value": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/verify_offline_match.py",
+        "--target",
+        "linux",
+        "--scenario",
+        "defuse",
+        "--display",
+        ":182",
+        "--timeout",
+        "180",
+        "--output",
+        "builds/mission-m1/defuse-candidate-r1"
+      ]
+    },
+    {
+      "original_path": "builds/mission-m1/layout-candidate-r1/results.json",
+      "field": "controller_command",
+      "value": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/capture_desktop_layouts.py",
+        "--display-base",
+        "190",
+        "--case-timeout",
+        "120",
+        "--timeout",
+        "600",
+        "--touch-toggle",
+        "--output",
+        "builds/mission-m1/layout-candidate-r1"
+      ]
+    },
+    {
+      "original_path": "builds/mission-m1/candidate-build/linux/export-run.json.log",
+      "field": "commands",
+      "value": [
+        {
+          "command": [
+            "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+            "--path",
+            "/workspace/sightbreak-v1-execution/game",
+            "--headless",
+            "--editor",
+            "--import",
+            "--quit"
+          ],
+          "exit_code": 0,
+          "seconds": 3.2769050510014495
+        },
+        {
+          "command": [
+            "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+            "--path",
+            "/workspace/sightbreak-v1-execution/game",
+            "--headless",
+            "--export-debug",
+            "Linux",
+            "/workspace/sightbreak-v1-execution/builds/mission-m1/candidate-build/linux/sightbreak.x86_64"
+          ],
+          "exit_code": 0,
+          "seconds": 3.0747074199989584
+        }
+      ]
+    }
+  ],
+  "broad_validation_and_catalog": "Original combined stdout, per-suite logs and separate catalog success output are retained; those text files do not record their complete launching argv/environment, so none is invented here."
+}

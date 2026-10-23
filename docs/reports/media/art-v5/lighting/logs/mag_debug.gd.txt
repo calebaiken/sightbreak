@@ -1,0 +1,67 @@
+extends SceneTree
+## Renders the pulled magazine with its shader inputs shown as colour.
+const Actor = preload("res://scripts/gameplay/actor.gd")
+const Arena = preload("res://scripts/gameplay/arena.gd")
+const MODES := ["albedo", "ao", "roughness", "metallic", "world_normal_y", "facing"]
+func _initialize() -> void: _run.call_deferred()
+func _frame() -> Image:
+	for i in 3: await process_frame
+	await RenderingServer.frame_post_draw
+	return root.get_texture().get_image()
+func _run() -> void:
+	var out := OS.get_cmdline_user_args()[0].trim_prefix("--out=")
+	DirAccess.make_dir_recursive_absolute(out)
+	root.content_scale_size = Vector2i(1280, 720)
+	root.size = Vector2i(1280, 720)
+	var world := Node3D.new()
+	root.add_child(world)
+	world.add_child(Arena.new())
+	var actor := Actor.new()
+	actor.configure(1, 0, "Debug", true)
+	world.add_child(actor)
+	actor.reset_for_round(Vector3(0, 0.05, -19))
+	actor.credits = 5000
+	actor.buy_weapon("rifle")
+	actor._equip_blend = 0
+	actor.apply_cosmetic({})
+	actor.global_position = Vector3(0, 0.05, -19)
+	actor.yaw = PI - 0.08
+	actor.rotation.y = actor.yaw
+	actor.camera.rotation.x = -0.025
+	actor.reload_remaining = 2.25 * 0.5
+	actor.tick_visual(0.016)
+	var mag: MeshInstance3D = actor._magazine
+	print("magazine material: ", mag.material_override, " shader params fov=", mag.material_override.get_shader_parameter("viewmodel_fov"), " fill=", mag.material_override.get_shader_parameter("viewmodel_fill"), " scale=", mag.material_override.get_shader_parameter("viewmodel_fill_scale"))
+	print("magazine transform basis ", mag.global_transform.basis, " origin ", mag.global_transform.origin)
+	var lit := mag.material_override
+	var base := await _frame()
+	base.save_png(out.path_join("lit.png"))
+	var ROI := Rect2i(560, 380, 400, 340)
+	for mode in MODES.size():
+		var shader := Shader.new()
+		var expr: String = ["texture(albedo_texture, UV).rgb", "vec3(texture(orm_texture, UV).r)", "vec3(texture(orm_texture, UV).g)", "vec3(texture(orm_texture, UV).b)", "vec3(normalize((INV_VIEW_MATRIX * vec4(NORMAL, 0.0)).xyz).y * 0.5 + 0.5)", "vec3(clamp(dot(NORMAL, VIEW), 0.0, 1.0))"][mode]
+		shader.code = "shader_type spatial;\nrender_mode unshaded;\n" + SBViewmodelShading.UNIFORMS + "uniform sampler2D albedo_texture : source_color;\nuniform sampler2D orm_texture;\nvoid vertex() {\n" + SBViewmodelShading.PROJECT + "}\nvoid fragment() { ALBEDO = " + expr + "; }\n"
+		var material := ShaderMaterial.new()
+		material.shader = shader
+		material.set_shader_parameter("albedo_texture", load("res://assets/weapons/relay_ar/relay_ar_albedo.png"))
+		material.set_shader_parameter("orm_texture", load("res://assets/weapons/relay_ar/relay_ar_orm.png"))
+		SBViewmodelShading.enable(material)
+		mag.material_override = material
+		var image := await _frame()
+		mag.material_override = lit
+		image.save_png(out.path_join("%s.png" % MODES[mode]))
+		# Pixels the magazine covers: those that differ from the frame without it.
+		mag.visible = false
+		var hidden := await _frame()
+		mag.visible = true
+		var values: Array[float] = []
+		for y in range(ROI.position.y, ROI.end.y, 2):
+			for x in range(ROI.position.x, ROI.end.x, 2):
+				var p := base.get_pixel(x, y)
+				var q := hidden.get_pixel(x, y)
+				if absf(p.r - q.r) + absf(p.g - q.g) + absf(p.b - q.b) > 0.03:
+					values.append(image.get_pixel(x, y).r * 255.0)
+		values.sort()
+		if values.size() > 10:
+			print("%s over the magazine's %d pixels: median %.0f p10 %.0f p90 %.0f" % [MODES[mode], values.size() * 4, values[values.size() / 2], values[int(values.size() * 0.1)], values[int(values.size() * 0.9)]])
+	quit()

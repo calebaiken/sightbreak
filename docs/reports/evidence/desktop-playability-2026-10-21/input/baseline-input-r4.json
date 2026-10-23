@@ -1,0 +1,20 @@
+{
+  "command": [
+    "python3",
+    "scripts/toolchain.py",
+    "run",
+    "--audio-driver",
+    "Dummy",
+    "--accessibility",
+    "disabled",
+    "--accessibility-driver",
+    "dummy",
+    "--script",
+    "res://tests/input_mode_test.gd",
+    "--",
+    "--baseline-source=/workspace/playability-evidence/main-baseline.gd"
+  ],
+  "exit": 1,
+  "baseline_source": "82a03fcbf69f931e7eb91db7d566481b03745cf9",
+  "scope": "real graphical Godot, simulated capability and input; not physical touchscreen/controller"
+}

@@ -1,0 +1,70 @@
+{
+  "scope": "Independent health OCR source/capture controls, not a game fix or native gameplay rerun",
+  "candidate_checks": 9,
+  "candidate_failures": 0,
+  "raw_pngs_unchanged": true,
+  "preliminary_wrapper_exit_code": 1,
+  "baseline_expectation_mistakes": [
+    {
+      "case": "critical10-r9",
+      "actual_accepted": true,
+      "actual_health": 10
+    },
+    {
+      "case": "field-menu-negative",
+      "actual_accepted": true,
+      "actual_health": 100
+    }
+  ],
+  "baseline_scope": "Matched diagnostic observations, not required acceptance; original wrapper incorrectly predicted rejection for r9 critical and field-menu. Original results remain intact.",
+  "candidate_outputs": [
+    {
+      "case": "critical10-r10",
+      "accepted": true,
+      "health": 10
+    },
+    {
+      "case": "critical10-r9",
+      "accepted": true,
+      "health": 10
+    },
+    {
+      "case": "normal83",
+      "accepted": true,
+      "health": 83
+    },
+    {
+      "case": "menu-negative",
+      "accepted": false,
+      "health": null
+    },
+    {
+      "case": "field-settings-negative",
+      "accepted": false,
+      "health": null
+    },
+    {
+      "case": "field-menu-negative",
+      "accepted": false,
+      "health": null
+    },
+    {
+      "case": "dead-spectating-negative",
+      "accepted": false,
+      "health": null
+    },
+    {
+      "case": "blank-black-negative",
+      "accepted": false,
+      "health": null
+    },
+    {
+      "case": "blank-white-negative",
+      "accepted": false,
+      "health": null
+    }
+  ],
+  "baseline_source_sha256": "097220d1e5027d5e49b1e6804d35e41a0ef157e90462e43cd5f39da1ad13fcf6",
+  "candidate_source_sha256": "1c672df929ab8606bdfdf2241b55fa86e62bdb9edc02c8f9eb1f4cc626a44733",
+  "tesseract_version": "tesseract 5.5.0"
+}

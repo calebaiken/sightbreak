@@ -1,0 +1,1156 @@
+﻿2026-10-16T05:52:39.0971331Z Current runner version: '2.337.0'
+2026-10-16T05:52:39.0992234Z ##[group]Runner Image Provisioner
+2026-10-16T05:52:39.0992946Z Hosted Compute Agent
+2026-10-16T05:52:39.0993366Z Version: 20261012.601
+2026-10-16T05:52:39.0993836Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-16T05:52:39.0994375Z Build Date: 2026-10-12T17:48:21Z
+2026-10-16T05:52:39.0994823Z Worker ID: {ef2947a6-6793-4210-b73a-f45ed470a398}
+2026-10-16T05:52:39.0995292Z Region: southcentralus
+2026-10-16T05:52:39.0995666Z Cloud: Azure
+2026-10-16T05:52:39.0996023Z ##[endgroup]
+2026-10-16T05:52:39.0996926Z ##[group]Operating System
+2026-10-16T05:52:39.0997334Z Ubuntu
+2026-10-16T05:52:39.0997647Z 24.04.5
+2026-10-16T05:52:39.0998192Z LTS
+2026-10-16T05:52:39.0998567Z ##[endgroup]
+2026-10-16T05:52:39.0998971Z ##[group]Runner Image
+2026-10-16T05:52:39.0999405Z Image: ubuntu-24.04
+2026-10-16T05:52:39.0999756Z Version: 20261012.334.1
+2026-10-16T05:52:39.1000655Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-16T05:52:39.1001592Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-16T05:52:39.1002213Z ##[endgroup]
+2026-10-16T05:52:39.1002949Z ##[group]GITHUB_TOKEN Permissions
+2026-10-16T05:52:39.1004355Z Contents: read
+2026-10-16T05:52:39.1004702Z Metadata: read
+2026-10-16T05:52:39.1005111Z ##[endgroup]
+2026-10-16T05:52:39.1006641Z Secret source: Actions
+2026-10-16T05:52:39.1007288Z Cache mode: write
+2026-10-16T05:52:39.1007755Z Prepare workflow directory
+2026-10-16T05:52:39.1292116Z Prepare all required actions
+2026-10-16T05:52:39.1327041Z Getting action download info
+2026-10-16T05:52:39.3714083Z Download action repository 'actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683' (SHA:11bd71901bbe5b1630ceea73d27597364c9af683)
+2026-10-16T05:52:39.6444836Z Download action repository 'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2026-10-16T05:52:40.5343397Z Complete job name: native-packages
+2026-10-16T05:52:40.6060417Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2026-10-16T05:52:40.6061080Z with:
+2026-10-16T05:52:40.6061373Z   repository: calebaiken/sightbreak
+2026-10-16T05:52:40.6063708Z   token: ***
+2026-10-16T05:52:40.6063975Z   ssh-strict: true
+2026-10-16T05:52:40.6064252Z   ssh-user: git
+2026-10-16T05:52:40.6064545Z   persist-credentials: true
+2026-10-16T05:52:40.6064852Z   clean: true
+2026-10-16T05:52:40.6065133Z   sparse-checkout-cone-mode: true
+2026-10-16T05:52:40.6065464Z   fetch-depth: 1
+2026-10-16T05:52:40.6065737Z   fetch-tags: false
+2026-10-16T05:52:40.6066015Z   show-progress: true
+2026-10-16T05:52:40.6066295Z   lfs: false
+2026-10-16T05:52:40.6066571Z   submodules: false
+2026-10-16T05:52:40.6066868Z   set-safe-directory: true
+2026-10-16T05:52:40.6067343Z ##[endgroup]
+2026-10-16T05:52:40.6815856Z Syncing repository: calebaiken/sightbreak
+2026-10-16T05:52:40.6818123Z ##[group]Getting Git version info
+2026-10-16T05:52:40.6818935Z Working directory is '/home/runner/work/sightbreak/sightbreak'
+2026-10-16T05:52:40.6819752Z [command]/usr/bin/git version
+2026-10-16T05:52:40.6902427Z git version 2.55.0
+2026-10-16T05:52:40.6921585Z ##[endgroup]
+2026-10-16T05:52:40.6932668Z Temporarily overriding HOME='/home/runner/work/_temp/d3e9d5f9-68d2-4ad0-bc05-87514ca59ac3' before making global git config changes
+2026-10-16T05:52:40.6934113Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T05:52:40.6937007Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sightbreak/sightbreak
+2026-10-16T05:52:40.7682815Z Deleting the contents of '/home/runner/work/sightbreak/sightbreak'
+2026-10-16T05:52:40.7685860Z ##[group]Initializing the repository
+2026-10-16T05:52:40.7691055Z [command]/usr/bin/git init /home/runner/work/sightbreak/sightbreak
+2026-10-16T05:52:40.8579483Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-16T05:52:40.8581061Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-16T05:52:40.8582456Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-16T05:52:40.8583286Z hint: call:
+2026-10-16T05:52:40.8583702Z hint:
+2026-10-16T05:52:40.8584077Z hint: 	git config --global init.defaultBranch <name>
+2026-10-16T05:52:40.8584505Z hint:
+2026-10-16T05:52:40.8584873Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-16T05:52:40.8585494Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-16T05:52:40.8586029Z hint:
+2026-10-16T05:52:40.8586325Z hint: 	git branch -m <name>
+2026-10-16T05:52:40.8586632Z hint:
+2026-10-16T05:52:40.8587042Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-16T05:52:40.8587712Z Initialized empty Git repository in /home/runner/work/sightbreak/sightbreak/.git/
+2026-10-16T05:52:40.8589841Z [command]/usr/bin/git remote add origin https://github.com/calebaiken/sightbreak
+2026-10-16T05:52:40.8880454Z ##[endgroup]
+2026-10-16T05:52:40.8881092Z ##[group]Disabling automatic garbage collection
+2026-10-16T05:52:40.8883686Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-16T05:52:40.9481755Z ##[endgroup]
+2026-10-16T05:52:40.9482821Z ##[group]Setting up auth
+2026-10-16T05:52:40.9487813Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T05:52:40.9530256Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T05:52:40.9860841Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T05:52:40.9900252Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T05:52:41.0107293Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-16T05:52:41.0788767Z ##[endgroup]
+2026-10-16T05:52:41.0790035Z ##[group]Fetching the repository
+2026-10-16T05:52:41.0798706Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd:refs/remotes/origin/integration/sightbreak-three-agent-artifacts
+2026-10-16T05:52:47.4540057Z From https://github.com/calebaiken/sightbreak
+2026-10-16T05:52:47.4541883Z  * [new ref]         701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd -> origin/integration/sightbreak-three-agent-artifacts
+2026-10-16T05:52:47.4558175Z ##[endgroup]
+2026-10-16T05:52:47.4558658Z ##[group]Determining the checkout info
+2026-10-16T05:52:47.4559104Z ##[endgroup]
+2026-10-16T05:52:47.4559511Z [command]/usr/bin/git sparse-checkout disable
+2026-10-16T05:52:47.4649364Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-16T05:52:47.4685309Z ##[group]Checking out the ref
+2026-10-16T05:52:47.4690647Z [command]/usr/bin/git checkout --progress --force -B integration/sightbreak-three-agent-artifacts refs/remotes/origin/integration/sightbreak-three-agent-artifacts
+2026-10-16T05:52:47.9363668Z Switched to a new branch 'integration/sightbreak-three-agent-artifacts'
+2026-10-16T05:52:47.9366828Z branch 'integration/sightbreak-three-agent-artifacts' set up to track 'origin/integration/sightbreak-three-agent-artifacts'.
+2026-10-16T05:52:47.9431363Z ##[endgroup]
+2026-10-16T05:52:47.9499260Z [command]/usr/bin/git log -1 --format=%H
+2026-10-16T05:52:47.9519785Z 701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd
+2026-10-16T05:52:47.9710801Z ##[group]Run sudo apt-get update
+2026-10-16T05:52:47.9711104Z [36;1msudo apt-get update[0m
+2026-10-16T05:52:47.9711349Z [36;1msudo apt-get install -y libgl1 libvulkan1 xvfb ripgrep unzip openjdk-17-jdk[0m
+2026-10-16T05:52:47.9711595Z [36;1mscripts/setup.sh[0m
+2026-10-16T05:52:47.9711747Z [36;1mscripts/setup-android.sh[0m
+2026-10-16T05:52:47.9937581Z shell: /usr/bin/bash -e {0}
+2026-10-16T05:52:47.9937824Z ##[endgroup]
+2026-10-16T05:52:48.0693825Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-16T05:52:48.0959199Z Get:6 https://packages.microsoft.com/ubuntu/24.04/prod noble InRelease [3600 B]
+2026-10-16T05:52:48.1160203Z Hit:2 http://azure.archive.ubuntu.com/ubuntu noble InRelease
+2026-10-16T05:52:48.1170824Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
+2026-10-16T05:52:48.1231417Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
+2026-10-16T05:52:48.1257474Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble-security InRelease [126 kB]
+2026-10-16T05:52:48.1698568Z Get:7 https://packages.microsoft.com/ubuntu/24.04/prod noble/main arm64 Packages [523 kB]
+2026-10-16T05:52:48.1849385Z Get:8 https://packages.microsoft.com/ubuntu/24.04/prod noble/main amd64 Packages [581 kB]
+2026-10-16T05:52:48.1914067Z Get:9 https://packages.microsoft.com/ubuntu/24.04/prod noble/main armhf Packages [12.4 kB]
+2026-10-16T05:52:48.2595588Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1397 kB]
+2026-10-16T05:52:48.2654140Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble-updates/main Translation-en [308 kB]
+2026-10-16T05:52:48.2677098Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1704 kB]
+2026-10-16T05:52:48.2742481Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble-updates/universe Translation-en [342 kB]
+2026-10-16T05:52:48.2764955Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1805 kB]
+2026-10-16T05:52:48.2842057Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble-updates/restricted Translation-en [411 kB]
+2026-10-16T05:52:48.3858263Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 Packages [1144 kB]
+2026-10-16T05:52:48.3906975Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble-security/main Translation-en [231 kB]
+2026-10-16T05:52:48.3919894Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1222 kB]
+2026-10-16T05:52:48.3963759Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble-security/universe Translation-en [246 kB]
+2026-10-16T05:52:48.4420433Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1713 kB]
+2026-10-16T05:52:48.4482941Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble-security/restricted Translation-en [392 kB]
+2026-10-16T05:52:53.7375558Z Fetched 12.4 MB in 1s (11.6 MB/s)
+2026-10-16T05:52:54.3850905Z Reading package lists...
+2026-10-16T05:52:54.4106073Z Reading package lists...
+2026-10-16T05:52:54.6068345Z Building dependency tree...
+2026-10-16T05:52:54.6073119Z Reading state information...
+2026-10-16T05:52:54.7727644Z libgl1 is already the newest version (1.7.0-1build1).
+2026-10-16T05:52:54.7728192Z libgl1 set to manually installed.
+2026-10-16T05:52:54.7728432Z libvulkan1 is already the newest version (1.3.275.0-1build1).
+2026-10-16T05:52:54.7728674Z libvulkan1 set to manually installed.
+2026-10-16T05:52:54.7728857Z xvfb is already the newest version (2:21.1.12-1ubuntu1.8).
+2026-10-16T05:52:54.7729066Z unzip is already the newest version (6.0-28ubuntu4.1).
+2026-10-16T05:52:54.7729271Z The following additional packages will be installed:
+2026-10-16T05:52:54.7729707Z   ca-certificates-java libatk-wrapper-java libatk-wrapper-java-jni libgif7
+2026-10-16T05:52:54.7733121Z   libice-dev libpcsclite1 libpthread-stubs0-dev libsm-dev libx11-dev
+2026-10-16T05:52:54.7733507Z   libxau-dev libxcb-shape0 libxcb1-dev libxdmcp-dev libxt-dev libxv1
+2026-10-16T05:52:54.7737438Z   libxxf86dga1 openjdk-17-jdk-headless openjdk-17-jre openjdk-17-jre-headless
+2026-10-16T05:52:54.7737693Z   x11-utils x11proto-dev xorg-sgml-doctools xtrans-dev
+2026-10-16T05:52:54.7744023Z Suggested packages:
+2026-10-16T05:52:54.7744334Z   libice-doc pcscd libsm-doc libx11-doc libxcb-doc libxt-doc openjdk-17-demo
+2026-10-16T05:52:54.7744728Z   openjdk-17-source visualvm libnss-mdns fonts-ipafont-gothic
+2026-10-16T05:52:54.7745152Z   fonts-ipafont-mincho fonts-wqy-microhei | fonts-wqy-zenhei fonts-indic
+2026-10-16T05:52:54.7745359Z   mesa-utils
+2026-10-16T05:52:54.7745476Z Recommended packages:
+2026-10-16T05:52:54.7745597Z   luit
+2026-10-16T05:52:54.7998579Z The following NEW packages will be installed:
+2026-10-16T05:52:54.8000361Z   ca-certificates-java libatk-wrapper-java libatk-wrapper-java-jni libgif7
+2026-10-16T05:52:54.8003398Z   libice-dev libpcsclite1 libpthread-stubs0-dev libsm-dev libx11-dev
+2026-10-16T05:52:54.8003789Z   libxau-dev libxcb-shape0 libxcb1-dev libxdmcp-dev libxt-dev libxv1
+2026-10-16T05:52:54.8005284Z   libxxf86dga1 openjdk-17-jdk openjdk-17-jdk-headless openjdk-17-jre
+2026-10-16T05:52:54.8006965Z   openjdk-17-jre-headless ripgrep x11-utils x11proto-dev xorg-sgml-doctools
+2026-10-16T05:52:54.8007275Z   xtrans-dev
+2026-10-16T05:52:54.8175097Z 0 upgraded, 25 newly installed, 0 to remove and 44 not upgraded.
+2026-10-16T05:52:54.8175482Z Need to get 125 MB of archives.
+2026-10-16T05:52:54.8175724Z After this operation, 288 MB of additional disk space will be used.
+2026-10-16T05:52:54.8175960Z Get:1 file:/etc/apt/apt-mirrors.txt Mirrorlist [144 B]
+2026-10-16T05:52:54.9113714Z Get:2 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 ca-certificates-java all 20240118 [11.6 kB]
+2026-10-16T05:52:54.9404704Z Get:3 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxcb-shape0 amd64 1.15-1ubuntu2 [6100 B]
+2026-10-16T05:52:54.9689849Z Get:4 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxv1 amd64 2:1.0.11-1.1build1 [10.7 kB]
+2026-10-16T05:52:54.9978721Z Get:5 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxxf86dga1 amd64 2:1.1.5-1build1 [11.6 kB]
+2026-10-16T05:52:55.0269227Z Get:6 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 x11-utils amd64 7.7+6build2 [189 kB]
+2026-10-16T05:52:55.0564978Z Get:7 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libatk-wrapper-java all 0.40.0-3build2 [54.3 kB]
+2026-10-16T05:52:55.0853326Z Get:8 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libatk-wrapper-java-jni amd64 0.40.0-3build2 [46.4 kB]
+2026-10-16T05:52:55.1140438Z Get:9 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 libgif7 amd64 5.2.2-1ubuntu1.2 [35.6 kB]
+2026-10-16T05:52:55.1432465Z Get:10 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xorg-sgml-doctools all 1:1.11-1.1 [10.9 kB]
+2026-10-16T05:52:55.1719316Z Get:11 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 x11proto-dev all 2023.2-1 [602 kB]
+2026-10-16T05:52:55.2035353Z Get:12 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libice-dev amd64 2:1.0.10-1build3 [51.0 kB]
+2026-10-16T05:52:55.2322699Z Get:13 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libpcsclite1 amd64 2.0.3-1build1 [21.4 kB]
+2026-10-16T05:52:55.2611744Z Get:14 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libpthread-stubs0-dev amd64 0.4-1build3 [4746 B]
+2026-10-16T05:52:55.2900385Z Get:15 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libsm-dev amd64 2:1.2.3-1build3 [17.8 kB]
+2026-10-16T05:52:55.3187439Z Get:16 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxau-dev amd64 1:1.0.9-1build6 [9570 B]
+2026-10-16T05:52:55.3473798Z Get:17 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxdmcp-dev amd64 1:1.1.3-0ubuntu6 [26.5 kB]
+2026-10-16T05:52:55.3762237Z Get:18 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 xtrans-dev all 1.4.0-1 [68.9 kB]
+2026-10-16T05:52:55.4052170Z Get:19 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxcb1-dev amd64 1.15-1ubuntu2 [85.8 kB]
+2026-10-16T05:52:55.4781724Z Get:20 http://azure.archive.ubuntu.com/ubuntu noble-security/main amd64 libx11-dev amd64 2:1.8.7-1ubuntu0.1 [732 kB]
+2026-10-16T05:52:55.5102070Z Get:21 http://azure.archive.ubuntu.com/ubuntu noble/main amd64 libxt-dev amd64 1:1.2.1-1.2build1 [394 kB]
+2026-10-16T05:52:55.5406957Z Get:22 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 openjdk-17-jre-headless amd64 17.0.20.1+1-1~24.04 [48.1 MB]
+2026-10-16T05:52:56.2419938Z Get:23 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 openjdk-17-jre amd64 17.0.20.1+1-1~24.04 [234 kB]
+2026-10-16T05:52:56.2720255Z Get:24 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 openjdk-17-jdk-headless amd64 17.0.20.1+1-1~24.04 [71.6 MB]
+2026-10-16T05:52:57.2814518Z Get:25 http://azure.archive.ubuntu.com/ubuntu noble-updates/main amd64 openjdk-17-jdk amd64 17.0.20.1+1-1~24.04 [1538 kB]
+2026-10-16T05:52:57.3710178Z Get:26 http://azure.archive.ubuntu.com/ubuntu noble/universe amd64 ripgrep amd64 14.1.0-1 [1551 kB]
+2026-10-16T05:52:57.6774813Z Fetched 125 MB in 3s (48.7 MB/s)
+2026-10-16T05:52:57.8426578Z Selecting previously unselected package ca-certificates-java.
+2026-10-16T05:52:57.8788138Z (Reading database ... 
+2026-10-16T05:52:57.8788682Z (Reading database ... 5%
+2026-10-16T05:52:57.8788995Z (Reading database ... 10%
+2026-10-16T05:52:57.8789326Z (Reading database ... 15%
+2026-10-16T05:52:57.8789552Z (Reading database ... 20%
+2026-10-16T05:52:57.8789779Z (Reading database ... 25%
+2026-10-16T05:52:57.8789972Z (Reading database ... 30%
+2026-10-16T05:52:57.8790161Z (Reading database ... 35%
+2026-10-16T05:52:57.8790407Z (Reading database ... 40%
+2026-10-16T05:52:57.8790676Z (Reading database ... 45%
+2026-10-16T05:52:57.8790954Z (Reading database ... 50%
+2026-10-16T05:52:57.8828253Z (Reading database ... 55%
+2026-10-16T05:52:57.9638303Z (Reading database ... 60%
+2026-10-16T05:52:58.1702869Z (Reading database ... 65%
+2026-10-16T05:52:58.3735891Z (Reading database ... 70%
+2026-10-16T05:52:58.5587532Z (Reading database ... 75%
+2026-10-16T05:52:58.6859723Z (Reading database ... 80%
+2026-10-16T05:52:58.7735343Z (Reading database ... 85%
+2026-10-16T05:52:58.8862803Z (Reading database ... 90%
+2026-10-16T05:52:59.0645567Z (Reading database ... 95%
+2026-10-16T05:52:59.0645892Z (Reading database ... 100%
+2026-10-16T05:52:59.0646212Z (Reading database ... 203540 files and directories currently installed.)
+2026-10-16T05:52:59.0684812Z Preparing to unpack .../00-ca-certificates-java_20240118_all.deb ...
+2026-10-16T05:52:59.1444592Z Unpacking ca-certificates-java (20240118) ...
+2026-10-16T05:53:00.6814025Z Selecting previously unselected package libxcb-shape0:amd64.
+2026-10-16T05:53:00.6921426Z Preparing to unpack .../01-libxcb-shape0_1.15-1ubuntu2_amd64.deb ...
+2026-10-16T05:53:00.8226214Z Unpacking libxcb-shape0:amd64 (1.15-1ubuntu2) ...
+2026-10-16T05:53:00.8421955Z Selecting previously unselected package libxv1:amd64.
+2026-10-16T05:53:00.8525377Z Preparing to unpack .../02-libxv1_2%3a1.0.11-1.1build1_amd64.deb ...
+2026-10-16T05:53:00.8534142Z Unpacking libxv1:amd64 (2:1.0.11-1.1build1) ...
+2026-10-16T05:53:00.8736321Z Selecting previously unselected package libxxf86dga1:amd64.
+2026-10-16T05:53:00.8840634Z Preparing to unpack .../03-libxxf86dga1_2%3a1.1.5-1build1_amd64.deb ...
+2026-10-16T05:53:00.8850185Z Unpacking libxxf86dga1:amd64 (2:1.1.5-1build1) ...
+2026-10-16T05:53:00.9052418Z Selecting previously unselected package x11-utils.
+2026-10-16T05:53:00.9157563Z Preparing to unpack .../04-x11-utils_7.7+6build2_amd64.deb ...
+2026-10-16T05:53:00.9166364Z Unpacking x11-utils (7.7+6build2) ...
+2026-10-16T05:53:00.9484612Z Selecting previously unselected package libatk-wrapper-java.
+2026-10-16T05:53:00.9588439Z Preparing to unpack .../05-libatk-wrapper-java_0.40.0-3build2_all.deb ...
+2026-10-16T05:53:00.9596432Z Unpacking libatk-wrapper-java (0.40.0-3build2) ...
+2026-10-16T05:53:00.9888940Z Selecting previously unselected package libatk-wrapper-java-jni:amd64.
+2026-10-16T05:53:00.9991635Z Preparing to unpack .../06-libatk-wrapper-java-jni_0.40.0-3build2_amd64.deb ...
+2026-10-16T05:53:01.0000842Z Unpacking libatk-wrapper-java-jni:amd64 (0.40.0-3build2) ...
+2026-10-16T05:53:01.0197615Z Selecting previously unselected package libgif7:amd64.
+2026-10-16T05:53:01.0297559Z Preparing to unpack .../07-libgif7_5.2.2-1ubuntu1.2_amd64.deb ...
+2026-10-16T05:53:01.0307059Z Unpacking libgif7:amd64 (5.2.2-1ubuntu1.2) ...
+2026-10-16T05:53:01.0493054Z Selecting previously unselected package xorg-sgml-doctools.
+2026-10-16T05:53:01.0595364Z Preparing to unpack .../08-xorg-sgml-doctools_1%3a1.11-1.1_all.deb ...
+2026-10-16T05:53:01.0603348Z Unpacking xorg-sgml-doctools (1:1.11-1.1) ...
+2026-10-16T05:53:01.0819387Z Selecting previously unselected package x11proto-dev.
+2026-10-16T05:53:01.0928858Z Preparing to unpack .../09-x11proto-dev_2023.2-1_all.deb ...
+2026-10-16T05:53:01.0936481Z Unpacking x11proto-dev (2023.2-1) ...
+2026-10-16T05:53:01.1330598Z Selecting previously unselected package libice-dev:amd64.
+2026-10-16T05:53:01.1428532Z Preparing to unpack .../10-libice-dev_2%3a1.0.10-1build3_amd64.deb ...
+2026-10-16T05:53:01.1583898Z Unpacking libice-dev:amd64 (2:1.0.10-1build3) ...
+2026-10-16T05:53:01.1798185Z Selecting previously unselected package libpcsclite1:amd64.
+2026-10-16T05:53:01.1900653Z Preparing to unpack .../11-libpcsclite1_2.0.3-1build1_amd64.deb ...
+2026-10-16T05:53:01.1909058Z Unpacking libpcsclite1:amd64 (2.0.3-1build1) ...
+2026-10-16T05:53:01.2091349Z Selecting previously unselected package libpthread-stubs0-dev:amd64.
+2026-10-16T05:53:01.2191258Z Preparing to unpack .../12-libpthread-stubs0-dev_0.4-1build3_amd64.deb ...
+2026-10-16T05:53:01.2199829Z Unpacking libpthread-stubs0-dev:amd64 (0.4-1build3) ...
+2026-10-16T05:53:01.2385669Z Selecting previously unselected package libsm-dev:amd64.
+2026-10-16T05:53:01.2486768Z Preparing to unpack .../13-libsm-dev_2%3a1.2.3-1build3_amd64.deb ...
+2026-10-16T05:53:01.2495623Z Unpacking libsm-dev:amd64 (2:1.2.3-1build3) ...
+2026-10-16T05:53:01.2687121Z Selecting previously unselected package libxau-dev:amd64.
+2026-10-16T05:53:01.2785180Z Preparing to unpack .../14-libxau-dev_1%3a1.0.9-1build6_amd64.deb ...
+2026-10-16T05:53:01.2794743Z Unpacking libxau-dev:amd64 (1:1.0.9-1build6) ...
+2026-10-16T05:53:01.3023400Z Selecting previously unselected package libxdmcp-dev:amd64.
+2026-10-16T05:53:01.3122735Z Preparing to unpack .../15-libxdmcp-dev_1%3a1.1.3-0ubuntu6_amd64.deb ...
+2026-10-16T05:53:01.3183200Z Unpacking libxdmcp-dev:amd64 (1:1.1.3-0ubuntu6) ...
+2026-10-16T05:53:01.3356698Z Selecting previously unselected package xtrans-dev.
+2026-10-16T05:53:01.3459375Z Preparing to unpack .../16-xtrans-dev_1.4.0-1_all.deb ...
+2026-10-16T05:53:01.3467576Z Unpacking xtrans-dev (1.4.0-1) ...
+2026-10-16T05:53:01.3681449Z Selecting previously unselected package libxcb1-dev:amd64.
+2026-10-16T05:53:01.3784342Z Preparing to unpack .../17-libxcb1-dev_1.15-1ubuntu2_amd64.deb ...
+2026-10-16T05:53:01.3793269Z Unpacking libxcb1-dev:amd64 (1.15-1ubuntu2) ...
+2026-10-16T05:53:01.3996217Z Selecting previously unselected package libx11-dev:amd64.
+2026-10-16T05:53:01.4101773Z Preparing to unpack .../18-libx11-dev_2%3a1.8.7-1ubuntu0.1_amd64.deb ...
+2026-10-16T05:53:01.4109981Z Unpacking libx11-dev:amd64 (2:1.8.7-1ubuntu0.1) ...
+2026-10-16T05:53:01.4421753Z Selecting previously unselected package libxt-dev:amd64.
+2026-10-16T05:53:01.4525052Z Preparing to unpack .../19-libxt-dev_1%3a1.2.1-1.2build1_amd64.deb ...
+2026-10-16T05:53:01.4532383Z Unpacking libxt-dev:amd64 (1:1.2.1-1.2build1) ...
+2026-10-16T05:53:01.5177068Z Selecting previously unselected package openjdk-17-jre-headless:amd64.
+2026-10-16T05:53:01.5276850Z Preparing to unpack .../20-openjdk-17-jre-headless_17.0.20.1+1-1~24.04_amd64.deb ...
+2026-10-16T05:53:01.5284907Z Unpacking openjdk-17-jre-headless:amd64 (17.0.20.1+1-1~24.04) ...
+2026-10-16T05:53:03.1218789Z Selecting previously unselected package openjdk-17-jre:amd64.
+2026-10-16T05:53:03.1323851Z Preparing to unpack .../21-openjdk-17-jre_17.0.20.1+1-1~24.04_amd64.deb ...
+2026-10-16T05:53:03.1331809Z Unpacking openjdk-17-jre:amd64 (17.0.20.1+1-1~24.04) ...
+2026-10-16T05:53:03.2101522Z Selecting previously unselected package openjdk-17-jdk-headless:amd64.
+2026-10-16T05:53:03.2202056Z Preparing to unpack .../22-openjdk-17-jdk-headless_17.0.20.1+1-1~24.04_amd64.deb ...
+2026-10-16T05:53:03.2234512Z Unpacking openjdk-17-jdk-headless:amd64 (17.0.20.1+1-1~24.04) ...
+2026-10-16T05:53:03.7318860Z Selecting previously unselected package openjdk-17-jdk:amd64.
+2026-10-16T05:53:03.7416946Z Preparing to unpack .../23-openjdk-17-jdk_17.0.20.1+1-1~24.04_amd64.deb ...
+2026-10-16T05:53:03.7423108Z Unpacking openjdk-17-jdk:amd64 (17.0.20.1+1-1~24.04) ...
+2026-10-16T05:53:03.7645908Z Selecting previously unselected package ripgrep.
+2026-10-16T05:53:03.7742998Z Preparing to unpack .../24-ripgrep_14.1.0-1_amd64.deb ...
+2026-10-16T05:53:03.7749044Z Unpacking ripgrep (14.1.0-1) ...
+2026-10-16T05:53:03.8435917Z Setting up libxcb-shape0:amd64 (1.15-1ubuntu2) ...
+2026-10-16T05:53:03.8453547Z Setting up libxxf86dga1:amd64 (2:1.1.5-1build1) ...
+2026-10-16T05:53:03.8466724Z Setting up libpthread-stubs0-dev:amd64 (0.4-1build3) ...
+2026-10-16T05:53:03.8481714Z Setting up xtrans-dev (1.4.0-1) ...
+2026-10-16T05:53:03.8495962Z Setting up libxv1:amd64 (2:1.0.11-1.1build1) ...
+2026-10-16T05:53:03.8510870Z Setting up libpcsclite1:amd64 (2.0.3-1build1) ...
+2026-10-16T05:53:03.8525160Z Setting up libgif7:amd64 (5.2.2-1ubuntu1.2) ...
+2026-10-16T05:53:03.8539657Z Setting up ripgrep (14.1.0-1) ...
+2026-10-16T05:53:03.8553711Z Setting up x11-utils (7.7+6build2) ...
+2026-10-16T05:53:03.8619112Z Setting up xorg-sgml-doctools (1:1.11-1.1) ...
+2026-10-16T05:53:03.8632840Z Setting up libatk-wrapper-java (0.40.0-3build2) ...
+2026-10-16T05:53:03.8647474Z Setting up ca-certificates-java (20240118) ...
+2026-10-16T05:53:05.4720840Z Adding debian:ACCVRAIZ1.pem
+2026-10-16T05:53:05.4740900Z Adding debian:AC_RAIZ_FNMT-RCM.pem
+2026-10-16T05:53:05.5225247Z Adding debian:AC_RAIZ_FNMT-RCM_SERVIDORES_SEGUROS.pem
+2026-10-16T05:53:05.5242399Z Adding debian:ANF_Secure_Server_Root_CA.pem
+2026-10-16T05:53:05.5258788Z Adding debian:Actalis_Authentication_Root_CA.pem
+2026-10-16T05:53:05.5268983Z Adding debian:Amazon_Root_CA_1.pem
+2026-10-16T05:53:05.5284893Z Adding debian:Amazon_Root_CA_2.pem
+2026-10-16T05:53:05.5293981Z Adding debian:Amazon_Root_CA_3.pem
+2026-10-16T05:53:05.5301853Z Adding debian:Amazon_Root_CA_4.pem
+2026-10-16T05:53:05.5312878Z Adding debian:Atos_TrustedRoot_2011.pem
+2026-10-16T05:53:05.5321280Z Adding debian:Atos_TrustedRoot_Root_CA_ECC_TLS_2021.pem
+2026-10-16T05:53:05.5337403Z Adding debian:Atos_TrustedRoot_Root_CA_RSA_TLS_2021.pem
+2026-10-16T05:53:05.5355977Z Adding debian:Autoridad_de_Certificacion_Firmaprofesional_CIF_A62634068.pem
+2026-10-16T05:53:05.5372313Z Adding debian:BJCA_Global_Root_CA1.pem
+2026-10-16T05:53:05.5382002Z Adding debian:BJCA_Global_Root_CA2.pem
+2026-10-16T05:53:05.5557950Z Adding debian:Buypass_Class_2_Root_CA.pem
+2026-10-16T05:53:05.5575051Z Adding debian:Buypass_Class_3_Root_CA.pem
+2026-10-16T05:53:05.5592169Z Adding debian:CA_Disig_Root_R2.pem
+2026-10-16T05:53:05.5610057Z Adding debian:CFCA_EV_ROOT.pem
+2026-10-16T05:53:05.5621507Z Adding debian:COMODO_ECC_Certification_Authority.pem
+2026-10-16T05:53:05.5637732Z Adding debian:COMODO_RSA_Certification_Authority.pem
+2026-10-16T05:53:05.5646342Z Adding debian:Certainly_Root_E1.pem
+2026-10-16T05:53:05.5665550Z Adding debian:Certainly_Root_R1.pem
+2026-10-16T05:53:05.5684768Z Adding debian:Certigna_Root_CA.pem
+2026-10-16T05:53:05.5695327Z Adding debian:Certum_EC-384_CA.pem
+2026-10-16T05:53:05.5706690Z Adding debian:Certum_Trusted_Network_CA.pem
+2026-10-16T05:53:05.5722306Z Adding debian:Certum_Trusted_Network_CA_2.pem
+2026-10-16T05:53:05.5736916Z Adding debian:Certum_Trusted_Root_CA.pem
+2026-10-16T05:53:05.5746505Z Adding debian:D-TRUST_BR_Root_CA_1_2020.pem
+2026-10-16T05:53:05.5761890Z Adding debian:D-TRUST_BR_Root_CA_2_2023.pem
+2026-10-16T05:53:05.5771462Z Adding debian:D-TRUST_EV_Root_CA_1_2020.pem
+2026-10-16T05:53:05.5788423Z Adding debian:D-TRUST_EV_Root_CA_2_2023.pem
+2026-10-16T05:53:05.5800981Z Adding debian:D-TRUST_Root_Class_3_CA_2_2009.pem
+2026-10-16T05:53:05.5814106Z Adding debian:D-TRUST_Root_Class_3_CA_2_EV_2009.pem
+2026-10-16T05:53:05.5826142Z Adding debian:DigiCert_Assured_ID_Root_G2.pem
+2026-10-16T05:53:05.5834363Z Adding debian:DigiCert_Assured_ID_Root_G3.pem
+2026-10-16T05:53:05.5845616Z Adding debian:DigiCert_Global_Root_G2.pem
+2026-10-16T05:53:05.5854217Z Adding debian:DigiCert_Global_Root_G3.pem
+2026-10-16T05:53:05.5861235Z Adding debian:DigiCert_TLS_ECC_P384_Root_G5.pem
+2026-10-16T05:53:05.5877801Z Adding debian:DigiCert_TLS_RSA4096_Root_G5.pem
+2026-10-16T05:53:05.5904340Z Adding debian:DigiCert_Trusted_Root_G4.pem
+2026-10-16T05:53:05.5920229Z Adding debian:Entrust_Root_Certification_Authority.pem
+2026-10-16T05:53:05.5935722Z Adding debian:GDCA_TrustAUTH_R5_ROOT.pem
+2026-10-16T05:53:05.5951111Z Adding debian:GTS_Root_R1.pem
+2026-10-16T05:53:05.5959190Z Adding debian:GTS_Root_R3.pem
+2026-10-16T05:53:05.5965913Z Adding debian:GTS_Root_R4.pem
+2026-10-16T05:53:05.5972663Z Adding debian:GlobalSign_ECC_Root_CA_-_R4.pem
+2026-10-16T05:53:05.5980171Z Adding debian:GlobalSign_ECC_Root_CA_-_R5.pem
+2026-10-16T05:53:05.5992098Z Adding debian:GlobalSign_Root_CA_-_R3.pem
+2026-10-16T05:53:05.6005690Z Adding debian:GlobalSign_Root_CA_-_R6.pem
+2026-10-16T05:53:05.6012466Z Adding debian:GlobalSign_Root_E46.pem
+2026-10-16T05:53:05.6026224Z Adding debian:GlobalSign_Root_R46.pem
+2026-10-16T05:53:05.6038195Z Adding debian:Go_Daddy_Root_Certificate_Authority_-_G2.pem
+2026-10-16T05:53:05.6045753Z Adding debian:HARICA_TLS_ECC_Root_CA_2021.pem
+2026-10-16T05:53:05.6059483Z Adding debian:HARICA_TLS_RSA_Root_CA_2021.pem
+2026-10-16T05:53:05.6068248Z Adding debian:Hellenic_Academic_and_Research_Institutions_ECC_RootCA_2015.pem
+2026-10-16T05:53:05.6085174Z Adding debian:Hellenic_Academic_and_Research_Institutions_RootCA_2015.pem
+2026-10-16T05:53:05.6099794Z Adding debian:HiPKI_Root_CA_-_G1.pem
+2026-10-16T05:53:05.6113636Z Adding debian:Hongkong_Post_Root_CA_3.pem
+2026-10-16T05:53:05.6126959Z Adding debian:ISRG_Root_X1.pem
+2026-10-16T05:53:05.6133675Z Adding debian:ISRG_Root_X2.pem
+2026-10-16T05:53:05.6147551Z Adding debian:IdenTrust_Commercial_Root_CA_1.pem
+2026-10-16T05:53:05.6162464Z Adding debian:IdenTrust_Public_Sector_Root_CA_1.pem
+2026-10-16T05:53:05.6177740Z Adding debian:Izenpe.com.pem
+2026-10-16T05:53:05.6189917Z Adding debian:Microsec_e-Szigno_Root_CA_2009.pem
+2026-10-16T05:53:05.6196926Z Adding debian:Microsoft_ECC_Root_Certificate_Authority_2017.pem
+2026-10-16T05:53:05.6212481Z Adding debian:Microsoft_RSA_Root_Certificate_Authority_2017.pem
+2026-10-16T05:53:05.6228873Z Adding debian:NAVER_Global_Root_Certification_Authority.pem
+2026-10-16T05:53:05.6250876Z Adding debian:NetLock_Arany_=Class_Gold=_Főtanúsítvány.pem
+2026-10-16T05:53:05.6258893Z Adding debian:OISTE_Server_Root_ECC_G1.pem
+2026-10-16T05:53:05.6275643Z Adding debian:OISTE_Server_Root_RSA_G1.pem
+2026-10-16T05:53:05.6285886Z Adding debian:OISTE_WISeKey_Global_Root_GB_CA.pem
+2026-10-16T05:53:05.6295415Z Adding debian:OISTE_WISeKey_Global_Root_GC_CA.pem
+2026-10-16T05:53:05.6310168Z Adding debian:QuoVadis_Root_CA_1_G3.pem
+2026-10-16T05:53:05.6328694Z Adding debian:QuoVadis_Root_CA_2_G3.pem
+2026-10-16T05:53:05.6346774Z Adding debian:QuoVadis_Root_CA_3_G3.pem
+2026-10-16T05:53:05.6352200Z Adding debian:SSL.com_EV_Root_Certification_Authority_ECC.pem
+2026-10-16T05:53:05.6366887Z Adding debian:SSL.com_EV_Root_Certification_Authority_RSA_R2.pem
+2026-10-16T05:53:05.6374990Z Adding debian:SSL.com_Root_Certification_Authority_ECC.pem
+2026-10-16T05:53:05.6394011Z Adding debian:SSL.com_Root_Certification_Authority_RSA.pem
+2026-10-16T05:53:05.6401187Z Adding debian:SSL.com_TLS_ECC_Root_CA_2022.pem
+2026-10-16T05:53:05.6414729Z Adding debian:SSL.com_TLS_RSA_Root_CA_2022.pem
+2026-10-16T05:53:05.6424698Z Adding debian:SZAFIR_ROOT_CA2.pem
+2026-10-16T05:53:05.6432306Z Adding debian:Sectigo_Public_Server_Authentication_Root_E46.pem
+2026-10-16T05:53:05.6445885Z Adding debian:Sectigo_Public_Server_Authentication_Root_R46.pem
+2026-10-16T05:53:05.6456898Z Adding debian:SecureSign_Root_CA12.pem
+2026-10-16T05:53:05.6468701Z Adding debian:SecureSign_Root_CA14.pem
+2026-10-16T05:53:05.6475852Z Adding debian:SecureSign_Root_CA15.pem
+2026-10-16T05:53:05.6482055Z Adding debian:Security_Communication_ECC_RootCA1.pem
+2026-10-16T05:53:05.6491615Z Adding debian:Security_Communication_RootCA2.pem
+2026-10-16T05:53:05.6502989Z Adding debian:Starfield_Root_Certificate_Authority_-_G2.pem
+2026-10-16T05:53:05.6511883Z Adding debian:Starfield_Services_Root_Certificate_Authority_-_G2.pem
+2026-10-16T05:53:05.6526762Z Adding debian:SwissSign_RSA_TLS_Root_CA_2022_-_1.pem
+2026-10-16T05:53:05.6536589Z Adding debian:T-TeleSec_GlobalRoot_Class_2.pem
+2026-10-16T05:53:05.6547477Z Adding debian:T-TeleSec_GlobalRoot_Class_3.pem
+2026-10-16T05:53:05.6560409Z Adding debian:TUBITAK_Kamu_SM_SSL_Kok_Sertifikasi_-_Surum_1.pem
+2026-10-16T05:53:05.6575520Z Adding debian:TWCA_CYBER_Root_CA.pem
+2026-10-16T05:53:05.6589165Z Adding debian:TWCA_Global_Root_CA.pem
+2026-10-16T05:53:05.6597922Z Adding debian:TWCA_Root_Certification_Authority.pem
+2026-10-16T05:53:05.6604619Z Adding debian:Telekom_Security_TLS_ECC_Root_2020.pem
+2026-10-16T05:53:05.6619735Z Adding debian:Telekom_Security_TLS_RSA_Root_2023.pem
+2026-10-16T05:53:05.6633682Z Adding debian:Telia_Root_CA_v2.pem
+2026-10-16T05:53:05.6651112Z Adding debian:TrustAsia_Global_Root_CA_G3.pem
+2026-10-16T05:53:05.6658321Z Adding debian:TrustAsia_Global_Root_CA_G4.pem
+2026-10-16T05:53:05.6676321Z Adding debian:TrustAsia_TLS_ECC_Root_CA.pem
+2026-10-16T05:53:05.6682080Z Adding debian:TrustAsia_TLS_RSA_Root_CA.pem
+2026-10-16T05:53:05.6695354Z Adding debian:TunTrust_Root_CA.pem
+2026-10-16T05:53:05.6717179Z Adding debian:UCA_Extended_Validation_Root.pem
+2026-10-16T05:53:05.6722599Z Adding debian:UCA_Global_G2_Root.pem
+2026-10-16T05:53:05.6730020Z Adding debian:USERTrust_ECC_Certification_Authority.pem
+2026-10-16T05:53:05.6744484Z Adding debian:USERTrust_RSA_Certification_Authority.pem
+2026-10-16T05:53:05.6758265Z Adding debian:certSIGN_Root_CA_G2.pem
+2026-10-16T05:53:05.6765350Z Adding debian:e-Szigno_Root_CA_2017.pem
+2026-10-16T05:53:05.6775389Z Adding debian:e-Szigno_TLS_Root_CA_2023.pem
+2026-10-16T05:53:05.6789418Z Adding debian:ePKI_Root_Certification_Authority.pem
+2026-10-16T05:53:05.6795426Z Adding debian:emSign_ECC_Root_CA_-_C3.pem
+2026-10-16T05:53:05.6801571Z Adding debian:emSign_ECC_Root_CA_-_G3.pem
+2026-10-16T05:53:05.6810025Z Adding debian:emSign_Root_CA_-_C1.pem
+2026-10-16T05:53:05.6819623Z Adding debian:emSign_Root_CA_-_G1.pem
+2026-10-16T05:53:05.6825604Z Adding debian:vTrus_ECC_Root_CA.pem
+2026-10-16T05:53:05.6838787Z Adding debian:vTrus_Root_CA.pem
+2026-10-16T05:53:05.7585605Z done.
+2026-10-16T05:53:05.7612065Z Setting up libatk-wrapper-java-jni:amd64 (0.40.0-3build2) ...
+2026-10-16T05:53:05.7693344Z Setting up openjdk-17-jre-headless:amd64 (17.0.20.1+1-1~24.04) ...
+2026-10-16T05:53:05.9331782Z Processing triggers for libc-bin (2.39-0ubuntu8.9) ...
+2026-10-16T05:53:06.1282796Z Processing triggers for man-db (2.12.0-4build2) ...
+2026-10-16T05:53:06.1303925Z Not building database; man-db/auto-update is not 'true'.
+2026-10-16T05:53:06.1327431Z Processing triggers for sgml-base (1.31) ...
+2026-10-16T05:53:06.1418152Z Setting up x11proto-dev (2023.2-1) ...
+2026-10-16T05:53:06.1437312Z Setting up libxau-dev:amd64 (1:1.0.9-1build6) ...
+2026-10-16T05:53:06.1456266Z Processing triggers for hicolor-icon-theme (0.17-2) ...
+2026-10-16T05:53:06.9593590Z Setting up libice-dev:amd64 (2:1.0.10-1build3) ...
+2026-10-16T05:53:06.9608472Z Setting up libsm-dev:amd64 (2:1.2.3-1build3) ...
+2026-10-16T05:53:06.9638510Z Setting up libxdmcp-dev:amd64 (1:1.1.3-0ubuntu6) ...
+2026-10-16T05:53:06.9657901Z Setting up libxcb1-dev:amd64 (1.15-1ubuntu2) ...
+2026-10-16T05:53:06.9682926Z Setting up libx11-dev:amd64 (2:1.8.7-1ubuntu0.1) ...
+2026-10-16T05:53:06.9706152Z Setting up libxt-dev:amd64 (1:1.2.1-1.2build1) ...
+2026-10-16T05:53:06.9754075Z Processing triggers for ca-certificates-java (20240118) ...
+2026-10-16T05:53:07.0056094Z done.
+2026-10-16T05:53:07.0093560Z Setting up openjdk-17-jre:amd64 (17.0.20.1+1-1~24.04) ...
+2026-10-16T05:53:07.0143609Z Setting up openjdk-17-jdk-headless:amd64 (17.0.20.1+1-1~24.04) ...
+2026-10-16T05:53:07.1028921Z Setting up openjdk-17-jdk:amd64 (17.0.20.1+1-1~24.04) ...
+2026-10-16T05:53:07.6005115Z 
+2026-10-16T05:53:07.6005890Z Running kernel seems to be up-to-date.
+2026-10-16T05:53:07.6007550Z 
+2026-10-16T05:53:07.6007797Z No services need to be restarted.
+2026-10-16T05:53:07.6008123Z 
+2026-10-16T05:53:07.6008215Z No containers need to be restarted.
+2026-10-16T05:53:07.6008711Z 
+2026-10-16T05:53:07.6008822Z No user sessions are running outdated binaries.
+2026-10-16T05:53:07.6009005Z 
+2026-10-16T05:53:07.6009178Z No VM guests are running outdated hypervisor (qemu) binaries on this host.
+2026-10-16T05:53:08.7036654Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-10-16T05:53:08.7036982Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-10-16T05:53:08.7037219Z 
+2026-10-16T05:53:08.8898818Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-10-16T05:53:08.8899343Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-10-16T05:53:09.3848126Z 
+2026-10-16T05:53:09.3848943Z 100 74.2M  100 74.2M    0     0   108M      0 --:--:-- --:--:-- --:--:--  108M
+2026-10-16T05:53:09.4733985Z /home/runner/work/sightbreak/tools/godot-4.7.2/godot.zip.download: OK
+2026-10-16T05:53:10.2365971Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-10-16T05:53:10.2366305Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-10-16T05:53:10.2366516Z 
+2026-10-16T05:53:10.4081897Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-10-16T05:53:10.4082337Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-10-16T05:53:10.5399815Z 
+2026-10-16T05:53:11.5497164Z   0 1221M    0  763k    0     0  2514k      0  0:08:17 --:--:--  0:08:17 2514k
+2026-10-16T05:53:12.5452671Z  20 1221M   20  250M    0     0   190M      0  0:00:06  0:00:01  0:00:05  247M
+2026-10-16T05:53:13.5395039Z  41 1221M   41  510M    0     0   220M      0  0:00:05  0:00:02  0:00:03  254M
+2026-10-16T05:53:14.5395615Z  61 1221M   61  754M    0     0   228M      0  0:00:05  0:00:03  0:00:02  251M
+2026-10-16T05:53:15.3096294Z  82 1221M   82 1004M    0     0   233M      0  0:00:05  0:00:04  0:00:01  250M
+2026-10-16T05:53:15.3096768Z 100 1221M  100 1221M    0     0   240M      0  0:00:05  0:00:05 --:--:--  256M
+2026-10-16T05:53:16.4584667Z /home/runner/work/sightbreak/tools/godot-4.7.2/templates.tpz.download: OK
+2026-10-16T05:53:19.3873229Z 4.7.2.stable.official.ed1daf0bf
+2026-10-16T05:53:19.3900372Z Godot ready. Run scripts/godot.sh --editor or scripts/export.sh linux.
+2026-10-16T05:53:19.4006313Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-10-16T05:53:19.4006735Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-10-16T05:53:19.4006934Z 
+2026-10-16T05:53:19.5408138Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-10-16T05:53:20.0007313Z   0  157M    0  675k    0     0  4822k      0  0:00:33 --:--:--  0:00:33 4790k
+2026-10-16T05:53:20.0007674Z 100  157M  100  157M    0     0   261M      0 --:--:-- --:--:-- --:--:--  261M
+2026-10-16T05:53:20.0941202Z /home/runner/work/sightbreak/tools/android-commandline-19.zip.download: OK
+2026-10-16T05:53:20.5846582Z   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+2026-10-16T05:53:20.5847089Z                                  Dload  Upload   Total   Spent    Left  Speed
+2026-10-16T05:53:20.5847489Z 
+2026-10-16T05:53:20.8257633Z   0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+2026-10-16T05:53:20.8342699Z 100 8841k  100 8841k    0     0  35.8M      0 --:--:-- --:--:-- --:--:-- 35.8M
+2026-10-16T05:53:20.8343162Z /home/runner/work/sightbreak/tools/android-platform-tools-37.0.1.zip.download: OK
+2026-10-16T05:53:22.8447717Z Loading package information...                                                  
+2026-10-16T05:53:22.9046944Z Loading local repository...                                                     
+2026-10-16T05:53:22.9049993Z [                                       ] 3% Loading local repository...        
+2026-10-16T05:53:23.8076021Z [                                       ] 3% Fetch remote repository...         
+2026-10-16T05:53:24.0939378Z [=                                      ] 3% Fetch remote repository...         
+2026-10-16T05:53:24.1425430Z [=                                      ] 4% Fetch remote repository...         
+2026-10-16T05:53:24.1709868Z [=                                      ] 5% Fetch remote repository...         
+2026-10-16T05:53:24.2000857Z [==                                     ] 5% Fetch remote repository...         
+2026-10-16T05:53:24.2539772Z [==                                     ] 6% Fetch remote repository...         
+2026-10-16T05:53:24.3829234Z [==                                     ] 7% Fetch remote repository...         
+2026-10-16T05:53:24.3829879Z [==                                     ] 7% Computing updates...               
+2026-10-16T05:53:24.3919003Z [===                                    ] 8% Computing updates...               
+2026-10-16T05:53:24.3951791Z [===                                    ] 10% Computing updates...              
+2026-10-16T05:53:24.3952309Z [=======================================] 100% Computing updates...             
+2026-10-16T05:53:24.3952615Z 
+2026-10-16T05:53:24.7500314Z Generating 2,048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 10,000 days
+2026-10-16T05:53:24.7509251Z 	for: CN=Android Debug, O=Android, C=US
+2026-10-16T05:53:24.9202572Z Android SDK and debug signing ready. Run scripts/export.sh android.
+2026-10-16T05:53:24.9237591Z ##[group]Run scripts/export.sh linux
+2026-10-16T05:53:24.9237822Z [36;1mscripts/export.sh linux[0m
+2026-10-16T05:53:24.9238104Z [36;1mscripts/export.sh android[0m
+2026-10-16T05:53:24.9238253Z [36;1mscripts/export.sh ios[0m
+2026-10-16T05:53:24.9291587Z shell: /usr/bin/bash -e {0}
+2026-10-16T05:53:24.9291757Z ##[endgroup]
+2026-10-16T05:53:25.4702605Z Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+2026-10-16T05:53:25.5062375Z 
+2026-10-16T05:53:27.2702206Z [   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+2026-10-16T05:53:27.2702921Z [   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+2026-10-16T05:53:27.2713829Z [  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+2026-10-16T05:53:27.2819574Z [  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+2026-10-16T05:53:27.2861541Z [  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+2026-10-16T05:53:27.2864595Z [  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+2026-10-16T05:53:27.2865201Z [  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+2026-10-16T05:53:27.2865671Z [92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+2026-10-16T05:53:27.2865971Z [0m
+2026-10-16T05:53:27.4666764Z [   0% ] [90m[1mupdate_scripts_classes[22m | Started Registering global classes... (116 steps)[39m[0m
+2026-10-16T05:53:27.4667387Z [   0% ] [90m[1mupdate_scripts_classes[22m | SBActor[39m[0m
+2026-10-16T05:53:27.4667830Z [   0% ] [90m[1mupdate_scripts_classes[22m | RelayYard[39m[0m
+2026-10-16T05:53:27.4668382Z [   1% ] [90m[1mupdate_scripts_classes[22m | SBBotAI[39m[0m
+2026-10-16T05:53:27.4668810Z [   2% ] [90m[1mupdate_scripts_classes[22m | SBCombatEffects[39m[0m
+2026-10-16T05:53:27.4669277Z [   3% ] [90m[1mupdate_scripts_classes[22m | TacticalMatch[39m[0m
+2026-10-16T05:53:27.4669720Z [   4% ] [90m[1mupdate_scripts_classes[22m | SBReloadAudio[39m[0m
+2026-10-16T05:53:27.4670165Z [   5% ] [90m[1mupdate_scripts_classes[22m | SBReloadPhases[39m[0m
+2026-10-16T05:53:27.4670605Z [   5% ] [90m[1mupdate_scripts_classes[22m | SBUtility[39m[0m
+2026-10-16T05:53:27.4671055Z [   6% ] [90m[1mupdate_scripts_classes[22m | SBViewmodelShading[39m[0m
+2026-10-16T05:53:27.4671537Z [   7% ] [90m[1mupdate_scripts_classes[22m | SBWeapons[39m[0m
+2026-10-16T05:53:27.4671993Z [   8% ] [90m[1mupdate_scripts_classes[22m | SBWeaponModel[39m[0m
+2026-10-16T05:53:27.4672551Z [   9% ] [90m[1mupdate_scripts_classes[22m | SBEconomyBridge[39m[0m
+2026-10-16T05:53:27.4673352Z [  10% ] [90m[1mupdate_scripts_classes[22m | SBHitHistory[39m[0m
+2026-10-16T05:53:27.4673786Z [  11% ] [90m[1mupdate_scripts_classes[22m | SBInputGate[39m[0m
+2026-10-16T05:53:27.4674240Z [  11% ] [90m[1mupdate_scripts_classes[22m | SBInputStream[39m[0m
+2026-10-16T05:53:27.4674718Z [  12% ] [90m[1mupdate_scripts_classes[22m | SBMovementPrediction[39m[0m
+2026-10-16T05:53:27.4675192Z [  13% ] [90m[1mupdate_scripts_classes[22m | SBMovementStep[39m[0m
+2026-10-16T05:53:27.4675644Z [  14% ] [90m[1mupdate_scripts_classes[22m | SBPeerLifecycle[39m[0m
+2026-10-16T05:53:27.4676111Z [  15% ] [90m[1mupdate_scripts_classes[22m | SBReconnectPolicy[39m[0m
+2026-10-16T05:53:27.4676562Z [  16% ] [90m[1mupdate_scripts_classes[22m | SBResultOutbox[39m[0m
+2026-10-16T05:53:27.4677011Z [  17% ] [90m[1mupdate_scripts_classes[22m | SBSnapshotBuffer[39m[0m
+2026-10-16T05:53:27.4689184Z [  17% ] [90m[1mupdate_scripts_classes[22m | SBSnapshotSchema[39m[0m
+2026-10-16T05:53:27.4690919Z [  18% ] [90m[1mupdate_scripts_classes[22m | SBStatePrivacy[39m[0m
+2026-10-16T05:53:27.4691394Z [  19% ] [90m[1mupdate_scripts_classes[22m | CaseReveal[39m[0m
+2026-10-16T05:53:27.4691820Z [  20% ] [90m[1mupdate_scripts_classes[22m | ConfirmSheet[39m[0m
+2026-10-16T05:53:27.4692533Z [  21% ] [90m[1mupdate_scripts_classes[22m | CosmeticMaterial[39m[0m
+2026-10-16T05:53:27.4692953Z [  22% ] [90m[1mupdate_scripts_classes[22m | SBDesign[39m[0m
+2026-10-16T05:53:27.4693365Z [  23% ] [90m[1mupdate_scripts_classes[22m | DisplayModels[39m[0m
+2026-10-16T05:53:27.4693780Z [  23% ] [90m[1mupdate_scripts_classes[22m | EconomyAPI[39m[0m
+2026-10-16T05:53:27.4694185Z [  24% ] [90m[1mupdate_scripts_classes[22m | EconomyUI[39m[0m
+2026-10-16T05:53:27.4694601Z [  25% ] [90m[1mupdate_scripts_classes[22m | ItemInspector[39m[0m
+2026-10-16T05:53:27.4695021Z [  26% ] [90m[1mupdate_scripts_classes[22m | SBRadar[39m[0m
+2026-10-16T05:53:27.4695442Z [  27% ] [90m[1mupdate_scripts_classes[22m | DeviceSafeArea[39m[0m
+2026-10-16T05:53:27.4695882Z [  28% ] [90m[1mupdate_scripts_classes[22m | TacticalTouch[39m[0m
+2026-10-16T05:53:27.4696310Z [  29% ] [90m[1mupdate_scripts_classes[22m | SBWeaponGlyph[39m[0m
+2026-10-16T05:53:27.4696701Z [  29% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4697110Z [  30% ] [90m[1mupdate_scripts_classes[22m | OfflineProfile[39m[0m
+2026-10-16T05:53:27.4697505Z [  31% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4697856Z [  32% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4698383Z [  33% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4698727Z [  34% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4699071Z [  35% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4699460Z [  35% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4699806Z [  36% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4700156Z [  37% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4700504Z [  38% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4700850Z [  39% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4701196Z [  40% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4701542Z [  41% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4701893Z [  41% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4702241Z [  42% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4702587Z [  43% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4702930Z [  44% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4703272Z [  45% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4703619Z [  46% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4703969Z [  47% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4704494Z [  47% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4704840Z [  48% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4705184Z [  49% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4705532Z [  50% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4705887Z [  51% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4706258Z [  52% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4706615Z [  52% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4706973Z [  53% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4707325Z [  54% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4707673Z [  55% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4708139Z [  56% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4708498Z [  57% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4708853Z [  58% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4709204Z [  58% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4709551Z [  59% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4710051Z [  60% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4710401Z [  61% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4710749Z [  62% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4711092Z [  63% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4711435Z [  64% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4711776Z [  64% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4712120Z [  65% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4712466Z [  66% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4712820Z [  67% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4713172Z [  68% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4713526Z [  69% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4713884Z [  70% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4714247Z [  70% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4714612Z [  71% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4714970Z [  72% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4715316Z [  73% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4715668Z [  74% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4716016Z [  75% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4716362Z [  76% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4716703Z [  76% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4717053Z [  77% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4717399Z [  78% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4717748Z [  79% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4718232Z [  80% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4718578Z [  81% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4718934Z [  82% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4719284Z [  82% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4719647Z [  83% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4720010Z [  84% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4720360Z [  85% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4720714Z [  86% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4721068Z [  87% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4721560Z [  88% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4721902Z [  88% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4722245Z [  89% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4722592Z [  90% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4722938Z [  91% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4723278Z [  92% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4723627Z [  93% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4723965Z [  94% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4724305Z [  94% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4724645Z [  95% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4724996Z [  96% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4725345Z [  97% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4725701Z [  98% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+2026-10-16T05:53:27.4726059Z [92m[ DONE ][39m [1mupdate_scripts_classes[22m
+2026-10-16T05:53:27.4726336Z [0m
+2026-10-16T05:53:27.5240408Z [   0% ] [90m[1m_update_scan_actions[22m | Started Scanning actions... (22 steps)[39m[0m
+2026-10-16T05:53:27.5241081Z [   0% ] [90m[1m_update_scan_actions[22m | asphalt.png[39m[0m
+2026-10-16T05:53:27.5241616Z [   4% ] [90m[1m_update_scan_actions[22m | asphalt_normal.png[39m[0m
+2026-10-16T05:53:27.5242141Z [   8% ] [90m[1m_update_scan_actions[22m | asphalt_roughness.png[39m[0m
+2026-10-16T05:53:27.5260736Z [  13% ] [90m[1m_update_scan_actions[22m | concrete.png[39m[0m
+2026-10-16T05:53:27.5261464Z [  17% ] [90m[1m_update_scan_actions[22m | concrete_normal.png[39m[0m
+2026-10-16T05:53:27.5262106Z [  21% ] [90m[1m_update_scan_actions[22m | concrete_roughness.png[39m[0m
+2026-10-16T05:53:27.5262550Z [  26% ] [90m[1m_update_scan_actions[22m | painted_metal.png[39m[0m
+2026-10-16T05:53:27.5263026Z [  30% ] [90m[1m_update_scan_actions[22m | painted_metal_normal.png[39m[0m
+2026-10-16T05:53:27.5263507Z [  34% ] [90m[1m_update_scan_actions[22m | painted_metal_roughness.png[39m[0m
+2026-10-16T05:53:27.5263988Z [  39% ] [90m[1m_update_scan_actions[22m | relay_ar.glb[39m[0m
+2026-10-16T05:53:27.5264401Z [  43% ] [90m[1m_update_scan_actions[22m | relay_ar_albedo.png[39m[0m
+2026-10-16T05:53:27.5264817Z [  47% ] [90m[1m_update_scan_actions[22m | relay_ar_arms.glb[39m[0m
+2026-10-16T05:53:27.5265252Z [  52% ] [90m[1m_update_scan_actions[22m | relay_ar_arms_albedo.png[39m[0m
+2026-10-16T05:53:27.5265701Z [  56% ] [90m[1m_update_scan_actions[22m | relay_ar_arms_normal.png[39m[0m
+2026-10-16T05:53:27.5266144Z [  60% ] [90m[1m_update_scan_actions[22m | relay_ar_arms_orm.png[39m[0m
+2026-10-16T05:53:27.5266565Z [  65% ] [90m[1m_update_scan_actions[22m | relay_ar_hands.glb[39m[0m
+2026-10-16T05:53:27.5267014Z [  69% ] [90m[1m_update_scan_actions[22m | relay_ar_hands_albedo.png[39m[0m
+2026-10-16T05:53:27.5267471Z [  73% ] [90m[1m_update_scan_actions[22m | relay_ar_hands_normal.png[39m[0m
+2026-10-16T05:53:27.5267921Z [  78% ] [90m[1m_update_scan_actions[22m | relay_ar_hands_orm.png[39m[0m
+2026-10-16T05:53:27.5269341Z [  82% ] [90m[1m_update_scan_actions[22m | relay_ar_normal.png[39m[0m
+2026-10-16T05:53:27.5269771Z [  86% ] [90m[1m_update_scan_actions[22m | relay_ar_orm.png[39m[0m
+2026-10-16T05:53:27.5270156Z [  91% ] [90m[1m_update_scan_actions[22m | icon.svg[39m[0m
+2026-10-16T05:53:27.5270510Z [92m[ DONE ][39m [1m_update_scan_actions[22m
+2026-10-16T05:53:27.5270766Z [0m
+2026-10-16T05:53:27.5271088Z [   0% ] [90m[1mreimport[22m | Started (Re)Importing Assets (22 steps)[39m[0m
+2026-10-16T05:53:27.5271541Z [   0% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5271994Z [   4% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5272670Z [   8% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5273116Z [  13% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5273552Z [  17% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5273994Z [  21% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5274459Z [  26% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5274955Z [  30% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5275498Z [  34% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5276058Z [  39% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5276538Z [  43% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5276992Z [  47% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5277458Z [  52% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5277913Z [  56% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5278507Z [  60% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5279215Z [  65% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5279732Z [  69% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5281059Z [  73% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5282241Z [  78% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5283443Z [  82% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5284681Z [  86% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5285887Z [  91% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+2026-10-16T05:53:27.5286992Z [   0% ] [90m[1mreimport[22m | Executing pre-reimport operations...[39m[0m
+2026-10-16T05:53:27.5290029Z [   0% ] [90m[1mpreload_reimporting_scene[22m | Started Preparing scenes for reload (1 steps)[39m[0m
+2026-10-16T05:53:27.5290752Z [   0% ] [90m[1mpreload_reimporting_scene[22m | Analyzing scene [empty][39m[0m
+2026-10-16T05:53:27.5299363Z [  50% ] [90m[1mpreload_reimporting_scene[22m | Preparation done.[39m[0m
+2026-10-16T05:53:27.5299921Z [92m[ DONE ][39m [1mpreload_reimporting_scene[22m
+2026-10-16T05:53:27.5300323Z [0m
+2026-10-16T05:53:27.5300681Z [   0% ] [90m[1mreimport[22m | icon.svg[39m[0m
+2026-10-16T05:53:27.6506297Z [   4% ] [90m[1mreimport[22m | relay_ar_orm.png[39m[0m
+2026-10-16T05:53:27.6526639Z [   8% ] [90m[1mreimport[22m | relay_ar_normal.png[39m[0m
+2026-10-16T05:53:27.7580223Z [  13% ] [90m[1mreimport[22m | relay_ar_hands_orm.png[39m[0m
+2026-10-16T05:53:27.8673951Z [  17% ] [90m[1mreimport[22m | relay_ar_hands_normal.png[39m[0m
+2026-10-16T05:53:27.9789201Z [  21% ] [90m[1mreimport[22m | relay_ar_hands_albedo.png[39m[0m
+2026-10-16T05:53:28.1060657Z [  26% ] [90m[1mreimport[22m | relay_ar_arms_orm.png[39m[0m
+2026-10-16T05:53:28.2193746Z [  30% ] [90m[1mreimport[22m | relay_ar_arms_normal.png[39m[0m
+2026-10-16T05:53:28.2242172Z [  34% ] [90m[1mreimport[22m | relay_ar_arms_albedo.png[39m[0m
+2026-10-16T05:53:28.2268324Z [  39% ] [90m[1mreimport[22m | relay_ar_albedo.png[39m[0m
+2026-10-16T05:53:28.3377711Z [  43% ] [90m[1mreimport[22m | painted_metal_roughness.png[39m[0m
+2026-10-16T05:53:28.3409508Z [  47% ] [90m[1mreimport[22m | painted_metal_normal.png[39m[0m
+2026-10-16T05:53:28.4555753Z [  52% ] [90m[1mreimport[22m | painted_metal.png[39m[0m
+2026-10-16T05:53:28.4578872Z [  56% ] [90m[1mreimport[22m | concrete_roughness.png[39m[0m
+2026-10-16T05:53:28.5658485Z [  60% ] [90m[1mreimport[22m | concrete_normal.png[39m[0m
+2026-10-16T05:53:28.6859442Z [  65% ] [90m[1mreimport[22m | concrete.png[39m[0m
+2026-10-16T05:53:28.6868412Z [  69% ] [90m[1mreimport[22m | asphalt_roughness.png[39m[0m
+2026-10-16T05:53:28.6888685Z [  73% ] [90m[1mreimport[22m | asphalt_normal.png[39m[0m
+2026-10-16T05:53:28.8036175Z [  78% ] [90m[1mreimport[22m | asphalt.png[39m[0m
+2026-10-16T05:53:28.9240534Z [  82% ] [90m[1mreimport[22m | relay_ar.glb[39m[0m
+2026-10-16T05:53:28.9243554Z [   0% ] [90m[1mimport[22m | Started Import Scene (104 steps)[39m[0m
+2026-10-16T05:53:28.9244158Z [   0% ] [90m[1mimport[22m | Importing Scene...[39m[0m
+2026-10-16T05:53:29.0226404Z [   1% ] [90m[1mimport[22m | Running Custom Script...[39m[0m
+2026-10-16T05:53:29.0226711Z [  99% ] [90m[1mimport[22m | Saving...[39m[0m
+2026-10-16T05:53:29.0327729Z [92m[ DONE ][39m [1mimport[22m
+2026-10-16T05:53:29.0327963Z [0m
+2026-10-16T05:53:29.0462243Z [  86% ] [90m[1mreimport[22m | relay_ar_arms.glb[39m[0m
+2026-10-16T05:53:29.0464562Z [   0% ] [90m[1mimport[22m | Started Import Scene (104 steps)[39m[0m
+2026-10-16T05:53:29.0465024Z [   0% ] [90m[1mimport[22m | Importing Scene...[39m[0m
+2026-10-16T05:53:29.0717509Z [   1% ] [90m[1mimport[22m | Running Custom Script...[39m[0m
+2026-10-16T05:53:29.0717947Z [  99% ] [90m[1mimport[22m | Saving...[39m[0m
+2026-10-16T05:53:29.0759224Z [92m[ DONE ][39m [1mimport[22m
+2026-10-16T05:53:29.0759538Z [0m
+2026-10-16T05:53:29.0779701Z [  91% ] [90m[1mreimport[22m | relay_ar_hands.glb[39m[0m
+2026-10-16T05:53:29.0782021Z [   0% ] [90m[1mimport[22m | Started Import Scene (104 steps)[39m[0m
+2026-10-16T05:53:29.0782447Z [   0% ] [90m[1mimport[22m | Importing Scene...[39m[0m
+2026-10-16T05:53:29.1122452Z [   1% ] [90m[1mimport[22m | Running Custom Script...[39m[0m
+2026-10-16T05:53:29.1122892Z [  99% ] [90m[1mimport[22m | Saving...[39m[0m
+2026-10-16T05:53:29.1148969Z [92m[ DONE ][39m [1mimport[22m
+2026-10-16T05:53:29.1149263Z [0m
+2026-10-16T05:53:29.1167316Z [  95% ] [90m[1mreimport[22m | Finalizing Asset Import...[39m[0m
+2026-10-16T05:53:29.1172224Z [92m[ DONE ][39m [1mreimport[22m
+2026-10-16T05:53:29.1172463Z [0m
+2026-10-16T05:53:29.1172820Z [   0% ] [90m[1mreimport[22m | Started (Re)Importing Assets (22 steps)[39m[0m
+2026-10-16T05:53:29.1173269Z [   0% ] [90m[1mreimport[22m | Executing post-reimport operations...[39m[0m
+2026-10-16T05:53:29.1175660Z [92m[ DONE ][39m [1mreimport[22m
+2026-10-16T05:53:29.1176237Z [0m
+2026-10-16T05:53:29.1203218Z [   0% ] [90m[1mloading_editor_layout[22m | Started Loading editor (5 steps)[39m[0m
+2026-10-16T05:53:29.1203749Z [   0% ] [90m[1mloading_editor_layout[22m | Loading editor layout...[39m[0m
+2026-10-16T05:53:29.1204199Z [  16% ] [90m[1mloading_editor_layout[22m | Loading docks...[39m[0m
+2026-10-16T05:53:29.1204575Z [92m[ DONE ][39m [1mloading_editor_layout[22m
+2026-10-16T05:53:29.1204861Z [0m
+2026-10-16T05:53:30.0841711Z Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+2026-10-16T05:53:30.1056068Z 
+2026-10-16T05:53:31.5454786Z [   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+2026-10-16T05:53:31.5455183Z [   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+2026-10-16T05:53:31.5466950Z [  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+2026-10-16T05:53:31.5568900Z [  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+2026-10-16T05:53:31.5569409Z [  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+2026-10-16T05:53:31.5569826Z [  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+2026-10-16T05:53:31.5571161Z [  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+2026-10-16T05:53:31.5571544Z [92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+2026-10-16T05:53:31.5571808Z [0m
+2026-10-16T05:53:31.6643594Z [   0% ] [90m[1msavepack[22m | Started Packing (102 steps)[39m[0m
+2026-10-16T05:53:31.6681927Z [   1% ] [90m[1msavepack[22m | Storing File: res://.godot/exported/133200997/export-2b429c7a341b3ddad8de7f0eb535a104-relay_sky.res[39m[0m
+2026-10-16T05:53:31.6684142Z [   2% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/asphalt.png-64e4e563e24468231aa46a052a99923d.ctex[39m[0m
+2026-10-16T05:53:31.6684844Z [   2% ] [90m[1msavepack[22m | Storing File: res://assets/materials/asphalt.png.import[39m[0m
+2026-10-16T05:53:31.6687268Z [   4% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/asphalt_normal.png-523d6b94e4040efc3aee0bb8182034ce.ctex[39m[0m
+2026-10-16T05:53:31.6688194Z [   4% ] [90m[1msavepack[22m | Storing File: res://assets/materials/asphalt_normal.png.import[39m[0m
+2026-10-16T05:53:31.6689603Z [   5% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/asphalt_roughness.png-02037ed9f4af0c4626a7e06f69845200.ctex[39m[0m
+2026-10-16T05:53:31.6690334Z [   5% ] [90m[1msavepack[22m | Storing File: res://assets/materials/asphalt_roughness.png.import[39m[0m
+2026-10-16T05:53:31.6692124Z [   7% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/concrete.png-56aee7e69777ae61401b56d3ca180326.ctex[39m[0m
+2026-10-16T05:53:31.6692794Z [   7% ] [90m[1msavepack[22m | Storing File: res://assets/materials/concrete.png.import[39m[0m
+2026-10-16T05:53:31.6694748Z [   8% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/concrete_normal.png-2f21227745893f0bf57e261e33db21d9.ctex[39m[0m
+2026-10-16T05:53:31.6695465Z [   8% ] [90m[1msavepack[22m | Storing File: res://assets/materials/concrete_normal.png.import[39m[0m
+2026-10-16T05:53:31.6696769Z [  10% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/concrete_roughness.png-ee567dede458bb1bed42e99b449b65aa.ctex[39m[0m
+2026-10-16T05:53:31.6697555Z [  10% ] [90m[1msavepack[22m | Storing File: res://assets/materials/concrete_roughness.png.import[39m[0m
+2026-10-16T05:53:31.6699359Z [  12% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/painted_metal.png-8b1a21a48886cddf733de5ff555f5fcf.ctex[39m[0m
+2026-10-16T05:53:31.6699898Z [  12% ] [90m[1msavepack[22m | Storing File: res://assets/materials/painted_metal.png.import[39m[0m
+2026-10-16T05:53:31.6701494Z [  13% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/painted_metal_normal.png-2c66ea18fb624d4bda7b71b6e4fef35c.ctex[39m[0m
+2026-10-16T05:53:31.6702003Z [  13% ] [90m[1msavepack[22m | Storing File: res://assets/materials/painted_metal_normal.png.import[39m[0m
+2026-10-16T05:53:31.6703569Z [  15% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/painted_metal_roughness.png-15b8a6ab9755c88973e4eab051669e59.ctex[39m[0m
+2026-10-16T05:53:31.6704077Z [  15% ] [90m[1msavepack[22m | Storing File: res://assets/materials/painted_metal_roughness.png.import[39m[0m
+2026-10-16T05:53:31.6723104Z [  16% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/relay_ar.glb-b4e964bfdb8e5d86bf5f8722cc34c655.scn[39m[0m
+2026-10-16T05:53:31.6723568Z [  16% ] [90m[1msavepack[22m | Storing File: res://assets/weapons/relay_ar/relay_ar.glb.import[39m[0m
+2026-10-16T05:53:31.6735747Z [  18% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/relay_ar_albedo.png-b0b0d9366f798051ffa343871d9de8a2.s3tc.ctex[39m[0m
+2026-10-16T05:53:31.6736457Z [  18% ] [90m[1msavepack[22m | Storing File: res://assets/weapons/relay_ar/relay_ar_albedo.png.import[39m[0m
+2026-10-16T05:53:31.6741806Z [  20% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/relay_ar_arms.glb-571f25e44d0c1498610ac0d10f3b405a.scn[39m[0m
+2026-10-16T05:53:31.6742249Z [  20% ] [90m[1msavepack[22m | Storing File: res://assets/weapons/relay_ar/relay_ar_arms.glb.import[39m[0m
+2026-10-16T05:53:31.6755102Z [  21% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/relay_ar_arms_albedo.png-b07efd8bfef64e277aba811e23b604f1.s3tc.ctex[39m[0m
+2026-10-16T05:53:31.6755910Z [  21% ] [90m[1msavepack[22m | Storing File: res://assets/weapons/relay_ar/relay_ar_arms_albedo.png.import[39m[0m
+2026-10-16T05:53:31.6779754Z [  23% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/relay_ar_arms_normal.png-a3508f567360421179458ae4636bf4e6.s3tc.ctex[39m[0m
+2026-10-16T05:53:31.6780235Z [  23% ] [90m[1msavepack[22m | Storing File: res://assets/weapons/relay_ar/relay_ar_arms_normal.png.import[39m[0m
+2026-10-16T05:53:31.6792412Z [  24% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/relay_ar_arms_orm.png-748802f836b27baa5e415e3fbbf77146.s3tc.ctex[39m[0m
+2026-10-16T05:53:31.6793139Z [  24% ] [90m[1msavepack[22m | Storing File: res://assets/weapons/relay_ar/relay_ar_arms_orm.png.import[39m[0m
+2026-10-16T05:53:31.6811417Z [  26% ] [90m[1msavepack[22m | Storing File: res://.godot/exported/133200997/export-0453c53eb72ce20fef5e1ab031253617-relay_ar_body.res[39m[0m
+2026-10-16T05:53:31.6817793Z [  27% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/relay_ar_hands.glb-337713e82129d5fa52dfb111a3a7e808.scn[39m[0m
+2026-10-16T05:53:31.6818582Z [  27% ] [90m[1msavepack[22m | Storing File: res://assets/weapons/relay_ar/relay_ar_hands.glb.import[39m[0m
+2026-10-16T05:53:31.6830042Z [  29% ] [90m[1msavepack[22m | Storing File: res://.godot/exported/133200997/export-ef44f271e2eecd8a4b876c155124011d-relay_ar_hands.res[39m[0m
+2026-10-16T05:53:31.6842772Z [  31% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/relay_ar_hands_albedo.png-a24e8b9f22f7903fef3d2926c2a70848.s3tc.ctex[39m[0m
+2026-10-16T05:53:31.6843679Z [  31% ] [90m[1msavepack[22m | Storing File: res://assets/weapons/relay_ar/relay_ar_hands_albedo.png.import[39m[0m
+2026-10-16T05:53:31.6868560Z [  32% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/relay_ar_hands_normal.png-3b0fb40411f8a0b259276575acff3881.s3tc.ctex[39m[0m
+2026-10-16T05:53:31.6869403Z [  32% ] [90m[1msavepack[22m | Storing File: res://assets/weapons/relay_ar/relay_ar_hands_normal.png.import[39m[0m
+2026-10-16T05:53:31.6882911Z [  33% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/relay_ar_hands_orm.png-f3abb167d068f9a48972255f3b890347.s3tc.ctex[39m[0m
+2026-10-16T05:53:31.6883644Z [  33% ] [90m[1msavepack[22m | Storing File: res://assets/weapons/relay_ar/relay_ar_hands_orm.png.import[39m[0m
+2026-10-16T05:53:31.6907211Z [  34% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/relay_ar_normal.png-3720940a18ca01478f0b9f25c87ad29f.s3tc.ctex[39m[0m
+2026-10-16T05:53:31.6908081Z [  34% ] [90m[1msavepack[22m | Storing File: res://assets/weapons/relay_ar/relay_ar_normal.png.import[39m[0m
+2026-10-16T05:53:31.6920939Z [  36% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/relay_ar_orm.png-937749b0797a97bbc26957256bca329c.s3tc.ctex[39m[0m
+2026-10-16T05:53:31.6921548Z [  36% ] [90m[1msavepack[22m | Storing File: res://assets/weapons/relay_ar/relay_ar_orm.png.import[39m[0m
+2026-10-16T05:53:31.6923848Z [  38% ] [90m[1msavepack[22m | Storing File: res://.godot/imported/icon.svg-56083ea2a1f1a4f1e49773bdc6d7826c.ctex[39m[0m
+2026-10-16T05:53:31.6924243Z [  38% ] [90m[1msavepack[22m | Storing File: res://assets/icon.svg.import[39m[0m
+2026-10-16T05:53:31.6971703Z [  39% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/actor.gdc[39m[0m
+2026-10-16T05:53:31.7004705Z [  41% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/arena.gdc[39m[0m
+2026-10-16T05:53:31.7032201Z [  42% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/bot_ai.gdc[39m[0m
+2026-10-16T05:53:31.7040971Z [  44% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/combat_effects.gdc[39m[0m
+2026-10-16T05:53:31.7099983Z [  46% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/match.gdc[39m[0m
+2026-10-16T05:53:31.7111246Z [  47% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/reload_audio.gdc[39m[0m
+2026-10-16T05:53:31.7114331Z [  49% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/reload_phases.gdc[39m[0m
+2026-10-16T05:53:31.7125303Z [  50% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/utility.gdc[39m[0m
+2026-10-16T05:53:31.7131195Z [  52% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/viewmodel_shading.gdc[39m[0m
+2026-10-16T05:53:31.7133545Z [  53% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/weapons.gdc[39m[0m
+2026-10-16T05:53:31.7164076Z [  55% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/weapon_model.gdc[39m[0m
+2026-10-16T05:53:31.7169794Z [  57% ] [90m[1msavepack[22m | Storing File: res://scripts/network/economy_bridge.gdc[39m[0m
+2026-10-16T05:53:31.7175308Z [  58% ] [90m[1msavepack[22m | Storing File: res://scripts/network/hit_history.gdc[39m[0m
+2026-10-16T05:53:31.7178370Z [  60% ] [90m[1msavepack[22m | Storing File: res://scripts/network/input_gate.gdc[39m[0m
+2026-10-16T05:53:31.7182555Z [  61% ] [90m[1msavepack[22m | Storing File: res://scripts/network/input_stream.gdc[39m[0m
+2026-10-16T05:53:31.7187291Z [  63% ] [90m[1msavepack[22m | Storing File: res://scripts/network/movement_prediction.gdc[39m[0m
+2026-10-16T05:53:31.7190499Z [  65% ] [90m[1msavepack[22m | Storing File: res://scripts/network/movement_step.gdc[39m[0m
+2026-10-16T05:53:31.7194266Z [  66% ] [90m[1msavepack[22m | Storing File: res://scripts/network/peer_lifecycle.gdc[39m[0m
+2026-10-16T05:53:31.7196293Z [  67% ] [90m[1msavepack[22m | Storing File: res://scripts/network/reconnect_policy.gdc[39m[0m
+2026-10-16T05:53:31.7200383Z [  68% ] [90m[1msavepack[22m | Storing File: res://scripts/network/result_outbox.gdc[39m[0m
+2026-10-16T05:53:31.7205042Z [  70% ] [90m[1msavepack[22m | Storing File: res://scripts/network/snapshot_buffer.gdc[39m[0m
+2026-10-16T05:53:31.7210768Z [  72% ] [90m[1msavepack[22m | Storing File: res://scripts/network/snapshot_schema.gdc[39m[0m
+2026-10-16T05:53:31.7219461Z [  73% ] [90m[1msavepack[22m | Storing File: res://scripts/network/state_privacy.gdc[39m[0m
+2026-10-16T05:53:31.7221992Z [  75% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/case_reveal.gdc[39m[0m
+2026-10-16T05:53:31.7229046Z [  76% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/confirm_sheet.gdc[39m[0m
+2026-10-16T05:53:31.7234185Z [  78% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/cosmetic_material.gdc[39m[0m
+2026-10-16T05:53:31.7244092Z [  79% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/design_tokens.gdc[39m[0m
+2026-10-16T05:53:31.7250571Z [  81% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/display_models.gdc[39m[0m
+2026-10-16T05:53:31.7255507Z [  83% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/economy_api.gdc[39m[0m
+2026-10-16T05:53:31.7317931Z [  84% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/economy_ui.gdc[39m[0m
+2026-10-16T05:53:31.7325874Z [  86% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/item_inspector.gdc[39m[0m
+2026-10-16T05:53:31.7330761Z [  87% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/radar.gdc[39m[0m
+2026-10-16T05:53:31.7332979Z [  89% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/safe_area.gdc[39m[0m
+2026-10-16T05:53:31.7343783Z [  91% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/touch_controls.gdc[39m[0m
+2026-10-16T05:53:31.7347399Z [  92% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/weapon_glyph.gdc[39m[0m
+2026-10-16T05:53:31.7420427Z [  94% ] [90m[1msavepack[22m | Storing File: res://scripts/main.gdc[39m[0m
+2026-10-16T05:53:31.7426989Z [  95% ] [90m[1msavepack[22m | Storing File: res://scripts/profile.gdc[39m[0m
+2026-10-16T05:53:31.9370932Z [  97% ] [90m[1msavepack[22m | Storing File: res://.godot/exported/133200997/export-3070c538c03ee49b7677ff960a3f5195-main.scn[39m[0m
+2026-10-16T05:53:31.9371447Z [  97% ] [90m[1msavepack[22m | Storing File: res://assets/environments/relay_sky.tres.remap[39m[0m
+2026-10-16T05:53:31.9371874Z [  97% ] [90m[1msavepack[22m | Storing File: res://assets/weapons/relay_ar/relay_ar_body.tres.remap[39m[0m
+2026-10-16T05:53:31.9379354Z [  97% ] [90m[1msavepack[22m | Storing File: res://assets/weapons/relay_ar/relay_ar_hands.tres.remap[39m[0m
+2026-10-16T05:53:31.9380018Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/actor.gd.remap[39m[0m
+2026-10-16T05:53:31.9380650Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/arena.gd.remap[39m[0m
+2026-10-16T05:53:31.9381301Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/bot_ai.gd.remap[39m[0m
+2026-10-16T05:53:31.9381917Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/combat_effects.gd.remap[39m[0m
+2026-10-16T05:53:31.9382494Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/match.gd.remap[39m[0m
+2026-10-16T05:53:31.9383056Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/reload_audio.gd.remap[39m[0m
+2026-10-16T05:53:31.9383654Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/reload_phases.gd.remap[39m[0m
+2026-10-16T05:53:31.9384229Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/utility.gd.remap[39m[0m
+2026-10-16T05:53:31.9384822Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/viewmodel_shading.gd.remap[39m[0m
+2026-10-16T05:53:31.9385617Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/weapons.gd.remap[39m[0m
+2026-10-16T05:53:31.9386190Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/gameplay/weapon_model.gd.remap[39m[0m
+2026-10-16T05:53:31.9386779Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/network/economy_bridge.gd.remap[39m[0m
+2026-10-16T05:53:31.9387367Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/network/hit_history.gd.remap[39m[0m
+2026-10-16T05:53:31.9388115Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/network/input_gate.gd.remap[39m[0m
+2026-10-16T05:53:31.9388694Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/network/input_stream.gd.remap[39m[0m
+2026-10-16T05:53:31.9389308Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/network/movement_prediction.gd.remap[39m[0m
+2026-10-16T05:53:31.9389895Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/network/movement_step.gd.remap[39m[0m
+2026-10-16T05:53:31.9390485Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/network/peer_lifecycle.gd.remap[39m[0m
+2026-10-16T05:53:31.9391058Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/network/reconnect_policy.gd.remap[39m[0m
+2026-10-16T05:53:31.9391625Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/network/result_outbox.gd.remap[39m[0m
+2026-10-16T05:53:31.9392193Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/network/snapshot_buffer.gd.remap[39m[0m
+2026-10-16T05:53:31.9392772Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/network/snapshot_schema.gd.remap[39m[0m
+2026-10-16T05:53:31.9393344Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/network/state_privacy.gd.remap[39m[0m
+2026-10-16T05:53:31.9393898Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/case_reveal.gd.remap[39m[0m
+2026-10-16T05:53:31.9394435Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/confirm_sheet.gd.remap[39m[0m
+2026-10-16T05:53:31.9395025Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/cosmetic_material.gd.remap[39m[0m
+2026-10-16T05:53:31.9395599Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/design_tokens.gd.remap[39m[0m
+2026-10-16T05:53:31.9396252Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/display_models.gd.remap[39m[0m
+2026-10-16T05:53:31.9396800Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/economy_api.gd.remap[39m[0m
+2026-10-16T05:53:31.9397368Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/economy_ui.gd.remap[39m[0m
+2026-10-16T05:53:31.9397916Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/item_inspector.gd.remap[39m[0m
+2026-10-16T05:53:31.9398798Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/radar.gd.remap[39m[0m
+2026-10-16T05:53:31.9399299Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/safe_area.gd.remap[39m[0m
+2026-10-16T05:53:31.9399816Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/touch_controls.gd.remap[39m[0m
+2026-10-16T05:53:31.9400316Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/ui/weapon_glyph.gd.remap[39m[0m
+2026-10-16T05:53:31.9400785Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/main.gd.remap[39m[0m
+2026-10-16T05:53:31.9401245Z [  97% ] [90m[1msavepack[22m | Storing File: res://scripts/profile.gd.remap[39m[0m
+2026-10-16T05:53:31.9401731Z [  97% ] [90m[1msavepack[22m | Storing File: res://main.tscn.remap[39m[0m
+2026-10-16T05:53:31.9402227Z [  97% ] [90m[1msavepack[22m | Storing File: res://.godot/global_script_class_cache.cfg[39m[0m
+2026-10-16T05:53:31.9402748Z [  97% ] [90m[1msavepack[22m | Storing File: res://assets/icon.svg[39m[0m
+2026-10-16T05:53:31.9403211Z [  97% ] [90m[1msavepack[22m | Storing File: res://.godot/uid_cache.bin[39m[0m
+2026-10-16T05:53:31.9405329Z [  97% ] [90m[1msavepack[22m | Storing File: res://project.binary[39m[0m
+2026-10-16T05:53:31.9407144Z [92m[ DONE ][39m [1msavepack[22m
+2026-10-16T05:53:31.9407414Z [0m
+2026-10-16T05:53:32.7335817Z Exported /home/runner/work/sightbreak/sightbreak/builds/linux/sightbreak.x86_64
+2026-10-16T05:53:32.8154377Z Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+2026-10-16T05:53:32.8363767Z 
+2026-10-16T05:53:34.2570586Z [   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+2026-10-16T05:53:34.2570979Z [   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+2026-10-16T05:53:34.2584201Z [  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+2026-10-16T05:53:34.2687916Z [  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+2026-10-16T05:53:34.2688859Z [  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+2026-10-16T05:53:34.2689342Z [  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+2026-10-16T05:53:34.2698877Z [  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+2026-10-16T05:53:34.2699252Z [92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+2026-10-16T05:53:34.2699510Z [0m
+2026-10-16T05:53:34.3593661Z [   0% ] [90m[1mloading_editor_layout[22m | Started Loading editor (5 steps)[39m[0m
+2026-10-16T05:53:34.3595042Z [   0% ] [90m[1mloading_editor_layout[22m | Loading editor layout...[39m[0m
+2026-10-16T05:53:34.3595322Z [  16% ] [90m[1mloading_editor_layout[22m | Loading docks...[39m[0m
+2026-10-16T05:53:34.3595560Z [92m[ DONE ][39m [1mloading_editor_layout[22m
+2026-10-16T05:53:34.3595732Z [0m
+2026-10-16T05:53:35.2324454Z Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+2026-10-16T05:53:35.2539665Z 
+2026-10-16T05:53:36.6791689Z [   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+2026-10-16T05:53:36.6792349Z [   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+2026-10-16T05:53:36.6803166Z [  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+2026-10-16T05:53:36.6912059Z [  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+2026-10-16T05:53:36.6912637Z [  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+2026-10-16T05:53:36.6913115Z [  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+2026-10-16T05:53:36.6913549Z [  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+2026-10-16T05:53:36.6913924Z [92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+2026-10-16T05:53:36.6914179Z [0m
+2026-10-16T05:53:36.7805557Z [   0% ] [90m[1mexport[22m | Started Exporting for Android (105 steps)[39m[0m
+2026-10-16T05:53:36.7809870Z 0 param: --xr_mode_regular
+2026-10-16T05:53:36.7810321Z 1 param: --xr-mode
+2026-10-16T05:53:36.7810525Z 2 param: off
+2026-10-16T05:53:36.7810656Z 3 param: --fullscreen
+2026-10-16T05:53:36.7810806Z 4 param: --background_color
+2026-10-16T05:53:36.7810970Z 5 param: #000000
+2026-10-16T05:53:36.7811236Z [   0% ] [90m[1mexport[22m | Creating APK...[39m[0m
+2026-10-16T05:53:36.8006308Z ADDING: classes.dex
+2026-10-16T05:53:36.9672157Z ADDING: classes10.dex
+2026-10-16T05:53:36.9682007Z ADDING: classes11.dex
+2026-10-16T05:53:36.9697389Z ADDING: classes12.dex
+2026-10-16T05:53:36.9707277Z ADDING: classes13.dex
+2026-10-16T05:53:36.9709212Z ADDING: classes2.dex
+2026-10-16T05:53:36.9712005Z ADDING: classes3.dex
+2026-10-16T05:53:36.9727535Z ADDING: classes4.dex
+2026-10-16T05:53:36.9747351Z ADDING: classes5.dex
+2026-10-16T05:53:36.9755548Z ADDING: classes6.dex
+2026-10-16T05:53:36.9775365Z ADDING: classes7.dex
+2026-10-16T05:53:36.9820831Z ADDING: classes8.dex
+2026-10-16T05:53:36.9826417Z ADDING: classes9.dex
+2026-10-16T05:53:36.9871077Z ADDING: lib/arm64-v8a/libc++_shared.so
+2026-10-16T05:53:37.2497267Z ADDING: lib/arm64-v8a/libgodot_android.so
+2026-10-16T05:53:39.6162275Z ADDING: lib/x86_64/libc++_shared.so
+2026-10-16T05:53:39.9155356Z ADDING: lib/x86_64/libgodot_android.so
+2026-10-16T05:53:42.1320092Z Adding application metadata org.godotengine.rendering.method
+2026-10-16T05:53:42.1320579Z Adding application metadata org.godotengine.editor.version
+2026-10-16T05:53:42.1320953Z Adding permission android.permission.ACCESS_NETWORK_STATE
+2026-10-16T05:53:42.1321291Z Adding permission android.permission.INTERNET
+2026-10-16T05:53:42.1321958Z ADDING: AndroidManifest.xml
+2026-10-16T05:53:42.1322856Z ADDING: res/anim-v21/fragment_fast_out_extra_slow_in.xml
+2026-10-16T05:53:42.1323188Z ADDING: res/animator/fragment_close_enter.xml
+2026-10-16T05:53:42.1323522Z ADDING: res/animator/fragment_close_exit.xml
+2026-10-16T05:53:42.1324173Z ADDING: res/animator/fragment_fade_enter.xml
+2026-10-16T05:53:42.1324782Z ADDING: res/animator/fragment_fade_exit.xml
+2026-10-16T05:53:42.1325199Z ADDING: res/animator/fragment_open_enter.xml
+2026-10-16T05:53:42.1325825Z ADDING: res/animator/fragment_open_exit.xml
+2026-10-16T05:53:42.1326446Z ADDING: res/drawable-hdpi-v4/notification_bg_low_normal.9.png
+2026-10-16T05:53:42.1326838Z ADDING: res/drawable-hdpi-v4/notification_bg_low_pressed.9.png
+2026-10-16T05:53:42.1327449Z ADDING: res/drawable-hdpi-v4/notification_bg_normal.9.png
+2026-10-16T05:53:42.1327814Z ADDING: res/drawable-hdpi-v4/notification_bg_normal_pressed.9.png
+2026-10-16T05:53:42.1328344Z ADDING: res/drawable-hdpi-v4/notify_panel_notification_icon_bg.png
+2026-10-16T05:53:42.1328723Z ADDING: res/drawable-mdpi-v4/notification_bg_low_normal.9.png
+2026-10-16T05:53:42.1329090Z ADDING: res/drawable-mdpi-v4/notification_bg_low_pressed.9.png
+2026-10-16T05:53:42.1329459Z ADDING: res/drawable-mdpi-v4/notification_bg_normal.9.png
+2026-10-16T05:53:42.1329837Z ADDING: res/drawable-mdpi-v4/notification_bg_normal_pressed.9.png
+2026-10-16T05:53:42.1330261Z ADDING: res/drawable-mdpi-v4/notify_panel_notification_icon_bg.png
+2026-10-16T05:53:42.1330642Z ADDING: res/drawable-v21/notification_action_background.xml
+2026-10-16T05:53:42.1330989Z ADDING: res/drawable-v23/compat_splash_screen.xml
+2026-10-16T05:53:42.1331364Z ADDING: res/drawable-v23/compat_splash_screen_no_icon_background.xml
+2026-10-16T05:53:42.1331765Z ADDING: res/drawable-xhdpi-v4/notification_bg_low_normal.9.png
+2026-10-16T05:53:42.1332143Z ADDING: res/drawable-xhdpi-v4/notification_bg_low_pressed.9.png
+2026-10-16T05:53:42.1332508Z ADDING: res/drawable-xhdpi-v4/notification_bg_normal.9.png
+2026-10-16T05:53:42.1332903Z ADDING: res/drawable-xhdpi-v4/notification_bg_normal_pressed.9.png
+2026-10-16T05:53:42.1333315Z ADDING: res/drawable-xhdpi-v4/notify_panel_notification_icon_bg.png
+2026-10-16T05:53:42.1333663Z ADDING: res/drawable/icon_background.xml
+2026-10-16T05:53:42.1333938Z ADDING: res/drawable/notification_bg.xml
+2026-10-16T05:53:42.1334422Z ADDING: res/drawable/notification_bg_low.xml
+2026-10-16T05:53:42.1334730Z ADDING: res/drawable/notification_icon_background.xml
+2026-10-16T05:53:42.1335043Z ADDING: res/drawable/notification_tile_bg.xml
+2026-10-16T05:53:42.1335342Z ADDING: res/drawable/splash_branding_image.webp
+2026-10-16T05:53:42.1346770Z ADDING: res/drawable/splash_icon.webp
+2026-10-16T05:53:42.1347091Z ADDING: res/layout-v21/notification_action.xml
+2026-10-16T05:53:42.1347872Z ADDING: res/layout-v21/notification_action_tombstone.xml
+2026-10-16T05:53:42.1348938Z ADDING: res/layout-v21/notification_template_custom_big.xml
+2026-10-16T05:53:42.1350155Z ADDING: res/layout-v21/notification_template_icon_group.xml
+2026-10-16T05:53:42.1350741Z ADDING: res/layout/custom_dialog.xml
+2026-10-16T05:53:42.1351255Z ADDING: res/layout/godot_app_layout.xml
+2026-10-16T05:53:42.1351775Z ADDING: res/layout/notification_template_part_chronometer.xml
+2026-10-16T05:53:42.1352280Z ADDING: res/layout/notification_template_part_time.xml
+2026-10-16T05:53:42.1352743Z ADDING: res/layout/remote_godot_fragment_layout.xml
+2026-10-16T05:53:42.1353265Z ADDING: res/layout/snackbar.xml
+2026-10-16T05:53:42.1354244Z ADDING: res/layout/splash_screen_view.xml
+2026-10-16T05:53:42.1354658Z ADDING: res/mipmap-anydpi-v26/icon.xml
+2026-10-16T05:53:42.1369099Z ADDING: res/mipmap-hdpi-v4/icon.webp
+2026-10-16T05:53:42.1378864Z ADDING: res/mipmap-hdpi-v4/icon_background.webp
+2026-10-16T05:53:42.1408822Z ADDING: res/mipmap-hdpi-v4/icon_foreground.webp
+2026-10-16T05:53:42.1409353Z ADDING: res/mipmap-hdpi-v4/icon_monochrome.webp
+2026-10-16T05:53:42.1422395Z ADDING: res/mipmap-mdpi-v4/icon.webp
+2026-10-16T05:53:42.1422886Z ADDING: res/mipmap-mdpi-v4/icon_background.webp
+2026-10-16T05:53:42.1448901Z ADDING: res/mipmap-mdpi-v4/icon_foreground.webp
+2026-10-16T05:53:42.1449699Z ADDING: res/mipmap-mdpi-v4/icon_monochrome.webp
+2026-10-16T05:53:42.1463763Z ADDING: res/mipmap-xhdpi-v4/icon.webp
+2026-10-16T05:53:42.1464056Z ADDING: res/mipmap-xhdpi-v4/icon_background.webp
+2026-10-16T05:53:42.1516373Z ADDING: res/mipmap-xhdpi-v4/icon_foreground.webp
+2026-10-16T05:53:42.1517032Z ADDING: res/mipmap-xhdpi-v4/icon_monochrome.webp
+2026-10-16T05:53:42.1551325Z ADDING: res/mipmap-xxhdpi-v4/icon.webp
+2026-10-16T05:53:42.1551908Z ADDING: res/mipmap-xxhdpi-v4/icon_background.webp
+2026-10-16T05:53:42.1661087Z ADDING: res/mipmap-xxhdpi-v4/icon_foreground.webp
+2026-10-16T05:53:42.1661792Z ADDING: res/mipmap-xxhdpi-v4/icon_monochrome.webp
+2026-10-16T05:53:42.1710918Z ADDING: res/mipmap-xxxhdpi-v4/icon.webp
+2026-10-16T05:53:42.1711320Z ADDING: res/mipmap-xxxhdpi-v4/icon_background.webp
+2026-10-16T05:53:42.1889579Z ADDING: res/mipmap-xxxhdpi-v4/icon_foreground.webp
+2026-10-16T05:53:42.1890000Z ADDING: res/mipmap-xxxhdpi-v4/icon_monochrome.webp
+2026-10-16T05:53:42.1941133Z ADDING: res/mipmap/icon.webp
+2026-10-16T05:53:42.1941538Z ADDING: res/mipmap/icon_background.webp
+2026-10-16T05:53:42.2112912Z ADDING: res/mipmap/icon_foreground.webp
+2026-10-16T05:53:42.2113206Z ADDING: res/mipmap/icon_monochrome.webp
+2026-10-16T05:53:42.2113447Z ADDING: res/xml/godot_provider_paths.xml
+2026-10-16T05:53:42.2116072Z ADDING: resources.arsc
+2026-10-16T05:53:42.2116630Z ADDING: DebugProbesKt.bin
+2026-10-16T05:53:42.2119179Z ADDING: kotlin/annotation/annotation.kotlin_builtins
+2026-10-16T05:53:42.2119755Z ADDING: kotlin/collections/collections.kotlin_builtins
+2026-10-16T05:53:42.2121294Z ADDING: kotlin/concurrent/atomics/atomics.kotlin_builtins
+2026-10-16T05:53:42.2122041Z ADDING: kotlin/coroutines/coroutines.kotlin_builtins
+2026-10-16T05:53:42.2122408Z ADDING: kotlin/internal/internal.kotlin_builtins
+2026-10-16T05:53:42.2123652Z ADDING: kotlin/kotlin.kotlin_builtins
+2026-10-16T05:53:42.2126609Z ADDING: kotlin/ranges/ranges.kotlin_builtins
+2026-10-16T05:53:42.2127543Z ADDING: kotlin/reflect/reflect.kotlin_builtins
+2026-10-16T05:53:42.2129162Z [   0% ] [90m[1mexport[22m | Adding files...[39m[0m
+2026-10-16T05:53:42.3858973Z [  97% ] [90m[1mexport[22m | Aligning APK...[39m[0m
+2026-10-16T05:53:42.5013795Z [  98% ] [90m[1mexport[22m | Signing debug APK...[39m[0m
+2026-10-16T05:53:42.7352185Z Signing binary using: 
+2026-10-16T05:53:42.7353085Z /usr/local/lib/android/sdk/build-tools/36.0.0/apksigner sign --verbose --ks <REDACTED> --ks-pass pass:<REDACTED> --ks-key-alias <REDACTED> /home/runner/work/sightbreak/sightbreak/builds/android/sightbreak-debug.apk
+2026-10-16T05:53:44.2300162Z Signed
+2026-10-16T05:53:44.2300314Z 
+2026-10-16T05:53:44.2300689Z [  99% ] [90m[1mexport[22m | Verifying APK...[39m[0m
+2026-10-16T05:53:44.4878192Z [92m[ DONE ][39m [1mexport[22m
+2026-10-16T05:53:44.4878427Z [0m
+2026-10-16T05:53:45.2080850Z Exported /home/runner/work/sightbreak/sightbreak/builds/android/sightbreak-debug.apk
+2026-10-16T05:53:53.4160782Z Unsigned Xcode project exported: /home/runner/work/sightbreak/sightbreak/builds/ios/sightbreak.xcodeproj
+2026-10-16T05:53:53.4259337Z ##[group]Run python3 scripts/verify_builds.py
+2026-10-16T05:53:53.4259573Z [36;1mpython3 scripts/verify_builds.py[0m
+2026-10-16T05:53:53.4259793Z [36;1mpython3 scripts/build_manifest.py package > builds/packaging.json[0m
+2026-10-16T05:53:53.4314367Z shell: /usr/bin/bash -e {0}
+2026-10-16T05:53:53.4314539Z ##[endgroup]
+2026-10-16T05:53:57.3438200Z {
+2026-10-16T05:53:57.3438611Z   "source_commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+2026-10-16T05:53:57.3438915Z   "source_game_tree": "2d2b174c2145e9755ddfc78a1369e74443fcc400",
+2026-10-16T05:53:57.3439229Z   "source_content_sha256": "12d50718f295f04d21de691f31fbde8f03612b145680aaa592ef9e6e08cd5eec",
+2026-10-16T05:53:57.3439517Z   "source_game_dirty": false,
+2026-10-16T05:53:57.3439678Z   "passed": true,
+2026-10-16T05:53:57.3439813Z   "linux_menu_smoke": true,
+2026-10-16T05:53:57.3439973Z   "linux_demo_120_frames": true,
+2026-10-16T05:53:57.3440155Z   "linux_pck_resources": 130,
+2026-10-16T05:53:57.3440387Z   "android_assets": 132,
+2026-10-16T05:53:57.3440533Z   "ios_pck_resources": 130,
+2026-10-16T05:53:57.3440680Z   "test_harnesses_excluded": true,
+2026-10-16T05:53:57.3440831Z   "android_signature_schemes": [
+2026-10-16T05:53:57.3440980Z     "v2",
+2026-10-16T05:53:57.3441082Z     "v3"
+2026-10-16T05:53:57.3441183Z   ],
+2026-10-16T05:53:57.3441351Z   "integrated_imported_rifle_arms_textures_network_modules": true,
+2026-10-16T05:53:57.3441580Z   "android_version": "0.3.1-dev (4)",
+2026-10-16T05:53:57.3441757Z   "android_min_sdk": 24,
+2026-10-16T05:53:57.3441900Z   "android_target_sdk": 36,
+2026-10-16T05:53:57.3442053Z   "android_abis": [
+2026-10-16T05:53:57.3442188Z     "arm64-v8a",
+2026-10-16T05:53:57.3442314Z     "x86_64"
+2026-10-16T05:53:57.3442431Z   ],
+2026-10-16T05:53:57.3442560Z   "android_landscape_manifest": true,
+2026-10-16T05:53:57.3442823Z   "android_launcher_alias": "com.sightbreak.game/com.godot.game.GodotAppLauncher",
+2026-10-16T05:53:57.3443106Z   "ios_project_plist_and_unsigned_team": true,
+2026-10-16T05:53:57.3443293Z   "physical_device_installation": "NOT TESTED",
+2026-10-16T05:53:57.3443467Z   "device_performance": "NOT TESTED",
+2026-10-16T05:53:57.3443620Z   "xcode_build": "NOT TESTED"
+2026-10-16T05:53:57.3443761Z }
+2026-10-16T05:54:02.9893311Z ##[group]Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+2026-10-16T05:54:02.9893550Z with:
+2026-10-16T05:54:02.9893742Z   name: sightbreak-three-agent-701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd
+2026-10-16T05:54:02.9894168Z   path: builds/sightbreak-*.zip
+builds/android/sightbreak-debug.apk
+builds/manifest.json
+builds/checksums.txt
+builds/verification/
+builds/*/*.log
+
+2026-10-16T05:54:02.9894649Z   if-no-files-found: error
+2026-10-16T05:54:02.9894785Z   retention-days: 14
+2026-10-16T05:54:02.9894911Z   compression-level: 6
+2026-10-16T05:54:02.9895034Z   overwrite: false
+2026-10-16T05:54:02.9895156Z   include-hidden-files: false
+2026-10-16T05:54:02.9895302Z ##[endgroup]
+2026-10-16T05:54:03.1015178Z (node:3499) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-16T05:54:03.1015832Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-16T05:54:03.1106414Z With the provided path, there will be 18 files uploaded
+2026-10-16T05:54:03.1110944Z Artifact name is valid!
+2026-10-16T05:54:03.1111320Z Root directory input is valid!
+2026-10-16T05:54:03.4215810Z Beginning upload of artifact content to blob storage
+2026-10-16T05:54:03.6133864Z (node:3499) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-16T05:54:04.1580909Z Uploaded bytes 8388608
+2026-10-16T05:54:04.3307909Z Uploaded bytes 16777216
+2026-10-16T05:54:04.4989007Z Uploaded bytes 25165824
+2026-10-16T05:54:04.5215510Z Uploaded bytes 33554432
+2026-10-16T05:54:04.6710940Z Uploaded bytes 41943040
+2026-10-16T05:54:04.6984881Z Uploaded bytes 50331648
+2026-10-16T05:54:04.9063022Z Uploaded bytes 58720256
+2026-10-16T05:54:05.1555695Z Uploaded bytes 67108864
+2026-10-16T05:54:05.4015891Z Uploaded bytes 75497472
+2026-10-16T05:54:05.6381734Z Uploaded bytes 83886080
+2026-10-16T05:54:05.7057883Z Uploaded bytes 92274688
+2026-10-16T05:54:05.8488600Z Uploaded bytes 100663296
+2026-10-16T05:54:06.0268841Z Uploaded bytes 109051904
+2026-10-16T05:54:06.2365327Z Uploaded bytes 117440512
+2026-10-16T05:54:06.3663091Z Uploaded bytes 125829120
+2026-10-16T05:54:06.5779024Z Uploaded bytes 134217728
+2026-10-16T05:54:06.7609519Z Uploaded bytes 142606336
+2026-10-16T05:54:06.9214692Z Uploaded bytes 150994944
+2026-10-16T05:54:07.1088947Z Uploaded bytes 159383552
+2026-10-16T05:54:07.3879388Z Uploaded bytes 167772160
+2026-10-16T05:54:07.5874550Z Uploaded bytes 176160768
+2026-10-16T05:54:07.7094322Z Uploaded bytes 184549376
+2026-10-16T05:54:07.8843114Z Uploaded bytes 192937984
+2026-10-16T05:54:08.1158999Z Uploaded bytes 201326592
+2026-10-16T05:54:08.2521472Z Uploaded bytes 209715200
+2026-10-16T05:54:08.4697846Z Uploaded bytes 218103808
+2026-10-16T05:54:08.6063772Z Uploaded bytes 226492416
+2026-10-16T05:54:08.8453223Z Uploaded bytes 234881024
+2026-10-16T05:54:09.0346612Z Uploaded bytes 243269632
+2026-10-16T05:54:09.2500217Z Uploaded bytes 251658240
+2026-10-16T05:54:09.4603236Z Uploaded bytes 260046848
+2026-10-16T05:54:09.5816883Z Uploaded bytes 268435456
+2026-10-16T05:54:09.8330094Z Uploaded bytes 276824064
+2026-10-16T05:54:10.0250267Z Uploaded bytes 285212672
+2026-10-16T05:54:10.1116210Z Uploaded bytes 287276825
+2026-10-16T05:54:10.1575727Z Finished uploading artifact content to blob storage!
+2026-10-16T05:54:10.1578803Z SHA256 digest of uploaded artifact zip is 8f230eab3d953ba40f1981286e71137e07f2ff5548b0ad5eda355c58c9ec5f1e
+2026-10-16T05:54:10.1580883Z Finalizing artifact upload
+2026-10-16T05:54:10.4964084Z Artifact sightbreak-three-agent-701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd.zip successfully finalized. Artifact ID 12028135819
+2026-10-16T05:54:10.4965083Z Artifact sightbreak-three-agent-701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd has been successfully uploaded! Final size is 287276825 bytes. Artifact ID is 12028135819
+2026-10-16T05:54:10.4970451Z Artifact download URL: https://github.com/calebaiken/sightbreak/actions/runs/38858072161/artifacts/12028135819
+2026-10-16T05:54:10.5197559Z Post job cleanup.
+2026-10-16T05:54:10.5899269Z [command]/usr/bin/git version
+2026-10-16T05:54:10.5939223Z git version 2.55.0
+2026-10-16T05:54:10.5963347Z Temporarily overriding HOME='/home/runner/work/_temp/b1a04929-bbda-48eb-b4fb-2ac7a3236c81' before making global git config changes
+2026-10-16T05:54:10.5964097Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-16T05:54:10.5969323Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sightbreak/sightbreak
+2026-10-16T05:54:10.6017558Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-16T05:54:10.6061007Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-16T05:54:10.6318751Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-16T05:54:10.6350860Z http.https://github.com/.extraheader
+2026-10-16T05:54:10.6380854Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-16T05:54:10.6423652Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-16T05:54:10.6822648Z Cleaning up orphan processes
+2026-10-16T05:54:10.7079175Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683, actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

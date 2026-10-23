@@ -1,0 +1,31 @@
+{
+  "candidate": "79e076ed83651aea3ff8e439a64c0f979d35ecf2",
+  "game_tree": "1f3616afdfaaed0fb7c9ffbd0aa8e4947f7d2a48",
+  "status": "",
+  "baseline": "b97fd81b0f10f45bda92f4a873314b0d270086db",
+  "upstream_pr18": "ccd0955a2cf5d8bcad4e9e9e2fba8ad399591f5e",
+  "base_pr16": "d2439acdd5f73df7bae5ada62ee1e3dec2cf30db",
+  "merge_base_with_pr18": "d2439acdd5f73df7bae5ada62ee1e3dec2cf30db",
+  "ahead_behind_vs_pr18": "236\t11",
+  "baseline_ui_api_and_affected_tests_equal_pr16": true,
+  "production_equal_pr18": true,
+  "backend_server_unchanged": true,
+  "files": {
+    "game/scripts/ui/economy_ui.gd": "a6580d176216af48c447eacaf3d293d7862fb8af0f56db7a4a3b9fd4398f450b",
+    "game/scripts/ui/transaction_journal.gd": "3a7e060f7d5c3a65f4b983edf3c56d008cb070a8948bdcb128681bd4ce562d03",
+    "scripts/validate_transaction_restart.py": "9a6c82d7267eab42f084d47c3dc96066d648e19849b94a4e83ad6510716435a4",
+    "game/tests/receipt_lifecycle_probe.gd": "544d2b6b7907c8bd1e90361d077c6ba4123b3e54371e6f9668ea7266a353bf46",
+    "game/tests/transaction_journal_test.gd": "5d459648d8794ae0eaa024ed993a52e71144523bbf783f5196e42d370599d38b",
+    "scripts/validate.sh": "896601b49bb48cef0487d161d9ef1338448afcd5e0e37cdded59bf6fbb62fc93"
+  },
+  "commits": [
+    "95be0e71e9a8fb85fad8e777dd814452deda18c2 Caleb Aiken <calebaiken07@gmail.com> docs: register durable armory receipt qualification gates",
+    "a0c413aa05b75549106711c0c8a728b6976a17c5 calebaiken <calebaiken07@gmail.com> fix: persist client receipts before keyed economy requests",
+    "5d04aa62b7a1d31a868a7239cf3793166b74cf2b calebaiken <calebaiken07@gmail.com> fix: serialize durable receipt owners and preserve unresolved retries",
+    "ce2b1287eab3f476a2739b88dd6d1fcfdd5b1971 calebaiken <calebaiken07@gmail.com> fix: release stale receipt claims and enforce crash ordering",
+    "499b3054876c16be4734b6d0fd01f9c27b827fce calebaiken <calebaiken07@gmail.com> test: preserve receipt probe integer consent and killed-socket capture",
+    "7f4d360b5542eed6a22b838bfc71060b3fc490df calebaiken <calebaiken07@gmail.com> test: kill rejected recovery before native teardown",
+    "a9aa5e00ceffba1508b82a1abee8ecfb382f5ec5 Caleb Aiken <calebaiken07@gmail.com> test: qualify original receipt recovery across retry logout and restart",
+    "79e076ed83651aea3ff8e439a64c0f979d35ecf2 Caleb Aiken <calebaiken07@gmail.com> test: retain failed receipt process output and verify forced kills"
+  ]
+}

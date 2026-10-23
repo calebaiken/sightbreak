@@ -1,0 +1,8 @@
+{
+  "stage": "independent historical-bar audit implementation",
+  "first_attempt_exit": 1,
+  "reason": "Audit incorrectly assumed campaign-r6 retained campaign-r7 disk snapshots; git show failed for docs/reports/systems-v3-evidence/client-recovery/campaign-r6/baseline/0-case-after_commit/journal-first-kill-state.json (not present in original ccd0955)",
+  "correction": "Treat r6 journal-at-kill and native pending results separately; require explicit byte/disk snapshots only for r7. No r6 final disk absence claim. Corrected audit passes 72 original case ledgers.",
+  "product_failure": false,
+  "review_author": "independent transaction_receipt_critic"
+}

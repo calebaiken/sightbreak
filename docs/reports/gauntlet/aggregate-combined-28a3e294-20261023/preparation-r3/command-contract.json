@@ -1,0 +1,335 @@
+{
+  "validate_sha256": "4ab022e46ad9a7b913da9b82e6ebe76ec161cf2bd8fd7b51c9ecebe30d72442b",
+  "command": [
+    "./scripts/validate.sh"
+  ],
+  "mandatory_godot": [
+    {
+      "label": "import",
+      "source_command": "run_godot import --headless --editor --import --quit"
+    },
+    {
+      "label": "actor",
+      "source_command": "run_godot actor --headless --script res://tests/actor_test.gd"
+    },
+    {
+      "label": "world",
+      "source_command": "run_godot world --headless --script res://tests/world_test.gd"
+    },
+    {
+      "label": "hit-feedback",
+      "source_command": "run_godot hit-feedback --headless --script res://tests/hit_feedback_test.gd"
+    },
+    {
+      "label": "weapon-integrity",
+      "source_command": "run_godot weapon-integrity --headless --script res://tests/weapon_integrity_test.gd"
+    },
+    {
+      "label": "gunplay-rules",
+      "source_command": "run_godot gunplay-rules --headless --audio-driver Dummy --script res://tests/gunplay_rules_probe.gd"
+    },
+    {
+      "label": "hit-volume",
+      "source_command": "run_godot hit-volume --headless --script res://tests/hit_volume_test.gd"
+    },
+    {
+      "label": "hit-history",
+      "source_command": "run_godot hit-history --headless --script res://tests/hit_history_test.gd"
+    },
+    {
+      "label": "render-budget",
+      "source_command": "run_godot render-budget --headless --script res://tests/render_budget_test.gd"
+    },
+    {
+      "label": "smoke-presentation",
+      "source_command": "run_godot smoke-presentation --headless --script res://tests/smoke_presentation_test.gd"
+    },
+    {
+      "label": "match",
+      "source_command": "run_godot match --headless --script res://tests/match_test.gd"
+    },
+    {
+      "label": "authority-order",
+      "source_command": "run_godot authority-order --headless --script res://tests/authority_order_test.gd"
+    },
+    {
+      "label": "state-privacy",
+      "source_command": "run_godot state-privacy --headless --script res://tests/state_privacy_test.gd"
+    },
+    {
+      "label": "snapshot-buffer",
+      "source_command": "run_godot snapshot-buffer --headless --script res://tests/snapshot_buffer_test.gd"
+    },
+    {
+      "label": "input-stream",
+      "source_command": "run_godot input-stream --headless --script res://tests/input_stream_test.gd"
+    },
+    {
+      "label": "activity-provenance",
+      "source_command": "run_godot activity-provenance --headless --script res://tests/activity_provenance_test.gd"
+    },
+    {
+      "label": "movement-replay",
+      "source_command": "run_godot movement-replay --headless --script res://tests/movement_prediction_test.gd"
+    },
+    {
+      "label": "input-lifecycle",
+      "source_command": "run_godot input-lifecycle --headless --script res://tests/input_lifecycle_test.gd"
+    },
+    {
+      "label": "peer-lifecycle",
+      "source_command": "run_godot peer-lifecycle --headless --script res://tests/peer_lifecycle_test.gd"
+    },
+    {
+      "label": "result-outbox",
+      "source_command": "run_godot result-outbox --headless --script res://tests/result_outbox_test.gd"
+    },
+    {
+      "label": "reconnect-policy",
+      "source_command": "run_godot reconnect-policy --headless --script res://tests/reconnect_policy_test.gd"
+    },
+    {
+      "label": "reconnect-independent",
+      "source_command": "run_godot reconnect-independent --headless --script res://tests/independent_reconnect_review_test.gd"
+    },
+    {
+      "label": "resume-admission",
+      "source_command": "run_godot resume-admission --headless --script res://tests/independent_resume_admission_test.gd"
+    },
+    {
+      "label": "lost-welcome",
+      "source_command": "run_godot lost-welcome --headless --script res://tests/lost_welcome_test.gd"
+    },
+    {
+      "label": "resume-alias",
+      "source_command": "run_godot resume-alias --headless --script res://tests/independent_resume_alias_test.gd"
+    },
+    {
+      "label": "resume-auth-loss",
+      "source_command": "run_godot resume-auth-loss --headless --script res://tests/resume_auth_loss_test.gd"
+    },
+    {
+      "label": "bot-ai-regression",
+      "source_command": "run_godot bot-ai-regression --headless --script res://tests/bot_ai_regression_test.gd"
+    },
+    {
+      "label": "bot-dry-weapon",
+      "source_command": "run_godot bot-dry-weapon --headless --audio-driver Dummy --script res://tests/bot_dry_weapon_test.gd"
+    },
+    {
+      "label": "bot-exhausted-primary",
+      "source_command": "run_godot bot-exhausted-primary --headless --audio-driver Dummy --script res://tests/bot_exhausted_primary_test.gd"
+    },
+    {
+      "label": "bot-squad-symmetry",
+      "source_command": "run_godot bot-squad-symmetry --headless --script res://tests/bot_squad_symmetry_test.gd"
+    },
+    {
+      "label": "bots",
+      "source_command": "run_godot bots --headless --script res://tests/bot_match_test.gd"
+    },
+    {
+      "label": "bot-lifecycle",
+      "source_command": "run_godot bot-lifecycle --headless --script res://tests/bot_lifecycle_test.gd"
+    },
+    {
+      "label": "profile",
+      "source_command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/profile-state\" run_godot profile --headless --script res://tests/profile_test.gd"
+    },
+    {
+      "label": "touch",
+      "source_command": "run_godot touch --headless --script res://tests/touch_test.gd"
+    },
+    {
+      "label": "main",
+      "source_command": "run_godot main --headless --script res://tests/main_test.gd"
+    },
+    {
+      "label": "input-mode",
+      "source_command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/input-mode-state\" run_godot input-mode --headless --script res://tests/input_mode_test.gd"
+    },
+    {
+      "label": "menu-focus",
+      "source_command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/menu-focus-state\" run_godot menu-focus --headless --script res://tests/menu_focus_test.gd"
+    },
+    {
+      "label": "offline-diagnostics",
+      "source_command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/offline-diagnostics-state\" run_godot offline-diagnostics --headless --script res://tests/offline_diagnostics_test.gd"
+    },
+    {
+      "label": "objective-hud",
+      "source_command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/objective-hud-state\" run_godot objective-hud --headless --script res://tests/hud_objective_hint_test.gd"
+    },
+    {
+      "label": "landscape",
+      "source_command": "run_godot landscape --headless --script res://tests/landscape_ui_test.gd"
+    },
+    {
+      "label": "ux-contract",
+      "source_command": "run_godot ux-contract --headless --script res://tests/ux_contract_test.gd"
+    },
+    {
+      "label": "hud-overflow",
+      "source_command": "run_godot hud-overflow --headless --script res://tests/hud_overflow_test.gd"
+    },
+    {
+      "label": "economy-ui",
+      "source_command": "run_godot economy-ui --headless --script res://tests/economy_ui_test.gd"
+    },
+    {
+      "label": "armory-ui",
+      "source_command": "run_godot armory-ui --headless --script res://tests/armory_ui_test.gd"
+    },
+    {
+      "label": "armory-state",
+      "source_command": "run_godot armory-state --headless --script res://tests/armory_state_test.gd"
+    },
+    {
+      "label": "menu-state",
+      "source_command": "run_godot menu-state --headless --script res://tests/menu_state_test.gd"
+    },
+    {
+      "label": "economy-recovery",
+      "source_command": "run_godot economy-recovery --headless --script res://tests/economy_recovery_test.gd"
+    },
+    {
+      "label": "transaction-journal",
+      "source_command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/transaction-journal-state\" run_godot transaction-journal --headless --script res://tests/transaction_journal_test.gd"
+    },
+    {
+      "label": "cosmetics",
+      "source_command": "run_godot cosmetics --headless --script res://tests/cosmetic_presentation_test.gd"
+    },
+    {
+      "label": "weapon-art",
+      "source_command": "run_godot weapon-art --headless --script res://tests/weapon_art_test.gd"
+    },
+    {
+      "label": "integration-actor-lifecycle",
+      "source_command": "run_godot integration-actor-lifecycle --headless --script res://tests/integration_actor_lifecycle_test.gd"
+    },
+    {
+      "label": "reload-sequence",
+      "source_command": "run_godot reload-sequence --headless --script res://tests/reload_sequence_test.gd"
+    },
+    {
+      "label": "reload-audio",
+      "source_command": "run_godot reload-audio --headless --script res://tests/reload_audio_test.gd"
+    },
+    {
+      "label": "reload-audio-capture",
+      "source_command": "run_godot reload-audio-capture --headless --audio-driver Dummy --script res://tests/reload_audio_capture.gd -- --scenario=reload"
+    },
+    {
+      "label": "reload-audio-cancel",
+      "source_command": "run_godot reload-audio-cancel --headless --audio-driver Dummy --script res://tests/reload_audio_capture.gd -- --scenario=cancel"
+    },
+    {
+      "label": "reload-audio-shot",
+      "source_command": "run_godot reload-audio-shot --headless --audio-driver Dummy --script res://tests/reload_audio_capture.gd -- --scenario=shot"
+    }
+  ],
+  "display_only_godot": [
+    {
+      "label": "reload-visibility",
+      "source_command": "  run_godot reload-visibility --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_visibility_test.gd -- --step=2"
+    },
+    {
+      "label": "reload-finish-sunlit",
+      "source_command": "  run_godot reload-finish-sunlit --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base"
+    },
+    {
+      "label": "reload-finish-shade",
+      "source_command": "  run_godot reload-finish-shade --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --view=shade"
+    },
+    {
+      "label": "viewmodel-light",
+      "source_command": "  run_godot viewmodel-light --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/viewmodel_light_probe.gd -- --assert --poses=ready,grab"
+    },
+    {
+      "label": "reload-finish-skin",
+      "source_command": "  run_godot reload-finish-skin --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --skin"
+    }
+  ],
+  "python": [
+    {
+      "command": "python3 -m unittest discover -s server/tests -v",
+      "target": "server/tests",
+      "source_test_methods": 11
+    },
+    {
+      "command": "python3 scripts/test_transaction_restart_oracle.py",
+      "target": "scripts/test_transaction_restart_oracle.py",
+      "source_test_methods": 7
+    },
+    {
+      "command": "python3 scripts/test_account_network_output.py",
+      "target": "scripts/test_account_network_output.py",
+      "source_test_methods": 4
+    },
+    {
+      "command": "python3 scripts/test_account_match_output.py",
+      "target": "scripts/test_account_match_output.py",
+      "source_test_methods": 15
+    },
+    {
+      "command": "python3 scripts/test_reload_contact.py | tee \"$validation_dir/reload-contact.log\"",
+      "target": "scripts/test_reload_contact.py",
+      "source_test_methods": 0
+    },
+    {
+      "command": "python3 scripts/test_connection_lifecycle.py --out \"$validation_dir/connection-lifecycle\"",
+      "target": "scripts/test_connection_lifecycle.py",
+      "source_test_methods": 0
+    },
+    {
+      "command": "python3 scripts/test_build_manifest.py",
+      "target": "scripts/test_build_manifest.py",
+      "source_test_methods": 24
+    },
+    {
+      "command": "python3 scripts/test_native_log.py -v",
+      "target": "scripts/test_native_log.py",
+      "source_test_methods": 5
+    },
+    {
+      "command": "python3 scripts/test_native_observation.py -v",
+      "target": "scripts/test_native_observation.py",
+      "source_test_methods": 7
+    },
+    {
+      "command": "python3 scripts/test_offline_role_guidance.py -v",
+      "target": "scripts/test_offline_role_guidance.py",
+      "source_test_methods": 4
+    },
+    {
+      "command": "python3 scripts/test_offline_export_ocr.py -v",
+      "target": "scripts/test_offline_export_ocr.py",
+      "source_test_methods": 5
+    },
+    {
+      "command": "python3 scripts/test_offline_capture_fences.py -v",
+      "target": "scripts/test_offline_capture_fences.py",
+      "source_test_methods": 15
+    },
+    {
+      "command": "python3 scripts/test_native_focus_fence.py -v",
+      "target": "scripts/test_native_focus_fence.py",
+      "source_test_methods": 16
+    },
+    {
+      "command": "python3 scripts/test_focus_resume_timing.py -v",
+      "target": "scripts/test_focus_resume_timing.py",
+      "source_test_methods": 8
+    },
+    {
+      "command": "python3 scripts/test_native_settings_route.py -v",
+      "target": "scripts/test_native_settings_route.py",
+      "source_test_methods": 8
+    }
+  ],
+  "whole_seconds": 1200,
+  "per_godot_seconds": 540,
+  "phase_limits_origin": "unchanged timeout ${SIGHTBREAK_TEST_TIMEOUT:-540}; connection lifecycle 45-second waits, readiness 100*0.05s, owned cleanup 5s; smoke readiness 80*0.1s and owned cleanup 5s; other helpers bounded by whole supervisor",
+  "strict_pattern": "^(?:SCRIPT ERROR|ERROR:)|Parse Error|ObjectDB.*leaked|Leaked instance|^Orphan StringName: [^\\r\\n]+ \\(static: [0-9]+, total: [0-9]+\\)\\r?$|^StringName: [1-9][0-9]* unclaimed string names at exit\\.\\r?$|[Rr]esources? still in use|Traceback \\(most recent call last\\)|^FAILED(?:[ (]|$)|^FAIL:|(?:failures|errors)=[1-9][0-9]*"
+}

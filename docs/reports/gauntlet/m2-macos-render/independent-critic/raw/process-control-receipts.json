@@ -1,0 +1,283 @@
+{
+  "success": {
+    "label": "success",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-c",
+      "print('RENDER_DIAG_EXIT capture_error=0 case=full msec=200',flush=True)"
+    ],
+    "budget_seconds": 0.5,
+    "native_exit_code": 0,
+    "timed_out": false,
+    "surviving_owned_group": [],
+    "pid": 27657,
+    "elapsed_before_cleanup": 0.10064571799921396,
+    "owned_group_after_native_exit": [],
+    "exit_code_after_cleanup": 0,
+    "elapsed_total": 0.10982022200005304,
+    "process_states": [],
+    "samples": [],
+    "capture": {
+      "valid_png": true,
+      "width": 8,
+      "height": 8,
+      "sha256": "67cd4f24d4dd6ea4f68cf2c17309bddcbeb39728e85a9db9968f28faa1590dd0"
+    },
+    "marker_observed": true,
+    "clean_log": true,
+    "renderer_lines": [],
+    "phase_lines": [],
+    "passed": true
+  },
+  "dirty-log": {
+    "label": "dirty-log",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-c",
+      "print('RENDER_DIAG_EXIT capture_error=0 case=full msec=200',flush=True)\nprint('ERROR: deliberate dirty log')"
+    ],
+    "budget_seconds": 0.5,
+    "native_exit_code": 0,
+    "timed_out": false,
+    "surviving_owned_group": [],
+    "pid": 27664,
+    "elapsed_before_cleanup": 0.10044336999999359,
+    "owned_group_after_native_exit": [],
+    "exit_code_after_cleanup": 0,
+    "elapsed_total": 0.11070913200092036,
+    "process_states": [],
+    "samples": [],
+    "capture": {
+      "valid_png": true,
+      "width": 8,
+      "height": 8,
+      "sha256": "67cd4f24d4dd6ea4f68cf2c17309bddcbeb39728e85a9db9968f28faa1590dd0"
+    },
+    "marker_observed": true,
+    "clean_log": false,
+    "renderer_lines": [],
+    "phase_lines": [],
+    "passed": false
+  },
+  "missing-marker": {
+    "label": "missing-marker",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-c",
+      "print('clean exit without evidence')"
+    ],
+    "budget_seconds": 0.5,
+    "native_exit_code": 0,
+    "timed_out": false,
+    "surviving_owned_group": [],
+    "pid": 27669,
+    "elapsed_before_cleanup": 0.10047907700027281,
+    "owned_group_after_native_exit": [],
+    "exit_code_after_cleanup": 0,
+    "elapsed_total": 0.10949514599997201,
+    "process_states": [],
+    "samples": [],
+    "capture": {
+      "valid_png": true,
+      "width": 8,
+      "height": 8,
+      "sha256": "67cd4f24d4dd6ea4f68cf2c17309bddcbeb39728e85a9db9968f28faa1590dd0"
+    },
+    "marker_observed": false,
+    "clean_log": true,
+    "renderer_lines": [],
+    "phase_lines": [],
+    "passed": false
+  },
+  "nonzero": {
+    "label": "nonzero",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-c",
+      "print('RENDER_DIAG_EXIT capture_error=0 case=full msec=200',flush=True)\nraise SystemExit(7)"
+    ],
+    "budget_seconds": 0.5,
+    "native_exit_code": 7,
+    "timed_out": false,
+    "surviving_owned_group": [],
+    "pid": 27672,
+    "elapsed_before_cleanup": 0.10051132400076312,
+    "owned_group_after_native_exit": [],
+    "exit_code_after_cleanup": 7,
+    "elapsed_total": 0.10946047700053896,
+    "process_states": [],
+    "samples": [],
+    "capture": {
+      "valid_png": true,
+      "width": 8,
+      "height": 8,
+      "sha256": "67cd4f24d4dd6ea4f68cf2c17309bddcbeb39728e85a9db9968f28faa1590dd0"
+    },
+    "marker_observed": true,
+    "clean_log": true,
+    "renderer_lines": [],
+    "phase_lines": [],
+    "passed": false
+  },
+  "timeout": {
+    "label": "timeout",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-c",
+      "import signal,time\nsignal.signal(signal.SIGTERM,signal.SIG_IGN)\ntime.sleep(30)"
+    ],
+    "budget_seconds": 0.5,
+    "native_exit_code": null,
+    "timed_out": true,
+    "surviving_owned_group": [],
+    "pid": 27675,
+    "elapsed_before_cleanup": 0.5009547940007906,
+    "owned_group_after_native_exit": [],
+    "exit_code_after_cleanup": -9,
+    "elapsed_total": 3.52145674699932,
+    "process_states": [
+      {
+        "seconds": 0.5009603039998183,
+        "owned_group": [
+          "  27675   27656   27675 Ss         00:00  1.9 python3"
+        ]
+      }
+    ],
+    "samples": [],
+    "capture": {
+      "valid_png": true,
+      "width": 8,
+      "height": 8,
+      "sha256": "67cd4f24d4dd6ea4f68cf2c17309bddcbeb39728e85a9db9968f28faa1590dd0"
+    },
+    "marker_observed": false,
+    "clean_log": true,
+    "renderer_lines": [],
+    "phase_lines": [],
+    "passed": false
+  },
+  "missing-capture": {
+    "label": "missing-capture",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-c",
+      "print('RENDER_DIAG_EXIT capture_error=0 case=full msec=200',flush=True)"
+    ],
+    "budget_seconds": 0.5,
+    "native_exit_code": 0,
+    "timed_out": false,
+    "surviving_owned_group": [],
+    "pid": 27680,
+    "elapsed_before_cleanup": 0.10040895299971453,
+    "owned_group_after_native_exit": [],
+    "exit_code_after_cleanup": 0,
+    "elapsed_total": 0.11256571899866685,
+    "process_states": [],
+    "samples": [],
+    "capture": null,
+    "marker_observed": true,
+    "clean_log": true,
+    "renderer_lines": [],
+    "phase_lines": [],
+    "passed": false
+  },
+  "bad-capture": {
+    "label": "bad-capture",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-c",
+      "print('RENDER_DIAG_EXIT capture_error=0 case=full msec=200',flush=True)"
+    ],
+    "budget_seconds": 0.5,
+    "native_exit_code": 0,
+    "timed_out": false,
+    "surviving_owned_group": [],
+    "pid": 27683,
+    "elapsed_before_cleanup": 0.10043095999935758,
+    "owned_group_after_native_exit": [],
+    "exit_code_after_cleanup": 0,
+    "elapsed_total": 0.10775537799963786,
+    "process_states": [],
+    "samples": [],
+    "capture": {
+      "valid_png": false,
+      "sha256": "2aade9c49b9414c70f452b226271ef5066e2894cdd0557f54857819fb7bcc782"
+    },
+    "marker_observed": true,
+    "clean_log": true,
+    "renderer_lines": [],
+    "phase_lines": [],
+    "passed": false
+  },
+  "timeout-tree": {
+    "label": "timeout-tree",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-c",
+      "import subprocess,signal,time,sys\nchild=subprocess.Popen([sys.executable,'-c','import time; time.sleep(30)'])\ndef stop(sig,frame):\n    child.wait(timeout=2)\n    raise SystemExit(128+sig)\nsignal.signal(signal.SIGTERM,stop)\nprint('child='+str(child.pid),flush=True)\ntime.sleep(30)\n"
+    ],
+    "budget_seconds": 0.5,
+    "native_exit_code": null,
+    "timed_out": true,
+    "surviving_owned_group": [],
+    "pid": 27686,
+    "elapsed_before_cleanup": 0.5008684360000188,
+    "owned_group_after_native_exit": [],
+    "exit_code_after_cleanup": 143,
+    "elapsed_total": 0.5252536219995818,
+    "process_states": [
+      {
+        "seconds": 0.5008748789987294,
+        "owned_group": [
+          "  27686   27656   27686 Ss         00:00  4.0 python3",
+          "  27687   27686   27686 S          00:00  0.0 python3"
+        ]
+      }
+    ],
+    "samples": [],
+    "capture": {
+      "valid_png": true,
+      "width": 8,
+      "height": 8,
+      "sha256": "67cd4f24d4dd6ea4f68cf2c17309bddcbeb39728e85a9db9968f28faa1590dd0"
+    },
+    "marker_observed": false,
+    "clean_log": true,
+    "renderer_lines": [],
+    "phase_lines": [],
+    "passed": false
+  },
+  "interrupted": {
+    "label": "interrupted",
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-c",
+      "import time; time.sleep(30)"
+    ],
+    "budget_seconds": 30,
+    "native_exit_code": null,
+    "timed_out": false,
+    "surviving_owned_group": [],
+    "pid": 27694,
+    "interrupted": 143,
+    "error": "External cancellation",
+    "owned_group_after_native_exit": [
+      "  27694   27692   27694 Ss         00:00  0.0 python3"
+    ],
+    "exit_code_after_cleanup": -15,
+    "elapsed_total": 0.314320254001359,
+    "process_states": [],
+    "samples": [],
+    "capture": {
+      "valid_png": true,
+      "width": 8,
+      "height": 8,
+      "sha256": "67cd4f24d4dd6ea4f68cf2c17309bddcbeb39728e85a9db9968f28faa1590dd0"
+    },
+    "marker_observed": false,
+    "clean_log": true,
+    "renderer_lines": [],
+    "phase_lines": [],
+    "passed": false
+  }
+}

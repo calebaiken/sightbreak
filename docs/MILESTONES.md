@@ -1,0 +1,118 @@
+# Development milestones
+
+## Desktop playability — 2026-10-21
+
+0.3.3-dev/build 6 implements explicit desktop/mobile touch policy, safe held-input
+resume, consistent controller routing, role/phase objective guidance, bounded
+read-only debug/offline observations, native Windows/Linux objective/full-match
+controllers and macOS minimal/frozen/candidate diagnostics. Actual results and
+exact frozen packages are in the [playability report](reports/DESKTOP_PLAYABILITY_REPORT.md).
+Implementation and passing source tests do not establish milestone-wide or 8.5
+acceptance; retained failed native gates remain blockers.
+
+Next three priorities:
+
+1. Resolve measured native Windows authority/freshness timing and offline OCR,
+   then repeat complete interaction/restart and layout flows without altering
+   gameplay or failed deadlines. Retain separately passed objectives/matches. Isolate
+   Intel's game-rendering workload while retaining the unchanged startup gate.
+2. Qualify human full matches on real Windows/Linux/Intel/ARM hardware, macOS
+   gameplay, touch/controller/high-DPI/window modes, Wayland, mobile devices,
+   audio/frame pacing and signing. Independently assess every applicable 8.5 gate.
+3. Independently qualify V3 input freshness and durable recovery with real
+   PostgreSQL restart/lost-response evidence, then repair tactical AI contracts
+   and measured gunplay/visual defects. Steam publication and public operations
+   remain later milestones with their own authorization and release gates.
+
+## Desktop alpha continuation — 2026-10-20
+
+0.3.2-dev (build 5) adds Windows x86_64/macOS Universal 2 export presets, portable
+selected-target toolchain/packaging, exact-source/mode checks, native CI and safe
+desktop focus/in-match settings/display handling. Android/iOS presets and all
+network/backend/economy contracts are preserved. [Preflight](reports/DESKTOP_PREFLIGHT.md)
+and [desktop acceptance checklist](DESKTOP_TESTING.md) define the current scope.
+No full milestone or per-category 8.5 acceptance is inferred from these changes.
+
+[Final desktop evidence](reports/DESKTOP_ALPHA_REPORT.md): five exports/packages
+inspected; Linux real offline/restart and network input pass; Windows network
+input passes an unchanged-source retry with the first timeout retained; macOS15
+Apple Silicon startup passes, Intel graphical startup fails. The full maintained
+rendered/backend suite passes on frozen `0fb7480`. Complete exported objectives,
+touchscreen-desktop input selection and human/platform quality gates remain open.
+
+Next three implementation priorities:
+
+1. Correct inherited touchscreen-desktop input selection; resolve Intel macOS
+   graphical startup and diagnose intermittent Windows reload; complete native
+   desktop full-match/objective/controller/focus/DPI qualification,
+   including Intel/Apple Silicon macOS, then physical Linux/Windows GPU profiling.
+2. Independently integrate the narrow V3 input-freshness fix, followed by durable
+   client recovery with a real PostgreSQL lost-response/re-auth/restart oracle;
+   preserve protocol compatibility and default-off prediction/rewind.
+3. Repair match/actor contracts before tactical AI porting, and fix the measured
+   reload/hand framing defects with native before/after motion and independent review.
+
+Older milestone records below retain their historical scope and failures.
+
+## Combined preview update — 2026-10-14
+
+The isolated combined branch includes PR1=98ff57c, PR2=64ec598 and Codex PR3–8=89c0e9. See [integration report](reports/COMBINED_INTEGRATION_REPORT.md) for exact source/build identities and evidence. Full maintained47-group matrix passes; new custom-HUD adversarial tests and full-capacity close-loss reconnect fail. Unicode feed clipping is fixed; older references below are historical. Default rig works, static fallback projection is defective, and the independent weapon/arms visual slice scores5.5/10 (not the historical whole-game8.1 rubric). Device performance, physical touch, Xcode and production Internet security remain unverified. Next priority: owner corrections for HUD/fallback, a separate bounded reconnect fix with hostile account/capacity tests, then refreshed combined verification. Prediction stays opt-in, live rewind disabled, earned-only economy unchanged.
+
+## Historical record (superseded where noted above)
+
+## Competitive systems initiative — review stack
+
+- A: corrected Claude77e0433 independently verified; Unicode HUD failure posted to PR1. No dependency merge performed.
+- B: recipient state privacy and adversarial tests, PR3.
+- C: timestamped continuous interpolation and opt-in movement replay/reconciliation, PR4. Human feel/accuracy gate remains open.
+- D: bounded admission/idle cleanup and ticket-preserving capacity/account preflight, PR5.
+- F: immutable server result outbox, crash/outage/lost-ack evidence, PR6. Long-outage policy and hardware durability remain open.
+- E: disabled diagnostic hit history with live-volume parity, PR7. Active compensation and fairness **incomplete**.
+- G/H: reproducible impairment/load/lifecycle metrics, full regression matrix, debug builds, manual CI definition and independent review, PR8. Remote CI execution and physical Android/iOS acceptance **unverified**.
+
+All are stacked drafts requiring dependency reconciliation, full applicable gates and explicit merge authorization. Claude graphics PR2 is a separate workstream. Follow [parallel work](engineering/PARALLEL_WORK.md) and [current QA](reports/CODEX_NETWORK_QA.md) when resuming; do not rebuild completed systems.
+
+The initial source state contained only a README. This implementation establishes a playable native alpha with substantial offline, network and economy foundations. The specification's quality gate remains **at least 8.5/10 in every applicable category**, backed by independent evidence. Implemented functionality is not automatic milestone acceptance. No full phase is accepted while its applicable physical-device, security or quality criteria remain unverified.
+
+| Phase | Implemented development scope | Remaining acceptance work |
+| --- | --- | --- |
+| 1 Foundation | Pinned native Godot toolchain, menu/settings, player controller, architecture, scripts, tests | Independent quality gate and device startup/lifecycle |
+| 2 Combat | Four weapons, damage/headshots/recoil/spread/reload, grenades/smoke, distinct gunshots, staged reload/sway, replicated recoil, touch/controller/gyro code, 3D arena and bots | Physical input feel, production weapon/character animation and all-device stability |
+| 3 Offline | Full 5v5 round loop, two sites, planting/defusing, match funds, side switch, scoreboard, results, spectator and local training records | Human balance and device soak; unforced full bot matches now pass including halftime and final result |
+| 4 Online | Dedicated authoritative ENet, input filtering, snapshots/interpolation, reconnect, account tickets, trusted result bridge, server lobby reset | Encrypted production transport, broader anti-cheat, prediction/lag compensation, loss/jitter/10-human tests |
+| 5 Progression/inventory | Authenticated accounts, XP/levels, match/daily-first/level rewards, authoritative wallets/instances, persistent rifle loadouts | Daily/weekly challenges, achievements, complete career/profile/history UX and anti-farming review |
+| 6 Cases/cosmetics | Four collections, exact probabilities, CSPRNG draw committed before carousel, skip/reduced motion, procedural finishes and native 3D inspection | Expanded knife/glove/sticker/charm/accessory assets; physical-device polish |
+| 7 Trading/market | Two-sided revision confirmations, atomic ownership exchange, marketplace debit/fee/transfer, reservation/replay/race tests | Complete filters/history/profile UX, pagination, trade expiry, durable app-restart recovery and load/security review; same-session lost-response retry implemented |
+| 8 Production | Original procedural yard/models/sound, shader finishes, compatible renderer, quality controls, instance batching | Production art/audio/animation, device performance/thermal profiling and optimization |
+| 9 Release | Native Linux/Android debug exports, unsigned iOS Xcode project, source-bound artifact manifests, reproducible checks and independent QA record | Physical Android/iOS evidence, secure public deployment review, accessibility/balance and release acceptance |
+
+## Stabilization follow-up
+
+The second development pass preserves the existing gameplay/economy architecture. The renderer failure now has a standalone engine reproduction, a shared-sky mitigation, and passing actual rendered demo/repeated-session checks. Synthetic input and landscape coverage were expanded; full natural bot matches exercise buying, combat, planting, halftime and one final result. Gunplay, environment surfaces, case inspection and safe pending-transaction retries have received focused polish. See the dated QA follow-up for independent measurements and scoped scores; these are not global milestone acceptance.
+
+## 0.3.0-dev visual and mobile milestone
+
+The existing systems continue from `4f21dc14ef73c3d620f095065ab89a0035ddd1f2`.
+
+- Implemented: Relay Yard architecture/material pass; shared weapon geometry and articulated operator presentation; staged combat animation and pooled impact/casing effects; authority-confirmed network hit/impact feedback; compact mobile HUD and maximum-scale layout corrections; native hinged case and sharpened item/knife-reference inspection; inventory/market filters.
+- Verified evidence: fixed-view native before/after captures, independent seven-category visual review, maintained gameplay/network/PostgreSQL/HTTP economy regressions, full bot matches and repeated native resource cleanup. Exact counts, scores and unresolved gates are in [QA-0.3](reports/QA-0.3.md).
+- Measured: reproducible fixed-camera software-rendering counters and frame samples. These are development diagnostics and never mobile FPS or thermal evidence.
+- Delivery: versioned Android debug package, Linux development export and unsigned iOS project, with source and payload hashes. Exact verified versions and paths are in [builds](builds.md).
+- Incomplete: the visual gate (**8.1/10** aggregate; geometry/materials/lighting/models/effects below 8.5), every physical-device gate, human gunplay/balance assessment and production transport/security review. The native knife reference is not an owned item or an expanded reward catalog.
+
+## Next development session
+
+1. Begin with `docs/reports/QA-0.3.md`, `docs/KNOWN_LIMITATIONS.md` and `docs/DEVICE_TESTING.md`. Preserve the now-passing actual renderer/lifecycle checks and full regression aggregate. Do not reintroduce per-scene sky allocation without retesting the maintained Godot reproduction.
+2. Continue the native screenshot loop on the weakest categories: authored character anatomy/hand integration, surface variation at believable scale, lighting/contact depth and less spherical smoke. Preserve the matched cameras and independent scoring. Current art increases standard rendering cost; profile LOD, shadow participation and batch/geometry budgets before adding detail.
+3. Install the actual debug APK on representative midrange Android hardware and complete the QA device checklist. Collect device/OS/build hash, p95/p99 frame times, a full match and long-session thermal/memory behavior. macOS/Xcode/iPhone validation is a separate platform prerequisite.
+4. Exercise ten real account users through full matches and rewards. Preserve privacy-safe identity/activity evidence; verify rejoin, ineligible abandonment, network loss, result retries and lobby reset. Synthetic fixture success is not human anti-farming evidence.
+5. Finish configurable daily/weekly challenges, achievements and career/history screens from authoritative match records, with idempotent grants and adversarial tests.
+6. Expand cosmetic definitions and original assets only after the visual-only loadout invariant remains tested. Finish multi-field market discovery/history and recoverable pending transaction UX.
+7. Profile and improve predicted movement, bounded lag compensation and encrypted authenticated transport before public competitive play. Keep privileged services isolated and never add financial features.
+
+## Session state
+
+- Source and reproducible scripts live in the repository; generated exports, local keys, caches and transient logs are ignored. Curated QA logs/screenshots and manifest evidence are tracked under `docs/reports/`.
+- Local test PostgreSQL and API run only for development. Start using `backend/dev-db.sh`, migrate explicitly, then `backend/dev-api.sh`; processes do not survive an environment snapshot.
+- The installer pins and verifies Godot 4.7.2. Android toolchain setup and export instructions are in `docs/builds.md`.
+- Automated fixtures are fictional and distinct from player progress. Never import local training saves into online inventory or wallets.

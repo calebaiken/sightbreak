@@ -1,0 +1,166 @@
+{
+  "verification": "PASS",
+  "scope": "Recomputed native headless source outcomes, not independent approval or platform release acceptance",
+  "results": {
+    "baseline-r1": {
+      "source": {
+        "commit": "561d0cbba651514bfac96c50437a849d65843545",
+        "game_tree": "45b6c6ea9d3244700e324e90d6df4778ee28d18e",
+        "status": "",
+        "input_stream_sha256": "60d92e1cacc838867f9241379cbf3bc8b27a025fd1b91ca191effc37354d7ccc"
+      },
+      "native_pairs": 8,
+      "declared_outcomes_met": 4,
+      "focused_groups": 9,
+      "checks": [
+        {
+          "case": "1-steady-prediction-off",
+          "meets_declared_outcome": true,
+          "stale_displacement_m": 0.0,
+          "max_speed_mps": 0.0,
+          "stop_after_last_ack_s": 0.0,
+          "retired_at_s": -1.0
+        },
+        {
+          "case": "1-steady-prediction-on",
+          "meets_declared_outcome": true,
+          "stale_displacement_m": 0.0,
+          "max_speed_mps": 0.0,
+          "stop_after_last_ack_s": 0.0,
+          "retired_at_s": -1.0
+        },
+        {
+          "case": "1-input-gap-prediction-off",
+          "meets_declared_outcome": true,
+          "stale_displacement_m": 0.0,
+          "max_speed_mps": 0.0,
+          "stop_after_last_ack_s": 0.0,
+          "retired_at_s": -1.0
+        },
+        {
+          "case": "1-input-gap-prediction-on",
+          "meets_declared_outcome": true,
+          "stale_displacement_m": 0.0,
+          "max_speed_mps": 0.0,
+          "stop_after_last_ack_s": 0.0,
+          "retired_at_s": -1.0
+        },
+        {
+          "case": "1-snapshot-gap-prediction-off",
+          "meets_declared_outcome": false,
+          "stale_displacement_m": 1.02000975608826,
+          "max_speed_mps": 1.01999998092651,
+          "stop_after_last_ack_s": null,
+          "retired_at_s": -1.0
+        },
+        {
+          "case": "1-snapshot-gap-prediction-on",
+          "meets_declared_outcome": false,
+          "stale_displacement_m": 1.00300931930542,
+          "max_speed_mps": 1.01999998092651,
+          "stop_after_last_ack_s": null,
+          "retired_at_s": -1.0
+        },
+        {
+          "case": "1-stale-replay-prediction-off",
+          "meets_declared_outcome": false,
+          "stale_displacement_m": 1.00300931930542,
+          "max_speed_mps": 1.01999998092651,
+          "stop_after_last_ack_s": null,
+          "retired_at_s": -1.0
+        },
+        {
+          "case": "1-stale-replay-prediction-on",
+          "meets_declared_outcome": false,
+          "stale_displacement_m": 1.00300931930542,
+          "max_speed_mps": 1.01999998092651,
+          "stop_after_last_ack_s": null,
+          "retired_at_s": -1.0
+        }
+      ],
+      "probe_sha256": "ec6ed6a056d8a50c1b6554d0a741742802ec42fb26c056711be5790e2dbf9f97",
+      "driver_sha256": "5c84f2a8cdd58832f2087cebaafbe183a39808cfbc3fb2cfb2cb8dfe7c556317",
+      "godot_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e"
+    },
+    "candidate-r1": {
+      "source": {
+        "commit": "8e10df0b6508964fbe67a93629b0aa8b3ac86a00",
+        "game_tree": "af4c06463f57c6d4e1feffda4a985eea569b14fa",
+        "status": "",
+        "input_stream_sha256": "b455205d827134830637f03457cc67e4e321721d91a7d840941fc74e1b26c88e"
+      },
+      "native_pairs": 8,
+      "declared_outcomes_met": 8,
+      "focused_groups": 9,
+      "checks": [
+        {
+          "case": "1-steady-prediction-off",
+          "meets_declared_outcome": true,
+          "stale_displacement_m": 0.0,
+          "max_speed_mps": 0.0,
+          "stop_after_last_ack_s": 0.0,
+          "retired_at_s": -1.0
+        },
+        {
+          "case": "1-steady-prediction-on",
+          "meets_declared_outcome": true,
+          "stale_displacement_m": 0.0,
+          "max_speed_mps": 0.0,
+          "stop_after_last_ack_s": 0.0,
+          "retired_at_s": -1.0
+        },
+        {
+          "case": "1-input-gap-prediction-off",
+          "meets_declared_outcome": true,
+          "stale_displacement_m": 0.0,
+          "max_speed_mps": 0.0,
+          "stop_after_last_ack_s": 0.0,
+          "retired_at_s": -1.0
+        },
+        {
+          "case": "1-input-gap-prediction-on",
+          "meets_declared_outcome": true,
+          "stale_displacement_m": 0.0,
+          "max_speed_mps": 0.0,
+          "stop_after_last_ack_s": 0.0,
+          "retired_at_s": -1.0
+        },
+        {
+          "case": "1-snapshot-gap-prediction-off",
+          "meets_declared_outcome": true,
+          "stale_displacement_m": 0.0,
+          "max_speed_mps": 0.0,
+          "stop_after_last_ack_s": 0.3160000000000003,
+          "retired_at_s": -1.0
+        },
+        {
+          "case": "1-snapshot-gap-prediction-on",
+          "meets_declared_outcome": true,
+          "stale_displacement_m": 0.0,
+          "max_speed_mps": 0.0,
+          "stop_after_last_ack_s": 0.33299999999999974,
+          "retired_at_s": -1.0
+        },
+        {
+          "case": "1-stale-replay-prediction-off",
+          "meets_declared_outcome": true,
+          "stale_displacement_m": 0.0,
+          "max_speed_mps": 0.0,
+          "stop_after_last_ack_s": 0.31700000000000017,
+          "retired_at_s": 32.04
+        },
+        {
+          "case": "1-stale-replay-prediction-on",
+          "meets_declared_outcome": true,
+          "stale_displacement_m": 0.0,
+          "max_speed_mps": 0.0,
+          "stop_after_last_ack_s": 0.3330000000000002,
+          "retired_at_s": 32.032
+        }
+      ],
+      "probe_sha256": "ec6ed6a056d8a50c1b6554d0a741742802ec42fb26c056711be5790e2dbf9f97",
+      "driver_sha256": "5c84f2a8cdd58832f2087cebaafbe183a39808cfbc3fb2cfb2cb8dfe7c556317",
+      "godot_sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e"
+    }
+  }
+}

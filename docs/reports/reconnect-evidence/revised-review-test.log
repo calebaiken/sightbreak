@@ -1,0 +1,30 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+REVIEW_CHECK PASS repeated callbacks cannot renew recovery deadline
+REVIEW_CHECK PASS recovery deadline boundary is strict
+REVIEW_CHECK PASS permitted attempt 0
+REVIEW_CHECK PASS permitted attempt 1
+REVIEW_CHECK PASS permitted attempt 2
+REVIEW_CHECK PASS permitted attempt 3
+REVIEW_CHECK PASS permitted attempt 4
+REVIEW_CHECK PASS extra attempts remain bounded
+REVIEW_CHECK PASS successful or terminal episode can clear policy
+REVIEW_CHECK PASS invalid or expired resume token rejected before guest fallback
+REVIEW_CHECK PASS invalid resume cannot inspect/consume account ticket or gain authority
+REVIEW_CHECK PASS invalid or expired resume token rejected before guest fallback
+REVIEW_CHECK PASS invalid resume cannot inspect/consume account ticket or gain authority
+REVIEW_CHECK PASS invalid or expired resume token rejected before guest fallback
+REVIEW_CHECK PASS invalid resume cannot inspect/consume account ticket or gain authority
+REVIEW_CHECK PASS positive control: ordinary fresh account join reaches inspection
+PROTOCOL_CLIENT_FAILED Account ticket rejected: terminal review reason
+REVIEW_CHECK PASS terminal admission cancels retry timer before another frame
+REVIEW_CHECK PASS terminal admission cancels recovery episode
+REVIEW_CHECK PASS expired recovery cannot overwrite terminal rejection reason
+PROTOCOL_CLIENT_FAILED Version mismatch: this client uses SIGHTBREAK network protocol 6. review mismatch Install the same SIGHTBREAK version as the server to join.
+PROTOCOL_CLIENT_REJECTED server_protocol=999
+REVIEW_CHECK PASS explicit incompatible version stays terminal after delayed callbacks
+REVIEW_CHECK PASS duplicate disconnect callbacks do not consume or renew recovery
+REVIEW_CHECK PASS unadmitted client without resume credential cannot start recovery
+REVIEW_CHECK PASS native transport setup for stale-close test
+REVIEW_CHECK PASS stale deferred close cannot terminate replacement transport
+INDEPENDENT_RECONNECT_REVIEW checks=24 failures=0

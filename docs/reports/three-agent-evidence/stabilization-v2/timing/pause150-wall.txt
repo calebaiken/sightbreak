@@ -1,0 +1,45 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PROBE_CAPTURE_READY clock=wall origin=309
+ERROR: land on voice 3: heard at -60 ms after play() with its 0 ms attack, -0 ms from the run's typical offset (peak 0.018)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe.gd:52)
+       [1] _run (/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe.gd:259)
+ERROR: seat on voice 1: heard at -60 ms after play() with its 0 ms attack, 0 ms from the run's typical offset (peak 0.016)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe.gd:52)
+       [1] _run (/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe.gd:259)
+ERROR: the mixer's offset from the wall clock is -60 ms (between -45 and 120: output latency plus the mix chunk)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe.gd:52)
+       [1] _run (/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe.gd:261)
+ERROR: nothing is audible on any reload voice before the first event (peak 0.06647)
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe.gd:52)
+       [1] _run (/workspace/reviews/stabilization-v2-20261016/timing/reload_audio_clock_probe.gd:294)
+captured 135168 frames per bus at 44100 Hz; peaks [0.08469361066818, 0.13238176703453, 0.05278231948614, 0.03180443868041, 0.0]
+bus 0 onsets (ms from capture start): 472, 1591
+bus 1 onsets (ms from capture start): 498, 1677
+bus 2 onsets (ms from capture start): 1058
+bus 3 onsets (ms from capture start): 1218, 1400
+bus 4 onsets (ms from capture start): 
+logged unlatch at 544 ms from origin (voice 0)
+logged extract at 599 ms from origin (voice 1)
+logged pouch at 1131 ms from origin (voice 2)
+logged land at 1331 ms from origin (voice 3)
+logged enter at 1669 ms from origin (voice 0)
+logged seat at 1807 ms from origin (voice 1)
+ok   the reload logged every event once, in order (["unlatch", "extract", "pouch", "land", "enter", "seat"])
+ok   unlatch on voice 0: heard at -60 ms after play() with its 0 ms attack, 0 ms from the run's typical offset (peak 0.037)
+ok   extract on voice 1: heard at -59 ms after play() with its 19 ms attack, -19 ms from the run's typical offset (peak 0.078)
+ok   pouch on voice 2: heard at -60 ms after play() with its 0 ms attack, 0 ms from the run's typical offset (peak 0.053)
+FAIL land on voice 3: heard at -60 ms after play() with its 0 ms attack, -0 ms from the run's typical offset (peak 0.018)
+ok   enter on voice 0: heard at -60 ms after play() with its 7 ms attack, -7 ms from the run's typical offset (peak 0.085)
+FAIL seat on voice 1: heard at -60 ms after play() with its 0 ms attack, 0 ms from the run's typical offset (peak 0.016)
+FAIL the mixer's offset from the wall clock is -60 ms (between -45 and 120: output latency plus the mix chunk)
+FAIL nothing is audible on any reload voice before the first event (peak 0.06647)
+RELOAD_AUDIO_CAPTURE scenario=reload reduced=false checks=9 failures=4

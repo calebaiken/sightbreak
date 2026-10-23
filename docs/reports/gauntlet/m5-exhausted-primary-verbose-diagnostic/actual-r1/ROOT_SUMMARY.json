@@ -1,0 +1,30 @@
+{
+  "scope": "Root builder diagnostic handoff; independent actual review pending",
+  "source_freeze": "b87afb717bf09a78c6d36b164d48906902734bdb",
+  "source_head_before": "b87afb717bf09a78c6d36b164d48906902734bdb",
+  "source_head_after": "b87afb717bf09a78c6d36b164d48906902734bdb",
+  "source_status_after": "",
+  "controller_sha256": "43dfdeae51aaa95dbb43aeb33125c772688f50e604cc471c8b4ba0309734c7fe",
+  "tool_exec_session": 23521,
+  "tool_returned_exit_code": 0,
+  "diagnostic_only": true,
+  "strict_native_result": "FAILED_OBJECTDB_LEAKS",
+  "import_seconds": 6.48413261099995,
+  "probe_seconds": 22.956629680000333,
+  "wrapper_seconds": 31.890402494000227,
+  "case_rows": 567,
+  "sequence_steps": 576,
+  "control_steps": 96,
+  "fixture_checks": 18499,
+  "fixture_failures": [],
+  "typed_leak_lines": [
+    "Leaked instance: AudioStreamPlaybackWAV:9223372369278539738 - Reference count: 1",
+    "Leaked instance: AudioStreamWAV:9223372163673757853 - Reference count: 1",
+    "Orphan StringName: Master (static: 0, total: 2)"
+  ],
+  "original_stderr": "WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).\n   at: cleanup (core/object/object.cpp:2536)\n",
+  "tracked_sources_unchanged": true,
+  "recognized_godot_after": [],
+  "archive_files": 17,
+  "original_baseline_types_remain_unidentified": true
+}

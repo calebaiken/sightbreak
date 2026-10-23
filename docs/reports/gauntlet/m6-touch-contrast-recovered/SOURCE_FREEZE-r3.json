@@ -1,0 +1,78 @@
+{
+  "phase": "SOURCE_AND_PURE_ONLY_REVIEW_PENDING",
+  "round": 3,
+  "freeze_commit": "a52022169241df9ff662039547a375e1c46ac1c5",
+  "baseline_commit": "138a1ab810a29e3c504f5811a0051a08e1ad52b9",
+  "preregistration_commit": "61151b5",
+  "product_commit": "b4d0c1b",
+  "native_runs": 0,
+  "engine_invocations": 0,
+  "pure_controls": 16,
+  "independent_r2_reproducer_replay_pass": true,
+  "fixtures": [
+    {
+      "name": "baseline",
+      "path": "/workspace/sightbreak-touch-contrast-fixture-recovered-r3/baseline",
+      "source_full": "138a1ab810a29e3c504f5811a0051a08e1ad52b9",
+      "manifest_sha256": "292acc6b618919e27379b0b28b633d10885898f90328bfde1d4aa9d3f3434e34",
+      "original_paths": 323,
+      "original_bytes": 9924140
+    },
+    {
+      "name": "candidate",
+      "path": "/workspace/sightbreak-touch-contrast-fixture-recovered-r3/candidate",
+      "source_full": "a52022169241df9ff662039547a375e1c46ac1c5",
+      "manifest_sha256": "b63de02c0ebe3755d4ebc439cb90dde7b1edc3e554ab5b2242902c062a50bcf7",
+      "original_paths": 323,
+      "original_bytes": 9924649
+    }
+  ],
+  "frozen_files": [
+    {
+      "path": "game/scripts/ui/touch_controls.gd",
+      "sha256": "5850ba805b44f99ce83c31d9ec607bb4b055f57fa85918d03a0e6fb0a222f398",
+      "bytes": 11562
+    },
+    {
+      "path": "game/scripts/ui/touch_controls.gd.uid",
+      "sha256": "2f4e64596905c7df3561425084553306fd4810e06e68a34b6bab3c7402e938a0",
+      "bytes": 19
+    },
+    {
+      "path": "scripts/prepare_touch_contrast.py",
+      "sha256": "3045fd88d938e6926dc7e08b7a9137c53fbb98036360fb23cd192c52d55949be",
+      "bytes": 6933
+    },
+    {
+      "path": "scripts/analyze_touch_contrast.py",
+      "sha256": "2501fc714ca07d77aa883689d3003f06ae40db6210eba08f1002f33a1afda4ab",
+      "bytes": 15561
+    },
+    {
+      "path": "scripts/test_touch_contrast_method.py",
+      "sha256": "5046aa29730e68e6d7b207a3bb82a5c89e38a984e0c2da2a363e567451a32af4",
+      "bytes": 6911
+    },
+    {
+      "path": "scripts/fixtures/touch_contrast/touch_contrast_capture.gd",
+      "sha256": "905dee2274c81ba77a12a664cd6150e9fa735db08a64d867dd09af2375dc952e",
+      "bytes": 8148
+    },
+    {
+      "path": "scripts/fixtures/touch_contrast/touch_contrast_capture.gd.uid",
+      "sha256": "6770e17017eecf6ab560b243eaaba4a7dd77700f05f1a750a87263e48ce260d5",
+      "bytes": 20
+    }
+  ],
+  "unchanged_from_r2": [
+    "game/scripts/ui/touch_controls.gd",
+    "game/scripts/ui/touch_controls.gd.uid",
+    "scripts/prepare_touch_contrast.py",
+    "scripts/fixtures/touch_contrast/touch_contrast_capture.gd",
+    "scripts/fixtures/touch_contrast/touch_contrast_capture.gd.uid"
+  ],
+  "independent_reproducer_sha256": "9a25c8d51c3385e2cbf9af7e2b1c40f6fdf77f3ac558a0d2b100570b9e9e8998",
+  "independent_r2_rejection_sha256": "6dfdea455240b50b3dd6986149b85616c166b65055534f0c703fd379c8585313",
+  "independent_r3_replay_sha256": "dd2ffdd1b6ded5153a6eda01c81fc3550d307ed8c33fc8d0dade88a72169f06b",
+  "remaining": "Independent R3 method/source critic and root render-lane release before native; dark surround/external background remains unresolved."
+}

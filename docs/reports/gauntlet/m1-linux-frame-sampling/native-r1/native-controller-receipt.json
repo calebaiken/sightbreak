@@ -1,0 +1,25 @@
+{
+  "command": [
+    "python3",
+    "scripts/verify_offline_match.py",
+    "--target",
+    "linux",
+    "--scenario",
+    "plant",
+    "--timeout",
+    "180",
+    "--linux-frame-diagnostics",
+    "--display",
+    ":122",
+    "--xvfb",
+    "/workspace/tools/xvfb/usr/bin/Xvfb",
+    "--output",
+    "/workspace/sightbreak-linux-frame-sampling/.local/linux-frame-sampling/runtime-r1/native-plant"
+  ],
+  "started_wall_unix_ns": 1792655748737316397,
+  "started_monotonic_ns": 31587378646065,
+  "owned_controller_pid": 137004,
+  "exit_code": 1,
+  "finished_wall_unix_ns": 1792655881221350792,
+  "finished_monotonic_ns": 31719862679399
+}

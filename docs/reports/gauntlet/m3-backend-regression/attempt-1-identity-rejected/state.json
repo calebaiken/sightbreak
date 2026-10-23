@@ -1,0 +1,435 @@
+{
+  "accepted_by_builder": false,
+  "cleanup_result": "PASS",
+  "database": "sb_backend_304618a2553f_test",
+  "failure": "Traceback (most recent call last):\n  File \"/workspace/sightbreak-backend-regression-a3b7070/docs/reports/gauntlet/m3-backend-regression/run_qualification.py\", line 245, in <module>\n    identity('identity-before-migration')\n  File \"/workspace/sightbreak-backend-regression-a3b7070/docs/reports/gauntlet/m3-backend-regression/run_qualification.py\", line 153, in identity\n    assert value['server_port'] == 5432 and internal[4] == '5432'\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n",
+  "finished_utc": "2026-10-22T07:01:15.870644+00:00",
+  "independent_review": "PENDING",
+  "output": "/workspace/sightbreak-backend-regression-a3b7070/builds/sightbreak-backend-regression-304618a2553f",
+  "role": "sb_regression",
+  "run": "sightbreak-backend-regression-304618a2553f",
+  "source_result": "PASS: before equals after",
+  "started_utc": "2026-10-22T07:01:11.412626+00:00",
+  "steps": [
+    {
+      "argv": [
+        "docker",
+        "--host=unix:///var/run/docker.sock",
+        "image",
+        "inspect",
+        "--format",
+        "{{json .Id}}\n{{json .RepoDigests}}",
+        "postgres:17@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 0.015400143001897959,
+      "exit_code": 0,
+      "name": "image-before",
+      "process": {
+        "pgrp": 116271,
+        "pid": 116271,
+        "ppid": 116233,
+        "start_ticks": 2831011,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "docker",
+        "--host=unix:///var/run/docker.sock",
+        "volume",
+        "create",
+        "--label",
+        "io.sightbreak.qualification=sightbreak-backend-regression-304618a2553f",
+        "--label",
+        "io.sightbreak.owner=backend_regression_builder",
+        "sightbreak-backend-regression-304618a2553f-data"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 0.015247013001498999,
+      "exit_code": 0,
+      "name": "create-owned-volume",
+      "process": {
+        "pgrp": 116280,
+        "pid": 116280,
+        "ppid": 116233,
+        "start_ticks": 2831014,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "docker",
+        "--host=unix:///var/run/docker.sock",
+        "run",
+        "-d",
+        "--pull=never",
+        "--name",
+        "sightbreak-backend-regression-304618a2553f",
+        "--label",
+        "io.sightbreak.qualification=sightbreak-backend-regression-304618a2553f",
+        "--label",
+        "io.sightbreak.owner=backend_regression_builder",
+        "-p",
+        "127.0.0.1::5432",
+        "-e",
+        "POSTGRES_PASSWORD",
+        "-e",
+        "POSTGRES_USER=sb_regression",
+        "-e",
+        "POSTGRES_DB=sb_backend_304618a2553f_test",
+        "-v",
+        "sightbreak-backend-regression-304618a2553f-data:/var/lib/postgresql/data",
+        "postgres:17@sha256:2d2b8998d31037bf721cfdf764d76ba74171b4fab3431b7f72c27c56ddbdf9e3"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 1.409775181000441,
+      "exit_code": 0,
+      "name": "start-owned-container",
+      "process": {
+        "pgrp": 116289,
+        "pid": 116289,
+        "ppid": 116233,
+        "start_ticks": 2831016,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "docker",
+        "--host=unix:///var/run/docker.sock",
+        "inspect",
+        "--format",
+        "{{json .Id}}\n{{json .Name}}\n{{json .Image}}\n{{json .Config.Labels}}\n{{json .NetworkSettings.Ports}}\n{{json .State.Pid}}\n{{json .Mounts}}",
+        "526cbb8e86a5964c54b7595cf5637dec5141bc9bbd17f0aa5cca3c877c19b82a"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 0.014968203999160323,
+      "exit_code": 0,
+      "name": "container-before",
+      "process": {
+        "pgrp": 116375,
+        "pid": 116375,
+        "ppid": 116233,
+        "start_ticks": 2831157,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "docker",
+        "--host=unix:///var/run/docker.sock",
+        "exec",
+        "526cbb8e86a5964c54b7595cf5637dec5141bc9bbd17f0aa5cca3c877c19b82a",
+        "pg_isready",
+        "-U",
+        "sb_regression",
+        "-d",
+        "sb_backend_304618a2553f_test"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 0.10110083499967004,
+      "exit_code": 2,
+      "name": "readiness-00",
+      "process": {
+        "pgrp": 116398,
+        "pid": 116398,
+        "ppid": 116233,
+        "start_ticks": 2831160,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "docker",
+        "--host=unix:///var/run/docker.sock",
+        "exec",
+        "526cbb8e86a5964c54b7595cf5637dec5141bc9bbd17f0aa5cca3c877c19b82a",
+        "pg_isready",
+        "-U",
+        "sb_regression",
+        "-d",
+        "sb_backend_304618a2553f_test"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 0.08894204199896194,
+      "exit_code": 1,
+      "name": "readiness-01",
+      "process": {
+        "pgrp": 116454,
+        "pid": 116454,
+        "ppid": 116233,
+        "start_ticks": 2831271,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "docker",
+        "--host=unix:///var/run/docker.sock",
+        "exec",
+        "526cbb8e86a5964c54b7595cf5637dec5141bc9bbd17f0aa5cca3c877c19b82a",
+        "pg_isready",
+        "-U",
+        "sb_regression",
+        "-d",
+        "sb_backend_304618a2553f_test"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 0.08429084599993075,
+      "exit_code": 0,
+      "name": "readiness-02",
+      "process": {
+        "pgrp": 116490,
+        "pid": 116490,
+        "ppid": 116233,
+        "start_ticks": 2831380,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "docker",
+        "--host=unix:///var/run/docker.sock",
+        "exec",
+        "526cbb8e86a5964c54b7595cf5637dec5141bc9bbd17f0aa5cca3c877c19b82a",
+        "psql",
+        "-X",
+        "-At",
+        "-F",
+        "|",
+        "-U",
+        "sb_regression",
+        "-d",
+        "sb_backend_304618a2553f_test",
+        "-c",
+        "SELECT current_database(), current_user, version(),\ninet_server_addr()::text, inet_server_port(), pg_postmaster_start_time()::text,\n(SELECT system_identifier::text FROM pg_control_system())"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 0.08848826000030385,
+      "exit_code": 0,
+      "name": "identity-before-migration-container-sql",
+      "process": {
+        "pgrp": 116520,
+        "pid": 116520,
+        "ppid": 116233,
+        "start_ticks": 2831389,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "docker",
+        "--host=unix:///var/run/docker.sock",
+        "inspect",
+        "--format",
+        "{{json .Id}}\n{{json .Name}}\n{{json .Image}}\n{{json .Config.Labels}}\n{{json .NetworkSettings.Ports}}\n{{json .State.Pid}}\n{{json .Mounts}}",
+        "526cbb8e86a5964c54b7595cf5637dec5141bc9bbd17f0aa5cca3c877c19b82a"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 0.013544015000661602,
+      "exit_code": 0,
+      "name": "container-before-cleanup",
+      "process": {
+        "pgrp": 116549,
+        "pid": 116549,
+        "ppid": 116233,
+        "start_ticks": 2831400,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "docker",
+        "--host=unix:///var/run/docker.sock",
+        "rm",
+        "-f",
+        "-v",
+        "526cbb8e86a5964c54b7595cf5637dec5141bc9bbd17f0aa5cca3c877c19b82a"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 0.2891706919981516,
+      "exit_code": 0,
+      "name": "remove-owned-container",
+      "process": {
+        "pgrp": 116558,
+        "pid": 116558,
+        "ppid": 116233,
+        "start_ticks": 2831402,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "docker",
+        "--host=unix:///var/run/docker.sock",
+        "inspect",
+        "--format",
+        "{{.Id}}",
+        "526cbb8e86a5964c54b7595cf5637dec5141bc9bbd17f0aa5cca3c877c19b82a"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 0.020124591999774566,
+      "exit_code": 1,
+      "name": "container-absence",
+      "process": {
+        "pgrp": 116606,
+        "pid": 116606,
+        "ppid": 116233,
+        "start_ticks": 2831432,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "docker",
+        "--host=unix:///var/run/docker.sock",
+        "ps",
+        "-aq",
+        "--filter",
+        "label=io.sightbreak.qualification=sightbreak-backend-regression-304618a2553f"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 0.011887103999470128,
+      "exit_code": 0,
+      "name": "owned-label-container-absence",
+      "process": {
+        "pgrp": 116622,
+        "pid": 116622,
+        "ppid": 116233,
+        "start_ticks": 2831434,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "docker",
+        "--host=unix:///var/run/docker.sock",
+        "volume",
+        "inspect",
+        "--format",
+        "{{json .Name}}\n{{json .Labels}}",
+        "sightbreak-backend-regression-304618a2553f-data"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 0.011815843001386384,
+      "exit_code": 0,
+      "name": "volume-before-cleanup",
+      "process": {
+        "pgrp": 116630,
+        "pid": 116630,
+        "ppid": 116233,
+        "start_ticks": 2831436,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "docker",
+        "--host=unix:///var/run/docker.sock",
+        "volume",
+        "rm",
+        "sightbreak-backend-regression-304618a2553f-data"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 0.026008287000877317,
+      "exit_code": 0,
+      "name": "remove-owned-volume",
+      "process": {
+        "pgrp": 116640,
+        "pid": 116640,
+        "ppid": 116233,
+        "start_ticks": 2831438,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "docker",
+        "--host=unix:///var/run/docker.sock",
+        "volume",
+        "inspect",
+        "--format",
+        "{{.Name}}",
+        "sightbreak-backend-regression-304618a2553f-data"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 0.013844225999491755,
+      "exit_code": 1,
+      "name": "volume-absence",
+      "process": {
+        "pgrp": 116649,
+        "pid": 116649,
+        "ppid": 116233,
+        "start_ticks": 2831441,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    },
+    {
+      "argv": [
+        "ss",
+        "-ltnp",
+        "sport = :32771"
+      ],
+      "cwd": "/workspace/sightbreak-backend-regression-a3b7070",
+      "duration_seconds": 0.012993188000109512,
+      "exit_code": 0,
+      "name": "port-after-cleanup",
+      "process": {
+        "pgrp": 116658,
+        "pid": 116658,
+        "ppid": 116233,
+        "start_ticks": 2831443,
+        "state": "R"
+      },
+      "remaining_live_group_members": [],
+      "timed_out": false,
+      "timeout_seconds": 30
+    }
+  ]
+}

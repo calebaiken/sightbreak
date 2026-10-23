@@ -1,0 +1,956 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+AUTHORITY_ORDER engine=4.7.2-stable (official) observe=false
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.00011718668974936,-3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.00011718668974936,3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":false,"reverse":false,"seed":0,"shots":[1]}
+ERROR: duel seed=0 mirror=false reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=0 mirror=false reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=0 mirror=false reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=0 mirror=false reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":false,"reverse":true,"seed":0,"shots":[6]}
+ERROR: duel seed=0 mirror=false reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=0 mirror=false reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=0 mirror=false reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=0 mirror=false reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=0 mirror=false reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":true,"reverse":false,"seed":0,"shots":[1]}
+ERROR: duel seed=0 mirror=true reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=0 mirror=true reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=0 mirror=true reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=0 mirror=true reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":true,"reverse":true,"seed":0,"shots":[6]}
+ERROR: duel seed=0 mirror=true reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=0 mirror=true reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=0 mirror=true reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=0 mirror=true reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=0 mirror=true reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":false,"reverse":false,"seed":1,"shots":[1]}
+ERROR: duel seed=1 mirror=false reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=1 mirror=false reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=1 mirror=false reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=1 mirror=false reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":false,"reverse":true,"seed":1,"shots":[6]}
+ERROR: duel seed=1 mirror=false reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=1 mirror=false reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=1 mirror=false reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=1 mirror=false reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=1 mirror=false reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":true,"reverse":false,"seed":1,"shots":[1]}
+ERROR: duel seed=1 mirror=true reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=1 mirror=true reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=1 mirror=true reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=1 mirror=true reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":true,"reverse":true,"seed":1,"shots":[6]}
+ERROR: duel seed=1 mirror=true reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=1 mirror=true reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=1 mirror=true reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=1 mirror=true reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=1 mirror=true reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":false,"reverse":false,"seed":2,"shots":[1]}
+ERROR: duel seed=2 mirror=false reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=2 mirror=false reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=2 mirror=false reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=2 mirror=false reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":false,"reverse":true,"seed":2,"shots":[6]}
+ERROR: duel seed=2 mirror=false reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=2 mirror=false reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=2 mirror=false reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=2 mirror=false reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=2 mirror=false reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":true,"reverse":false,"seed":2,"shots":[1]}
+ERROR: duel seed=2 mirror=true reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=2 mirror=true reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=2 mirror=true reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=2 mirror=true reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":true,"reverse":true,"seed":2,"shots":[6]}
+ERROR: duel seed=2 mirror=true reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=2 mirror=true reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=2 mirror=true reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=2 mirror=true reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=2 mirror=true reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":false,"reverse":false,"seed":3,"shots":[1]}
+ERROR: duel seed=3 mirror=false reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=3 mirror=false reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=3 mirror=false reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=3 mirror=false reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":false,"reverse":true,"seed":3,"shots":[6]}
+ERROR: duel seed=3 mirror=false reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=3 mirror=false reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=3 mirror=false reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=3 mirror=false reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=3 mirror=false reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":true,"reverse":false,"seed":3,"shots":[1]}
+ERROR: duel seed=3 mirror=true reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=3 mirror=true reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=3 mirror=true reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=3 mirror=true reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":true,"reverse":true,"seed":3,"shots":[6]}
+ERROR: duel seed=3 mirror=true reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=3 mirror=true reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=3 mirror=true reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=3 mirror=true reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=3 mirror=true reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":false,"reverse":false,"seed":4,"shots":[1]}
+ERROR: duel seed=4 mirror=false reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=4 mirror=false reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=4 mirror=false reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=4 mirror=false reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":false,"reverse":true,"seed":4,"shots":[6]}
+ERROR: duel seed=4 mirror=false reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=4 mirror=false reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=4 mirror=false reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=4 mirror=false reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=4 mirror=false reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":true,"reverse":false,"seed":4,"shots":[1]}
+ERROR: duel seed=4 mirror=true reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=4 mirror=true reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=4 mirror=true reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=4 mirror=true reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":true,"reverse":true,"seed":4,"shots":[6]}
+ERROR: duel seed=4 mirror=true reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=4 mirror=true reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=4 mirror=true reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=4 mirror=true reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=4 mirror=true reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":false,"reverse":false,"seed":5,"shots":[1]}
+ERROR: duel seed=5 mirror=false reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=5 mirror=false reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=5 mirror=false reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=5 mirror=false reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":false,"reverse":true,"seed":5,"shots":[6]}
+ERROR: duel seed=5 mirror=false reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=5 mirror=false reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=5 mirror=false reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=5 mirror=false reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=5 mirror=false reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":true,"reverse":false,"seed":5,"shots":[1]}
+ERROR: duel seed=5 mirror=true reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=5 mirror=true reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=5 mirror=true reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=5 mirror=true reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":true,"reverse":true,"seed":5,"shots":[6]}
+ERROR: duel seed=5 mirror=true reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=5 mirror=true reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=5 mirror=true reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=5 mirror=true reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=5 mirror=true reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":false,"reverse":false,"seed":6,"shots":[1]}
+ERROR: duel seed=6 mirror=false reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=6 mirror=false reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=6 mirror=false reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=6 mirror=false reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":false,"reverse":true,"seed":6,"shots":[6]}
+ERROR: duel seed=6 mirror=false reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=6 mirror=false reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=6 mirror=false reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=6 mirror=false reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=6 mirror=false reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":true,"reverse":false,"seed":6,"shots":[1]}
+ERROR: duel seed=6 mirror=true reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=6 mirror=true reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=6 mirror=true reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=6 mirror=true reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":true,"reverse":true,"seed":6,"shots":[6]}
+ERROR: duel seed=6 mirror=true reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=6 mirror=true reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=6 mirror=true reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=6 mirror=true reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=6 mirror=true reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":false,"reverse":false,"seed":7,"shots":[1]}
+ERROR: duel seed=7 mirror=false reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=7 mirror=false reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=7 mirror=false reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=7 mirror=false reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":false,"reverse":true,"seed":7,"shots":[6]}
+ERROR: duel seed=7 mirror=false reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=7 mirror=false reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=7 mirror=false reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=7 mirror=false reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=7 mirror=false reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[6,1]],"kind":"duel","mirror":true,"reverse":false,"seed":7,"shots":[1]}
+ERROR: duel seed=7 mirror=true reverse=false accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=7 mirror=true reverse=false consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=7 mirror=true reverse=false records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=7 mirror=true reverse=false dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.0000390615314245224,-3.0]},"eliminations":[[1,6]],"kind":"duel","mirror":true,"reverse":true,"seed":7,"shots":[6]}
+ERROR: duel seed=7 mirror=true reverse=true agrees with original insertion order
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:127)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=7 mirror=true reverse=true accepts both lethal shots
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:130)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=7 mirror=true reverse=true consumes each eligible shot once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:131)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=7 mirror=true reverse=true records each death and reward once
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:132)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duel seed=7 mirror=true reverse=true dead actors do not fire next tick
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _duel (res://tests/authority_order_test.gd:134)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.000917968340218067,0.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.119999997317791,0.000917968340218067,-6.0]},"eliminations":[[6,1]],"kind":"moving","reverse":false,"shots":[1]}
+ERROR: moving target uses post-movement pose reverse=false
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _moving_target (res://tests/authority_order_test.gd:151)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.0,0.000917968340218067,0.0]},"b":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.000917968340218067,-6.0]},"head_height":1.62,"kind":"stance","reverse":false}
+ERROR: stance target uses post-movement crouch reverse=false
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _stance_target (res://tests/authority_order_test.gd:167)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[-0.400000005960464,0.000148506369441748,0.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.400000005960464,0.000490231439471245,0.0]},"behind":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.000917968340218067,-4.80000019073486]},"eliminations":[[6,1],[7,2]],"front":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.000917968340218067,-4.0]},"kind":"shield","reverse":false,"shots":[1,2]}
+ERROR: front living volume shields every same-tick ray reverse=false
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _shielding (res://tests/authority_order_test.gd:187)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: shield batch has two shots and one elimination reverse=false
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _shielding (res://tests/authority_order_test.gd:188)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duplicate contacts cannot duplicate rewards reverse=false
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _shielding (res://tests/authority_order_test.gd:189)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":800,"deaths":0,"health":880.362438012705,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":true,"ammo":29,"credits":800,"deaths":0,"health":880.362438012705,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"kind":"nonlethal","reverse":false,"shots":[1,6]}
+CASE {"a":{"alive":true,"ammo":29,"credits":800,"deaths":0,"health":100.0,"kills":0,"position":[0.0,0.000917968340218067,0.0]},"b":{"alive":true,"ammo":30,"credits":800,"deaths":0,"health":100.0,"kills":0,"position":[0.204999998211861,0.000917968340218067,-6.0]},"eliminations":[],"kind":"moving","reverse":true,"shots":[1]}
+CASE {"a":{"alive":true,"ammo":29,"credits":800,"deaths":0,"health":100.0,"kills":0,"position":[0.0,0.000917968340218067,0.0]},"b":{"alive":true,"ammo":30,"credits":800,"deaths":0,"health":100.0,"kills":0,"position":[0.0,0.000917968340218067,-6.0]},"head_height":1.13,"kind":"stance","reverse":true}
+CASE {"a":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[-0.400000005960464,0.000148506369441748,0.0]},"b":{"alive":true,"ammo":29,"credits":1100,"deaths":0,"health":100.0,"kills":1,"position":[0.400000005960464,0.000490231439471245,0.0]},"behind":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.000917968340218067,-4.80000019073486]},"eliminations":[[6,2],[7,1]],"front":{"alive":false,"ammo":30,"credits":800,"deaths":1,"health":0.0,"kills":0,"position":[0.0,0.000917968340218067,-4.0]},"kind":"shield","reverse":true,"shots":[2,1]}
+ERROR: front living volume shields every same-tick ray reverse=true
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _shielding (res://tests/authority_order_test.gd:187)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: shield batch has two shots and one elimination reverse=true
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _shielding (res://tests/authority_order_test.gd:188)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+ERROR: duplicate contacts cannot duplicate rewards reverse=true
+   at: push_error (core/variant/variant_utility.cpp:1023)
+   GDScript backtrace (most recent call first):
+       [0] check (res://tests/authority_order_test.gd:25)
+       [1] _shielding (res://tests/authority_order_test.gd:189)
+       [2] _settle (res://tests/authority_order_test.gd:103)
+CASE {"a":{"alive":true,"ammo":29,"credits":800,"deaths":0,"health":880.362438012705,"kills":0,"position":[0.0,0.0000390615314245224,-3.0]},"b":{"alive":true,"ammo":29,"credits":800,"deaths":0,"health":880.362438012705,"kills":0,"position":[0.0,0.0000390615314245224,3.0]},"kind":"nonlethal","reverse":true,"shots":[6,1]}
+AUTHORITY_ORDER checks=162 failures=152 mode=assertion

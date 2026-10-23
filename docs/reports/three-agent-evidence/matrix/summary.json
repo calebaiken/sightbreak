@@ -1,0 +1,1015 @@
+{
+  "commit": "10fdba067d7ef02f4b8452a897dcbb9ac55515ae",
+  "dirty": false,
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "python": "3.12.14",
+  "checks": [
+    {
+      "name": "import",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--editor",
+        "--import",
+        "--quit"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 6.935,
+      "log": "import.log"
+    },
+    {
+      "name": "actor",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/actor_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 5.092,
+      "log": "actor.log"
+    },
+    {
+      "name": "world",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/world_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.374,
+      "log": "world.log"
+    },
+    {
+      "name": "hit-feedback",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/hit_feedback_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.678,
+      "log": "hit-feedback.log"
+    },
+    {
+      "name": "weapon-integrity",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/weapon_integrity_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 8.593,
+      "log": "weapon-integrity.log"
+    },
+    {
+      "name": "hit-volume",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/hit_volume_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 7.59,
+      "log": "hit-volume.log"
+    },
+    {
+      "name": "hit-history",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/hit_history_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.373,
+      "log": "hit-history.log"
+    },
+    {
+      "name": "render-budget",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/render_budget_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.936,
+      "log": "render-budget.log"
+    },
+    {
+      "name": "smoke-presentation",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/smoke_presentation_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 4.396,
+      "log": "smoke-presentation.log"
+    },
+    {
+      "name": "match",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/match_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.976,
+      "log": "match.log"
+    },
+    {
+      "name": "state-privacy",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/state_privacy_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.776,
+      "log": "state-privacy.log"
+    },
+    {
+      "name": "snapshot-buffer",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/snapshot_buffer_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.277,
+      "log": "snapshot-buffer.log"
+    },
+    {
+      "name": "input-stream",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/input_stream_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.275,
+      "log": "input-stream.log"
+    },
+    {
+      "name": "movement-replay",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/movement_prediction_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 9.323,
+      "log": "movement-replay.log"
+    },
+    {
+      "name": "input-lifecycle",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/input_lifecycle_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 7.04,
+      "log": "input-lifecycle.log"
+    },
+    {
+      "name": "peer-lifecycle",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/peer_lifecycle_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.225,
+      "log": "peer-lifecycle.log"
+    },
+    {
+      "name": "result-outbox",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/result_outbox_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.23,
+      "log": "result-outbox.log"
+    },
+    {
+      "name": "reconnect-policy",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/reconnect_policy_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.229,
+      "log": "reconnect-policy.log"
+    },
+    {
+      "name": "reconnect-independent",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/independent_reconnect_review_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.484,
+      "log": "reconnect-independent.log"
+    },
+    {
+      "name": "resume-admission",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/independent_resume_admission_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 4.41,
+      "log": "resume-admission.log"
+    },
+    {
+      "name": "lost-welcome",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/lost_welcome_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.926,
+      "log": "lost-welcome.log"
+    },
+    {
+      "name": "resume-alias",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/independent_resume_alias_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 4.444,
+      "log": "resume-alias.log"
+    },
+    {
+      "name": "resume-auth-loss",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/resume_auth_loss_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 11.062,
+      "log": "resume-auth-loss.log"
+    },
+    {
+      "name": "bot-ai-regression",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/bot_ai_regression_test.gd"
+      ],
+      "exit": 1,
+      "logged_errors": true,
+      "passed": false,
+      "seconds": 5.311,
+      "log": "bot-ai-regression.log"
+    },
+    {
+      "name": "bots",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/bot_match_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 11.156,
+      "log": "bots.log"
+    },
+    {
+      "name": "bot-lifecycle",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/bot_lifecycle_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 82.095,
+      "log": "bot-lifecycle.log"
+    },
+    {
+      "name": "profile",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/profile_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.452,
+      "log": "profile.log"
+    },
+    {
+      "name": "touch",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/touch_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.644,
+      "log": "touch.log"
+    },
+    {
+      "name": "main",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/main_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 5.711,
+      "log": "main.log"
+    },
+    {
+      "name": "landscape",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/landscape_ui_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 175.391,
+      "log": "landscape.log"
+    },
+    {
+      "name": "ux-contract",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/ux_contract_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 25.635,
+      "log": "ux-contract.log"
+    },
+    {
+      "name": "hud-overflow",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/hud_overflow_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 17.268,
+      "log": "hud-overflow.log"
+    },
+    {
+      "name": "economy-ui",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/economy_ui_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 4.581,
+      "log": "economy-ui.log"
+    },
+    {
+      "name": "armory-ui",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/armory_ui_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 6.45,
+      "log": "armory-ui.log"
+    },
+    {
+      "name": "armory-state",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/armory_state_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 13.006,
+      "log": "armory-state.log"
+    },
+    {
+      "name": "menu-state",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/menu_state_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 6.285,
+      "log": "menu-state.log"
+    },
+    {
+      "name": "economy-recovery",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/economy_recovery_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.373,
+      "log": "economy-recovery.log"
+    },
+    {
+      "name": "cosmetics",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/cosmetic_presentation_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.372,
+      "log": "cosmetics.log"
+    },
+    {
+      "name": "weapon-art",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/weapon_art_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.775,
+      "log": "weapon-art.log"
+    },
+    {
+      "name": "integration-actor-lifecycle",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/integration_actor_lifecycle_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 4.024,
+      "log": "integration-actor-lifecycle.log"
+    },
+    {
+      "name": "reload-sequence",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/reload_sequence_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": true,
+      "passed": false,
+      "seconds": 5.73,
+      "log": "reload-sequence.log"
+    },
+    {
+      "name": "reload-audio",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/reload_audio_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": true,
+      "passed": false,
+      "seconds": 3.477,
+      "log": "reload-audio.log"
+    },
+    {
+      "name": "reload-audio-capture",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "res://tests/reload_audio_capture.gd",
+        "--",
+        "--scenario=reload"
+      ],
+      "exit": 1,
+      "logged_errors": true,
+      "passed": false,
+      "seconds": 6.63,
+      "log": "reload-audio-capture.log"
+    },
+    {
+      "name": "reload-audio-cancel",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "res://tests/reload_audio_capture.gd",
+        "--",
+        "--scenario=cancel"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 6.735,
+      "log": "reload-audio-cancel.log"
+    },
+    {
+      "name": "reload-visibility",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--audio-driver",
+        "Dummy",
+        "--rendering-method",
+        "gl_compatibility",
+        "--script",
+        "res://tests/reload_visibility_test.gd",
+        "--",
+        "--step=2"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 136.583,
+      "log": "reload-visibility.log"
+    },
+    {
+      "name": "reload-finish-sunlit",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--audio-driver",
+        "Dummy",
+        "--rendering-method",
+        "gl_compatibility",
+        "--script",
+        "res://tests/reload_discolour_probe.gd",
+        "--",
+        "--assert",
+        "--conditions=base"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 64.553,
+      "log": "reload-finish-sunlit.log"
+    },
+    {
+      "name": "reload-finish-shade",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--audio-driver",
+        "Dummy",
+        "--rendering-method",
+        "gl_compatibility",
+        "--script",
+        "res://tests/reload_discolour_probe.gd",
+        "--",
+        "--assert",
+        "--conditions=base",
+        "--view=shade"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 64.37,
+      "log": "reload-finish-shade.log"
+    },
+    {
+      "name": "viewmodel-light",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--audio-driver",
+        "Dummy",
+        "--rendering-method",
+        "gl_compatibility",
+        "--script",
+        "res://tests/viewmodel_light_probe.gd",
+        "--",
+        "--assert",
+        "--poses=ready,grab"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 61.978,
+      "log": "viewmodel-light.log"
+    },
+    {
+      "name": "reload-finish-skin",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--audio-driver",
+        "Dummy",
+        "--rendering-method",
+        "gl_compatibility",
+        "--script",
+        "res://tests/reload_discolour_probe.gd",
+        "--",
+        "--assert",
+        "--conditions=base",
+        "--skin"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 51.967,
+      "log": "reload-finish-skin.log"
+    },
+    {
+      "name": "account-output-unit",
+      "command": [
+        "python3",
+        "scripts/test_account_network_output.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.114,
+      "log": "account-output-unit.log"
+    },
+    {
+      "name": "worker-unit",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "server/tests",
+        "-v"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.766,
+      "log": "worker-unit.log"
+    },
+    {
+      "name": "network",
+      "command": [
+        "bash",
+        "scripts/test_network.sh"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 10.96,
+      "log": "network.log"
+    },
+    {
+      "name": "network-soak",
+      "command": [
+        "python3",
+        "scripts/test_network_soak.py",
+        "--out",
+        "/workspace/reviews/three-agent-20261016/matrix/soak"
+      ],
+      "exit": 1,
+      "logged_errors": false,
+      "passed": false,
+      "seconds": 67.45,
+      "log": "network-soak.log"
+    },
+    {
+      "name": "network-soak-ten",
+      "command": [
+        "python3",
+        "scripts/test_network_soak.py",
+        "--clients",
+        "10",
+        "--port",
+        "29840",
+        "--out",
+        "/workspace/reviews/three-agent-20261016/matrix/soak-ten"
+      ],
+      "exit": 1,
+      "logged_errors": false,
+      "passed": false,
+      "seconds": 67.408,
+      "log": "network-soak-ten.log"
+    },
+    {
+      "name": "connection-lifecycle",
+      "command": [
+        "python3",
+        "scripts/test_connection_lifecycle.py",
+        "--out",
+        "/workspace/reviews/three-agent-20261016/matrix/connections"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 46.544,
+      "log": "connection-lifecycle.log"
+    },
+    {
+      "name": "bridge-transport",
+      "command": [
+        "python3",
+        "scripts/test_bridge_transport.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 10.713,
+      "log": "bridge-transport.log"
+    },
+    {
+      "name": "build-manifest",
+      "command": [
+        "python3",
+        "scripts/test_build_manifest.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.165,
+      "log": "build-manifest.log"
+    },
+    {
+      "name": "protocol-matrix",
+      "command": [
+        "bash",
+        "scripts/test_protocol_compat.sh",
+        "/workspace/reviews/three-agent-20261016/matrix/protocol"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 215.077,
+      "log": "protocol-matrix.log"
+    },
+    {
+      "name": "hostile-handshake",
+      "command": [
+        "bash",
+        "scripts/test_handshake_hardening.sh",
+        "/workspace/reviews/three-agent-20261016/matrix/handshake"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 100.392,
+      "log": "hostile-handshake.log"
+    },
+    {
+      "name": "catalog-fixture",
+      "command": [
+        "/workspace/sightbreak-three-agent/.venv/bin/python",
+        "scripts/export_catalog_fixture.py",
+        "--check"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.817,
+      "log": "catalog-fixture.log"
+    },
+    {
+      "name": "postgresql",
+      "command": [
+        "/workspace/sightbreak-three-agent/.venv/bin/python",
+        "-m",
+        "pytest",
+        "backend/tests",
+        "-q"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 5.787,
+      "log": "postgresql.log"
+    },
+    {
+      "name": "account-protocol",
+      "command": [
+        "/workspace/sightbreak-three-agent/.venv/bin/python",
+        "scripts/test_account_isolated.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 24.69,
+      "log": "account-protocol.log"
+    },
+    {
+      "name": "account-capacity",
+      "command": [
+        "/workspace/sightbreak-three-agent/.venv/bin/python",
+        "scripts/test_admission_capacity.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 21.189,
+      "log": "account-capacity.log"
+    },
+    {
+      "name": "outbox-crash",
+      "command": [
+        "/workspace/sightbreak-three-agent/.venv/bin/python",
+        "scripts/test_result_outbox.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 7.79,
+      "log": "outbox-crash.log"
+    },
+    {
+      "name": "native-economy",
+      "command": [
+        "/workspace/sightbreak-three-agent/.venv/bin/python",
+        "scripts/test_native_economy.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 8.687,
+      "log": "native-economy.log"
+    },
+    {
+      "name": "account-full-reconnect",
+      "command": [
+        "/workspace/sightbreak-three-agent/.venv/bin/python",
+        "scripts/test_full_account_reconnect.py",
+        "--out",
+        "/workspace/reviews/three-agent-20261016/matrix/account-full-reconnect"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 35.0,
+      "log": "account-full-reconnect.log"
+    },
+    {
+      "name": "economy-conservation",
+      "command": [
+        "python3",
+        "backend/simulate.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.867,
+      "log": "economy-conservation.log"
+    },
+    {
+      "name": "native-render-lifecycle",
+      "command": [
+        "bash",
+        "scripts/test_render.sh"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 45.736,
+      "log": "native-render-lifecycle.log"
+    },
+    {
+      "name": "native-hud-overflow",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "res://tests/hud_overflow_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 117.237,
+      "log": "native-hud-overflow.log"
+    },
+    {
+      "name": "native-paint-visibility",
+      "command": [
+        "/workspace/sightbreak-three-agent/scripts/godot.sh",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "res://tests/paint_visibility_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 15.483,
+      "log": "native-paint-visibility.log"
+    }
+  ]
+}

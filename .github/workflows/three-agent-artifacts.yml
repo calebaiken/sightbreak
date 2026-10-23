@@ -1,0 +1,42 @@
+name: Three-agent development artifacts
+# An isolated delivery branch triggers this build without changing main.
+on:
+  push:
+    branches: [integration/sightbreak-three-agent-artifacts]
+permissions:
+  contents: read
+jobs:
+  native-packages:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Install native build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgl1 libvulkan1 xvfb ripgrep unzip openjdk-17-jdk
+          scripts/setup.sh --targets linux android ios
+          scripts/setup-android.sh
+      - name: Export exact checkout
+        run: |
+          scripts/export.sh linux
+          scripts/export.sh android
+          scripts/export.sh ios
+      - name: Inspect and package actual artifacts
+        run: |
+          python3 scripts/verify_builds.py
+          python3 scripts/build_manifest.py package > builds/packaging.json
+      - name: Retain development packages and failure logs
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-three-agent-${{ github.sha }}
+          path: |
+            builds/sightbreak-*.zip
+            builds/android/sightbreak-debug.apk
+            builds/manifest.json
+            builds/checksums.txt
+            builds/verification/
+            builds/*/*.log
+          if-no-files-found: error
+          retention-days: 14

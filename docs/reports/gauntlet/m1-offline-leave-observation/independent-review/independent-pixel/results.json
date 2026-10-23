@@ -1,0 +1,86 @@
+{
+  "scope": "independent Linux saved-image replay only; no native Windows OCR claim",
+  "controller_sha256": "9364e7e4c8e0d33d081d0619950388aa8ea2dc0c6fcbb15ab2e30a662ec2298b",
+  "ocr_words_ast_sha256": "a7b37e36ba550b0a0fcccf75dc7a3bbca085b84069cf7f197a937382d4ea2151",
+  "tesseract": "tesseract 5.5.0\n leptonica-1.84.1\n  libgif 5.2.2 : libjpeg 6b (libjpeg-turbo 2.1.5) : libpng 1.6.48 : libtiff 4.7.0 : zlib 1.3.1 : libwebp 1.5.0 : libopenjp2 2.5.3\n Found AVX2\n Found AVX\n Found FMA\n Found SSE4.1\n Found OpenMP 201511\n Found libarchive 3.7.4 zlib/1.3.1 liblzma/5.8.1 bz2lib/1.0.8 liblz4/1.10.0 libzstd/1.5.7\n Found libcurl/8.14.1 OpenSSL/3.5.7 zlib/1.3.1 brotli/1.1.0 zstd/1.5.7 libidn2/2.3.8 libpsl/0.21.2 libssh2/1.11.1 nghttp2/1.64.0 nghttp3/1.8.0 librtmp/2.3 OpenLDAP/2.6.10\n",
+  "cases": [
+    {
+      "case": "actual-final",
+      "native_original": true,
+      "original_pixels_sha256": "e62116a4c42c7b09ca947a7eb1cb3551865c4d6f4ffecff36066f8e7d4bee635",
+      "expected_recognized": true,
+      "recognized": true,
+      "heading": {
+        "left": 60,
+        "top": 69,
+        "width": 205,
+        "height": 23,
+        "text": "FIELD MENU"
+      },
+      "control": {
+        "left": 587,
+        "top": 379,
+        "width": 106,
+        "height": 11,
+        "text": "LEAVE MATCH"
+      },
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "11",
+        "tsv"
+      ],
+      "OMP_THREAD_LIMIT": "1",
+      "exit": 0,
+      "tsv_sha256": "281310483f0fa1b1879ec200f23481727db5269e472b1b6f2690c5800234e6a2"
+    },
+    {
+      "case": "actual-settings",
+      "native_original": true,
+      "original_pixels_sha256": "dd622975d7db698a878ab20405feec287e8e2a65519b08c340a1f9d1a685f236",
+      "expected_recognized": false,
+      "recognized": false,
+      "heading": null,
+      "control": null,
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "11",
+        "tsv"
+      ],
+      "OMP_THREAD_LIMIT": "1",
+      "exit": 0,
+      "tsv_sha256": "6db1290fc8406ef9db513abc5f7711c1b69867787026eb0140eb925544438231"
+    },
+    {
+      "case": "altered-removed-MATCH",
+      "native_original": false,
+      "original_pixels_sha256": "275371004d0a4627c751ce499de699b46e547e8b0035d2b99981654a024b0272",
+      "expected_recognized": false,
+      "recognized": false,
+      "heading": {
+        "left": 60,
+        "top": 69,
+        "width": 205,
+        "height": 23,
+        "text": "FIELD MENU"
+      },
+      "control": null,
+      "command": [
+        "tesseract",
+        "stdin",
+        "stdout",
+        "--psm",
+        "11",
+        "tsv"
+      ],
+      "OMP_THREAD_LIMIT": "1",
+      "exit": 0,
+      "tsv_sha256": "ca291dbf5ae026012f0332900b048cb977aa05c9b16775fb11a984be2a7c6105"
+    }
+  ]
+}

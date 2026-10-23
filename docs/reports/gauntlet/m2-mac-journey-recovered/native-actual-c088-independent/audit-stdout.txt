@@ -1,0 +1,91 @@
+{
+  "evidence_integrity_audit_passed": true,
+  "assertions": 655,
+  "scope": "Read-only original-file audit; no native run, OCR or final binary reparse",
+  "source_commit": "c08889b8c1118c89e83c151079df4dc224076760",
+  "workflow_conclusion": "failure",
+  "receipt_index_files": 165,
+  "identical_qa_overlaps": 163,
+  "qa_files": 182,
+  "native_suites_observed": 7,
+  "native_reported_assertions": {
+    "actor": 73,
+    "match": 75,
+    "authority_order": 178,
+    "state_privacy": 55,
+    "movement_prediction": 725,
+    "peer_lifecycle": 16,
+    "input_mode": 462
+  },
+  "native_reported_assertions_total": 1584,
+  "native_15_suite_9434_gate_passed": false,
+  "strict_logs_scanned": 106,
+  "strict_failing_logs": [
+    "regressions/input_mode.log",
+    "source-leak-verbose/repeat/input_mode.log"
+  ],
+  "verbose_leaked_types": [
+    "AudioStreamPlaybackWAV",
+    "AudioStreamWAV"
+  ],
+  "runner_reaped_orphans": [
+    [
+      "5323",
+      "ibtoold"
+    ],
+    [
+      "5317",
+      "ibtoold"
+    ]
+  ],
+  "preflight_seconds": 3.870969625000015,
+  "menu_seconds": 32.56817454200001,
+  "menu_settings_target_points": [
+    307.9310337342623,
+    478.13818193180816
+  ],
+  "menu_groups": 6,
+  "ordinary_component_passed": false,
+  "ordinary_failure": {
+    "type": "RuntimeError",
+    "message": "Expected one exact confident in-bounds native label: DEPLOY \u00b7 OFFLINE 5V5"
+  },
+  "ordinary_seconds": 28.365823999999975,
+  "ordinary_event_posts": 0,
+  "ordinary_startup_captures": 8,
+  "ordinary_rejected_splashes": 6,
+  "ordinary_pin_seconds": 27.208147124999982,
+  "ordinary_deploy_vision": [
+    {
+      "capture": "00-startup-menu-7",
+      "box_normalized_bottom_left": [
+        0.10991379777533286,
+        0.5179153096273463,
+        0.1702586170211731,
+        0.019735292497887635
+      ],
+      "confidence": 0.5,
+      "text": "DEPLOY \u2022 OFFLINE 5V5"
+    },
+    {
+      "capture": "01-focused-menu",
+      "box_normalized_bottom_left": [
+        0.10991379109608065,
+        0.5179153098445015,
+        0.16810344984806866,
+        0.019735292497887746
+      ],
+      "confidence": 0.5,
+      "text": "DEPLOY \u2022 OFFLINE 5V5"
+    }
+  ],
+  "ordinary_group_count": 10,
+  "ordinary_failure_path_close_exit": 0,
+  "ordinary_complete_gameplay_close_qualified": false,
+  "ios_compile_seconds": 81.75213358399998,
+  "ios_xcodebuild_seconds": 44.70160608399999,
+  "ios_command_groups": 15,
+  "ios_binary_independently_reparsed": false,
+  "complete_descendant_cleanup_established": false,
+  "comparison_winner": "c088 startup observation and failure-path close only; neither ordinary gameplay component passes"
+}

@@ -1,0 +1,742 @@
+{
+  "scope": "Saved real Windows pixels, local Tesseract; not a native Windows rerun",
+  "tesseract_version": "tesseract 5.5.0",
+  "frozen_windows_source": {
+    "source_dirty": false,
+    "source_validation_sha256": "982057ffe78de32a2795e61c48137d5b094461ec1ea74c62d8add55b22fb13a5",
+    "source_commit": "0ca125dfba637868e6e8e9772ff9c40400413e32",
+    "source_game_tree": "782c26464631f86ad63ddab9de36a969d4e44534",
+    "source_content_sha256": "f8a849b90df3ff214037cace7bc32c0c7b5e184911558b424b0a6c0f798db781",
+    "source_game_dirty": false
+  },
+  "baseline_failure": "HUD analysis requires the actual living, focused offline player",
+  "baseline_elapsed_seconds": 100.43700000000001,
+  "baseline_cleanup_errors": [],
+  "readers": {
+    "0ca125dfba637868e6e8e9772ff9c40400413e32": "6d10e64c5fa020ac93ca142b9a584ee439eaa4e591156840513b6016707a883c",
+    "5c11a5b9894ccb28f505d3a60990b0ff46b6eaa0": "6d10e64c5fa020ac93ca142b9a584ee439eaa4e591156840513b6016707a883c"
+  },
+  "pixel_results": [
+    {
+      "commit": "0ca125dfba637868e6e8e9772ff9c40400413e32",
+      "capture": "05-after-fire",
+      "sha256": "e2aa76570cb715e54111ad2b547437187734aa058347aec75d87de526270b12a",
+      "expected_living_hud": true,
+      "ocr_calls": [
+        {
+          "psm": 6,
+          "label": "05-after-fire:(0, 630, 450, 720)",
+          "stdout": "BOG FUNDS\n100 - HEALTH\n",
+          "stderr": ""
+        },
+        {
+          "psm": 7,
+          "label": "05-after-fire:(980, 648, 1280, 680)",
+          "stdout": "SIDEARM 14/60\n",
+          "stderr": ""
+        }
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 14,
+        "reserve": 60,
+        "status_ocr": "BOG FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 14/60\n"
+      },
+      "accepted_living_hud": true,
+      "matches_expected": true
+    },
+    {
+      "commit": "0ca125dfba637868e6e8e9772ff9c40400413e32",
+      "capture": "06-after-reload",
+      "sha256": "f13988e2b74c9d9d0e6b834c62130c32414c3c888985f0756111fdcf9802d0aa",
+      "expected_living_hud": true,
+      "ocr_calls": [
+        {
+          "psm": 6,
+          "label": "06-after-reload:(0, 630, 450, 720)",
+          "stdout": "BOG FUNDS\n100 - HEALTH\n",
+          "stderr": ""
+        },
+        {
+          "psm": 7,
+          "label": "06-after-reload:(980, 648, 1280, 680)",
+          "stdout": "SIDEARM 15/59\n",
+          "stderr": ""
+        }
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 59,
+        "status_ocr": "BOG FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/59\n"
+      },
+      "accepted_living_hud": true,
+      "matches_expected": true
+    },
+    {
+      "commit": "0ca125dfba637868e6e8e9772ff9c40400413e32",
+      "capture": "06g-switched-primary",
+      "sha256": "d3a72404498a5e4342562864f63adb5211357f51c7e9f1115afa2288b139a766",
+      "expected_living_hud": true,
+      "ocr_calls": [
+        {
+          "psm": 6,
+          "label": "06g-switched-primary:(0, 630, 450, 720)",
+          "stdout": "1609 FUNDS\n100 - HEALTH\n",
+          "stderr": ""
+        },
+        {
+          "psm": 7,
+          "label": "06g-switched-primary:(980, 648, 1280, 680)",
+          "stdout": "SMG 30/120\n",
+          "stderr": ""
+        }
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 30,
+        "reserve": 120,
+        "status_ocr": "1609 FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SMG 30/120\n"
+      },
+      "accepted_living_hud": true,
+      "matches_expected": true
+    },
+    {
+      "commit": "0ca125dfba637868e6e8e9772ff9c40400413e32",
+      "capture": "01-menu",
+      "sha256": "a968a62c393e502203a9df478c843ef2cfa5c14fea4a891cf8d33abbc2984bc6",
+      "expected_living_hud": false,
+      "ocr_calls": [
+        {
+          "psm": 6,
+          "label": "01-menu:(0, 630, 450, 720)",
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "psm": 7,
+          "label": "01-menu:(980, 648, 1280, 680)",
+          "stdout": "DIN PLAY : NO REAL-MONEY PURCHASES\n",
+          "stderr": ""
+        }
+      ],
+      "accepted_living_hud": false,
+      "error": "Rendered living-player/ammunition check failed: ('', 'DIN PLAY : NO REAL-MONEY PURCHASES\\n')",
+      "matches_expected": true
+    },
+    {
+      "commit": "0ca125dfba637868e6e8e9772ff9c40400413e32",
+      "capture": "07d-explicit-resume",
+      "sha256": "c1a66a0c399af91cfab904146035af158c96aa08d8a5a48e7fc5e6ea59bc2a4b",
+      "expected_living_hud": false,
+      "ocr_calls": [
+        {
+          "psm": 6,
+          "label": "07d-explicit-resume:(0, 630, 450, 720)",
+          "stdout": "1609 FUNDS\nELIMINATED - SPECTATING\n",
+          "stderr": ""
+        },
+        {
+          "psm": 7,
+          "label": "07d-explicit-resume:(980, 648, 1280, 680)",
+          "stdout": "SMG 30/120\n",
+          "stderr": ""
+        }
+      ],
+      "accepted_living_hud": false,
+      "error": "Rendered living-player/ammunition check failed: ('1609 FUNDS\\nELIMINATED - SPECTATING\\n', 'SMG 30/120\\n')",
+      "matches_expected": true
+    },
+    {
+      "commit": "5c11a5b9894ccb28f505d3a60990b0ff46b6eaa0",
+      "capture": "05-after-fire",
+      "sha256": "e2aa76570cb715e54111ad2b547437187734aa058347aec75d87de526270b12a",
+      "expected_living_hud": true,
+      "ocr_calls": [
+        {
+          "psm": 6,
+          "label": "05-after-fire:(0, 630, 450, 720)",
+          "stdout": "BOG FUNDS\n100 - HEALTH\n",
+          "stderr": ""
+        },
+        {
+          "psm": 7,
+          "label": "05-after-fire:(980, 648, 1280, 680)",
+          "stdout": "SIDEARM 14/60\n",
+          "stderr": ""
+        }
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 14,
+        "reserve": 60,
+        "status_ocr": "BOG FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 14/60\n"
+      },
+      "accepted_living_hud": true,
+      "matches_expected": true
+    },
+    {
+      "commit": "5c11a5b9894ccb28f505d3a60990b0ff46b6eaa0",
+      "capture": "06-after-reload",
+      "sha256": "f13988e2b74c9d9d0e6b834c62130c32414c3c888985f0756111fdcf9802d0aa",
+      "expected_living_hud": true,
+      "ocr_calls": [
+        {
+          "psm": 6,
+          "label": "06-after-reload:(0, 630, 450, 720)",
+          "stdout": "BOG FUNDS\n100 - HEALTH\n",
+          "stderr": ""
+        },
+        {
+          "psm": 7,
+          "label": "06-after-reload:(980, 648, 1280, 680)",
+          "stdout": "SIDEARM 15/59\n",
+          "stderr": ""
+        }
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 59,
+        "status_ocr": "BOG FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SIDEARM 15/59\n"
+      },
+      "accepted_living_hud": true,
+      "matches_expected": true
+    },
+    {
+      "commit": "5c11a5b9894ccb28f505d3a60990b0ff46b6eaa0",
+      "capture": "06g-switched-primary",
+      "sha256": "d3a72404498a5e4342562864f63adb5211357f51c7e9f1115afa2288b139a766",
+      "expected_living_hud": true,
+      "ocr_calls": [
+        {
+          "psm": 6,
+          "label": "06g-switched-primary:(0, 630, 450, 720)",
+          "stdout": "1609 FUNDS\n100 - HEALTH\n",
+          "stderr": ""
+        },
+        {
+          "psm": 7,
+          "label": "06g-switched-primary:(980, 648, 1280, 680)",
+          "stdout": "SMG 30/120\n",
+          "stderr": ""
+        }
+      ],
+      "reading": {
+        "health": 100,
+        "ammo": 30,
+        "reserve": 120,
+        "status_ocr": "1609 FUNDS\n100 - HEALTH\n",
+        "ammo_ocr": "SMG 30/120\n"
+      },
+      "accepted_living_hud": true,
+      "matches_expected": true
+    },
+    {
+      "commit": "5c11a5b9894ccb28f505d3a60990b0ff46b6eaa0",
+      "capture": "01-menu",
+      "sha256": "a968a62c393e502203a9df478c843ef2cfa5c14fea4a891cf8d33abbc2984bc6",
+      "expected_living_hud": false,
+      "ocr_calls": [
+        {
+          "psm": 6,
+          "label": "01-menu:(0, 630, 450, 720)",
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "psm": 7,
+          "label": "01-menu:(980, 648, 1280, 680)",
+          "stdout": "DIN PLAY : NO REAL-MONEY PURCHASES\n",
+          "stderr": ""
+        }
+      ],
+      "accepted_living_hud": false,
+      "error": "Rendered living-player/ammunition check failed: ('', 'DIN PLAY : NO REAL-MONEY PURCHASES\\n')",
+      "matches_expected": true
+    },
+    {
+      "commit": "5c11a5b9894ccb28f505d3a60990b0ff46b6eaa0",
+      "capture": "07d-explicit-resume",
+      "sha256": "c1a66a0c399af91cfab904146035af158c96aa08d8a5a48e7fc5e6ea59bc2a4b",
+      "expected_living_hud": false,
+      "ocr_calls": [
+        {
+          "psm": 6,
+          "label": "07d-explicit-resume:(0, 630, 450, 720)",
+          "stdout": "1609 FUNDS\nELIMINATED - SPECTATING\n",
+          "stderr": ""
+        },
+        {
+          "psm": 7,
+          "label": "07d-explicit-resume:(980, 648, 1280, 680)",
+          "stdout": "SMG 30/120\n",
+          "stderr": ""
+        }
+      ],
+      "accepted_living_hud": false,
+      "error": "Rendered living-player/ammunition check failed: ('1609 FUNDS\\nELIMINATED - SPECTATING\\n', 'SMG 30/120\\n')",
+      "matches_expected": true
+    }
+  ],
+  "primary_pause": {
+    "before": {
+      "simulation_tick": 3237,
+      "wall_msec": 87355,
+      "elapsed": 53.9499999999982,
+      "drawn_frames": 649,
+      "phase": "live",
+      "round_number": 2,
+      "local_actor": {
+        "id": 1,
+        "alive": true,
+        "health": 100.0,
+        "deaths": 1,
+        "weapon": "smg",
+        "ammo": 30,
+        "reserve": 120
+      }
+    },
+    "paused": {
+      "simulation_tick": 3244,
+      "wall_msec": 87846,
+      "elapsed": 54.0666666666649,
+      "drawn_frames": 655,
+      "phase": "live",
+      "round_number": 2,
+      "local_actor": {
+        "id": 1,
+        "alive": true,
+        "health": 70.2791296386719,
+        "deaths": 1,
+        "weapon": "smg",
+        "ammo": 30,
+        "reserve": 120
+      }
+    },
+    "after_analysis": {
+      "simulation_tick": 3244,
+      "wall_msec": 89574,
+      "elapsed": 54.0666666666649,
+      "drawn_frames": 669,
+      "phase": "live",
+      "round_number": 2,
+      "local_actor": {
+        "id": 1,
+        "alive": true,
+        "health": 70.2791296386719,
+        "deaths": 1,
+        "weapon": "smg",
+        "ammo": 30,
+        "reserve": 120
+      }
+    },
+    "resumed": {
+      "simulation_tick": 3246,
+      "wall_msec": 89832,
+      "elapsed": 54.0999999999982,
+      "drawn_frames": 671,
+      "phase": "live",
+      "round_number": 2,
+      "local_actor": {
+        "id": 1,
+        "alive": true,
+        "health": 70.2791296386719,
+        "deaths": 1,
+        "weapon": "smg",
+        "ammo": 30,
+        "reserve": 120
+      }
+    }
+  },
+  "decisive_actions": [
+    {
+      "event": "key_after",
+      "seconds": 90.31200000000001,
+      "wall_unix_msec": 1792641720646,
+      "held_keys": [
+        "Escape"
+      ],
+      "key": "Escape",
+      "down": true,
+      "scope": "saved_hud_analysis_cleanup",
+      "native_state": {
+        "target_window": 3998096,
+        "foreground_window": 3998096,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      }
+    },
+    {
+      "event": "key_after",
+      "seconds": 90.45299999999997,
+      "wall_unix_msec": 1792641720788,
+      "held_keys": [],
+      "key": "Escape",
+      "down": false,
+      "scope": "saved_hud_analysis",
+      "native_state": {
+        "target_window": 3998096,
+        "foreground_window": 3998096,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      }
+    },
+    {
+      "event": "key_before",
+      "seconds": 90.57799999999997,
+      "wall_unix_msec": 1792641720909,
+      "held_keys": [],
+      "key": "Escape",
+      "down": true,
+      "native_state": {
+        "target_window": 3998096,
+        "foreground_window": 3998096,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      }
+    },
+    {
+      "event": "key_after",
+      "seconds": 90.65599999999995,
+      "wall_unix_msec": 1792641720983,
+      "held_keys": [
+        "Escape"
+      ],
+      "key": "Escape",
+      "down": true,
+      "native_state": {
+        "target_window": 3998096,
+        "foreground_window": 3998096,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      }
+    },
+    {
+      "event": "key_before",
+      "seconds": 91.03099999999995,
+      "wall_unix_msec": 1792641721360,
+      "held_keys": [
+        "Escape"
+      ],
+      "key": "Escape",
+      "down": false,
+      "native_state": {
+        "target_window": 3998096,
+        "foreground_window": 3998096,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      }
+    },
+    {
+      "event": "key_after",
+      "seconds": 91.10900000000004,
+      "wall_unix_msec": 1792641721435,
+      "held_keys": [],
+      "key": "Escape",
+      "down": false,
+      "native_state": {
+        "target_window": 3998096,
+        "foreground_window": 3998096,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      }
+    },
+    {
+      "event": "capture_begin",
+      "seconds": 98.28099999999995,
+      "wall_unix_msec": 1792641728607,
+      "held_keys": [],
+      "capture": "07c-settings-changed",
+      "native_state": {
+        "target_window": 3998096,
+        "foreground_window": 3998096,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      }
+    },
+    {
+      "event": "capture_end",
+      "seconds": 98.42100000000005,
+      "wall_unix_msec": 1792641728749,
+      "held_keys": [],
+      "capture": "07c-settings-changed",
+      "dimensions": [
+        976,
+        549
+      ],
+      "native_state": {
+        "target_window": 3998096,
+        "foreground_window": 3998096,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      }
+    },
+    {
+      "event": "key_before",
+      "seconds": 98.45299999999997,
+      "wall_unix_msec": 1792641728790,
+      "held_keys": [],
+      "key": "Escape",
+      "down": true,
+      "native_state": {
+        "target_window": 3998096,
+        "foreground_window": 3998096,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      }
+    },
+    {
+      "event": "key_after",
+      "seconds": 98.51499999999999,
+      "wall_unix_msec": 1792641728850,
+      "held_keys": [
+        "Escape"
+      ],
+      "key": "Escape",
+      "down": true,
+      "native_state": {
+        "target_window": 3998096,
+        "foreground_window": 3998096,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      }
+    },
+    {
+      "event": "key_before",
+      "seconds": 98.875,
+      "wall_unix_msec": 1792641729202,
+      "held_keys": [
+        "Escape"
+      ],
+      "key": "Escape",
+      "down": false,
+      "native_state": {
+        "target_window": 3998096,
+        "foreground_window": 3998096,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      }
+    },
+    {
+      "event": "key_after",
+      "seconds": 98.88999999999999,
+      "wall_unix_msec": 1792641729220,
+      "held_keys": [],
+      "key": "Escape",
+      "down": false,
+      "native_state": {
+        "target_window": 3998096,
+        "foreground_window": 3998096,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      }
+    },
+    {
+      "event": "capture_begin",
+      "seconds": 99.92100000000005,
+      "wall_unix_msec": 1792641730245,
+      "held_keys": [],
+      "capture": "07d-explicit-resume",
+      "native_state": {
+        "target_window": 3998096,
+        "foreground_window": 3998096,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      }
+    },
+    {
+      "event": "capture_end",
+      "seconds": 100.20299999999997,
+      "wall_unix_msec": 1792641730539,
+      "held_keys": [],
+      "capture": "07d-explicit-resume",
+      "dimensions": [
+        976,
+        549
+      ],
+      "native_state": {
+        "target_window": 3998096,
+        "foreground_window": 3998096,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      }
+    }
+  ],
+  "death_events": [
+    {
+      "event": "objective_state",
+      "event_index": 31,
+      "simulation_tick": 3272,
+      "elapsed": 54.5333333333315,
+      "wall_msec": 98419,
+      "drawn_frames": 748,
+      "phase": "live",
+      "round_number": 2,
+      "local_actor": {
+        "alive": false,
+        "ammo": 30,
+        "assists": 0,
+        "credits": 1600,
+        "deaths": 2,
+        "grenades": 1,
+        "health": 0.0,
+        "id": 1,
+        "inventory": [
+          "sidearm",
+          "smg"
+        ],
+        "kills": 0,
+        "pitch": 0.0,
+        "position": [
+          -4.40000009536743,
+          -0.000745564699172974,
+          -21.0
+        ],
+        "reload": 0.0,
+        "reserve": 120,
+        "smokes": 1,
+        "team": 0,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "smg",
+        "yaw": -3.14159256616701
+      }
+    },
+    {
+      "event": "alive",
+      "event_index": 32,
+      "simulation_tick": 3272,
+      "elapsed": 54.5333333333315,
+      "wall_msec": 98419,
+      "drawn_frames": 748,
+      "phase": "live",
+      "round_number": 2,
+      "local_actor": {
+        "alive": false,
+        "ammo": 30,
+        "assists": 0,
+        "credits": 1600,
+        "deaths": 2,
+        "grenades": 1,
+        "health": 0.0,
+        "id": 1,
+        "inventory": [
+          "sidearm",
+          "smg"
+        ],
+        "kills": 0,
+        "pitch": 0.0,
+        "position": [
+          -4.40000009536743,
+          -0.000745564699172974,
+          -21.0
+        ],
+        "reload": 0.0,
+        "reserve": 120,
+        "smokes": 1,
+        "team": 0,
+        "velocity": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "weapon": "smg",
+        "yaw": -3.14159256616701
+      }
+    }
+  ],
+  "all_pixel_checks_pass": true
+}

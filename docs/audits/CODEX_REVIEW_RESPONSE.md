@@ -1,0 +1,348 @@
+# Response to Codex's PR #1 review (REQUEST CHANGES at `e018a65`)
+
+Three blocking findings, fixed in three focused commits on `claude/independent-audit-visual-v04`, plus five follow-up commits from the second review and one from Codex's follow-up review at `77e0433` (see the end of this document). Each defect was reproduced first, and each regression test was confirmed failing on the commit before its fix. The full matrix was then re-run on the final head, `d0278f0`. Evidence is in [`docs/reports/media/claude-v04/codex-review/`](../reports/media/claude-v04/codex-review/README.md). Nothing here is merged and no release readiness is claimed.
+
+| Blocker | Commit | Regression test | On reviewed head | After fix |
+| --- | --- | --- | --- | --- |
+| 1 · Kill-feed HUD overflow | `89a743a`, `ff41188`, `d0278f0`, `8803029` | `game/tests/hud_overflow_test.gd` | 49 of 436 checks fail | 2,437/2,437 headless, 2,444/2,444 native with captures (`7756e35`; see the follow-up review) |
+| 2 · Body hit-volume regression | `6e144a0`, `fc52e68`, `5407325` | `game/tests/hit_volume_test.gd` | 8 of 33 fail | 40/40 |
+| 3 · Mixed-version protocol stall | `cf9a630`, `a84b208` | `scripts/test_protocol_compat.sh`, `scripts/test_account_network.py`, `scripts/test_handshake_hardening.sh` | mixed pairs stall in "joining" for the full 15 s window | 6/6 pairings and 8/8 hostile-peer checks behave as specified |
+
+## Blocker 1 — kill-feed HUD overflow
+
+**Reproduced.** At 960×720, two 24-character names put the ammunition and utility labels at x = 611 with a 577 px width, off the right edge. The score moved left of centre and the feed ran under the MENU button. At 130 % text, the score also shifted at 1280, 1560 and 1600 px wide.
+
+**Root cause.** Each feed row was a non-wrapping `HBoxContainer` of name labels, so its minimum width was the full text width. Container minimum sizes propagate upward through the side column, the top row and the HUD margin container. Those grew past the viewport and pushed everything anchored to the right. The `.left(16)` character cut did not bound the rendered width; wide glyphs and CJK are much wider per character.
+
+**Fix (`game/scripts/main.gd`):**
+- **Frame:** the feed lives in a plain `Control` (`KillFeedFrame`), whose minimum size ignores its children. Its height is measured in the tree for exactly four rows at the current text size, and it clips as a backstop. No feed content can resize the HUD.
+- **Name width:** names keep their natural width when they fit; otherwise they share the remaining width. Each name is cut to the longest prefix that fits, measured in the label's own font, with an explicit "…". Godot's built-in overrun was dropped because natively it omitted the ellipsis whenever the cut text exactly filled the width.
+- **Cluster safety:** cuts fall only on grapheme boundaries reported by the text server. Combining marks, Indic conjuncts, Thai clusters, flags and keycap sequences stay whole (`ff41188`; the earlier mark-only rule split Devanagari conjuncts).
+- **Compact marker:** when space is tight, "HEADSHOT" becomes a gold "HS" before any name is cut. It is still text, so the headshot is not signalled by colour alone.
+- **Sanitising:** names pass through `SBDesign.plain_line()`.
+- **Unchanged:** text size is not reduced, and touch layouts and accessibility settings behave as before.
+
+**Verified.** The test covers 960×720, 1180×820 (tablet), 1280×720, 1560×720 and 1600×720, at 100 % and 130 % text, with ordinary names, 24-character names (the server's limit) and Unicode/CJK names. Per case it checks:
+- the score stays centred and does not move when rows arrive;
+- ammo, utility, health, score and radar stay on screen;
+- the feed stays on screen and clears the score, radar and MENU button;
+- every row is fully visible and every name is drawn whole or as a prefix ending in "…";
+- ordinary names are never shortened;
+- every cut lands on a grapheme boundary (accents, Devanagari, Thai, flags and keycaps);
+- a name built from stacked combining marks keeps every row one line tall (`d0278f0`).
+
+Before and after native captures are in `codex-review/hud/`. Landscape (144), UX contract (30), main (35) and touch (34) suites are unchanged.
+
+## Blocker 2 — body hit-volume regression
+
+**Reproduced with identical rays in three builds.** `docs/audits/probes/hit_grid_probe.gd` was run in an untouched `git archive` of 0.3.0, the reviewed head and this tree, on 1 cm cell centres:
+- **Views:** front and side, standing and crouched, plus rays plunging from 2.5 m.
+- **0.3.0:** scored by its own rule, a physics ray against the movement capsule with a headshot above `head_height − 0.25`.
+- **PR builds:** scored by `trace_shot`.
+
+At 5 cm above the floor, 0.3.0 registers hits across x = ±16 cm and the reviewed head across ±30 cm. In total the reviewed head scored 2,885 cells where 0.3.0 missed, all at foot and shin level.
+
+**Root cause.** 0.3.0's hitbox was the movement capsule: radius 0.31 m, height 1.8 m (1.25 m crouched), with rounded ends. The PR replaced the body with a flat-bottomed 0.31 m cylinder, which fills the corners of the capsule's rounded bottom.
+
+**Fix (`game/scripts/gameplay/actor.gd`).** The body volume is now exactly the movement capsule, read from the live collision shape at the current stance and cut off at the drawn torso top (`BODY_TOP × crouch squash`):
+- The ray is intersected analytically (cylinder ∪ caps, overlapped with the half-space). Grazing rays miss, as they do against the physics capsule.
+- The head and helmet ellipsoids built from the drawn head are unchanged.
+- World-before-actor ordering, nearest-actor selection and pass-through of empty volume space are unchanged.
+
+**Verified (`hit_volume_test.gd`, 40 checks; `compare_hit_grids.py`; the grid probe gives cell-for-cell identical results on the final head):**
+
+| View | 0.3.0 head / body cells | Reviewed head | Now | Hit where 0.3.0 missed (now) |
+| --- | --- | --- | --- | ---: |
+| Standing, front | 2,256 / 8,084 | 1,190 / 8,556 | 1,190 / 8,146 | **0** |
+| Standing, side | 2,256 / 8,084 | 1,217 / 8,556 | 1,217 / 8,146 | **0** |
+| Plunging (feet), every view | 0 / 3,484 | 0 / 3,720 | 0 / 3,484 | **0** |
+| Crouched, front | 1,884 / 5,046 | 858 / 6,138 | 858 / 5,728 | 146 (all headshots, see decision 1) |
+| Crouched, side | 1,884 / 5,046 | 882 / 6,138 | 882 / 5,728 | 155 (all headshots) |
+
+The in-process test scores every ray both ways: physics against the actual layer-2 capsule (0.3.0's hitbox), and `trace_shot`. It asserts:
+- no body hit exists where the capsule missed;
+- every capsule hit below the drawn torso top still hits;
+- the only extra area is the drawn crouched helmet.
+
+It also runs specific foot, shin, torso, edge (±1 cm), head and crouched rays, plus a ray past rounded feet that reaches the operator behind and a wall that blocks the shot. Five analytic rays (`fc52e68`) pin tangent behaviour: a ray exactly on the radius, under the rounded bottom or along the side misses, as it does against the physics capsule. Before that commit, 32-bit rounding let two of them hit. Since `5407325` the spans work in 64-bit floats. 4,000 seeded rays from 40–140 m match an exact line-to-segment distance wherever the surface is more than 0.05 mm away, and an 86° ray just inside the wall hits. The weapon integrity, actor, hit feedback and match suites, and the head-area probe (577/599 standing, 852/863 crouched, 0 cells outside the drawn head), are unchanged.
+
+**Decisions for Codex and design (not chosen silently):**
+1. **Crouched helmet vs 0.3.0 capsule.** The drawn crouched helmet reaches 1.29 m, but the 0.3.0 crouched capsule tops out at 1.25 m, and its rounded top reaches only about 0.12 m from the centre line at 1.22 m. So 146–155 cm² of drawn helmet (front/side) is a headshot now and a miss in 0.3.0. This build keeps the drawn helmet hittable, to avoid shoot-through on visible geometry. The alternative, intersecting the head volumes with the capsule, is a two-line change that restores exact 0.3.0 coverage but makes that part of the visible helmet shoot-through.
+2. **H-2 changes headshot area; it was not a regression fix.** This was audit finding H-2 and is not new in this response, but it is a real balance change and needs explicit acceptance:
+   - Standing headshot area drops from 2,256 to 1,190 cm² (−47 %); 1,004 cm² of air beside the head that 0.3.0 counted as headshots now misses.
+   - A 1 cm band at 1.37–1.38 m (62 cm²) changes from headshot to body.
+   - Crouched, the shoulder band at 0.88–0.99 m (682 cm²) changes from headshot to body damage.
+   - Total hit area falls 9.7 % standing and 5.0 % crouched; the body hit area never exceeds 0.3.0's.
+   - Restoring 0.3.0's headshot behaviour means reverting H-2.
+
+## Blocker 3 — mixed-version protocol stall
+
+**Reproduced with real processes.** The dedicated-server and client processes are separate, and 0.3.0 comes from an untouched `git archive`:
+- Same-version pairs joined in 0.5–0.8 s.
+- Both mixed pairings logged "The rpc node checksum failed" and stayed in "joining" for the whole 15 s observation window. Before this fix nothing ended that state.
+
+**Root cause.** Godot dispatches RPCs by method index in name order. `_elimination_rpc` sorts right after `_buy_rpc`, so it shifts every later index, including `_join_rpc`, `_snapshot_rpc` and `_welcome_rpc`. With no version check, nothing told either side.
+
+**Why not only restore the 0.3.0 RPC table?** Removing `_elimination_rpc` and moving kill events into snapshots would let today's two builds interoperate. But the next RPC change would fail the same silent way, and nothing would detect it. A handshake that runs before, and independently of, the gameplay RPC table prevents the whole class.
+
+**Fix (`game/scripts/gameplay/match.gd`).** A version handshake in SceneMultiplayer's authentication stage. Godot does not admit a peer, and so does not let it exchange RPCs, until both sides complete authentication. It is documented in `docs/network.md`.
+- **Hello:** both sides exchange a bounded (≤ 512 B), type-checked JSON hello with `PROTOCOL_VERSION`: 2 now, with 0.3.0 implicitly having none. Only an exact whole-number match is admitted, and a peer's first hello decides (`a84b208`).
+- **Mismatch:** a mismatched peer receives the reason, is never admitted, and is dropped about 0.5 s later. `_join_rpc` never runs, so no join ticket is consumed and no slot is allocated.
+- **No hello (0.3.0 clients, foreign traffic):** dropped at the 5 s authentication timeout.
+- **No answer (0.3.0 servers):** the client gets a specific, terminal message.
+- **Bounded waits:** connecting, authenticating and joining are capped at 20 s on the client. Failures are terminal, with no reconnect loop, and a later generic `connection_failed` no longer overwrites the specific reason.
+- **Unchanged:** reconnect of an established session works as before (`test_network.sh` reclaims both slots).
+
+**Verified.** `scripts/test_protocol_compat.sh` asserts every pairing, including a protocol-bumped copy of this build standing in for the next incompatible release:
+
+| Client | Server | Expected | Observed | Result | Last message shown to the player |
+| --- | --- | --- | --- | --- | --- |
+| 0.3.0 (e67f2c8) | 0.3.0 (e67f2c8) | join | joined after 0.50 s | PASS | Round live. Secure Relay Yard. |
+| this branch (protocol 2) | this branch (protocol 2) | join | joined after 0.28 s | PASS | Round live. Secure Relay Yard. |
+| 0.3.0 (e67f2c8) | this branch (protocol 2) | server drops pre-handshake client | never admitted; dropped 3x by the server, first after 5.1 s; 0.3.0 client retries on its own | PASS | Connecting to Relay Yard… |
+| this branch (protocol 2) | 0.3.0 (e67f2c8) | client reports missing handshake | failed after 5.1 s, no retries | PASS | No version handshake from the server within 5 seconds. It is probably running an older SIGHTBREAK release (0.3.0 has no handshake) or is not a SIGHTBREAK server. Join a server running the same version as this client. |
+| next build (protocol 3) | this branch (protocol 2) | explicit mismatch | rejected after 0.2 s with the reason shown | PASS | Version mismatch: this client uses SIGHTBREAK network protocol 3. This server uses network protocol 2; this client sent protocol 3. Install the same SIGHTBREAK version as the server to join. |
+| this branch (protocol 2) | next build (protocol 3) | explicit mismatch | rejected after 0.2 s with the reason shown | PASS | Version mismatch: this client uses SIGHTBREAK network protocol 2. This server uses network protocol 3; this client sent protocol 2. Install the same SIGHTBREAK version as the server to join. |
+
+`test_account_network.py` adds a protocol-99 client that presents the join ticket first. It is rejected in 0.68 s, and the same ticket then binds the real client to slot 1. That proves the rejected attempt consumed neither the ticket nor a slot. Guest rejection, replay rejection and account reclaim are unchanged.
+
+**Limitation (cannot be fixed retroactively).** An unmodified 0.3.0 client cannot display a message it does not know. The server drops it at 5 s every time; the 0.3.0 client then runs its own reconnect loop, which only a client update can change.
+
+## Full regression run (commit `d0278f0`)
+
+Same host, PostgreSQL 16.15 (the repository pins 17), Xvfb/llvmpipe. Each suite was run once on the committed head; the counts are actual output, not targets (`codex-review/matrix-d0278f0.log`, `validate-d0278f0.log`).
+
+| Suite | Result |
+| --- | --- |
+| `scripts/validate.sh` | exit 0: **1,915** native assertions (previously 548; +40 hit volume, +1,327 HUD overflow), a natural 10-round bot match, and two ENet clients with reconnect |
+| Backend PostgreSQL tests | **48 passed** |
+| `scripts/test_native_economy.py` (real HTTP) | 14/14 |
+| `scripts/test_render.sh` (renderer lifecycle) | 11/11 + 19/19, texture bytes flat across cycles |
+| `scripts/test_account_network.py` | pass, including the new incompatible-protocol case |
+| `scripts/test_bridge_transport.py` | pass |
+| `scripts/test_reward_bridge.py` | pass — 10 exact wallets, 10 ledger grants, replay minted nothing |
+| `scripts/test_protocol_compat.sh` | **PASS**, all six pairings |
+| `scripts/test_handshake_hardening.sh` | **PASS**, 8/8 hostile-client and hostile-server checks (7/8 fail on `fc52e68`) |
+
+No existing assertion was removed or loosened. The new tests failed on the reviewed head as described above. Software-render timings and captures are not device evidence: Android/iOS frame rate, thermals and touch feel remain **UNVERIFIED**.
+
+## Second review
+
+A second Claude agent reviewed the final blocker fixes adversarially. It wrote its own probes and attack harnesses rather than rereading these tests. It is the same model family as the author, so this is **not independent acceptance**; Codex's review remains the gate.
+
+- **First attempt:** an environment restart interrupted it before its report. Its recovered probes found two defects, both fixed with regression tests:
+  - truncation split Devanagari conjuncts, Thai clusters, flags and keycaps (`ff41188`);
+  - 32-bit rounding let rays that only touch the capsule register hits (`fc52e68`).
+- **Second attempt:** it reviewed `fc52e68` in full and found **no blocking defect**. It confirmed the defects below by reproduction, and all of them are fixed here.
+
+| Finding (reviewer's severity) | Reproduction | Fix | Regression test (fails before → passes after) |
+| --- | --- | --- | --- |
+| Long-range precision (non-blocking): at 70–100 m the capsule caps used 32-bit `Vector3.dot`, so body hits landed up to 3.7 mm outside the 0.3.0 capsule and hits up to 3.1 mm inside were lost | 20k rays per range against exact geometry | `5407325`: 64-bit closest-approach spans | `hit_volume_test.gd`: 4,000 seeded 40–140 m rays (4 extra and 3 lost → 0) |
+| Steep-ray margin (note): the tangent margin scaled with pitch, so an 86° ray 0.3 mm inside the wall missed | crafted rays | `5407325` | `hit_volume_test.gd` steep ray (miss → hit) |
+| Hello flood (non-blocking): each hello re-armed the 0.5 s drop, so 14,560 hellos drew 14,520 replies and log lines and held the slot to the 5 s timeout | hostile client | `a84b208`: first hello decides, later ones are ignored | `test_handshake_hardening.sh spam` (14,520 replies, 5.02 s → 1 reply, 0.53 s) |
+| Ordering (note): a mismatched hello followed by a good one was admitted; a good one followed by a bad one logged a rejection and an engine error, then was admitted | hostile client | `a84b208` | `bad_then_good` (admitted → dropped at 0.53 s), `good_then_bad` (1 error → 0) |
+| Fractional protocol (note): 2.9 was truncated to 2 and admitted; 1e400 logged as INT64_MIN | hostile client | `a84b208`: whole numbers only | `fractional` (admitted → rejected), `huge` |
+| Client crash (note): a non-boolean `accepted` threw in the handler, then the client waited 5 s for a misleading message | hostile server | `a84b208`: type-checked | `accepted_text` (script error → explicit mismatch) |
+| Hang-up message (non-blocking): a server that disconnects during the handshake (ENet discards the queued reason) produced "probably running an older release" after 0.1 s | hostile server | `a84b208`: an early hang-up says the server closed the connection during the version check | `hang_up`, `reject_then_hang_up` |
+| Tall names (note): one letter plus 23 combining marks drew an 84 px row and pushed the two newest kills out of the clipped feed | native capture | `d0278f0`: at most two generic combining marks per character | `hud_overflow_test.gd` stacked-marks set (30 failures → 0) |
+
+Not changed, with reasons:
+- **A ray that starts inside a capsule** registers at t = 0, where 0.3.0's physics ray ignores the shape it starts in. Live capsules collide, so a shooter's eye cannot be inside another operator's capsule in play.
+- **Display-name sanitising** (`SBDesign.plain_line`, unchanged since 0.3) cuts at 24 code points without an ellipsis and turns zero-width joiners into spaces. This splits family emoji and some Persian and Indic spellings. It is recorded in `docs/KNOWN_LIMITATIONS.md` and is out of scope for this PR.
+- **The final `hit_volume_test.gd`** does not parse on `e018a65`, because its tangent and long-range checks call a helper added in `6e144a0`. The failure counts above were measured against the commit before each check was added. The 33-check version fails 8/33 on `e018a65` for the stated reasons.
+- **`hud_overflow_test.gd` on `e018a65`** hangs after its script error until `validate.sh`'s 540 s timeout kills it.
+
+The reviewer found these sound:
+- **Existing assertions:** none removed or loosened between `e018a65` and `fc52e68`.
+- **Malformed hellos:** 200 KB, non-UTF-8, nested and silent peers never crashed the server or reached an RPC, ticket or slot. Godot discards non-auth packets from authenticating peers (`scene_multiplayer.cpp`).
+- **Reconnect** of established sessions still works.
+- **Truncation cost:** `_fit_text` takes at most 0.43 ms.
+- **Unicode layouts:** emoji, Thai, CJK and Arabic feed layouts keep full rows.
+
+It did not test real packet loss or latency, raw crafted ENet packets, Jolt, or Android/ARM.
+
+## Codex follow-up review at `77e0433`: fallback-face row height
+
+Codex requested changes for one remaining defect. `main.gd` sized the clipped feed frame for four rows measured from "Ag" in the default face. With Noto Sans CJK as the system's CJK face, the unchanged test failed 10 checks headless (1,325) and 10 native (1,331): the fourth row at every size and both text scales.
+
+**Reproduced here.** This host's CJK face is WenQuanYi Zen Hei, which fits the 20 px Latin row, so the unchanged test passed (1,327/1,327). Noto Sans CJK was then selected through `FONTCONFIG_FILE` (the 2023-08-17 Debian package, extracted to a scratch folder; nothing installed system-wide or committed; recipe in `hud-fallback/noto-cjk-fonts.conf`). Under it, the unchanged test at `77e0433` gave exactly Codex's counts: 1,325 checks / 10 failures headless and 1,331 / 10 native.
+
+| 1560×720, Unicode/CJK names | Latin row | CJK row | Frame bottom | Fourth-row bottom | Clipped |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| 100 % text, `77e0433` | 26 px | 28 px | 166 | 174 | **8 px** (Codex: 8 px) |
+| 130 % text, `77e0433` | 32 px | 33 px | 197 | 201 | **4 px** (Codex: 6 px) |
+| 100 % text, fixed | 26 px | 28 px | 174 | 174 | 0 |
+| 130 % text, fixed | 32 px | 33 px | 201 | 201 | 0 |
+
+At 130 % this Noto build shapes an 18 px line at 27 px; Codex's measured 28 px, hence 4 px here against 6 px there.
+
+**Root cause.** A label's line is as tall as the tallest face its text is shaped with. Godot shapes glyphs the default face lacks with an OS-chosen fallback face, so the line height is the OS's, not the project's. All four rows were assumed to be the Latin height. Truncation and mark limiting never touch height.
+
+**Fix (`8803029`).**
+- The Latin measurement is now only the reserve, so Latin feeds lay out exactly as before.
+- `_fit_kill_feed_frame()` sets the frame's height to the live rows' minimum heights plus gaps, never less than the reserve, whenever a row is added or expires.
+- Only the height is set. The frame is still a plain `Control`, so no row width can resize the HUD.
+- There is no fixed pixel allowance.
+
+**Test changes (`hud_overflow_test.gd`).** No assertion was removed or loosened.
+- **Second pass with a taller face.** It takes the system's own CJK face, makes it 3 px taller above and below the line, and installs it as the default font's explicit fallback. It runs the Latin and CJK sets at all five sizes and both text scales. The regression therefore fails on any machine with a CJK face, not only one whose face happens to be taller. If no system face covers the CJK sample, the pass prints that it was skipped.
+- **Guard against a vacuous pass:** it asserts the frame actually grew.
+- **Latin rows keep the reserved height.**
+- **Nothing else moves:** no score, radar, ammunition, utility, funds, health or status rect moves when the feed fills or grows.
+
+**Verified.** All runs use the same host and Godot 4.7.2; native runs use Xvfb/llvmpipe.
+
+| Run | `77e0433`, unchanged test | Old frame under the final test (negative control) | Final head `7756e35` |
+| --- | --- | --- | --- |
+| Headless, this host's fonts | 1,327 / 0 | 2,317 checks / **20 failures** | 2,437 / 0 |
+| Headless, Noto Sans CJK | **1,325 / 10** | 2,315 / **30** (Codex's 10 + 20 in the taller pass) | 2,435 / 0 |
+| Native with captures, Noto Sans CJK | **1,331 / 10** | — | 2,442 / 0 |
+| Native with captures, this host's fonts | — | — | 2,444 / 0 |
+
+The negative control is the final test run with `_fit_kill_feed_frame()` disabled. Counts differ between font setups because the prefix checks run only for names that were shortened.
+
+`scripts/validate.sh` on `7756e35` exits 0 (`codex-review/validate-7756e35.log`):
+- **3,079 native assertions:** 1,915 before, plus 1,110 HUD overflow, 52 landscape and 2 UX contract, the latter two from the funds change below;
+- the natural 10-round bot match;
+- two ENet clients with reconnect.
+
+Evidence is in `codex-review/hud-fallback/`:
+- before and after captures, and a cropped comparison;
+- every log listed above.
+
+One environment note: when two native Godot windows ran at once on the same Xvfb display, X11 refused one of them the mouse grab ("NO GRAB"). The final native runs above ran alone and logged no engine errors.
+
+**Also on this branch: funds label (`7756e35`).** At the project owner's request, match funds are now one gold "800 · FUNDS" label directly above the health readout and bar. They are no longer repeated in the utility row or the buy prompt.
+- The label hangs from a zero-height anchor, so the bottom row and the status line keep their positions.
+- A first version stacked it in the vitals block. That grew the row and pushed the buy prompt into the FRAG and SMOKE buttons. `landscape_ui_test.gd` caught it (8 failures) before anything was pushed.
+- New checks: the label clears every touch control (landscape test), sits above the health readout and is not repeated (UX contract test), and stays on screen and does not move (HUD test).
+- It is presentation only; no economy, network or gameplay code changed. Captures are in `docs/reports/media/claude-v04/hud-funds/`.
+
+**Confirmed by Codex and unchanged here:**
+- hit volumes 40/40;
+- weapon integrity 28/28;
+- the lower-leg grid 1,468/1,468;
+- handshake hardening 8/8.
+
+**Still open (not changed in this PR):** Codex observed that compatible raw peers that complete the handshake but never join stay connected after 26 s. That is the pre-existing Phase D hardening task, now recorded in `docs/KNOWN_LIMITATIONS.md`.
+
+Nothing is merged and no release readiness is claimed. Same-family review limits apply as above.
+
+## Follow-up: status text against touch controls at larger text sizes
+
+**Codex's recheck of `227d6c8`** confirmed the kill-feed fix and reported a pre-existing accessibility defect. At 130 % text size, the status line's glyphs overlap FRAG at 960, 1280, 1560 and 1600 × 720, and SMOKE at 960 in the buy phase. It is clear at 100 %, and the landscape test only covered 100 %.
+
+**Reproduced and widened.** A probe compares the drawn text block with every touch target (`status-touch/logs/status_touch_probe.gd.txt`):
+- **On `227d6c8`:** 15 of 24 size, scale and phase combinations overlap: 8 at 130 %, 7 at 115 %, and none at 100 % for the buy and objective prompts (`probe-227d6c8.log`).
+- **The longest real notification** ("Match complete; account reward submission failed…") also overlaps at 85 % and 100 %.
+
+**Cause.** The status line spans the full row and is centred, and the default FRAG and SMOKE targets sit at 60 % and 69 % of the width in the same band. Larger text, or a long notification, therefore reaches them. Players' custom layouts could cause the same collision at any text size.
+
+**Fix (`main.gd`, presentation only).** The status label sits in a row whose margins `_fit_status_line()` sets every frame:
+- **With touch controls**, it finds the stretches of that row that no drawn touch target occupies. The band is three lines tall, with an 8 px gap, and the move area is excluded because it is a region rather than a button.
+- **Placement:** it centres the text as near the screen centre as the chosen stretch allows, preferring the stretch that contains the centre and otherwise the widest one. It wraps only if the text is wider than that stretch.
+- **Custom layouts** are covered too, because it uses the controls' actual positions.
+- **Without touch controls** the row has no margins and nothing changes.
+
+**Tests (`landscape_ui_test.gd`, 196 → 325 checks).** At 85, 100, 115 and 130 % text, at all four sizes, for the buy, attack and defuse prompts and the longest notification:
+- the drawn text block clears every drawn touch control and stays on screen;
+- without touch controls, the 130 % line stays centred.
+
+The negative control is the same test on `227d6c8`'s `main.gd`: **34 failures** (85 %: 1, 100 %: 2, 115 %: 15, 130 %: 16; `landscape-test-on-227d6c8-main.log`). With the fix there are none.
+
+**Results.** The probe on the fix overlaps in 0 of 24 cases. `validate.sh` exits 0 (`validate-fixed.log`): landscape 325/325, HUD overflow 2,437, UX 32, touch 34, match 75/75, the 10-round bot match and two ENet clients. The native 130 % captures, before and after, are in `docs/reports/media/claude-v04/codex-review/status-touch/`.
+
+Same-family review limits apply. Nothing is merged and no release readiness is claimed.
+
+
+## Codex regression at `98ff57c`: saved layouts made the status line oscillate
+
+**Report.** Codex's review of `98ff57c` reported this setup: 960 × 720, 130 % text, 100 % buttons, and only FRAG and SMOKE saved, at (0.459375, 0.82) and (0.540625, 0.82).
+- **What `_fit_status_line()` did:** their keep-out zones leave a 6 px gap at the centre, and the fitter chose it because it held the screen centre.
+- **What followed:** the line alternated every frame between about 346 × 30 and 6 × 756 px (23 lines), pushing health and ammunition off screen. A long notification reached 2,637 px.
+- **Codex's evidence:** 54 checks with 7 failures, headless and native.
+- **Codex asked for:**
+  - a usable minimum width based on bounded text height;
+  - a wider alternative preferred over an unusable centre gap;
+  - a bounded fallback when no stretch is clear;
+  - no feedback from the label's height into the next frame;
+  - a saved-layout regression that samples consecutive frames.
+
+**Reproduced.** Native consecutive frames on `98ff57c` (`status-layouts/logs/frames-98ff57c.log`):
+- **Buy prompt:** frames alternate between 346 × 30 (1 line) and 6 × 756 (23 lines). On the bad frames, health sits at y = 1,007 on a 720 px screen.
+- **Longest notification:** frames alternate between 916 × 63 and 6 × 2,637 (80 lines).
+
+**Causes, all in `98ff57c`'s design:**
+1. **No minimum width:** a stretch was accepted however narrow, and the stretch holding the centre always won.
+2. **Feedback loop:** the label sat in a container row, so its wrapped height became the row's height, and that row was the next frame's input.
+3. **No bounds:** the line count was unlimited, and nothing defined what happens when no stretch can hold the text.
+
+**Fix (`main.gd`, presentation only).**
+- **Fixed row.**
+  - The status row is now a plain `Control` that reserves one line at the current text size, like the kill-feed frame.
+  - The fitter places the label inside it, and a wrapped label grows upward into the empty space above. Nothing below it moves, and its size cannot change the layout.
+- **Usable stretches only.**
+  - For 1, 2 and 3 lines, the fitter finds the narrowest width at which the label itself wraps the text to that many lines, and the label's height at that width.
+  - A stretch qualifies only if it is at least that wide, so the 6 px gap never qualifies.
+- **Choice.**
+  - The closest placement to the screen centre wins. Each extra line costs a quarter of the row's width (`STATUS_LINE_COST`), so the text wraps to stay central but never into a column.
+  - At most three lines (`STATUS_MAX_LINES`, also the label's `max_lines_visible`).
+- **What it keeps clear,** each with the existing 8 px gap:
+  - every drawn touch control, now including the move stick's ring;
+  - the funds label, which since `7756e35` sits in the same band at the left.
+- **Fallback.**
+  - If no stretch of the row is clear, the line rises to the lowest position where it clears every control in its way. It tries each control's top edge.
+  - Its top stays below 58 % of the screen height (`STATUS_RISE_LIMIT`): at least 57 px below the reticle at 720 px and 61 px at 768, beyond the largest crosshair gap.
+  - If even that fails, the line takes the full row at its usual position and covers a control. This is a deliberate, bounded last resort; no case in the test matrix reaches it.
+- **No oscillation.**
+  - Every input is geometry the label does not affect: the text, the row's rectangle, the font size, and the control and funds rectangles.
+  - The placement is recomputed only when one of those changes.
+  - Before the label is sized, its cached minimum size is refreshed for the new width. An autowrapped label's minimum height depends on its width, and without the refresh the cache from the last width measured would resize it a frame later. This was the last instability the new test caught during development.
+- **No resolution-specific offsets.** Everything is a fraction of the screen, a line count, or the existing 8 px gap.
+
+**Tests (`landscape_ui_test.gd`, 325 → 9,217 checks).**
+- **Codex's exact case**, with the layout saved in the profile before the match starts.
+- **A new matrix:**
+  - text at 85, 100, 115 and 130 %;
+  - screens of 960 × 720, 1024 × 768, 1280 × 720, 1560 × 720 and 1600 × 720;
+  - buttons at 100 and 150 %;
+  - four layouts: the default, Codex's centre gap, one button at the centre, and a five-button wall across the bottom;
+  - five texts: the buy, attack and defuse prompts, the longest notification, and a kill notice mixing CJK, full-width and accented Latin.
+- **For every case, over eight consecutive frames:**
+  - the label does not move;
+  - it holds at most three lines;
+  - the label's own rectangle, and not only the estimated text block, stays on screen and below the reticle;
+  - both the label and the text block clear every drawn touch control and the funds label;
+  - health and ammunition stay on screen, and the score stays centred at the top.
+
+  Codex noted that the test's `text_block` estimate does not wrap as the Label does: it gave 180 px for a 756 px label. Checking the real rectangle closes that gap.
+
+  The match simulation is frozen while sampling, so no match event replaces the text; the HUD still updates every frame.
+- **1024 × 768** is added to the existing size loops.
+- **Hermetic settings.** The test now sets text size and button size itself at the start. An earlier run had left 130 % text saved in the shared profile, and the 100 % swap-button check then ran at 130 % and failed.
+- **`--status-quick`** limits the matrix to 130 % text on 960 × 720 and 1024 × 768, for native runs, which render every sampled frame in software.
+
+**Results.**
+- **Negative control** (the new test on `98ff57c`'s `main.gd`, headless): **700 failures of 9,217**.
+
+  | Failure | Count |
+  | --- | ---: |
+  | The label's rectangle covers a control or the funds label | 210 |
+  | More than three lines | 181 |
+  | The text block covers a touch control | 88 |
+  | Moves between frames | 86 |
+  | The text block covers the funds label | 73 |
+  | Above the reticle limit | 50 |
+  | Health off screen | 7 |
+  | Ammunition off screen | 5 |
+
+- **The fix, headless:** 9,217/0.
+- **The fix, native (Xvfb, GL Compatibility):** landscape with `--status-quick` 1,312/0; HUD overflow 2,437/0.
+- **`validate.sh`:** exit 0. Landscape 7,615, HUD overflow 2,437, UX 32, touch 34, main 35, plus the match, bot-lifecycle and ENet client suites.
+- **Native consecutive frames:** before and after, in `docs/reports/media/claude-v04/codex-review/status-layouts/`. Codex's case now draws at 189 × 63 (two lines, left of FRAG) on every frame, with health at y = 649.
+
+**Found while testing, not changed in this PR:**
+- **Swap and ammunition at 130 %:** the ammunition label's box reaches 1.8 px into the SWAP target's bounding square at 1280 × 720, default layout. The landscape check for this runs only at 100 %.
+- **Status-text contrast:** the gold status text has no shadow, so it reads poorly where it crosses the light sidearm. This is pre-existing.
+
+Both are recorded for the UI pass. Same-family review limits apply. Nothing is merged and no release readiness is claimed.

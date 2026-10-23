@@ -1,0 +1,20 @@
+diff --git a/game/scripts/gameplay/match.gd b/game/scripts/gameplay/match.gd
+index e142802..c06f7b4 100644
+--- a/game/scripts/gameplay/match.gd
++++ b/game/scripts/gameplay/match.gd
+@@ -327,7 +327,6 @@ func _begin_round() -> void:
+ 	_damage_history.clear()
+ 	_heard.clear()
+ 	_team_ai_state = SBBotAI.create_team_state()
+-	_team_ai_state[0]["primary_site"] = SBBotAI.select_round_plan(round_number, _rng)
+ 	var attack_index: int = 0
+ 	var defend_index: int = 0
+ 	objective_carrier = 0
+@@ -346,6 +345,7 @@ func _begin_round() -> void:
+ 		if _is_bot(actor.actor_id):
+ 			actor.buy_weapon(SBBotAI.choose_buy_weapon(actor, str(options.get("difficulty", "normal")), round_number))
+ 		actor.input_state = {"move": Vector2.ZERO, "look": Vector2(PI if actor.team == 0 else 0, 0)}
++	SBBotAI.select_round_plan(self, 0)
+ 	_announce("Round %d • prepare your equipment" % round_number)
+ 
+ func _objective_tick(delta: float) -> void:

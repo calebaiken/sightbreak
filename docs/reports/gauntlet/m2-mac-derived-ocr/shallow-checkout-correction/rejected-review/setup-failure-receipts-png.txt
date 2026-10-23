@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/docs/reports/gauntlet/m2-mac-derived-ocr/independent-fresh-source/run_review.py", line 194, in <module>
+    main()
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/docs/reports/gauntlet/m2-mac-derived-ocr/independent-fresh-source/run_review.py", line 156, in main
+    artifacts = artifact_audit()
+                ^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/docs/reports/gauntlet/m2-mac-derived-ocr/independent-fresh-source/run_review.py", line 134, in artifact_audit
+    assert receipt.read('evidence/' + rel) == path.read_bytes(), rel
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py", line 1585, in read
+    with self.open(name, "r", pwd) as fp:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py", line 1622, in open
+    zinfo = self.getinfo(name)
+            ^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/zipfile/__init__.py", line 1550, in getinfo
+    raise KeyError(
+KeyError: "There is no item named 'evidence/macos-ordinary-input/00-startup-menu-1.png' in the archive"
