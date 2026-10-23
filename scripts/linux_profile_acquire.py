@@ -512,8 +512,15 @@ class Acquisition:
         self.command('stage', [self.python_path, str(ROOT / 'scripts/linux_profile_overhead.py'), 'stage', '--output', str(self.project)], ROOT)
         original = self.evidence.json(OUTPUT / 'project-stage.json')
         require(original['files'] == accepted.inventory(self.project), 'Initial stage does not match its record')
+        for name, wanted in original['files'].items():
+            if name not in ('project.godot', 'export_presets.cfg'):
+                self.evidence.bind(self.project / name, wanted=wanted)
         project, presets = self.project / 'project.godot', self.project / 'export_presets.cfg'
         before = {'project.godot': project.read_text(), 'export_presets.cfg': presets.read_text()}
+        for name, text in before.items():
+            raw = text.encode()
+            require(original['files'][name] == {'bytes': len(raw), 'sha256': payload.sha(raw)},
+                    'Packaging input changed after initial stage gate: ' + name)
         require('[editor]' not in before['project.godot'], 'Unexpected base editor settings')
         project.write_text(before['project.godot'] + '\n[editor]\nexport/convert_text_resources_to_binary=false\n')
         require(before['export_presets.cfg'].count('script_export_mode=2') == 5, 'Unexpected base export modes')
@@ -525,6 +532,8 @@ class Acquisition:
         self.evidence.publication(OUTPUT / 'diagnostic-packaging-amendment.json', amendment)
         self.stage_record = {**original, 'files': accepted.inventory(self.project),
                              'diagnostic_packaging': {'script_export_mode': 0, 'convert_text_resources_to_binary': False}}
+        for name, wanted in self.stage_record['files'].items():
+            self.evidence.bind(self.project / name, wanted=wanted)
         write(OUTPUT / 'diagnostic-stage.json', self.stage_record)
         self.evidence.publication(OUTPUT / 'diagnostic-stage.json', self.stage_record)
         return self.stage_record

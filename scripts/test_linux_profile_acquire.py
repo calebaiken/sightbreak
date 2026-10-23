@@ -438,6 +438,27 @@ class FlowTests(unittest.TestCase):
 
 
 class SourceAndPreparationTests(unittest.TestCase):
+    def test_stage_inputs_cannot_change_between_original_inventory_and_amendment(self):
+        for target in ('world.gd', 'project.godot'):
+            with self.subTest(target=target), tempfile.TemporaryDirectory() as temporary, patch.object(acq, 'OUTPUT', Path(temporary)):
+                controller = acq.Acquisition('c' * 40); controller.python_path = '/fake-python'
+                inventory = acq.accepted.inventory
+                def command(*_args):
+                    project = Path(temporary) / 'project'; project.mkdir()
+                    (project / 'world.gd').write_text('extends Node\n')
+                    (project / 'project.godot').write_text('[application]\nrun/main_scene="res://diagnostics/linux_profile_overhead.tscn"\n')
+                    (project / 'export_presets.cfg').write_text('script_export_mode=2\n' * 5)
+                    acq.write(Path(temporary) / 'project-stage.json', {'files': inventory(project), 'source': {'commit': 'c' * 40}})
+                def changed_after_read(project):
+                    result = inventory(project)
+                    path = project / target
+                    path.write_text(path.read_text() + '\n; late source change\n')
+                    return result
+                with patch.object(controller, 'command', side_effect=command), \
+                        patch.object(acq.accepted, 'inventory', side_effect=changed_after_read):
+                    with self.assertRaisesRegex(acq.accepted.Invalid, 'accepted bytes|Packaging input changed'):
+                        controller.stage()
+
     def test_original_uid_and_other_source_bytes_are_checked_against_git_blobs(self):
         with tempfile.TemporaryDirectory() as temporary, patch.object(acq, 'ROOT', Path(temporary)), \
                 patch.object(acq, 'ACCEPTED', {}), patch.object(acq.subprocess, 'Popen', side_effect=AssertionError('No process permitted')):
