@@ -6,6 +6,7 @@ The OFF/ON/ON/OFF block screens median post-draw cadence at declared pacing;
 it does not measure complete profiler overhead, GPU completion or gameplay cost.
 """
 import argparse
+from contextlib import contextmanager
 import fcntl
 import hashlib
 import json
@@ -15,6 +16,7 @@ from pathlib import Path
 import re
 import shutil
 import signal
+import stat
 import struct
 import subprocess
 import sys
@@ -42,6 +44,65 @@ class Invalid(ValueError):
 def require(value, message):
     if not value:
         raise Invalid(message)
+
+
+def strict_json(text):
+    def number(value):
+        result = float(value)
+        require(math.isfinite(result), 'Nonfinite JSON number')
+        return result
+    def constant(_value):
+        raise Invalid('Nonfinite JSON constant')
+    return json.loads(text, parse_float=number, parse_constant=constant)
+
+
+def read_json(path):
+    return strict_json(Path(path).read_text())
+
+
+class Deadline:
+    """One absolute bound; alarms interrupt blocking host reads in the main thread.
+
+    Cleanup is separately bounded and never turns a late condition into a pass.
+    An existing real-time alarm is rejected rather than silently replaced.
+    """
+    def __init__(self, record, bound=BOUND):
+        self.record = record
+        self.started = time.monotonic()
+        self.until = self.started + bound
+        record['timing'] = {'bound_seconds': bound, 'started_monotonic_seconds': self.started,
+                            'deadline_monotonic_seconds': self.until, 'observations': []}
+
+    def observe(self, stage):
+        now = time.monotonic()
+        timing = self.record['timing']
+        timing.update(ended_monotonic_seconds=now, elapsed_seconds=now - self.started)
+        timing['observations'].append({'stage': stage, 'monotonic_seconds': now,
+                                       'elapsed_seconds': now - self.started})
+        return now
+
+    def check(self, stage):
+        if self.observe(stage) >= self.until:
+            raise TimeoutError('Condition deadline at ' + stage)
+
+    @contextmanager
+    def armed(self, stage):
+        self.check(stage + ':entry')
+        require(signal.getitimer(signal.ITIMER_REAL) == (0.0, 0.0), 'An existing real-time alarm is active')
+        previous = signal.getsignal(signal.SIGALRM)
+        def expired(_signum, _frame):
+            raise TimeoutError('Condition deadline interrupted ' + stage)
+        signal.signal(signal.SIGALRM, expired)
+        try:
+            remaining = self.until - time.monotonic()
+            if remaining <= 0:
+                raise TimeoutError('Condition deadline before arming ' + stage)
+            signal.setitimer(signal.ITIMER_REAL, remaining)
+            yield
+            self.check(stage + ':complete')
+        finally:
+            signal.setitimer(signal.ITIMER_REAL, 0)
+            signal.signal(signal.SIGALRM, previous)
 
 
 def digest(path):
@@ -151,7 +212,7 @@ def stage(destination):
 
 def seal_payload(stage_record, executable, output):
     """Bind a fresh externally exported diagnostic; this does not run an exporter."""
-    record = json.loads(Path(stage_record).read_text())
+    record = read_json(stage_record)
     require(record['source'] == source_identity(), 'Stage source changed')
     require(record['files'] == inventory(Path(record['stage'])), 'Staged source changed')
     executable = Path(executable).resolve()
@@ -208,7 +269,10 @@ def interval_values(report):
     require(positive(anchor['clock_usec']), 'Invalid cold anchor clock')
     require(type(report['cold_before']['counter']) is int and type(report['cold_before']['callback']) is int,
             'Invalid pre-anchor identity')
-    require(report['cold_before']['clock_usec'] < anchor['clock_usec'], 'Cold anchor was not separately timed')
+    cold_clock = report['cold_before']['clock_usec']
+    require(type(cold_clock) in (int, float) and math.isfinite(cold_clock) and cold_clock >= 0,
+            'Invalid pre-anchor clock')
+    require(positive(anchor['clock_usec'] - cold_clock), 'Cold anchor was not separately timed')
     require(anchor['callback'] == report['cold_before']['callback'] + 1 and
             anchor['counter'] == report['cold_before']['counter'], 'Unexpected synchronous cold-anchor callback')
     previous = anchor
@@ -233,7 +297,8 @@ def interval_values(report):
         groups.append(values)
     readback = report['readback']
     require(readback['counter'] == previous['counter'] + 1 and readback['callback'] == previous['callback'] + 1
-            and readback['clock_usec'] > previous['clock_usec'], 'Readback lacks a separate later draw')
+            and positive(readback['clock_usec']) and positive(readback['clock_usec'] - previous['clock_usec']),
+            'Readback lacks a separate later draw')
     require(report['readback_after']['counter'] == readback['counter'] and
             report['readback_after']['callback'] == readback['callback'] and
             positive(report['readback_after']['clock_usec']) and
@@ -257,6 +322,14 @@ def validate_condition(record, expected):
             'XDG_DATA_HOME': paths['data'], 'XDG_CONFIG_HOME': paths['config'], 'XDG_CACHE_HOME': paths['cache'],
             'MESA_SHADER_CACHE_DIR': paths['mesa']}, 'Changed graphics/cache environment')
     require(record['exit_code'] == 0 and record['timeout'] is False, 'Timeout or native exit failure')
+    timing = record['timing']
+    require(timing['bound_seconds'] == BOUND and type(timing['started_monotonic_seconds']) in (int, float)
+            and math.isfinite(timing['started_monotonic_seconds']) and timing['started_monotonic_seconds'] >= 0
+            and timing['deadline_monotonic_seconds'] == timing['started_monotonic_seconds'] + BOUND
+            and type(timing['elapsed_seconds']) in (int, float) and math.isfinite(timing['elapsed_seconds'])
+            and 0 <= timing['elapsed_seconds'] < BOUND
+            and timing['ended_monotonic_seconds'] == timing['started_monotonic_seconds'] + timing['elapsed_seconds'],
+            'Invalid or exceeded whole-condition deadline')
     require(record['cleanup'] == {'pid_absent': True, 'group_absent': True, 'forced': False}, 'Failed owned cleanup')
     require(record['payload_before'] == record['payload_after'] == expected['payload_sha256'], 'Payload changed')
     require(record['seal_sha256'] == expected['seal_sha256'], 'Payload/source seal differs')
@@ -287,7 +360,7 @@ def validate_condition(record, expected):
     for name in ('fingerprint_initial', 'fingerprint_terminal'):
         item = report[name]
         require(hashlib.sha256(item['serialized'].encode()).hexdigest() == item['sha256'], 'Invalid fingerprint hash')
-        content = json.loads(item['serialized'])
+        content = strict_json(item['serialized'])
         require(content['source_ledger_sha256'] == expected['source_ledger_sha256'] and content['nodes']
                 and content['settings'] == report['settings'], 'Incomplete fingerprint')
     require(report['fingerprint_initial'] == report['fingerprint_terminal'], 'Scene changed during condition')
@@ -398,6 +471,31 @@ def cleanup(process):
     return {'pid_absent': absent(process.pid), 'group_absent': absent(process.pid, True), 'forced': forced}
 
 
+def owned_display(process, socket, lock):
+    """Join the published path to a socket FD held by this exact live child."""
+    require(process.poll() is None and pid_start(process.pid) == process.sightbreak_start_ticks,
+            'Owned Xvfb is not live with its original identity')
+    before = socket.lstat()
+    require(stat.S_ISSOCK(before.st_mode), 'Display path is not a Unix socket')
+    lock_before = lock.lstat()
+    require(stat.S_ISREG(lock_before.st_mode) and lock.read_text().strip() == str(process.pid),
+            'Display lock does not name owned Xvfb')
+    inodes = {line.split()[6] for line in Path(f'/proc/{process.pid}/net/unix').read_text().splitlines()[1:]
+              if len(line.split()) == 8 and line.split()[7] == str(socket)}
+    descriptors = {os.readlink(path) for path in Path(f'/proc/{process.pid}/fd').iterdir()}
+    held = sorted(inode for inode in inodes if 'socket:[' + inode + ']' in descriptors)
+    require(held, 'Ready display socket is not held by owned Xvfb')
+    after, lock_after = socket.lstat(), lock.lstat()
+    require((before.st_dev, before.st_ino) == (after.st_dev, after.st_ino)
+            and (lock_before.st_dev, lock_before.st_ino) == (lock_after.st_dev, lock_after.st_ino)
+            and lock.read_text().strip() == str(process.pid), 'Display publication changed during ownership check')
+    require(process.poll() is None and pid_start(process.pid) == process.sightbreak_start_ticks,
+            'Owned Xvfb exited or changed identity during readiness')
+    return {'pid': process.pid, 'start_ticks': process.sightbreak_start_ticks,
+            'socket_device': before.st_dev, 'socket_inode': before.st_ino,
+            'owned_kernel_socket_inodes': held, 'lock_pid': process.pid}
+
+
 class NativeRunner:
     def __init__(self, xvfb, display, output):
         self.xvfb, self.display, self.output = xvfb, display, Path(output)
@@ -407,17 +505,34 @@ class NativeRunner:
     def start(self):
         require(re.fullmatch(r':[0-9]+', self.display), 'Use a numbered display')
         socket = Path('/tmp/.X11-unix/X' + self.display[1:])
-        require(not socket.exists(), 'Display already in use')
+        lock = Path('/tmp/.X' + self.display[1:] + '-lock')
+        require(not socket.exists() and not socket.is_symlink() and not lock.exists() and not lock.is_symlink(),
+                'Display socket or lock already in use')
         self.log = (self.output / 'xvfb.log').open('wb')
         self.server = subprocess.Popen([self.xvfb, self.display, '-screen', '0', '1280x720x24', '-nolisten', 'tcp'],
                                        stdout=self.log, stderr=subprocess.STDOUT, start_new_session=True)
         self.server.sightbreak_start_ticks = pid_start(self.server.pid)
         write(self.output / 'xvfb-launch.json', {'command': self.server.args, 'pid': self.server.pid,
               'start_ticks': self.server.sightbreak_start_ticks, 'started_unix_ns': time.time_ns()})
-        until = time.monotonic() + 5
-        while not socket.exists():
-            require(self.server.poll() is None and time.monotonic() < until, 'Xvfb readiness failure')
-            time.sleep(0.05)
+        receipt = {}
+        deadline = Deadline(receipt, 5)
+        try:
+            with deadline.armed('Xvfb readiness'):
+                while True:
+                    deadline.check('Xvfb readiness poll')
+                    require(self.server.poll() is None and pid_start(self.server.pid) == self.server.sightbreak_start_ticks,
+                            'Xvfb readiness failure: owned server exited or changed identity')
+                    if socket.exists():
+                        receipt['ownership'] = owned_display(self.server, socket, lock)
+                        deadline.check('Xvfb ownership accepted')
+                        break
+                    time.sleep(0.05)
+            write(self.output / 'xvfb-readiness.json', receipt)
+        except (Exception, KeyboardInterrupt) as error:
+            deadline.observe('Xvfb readiness rejected')
+            receipt.update(error=str(error), owned_exit_code=self.server.poll())
+            write(self.output / 'xvfb-readiness.json', receipt)
+            raise
 
     def stop(self):
         result = cleanup(self.server) if self.server else None
@@ -427,60 +542,82 @@ class NativeRunner:
             self.log.close()
         return result
 
-    def condition(self, record, environment):
+    def condition(self, record, environment, deadline):
         output = Path(record['output'])
-        until = time.monotonic() + BOUND
         process = None
-        with (output / 'client.log').open('wb') as log:
-            try:
+        try:
+            with deadline.armed('native observations'), (output / 'client.log').open('wb') as log:
                 import resource
                 cpu_before = resource.getrusage(resource.RUSAGE_CHILDREN)
                 process = subprocess.Popen(record['process_argv'], env=environment, cwd=output,
                                            stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+                deadline.check('client spawned')
                 record['pid'] = process.pid
                 process.sightbreak_start_ticks = pid_start(process.pid)
                 record['pid_start_ticks'] = process.sightbreak_start_ticks
                 write(output / 'launch.json', record)
                 for filename in ('ready.json', 'metrics.json'):
                     path = output / filename
+                    deadline.check('before ' + filename)
                     while not path.exists():
                         require(process.poll() is None, 'Fixture exited before ' + filename)
-                        if time.monotonic() >= until:
-                            raise TimeoutError(filename)
+                        deadline.check('waiting for ' + filename)
                         time.sleep(0.05)
-                    require(json.loads(path.read_text())['token'] == record['token'], 'Wrong fixture token')
+                    deadline.check('published ' + filename)
+                    publication = read_json(path)
+                    deadline.check('read ' + filename)
+                    require(publication['token'] == record['token'], 'Wrong fixture token')
                     if filename == 'ready.json':
                         record['actual_cmdline'], record['actual_environment'] = owned_launch_state(process.pid, record['selected_environment'])
+                        deadline.check('owned launch observed')
                         require(record['actual_cmdline'] == record['engine_argv'], 'Actual engine command differs')
                         require(record['actual_environment'] == record['selected_environment'], 'Actual selected environment differs')
                         record['host_begin'] = host_snapshot(process.pid)
+                        deadline.check('initial host observed')
                         acknowledge(output / 'begin.ack', record['token'])
+                        deadline.check('begin acknowledged')
                     else:
                         record['host_end'] = host_snapshot(process.pid)
-                        record['fixture'] = json.loads(path.read_text())
+                        deadline.check('final host observed')
+                        record['fixture'] = publication
                         record['payload_after'] = digest(record['engine_argv'][0])
+                        deadline.check('payload verified')
                         acknowledge(output / 'finish.ack', record['token'])
-                process.wait(timeout=max(0.001, until - time.monotonic()))
+                        deadline.check('finish acknowledged')
+                deadline.check('before child wait')
+                process.wait(timeout=deadline.until - time.monotonic())
+                deadline.check('child completed')
                 cpu_after = resource.getrusage(resource.RUSAGE_CHILDREN)
                 record['rusage'] = {'user_seconds': cpu_after.ru_utime - cpu_before.ru_utime,
                                     'system_seconds': cpu_after.ru_stime - cpu_before.ru_stime,
                                     'scope': 'Completed owned child process including startup; no other child is waited in this interval'}
                 record['exit_code'] = process.returncode
                 final = cgroup_snapshot(os.getpid())
+                deadline.check('final cgroup observed')
                 require(final['cgroup_path'] == record['host_end']['cgroup_path'], 'Controller/client cgroup differs')
                 record['host_end']['throttling'] = final['throttling']
                 require(digest(output / 'proof.png') == record['fixture']['png_sha256'], 'Actual PNG differs')
+                deadline.check('PNG verified')
+        except (Exception, KeyboardInterrupt) as error:
+            record.update(error=str(error), timeout=isinstance(error, (TimeoutError, subprocess.TimeoutExpired)))
+        finally:
+            try:
+                record['cleanup'] = cleanup(process) if process else {'pid_absent': False, 'group_absent': False, 'forced': True}
+            except Exception as error:
+                record['cleanup'] = {'pid_absent': False, 'group_absent': False, 'forced': True}
+                record['cleanup_error'] = str(error)
+            if process and 'exit_code' not in record:
+                record['exit_code'] = process.returncode
+            deadline.observe('owned cleanup ended')
+        record['stdout'] = ''
+        if not record.get('error'):
+            try:
+                with deadline.armed('final client log read'):
+                    record['stdout'] = (output / 'client.log').read_text(errors='replace')
             except (Exception, KeyboardInterrupt) as error:
                 record.update(error=str(error), timeout=isinstance(error, (TimeoutError, subprocess.TimeoutExpired)))
-            finally:
-                try:
-                    record['cleanup'] = cleanup(process) if process else {'pid_absent': False, 'group_absent': False, 'forced': True}
-                except Exception as error:
-                    record['cleanup'] = {'pid_absent': False, 'group_absent': False, 'forced': True}
-                    record['cleanup_error'] = str(error)
-                if process and 'exit_code' not in record:
-                    record['exit_code'] = process.returncode
-        record['stdout'] = (output / 'client.log').read_text(errors='replace')
+        else:
+            record['stdout_retained_on_disk'] = str(output / 'client.log')
         return record
 
 
@@ -517,15 +654,38 @@ def run_block(seal, output, cpus, runner, source_check=None):
                                MESA_SHADER_CACHE_DIR=paths['mesa'], DBUS_SESSION_BUS_ADDRESS='unix:path=' + str(directory / 'unavailable-bus'))
             record['selected_environment'] = {key: environment[key] for key in ('DISPLAY', 'LIBGL_ALWAYS_SOFTWARE', 'LP_NUM_THREADS',
                                                'XDG_DATA_HOME', 'XDG_CONFIG_HOME', 'XDG_CACHE_HOME', 'MESA_SHADER_CACHE_DIR')}
-            record = runner.condition(record, environment)
+            deadline = Deadline(record)
+            record = runner.condition(record, environment, deadline)
             records.append(record)
-            if source_check:
-                source_check()
-            if index == 0 and 'host_begin' in record:
-                for key in ('quota', 'cgroup_path', 'driver_libraries'):
-                    expected[key] = record['host_begin'][key]
-            validate_condition(record, expected)
-            write(directory / 'condition.json', record)
+            try:
+                require(not record.get('error'), 'Incomplete condition: ' + str(record.get('error')))
+                with deadline.armed('condition acceptance'):
+                    if source_check:
+                        source_check()
+                        deadline.check('source rechecked')
+                    if index == 0 and 'host_begin' in record:
+                        for key in ('quota', 'cgroup_path', 'driver_libraries'):
+                            expected[key] = record['host_begin'][key]
+                    validate_condition(record, expected)
+                    deadline.check('condition validated')
+                    # This immutable copy is the publication; later acceptance times
+                    # and its hash live in block.json without rewriting the receipt.
+                    publication = strict_json(json.dumps(record, allow_nan=False))
+                    write(directory / 'condition.json', publication)
+                    deadline.check('condition published')
+                    published = read_json(directory / 'condition.json')
+                    deadline.check('condition publication reread')
+                    require(published == publication, 'Published condition differs')
+                    validate_condition(published, expected)
+                    record['publication_sha256'] = digest(directory / 'condition.json')
+                    deadline.check('condition accepted after final read')
+            except (Exception, KeyboardInterrupt) as error:
+                record.setdefault('error', str(error))
+                record['timeout'] = record.get('timeout', False) or isinstance(error, (TimeoutError, subprocess.TimeoutExpired))
+                if str(error) != record['error']:
+                    record['acceptance_error'] = str(error)
+                deadline.observe('condition rejected')
+                raise
         summary['evaluation'] = evaluate(records, expected)
         summary['passed'] = True
     except (Exception, KeyboardInterrupt) as error:
@@ -571,13 +731,13 @@ def main():
         print(json.dumps(seal_payload(args.stage_record, args.executable, args.output), indent=2))
     else:
         require(sys.platform == 'linux', 'Run the fixed diagnostic on native Linux only')
-        seal = json.loads(args.seal.read_text())
+        seal = read_json(args.seal)
         require(seal['source'] == source_identity(), 'Runtime source changed since staging')
         require(digest(seal['stage_record']) == seal['stage_sha256'], 'Stage record changed since sealing')
         cpus = sorted(int(value) for value in args.cpus.split(','))
         require(set(cpus) <= os.sched_getaffinity(0), 'CPUs outside allowed affinity')
-        require(inventory(Path(json.loads(Path(seal['stage_record']).read_text())['stage'])) ==
-                json.loads(Path(seal['stage_record']).read_text())['files'], 'Stage changed after export')
+        require(inventory(Path(read_json(seal['stage_record'])['stage'])) ==
+                read_json(seal['stage_record'])['files'], 'Stage changed after export')
         seal['seal_sha256'] = digest(args.seal)
         with Path('/tmp/sightbreak-linux-profile-overhead.lock').open('a') as lock:
             fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
@@ -585,8 +745,8 @@ def main():
             def check_source():
                 require(source_identity() == seal['source'], 'Repository source changed during block')
                 require(digest(seal['stage_record']) == seal['stage_sha256'], 'Stage record changed during block')
-                require(inventory(Path(json.loads(Path(seal['stage_record']).read_text())['stage'])) ==
-                        json.loads(Path(seal['stage_record']).read_text())['files'], 'Staged source changed during block')
+                require(inventory(Path(read_json(seal['stage_record'])['stage'])) ==
+                        read_json(seal['stage_record'])['files'], 'Staged source changed during block')
             summary = run_block(seal, args.output, cpus, runner, check_source)
         print(json.dumps({'passed': summary['passed'], 'error': summary.get('error')}, indent=2))
         raise SystemExit(0 if summary['passed'] else 1)

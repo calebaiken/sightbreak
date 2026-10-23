@@ -1,5 +1,12 @@
 # Profiling-cadence diagnostic: implementation handoff
 
+Historical handoff for rejected freeze `12901729f7be29d0f64d87a0d92219a84500f1a6`.
+Independent implementation review rejected runtime readiness at
+`51add37cd801731016a2f52049e66b17fa90b393`. The retained text, original ledger and
+14-method output below describe that freeze. The operative source/pure correction
+and new evidence are in [correction r1](implementation-correction-r1/CORRECTION.md).
+Runtime remains held for fresh exact-source review.
+
 Source/pure candidate only. No engine, GDScript compilation, import, UID
 generation, export, profiler, OCR or native workload ran. The shared native lane
 remains reserved for root's separate bot diagnostic. Fresh exact-source
