@@ -36,6 +36,8 @@ def main(args):
         command, result = read("command.json"), read("result.json")
         engine, preflight, cleanup = read("engine.json"), read("preflight-resources.json"), read("cleanup.json")
         observed, launch_inputs = read("observed-processes.json"), read("tracked-inputs.json")
+        outer = read("outer-live.json")
+        independent_outer = json.loads(Path(__file__).with_name("independent-outer-live.json").read_text())
         check(before == after == result.get("source_after", before), "before/after source receipts exactly equal")
         check(before["source_commit"] == args.expected_source and not before["source_dirty"] and not before["source_game_dirty"], "receipts identify exact clean freeze")
         check(git("rev-parse", "HEAD").decode().strip() == args.expected_source and not git("status", "--porcelain", "--untracked-files=all"), "actual whole frozen checkout remains exact and clean")
@@ -65,6 +67,9 @@ def main(args):
         check(result["exit_code"] == 0 and result["passed"] is True and result["source_unchanged"] is True and result["failure"] is None and not result.get("forced_group_cleanup"), "original aggregate normal zero exit without supervisor error/forced group cleanup")
         started, completed = dt.datetime.fromisoformat(result["started_utc"]), dt.datetime.fromisoformat(result["completed_utc"])
         check(started < completed and 0 < result["seconds"] < 1200 and abs((completed - started).total_seconds() - result["seconds"]) < 1.0, "actual bounded elapsed and ordered UTC completion receipts")
+        check(outer["aggregate_pid"] == command["pid"] and outer["outer_pid"] == independent_outer["pid"] and outer["outer_start_ticks"] == independent_outer["start_ticks"] and outer["outer_pgid"] == independent_outer["pgid"] and outer["outer_sid"] == independent_outer["sid"] and outer["outer_argv_sha256"] == independent_outer["argv_sha256"], "coordinator outer identity matches independent live PID/start/argv/group/session observation")
+        check(independent_outer["argv"] == ["python3", "docs/reports/gauntlet/aggregate-recovered-20261023/run_aggregate.py", str(frozen), args.expected_source, str(run)] and independent_outer["cwd"] == str(frozen), "independently observed actual supervisor argv/cwd")
+        check(started < dt.datetime.fromisoformat(outer["observed_utc"]) < dt.datetime.fromisoformat(independent_outer["observed_utc"]) < completed, "both live outer identity observations occur during this actual aggregate")
         environment = command["environment"]
         check(environment["DISPLAY"] is None and environment["GODOT_BIN"] is None and environment["SIGHTBREAK_TEST_TIMEOUT"] is None, "no rendering, engine or 540-second stage-timeout override")
         check(environment["SIGHTBREAK_TOOLS_DIR"] == "/workspace/tools" and environment["SIGHTBREAK_STATE_DIR"] == str(frozen / ".local/aggregate-state") and environment["SIGHTBREAK_BACKEND_PYTHON"] == "/workspace/sightbreak/.venv/bin/python", "actual declared private state and backend interpreter selectors")
@@ -82,6 +87,7 @@ def main(args):
         fixed_ports = {27991, 29900, 29901, 29902, 33540, 33541, 33542, 33543}
         ports = fixed_ports | ready_ports
         owned = {(r["pid"], r["start_ticks"]) for r in observed}
+        owned.add((independent_outer["pid"], independent_outer["start_ticks"]))
         found, reused, session_members = [], [], []
         for path in Path("/proc").iterdir():
             if not path.name.isdigit():
@@ -93,7 +99,7 @@ def main(args):
                 comm = (path / "comm").read_text().strip()
                 argv = (path / "cmdline").read_bytes()
                 row = {"pid": pid, "ppid": int(values[1]), "pgid": pgid, "sid": sid, "start_ticks": ticks, "state": values[0], "comm": comm, "argv_sha256": sha(argv)}
-                if sid == command["pid"] or pgid == command["pgid"]:
+                if sid in {command["pid"], independent_outer["sid"]} or pgid in {command["pgid"], independent_outer["pgid"]}:
                     session_members.append(row)
                 if (pid, ticks) in owned or pid == command["pid"] or comm.lower().startswith("godot") and os.fsencode(str(frozen)) in argv:
                     found.append(row)
@@ -112,11 +118,13 @@ def main(args):
                        "matching_observed_identity_or_checkout_engine": found, "reused_pids_with_different_start": reused,
                        "matching_bound_sockets": sockets, "checked_ports": sorted(ports), "original_ready_ports": sorted(ready_ports),
                        "aggregate_pid": command["pid"], "aggregate_pgid": command["pgid"], "observed_identities": len(owned),
-                       "scope": "Read-only actual original-session/group, sampled PID/start, checkout-bound Godot and fixed/ready-port scan. No signal sent. No arbitrary escaped-descendant coverage claim."}
+                       "outer_pid": independent_outer["pid"], "outer_pgid": independent_outer["pgid"],
+                       "scope": "Read-only actual original inner/outer session/group, sampled PID/start, checkout-bound Godot and fixed/ready-port scan. No signal sent. No arbitrary escaped-descendant coverage claim."}
         check(not session_members and not found and not sockets, "independent actual scoped process/listener observation empty")
         (out / "process-after.json").write_text(json.dumps(observation, indent=2) + "\n")
         report.update(source=before, command=command, result=result, engine=engine, preflight=preflight,
                       cleanup=cleanup, observed_processes=observed, current_observation=observation,
+                      outer_live=outer, independent_outer_live=independent_outer,
                       launch_input_count=len(launch_inputs), independent_content_sha256=content.hexdigest(),
                       independent_validation_sha256=validation.hexdigest(),
                       outer_exit_scope="The parent's actual run_aggregate.py tool/session exit is reviewed separately; result.json records the inner aggregate exit.")
