@@ -15,9 +15,9 @@ completes. Provisional step scopes remain provisional.
   followed at 07:15:41 UTC without inspecting any actual output. Correction
   `548f19a` and `REGISTRATION_TIMING.md` preserve that timing limitation.
 
-Latest retained step read has living/settings/focus failed, plant and defuse
-successful, full stock match still running. Native suites and all three input
-steps also report success. No actual completed-run logs, artifacts, native
+Latest retained step read has living/settings/focus failed, plant, defuse and
+full stock match successful, and development-package preservation running.
+Native suites and all three input steps also report success. No actual completed-run logs, artifacts, native
 receipts, OCR bytes or new PNGs have yet been retrieved or accepted.
 
 Next, use supported GitHub tools to fetch final run jobs/steps, decoded job logs
