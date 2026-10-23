@@ -30,7 +30,8 @@ The proposed pure validator will require the following independently of any
 nominal text rectangle:
 
 - Every original grouped label pixel is assigned to exactly one native action
-  label footprint. Missing, duplicate and extra pixels fail.
+  label footprint with byte-identical RGB coverage. Missing, duplicate, extra
+  and intensity-changed pixels fail.
 - Every action footprint is present, nonempty, neutral RGB and the exact native
   image size. Each action belongs to its original active/inactive group.
 - Every action label pixel also appears in that action's complete native
