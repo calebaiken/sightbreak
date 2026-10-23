@@ -102,14 +102,13 @@ jobs:
     if: github.event.repository.private == false
     runs-on: ubuntu-24.04
     timeout-minutes: 45
-    env:
-      SIGHTBREAK_TOOLS_DIR: ${{ runner.temp }}/sightbreak-control-tools
-      SIGHTBREAK_STATE_DIR: ${{ runner.temp }}/sightbreak-control-state
-      SIGHTBREAK_CONTROL_PYTHON: ${{ runner.temp }}/sightbreak-control-python/bin/python
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
         with:
           fetch-depth: 0
+      - name: Declare isolated control paths at runtime
+        run: |
+          printf '%s\n' "SIGHTBREAK_TOOLS_DIR=$RUNNER_TEMP/sightbreak-control-tools" "SIGHTBREAK_STATE_DIR=$RUNNER_TEMP/sightbreak-control-state" "SIGHTBREAK_CONTROL_PYTHON=$RUNNER_TEMP/sightbreak-control-python/bin/python" >> "$GITHUB_ENV"
       - name: Prepare a separate exact-commit mutation checkout
         run: |
           sudo apt-get update
