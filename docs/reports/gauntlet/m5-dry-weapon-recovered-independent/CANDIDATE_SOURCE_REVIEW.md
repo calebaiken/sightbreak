@@ -1,7 +1,8 @@
 # Candidate source review
 
-Verdict: **PASS source boundary** at
-`bd4ea03f071be4c90db90e3f5ff56e8846af7cf7`, pending native measurement. The
+Verdict: **PASS source boundary and maintained registration** at final freeze
+`8e8d13e7dbf427b464519868d38a9c40aa732594`, pending native measurement. Product
+source is the same as `bd4ea03f071be4c90db90e3f5ff56e8846af7cf7`. The
 production delta is exactly three added lines in the no-target primary-return
 loop. No fixture byte, action consumer, profile, fallback, reload, objective,
 timer, authority, economy or network code changes.
@@ -22,3 +23,13 @@ named source comparison, not a blind result. The largest remaining gap is
 absence of actual candidate output; source inspection is not candidate gameplay
 acceptance. The documented finite-priority, injected-perception, unlogged
 snapshot and session-only cleanup limits remain.
+
+The separate registration adds one mandatory `run_godot` invocation to
+`validate.sh`, one `bot_dry_weapon` entry to the native default suite tuple and
+the explicit headless/Dummy command for the same fixture. It removes no suite,
+retains previous suite order and argument overrides, and adds no skip or weaker
+failure condition. `set -euo pipefail` preserves a nonzero engine exit through
+the validation tee pipeline. The native runner already rejects a nonzero suite
+exit or error log. AST checks of those registrations and `bash -n` pass; their
+exact checks and hashes are retained in `registration-review.json`. No maintained
+aggregate or native platform-suite pass is claimed from this registration review.
