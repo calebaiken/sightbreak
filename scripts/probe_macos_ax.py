@@ -154,6 +154,11 @@ class NativeAX(MacReadOnly):
         self.check_element(element)
         value = C.c_void_p()
         error = self.call('AXUIElementCopyAttributeValue', element, self.key(name), C.byref(value), owned_out=value)
+        # kAXErrorNoValue is an absent attribute value, not failed messaging.
+        # Only an untitled button may continue as an empty, noncandidate title.
+        # Recheck role after the guarded call; contradictory output stays an error.
+        if error == -25212 and not value.value and name == 'AXTitle' and self.role(element) == 'AXButton':
+            return None
         if error or not value.value:
             raise RuntimeError('Required AX attribute unavailable: ' + name + ' code=' + str(error))
         return value.value
@@ -164,6 +169,8 @@ class NativeAX(MacReadOnly):
         if name == 'AXTitle' and self.role(element) not in ('AXButton', 'AXWindow'):
             raise RuntimeError('Title reads require semantic button or owned window role')
         value = self.attribute(element, name)
+        if name == 'AXTitle' and value is None:
+            return ''
         if self.cf.CFGetTypeID(value) != self.cf.CFStringGetTypeID():
             raise RuntimeError('Malformed AX string type')
         units = self.cf.CFStringGetLength(value)  # Counted UTF-16 units, not UTF-8 bytes.
