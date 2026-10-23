@@ -1,0 +1,491 @@
+{
+  "kind": "LIVE_PROCESS_METADATA_ONLY",
+  "observations_sha256": "4f804f7931763aad7b879285a35d43a1c4641edd3ea84ae0f6420b95bfe8ca46",
+  "bytes": 9564827,
+  "start": {
+    "event": "observer_start",
+    "time_utc": "2026-10-23T09:59:43.434950+00:00",
+    "observer_pid": 135947,
+    "observer_affinity": [
+      4
+    ],
+    "max_observation_seconds": 3600.0,
+    "interval_seconds": 1.0,
+    "scope": "Read-only process metadata; this bound does not bound the controller."
+  },
+  "stop": {
+    "event": "observer_stop",
+    "reason": "lane_end_receipt_exists",
+    "time_utc": "2026-10-23T10:33:22.841824+00:00",
+    "scans": 1919,
+    "wall_seconds": 2019.4071069769998,
+    "quality_outputs_read": false
+  },
+  "live_observed_owned_processes": [
+    {
+      "pid": 136011,
+      "first_utc": "2026-10-23T10:00:08.170105+00:00",
+      "last_utc": "2026-10-23T10:00:13.313593+00:00",
+      "observed_samples": 6,
+      "identities": [
+        {
+          "getpgid": 136011,
+          "getsid": 136011,
+          "stat_pgid": 136011,
+          "stat_sid": 136011,
+          "start_ticks": 2198446,
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "command": [
+            "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+            "--path",
+            "/workspace/sightbreak-touch-contrast-fixture-recovered-r4b-r3/baseline/game",
+            "--headless",
+            "--editor",
+            "--import",
+            "--quit"
+          ],
+          "environment_selectors": {
+            "DISPLAY": ":131",
+            "SIGHTBREAK_STATE_DIR": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/import-baseline",
+            "XDG_DATA_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/import-baseline/data",
+            "XDG_CONFIG_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/import-baseline/config",
+            "XDG_CACHE_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/import-baseline/cache",
+            "LP_NUM_THREADS": "2",
+            "OMP_NUM_THREADS": "2"
+          }
+        }
+      ]
+    },
+    {
+      "pid": 136249,
+      "first_utc": "2026-10-23T10:00:14.338250+00:00",
+      "last_utc": "2026-10-23T10:00:20.530671+00:00",
+      "observed_samples": 7,
+      "identities": [
+        {
+          "getpgid": 136249,
+          "getsid": 136249,
+          "stat_pgid": 136249,
+          "stat_sid": 136249,
+          "start_ticks": 2199106,
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "command": [
+            "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+            "--path",
+            "/workspace/sightbreak-touch-contrast-fixture-recovered-r4b-r3/candidate/game",
+            "--headless",
+            "--editor",
+            "--import",
+            "--quit"
+          ],
+          "environment_selectors": {
+            "DISPLAY": ":131",
+            "SIGHTBREAK_STATE_DIR": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/import-candidate",
+            "XDG_DATA_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/import-candidate/data",
+            "XDG_CONFIG_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/import-candidate/config",
+            "XDG_CACHE_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/import-candidate/cache",
+            "LP_NUM_THREADS": "2",
+            "OMP_NUM_THREADS": "2"
+          }
+        }
+      ]
+    },
+    {
+      "pid": 136512,
+      "first_utc": "2026-10-23T10:00:21.556861+00:00",
+      "last_utc": "2026-10-23T10:33:21.809108+00:00",
+      "observed_samples": 1882,
+      "identities": [
+        {
+          "getpgid": 136512,
+          "getsid": 136512,
+          "stat_pgid": 136512,
+          "stat_sid": 136512,
+          "start_ticks": 2199743,
+          "affinity": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "command": [
+            "/workspace/tools/xvfb/usr/bin/Xvfb",
+            ":131",
+            "-screen",
+            "0",
+            "1280x720x24",
+            "+extension",
+            "GLX",
+            "+render",
+            "-noreset",
+            "-nolisten",
+            "tcp"
+          ],
+          "environment_selectors": {
+            "DISPLAY": null,
+            "SIGHTBREAK_STATE_DIR": null,
+            "XDG_DATA_HOME": null,
+            "XDG_CONFIG_HOME": null,
+            "XDG_CACHE_HOME": null,
+            "LP_NUM_THREADS": null,
+            "OMP_NUM_THREADS": null
+          }
+        }
+      ]
+    },
+    {
+      "pid": 136513,
+      "first_utc": "2026-10-23T10:00:21.556861+00:00",
+      "last_utc": "2026-10-23T10:00:47.452139+00:00",
+      "observed_samples": 26,
+      "identities": [
+        {
+          "getpgid": 136513,
+          "getsid": 136513,
+          "stat_pgid": 136513,
+          "stat_sid": 136513,
+          "start_ticks": 2199750,
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "command": [
+            "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+            "--path",
+            "/workspace/sightbreak-touch-contrast-fixture-recovered-r4b-r3/baseline/game",
+            "--audio-driver",
+            "Dummy",
+            "--display-driver",
+            "x11",
+            "--rendering-method",
+            "gl_compatibility",
+            "--resolution",
+            "1280x720",
+            "--max-fps",
+            "60",
+            "--script",
+            "res://tests/touch_contrast_capture.gd",
+            "--",
+            "--mode=backgrounds",
+            "--out=/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/backgrounds"
+          ],
+          "environment_selectors": {
+            "DISPLAY": ":131",
+            "SIGHTBREAK_STATE_DIR": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/backgrounds",
+            "XDG_DATA_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/backgrounds/data",
+            "XDG_CONFIG_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/backgrounds/config",
+            "XDG_CACHE_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/backgrounds/cache",
+            "LP_NUM_THREADS": "2",
+            "OMP_NUM_THREADS": "2"
+          }
+        }
+      ]
+    },
+    {
+      "pid": 136564,
+      "first_utc": "2026-10-23T10:00:48.483532+00:00",
+      "last_utc": "2026-10-23T10:08:21.085762+00:00",
+      "observed_samples": 436,
+      "identities": [
+        {
+          "getpgid": 136564,
+          "getsid": 136564,
+          "stat_pgid": 136564,
+          "stat_sid": 136564,
+          "start_ticks": 2202480,
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "command": [
+            "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+            "--path",
+            "/workspace/sightbreak-touch-contrast-fixture-recovered-r4b-r3/baseline/game",
+            "--audio-driver",
+            "Dummy",
+            "--display-driver",
+            "x11",
+            "--rendering-method",
+            "gl_compatibility",
+            "--resolution",
+            "1280x720",
+            "--max-fps",
+            "60",
+            "--script",
+            "res://tests/touch_contrast_capture.gd",
+            "--",
+            "--mode=controls",
+            "--out=/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/baseline",
+            "--background-dir=/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/backgrounds"
+          ],
+          "environment_selectors": {
+            "DISPLAY": ":131",
+            "SIGHTBREAK_STATE_DIR": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/controls-baseline",
+            "XDG_DATA_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/controls-baseline/data",
+            "XDG_CONFIG_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/controls-baseline/config",
+            "XDG_CACHE_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/controls-baseline/cache",
+            "LP_NUM_THREADS": "2",
+            "OMP_NUM_THREADS": "2"
+          }
+        }
+      ]
+    },
+    {
+      "pid": 137406,
+      "first_utc": "2026-10-23T10:08:22.118870+00:00",
+      "last_utc": "2026-10-23T10:15:59.054497+00:00",
+      "observed_samples": 429,
+      "identities": [
+        {
+          "getpgid": 137406,
+          "getsid": 137406,
+          "stat_pgid": 137406,
+          "stat_sid": 137406,
+          "start_ticks": 2247840,
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "command": [
+            "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+            "--path",
+            "/workspace/sightbreak-touch-contrast-fixture-recovered-r4b-r3/candidate/game",
+            "--audio-driver",
+            "Dummy",
+            "--display-driver",
+            "x11",
+            "--rendering-method",
+            "gl_compatibility",
+            "--resolution",
+            "1280x720",
+            "--max-fps",
+            "60",
+            "--script",
+            "res://tests/touch_contrast_capture.gd",
+            "--",
+            "--mode=controls",
+            "--out=/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/candidate",
+            "--background-dir=/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/backgrounds"
+          ],
+          "environment_selectors": {
+            "DISPLAY": ":131",
+            "SIGHTBREAK_STATE_DIR": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/controls-candidate",
+            "XDG_DATA_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/controls-candidate/data",
+            "XDG_CONFIG_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/controls-candidate/config",
+            "XDG_CACHE_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/controls-candidate/cache",
+            "LP_NUM_THREADS": "2",
+            "OMP_NUM_THREADS": "2"
+          }
+        }
+      ]
+    },
+    {
+      "pid": 137610,
+      "first_utc": "2026-10-23T10:16:00.083165+00:00",
+      "last_utc": "2026-10-23T10:16:04.235881+00:00",
+      "observed_samples": 5,
+      "identities": [
+        {
+          "getpgid": 137610,
+          "getsid": 137610,
+          "stat_pgid": 137610,
+          "stat_sid": 137610,
+          "start_ticks": 2293681,
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "command": [
+            "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+            "--path",
+            "/workspace/sightbreak-touch-contrast-fixture-recovered-r4b-r3/baseline/game",
+            "--headless",
+            "--audio-driver",
+            "Dummy",
+            "--script",
+            "res://tests/input_mode_test.gd"
+          ],
+          "environment_selectors": {
+            "DISPLAY": ":131",
+            "SIGHTBREAK_STATE_DIR": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/regression-baseline-input_mode",
+            "XDG_DATA_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/regression-baseline-input_mode/data",
+            "XDG_CONFIG_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/regression-baseline-input_mode/config",
+            "XDG_CACHE_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/regression-baseline-input_mode/cache",
+            "LP_NUM_THREADS": "2",
+            "OMP_NUM_THREADS": "2"
+          }
+        }
+      ]
+    },
+    {
+      "pid": 137621,
+      "first_utc": "2026-10-23T10:16:05.263189+00:00",
+      "last_utc": "2026-10-23T10:16:09.625642+00:00",
+      "observed_samples": 4,
+      "identities": [
+        {
+          "getpgid": 137621,
+          "getsid": 137621,
+          "stat_pgid": 137621,
+          "stat_sid": 137621,
+          "start_ticks": 2294198,
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "command": [
+            "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+            "--path",
+            "/workspace/sightbreak-touch-contrast-fixture-recovered-r4b-r3/candidate/game",
+            "--headless",
+            "--audio-driver",
+            "Dummy",
+            "--script",
+            "res://tests/touch_test.gd"
+          ],
+          "environment_selectors": {
+            "DISPLAY": ":131",
+            "SIGHTBREAK_STATE_DIR": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/regression-candidate-touch",
+            "XDG_DATA_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/regression-candidate-touch/data",
+            "XDG_CONFIG_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/regression-candidate-touch/config",
+            "XDG_CACHE_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/regression-candidate-touch/cache",
+            "LP_NUM_THREADS": "2",
+            "OMP_NUM_THREADS": "2"
+          }
+        }
+      ]
+    },
+    {
+      "pid": 137632,
+      "first_utc": "2026-10-23T10:16:10.688742+00:00",
+      "last_utc": "2026-10-23T10:16:16.116551+00:00",
+      "observed_samples": 6,
+      "identities": [
+        {
+          "getpgid": 137632,
+          "getsid": 137632,
+          "stat_pgid": 137632,
+          "stat_sid": 137632,
+          "start_ticks": 2294669,
+          "affinity": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "command": [
+            "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+            "--path",
+            "/workspace/sightbreak-touch-contrast-fixture-recovered-r4b-r3/candidate/game",
+            "--headless",
+            "--audio-driver",
+            "Dummy",
+            "--script",
+            "res://tests/input_mode_test.gd"
+          ],
+          "environment_selectors": {
+            "DISPLAY": ":131",
+            "SIGHTBREAK_STATE_DIR": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/regression-candidate-input_mode",
+            "XDG_DATA_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/regression-candidate-input_mode/data",
+            "XDG_CONFIG_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/regression-candidate-input_mode/config",
+            "XDG_CACHE_HOME": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/private-state/regression-candidate-input_mode/cache",
+            "LP_NUM_THREADS": "2",
+            "OMP_NUM_THREADS": "2"
+          }
+        }
+      ]
+    }
+  ],
+  "known_command_receipt_pids": [
+    {
+      "path": "backgrounds-command.json",
+      "sha256": "560be3f6c5f5f275e34b3c46c19d0df441294342fa4b98d6a9282a55a0a2fe51",
+      "pid": 136513
+    },
+    {
+      "path": "controls-baseline-command.json",
+      "sha256": "b8a1ab3d4798234b5720d67caabb8ce8a851cd849287ecb875528ba8ace22787",
+      "pid": 136564
+    },
+    {
+      "path": "controls-candidate-command.json",
+      "sha256": "fdcc9200f04bf5717a36f026b059b67690a65c69d9108fc47a87138da24ee154",
+      "pid": 137406
+    },
+    {
+      "path": "engine-version-command.json",
+      "sha256": "6ca4147aa4d6e10934acaf9644ed19aec24e3ebc6fd9c8cd2babc333216a2326",
+      "pid": 136008
+    },
+    {
+      "path": "import-baseline-command.json",
+      "sha256": "0ab13b8b503dc19742711857d7668a2722a76e3ba35b9a94d987abeb8c6e8584",
+      "pid": 136011
+    },
+    {
+      "path": "import-candidate-command.json",
+      "sha256": "c04cf1efb9cde248ae4f1c8d4caca5a3d6d5e704c119ff9952a6fe6e39e9f99f",
+      "pid": 136249
+    },
+    {
+      "path": "regression-baseline-input_mode-command.json",
+      "sha256": "7c83ea80858a1c4da6a93723165c4ac99b28254b12237f069c9eb973c38e368d",
+      "pid": 137610
+    },
+    {
+      "path": "regression-baseline-touch-command.json",
+      "sha256": "ca75af392cc67890a0edb02eaff3aa80c7a70977c2758bb661aae6c1c528fb97",
+      "pid": 137599
+    },
+    {
+      "path": "regression-candidate-input_mode-command.json",
+      "sha256": "c5b7d5ee00c84ee5827d3e261bfa14c6c1f2f2264e36053fcf5451a78298741c",
+      "pid": 137632
+    },
+    {
+      "path": "regression-candidate-touch-command.json",
+      "sha256": "7063e9ab4fbcce8eeb2b06f009708329f9670cac1232122e5b1279be9404bfd0",
+      "pid": 137621
+    },
+    {
+      "path": "xvfb-command.json",
+      "sha256": "7a4313b774709e7e69d482fe0d4ab978faaf66a4e3dfb4e345fcdf839e199885",
+      "pid": 136512
+    }
+  ],
+  "terminal_owned_group_members": [
+    {
+      "pid": 136526,
+      "state": "S",
+      "ppid": 1,
+      "pgid": 136513,
+      "sid": 136513,
+      "start_ticks": 2199755
+    }
+  ],
+  "terminal_unreadable_proc_records": [],
+  "terminal_display_socket_exists": false,
+  "terminal_display_lock_exists": false,
+  "quality_outputs_read": false
+}
