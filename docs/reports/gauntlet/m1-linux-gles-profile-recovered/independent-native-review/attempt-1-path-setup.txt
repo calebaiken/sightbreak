@@ -1,0 +1,16 @@
+Traceback (most recent call last):
+  File "/workspace/reviews/linux-gles-profile-native/docs/reports/gauntlet/m1-linux-gles-profile-recovered/independent-native-review/audit.py", line 258, in <module>
+    main()
+  File "/workspace/reviews/linux-gles-profile-native/docs/reports/gauntlet/m1-linux-gles-profile-recovered/independent-native-review/audit.py", line 37, in main
+    index = load(ARCHIVE / 'payload-index.json')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/linux-gles-profile-native/docs/reports/gauntlet/m1-linux-gles-profile-recovered/independent-native-review/audit.py", line 29, in load
+    return json.loads(Path(path).read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/reviews/linux-gles-profile-native/docs/docs/reports/gauntlet/m1-linux-gles-profile-recovered/native-r1/payload-index.json'
