@@ -1,0 +1,39 @@
+test_actual_file_identity_dimensions_and_image_caps_are_required (test_macos_deploy_ocr.DeployAnalysisControls.test_actual_file_identity_dimensions_and_image_caps_are_required) ... ok
+test_boxes_must_be_in_window_and_agree_at_original_center (test_macos_deploy_ocr.DeployAnalysisControls.test_boxes_must_be_in_window_and_agree_at_original_center) ... ok
+test_default_native_helper_ocr_and_gameplay_tail_are_byte_preserved (test_macos_deploy_ocr.DeployAnalysisControls.test_default_native_helper_ocr_and_gameplay_tail_are_byte_preserved) ... ok
+test_derived_confidence_never_weakens_point_eight (test_macos_deploy_ocr.DeployAnalysisControls.test_derived_confidence_never_weakens_point_eight) ... 
+  test_derived_confidence_never_weakens_point_eight (test_macos_deploy_ocr.DeployAnalysisControls.test_derived_confidence_never_weakens_point_eight) (value=0.7999999) ... FAIL
+test_duplicate_or_invalid_native_corroboration_is_rejected_at_any_confidence (test_macos_deploy_ocr.DeployAnalysisControls.test_duplicate_or_invalid_native_corroboration_is_rejected_at_any_confidence) ... ok
+test_every_identity_transform_and_recognition_setting_binds_exactly (test_macos_deploy_ocr.DeployAnalysisControls.test_every_identity_transform_and_recognition_setting_binds_exactly) ... ok
+test_exact_words_and_only_observed_separator_equivalence (test_macos_deploy_ocr.DeployAnalysisControls.test_exact_words_and_only_observed_separator_equivalence) ... ok
+test_existing_native_selector_and_hud_confidence_remain_strict (test_macos_deploy_ocr.DeployAnalysisControls.test_existing_native_selector_and_hud_confidence_remain_strict) ... ok
+test_full_controller_rejects_missing_unopted_spoofed_and_invalid_derived_observations (test_macos_deploy_ocr.DeployAnalysisControls.test_full_controller_rejects_missing_unopted_spoofed_and_invalid_derived_observations) ... 
+  test_full_controller_rejects_missing_unopted_spoofed_and_invalid_derived_observations (test_macos_deploy_ocr.DeployAnalysisControls.test_full_controller_rejects_missing_unopted_spoofed_and_invalid_derived_observations) (fault='low') ... FAIL
+test_full_synthetic_controller_requests_derived_analysis_once_and_retains_both_png_headers (test_macos_deploy_ocr.DeployAnalysisControls.test_full_synthetic_controller_requests_derived_analysis_once_and_retains_both_png_headers) ... ok
+test_json_cannot_spoof_a_binding_or_mutate_an_already_bound_receipt (test_macos_deploy_ocr.DeployAnalysisControls.test_json_cannot_spoof_a_binding_or_mutate_an_already_bound_receipt) ... ok
+test_original_low_confidence_bullet_receipts_still_reject_without_new_observations (test_macos_deploy_ocr.DeployAnalysisControls.test_original_low_confidence_bullet_receipts_still_reject_without_new_observations) ... ok
+test_synthetic_high_confidence_analysis_preserves_native_center_and_raw_rows (test_macos_deploy_ocr.DeployAnalysisControls.test_synthetic_high_confidence_analysis_preserves_native_center_and_raw_rows) ... ok
+
+======================================================================
+FAIL: test_derived_confidence_never_weakens_point_eight (test_macos_deploy_ocr.DeployAnalysisControls.test_derived_confidence_never_weakens_point_eight) (value=0.7999999)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_deploy_ocr.py", line 85, in test_derived_confidence_never_weakens_point_eight
+    self.rejected(image)
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_deploy_ocr.py", line 41, in rejected
+    with self.assertRaises(RuntimeError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_full_controller_rejects_missing_unopted_spoofed_and_invalid_derived_observations (test_macos_deploy_ocr.DeployAnalysisControls.test_full_controller_rejects_missing_unopted_spoofed_and_invalid_derived_observations) (fault='low')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_deploy_ocr.py", line 232, in test_full_controller_rejects_missing_unopted_spoofed_and_invalid_derived_observations
+    self.assertEqual(code, int(fault is not None), report.get('failure'))
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.120s
+
+FAILED (failures=2)
