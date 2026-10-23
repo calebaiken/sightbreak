@@ -6,49 +6,33 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-Current execution is active, 2026-10-23 09:44 UTC, root code checkpoint
-cdd69b78. The exhausted-primary sidearm correction is integrated as 0f2cf636,
-with actual prepared UID 261d6ddb. Independent 63ec7271 verifies 1,268 native rows /
-75,890 predicates and the registered selection comparison; independent 720cc695
-accepts the separate three stock regressions, all 480 symmetry pairs and exact
-prior stdout equality. Both strict-clean native blocks, source/private state,
-publication/zero exits and archives verify. All 15 new 24 m shots miss; aiming,
-full matches, objectives, balance and historical audio causes remain open.
+The mission remains active, 2026-10-23 10:03 UTC. The full maintained aggregate
+is independently VERIFIED at exact 28a3e294 in 534.403222822 seconds, critic
+ab2ca960/root a84f8414: all 56 Godot invocations, 129 Python methods (three
+original Windows skips), observable reconstructions, strict logs, source/138 UIDs,
+202 observed process identities/eight cleared ports and both archives verify.
+Root actual evidence is 2250af3c. All originals remain. This verifies headless
+engineering correctness only; all 15 new 24 m sidearm shots miss.
 
-The strict native StringName guard is integrated as fbb439cf, independently
-accepted ca71aac4; standalone/depth-one tests and real native corpus verify.
-Combined root cdd69b78 passes 37 relevant pure methods/shell syntax and exact
-source-union checks. Whole maintained aggregate/native platforms remain unrun
-at the combined source. Earlier afca2f1 whole-source pass is not transferred.
+ONE touch R4B R3 native comparison is running after release f312ee8c and actual
+admission at 09:59:27.374264 UTC. Controller session 18804 uses the exact prepared
+source/recipe and original limits. Fresh actual critic e439aa93/86c2c9b3 records
+live ownership; a separate blinded visual judge has preregistered criteria and
+inspected real Luanti Android/AssaultCube references. No new numeric, visual or
+accessibility pass is inferred before terminal outputs and independent review.
+Previous R3 numeric failure and R4B R2 import failure remain unchanged.
 
-Latest Windows e28c8e9 run 39926044462 independently FAILS route corridor and
-legacy reload diagnostic. Live 100 HP actor overshoots to x -8.6911116; settings,
-LEAVE/reopen/focus are unreached. Separate 15 / 9,434 native, two input schedules,
-both objectives and 12 stock rounds/7:5 with exact 120 XP / 250 offline-credit reload
-pass. Full official ZIPs / 70 PNGs and 133 strict-clean logs remain retained.
-[Review](../reports/gauntlet/windows-native-e28c8e9-independent-20261023/REPORT.md).
-Route-only pulse source correction is under implementation, preserving all guards.
+Windows R2 pulse a4899dd5 is source-accepted by 791998d3 after two meaningful
+focus/owner failures in the first candidate. It needs integration and independent
+combined-root qualification before any Windows rerun. Actual e28c8e9 still fails
+its live route and legacy reload deadline despite bounded objectives, full-match
+and earned-offline persistence passes. Mac R2 source d6cb78aa has 118 passing
+builder methods but awaits independent re-review after retained AX boundary
+rejection. Linux type correction 216d39ad is source-accepted f8659bba; compilation
+and new profiling data remain unobserved after the original failed import.
 
-One Linux exact f242a2f controlled acquisition FAILS strict import with a genuine
-fixture type-inference parse/load error at line 107. No export or any of the four
-measurement conditions executes. Original Linux gameplay remains failed. Fresh
-actual review is preserving exact failed evidence; no retry is released. The CPU
-hold is ended. A new full maintained aggregate at exact 28a3e294 is in bounded
-preparation with a fresh critic before runtime. Touch explicit-bool correction
-108d1cdc passes fresh 95703781 source review only; no new native render/import.
-Mac read-only AX source cf4de47f awaits final pure/depth-one validation and fresh
-review; c838 actual gameplay still fails before input. Audio corrected pure
-analysis stays source-bound on its own branch; original acquisition REJECT /
-strict FAIL and unknown cause remain.
-The new full aggregate at exact 28a3e294 is now RUNNING after source acceptance
-897597ea, actual criteria 206e2a11 and root release 0e66bc78; exec 41224. No actual
-pass is inferred. Source rejections bf47f7c9 (Windows pulse) and 12ec93dd (Mac AX)
-are retained and guide narrow corrections; neither is runtime-ready. Linux
-actual 5cbbcd3c verifies failed import/evidence preservation only. Latest PR pure
-CI cf0df0f1 passes 37 tests; it does not replace the aggregate. Touch actual
-prereg 86c2c9b3 precedes its still-pending new pipeline release.
-
-No whole release gate changes status. NEXT_SESSION is the exact continuation.
+All G1–G19 whole release gates and human/physical/CS2/Steam blockers remain open.
+[NEXT_SESSION](../engineering/NEXT_SESSION.md) is the exact continuation.
 
 A separate future market-harness guard is independently accepted at
 `985a9d71`, [draft PR29](https://github.com/calebaiken/sightbreak/pull/29):
@@ -242,3 +226,15 @@ independent abb837b4 readiness with 56 additional mutation cases and no native
 quality approval. Windows cover-route af13a99 passes independent 5820ca7; combined
 root e28c8e9 is in source/shallow review before any hosted trial. All full gates
 retain their statuses. See NEXT_SESSION for exact branch paths and next actions.
+
+## 2026-10-23 10:01 UTC — verified aggregate and active native comparison
+
+Exact 28a3e294 full maintained aggregate independently passes in 534.403222822s,
+critic ab2ca960/root a84f8414: 56 Godot invocations, 129 Python methods, raw bot
+reconstruction, strict logs, source / 138 UIDs, 202 observed identities/eight ports
+and both original archives verify. No rendering/platform/human pass follows.
+ONE new touch R4B R3 pipeline is actually running after release f312ee8c and
+admission 09:59:27.374264 UTC; exec 18804. Actual quality remains unobserved; prior
+failures remain. Windows R2 pulse now source-accepted only; new combined-root
+qualification precedes runtime. Mac R2 and Linux source correction also remain
+separate from any new native acceptance. NEXT_SESSION is authoritative.

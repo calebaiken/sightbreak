@@ -75,3 +75,9 @@ actual criteria. It is not yet a pass. Windows pulse and Mac AX source candidate
 are independently rejected by meaningful new boundary controls despite passing
 maintained pure tests; narrow corrections must withstand those controls before
 runtime. Linux failed evidence is independently verified, not relabeled passing.
+
+At10:01UTC the combined-source aggregate28a3e294 is independently VERIFIED by
+ab2ca960, preserving exact native/pure/source/cleanup/archive scope. This closes
+the scoped regression requirement, not any whole release gate. The next touch
+A/B native pipeline is actually running; its numeric, interaction ownership,
+strict-log and blinded visual requirements stay unverified until actual review.

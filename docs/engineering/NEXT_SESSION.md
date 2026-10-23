@@ -7,54 +7,68 @@ available. The automatic goal remains active. Read AGENTS.md and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
 
-## Active verification — 2026-10-23 09:44:12 UTC
+## Active verification — 2026-10-23 10:01 UTC
 
-This checkpoint supersedes earlier queues below. Root release 0e66bc78 is pushed.
-ONE full maintained aggregate is RUNNING at exact 28a3e294c850482475b7ab74067c08538ae6310d
-in /workspace/sightbreak-aggregate-frozen-28a3e294, exec session 41224. The child
-is unchanged ./scripts/validate.sh, no DISPLAY/no --backend. Accepted wrapper
-bcfc7c3c SHA bf48ee4e38fa5a62b94bd2394f40981e02fb5ff795cb25e64afed6bed32c3cdd
-is in /workspace/sightbreak-aggregate-combined-28a3e294. Fresh critic 897597ea
-accepts 2,455 source/setup predicates and nine adversarial controls after retained
-rejection 2198721a. Actual prereg206e2a11 precedes dispatch. This is not a test pass.
+This checkpoint supersedes earlier queues below. Root is on own branch
+codex/v1-executor-recovery-20261023; inspect actual HEAD before recovery.
 
-- Poll the actual session with write_stdin; preserve terminal tool return and
-  .local/aggregate-combined-r1-wrapper.stdout/stderr/outer-launch.json. The latter
-  is the real initial tool return, not an invented whole runtime. Raw run is
-  builds/aggregate-combined-r1. Keep original 1200-second finite inner whole and
-  540-second per-Godot bounds; no retry or manual continuation after STOP.
-- /root/combined_aggregate_fresh_critic is capturing independent live identities
-  before the terminal output, then reviews full actual logs/observables/provenance,
-  source/UID/private state/ENet/cleanup and original archive. Outer and archived
-  strict scans, including orphan/unclaimed StringNames, are separately required.
-- Linux failed r1 now has final independent 5cbbcd3c, root 6eb45cf8: 1,695 integrity
-  predicates pass; actual import remains FAIL, all 224 originals unchanged, no
-  export/Xvfb/measurement. Bounded 231-member archive 19,739,886B is committed.
-  Narrow Array/hash/output correction 216d39ad is source-only in
-  /workspace/sightbreak-linux-profile-fixture-native-types; new fresh critic
-  /root/linux_type_fresh_source_critic accepts it in f8659bba (root 3ca4bf8e):
-  31 + 22 maintained tests, 81 independent predicates, 18 mutation and six reuse
-  controls. Compilation remains unobserved; no native retry released.
-- Windows pulse source 977633e4 is independently REJECTED by bf47f7c9, root 5c779633:
-  after first key-down changes foreground/owner, a second key-down still sends.
-  Existing 93 methods have 90 passes / 3 existing skips; two independent real-key-path
-  failures control acceptance. Builder is preregistering a per-edge correction.
-- Mac AX source cf4de47f is independently REJECTED by 12ec93dd, root 549fe1bd:
-  late native call accepted, three Create/Copy references lost on guard failure,
-  embedded NUL title truncated. Existing 110 methods pass; five fresh safety
-  assertions fail. Builder has exact controls and is preparing narrow R2 fixes.
-  No Windows/Apple/native/CI rerun is released.
-- Touch R3 actual critic /root/touch_r3_native_fresh_critic has prereg 86c2c9b3
-  before output; source recipe b9bd7e62/108d1cdc remains source-accepted 95703781.
-  It is next actual rendering work after this aggregate and its evidence are
-  preserved. Root must release ONE exact new pipeline; no captures exist yet.
-- Current PR31 pure CI at exact cf0df0f1 passes 37 tests, run 39932688892/job 120344571235.
-  Decoded log/metadata retained under mission-live-state-20261023. Latest PR refs
-  and main 4d8cdb33 are rechecked, unchanged dependencies. Contributor checkout safe.
+**The combined aggregate is independently VERIFIED at exact 28a3e294.**
+Actual 534.4032228220021 seconds, inner/outer0, all56 Godot invocations and
+129 Python methods (three original Windows skips). Critic ab2ca960, root a84f8414,
+accepts 3,812 output +1,974 dry +75,890 exhausted predicates, eight counterfeit
+rejections, 843 provenance/16 final checks, all808 file modes/138UIDs,
+202 observed identities/eight cleared ports, full strict logs and both original
+archives. Full report is aggregate-combined-28a3e294-20261023/independent-critic/REVIEW.md.
+Root actual evidence2250af3c and critic archive are committed. All originals remain.
+All15 new24m shots miss; no visual/physical/full-match/whole-goal acceptance.
 
-Update permanent evidence/gates, commit/push, then continue the next milestone.
-Human/physical/CS2/Steam and every whole G1–G19 gate remain open. No background
-execution after session termination is promised.
+**ONE touch R4B R3 native pipeline is now RUNNING.** Release f312ee8c pushed,
+admitted09:59:27.374264 UTC, actual controller exec session18804 began10:00:08UTC.
+Raw /workspace/sightbreak-touch-contrast-native-recovered-r4b-r3. Source/recipe
+b9bd7e62/108d1cdc accepted95703781 and fresh actual admission e439aa93 after
+criteria86c2c9b3. Native stages remain separately prepared under
+/workspace/sightbreak-touch-contrast-fixture-recovered-r4b-r3. Poll session18804,
+then read controller-exit.json: shell exit alone covers receipt publication.
+Keep original PLAN/controller/order/phase limits/selectors, no outer timeout,
+retry or manual continuation afterSTOP. Full analyzer/final waits lack a whole
+hard cap;3330sum is not a whole bound. Current original logs/partial images stay.
+
+Root admission script/transform hashes/stdout/stderr/outer-launch.json are in
+/workspace/sightbreak-touch-contrast-recovered/.local/touch-r4b-r3-root-*.
+After terminal preserve actual tool return; execute ONLY frozen PLAN post-source
+receipt and packager once, retain cleanup/actualPNG counts/failures. Tell fresh
+/root/touch_r3_native_fresh_critic raw-ready; its CPU4 live metadata observer
+session49199 captures PGID/SID/start/affinity and stops at lane-end.json. Heavy
+hashing/cloning/tests/archives by other agents are held; light source reads okay.
+No premature quality claim. Separate blind judge /root/touch_blind_visual_critic
+has inspected five real shipped references and committed criteria retained in
+ef5c4231 BEFORE outputs. It knows no mapping: later supply randomized matching
+native A/B pairs with provenance map withheld, preserving numeric and visual
+gates separately. Prior numericFAIL/R2importFAIL remain unchanged.
+
+**Next source work:** Windows route pulse R2 exact a4899dd5/handoff d3b0fc16 is
+independently source-accepted791998d3 after bf47f7c9 rejection. Per-down context
+checks now stop original two blockers; semantic23/eight extra controls pass;
+101 maintained methods pass with three old skips. Original full-rig ordinal
+failures and legacy/corridor runtime failures retained. Integrate six accepted
+Windows paths into own root, independently qualify exact union with bot/guard
+and both test registrations, then preregister a fresh actual critic and ONE
+new combined Windows run. No Windows native/CI release yet. Tiny raw-patch
+whitespace packaging note is not a product defect; don't alter raw evidence.
+
+Mac R2 source d6cb78aa on codex/m2-mac-ax-read-only-r2 fixes the five fresh AX
+boundary failures; final own/depth-one replay and exact handoff are being sealed,
+with heavy replays paused during touch. It needs independent re-review before
+any diagnostic-only ARM release. Original cf4de47f source REJECT12ec93dd and
+actual c838907 gameplay FAIL remain. No confidence lowering, input injection or
+full Mac retry. Linux minimal type/hash/output source216d39ad is accepted
+f8659bba (root3ca4bf8e), native compilation still unobserved; new r2 profiling
+acquisition needs separate actual criteria/release AFTER touch lane clears.
+Original Linux r1 actual5cbbcd3c verifies failed import/preservation only.
+
+Update mission/gates, commit/push and continue. Human/physical/CS2/Steam and all
+whole G1–G19 gates remain open. Preserve contributor checkout work@4d8cdb33 and
+PR27→24→23→22→16 dependencies. No protected/shared merge or deployment is released.
 
 ## Earlier execution detail — superseded by the current queue below
 
