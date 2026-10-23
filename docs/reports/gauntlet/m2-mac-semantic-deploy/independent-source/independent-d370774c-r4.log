@@ -1,0 +1,142 @@
+test_delivered_down_exception_releases_recorded_owned_button (__main__.IndependentBoundaries.test_delivered_down_exception_releases_recorded_owned_button) ... ok
+test_fifo_is_rejected_without_reading (__main__.IndependentBoundaries.test_fifo_is_rejected_without_reading) ... FAIL
+test_growth_after_stat_cannot_exceed_receipt_byte_bound (__main__.IndependentBoundaries.test_growth_after_stat_cannot_exceed_receipt_byte_bound) ... FAIL
+test_native_identity_count_and_zero_event_types_fail_closed (__main__.IndependentBoundaries.test_native_identity_count_and_zero_event_types_fail_closed) ... 
+  test_native_identity_count_and_zero_event_types_fail_closed (__main__.IndependentBoundaries.test_native_identity_count_and_zero_event_types_fail_closed) (name='window_pid_float') ... FAIL
+  test_native_identity_count_and_zero_event_types_fail_closed (__main__.IndependentBoundaries.test_native_identity_count_and_zero_event_types_fail_closed) (name='cg_owner_float') ... FAIL
+  test_native_identity_count_and_zero_event_types_fail_closed (__main__.IndependentBoundaries.test_native_identity_count_and_zero_event_types_fail_closed) (name='examined_nodes_float') ... FAIL
+  test_native_identity_count_and_zero_event_types_fail_closed (__main__.IndependentBoundaries.test_native_identity_count_and_zero_event_types_fail_closed) (name='input_events_false') ... FAIL
+  test_native_identity_count_and_zero_event_types_fail_closed (__main__.IndependentBoundaries.test_native_identity_count_and_zero_event_types_fail_closed) (name='permission_requests_false') ... FAIL
+test_same_byte_original_file_replacement_after_move_never_posts_down (__main__.IndependentBoundaries.test_same_byte_original_file_replacement_after_move_never_posts_down) ... 
+  test_same_byte_original_file_replacement_after_move_never_posts_down (__main__.IndependentBoundaries.test_same_byte_original_file_replacement_after_move_never_posts_down) (name='01-focused-menu.png') ... FAIL
+  test_same_byte_original_file_replacement_after_move_never_posts_down (__main__.IndependentBoundaries.test_same_byte_original_file_replacement_after_move_never_posts_down) (name='01-focused-menu.json') ... FAIL
+  test_same_byte_original_file_replacement_after_move_never_posts_down (__main__.IndependentBoundaries.test_same_byte_original_file_replacement_after_move_never_posts_down) (name='semantic-deploy-ax.json') ... FAIL
+test_trace_delay_after_semantic_check_cannot_post_expired_move_or_down (__main__.IndependentBoundaries.test_trace_delay_after_semantic_check_cannot_post_expired_move_or_down) ... 
+  test_trace_delay_after_semantic_check_cannot_post_expired_move_or_down (__main__.IndependentBoundaries.test_trace_delay_after_semantic_check_cannot_post_expired_move_or_down) (kind='pointer_move') ... FAIL
+  test_trace_delay_after_semantic_check_cannot_post_expired_move_or_down (__main__.IndependentBoundaries.test_trace_delay_after_semantic_check_cannot_post_expired_move_or_down) (kind='lmb_down') ... FAIL
+
+======================================================================
+FAIL: test_fifo_is_rejected_without_reading (__main__.IndependentBoundaries.test_fifo_is_rejected_without_reading)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/m2-mac-semantic-deploy-fresh-source-critic/docs/reports/gauntlet/m2-mac-semantic-deploy/independent-source/test_independent_boundaries.py", line 93, in test_fifo_is_rejected_without_reading
+    self.assertFalse(read.called, 'Special FIFO reached the ordinary unbounded read')
+AssertionError: True is not false : Special FIFO reached the ordinary unbounded read
+
+======================================================================
+FAIL: test_growth_after_stat_cannot_exceed_receipt_byte_bound (__main__.IndependentBoundaries.test_growth_after_stat_cannot_exceed_receipt_byte_bound)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/m2-mac-semantic-deploy-fresh-source-critic/docs/reports/gauntlet/m2-mac-semantic-deploy/independent-source/test_independent_boundaries.py", line 106, in test_growth_after_stat_cannot_exceed_receipt_byte_bound
+    with self.assertRaises(RuntimeError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_native_identity_count_and_zero_event_types_fail_closed (__main__.IndependentBoundaries.test_native_identity_count_and_zero_event_types_fail_closed) (name='window_pid_float')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/m2-mac-semantic-deploy-fresh-source-critic/docs/reports/gauntlet/m2-mac-semantic-deploy/independent-source/test_independent_boundaries.py", line 146, in test_native_identity_count_and_zero_event_types_fail_closed
+    with self.assertRaises(RuntimeError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_native_identity_count_and_zero_event_types_fail_closed (__main__.IndependentBoundaries.test_native_identity_count_and_zero_event_types_fail_closed) (name='cg_owner_float')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/m2-mac-semantic-deploy-fresh-source-critic/docs/reports/gauntlet/m2-mac-semantic-deploy/independent-source/test_independent_boundaries.py", line 146, in test_native_identity_count_and_zero_event_types_fail_closed
+    with self.assertRaises(RuntimeError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_native_identity_count_and_zero_event_types_fail_closed (__main__.IndependentBoundaries.test_native_identity_count_and_zero_event_types_fail_closed) (name='examined_nodes_float')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/m2-mac-semantic-deploy-fresh-source-critic/docs/reports/gauntlet/m2-mac-semantic-deploy/independent-source/test_independent_boundaries.py", line 146, in test_native_identity_count_and_zero_event_types_fail_closed
+    with self.assertRaises(RuntimeError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_native_identity_count_and_zero_event_types_fail_closed (__main__.IndependentBoundaries.test_native_identity_count_and_zero_event_types_fail_closed) (name='input_events_false')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/m2-mac-semantic-deploy-fresh-source-critic/docs/reports/gauntlet/m2-mac-semantic-deploy/independent-source/test_independent_boundaries.py", line 146, in test_native_identity_count_and_zero_event_types_fail_closed
+    with self.assertRaises(RuntimeError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_native_identity_count_and_zero_event_types_fail_closed (__main__.IndependentBoundaries.test_native_identity_count_and_zero_event_types_fail_closed) (name='permission_requests_false')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/m2-mac-semantic-deploy-fresh-source-critic/docs/reports/gauntlet/m2-mac-semantic-deploy/independent-source/test_independent_boundaries.py", line 146, in test_native_identity_count_and_zero_event_types_fail_closed
+    with self.assertRaises(RuntimeError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_same_byte_original_file_replacement_after_move_never_posts_down (__main__.IndependentBoundaries.test_same_byte_original_file_replacement_after_move_never_posts_down) (name='01-focused-menu.png')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/m2-mac-semantic-deploy-fresh-source-critic/docs/reports/gauntlet/m2-mac-semantic-deploy/independent-source/test_independent_boundaries.py", line 74, in test_same_byte_original_file_replacement_after_move_never_posts_down
+    self.assertNotEqual(code, 0, 'Replaced original identity still authorized a complete click')
+AssertionError: 0 == 0 : Replaced original identity still authorized a complete click
+
+======================================================================
+FAIL: test_same_byte_original_file_replacement_after_move_never_posts_down (__main__.IndependentBoundaries.test_same_byte_original_file_replacement_after_move_never_posts_down) (name='01-focused-menu.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/m2-mac-semantic-deploy-fresh-source-critic/docs/reports/gauntlet/m2-mac-semantic-deploy/independent-source/test_independent_boundaries.py", line 74, in test_same_byte_original_file_replacement_after_move_never_posts_down
+    self.assertNotEqual(code, 0, 'Replaced original identity still authorized a complete click')
+AssertionError: 0 == 0 : Replaced original identity still authorized a complete click
+
+======================================================================
+FAIL: test_same_byte_original_file_replacement_after_move_never_posts_down (__main__.IndependentBoundaries.test_same_byte_original_file_replacement_after_move_never_posts_down) (name='semantic-deploy-ax.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/m2-mac-semantic-deploy-fresh-source-critic/docs/reports/gauntlet/m2-mac-semantic-deploy/independent-source/test_independent_boundaries.py", line 74, in test_same_byte_original_file_replacement_after_move_never_posts_down
+    self.assertNotEqual(code, 0, 'Replaced original identity still authorized a complete click')
+AssertionError: 0 == 0 : Replaced original identity still authorized a complete click
+
+======================================================================
+FAIL: test_trace_delay_after_semantic_check_cannot_post_expired_move_or_down (__main__.IndependentBoundaries.test_trace_delay_after_semantic_check_cannot_post_expired_move_or_down) (kind='pointer_move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/m2-mac-semantic-deploy-fresh-source-critic/docs/reports/gauntlet/m2-mac-semantic-deploy/independent-source/test_independent_boundaries.py", line 123, in test_trace_delay_after_semantic_check_cannot_post_expired_move_or_down
+    self.assertEqual(expired, [], 'Original trace work runs after freshness check and posts stale event')
+AssertionError: Lists differ: [(5, 5.2010000000000005, 5.0)] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+(5, 5.2010000000000005, 5.0)
+
+- [(5, 5.2010000000000005, 5.0)]
++ [] : Original trace work runs after freshness check and posts stale event
+
+======================================================================
+FAIL: test_trace_delay_after_semantic_check_cannot_post_expired_move_or_down (__main__.IndependentBoundaries.test_trace_delay_after_semantic_check_cannot_post_expired_move_or_down) (kind='lmb_down')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/m2-mac-semantic-deploy-fresh-source-critic/docs/reports/gauntlet/m2-mac-semantic-deploy/independent-source/test_independent_boundaries.py", line 123, in test_trace_delay_after_semantic_check_cannot_post_expired_move_or_down
+    self.assertEqual(expired, [], 'Original trace work runs after freshness check and posts stale event')
+AssertionError: Lists differ: [(1, 5.401000000000001, 5.0)] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+(1, 5.401000000000001, 5.0)
+
+- [(1, 5.401000000000001, 5.0)]
++ [] : Original trace work runs after freshness check and posts stale event
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.580s
+
+FAILED (failures=12)
+{"attack": "01-focused-menu.png", "code": 0, "posts": [5, 1, 2, 5, 1, 2], "inode_before_after": [[425689, 425693], [425693, 425748]], "passed": true}
+{"attack": "01-focused-menu.json", "code": 0, "posts": [5, 1, 2, 5, 1, 2], "inode_before_after": [[425788, 425797], [425797, 425812]], "passed": true}
+{"attack": "semantic-deploy-ax.json", "code": 0, "posts": [5, 1, 2, 5, 1, 2], "inode_before_after": [[425876, 425877], [425877, 425916]], "passed": true}
+{"delay_before": "pointer_move", "code": 1, "post_times_kind_now_expires": [[5, 5.2010000000000005, 5.0]]}
+{"delay_before": "lmb_down", "code": 0, "post_times_kind_now_expires": [[5, 0.2, 5.0], [1, 5.401000000000001, 5.0], [2, 5.551000000000001, 5.0], [5, 8.401000000000003, null], [1, 13.602000000000004, null], [2, 13.752000000000004, null]]}
