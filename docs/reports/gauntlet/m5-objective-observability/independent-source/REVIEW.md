@@ -1,8 +1,9 @@
 # Independent source review
 
 Verdict: REJECT `c91d9b98a293ef8605d99ae6e83402d3af983519` for diagnostic-method
-readiness. The maintained ten methods pass, but fourteen independent malformed or
-incomplete receipt controls receive acceptance. The optional production API also
+readiness. The maintained ten methods pass, but thirteen actually mutated
+receipts receive acceptance. The original count included a defective no-op
+negative control; the correction below supersedes that count. The optional production API also
 retains old trace fields across calls. These are evidence-method defects; this
 review finds no source-visible bot-policy correction or demonstrated gameplay
 regression. No native acquisition is released.
@@ -74,16 +75,35 @@ renderer, CI or dispatch ran.
    position/timer/contributions and several action/movement fields, so its
    “protected state” is a declared subset rather than a complete outcome proof.
 
-The independent controls are in `independent_controls.py` and their unchanged
-original output is `independent-controls.json`: 20 controls, six expected
-outcomes, fourteen unexpected acceptances, process exit 1. Five intended rejection
-controls do reject wrong protocol, missing terminal, changed paired ammo, wrong
-hold duration and retained invalid progress. A valid maintained synthetic
-receipt still passes. The failures are not caused by wholesale reader bypass. Three final type-boundary
-controls also accept a boolean actor ID, boolean time scale and a floating protocol
-value where the emitted fields are integer/numeric scalars with declared roles.
-The first 17-control run is preserved separately under `first-independent-controls`;
-the subsequent run only adds these three previously untested boundaries.
+The unchanged original rig is in `independent_controls.py`; original output
+remains in `independent-controls.json` (20 named cases, six expected outcomes,
+fourteen reported unexpected acceptances, exit 1). Those raw counts contain a
+control-design defect and do not represent twenty independent cases.
+
+Follow-up adjudication independently verified the builder's specific objection.
+`valid_maintained_synthetic_receipt` and
+`forward_rows_have_no_dt_pose_command_objective_or_progress` both use
+`lambda rows: None`. They submit byte-identical input with opposite expectations.
+I incorrectly counted the latter no-op as a separate negative falsifier. The
+“valid” label on the former also overstates what the fixture establishes; it is
+an acceptance smoke case, not proof of a complete valid observation stream.
+
+The corrected interpretation is nineteen distinct cases: one baseline acceptance
+smoke case and eighteen actual mutation controls. Thirteen mutated receipts are
+accepted and five are rejected. The maintained baseline's 120 forward rows have
+only `label` and `tick`; their missing fields remain a direct schema observation,
+not a separate deletion falsifier. Five controls reject wrong protocol, missing
+terminal, changed paired ammo, wrong hold duration and retained invalid progress.
+Three type-boundary mutations accept a boolean actor ID, boolean time scale and
+a floating protocol value. Other supported mutated receipts and source findings
+continue to support rejection of the original candidate.
+
+`RIG_CORRECTION.md` and `rig-adjudication.json` retain the correction, exact hashes
+and original unchanged replay. The replay output equals the preserved original
+and still exits 1; its stdout/stderr/status use the `rig-original-rerun` prefix.
+Neither the original rig nor any original output was edited. The first
+17-case run is also preserved under `first-independent-controls`. No corrected
+candidate was inspected or approved in this adjudication.
 
 ## Source safety and ownership findings
 
@@ -173,7 +193,9 @@ worktree and reading only the initialized fixture sources, is:
 taskset -c 4 python3 docs/reports/gauntlet/m5-objective-observability/independent-source/independent_controls.py /workspace/reviews/m5-objective-observability-shallow-source
 ```
 
-It exits 1 with the fourteen unexpected acceptances. Grammar parsing with the
+Its original output exits 1 and reports fourteen unexpected acceptances; after
+excluding the defective no-op negative, thirteen actually mutated receipts are
+accepted. See the follow-up adjudication above. Grammar parsing with the
 already installed temporary `gdtoolkit==4.5.0` accepts both GDScripts;
 `grammar.json` explicitly leaves compilation false. No engine was invoked.
 
