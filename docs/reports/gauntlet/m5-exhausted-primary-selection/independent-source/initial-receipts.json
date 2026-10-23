@@ -1,0 +1,71 @@
+[
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "/workspace/reviews/exhausted-primary-selection-source/docs/reports/gauntlet/m5-exhausted-primary-selection/independent-source/review_source.py"
+    ],
+    "cwd": "/workspace/reviews/exhausted-primary-selection-source",
+    "start_utc": "2026-10-23T07:36:50.604759+00:00",
+    "wall_seconds": 11.346504396000455,
+    "exit_code": 1,
+    "stdout": "initial-0.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "initial-0.stderr.log",
+    "stderr_sha256": "dd4589f7db3e128b8e9180e127102b50695cb509f3fba3a8bb3bc7241f8bef8b"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "docs/reports/gauntlet/m5-exhausted-primary-selection",
+      "-p",
+      "test_audit_candidate.py",
+      "-v"
+    ],
+    "cwd": "/workspace/reviews/exhausted-primary-selection-source",
+    "start_utc": "2026-10-23T07:37:01.951593+00:00",
+    "wall_seconds": 0.8869370299998991,
+    "exit_code": 0,
+    "stdout": "initial-1.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "initial-1.stderr.log",
+    "stderr_sha256": "d8cc51ff1615d40de1284e92b5469d838a4146a8a49b9f45074576642735a93b"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/reports/gauntlet/m5-exhausted-primary-benchmark/independent-critic-r2/probe_oracle_scope.py"
+    ],
+    "cwd": "/workspace/reviews/exhausted-primary-selection-source",
+    "start_utc": "2026-10-23T07:37:02.838975+00:00",
+    "wall_seconds": 0.14800036800079397,
+    "exit_code": 0,
+    "stdout": "initial-2.stdout.log",
+    "stdout_sha256": "6b24d8020af152795253bca3d7979886e2b00ebba376090a26aaafa07089a275",
+    "stderr": "initial-2.stderr.log",
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "argv": [
+      "python3",
+      "-B",
+      "docs/reports/gauntlet/m5-exhausted-primary-benchmark/independent-actual/falsify_raw.py",
+      "docs/reports/gauntlet/m5-exhausted-primary-benchmark/actual-r2/baseline-probe.stdout.log.gz",
+      "."
+    ],
+    "cwd": "/workspace/reviews/exhausted-primary-selection-source",
+    "start_utc": "2026-10-23T07:37:02.987983+00:00",
+    "wall_seconds": 0.0675957430012204,
+    "exit_code": 1,
+    "stdout": "initial-3.stdout.log",
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr": "initial-3.stderr.log",
+    "stderr_sha256": "0b88df9be4b23df603cb1a7727d43423d6d336538f3d9764ec45dc7bb8193578"
+  }
+]

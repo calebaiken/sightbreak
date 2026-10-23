@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/workspace/reviews/exhausted-primary-selection-source/docs/reports/gauntlet/m5-exhausted-primary-selection/independent-source/review_source.py", line 232, in <module>
+    print(json.dumps(run(), indent=2, sort_keys=True))
+                     ^^^^^
+  File "/workspace/reviews/exhausted-primary-selection-source/docs/reports/gauntlet/m5-exhausted-primary-selection/independent-source/review_source.py", line 208, in run
+    falsify('stale active cache after equip', lambda r: r['after_action']['ammo_store'].update(smg=[30, 90]), 'complete shooter action consumption')
+  File "/workspace/reviews/exhausted-primary-selection-source/docs/reports/gauntlet/m5-exhausted-primary-selection/independent-source/review_source.py", line 202, in falsify
+    check(not accepted and needle in reason, name + ': ' + reason)
+  File "/workspace/reviews/exhausted-primary-selection-source/docs/reports/gauntlet/m5-exhausted-primary-selection/independent-source/review_source.py", line 68, in check
+    raise AssertionError(message)
+AssertionError: stale active cache after equip: line 416 core/normal/smg/exhausted/loaded/fallback_boundary/none step -1: all raw resource projections

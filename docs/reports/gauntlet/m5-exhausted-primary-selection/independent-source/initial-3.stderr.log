@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "/workspace/reviews/exhausted-primary-selection-source/docs/reports/gauntlet/m5-exhausted-primary-benchmark/independent-actual/falsify_raw.py", line 63, in <module>
+    records,_=parse(Path(sys.argv[1]))
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/exhausted-primary-selection-source/docs/reports/gauntlet/m5-exhausted-primary-benchmark/independent-actual/audit_raw.py", line 123, in parse
+    for line_no,line in enumerate(path.read_text().splitlines(),1):
+                                  ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1028, in read_text
+    return f.read()
+           ^^^^^^^^
+  File "<frozen codecs>", line 322, in decode
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x8b in position 1: invalid start byte
