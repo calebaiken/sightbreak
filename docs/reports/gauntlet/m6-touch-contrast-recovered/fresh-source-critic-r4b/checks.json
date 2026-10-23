@@ -1,0 +1,130 @@
+{
+  "source_freeze": "2ea23f947aec6085449bced53c9b061618a67029",
+  "scope": "SOURCE_PURE_ONLY",
+  "engine_invocations": 0,
+  "native_captures": 0,
+  "checks": {
+    "twenty_frozen_files_match_exact_source": {
+      "pass": true,
+      "freeze_sha256": "375b2a867d9fc2991eb9cf5a3caa7e0ef04a77c3fd9311194620425b09e8af68",
+      "count": 20
+    },
+    "independent_read_only_staging_exact": {
+      "pass": true,
+      "stages": [
+        {
+          "name": "baseline",
+          "original_paths": 323,
+          "checked_paths": 327,
+          "uid_paths": 138,
+          "manifest_sha256": "8769df11adb16daefd652d6694b2917cf4ecd95db59e77bccfb99cc5a651788f",
+          "cache_present": false
+        },
+        {
+          "name": "candidate",
+          "original_paths": 323,
+          "checked_paths": 327,
+          "uid_paths": 138,
+          "manifest_sha256": "cb3bd854be3b546cf94ffaaaecde3864975fadbcf552a5d222fcd6825ca270f2",
+          "cache_present": false
+        }
+      ]
+    },
+    "historical_native_glyph_inputs_remain_bound": {
+      "pass": true,
+      "inputs": 16,
+      "assignments": 44
+    },
+    "handoff_changes_no_frozen_code": {
+      "pass": true
+    },
+    "old_pixel_and_final_band_predicates_unchanged": {
+      "pass": true,
+      "thresholds": {
+        "active_label": 4.5,
+        "empty_count": 4.5,
+        "ready_count": 4.5,
+        "active_icon": 3.0,
+        "border": 3.0,
+        "held_border": 3.0,
+        "joystick_ring": 3.0,
+        "joystick_knob": 3.0
+      },
+      "retained_diagnostic_groups": [
+        "border",
+        "held_border"
+      ]
+    },
+    "reproduced_continuous_certificate_exact": {
+      "pass": true,
+      "sha256": "6c8056d1362e81cf6a7a758a25cca1b6e57a4d0fb40f3a143283084519071850",
+      "cases": 32,
+      "intervals": 2482
+    },
+    "critical_branch_interiors_hold": {
+      "pass": true,
+      "cases_sampled": 1998,
+      "actual_minima": {
+        "ownership": 0.05733157513205156,
+        "paint_clearance": 2.5999999999999943,
+        "inside_own_hit": 0.2499999999999183
+      },
+      "largest_nextafter_gap": 7.105427357601002e-15,
+      "qualification": "Source arithmetic plus audited branch formulas; Python doubles and native Vector2/raster rounding are not identical."
+    },
+    "disk_minimum_does_not_overstate_random_lower_bounds": {
+      "pass": true,
+      "random_disks": 200,
+      "maximum_bound_excess": -1.107860914117964e-09
+    },
+    "custom_collisions_and_tiny_dimensions_remain_unqualified": {
+      "pass": true,
+      "custom_error_kinds": [
+        "paint_envelope_overlap",
+        "wrong_owner"
+      ],
+      "tiny_error_kinds": [
+        "paint_envelope_overlap",
+        "wrong_owner"
+      ]
+    },
+    "strongest_final_band_falsifiers_remain": {
+      "pass": true,
+      "opaque_unrelated_underlay_passes": true,
+      "invisible_outer_contour_passes": true,
+      "interior_sixty_percent_replacement_passes": true
+    },
+    "invalid_baseline_ownership_receipt_counterexample_reproduces": {
+      "pass": true,
+      "synthetic_only": true,
+      "ownership_errors": [],
+      "fire_row": {
+        "action": "fire",
+        "support_pixels": 1,
+        "actual_native_wrong_owner_pixels": 0,
+        "independent_normalized_hit_replay_wrong_pixels": 1,
+        "native_record_well_formed": true,
+        "pass": false
+      },
+      "comparison_accepts_invalid_baseline": true,
+      "requirement": "Invalid baseline ownership receipt blocks comparison; legitimate baseline geometry failure remains comparable."
+    },
+    "invalid_baseline_recorded_winner_not_reconciled": {
+      "pass": true,
+      "synthetic_only": true,
+      "supplied_wrong_winner": "pause",
+      "independently_selected_winner": "jump",
+      "fire_row": {
+        "action": "fire",
+        "support_pixels": 1,
+        "actual_native_wrong_owner_pixels": 1,
+        "independent_normalized_hit_replay_wrong_pixels": 1,
+        "native_record_well_formed": true,
+        "pass": false
+      }
+    }
+  },
+  "verdict": "REJECT_SOURCE_METHOD_READINESS_INVALID_BASELINE_OWNERSHIP_RECEIPT_FENCE",
+  "native_lane_released": false,
+  "all_expected_review_findings_reproduced": true
+}
