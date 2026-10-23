@@ -71,9 +71,15 @@ rows also cannot distinguish decision-time target damage from authority damage.
    existing no-switch reloadable-primary case and verify its configured initial
    duration, with unchanged clip/reserve. Emit exact witness labels/counts in the
    result. Require observation/authority failure if a registered positive witness
-   is absent. Completed reloads and primary cadence can remain outside this
-   bounded run; do not claim them from the current 0.96 s sequences. Preserve the
-   original freeze and obtain fresh source review of the revised fixture/hash.
+   is absent. Root's review steering additionally requires completed-reload
+   witnesses before baseline release: preregister separate bounded controls for
+   reloadable primaries and a reserve-only sidearm, with enough action steps to
+   exceed their configured reload plus initial start/draw delays. Require actual
+   completion, legal reserve-to-clip transfer and shot-adjusted conservation;
+   retain raw intermediate states without resource resets. The existing 0.96 s
+   diagnostic sequences can remain unchanged and cannot substitute for these
+   controls. Primary cadence remains outside scope. Preserve the original freeze
+   and obtain fresh source review of the revised fixture/hash.
 
 ## What the freeze supports from source
 
@@ -117,7 +123,8 @@ and no-ai-slop including its evaluation. Existing originals were reused. The
 parent's narrower source-only instruction controls: canonical mission files are
 not edited, and no nested agent or runtime lane is started.
 
-After the three fixes, root can request fresh source review and decide whether
+After the three fixes, including the root-required completed-reload witnesses,
+root can request fresh source review and decide whether
 to release one bounded private-state baseline with retained raw logs, source
 hashes, PID/start/exit and scoped cleanup receipts. This report does not release
 that run. Full gameplay/balance, bot reliability, human experience, CS2 comparison
