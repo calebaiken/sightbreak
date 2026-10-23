@@ -406,6 +406,8 @@ class Runner:
                 and not receipt.get('terminal_observed') and not receipt.get('terminal_same_session')
                 and not receipt.get('terminal_recognized_godot') and receipt['wall_seconds'] <= cap
                 and self.budget.remaining() >= 0 and owned is not None and owned.root is not None)
+            if not receipt['passed'] and receipt['failure'] is None:
+                receipt['failure'] = dict(type='PhaseFailed',message=label+' failed; complete streams/strict failure retained')
             write(self.output/(label+'.receipt.json'), receipt)
         if original_error:
             raise original_error
@@ -426,25 +428,45 @@ def completed_suite(suite, text):
                 'Existing squad-symmetry result incomplete/failed')
 
 
+def candidate_audit(source, output):
+    oracle = load_module('candidate_raw_audit',source/REPORT/'audit_candidate.py')
+    stdout = output/'bot_exhausted_primary.stdout.log'
+    baseline_path = source/'docs/reports/gauntlet/m5-exhausted-primary-benchmark/actual-r2/baseline-probe.stdout.log.gz'
+    require(hashlib.sha256(oracle.file_data(baseline_path)).hexdigest() == oracle.BASELINE_STDOUT_SHA256,
+            'Immutable actual baseline stdout hash mismatch')
+    records,_ = oracle.parse(stdout)
+    baseline,_ = oracle.parse(baseline_path)
+    value = dict(authority=oracle.audit(records,source),comparison=oracle.compare(records,baseline),stdout_sha256=sha(stdout))
+    write(output/'candidate-builder-audit.json',value)
+    return dict(passed=True,scope='Builder recomputation only; fresh independent actual-output review required')
+
+
 def run(args):
-    source, output = args.source.resolve(), args.output.absolute()
+    seconds, suites = BLOCKS[args.block]
+    budget = Budget(seconds)
+    source, output = args.source.resolve(), args.output.resolve()
     require(platform.system() == 'Linux' and Path('/proc').is_dir(), 'This wrapper is local Linux only')
     require(source == ROOT and re.fullmatch('[0-9a-f]{40}', args.expected_head), 'Use this exact own checkout and full reviewed source HEAD')
     require(hasattr(os,'pidfd_open') and hasattr(signal,'pidfd_send_signal'), 'Linux pidfd signal support is required')
-    journal = claim(source,args.expected_head,args.block,output)
-    seconds, suites = BLOCKS[args.block]
-    budget = Budget(seconds)
+    old_handlers = {s:signal.getsignal(s) for s in [signal.SIGALRM,signal.SIGINT,signal.SIGTERM]}
+    def interrupted(signum, _frame):
+        raise BoundExceeded('Whole block deadline' if signum == signal.SIGALRM else 'Interrupted by '+signal.Signals(signum).name)
+    for sig in old_handlers:
+        signal.signal(sig,interrupted)
+    try:
+        budget.arm()
+        journal = claim(source,args.expected_head,args.block,output)
+    except BaseException:
+        signal.setitimer(signal.ITIMER_REAL,0)
+        for sig,handler in old_handlers.items():
+            signal.signal(sig,handler)
+        raise
     report = dict(block=args.block, expected_source_head=args.expected_head, accepted_candidate=ACCEPTED,
                   start_utc=utc(), whole_bound_seconds=seconds, passed=False, failure=None,
                   finalization_failures=[], journal=str(journal), output=str(output), cleanup_scope=SCOPE)
     original = copied = prepared = None
     stage = output/'staged'
     runner = Runner(output,budget)
-    old_handlers = {s:signal.getsignal(s) for s in [signal.SIGALRM,signal.SIGINT,signal.SIGTERM]}
-    def interrupted(signum, _frame):
-        raise BoundExceeded('Whole block deadline' if signum == signal.SIGALRM else 'Interrupted by '+signal.Signals(signum).name)
-    for sig in old_handlers:
-        signal.signal(sig,interrupted)
     candidate_attempted = False
     try:
         budget.arm()
@@ -482,13 +504,16 @@ def run(args):
         first_env = suite_env(output,suites[0])
         before = producer(suites[0],'before',first_env)
         stable()
-        write(output/'staged-before-import.json',stage_inventory(stage))
+        before_import = stage_inventory(stage)
+        write(output/'staged-before-import.json',before_import)
         runner.native('preparation-import',prefix()+['--editor','--import'],first_env,120)
         current = stage_inventory(stage,cache=False)
         added = preparation_sources(initial,current)
         prepared = current
         report['preparation'] = dict(original_tracked_bytes_unchanged=True,
-            staged_noncache_source_set_equal_to_original=current==initial, added_source_files=added)
+            staged_noncache_source_set_equal_to_original=current==initial, added_source_files=added,
+            added_uid_first_observed=('after first native producer/before editor import' if NEW_UID in before_import
+                                      else 'after editor import') if NEW_UID in added else None)
         if NEW_UID in added:
             uid = stage/NEW_UID
             require(re.fullmatch(r'uid://[a-z0-9]+\n?',uid.read_text()) is not None, 'Malformed generated test UID')
@@ -511,7 +536,13 @@ def run(args):
             runner.native(suite,prefix()+['--script','res://tests/'+suite+'_test.gd'],env,120)
             stable()
             text = (output/(suite+'.stdout.log')).read_text()
-            if suite != 'bot_exhausted_primary':
+            if suite == 'bot_exhausted_primary':
+                try:
+                    report['candidate_builder_audit'] = candidate_audit(source,output)
+                except BaseException as error:
+                    report['candidate_builder_audit'] = dict(passed=False,type=type(error).__name__,message=str(error))
+                    raise
+            else:
                 completed_suite(suite,text)
             after = producer(suite,'after',env)
             require(after['path'] == before['path'], 'Before/after native producer paths differ')
@@ -522,24 +553,23 @@ def run(args):
         require(budget.remaining() >= 0, 'Whole bound exceeded after suites')
         report['passed'] = True
     except BaseException as error:
-        report['failure'] = dict(type=type(error).__name__,message=str(error))
+        current = dict(type=type(error).__name__,message=str(error))
+        primary = runner.receipts[-1].get('failure') if runner.receipts else None
+        report['failure'] = primary or current
+        if primary and primary != current:
+            report['finalization_failures'].append(dict(current,stage='native receipt finalization; original phase failure preserved'))
     finally:
         # No further native command is launched, including after a strict leak.
         signal.setitimer(signal.ITIMER_REAL,0)
         try:
             budget.finish_alarm()
-            if args.block=='candidate' and candidate_attempted and budget.remaining()>0:
+            if args.block=='candidate' and candidate_attempted and 'candidate_builder_audit' not in report and budget.remaining()>0:
                 try:
-                    oracle = load_module('candidate_raw_audit',source/REPORT/'audit_candidate.py')
-                    records,_ = oracle.parse(output/'bot_exhausted_primary.stdout.log')
-                    baseline,_ = oracle.parse(source/'docs/reports/gauntlet/m5-exhausted-primary-benchmark/actual-r2/baseline-probe.stdout.log.gz')
-                    audit = dict(authority=oracle.audit(records,source),comparison=oracle.compare(records,baseline))
-                    write(output/'candidate-builder-audit.json',audit)
-                    report['candidate_builder_audit'] = dict(passed=True,scope='Builder recomputation only; fresh independent actual-output review required')
+                    report['candidate_builder_audit'] = candidate_audit(source,output)
                 except BaseException as error:
                     report['candidate_builder_audit'] = dict(passed=False,type=type(error).__name__,message=str(error))
                     report['passed'] = False
-            elif args.block=='candidate':
+            elif args.block=='candidate' and 'candidate_builder_audit' not in report:
                 report['candidate_builder_audit'] = dict(passed=False,reason='Candidate not attempted or whole budget exhausted')
                 report['passed'] = False
             if original is not None:
@@ -555,6 +585,9 @@ def run(args):
                     require(current==prepared,'Prepared non-cache source/UID set changed')
                 elif copied is not None:
                     preparation_sources(initial,current)
+            state = output/'private-state'
+            if state.exists():
+                write(output/'private-state-after-attempt.json',stage_inventory(state))
             report['engine_sha256_after'] = sha(ENGINE)
             require(report['engine_sha256_after']==ENGINE_SHA,'Pinned engine changed')
             report['recognized_godot_after'] = recognized(proc_snapshot())
