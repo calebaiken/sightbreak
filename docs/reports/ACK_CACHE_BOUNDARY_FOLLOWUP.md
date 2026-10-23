@@ -1,10 +1,31 @@
 # PR21 cache-boundary artifact follow-up
 
+**Source-bound critic review is complete:** outcome-only boundary **PASS**, then
+post-unblind capture/API-binding **PASS**. The existing controller files are now
+publicly archived against their prior hash commitments. PR21 is ready for **Sol
+integration review**, remains draft, and is not claimed integrated.
+
 ## Parent-recorded review summaries
 
 These are **summaries of parent-recorded GitHub comments, not full critic
-transcripts**. Refreshed on 2026-10-22 after the server restart.
+transcripts**. The closure chronology below uses the comments' GitHub UTC timestamps.
 
+- [Outcome-only boundary PASS, comment 6354593942](https://github.com/calebaiken/sightbreak/pull/21#issuecomment-6354593942),
+  frozen **2026-10-23 00:42:29 UTC before identity/source access**: the same critic
+  checked both 121-row traces, ZIP/CRC/JSON integrity, every insertion's arithmetic,
+  the 120→121 boundary, retained IDs2–121, original anchor, 3.75m total drift,
+  0.03125m previous delta and all legacy parity. The raw insertion-history gap is
+  closed; M's absent helper is N/A.
+- [Post-unblind capture/API-binding PASS, comment 6354660494](https://github.com/calebaiken/sightbreak/pull/21#issuecomment-6354660494),
+  recorded **2026-10-23 00:47:32 UTC after the frozen outcome PASS**: the same critic
+  opened the existing controller/source records and verified M→frozen701 and
+  T→capture workload `b4b3db04`, shipping content `0fbce120`. ZIP/captured/published
+  trace bytes agree, as do native log hashes, exit0 and 242/484 checks. Three
+  workload-file hashes match Git. The fixture actually invokes `predict` and
+  `reconcile` and reads helper counts/IDs/samples rather than exporting expected
+  formulas as outcomes. The critic reconstructed all **124 baseline / 125
+  candidate** shipping-manifest entries, accounted for LF→CRLF representation,
+  and checked the recorded before/after identity checks. No blocking discrepancy.
 - [Outcome-only verdict, comment 6276374296](https://github.com/calebaiken/sightbreak/pull/21#issuecomment-6276374296):
   **sample-R WINS the diagnostic bar; C loses coverage.** The critic verified the
   packet checksum, 1,224/1,224 observations, 20 formerly unscored held observations,
@@ -64,10 +85,12 @@ python scripts/measure_ack_cache_boundary.py `
 
 The new neutral packet contains **only two raw traces and method instructions**.
 Raw logs, exact source/workload hashes and author-run audit are published outside
-it. Identity-bearing capture commands and the newly shuffled mapping remain in
-the external `controller/` directory until the same critic freezes its follow-up
-verdict. No critic is launched by this worker. PR21 remains draft; prediction
-default-off, protocol6 and live rewind off remain in force.
+it. Identity-bearing commands and the shuffled mapping were withheld in the
+external `controller/` directory until the same critic froze the outcome-only
+verdict. They were inspected afterwards and are now archived under
+[`ack-cache-boundary-v3/controller/`](ack-cache-boundary-v3/controller/README.md).
+PR21 remains draft; prediction default-off, protocol6 and live rewind off remain
+in force.
 
 ## Captured result
 
@@ -106,27 +129,62 @@ six-condition campaign and maintained gates were not rerun.
 | Item | SHA256 / revision |
 | --- | --- |
 | Frozen external workload | `b4b3db044fc762fbb5c9eb69da8713b316fdb496` |
+| Original raw evidence/report | `d5c738d367f3ba80f3cfc679e104a009d0a72183` |
 | Native fixture SHA256 | `33ea6a44b45120ad11baa8ee46bad31dcca9b4a3fc7ae89a2419a7795deb4518` |
 | Driver SHA256 | `a179632642e80dd8ac2e68155bef9723aa0f63398308531f36b10d59ec616e31` |
 | Shared slice-local capture utility SHA256 | `95a72a5125ff59619fadf8801c665a000a36895800d8424a458852bed36c60d5` |
 | Official Godot 4.7.2 binary SHA256 | `ab1824f85bfd8e0e4128182c000c4003a3e042245b2967848d089b2a04b22424` |
 | Neutral trace ZIP SHA256 | `70a15c1f330c7e9e51bf50fc52673243dd3cbe62dd030acdc60081eba6443517` |
 
-The driver checked each cached shipping tree against its exact Git archive before
-running, verified it unchanged afterwards, and checked the candidate shipping
-tree against `0fbce120`. Native fixture and driver hashes also match their frozen
-Git blobs. [Raw traces, logs, source receipt and audit](ack-cache-boundary-v3/README.md).
+The capture records the driver's cached-shipping comparison against exact Git
+archives before running, unchanged-shipping check afterwards, and candidate
+comparison against `0fbce120`. Native fixture and driver hashes match their frozen
+Git blobs. The post-unblind critic reviewed this capture/API chain.
+[Raw traces, logs, source receipt and audit](ack-cache-boundary-v3/README.md).
 
-### Follow-up critic handoff
+### Frozen review chronology and controller release
 
-Give the same critic only
-[`blind-traces.zip`](ack-cache-boundary-v3/blind-traces.zip), or its identical
-isolated copy at
-`C:/Users/blith/AppData/Local/Temp/opencode/ack-cache-boundary-neutral-r1/blind-traces.zip`.
-The two new labels were independently shuffled; the private source mapping and
-identity-bearing capture commands remain in the external controller directory.
-They are not committed or supplied with the packet. Freeze the outcome-only
-follow-up verdict before revealing that key.
+1. Workload `b4b3db04` was frozen before capture. Evidence `d5c738d3` published the
+   trace packet and `publication-audit.json` commitments while withholding the key.
+2. Outcome-only **PASS** was publicly frozen at **00:42:29 UTC**, before identity
+   access. The neutral packet was the only review input at this stage.
+3. The same critic then read the existing controller/source records. Capture/API
+   provenance **PASS** was publicly recorded at **00:47:32 UTC**. The parent
+   comments explicitly attest to this ordering; these are not full transcripts.
+4. This docs/evidence-only closure copies the **exact existing** controller files
+   into Git, without normalization, and verifies them against the commitments
+   already committed at `d5c738d3`. It performs no new capture or test run.
 
-The parent R-WINS/source-PASS records remain as summarized above. Acceptance of
-this new trace artifact by that critic is **pending**; no own critic was run.
+| Released label | Captured source revision | Shipping runtime reference |
+| --- | --- | --- |
+| M | `701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd` | `701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd` |
+| T | `b4b3db044fc762fbb5c9eb69da8713b316fdb496` | `0fbce120d8c17db58596d280f7d8401ab2aa0937` |
+
+Both sources used the same frozen external workload `b4b3db04`. The existing
+imported stages and full native command lines are retained verbatim in the capture.
+
+| Exact released file | Previously committed SHA256 |
+| --- | --- |
+| [controller/mapping.json](ack-cache-boundary-v3/controller/mapping.json) | `bb9e66d695b9d079fc5b55c99ba985aee4133052e55245b1de0315aeca7483b5` |
+| [controller/capture.json](ack-cache-boundary-v3/controller/capture.json) | `68aefbc9a5b3f0d397078b144f5e40993fdbe2e183a8154dcb1eecb488e393b2` |
+
+[Release receipt](ack-cache-boundary-v3/controller/release-receipt.json) binds the
+archive to the prior commitment blob and both public verdict anchors. Scoped
+`-text` attributes preserve copied bytes; [checksums](ack-cache-boundary-v3/checksums.json)
+bind the released files. The initial TIE, earlier R win and all original neutral
+packet hashes remain distinct and unchanged.
+
+### Provenance limits and integration status
+
+**Machine execution and historical filesystem measurements remain author-run
+attestations, not authenticated process attestation.** Byte/source/API binding
+review supports the recorded capture chain; it does not establish independently
+authenticated historical process execution. The window trace isolates one eviction
+boundary with empty replay history after ACK1, and observes reconciliations rather
+than coalesced wire packets. It does not establish gameplay accuracy, consumption
+time, performance, ENet behavior or prediction activation.
+
+The source-bound review task is complete. Shipping stays `0fbce120`, the measured
+workload stays `b4b3db04`, and original evidence stays `d5c738d3`. PR21 is **ready for
+Sol integration review**, not integrated. Draft/default-off/protocol6/rewind-off
+remain in force.
