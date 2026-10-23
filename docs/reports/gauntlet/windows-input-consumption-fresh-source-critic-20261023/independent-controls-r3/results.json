@@ -1,0 +1,163 @@
+{
+  "scope": "Independent synthetic source-review falsifiers; no native run",
+  "candidate": "c0738163965804297a1881905d5bb4646da40a16",
+  "checkout_head": "2a25c7cbbe63ba2eecad4b2022dea8a040d5678b",
+  "analyzer_sha256": "7654c44f13d765a2f98f64f7ced4e463d13f040768e87cd56fb0a943d6953e01",
+  "cpu_affinity": [
+    4
+  ],
+  "cases": [
+    {
+      "name": "coherent_independent_pipeline",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true
+    },
+    {
+      "name": "stale_receive",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false
+    },
+    {
+      "name": "receive_wrong_epoch",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true
+    },
+    {
+      "name": "receive_impossible_sequence",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true
+    },
+    {
+      "name": "receive_missing_metadata",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false
+    },
+    {
+      "name": "receive_unbound_different_peer",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false
+    },
+    {
+      "name": "accepted_reversed_sequence_interval",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false
+    },
+    {
+      "name": "consumption_outside_accepted_batch",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true
+    },
+    {
+      "name": "consumption_before_receive_accept",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false
+    },
+    {
+      "name": "client_send_different_transport",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false
+    },
+    {
+      "name": "client_send_unwelcomed_attempt",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false
+    },
+    {
+      "name": "client_send_different_actor",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false
+    },
+    {
+      "name": "client_send_epoch_disagrees_with_authority",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true
+    },
+    {
+      "name": "send_outside_pending_interval",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false
+    },
+    {
+      "name": "missing_consumption",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true
+    },
+    {
+      "name": "stale_consumption",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true
+    },
+    {
+      "name": "consumption_wrong_generation",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true
+    },
+    {
+      "name": "explicit_cap_truncation",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true
+    },
+    {
+      "name": "index_gap",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true
+    },
+    {
+      "name": "account_field",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true
+    },
+    {
+      "name": "hidden_spatial_field",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true
+    },
+    {
+      "name": "private_value_in_allowed_field",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true
+    },
+    {
+      "name": "malformed_truncated_json",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true
+    },
+    {
+      "name": "empty_logs",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true
+    },
+    {
+      "name": "original_failed_windows_untraced",
+      "expected_complete": false,
+      "actual_complete": false,
+      "expectation_met": true
+    }
+  ],
+  "expectations_met": 16,
+  "cases_total": 25
+}
