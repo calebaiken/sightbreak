@@ -49,6 +49,20 @@ skip failing controls or claim the old certificate as a new-source result.
 Any authorized lexical-only helper change must be separately registered before
 code, preserve evaluated expressions/predicates and retain the old rejection.
 
+Root has now explicitly authorized that necessary lexical accommodation before
+code: recognize exactly `var compact: bool =` in addition to the original
+`var compact :=` spelling. Keep the captured compact expression exactly
+`key != "fire" and r < 32.0` in either form and reject an altered expression,
+wrong explicit type, unsupported declaration or missing/duplicate compact
+declaration. Other paint declarations keep their original parser. Preserve all
+evaluated expressions, geometry/math/paint/ownership predicates and native
+analyzer bytes. Add direct positive controls for both exact declaration forms
+and negative controls for wrong type, changed expression and absent declaration;
+retain the original helper's in-memory AttributeError as historical evidence.
+This is source-method compatibility with the declared compiler hypothesis,
+not new geometry or a new runtime result. Freeze its entire lexical diff for
+the independent critic. No broader parser relaxation or engine run is allowed.
+
 After the preregistration is committed/pushed, apply only the declared product
 line. Commit its exact source identity before generating new source manifests.
 Use the unchanged source-only preparer on a NEW absent root:
