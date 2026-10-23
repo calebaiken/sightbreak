@@ -1,0 +1,62 @@
+{
+  "accepted_game_scripts_unchanged": true,
+  "accepted_game_source": "1b7ebc71290e6c4c23017f7a2d8539d7c5eec149",
+  "accepted_manifest_bytes_unchanged": true,
+  "accepted_source_hashes_checked": 23,
+  "checks": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/sightbreak-exhausted-primary-selection/docs/reports/gauntlet/m5-exhausted-primary-selection/acquisition/test_acquisition.py"
+      ],
+      "cwd": "/workspace/sightbreak-exhausted-primary-selection",
+      "end_utc": "2026-10-23T08:40:43.218546+00:00",
+      "exit_code": 0,
+      "name": "builder",
+      "start_utc": "2026-10-23T08:40:42.903213+00:00",
+      "wall_seconds": 0.3153384149991325
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/sightbreak-exhausted-primary-selection/docs/reports/gauntlet/m5-exhausted-primary-selection/acquisition/correction-r2/test_publication.py"
+      ],
+      "cwd": "/workspace/sightbreak-exhausted-primary-selection",
+      "end_utc": "2026-10-23T08:40:43.534024+00:00",
+      "exit_code": 0,
+      "name": "publication",
+      "start_utc": "2026-10-23T08:40:43.218570+00:00",
+      "wall_seconds": 0.31547095499990974
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-B",
+        "/workspace/sightbreak-exhausted-primary-selection/docs/reports/gauntlet/m5-exhausted-primary-selection/acquisition/correction-r2/replay_independent.py",
+        "--output",
+        "/workspace/sightbreak-exhausted-primary-selection/docs/reports/gauntlet/m5-exhausted-primary-selection/acquisition/correction-r2/pure-checks/independent"
+      ],
+      "cwd": "/workspace/sightbreak-exhausted-primary-selection",
+      "end_utc": "2026-10-23T08:40:43.849514+00:00",
+      "exit_code": 0,
+      "name": "independent",
+      "start_utc": "2026-10-23T08:40:43.534049+00:00",
+      "wall_seconds": 0.31548243799988995
+    }
+  ],
+  "code_commit": "d941cc355fbb089f80ccb09f7873fbfe8143c159",
+  "native_compiles": 0,
+  "native_engine_invocations": 0,
+  "native_imports": 0,
+  "passed": true,
+  "real_native_signals": 0,
+  "scope": "Builder pure/mock checks only; exact-source independent review and runtime remain held",
+  "source_sha256": {
+    "docs/reports/gauntlet/m5-exhausted-primary-selection/acquisition/correction-r2/replay_independent.py": "dcc1fd447014a716a5972ba3277bf92b6052dbd5fffa0aa9fc4e8590040606ea",
+    "docs/reports/gauntlet/m5-exhausted-primary-selection/acquisition/correction-r2/test_publication.py": "2c87f0558502e039b0ba75aa6a66941eaf384e292cc25312307782b7eda75750",
+    "docs/reports/gauntlet/m5-exhausted-primary-selection/acquisition/run_acquisition.py": "78ce6ba388e49b1e633612e17a1dd33c07efc23a49d47a9e0dbdd54af7e038a3",
+    "docs/reports/gauntlet/m5-exhausted-primary-selection/acquisition/test_acquisition.py": "211b0eb23692e01acbfa1a59dfeb78d4d1b5c253ff107b14b1fa9487a0481b02"
+  }
+}

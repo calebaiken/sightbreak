@@ -1,0 +1,1920 @@
+{
+  "candidate_success": {
+    "actual_seconds": 0,
+    "calls": [
+      {
+        "cap": 30,
+        "command": [
+          "/tmp/tmp2lnk5fz2/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmp2lnk5fz2/.local/replay/staged/game",
+          "--script",
+          "/tmp/tmp2lnk5fz2/.local/replay/producer.gd",
+          "--",
+          "--receipt=/tmp/tmp2lnk5fz2/.local/replay/bot_exhausted_primary-before.json"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/config",
+          "XDG_DATA_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data"
+        },
+        "label": "bot_exhausted_primary-producer-before"
+      },
+      {
+        "cap": 120,
+        "command": [
+          "/tmp/tmp2lnk5fz2/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmp2lnk5fz2/.local/replay/staged/game",
+          "--editor",
+          "--import"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/config",
+          "XDG_DATA_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data"
+        },
+        "label": "preparation-import"
+      },
+      {
+        "cap": 120,
+        "command": [
+          "/tmp/tmp2lnk5fz2/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmp2lnk5fz2/.local/replay/staged/game",
+          "--script",
+          "res://tests/bot_exhausted_primary_test.gd"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/config",
+          "XDG_DATA_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data"
+        },
+        "label": "bot_exhausted_primary"
+      },
+      {
+        "cap": 30,
+        "command": [
+          "/tmp/tmp2lnk5fz2/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmp2lnk5fz2/.local/replay/staged/game",
+          "--script",
+          "/tmp/tmp2lnk5fz2/.local/replay/producer.gd",
+          "--",
+          "--receipt=/tmp/tmp2lnk5fz2/.local/replay/bot_exhausted_primary-after.json"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/config",
+          "XDG_DATA_HOME": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data"
+        },
+        "label": "bot_exhausted_primary-producer-after"
+      }
+    ],
+    "events": [
+      {
+        "event": "native",
+        "label": "bot_exhausted_primary-producer-before"
+      },
+      {
+        "event": "native",
+        "label": "preparation-import"
+      },
+      {
+        "event": "native",
+        "label": "bot_exhausted_primary"
+      },
+      {
+        "event": "audit"
+      },
+      {
+        "event": "native",
+        "label": "bot_exhausted_primary-producer-after"
+      },
+      {
+        "active_alarm": 240.0,
+        "after": 0,
+        "before": 0,
+        "event": "overall-write"
+      }
+    ],
+    "report": {
+      "accepted_candidate": "1b7ebc71290e6c4c23017f7a2d8539d7c5eec149",
+      "block": "candidate",
+      "candidate_builder_audit": {
+        "passed": true
+      },
+      "cleanup_scope": "Observed stable PID identities, ancestry and anchored SID members only; polling can miss an unobserved descendant escaping/reparenting. No generic descendant/failure-path guarantee is claimed.",
+      "duration_scope": "Stored snapshot precedes its own publication; final wall_seconds and confirmed readbacks are in the returned report/terminal summary",
+      "end_utc": "2026-10-23T08:40:43.744159+00:00",
+      "engine_sha256_after": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "engine_sha256_before": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "expected_source_head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "failure": null,
+      "finalization_failures": [],
+      "journal": "/tmp/tmp2lnk5fz2/.local/exhausted-selection-acquisition-claims/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-candidate.json",
+      "native_producer_source_sha256": "f8e5fb90ca2bfe14d93789521428f1e826960ba8fd631231369eebbc1adcd10a",
+      "original_tracked_inventory_unchanged": true,
+      "output": "/tmp/tmp2lnk5fz2/.local/replay",
+      "passed": true,
+      "preparation": {
+        "added_source_files": [],
+        "added_uid_first_observed": null,
+        "original_tracked_bytes_unchanged": true,
+        "staged_noncache_source_set_equal_to_original": true
+      },
+      "processes": [
+        {
+          "failure": null,
+          "label": "bot_exhausted_primary-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "preparation-import",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_exhausted_primary",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_exhausted_primary-producer-after",
+          "passed": true
+        }
+      ],
+      "publication_confirmed": true,
+      "publication_contract": "Requires confirmed overall receipt + claim journal readbacks and zero wrapper exit",
+      "publication_readbacks": [
+        {
+          "path": "/tmp/tmp2lnk5fz2/.local/replay/overall.receipt.json",
+          "readback_elapsed_seconds": 0.0
+        },
+        {
+          "path": "/tmp/tmp2lnk5fz2/.local/exhausted-selection-acquisition-claims/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-candidate.json",
+          "readback_elapsed_seconds": 0.0
+        }
+      ],
+      "recognized_godot_after": [],
+      "recognized_godot_before": [],
+      "start_utc": "2026-10-23T08:40:43.737798+00:00",
+      "suites": [
+        {
+          "after": {
+            "path": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmp2lnk5fz2/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "before": {
+            "path": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmp2lnk5fz2/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": true,
+          "suite": "bot_exhausted_primary"
+        }
+      ],
+      "wall_seconds": 0.0,
+      "wall_seconds_before_publication": 0.0,
+      "whole_bound_seconds": 240
+    },
+    "stored_report": {
+      "accepted_candidate": "1b7ebc71290e6c4c23017f7a2d8539d7c5eec149",
+      "block": "candidate",
+      "candidate_builder_audit": {
+        "passed": true
+      },
+      "cleanup_scope": "Observed stable PID identities, ancestry and anchored SID members only; polling can miss an unobserved descendant escaping/reparenting. No generic descendant/failure-path guarantee is claimed.",
+      "duration_scope": "Stored snapshot precedes its own publication; final wall_seconds and confirmed readbacks are in the returned report/terminal summary",
+      "end_utc": "2026-10-23T08:40:43.743683+00:00",
+      "engine_sha256_after": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "engine_sha256_before": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "expected_source_head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "failure": null,
+      "finalization_failures": [],
+      "journal": "/tmp/tmp2lnk5fz2/.local/exhausted-selection-acquisition-claims/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-candidate.json",
+      "native_producer_source_sha256": "f8e5fb90ca2bfe14d93789521428f1e826960ba8fd631231369eebbc1adcd10a",
+      "original_tracked_inventory_unchanged": true,
+      "output": "/tmp/tmp2lnk5fz2/.local/replay",
+      "passed": true,
+      "preparation": {
+        "added_source_files": [],
+        "added_uid_first_observed": null,
+        "original_tracked_bytes_unchanged": true,
+        "staged_noncache_source_set_equal_to_original": true
+      },
+      "processes": [
+        {
+          "failure": null,
+          "label": "bot_exhausted_primary-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "preparation-import",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_exhausted_primary",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_exhausted_primary-producer-after",
+          "passed": true
+        }
+      ],
+      "publication_confirmed": false,
+      "publication_contract": "Requires confirmed overall receipt + claim journal readbacks and zero wrapper exit",
+      "recognized_godot_after": [],
+      "recognized_godot_before": [],
+      "start_utc": "2026-10-23T08:40:43.737798+00:00",
+      "suites": [
+        {
+          "after": {
+            "path": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmp2lnk5fz2/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "before": {
+            "path": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmp2lnk5fz2/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmp2lnk5fz2/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": true,
+          "suite": "bot_exhausted_primary"
+        }
+      ],
+      "wall_seconds_before_publication": 0.0,
+      "whole_bound_seconds": 240
+    }
+  },
+  "contradictory_squad_failure": {
+    "actual_seconds": 0.0,
+    "calls": [
+      {
+        "cap": 30,
+        "command": [
+          "/tmp/tmp9no5xm5k/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+          "--script",
+          "/tmp/tmp9no5xm5k/.local/replay/producer.gd",
+          "--",
+          "--receipt=/tmp/tmp9no5xm5k/.local/replay/bot_ai_regression-before.json"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/config",
+          "XDG_DATA_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data"
+        },
+        "label": "bot_ai_regression-producer-before"
+      },
+      {
+        "cap": 120,
+        "command": [
+          "/tmp/tmp9no5xm5k/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+          "--editor",
+          "--import"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/config",
+          "XDG_DATA_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data"
+        },
+        "label": "preparation-import"
+      },
+      {
+        "cap": 120,
+        "command": [
+          "/tmp/tmp9no5xm5k/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+          "--script",
+          "res://tests/bot_ai_regression_test.gd"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/config",
+          "XDG_DATA_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data"
+        },
+        "label": "bot_ai_regression"
+      },
+      {
+        "cap": 30,
+        "command": [
+          "/tmp/tmp9no5xm5k/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+          "--script",
+          "/tmp/tmp9no5xm5k/.local/replay/producer.gd",
+          "--",
+          "--receipt=/tmp/tmp9no5xm5k/.local/replay/bot_ai_regression-after.json"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/config",
+          "XDG_DATA_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data"
+        },
+        "label": "bot_ai_regression-producer-after"
+      },
+      {
+        "cap": 30,
+        "command": [
+          "/tmp/tmp9no5xm5k/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+          "--script",
+          "/tmp/tmp9no5xm5k/.local/replay/producer.gd",
+          "--",
+          "--receipt=/tmp/tmp9no5xm5k/.local/replay/bot_dry_weapon-before.json"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/config",
+          "XDG_DATA_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/data"
+        },
+        "label": "bot_dry_weapon-producer-before"
+      },
+      {
+        "cap": 120,
+        "command": [
+          "/tmp/tmp9no5xm5k/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+          "--script",
+          "res://tests/bot_dry_weapon_test.gd"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/config",
+          "XDG_DATA_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/data"
+        },
+        "label": "bot_dry_weapon"
+      },
+      {
+        "cap": 30,
+        "command": [
+          "/tmp/tmp9no5xm5k/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+          "--script",
+          "/tmp/tmp9no5xm5k/.local/replay/producer.gd",
+          "--",
+          "--receipt=/tmp/tmp9no5xm5k/.local/replay/bot_dry_weapon-after.json"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/config",
+          "XDG_DATA_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/data"
+        },
+        "label": "bot_dry_weapon-producer-after"
+      },
+      {
+        "cap": 30,
+        "command": [
+          "/tmp/tmp9no5xm5k/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+          "--script",
+          "/tmp/tmp9no5xm5k/.local/replay/producer.gd",
+          "--",
+          "--receipt=/tmp/tmp9no5xm5k/.local/replay/bot_squad_symmetry-before.json"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_squad_symmetry/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_squad_symmetry/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_squad_symmetry/config",
+          "XDG_DATA_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_squad_symmetry/data"
+        },
+        "label": "bot_squad_symmetry-producer-before"
+      },
+      {
+        "cap": 120,
+        "command": [
+          "/tmp/tmp9no5xm5k/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+          "--script",
+          "res://tests/bot_squad_symmetry_test.gd"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_squad_symmetry/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_squad_symmetry/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_squad_symmetry/config",
+          "XDG_DATA_HOME": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_squad_symmetry/data"
+        },
+        "label": "bot_squad_symmetry"
+      }
+    ],
+    "events": [
+      {
+        "event": "native",
+        "label": "bot_ai_regression-producer-before"
+      },
+      {
+        "event": "native",
+        "label": "preparation-import"
+      },
+      {
+        "event": "native",
+        "label": "bot_ai_regression"
+      },
+      {
+        "event": "native",
+        "label": "bot_ai_regression-producer-after"
+      },
+      {
+        "event": "native",
+        "label": "bot_dry_weapon-producer-before"
+      },
+      {
+        "event": "native",
+        "label": "bot_dry_weapon"
+      },
+      {
+        "event": "native",
+        "label": "bot_dry_weapon-producer-after"
+      },
+      {
+        "event": "native",
+        "label": "bot_squad_symmetry-producer-before"
+      },
+      {
+        "event": "native",
+        "label": "bot_squad_symmetry"
+      },
+      {
+        "active_alarm": 5.0,
+        "after": 0.0,
+        "before": 0.0,
+        "event": "overall-write"
+      }
+    ],
+    "report": {
+      "accepted_candidate": "1b7ebc71290e6c4c23017f7a2d8539d7c5eec149",
+      "block": "regressions",
+      "cleanup_scope": "Observed stable PID identities, ancestry and anchored SID members only; polling can miss an unobserved descendant escaping/reparenting. No generic descendant/failure-path guarantee is claimed.",
+      "duration_scope": "Stored snapshot precedes its own publication; final wall_seconds and confirmed readbacks are in the returned report/terminal summary",
+      "end_utc": "2026-10-23T08:40:43.758019+00:00",
+      "engine_sha256_after": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "engine_sha256_before": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "expected_source_head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "failure": {
+        "message": "Explicit bot regression failure record",
+        "type": "RuntimeError"
+      },
+      "finalization_failures": [],
+      "journal": "/tmp/tmp9no5xm5k/.local/exhausted-selection-acquisition-claims/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-regressions.json",
+      "native_producer_source_sha256": "f8e5fb90ca2bfe14d93789521428f1e826960ba8fd631231369eebbc1adcd10a",
+      "original_tracked_inventory_unchanged": true,
+      "output": "/tmp/tmp9no5xm5k/.local/replay",
+      "passed": false,
+      "preparation": {
+        "added_source_files": [],
+        "added_uid_first_observed": null,
+        "original_tracked_bytes_unchanged": true,
+        "staged_noncache_source_set_equal_to_original": true
+      },
+      "processes": [
+        {
+          "failure": null,
+          "label": "bot_ai_regression-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "preparation-import",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_ai_regression",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_ai_regression-producer-after",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_dry_weapon-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_dry_weapon",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_dry_weapon-producer-after",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_squad_symmetry-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_squad_symmetry",
+          "passed": true
+        }
+      ],
+      "publication_confirmed": true,
+      "publication_contract": "Requires confirmed overall receipt + claim journal readbacks and zero wrapper exit",
+      "publication_readbacks": [
+        {
+          "path": "/tmp/tmp9no5xm5k/.local/replay/overall.receipt.json",
+          "readback_elapsed_seconds": 0.0
+        },
+        {
+          "path": "/tmp/tmp9no5xm5k/.local/exhausted-selection-acquisition-claims/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-regressions.json",
+          "readback_elapsed_seconds": 0.0
+        }
+      ],
+      "recognized_godot_after": [],
+      "recognized_godot_before": [],
+      "start_utc": "2026-10-23T08:40:43.747461+00:00",
+      "suites": [
+        {
+          "after": {
+            "path": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "before": {
+            "path": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": true,
+          "suite": "bot_ai_regression"
+        },
+        {
+          "after": {
+            "path": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "before": {
+            "path": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": true,
+          "suite": "bot_dry_weapon"
+        },
+        {
+          "before": {
+            "path": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_squad_symmetry/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_squad_symmetry/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_squad_symmetry/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": false,
+          "suite": "bot_squad_symmetry"
+        }
+      ],
+      "wall_seconds": 0.0,
+      "wall_seconds_before_publication": 0.0,
+      "whole_bound_seconds": 480
+    },
+    "stored_report": {
+      "accepted_candidate": "1b7ebc71290e6c4c23017f7a2d8539d7c5eec149",
+      "block": "regressions",
+      "cleanup_scope": "Observed stable PID identities, ancestry and anchored SID members only; polling can miss an unobserved descendant escaping/reparenting. No generic descendant/failure-path guarantee is claimed.",
+      "duration_scope": "Stored snapshot precedes its own publication; final wall_seconds and confirmed readbacks are in the returned report/terminal summary",
+      "end_utc": "2026-10-23T08:40:43.756237+00:00",
+      "engine_sha256_after": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "engine_sha256_before": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "expected_source_head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "failure": {
+        "message": "Explicit bot regression failure record",
+        "type": "RuntimeError"
+      },
+      "finalization_failures": [],
+      "journal": "/tmp/tmp9no5xm5k/.local/exhausted-selection-acquisition-claims/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-regressions.json",
+      "native_producer_source_sha256": "f8e5fb90ca2bfe14d93789521428f1e826960ba8fd631231369eebbc1adcd10a",
+      "original_tracked_inventory_unchanged": true,
+      "output": "/tmp/tmp9no5xm5k/.local/replay",
+      "passed": false,
+      "preparation": {
+        "added_source_files": [],
+        "added_uid_first_observed": null,
+        "original_tracked_bytes_unchanged": true,
+        "staged_noncache_source_set_equal_to_original": true
+      },
+      "processes": [
+        {
+          "failure": null,
+          "label": "bot_ai_regression-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "preparation-import",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_ai_regression",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_ai_regression-producer-after",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_dry_weapon-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_dry_weapon",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_dry_weapon-producer-after",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_squad_symmetry-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_squad_symmetry",
+          "passed": true
+        }
+      ],
+      "publication_confirmed": false,
+      "publication_contract": "Requires confirmed overall receipt + claim journal readbacks and zero wrapper exit",
+      "recognized_godot_after": [],
+      "recognized_godot_before": [],
+      "start_utc": "2026-10-23T08:40:43.747461+00:00",
+      "suites": [
+        {
+          "after": {
+            "path": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "before": {
+            "path": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": true,
+          "suite": "bot_ai_regression"
+        },
+        {
+          "after": {
+            "path": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "before": {
+            "path": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": true,
+          "suite": "bot_dry_weapon"
+        },
+        {
+          "before": {
+            "path": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_squad_symmetry/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_squad_symmetry/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmp9no5xm5k/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmp9no5xm5k/.local/replay/private-state/bot_squad_symmetry/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": false,
+          "suite": "bot_squad_symmetry"
+        }
+      ],
+      "wall_seconds_before_publication": 0.0,
+      "whole_bound_seconds": 480
+    }
+  },
+  "late_overall_write": {
+    "actual_seconds": 243,
+    "calls": [
+      {
+        "cap": 30,
+        "command": [
+          "/tmp/tmphcyyoikl/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmphcyyoikl/.local/replay/staged/game",
+          "--script",
+          "/tmp/tmphcyyoikl/.local/replay/producer.gd",
+          "--",
+          "--receipt=/tmp/tmphcyyoikl/.local/replay/bot_exhausted_primary-before.json"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/config",
+          "XDG_DATA_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data"
+        },
+        "label": "bot_exhausted_primary-producer-before"
+      },
+      {
+        "cap": 120,
+        "command": [
+          "/tmp/tmphcyyoikl/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmphcyyoikl/.local/replay/staged/game",
+          "--editor",
+          "--import"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/config",
+          "XDG_DATA_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data"
+        },
+        "label": "preparation-import"
+      },
+      {
+        "cap": 120,
+        "command": [
+          "/tmp/tmphcyyoikl/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmphcyyoikl/.local/replay/staged/game",
+          "--script",
+          "res://tests/bot_exhausted_primary_test.gd"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/config",
+          "XDG_DATA_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data"
+        },
+        "label": "bot_exhausted_primary"
+      },
+      {
+        "cap": 30,
+        "command": [
+          "/tmp/tmphcyyoikl/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmphcyyoikl/.local/replay/staged/game",
+          "--script",
+          "/tmp/tmphcyyoikl/.local/replay/producer.gd",
+          "--",
+          "--receipt=/tmp/tmphcyyoikl/.local/replay/bot_exhausted_primary-after.json"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/config",
+          "XDG_DATA_HOME": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data"
+        },
+        "label": "bot_exhausted_primary-producer-after"
+      }
+    ],
+    "events": [
+      {
+        "event": "native",
+        "label": "bot_exhausted_primary-producer-before"
+      },
+      {
+        "event": "native",
+        "label": "preparation-import"
+      },
+      {
+        "event": "native",
+        "label": "bot_exhausted_primary"
+      },
+      {
+        "event": "audit"
+      },
+      {
+        "event": "native",
+        "label": "bot_exhausted_primary-producer-after"
+      },
+      {
+        "active_alarm": 1.0,
+        "after": 241,
+        "before": 239,
+        "event": "overall-write"
+      },
+      {
+        "active_alarm": 5,
+        "after": 243,
+        "before": 241,
+        "event": "overall-write"
+      }
+    ],
+    "report": {
+      "accepted_candidate": "1b7ebc71290e6c4c23017f7a2d8539d7c5eec149",
+      "block": "candidate",
+      "candidate_builder_audit": {
+        "passed": true
+      },
+      "cleanup_scope": "Observed stable PID identities, ancestry and anchored SID members only; polling can miss an unobserved descendant escaping/reparenting. No generic descendant/failure-path guarantee is claimed.",
+      "duration_scope": "Stored snapshot precedes its own publication; final wall_seconds and confirmed readbacks are in the returned report/terminal summary",
+      "end_utc": "2026-10-23T08:40:43.784379+00:00",
+      "engine_sha256_after": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "engine_sha256_before": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "expected_source_head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "failure": {
+        "message": "Acquisition publication/work deadline exceeded",
+        "stage": "overall publication/readback",
+        "type": "BoundExceeded"
+      },
+      "finalization_failures": [],
+      "journal": "/tmp/tmphcyyoikl/.local/exhausted-selection-acquisition-claims/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-candidate.json",
+      "native_producer_source_sha256": "f8e5fb90ca2bfe14d93789521428f1e826960ba8fd631231369eebbc1adcd10a",
+      "original_tracked_inventory_unchanged": true,
+      "output": "/tmp/tmphcyyoikl/.local/replay",
+      "passed": false,
+      "preparation": {
+        "added_source_files": [],
+        "added_uid_first_observed": null,
+        "original_tracked_bytes_unchanged": true,
+        "staged_noncache_source_set_equal_to_original": true
+      },
+      "processes": [
+        {
+          "failure": null,
+          "label": "bot_exhausted_primary-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "preparation-import",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_exhausted_primary",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_exhausted_primary-producer-after",
+          "passed": true
+        }
+      ],
+      "publication_confirmed": true,
+      "publication_contract": "Requires confirmed overall receipt + claim journal readbacks and zero wrapper exit",
+      "publication_readbacks": [
+        {
+          "path": "/tmp/tmphcyyoikl/.local/replay/overall.receipt.json",
+          "readback_elapsed_seconds": 243.0
+        },
+        {
+          "path": "/tmp/tmphcyyoikl/.local/exhausted-selection-acquisition-claims/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-candidate.json",
+          "readback_elapsed_seconds": 243.0
+        }
+      ],
+      "recognized_godot_after": [],
+      "recognized_godot_before": [],
+      "start_utc": "2026-10-23T08:40:43.777723+00:00",
+      "suites": [
+        {
+          "after": {
+            "path": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmphcyyoikl/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "before": {
+            "path": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmphcyyoikl/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": true,
+          "suite": "bot_exhausted_primary"
+        }
+      ],
+      "wall_seconds": 243.0,
+      "wall_seconds_before_publication": 241.0,
+      "whole_bound_seconds": 240
+    },
+    "stored_report": {
+      "accepted_candidate": "1b7ebc71290e6c4c23017f7a2d8539d7c5eec149",
+      "block": "candidate",
+      "candidate_builder_audit": {
+        "passed": true
+      },
+      "cleanup_scope": "Observed stable PID identities, ancestry and anchored SID members only; polling can miss an unobserved descendant escaping/reparenting. No generic descendant/failure-path guarantee is claimed.",
+      "duration_scope": "Stored snapshot precedes its own publication; final wall_seconds and confirmed readbacks are in the returned report/terminal summary",
+      "end_utc": "2026-10-23T08:40:43.783765+00:00",
+      "engine_sha256_after": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "engine_sha256_before": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "expected_source_head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "failure": {
+        "message": "Acquisition publication/work deadline exceeded",
+        "stage": "overall publication/readback",
+        "type": "BoundExceeded"
+      },
+      "finalization_failures": [],
+      "journal": "/tmp/tmphcyyoikl/.local/exhausted-selection-acquisition-claims/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-candidate.json",
+      "native_producer_source_sha256": "f8e5fb90ca2bfe14d93789521428f1e826960ba8fd631231369eebbc1adcd10a",
+      "original_tracked_inventory_unchanged": true,
+      "output": "/tmp/tmphcyyoikl/.local/replay",
+      "passed": false,
+      "preparation": {
+        "added_source_files": [],
+        "added_uid_first_observed": null,
+        "original_tracked_bytes_unchanged": true,
+        "staged_noncache_source_set_equal_to_original": true
+      },
+      "processes": [
+        {
+          "failure": null,
+          "label": "bot_exhausted_primary-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "preparation-import",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_exhausted_primary",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_exhausted_primary-producer-after",
+          "passed": true
+        }
+      ],
+      "publication_confirmed": false,
+      "publication_contract": "Requires confirmed overall receipt + claim journal readbacks and zero wrapper exit",
+      "recognized_godot_after": [],
+      "recognized_godot_before": [],
+      "start_utc": "2026-10-23T08:40:43.777723+00:00",
+      "suites": [
+        {
+          "after": {
+            "path": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmphcyyoikl/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "before": {
+            "path": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmphcyyoikl/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmphcyyoikl/.local/replay/private-state/bot_exhausted_primary/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": true,
+          "suite": "bot_exhausted_primary"
+        }
+      ],
+      "wall_seconds_before_publication": 241.0,
+      "whole_bound_seconds": 240
+    }
+  },
+  "late_phase_receipt": {
+    "actual_seconds": 121.0,
+    "error": "BoundExceeded('Acquisition publication/work deadline exceeded')",
+    "receipt": {
+      "cleanup_failures": [],
+      "cleanup_seconds": 0.0,
+      "command": [
+        "/never-launched"
+      ],
+      "complete_log_scope": "Original stdout + newline + original stderr, no cross-stream chronology claimed",
+      "cwd": "/tmp/tmpgud1nzcb",
+      "duration_scope": "Snapshot precedes its own publication; final phase wall_seconds/readback is in the later overall report",
+      "end_utc": "2026-10-23T08:40:43.762197+00:00",
+      "exit_code": 0,
+      "failure": {
+        "message": "Acquisition publication/work deadline exceeded",
+        "type": "BoundExceeded"
+      },
+      "label": "phase",
+      "observed_identities": [
+        {
+          "comm": "mock",
+          "exe": "/mock",
+          "pgid": 5001,
+          "pid": 5001,
+          "ppid": 10,
+          "sid": 5001,
+          "start_ticks": 123,
+          "state": "R"
+        }
+      ],
+      "passed": false,
+      "phase_cap_seconds": 120,
+      "pid": 5001,
+      "private_environment": {
+        "ANDROID_USER_HOME": "/private/ANDROID_USER_HOME",
+        "SIGHTBREAK_STATE_DIR": "/private/SIGHTBREAK_STATE_DIR",
+        "XDG_CACHE_HOME": "/private/XDG_CACHE_HOME",
+        "XDG_CONFIG_HOME": "/private/XDG_CONFIG_HOME",
+        "XDG_DATA_HOME": "/private/XDG_DATA_HOME"
+      },
+      "publication_readbacks": [
+        {
+          "path": "/tmp/tmpgud1nzcb/phase.receipt.json",
+          "readback_elapsed_seconds": 121.0
+        }
+      ],
+      "root_identity": {
+        "comm": "mock",
+        "exe": "/mock",
+        "pgid": 5001,
+        "pid": 5001,
+        "ppid": 10,
+        "sid": 5001,
+        "start_ticks": 123,
+        "state": "R"
+      },
+      "signals": [],
+      "start_monotonic": 0.0,
+      "start_utc": "2026-10-23T08:40:43.761028+00:00",
+      "stderr": {
+        "bytes": 0,
+        "path": "/tmp/tmpgud1nzcb/phase.stderr.log",
+        "present": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stdout": {
+        "bytes": 17,
+        "path": "/tmp/tmpgud1nzcb/phase.stdout.log",
+        "present": true,
+        "sha256": "4b55e4e80ca8e58d7b87fe5fadc4379c1c64d0c20ca15951679758051c6d7ec6"
+      },
+      "strict_log_failed": false,
+      "terminal_observed": [],
+      "terminal_recognized_godot": [],
+      "terminal_same_session": [],
+      "timed_out": false,
+      "timeout_seconds": 120.0,
+      "unexpected_members_after_root_exit": [],
+      "wall_seconds": 121.0,
+      "wall_seconds_before_publication": 121.0
+    }
+  },
+  "regressions_success": {
+    "actual_seconds": 0,
+    "calls": [
+      {
+        "cap": 30,
+        "command": [
+          "/tmp/tmpvvyn1tqw/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+          "--script",
+          "/tmp/tmpvvyn1tqw/.local/replay/producer.gd",
+          "--",
+          "--receipt=/tmp/tmpvvyn1tqw/.local/replay/bot_ai_regression-before.json"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/config",
+          "XDG_DATA_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data"
+        },
+        "label": "bot_ai_regression-producer-before"
+      },
+      {
+        "cap": 120,
+        "command": [
+          "/tmp/tmpvvyn1tqw/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+          "--editor",
+          "--import"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/config",
+          "XDG_DATA_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data"
+        },
+        "label": "preparation-import"
+      },
+      {
+        "cap": 120,
+        "command": [
+          "/tmp/tmpvvyn1tqw/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+          "--script",
+          "res://tests/bot_ai_regression_test.gd"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/config",
+          "XDG_DATA_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data"
+        },
+        "label": "bot_ai_regression"
+      },
+      {
+        "cap": 30,
+        "command": [
+          "/tmp/tmpvvyn1tqw/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+          "--script",
+          "/tmp/tmpvvyn1tqw/.local/replay/producer.gd",
+          "--",
+          "--receipt=/tmp/tmpvvyn1tqw/.local/replay/bot_ai_regression-after.json"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/config",
+          "XDG_DATA_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data"
+        },
+        "label": "bot_ai_regression-producer-after"
+      },
+      {
+        "cap": 30,
+        "command": [
+          "/tmp/tmpvvyn1tqw/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+          "--script",
+          "/tmp/tmpvvyn1tqw/.local/replay/producer.gd",
+          "--",
+          "--receipt=/tmp/tmpvvyn1tqw/.local/replay/bot_dry_weapon-before.json"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/config",
+          "XDG_DATA_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/data"
+        },
+        "label": "bot_dry_weapon-producer-before"
+      },
+      {
+        "cap": 120,
+        "command": [
+          "/tmp/tmpvvyn1tqw/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+          "--script",
+          "res://tests/bot_dry_weapon_test.gd"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/config",
+          "XDG_DATA_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/data"
+        },
+        "label": "bot_dry_weapon"
+      },
+      {
+        "cap": 30,
+        "command": [
+          "/tmp/tmpvvyn1tqw/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+          "--script",
+          "/tmp/tmpvvyn1tqw/.local/replay/producer.gd",
+          "--",
+          "--receipt=/tmp/tmpvvyn1tqw/.local/replay/bot_dry_weapon-after.json"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/config",
+          "XDG_DATA_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/data"
+        },
+        "label": "bot_dry_weapon-producer-after"
+      },
+      {
+        "cap": 30,
+        "command": [
+          "/tmp/tmpvvyn1tqw/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+          "--script",
+          "/tmp/tmpvvyn1tqw/.local/replay/producer.gd",
+          "--",
+          "--receipt=/tmp/tmpvvyn1tqw/.local/replay/bot_squad_symmetry-before.json"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/config",
+          "XDG_DATA_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/data"
+        },
+        "label": "bot_squad_symmetry-producer-before"
+      },
+      {
+        "cap": 120,
+        "command": [
+          "/tmp/tmpvvyn1tqw/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+          "--script",
+          "res://tests/bot_squad_symmetry_test.gd"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/config",
+          "XDG_DATA_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/data"
+        },
+        "label": "bot_squad_symmetry"
+      },
+      {
+        "cap": 30,
+        "command": [
+          "/tmp/tmpvvyn1tqw/mock-engine-bytes",
+          "--headless",
+          "--audio-driver",
+          "Dummy",
+          "--path",
+          "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+          "--script",
+          "/tmp/tmpvvyn1tqw/.local/replay/producer.gd",
+          "--",
+          "--receipt=/tmp/tmpvvyn1tqw/.local/replay/bot_squad_symmetry-after.json"
+        ],
+        "env": {
+          "ANDROID_USER_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/android",
+          "HOME": "/preserved-fixture-home",
+          "XDG_CACHE_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/cache",
+          "XDG_CONFIG_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/config",
+          "XDG_DATA_HOME": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/data"
+        },
+        "label": "bot_squad_symmetry-producer-after"
+      }
+    ],
+    "events": [
+      {
+        "event": "native",
+        "label": "bot_ai_regression-producer-before"
+      },
+      {
+        "event": "native",
+        "label": "preparation-import"
+      },
+      {
+        "event": "native",
+        "label": "bot_ai_regression"
+      },
+      {
+        "event": "native",
+        "label": "bot_ai_regression-producer-after"
+      },
+      {
+        "event": "native",
+        "label": "bot_dry_weapon-producer-before"
+      },
+      {
+        "event": "native",
+        "label": "bot_dry_weapon"
+      },
+      {
+        "event": "native",
+        "label": "bot_dry_weapon-producer-after"
+      },
+      {
+        "event": "native",
+        "label": "bot_squad_symmetry-producer-before"
+      },
+      {
+        "event": "native",
+        "label": "bot_squad_symmetry"
+      },
+      {
+        "event": "native",
+        "label": "bot_squad_symmetry-producer-after"
+      },
+      {
+        "active_alarm": 480.0,
+        "after": 0,
+        "before": 0,
+        "event": "overall-write"
+      }
+    ],
+    "report": {
+      "accepted_candidate": "1b7ebc71290e6c4c23017f7a2d8539d7c5eec149",
+      "block": "regressions",
+      "cleanup_scope": "Observed stable PID identities, ancestry and anchored SID members only; polling can miss an unobserved descendant escaping/reparenting. No generic descendant/failure-path guarantee is claimed.",
+      "duration_scope": "Stored snapshot precedes its own publication; final wall_seconds and confirmed readbacks are in the returned report/terminal summary",
+      "end_utc": "2026-10-23T08:40:43.775424+00:00",
+      "engine_sha256_after": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "engine_sha256_before": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "expected_source_head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "failure": null,
+      "finalization_failures": [],
+      "journal": "/tmp/tmpvvyn1tqw/.local/exhausted-selection-acquisition-claims/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-regressions.json",
+      "native_producer_source_sha256": "f8e5fb90ca2bfe14d93789521428f1e826960ba8fd631231369eebbc1adcd10a",
+      "original_tracked_inventory_unchanged": true,
+      "output": "/tmp/tmpvvyn1tqw/.local/replay",
+      "passed": true,
+      "preparation": {
+        "added_source_files": [],
+        "added_uid_first_observed": null,
+        "original_tracked_bytes_unchanged": true,
+        "staged_noncache_source_set_equal_to_original": true
+      },
+      "processes": [
+        {
+          "failure": null,
+          "label": "bot_ai_regression-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "preparation-import",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_ai_regression",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_ai_regression-producer-after",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_dry_weapon-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_dry_weapon",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_dry_weapon-producer-after",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_squad_symmetry-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_squad_symmetry",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_squad_symmetry-producer-after",
+          "passed": true
+        }
+      ],
+      "publication_confirmed": true,
+      "publication_contract": "Requires confirmed overall receipt + claim journal readbacks and zero wrapper exit",
+      "publication_readbacks": [
+        {
+          "path": "/tmp/tmpvvyn1tqw/.local/replay/overall.receipt.json",
+          "readback_elapsed_seconds": 0.0
+        },
+        {
+          "path": "/tmp/tmpvvyn1tqw/.local/exhausted-selection-acquisition-claims/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-regressions.json",
+          "readback_elapsed_seconds": 0.0
+        }
+      ],
+      "recognized_godot_after": [],
+      "recognized_godot_before": [],
+      "start_utc": "2026-10-23T08:40:43.763708+00:00",
+      "suites": [
+        {
+          "after": {
+            "path": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "before": {
+            "path": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": true,
+          "suite": "bot_ai_regression"
+        },
+        {
+          "after": {
+            "path": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "before": {
+            "path": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": true,
+          "suite": "bot_dry_weapon"
+        },
+        {
+          "after": {
+            "path": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "before": {
+            "path": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": true,
+          "suite": "bot_squad_symmetry"
+        }
+      ],
+      "wall_seconds": 0.0,
+      "wall_seconds_before_publication": 0.0,
+      "whole_bound_seconds": 480
+    },
+    "stored_report": {
+      "accepted_candidate": "1b7ebc71290e6c4c23017f7a2d8539d7c5eec149",
+      "block": "regressions",
+      "cleanup_scope": "Observed stable PID identities, ancestry and anchored SID members only; polling can miss an unobserved descendant escaping/reparenting. No generic descendant/failure-path guarantee is claimed.",
+      "duration_scope": "Stored snapshot precedes its own publication; final wall_seconds and confirmed readbacks are in the returned report/terminal summary",
+      "end_utc": "2026-10-23T08:40:43.774918+00:00",
+      "engine_sha256_after": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "engine_sha256_before": "c87c9274d53c55b6db1bf671d343e13ccefa3dd2b42d868e1ec79d380dde227e",
+      "expected_source_head": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "failure": null,
+      "finalization_failures": [],
+      "journal": "/tmp/tmpvvyn1tqw/.local/exhausted-selection-acquisition-claims/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-regressions.json",
+      "native_producer_source_sha256": "f8e5fb90ca2bfe14d93789521428f1e826960ba8fd631231369eebbc1adcd10a",
+      "original_tracked_inventory_unchanged": true,
+      "output": "/tmp/tmpvvyn1tqw/.local/replay",
+      "passed": true,
+      "preparation": {
+        "added_source_files": [],
+        "added_uid_first_observed": null,
+        "original_tracked_bytes_unchanged": true,
+        "staged_noncache_source_set_equal_to_original": true
+      },
+      "processes": [
+        {
+          "failure": null,
+          "label": "bot_ai_regression-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "preparation-import",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_ai_regression",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_ai_regression-producer-after",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_dry_weapon-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_dry_weapon",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_dry_weapon-producer-after",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_squad_symmetry-producer-before",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_squad_symmetry",
+          "passed": true
+        },
+        {
+          "failure": null,
+          "label": "bot_squad_symmetry-producer-after",
+          "passed": true
+        }
+      ],
+      "publication_confirmed": false,
+      "publication_contract": "Requires confirmed overall receipt + claim journal readbacks and zero wrapper exit",
+      "recognized_godot_after": [],
+      "recognized_godot_before": [],
+      "start_utc": "2026-10-23T08:40:43.763708+00:00",
+      "suites": [
+        {
+          "after": {
+            "path": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "before": {
+            "path": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_ai_regression/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": true,
+          "suite": "bot_ai_regression"
+        },
+        {
+          "after": {
+            "path": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "before": {
+            "path": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_dry_weapon/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": true,
+          "suite": "bot_dry_weapon"
+        },
+        {
+          "after": {
+            "path": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "before": {
+            "path": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/data/godot/app_userdata/SIGHTBREAK",
+            "receipt": {
+              "custom_user_dir": "",
+              "data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/data",
+              "diagnostics_exist": false,
+              "os": "Linux",
+              "profile_exists": false,
+              "project_path": "/tmp/tmpvvyn1tqw/.local/replay/staged/game",
+              "user_data_dir": "/tmp/tmpvvyn1tqw/.local/replay/private-state/bot_squad_symmetry/data/godot/app_userdata/SIGHTBREAK",
+              "uses_custom_user_dir": false
+            }
+          },
+          "passed": true,
+          "suite": "bot_squad_symmetry"
+        }
+      ],
+      "wall_seconds_before_publication": 0.0,
+      "whole_bound_seconds": 480
+    }
+  }
+}
