@@ -160,6 +160,21 @@ PostgreSQL must be available at the recorded `127.0.0.1:55439` development clust
 
 This task adds harness/probe and focused evidence only. It exercises native UI
 methods and real HTTP/SQL, not automated mouse/touch confirmation interaction,
-backend-process failure, or machine power-loss durability. The existing other
-B-21 critic passes are outside this new packet; no new critic was dispatched here.
-PR18/PR17 remain draft handoff targets for exact-source independent review.
+backend-process failure, or machine power-loss durability. At initial publication,
+the existing B-21 critic passes were outside this new packet and its own independent
+review had not begun. PR18/PR17 remain draft handoff targets.
+
+## Subsequent independent outcome review
+
+The [full frozen verdict](native-pg-restart-evidence/blind-review/_FROZEN_VERDICT.md)
+selects Set-8F5F7604: 3/3 exact recoveries versus 0/3. All 122 packet payloads,
+six cases, 30 SQL stages and 2,078 consistency checks passed. The reviewer
+recomputed fee rounding, full economic-row preservation, fresh-session binding,
+exact receipt/request/result equality and zero purchases on second restart.
+The verdict was frozen before identity/source access in
+[PR18 comment 6355013968](https://github.com/calebaiken/sightbreak/pull/18#issuecomment-6355013968).
+
+Source/API binding and a focused minimal-recovery-input control address its remaining
+fixture-assistance concern. The original packet, result flags and raw observations
+remain retained. In particular, baseline flags about the original committed result
+or stable journal absence do not establish successful receipt recovery.

@@ -79,8 +79,12 @@ were reverified after incorporation into this branch.
 
 This oracle used Python 3.12.14/PostgreSQL 17.11 and the same Godot 4.7.2 executable
 for both arms. The completed V2 run was retained across the host interruption;
-these are matching crash workloads, not a latency comparison. Fresh independent
-blind review of this PostgreSQL packet is pending. The original maintained native
+these are matching crash workloads, not a latency comparison. The fresh independent
+[blind review](native-pg-restart-evidence/blind-review/_FROZEN_VERDICT.md) selected
+Set-8F5F7604 with 3/3 exact recoveries versus 0/3, after checking all 122 payloads,
+30 SQL stages and 2,078 consistency conditions. Source/API binding and a focused
+recovery-input absence control address its remaining fixture-assistance concern.
+The original maintained native
 economy regression's 36/37 Windows port-9 failure is retained; a one-literal reserved
 DNS calibration passed 37/37 and is now adopted by the maintained test in `5da86b28`.
 Its LF Git bytes reproduce the executed CRLF probe exactly after newline expansion.
@@ -197,8 +201,8 @@ terminates at a stable post-response boundary.
 
 The largest evidence gap from the first blind review was real PostgreSQL market
 settlement through a lost response, fresh authentication, recovery and a second
-restart. Its exact-source result is now published; the separate blinded review is
-the remaining acceptance step for that packet.
+restart. Its exact-source result and passing blind outcome review are now published;
+source/API binding and a narrow recovery-input absence control remain in progress.
 The original backend does not durably fence terminal rejected receipts, so a
 permanently rejected uncertain intent can remain blocked. Forgetting it would be
 unsafe while an earlier request may still commit. Port collisions fail closed;
