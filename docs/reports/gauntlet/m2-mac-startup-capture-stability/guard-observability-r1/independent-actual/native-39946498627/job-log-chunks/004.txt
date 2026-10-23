@@ -1,0 +1,199 @@
+n: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:30:52.9753220Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-23T11:30:52.9753600Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:30:52.9753940Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:30:52.9754280Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:30:52.9754550Z ##[endgroup]
+2026-10-23T11:31:04.4006760Z 4.7.2.stable.official.ed1daf0bf
+2026-10-23T11:31:04.4309560Z ##[group]Run python scripts/export.py macos
+2026-10-23T11:31:04.4310240Z [36;1mpython scripts/export.py macos[0m
+2026-10-23T11:31:04.4395390Z shell: /bin/bash -e {0}
+2026-10-23T11:31:04.4395740Z env:
+2026-10-23T11:31:04.4396130Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic
+2026-10-23T11:31:04.4396730Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:31:04.4397280Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-23T11:31:04.4397730Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:31:04.4404740Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:31:04.4405150Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:31:04.4405580Z ##[endgroup]
+2026-10-23T11:31:22.0609790Z Exported /Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic/macos/SIGHTBREAK.app
+2026-10-23T11:31:22.0744530Z ##[group]Run python scripts/verify_macos_ax_read_only.py --output builds/macos-ax-diagnostic/ax-read-only
+2026-10-23T11:31:22.0745290Z [36;1mpython scripts/verify_macos_ax_read_only.py --output builds/macos-ax-diagnostic/ax-read-only[0m
+2026-10-23T11:31:22.0788790Z shell: /bin/bash -e {0}
+2026-10-23T11:31:22.0789130Z env:
+2026-10-23T11:31:22.0789530Z   SIGHTBREAK_BUILDS_DIR: /Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic
+2026-10-23T11:31:22.0790150Z   pythonLocation: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:31:22.0790620Z   PKG_CONFIG_PATH: /Users/runner/hostedtoolcache/Python/3.12.10/arm64/lib/pkgconfig
+2026-10-23T11:31:22.0791290Z   Python_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:31:22.0791700Z   Python2_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:31:22.0792200Z   Python3_ROOT_DIR: /Users/runner/hostedtoolcache/Python/3.12.10/arm64
+2026-10-23T11:31:22.0792660Z ##[endgroup]
+2026-10-23T11:31:59.3816820Z {
+2026-10-23T11:31:59.3920870Z   "scope": "Opt-in --accessibility always read-only exported AX exposure diagnostic; no input or gameplay acceptance",
+2026-10-23T11:31:59.3986420Z   "passed": true,
+2026-10-23T11:31:59.3987160Z   "permission_requests_made": 0,
+2026-10-23T11:31:59.3987750Z   "cg_event_post_attempts": 0,
+2026-10-23T11:31:59.3988220Z   "controller_pid": 3489,
+2026-10-23T11:31:59.3988680Z   "budgets_seconds": {
+2026-10-23T11:31:59.3989010Z     "total": 300,
+2026-10-23T11:31:59.3989450Z     "compile": 60,
+2026-10-23T11:31:59.3993010Z     "window": 30,
+2026-10-23T11:31:59.3993600Z     "focus": 5,
+2026-10-23T11:31:59.3993900Z     "menu": 60,
+2026-10-23T11:31:59.3994260Z     "deploy": 30,
+2026-10-23T11:31:59.3994520Z     "live": 60,
+2026-10-23T11:31:59.3994790Z     "fire": 5,
+2026-10-23T11:31:59.3994990Z     "reload_start": 5,
+2026-10-23T11:31:59.3995290Z     "reload_complete": 15,
+2026-10-23T11:31:59.3995530Z     "reload_frames": 5,
+2026-10-23T11:31:59.3996140Z     "field_menu": 10,
+2026-10-23T11:31:59.3996380Z     "return_menu": 30,
+2026-10-23T11:31:59.3996690Z     "close": 20,
+2026-10-23T11:31:59.3997000Z     "capture": 25
+2026-10-23T11:31:59.3997220Z   },
+2026-10-23T11:31:59.3997510Z   "ax_caps": {
+2026-10-23T11:31:59.3997700Z     "seconds": 5,
+2026-10-23T11:31:59.3997950Z     "snapshots": 3,
+2026-10-23T11:31:59.3998170Z     "spacing_seconds": 0.1,
+2026-10-23T11:31:59.3998480Z     "call_seconds": 0.25,
+2026-10-23T11:31:59.3998760Z     "depth": 16,
+2026-10-23T11:31:59.3998990Z     "nodes": 256,
+2026-10-23T11:31:59.3999220Z     "receipt_bytes": 524288,
+2026-10-23T11:31:59.3999530Z     "title_bytes": 512
+2026-10-23T11:31:59.3999830Z   },
+2026-10-23T11:31:59.4000060Z   "actions": [
+2026-10-23T11:31:59.4000320Z     {
+2026-10-23T11:31:59.4000500Z       "event": "helper_command",
+2026-10-23T11:31:59.4000840Z       "seconds": 1.263178584000002,
+2026-10-23T11:31:59.4001130Z       "name": "compile-capture-helper",
+2026-10-23T11:31:59.4001450Z       "command": [
+2026-10-23T11:31:59.4001650Z         "xcrun",
+2026-10-23T11:31:59.4001980Z         "swiftc",
+2026-10-23T11:31:59.4002700Z         "-parse-as-library",
+2026-10-23T11:31:59.4003110Z         "-swift-version",
+2026-10-23T11:31:59.4003460Z         "5",
+2026-10-23T11:31:59.4003650Z         "-target",
+2026-10-23T11:31:59.4003970Z         "arm64-apple-macos14.0",
+2026-10-23T11:31:59.4004390Z         "/Users/runner/work/sightbreak/sightbreak/scripts/macos_window_capture.swift",
+2026-10-23T11:31:59.4004880Z         "-framework",
+2026-10-23T11:31:59.4005180Z         "AppKit",
+2026-10-23T11:31:59.4005470Z         "-framework",
+2026-10-23T11:31:59.4006740Z         "CoreGraphics",
+2026-10-23T11:31:59.4007100Z         "-framework",
+2026-10-23T11:31:59.4007480Z         "ScreenCaptureKit",
+2026-10-23T11:31:59.4007800Z         "-framework",
+2026-10-23T11:31:59.4008090Z         "Vision",
+2026-10-23T11:31:59.4008330Z         "-framework",
+2026-10-23T11:31:59.4008530Z         "ImageIO",
+2026-10-23T11:31:59.4008870Z         "-framework",
+2026-10-23T11:31:59.4009810Z         "UniformTypeIdentifiers",
+2026-10-23T11:31:59.4010150Z         "-o",
+2026-10-23T11:31:59.4010730Z         "/Users/runner/work/sightbreak/sightbreak/builds/macos-ax-diagnostic/ax-read-only/macos-window-capture"
+2026-10-23T11:31:59.4011360Z       ],
+2026-10-23T11:31:59.4011700Z       "budget_seconds": 60
+2026-10-23T11:31:59.4012110Z     },
+2026-10-23T11:31:59.4012700Z     {
+2026-10-23T11:31:59.4013050Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4013590Z       "seconds": 12.349954459000003,
+2026-10-23T11:31:59.4013960Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4014510Z     },
+2026-10-23T11:31:59.4014830Z     {
+2026-10-23T11:31:59.4015110Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4015370Z       "seconds": 12.480361834000007,
+2026-10-23T11:31:59.4015720Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4016020Z     },
+2026-10-23T11:31:59.4016300Z     {
+2026-10-23T11:31:59.4016670Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4144860Z       "seconds": 12.583264249999957,
+2026-10-23T11:31:59.4145190Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4146370Z     },
+2026-10-23T11:31:59.4149340Z     {
+2026-10-23T11:31:59.4151160Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4151430Z       "seconds": 12.728393041999993,
+2026-10-23T11:31:59.4151640Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4151840Z     },
+2026-10-23T11:31:59.4151950Z     {
+2026-10-23T11:31:59.4152090Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4152320Z       "seconds": 12.82365649999997,
+2026-10-23T11:31:59.4152630Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4152960Z     },
+2026-10-23T11:31:59.4153150Z     {
+2026-10-23T11:31:59.4153350Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4153550Z       "seconds": 12.927827874999991,
+2026-10-23T11:31:59.4154310Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4155850Z     },
+2026-10-23T11:31:59.4155980Z     {
+2026-10-23T11:31:59.4157430Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4157780Z       "seconds": 13.061875917000009,
+2026-10-23T11:31:59.4159190Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4159520Z     },
+2026-10-23T11:31:59.4159710Z     {
+2026-10-23T11:31:59.4160540Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4160920Z       "seconds": 13.120948042000009,
+2026-10-23T11:31:59.4161820Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4162320Z     },
+2026-10-23T11:31:59.4162580Z     {
+2026-10-23T11:31:59.4163040Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4163430Z       "seconds": 13.270596958999988,
+2026-10-23T11:31:59.4163750Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4164120Z     },
+2026-10-23T11:31:59.4164290Z     {
+2026-10-23T11:31:59.4164700Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4165050Z       "seconds": 13.324007291999976,
+2026-10-23T11:31:59.4165500Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4165850Z     },
+2026-10-23T11:31:59.4166180Z     {
+2026-10-23T11:31:59.4169400Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4169810Z       "seconds": 13.427641375000007,
+2026-10-23T11:31:59.4170280Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4170650Z     },
+2026-10-23T11:31:59.4170780Z     {
+2026-10-23T11:31:59.4170920Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4171300Z       "seconds": 13.546757125,
+2026-10-23T11:31:59.4172160Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4172360Z     },
+2026-10-23T11:31:59.4172560Z     {
+2026-10-23T11:31:59.4172890Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4173220Z       "seconds": 13.645247499999982,
+2026-10-23T11:31:59.4173670Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4174040Z     },
+2026-10-23T11:31:59.4174280Z     {
+2026-10-23T11:31:59.4174780Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4175200Z       "seconds": 13.720573749999971,
+2026-10-23T11:31:59.4175440Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4175730Z     },
+2026-10-23T11:31:59.4175920Z     {
+2026-10-23T11:31:59.4176060Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4176400Z       "seconds": 13.780928958999993,
+2026-10-23T11:31:59.4176790Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4177060Z     },
+2026-10-23T11:31:59.4177330Z     {
+2026-10-23T11:31:59.4177550Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4178940Z       "seconds": 13.885030583999992,
+2026-10-23T11:31:59.4179690Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4181040Z     },
+2026-10-23T11:31:59.4181240Z     {
+2026-10-23T11:31:59.4181410Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4181840Z       "seconds": 14.007457208999995,
+2026-10-23T11:31:59.4182180Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4182590Z     },
+2026-10-23T11:31:59.4182740Z     {
+2026-10-23T11:31:59.4182990Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4183220Z       "seconds": 14.076172999999983,
+2026-10-23T11:31:59.4183510Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4183730Z     },
+2026-10-23T11:31:59.4183870Z     {
+2026-10-23T11:31:59.4184110Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4184400Z       "seconds": 14.193636999999967,
+2026-10-23T11:31:59.4184810Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4185280Z     },
+2026-10-23T11:31:59.4185570Z     {
+2026-10-23T11:31:59.4185850Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4186070Z       "seconds": 14.291990916999964,
+2026-10-23T11:31:59.4186320Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:31:59.4186530Z     },
+2026-10-23T11:31:59.4186690Z     {
+2026-10-23T11:31:59.4186970Z       "event": "first_window_observation",
+2026-10-23T11:31:59.4187350Z       "seconds": 14.37586220899999,
+2026-10-23T11:31:59.4188540Z       "observed_owned_layer_zero_windows": []
+2026-10-23T11:3
