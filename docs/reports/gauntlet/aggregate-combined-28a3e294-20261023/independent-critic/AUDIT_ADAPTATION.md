@@ -15,3 +15,5 @@ checked separately. No engine, import, renderer, OCR, service or CI executes.
 - adapted audit: `fdbe2615b5e5fef8b7ad7917a9c0a17088112353628105a1b79ff49deed117b6`
 - dry oracle: `57f4fd886bd6ac4984c16ba28000726b0d4e63fabf6cfb4313d3ff3a2e252611`
 - independent exhausted oracle: `c88f52d3e9e37453ffcc392e5e75d6889b41465c593a9f0dda74edea55539295`
+
+Before inspecting runtime output, the aggregate auditor also adds direct raw-to-summary reserve reload binding, exact steps 1/14, and each registered normal/hard 24 m draw/fire consumption check. These evaluate the new actual rows, without carrying forward a prior result.
