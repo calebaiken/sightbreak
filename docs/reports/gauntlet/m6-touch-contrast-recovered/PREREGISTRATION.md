@@ -30,9 +30,9 @@ measurements are reported separately. The 0 count remains useful information.
 
 Before engine use, commit the same minimal fixture generator, capture script,
 analysis script and source receipt; have a separate critic audit the method.
-Prepare two minimal projects from exact Git bytes. Copy only touch/safe-area,
-original arena/material/environment dependencies, utility smoke implementation,
-and fixture sources/UIDs. Record every path/hash and source commit. Instrumented
+Prepare two minimal projects from exact Git bytes. Retain exact tracked game code/assets and UIDs (about 10 MiB), including
+typed transitive dependencies of the original utility smoke implementation,
+then add the same fixture sources/UIDs. Record every path/hash and source commit. Instrumented
 versions are test-only: mechanically wrap draw calls and record original line,
 classification and emitted bytes. A normal pass must execute the same source
 calls with original arguments. No candidate-specific shader, font or backdrop.
@@ -56,9 +56,10 @@ Capture all normal images at native size. Do not crop away overlaps or failures.
 For each scene, capture foreground groups separately: action text, icons, counts,
 action borders, joystick ring and joystick knob. For each group render an exact
 foreground-free underlay plus black and white diagnostic foreground versions;
-all other calls/arguments remain byte-identical. The black/white difference
-recovers raster coverage at every pixel, including disconnected letters and thin
-strokes, with only the 8-bit quantization floor (difference >= 1 code value).
+all other calls/arguments remain byte-identical. Black/white diagnostics preserve the original primitive alpha. Their difference
+recovers effective raster coverage at every pixel, including disconnected
+letters and thin strokes, with only the 8-bit quantization floor (difference >= 1
+code value). Opaque diagnostic overrides would hide original translucency.
 No high-luminance threshold, flood fill, inferred text rectangle or chosen glyph
 subset may stand in for complete coverage. Keep original and diagnostic PNGs.
 
@@ -93,3 +94,33 @@ execution is permitted before that release. Source/pure checks may proceed.
 
 No full accessibility/presentation gate, device performance, shipped-title parity,
 real touch ergonomics or entire player journey is claimed by this fixture.
+
+## Source-method clarification, before native execution
+
+The frozen fixture splits foregrounds into ten same-color groups: active and
+inactive labels/icons, empty and ready counts, regular and held action borders,
+joystick ring and knob. The complete support mask is `max(white-black) >= 1`.
+Every supported pixel participates in the affine identity `P = B + C*(W-B)`,
+where P is the normal native output and B/W are native diagnostic captures.
+Recover shared RGB C by least squares and intersect conservative per-pixel
+quantization intervals; reject residuals above two code values, nonneutral
+coverage, an empty color interval or changed pixels outside support.
+
+Only the minimum primitive alpha is taken from the recorded draw calls. Native
+RGB and the exact suppressed-foreground underlay determine contrast at every
+support pixel, including low-alpha edges. Applying the minimum primitive opacity
+to inferred native RGB is conservative for overlapping same-color strokes.
+Strong-coverage observed contrast is reported separately. Inactive label/icon
+rows are exceptions; unresolved diagnostic reconstruction is never a pass.
+Border portions overlapped by another component may produce a strict failure;
+retain that result for the independent critic instead of dropping those pixels.
+
+Pure method controls must catch a single bright underlay under a disconnected,
+low-coverage glyph pixel, changed backgrounds, nonconstant colors and the false
+assumption that a .24-opacity foreground is opaque. Source controls prove the
+entire file outside `_draw` and every original non-color draw argument remain
+unchanged (the knob variable is normalized to its unchanged position expression).
+The minimal source projects are ~10 MiB each; diagnostics are bounded at 32 scenes
+per source, 64 ordinary and wrapped-normal PNGs plus 912 diagnostic PNGs each.
+Raw output and any native failure stay outside the source checkout until archived
+with path/hash/size receipts; no raw files are deleted to conceal failed rounds.
