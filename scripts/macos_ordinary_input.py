@@ -11,6 +11,7 @@ import stat
 import time
 
 from macos_native_input import MacMenuUI, same_bounds
+from macos_deploy_ocr import BINDING, LABEL as DEPLOY_LABEL, deploy_provenance, derived_deploy_row
 from probe_macos_input import (NativePrerequisiteBlocked, Point, digest,
                                require_absent_profile, user_directory)
 from verify_macos_menu import require_screen, screen_text, unique_screen_label
@@ -150,9 +151,13 @@ def capture_geometry(capture):
 
 def label_point(capture, label):
     bounds = capture_geometry(capture)
-    if not unique_screen_label(capture, label):
-        raise RuntimeError('Expected one exact confident in-bounds native label: ' + label)
-    x, y, width, height = screen_text(capture, label)[0]['box_normalized_bottom_left']
+    if label == DEPLOY_LABEL and (BINDING in capture or 'derived_deploy_analysis' in capture):
+        entry = derived_deploy_row(capture)
+    else:
+        if not unique_screen_label(capture, label):
+            raise RuntimeError('Expected one exact confident in-bounds native label: ' + label)
+        entry = screen_text(capture, label)[0]
+    x, y, width, height = entry['box_normalized_bottom_left']
     return (bounds[0]+(x+width/2)*bounds[2], bounds[1]+(1-y-height/2)*bounds[3])
 
 
@@ -311,6 +316,9 @@ class MacOrdinaryUI(MacMenuUI):
                 or not same_bounds(capture.get('bounds_points_including_chrome', []), self.bounds)):
             raise RuntimeError('Label screenshot belongs to a different native window')
         point = label_point(capture, label)
+        if label == DEPLOY_LABEL and BINDING in capture:
+            self.trace('derived_deploy_target', label=label, target_points=list(point),
+                       original_native_row=derived_deploy_row(capture), analysis=deploy_provenance(capture))
         self.post(self.cg.CGEventCreateMouseEvent(None, 5, Point(*point), 0), 'pointer_move')
         time.sleep(.2)
         self.require_target()
