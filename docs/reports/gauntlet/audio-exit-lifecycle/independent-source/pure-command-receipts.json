@@ -1,0 +1,20 @@
+[
+  {
+    "argv": [
+      "python3",
+      "scripts/test_analyze_audio_lifecycle.py",
+      "-v"
+    ],
+    "returncode": 0,
+    "output": "maintained-tests.log"
+  },
+  {
+    "argv": [
+      "python3",
+      "docs/reports/gauntlet/audio-exit-lifecycle/independent-source/replay_counterexamples.py",
+      "-v"
+    ],
+    "returncode": 1,
+    "output": "independent-counterexamples.log"
+  }
+]
