@@ -364,8 +364,8 @@ class Run:
                     # Publish the write and its marker under the ingress lock.
                     # A client can dispatch its next GET as soon as write returns;
                     # it must not overtake the replay response marker.
-                    self.connection.settimeout(run.remaining(10))
                     with run.lock:
+                        self.connection.settimeout(run.remaining(10))
                         self.send_response(response.status)
                         self.send_header("Content-Type", response.getheader("Content-Type", "application/json"))
                         self.send_header("Content-Length", str(len(raw))); self.end_headers()
