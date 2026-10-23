@@ -84,7 +84,33 @@ def scalar(data):
     return value
 
 
-def project_properties(data):
+def critical_source(text):
+    """Only scalar critical keys; all their feature variants must be safe.
+
+    Pinned ProjectSettings::_set splits at the first dot, so selectors cannot
+    hide behind additional dots. Reject undeclared packed variants regardless
+    of which OS/custom features happen to be active on this host.
+    """
+    bases = {key.split('.', 1)[0] for key in CRITICAL}
+    current, result = None, {}
+    for line in text.splitlines():
+        if re.fullmatch(r'\[[a-z_]+\]', line):
+            current = line[1:-1]
+        elif current and '=' in line and not line.lstrip().startswith(';'):
+            key, value = line.split('=', 1)
+            key = current + '/' + key
+            base = key.split('.', 1)[0]
+            if base in bases:
+                require(key not in result, 'Duplicate staged critical key: ' + key)
+                result[key] = strict_json(value)
+                wanted = CRITICAL[base]
+                require(type(result[key]) is type(wanted) and result[key] == wanted,
+                        'Unsafe staged critical setting variant: ' + key)
+    require(set(CRITICAL) <= set(result), 'Missing staged critical settings')
+    return result
+
+
+def project_properties(data, source):
     reader = Reader(data)
     require(reader.take(4) == b'ECFG', 'Missing ECFG project header')
     count, = reader.unpack('<I')
@@ -96,10 +122,15 @@ def project_properties(data):
         size, = reader.unpack('<I')
         result[key] = reader.take(size)
     reader.done()
-    for key, wanted in CRITICAL.items():
+    declared = critical_source(source)
+    bases = {key.split('.', 1)[0] for key in CRITICAL}
+    for key in result:
+        if key.split('.', 1)[0] in bases:
+            require(key in declared, 'Undeclared packed critical feature variant: ' + key)
+    for key, wanted in declared.items():
         value = scalar(result[key]) if key in result else DEFAULTS.get(key)
         require(type(value) is type(wanted) and value == wanted, 'Wrong packed project setting: ' + key)
-    return {key: scalar(result[key]) if key in result else DEFAULTS[key] for key in CRITICAL}
+    return {key: scalar(result[key]) if key in result else DEFAULTS[key] for key in declared}
 
 
 def elf_sections(data):
@@ -283,17 +314,19 @@ def inspect(executable, template, stage, record):
     require(sha(resources['diagnostics/linux_profile_overhead.gd']) == record['source']['fixture_sha256']
             and sha(resources['diagnostics/linux_profile_overhead.tscn']) == record['source']['scene_sha256'],
             'Packed fixture/scene differs from frozen source identity')
+    auxiliary = {name: (stage / name).read_bytes() for name in ('.godot/global_script_class_cache.cfg', '.godot/uid_cache.bin')}
     packed_classes = classes(resources['.godot/global_script_class_cache.cfg'])
-    require(packed_classes == {path: row for path, row in classes((stage / '.godot/global_script_class_cache.cfg').read_bytes()).items()
+    require(packed_classes == {path: row for path, row in classes(auxiliary['.godot/global_script_class_cache.cfg']).items()
                                if path in source_paths}, 'Packed class cache differs from staged resources')
     for path, row in packed_classes.items():
         require(path[6:] in resources and re.search(r'^class_name\s+' + re.escape(row['class']) + r'\b',
                 resources[path[6:]].decode(), re.M), 'Class name is not declared by exact packed script')
     packed_uids = uid_cache(resources['.godot/uid_cache.bin'])
-    require(packed_uids == {path: value for path, value in uid_cache((stage / '.godot/uid_cache.bin').read_bytes()).items()
+    require(packed_uids == {path: value for path, value in uid_cache(auxiliary['.godot/uid_cache.bin']).items()
                            if path in source_paths}, 'Packed UID cache differs from staged resource identities')
     require('res://diagnostics/linux_profile_overhead.gd' in packed_uids, 'Missing fixture UID cache identity')
-    result.update(project=project_properties(resources['project.binary']), imported_resources=imported,
+    result.update(project=project_properties(resources['project.binary'], (stage / 'project.godot').read_text()), imported_resources=imported,
+                  stage_auxiliary={name: {'bytes': len(raw), 'sha256': sha(raw)} for name, raw in auxiliary.items()},
                   uid_cache=packed_uids, global_classes=packed_classes,
                   ledger_sha256=sha(resources['diagnostics/source_ledger.json']), text_source_paths=sorted(expected))
     expected.update(('.godot/global_script_class_cache.cfg', '.godot/uid_cache.bin', 'project.binary'))

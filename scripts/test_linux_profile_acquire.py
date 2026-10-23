@@ -23,7 +23,7 @@ def descriptor(data):
     return {'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
 
 
-def project_binary(changes=None):
+def project_binary(changes=None, omitted=()):
     values = {'application/run/main_scene': 'res://diagnostics/linux_profile_overhead.tscn',
               'display/window/size/viewport_width': 1280, 'display/window/size/viewport_height': 720,
               'display/window/size/window_width_override': 1280, 'display/window/size/window_height_override': 720,
@@ -33,6 +33,8 @@ def project_binary(changes=None):
               'rendering/driver/threads/thread_model': 1, 'debug/settings/stdout/print_gpu_profile': False,
               'editor/export/convert_text_resources_to_binary': False}
     values.update(changes or {})
+    for key in omitted:
+        del values[key]
     result = b'ECFG' + struct.pack('<I', len(values))
     for key, value in values.items():
         key = key.encode()
@@ -97,7 +99,24 @@ def manual_stage(root):
     ledger = (json.dumps({'source': source, 'content': base}) + '\n').encode()
     original_import = b'[remap]\nimporter="texture"\ntype="CompressedTexture2D"\nuid="uid://synthetic"\npath="res://.godot/imported/a.ctex"\nmetadata={\n"vram_texture": false\n}\n[deps]\nsource_file="res://assets/a.png"\ndest_files=["res://.godot/imported/a.ctex"]\n[params]\ncompress/mode=0\n'
     files = {'diagnostics/linux_profile_overhead.gd': script, 'diagnostics/linux_profile_overhead.tscn': scene,
-             'diagnostics/source_ledger.json': ledger, 'assets/a.png': b'original texture', 'assets/a.png.import': original_import}
+             'diagnostics/source_ledger.json': ledger, 'assets/a.png': b'original texture', 'assets/a.png.import': original_import,
+             'project.godot': b'''[application]
+run/main_scene="res://diagnostics/linux_profile_overhead.tscn"
+[display]
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1280
+window/size/window_height_override=720
+[rendering]
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+anti_aliasing/quality/msaa_3d=1
+driver/threads/thread_model=1
+[debug]
+settings/stdout/print_gpu_profile=false
+[editor]
+export/convert_text_resources_to_binary=false
+'''}
     record = {'source': source, 'base_files': base, 'files': {name: descriptor(raw) for name, raw in files.items()}}
     resources = {name: raw for name, raw in files.items() if name.startswith('diagnostics/')}
     resources.update({'assets/a.png.import': b'[remap]\nimporter="texture"\ntype="CompressedTexture2D"\nuid="uid://synthetic"\npath="res://.godot/imported/a.ctex"\nmetadata={\n"vram_texture": false\n}\n',
@@ -491,8 +510,13 @@ class SourceAndPreparationTests(unittest.TestCase):
         for bad in (False, True):
             with tempfile.TemporaryDirectory() as temporary, patch.object(acq, 'OUTPUT', Path(temporary)):
                 controller = acq.Acquisition('c' * 40); controller.python_path = '/fake-python'; controller.executable = Path(temporary) / 'ELF'
+                controller.stage_record = {'synthetic': True}
+                acq.write(Path(temporary) / 'diagnostic-stage.json', controller.stage_record)
                 controller.receipt['independent_payload'] = {'ELF_sha256': 'elf', 'ledger_sha256': 'ledger'}
-                def command(*args): acq.write(Path(temporary) / 'seal.json', {'payload_sha256': 'wrong' if bad else 'elf', 'source_ledger_sha256': 'ledger'})
+                def command(*args): acq.write(Path(temporary) / 'seal.json', {
+                    'payload_sha256': 'wrong' if bad else 'elf', 'source_ledger_sha256': 'ledger',
+                    'stage_record': str(Path(temporary) / 'diagnostic-stage.json'),
+                    'stage_sha256': acq.digest(Path(temporary) / 'diagnostic-stage.json')})
                 with patch.object(controller, 'command', side_effect=command):
                     if bad:
                         with self.assertRaisesRegex(acq.accepted.Invalid, 'independent payload'): controller.seal_payload()

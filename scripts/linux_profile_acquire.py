@@ -47,10 +47,76 @@ def strict_log(text):
         line, re.I)]
 
 
+class Evidence:
+    """First validated bytes win. A later observation can only confirm them."""
+    def __init__(self, receipt):
+        self.rows, self.logs, self.receipt = {}, set(), receipt
+
+    def identity(self, path):
+        path = Path(path)
+        require(path.is_relative_to(OUTPUT) and path.is_file()
+                and not any(part.is_symlink() for part in (path, *path.parents) if part.is_relative_to(OUTPUT)),
+                'Missing/unsafe retained evidence: ' + str(path))
+        before = path.stat().st_size
+        value = {'bytes': before, 'sha256': digest(path)}
+        require(path.stat().st_size == before, 'Evidence changed during hash: ' + str(path))
+        return value
+
+    def bind(self, path, raw=None, wanted=None, log=False):
+        path = Path(path)
+        observed = self.identity(path)
+        expected = {'bytes': len(raw), 'sha256': payload.sha(raw)} if raw is not None else wanted
+        if expected is not None:
+            require(all(observed.get(key) == value for key, value in expected.items()),
+                    'Retained evidence differs from accepted bytes: ' + str(path))
+        name = path.relative_to(OUTPUT).as_posix()
+        require(name not in self.rows or self.rows[name] == observed,
+                'Retained evidence identity drift: ' + name)
+        self.rows.setdefault(name, observed)
+        if log:
+            require(not strict_log(path.read_text(errors='replace')), 'Retained strict log drift: ' + name)
+            self.logs.add(name)
+        return observed
+
+    def json(self, path):
+        raw = Path(path).read_bytes()
+        value = accepted.strict_json(raw.decode())
+        self.bind(path, raw=raw)
+        return value
+
+    def publication(self, path, value):
+        self.bind(path, raw=(json.dumps(value, indent=2, allow_nan=False) + '\n').encode())
+
+    def validate(self, closed=False):
+        # No rebinding and no fresh baseline: compare with every original gate.
+        for name, wanted in self.rows.items():
+            path = OUTPUT / name
+            require(self.identity(path) == wanted, 'Retained evidence identity drift: ' + name)
+            if name in self.logs:
+                require(not strict_log(path.read_text(errors='replace')), 'Retained strict log drift: ' + name)
+        if closed:
+            paths = list(OUTPUT.rglob('*'))
+            require(not any(path.is_symlink() for path in paths), 'Unexpected output symlink')
+            require({path.relative_to(OUTPUT).as_posix() for path in paths if path.is_file()} == set(self.rows),
+                    'Retained output set changed during publication')
+
+    def close_outputs(self):
+        self.validate()
+        require(not (OUTPUT / 'outputs.json').exists() and not (OUTPUT / 'overall.json').exists(),
+                'Preserve existing final publications')
+        for path in sorted(OUTPUT.rglob('*')):
+            require(not path.is_symlink(), 'Unexpected output symlink')
+            if path.is_file():
+                self.bind(path)
+        self.validate(closed=True)
+        return deepcopy(self.rows)
+
+
 class Budget:
     """One original whole deadline; phase timers always use its remaining time."""
     def __init__(self, receipt):
         self.receipt, self.started = receipt, time.monotonic()
+        self.evidence = Evidence(receipt)
         self.until = self.started + WHOLE
         self.phase_until = self.until
         receipt.update(start_monotonic=self.started, whole_deadline_monotonic=self.until,
@@ -98,6 +164,7 @@ class Budget:
                 write(OUTPUT / (name + '.phase.json'), before)
                 self.check(name + ':published')
                 require(read_json(OUTPUT / (name + '.phase.json')) == before, 'Phase publication differs')
+                self.evidence.publication(OUTPUT / (name + '.phase.json'), before)
                 self.check(name + ':reread')
                 row['publication_sha256'] = digest(OUTPUT / (name + '.phase.json'))
                 self.check(name + ':receipt hashed')
@@ -237,6 +304,7 @@ class Acquisition:
                         'purpose': 'One fixed text-script profiling-cadence acquisition, not shipping/gameplay acceptance',
                         'commands': [], 'cleanup_scope': 'Observed exact PID/start identities, original group/session; unobserved escaped/reparented descendants are outside scope'}
         self.budget, self.counter = Budget(self.receipt), 0
+        self.evidence = self.budget.evidence
         self.environment = dict(os.environ)
         self.original = self.stage_record = self.seal = None
 
@@ -317,7 +385,8 @@ class Acquisition:
         if failure:
             raise failure
         self.budget.check(name + ':before logs')
-        out, err = stdout.read_text(errors='replace'), stderr.read_text(errors='replace')
+        out_raw, err_raw = stdout.read_bytes(), stderr.read_bytes()
+        out, err = out_raw.decode(errors='replace'), err_raw.decode(errors='replace')
         self.budget.check(name + ':logs read')
         row.update(stdout={'path': str(stdout), 'bytes': stdout.stat().st_size, 'sha256': digest(stdout)},
                    stderr={'path': str(stderr), 'bytes': stderr.stat().st_size, 'sha256': digest(stderr)},
@@ -328,6 +397,8 @@ class Acquisition:
         require(not row['log_failures'], 'Strict native log gate: ' + name)
         if label in ('import', 'export'):
             require(row.get('actual_tool_libraries'), 'Missing actual preparation library evidence')
+        self.evidence.bind(stdout, raw=out_raw, log=True)
+        self.evidence.bind(stderr, raw=err_raw, log=True)
         return out
 
     def git(self, *args):
@@ -407,6 +478,7 @@ class Acquisition:
                 and self.git_path in {row['path'] for row in self.pins['tools']}, 'Unpinned Python/git selection')
         self.original = self.sources()
         write(OUTPUT / 'original-before.json', self.original)
+        self.evidence.publication(OUTPUT / 'original-before.json', self.original)
         self.receipt['host_before'] = self.host()
         self.receipt['recognized_native_before'] = recognized_native()
         require(not self.receipt['recognized_native_before'], 'Another recognized native engine/display is running')
@@ -438,7 +510,7 @@ class Acquisition:
     def stage(self):
         self.project = OUTPUT / 'project'
         self.command('stage', [self.python_path, str(ROOT / 'scripts/linux_profile_overhead.py'), 'stage', '--output', str(self.project)], ROOT)
-        original = read_json(OUTPUT / 'project-stage.json')
+        original = self.evidence.json(OUTPUT / 'project-stage.json')
         require(original['files'] == accepted.inventory(self.project), 'Initial stage does not match its record')
         project, presets = self.project / 'project.godot', self.project / 'export_presets.cfg'
         before = {'project.godot': project.read_text(), 'export_presets.cfg': presets.read_text()}
@@ -446,12 +518,15 @@ class Acquisition:
         project.write_text(before['project.godot'] + '\n[editor]\nexport/convert_text_resources_to_binary=false\n')
         require(before['export_presets.cfg'].count('script_export_mode=2') == 5, 'Unexpected base export modes')
         presets.write_text(before['export_presets.cfg'].replace('script_export_mode=2', 'script_export_mode=0', 1))
-        write(OUTPUT / 'diagnostic-packaging-amendment.json', {'before': before, 'after': {
+        amendment = {'before': before, 'after': {
             'project.godot': project.read_text(), 'export_presets.cfg': presets.read_text()},
-            'original_stage_record_sha256': digest(OUTPUT / 'project-stage.json')})
+            'original_stage_record_sha256': digest(OUTPUT / 'project-stage.json')}
+        write(OUTPUT / 'diagnostic-packaging-amendment.json', amendment)
+        self.evidence.publication(OUTPUT / 'diagnostic-packaging-amendment.json', amendment)
         self.stage_record = {**original, 'files': accepted.inventory(self.project),
                              'diagnostic_packaging': {'script_export_mode': 0, 'convert_text_resources_to_binary': False}}
         write(OUTPUT / 'diagnostic-stage.json', self.stage_record)
+        self.evidence.publication(OUTPUT / 'diagnostic-stage.json', self.stage_record)
         return self.stage_record
 
     def retain_stage(self, label):
@@ -459,12 +534,14 @@ class Acquisition:
         complete = {path.relative_to(self.project).as_posix(): {'bytes': path.stat().st_size, 'sha256': digest(path)}
                     for path in sorted(self.project.rglob('*')) if path.is_file()}
         write(OUTPUT / (label + '-complete-stage.json'), complete)
+        self.evidence.publication(OUTPUT / (label + '-complete-stage.json'), complete)
         generated = OUTPUT / (label + '-generated-uids')
         for name in complete:
             if name.endswith('.uid') and (not self.stage_record or name not in self.stage_record['files']):
                 destination = generated / name
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(self.project / name, destination)
+                self.evidence.bind(destination, wanted=complete[name])
         return complete
 
     def inventory_stage(self, label):
@@ -472,6 +549,8 @@ class Acquisition:
         source = {name: value for name, value in complete.items() if not name.startswith('.godot/')
                   and name != 'diagnostics/linux_profile_overhead.gd.uid'}
         require(source == self.stage_record['files'], 'Staged source/UID changed after ' + label)
+        for name, wanted in source.items():
+            self.evidence.bind(self.project / name, wanted=wanted)
         require(not any(path.is_symlink() for path in self.project.rglob('*')), 'Unexpected staged symlink')
         require(self.sources() == self.original, 'Original tracked source changed')
         return complete
@@ -485,17 +564,31 @@ class Acquisition:
         require(read_json(OUTPUT / 'independent-payload.json') == result and digest(pack_path) == result['PCK_sha256'], 'Artifact receipt differs')
         self.receipt['independent_payload'] = result
         self.receipt['independent_payload_receipt_sha256'] = digest(OUTPUT / 'independent-payload.json')
+        self.evidence.bind(self.executable, wanted={'bytes': result['ELF_bytes'], 'sha256': result['ELF_sha256']})
+        self.evidence.bind(pack_path, raw=pack)
+        self.evidence.publication(OUTPUT / 'independent-payload.json', result)
+        for row in result['imported_resources']:
+            self.evidence.bind(self.project / row['target'], wanted={'sha256': row['cache_sha256']})
+        for name, wanted in result['stage_auxiliary'].items():
+            self.evidence.bind(self.project / name, wanted=wanted)
         return result
 
     def seal_payload(self):
         self.command('seal', [self.python_path, str(ROOT / 'scripts/linux_profile_overhead.py'), 'seal',
                     '--stage-record', str(OUTPUT / 'diagnostic-stage.json'), '--executable', str(self.executable),
                     '--output', str(OUTPUT / 'seal.json')], ROOT)
-        self.seal = read_json(OUTPUT / 'seal.json')
+        self.seal = self.evidence.json(OUTPUT / 'seal.json')
         require(self.seal['payload_sha256'] == self.receipt['independent_payload']['ELF_sha256']
                 and self.seal['source_ledger_sha256'] == self.receipt['independent_payload']['ledger_sha256'], 'Seal differs from independent payload gate')
         self.receipt['seal_sha256'] = digest(OUTPUT / 'seal.json')
+        self.validate_stage_record()
         return self.seal
+
+    def validate_stage_record(self):
+        path = OUTPUT / 'diagnostic-stage.json'
+        require(self.seal['stage_record'] == str(path.resolve()), 'Seal stage record path differs')
+        self.evidence.bind(path, wanted={'sha256': self.seal['stage_sha256']})
+        require(self.evidence.json(path) == self.stage_record, 'Seal-bound stage record changed')
 
     def native_argv(self, *args):
         return ['/usr/bin/taskset', '-c', '0,1', *args]
@@ -510,7 +603,7 @@ class Acquisition:
         finally:
             if hasattr(self, 'lane_lock'):
                 fcntl.flock(self.lane_lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        block = read_json(OUTPUT / 'native-block/block.json')
+        block = self.evidence.json(OUTPUT / 'native-block/block.json')
         require(block['passed'] is True and block['expected']['cpus'] == [0, 1] and block['expected']['display'] == self.display,
                 'Accepted controller did not complete the registered block')
         require(block['expected']['source'] == self.seal['source'] and block['expected']['payload_sha256'] == digest(self.executable),
@@ -524,19 +617,26 @@ class Acquisition:
             require(row['output'] == str(expected_output) and not expected_output.is_symlink(), 'Block condition output escaped this attempt')
             condition = Path(row['output']) / 'condition.json'
             require(digest(condition) == row['publication_sha256'], 'Changed condition publication')
-            accepted.validate_condition(read_json(condition), block['expected'])
-            actual_log = (expected_output / 'client.log').read_text(errors='replace')
+            self.evidence.bind(condition, wanted={'sha256': row['publication_sha256']})
+            accepted.validate_condition(self.evidence.json(condition), block['expected'])
+            log_raw = (expected_output / 'client.log').read_bytes()
+            actual_log = log_raw.decode(errors='replace')
             require(actual_log == row['stdout'] and not strict_log(actual_log), 'Changed/failed strict condition log')
-            require(read_json(expected_output / 'metrics.json') == row['fixture'], 'Metrics differ from accepted condition')
+            self.evidence.bind(expected_output / 'client.log', raw=log_raw, log=True)
+            require(self.evidence.json(expected_output / 'metrics.json') == row['fixture'], 'Metrics differ from accepted condition')
             require(digest(expected_output / 'proof.png') == row['fixture']['png_sha256'], 'Proof image differs from accepted condition')
+            self.evidence.bind(expected_output / 'proof.png', wanted={'sha256': row['fixture']['png_sha256']})
             self.budget.check('outer raw condition rechecked')
         require(not strict_log((OUTPUT / 'native-block/xvfb.log').read_text(errors='replace')), 'Strict Xvfb log gate')
+        self.evidence.bind(OUTPUT / 'native-block/xvfb.log', log=True)
         require(block['xvfb_cleanup']['pid_absent'] and block['xvfb_cleanup']['group_absent'], 'Xvfb cleanup failed')
         self.receipt['block_sha256'] = digest(OUTPUT / 'native-block/block.json')
         self.receipt['block'] = block
         return {'passed': True, 'sha256': self.receipt['block_sha256']}
 
     def finalize(self):
+        self.evidence.validate()
+        self.validate_stage_record()
         require(self.sources() == self.original, 'Final original tracked source changed')
         self.inventory_stage('final')
         self.verify_tools()
@@ -558,6 +658,7 @@ class Acquisition:
         require(not self.receipt['recognized_native_after'], 'Recognized native process remains')
         require(not Path('/tmp/.X11-unix/X99127').exists() and not Path('/tmp/.X99127-lock').exists(), 'Display publication remains')
         self.budget.check('final acceptance prepared')
+        self.evidence.validate()
         return {'source_unchanged': True, 'stage_unchanged': True, 'payload_unchanged': True, 'host_unchanged': True}
 
     def execute(self):
@@ -629,6 +730,7 @@ def main():
             acquisition.budget.phase_until = until
         with acquisition.budget.armed(until, 'overall publication'):
             if not acquisition.receipt['passed']:
+                acquisition.receipt['validated_evidence'] = deepcopy(acquisition.evidence.rows)
                 if hasattr(acquisition, 'project') and acquisition.project.exists():
                     try:
                         acquisition.retain_stage('failed-preparation')
@@ -638,29 +740,36 @@ def main():
                     for stream in ('stdout', 'stderr'):
                         path = Path(row[stream]['path'])
                         if path.is_file():
-                            row[stream].update(bytes=path.stat().st_size, sha256=digest(path))
+                            # Preserve the original gate identity on rejection.
+                            row[stream]['failure_observation'] = {'bytes': path.stat().st_size, 'sha256': digest(path)}
             if acquisition.receipt['passed']:
-                outputs = {}
-                for path in sorted(OUTPUT.rglob('*')):
-                    require(not path.is_symlink(), 'Unexpected output symlink')
-                    if path.is_file():
-                        outputs[path.relative_to(OUTPUT).as_posix()] = {'bytes': path.stat().st_size, 'sha256': digest(path)}
+                outputs = acquisition.evidence.close_outputs()
                 write(OUTPUT / 'outputs.json', outputs)
                 require(read_json(OUTPUT / 'outputs.json') == outputs, 'Output manifest publication differs')
+                acquisition.evidence.publication(OUTPUT / 'outputs.json', outputs)
+                acquisition.evidence.validate(closed=True)
                 acquisition.receipt['output_manifest_sha256'] = digest(OUTPUT / 'outputs.json')
+                # Overall cannot contain its own byte identity. This snapshot
+                # includes the manifest; the private registry also binds overall.
+                acquisition.receipt['validated_evidence'] = deepcopy(acquisition.evidence.rows)
                 acquisition.budget.check('overall before publication')
             write(OUTPUT / 'overall.json', accepted.safe_failure_report(acquisition.receipt))
             reread = read_json(OUTPUT / 'overall.json')
             require(reread == accepted.safe_failure_report(acquisition.receipt), 'Overall publication differs')
             if acquisition.receipt['passed']:
+                acquisition.evidence.publication(OUTPUT / 'overall.json', accepted.safe_failure_report(acquisition.receipt))
+                acquisition.evidence.validate(closed=True)
                 acquisition.budget.check('overall final read')
             print(json.dumps({'passed': acquisition.receipt['passed'], 'output': str(OUTPUT), 'error': acquisition.receipt.get('error')}), flush=True)
             if acquisition.receipt['passed']:
+                acquisition.evidence.validate(closed=True)
                 acquisition.budget.check('overall final stdout')
         if acquisition.receipt['passed']:
+            acquisition.evidence.validate(closed=True)
             acquisition.budget.check('overall alarm restored')
     except (Exception, KeyboardInterrupt) as error:
         acquisition.receipt.update(passed=False, publication_error=str(error))
+        acquisition.receipt['validated_evidence'] = deepcopy(acquisition.evidence.rows)
         failure_until = failure_until or time.monotonic() + FAILURE_PUBLICATION
         try:
             with acquisition.budget.armed(failure_until, 'failure publication'):

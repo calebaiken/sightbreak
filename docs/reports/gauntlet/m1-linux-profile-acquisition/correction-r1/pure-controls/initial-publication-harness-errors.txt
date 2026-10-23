@@ -1,0 +1,206 @@
+test_declared_safe_variant_and_permitted_default_omissions_pass (test_linux_profile_acquire_sealing.FeatureSettingsTests.test_declared_safe_variant_and_permitted_default_omissions_pass) ... ok
+test_undeclared_selectors_reject_even_if_their_value_is_safe (test_linux_profile_acquire_sealing.FeatureSettingsTests.test_undeclared_selectors_reject_even_if_their_value_is_safe) ... ok
+test_unsafe_staged_variant_rejects_and_required_base_cannot_be_omitted (test_linux_profile_acquire_sealing.FeatureSettingsTests.test_unsafe_staged_variant_rejects_and_required_base_cannot_be_omitted) ... ok
+test_first_identity_cannot_be_rebound_and_closed_set_cannot_grow (test_linux_profile_acquire_sealing.SealingTests.test_first_identity_cannot_be_rebound_and_closed_set_cannot_grow) ... ok
+test_original_independent_positive_and_all_ten_falsifiers (test_linux_profile_acquire_sealing.SealingTests.test_original_independent_positive_and_all_ten_falsifiers) ... ok
+test_publication_mutations_cannot_rebaseline_prior_evidence (test_linux_profile_acquire_sealing.SealingTests.test_publication_mutations_cannot_rebaseline_prior_evidence) ... 
+  test_publication_mutations_cannot_rebaseline_prior_evidence (test_linux_profile_acquire_sealing.SealingTests.test_publication_mutations_cannot_rebaseline_prior_evidence) (hook='manifest-write', target='outputs.json') ... ERROR
+  test_publication_mutations_cannot_rebaseline_prior_evidence (test_linux_profile_acquire_sealing.SealingTests.test_publication_mutations_cannot_rebaseline_prior_evidence) (hook='overall-write', target='outputs.json') ... ERROR
+  test_publication_mutations_cannot_rebaseline_prior_evidence (test_linux_profile_acquire_sealing.SealingTests.test_publication_mutations_cannot_rebaseline_prior_evidence) (hook='overall-read', target='outputs.json') ... ERROR
+  test_publication_mutations_cannot_rebaseline_prior_evidence (test_linux_profile_acquire_sealing.SealingTests.test_publication_mutations_cannot_rebaseline_prior_evidence) (hook='stdout', target='outputs.json') ... ERROR
+  test_publication_mutations_cannot_rebaseline_prior_evidence (test_linux_profile_acquire_sealing.SealingTests.test_publication_mutations_cannot_rebaseline_prior_evidence) (hook='alarm-restore', target='outputs.json') ... ERROR
+
+======================================================================
+ERROR: test_publication_mutations_cannot_rebaseline_prior_evidence (test_linux_profile_acquire_sealing.SealingTests.test_publication_mutations_cannot_rebaseline_prior_evidence) (hook='manifest-write', target='outputs.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/test_linux_profile_acquire_sealing.py", line 73, in test_publication_mutations_cannot_rebaseline_prior_evidence
+    result = independent.finalized('valid')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/docs/reports/gauntlet/m1-linux-profile-acquisition/correction-r1/retained-rejection/test_independent_controls.py", line 164, in finalized
+    outputs = acq.read_json(output / 'outputs.json') if (output / 'outputs.json').exists() else {}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/test_linux_profile_acquire_sealing.py", line 59, in read
+    value = original_read(path)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/linux_profile_overhead.py", line 60, in read_json
+    return strict_json(Path(path).read_text())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/linux_profile_overhead.py", line 56, in strict_json
+    return json.loads(text, parse_float=number, parse_constant=constant)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py", line 359, in loads
+    return cls(**kw).decode(s)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 338, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 356, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+======================================================================
+ERROR: test_publication_mutations_cannot_rebaseline_prior_evidence (test_linux_profile_acquire_sealing.SealingTests.test_publication_mutations_cannot_rebaseline_prior_evidence) (hook='overall-write', target='outputs.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/test_linux_profile_acquire_sealing.py", line 73, in test_publication_mutations_cannot_rebaseline_prior_evidence
+    result = independent.finalized('valid')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/docs/reports/gauntlet/m1-linux-profile-acquisition/correction-r1/retained-rejection/test_independent_controls.py", line 164, in finalized
+    outputs = acq.read_json(output / 'outputs.json') if (output / 'outputs.json').exists() else {}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/test_linux_profile_acquire_sealing.py", line 59, in read
+    value = original_read(path)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/linux_profile_overhead.py", line 60, in read_json
+    return strict_json(Path(path).read_text())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/linux_profile_overhead.py", line 56, in strict_json
+    return json.loads(text, parse_float=number, parse_constant=constant)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py", line 359, in loads
+    return cls(**kw).decode(s)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 338, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 356, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+======================================================================
+ERROR: test_publication_mutations_cannot_rebaseline_prior_evidence (test_linux_profile_acquire_sealing.SealingTests.test_publication_mutations_cannot_rebaseline_prior_evidence) (hook='overall-read', target='outputs.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/test_linux_profile_acquire_sealing.py", line 73, in test_publication_mutations_cannot_rebaseline_prior_evidence
+    result = independent.finalized('valid')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/docs/reports/gauntlet/m1-linux-profile-acquisition/correction-r1/retained-rejection/test_independent_controls.py", line 164, in finalized
+    outputs = acq.read_json(output / 'outputs.json') if (output / 'outputs.json').exists() else {}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/test_linux_profile_acquire_sealing.py", line 59, in read
+    value = original_read(path)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/linux_profile_overhead.py", line 60, in read_json
+    return strict_json(Path(path).read_text())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/linux_profile_overhead.py", line 56, in strict_json
+    return json.loads(text, parse_float=number, parse_constant=constant)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py", line 359, in loads
+    return cls(**kw).decode(s)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 338, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 356, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+======================================================================
+ERROR: test_publication_mutations_cannot_rebaseline_prior_evidence (test_linux_profile_acquire_sealing.SealingTests.test_publication_mutations_cannot_rebaseline_prior_evidence) (hook='stdout', target='outputs.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/test_linux_profile_acquire_sealing.py", line 73, in test_publication_mutations_cannot_rebaseline_prior_evidence
+    result = independent.finalized('valid')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/docs/reports/gauntlet/m1-linux-profile-acquisition/correction-r1/retained-rejection/test_independent_controls.py", line 164, in finalized
+    outputs = acq.read_json(output / 'outputs.json') if (output / 'outputs.json').exists() else {}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/test_linux_profile_acquire_sealing.py", line 59, in read
+    value = original_read(path)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/linux_profile_overhead.py", line 60, in read_json
+    return strict_json(Path(path).read_text())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/linux_profile_overhead.py", line 56, in strict_json
+    return json.loads(text, parse_float=number, parse_constant=constant)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py", line 359, in loads
+    return cls(**kw).decode(s)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 338, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 356, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+======================================================================
+ERROR: test_publication_mutations_cannot_rebaseline_prior_evidence (test_linux_profile_acquire_sealing.SealingTests.test_publication_mutations_cannot_rebaseline_prior_evidence) (hook='alarm-restore', target='outputs.json')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/test_linux_profile_acquire_sealing.py", line 73, in test_publication_mutations_cannot_rebaseline_prior_evidence
+    result = independent.finalized('valid')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/docs/reports/gauntlet/m1-linux-profile-acquisition/correction-r1/retained-rejection/test_independent_controls.py", line 164, in finalized
+    outputs = acq.read_json(output / 'outputs.json') if (output / 'outputs.json').exists() else {}
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/test_linux_profile_acquire_sealing.py", line 59, in read
+    value = original_read(path)
+            ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/linux_profile_overhead.py", line 60, in read_json
+    return strict_json(Path(path).read_text())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/linux_profile_overhead.py", line 56, in strict_json
+    return json.loads(text, parse_float=number, parse_constant=constant)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py", line 359, in loads
+    return cls(**kw).decode(s)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 338, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py", line 356, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)
+
+----------------------------------------------------------------------
+Ran 6 tests in 14.430s
+
+FAILED (errors=5)
