@@ -10,7 +10,10 @@ SOURCE='e28c8e90b9ef2d0c766bd9152c194e3197ceba9a'
 CRLF={'scripts/diagnostics/render_feature_probe.gd','scripts/fixtures/export_integration.gd',
       'scripts/fixtures/network_soak.gd','game/tests/fixtures/backend_world.json',
       'scripts/fixtures/offline_capture_observations.json','scripts/fixtures/offline_focus_observations.json',
-      'scripts/macos_window_capture.swift'}
+      'scripts/macos_window_capture.swift', 'scripts/diagnostics/linux_profile_overhead.gd',
+      'scripts/diagnostics/linux_profile_overhead.tscn',
+      'scripts/fixtures/macos_ordinary_source/default_capture_body.swift.txt',
+      'scripts/fixtures/macos_ordinary_source/reference.json'}
 READ=lambda p:json.loads(p.read_text())
 
 def audit(checkout,receipts):
