@@ -1,0 +1,19 @@
+init: 0
+remote: 0
+fetch: 0
+sparse: 0
+checkout: 0
+head: 0
+shallow: 0
+commit-count: 0
+absent-c838907: 0
+Traceback (most recent call last):
+  File "/workspace/reviews/windows-combined-e28c8e9-source/docs/reports/gauntlet/windows-combined-e28c8e9-source-20261023/run_review.py", line 281, in <module>
+    main()
+  File "/workspace/reviews/windows-combined-e28c8e9-source/docs/reports/gauntlet/windows-combined-e28c8e9-source-20261023/run_review.py", line 191, in main
+    run('absent-' + historical[:7], ['git', 'cat-file', '-e', historical + '^{commit}'], expected=128)
+  File "/workspace/reviews/windows-combined-e28c8e9-source/docs/reports/gauntlet/windows-combined-e28c8e9-source-20261023/run_review.py", line 172, in run
+    assert result.returncode == expected, result.stdout.decode()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: warning: filtering not recognized by server, ignoring
+
