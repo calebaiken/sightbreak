@@ -38,8 +38,11 @@ Root admission script/transform hashes/stdout/stderr/outer-launch.json are in
 After terminal preserve actual tool return; execute ONLY frozen PLAN post-source
 receipt and packager once, retain cleanup/actualPNG counts/failures. Tell fresh
 /root/touch_r3_native_fresh_critic raw-ready; its CPU4 live metadata observer
-session49199 captures PGID/SID/start/affinity and stops at lane-end.json. Heavy
-hashing/cloning/tests/archives by other agents are held; light source reads okay.
+session49199 captures PGID/SID/start/affinity and stops at lane-end.json. The native producers have all exited0 and all5648PNGs exist; the original
+analyzer is still active. Root SOURCE_TEST_PHASE_CLEARANCE.md now permits
+queued source-only sparse/pure checks pinnedCPU4; no new native, export, OCR,
+service or large archive until final cleanup. This deterministic phase is not a
+performance comparison. Fresh touch actual review still waits terminal evidence.
 No premature quality claim. Separate blind judge /root/touch_blind_visual_critic
 has inspected five real shipped references and committed criteria retained in
 ef5c4231 BEFORE outputs. It knows no mapping: later supply randomized matching
