@@ -10,7 +10,8 @@ SOURCE='49ae54b0e4f5d880bdf06e4eb783a616b2dff684'
 CRLF={'scripts/diagnostics/render_feature_probe.gd','scripts/fixtures/export_integration.gd',
       'scripts/fixtures/network_soak.gd','game/tests/fixtures/backend_world.json',
       'scripts/fixtures/offline_capture_observations.json','scripts/fixtures/offline_focus_observations.json',
-      'scripts/macos_window_capture.swift', 'scripts/diagnostics/linux_profile_overhead.gd',
+      'scripts/macos_window_capture.swift', 'scripts/fixtures/native_log/.gitattributes',
+      'scripts/fixtures/native_log/provenance.json', 'scripts/diagnostics/linux_profile_overhead.gd',
       'scripts/diagnostics/linux_profile_overhead.tscn',
       'scripts/fixtures/macos_ordinary_source/default_capture_body.swift.txt',
       'scripts/fixtures/macos_ordinary_source/reference.json'}

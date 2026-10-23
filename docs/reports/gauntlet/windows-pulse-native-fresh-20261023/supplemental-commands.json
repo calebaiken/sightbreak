@@ -1,0 +1,30 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "taskset",
+        "-c",
+        "4",
+        "python",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_ordinary_failure.py",
+        ".local/native49/receipts",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r2/ordinary-failure-recomputed.json"
+      ],
+      "exit": 0,
+      "result": "all_failure_fact_checks_passed true;44 joined actor samples"
+    },
+    {
+      "argv": [
+        "taskset",
+        "-c",
+        "4",
+        "python",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/verify_review.py"
+      ],
+      "exit": 0,
+      "result": "19 report evidence checks pass; qualification FAIL"
+    }
+  ],
+  "scope": "Additional read-only actual artifact review commands. Full18-command R1/R2 ledgers are retained separately. No engine/native input/CI/OCR executable was run."
+}

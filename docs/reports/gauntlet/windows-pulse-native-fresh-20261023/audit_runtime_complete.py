@@ -32,6 +32,11 @@ for name in ('native-commands-recomputed', 'source-Windows-recomputed', 'journey
 native = read(args.audits / 'native-commands-recomputed.json')
 checks['sixteen_suites_actual_recomputed_counts'] = len(native['actual_suite_records']) == 16 and type(native.get('native_assertion_total')) is int and native['native_assertion_total'] > 0
 checks['gunplay_mathematical_recomputation'] = read(args.audits / 'gunplay-recomputed.json')['failures'] == []
+checks['exhausted_primary_observable_recomputation'] = read(args.audits / 'exhausted-observable-recomputed.json').get('all_exhausted_checks_passed') is True
+checks['route_original_predicates'] = read(args.audits / 'settings-route-recomputed.json').get('all_route_checks_passed') is True
+checks['actual_pulse_API_OS_predicates'] = read(args.audits / 'route-pulses-recomputed.json').get('all_pulse_checks_passed') is True
+checks['three_schedules_original_waits'] = read(args.audits / 'input-schedules-recomputed.json').get('all_three_original_schedules_passed') is True
+checks['complete_living_focus_context'] = read(args.audits / 'focus-actual-recomputed.json').get('all_focus_checks_passed') is True
 checks['dry_weapon_observable_recomputation'] = read(args.audits / 'dry-observable-recomputed.json').get('observable_comparison_passed') is True
 checks['both_original_phase_brackets'] = read(args.audits / 'phase-captures-recomputed.json').get('all_native_bracket_checks_passed') is True
 checks['objective_stages_original_limits'] = read(args.audits / 'objective-stages-recomputed.json').get('all_stage_checks_passed') is True

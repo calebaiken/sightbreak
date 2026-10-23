@@ -33,6 +33,9 @@ def main():
     specs = [
         ('raw-recomputed','verify_receipts.py',[a.receipts]),
         ('native-commands-recomputed','audit_native_commands.py',[a.receipts]),
+        ('input-schedules-recomputed','audit_input_schedules.py',[a.receipts]),
+        ('route-pulses-recomputed','audit_route_pulses.py',[a.receipts]),
+        ('exhausted-observable-recomputed','audit_exhausted_native.py',[a.receipts/'evidence/regressions/bot_exhausted_primary.log',checkout]),
         ('journey-OCR-recomputed','audit_journey_ocr.py',[a.receipts]),
         ('phase-captures-recomputed','audit_phase_captures.py',[a.receipts,'--full',a.full]),
         ('focus-actual-recomputed','audit_focus_actual.py',[a.receipts,a.full]),
