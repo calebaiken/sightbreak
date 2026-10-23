@@ -1,0 +1,7 @@
+{
+  "scope": "Own report setup; no source edits",
+  "failure": "Initial git add omitted the new R3 report because the existing own sparse cone selected only the R2 report. Commit reported nothing added. The initial nine-case replay still ran against unchanged old source at f01881dd and met one of nine expectations.",
+  "correction": "Added only the new own R3 report cone, then committed preregistration before analyzer/test edits. Preserve the initial replay unchanged.",
+  "old_replay": "old-reader-additional-controls/",
+  "candidate_source_edits_before_preregistration": false
+}
