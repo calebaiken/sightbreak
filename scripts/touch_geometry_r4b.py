@@ -96,7 +96,11 @@ def geometry(source, size, insets, scale, positions=None, editing=False, reverse
 
 @lru_cache(maxsize=4)
 def paint_program(source):
-    return [(name, compile(re.search(r"^\t\tvar " + name + r" := (.+)$", source, re.M).group(1), "product:draw:" + name, "eval"))
+    declarations = re.findall(r"^\t\tvar compact\b.*$", source, re.M)
+    compact = re.fullmatch(r'\t\tvar compact(?:: bool =| :=) (key != "fire" and r < 32\.0)', declarations[0]) if len(declarations) == 1 else None
+    if compact is None:
+        raise ValueError("expected one exact compact inferred/bool declaration and unchanged expression")
+    return [(name, compile(compact.group(1) if name == "compact" else re.search(r"^\t\tvar " + name + r" := (.+)$", source, re.M).group(1), "product:draw:" + name, "eval"))
         for name in ("compact", "paint_r", "rim_r", "rim_shadow", "icon_y", "label_y", "badge_offset", "badge")]
 
 

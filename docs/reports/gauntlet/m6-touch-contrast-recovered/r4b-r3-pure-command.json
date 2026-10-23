@@ -1,0 +1,22 @@
+{
+  "command": [
+    "timeout",
+    "60s",
+    "taskset",
+    "-c",
+    "4",
+    "env",
+    "PYTHONPATH=scripts",
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_touch_geometry_r4b",
+    "test_touch_method_r4b",
+    "test_touch_receipts_r4b_r2",
+    "test_touch_declaration_r4b_r3"
+  ],
+  "exit_code": 0,
+  "recorded_utc": "2026-10-23T08:56:16.373645+00:00",
+  "scope": "Bounded single-core source/pure controls; no engine/native"
+}

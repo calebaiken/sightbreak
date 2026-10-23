@@ -211,7 +211,7 @@ func _draw() -> void:
 		var point := control_point(key)
 		var r := radius(key)
 		# The compact plate stays within the existing 1.25-radius hit region.
-		var compact := key != "fire" and r < 32.0
+		var compact: bool = key != "fire" and r < 32.0
 		var paint_r := minf(r * 1.25, maxf(r, 26.0)) if compact else r
 		var rim_r := paint_r + 1.0 if compact else paint_r
 		var rim_shadow := 3.5 if compact else 5.25

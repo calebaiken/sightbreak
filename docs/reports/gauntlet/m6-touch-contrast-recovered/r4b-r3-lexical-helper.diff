@@ -1,0 +1,9 @@
+--- b001fc5087960729535f63c896b40d6dc25bd272:scripts/touch_geometry_r4b.py
++++ new-source:scripts/touch_geometry_r4b.py
+@@ -99 +99,5 @@
+-    return [(name, compile(re.search(r"^\t\tvar " + name + r" := (.+)$", source, re.M).group(1), "product:draw:" + name, "eval"))
++    declarations = re.findall(r"^\t\tvar compact\b.*$", source, re.M)
++    compact = re.fullmatch(r'\t\tvar compact(?:: bool =| :=) (key != "fire" and r < 32\.0)', declarations[0]) if len(declarations) == 1 else None
++    if compact is None:
++        raise ValueError("expected one exact compact inferred/bool declaration and unchanged expression")
++    return [(name, compile(compact.group(1) if name == "compact" else re.search(r"^\t\tvar " + name + r" := (.+)$", source, re.M).group(1), "product:draw:" + name, "eval"))
