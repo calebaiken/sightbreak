@@ -1,5 +1,24 @@
 # Autonomous worklog
 
+## Recovered Linux GLES source capability, 2026-10-23
+
+Builder `diagnostic/linux-gles-profile-recovered` starts at exact recovered
+`917b143b`; no old unpublished approval is reused. Preregistration `98cd21c`
+names the original plant controller and accepted failing `8afe0cc` native
+attempt, and allows only one future sampler-off profile capability attempt.
+Implementation `2bf9be1` adds eight controller lines; complete remaining AST
+and game source match the base. Pure checks pass 3 new / 18 sampler / 4 role /
+15 capture-fence groups, compile and whitespace checks. Initial missing-Pillow
+and fixture-host-query failures remain archived with byte-identical hashes.
+Exact pinned upstream source establishes historical GLES query timing, repeated
+retained profiles, periodic row averages and a latest-profile header total.
+No phase, CPU-cost, physical-FPS or improvement attribution is supported.
+
+Fresh independent source acceptance and root release of a new exact-source
+export/native attempt are pending. No engine, export, native client, CI or
+service ran. The original Linux next-buy gate remains FAILED. Evidence:
+`docs/reports/gauntlet/m1-linux-gles-profile-recovered/SOURCE_REPORT.md`.
+
 ## ARM Mac input preflight source readiness, 2026-10-22
 
 Builder branch `codex/m2-macos-native-input` begins at `e38ec3c`. Existing actual

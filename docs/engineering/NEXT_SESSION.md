@@ -1,5 +1,26 @@
 # Next session
 
+## Recovered Linux GLES source candidate, 2026-10-23
+
+Own worktree `/workspace/sightbreak-linux-profile-recovered`, branch
+`diagnostic/linux-gles-profile-recovered`, exact recovered base `917b143b`.
+Preregistration `98cd21c` precedes implementation `2bf9be1`; both are pushed.
+The eight-line opt-in admits only Linux plant / seed 42 / timeout 180, forbids
+the external sampler, and profiles only the initial command. All remaining
+controller statements match the base AST; game source is unchanged. Source
+report and retained pure outputs:
+`docs/reports/gauntlet/m1-linux-gles-profile-recovered/SOURCE_REPORT.md`.
+
+Pure controls pass 3 new / 18 sampler / 4 role / 15 capture-fence groups, plus
+compile and structural checks. The recovered shared venv lacks Pillow; use
+system `python3` for these controls. Two initial setup failures and their exact
+raw bytes are retained. Fresh independent source review is pending. Root owns
+the native lane and may release one registered sampler-off capability attempt
+only after that review, using a fresh exact-source export. No engine/export/
+native/CI/service run occurred. Historical GLES averaged query rows cannot be
+phase-tagged by arrival, partition CPU cost or be summed with the header total.
+The original Linux next-buy deadline and broader release gates remain open.
+
 Updated 2026-10-23, 03:44 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native Codex goal API is exposed. Read AGENTS.md, the mission and the canonical
