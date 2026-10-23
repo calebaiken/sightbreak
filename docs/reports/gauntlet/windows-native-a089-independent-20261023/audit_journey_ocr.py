@@ -39,7 +39,32 @@ def audit(root):
                     'exit_code':entry['exit_code'],'timed_out':entry.get('timed_out',False),
                     'started_seconds':entry['started_seconds'],'finished_seconds':entry['finished_seconds'],
                     'command':entry['command']})
-    leave=next(a for a in actions if a['event']=='click_text' and a.get('caption')=='LEAVE MATCH')
+    leaves=[a for a in actions if a['event']=='click_text' and a.get('caption')=='LEAVE MATCH']
+    if not leaves:
+        hud=[]
+        for capture in ('05-after-fire','06-after-reload','06e-purchased-smg','06f-switched-sidearm','06g-switched-primary','07d-explicit-resume'):
+            health=next((e for e in commands if e['label']==capture+':(0, 630, 450, 720)'),None)
+            ammo=next((e for e in commands if e['label']==capture+':(980, 648, 1280, 680)'),None)
+            item={'capture':capture,'both_original_stdout_calls_available':bool(health and ammo)}
+            if health and ammo:
+                health_text=(directory/health['stdout_path']).read_text()
+                ammo_text=(directory/ammo['stdout_path']).read_text()
+                h=re.search(r'(?<!\d)(\d{1,3})\s*[^A-Z0-9]*HEALTH',health_text.upper())
+                a=re.search(r'(\d+)\s*/\s*(\d+)',ammo_text)
+                item['parsed_original_stdout']={'health':int(h[1]) if h else None,'ammo':int(a[1]) if a else None,'reserve':int(a[2]) if a else None,'health_text':health_text,'ammo_text':ammo_text}
+            hud.append(item)
+        checks={'all_per_call_original_stdout_bytes_match':all(e['hash_matches'] and e['byte_counts_match'] and e['complete_untruncated'] for e in raw),
+                'all_OCR_exits_zero_without_timeout':all(e['exit_code']==0 and e['timed_out'] is False for e in raw),
+                'unique_retained_file_per_call':len({e['stdout_path'] for e in raw})==len(raw),
+                'sidecar_matches_native_result_commands':commands==receipt['ocr_commands'],
+                'whole_ordinary_journey_passed':False,'strict_actual_LEAVE_and_heading_captions':False,
+                'actual_LEAVE_return_and_capture_within_original_30s':False,
+                'numeric_HUD_readings_recomputed_from_original_stdout':False}
+        return {'checks':checks,'all_checks_passed':False,'calls':raw,'LEAVE_call':None,'LEAVE_unreached':True,
+                'original_error':receipt.get('error'),'HUD_original_stdout_recomputation':hud,
+                'missing_success_only_numeric_result_fields':[key for key in ('fired_hud','reloaded_hud','resumed_hud') if key not in receipt],
+                'scope':'Earlier native failure precedes LEAVE and resumed-HUD OCR. Reached stdout originals are audited; missing calls and success-only comparisons remain unavailable, not invented or passed. No OCR is run.'}
+    leave=leaves[0]
     candidates=[(i,e) for i,e in enumerate(commands) if e['label']=='current-native-ui' and e['finished_seconds']<=leave['seconds']]
     index,entry=max(candidates,key=lambda pair:pair[1]['finished_seconds'])
     text=(directory/entry['stdout_path']).read_bytes().decode('utf-8',errors='replace');heading=caption_boxes(text,'FIELD MENU');control=caption_boxes(text,'LEAVE MATCH')

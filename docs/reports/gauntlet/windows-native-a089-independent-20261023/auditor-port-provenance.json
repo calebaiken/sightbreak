@@ -35,7 +35,12 @@
     "original_source": "a089473481ced0f2e7b2a7468bbc5d079f92f0ff:docs/reports/gauntlet/windows-combined-recovered-20261023/audit_journey_ocr.py",
     "original_sha256": "dc0adbc2e24f6c6971cfcc5d3cb67b37a68a257d1a6bac9e625d6dabc941dde9",
     "ported_sha256": "dc0adbc2e24f6c6971cfcc5d3cb67b37a68a257d1a6bac9e625d6dabc941dde9",
-    "edits": []
+    "edits": [],
+    "reviewer_actual_output_adaptation": {
+      "reason": "Earlier actual failure precedes LEAVE and resumed OCR; audit reached original stdout, retain absent phases and missing comparisons as false.",
+      "previous_sha256": "dc0adbc2e24f6c6971cfcc5d3cb67b37a68a257d1a6bac9e625d6dabc941dde9",
+      "corrected_sha256": "096336dc6fbd974259471b1917a759f3bc6759affb09059b6e72ef8d3068e322"
+    }
   },
   {
     "path": "audit_native_commands.py",
@@ -70,7 +75,12 @@
         "old": "39907358390",
         "new": "39916539053"
       }
-    ]
+    ],
+    "reviewer_actual_output_adaptation": {
+      "reason": "Retain missing reopened trace as None; evaluate reached 06c bracket and explicitly missing 10 bracket.",
+      "previous_sha256": "cd995595153da081777ddebba4c3c0555621b35aaa60d57eb3166fe1679b78c2",
+      "corrected_sha256": "d37cfce61ded28e73a64e4c35206f6583a3f3484bee1f6fb567118e1b555406f"
+    }
   },
   {
     "path": "audit_raw_sources_logs.py",
@@ -134,7 +144,12 @@
     "original_source": "a089473481ced0f2e7b2a7468bbc5d079f92f0ff:docs/reports/gauntlet/windows-combined-recovered-20261023/audit_runtime_complete.py",
     "original_sha256": "9d2e4036806f8d22b871b35ed15f01d5d5e0adde81f7383fe6ebe32a8486f102",
     "ported_sha256": "9d2e4036806f8d22b871b35ed15f01d5d5e0adde81f7383fe6ebe32a8486f102",
-    "edits": []
+    "edits": [],
+    "reviewer_actual_output_adaptation": {
+      "reason": "Missing unreached trace becomes empty snapshots and false coverage, not a reviewer exception.",
+      "previous_sha256": "9d2e4036806f8d22b871b35ed15f01d5d5e0adde81f7383fe6ebe32a8486f102",
+      "corrected_sha256": "b6c2adb6c6998862fa9a47d2a35bdda404382d8d6da36cab1b6e43beee0746af"
+    }
   },
   {
     "path": "audit_failure_diagnostics.py",

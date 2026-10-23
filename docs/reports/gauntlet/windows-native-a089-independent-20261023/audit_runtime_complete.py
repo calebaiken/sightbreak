@@ -53,7 +53,8 @@ numeric_fields = ('physics_jitter_fix', 'process_max_seconds_last_engine_window'
 for relative in ('offline-input/initial-offline-trace/events.jsonl', 'offline-input/restart-profile-trace/events.jsonl',
                  'offline-plant/trace/events.jsonl', 'offline-defuse/trace/events.jsonl',
                  'offline-full-match/trace/events.jsonl', 'offline-full-match/trace-reopened/events.jsonl'):
-    rows = [json.loads(line) for line in (args.receipts / 'evidence' / relative).read_text().splitlines() if line]
+    trace_path = args.receipts / 'evidence' / relative
+    rows = [json.loads(line) for line in trace_path.read_text().splitlines() if line] if trace_path.is_file() else []
     snapshots = [row for row in rows if row.get('scope') == 'debug_offline_read_only_observation']
     valid = bool(snapshots)
     for row in snapshots:

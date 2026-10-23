@@ -1,0 +1,61 @@
+{
+  "run_id": 39916539053,
+  "job_id": 120291226421,
+  "source_commit": "a089473481ced0f2e7b2a7468bbc5d079f92f0ff",
+  "artifacts": [
+    {
+      "artifact_id": 12486386097,
+      "bytes": 4808079,
+      "sha256": "92a5283f00e9a92a32e25914b5dfee32659ddbc8932693f2f0a19894d407c740",
+      "path": "archives/windows-qa-receipts-12486386097.zip",
+      "official_digest_matches": true
+    },
+    {
+      "artifact_id": 12485916617,
+      "bytes": 22292790,
+      "sha256": "67fc08feda5ffe214eca9cd31e149b9561870498ddbe67a2befd564df6eaf3d2",
+      "path": "archives/windows-qa-12485916617.zip",
+      "official_digest_matches": true
+    }
+  ],
+  "extractions": [
+    {
+      "archive": "docs/reports/gauntlet/windows-native-a089-independent-20261023/archives/windows-qa-receipts-12486386097.zip",
+      "sha256": "92a5283f00e9a92a32e25914b5dfee32659ddbc8932693f2f0a19894d407c740",
+      "entries": 1,
+      "expanded_bytes": 4807935,
+      "destination": "builds/windows-native-a089-review/outer"
+    },
+    {
+      "archive": "docs/reports/gauntlet/windows-native-a089-independent-20261023/archives/windows-qa-12485916617.zip",
+      "sha256": "67fc08feda5ffe214eca9cd31e149b9561870498ddbe67a2befd564df6eaf3d2",
+      "entries": 302,
+      "expanded_bytes": 26641334,
+      "destination": "builds/windows-native-a089-review/full"
+    },
+    {
+      "archive": "builds/windows-native-a089-review/outer/qa-receipts.zip",
+      "sha256": "6aa26318a715ad6c1da0a1e67c276b4939af5dab1d2acf5560f0774911d9668a",
+      "entries": 226,
+      "expanded_bytes": 4760941,
+      "destination": "builds/windows-native-a089-review/receipts"
+    }
+  ],
+  "inner_receipts": {
+    "bytes": 4807935,
+    "sha256": "6aa26318a715ad6c1da0a1e67c276b4939af5dab1d2acf5560f0774911d9668a"
+  },
+  "decoded_job_log": {
+    "bytes": 1245064,
+    "sha256": "3e9cf74d2c2ded5f086f656acf8a6d8c3606e89f782b4c1de526e7b171244d83",
+    "LF": 21545,
+    "CRLF": 21539,
+    "kind": "Exact UTF-8 encoding of connector-decoded log response; not original GitHub log ZIP"
+  },
+  "untransferred_development_artifact": {
+    "artifact_id": 12485353979,
+    "bytes": 139299728,
+    "reason": "Above supported 32 MiB transfer cap; no request or independent EXE/PCK reparse."
+  },
+  "scope": "Official GitHub connector file references downloaded with download_file. No signed URL retained."
+}
