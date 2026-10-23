@@ -1,3 +1,21 @@
+# Isolated Windows controller component — 2026-10-23
+
+This checkout is /workspace/sightbreak-windows-reload-route-actual on
+codex/windows-reload-route-actual-20261023, from exact Windows 49ae54b0.
+Preregistration 0bd1fe11 precedes source ea6c330a272f17a8a68ef94af868c70bda95a91e.
+The optional native route callback now owns the first displacement. This is
+controller adaptation only; game tree, R2 WinUI, corridor, budgets, schedules and
+rules are unchanged. Full pure source/depth-one checks each pass 158 maintained
+methods (three old Windows skips) plus 20 additional methods on CPU 4. Four
+meaningful controls reject exact original controller bytes; failed outputs remain.
+Fresh independent source review and root release are still required. No native,
+export, CI or retry ran. Ordinary network disconnect/reload-start failure and all
+historical native failures remain unresolved. See
+[component handoff](../reports/gauntlet/windows-reload-route-actual-20261023/HANDOFF.md)
+for exact raw bindings, source, commands and largest uncertainty. Root/contributor
+checkouts and branches were not edited. The older root queue below is inherited
+context, not this component's current execution state.
+
 # Next session
 
 Updated 2026-10-23, 09:44 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
