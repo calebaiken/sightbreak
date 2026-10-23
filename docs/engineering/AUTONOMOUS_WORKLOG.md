@@ -477,3 +477,18 @@ fail and skip ordinary play. Test-only 3730273 plus independent 78d5fa1/2b43487
 allow repeat 39906639650 at b2e0293; actual ordinary play is now in progress.
 Windows frozen-ref review and fresh R3 native touch evidence acquisition are
 active. No broad release gate closes. NEXT_SESSION holds the exact continuation.
+
+## 2026-10-23: reject audio lifecycle analyzer source chronology
+
+Fresh independent source review of builder freeze 809dbc0 (preregistration
+23898fb, base c08889b) retains three pure counterexamples: accepted post-final
+weak data changes final liveness, early final weak data passes, and absent
+post-leave weak rows pass. The maintained 13 tests pass; the three independent
+rejection controls fail unchanged. Exact byte audit covers 323 base game files
+and 99 scripts, with only the declared input-mode hooks differing; stripping
+them reconstructs the original bytes. WeakRef observer properties are supported
+by separate read-only subreview. Actual ARM 39912086121 and root's separate bot
+verbose output were inspected; matching leak classes establish no shared cause.
+Verdict source REJECT, no native release. No Godot/import/compile/native/CI/OCR
+ran. Evidence and next correction commands are in
+`docs/reports/gauntlet/audio-exit-lifecycle/independent-source/REVIEW.md`.

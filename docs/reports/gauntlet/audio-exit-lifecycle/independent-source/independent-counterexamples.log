@@ -1,0 +1,35 @@
+test_final_weak_before_all_leave_boundaries_is_rejected (__main__.IndependentChronologyControls.test_final_weak_before_all_leave_boundaries_is_rejected) ... FAIL
+test_late_weak_after_final_checkpoint_is_rejected (__main__.IndependentChronologyControls.test_late_weak_after_final_checkpoint_is_rejected) ... FAIL
+test_missing_post_leave_weak_observations_is_rejected (__main__.IndependentChronologyControls.test_missing_post_leave_weak_observations_is_rejected) ... FAIL
+
+======================================================================
+FAIL: test_final_weak_before_all_leave_boundaries_is_rejected (__main__.IndependentChronologyControls.test_final_weak_before_all_leave_boundaries_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/audio-exit-lifecycle-source/docs/reports/gauntlet/audio-exit-lifecycle/independent-source/replay_counterexamples.py", line 46, in test_final_weak_before_all_leave_boundaries_is_rejected
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_late_weak_after_final_checkpoint_is_rejected (__main__.IndependentChronologyControls.test_late_weak_after_final_checkpoint_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/audio-exit-lifecycle-source/docs/reports/gauntlet/audio-exit-lifecycle/independent-source/replay_counterexamples.py", line 42, in test_late_weak_after_final_checkpoint_is_rejected
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_missing_post_leave_weak_observations_is_rejected (__main__.IndependentChronologyControls.test_missing_post_leave_weak_observations_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/audio-exit-lifecycle-source/docs/reports/gauntlet/audio-exit-lifecycle/independent-source/replay_counterexamples.py", line 50, in test_missing_post_leave_weak_observations_is_rejected
+    with self.assertRaises(ValueError):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.004s
+
+FAILED (failures=3)

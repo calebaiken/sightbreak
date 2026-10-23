@@ -1,5 +1,18 @@
 # Next session
 
+Independent audio source review checkpoint, 2026-10-23: own sparse worktree
+`/workspace/reviews/audio-exit-lifecycle-source`, branch
+`codex/audio-exit-lifecycle-source-critic-20261023`. Exact builder freeze
+`809dbc0921b1faa2abe25eb6bab3576becb48db8` is source REJECTED for accepted
+incomplete/reordered weak snapshots and contradictory final liveness. Original
+13 pure tests pass; three new independent controls fail as retained. See
+`docs/reports/gauntlet/audio-exit-lifecycle/independent-source/REVIEW.md` and run
+its unchanged `replay_counterexamples.py -v` after correction. All 323 base game
+and 99 base script hashes were checked; stripping only declared hooks reconstructs
+the original input-mode bytes. No Godot/import/compile/native/CI/OCR ran and no
+runtime release follows. Root's native lane remains idle; a future diagnostic
+requires a separately reviewed bounded wrapper. Mission status remains IN PROGRESS.
+
 Updated 2026-10-23, 06:19 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is

@@ -1,0 +1,52 @@
+{
+  "arm_run": "39912086121",
+  "arm_job": "120277159133",
+  "actual_review": "9f2a67f",
+  "arm_original_zip_sha256": {
+    "arm-39912086121-qa.zip": "6452eac95a8f55fd84d1bcba9e62a50763fda7d419b7c453d25d009aa0f8dfb7",
+    "arm-39912086121-receipts.zip": "960e1b6877c8c8c9d1b99672d94cd8eb5a3f34597dab21c7d6fe5efc8e24e5a8"
+  },
+  "arm_logs": {
+    "regressions/input_mode.log": {
+      "sha256": "cbb864afdb8a55bd9f359c8309418090dd56e0d17548e7c64fcc28e2fd4cb6e8",
+      "bytes": 15413,
+      "witness_lines": [
+        "INPUT_MODE_TEST checks=462 failures=0 graphical_pointer=false scope=simulated_capabilities_and_input_not_physical_hardware baseline=false",
+        "WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details)."
+      ]
+    },
+    "source-leak-verbose/repeat/input_mode.log": {
+      "sha256": "f51e5f285cd74732e25acdbfeab5446026a002d9ce04bcf4a3a83556f75becdd",
+      "bytes": 20746,
+      "witness_lines": [
+        "INPUT_MODE_TEST checks=462 failures=0 graphical_pointer=false scope=simulated_capabilities_and_input_not_physical_hardware baseline=false",
+        "WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).",
+        "Leaked instance: AudioStreamPlaybackWAV:9223373377454999925 - Reference count: 1",
+        "Leaked instance: AudioStreamWAV:9223372248365144678 - Reference count: 1",
+        "Orphan StringName: Master (static: 0, total: 1)"
+      ]
+    }
+  },
+  "root_bot_diagnostic": {
+    "source": "b87afb717bf09a78c6d36b164d48906902734bdb",
+    "retained_path": "/workspace/sightbreak-v1-recovered/docs/reports/gauntlet/m5-exhausted-primary-verbose-diagnostic/actual-r1",
+    "stdout_gzip_sha256": "b3f772d2bd993c7246b0ea7b9c15ac3c03a518fb1ef20a14f5f4532492e2c3b2",
+    "stdout_raw_sha256": "387762da62e75de243f95c84ee66126aa408495d19ef01bd7d5e6e300de2632c",
+    "stdout_bytes": 8567143,
+    "witness_lines": [
+      {
+        "line": 1389,
+        "text": "Leaked instance: AudioStreamPlaybackWAV:9223372369278539738 - Reference count: 1"
+      },
+      {
+        "line": 1390,
+        "text": "Leaked instance: AudioStreamWAV:9223372163673757853 - Reference count: 1"
+      },
+      {
+        "line": 1392,
+        "text": "Orphan StringName: Master (static: 0, total: 2)"
+      }
+    ],
+    "same_cause": "unproved; matching classes only"
+  }
+}

@@ -6,6 +6,14 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
+Independent audio lifecycle source review rejects exact 809dbc0: its analyzer
+accepts malformed final chronology and can contradict the explicit final weak
+row. Thirteen maintained pure controls pass; three independent controls fail as
+retained. Product bytes and stripped-hook test fidelity pass. See the scoped
+[source review](../reports/gauntlet/audio-exit-lifecycle/independent-source/REVIEW.md).
+The observer itself has no identified blocking source defect. No native attempt
+or source approval is released; existing strict leak failures remain open.
+
 Current execution is active again on 2026-10-23. The executor contains an older
 snapshot. Published checkpoint `917b143b` is recovered into
 `codex/v1-executor-recovery-20261023`; unpublished local work was not found in
