@@ -1,0 +1,16 @@
+test_final_strict_reread_must_match_first_accepted_identity (replayed_controls.BoundaryControls.test_final_strict_reread_must_match_first_accepted_identity) ... FAIL
+test_real_finalization_positive_control (replayed_controls.BoundaryControls.test_real_finalization_positive_control) ... ok
+test_source_drift_during_manifest_publication_must_reject (replayed_controls.BoundaryControls.test_source_drift_during_manifest_publication_must_reject) ... ok
+
+======================================================================
+FAIL: test_final_strict_reread_must_match_first_accepted_identity (replayed_controls.BoundaryControls.test_final_strict_reread_must_match_first_accepted_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-linux-profile-acquisition/docs/reports/gauntlet/m1-linux-profile-acquisition/correction-r2/retained-rejection/test_boundary_controls.py", line 55, in test_final_strict_reread_must_match_first_accepted_identity
+    self.assertTrue(state['mutated'])
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.543s
+
+FAILED (failures=1)

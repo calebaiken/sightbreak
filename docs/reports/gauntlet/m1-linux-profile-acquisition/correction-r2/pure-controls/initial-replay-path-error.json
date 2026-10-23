@@ -1,0 +1,58 @@
+{
+  "native_runs": 0,
+  "methods": 3,
+  "failures": 1,
+  "errors": 0,
+  "skips": 0,
+  "results": [
+    {
+      "mode": "valid",
+      "exit_code": 0,
+      "passed": true,
+      "phases": {
+        "version": true,
+        "artifact": true,
+        "block": true,
+        "finalize": true
+      },
+      "raw_manifest_binds_changed_file": false,
+      "error": null,
+      "overall": true,
+      "after_restore": true,
+      "mutated": false,
+      "control": "final-semantic-log-reread"
+    },
+    {
+      "mode": "valid",
+      "exit_code": 0,
+      "passed": true,
+      "phases": {
+        "version": true,
+        "artifact": true,
+        "block": true,
+        "finalize": true
+      },
+      "raw_manifest_binds_changed_file": false,
+      "error": null,
+      "control": "positive"
+    },
+    {
+      "mode": "valid",
+      "exit_code": 1,
+      "passed": false,
+      "phases": {
+        "version": true,
+        "artifact": true,
+        "block": true,
+        "finalize": true
+      },
+      "raw_manifest_binds_changed_file": false,
+      "error": null,
+      "mutated": true,
+      "sources_checked": 4,
+      "real_source_checker_rejects_changed_source": "Source is not exact and clean",
+      "checks_at_mutation": 3,
+      "control": "source-during-manifest-publication"
+    }
+  ]
+}
