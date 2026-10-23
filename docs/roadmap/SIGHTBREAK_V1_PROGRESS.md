@@ -18,8 +18,11 @@ failures, existing bot AI and 2,722-check symmetry regressions pass. Critic
 `f947350` verifies the actual comparison and all 480 symmetry pairs. See
 [final review](../reports/gauntlet/m5-dry-weapon-recovered-independent/FINAL_REVIEW.md).
 Whole-source aggregate and representative full matches remain open. Mac ordinary
-play and Linux profiling are in source review; a new touch-contrast reconstruction
-is beginning from recoverable source. No broader release gate changes status.
+play runs in actual ARM CI39904830917 at exact34dbd97 after independent source
+approval. Full local aggregate afca2f1 awaits its pre-run runner review. The single
+Linux GPU-profile attempt at b1a131ab fails initial LIVE while still BUY;
+actual raw review is pending. Touch oracle corrections precede any native run.
+See NEXT_SESSION for exact sources and commands. No broader gate changes status.
 
 A separate future market-harness guard is independently accepted at
 `985a9d71`, [draft PR29](https://github.com/calebaiken/sightbreak/pull/29):
