@@ -220,6 +220,28 @@ def main(args):
         check(exhausted["row_counts"] == {"CASE": 567, "STEP": 576, "SEQUENCE": 72, "CONTROL_STEP": 96, "CONTROL": 5, "POLICY_RANGE": 9, "POLICY_RESERVE_STEP": 20}, "new maintained exhausted-primary complete raw action set")
         check(rows(texts["bot-exhausted-primary"], "BOT_EXHAUSTED_POLICY_HEADER ") == [{"range_cases_expected": 9, "reserve_steps_expected": 20, "total_policy_rows_expected": 1268, "common_fixture_sha256": "540d24dda8e58f4685030e81b55ac3778ccbf31a89f76f9873ac598c32770731"}], "exhausted source-bound supplement header")
         check(rows(texts["bot-exhausted-primary"], "BOT_EXHAUSTED_POLICY_RESULT ") == [{"policy_rows": 1268, "range_rows": 9, "reserve_rows": 20, "failures_so_far": []}], "exhausted supplement terminal completion")
+        reserve_steps = [r for _, kind, r in exhausted_records if kind == "POLICY_RESERVE_STEP"]
+        reserve_summaries = rows(texts["bot-exhausted-primary"], "BOT_EXHAUSTED_POLICY_RESERVE ")
+        check(len(reserve_summaries) == 1, "one exhausted stock reserve-reload summary")
+        if reserve_summaries:
+            summary = reserve_summaries[0]
+            starts = [r["step"] for r in reserve_steps if r["before"]["weapon"] == r["after_action"]["weapon"] and r["before"]["reload"] == 0 < r["after_action"]["reload"]]
+            ends = [r["step"] for r in reserve_steps if r["before"]["weapon"] == r["after_action"]["weapon"] and r["before"]["reload"] > 0 == r["after_action"]["reload"]]
+            check(starts == [1] and ends == [14], "exhausted actual 24m stock reload duration and exact steps")
+            check(summary["initial_shooter"] == reserve_steps[0]["before"] and summary["final_shooter"] == reserve_steps[-1]["after_action"] and summary["initial_target"] == reserve_steps[0]["enemy_before"] and summary["final_target"] == reserve_steps[-1]["enemy_after_action"], "exhausted reserve summary bound to exact raw snapshots")
+            check(summary["draws"] == summary["reload_starts"] == summary["reload_completions"] == 1 and summary["reload_start_step"] == 1 and summary["reload_completion_step"] == 14 and summary["impossible_reload_requests"] == 0 and summary["steps"] == 20 and summary["name"] == "policy_reserve_24m", "exhausted reserve summary counters and identity")
+            check(summary["initial_target"] == summary["final_target"] and all(not r["actual_shots"] and not r["damage_events"] and not r["elimination_events"] and not r["empty_reload_request"] for r in reserve_steps), "exhausted reserve no target mutation, illegal shot or impossible reload")
+        far_sequences = []
+        for difficulty in ("normal", "hard"):
+            for primary in ("smg", "rifle", "marksman"):
+                label = "sequence/" + difficulty + "/" + primary + "/far_loaded"
+                sequence = [r for _, kind, r in exhausted_records if kind == "STEP" and r["label"] == label]
+                draws = sum(r["before"]["weapon"] != r["after_action"]["weapon"] for r in sequence)
+                shots = sum(len(r["actual_shots"]) for r in sequence)
+                check(len(sequence) == 8 and draws == 1 and shots > 0 and all(not r["empty_reload_request"] for r in sequence), "exhausted actual 24m draw/fire without impossible reload: " + label)
+                check(sequence[-1]["after_action"]["weapon"] == "sidearm" and sequence[-1]["after_action"]["ammo"] == 15 - shots and sequence[-1]["after_action"]["reserve"] == 0, "exhausted real sidearm consumption: " + label)
+                far_sequences.append(dict(label=label,draws=draws,shots=shots,final_ammo=sequence[-1]["after_action"]["ammo"]))
+        report["exhausted_actual_24m_sequences"] = far_sequences
         report["additional_exhausted_observable_predicates"] = exhausted["independent_predicates"]
         report["exhausted_fixture_checks"] = exhausted["reported_fixture_checks"]
         report["exhausted_event_totals"] = exhausted["all_row_totals"]
