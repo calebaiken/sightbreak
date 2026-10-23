@@ -1,0 +1,71 @@
+{
+  "cleanup_limit": "Observed stable PID identities, original process group and SID. Polling can miss an unobserved descendant escaping/reparenting between scans; no generic descendant/failure-path guarantee is claimed.",
+  "copied_game_files": 324,
+  "full_tracked_entries": 8933,
+  "generated_uid_bytes": "uid://v5jkognemvu\n",
+  "identity_checks": 12314,
+  "import_additions": 63,
+  "original_stderr": "WARNING: 2 ObjectDB instances were leaked at exit (run with `--verbose` for details).\n   at: cleanup (core/object/object.cpp:2536)\n",
+  "phases": [
+    {
+      "command": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--editor",
+        "--path",
+        "/workspace/sightbreak-exhausted-primary-benchmark/.local/exhausted-primary-r2-single-attempt-20261023/staged-project/game",
+        "--import"
+      ],
+      "end_utc": "2026-10-23T06:35:44.652589+00:00",
+      "exit_code": 0,
+      "name": "preparation-import",
+      "pid": 34219,
+      "root_identity": {
+        "comm": "Godot_v4.7.2-st",
+        "exe": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "pgid": 34219,
+        "pid": 34219,
+        "ppid": 33866,
+        "sid": 34219,
+        "start_ticks": 971492,
+        "state": "R"
+      },
+      "signals": [],
+      "start_utc": "2026-10-23T06:35:38.154746+00:00",
+      "terminal_observed_live": [],
+      "wall_seconds": 6.497861367000951
+    },
+    {
+      "command": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--headless",
+        "--path",
+        "/workspace/sightbreak-exhausted-primary-benchmark/.local/exhausted-primary-r2-single-attempt-20261023/staged-project/game",
+        "--script",
+        "res://tests/bot_exhausted_primary_probe.gd"
+      ],
+      "end_utc": "2026-10-23T06:36:06.928515+00:00",
+      "exit_code": 0,
+      "name": "baseline-probe",
+      "pid": 34468,
+      "root_identity": {
+        "comm": "Godot_v4.7.2-st",
+        "exe": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "pgid": 34468,
+        "pid": 34468,
+        "ppid": 33866,
+        "sid": 34468,
+        "start_ticks": 972148,
+        "state": "R"
+      },
+      "signals": [],
+      "start_utc": "2026-10-23T06:35:44.709890+00:00",
+      "terminal_observed_live": [],
+      "wall_seconds": 22.21864387900132
+    }
+  ],
+  "present_original_files_verified_against_git": 503,
+  "source_freeze": "b87afb717bf09a78c6d36b164d48906902734bdb",
+  "strict_native_verdict": "REJECT",
+  "wrapper_wall_seconds": 30.942106325999703
+}
