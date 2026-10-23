@@ -1,0 +1,24 @@
+{
+  "command": [
+    "timeout",
+    "60s",
+    "taskset",
+    "-c",
+    "4",
+    "env",
+    "PYTHONPATH=scripts",
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_touch_geometry_r4b",
+    "test_touch_method_r4b",
+    "test_touch_receipts_r4b_r2",
+    "test_touch_declaration_r4b_r3"
+  ],
+  "start_utc": "2026-10-23T09:11:47.681316+00:00",
+  "scope": "bounded pure replay; synthetic receipt/pixel controls are not native evidence",
+  "exit_code": 0,
+  "wall_seconds": 15.101710022001498,
+  "end_utc": "2026-10-23T09:12:02.783050+00:00"
+}
