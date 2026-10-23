@@ -119,7 +119,7 @@ func account_states_against_the_real_server(a, b, fixtures: Dictionary) -> void:
 	check(not first.has("_error") and not second.has("_error") and int(before.credits) - int(after.credits) == 150, "the same receipt id sent twice is charged once (%d -> %d)" % [int(before.credits), int(after.credits)])
 	# A real, unreachable server: the held account is stale, the balance unconfirmed, nothing invented.
 	var good_url: String = a.api.base_url
-	a.api.base_url = "http://127.0.0.1:9"
+	a.api.base_url = "http://native-receipt-oracle.invalid"
 	var ok: bool = await a._refresh()
 	check(not ok and a.load_outcome == "not_reached" and a.account_summary().state == "stale" and not a.account_summary().balance_verified, "an unreachable server leaves the held balance marked unconfirmed")
 	check(a.wallet.text.contains("LAST CONFIRMED"), "...and the header says so: " + a.wallet.text)

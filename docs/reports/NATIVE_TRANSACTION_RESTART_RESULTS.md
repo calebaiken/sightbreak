@@ -122,6 +122,14 @@ production test file was not changed. Both executed sources and logs are retaine
 The calibrated pass does not erase the original failure. These supplemental
 results are separate from the receipt oracle's successful `core_pass`.
 
+PR18's maintained test now adopts that same single-literal DNS calibration. The
+executed probe above has CRLF line endings; the maintained Git blob has LF endings
+and SHA-256 `516aaee3ec42410c0a566861c4988d3bec618b808cbbb733df99b77c3dc9d5f2`.
+Expanding those LF endings to CRLF reproduces all executed bytes exactly. The
+original `7b6f379` failure remains retained. This is a test portability fix, not a
+change to the measured shipping runtime or HTTP outcome classification; no new
+regression run is claimed for the publication commit.
+
 ## Raw evidence and reproduction
 
 [Evidence index](native-pg-restart-evidence/README.md) ·
