@@ -6,7 +6,7 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-Current execution is active on 2026-10-23, checkpoint 08:20 UTC. Root branch
+Current execution is active on 2026-10-23, checkpoint 08:31 UTC. Root branch
 `codex/v1-executor-recovery-20261023`, draft PR31, preserves the contributor
 checkout and PR27 → PR24 → PR23 → PR22 → PR16 dependencies. Published history
 is recovered; missing unpublished work is not claimed recovered. The independently
@@ -219,3 +219,20 @@ states. Original Linux objective failures, account trial 1's missing post-replay
 witness and all rejected fixtures remain unchanged. Trial 2 independently closes
 its declared current-source stock settlement/recovery scope, and Windows independently
 passes its selected native gates. Neither result closes whole G1/G3/G12/G16.
+
+## 2026-10-23, 08:31 UTC — diagnostic and source correction checkpoint
+
+Sole audio ownership attempt at 26a1c59 FAILS acquisition: 18.303288 seconds,
+all five native exits 0 and observed groups gone, but real header mix_rate 44100.0
+is rejected by the integer-only analyzer. Actual critic also finds 353 orphaned
+StringNames missed by native_log.failed; no strict-clean conclusion is valid.
+Root corrected its initial clean-log description. Original project/state/logs
+remain preserved; full independent actual review is active. No retry or cause
+claim. Root prereg dcee3e1/release 1d70987 and critic 33a2b31 precede runtime.
+
+Bot acquisition c7145cd and Linux acquisition 04bc153 are source-rejected for real
+false successes; corrections retain exact falsifiers. Touch method b001fc5 passes
+independent abb837b4 readiness with 56 additional mutation cases and no native
+quality approval. Windows cover-route af13a99 passes independent 5820ca7; combined
+root e28c8e9 is in source/shallow review before any hosted trial. All full gates
+retain their statuses. See NEXT_SESSION for exact branch paths and next actions.

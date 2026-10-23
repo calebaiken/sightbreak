@@ -563,3 +563,17 @@ touch receipt method b001fc5. No engine/import/native acquisition has run for th
 Original source rejections and falsifiers remain intact. Highest native priority
 is the bot candidate after controller qualification, then separate regressions.
 No full release gate closes; mission remains ACTIVE.
+
+
+## 2026-10-23, 08:31 UTC: execute ownership diagnostic; retain failures
+
+Root releases one exact 26a1c59 audio-owner acquisition after independent source
+acceptance e08b313 and fresh criteria 33a2b31. It ends exit 1 in 18.303288 seconds,
+all five native phases exit 0 with observed groups gone. Acquisition fails on
+actual float mix-rate header, and fresh critic identifies 353 unclaimed StringNames
+missed by the narrow scanner. Root corrects its premature clean-log description;
+raw files/project/state remain preserved. Full actual review continues; no retry
+or root-cause/leak-fix claim. Bot and Linux acquisition wrappers independently
+fail their exact source reviews; narrow corrections retain falsifiers. Touch R4B
+receipt method passes source readiness; Windows cover-route is integrated through
+e28c8e9 and combined shallow review is underway. Native and full RC gates stay open.

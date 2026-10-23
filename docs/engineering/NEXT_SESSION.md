@@ -1,13 +1,13 @@
 # Next session
 
-Updated 2026-10-23, 08:20 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 08:31 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. The automatic goal remains active. Read AGENTS.md and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
 
-## Live execution checkpoint — 2026-10-23, 08:20 UTC
+## Live execution checkpoint — 2026-10-23, 08:31 UTC
 
 The mission is ACTIVE. Root is `/workspace/sightbreak-v1-recovered`, own branch
 `codex/v1-executor-recovery-20261023`, [draft PR31](https://github.com/calebaiken/sightbreak/pull/31).
@@ -622,14 +622,40 @@ credential change. Human play/listening, physical GPUs/mobile/controllers, CS2
 media and Steam credentials remain explicit external gates. No background work
 is promised after execution stops.
 
-## Exact source review queue — 08:20 UTC
+## Current execution queue — 08:31 UTC
 
-The local native lane is idle and held. Five independent source reviews are active:
-bot acquisition c7145cd (accepted product 1b7ebc7), audio corrected wrapper 26a1c59
-(prior rejection 062147c/337d82aa retained), Linux wrapper 04bc153 (fixture 3fd9718),
-Windows ordinary cover-route af13a99 (handoff 66cf2cb), touch R4B corrected method
-b001fc5 (handoff 548e3569; prior rejection ce3510e retained). Use each exact pushed
-handoff and preserve original falsifiers. Native priority after source acceptance:
-one bot candidate acquisition, then independently reviewed actual output and
-separate existing regressions; audio ownership probe; Linux controlled block;
-touch comparable A/B. Each needs concrete root release and fresh actual critic.
+One native audio-owner diagnostic has completed, FAILED, at exact 26a1c59.
+Root prereg dcee3e1/release 1d70987 and fresh critic criteria 33a2b31 precede it.
+Raw `/workspace/sightbreak-audio-exit-lifecycle/.local/audio-owner-r1-20261023`;
+wrapper exit 1, whole 18.303288 seconds, all five native phases exit 0/scoped groups
+gone/no signals. Acquisition integrity is false: final analyzer rejects actual
+header `mix_rate:44100.0` because it requires int. The critic also finds 353
+`Orphan StringName:` lines and a 353-unclaimed summary missed by native_log.failed;
+root's preliminary clean-log description was corrected to the user. Originals
+are preserved. No strict-clean or leak-fix claim; full fresh actual review by
+`/root/audio_owner_native_fresh_critic` is active. No retry. All standalone
+identity sidecars must match validated embedded receipts. Use preserved raw
+bytes for any narrowly preregistered analyzer/scanner correction before another
+native release. Root outer tool responses are retained in native-owner-r1-root.
+
+The local native lane is now idle. Bot wrapper c7145cd is independently REJECTED
+b8ccf8f (root 47a7322): final whole/phase receipt writes escape caps and contradictory
+squad failure text is accepted. Builder correction prereg 2671fa6 precedes code;
+accepted product 1b7ebc7 stays unchanged. Linux wrapper 04bc153 is independently
+REJECTED ff4cc71 (root 5fd468e): seven late-byte false successes and three critical
+ECFG Linux override false accepts. Narrow correction is source-only.
+
+Touch R4B method b001fc5 independently passes abb837b4 (root 960c5fe): original
+falsifiers now reject, 54 supplied controls/56 independent mutation cases pass;
+genuine failing baseline stays comparable. Builder prepares concrete original
+bounded A/B recipe; no engine/render/import released. Windows cover-route af13a99
+passes 5820ca7; ordered root integration e28c8e9 is under combined shallow source
+review before ONE full hosted Windows run. Mac native accessibility source
+research identifies public AccessKit support and --accessibility always, but
+actual exported AX tree remains unobserved. Source-only read preflight planning
+must preserve privacy, original raw OCR/confidence gate and no arbitrary click.
+
+Next achievable native acquisition is touch A/B or corrected bot candidate,
+according to exact source readiness; root owns the lane and must assign fresh
+actual critics before release. Audio strict/analysis failures need pure evidence
+correction first. Keep all original failures and source IDs. No full RC gate closes.
