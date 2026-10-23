@@ -25,6 +25,12 @@ class OwnedWindowChanged(RuntimeError):
     pass
 
 
+def owned_visible_windows(rows, pid):
+    # MacReadOnly.windows supplies validated layer-zero metadata. Use the same
+    # PID/visibility selection for discovery and every later input guard.
+    return [row for row in rows if row.get('owner_pid') == pid and row.get('onscreen') is True]
+
+
 def no_symlinks(path):
     path = Path(path).absolute()
     for entry in (path, *path.parents):
@@ -260,8 +266,8 @@ class MacOrdinaryUI(MacMenuUI):
         return result
 
     def require_window(self):
-        # Retain exactly the base permission/window conditions, while recording
-        # the actual rows used by this component's decision, including failures.
+        # Preserve permission/isolation guards and retain every decision row.
+        # The selected ID must remain the only owned visible layer-zero window.
         require_private_userdir(self.private_directory, self.default_before)
         permissions = self.preflight()
         denied = [name for name in ('CGPreflightPostEventAccess', 'CGPreflightScreenCaptureAccess')
@@ -273,9 +279,10 @@ class MacOrdinaryUI(MacMenuUI):
                    expected_bounds_points=self.bounds, observed_owned_layer_zero_windows=current,
                    input_geometry_pinned=bool(getattr(self, 'input_geometry_pinned', False)),
                    cg_event_post_attempts=self.event_post_attempts)
-        matched = [row for row in current if row['window_id'] == self.window and row['onscreen']]
-        if len(matched) != 1 or not same_bounds(matched[0]['bounds_points_including_chrome'], self.bounds):
-            raise OwnedWindowChanged('Owned visible window or its geometry changed before input')
+        matched = owned_visible_windows(current, self.pid)
+        if (len(matched) != 1 or matched[0].get('window_id') != self.window
+                or not same_bounds(matched[0]['bounds_points_including_chrome'], self.bounds)):
+            raise OwnedWindowChanged('Unique owned visible window or its geometry changed before input')
 
     def neutral(self):
         super().neutral()

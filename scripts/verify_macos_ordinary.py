@@ -17,7 +17,7 @@ import uuid
 from build_manifest import BUILDS, OUTPUTS, clean, source, validate_record
 from macos_native_input import same_bounds
 from macos_ordinary_input import (MacOrdinaryUI, OwnedWindowChanged, account_home, capture_geometry, default_inventory, hud_values, inventory,
-    living_context, no_symlinks, require_field_menu, require_initial, require_private_userdir,
+    living_context, no_symlinks, owned_visible_windows, require_field_menu, require_initial, require_private_userdir,
     stage_app, verify_staged_app)
 from native_log import failed
 from native_observation import read_observation_json
@@ -53,7 +53,7 @@ def discover_startup_menu(api, client, select_candidate, capture, remaining, tra
             raise RuntimeError('Exact native client exited before startup menu readiness')
         rows = api.windows(client.pid)
         trace('startup_window_observation', observed_owned_layer_zero_windows=rows)
-        owned = [row for row in rows if row.get('owner_pid') == client.pid and row.get('onscreen') is True]
+        owned = owned_visible_windows(rows, client.pid)
         if len(owned) == 1:
             ui = select_candidate(owned[0])
             if ui.event_post_attempts:
