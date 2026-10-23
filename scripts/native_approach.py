@@ -4,7 +4,7 @@ import statistics
 import time
 
 
-def approach_floor(x, z, *, observe, key, pause, record, deadline, clock=time.monotonic):
+def approach_floor(x, z, *, observe, key, pause, record, deadline, clock=time.monotonic, pulse=None):
     """Walk coarsely, then pulse from rest instead of chasing delayed positions.
 
     The final pulses use the inspected 28 m/s² ground acceleration to limit
@@ -111,15 +111,27 @@ def approach_floor(x, z, *, observe, key, pause, record, deadline, clock=time.mo
             record('movement_control', mode='pulse' if fine else 'walk', distance=distance,
                    simulation_per_wall=rate, pulse_wall_seconds=duration if fine else None)
             command_start = clock()
-            steer(dx, dz, actor['yaw'])
-            settled.clear()
-            if fine:
-                pause(min(max(0, command_start + duration - clock()), max(0, deadline - clock())))
-                release()
+            if fine and pulse is not None:
+                mx = math.cos(actor['yaw']) * dx - math.sin(actor['yaw']) * dz
+                my = -math.sin(actor['yaw']) * dx - math.cos(actor['yaw']) * dz
+                wanted = tuple(name for name, enabled in (
+                    ('w', my > .15), ('a', mx < -.15), ('s', my < -.15), ('d', mx > .15)) if enabled)
+                pulse(wanted, min(duration, max(0, deadline - clock())), deadline)
+                if clock() >= deadline:
+                    raise TimeoutError('Original native approach deadline expired during route pulse')
+                settled.clear()
                 released_tick = tick
                 record('movement_pulse_released', requested=[x, z], released_after_tick=tick)
             else:
-                driving = True
+                steer(dx, dz, actor['yaw'])
+                settled.clear()
+                if fine:
+                    pause(min(max(0, command_start + duration - clock()), max(0, deadline - clock())))
+                    release()
+                    released_tick = tick
+                    record('movement_pulse_released', requested=[x, z], released_after_tick=tick)
+                else:
+                    driving = True
             pause(min(.05, max(0, deadline - clock())))
         raise TimeoutError('Legitimate native movement did not reach the requested floor position')
     finally:
