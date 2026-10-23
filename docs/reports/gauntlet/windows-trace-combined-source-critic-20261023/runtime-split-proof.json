@@ -1,0 +1,129 @@
+{
+  "source": "c0738163965804297a1881905d5bb4646da40a16",
+  "base": "49ae54b0e4f5d880bdf06e4eb783a616b2dff684",
+  "scope": "Four-path collector proposal, source-only; no implemented split or native pass",
+  "cpu_affinity": [
+    4
+  ],
+  "bindings": {
+    "game/scripts/gameplay/match.gd": {
+      "candidate_blob": "1729e7de87726048e604d158d44430ea7306af1c",
+      "base_blob": "b994a2cd40be160dc29bd8ed63646c7ceb01190a",
+      "candidate_sha256": "80c1cc2fceeb44dd4bf8c9726a8f6a77124e649a8535a9e508ea6d904ec9f238",
+      "base_sha256": "2db21ed6eb27d2095e899db836b417288c8a96e5e3239c8aa7affa6bb6a54173",
+      "recovered_sha256": "2db21ed6eb27d2095e899db836b417288c8a96e5e3239c8aa7affa6bb6a54173",
+      "candidate_bytes": 71755,
+      "base_bytes": 61763,
+      "mode": "100644",
+      "exact_erasure": true
+    },
+    "game/tests/movement_prediction_test.gd": {
+      "candidate_blob": "5fbdf8312624eae237203d73bb2831a5f1d0e7a7",
+      "base_blob": "74e30418680a9bcf74a03c0b0429887fae324cc7",
+      "candidate_sha256": "574adfb0f17ce00e31b8db0eabb7ab3192e4556cd3002095bb2b6df00c94494b",
+      "base_sha256": "aad242761fcd1541183fd29470530e6a883ed57b0b55134e418987691b0e344d",
+      "recovered_sha256": "aad242761fcd1541183fd29470530e6a883ed57b0b55134e418987691b0e344d",
+      "candidate_bytes": 6558,
+      "base_bytes": 3449,
+      "mode": "100644",
+      "exact_erasure": true
+    },
+    "scripts/fixtures/export_integration.gd": {
+      "candidate_blob": "75ee0adb6a44315fbd746ba2c91a71c2191cbacc",
+      "base_blob": "fc2024e15ec2bf88bfc9f86bf1667afbdbe83991",
+      "candidate_sha256": "ff45b3f96864ff1298f45388977817ef0c44f7eeaccff543a27e82c292e93912",
+      "base_sha256": "b5621ad5e52d17b938e81a285b4e690dc2bf10ae5955c0ae43442c78e0c079e4",
+      "recovered_sha256": "b5621ad5e52d17b938e81a285b4e690dc2bf10ae5955c0ae43442c78e0c079e4",
+      "candidate_bytes": 7709,
+      "base_bytes": 7493,
+      "mode": "100644",
+      "exact_erasure": true
+    },
+    "scripts/verify_integration_export.py": {
+      "candidate_blob": "b7fab40228d8a37825fc33b80c7b303a0cd4e9cf",
+      "base_blob": "159afd6943c44ea4dbe8c9a0ed416b4628ea4d8e",
+      "candidate_sha256": "cf295eab7f43280803b9649a5c54bd2c2fec45a0b13427d98d7ec42463ea812e",
+      "base_sha256": "6de6b78597d5af681f3ee883886422b065ebe2c2f96a72f628ff52e502f698fe",
+      "recovered_sha256": "6de6b78597d5af681f3ee883886422b065ebe2c2f96a72f628ff52e502f698fe",
+      "candidate_bytes": 53903,
+      "base_bytes": 52882,
+      "mode": "100644",
+      "exact_erasure": true
+    }
+  },
+  "flag_ast_cases": [
+    {
+      "enabled": false,
+      "client": [
+        "game",
+        "--quit-after",
+        "10"
+      ],
+      "server": [
+        "godot",
+        "--",
+        "--output=fresh"
+      ],
+      "result": {}
+    },
+    {
+      "enabled": true,
+      "client": [
+        "game",
+        "--quit-after",
+        "10",
+        "--",
+        "--native-input-observation"
+      ],
+      "server": [
+        "godot",
+        "--",
+        "--output=fresh",
+        "--native-input-observation"
+      ],
+      "result": {
+        "input_consumption_observation": {
+          "enabled": true,
+          "scope": "Debug guest-loopback read-only stage observations; observer overhead unmeasured; original schedules, waits and pass predicates unchanged"
+        }
+      }
+    }
+  ],
+  "controller_imports": [
+    "argparse",
+    "ctypes",
+    "ctypes.util",
+    "hashlib",
+    "json",
+    "os",
+    "platform",
+    "signal",
+    "pathlib",
+    "re",
+    "shutil",
+    "subprocess",
+    "threading",
+    "time",
+    "urllib.parse",
+    "PIL",
+    "build_manifest",
+    "toolchain",
+    "native_log"
+  ],
+  "reader_dependency_found": false,
+  "erasure_restores_all_four_original_files": true,
+  "godot_new_check_calls_syntactic": 13,
+  "godot_new_checks_with_patch_loop": 17,
+  "godot_controls_reachable_in_original_native_suite": true,
+  "lexical_mutator_patterns_absent": [
+    "@rpc",
+    "\\.rpc(?:_id)?\\(",
+    "_input_stream\\.(?:accept|pop|forget|reset_epoch)\\(",
+    "_prediction\\.(?:predict|packet|reconcile|reset)\\(",
+    "_peer_lifecycle\\.(?:active|allow_input|admitted|forget|reject|connected)\\(",
+    "\\b(?:set_local_input|start_reload|_connect_client|_apply_snapshot)\\(",
+    "Input\\.(?:parse_input_event|action_press|action_release|flush_buffered_events)\\(",
+    "^\\s*(?:actor\\.|options\\[|_local_input\\s*=|_peer_actors\\[|_last_input_sequence\\[|connection_state\\s*=)"
+  ],
+  "passed": true
+}
