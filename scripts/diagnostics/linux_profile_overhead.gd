@@ -104,7 +104,7 @@ func _canonical(value):
 			return result
 		TYPE_DICTIONARY:
 			var result := {}
-			var keys := value.keys()
+			var keys: Array = value.keys()
 			keys.sort_custom(func(a, b): return str(typeof(a)) + JSON.stringify(a, "", true, true) < str(typeof(b)) + JSON.stringify(b, "", true, true))
 			for key in keys:
 				if typeof(key) not in [TYPE_STRING, TYPE_STRING_NAME, TYPE_INT, TYPE_FLOAT]:

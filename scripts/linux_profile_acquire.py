@@ -27,13 +27,13 @@ import toolchain
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT / 'docs/reports/gauntlet/m1-linux-profile-acquisition'
-OUTPUT = ROOT / 'builds/linux-profile-acquisition-r1'
+OUTPUT = ROOT / 'builds/linux-profile-acquisition-r2'
 PINS = REPORT / 'pins.json'
 INSTALL = Path('/workspace/tools/godot-4.7.2')
 LANE_LOCK = Path('/tmp/sightbreak-linux-profile-overhead.lock')
 ACQUISITION_LOCK = Path('/tmp/sightbreak-linux-profile-acquisition.lock')
 ACCEPTED = {'scripts/linux_profile_overhead.py': '3d495f74c7799e58616288a8812c29829c45b426ae737fcc73a5712c63782561',
-            'scripts/diagnostics/linux_profile_overhead.gd': '1e3f4094f2439a7ae054455c5f7e2ca4a993a15067affebce57e760569ee1dae',
+            'scripts/diagnostics/linux_profile_overhead.gd': 'bac96e5c3aa9e63dfe0aa41522076cb6352293a3d5d9e70657a19cdfa4d52b92',
             'scripts/diagnostics/linux_profile_overhead.tscn': 'acc3cd62c2a72005c112014ed24320093d6f772d5c0f459cda5f24e3cf05fe61'}
 CAPS = {'preflight': 60, 'stage': 45, 'version': 15, 'import': 120, 'import-inventory': 30,
         'export': 120, 'artifact': 60, 'seal': 30, 'block': 750, 'finalize': 60}
