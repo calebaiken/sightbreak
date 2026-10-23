@@ -1,0 +1,19 @@
+test_analyze_audio_lifecycle (unittest.loader._FailedTest.test_analyze_audio_lifecycle) ... ERROR
+
+======================================================================
+ERROR: test_analyze_audio_lifecycle (unittest.loader._FailedTest.test_analyze_audio_lifecycle)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_analyze_audio_lifecycle
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 137, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-audio-exit-lifecycle/scripts/test_analyze_audio_lifecycle.py", line 9, in <module>
+    import analyze_audio_lifecycle as diagnostic
+ModuleNotFoundError: No module named 'analyze_audio_lifecycle'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

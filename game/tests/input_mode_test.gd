@@ -2,6 +2,10 @@ extends SceneTree
 ## Capability/input simulation through the real main controller, not hardware QA.
 var checks := 0
 var failures := 0
+var audio_probe
+
+func audio_checkpoint(stage: String) -> void:
+	if audio_probe != null: audio_probe.snapshot(stage, true)
 
 func check(value: bool, message: String) -> void:
 	checks += 1
@@ -10,7 +14,9 @@ func check(value: bool, message: String) -> void:
 		push_error(message)
 
 func frames(count := 2) -> void:
-	for _i in count: await process_frame
+	for _i in count:
+		await process_frame
+		if audio_probe != null: audio_probe.snapshot("existing_process_frame")
 
 func _initialize() -> void:
 	run.call_deferred()
@@ -23,6 +29,9 @@ func run() -> void:
 	var baseline := ""
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--baseline-source="): baseline = arg.trim_prefix("--baseline-source=")
+	if OS.get_cmdline_user_args().has("--audio-lifecycle-diagnostic"):
+		audio_probe = load("res://tests/audio_lifecycle_probe.gd").new()
+		audio_probe.attach(self)
 	var adapter := "\nvar simulated_capabilities := {\"mobile\":false,\"touchscreen\":false}\nvar simulated_pads: Array[int] = []\nvar simulated_axes := {}\nfunc input_capabilities() -> Dictionary:\n\treturn simulated_capabilities\nfunc connected_controllers() -> Array[int]:\n\treturn simulated_pads\nfunc controller_axis(device: int, axis: int) -> float:\n\treturn float(simulated_axes.get(Vector2i(device,axis),0.0))\nfunc controller_button(_device: int, _button: int) -> bool:\n\treturn false\n"
 	var script := GDScript.new()
 	if baseline.is_empty():
@@ -183,10 +192,13 @@ func run() -> void:
 	main.build_hud()
 	main.close_overlay()
 	check(main.touch.enabled and Input.mouse_mode == Input.MOUSE_MODE_VISIBLE, "Mobile defaults to touch independently of reported hardware")
+	audio_checkpoint("before_final_leave")
 	main.leave_match()
+	audio_checkpoint("after_final_leave")
 	main.queue_free()
 	await frames(3)
 	print("INPUT_MODE_TEST checks=%d failures=%d graphical_pointer=%s scope=simulated_capabilities_and_input_not_physical_hardware baseline=%s" % [checks,failures,graphical,not baseline.is_empty()])
+	if audio_probe != null: audio_probe.finish()
 	quit(1 if failures else 0)
 
 func hud_footer(main: Node) -> Label:
@@ -294,7 +306,9 @@ func hud_mode_transitions(main: Node) -> void:
 		main.close_overlay()
 		main._physics_process(1.0/60)
 		check(not main.match_game._local_input.fire and main.match_game._local_input.move == Vector2.ZERO, context + " explicit resume has no stale touch movement/fire")
+		audio_checkpoint("before_hud_leave")
 		main.leave_match()
+		audio_checkpoint("after_hud_leave")
 		await frames(3)
 	main.set_physics_process(true)
 	main.profile.data.settings.ui_text_scale = 1.0
