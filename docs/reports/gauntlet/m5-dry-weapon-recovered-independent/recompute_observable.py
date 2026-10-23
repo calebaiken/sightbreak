@@ -89,7 +89,8 @@ def main():
         for key, value in expected.items():
             actual_value = actual.get(key)
             equal = (isinstance(actual_value, (float, int)) and not isinstance(actual_value, bool)
-                     and math.isclose(actual_value, value, abs_tol=0.000001)) if isinstance(value, float) else actual_value == value
+                     and math.isclose(actual_value, value, abs_tol=0.000001)) if isinstance(value, float) else (
+                         type(actual_value) is type(value) and actual_value == value)
             check(equal, f"{label}: {key} expected {value!r}, got {actual_value!r}")
 
     check(len(rows["ENGINE"]) == 1, "Exactly one engine marker")
