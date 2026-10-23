@@ -1,0 +1,117 @@
+{
+  "passed": true,
+  "observer_start": {
+    "cap_seconds": 1440,
+    "discovery_cap_seconds": 60,
+    "event": "start",
+    "interval_seconds": 0.1,
+    "monotonic": 26841.660069248,
+    "observer": {
+      "affinity": [
+        4
+      ],
+      "argv": [
+        "python3",
+        "-B",
+        "docs/reports/gauntlet/m1-linux-profile-acquisition/native-r2-independent/observe_processes.py",
+        "--root-release-ref",
+        "90a9cab61a554672306d5a630e15e25ea93c8dd0"
+      ],
+      "comm": "python3",
+      "cwd": "/workspace/reviews/linux-profile-acquisition-r2-native",
+      "exe": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "identity_revalidated": true,
+      "nice": 0,
+      "pgid": 159705,
+      "pid": 159705,
+      "ppid": 561,
+      "scheduler": 0,
+      "selected_environment": {},
+      "sid": 159705,
+      "sockets": [],
+      "start_ticks": 2684156,
+      "state": "R",
+      "threads": {
+        "159705": [
+          4
+        ]
+      }
+    },
+    "preexisting_listeners": {
+      "/tmp/.X11-unix/X99127": {
+        "exists": false
+      },
+      "/tmp/.X99127-lock": {
+        "exists": false
+      },
+      "tcp": [
+        "0: 00000000:0410 00000000:0000 0A 00000000:00000000 00:00000000 00000000  1000        0 1779 1 0000000095642f56 100 0 0 10 0"
+      ],
+      "tcp6": [],
+      "udp": [],
+      "udp6": [],
+      "unix_display_or_owned": []
+    },
+    "release_reference": "90a9cab61a554672306d5a630e15e25ea93c8dd0",
+    "semantics": "Read-only observations; no signals or children; no CPU utilization sampling",
+    "source": "216d39ada8f9d11e2d8544d01fde42da49607b14",
+    "source_path": "/workspace/sightbreak-linux-profile-fixture-native-types",
+    "terminal_grace_seconds": 10,
+    "utc": "2026-10-23T11:21:04.888317+00:00"
+  },
+  "supervisor_discovered": {
+    "event": "supervisor_discovered",
+    "identity": {
+      "affinity": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "argv": [
+        "python3",
+        "-B",
+        "scripts/linux_profile_acquire.py",
+        "--execute-frozen-source",
+        "216d39ada8f9d11e2d8544d01fde42da49607b14"
+      ],
+      "comm": "python3",
+      "cwd": "/workspace/sightbreak-linux-profile-fixture-native-types",
+      "exe": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "identity_revalidated": true,
+      "nice": 0,
+      "pgid": 159835,
+      "pid": 159836,
+      "ppid": 159835,
+      "scheduler": 0,
+      "selected_environment": {},
+      "sid": 159835,
+      "sockets": [],
+      "start_ticks": 2687284,
+      "state": "R",
+      "threads": {
+        "159836": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    "monotonic": 26872.942317122,
+    "utc": "2026-10-23T11:21:36.170565+00:00"
+  },
+  "discovery_delay_seconds": 31.28224787400177,
+  "claim": {
+    "path": "/workspace/sightbreak-linux-profile-fixture-native-types/builds/linux-profile-acquisition-r2/attempt.claim",
+    "bytes": 41,
+    "sha256": "4acbb513924953a18c53c984fc5ed8c7253be0774885699fbf981711aba4cdde",
+    "content": "216d39ada8f9d11e2d8544d01fde42da49607b14\n"
+  },
+  "observed_event_count": 107,
+  "last_event": "observer_return",
+  "utc": "2026-10-23T11:22:22.100050+00:00",
+  "monotonic": 26918.871801341
+}
