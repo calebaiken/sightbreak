@@ -6,7 +6,25 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-Updated 2026-10-22, 08:56 UTC. **IN PROGRESS / PRIMARY**. Persistent tracker
+**Current execution BLOCKED:** the managed executor failed provisioning on
+2026-10-23 (container_creation / container_service_failed / transport_timeout).
+The persistent mission remains IN PROGRESS / PRIMARY. Exact local branch
+recovery and verified remote commits are in [NEXT_SESSION](../engineering/NEXT_SESSION.md).
+Local root was last observed at `da46730b`; remote mission remains `ad6cdc20`.
+Neither unpushed files nor native process state can be inspected during this failure.
+
+A separate future market-harness guard is independently accepted at
+`985a9d71`, [draft PR29](https://github.com/calebaiken/sightbreak/pull/29):
+actual CI [39896279199](https://github.com/calebaiken/sightbreak/actions/runs/39896279199)
+passes 37 tests, no skips. It rejects stale login reads and enforces successful
+post-replay reads before final SQL/observer acceptance. Initial deadline
+regression, corrected source, baseline false acceptance and full CI logs are
+retained in [independent review c00f38a3](https://github.com/calebaiken/sightbreak/blob/c00f38a3fc58a7909f5f09c664b8023dfe6c2669/docs/reports/gauntlet/m3-market-refresh-guard/independent-critic/REVIEW.md).
+Production/game/backend source and the accepted `882931dd` archive are unchanged.
+This is a source/pure-test increment; no full release gate is promoted.
+
+
+Updated 2026-10-23, 03:44 UTC. **IN PROGRESS / PRIMARY**. Persistent tracker
 [issue #25](https://github.com/calebaiken/sightbreak/issues/25); initialization
 `561d0cb`. No native Codex goal API is exposed. Branch `codex/v1-mission-playability`,
 [draft PR27](https://github.com/calebaiken/sightbreak/pull/27), preserves
