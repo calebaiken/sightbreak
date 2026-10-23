@@ -1,42 +1,5 @@
 # Next session
 
-## Separate market refresh guard, 2026-10-23
-
-Own branch `codex/m3-market-refresh-guard-20261023-0322`, draft
-[PR29](https://github.com/calebaiken/sightbreak/pull/29), starts at exact
-`ad6cdc20db2a2f3ac179ba3cf3bed502620b6171` and targets
-`codex/v1-mission-playability`. No shared branch was updated or merged.
-
-Tested source `985a9d71be546723adfb38f406302537a0a3f751` passes 37 pure
-tests in 0.084 seconds, zero skips, actual Actions run
-[39896279199](https://github.com/calebaiken/sightbreak/actions/runs/39896279199),
-job `120227376236`. The full mocked baseline runner demonstrably accepts stale
-login reads after replay; the correction requires actual fresh GET observations
-and rejects before final SQL or observer. Initial 36-test pass plus independent
-queued-deadline source finding and correction are retained in the
-[report](../reports/gauntlet/m3-market-refresh-guard/REPORT.md).
-
-Independent final criticism is pending. Original market archive/source
-`882931dd` remains intact and is audited under its explicit old success-only
-event schema; future runtime always requires strict ingress/status provenance.
-No Godot, Docker, PostgreSQL or production API was executed for this increment.
-The selected filesystem environment failed to query executor configuration
-capabilities. Use connected GitHub tools for review; do not claim local execution.
-
-To reproduce on a usable checkout of the PR branch:
-
-```sh
-git show ad6cdc20db2a2f3ac179ba3cf3bed502620b6171:scripts/test_postgres_receipt_recovery.py > /tmp/sightbreak-market-refresh-baseline.py
-cd scripts
-SIGHTBREAK_REFRESH_BASELINE=/tmp/sightbreak-market-refresh-baseline.py python3 -B -m unittest -v test_postgres_receipt_oracle test_postgres_receipt_guards test_postgres_receipt_refresh
-```
-
-Next: finish independent source/CI review, then qualify a real native market
-campaign on the exact corrected source when an execution environment is usable.
-Whole mission, G3/G7/G16, store/case and rendered recovery remain open. The prior
-root checkpoint below retains its original source identities.
-
-
 Updated 2026-10-22, 08:56 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native Codex goal API is exposed. Read AGENTS.md, the mission and the canonical
