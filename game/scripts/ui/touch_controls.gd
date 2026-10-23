@@ -188,8 +188,9 @@ func _draw() -> void:
 		if key == "move": continue
 		var point := control_point(key)
 		var r := radius(key)
-		draw_circle(point, r, Color(0.045, 0.058, 0.072, 0.42))
-		draw_arc(point, r, 0, TAU, 48, Color(0.85, 0.72, 0.45, 0.95) if editing else Color(0.83, 0.87, 0.89, 0.5), 1.25)
+		draw_circle(point, r, Color(0.045, 0.058, 0.072, 0.86))
+		draw_arc(point, r, 0, TAU, 48, Color(0.015, 0.02, 0.028, 0.96), 5.25)
+		draw_arc(point, r, 0, TAU, 48, Color(0.85, 0.72, 0.45, 0.95) if editing else Color(0.83, 0.87, 0.89, 0.95), 1.25)
 		if key == "fire":
 			draw_arc(point, r - 5, -PI * 0.8, -PI * 0.2, 24, Color(0.77, 0.24, 0.30, 0.95), 2.5)
 		if actions.get(key, false):
@@ -200,6 +201,7 @@ func _draw() -> void:
 		var depleted: bool = counts.has(key) and int(counts[key]) <= 0
 		var ink := Color(0.9, 0.92, 0.94, 0.35 if depleted else 0.9)
 		_draw_action_icon(key, point + Vector2(0, -8), ink)
+		draw_string_outline(font, point + Vector2(-width / 2, 17), label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, 3, Color(0, 0, 0, 0.4 if depleted else 1.0))
 		draw_string(font, point + Vector2(-width / 2, 17), label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(1, 1, 1, 0.4 if depleted else 1.0))
 		if counts.has(key):
 			# Remaining-utility badge on the upper right of the button.
@@ -207,10 +209,14 @@ func _draw() -> void:
 			draw_circle(badge, 9, Color(0.78, 0.67, 0.43, 0.95) if not depleted else Color(0.3, 0.33, 0.37, 0.9))
 			var digits := str(int(counts[key]))
 			var digit_width := font.get_string_size(digits, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
-			draw_string(font, badge + Vector2(-digit_width / 2, 4.5), digits, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(0.04, 0.05, 0.07))
+			draw_string(font, badge + Vector2(-digit_width / 2, 4.5), digits, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(1, 1, 1) if depleted else Color(0.04, 0.05, 0.07))
 	var origin := move_origin if not editing and fingers.values().has("move") else control_point("move")
-	draw_arc(origin, 65 * hud_scale, 0, TAU, 48, Color(0.8, 0.85, 0.9, 0.24), 2.0)
-	draw_circle(origin + Vector2(movement.x, -movement.y) * 40 * hud_scale, 23 * hud_scale, Color(0.8, 0.85, 0.9, 0.25))
+	draw_arc(origin, 65 * hud_scale, 0, TAU, 48, Color(0.015, 0.02, 0.028, 0.96), 6.0)
+	draw_arc(origin, 65 * hud_scale, 0, TAU, 48, Color(0.8, 0.85, 0.9, 0.95), 2.0)
+	var knob := origin + Vector2(movement.x, -movement.y) * 40 * hud_scale
+	draw_circle(knob, 23 * hud_scale, Color(0.015, 0.02, 0.028, 0.96))
+	draw_arc(knob, 23 * hud_scale, 0, TAU, 48, Color(0.015, 0.02, 0.028, 0.96), 4.0)
+	draw_circle(knob, 23 * hud_scale, Color(0.8, 0.85, 0.9, 0.9))
 	if editing:
 		draw_string(font, Vector2(size.x * 0.30, size.y * 0.45), "DRAG CONTROLS  /  TAP SAVE ABOVE", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color(0.9, 0.78, 0.5))
 
