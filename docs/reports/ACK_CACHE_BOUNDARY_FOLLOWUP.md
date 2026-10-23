@@ -68,3 +68,65 @@ it. Identity-bearing capture commands and the newly shuffled mapping remain in
 the external `controller/` directory until the same critic freezes its follow-up
 verdict. No critic is launched by this worker. PR21 remains draft; prediction
 default-off, protocol6 and live rewind off remain in force.
+
+## Captured result
+
+The workload was committed and pushed **before capture** at
+`b4b3db044fc762fbb5c9eb69da8713b316fdb496`, directly after parent `6d2b38df`.
+The first capture completed both short serial native invocations successfully;
+the subsequent server restart did not require repeating them.
+
+| Insertion | Observed count | Retained size | Evictions | Retained IDs | Original anchor | Drift from original anchor |
+| --- | ---: | ---: | ---: | --- | --- | ---: |
+| 1 | 1 | 1 | 0 | 1 | `[3, 0.0625, -2]` | 0 m |
+| 120 | 120 | 120 | 0 | 1–120 | `[3, 0.0625, -2]` | 3.71875 m |
+| 121 | 121 | 120 | 1 | 2–121 | `[3, 0.0625, -2]` | **3.75 m** |
+
+The raw trace contains **every insertion**, not just these three boundary rows.
+At insertion121 the received/latest position is `[6.75, 0.0625, -2]`, the oldest
+retained position is `[3.03125, 0.0625, -2]`, and the previous-snapshot delta is
+**0.03125 m**. Both oldest and latest retained samples still reference the original
+anchor. Exact arithmetic checks pass; no tolerance or rounding hides a discrepancy.
+
+All **121 legacy rows compare exactly** between frozen701 and the unchanged
+diagnostic runtime. In particular, the old error series remains `[0.5]` after
+every insertion; history stays empty after ACK1; positions, velocities, sequence,
+correction records/counts, visual offsets and combat-state controls match.
+Baseline cache assertions are **N/A because the helper is absent**, not a new
+baseline regression or failed old gate.
+
+Native assertions passed: baseline **242**, diagnostic runtime **484**, both with
+zero failures, zero exit codes and no script/resource-leak errors in captured
+logs. Assertion count is not the improvement metric: the added artifact supplies
+the missing raw evidence for an already reviewed runtime boundary. The previous
+six-condition campaign and maintained gates were not rerun.
+
+### Exact provenance
+
+| Item | SHA256 / revision |
+| --- | --- |
+| Frozen external workload | `b4b3db044fc762fbb5c9eb69da8713b316fdb496` |
+| Native fixture SHA256 | `33ea6a44b45120ad11baa8ee46bad31dcca9b4a3fc7ae89a2419a7795deb4518` |
+| Driver SHA256 | `a179632642e80dd8ac2e68155bef9723aa0f63398308531f36b10d59ec616e31` |
+| Shared slice-local capture utility SHA256 | `95a72a5125ff59619fadf8801c665a000a36895800d8424a458852bed36c60d5` |
+| Official Godot 4.7.2 binary SHA256 | `ab1824f85bfd8e0e4128182c000c4003a3e042245b2967848d089b2a04b22424` |
+| Neutral trace ZIP SHA256 | `70a15c1f330c7e9e51bf50fc52673243dd3cbe62dd030acdc60081eba6443517` |
+
+The driver checked each cached shipping tree against its exact Git archive before
+running, verified it unchanged afterwards, and checked the candidate shipping
+tree against `0fbce120`. Native fixture and driver hashes also match their frozen
+Git blobs. [Raw traces, logs, source receipt and audit](ack-cache-boundary-v3/README.md).
+
+### Follow-up critic handoff
+
+Give the same critic only
+[`blind-traces.zip`](ack-cache-boundary-v3/blind-traces.zip), or its identical
+isolated copy at
+`C:/Users/blith/AppData/Local/Temp/opencode/ack-cache-boundary-neutral-r1/blind-traces.zip`.
+The two new labels were independently shuffled; the private source mapping and
+identity-bearing capture commands remain in the external controller directory.
+They are not committed or supplied with the packet. Freeze the outcome-only
+follow-up verdict before revealing that key.
+
+The parent R-WINS/source-PASS records remain as summarized above. Acceptance of
+this new trace artifact by that critic is **pending**; no own critic was run.
