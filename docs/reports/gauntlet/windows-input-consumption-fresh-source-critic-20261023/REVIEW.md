@@ -70,8 +70,31 @@ Both original input logs have zero observation records and the analyzer rejects
 them as insufficient. Original run39940242244 ordinary-input failure and its
 unknown cause remain unchanged. Screenshots were hashed, not visually reviewed.
 
-Maintained complete/depth-one pure checks and pure grammar results will be sealed
-in a follow-up evidence commit. No Godot compile/type/API test, import/export,
+Both complete and independently initialized depth-one checkouts pass193 pure
+methods:173 maintained (170 pass/three old Windows skips), plus20 approach/Mac
+methods. All17 per-group logs are retained and hash-verified in each checkout.
+Bash syntax passes. Both three-file pure grammar checks pass using the existing
+gdtoolkit4.3.4/Lark1.2.2; no tool was installed by this critic. Depth one is
+shallow=true, exactly one commit at c0738163, clean tracked state, and859 present
+tracked files independently match exact candidate blobs (473 non-document paths;
+10,257 explicitly listed sparse omissions include historical reports). The same
+25 independent controls replay unchanged with the same16 met/nine failed result.
+The complete review HEAD includes only report additions over the candidate.
+
+The supplemental duplicate/role controls reject duplicate JSON keys, duplicate
+record indices and repeated consumption sequences. A tenth supported invalid case
+falsely completes: authority-only peer_expired inside the client role. That exact
+case also passes in depth one. Four supplement cases yield three expected
+rejections/one false acceptance. Combined independent coverage is29 cases,19
+expectations met and ten false-completeness cases, with no change to the frozen
+R3 inputs. The10 supported invalid packets each replay through the actual CLI
+with exit0, diagnostic_complete=true and no errors; cli-replays/ retains both
+streams, output JSON and command receipts. These CLI exits are retained failures.
+
+The declared schema has no terminal-capture marker. A valid early pipeline
+prefix cannot establish complete later capture, shutdown or whole-run coverage.
+Acquisition must bind whole retained streams to terminal supervision separately.
+That limitation does not turn identical input bytes into opposing test outcomes. No Godot compile/type/API test, import/export,
 engine/native run, observer, render or CI has executed for this review. Added
 Godot runtime controls remain unexecuted. Even grammar/pure success cannot
 establish executable readiness, successful native input or a gameplay fix.
