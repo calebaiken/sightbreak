@@ -50,15 +50,18 @@ gates separately. Prior numericFAIL/R2importFAIL remain unchanged.
 independently source-accepted791998d3 after bf47f7c9 rejection. Per-down context
 checks now stop original two blockers; semantic23/eight extra controls pass;
 101 maintained methods pass with three old skips. Original full-rig ordinal
-failures and legacy/corridor runtime failures retained. Integrate six accepted
-Windows paths into own root, independently qualify exact union with bot/guard
-and both test registrations, then preregister a fresh actual critic and ONE
-new combined Windows run. No Windows native/CI release yet. Tiny raw-patch
+failures and legacy/corridor runtime failures retained. Six accepted Windows paths are now integrated as 55f27596/c82fbf6c, clean
+freeze 49ae54b0. Fresh /root/windows_pulse_combined_fresh_critic independently
+confirms the exact six-path source union and awaits touch lane clearance for
+full combined pure/depth-one tests. No old aggregate pass transfers to the
+changed validation source. After exact union acceptance, preregister a fresh
+actual critic and ONE new combined Windows run. No Windows native/CI release yet. Tiny raw-patch
 whitespace packaging note is not a product defect; don't alter raw evidence.
 
 Mac R2 source d6cb78aa on codex/m2-mac-ax-read-only-r2 fixes the five fresh AX
 boundary failures; final own/depth-one replay and exact handoff are being sealed,
-with heavy replays paused during touch. It needs independent re-review before
+handoff 5cf20855 is complete (118 exact depth-one methods); /root/mac_ax_fresh_source_critic
+has been reactivated for light prereg/source review, with heavy replays paused during touch. It needs independent re-review before
 any diagnostic-only ARM release. Original cf4de47f source REJECT12ec93dd and
 actual c838907 gameplay FAIL remain. No confidence lowering, input injection or
 full Mac retry. Linux minimal type/hash/output source216d39ad is accepted
