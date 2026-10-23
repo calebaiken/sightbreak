@@ -39,7 +39,7 @@ def main():
     test = (ROOT / 'scripts/test_linux_profile_acquire.py').read_bytes()
     assert sha(test.replace(b'false\\n}\\n\\0\',', b'false\\n}\\n\',')) == frozen['original_acquisition_test_sha256']
     assert not (ROOT / 'builds/linux-profile-acquisition-r3').exists()
-    assert not (ROOT / 'builds/linux-profile-acquisition-r3.claim').exists()
+    assert not (ROOT / 'builds/linux-profile-acquisition-r3/attempt.claim').exists()
     print(json.dumps({'passed': True, 'source': git('rev-parse', 'HEAD').decode().strip(),
                       'shallow': git('rev-parse', '--is-shallow-repository').decode().strip() == 'true',
                       'unchanged_tree_sha256': frozen['unchanged_tree_sha256'],
