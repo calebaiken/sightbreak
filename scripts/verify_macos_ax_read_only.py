@@ -13,7 +13,8 @@ import uuid
 
 from build_manifest import BUILDS, OUTPUTS, clean, source, validate_record
 from macos_ax_appkit import AXWindow
-from macos_ax_contract import CAPS, require_capture, require_owned, validate_observation
+from macos_ax_contract import (CAPS, require_capture, require_owned, validate_collection,
+                               validate_observation, validate_request)
 from macos_deploy_ocr import png_dimensions
 from macos_ordinary_input import (account_home, capture_geometry, default_inventory, inventory,
     no_symlinks, stage_app, verify_staged_app)
@@ -39,7 +40,7 @@ def launch_arguments(executable, trace_directory):
 
 
 def private_menu_inventory(directory, default_before):
-    """Allow/report engine-created private menu files; never read profile contents."""
+    """Inventory engine-created files by hash; never parse/retain profile fields."""
     if default_inventory() != default_before:
         raise RuntimeError('Default user directory changed during private AX diagnostic')
     require_absent_profile()
@@ -220,13 +221,15 @@ def run(output):
             nonce = uuid.uuid4().hex
             budget = min(CAPS['seconds'], remaining(menu_until))
             ax_started = time.monotonic()
+            ax_until = min(menu_until, ax_started + budget)
             ax_file = output / 'ax-observation.json'
             child = command('ax-observer', [sys.executable, str(AX_SOURCE), '--pid', str(client.pid),
                             '--window', str(ui.window), '--bounds', *map(str, ui.bounds), '--nonce', nonce,
                             '--budget', str(budget), '--report', str(ax_file)], budget, allow_failure=True)
-            ax_finished = time.monotonic()
             remaining(menu_until)
             after_rows = ui.require_target()
+            ax_finished = time.monotonic()
+            remaining(ax_until)
             if ax_file.stat().st_size > CAPS['receipt_bytes']:
                 raise RuntimeError('AX observer receipt exceeds preregistered byte bound')
             ax = json.loads(ax_file.read_text())
@@ -234,14 +237,19 @@ def run(output):
                                         'nonce': nonce, 'started_monotonic': ax_started,
                                         'finished_monotonic': ax_finished, 'budget_seconds': budget,
                                         'owned_rows_before': before_rows, 'owned_rows_after': after_rows}
+            binding = dict(pid=client.pid, window=ui.window, bounds=ui.bounds, nonce=nonce,
+                           observer_pid=child.pid, started=ax_started, finished=ax_finished, budget=budget)
+            validate_request(ax, **binding)
+            result['query_prerequisites'] = True
             if child.returncode:
                 raise RuntimeError('Read-only AX observer did not complete; original failure retained')
-            exposure = validate_observation(ax, menu, pid=client.pid, window=ui.window, bounds=ui.bounds,
-                                             nonce=nonce, observer_pid=child.pid, started=ax_started,
-                                             finished=ax_finished, budget=budget)
+            validate_collection(ax, **binding)
+            result['bounded_traversal_complete'] = True
+            exposure = validate_observation(ax, menu, **binding)
             for path, expected in native_files.items():
                 if digest(path) != expected:
                     raise RuntimeError('Original focused native capture/Vision bytes changed')
+            remaining(ax_until)
             result.update(query_prerequisites=True, bounded_traversal_complete=True,
                           unique_semantic_candidate=True, native_pixel_frame_agreement=True,
                           semantic_exposure=exposure, original_native_ocr_unchanged=True)
@@ -311,12 +319,14 @@ def run(output):
                 result['private_user_directory_after'] = inventory(private)
                 result['private_menu_profile_files_present'] = [name for name in ('offline_training.json', 'offline_training.json.tmp')
                                                                  if os.path.lexists(private / name)]
-                result['private_profile_scope'] = 'Engine-owned private menu files preserved/inventoried; contents not read; no input or reward action'
+                result['private_profile_scope'] = 'Engine-owned private menu files preserved with byte hashes; no profile fields parsed/retained; no input or reward action'
                 log = private / 'mac-ordinary-engine.log'
                 if log.is_file():
                     (output / 'engine.log').write_bytes(log.read_bytes())
                 if result['passed']:
                     private_menu_inventory(private, default_before)
+                if os.path.lexists(output / 'stock-offline-trace'):
+                    raise RuntimeError('Unexpected match trace exists; no deploy/reward action is permitted')
             except BaseException as error:
                 failures.append('private_userdata: ' + str(error))
         for path in sorted(output.glob('*.log')):
@@ -328,7 +338,8 @@ def run(output):
                 validate_record('macos', before)
                 if not result['source_unchanged']:
                     raise RuntimeError('Source/export changed during diagnostic')
-                if result['bound_source_sha256'] != {path.name: digest(path) for path in BOUND_SOURCES}:
+                if ('bound_source_sha256' in result
+                        and result['bound_source_sha256'] != {path.name: digest(path) for path in BOUND_SOURCES}):
                     raise RuntimeError('Bound observer/controller/capture source changed')
             except BaseException as error:
                 failures.append('source: ' + str(error))

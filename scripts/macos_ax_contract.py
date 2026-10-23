@@ -15,7 +15,7 @@ ATTRIBUTES = ('AXRole', 'AXChildren', 'AXWindows', 'AXTitle', 'AXPosition',
               'AXSize', 'AXEnabled', 'AXWindow')
 READ_APIS = ('AXUIElementCreateApplication', 'AXUIElementGetPid', 'AXUIElementSetMessagingTimeout',
              'AXUIElementCopyAttributeValue', 'AXUIElementGetAttributeValueCount', 'AXUIElementCopyAttributeValues')
-PRUNED_ROLES = ('AXTextField', 'AXTextArea', 'AXComboBox')
+PRUNED_ROLES = ('AXTextField', 'AXSecureTextField', 'AXSearchField', 'AXTextArea', 'AXComboBox')
 NODE_KEYS = {'node', 'parent', 'depth', 'pid', 'role', 'pruned', 'title',
              'normalized_title', 'enabled', 'frame_points', 'window_frame_points'}
 
@@ -85,14 +85,13 @@ def corroborating_text(capture):
     return matches[0]
 
 
-def validate_observation(receipt, capture, *, pid, window, bounds, nonce,
-                         observer_pid, started, finished, budget):
-    """Validate exposure only; never return a click point or alter raw OCR rows."""
-    require_capture(capture, pid, window, bounds)
+def validate_request(receipt, *, pid, window, bounds, nonce, observer_pid, started, finished, budget):
+    """Bind trust/method/time separately from traversal and semantic readiness."""
+    rectangle(bounds)
     if (receipt.get('schema') != SCHEMA or receipt.get('nonce') != nonce
             or receipt.get('owner_pid') != pid or receipt.get('window_id') != window
             or receipt.get('observer_pid') != observer_pid
-            or receipt.get('AXIsProcessTrusted') is not True or receipt.get('complete') is not True
+            or receipt.get('AXIsProcessTrusted') is not True
             or receipt.get('caps') != CAPS or receipt.get('input_events_posted') != 0
             or receipt.get('permission_requests_made') != 0
             or receipt.get('coordinate_mapping') != MAPPING):
@@ -102,14 +101,23 @@ def validate_observation(receipt, capture, *, pid, window, bounds, nonce,
             or not 0 < budget <= CAPS['seconds'] or not started <= first <= last <= finished
             or last - first >= budget or finished - started >= budget):
         raise RuntimeError('AX receipt is stale or exceeds its original deadline')
-    snapshots = receipt.get('snapshots')
-    if not isinstance(snapshots, list) or not 1 <= len(snapshots) <= CAPS['snapshots']:
-        raise RuntimeError('Invalid bounded AX snapshot sequence')
     calls = receipt.get('api_call_counts')
     if (not isinstance(calls, dict) or set(calls) - set(READ_APIS)
             or any(not isinstance(value, int) or isinstance(value, bool) or not 0 <= value <= 32768
                    for value in calls.values()) or sum(calls.values()) > 32768):
         raise RuntimeError('AX API receipt violates read-only call allowlist/bound')
+    return first, last
+
+
+def validate_collection(receipt, **binding):
+    first, last = validate_request(receipt, **binding)
+    pid, window, bounds = binding['pid'], binding['window'], binding['bounds']
+    if receipt.get('complete') is not True:
+        raise RuntimeError('AX traversal did not complete')
+    require_owned(receipt.get('last_owned_layer_zero_rows'), pid, window, bounds)
+    snapshots = receipt.get('snapshots')
+    if not isinstance(snapshots, list) or not 1 <= len(snapshots) <= CAPS['snapshots']:
+        raise RuntimeError('Invalid bounded AX snapshot sequence')
     total, previous_snapshot_end = 0, first
     for snapshot in snapshots:
         snap_first, snap_last = snapshot.get('started_monotonic'), snapshot.get('finished_monotonic')
@@ -167,6 +175,14 @@ def validate_observation(receipt, capture, *, pid, window, bounds, nonce,
     windows = latest.get('windows', [])
     if len(windows) != 1 or not same_bounds(windows[0].get('frame_points'), bounds):
         raise RuntimeError('Unique AX window/native frame agreement missing')
+    return latest
+
+
+def validate_observation(receipt, capture, **binding):
+    """Validate exposure only; never return a click point or alter raw OCR rows."""
+    pid, window, bounds = binding['pid'], binding['window'], binding['bounds']
+    require_capture(capture, pid, window, bounds)
+    latest = validate_collection(receipt, **binding)
     matches = [node for node in latest['nodes'] if node.get('role') == 'AXButton'
                and node.get('normalized_title') == LABEL]
     if len(matches) != 1:

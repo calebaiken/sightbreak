@@ -228,6 +228,10 @@ class ControllerControls(unittest.TestCase):
                 self.assertFalse(result['passed'])
                 self.assertEqual(result['cg_event_post_attempts'],0)
                 self.assertLessEqual(focus,1)
+                if fault=='wrong_words':
+                    self.assertTrue(result['query_prerequisites'])
+                    self.assertTrue(result['bounded_traversal_complete'])
+                    self.assertFalse(result['unique_semantic_candidate'])
 
     def test_late_geometry_window_or_foreground_change_preserves_current_failure_rows(self):
         for fault in ('late_window','late_geometry','lost_focus'):

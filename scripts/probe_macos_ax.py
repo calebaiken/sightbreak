@@ -47,6 +47,35 @@ class NativeAX(MacReadOnly):
             ('AXValueGetType', [C.c_void_p], C.c_uint32),
             ('AXValueGetValue', [C.c_void_p, C.c_uint32, C.c_void_p], C.c_bool)):
             self.bind(self.ax, name, args, returns)
+        for name, args, returns in (
+            ('CGDisplayCopyDisplayMode', [C.c_uint32], C.c_void_p),
+            ('CGDisplayModeGetWidth', [C.c_void_p], C.c_size_t),
+            ('CGDisplayModeGetHeight', [C.c_void_p], C.c_size_t),
+            ('CGDisplayModeGetPixelWidth', [C.c_void_p], C.c_size_t),
+            ('CGDisplayModeGetPixelHeight', [C.c_void_p], C.c_size_t)):
+            self.bind(self.cg, name, args, returns)
+
+    def displays(self):
+        displays = super().displays()
+        for display in displays:
+            self.guard()
+            mode = self.cg.CGDisplayCopyDisplayMode(display['display_id'])
+            if not mode:
+                raise RuntimeError('Current display mode unavailable for scale provenance')
+            try:
+                width, height = self.cg.CGDisplayModeGetWidth(mode), self.cg.CGDisplayModeGetHeight(mode)
+                pixel_width = self.cg.CGDisplayModeGetPixelWidth(mode)
+                pixel_height = self.cg.CGDisplayModeGetPixelHeight(mode)
+                if not all(0 < value <= 131072 for value in (width, height, pixel_width, pixel_height)):
+                    raise RuntimeError('Current display mode exceeds bounded geometry')
+                display['mode_dimensions'] = [width, height]
+                display['mode_pixel_dimensions'] = [pixel_width, pixel_height]
+                display['mode_pixel_per_unit'] = [pixel_width / width, pixel_height / height]
+                display['scale_scope'] = 'Raw public CGDisplayMode metadata; not an assumed AX coordinate multiplier'
+            finally:
+                self.cf.CFRelease(mode)
+            self.guard()
+        return displays
 
     def guard(self):
         if time.monotonic() >= self.deadline:
@@ -110,6 +139,8 @@ class NativeAX(MacReadOnly):
     def string(self, element, name, limit=512):
         if name not in ('AXRole', 'AXTitle'):
             raise RuntimeError('String reads restricted to role and allowed title')
+        if name == 'AXTitle' and self.role(element) not in ('AXButton', 'AXWindow'):
+            raise RuntimeError('Title reads require semantic button or owned window role')
         value = self.attribute(element, name)
         if self.cf.CFGetTypeID(value) != self.cf.CFStringGetTypeID():
             raise RuntimeError('Malformed AX string type')
@@ -124,8 +155,6 @@ class NativeAX(MacReadOnly):
         return self.string(element, 'AXRole', 64)
 
     def title(self, element):
-        if self.role(element) not in ('AXButton', 'AXWindow'):
-            raise RuntimeError('Title reads require semantic button or owned window role')
         return self.string(element, 'AXTitle', CAPS['title_bytes'])
 
     def frame(self, element):
@@ -193,11 +222,18 @@ class BoundedObserver:
         self.backend, self.result, self.clock, self.sleep = backend, result, clock, sleep
         self.examined = 0
 
+    def receipt_room(self):
+        # Stop before a bounded next row/failure/API summary could cross the
+        # actual cap. Keep the observed partial tree and mark it incomplete.
+        if len(json.dumps(self.result, ensure_ascii=False, allow_nan=False).encode()) > CAPS['receipt_bytes'] - 65536:
+            raise RuntimeError('AX receipt byte ceiling approached; incomplete partial observations retained')
+
     def snapshot(self, application):
         api = self.backend
         snapshot = {'started_monotonic': self.clock(), 'cg_before': api.guard(),
                     'windows': [], 'nodes': [], 'complete': False}
         self.result['snapshots'].append(snapshot)  # Preserve partial failures too.
+        self.receipt_room()
         windows = api.elements(application, 'AXWindows', min(16, CAPS['nodes'] - self.examined))
         if not windows:
             snapshot['cg_after'] = api.guard()
@@ -210,6 +246,7 @@ class BoundedObserver:
             row = {'pid': api.pid, 'role': role, 'frame_points': frame,
                    'title': api.title(window)}
             snapshot['windows'].append(row)
+            self.receipt_room()
         if (len(windows) != 1 or snapshot['windows'][0]['role'] != 'AXWindow'
                 or not same_bounds(snapshot['windows'][0]['frame_points'], api.bounds)):
             raise RuntimeError('AX windows do not uniquely agree with the owned CG frame')
@@ -242,6 +279,7 @@ class BoundedObserver:
                     raise RuntimeError('AX button names another containing window')
                 row.update(enabled=api.enabled(element), frame_points=api.frame(element),
                            window_frame_points=api.frame(containing))
+            self.receipt_room()
             children = api.elements(element, 'AXChildren', CAPS['nodes'] - self.examined - len(queue))
             queue.extend((child, row['node'], depth + 1) for child in children)
         snapshot['complete'] = any(row['role'] == 'AXButton' for row in snapshot['nodes'])
@@ -311,12 +349,10 @@ def main():
     result = collect(arguments.pid, arguments.window, arguments.bounds, arguments.nonce, arguments.budget)
     data = (json.dumps(result, sort_keys=True, ensure_ascii=False, allow_nan=False) + '\n').encode()
     if len(data) > CAPS['receipt_bytes']:
-        # Do not truncate or pass partial evidence. Bounded structure/title caps
-        # normally keep this below the cap; retain only the explicit failure.
-        data = (json.dumps({'schema': SCHEMA, 'complete': False, 'nonce': arguments.nonce,
-                            'failure': {'type': 'RuntimeError', 'message': 'AX receipt byte cap exceeded'},
-                            'input_events_posted': 0, 'permission_requests_made': 0}) + '\n').encode()
-        result['complete'] = False
+        # Never replace failed observations with a different, truncated receipt.
+        # The supervisor retains this invariant failure and all existing native
+        # captures/CG guards; an absent AX receipt cannot qualify exposure.
+        raise RuntimeError('AX receipt byte invariant failed; no truncated substitute written')
     with arguments.report.open('xb') as stream:
         stream.write(data)
     print(data.decode(), end='')

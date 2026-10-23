@@ -90,6 +90,7 @@ def observation(backend=None):
               'api_call_counts': {'AXUIElementGetPid': 4},
               'coordinate_mapping': contract.MAPPING, 'started_monotonic': 10., 'finished_monotonic': 10.2}
     BoundedObserver(backend, result, clock=backend.clock, sleep=backend.sleep).observe()
+    result['last_owned_layer_zero_rows'] = backend.guard()
     return result
 
 
@@ -126,6 +127,12 @@ class StructuralControls(unittest.TestCase):
         self.assertNotIn(('AXChildren', 2), backend.calls)
         self.assertNotIn(('pid', 99), backend.calls)
         self.assertNotIn('DO NOT READ', json.dumps(receipt))
+        for role in contract.PRUNED_ROLES:
+            backend=FakeBackend();backend.objects[2]['role']=role
+            result=observation(backend)
+            self.assertNotIn(('AXChildren',2),backend.calls)
+            self.assertNotIn(('pid',99),backend.calls)
+            self.assertNotIn('DO NOT READ',json.dumps(result))
 
     def test_wrong_pid_cycle_depth_and_node_exhaustion_fail_real_traversal(self):
         for fault in ('pid', 'cycle', 'depth', 'nodes'):
@@ -149,6 +156,34 @@ class StructuralControls(unittest.TestCase):
         backend = FakeBackend(); backend.objects[0]['children'] = []
         backend.until = 10.15
         with self.assertRaises(TimeoutError): observation(backend)
+
+    def test_cumulative_large_busy_trees_and_serialized_byte_ceiling_cannot_reset(self):
+        backend=FakeBackend();backend.objects[0]['children']=list(range(10,109))
+        for index in range(10,109):backend.objects[index]={'role':'AXGroup','children':[]}
+        with self.assertRaises(RuntimeError):observation(backend)
+        backend=FakeBackend();backend.objects[0]['children']=list(range(10,250))
+        for index in range(10,250):
+            backend.objects[index]={'role':'AXButton','title':'\\'*512,'enabled':True,'children':[],
+                                    'frame':[100,320,350,100]}
+        result={'snapshots':[],'examined_nodes':0,'complete':False}
+        observer=BoundedObserver(backend,result,clock=backend.clock,sleep=backend.sleep)
+        with self.assertRaisesRegex(RuntimeError,'byte ceiling'):observer.observe()
+        self.assertLess(len(json.dumps(result,ensure_ascii=False).encode()),contract.CAPS['receipt_bytes'])
+        self.assertFalse(result['complete'])
+        self.assertGreater(result['examined_nodes'],1)
+
+    def test_stale_snapshot_private_call_or_spoofed_parent_window_identity_reject(self):
+        for fault in ('stale_snapshot','api','parent','pruned_child','bool_node','bool_depth','window_pid','window_role'):
+            receipt=observation();snapshot=receipt['snapshots'][0]
+            if fault=='stale_snapshot':snapshot['started_monotonic']=0
+            elif fault=='api':receipt['api_call_counts']['AXUIElementPerformAction']=1
+            elif fault=='parent':snapshot['nodes'][1]['parent']=99
+            elif fault=='pruned_child':snapshot['nodes'][3].update(parent=2,depth=2)
+            elif fault=='bool_node':snapshot['nodes'][1]['node']=True
+            elif fault=='bool_depth':snapshot['nodes'][1]['depth']=True
+            elif fault=='window_pid':snapshot['windows'][0]['pid']=13
+            else:snapshot['windows'][0]['role']='AXGroup'
+            with self.subTest(fault=fault),self.assertRaises(RuntimeError):validate(receipt)
 
     def test_window_duplicates_foreign_containing_window_and_geometry_disagreement_fail(self):
         for fault in ('window', 'frame', 'containing'):
@@ -209,12 +244,35 @@ class StructuralControls(unittest.TestCase):
                 elif fault=='id':rows[0]['window_id']=55
                 else:rows[0]['bounds_points_including_chrome'][2]+=1
                 with self.subTest(key=key,fault=fault),self.assertRaises(RuntimeError):validate(receipt)
+        receipt=observation();rows=receipt['last_owned_layer_zero_rows']
+        rows.append(dict(rows[0],window_id=55))
+        with self.assertRaises(RuntimeError):validate(receipt)
 
     def test_actual_attribute_gate_rejects_private_account_value_and_text_reads(self):
         reader=NativeAX.__new__(NativeAX)
         for name in ('AXValue','AXSelectedText','AXDescription','AXHelp','AXIdentifier','_AXUIElementGetWindow','AXTitleUIElement'):
             with self.subTest(name=name),self.assertRaises(RuntimeError):reader.key(name)
         self.assertEqual(contract.ATTRIBUTES,('AXRole','AXChildren','AXWindows','AXTitle','AXPosition','AXSize','AXEnabled','AXWindow'))
+
+    def test_actual_reader_methods_fail_before_any_sensitive_string_or_private_call(self):
+        reader=NativeAX.__new__(NativeAX)
+        reader.role=lambda _: 'AXTextField'
+        with self.assertRaises(RuntimeError):reader.title(1)
+        with self.assertRaises(RuntimeError):reader.string(1,'AXValue')
+        with self.assertRaises(RuntimeError):reader.elements(1,'AXSelectedText',2)
+        with self.assertRaises(RuntimeError):reader.call('AXUIElementPerformAction',1,2)
+
+    def test_actual_native_call_rejects_late_success_and_changed_window(self):
+        reader=NativeAX.__new__(NativeAX)
+        reader.calls={}
+        reader.ax=type('SyntheticFunctions',(),{'AXUIElementGetPid':staticmethod(lambda *_:0)})()
+        checks=[]
+        def guard():
+            checks.append(1)
+            if len(checks)>1:raise TimeoutError('Synthetic late return')
+        reader.guard=guard
+        with self.assertRaises(TimeoutError):reader.call('AXUIElementGetPid',1,2)
+        self.assertEqual(reader.calls,{'AXUIElementGetPid':1})
 
 
 class SourceControls(unittest.TestCase):
