@@ -1,10 +1,127 @@
 # Next session
 
-Updated 2026-10-22, 08:56 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 03:38 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native Codex goal API is exposed. Read AGENTS.md, the mission and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
+
+## Recovery checkpoint — read this before the previous queue
+
+The 2026-10-22 session was interrupted by an actual agent usage limit. On
+2026-10-23 the managed environment is starting and offline; local files and
+process state cannot yet be inspected. Preserve every local branch and raw
+output. The SHAs below are last observed, not a claim that the restarted checkout
+has been verified. No native job is authorized by elapsed waiting time.
+
+- Remote mission branch remains `ad6cdc20db2a2f3ac179ba3cf3bed502620b6171`.
+  Last observed local root is `da46730b8f2757eeb51daa91b5b85a6925a9309f`
+  on `codex/v1-mission-playability`, with accepted snapshot evidence not pushed.
+  Never reset the local root to the older remote head.
+- Current automatic Codex goal context is active. An exposed goal tool can stop
+  the current goal but exposes no registration, metadata-update or ID lookup.
+  Keep issue #25 as the named IN PROGRESS / PRIMARY tracker; no native ID is known.
+- First restore the environment, read current cloud policy/readiness and inspect
+  each listed worktree with `git status` and exact HEAD. Fetch current refs.
+  Do not start Docker until actual managed socket/network readiness is checked.
+- Large report directories exhausted disk during one new checkout. Completed own
+  clean report worktrees were narrowed without changing HEAD or ignored outputs;
+  last observed free space was about 2.1 GiB. Receipt:
+  `builds/session-storage-recovery-0900.json`. Create new worktrees with
+  `--no-checkout`, select sparse scopes, then populate only the new own checkout.
+  Include specific report directories, never the whole gauntlet tree by default.
+
+Resume the following concrete work:
+
+1. **M6 touch contrast / live capture.** Worktree
+   `/workspace/sightbreak-touch-contrast`, branch `codex/m6-touch-contrast`,
+   last observed `8a9cb47f`. Product draw candidate `7993cac2` independently
+   passes all 180 active-label cases (minimum 7.526:1), icon/count/joystick checks,
+   and fresh blind comparisons. Input/layout code outside drawing is identical.
+   Native underlays prove reconstruction within one RGB level; failed earlier
+   pixel methods remain. Final component/OCR review stack ends `12d6426d` in
+   `/workspace/reviews/touch-contrast-critic`. Exact same-frame USE crop
+   `173f47f6` passes five new controls and eight unchanged legacy OCR tests.
+   Original live capture still FAILS its five-second OCR predicate/cleanup;
+   failure and all raw captures are retained, including
+   `native-evidence-before-live-fix.tar.gz` (SHA
+   ce884c3c5991a8cdf980b4c19d7a4e7ccada969ac80f023784500842a8996e12).
+   Accepted owned-descendant helper source `6f0c8345`, independent
+   `42b2807b`, is integrated locally. Controller integration `8a9cb47f`
+   has only compile checking; its critic hit the usage limit before reviewing.
+   Assign a fresh independent critic to scope setup/restoration failure,
+   registration failure, stage deadlines and retained cleanup receipts.
+   Then freeze/export the exact source and rerun the original
+   `capture_desktop_layouts.py --sizes 1280x720 --touch-toggle` with the
+   original 120-second case / five-second transition budgets. Preserve actual
+   neutral input, screenshots, source/artifact binding and clean close. Only
+   independent actual-output acceptance permits root integration.
+2. **Store recovery.** Worktree
+   `/workspace/sightbreak-postgres-store-receipt-recovery`, branch
+   `codex/m3-postgres-store-receipt-recovery`, last frozen `909dbfa2`.
+   Fresh critic rejected its final-refresh oracle: pre-POST login reads could
+   substitute for a failed post-response refresh. Builder began corrections,
+   but post-interruption working changes are unknown. Preserve them. Require
+   successful final /me and /inventory after the replay response, then a fresh
+   exact source freeze, independent falsifiers and two planned live SQL witnesses
+   before the bounded store campaign. No store engine/service run was released.
+3. **Market oracle followup via GitHub.** During environment startup, new own
+   branch `codex/m3-market-refresh-guard-20261023-0322` from `ad6cdc20`
+   implements the same future-test guard. Preregistered `95e423b8`, initial
+   candidate `a4217377`, [draft PR29](https://github.com/calebaiken/sightbreak/pull/29)
+   targets the mission branch. A separate fresh critic and actual pure CI are
+   active; do not infer a pass. Accepted old market source `882931dd` and its
+   raw production result remain immutable: actual timeline rows 68/69 contain
+   successful post-response reads after row 67. Historical-schema evidence
+   cannot acquire newly invented ingress fields.
+4. **M5 snapshot and dry weapon.** Local root `da46730b` accepts the injected
+   snapshot at `f6f55bce`, independent `f4bed74c`: 450 records, 64 postures,
+   384 decisions and 23,553 recomputed predicates. It proves mixed LOS/contact
+   and dry-SMG behavior in the fixture, not the historical timeout cause.
+   Missing child-PID coverage and 2.349-second saved-image OCR overlap remain.
+   Next own worktree `/workspace/sightbreak-bot-dry-weapon`, branch
+   `codex/m5-bot-dry-weapon`, preregistration `853b434d` /
+   `45ca8512`. Common fixture/candidate state after interruption is unknown.
+   Require baseline proof before a narrow ammo-selection fix, retain easy-profile
+   behavior, authority/economy/vision, and treat missing holstered state as unknown.
+   Active ammo-store entries are stale by design; use active fields for totals.
+   No dry-weapon engine run or accepted gameplay change is on record.
+5. **Linux cost capability.** Own `/workspace/sightbreak-linux-gles-profile`,
+   branch `diagnostic/linux-gles-profile`, exact `ab4fa6d0`; independent
+   source acceptance `9a3d6488`. Only one sampler-off / profile-on ordinary
+   seed-42 plant attempt with original 180-second bound is approved in source.
+   Runtime was not released. New controller needs a fresh exact-source export.
+   Historical averaged GLES query rows cannot be phase-tagged by stdout arrival,
+   partition CPU cost or establish physical FPS. Original Linux gameplay deadline
+   failures stay failed.
+6. **Mac ordinary journey.** Own `/workspace/sightbreak-mac-journey`, branch
+   `codex/m2-mac-ordinary-journey`, created clean at `da46730b`.
+   Last work was source investigation; check actual changes before proceeding.
+   Proposed narrow stock Deploy / living fire and reload / FIELD MENU and LEAVE /
+   clean close needs real CGEvent input, window/chrome/Retina mapping and verified
+   private userdata via pinned --main-pack/override support. No Mac compile,
+   dispatch or native gameplay pass occurred. Preserve original budgets and do
+   not claim the full Windows journey/objectives/match from a smaller component.
+7. **Reference research.** Local report commit `12ae2fcd` on
+   `codex/shipped-reference-research` records two actually inspected official
+   Red Eclipse gallery images as limited environment/character references.
+   Third-party pixels remain outside Git. Original CS2 GitHub attachments redirect
+   to an unallowed host; no redirect was followed. G18 remains blocked.
+
+Remote reassessment on 2026-10-23 found unchanged main `4d8cdb33`, PR26 map
+`778c89a6` and PR28 `2641ddf8`. V3 sibling draft heads changed:
+PR17 `2a026e61`, PR18 `228d20ea`, PR19 `866e2e1f`, PR20 `0cbc3ae7`,
+PR21 `37924d15`; each bases PR16, not one another. Actual run
+[39880125007](https://github.com/calebaiken/sightbreak/actions/runs/39880125007)
+fails matrix-harness-unit, network watchdog and living offline UI flow; exports
+and adversarial audio have narrower passing evidence. Do not blanket-integrate
+V3 or overwrite local adaptations. Full review details are retained in issue #25
+and the current conversation; fetch exact current refs again before integration.
+
+After accepted changes, update the matrix/worklog, commit and push recoverable
+own work, then freeze and independently verify the new combined source. The
+0527715 whole-source passes cannot be relabeled as newer candidates. All broad
+release gates remain open; human/device/CS2/Steam acceptance is not waived.
 
 ## Root and accepted checkpoints
 
@@ -73,7 +190,7 @@ implementation after each verified increment; these corrections do not finish v1
    Original rejected oracle and revision retained. No shipping tuning, actual
    latency, gunfeel, listening or CS2 comparison claim.
 
-## Active execution queue and exact next actions
+## Previous queue (2026-10-22; recovery checkpoint above takes precedence)
 
 1. **Frozen integrated validation / native scope independently PASS at 0527715.**
    Root 14efb54a accepts complete unmodified aggregate, 469.486 s, 54 required
