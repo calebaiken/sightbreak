@@ -1,0 +1,292 @@
+{
+  "acquisition_integrity": true,
+  "cleanup_scope": "Observed PID/start identities and original group/session; polling may miss unseen escaped descendants",
+  "declared_project_override": {
+    "custom_user_dir": "SIGHTBREAK-audio-lifecycle-2cdcd3334a8c46d79fb7ede66b35e7cb/input_mode",
+    "project_sha256": "fcc8ba33a03366a9f39b4777264a585a25204e5f2408c9dd77c77c295f9555b9"
+  },
+  "engine": "/tmp/tmpl2mnm3vd/inert-engine",
+  "engine_sha256": "93646ce67d0d48bddfe8da875e40d407b7e6aac011815d6047a6ff23b8f7eb21",
+  "engine_sha256_after": "93646ce67d0d48bddfe8da875e40d407b7e6aac011815d6047a6ff23b8f7eb21",
+  "engine_sha256_before": "93646ce67d0d48bddfe8da875e40d407b7e6aac011815d6047a6ff23b8f7eb21",
+  "finalization_errors": [],
+  "identity_probe_sha256": "2d32cff00d6d66e387877a7b4e917d8b85cbe2e19617d0a167216f8061248f6b",
+  "native_after": {
+    "custom_user_dir": "SIGHTBREAK-audio-lifecycle-2cdcd3334a8c46d79fb7ede66b35e7cb/input_mode",
+    "data_dir": "/tmp/tmpl2mnm3vd/attempt/private-state/data",
+    "diagnostics_exist": false,
+    "driver": "Dummy",
+    "profile_exists": false,
+    "project_path": "/tmp/tmpl2mnm3vd/attempt/project",
+    "user_data_dir": "/tmp/tmpl2mnm3vd/attempt/private-state/data/SIGHTBREAK-audio-lifecycle-2cdcd3334a8c46d79fb7ede66b35e7cb/input_mode",
+    "uses_custom_user_dir": true
+  },
+  "native_before": {
+    "custom_user_dir": "SIGHTBREAK-audio-lifecycle-2cdcd3334a8c46d79fb7ede66b35e7cb/input_mode",
+    "data_dir": "/tmp/tmpl2mnm3vd/attempt/private-state/data",
+    "diagnostics_exist": false,
+    "driver": "Dummy",
+    "profile_exists": false,
+    "project_path": "/tmp/tmpl2mnm3vd/attempt/project",
+    "user_data_dir": "/tmp/tmpl2mnm3vd/attempt/private-state/data/SIGHTBREAK-audio-lifecycle-2cdcd3334a8c46d79fb7ede66b35e7cb/input_mode",
+    "uses_custom_user_dir": true
+  },
+  "original_leak_blocker_resolved": false,
+  "passed": false,
+  "phases": [
+    {
+      "clean_log": true,
+      "cleanup_complete": true,
+      "cleanup_wall_seconds": 0.0,
+      "command": [
+        "/tmp/tmpl2mnm3vd/inert-engine",
+        "--headless",
+        "--version"
+      ],
+      "exit": 0,
+      "label": "engine-version",
+      "log": "engine-version.log",
+      "log_sha256": "edff16c1721dd4ae989cadf29a01f574ae8d51b118221f664725bd6980bbba5d",
+      "observed": [
+        {
+          "comm": "synthetic",
+          "exe": "inert",
+          "pgid": 4001,
+          "pid": 4001,
+          "ppid": 1,
+          "sid": 4001,
+          "start_ticks": 4011,
+          "state": "R"
+        }
+      ],
+      "pid": 4001,
+      "root_identity": {
+        "comm": "synthetic",
+        "exe": "inert",
+        "pgid": 4001,
+        "pid": 4001,
+        "ppid": 1,
+        "sid": 4001,
+        "start_ticks": 4011,
+        "state": "R"
+      },
+      "signals": [],
+      "terminal_group": [],
+      "terminal_observed": [],
+      "terminal_session": [],
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "wall_seconds": 0.0
+    },
+    {
+      "clean_log": true,
+      "cleanup_complete": true,
+      "cleanup_wall_seconds": 0.0,
+      "command": [
+        "/tmp/tmpl2mnm3vd/inert-engine",
+        "--path",
+        "/tmp/tmpl2mnm3vd/attempt/project",
+        "--headless",
+        "--editor",
+        "--import",
+        "--quit"
+      ],
+      "exit": 0,
+      "label": "private-import",
+      "log": "private-import.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed": [
+        {
+          "comm": "synthetic",
+          "exe": "inert",
+          "pgid": 4002,
+          "pid": 4002,
+          "ppid": 1,
+          "sid": 4002,
+          "start_ticks": 4012,
+          "state": "R"
+        }
+      ],
+      "pid": 4002,
+      "root_identity": {
+        "comm": "synthetic",
+        "exe": "inert",
+        "pgid": 4002,
+        "pid": 4002,
+        "ppid": 1,
+        "sid": 4002,
+        "start_ticks": 4012,
+        "state": "R"
+      },
+      "signals": [],
+      "terminal_group": [],
+      "terminal_observed": [],
+      "terminal_session": [],
+      "timed_out": false,
+      "timeout_seconds": 120,
+      "wall_seconds": 0.0
+    },
+    {
+      "clean_log": true,
+      "cleanup_complete": true,
+      "cleanup_wall_seconds": 0.0,
+      "command": [
+        "/tmp/tmpl2mnm3vd/inert-engine",
+        "--path",
+        "/tmp/tmpl2mnm3vd/attempt/project",
+        "--headless",
+        "--script",
+        "/tmp/tmpl2mnm3vd/attempt/identity_probe.gd",
+        "--",
+        "--receipt=/tmp/tmpl2mnm3vd/attempt/before-input-mode.json"
+      ],
+      "exit": 0,
+      "label": "before-input-mode",
+      "log": "before-input-mode.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed": [
+        {
+          "comm": "synthetic",
+          "exe": "inert",
+          "pgid": 4003,
+          "pid": 4003,
+          "ppid": 1,
+          "sid": 4003,
+          "start_ticks": 4013,
+          "state": "R"
+        }
+      ],
+      "pid": 4003,
+      "root_identity": {
+        "comm": "synthetic",
+        "exe": "inert",
+        "pgid": 4003,
+        "pid": 4003,
+        "ppid": 1,
+        "sid": 4003,
+        "start_ticks": 4013,
+        "state": "R"
+      },
+      "signals": [],
+      "terminal_group": [],
+      "terminal_observed": [],
+      "terminal_session": [],
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "wall_seconds": 0.0
+    },
+    {
+      "clean_log": false,
+      "cleanup_complete": true,
+      "cleanup_wall_seconds": 0.0,
+      "command": [
+        "/tmp/tmpl2mnm3vd/inert-engine",
+        "--path",
+        "/tmp/tmpl2mnm3vd/attempt/project",
+        "--headless",
+        "--verbose",
+        "--script",
+        "res://tests/input_mode_test.gd",
+        "--",
+        "--audio-lifecycle-diagnostic"
+      ],
+      "exit": 0,
+      "label": "input-mode",
+      "log": "input-mode.log",
+      "log_sha256": "7f9a31f0fd29f8ee6cb8977ac90a3bdf70bf4c13f7de9e181857403262f4bc61",
+      "observed": [
+        {
+          "comm": "synthetic",
+          "exe": "inert",
+          "pgid": 4004,
+          "pid": 4004,
+          "ppid": 1,
+          "sid": 4004,
+          "start_ticks": 4014,
+          "state": "R"
+        }
+      ],
+      "pid": 4004,
+      "root_identity": {
+        "comm": "synthetic",
+        "exe": "inert",
+        "pgid": 4004,
+        "pid": 4004,
+        "ppid": 1,
+        "sid": 4004,
+        "start_ticks": 4014,
+        "state": "R"
+      },
+      "signals": [],
+      "terminal_group": [],
+      "terminal_observed": [],
+      "terminal_session": [],
+      "timed_out": false,
+      "timeout_seconds": 120,
+      "wall_seconds": 0.0
+    },
+    {
+      "clean_log": true,
+      "cleanup_complete": true,
+      "cleanup_wall_seconds": 0.0,
+      "command": [
+        "/tmp/tmpl2mnm3vd/inert-engine",
+        "--path",
+        "/tmp/tmpl2mnm3vd/attempt/project",
+        "--headless",
+        "--script",
+        "/tmp/tmpl2mnm3vd/attempt/identity_probe.gd",
+        "--",
+        "--receipt=/tmp/tmpl2mnm3vd/attempt/after-input-mode.json"
+      ],
+      "exit": 0,
+      "label": "after-input-mode",
+      "log": "after-input-mode.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "observed": [
+        {
+          "comm": "synthetic",
+          "exe": "inert",
+          "pgid": 4005,
+          "pid": 4005,
+          "ppid": 1,
+          "sid": 4005,
+          "start_ticks": 4015,
+          "state": "R"
+        }
+      ],
+      "pid": 4005,
+      "root_identity": {
+        "comm": "synthetic",
+        "exe": "inert",
+        "pgid": 4005,
+        "pid": 4005,
+        "ppid": 1,
+        "sid": 4005,
+        "start_ticks": 4015,
+        "state": "R"
+      },
+      "signals": [],
+      "terminal_group": [],
+      "terminal_observed": [],
+      "terminal_session": [],
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "wall_seconds": 0.0
+    }
+  ],
+  "private_environment": {
+    "ANDROID_USER_HOME": "/tmp/tmpl2mnm3vd/attempt/private-state/android",
+    "SIGHTBREAK_STATE_DIR": "/tmp/tmpl2mnm3vd/attempt/private-state",
+    "XDG_CACHE_HOME": "/tmp/tmpl2mnm3vd/attempt/private-state/cache",
+    "XDG_CONFIG_HOME": "/tmp/tmpl2mnm3vd/attempt/private-state/config",
+    "XDG_DATA_HOME": "/tmp/tmpl2mnm3vd/attempt/private-state/data"
+  },
+  "private_project_removed": true,
+  "private_state_removed": true,
+  "sample_strict_clean": false,
+  "scope": "Linux ownership/strict exit only; no audible/physical or complete-descendant qualification",
+  "source_commit": "b9877533efb7b4092ab79a9f1e0403d6f41311fd",
+  "whole_cap_seconds": 240,
+  "whole_wall_seconds": 0.0
+}
