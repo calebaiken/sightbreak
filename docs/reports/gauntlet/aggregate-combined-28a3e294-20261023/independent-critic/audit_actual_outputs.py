@@ -3,6 +3,7 @@
 import argparse
 import ast
 from collections import Counter
+import copy
 import datetime as dt
 import hashlib
 import json
@@ -242,6 +243,36 @@ def main(args):
                 check(sequence[-1]["after_action"]["weapon"] == "sidearm" and sequence[-1]["after_action"]["ammo"] == 15 - shots and sequence[-1]["after_action"]["reserve"] == 0, "exhausted real sidearm consumption: " + label)
                 far_sequences.append(dict(label=label,draws=draws,shots=shots,final_ammo=sequence[-1]["after_action"]["ammo"]))
         report["exhausted_actual_24m_sequences"] = far_sequences
+        mutation_index = next(i for i, (_, kind, r) in enumerate(exhausted_records) if kind == "CASE" and r["scenario"]["difficulty"] == "normal" and r["scenario"]["primary"] == "smg" and r["scenario"]["target"]["name"] == "far" and r["scenario"]["active_resource"] == "exhausted" and r["scenario"]["sidearm_resource"] == "loaded")
+        def extra_round(r):
+            r["after_action"]["ammo"] += 1
+            r["resources_after"]["sidearm"]["clip"] += 1
+            r["equip_semantics_total_after"] += 1
+        def wrong_lane(r):
+            r["before"]["position"] = [0, 0, 0]
+            r["after_decision"]["position"] = [0, 0, 0]
+        mutations = {
+            "planning_ammo_mutation": lambda r: r["after_decision"].__setitem__("ammo", 1),
+            "request_without_actual_draw": lambda r: r["after_action"].__setitem__("weapon", r["before"]["weapon"]),
+            "free_deploy": lambda r: r["after_action"].__setitem__("deploy", 0),
+            "extra_round_with_consistent_projection": extra_round,
+            "false_shot": lambda r: r["actual_shots"].append(dict(serial=999)),
+            "unexplained_reward": lambda r: r["after_action"].__setitem__("credits", 1100),
+            "wrong_lane_matching_planning_snapshot": wrong_lane,
+            "false_resource_projection": lambda r: r["resources_after"]["sidearm"].__setitem__("clip", 16),
+        }
+        mutation_results = []
+        for name, mutate in mutations.items():
+            altered = copy.deepcopy(exhausted_records)
+            mutate(altered[mutation_index][2])
+            try:
+                exhausted_module.audit(altered, frozen)
+            except (AssertionError, KeyError, TypeError) as error:
+                mutation_results.append(dict(name=name,rejected=True,reason=str(error)))
+            else:
+                mutation_results.append(dict(name=name,rejected=False))
+            check(mutation_results[-1]["rejected"], "new actual exhausted counterfeit rejection: " + name)
+        report["exhausted_actual_mutation_controls"] = mutation_results
         report["additional_exhausted_observable_predicates"] = exhausted["independent_predicates"]
         report["exhausted_fixture_checks"] = exhausted["reported_fixture_checks"]
         report["exhausted_event_totals"] = exhausted["all_row_totals"]
