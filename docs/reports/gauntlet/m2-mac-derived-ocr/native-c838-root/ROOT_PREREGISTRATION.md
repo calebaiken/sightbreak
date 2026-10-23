@@ -26,3 +26,7 @@ Retain the prior c088 and both earlier failed attempts. Remote host variation
 cannot establish causality. Source acceptance is not gameplay acceptance;
 physical/Intel/human and whole-platform release gates remain open. No second
 attempt, merge, publication, paid action or credential change is granted.
+
+Root releases that single trial after combined source approval 2a3bcdf and
+actual critic criteria 0abfd19 are pushed. This release precedes dispatch and
+changes none of the registered gates. No second attempt is authorized.
