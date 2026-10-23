@@ -1,0 +1,177 @@
+{
+  "source": "49ae54b0e4f5d880bdf06e4eb783a616b2dff684",
+  "label": "depth-one-qualified",
+  "cpu_affinity": [
+    4
+  ],
+  "results": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_build_manifest.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-pulse-combined-depth-one-isolated",
+      "exit": 0,
+      "methods": 24,
+      "skips": 0,
+      "log": "depth-one-qualified-test_build_manifest.log",
+      "sha256": "def48cb59c0aa0424eec51c136a96db0f0d901296ab017d7b752fa7d889a2f3b"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_log.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-pulse-combined-depth-one-isolated",
+      "exit": 0,
+      "methods": 5,
+      "skips": 0,
+      "log": "depth-one-qualified-test_native_log.log",
+      "sha256": "5c0e6b954675f2cefc565fef8a3bd54b101d25d6e20bb18eab0cc4b82e03a9c0"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_observation.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-pulse-combined-depth-one-isolated",
+      "exit": 0,
+      "methods": 7,
+      "skips": 3,
+      "log": "depth-one-qualified-test_native_observation.log",
+      "sha256": "a8abb1d2c217cb87777472c041f5458597edf21e38fcbd7503bf397aa929dab4"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_offline_role_guidance.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-pulse-combined-depth-one-isolated",
+      "exit": 0,
+      "methods": 4,
+      "skips": 0,
+      "log": "depth-one-qualified-test_offline_role_guidance.log",
+      "sha256": "5bc92f2a1f452e3774d4b7edc763be49f3711c551c0dfa1b6ba1e37cb0e4334c"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_offline_export_ocr.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-pulse-combined-depth-one-isolated",
+      "exit": 0,
+      "methods": 5,
+      "skips": 0,
+      "log": "depth-one-qualified-test_offline_export_ocr.log",
+      "sha256": "27654309c972a44f9308d625cb595fc08e60613a43bbd5d7e5a6bab259deb0c8"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_offline_capture_fences.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-pulse-combined-depth-one-isolated",
+      "exit": 0,
+      "methods": 15,
+      "skips": 0,
+      "log": "depth-one-qualified-test_offline_capture_fences.log",
+      "sha256": "1156e568b80c27dddfa1a8a80e4b138984c8385726d25229bd4739d47f9929fc"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_focus_fence.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-pulse-combined-depth-one-isolated",
+      "exit": 0,
+      "methods": 16,
+      "skips": 0,
+      "log": "depth-one-qualified-test_native_focus_fence.log",
+      "sha256": "75da3d88b4334010b77f8aafff022aa7f2f1908333018c1a3706e150ca13488f"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_focus_resume_timing.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-pulse-combined-depth-one-isolated",
+      "exit": 0,
+      "methods": 8,
+      "skips": 0,
+      "log": "depth-one-qualified-test_focus_resume_timing.log",
+      "sha256": "69e44fa9969058e73417475ff8ddde9b7d8cf3baeabca341cb92b6bf65190dbb"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_settings_route.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-pulse-combined-depth-one-isolated",
+      "exit": 0,
+      "methods": 8,
+      "skips": 0,
+      "log": "depth-one-qualified-test_native_settings_route.log",
+      "sha256": "f98abd4153b1f80758889a1084618a67b14525edbfddb492215678da1bb17de9"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_route_pulse.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-pulse-combined-depth-one-isolated",
+      "exit": 0,
+      "methods": 25,
+      "skips": 0,
+      "log": "depth-one-qualified-test_native_route_pulse.log",
+      "sha256": "bc4ac598d09c05a85ea189305706283350a87b69bbfea78bfce330dfa7084fee"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_approach.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-pulse-combined-depth-one-isolated",
+      "exit": 0,
+      "methods": 9,
+      "skips": 0,
+      "log": "depth-one-qualified-test_native_approach.log",
+      "sha256": "27305cefc84070ea6f812892cac76b822e9069547b5445131d1c89370b5b7904"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_menu.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-pulse-combined-depth-one-isolated",
+      "exit": 0,
+      "methods": 11,
+      "skips": 0,
+      "log": "depth-one-qualified-test_macos_menu.log",
+      "sha256": "a824f0ea00fb46e96c82ab2cafeace4720c0b62752b3bb897ed068725e263f9a"
+    },
+    {
+      "command": [
+        "bash",
+        "-n",
+        "scripts/validate.sh"
+      ],
+      "exit": 0,
+      "methods": 0,
+      "skips": 0
+    }
+  ],
+  "method_count": 137,
+  "skips": 3
+}

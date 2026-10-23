@@ -1,0 +1,69 @@
+[
+  {
+    "label": "original-two-falsifiers",
+    "argv": [
+      "python3",
+      "/workspace/reviews/windows-pulse-combined-source-critic/docs/reports/gauntlet/windows-pulse-combined-source-independent-20261023/original_controls.py",
+      "/workspace/reviews/windows-pulse-combined-depth-one-isolated",
+      "IndependentPulseControls.test_two_key_dispatch_stops_when_focus_changes_after_first_down",
+      "IndependentPulseControls.test_two_key_dispatch_stops_when_owner_changes_after_first_down"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "cpu_affinity": [
+      4
+    ]
+  },
+  {
+    "label": "original-full-retained",
+    "argv": [
+      "python3",
+      "/workspace/reviews/windows-pulse-combined-source-critic/docs/reports/gauntlet/windows-pulse-combined-source-independent-20261023/original_controls.py",
+      "/workspace/reviews/windows-pulse-combined-depth-one-isolated"
+    ],
+    "exit": 1,
+    "expected_exit": 1,
+    "cpu_affinity": [
+      4
+    ]
+  },
+  {
+    "label": "semantic",
+    "argv": [
+      "python3",
+      "/workspace/reviews/windows-pulse-combined-source-critic/docs/reports/gauntlet/windows-pulse-combined-source-independent-20261023/semantic_controls.py",
+      "/workspace/reviews/windows-pulse-combined-depth-one-isolated"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "cpu_affinity": [
+      4
+    ]
+  },
+  {
+    "label": "boundaries",
+    "argv": [
+      "python3",
+      "/workspace/reviews/windows-pulse-combined-source-critic/docs/reports/gauntlet/windows-pulse-combined-source-independent-20261023/boundary_controls.py",
+      "/workspace/reviews/windows-pulse-combined-depth-one-isolated"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "cpu_affinity": [
+      4
+    ]
+  },
+  {
+    "label": "combined",
+    "argv": [
+      "python3",
+      "/workspace/reviews/windows-pulse-combined-source-critic/docs/reports/gauntlet/windows-pulse-combined-source-independent-20261023/combined_controls.py",
+      "/workspace/reviews/windows-pulse-combined-depth-one-isolated"
+    ],
+    "exit": 0,
+    "expected_exit": 0,
+    "cpu_affinity": [
+      4
+    ]
+  }
+]
