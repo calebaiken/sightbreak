@@ -72,3 +72,8 @@ exact source/UID freeze. A new independent critic must review before root can
 release any runtime. Later native evidence and a fresh blind judge must assess
 readability, full affordance truthfulness, scene occlusion and usable mobile
 reach; source arithmetic cannot approve those qualities or shipped-game parity.
+
+First pure layout attempt is retained in `r4b-geometry-attempt-1.json`. SMOKE
+x=.70 leaves its maximum-mobile rim envelope overlapping LOW by 1.66725px and
+produces an actual wrong-owner witness. Amend the proposed responsive SMOKE x
+to .68 before native; FRAG remains .58. No failed footprint is excluded.
