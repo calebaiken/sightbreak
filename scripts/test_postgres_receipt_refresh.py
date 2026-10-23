@@ -249,6 +249,7 @@ class RefreshTests(unittest.TestCase):
         handler = object.__new__(run.proxy_handler("origin1"))
         handler.command, handler.path, handler.headers = "GET", path, {}
         handler.rfile, handler.wfile = io.BytesIO(), io.BytesIO()
+        handler.connection = mock.Mock()
         handler.send_response = mock.Mock(); handler.send_header = mock.Mock(); handler.end_headers = mock.Mock()
         backend = mock.Mock(status=status)
         backend.read.return_value = json.dumps(response).encode()
@@ -278,6 +279,15 @@ class RefreshTests(unittest.TestCase):
             handler.forward()
         self.assertFalse(any(e["phase"] == "business_read" for e in run.events))
         self.assertFalse(run.reads)
+        self.assertEqual(run.events[-1]["phase"], "proxy_failure")
+
+    def test_proxy_short_write_does_not_publish_successful_read(self):
+        run = self.run_object()
+        handler, connection = self.handler(run, "/inventory", {"items": []})
+        handler.wfile = mock.Mock(write=mock.Mock(return_value=1))
+        with mock.patch.object(campaign.http.client, "HTTPConnection", return_value=connection):
+            handler.forward()
+        self.assertFalse(any(e["phase"] == "business_read" for e in run.events))
         self.assertEqual(run.events[-1]["phase"], "proxy_failure")
 
     def test_proxy_market_marker_precedes_concurrent_followup_ingress(self):
