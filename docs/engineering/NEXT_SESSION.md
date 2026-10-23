@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-23, 03:38 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 03:44 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native Codex goal API is exposed. Read AGENTS.md, the mission and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
@@ -9,8 +9,10 @@ implementation after each verified increment; these corrections do not finish v1
 ## Recovery checkpoint — read this before the previous queue
 
 The 2026-10-22 session was interrupted by an actual agent usage limit. On
-2026-10-23 the managed environment is starting and offline; local files and
-process state cannot yet be inspected. Preserve every local branch and raw
+2026-10-23 the managed environment FAILED to provision; local files and process
+state cannot be inspected. The supported wait tool reports container_creation /
+container_service_failed / transport_timeout; the environment context also
+reports failure querying executor configuration capabilities. Preserve every local branch and raw
 output. The SHAs below are last observed, not a claim that the restarted checkout
 has been verified. No native job is authorized by elapsed waiting time.
 
@@ -68,9 +70,19 @@ Resume the following concrete work:
 3. **Market oracle followup via GitHub.** During environment startup, new own
    branch `codex/m3-market-refresh-guard-20261023-0322` from `ad6cdc20`
    implements the same future-test guard. Preregistered `95e423b8`, initial
-   candidate `a4217377`, [draft PR29](https://github.com/calebaiken/sightbreak/pull/29)
-   targets the mission branch. A separate fresh critic and actual pure CI are
-   active; do not infer a pass. Accepted old market source `882931dd` and its
+   candidate `a4217377`, then corrected tested source
+   `985a9d71be546723adfb38f406302537a0a3f751`.
+   [Draft PR29](https://github.com/calebaiken/sightbreak/pull/29) targets the
+   mission branch; final builder HEAD `b696ca93`, independent review
+   `c00f38a3` on `codex/m3-market-refresh-critic-20261023-0342`.
+   Actual [CI 39896279199](https://github.com/calebaiken/sightbreak/actions/runs/39896279199)
+   passes 37 tests / 0.084 seconds / zero skips: original 9 oracle / 17 guard
+   groups plus 11 new groups. The full mocked baseline execute false-accepts
+   stale reads; candidate rejects before final SQL/observer. Critic caught a
+   queued-publication deadline defect in the first iteration, then independently
+   verified its correction. Both raw CI logs and full review are committed.
+   Acceptance covers source/pure-test correctness only, with no new native or
+   production service run. Accepted old market source `882931dd` and its
    raw production result remain immutable: actual timeline rows 68/69 contain
    successful post-response reads after row 67. Historical-schema evidence
    cannot acquire newly invented ingress fields.
@@ -107,6 +119,20 @@ Resume the following concrete work:
    Red Eclipse gallery images as limited environment/character references.
    Third-party pixels remain outside Git. Original CS2 GitHub attachments redirect
    to an unallowed host; no redirect was followed. G18 remains blocked.
+
+For the verified remote guard, preserve the separate report history. The exact
+ordered builder integration set is:
+`95e423b8 da01f29c 25496ffe 1b4b6e4b 981ea45e ef01f75e 35520ee7 a4217377 52c0993f 985a9d71 b8f3d13a 5815240e fa21f9ce 0ea95bd6 b696ca93`.
+Independent report/log commits are `e62d023a a992f673 c00f38a3`.
+Exclude NEXT-only `2df5b66c` / `cfa237cd` when cherry-picking over this newer
+resume note; they restore the older baseline and have zero net PR29 diff.
+Review the final diff and actual local changes before applying any set.
+
+The current automatic execution is BLOCKED by the failed executor. Issue #25
+remains IN PROGRESS / PRIMARY. Do not lower acceptance requirements, merge a
+protected/shared release branch, or infer native passes from these pure tests.
+The first next action is executor recovery and inspection of the existing local
+root and M6 branches; this checkpoint does not overwrite either branch.
 
 Remote reassessment on 2026-10-23 found unchanged main `4d8cdb33`, PR26 map
 `778c89a6` and PR28 `2641ddf8`. V3 sibling draft heads changed:
