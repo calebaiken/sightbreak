@@ -53,3 +53,14 @@ and actor-order PR28 `2641ddf8`. V3 PR17–21 remain siblings on PR16. PR17
 still reports two failed checks and one passing audio check. PR1 and art PR2
 have newer heads than the restored contributor snapshot; neither is integrated.
 The full query result is retained in open-prs.json.
+
+## Published recovery verification
+
+Draft [PR31](https://github.com/calebaiken/sightbreak/pull/31) targets the
+mission branch. Actual CI run 39902958021 / job 120248415800 passes at exact
+`1bca594a`: 37 tests in 0.130 seconds, zero skips. The complete log is retained.
+The CLI log redirect was denied; the supported GitHub connector retrieved the
+decoded job log. This is the pure guard lane, without a native gameplay claim.
+Both installed original skill files match their upstream raw sources byte for
+byte on this execution; hashes and URLs are in original-skill-verification.json.
+No skill was reinstalled.
