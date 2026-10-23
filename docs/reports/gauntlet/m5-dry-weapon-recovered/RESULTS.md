@@ -45,8 +45,13 @@ three-line guard and both maintained registrations before candidate runtime.
 Those reports live on `review/m5-dry-weapon-recovered` under
 `docs/reports/gauntlet/m5-dry-weapon-recovered-independent`.
 
-Candidate actual-output acceptance is pending a separate critic at this report
-checkpoint. The builder does not certify the component from its own result.
+Final independent actual-output review `f947350` picks the candidate as better
+and passes this narrow correction. It binds the raw/report commit `6a0ef57`,
+recomputes each side's 1,974 observable predicates, verifies the intended 21
+primary-request and three coupled reload changes, and retains 63 unchanged
+request controls. All 480 independently grouped squad pairs match. The report is
+`docs/reports/gauntlet/m5-dry-weapon-recovered-independent/FINAL_REVIEW.md` on the
+separate review branch. This accepts the bounded correction at `8e8d13e`.
 Raw JSON omits full protected snapshots and input inventory/ammo-store values;
 deep authority comparisons depend on the retained, source-reviewed fixture
 assertions. The matrix also omits all-three-loaded and
