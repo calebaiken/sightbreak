@@ -1,0 +1,50 @@
+{
+  "source_before_report": "49434b6bd29d40e08dc7919340885fd68dc22af5",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "scripts/test_native_log.py",
+        "-v"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.21516253400113783
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "scripts/test_build_manifest.py",
+        "-v"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.2517325839980913
+    },
+    {
+      "argv": [
+        "python3",
+        "-B",
+        "scripts/test_package_qa_receipts.py",
+        "-v"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.31531420100145624
+    },
+    {
+      "argv": [
+        "bash",
+        "-n",
+        "scripts/validate.sh"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.0026864909996220376
+    }
+  ],
+  "preserved_game_script_paths": 77,
+  "bot_ai_matches_native_source": "6276f0b799fde78811075af1fc37434ea4d0aec8",
+  "native_registry_matches_native_source": true,
+  "matcher_matches_independently_accepted_blob": true,
+  "validate_is_exact_union_of_two_registered_tests": true,
+  "gameplay_limit": "Full maintained aggregate and native platforms have not been rerun at this combined root."
+}
