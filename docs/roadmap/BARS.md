@@ -38,3 +38,17 @@ actual native Godot command and role outputs, with [declared gates and raw
 comparison](../reports/gauntlet/m5-bot-squad-symmetry/README.md). Final native
 oracle compares 480 paired outputs: 181 unequal on baseline, zero on candidate.
 This establishes bounded habit symmetry, not CS2 parity or complete-match balance.
+
+## B7: recovered M6 touch and HUD references, 2026-10-23
+
+Fresh official Luanti 5.15 Android release image and 5.12 touchscreen clip were
+retrieved from pinned `luanti-org/blog` commit `96b71ec0` and inspected at original
+resolution, alongside one official AssaultCube gameplay/HUD image from website
+commit `a011672c`. Third-party pixels remain outside Git. These are limited
+contextual references for control separation over bright/dark scenery and HUD
+placement; no aesthetic winner, measured contrast pass or CS2/touch parity is
+claimed. The clip's snow frame is an observed visibility weakness.
+[Provenance, original URLs/hashes, findings and limits](../reports/gauntlet/m6-shipped-hud-reference-recovered/FINDINGS.md).
+The enforced allowlist still excludes the named CS2 media hosts; no denied
+destination or redirect was followed. B4 and matched native SIGHTBREAK baseline
+outputs remain the engineering bars.
