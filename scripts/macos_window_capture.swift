@@ -5,6 +5,7 @@ import ScreenCaptureKit
 import Vision
 import ImageIO
 import UniformTypeIdentifiers
+import CryptoKit
 import Darwin
 
 struct CaptureFailure: Error, CustomStringConvertible {
@@ -36,6 +37,50 @@ func ownedWindow(_ pid: pid_t, _ windowID: CGWindowID) throws -> CGRect {
     return frame
 }
 
+func fileSHA256(_ url: URL) throws -> String {
+    SHA256.hash(data: try Data(contentsOf: url)).map { String(format: "%02x", $0) }.joined()
+}
+
+func derivedDeployAnalysis(_ image: CGImage, source: URL, destination: URL,
+                           pid: pid_t, windowID: CGWindowID, frame: CGRect, pointPixelScale: Double) throws -> [String: Any] {
+    let width = image.width * 2, height = image.height * 2
+    guard image.width > 0, image.height > 0, image.width * image.height <= 4_194_304,
+          width <= 8192, height <= 8192, width * height <= 16_777_216,
+          let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: 8,
+                                  bytesPerRow: 0, space: CGColorSpaceCreateDeviceRGB(),
+                                  bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue) else {
+        throw CaptureFailure("Fixed 2x Deploy analysis exceeds its image bounds or cannot allocate")
+    }
+    context.interpolationQuality = .high
+    context.draw(image, in: CGRect(x: 0, y: 0, width: CGFloat(width), height: CGFloat(height)))
+    guard let analysisImage = context.makeImage(),
+          let output = CGImageDestinationCreateWithURL(destination as CFURL, UTType.png.identifier as CFString, 1, nil) else {
+        throw CaptureFailure("Fixed 2x Deploy image creation failed")
+    }
+    CGImageDestinationAddImage(output, analysisImage, nil)
+    guard CGImageDestinationFinalize(output) else { throw CaptureFailure("Derived Deploy PNG write failed") }
+    let request = VNRecognizeTextRequest()
+    request.recognitionLevel = .accurate
+    request.recognitionLanguages = ["en-US"]
+    request.usesLanguageCorrection = false
+    try VNImageRequestHandler(cgImage: analysisImage, options: [:]).perform([request])
+    let text = (request.results ?? []).compactMap { observation -> [String: Any]? in
+        guard let candidate = observation.topCandidates(1).first else { return nil }
+        return ["text": candidate.string, "confidence": candidate.confidence,
+                "box_normalized_bottom_left": rectValues(observation.boundingBox)]
+    }
+    return ["schema": 1, "profile": "sightbreak-deploy-full-window-2x-v1",
+            "scope": "Derived analysis of the same native full-window pixels; no new capture or events",
+            "source_png_sha256": try fileSHA256(source), "analysis_png_sha256": try fileSHA256(destination),
+            "owner_pid": pid, "window_id": windowID, "bounds_points_including_chrome": rectValues(frame),
+            "source_point_pixel_scale": pointPixelScale,
+            "source_image_dimensions": [image.width, image.height], "analysis_image_dimensions": [width, height],
+            "source_crop_pixels_top_left": [0, 0, image.width, image.height], "scale": 2,
+            "normalized_box_space": "native-full-window-bottom-left", "resampling": "CoreGraphics-high",
+            "recognition_level": "accurate", "recognition_languages": ["en-US"],
+            "uses_language_correction": false, "custom_words": [String](), "text": text]
+}
+
 @main
 struct WindowCapture {
     @MainActor
@@ -48,10 +93,12 @@ struct WindowCapture {
         var exitCode: Int32 = 1
         do {
             let args = Array(CommandLine.arguments.dropFirst())
-            guard args.count == 8 else { throw CaptureFailure("Expected --pid PID --window ID --png PATH --report PATH") }
+            guard args.count == 8 || args.count == 12 else {
+                throw CaptureFailure("Expected owned-window capture arguments and optional fixed Deploy analysis")
+            }
             var options: [String: String] = [:]
             for offset in stride(from: 0, to: args.count, by: 2) {
-                guard ["--pid", "--window", "--png", "--report"].contains(args[offset]), options[args[offset]] == nil else {
+                guard ["--pid", "--window", "--png", "--report", "--analysis-mode", "--deploy-analysis-png"].contains(args[offset]), options[args[offset]] == nil else {
                     throw CaptureFailure("Unknown or repeated capture argument")
                 }
                 options[args[offset]] = args[offset + 1]
@@ -63,6 +110,20 @@ struct WindowCapture {
             }
             let pngURL = URL(fileURLWithPath: png)
             let candidateReport = URL(fileURLWithPath: destination)
+            var analysisURL: URL?
+            if options["--analysis-mode"] != nil || options["--deploy-analysis-png"] != nil {
+                guard options["--analysis-mode"] == "sightbreak-deploy-full-window-2x-v1",
+                      let path = options["--deploy-analysis-png"] else {
+                    throw CaptureFailure("Only the explicit fixed 2x Deploy analysis profile is supported")
+                }
+                let url = URL(fileURLWithPath: path)
+                guard url.standardizedFileURL != pngURL.standardizedFileURL,
+                      url.standardizedFileURL != candidateReport.standardizedFileURL,
+                      !FileManager.default.fileExists(atPath: url.path) else {
+                    throw CaptureFailure("Preserve distinct original and derived capture evidence")
+                }
+                analysisURL = url
+            }
             guard !FileManager.default.fileExists(atPath: pngURL.path),
                   !FileManager.default.fileExists(atPath: candidateReport.path) else {
                 throw CaptureFailure("Preserve existing capture evidence")
@@ -119,6 +180,10 @@ struct WindowCapture {
                 guard let candidate = observation.topCandidates(1).first else { return nil }
                 return ["text": candidate.string, "confidence": candidate.confidence,
                         "box_normalized_bottom_left": rectValues(observation.boundingBox)]
+            }
+            if let url = analysisURL {
+                report["derived_deploy_analysis"] = try derivedDeployAnalysis(
+                    image, source: pngURL, destination: url, pid: pid, windowID: windowID, frame: frame, pointPixelScale: scale)
             }
             report["passed"] = true
             exitCode = 0
