@@ -1,0 +1,2104 @@
+{
+  "mode": "Independent original-receipt/source and live read-only cleanup audit",
+  "checks": 808,
+  "failures": [],
+  "source": {
+    "source_dirty": false,
+    "source_validation_sha256": "408ff238275cea29a466ed5b99c03f82ee8d1d18205100fe158d07bda0251671",
+    "source_commit": "afca2f1040ad0ce668b2a9a2201d9f4b2dde636f",
+    "source_game_tree": "55691684d31d44f1680141954bbe530443de9d1f",
+    "source_content_sha256": "bcb872f6998ed8504c852dee354ab0acf5b6f19e58e40717267a1927e6d68a50",
+    "source_game_dirty": false
+  },
+  "command": {
+    "command": [
+      "./scripts/validate.sh"
+    ],
+    "cwd": "/workspace/sightbreak-validate-recovered-afca2f1",
+    "started_utc": "2026-10-23T05:21:49.801947+00:00",
+    "timeout_seconds": 1200,
+    "environment": {
+      "DISPLAY": null,
+      "SIGHTBREAK_TOOLS_DIR": "/workspace/tools",
+      "SIGHTBREAK_STATE_DIR": "/workspace/sightbreak-validate-recovered-afca2f1/.local/aggregate-state",
+      "SIGHTBREAK_BACKEND_PYTHON": "/workspace/sightbreak/.venv/bin/python",
+      "GODOT_BIN": null,
+      "SIGHTBREAK_TEST_TIMEOUT": null,
+      "LP_NUM_THREADS": null,
+      "LIBGL_ALWAYS_SOFTWARE": null
+    },
+    "runner_sha256": "843893a307cb714dacfc17abf62715c9816e8bf13534d81878ed8fb959057b6a",
+    "pid": 13434,
+    "pgid": 13434
+  },
+  "result": {
+    "command": [
+      "./scripts/validate.sh"
+    ],
+    "cwd": "/workspace/sightbreak-validate-recovered-afca2f1",
+    "started_utc": "2026-10-23T05:21:49.801947+00:00",
+    "timeout_seconds": 1200,
+    "environment": {
+      "DISPLAY": null,
+      "SIGHTBREAK_TOOLS_DIR": "/workspace/tools",
+      "SIGHTBREAK_STATE_DIR": "/workspace/sightbreak-validate-recovered-afca2f1/.local/aggregate-state",
+      "SIGHTBREAK_BACKEND_PYTHON": "/workspace/sightbreak/.venv/bin/python",
+      "GODOT_BIN": null,
+      "SIGHTBREAK_TEST_TIMEOUT": null,
+      "LP_NUM_THREADS": null,
+      "LIBGL_ALWAYS_SOFTWARE": null
+    },
+    "runner_sha256": "843893a307cb714dacfc17abf62715c9816e8bf13534d81878ed8fb959057b6a",
+    "pid": 13434,
+    "pgid": 13434,
+    "exit_code": 0,
+    "completed_utc": "2026-10-23T05:30:48.875700+00:00",
+    "seconds": 539.0735784609997,
+    "source_unchanged": true,
+    "failure": null,
+    "passed": true
+  },
+  "engine": {
+    "path": "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+    "sha256": "8d106cbe6144c2dc7e881d61d2429c1a8a76e6b22ef48bd5e48dcf934953f71e"
+  },
+  "preflight": {
+    "processes": [],
+    "listeners": []
+  },
+  "cleanup": {
+    "observed_utc": "2026-10-23T05:30:48.875584+00:00",
+    "remaining": [],
+    "listeners": [],
+    "scope": "original session and Godot argv bound to frozen checkout; not arbitrary escaped descendants"
+  },
+  "observed_processes": [
+    {
+      "pid": 13434,
+      "ppid": 13394,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 528657,
+      "state": "S",
+      "comm": "bash",
+      "argv_sha256": "71d77f095938bb74b0dfad04c3727b98c32e6a46e6f40a30b755c04820ebcf74"
+    },
+    {
+      "pid": 13439,
+      "ppid": 13434,
+      "pgid": 13439,
+      "sid": 13434,
+      "start_ticks": 528658,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "bcd7dc75b8961913c616d826559ef14d4447e33be22a5116b9cf26496d40e84c"
+    },
+    {
+      "pid": 13440,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 528658,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "a48844511ffb50aa8282a37616cbe122d94d9cc1f0e18f291361ede90de53e95"
+    },
+    {
+      "pid": 13441,
+      "ppid": 13439,
+      "pgid": 13439,
+      "sid": 13434,
+      "start_ticks": 528658,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "24ffdb90dcfc7a3bd73dadedaa79e1a9f84ce1f8c611bacf7615f49c32541249"
+    },
+    {
+      "pid": 13700,
+      "ppid": 13434,
+      "pgid": 13700,
+      "sid": 13434,
+      "start_ticks": 529373,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "486bb9663bfb8f784b3adb5611f3a761141fb844b45f59d1b2e320489a733367"
+    },
+    {
+      "pid": 13701,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 529373,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "94aefc6b4e5064660d6e21c98c38aaaf4c8b0107c47471cda60fea9cf4aa9fc2"
+    },
+    {
+      "pid": 13702,
+      "ppid": 13700,
+      "pgid": 13700,
+      "sid": 13434,
+      "start_ticks": 529374,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "a56df1eb8984e0265a1d74bbd78b8c91046c68b8aec1b2e6585fdb90160d0f54"
+    },
+    {
+      "pid": 13715,
+      "ppid": 13434,
+      "pgid": 13715,
+      "sid": 13434,
+      "start_ticks": 529630,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "e5b2a1fc55b9a4f65c52060f187ff2479fb28866776373e3ca3bf16722ff4e35"
+    },
+    {
+      "pid": 13716,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 529630,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "a963ac4423353478ba462fb3bcd313a1c9c24dcae5463f72b185e26afa6ab325"
+    },
+    {
+      "pid": 13717,
+      "ppid": 13715,
+      "pgid": 13715,
+      "sid": 13434,
+      "start_ticks": 529630,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "4a733383cdd8731d23420c650fcfa006f7f7394ed999c742c4f15392e6039985"
+    },
+    {
+      "pid": 13730,
+      "ppid": 13434,
+      "pgid": 13730,
+      "sid": 13434,
+      "start_ticks": 529705,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "a74643dfd43cbb2aa477e9dec6e50962808e6a66625116af8db93c15497cd924"
+    },
+    {
+      "pid": 13731,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 529705,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "72db1870a032578fda8faffdb7e8387d5073882015c7f6bd5be42a5f9d4f59eb"
+    },
+    {
+      "pid": 13732,
+      "ppid": 13730,
+      "pgid": 13730,
+      "sid": 13434,
+      "start_ticks": 529706,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "af75ed35d7669ba149410c668b8ad9c3d8bbd357760edb80660867e458c934a5"
+    },
+    {
+      "pid": 13745,
+      "ppid": 13434,
+      "pgid": 13745,
+      "sid": 13434,
+      "start_ticks": 529834,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "b7215aae9aea030eafe40f59d29792f6b9732ad616f54a9e908634c823d2347e"
+    },
+    {
+      "pid": 13746,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 529834,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "8a4cbf568fc83d96d98a473e1eac05f980fa9398637b3a573f325ba1e2217521"
+    },
+    {
+      "pid": 13747,
+      "ppid": 13745,
+      "pgid": 13745,
+      "sid": 13434,
+      "start_ticks": 529834,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "a9e3092625a32898bb10851999476ab52ffe919aa7bda2a421d6298135385ffa"
+    },
+    {
+      "pid": 13760,
+      "ppid": 13434,
+      "pgid": 13760,
+      "sid": 13434,
+      "start_ticks": 530458,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "f318bdaab4b145cdead43be996d03a2c21c8c3dc350e817487ff1bd9b6554b0d"
+    },
+    {
+      "pid": 13761,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 530458,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "f4f5cf3bb3ae76d56dd8d4b3414e5c7033a3aea023f79fcab7c13010b756a17b"
+    },
+    {
+      "pid": 13762,
+      "ppid": 13760,
+      "pgid": 13760,
+      "sid": 13434,
+      "start_ticks": 530458,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "c089ec295ce5b8a8a3cb615b3e1aec27da3abbcb3971d70459439f87b6bd30f7"
+    },
+    {
+      "pid": 13784,
+      "ppid": 13434,
+      "pgid": 13784,
+      "sid": 13434,
+      "start_ticks": 531107,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "f227cbaed580a459255a0207fc072e5351e7980d3212e8482e9bf89914080404"
+    },
+    {
+      "pid": 13785,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 531107,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "24a4bd1b96b1faf6ca32102cf70458c4ab0575297a40f1bc5c96fecb177035cf"
+    },
+    {
+      "pid": 13786,
+      "ppid": 13784,
+      "pgid": 13784,
+      "sid": 13434,
+      "start_ticks": 531108,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "8e315daf6e19e47ae72a6a58b373e911f94160a0fafe39190d73372e8bc181e6"
+    },
+    {
+      "pid": 13799,
+      "ppid": 13434,
+      "pgid": 13799,
+      "sid": 13434,
+      "start_ticks": 531591,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "f1ecca7799520a1a5c298dc7d57e9d55d09729fc586b2c90c9fd75d4d4f526b6"
+    },
+    {
+      "pid": 13800,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 531591,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "a05424a9fe054b7b8498b13b6bf3bda307b9e7fe1a4a5139d73ea41cbf625fd7"
+    },
+    {
+      "pid": 13801,
+      "ppid": 13799,
+      "pgid": 13799,
+      "sid": 13434,
+      "start_ticks": 531591,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "d9291d8218b60648b986f44a8eb715f49d0cde8bdacad586d7e1e9db1265af76"
+    },
+    {
+      "pid": 13814,
+      "ppid": 13434,
+      "pgid": 13814,
+      "sid": 13434,
+      "start_ticks": 531656,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "e61a69631d1152e5270bf565b7731f0e63a052314e95873566436172aa58b48d"
+    },
+    {
+      "pid": 13815,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 531656,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "4496935ca964d0f2c000dde5d9037ee44fe6845edda3ab0067effe4cee20ca2b"
+    },
+    {
+      "pid": 13816,
+      "ppid": 13814,
+      "pgid": 13814,
+      "sid": 13434,
+      "start_ticks": 531656,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "e56053e4b920a2360619529e1b8b92f92209884ea1c96301266f25b85821b1a6"
+    },
+    {
+      "pid": 13829,
+      "ppid": 13434,
+      "pgid": 13829,
+      "sid": 13434,
+      "start_ticks": 531794,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "3cb58f2cb8cce4205026baa506847469f03d2355f43385d267ce12d6ef20be0e"
+    },
+    {
+      "pid": 13830,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 531794,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "49aad30a527e01e546237ad5e927380ed79f114e6ffed2ac9a3f074a05944443"
+    },
+    {
+      "pid": 13831,
+      "ppid": 13829,
+      "pgid": 13829,
+      "sid": 13434,
+      "start_ticks": 531794,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "2e53ad09d79ce9ca5d993405a6ad363f5ec43b83b20e9d97574fc1fb4e14853f"
+    },
+    {
+      "pid": 13844,
+      "ppid": 13434,
+      "pgid": 13844,
+      "sid": 13434,
+      "start_ticks": 531976,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "88e3146ca6490523030c69c8f17f62c001e4d1b9264064bbd317d1a883da0079"
+    },
+    {
+      "pid": 13845,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 531976,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "aac7774db1df9a484aa7253454eb0fad6f228e986e0ab004b0ec6afef8f27c61"
+    },
+    {
+      "pid": 13846,
+      "ppid": 13844,
+      "pgid": 13844,
+      "sid": 13434,
+      "start_ticks": 531977,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "a5cb2072e3bc30354587a7ba2c793e2239346525e8722396c1edb67c2ead055d"
+    },
+    {
+      "pid": 13859,
+      "ppid": 13434,
+      "pgid": 13859,
+      "sid": 13434,
+      "start_ticks": 532165,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "621af0e33d0ab7f2115746388e89a88de5231e535ee185d33252f8da349c0ee2"
+    },
+    {
+      "pid": 13860,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 532165,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "5b49d863bc9aea15abdb4378c9afd2529ded917e00a16c6deca7d0739a0262ed"
+    },
+    {
+      "pid": 13861,
+      "ppid": 13859,
+      "pgid": 13859,
+      "sid": 13434,
+      "start_ticks": 532165,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "d4926e5da7de14ce7b8e9651ad665ff6719078df7bc52450f79312e104ba3f2c"
+    },
+    {
+      "pid": 13879,
+      "ppid": 13434,
+      "pgid": 13879,
+      "sid": 13434,
+      "start_ticks": 533072,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "dbec204b46039f465f28ad47cb92783982cd8cb0ed3437d6b6a990794e263cef"
+    },
+    {
+      "pid": 13880,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 533072,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "ecb24c09ce4674eef7ecb7f4af9096b18fbccf54caed74f22c007ee3b8527bc2"
+    },
+    {
+      "pid": 13881,
+      "ppid": 13879,
+      "pgid": 13879,
+      "sid": 13434,
+      "start_ticks": 533073,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "e6c84b0263c1c0d878eb1abe2bd9c63869306f361fcc311152c525505d420d48"
+    },
+    {
+      "pid": 13894,
+      "ppid": 13434,
+      "pgid": 13894,
+      "sid": 13434,
+      "start_ticks": 533187,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "4743e4c6a52757cdfdcebe5ee35f4d73b3d60edc47d6d26aa56969497e19cf50"
+    },
+    {
+      "pid": 13895,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 533187,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "c0cb49483c293d318929ceac1039c5c9725d71dcf8f5e7a93f89811c0bc71f6b"
+    },
+    {
+      "pid": 13896,
+      "ppid": 13894,
+      "pgid": 13894,
+      "sid": 13434,
+      "start_ticks": 533187,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "7f99a32320c841e8da9f457561a2bfd9bdd826c799520b4b3e21d28d54c5170d"
+    },
+    {
+      "pid": 13909,
+      "ppid": 13434,
+      "pgid": 13909,
+      "sid": 13434,
+      "start_ticks": 533224,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "6ebdcb8bb1000ddc10f38b8963eb51ced4ff76948eb5fa714013c5f7d4164799"
+    },
+    {
+      "pid": 13910,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 533224,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "56c1fbdedb69254242fe711b258ae74c89b4dcc1ad16df811bb15260fe222c0c"
+    },
+    {
+      "pid": 13911,
+      "ppid": 13909,
+      "pgid": 13909,
+      "sid": 13434,
+      "start_ticks": 533224,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "28eddf463efb50cf0bbf6a876fd04c6d37f7afad2d8dee402d32b599b8c808ec"
+    },
+    {
+      "pid": 13924,
+      "ppid": 13434,
+      "pgid": 13924,
+      "sid": 13434,
+      "start_ticks": 533257,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "99ddb088824455e4286dae31088d9443cc27687e57ba2f1c7a145ef0274b22bc"
+    },
+    {
+      "pid": 13925,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 533257,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "7e015566711119f04b87a9613b6f3a2509f30979b1bb3c81119e9157d163db67"
+    },
+    {
+      "pid": 13926,
+      "ppid": 13924,
+      "pgid": 13924,
+      "sid": 13434,
+      "start_ticks": 533257,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "658ebb9eb65f9cbc0b680335c48bda300896ac6e8943e3aa12490442b83c78d2"
+    },
+    {
+      "pid": 13939,
+      "ppid": 13434,
+      "pgid": 13939,
+      "sid": 13434,
+      "start_ticks": 533385,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "4149f7e74c6b02c44ec948b22d6e8528771f4db0f37fa4baad1e871a723db60a"
+    },
+    {
+      "pid": 13940,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 533385,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "13b40f3d79d19fb355a272b2826b254545cc938f1dc5f84526df3cb1d989bb3c"
+    },
+    {
+      "pid": 13941,
+      "ppid": 13939,
+      "pgid": 13939,
+      "sid": 13434,
+      "start_ticks": 533386,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "4025dbd7f79606413633ff4621206937fd370831261a8d412e033e6c7ede9460"
+    },
+    {
+      "pid": 13972,
+      "ppid": 13434,
+      "pgid": 13972,
+      "sid": 13434,
+      "start_ticks": 534017,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "21b44ee0e38006f8ea6de4e3b1e899b9d73d5bf3211ca3bf804a5b1f4d354a71"
+    },
+    {
+      "pid": 13973,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 534017,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "c8e5d7e69a49dee2bf775d3a644138f0c6ff9c7dcdab6c3a56ff413230d5eeb1"
+    },
+    {
+      "pid": 13974,
+      "ppid": 13972,
+      "pgid": 13972,
+      "sid": 13434,
+      "start_ticks": 534017,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "37eac171c1c27b477f8afb3fff75d982c86ccdef21a75e2e34674a3271b0f24a"
+    },
+    {
+      "pid": 13989,
+      "ppid": 13434,
+      "pgid": 13989,
+      "sid": 13434,
+      "start_ticks": 534451,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "cd2cb2a3900264edba24926ccf097159154628732f45253d9447abf054a209bc"
+    },
+    {
+      "pid": 13990,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 534452,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "90fe2f05e2f8a58155c78edd2bb772a00806584f591acadb179a4610431a519f"
+    },
+    {
+      "pid": 13991,
+      "ppid": 13989,
+      "pgid": 13989,
+      "sid": 13434,
+      "start_ticks": 534452,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "5a4806bff0b79e356c331be4aaab3fffe838fbd46ff64d6d2bf65cb082e68db7"
+    },
+    {
+      "pid": 14004,
+      "ppid": 13434,
+      "pgid": 14004,
+      "sid": 13434,
+      "start_ticks": 534498,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "ee36c17266c7ed1bd445574bbe98986f37938d8c2084cffc6c843189d4352e44"
+    },
+    {
+      "pid": 14005,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 534498,
+      "state": "R",
+      "comm": "tee",
+      "argv_sha256": "1b3245b2fd5cf6393f53d47d587deb661c6242f79721366d092469b27d1d83b8"
+    },
+    {
+      "pid": 14006,
+      "ppid": 14004,
+      "pgid": 14004,
+      "sid": 13434,
+      "start_ticks": 534499,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "0d29495de169879f65155c274d9780602b48063b74268f0951ca5cde8c30503c"
+    },
+    {
+      "pid": 14019,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 534567,
+      "state": "S",
+      "comm": "python3",
+      "argv_sha256": "05a06d6ba9f0a181f82fb9156216020fa1fb5c93a830580e893b719378927d30"
+    },
+    {
+      "pid": 14020,
+      "ppid": 14019,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 534609,
+      "state": "Z",
+      "comm": "bash",
+      "argv_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "pid": 14025,
+      "ppid": 14020,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 534610,
+      "state": "S",
+      "comm": "python3",
+      "argv_sha256": "0098c34684451455832a419dbda5720dce2155e949cb426d2c3a0c4161a623f3"
+    },
+    {
+      "pid": 14031,
+      "ppid": 14020,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 534623,
+      "state": "S",
+      "comm": "python3",
+      "argv_sha256": "704afcd926f1acc24109db006042904653ef695527af0fa74b36d56c81f3b92c"
+    },
+    {
+      "pid": 14032,
+      "ppid": 14020,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 534623,
+      "state": "S",
+      "comm": "sleep",
+      "argv_sha256": "bd7d82468ba77db9e33388b3397977df087f590f7dd6abdd4af7ab31b8ab5706"
+    },
+    {
+      "pid": 14034,
+      "ppid": 13434,
+      "pgid": 14034,
+      "sid": 13434,
+      "start_ticks": 534680,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "52cdd0e3b8664c0fe91aa922e4c4e9e3078e2b342082647595f78a5476f7e1bc"
+    },
+    {
+      "pid": 14035,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 534680,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "04bd53653e82c2479773c7d1393ee7a75cb443072b1258d9d972c98aa0688e24"
+    },
+    {
+      "pid": 14036,
+      "ppid": 14034,
+      "pgid": 14034,
+      "sid": 13434,
+      "start_ticks": 534680,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "2d72458cb2ba6cd36378712ab8ee78df2d4edd4acf85ecaa5fdd4babef3cdb73"
+    },
+    {
+      "pid": 14049,
+      "ppid": 13434,
+      "pgid": 14049,
+      "sid": 13434,
+      "start_ticks": 534719,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "6d91e863214b57567175e6e14fee01407d4feed9b9a0c261c465ca41dc349334"
+    },
+    {
+      "pid": 14050,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 534719,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "b81487b6fb99a958ed0a74168467601bb7e0f7d4765ddd01cdb6553451bd2a8e"
+    },
+    {
+      "pid": 14051,
+      "ppid": 14049,
+      "pgid": 14049,
+      "sid": 13434,
+      "start_ticks": 534719,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "292811ac322dc1dd98b8e6aedddf7b7df3f8aba549279dd28d740733e921a4f5"
+    },
+    {
+      "pid": 14064,
+      "ppid": 13434,
+      "pgid": 14064,
+      "sid": 13434,
+      "start_ticks": 534797,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "73f179ccc9c4de70a36891a236a569c1593afc3a21b1e22a611eefe783e85450"
+    },
+    {
+      "pid": 14065,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 534797,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "172dc62e0298fb50ea0759a0d8a9c3cb28a09f8b48e1e0fc8b6065c066bd7f54"
+    },
+    {
+      "pid": 14066,
+      "ppid": 14064,
+      "pgid": 14064,
+      "sid": 13434,
+      "start_ticks": 534797,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "b00648c757762019684f56ff39d821cfb88306c12472d4f9bfdfb163a1febb05"
+    },
+    {
+      "pid": 14089,
+      "ppid": 13434,
+      "pgid": 14089,
+      "sid": 13434,
+      "start_ticks": 535069,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "936dc2d7ad58e1475d423fa2327d0d43a765d64d1f444c9d13518a9d120761eb"
+    },
+    {
+      "pid": 14090,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 535069,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "db853fa0523fb633bddf4b07cd3b70a708196a043d108201b147cbe9b0205850"
+    },
+    {
+      "pid": 14091,
+      "ppid": 14089,
+      "pgid": 14089,
+      "sid": 13434,
+      "start_ticks": 535070,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "1e0dc0b3785d9c2ae24f5901b6d73b255617585e0b8f2bc0fb99be299d61249e"
+    },
+    {
+      "pid": 14104,
+      "ppid": 13434,
+      "pgid": 14104,
+      "sid": 13434,
+      "start_ticks": 535290,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "e86e1c61546c8d99c58dd3b6936524133967d204741232ac1d79c8a1caf741e9"
+    },
+    {
+      "pid": 14105,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 535290,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "6aee293146fd894be820f6826ed72d216464b609651769c09abad9f9172dd25c"
+    },
+    {
+      "pid": 14106,
+      "ppid": 14104,
+      "pgid": 14104,
+      "sid": 13434,
+      "start_ticks": 535290,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "d9e64a57f01c9520de4c1358b57f6f004ea01fb26cb6f6443b92a34d897f25ff"
+    },
+    {
+      "pid": 14118,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 535499,
+      "state": "R",
+      "comm": "rg",
+      "argv_sha256": "c488919ccf5b5b6a1ceaed7f1384cdbe2145d14e585d53825f4394d0f7db8507"
+    },
+    {
+      "pid": 14119,
+      "ppid": 13434,
+      "pgid": 14119,
+      "sid": 13434,
+      "start_ticks": 535501,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "325b0a08a13b379f14f95312f9121886339a83cfd6b0c462ca2942ea8f058908"
+    },
+    {
+      "pid": 14120,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 535501,
+      "state": "Z",
+      "comm": "tee",
+      "argv_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "pid": 14121,
+      "ppid": 14119,
+      "pgid": 14119,
+      "sid": 13434,
+      "start_ticks": 535501,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "19c0dd9ed6cb3dcbd315e4771403c297bef823763161f788054b16fae11fcee1"
+    },
+    {
+      "pid": 14204,
+      "ppid": 13434,
+      "pgid": 14204,
+      "sid": 13434,
+      "start_ticks": 536397,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "3e04eaa0d28315388704769638e18c5fe2ac31e1557ed9bbb285a60a0bce395d"
+    },
+    {
+      "pid": 14205,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 536397,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "680cdd47232d488463e39973e7fa3d7eb434ec4ad31cee8440f1c7a8cb062e83"
+    },
+    {
+      "pid": 14206,
+      "ppid": 14204,
+      "pgid": 14204,
+      "sid": 13434,
+      "start_ticks": 536397,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "253457935cbf4d3845fafa5e850a54aa49728b081ab72f513f0f8a5d847a36d9"
+    },
+    {
+      "pid": 14219,
+      "ppid": 13434,
+      "pgid": 14219,
+      "sid": 13434,
+      "start_ticks": 536619,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "5f908767f1b86b03000080bd1fdb9238024d8a4985507ff666ddee50abbcfec3"
+    },
+    {
+      "pid": 14220,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 536619,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "c1ee96f01ef387c6223059642ea6195defbffcb3a419828337b117fe00e882cb"
+    },
+    {
+      "pid": 14221,
+      "ppid": 14219,
+      "pgid": 14219,
+      "sid": 13434,
+      "start_ticks": 536619,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "712ee32343be633edd938689a3ef00badadc70cb2be2dc8bbca5c76065e65c0b"
+    },
+    {
+      "pid": 14234,
+      "ppid": 13434,
+      "pgid": 14234,
+      "sid": 13434,
+      "start_ticks": 536732,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "e2e45e166cb817578d4111b96e79b6aeb13b8f7c9e409daa38cdba27f23875ec"
+    },
+    {
+      "pid": 14235,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 536732,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "4b76391f346406e6044f6f6fd046bb12a455c7c42d6aa67aebde7f23c7e3b85d"
+    },
+    {
+      "pid": 14236,
+      "ppid": 14234,
+      "pgid": 14234,
+      "sid": 13434,
+      "start_ticks": 536732,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "7506050674dd8d2578f79001202cb9f596659b5deb1e7cfb0a68485219f29a18"
+    },
+    {
+      "pid": 14458,
+      "ppid": 13434,
+      "pgid": 14458,
+      "sid": 13434,
+      "start_ticks": 540693,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "dbc2f07ec670ab233e9a262d210c5b0e15b92b72cb4371ce32d43d477bc397a5"
+    },
+    {
+      "pid": 14459,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 540693,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "87397357f95d432da2e5717bee9736293d6017cb2f27c77305f88d7b1ec76f33"
+    },
+    {
+      "pid": 14460,
+      "ppid": 14458,
+      "pgid": 14458,
+      "sid": 13434,
+      "start_ticks": 540693,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "d06bb39a003fdb25e9b8f2222726239a5bd641011ede083b3ad928161730da2c"
+    },
+    {
+      "pid": 14513,
+      "ppid": 13434,
+      "pgid": 14513,
+      "sid": 13434,
+      "start_ticks": 541324,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "9472ed13d1b2cabe59bc0bc1863662947840e26e23aae07b292a8d6bb0f32b16"
+    },
+    {
+      "pid": 14514,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 541324,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "569ae1379c65635436ffdea183a8d3ce464f943c4e99741b0d31cde00820706b"
+    },
+    {
+      "pid": 14515,
+      "ppid": 14513,
+      "pgid": 14513,
+      "sid": 13434,
+      "start_ticks": 541324,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "82687018c317eb261b943b46c30b010c89be428c6b62f1116423cddf70557d1a"
+    },
+    {
+      "pid": 14737,
+      "ppid": 13434,
+      "pgid": 14737,
+      "sid": 13434,
+      "start_ticks": 549625,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "e2c00f4df7356a79afd69fa8a5f041a2369b9c4faa66ed722254d60b647256a1"
+    },
+    {
+      "pid": 14738,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 549625,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "5947c371d2614bcf7713b4a08389f65a8f1bc2fa3ed34c5f79265f1b6897a21b"
+    },
+    {
+      "pid": 14739,
+      "ppid": 14737,
+      "pgid": 14737,
+      "sid": 13434,
+      "start_ticks": 549625,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "40163ad0f059212e5c5b1c8c9b4bd8690725b4ceaa9d6a51d503ffdffb8002b0"
+    },
+    {
+      "pid": 14752,
+      "ppid": 13434,
+      "pgid": 14752,
+      "sid": 13434,
+      "start_ticks": 549663,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "34c8490175b6a07ca37904c5de5e997e893d144f46ea036871d8c35b4b891501"
+    },
+    {
+      "pid": 14753,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 549663,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "1d80dbd6e6947105051c3160220a23920419f683286089c46573cb68c9578ab5"
+    },
+    {
+      "pid": 14754,
+      "ppid": 14752,
+      "pgid": 14752,
+      "sid": 13434,
+      "start_ticks": 549663,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "1eaff0fb2ba1f86284729e99a9abfcfe30dd29f28d6c6fc05948cdb36fc10025"
+    },
+    {
+      "pid": 14780,
+      "ppid": 13434,
+      "pgid": 14780,
+      "sid": 13434,
+      "start_ticks": 549724,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "2ec3e479fdd1ab8a19f65616394e381f8e87e9b6eacbed377462248e97d65e11"
+    },
+    {
+      "pid": 14781,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 549724,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "d29471a7e36c62d7fa8950704d4348ae8a55d793f55cb99b5e26aa9d6d33a1e7"
+    },
+    {
+      "pid": 14782,
+      "ppid": 14780,
+      "pgid": 14780,
+      "sid": 13434,
+      "start_ticks": 549724,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "e6b534c2230da15bc832452767be0b4775a945c999645b66439a0dab15590bd8"
+    },
+    {
+      "pid": 14795,
+      "ppid": 13434,
+      "pgid": 14795,
+      "sid": 13434,
+      "start_ticks": 549938,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "37ee9261a117dc7a856d2adb2e5bf665f5e37c228afd6da6071bc84970f893ea"
+    },
+    {
+      "pid": 14796,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 549938,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "7c5fe58386600e0f1c1c237026f6fe48a7a8f0b7180b9a2e39c94fd059f1219b"
+    },
+    {
+      "pid": 14797,
+      "ppid": 14795,
+      "pgid": 14795,
+      "sid": 13434,
+      "start_ticks": 549938,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "4df195f2324d18c5b689b72f46926498d9e9764bb501dd30713a42197e757131"
+    },
+    {
+      "pid": 14824,
+      "ppid": 13434,
+      "pgid": 14824,
+      "sid": 13434,
+      "start_ticks": 550499,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "939f037022e57d8a9af70480f2a8c3ac9a08e58c6f76a6b46ed10a14e4205f25"
+    },
+    {
+      "pid": 14825,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 550499,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "990dea264e1c60563ad39d7f5822b76a7bd65a1fba5deb565a702e6e407383b8"
+    },
+    {
+      "pid": 14826,
+      "ppid": 14824,
+      "pgid": 14824,
+      "sid": 13434,
+      "start_ticks": 550499,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "ce750276a73ac0a77b604fe5a3d23873e3a5dbc72981039f54020137f15407b6"
+    },
+    {
+      "pid": 14839,
+      "ppid": 13434,
+      "pgid": 14839,
+      "sid": 13434,
+      "start_ticks": 550698,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "b84d6a7b8633fee1dc597516c25298eb29d08d29319654b1dd8e33ebe9b1d5cd"
+    },
+    {
+      "pid": 14840,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 550698,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "69707e4d0c2b2b6d2df8bf60391dd497ba770135f021785e4b78d5c1d20d7b24"
+    },
+    {
+      "pid": 14841,
+      "ppid": 14839,
+      "pgid": 14839,
+      "sid": 13434,
+      "start_ticks": 550698,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "1864ac7c3ce0f85a27d84206a9bc21f2028a55e16906293027c640d7e9745fc4"
+    },
+    {
+      "pid": 14854,
+      "ppid": 13434,
+      "pgid": 14854,
+      "sid": 13434,
+      "start_ticks": 550819,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "c666f94dc2ad1f44172f1ef28128288da4a463e8bcee5a9a459e49b4c7e2afd8"
+    },
+    {
+      "pid": 14855,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 550819,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "0bc7f981cafbe242b1d9b52671b543952312b1ce22430ba2df1274257448b3ed"
+    },
+    {
+      "pid": 14856,
+      "ppid": 14854,
+      "pgid": 14854,
+      "sid": 13434,
+      "start_ticks": 550819,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "cae227b9305532f348ef8457e8a6ab00e060d78205965b73b29d7488e4811bf3"
+    },
+    {
+      "pid": 14869,
+      "ppid": 13434,
+      "pgid": 14869,
+      "sid": 13434,
+      "start_ticks": 550970,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "1d2204b009e5dcaae11baf33f142ea71e0c36c59e0bfd2c69ea9c4273face1fb"
+    },
+    {
+      "pid": 14870,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 550970,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "bd66f937113d5fd543639c676177acfbfe42e2e8f90d64c01e88c95c3e0fcd7c"
+    },
+    {
+      "pid": 14871,
+      "ppid": 14869,
+      "pgid": 14869,
+      "sid": 13434,
+      "start_ticks": 550970,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "728df7735b1c8e92158f493379cd01133c6373d818f6865db097bca786c1a9ab"
+    },
+    {
+      "pid": 16263,
+      "ppid": 13434,
+      "pgid": 16263,
+      "sid": 13434,
+      "start_ticks": 568865,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "7d56892e6389088719249463b7bb3dd0f43b99dc05046c22f1944424a50f1305"
+    },
+    {
+      "pid": 16264,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 568865,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "8edd62477923c2b987618d0fcadae00ba1198ba048356cabac32cac2829ef88e"
+    },
+    {
+      "pid": 16265,
+      "ppid": 16263,
+      "pgid": 16263,
+      "sid": 13434,
+      "start_ticks": 568866,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "35f4b51f0dcc4477911d400c1da66229f87fd3505c2015c26c340e4bba836ee4"
+    },
+    {
+      "pid": 16435,
+      "ppid": 13434,
+      "pgid": 16435,
+      "sid": 13434,
+      "start_ticks": 571173,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "070868630198da09e0ddcc468a38d48cd88388f52ee15624571c5a667f84194c"
+    },
+    {
+      "pid": 16436,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 571173,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "8e9ee9d78018e7925a20ddae9ef16a9b8e16417cb580887de55e72be0b54bcf1"
+    },
+    {
+      "pid": 16437,
+      "ppid": 16435,
+      "pgid": 16435,
+      "sid": 13434,
+      "start_ticks": 571173,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "b3067dbb31a9378035c5946d405db0e06aa0a2574dceef002d80c2da915a02a7"
+    },
+    {
+      "pid": 16471,
+      "ppid": 13434,
+      "pgid": 16471,
+      "sid": 13434,
+      "start_ticks": 572951,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "a6d9a3fc8053de391e43f6dc774b3c21bc106fa8eb90b3166103b3d21523d1fb"
+    },
+    {
+      "pid": 16472,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 572951,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "31c46f286768bc1671fd7810d189123fd439ca00acf36a01a96ca9ce19d3a381"
+    },
+    {
+      "pid": 16473,
+      "ppid": 16471,
+      "pgid": 16471,
+      "sid": 13434,
+      "start_ticks": 572951,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "b2dae439a01f767980d6270ca5276e208c85de8ada97ed0963d3b1c15559a7ed"
+    },
+    {
+      "pid": 16486,
+      "ppid": 13434,
+      "pgid": 16486,
+      "sid": 13434,
+      "start_ticks": 573137,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "089cc83d7753d211a4e080e204d6c337a10c6fc1350bbe25028a9e96f4525fb6"
+    },
+    {
+      "pid": 16487,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 573137,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "926d774fdeaef7691f7442c4bb411121c1fad98207db86f11964f2bfe346ec07"
+    },
+    {
+      "pid": 16488,
+      "ppid": 16486,
+      "pgid": 16486,
+      "sid": 13434,
+      "start_ticks": 573137,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "3262adda85fcf291e3c8461443ebc4ccf7cf722a5af0e5fa24dbae7e6f943f25"
+    },
+    {
+      "pid": 16501,
+      "ppid": 13434,
+      "pgid": 16501,
+      "sid": 13434,
+      "start_ticks": 574003,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "342f8730811e6a07ac609b7019802897222c62b0eb366a9d9491c94976349cf3"
+    },
+    {
+      "pid": 16502,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 574003,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "0e09b64aa30e3aad175de28cf215c44affb25031011d4802010ff910a6c35ce8"
+    },
+    {
+      "pid": 16503,
+      "ppid": 16501,
+      "pgid": 16501,
+      "sid": 13434,
+      "start_ticks": 574004,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "31e00f36ef0058242d04d082a080bb51f96248a10b25bbf5902616dfe4338064"
+    },
+    {
+      "pid": 16606,
+      "ppid": 13434,
+      "pgid": 16606,
+      "sid": 13434,
+      "start_ticks": 575196,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "f9aa47d9404368dce305ceab93dd3a51e14f6828a82dcc0583c648827bb390c1"
+    },
+    {
+      "pid": 16607,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 575196,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "9108bcaae318045d28461e78edbb1f38ebc6bb6843efb5439134668d305db588"
+    },
+    {
+      "pid": 16608,
+      "ppid": 16606,
+      "pgid": 16606,
+      "sid": 13434,
+      "start_ticks": 575196,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "26dbd8464bb170cec3273864a262f607dc4da8b79d04af9939adf31caf0df8e8"
+    },
+    {
+      "pid": 16706,
+      "ppid": 13434,
+      "pgid": 16706,
+      "sid": 13434,
+      "start_ticks": 575600,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "dc433fb17a37e8795fe49fd7d4bd432996db80087f484e8751965dd1b41ba89d"
+    },
+    {
+      "pid": 16707,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 575600,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "4bff732895f9e63b68660441e87ed27e57cea5050b835ec9fa1456a14907ff51"
+    },
+    {
+      "pid": 16708,
+      "ppid": 16706,
+      "pgid": 16706,
+      "sid": 13434,
+      "start_ticks": 575600,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "d156b1605a640040976e9a71b14111afdad43df6eb19d4cf656c921e3c025669"
+    },
+    {
+      "pid": 16721,
+      "ppid": 13434,
+      "pgid": 16721,
+      "sid": 13434,
+      "start_ticks": 575664,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "33c4aca39debde438080c39bf0d2d7cc0795f91c833923945b55a4c5c9d80b22"
+    },
+    {
+      "pid": 16722,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 575664,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "767b9c53f190f8522a27e1a2ff8251f986d944bb08ba7a74235a92f086108884"
+    },
+    {
+      "pid": 16723,
+      "ppid": 16721,
+      "pgid": 16721,
+      "sid": 13434,
+      "start_ticks": 575665,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "e1b1589a546235ffb948a56b15b12595092f3cba4ed065d764cc0ee950046926"
+    },
+    {
+      "pid": 16735,
+      "ppid": 16723,
+      "pgid": 16721,
+      "sid": 13434,
+      "start_ticks": 575713,
+      "state": "S",
+      "comm": "sh",
+      "argv_sha256": "2d13f30250cbceaddeb59dddd64f3a203c308367131f99f693beab8b70268639"
+    },
+    {
+      "pid": 16736,
+      "ppid": 16735,
+      "pgid": 16721,
+      "sid": 13434,
+      "start_ticks": 575713,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "a1d7668b0a1614469bc3ed474f1abcf809e507fbc769a7e03511e08e2d8e6c5b"
+    },
+    {
+      "pid": 16747,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 575774,
+      "state": "R",
+      "comm": "python3",
+      "argv_sha256": "28b22888e497076b3bc65c0e46a08a0b832954533f0bfb8b7f652bd5c3cc4e20"
+    },
+    {
+      "pid": 16748,
+      "ppid": 13434,
+      "pgid": 16748,
+      "sid": 13434,
+      "start_ticks": 575788,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "58d69be1ba149bb7cb6bbc739a9769e134685347cda69ba439401e8264b50dac"
+    },
+    {
+      "pid": 16749,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 575788,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "dd951f06a518432f2c61c7d31fa3703de031d499de1552d9f7033d229c363c25"
+    },
+    {
+      "pid": 16750,
+      "ppid": 16748,
+      "pgid": 16748,
+      "sid": 13434,
+      "start_ticks": 575788,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "fa7f6f24b04773d2e85ec6ba178440baca73fcbd47b5d8d0996970d22acbcf48"
+    },
+    {
+      "pid": 16763,
+      "ppid": 13434,
+      "pgid": 16763,
+      "sid": 13434,
+      "start_ticks": 575852,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "a48ee0226ed5ccd887a1a3fc666b7849102c1fa5177a9edbac48bf0e2dbd96ec"
+    },
+    {
+      "pid": 16764,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 575852,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "9271297699ff2b1292b443dc8470f62cb6e8891f6c383d505f6d98c49b898272"
+    },
+    {
+      "pid": 16765,
+      "ppid": 16763,
+      "pgid": 16763,
+      "sid": 13434,
+      "start_ticks": 575852,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "eedc9619b00966a60cc775731cb22e31d29c86133b63dac8d2773aedd324d711"
+    },
+    {
+      "pid": 16778,
+      "ppid": 13434,
+      "pgid": 16778,
+      "sid": 13434,
+      "start_ticks": 575982,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "cda2a584695015a08fb398775edfec61d9f4efa0aec5b85aec80954387edfd0d"
+    },
+    {
+      "pid": 16779,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 575982,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "d3af006846a2a3c9ad9389e1a4473cb0d70f2b3145fd694f27022f1c82e141f5"
+    },
+    {
+      "pid": 16780,
+      "ppid": 16778,
+      "pgid": 16778,
+      "sid": 13434,
+      "start_ticks": 575982,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "edbf4c9d6346ebcfceb398a138f7889ecfe085808f457f92f8da8c416fda9d75"
+    },
+    {
+      "pid": 16793,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 576111,
+      "state": "R",
+      "comm": "python3",
+      "argv_sha256": "36a9beb42fc1faadba186fb89f71cc5a58c20ee5d7ff6e3ff870ed6c019cf22a"
+    },
+    {
+      "pid": 16794,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 576122,
+      "state": "R",
+      "comm": "python3",
+      "argv_sha256": "d168e7570c18cc370d74ba6fada5e3723dadd52a2134cae0ea85e2962776cff1"
+    },
+    {
+      "pid": 16795,
+      "ppid": 13434,
+      "pgid": 16795,
+      "sid": 13434,
+      "start_ticks": 576144,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "c611f24685aaeacf5d862982f782298daa930863d7eb6f7cb67550c258bb6fc6"
+    },
+    {
+      "pid": 16796,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 576144,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "44e981325f898e8fb03f2b73dbdb1e47fbd751bc893ab7fda2619199b934cbd6"
+    },
+    {
+      "pid": 16797,
+      "ppid": 16795,
+      "pgid": 16795,
+      "sid": 13434,
+      "start_ticks": 576144,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "03d7cd568a2a00e610caa320384a5aa420b1e3ef990b5b95ffe831dfd20467b2"
+    },
+    {
+      "pid": 16810,
+      "ppid": 13434,
+      "pgid": 16810,
+      "sid": 13434,
+      "start_ticks": 576507,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "971b8fb27bfb4c51eb9f7aa64dfd22c90c6e26a82aa5cdb1e8aefdb72644a72e"
+    },
+    {
+      "pid": 16811,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 576507,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "d121724bad519073363defb38b1f69e8a80f8adb87b4b793373ad694b9debd09"
+    },
+    {
+      "pid": 16812,
+      "ppid": 16810,
+      "pgid": 16810,
+      "sid": 13434,
+      "start_ticks": 576507,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "2290204d53b779e07a84ff39fb5b14310f7b73f7f1af165a4c8e5c685953d2cf"
+    },
+    {
+      "pid": 16825,
+      "ppid": 13434,
+      "pgid": 16825,
+      "sid": 13434,
+      "start_ticks": 576598,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "6733c5670c603673d537d12c623b0af99c303caf5d6e5a431a750dbce411c02d"
+    },
+    {
+      "pid": 16826,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 576598,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "002f49e3566bd3f79b740c3022e777e8c4aab6286078500961568e13cb9b478c"
+    },
+    {
+      "pid": 16827,
+      "ppid": 16825,
+      "pgid": 16825,
+      "sid": 13434,
+      "start_ticks": 576598,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "f9efbb8d4383132b661f79601a9a875bd584a71815c32d84f54c85b200bbc878"
+    },
+    {
+      "pid": 16840,
+      "ppid": 13434,
+      "pgid": 16840,
+      "sid": 13434,
+      "start_ticks": 577015,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "fae6b0e76989ceb678e18877df9abb7ed5a2d477207d84fe31cde793d44d9906"
+    },
+    {
+      "pid": 16841,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 577015,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "f2cca3737627fdf2b3ad5e906a09d73b88c0366c6f0c6b3228eab6b76d7bde48"
+    },
+    {
+      "pid": 16842,
+      "ppid": 16840,
+      "pgid": 16840,
+      "sid": 13434,
+      "start_ticks": 577015,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "75c805f748ab8fe4d0d414a47899dc5f089bf05738aed04183781006d20766f6"
+    },
+    {
+      "pid": 16855,
+      "ppid": 13434,
+      "pgid": 16855,
+      "sid": 13434,
+      "start_ticks": 577442,
+      "state": "S",
+      "comm": "timeout",
+      "argv_sha256": "85fd209e7d1419373bedbb254b0f7a82659f164db1a2372099c52eb0824475fb"
+    },
+    {
+      "pid": 16856,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 577442,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "b138c51fd31d0ed7798450840b234722837a16cf1392a2415a7255d0165a70d9"
+    },
+    {
+      "pid": 16857,
+      "ppid": 16855,
+      "pgid": 16855,
+      "sid": 13434,
+      "start_ticks": 577442,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "56f5927ffbd07527264590904c124c5f817e4b505aab680618fcd7d9afcbfde6"
+    },
+    {
+      "pid": 16875,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 577869,
+      "state": "R",
+      "comm": "python3",
+      "argv_sha256": "efc9c4dcc23acfb98f525ace5ef2d64a3076a02c36ba986e2f6c1eb5c775c616"
+    },
+    {
+      "pid": 16876,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 577869,
+      "state": "S",
+      "comm": "tee",
+      "argv_sha256": "2fea2666850e1c7dd3ed4349e5632bb8d955d2bce5cb2efe5296e48c88a33ad6"
+    },
+    {
+      "pid": 16877,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 577873,
+      "state": "S",
+      "comm": "bash",
+      "argv_sha256": "08688a7484c37206fff8def30c5b369fc1ce85f76b4e614ddd7137ce7aef4283"
+    },
+    {
+      "pid": 16880,
+      "ppid": 16877,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 577874,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "efa93b494751b453fc18922846886cc37286d6eb8bcdb554de523396ba36157c"
+    },
+    {
+      "pid": 16894,
+      "ppid": 16877,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 577885,
+      "state": "S",
+      "comm": "sleep",
+      "argv_sha256": "fedca33bcd909e6561d70a4dd6ac42387d4ee38018dcf141a2191c1bc7e3acb0"
+    },
+    {
+      "pid": 16902,
+      "ppid": 16877,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 577917,
+      "state": "S",
+      "comm": "sleep",
+      "argv_sha256": "fedca33bcd909e6561d70a4dd6ac42387d4ee38018dcf141a2191c1bc7e3acb0"
+    },
+    {
+      "pid": 16906,
+      "ppid": 16877,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 577938,
+      "state": "S",
+      "comm": "sleep",
+      "argv_sha256": "fedca33bcd909e6561d70a4dd6ac42387d4ee38018dcf141a2191c1bc7e3acb0"
+    },
+    {
+      "pid": 16910,
+      "ppid": 16877,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 577959,
+      "state": "R",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "cf378251e656e3f5eed477edbed26e34af0ba5e6120410c4c807ad1417b0e9f3"
+    },
+    {
+      "pid": 16911,
+      "ppid": 16877,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 577959,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "cf378251e656e3f5eed477edbed26e34af0ba5e6120410c4c807ad1417b0e9f3"
+    },
+    {
+      "pid": 17008,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 578445,
+      "state": "S",
+      "comm": "python3",
+      "argv_sha256": "14673fe87050ffbc7beaf2fb6dd3c6e95bab5c82d5637477ff0e0b0658858f1c"
+    },
+    {
+      "pid": 17009,
+      "ppid": 17008,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 578448,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "eb09052a3b19743a60e9aff869a509b3e39d6f2498cc7830591d806b2ae0ec7d"
+    },
+    {
+      "pid": 17021,
+      "ppid": 17008,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 578539,
+      "state": "Z",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "pid": 17022,
+      "ppid": 17008,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 578539,
+      "state": "S",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "466d67d679b560805bf55776cfc91f12d7ead08ae20ee295ef18ab13e2da195f"
+    },
+    {
+      "pid": 17045,
+      "ppid": 17008,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 578625,
+      "state": "Z",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "pid": 17046,
+      "ppid": 17008,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 578625,
+      "state": "Z",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "pid": 17069,
+      "ppid": 17008,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 578705,
+      "state": "Z",
+      "comm": "Godot_v4.7.2-st",
+      "argv_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "pid": 17089,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 582303,
+      "state": "R",
+      "comm": "python",
+      "argv_sha256": "25d149ee18cd63c4ad0106900799341682a43eb9a5f48ac2697d8c593d12da9d"
+    },
+    {
+      "pid": 17144,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 582463,
+      "state": "R",
+      "comm": "python3",
+      "argv_sha256": "45c3ac81628499a7895392335b2bbf1f693f8f75bdf33eb096a8d9ab219de15e"
+    },
+    {
+      "pid": 17146,
+      "ppid": 13434,
+      "pgid": 13434,
+      "sid": 13434,
+      "start_ticks": 582501,
+      "state": "R",
+      "comm": "python3",
+      "argv_sha256": "fd928d56d2b6f7aa096910ea76885ace59198fffa08fe453f5c2a9031464f411"
+    }
+  ],
+  "current_observation": {
+    "observed_utc": "2026-10-23T05:31:27.404056+00:00",
+    "session_or_group_members": [],
+    "matching_observed_identity_or_checkout_engine": [],
+    "reused_pids_with_different_start": [],
+    "matching_bound_sockets": [],
+    "checked_ports": [
+      27991,
+      29900,
+      29901,
+      29902,
+      33540,
+      33541,
+      33542,
+      33543
+    ],
+    "original_ready_ports": [
+      27991,
+      29900,
+      29901,
+      29902,
+      33540,
+      33541,
+      33542,
+      33543
+    ],
+    "aggregate_pid": 13434,
+    "aggregate_pgid": 13434,
+    "observed_identities": 197,
+    "outer_pid": 13394,
+    "outer_pgid": 13394,
+    "scope": "Read-only actual original inner/outer session/group, sampled PID/start, checkout-bound Godot and fixed/ready-port scan. No signal sent. No arbitrary escaped-descendant coverage claim."
+  },
+  "outer_live": {
+    "observed_utc": "2026-10-23T05:22:42.439496+00:00",
+    "tool_session_id": 28337,
+    "aggregate_pid": 13434,
+    "outer_pid": 13394,
+    "outer_start_ticks": 528612,
+    "outer_pgid": 13394,
+    "outer_sid": 13394,
+    "outer_argv_sha256": "c065603f234242a69af86f4dacb3a7eb274559571dc3928e298cb75c01b4ec86",
+    "outer_comm": "python3"
+  },
+  "independent_outer_live": {
+    "observed_utc": "2026-10-23T05:26:50.386729+00:00",
+    "pid": 13394,
+    "ppid": 561,
+    "pgid": 13394,
+    "sid": 13394,
+    "start_ticks": 528612,
+    "argv": [
+      "python3",
+      "docs/reports/gauntlet/aggregate-recovered-20261023/run_aggregate.py",
+      "/workspace/sightbreak-validate-recovered-afca2f1",
+      "afca2f1040ad0ce668b2a9a2201d9f4b2dde636f",
+      "/workspace/sightbreak-validate-recovered-afca2f1/builds/aggregate-recovered-r1"
+    ],
+    "argv_sha256": "c065603f234242a69af86f4dacb3a7eb274559571dc3928e298cb75c01b4ec86",
+    "cwd": "/workspace/sightbreak-validate-recovered-afca2f1",
+    "scope": "Independent live read-only observation of the declared outer aggregate supervisor."
+  },
+  "launch_input_count": 783,
+  "independent_content_sha256": "bcb872f6998ed8504c852dee354ab0acf5b6f19e58e40717267a1927e6d68a50",
+  "independent_validation_sha256": "408ff238275cea29a466ed5b99c03f82ee8d1d18205100fe158d07bda0251671",
+  "outer_exit_scope": "The parent's actual run_aggregate.py tool/session exit is reviewed separately; result.json records the inner aggregate exit.",
+  "passed": true
+}
