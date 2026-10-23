@@ -39,6 +39,7 @@ run_godot resume-alias --headless --script res://tests/independent_resume_alias_
 run_godot resume-auth-loss --headless --script res://tests/resume_auth_loss_test.gd
 run_godot bot-ai-regression --headless --script res://tests/bot_ai_regression_test.gd
 run_godot bot-dry-weapon --headless --audio-driver Dummy --script res://tests/bot_dry_weapon_test.gd
+run_godot bot-exhausted-primary --headless --audio-driver Dummy --script res://tests/bot_exhausted_primary_test.gd
 run_godot bot-squad-symmetry --headless --script res://tests/bot_squad_symmetry_test.gd
 run_godot bots --headless --script res://tests/bot_match_test.gd
 run_godot bot-lifecycle --headless --script res://tests/bot_lifecycle_test.gd
