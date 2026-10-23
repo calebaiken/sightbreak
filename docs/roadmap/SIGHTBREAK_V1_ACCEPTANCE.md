@@ -90,3 +90,12 @@ limitation. Fresh actual and all-pairs visual review are pending. Exact Windows
 AXTitle -25212; partial traversal cannot qualify Deploy exposure or gameplay.
 These findings leave all whole release gates, thresholds and external blockers
 unchanged. See NEXT_SESSION for exact immutable refs, jobs and continuation.
+
+At 10:54 UTC the touch blind comparison is independently complete:24 candidate
+preferences, eight ties, no baseline preference, all32 original pairs. Numeric
+FAIL, strict warnings and descendant cleanup limitation remain. All original
+raw files/archive members verify and are committed; unchanged analyzer replay
+continues. ARM R2 actual FAILED review is sealed e1221ba2/root ea5aeeb4; narrow
+R3 source4854aed9 is in fresh review, with no new native release. Windows current
+ordinary-input/living journey steps fail; raw causes and full-match output are
+pending. None of these scoped results closes a whole release gate.

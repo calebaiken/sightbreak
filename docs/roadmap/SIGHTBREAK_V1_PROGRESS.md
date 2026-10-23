@@ -6,7 +6,7 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-The mission remains IN PROGRESS / PRIMARY, 2026-10-23 10:43 UTC. Exact
+The mission remains IN PROGRESS / PRIMARY, 2026-10-23 10:54 UTC. Exact
 `28a3e294` full maintained aggregate is independently VERIFIED (`ab2ca960`,
 root `a84f8414`): 534.403222822 seconds, 56 Godot invocations, 129 Python
 methods (three original Windows skips), strict logs/source/UID/ownership/archives.
@@ -14,11 +14,12 @@ This is headless engineering evidence; all 15 new 24 m sidearm shots miss.
 
 Touch R4B R3 has completed all ten native producers and the original analyzer,
 with 5,648 images and unchanged source. Both baseline and candidate numeric gates
-FAIL; geometry policy is valid. Frozen post-source checks pass; packaging and
-fresh actual critique continue. Independent live observation finds a surviving
+FAIL; geometry policy is valid. Frozen post-source and full archive checks pass; original payload is committed
+3c5e0ad7. Fresh unchanged analyzer replay continues on CPU4. Independent live observation finds a surviving
 owned dbus-launch descendant (S at terminal, later Z), so leader-only cleanup
-receipts are insufficient. A separate visual comparison will use all32 unmodified
-matching normal pairs; it cannot override numeric or cleanup failure.
+receipts are insufficient. The separate locked visual review c0945580 (root231adbd9) covers all32
+unmodified matching pairs:24 candidate preferences/eight ties. Minimum label/count
+spacing remains tight. This cannot override numeric or cleanup failure.
 
 Windows R2 is integrated at `49ae54b0`; fresh combined source critic `97714ae6`
 accepts its exact union, maintained pure checks and fresh controls. One actual
@@ -31,8 +32,8 @@ Mac AX R2 source `d6cb78aa` is independently accepted `114f2224`, but the one
 read-only diagnostic [39939989024](https://github.com/calebaiken/sightbreak/actions/runs/39939989024)
 FAILS on an untitled AXButton's unavailable AXTitle (-25212). Trust/prerequisites
 pass; traversal aborts before Deploy selection, with zero CGEvents/prompts and
-ordinary clean close. Fresh actual audit continues; a builder has begun a narrow
-untitled-node investigation. No Mac gameplay or iOS/Intel gate closes. Linux
+ordinary clean close. Fresh actual review e1221ba2 is retained as ea5aeeb4. Narrow untitled-node
+source4854aed9 now awaits fresh independent source/actual qualification. No Mac gameplay or iOS/Intel gate closes. Linux
 `216d39ad` source correction remains accepted `f8659bba`; native compilation and
 profiling are unobserved. Whole G1–G19 and human/physical/CS2/Steam blockers stay
 open. [NEXT_SESSION](../engineering/NEXT_SESSION.md) gives the exact continuation.
