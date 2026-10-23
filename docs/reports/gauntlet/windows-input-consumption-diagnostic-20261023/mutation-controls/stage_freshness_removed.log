@@ -1,0 +1,16 @@
+SYNTHETIC_MUTATION_CONTROL stage_freshness_removed
+test_stale_epoch_or_stale_latest_metadata_never_qualifies_an_input_stage (test_input_consumption_observation.InputConsumptionControls.test_stale_epoch_or_stale_latest_metadata_never_qualifies_an_input_stage) ... 
+  test_stale_epoch_or_stale_latest_metadata_never_qualifies_an_input_stage (test_input_consumption_observation.InputConsumptionControls.test_stale_epoch_or_stale_latest_metadata_never_qualifies_an_input_stage) (field='wall_msec') ... FAIL
+
+======================================================================
+FAIL: test_stale_epoch_or_stale_latest_metadata_never_qualifies_an_input_stage (test_input_consumption_observation.InputConsumptionControls.test_stale_epoch_or_stale_latest_metadata_never_qualifies_an_input_stage) (field='wall_msec')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-diagnostic/scripts/test_input_consumption_observation.py", line 185, in test_stale_epoch_or_stale_latest_metadata_never_qualifies_an_input_stage
+    self.assertFalse(self.report(authority=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (failures=1)

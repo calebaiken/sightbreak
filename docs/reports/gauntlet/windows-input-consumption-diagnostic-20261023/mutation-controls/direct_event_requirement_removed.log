@@ -1,0 +1,15 @@
+SYNTHETIC_MUTATION_CONTROL direct_event_requirement_removed
+test_missing_direct_event_cannot_be_replaced_by_counter_claim (test_input_consumption_observation.InputConsumptionControls.test_missing_direct_event_cannot_be_replaced_by_counter_claim) ... FAIL
+
+======================================================================
+FAIL: test_missing_direct_event_cannot_be_replaced_by_counter_claim (test_input_consumption_observation.InputConsumptionControls.test_missing_direct_event_cannot_be_replaced_by_counter_claim)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-diagnostic/scripts/test_input_consumption_observation.py", line 127, in test_missing_direct_event_cannot_be_replaced_by_counter_claim
+    self.assertFalse(report['diagnostic_complete'])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

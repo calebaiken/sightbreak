@@ -1,0 +1,47 @@
+{
+  "scope": "Synthetic pure analyzer mutations; expected failed tests are retained",
+  "source": "c0738163965804297a1881905d5bb4646da40a16",
+  "cpu_affinity": [
+    4
+  ],
+  "analyzer_sha256": "7654c44f13d765a2f98f64f7ced4e463d13f040768e87cd56fb0a943d6953e01",
+  "cases": [
+    {
+      "mutation": "privacy_projection_removed",
+      "test": "test_unexpected_private_payload_or_other_actor_fields_are_rejected",
+      "exit_code": 1,
+      "rejected": true,
+      "log_sha256": "4d64044b6749d1eca8dbb96c597c1bdd78576b7fbae9a5e2d1a1cdc1a797c2e7"
+    },
+    {
+      "mutation": "retired_binding_guard_removed",
+      "test": "test_retired_generation_cannot_consume_even_when_actor_id_is_reused",
+      "exit_code": 1,
+      "rejected": true,
+      "log_sha256": "ca9959ab9db229587eb2403e42a707d7e9d337a53ba3b02f3331b573852aeee0"
+    },
+    {
+      "mutation": "stage_freshness_removed",
+      "test": "test_stale_epoch_or_stale_latest_metadata_never_qualifies_an_input_stage",
+      "exit_code": 1,
+      "rejected": true,
+      "log_sha256": "7f784fbe405e7679e7f4fe581d450f754420d0c52518d5541b0240560a522a00"
+    },
+    {
+      "mutation": "direct_event_requirement_removed",
+      "test": "test_missing_direct_event_cannot_be_replaced_by_counter_claim",
+      "exit_code": 1,
+      "rejected": true,
+      "log_sha256": "b1b087d6ffe0c1a51ce633d78924bcda8e1e2c7ea55ed224209bf1fd23b6cbc0"
+    },
+    {
+      "mutation": "truncation_guard_removed",
+      "test": "test_truncation_and_mixed_roles_are_rejected",
+      "exit_code": 1,
+      "rejected": true,
+      "log_sha256": "710920d17eb38fd9a25e7419767bfa8f24cf83b95987d699eb65a6f8a92c25b4"
+    }
+  ],
+  "all_rejected": true,
+  "source_unchanged": true
+}

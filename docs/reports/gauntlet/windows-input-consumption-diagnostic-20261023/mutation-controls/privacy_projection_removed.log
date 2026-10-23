@@ -1,0 +1,43 @@
+SYNTHETIC_MUTATION_CONTROL privacy_projection_removed
+test_unexpected_private_payload_or_other_actor_fields_are_rejected (test_input_consumption_observation.InputConsumptionControls.test_unexpected_private_payload_or_other_actor_fields_are_rejected) ... 
+  test_unexpected_private_payload_or_other_actor_fields_are_rejected (test_input_consumption_observation.InputConsumptionControls.test_unexpected_private_payload_or_other_actor_fields_are_rejected) (field='ticket') ... FAIL
+  test_unexpected_private_payload_or_other_actor_fields_are_rejected (test_input_consumption_observation.InputConsumptionControls.test_unexpected_private_payload_or_other_actor_fields_are_rejected) (field='position') ... FAIL
+  test_unexpected_private_payload_or_other_actor_fields_are_rejected (test_input_consumption_observation.InputConsumptionControls.test_unexpected_private_payload_or_other_actor_fields_are_rejected) (field='profile') ... FAIL
+  test_unexpected_private_payload_or_other_actor_fields_are_rejected (test_input_consumption_observation.InputConsumptionControls.test_unexpected_private_payload_or_other_actor_fields_are_rejected) (field='id') ... FAIL
+
+======================================================================
+FAIL: test_unexpected_private_payload_or_other_actor_fields_are_rejected (test_input_consumption_observation.InputConsumptionControls.test_unexpected_private_payload_or_other_actor_fields_are_rejected) (field='ticket')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-diagnostic/scripts/test_input_consumption_observation.py", line 212, in test_unexpected_private_payload_or_other_actor_fields_are_rejected
+    self.assertFalse(self.report(client=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_unexpected_private_payload_or_other_actor_fields_are_rejected (test_input_consumption_observation.InputConsumptionControls.test_unexpected_private_payload_or_other_actor_fields_are_rejected) (field='position')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-diagnostic/scripts/test_input_consumption_observation.py", line 212, in test_unexpected_private_payload_or_other_actor_fields_are_rejected
+    self.assertFalse(self.report(client=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_unexpected_private_payload_or_other_actor_fields_are_rejected (test_input_consumption_observation.InputConsumptionControls.test_unexpected_private_payload_or_other_actor_fields_are_rejected) (field='profile')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-diagnostic/scripts/test_input_consumption_observation.py", line 212, in test_unexpected_private_payload_or_other_actor_fields_are_rejected
+    self.assertFalse(self.report(client=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_unexpected_private_payload_or_other_actor_fields_are_rejected (test_input_consumption_observation.InputConsumptionControls.test_unexpected_private_payload_or_other_actor_fields_are_rejected) (field='id')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-diagnostic/scripts/test_input_consumption_observation.py", line 212, in test_unexpected_private_payload_or_other_actor_fields_are_rejected
+    self.assertFalse(self.report(client=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (failures=4)

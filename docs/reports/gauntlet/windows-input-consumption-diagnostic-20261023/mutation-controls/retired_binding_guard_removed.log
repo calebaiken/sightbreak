@@ -1,0 +1,15 @@
+SYNTHETIC_MUTATION_CONTROL retired_binding_guard_removed
+test_retired_generation_cannot_consume_even_when_actor_id_is_reused (test_input_consumption_observation.InputConsumptionControls.test_retired_generation_cannot_consume_even_when_actor_id_is_reused) ... FAIL
+
+======================================================================
+FAIL: test_retired_generation_cannot_consume_even_when_actor_id_is_reused (test_input_consumption_observation.InputConsumptionControls.test_retired_generation_cannot_consume_even_when_actor_id_is_reused)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-diagnostic/scripts/test_input_consumption_observation.py", line 167, in test_retired_generation_cannot_consume_even_when_actor_id_is_reused
+    self.assertIn('current observed peer-generation', str(self.report(authority=rows)['errors']))
+AssertionError: 'current observed peer-generation' not found in '[]'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+FAILED (failures=1)

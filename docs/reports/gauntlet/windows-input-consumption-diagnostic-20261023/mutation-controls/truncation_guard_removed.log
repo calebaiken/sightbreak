@@ -1,0 +1,16 @@
+SYNTHETIC_MUTATION_CONTROL truncation_guard_removed
+test_truncation_and_mixed_roles_are_rejected (test_input_consumption_observation.InputConsumptionControls.test_truncation_and_mixed_roles_are_rejected) ... 
+  test_truncation_and_mixed_roles_are_rejected (test_input_consumption_observation.InputConsumptionControls.test_truncation_and_mixed_roles_are_rejected) (field='reason') ... FAIL
+
+======================================================================
+FAIL: test_truncation_and_mixed_roles_are_rejected (test_input_consumption_observation.InputConsumptionControls.test_truncation_and_mixed_roles_are_rejected) (field='reason')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-diagnostic/scripts/test_input_consumption_observation.py", line 205, in test_truncation_and_mixed_roles_are_rejected
+    self.assertFalse(self.report(client=rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (failures=1)
