@@ -6,6 +6,16 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
+
+Audio evidence source correction is pending independent review at exact tooling
+freeze `aae1f0a`, own branch `codex/audio-native-serialization-strict-20261023`.
+Builder's 90 pure methods pass; complete original native raw parses as strict
+untyped failure. The actual `26a1c59` acquisition remains REJECT/strict FAIL per
+fresh actual critic `ae6abe14`; raw, receipts, game/probe/audio/wrapper remain
+unchanged. [Bounded result](../reports/gauntlet/audio-exit-lifecycle/native-serialization-strict-r1/RESULT.md)
+closes no G1–G20 or audio leak gate and releases no new native attempt.
+
+
 Current execution is active again on 2026-10-23. The executor contains an older
 snapshot. Published checkpoint `917b143b` is recovered into
 `codex/v1-executor-recovery-20261023`; unpublished local work was not found in

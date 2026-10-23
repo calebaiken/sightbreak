@@ -1,0 +1,46 @@
+{
+  "implementation_freeze": "aae1f0a5e963a01dceb4aed1d9c3b0c40520c76f",
+  "support_files": {
+    "replay_preserved.py": {
+      "bytes": 3489,
+      "sha256": "6904aa5f7f015d7f7c14d6583d8be01b1a35a5948ae7904dae258d23b800e6c4"
+    },
+    "replay-preserved.stdout": {
+      "bytes": 4259,
+      "sha256": "7a82f49805134ca1d8362fa67daff7c74d9e2b3552251c79ca8efda309d7df21"
+    },
+    "preservation-and-replay.json": {
+      "bytes": 1096,
+      "sha256": "74dc4d32049bff258ebd036467b11bf4d83d493cc1f918335a06f0c37d007bea"
+    },
+    "unchanged-r2-and-chronology.stderr": {
+      "bytes": 1792,
+      "sha256": "9140169bb5cc96e0b2af981ec20465cb7b276a3f649cf74f8c69f3be1b6d5623"
+    },
+    "source-binding.json": {
+      "bytes": 946,
+      "sha256": "ab80d34aeb129e0684539e994019b16d2cfca9e8c428552fb9dec87ad252a28a"
+    }
+  },
+  "replay_command": [
+    "python3",
+    "docs/reports/gauntlet/audio-exit-lifecycle/native-serialization-strict-r1/replay_preserved.py",
+    "/workspace/sightbreak-audio-exit-lifecycle/.local/audio-owner-r1-20261023/input-mode.log",
+    "--raw-root",
+    "/workspace/sightbreak-audio-exit-lifecycle/.local/audio-owner-r1-20261023",
+    "--critic-root",
+    "/workspace/reviews/audio-owner-r1-native/docs/reports/gauntlet/audio-exit-lifecycle/independent-native-r1"
+  ],
+  "replay_exit": 0,
+  "unchanged_r2_and_chronology": {
+    "exit": 0,
+    "methods": 10,
+    "mechanism": "unittest loader import of unchanged independent-source-r2-original/review_controls.py and replay_counterexamples.py; main routines not invoked"
+  },
+  "no_ai_slop_eval": {
+    "meaning_and_limits_preserved": true,
+    "concrete_sources_and_results": true,
+    "unsupported_score_or_cause_claims": false,
+    "applicable_style_checks": "pass"
+  }
+}

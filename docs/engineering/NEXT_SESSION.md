@@ -1,5 +1,30 @@
 # Next session
 
+## Local audio source correction checkpoint — 2026-10-23
+
+This own checkout is `/workspace/sightbreak-audio-native-evidence`, branch
+`codex/audio-native-serialization-strict-20261023`, exact base `26a1c59`.
+Implementation freeze is `aae1f0a5e963a01dceb4aed1d9c3b0c40520c76f`; subsequent
+commits retain source-bound reports/checkpoints. Root's canonical newer mission
+queue remains `/workspace/sightbreak-v1-recovered/docs/engineering/NEXT_SESSION.md`.
+Do not replace that queue with this checkout's older inherited notes below.
+
+Prereg `4cbc1f3`, baseline/new-control failure `1a3e7a8`, header fix `e356343`,
+standalone StringName fix `aae1f0a`. Builder reruns 90 relevant pure methods,
+zero skips. The corrected full original-log CLI parses 6,884 rows/437 objects/
+427 players/15 windows and reports untyped strict failure, unknown drain and
+unproven cause. Original actual review `ae6abe14` remains acquisition REJECT /
+strict FAIL. All 437 raw files, 16 critic files and original checkout at `26a1c59`
+are unchanged. No game/probe/wrapper/hooks/waits/audio delta and no native run.
+
+Next exact commands and sparse fixtures are in
+[the fresh-review handoff](../reports/gauntlet/audio-exit-lifecycle/native-serialization-strict-r1/REVIEW_HANDOFF.md).
+Parent must obtain fresh independent exact-source review; builder cannot approve.
+No native retry or audio cause/repair is authorized. Current largest gap is
+retaining-root/observer lifetime causality. Preserve the original `.local/audio-owner-r1-20261023`
+and original failed receipts. Continue root's active v1 mission after review.
+
+
 Updated 2026-10-23, 06:19 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is

@@ -64,3 +64,16 @@ are contextual shipped-interface references, not a measured contrast success
 bar, tactical-FPS presentation parity or CS2 evidence. Third-party pixels remain
 outside Git. B4 and matched native SIGHTBREAK captures remain the pass/fail bars.
 The source research is preserved on 733986d3; B7 is reserved for the bot benchmark.
+
+
+## Native audio serialization and StringName bar, 2026-10-23
+
+The actual failed native `26a1c59` log (2,000,315 bytes; SHA-256
+`a50a819152083c3d73564f21a5f15d36571c1b79c7178831667092f07537a218`),
+line 17's float header, 353 standalone orphan rows and line 7292's positive
+summary are the deterministic comparison. Exact review `ae6abe14` and original
+archive remain retained. Pinned Godot `ed1daf0bf` AudioServer float API and
+StringName cleanup source were fetched on 2026-10-23; URLs, hashes and declared
+gates are in [the preregistration](../reports/gauntlet/audio-exit-lifecycle/native-serialization-strict-r1/PREREGISTRATION.md)
+and its `upstream-retrieval.json`. Pure parsing/strict-rejection comparison is
+fetchable and source-bound; no shipped-title or audio-quality parity follows.

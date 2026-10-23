@@ -477,3 +477,19 @@ fail and skip ordinary play. Test-only 3730273 plus independent 78d5fa1/2b43487
 allow repeat 39906639650 at b2e0293; actual ordinary play is now in progress.
 Windows frozen-ref review and fresh R3 native touch evidence acquisition are
 active. No broad release gate closes. NEXT_SESSION holds the exact continuation.
+
+
+## 2026-10-23: correct native audio evidence parsing and strict rejection
+
+New own sparse branch `codex/audio-native-serialization-strict-20261023` starts
+at exact `26a1c59`, preserving that original checkout/raw. Prereg `4cbc1f3`
+reads exact independent actual review `ae6abe14` and pins real Godot float API/
+StringName output source. Failure retention `1a3e7a8` precedes header correction
+`e356343` and strict scanner freeze `aae1f0a`. All 90 relevant pure methods pass;
+original 2,000,315-byte raw now parses with strict untyped failure, exact census,
+unknown drain and unproven cause. All 437 raw/16 critic files and failed receipts
+remain unchanged. Production delta is two Python tooling files; game, observer,
+hooks, waits, audio and wrapper stay identical. No native operation runs.
+[Result and fresh review](../reports/gauntlet/audio-exit-lifecycle/native-serialization-strict-r1/RESULT.md)
+remain pending independent source review. Retaining-root/instrumentation lifetime
+is the largest supported gap; original acquisition REJECT and strict FAIL remain.
