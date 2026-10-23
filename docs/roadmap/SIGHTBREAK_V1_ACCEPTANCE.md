@@ -60,3 +60,11 @@ whole maintained aggregate and platform qualification. Linux one controlled
 acquisition is active; latest Windows overall fails despite separate bounded
 passes. Touch bool correction is source-ready, Mac AX diagnostic source-only.
 No whole gate, score threshold, human/physical or Steam criterion is lowered.
+
+At 09:34 UTC the Linux acquisition has FAILED strict import: the frozen
+measurement fixture does not compile. Export and all four controlled conditions
+are unreached. No performance result exists. Original raw evidence stays intact
+for independent actual review. The combined bot/guard aggregate at exact
+28a3e294 is being prepared with separate builder and fresh critic; no maintained
+aggregate at the combined root has run yet. Current mission and draft PR metadata
+are updated. All existing release gates and external blockers remain unchanged.

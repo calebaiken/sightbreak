@@ -6,7 +6,7 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-Current execution is active, 2026-10-23 09:24 UTC, root code checkpoint
+Current execution is active, 2026-10-23 09:34 UTC, root code checkpoint
 cdd69b78. The exhausted-primary sidearm correction is integrated as 0f2cf636,
 with actual prepared UID 261d6ddb. Independent 63ec7271 verifies 1,268 native rows /
 75,890 predicates and the registered selection comparison; independent 720cc695
@@ -29,14 +29,17 @@ pass. Full official ZIPs / 70 PNGs and 133 strict-clean logs remain retained.
 [Review](../reports/gauntlet/windows-native-e28c8e9-independent-20261023/REPORT.md).
 Route-only pulse source correction is under implementation, preserving all guards.
 
-One Linux exact f242a2f controlled profiling acquisition is now running after
-source acceptance 26095386, actual criteria 4e97721b and root release e587392d.
-The sole local CPU/native lane is reserved; other heavy work is held. Original
-Linux gameplay remains failed. Touch explicit-bool correction 108d1cdc passes
-fresh 95703781 source review; no new native render/import has occurred. Mac AX
-read-only diagnostic is source-only and unfinished; c838 actual gameplay remains
-failed before input. Audio corrected pure analysis stays source-bound on its
-own branch; original acquisition REJECT / strict FAIL and unknown cause remain.
+One Linux exact f242a2f controlled acquisition FAILS strict import with a genuine
+fixture type-inference parse/load error at line 107. No export or any of the four
+measurement conditions executes. Original Linux gameplay remains failed. Fresh
+actual review is preserving exact failed evidence; no retry is released. The CPU
+hold is ended. A new full maintained aggregate at exact 28a3e294 is in bounded
+preparation with a fresh critic before runtime. Touch explicit-bool correction
+108d1cdc passes fresh 95703781 source review only; no new native render/import.
+Mac read-only AX source cf4de47f awaits final pure/depth-one validation and fresh
+review; c838 actual gameplay still fails before input. Audio corrected pure
+analysis stays source-bound on its own branch; original acquisition REJECT /
+strict FAIL and unknown cause remain.
 No whole release gate changes status. NEXT_SESSION is the exact continuation.
 
 A separate future market-harness guard is independently accepted at
@@ -138,7 +141,7 @@ PR24 → PR23 → PR22 → PR16 dependencies and contributor ownership.
 | G8 | Visual quality at least 8.5/10 in each applicable category | FAILED | 0.3 aggregate 8.1 (geometry, materials, lighting, models, effects below 8.5). Fresh sequence review about 5.5. | Reported (AI reviewers, not human) | Per-category rounds after G4-G7. |
 | G9 | Audio: fire, reload, hit, objective cues consistent with animation | IN PROGRESS | Original ARM/playback-WAV leaks remain unresolved. Sole ownership diagnostic at 26a1c59 independently REJECTS acquisition and FAILS strict shutdown: native float mixrate rejected; 353 orphan StringNames missed by scanner. Source/raw/state/sidecar/UID/scoped cleanup otherwise reconcile. [Actual review](../reports/gauntlet/audio-exit-lifecycle/independent-native-r1/REVIEW.md). No listening or retaining-cause evidence. | Fresh independent source and actual-output critics | Source-only aae1f0a corrects native numeric validation and strict StringName patterns using preserved bytes. Fresh review before integration; no native retry or historical leak-fix claim. Investigate instrumentation lifetime separately, then supported owner/cause and listening/timing. |
 | G10 | Accessibility (contrast, text scale, reduced motion, controller/keyboard reach) | IN PROGRESS | R3 numeric FAIL and blind clarity preference remain separate. R4B receipt method b001fc5 is independently source-accepted by abb837b4 after preserved rejection. Sole new A/B attempt stops at candidate import: compact type inference/compile errors, zero captures. Source/UID fences unchanged, failed archive pending. | Fresh independent method/source/native and blind visual critics | Audit actual import failure, correct explicit type without geometry/method changes, freeze fresh stages and compare actual native pixels/ownership. Live HUD, human/physical reach, custom-layout and whole accessibility remain open. |
-| G11 | Linux native package | IN PROGRESS | Original ordinary selected gates/historical timing evidence preserved; gameplay still fails original LIVE/next-buy deadlines. Corrected overhead fixture/controller and acquisition f242a2f pass independent source reviews 4b5b8cd/26095386. ONE controlled native acquisition is running after actual prereg 4e97721b and release e587392d; no actual verdict yet. | Fresh independent source and actual-output critics | Preserve one source-bound staging/export/PCK/OFF-ON-ON-OFF/caps/host/cleanup record; independently measure registered ratios/drift/spikes. No physical FPS, total-cost, cause or gameplay-fix inference. |
+| G11 | Linux native package | IN PROGRESS | Original ordinary selected gates/historical timing evidence preserved; gameplay still fails original LIVE/next-buy deadlines. Corrected overhead fixture/controller and acquisition f242a2f pass independent source reviews 4b5b8cd/26095386. ONE acquisition after criteria 4e97721b/release e587392d FAILS strict import at fixture line 107; no export or measured conditions execute. Fresh actual evidence review is underway. | Fresh independent source and actual-output critics | Retain exact failed import/source/UID/log/cleanup evidence; independently review minimal type correction and new output identity before any new acquisition. Ratios/drift/spikes are unmeasured. No physical FPS, total-cost, cause or gameplay-fix inference. |
 | G12 | Windows native package | IN PROGRESS | Latest e28c8e9 run 39926044462 final 2020cfa9 FAILS route corridor while alive and separate legacy reload wait. Settings/LEAVE/reopen/focus unreached. Separate 15 suites / 9,434 checks, two input schedules, plant/natural defuse/restart, defuse and 12 rounds / 7:5 / exact offline earned persistence pass; 133 strict logs/70 PNGs/official ZIPs retained. [Review](../reports/gauntlet/windows-native-e28c8e9-independent-20261023/REPORT.md). | Fresh independent native critic | Route-only in-process keypulse source investigation; preserve defaults/guards/corridor/budgets. No new native run or causal fix. Qualify combined-root source, living flow and physical/human/package gates. |
 | G13 | macOS native package (Intel and Apple Silicon) | FAILED | Actual c838907 run 39920948579 independently FAILS Deploy before input: raw and fixed 2× full-window confidence both 0.5 versus required 0.8. Separate 15 suites / 9,434 checks, menu, unsigned iOS compile and failure-path exit-0 close pass bounded scopes. Earlier audio leaks remain unresolved; two ibtoold orphans limit cleanup. [Review](../reports/gauntlet/m2-mac-derived-ocr/native-c838-independent/NATIVE_REVIEW.md). | Fresh independent source and native critics | Research actual native keyboard/accessibility semantics before a new component; no blind retry or confidence change. Establish audio ownership and supported fix. Actual ordinary/full Mac gameplay, Intel, physical and binary reparse qualification remain open. |
 | G14 | Android and iOS keep building | IN PROGRESS | Fresh frozen 6a Android debug APK and unsigned iOS project export and structural inspection pass. Independent 48/49 package checks: simulator metadata claims ARM64+x86_64 but pinned debug archive contains x86_64 only; device archive is ARM64. [Evidence](../reports/gauntlet/m2-mobile-preservation/independent-package-critic/REPORT.md). Actual Xcode 16.4 / SDK 18.5 link fails on five iOS 26 framework globals. Reviewed SDK selection is integrated; retries39721286005 at2a2b732 and39727011693 ate7718ee pass independent unsigned-device compile review, with exact source/PCK and raw unsigned codesign evidence. Final binary reparse and runtime remain open. | Fresh independent mobile package critic | Preserve accepted exact-source unsigned compile; qualify simulator metadata, installation, older OS behavior and physical play. No credential/signing action is authorized. |

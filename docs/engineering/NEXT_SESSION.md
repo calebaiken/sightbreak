@@ -1,13 +1,13 @@
 # Next session
 
-Updated 2026-10-23, 09:24 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 09:34 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. The automatic goal remains active. Read AGENTS.md and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
 
-## Live execution checkpoint — 2026-10-23, 09:24 UTC
+## Earlier execution detail — superseded by the current queue below
 
 The mission is ACTIVE. Root is `/workspace/sightbreak-v1-recovered`, own branch
 `codex/v1-executor-recovery-20261023`, [draft PR31](https://github.com/calebaiken/sightbreak/pull/31).
@@ -622,7 +622,7 @@ credential change. Human play/listening, physical GPUs/mobile/controllers, CS2
 media and Steam credentials remain explicit external gates. No background work
 is promised after execution stops.
 
-## Current execution queue — 09:24 UTC
+## Current execution queue — 09:34 UTC
 
 1. **Verified exhausted-primary product is INTEGRATED.** Root product 0f2cf636,
    prepared native UID 261d6ddb; exact acquisition 6276f0b candidate 35.011458600s,
@@ -652,25 +652,24 @@ is promised after execution stops.
    to exact two test registrations. **Whole maintained aggregate and native
    platforms have NOT been rerun at this combined root.** This is next after the
    controlled measurement, before any final-candidate claim.
-3. **Linux sole controlled acquisition is RUNNING.** Exact f242a2f in
-   /workspace/sightbreak-linux-profile-acquisition, branch
-   diagnostic/linux-profile-acquisition-wrapper. Root release e587392d follows
-   independent source 26095386/root a2663a24 and fresh actual criteria 4e97721b.
-   Exec session 55816, output builds/linux-profile-acquisition-r1, wrapper streams
-   .local/linux-profile-acquisition-r1-wrapper.stdout/stderr. Source wrapper
-   command: python3 -B scripts/linux_profile_acquire.py --execute-frozen-source
-   f242a2f20adb3ba1d9c49feb1c6caca1bdbf52b9. One 1320-second whole acquisition,
-   fixed phase caps/180-second conditions, OFF/ON/ON/OFF, text-script diagnostic
-   payload, CPUs 0,1/LP2/display :99127. Source game is historical 55691684, not the
-   new root bot candidate; no cross-source or shipping performance pass follows.
-   Fresh /root/linux_profile_native_fresh_critic awaits terminal output and CPU
-   clearance. All other agents HOLD heavy tests/hashes/clones/archives/native;
-   source edits/light reads only. No retry, manual continuation after STOP,
-   graphics/source/preset/CPU/display/budget change. Preserve exact outputs and
-   outer tool launch/terminal responses, all logs incl orphan/unclaimed patterns,
-   export/PCK/ECFG/source/host/cadence/pixels/cleanup/seals. Original gameplay
-   timeout remains FAILED; this is overhead attribution only. Inspect actual
-   process/session and receipt before waiting or launching anything else.
+3. **Linux sole controlled acquisition FAILED at import.** Exact f242a2f in
+   /workspace/sightbreak-linux-profile-acquisition remains unchanged. Session
+   55816 terminal exit 1 was observed at 09:28:33 UTC. Frozen fixture line 107
+   (`var keys := value.keys()`) causes real parse/load errors; import process
+   exits 0 but strict log gate correctly rejects. No export/PCK/Xvfb or any of
+   the OFF/ON/ON/OFF conditions executes. No instrumentation-cost, FPS or cause
+   result exists. Original game initial-LIVE timeout remains FAILED.
+   Fresh actual /root/linux_profile_native_fresh_critic is preserving full logs,
+   overrides, staged source/UID/cache, exact 224-file raw inventory, scope-bound
+   cleanup and the separate Android build-tools message. All six observed
+   commands exit 0 without signals and their observed groups/sessions disappear;
+   terminal tool poll time is not whole wall time. Outer tool receipt and wrapper
+   streams are retained in .local/linux-profile-acquisition-r1-*; raw output
+   builds/linux-profile-acquisition-r1 must remain untouched. Root release was
+   e587392d after source 26095386 and actual criteria 4e97721b. No retry released.
+   CPU hold is ended. A separate minimal type-correction builder starts from
+   f242a2f, with new preregistration/output identity and unchanged design/budgets;
+   source review must precede any future native run.
 4. **Windows latest actual is FAILED and retained.** e28c8e9 run 39926044462,
    job 120322557935, final 2020cfa9 integrated in root ordered 20bde14/cc790a9/2020.
    Live actor 100 HP at tick 3211/x-8.6911116 leaves x>=-8.5 corridor after last
@@ -712,11 +711,11 @@ is promised after execution stops.
 7. **Mac read-only AX component is SOURCE-ONLY, unfinished.** Research b294ef9
    proves supported public AccessKit semantics and AUTO/VoiceOver gate. Builder
    /root/mac_ordinary_journey_builder uses codex/m2-mac-ax-read-only, checkpoint
-   b866c8e1 plus local refinements, prereg 10f16c3. New ctypes AX observer and
+   cf4de47f (runtime 00a28531), prereg 10f16c3. New ctypes AX observer and
    no-event AppKit focus/close helper, separate opt-in workflow job/controller
    importing unchanged original budgets. Pre-freeze 110methods pass; later secure/
    search-field pruning change awaits final exact replay and depth-one proof.
-   Heavy checks held during Linux. No Apple compile, engine, OCR or CI run. Need
+   CPU lane is released for final pure/depth-one replay. No Apple compile, engine, OCR or CI run. Need
    exact source freeze/fresh critic/root diagnostic-only release. Existing c838907
    actual Deploy confidence 0.5/raw+2x fails gate 0.8; no gameplay pass or retry.
 
@@ -725,3 +724,17 @@ independent review and defects; update this queue, commit/push, then execute nex
 milestone. Next substantial verification is whole maintained aggregate at combined
 root, then touch actual rendered comparison and Mac/Windows source corrections.
 Human/physical/CS2/Steam blockers remain explicit; no whole G1–G19 release gate closes.
+
+At 09:34 UTC, the next combined-source aggregate is in concrete preparation:
+exact 28a3e294c850482475b7ab74067c08538ae6310d, own builder
+/workspace/sightbreak-aggregate-combined-28a3e294, branch
+codex/aggregate-combined-28a3e294-20261023. Builder will use a separate clean
+runtime checkout at that exact commit. Fresh /root/combined_aggregate_fresh_critic
+must preregister and approve the bounded wrapper before root releases ONE
+unmodified scripts/validate.sh run. No DISPLAY, no --backend; pinned 4.7.2 and
+explicit existing backend interpreter for mandatory catalog check. Expected
+maintained scope: 56 Godot logs, 13 Python groups, real ENet and six lifecycle
+logs, plus catalog; display-only probes remain explicitly unexecuted. All sparse
+fixtures, source/UID inventories, original limits, logs and scoped cleanup must
+be preserved. The old afca2f1 pass is not transferred. Issue25 and draft PR31
+now describe integrated bot/guard changes and current actual failures.
