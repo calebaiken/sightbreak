@@ -24,9 +24,11 @@ At 11:24:46 UTC the critic independently resolved root's declared frozen
 acceptance remotely. Root may now commit/push its release and dispatch the ONE
 exact admitted read-only route. This critic never dispatches or authorizes retry.
 
-After root's sole dispatched run, supply exact run/job IDs and release record.
-Reactivate this critic to retain original metadata/job log/official archives,
-verify bounded receipts/source/payload/timing/privacy/close/cleanup, open every
-distinct original image, and issue the actual verdict under the unchanged
-preregistration. Preserve 32 MiB per supported transfer, original failures and
-all unobserved native/binary/descendant limitations. No retry is admitted.
+Actual root release `49170941` preceded sole run `39946498627`, diagnostic job
+`120390346371`. [ACTUAL_REVIEW.md](ACTUAL_REVIEW.md) independently verifies
+successful guard-field emission and read-only ARM AX exposure in 37.127239917 s,
+with all original archives/logs/receipts and four distinct images retained.
+Ordinary OCR still rejects Deploy at 0.5 against 0.8; no input/gameplay occurred.
+Failure-stage emission, original R3 missing geometry/cause, complete descendant
+telemetry, CF/timing/error-edge instrumentation and binary reparse stay open.
+No native/source retry or later dispatch is admitted by this review.
