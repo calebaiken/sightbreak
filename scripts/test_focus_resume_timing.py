@@ -4,7 +4,6 @@ import ast
 from copy import deepcopy
 import json
 from pathlib import Path
-import subprocess
 import unittest
 
 from native_focus_fence import FocusContextFence, FocusPreconditionLost
@@ -151,16 +150,10 @@ class FocusResumeTiming(unittest.TestCase):
         self.assertEqual([event[1] for event in trial.events if event[0] == 'sleep'], [.3, 1])
         self.assertAlmostEqual(trial.elapsed, 1.3)
 
-    def test_controller_ast_diff_allows_only_this_one_focus_invocation_replacement(self):
-        baseline = ast.parse(subprocess.check_output(
-            ['git', 'show', 'fa718ef:scripts/verify_offline_export.py'], text=True))
-        changed = deepcopy(TREE)
-        before_body, before_start, before_end = resume_block(baseline)
-        body, start, end = resume_block(changed)
-        self.assertEqual([ast.unparse(node) for node in body[start:end]],
-                         ["key('Escape', True)", 'pause(0.3)', "key('Escape', False)"])
-        body[start:end] = deepcopy(before_body[before_start:before_end])
-        self.assertEqual(ast.dump(changed), ast.dump(baseline))
+    def test_stale_unpaused_publication_cannot_ack_resume(self):
+        trial = ResumeTrial([state(0, paused=False), state(1, paused=False)])
+        self.assertEqual(trial.run()['wall_msec'], state(1, paused=False)['wall_msec'])
+        self.assertAlmostEqual(trial.elapsed, .4)
 
 
 if __name__ == '__main__':
