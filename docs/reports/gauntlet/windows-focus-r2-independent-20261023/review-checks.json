@@ -1,0 +1,276 @@
+{
+  "scope": "source-only independent acceptance; no runtime/retry/living-input acceptance or approval",
+  "verdicts": {
+    "fence": {
+      "source_freeze": "fa718efcbe6aa36e53ca12474454a5dccfc5e9b9",
+      "verdict": "ACCEPT_DECLARED_SOURCE_SCOPE"
+    },
+    "timing": {
+      "source_freeze": "691076fbe866ae798666e731c423ad4cc20fd876",
+      "verdict": "ACCEPT_DECLARED_SOURCE_SCOPE"
+    }
+  },
+  "original_case_count_per_source": 77,
+  "original_replay_assertions_per_source": 335,
+  "additional_case_count_per_source": 31,
+  "additional_assertions_per_source": 136,
+  "source_audit_assertions": 57,
+  "replay_outcomes_equal_between_freezes": true,
+  "pure_checks": [
+    {
+      "source_freeze": "fa718efcbe6aa36e53ca12474454a5dccfc5e9b9",
+      "label": "fence",
+      "command": [
+        "python3",
+        "scripts/test_native_focus_fence.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-focus-liveness-r2-source",
+      "exit": 0,
+      "methods": 16,
+      "skips": 0,
+      "log": "fence-test_native_focus_fence.log",
+      "sha256": "5729a72e8ad03766153f8abdee7634b8634883b87ffca0407578a64e2db4406d"
+    },
+    {
+      "source_freeze": "fa718efcbe6aa36e53ca12474454a5dccfc5e9b9",
+      "label": "fence",
+      "command": [
+        "python3",
+        "scripts/test_offline_capture_fences.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-focus-liveness-r2-source",
+      "exit": 0,
+      "methods": 15,
+      "skips": 0,
+      "log": "fence-test_offline_capture_fences.log",
+      "sha256": "90e15db6af1c3686cb9517f66d802508b087a4373600c72f2978ab8d604b0a9c"
+    },
+    {
+      "source_freeze": "fa718efcbe6aa36e53ca12474454a5dccfc5e9b9",
+      "label": "fence",
+      "command": [
+        "python3",
+        "scripts/test_macos_menu.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-focus-liveness-r2-source",
+      "exit": 0,
+      "methods": 11,
+      "skips": 0,
+      "log": "fence-test_macos_menu.log",
+      "sha256": "4163cda65dc3f8bacabed69160145fdf342389fc23bfbaa9a8d5a4f04c55ddc1"
+    },
+    {
+      "source_freeze": "fa718efcbe6aa36e53ca12474454a5dccfc5e9b9",
+      "label": "fence",
+      "command": [
+        "python3",
+        "scripts/test_native_observation.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-focus-liveness-r2-source",
+      "exit": 0,
+      "methods": 7,
+      "skips": 3,
+      "log": "fence-test_native_observation.log",
+      "sha256": "9c3fd76921f45bb7f69f48def3dae09addf471e436fa6b000a51ef9239658ffa"
+    },
+    {
+      "source_freeze": "fa718efcbe6aa36e53ca12474454a5dccfc5e9b9",
+      "label": "fence",
+      "command": [
+        "python3",
+        "scripts/test_offline_export_ocr.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-focus-liveness-r2-source",
+      "exit": 0,
+      "methods": 5,
+      "skips": 0,
+      "log": "fence-test_offline_export_ocr.log",
+      "sha256": "da3a1a9b7765959d41415976c2ca5c7919200b157093b02299099a7d0578cee6"
+    },
+    {
+      "source_freeze": "691076fbe866ae798666e731c423ad4cc20fd876",
+      "label": "timing",
+      "command": [
+        "python3",
+        "scripts/test_native_focus_fence.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-focus-timing-source",
+      "exit": 0,
+      "methods": 16,
+      "skips": 0,
+      "log": "timing-test_native_focus_fence.log",
+      "sha256": "c516ffdd5361a753fca68698f2e23b713ec45c868ecfd7cf8947fbbeadc016aa"
+    },
+    {
+      "source_freeze": "691076fbe866ae798666e731c423ad4cc20fd876",
+      "label": "timing",
+      "command": [
+        "python3",
+        "scripts/test_offline_capture_fences.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-focus-timing-source",
+      "exit": 0,
+      "methods": 15,
+      "skips": 0,
+      "log": "timing-test_offline_capture_fences.log",
+      "sha256": "a065857ef630b49590de67db52f9a9ad0f0449d9cd724edcf2380b52de5c25f2"
+    },
+    {
+      "source_freeze": "691076fbe866ae798666e731c423ad4cc20fd876",
+      "label": "timing",
+      "command": [
+        "python3",
+        "scripts/test_macos_menu.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-focus-timing-source",
+      "exit": 0,
+      "methods": 11,
+      "skips": 0,
+      "log": "timing-test_macos_menu.log",
+      "sha256": "692fc5ae168e08bdbd2ca2d5828a4ff56b1812beb016fdaae81c52915849d5be"
+    },
+    {
+      "source_freeze": "691076fbe866ae798666e731c423ad4cc20fd876",
+      "label": "timing",
+      "command": [
+        "python3",
+        "scripts/test_native_observation.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-focus-timing-source",
+      "exit": 0,
+      "methods": 7,
+      "skips": 3,
+      "log": "timing-test_native_observation.log",
+      "sha256": "a5633fd36b5c95a5ba6a7efbcc0fece867f2a94630db42da8ab156be2e7f6824"
+    },
+    {
+      "source_freeze": "691076fbe866ae798666e731c423ad4cc20fd876",
+      "label": "timing",
+      "command": [
+        "python3",
+        "scripts/test_offline_export_ocr.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-focus-timing-source",
+      "exit": 0,
+      "methods": 5,
+      "skips": 0,
+      "log": "timing-test_offline_export_ocr.log",
+      "sha256": "27654309c972a44f9308d625cb595fc08e60613a43bbd5d7e5a6bab259deb0c8"
+    },
+    {
+      "source_freeze": "691076fbe866ae798666e731c423ad4cc20fd876",
+      "label": "timing",
+      "command": [
+        "python3",
+        "scripts/test_focus_resume_timing.py",
+        "-v"
+      ],
+      "cwd": "/workspace/reviews/windows-focus-timing-source",
+      "exit": 0,
+      "methods": 8,
+      "skips": 0,
+      "log": "timing-test_focus_resume_timing.log",
+      "sha256": "d8699a71008c5bedf92a69ba5a5fb0af145fb3e66ddf018fce76e1148732fc79"
+    }
+  ],
+  "method_totals": {
+    "fence": 54,
+    "timing": 62
+  },
+  "retained_files": {
+    "REPORT.md": {
+      "bytes": 5856,
+      "sha256": "500304b02fef268711e376f09212ad9c4e2b0865d69d5949589d111483f39c9b"
+    },
+    "additional_controls.py": {
+      "bytes": 13555,
+      "sha256": "616e3615d4ac1efc38065d1cc4a8b867b1371a2b7b675326d524fd64813649f2"
+    },
+    "audit_source.py": {
+      "bytes": 6895,
+      "sha256": "a15794e9618ebd3ee32b0360f5ec67ede899864a0c360d3519b6b71a9ee8e9de"
+    },
+    "fence-additional-controls.json": {
+      "bytes": 4249993,
+      "sha256": "ac6917ec041362d950fea53dda51442ddd3de7bb0bd8887503fd14a7ea647659"
+    },
+    "fence-original-replay.json": {
+      "bytes": 1537201,
+      "sha256": "e8db8bac7410aef428ed1421a891241cb0c6e7149d7a57a4c322f015e110f2ac"
+    },
+    "fence-test_macos_menu.log": {
+      "bytes": 2216,
+      "sha256": "4163cda65dc3f8bacabed69160145fdf342389fc23bfbaa9a8d5a4f04c55ddc1"
+    },
+    "fence-test_native_focus_fence.log": {
+      "bytes": 2841,
+      "sha256": "5729a72e8ad03766153f8abdee7634b8634883b87ffca0407578a64e2db4406d"
+    },
+    "fence-test_native_observation.log": {
+      "bytes": 1512,
+      "sha256": "9c3fd76921f45bb7f69f48def3dae09addf471e436fa6b000a51ef9239658ffa"
+    },
+    "fence-test_offline_capture_fences.log": {
+      "bytes": 2431,
+      "sha256": "90e15db6af1c3686cb9517f66d802508b087a4373600c72f2978ab8d604b0a9c"
+    },
+    "fence-test_offline_export_ocr.log": {
+      "bytes": 820,
+      "sha256": "da3a1a9b7765959d41415976c2ca5c7919200b157093b02299099a7d0578cee6"
+    },
+    "replay_original.py": {
+      "bytes": 6588,
+      "sha256": "2724ebd3cc0fe8310636b3cc940400025d71ad519e7e367f35778ab519fe8d7b"
+    },
+    "source-audit.json": {
+      "bytes": 13102,
+      "sha256": "8c729e6527435cae7bc94588c52a148372302050b91cc8e946c7f9744edd9792"
+    },
+    "timing-additional-controls.json": {
+      "bytes": 4378113,
+      "sha256": "fbbe97f32023871f157060ad9812a312ef5e552aa46b83c41a9f9eedc1b85a82"
+    },
+    "timing-original-replay.json": {
+      "bytes": 1537201,
+      "sha256": "dca84d70ae39657075de6c1dc266b91d2c8b8b6e215e1230de561c2312072b1f"
+    },
+    "timing-test_focus_resume_timing.log": {
+      "bytes": 1356,
+      "sha256": "d8699a71008c5bedf92a69ba5a5fb0af145fb3e66ddf018fce76e1148732fc79"
+    },
+    "timing-test_macos_menu.log": {
+      "bytes": 2217,
+      "sha256": "692fc5ae168e08bdbd2ca2d5828a4ff56b1812beb016fdaae81c52915849d5be"
+    },
+    "timing-test_native_focus_fence.log": {
+      "bytes": 2841,
+      "sha256": "c516ffdd5361a753fca68698f2e23b713ec45c868ecfd7cf8947fbbeadc016aa"
+    },
+    "timing-test_native_observation.log": {
+      "bytes": 1512,
+      "sha256": "a5633fd36b5c95a5ba6a7efbcc0fece867f2a94630db42da8ab156be2e7f6824"
+    },
+    "timing-test_offline_capture_fences.log": {
+      "bytes": 2431,
+      "sha256": "a065857ef630b49590de67db52f9a9ad0f0449d9cd724edcf2380b52de5c25f2"
+    },
+    "timing-test_offline_export_ocr.log": {
+      "bytes": 820,
+      "sha256": "27654309c972a44f9308d625cb595fc08e60613a43bbd5d7e5a6bab259deb0c8"
+    },
+    "verify_r2_review.py": {
+      "bytes": 4056,
+      "sha256": "32fcb4ac3001361a5047a0eb1a60830aa08087fe59dc6ab4c67f3223922cd7b5"
+    }
+  }
+}
