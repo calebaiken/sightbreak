@@ -364,11 +364,13 @@ class Run:
                     # Publish the write and its marker under the ingress lock.
                     # A client can dispatch its next GET as soon as write returns;
                     # it must not overtake the replay response marker.
+                    self.connection.settimeout(run.remaining(10))
                     with run.lock:
                         self.send_response(response.status)
                         self.send_header("Content-Type", response.getheader("Content-Type", "application/json"))
                         self.send_header("Content-Length", str(len(raw))); self.end_headers()
-                        self.wfile.write(raw)
+                        written = self.wfile.write(raw)
+                        require(written == len(raw), "downstream response write incomplete")
                         if market:
                             run.event("market_" + str(index) + "_response_forwarded", native_phase=native_phase, origin=name)
                         if business_read:
