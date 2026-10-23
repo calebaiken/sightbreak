@@ -1,0 +1,133 @@
+{
+  "acquisition_integrity": false,
+  "cleanup_scope": "Observed PID/start identities and original group/session; polling may miss unseen escaped descendants",
+  "declared_project_override": {
+    "custom_user_dir": "SIGHTBREAK-audio-lifecycle-ba3cfec6668d42ed8386a5a20eb8be38/input_mode",
+    "project_sha256": "f08bf846469d3ccccc8eba92834044d9728e14217a26f33308664215fa7ae4eb"
+  },
+  "engine": "/tmp/tmp7rxcvldu/inert-engine",
+  "engine_sha256": "93646ce67d0d48bddfe8da875e40d407b7e6aac011815d6047a6ff23b8f7eb21",
+  "engine_sha256_after": "93646ce67d0d48bddfe8da875e40d407b7e6aac011815d6047a6ff23b8f7eb21",
+  "engine_sha256_before": "93646ce67d0d48bddfe8da875e40d407b7e6aac011815d6047a6ff23b8f7eb21",
+  "engine_sha256_sealed": "93646ce67d0d48bddfe8da875e40d407b7e6aac011815d6047a6ff23b8f7eb21",
+  "error": {
+    "message": "Strict private import failed; suite is skipped",
+    "type": "RuntimeError"
+  },
+  "finalization_errors": [],
+  "original_leak_blocker_resolved": false,
+  "originals_preserved_due_integrity_failure": false,
+  "passed": false,
+  "phase_logs_sealed": true,
+  "phases": [
+    {
+      "clean_log": true,
+      "cleanup_complete": true,
+      "cleanup_wall_seconds": 0.0,
+      "command": [
+        "/tmp/tmp7rxcvldu/inert-engine",
+        "--headless",
+        "--version"
+      ],
+      "exit": 0,
+      "label": "engine-version",
+      "log": "engine-version.log",
+      "log_bytes": 32,
+      "log_sha256": "edff16c1721dd4ae989cadf29a01f574ae8d51b118221f664725bd6980bbba5d",
+      "observed": [
+        {
+          "comm": "synthetic",
+          "exe": "inert",
+          "pgid": 4001,
+          "pid": 4001,
+          "ppid": 1,
+          "sid": 4001,
+          "start_ticks": 4011,
+          "state": "R"
+        }
+      ],
+      "pid": 4001,
+      "root_identity": {
+        "comm": "synthetic",
+        "exe": "inert",
+        "pgid": 4001,
+        "pid": 4001,
+        "ppid": 1,
+        "sid": 4001,
+        "start_ticks": 4011,
+        "state": "R"
+      },
+      "signals": [],
+      "terminal_group": [],
+      "terminal_observed": [],
+      "terminal_session": [],
+      "timed_out": false,
+      "timeout_seconds": 30,
+      "wall_seconds": 0.0
+    },
+    {
+      "clean_log": false,
+      "cleanup_complete": true,
+      "cleanup_wall_seconds": 0.0,
+      "command": [
+        "/tmp/tmp7rxcvldu/inert-engine",
+        "--path",
+        "/tmp/tmp7rxcvldu/attempt/project",
+        "--headless",
+        "--editor",
+        "--import",
+        "--quit"
+      ],
+      "exit": 0,
+      "label": "private-import",
+      "log": "private-import.log",
+      "log_bytes": 60043,
+      "log_sha256": "79066d92fb4aae97c3daafc229f85d12c66fd817a3a25c48642891c19808e1b5",
+      "observed": [
+        {
+          "comm": "synthetic",
+          "exe": "inert",
+          "pgid": 4002,
+          "pid": 4002,
+          "ppid": 1,
+          "sid": 4002,
+          "start_ticks": 4012,
+          "state": "R"
+        }
+      ],
+      "pid": 4002,
+      "root_identity": {
+        "comm": "synthetic",
+        "exe": "inert",
+        "pgid": 4002,
+        "pid": 4002,
+        "ppid": 1,
+        "sid": 4002,
+        "start_ticks": 4012,
+        "state": "R"
+      },
+      "signals": [],
+      "terminal_group": [],
+      "terminal_observed": [],
+      "terminal_session": [],
+      "timed_out": false,
+      "timeout_seconds": 120,
+      "wall_seconds": 0.0
+    }
+  ],
+  "private_environment": {
+    "ANDROID_USER_HOME": "/tmp/tmp7rxcvldu/attempt/private-state/android",
+    "SIGHTBREAK_STATE_DIR": "/tmp/tmp7rxcvldu/attempt/private-state",
+    "XDG_CACHE_HOME": "/tmp/tmp7rxcvldu/attempt/private-state/cache",
+    "XDG_CONFIG_HOME": "/tmp/tmp7rxcvldu/attempt/private-state/config",
+    "XDG_DATA_HOME": "/tmp/tmp7rxcvldu/attempt/private-state/data"
+  },
+  "private_project_removed": true,
+  "private_state_archive_verified": true,
+  "private_state_removed": true,
+  "sample_strict_clean": false,
+  "scope": "Linux ownership/strict exit only; no audible/physical or complete-descendant qualification",
+  "source_commit": "7f9c059881f028b5d6ccee9214ce154f5913e18a",
+  "whole_cap_seconds": 240,
+  "whole_wall_seconds": 0.0
+}

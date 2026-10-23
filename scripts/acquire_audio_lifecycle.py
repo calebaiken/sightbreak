@@ -148,6 +148,74 @@ def signal_identity(record, signum):
     return False
 
 
+def phase_snapshots(output, receipts, deadline, errors, completed):
+    """Hash, scan and analyze one retained byte snapshot, preserving old receipts."""
+    directory = output / 'final-phase-logs'; directory.mkdir()
+    snapshots, analysis = [], None
+    for phase in receipts:
+        remaining(deadline)
+        label = phase['label']
+        try:
+            if not re.fullmatch('[a-z][a-z-]*', label) or phase.get('log') != label + '.log':
+                raise RuntimeError('Phase log identity differs from its declared label')
+            raw = (output / phase['log']).read_bytes()
+            saved = directory / phase['log']; saved.write_bytes(raw)
+            if saved.read_bytes() != raw: raise RuntimeError('Retained raw snapshot bytes differ')
+            digest = hashlib.sha256(raw).hexdigest(); clean = not failed(raw.decode('utf-8', errors='replace'))
+            receipt_bytes = (output / (label + '.receipt.json')).read_bytes()
+            receipt_matches = json.loads(receipt_bytes) == phase
+            row = {'label': label, 'original_log': phase['log'], 'retained_log': str(saved.relative_to(output)),
+                   'sha256': digest, 'bytes': len(raw), 'clean_log': clean,
+                   'phase_receipt_sha256': hashlib.sha256(receipt_bytes).hexdigest(),
+                   'receipt_matches': receipt_matches,
+                   'matches_phase_snapshot': (phase.get('log_sha256') == digest and phase.get('log_bytes') == len(raw)
+                                              and phase.get('clean_log') is clean)}
+            snapshots.append(row)
+            if not receipt_matches or not row['matches_phase_snapshot']:
+                errors.append({'stage': 'phase_finalization', 'phase': label, 'error': 'Retained phase log or receipt drifted'})
+            if label == 'input-mode':
+                try:
+                    analysis = analyze(raw.decode('utf-8', errors='replace'))
+                    analysis.update(raw_log_sha256=digest, raw_log_bytes=len(raw))
+                    write(output / 'analysis.json', analysis)
+                    if analysis['strict_raw_log_failed'] is clean:
+                        raise RuntimeError('Analyzer and strict scanner disagree on retained bytes')
+                    if analysis['driver'] != 'Dummy' or not analysis['fixture_owner_coverage_complete']:
+                        raise RuntimeError('Actual default driver or fixture owner coverage is incomplete')
+                except BaseException as error:
+                    if completed: errors.append({'stage': 'final_analysis', 'error': str(error)})
+        except BaseException as error:
+            errors.append({'stage': 'phase_finalization', 'phase': label, 'error': str(error)})
+    write(output / 'final-phase-snapshots.json', snapshots)
+    return snapshots, analysis
+
+
+def seal_phase_snapshots(output, snapshots, analysis, deadline):
+    checks, errors = [], []
+    for row in snapshots:
+        remaining(deadline)
+        check = {'label': row['label']}
+        try:
+            for name in ('original_log', 'retained_log'):
+                raw = (output / row[name]).read_bytes()
+                current = {'sha256': hashlib.sha256(raw).hexdigest(), 'bytes': len(raw),
+                           'clean_log': not failed(raw.decode('utf-8', errors='replace'))}
+                check[name] = current
+                if any(current[key] != row[key] for key in current):
+                    errors.append('Phase raw bytes changed during finalization: ' + row['label'] + ' ' + name)
+            check['receipt_sha256'] = sha(output / (row['label'] + '.receipt.json'))
+            if check['receipt_sha256'] != row['phase_receipt_sha256']:
+                errors.append('Phase receipt changed during finalization: ' + row['label'])
+        except BaseException as error: errors.append(row['label'] + ': ' + str(error))
+        checks.append(check)
+    try:
+        if analysis is not None and json.loads((output / 'analysis.json').read_bytes()) != analysis:
+            errors.append('Retained analysis changed during finalization')
+    except BaseException as error: errors.append('Retained analysis: ' + str(error))
+    write(output / 'phase-seal.json', {'checks': checks, 'errors': errors, 'sealed': not errors})
+    if errors: raise RuntimeError('; '.join(errors))
+
+
 class Phases:
     def __init__(self, output, engine, engine_sha256, deadline, environment):
         self.output, self.engine, self.engine_sha256 = output, engine, engine_sha256
@@ -233,9 +301,11 @@ class Phases:
             except BaseException as error:
                 receipt["cleanup_error"] = {"type":type(error).__name__, "message":str(error)}
             if process is None: receipt['cleanup_complete'] = True
+            raw = log.read_bytes() if log.exists() else None
             receipt.update(wall_seconds=time.monotonic() - started, log=log.name,
-                           log_sha256=sha(log) if log.exists() else None,
-                           clean_log=log.exists() and not failed(log.read_text(errors='replace')))
+                           log_sha256=hashlib.sha256(raw).hexdigest() if raw is not None else None,
+                           log_bytes=len(raw) if raw is not None else None,
+                           clean_log=raw is not None and not failed(raw.decode('utf-8', errors='replace')))
             write(self.output / (label + '.receipt.json'), receipt)
         if receipt['timed_out']: raise TimeoutError(label + ' exceeded its phase bound')
         if not receipt['cleanup_complete']: raise RuntimeError(label + ' owned cleanup is incomplete')
@@ -262,8 +332,9 @@ def acquire(source, freeze, engine, engine_sha256, output):
               'whole_cap_seconds': WHOLE, 'original_leak_blocker_resolved': False, 'passed': False, 'acquisition_integrity': False,
               'scope': 'Linux ownership/strict exit only; no audible/physical or complete-descendant qualification',
               'cleanup_scope': 'Observed PID/start identities and original group/session; polling may miss unseen escaped descendants',
-              'phases': [], 'finalization_errors': []}
+              'phases': [], 'finalization_errors': [], 'phase_logs_sealed': False}
     original, before, prepared, runner = None, None, None, None
+    additions = {}; final_inventories = {}; snapshots, analysis = [], None
     try:
         original = tracked(source, freeze, deadline); write(output / 'source-before.json', original)
         report['engine_sha256_before'] = sha(engine)
@@ -324,14 +395,7 @@ def acquire(source, freeze, engine, engine_sha256, output):
         suite = runner.execute('input-mode', ['--path', str(project), *SUITE], 120)
         if suite['exit'] != 0: raise RuntimeError('Diagnostic suite did not exit zero')
         report['native_after'] = identity('after-input-mode')
-        raw = (output / 'input-mode.log').read_bytes(); analysis = analyze(raw.decode('utf-8', errors='replace'))
-        analysis.update(raw_log_sha256=hashlib.sha256(raw).hexdigest(), raw_log_bytes=len(raw))
-        write(output / 'analysis.json', analysis)
-        if analysis['driver'] != 'Dummy': raise RuntimeError('Probe audio driver disagrees with exact headless argv')
-        if not analysis['fixture_owner_coverage_complete']: raise RuntimeError('Actual fixture owner coverage is incomplete')
-        report['acquisition_integrity'] = True
-        report['sample_strict_clean'] = suite['clean_log']
-        report['passed'] = suite['clean_log']
+        report['acquisition_completed'] = True
     except BaseException as error:
         report['error'] = {'type': type(error).__name__, 'message': str(error)}
     finally:
@@ -341,11 +405,14 @@ def acquire(source, freeze, engine, engine_sha256, output):
             ('project-final', lambda: inventory(project, deadline) if project.exists() else {}),
             ('private-state-final', lambda: inventory(state, deadline) if state.exists() else {})]:
             try:
-                data = operation(); write(output / (label + '.json'), data)
+                data = operation(); write(output / (label + '.json'), data); final_inventories[label] = data
                 if label == 'source-after' and original is not None and data != original: raise RuntimeError('Original source manifest drifted')
                 if label == 'project-final' and prepared is not None and {k: v for k, v in data.items() if not k.startswith('.godot/')} != prepared:
                     raise RuntimeError('Prepared non-cache project resources drifted')
             except BaseException as error: report['finalization_errors'].append({'stage': label, 'error': str(error)})
+        try:
+            snapshots, analysis = phase_snapshots(output, report['phases'], deadline, report['finalization_errors'], report.get('acquisition_completed', False))
+        except BaseException as error: report['finalization_errors'].append({'stage': 'phase_snapshots', 'error': str(error)})
         try:
             report['engine_sha256_after'] = sha(engine)
             if report['engine_sha256_after'] != engine_sha256: raise RuntimeError('Executable hash drifted')
@@ -354,14 +421,47 @@ def acquire(source, freeze, engine, engine_sha256, output):
             if any(path.is_symlink() or path.resolve().parent != output for path in (state, project)):
                 raise RuntimeError('Private cleanup path no longer belongs to reserved output')
             if state.exists():
-                remaining(deadline); copy_owned_tree(state, output / 'produced-private-state', deadline); shutil.rmtree(state)
+                original_state = final_inventories['private-state-final']
+                if inventory(state, deadline) != original_state: raise RuntimeError('Private state changed before archive')
+                copy_owned_tree(state, output / 'produced-private-state', deadline)
+                archive = inventory(output / 'produced-private-state', deadline)
+                state_after = inventory(state, deadline)
+                write(output / 'private-state-archive.json', archive); write(output / 'private-state-after-copy.json', state_after)
+                report['private_state_archive_verified'] = archive == original_state == state_after
+                if not report['private_state_archive_verified']: raise RuntimeError('Private archive inventory/content differs; original preserved')
+            expected_uids = {name: digest for name, digest in additions.items() if name.endswith('.uid')}
+            retained_uids = inventory(output / 'generated-uids', deadline)
+            write(output / 'retained-uids-final.json', retained_uids)
+            if retained_uids != expected_uids: raise RuntimeError('Retained UID archive differs; original preserved')
+            seal_phase_snapshots(output, snapshots, analysis, deadline)
+            report['phase_logs_sealed'] = True
+            if project.exists() and inventory(project, deadline) != final_inventories['project-final']:
+                raise RuntimeError('Private project changed during finalization')
+            sealed_source = tracked(source, freeze, deadline); write(output / 'source-sealed.json', sealed_source)
+            if original is not None and sealed_source != original: raise RuntimeError('Source changed during finalization')
+            report['engine_sha256_sealed'] = sha(engine)
+            if report['engine_sha256_sealed'] != engine_sha256: raise RuntimeError('Executable changed during finalization')
+            if report['finalization_errors']:
+                raise RuntimeError('Retained evidence integrity failed; originals preserved')
+            if state.exists():
+                archive_sealed = inventory(output / 'produced-private-state', deadline)
+                source_sealed = inventory(state, deadline)
+                matches = archive_sealed == source_sealed == final_inventories['private-state-final']
+                write(output / 'private-state-archive-seal.json', {'archive': archive_sealed, 'source': source_sealed, 'verified': matches})
+                if not matches: raise RuntimeError('Private archive/source changed before removal; originals preserved')
+            if inventory(output / 'generated-uids', deadline) != expected_uids:
+                raise RuntimeError('UID archive changed before removal; originals preserved')
+            if state.exists(): remaining(deadline); shutil.rmtree(state)
             if project.exists(): remaining(deadline); shutil.rmtree(project)
-            report['private_project_removed'] = not project.exists(); report['private_state_removed'] = not state.exists()
         except BaseException as error: report['finalization_errors'].append({'stage': 'owned_cleanup', 'error': str(error)})
+        report['private_project_removed'] = not project.exists(); report['private_state_removed'] = not state.exists()
+        report['originals_preserved_due_integrity_failure'] = bool(report['finalization_errors'])
         report['whole_wall_seconds'] = time.monotonic() - started
         if report['whole_wall_seconds'] > WHOLE: report['finalization_errors'].append({'stage': 'whole_deadline', 'error': '240-second bound exceeded'})
-        if report['finalization_errors']:
-            report['passed'] = False; report['acquisition_integrity'] = False
+        report['acquisition_integrity'] = bool(report.get('acquisition_completed') and not report.get('error')
+                                               and not report['finalization_errors'] and analysis is not None)
+        report['sample_strict_clean'] = not analysis['strict_raw_log_failed'] if analysis is not None else False
+        report['passed'] = report['acquisition_integrity'] and report['sample_strict_clean']
         write(output / 'overall.json', report)
     return 0 if report['passed'] else 1
 

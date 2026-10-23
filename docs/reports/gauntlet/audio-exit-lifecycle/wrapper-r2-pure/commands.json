@@ -1,0 +1,32 @@
+[
+  {
+    "command": [
+      "python3",
+      "scripts/test_acquire_audio_lifecycle.py",
+      "-v"
+    ],
+    "exit": 0,
+    "output": "maintained-final.log",
+    "sha256": "2ee0541400a4420261d9f4238fcdb1047fce98e146e6371ca94b16a7403b5bc3"
+  },
+  {
+    "command": [
+      "python3",
+      "scripts/test_audio_acquisition_finalization.py",
+      "-v"
+    ],
+    "exit": 0,
+    "output": "explicit-replay-final.log",
+    "sha256": "60a3719d762045a29f9b81bb912f7d23588d80e2499debfa57f9b932577af314"
+  },
+  {
+    "command": [
+      "python3",
+      "docs/reports/gauntlet/audio-exit-lifecycle/wrapper-r2-replay-final/review_controls.py"
+    ],
+    "exit": 1,
+    "output": "docs/reports/gauntlet/audio-exit-lifecycle/wrapper-r2-replay-final/unchanged-controls.log",
+    "sha256": "55ddc682d1e1416488241f2fc5d892fad01504464e8278dfc10c96d2c284f92e",
+    "expected_remaining_failure": "old control asserts private_state_removed=true; corrected preservation requires false"
+  }
+]

@@ -80,6 +80,8 @@ class AcquisitionControls(unittest.TestCase):
                     receipt['clean_log']=not acquisition.failed(log.read_text())
                     if mode=='survivor': receipt['cleanup_complete']=False;raise RuntimeError('synthetic survivor')
                     if mode=='suite-drift': (project/'tests/input_mode_test.gd').write_text('changed after suite')
+                receipt.update(log=log.name,log_sha256=acquisition.sha(log),log_bytes=log.stat().st_size)
+                acquisition.write(self.output/(label+'.receipt.json'),receipt)
                 return receipt
         return source,output,engine,originals,instances,FakePhases
 

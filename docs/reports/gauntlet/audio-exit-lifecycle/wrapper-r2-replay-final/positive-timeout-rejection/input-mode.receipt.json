@@ -1,0 +1,57 @@
+{
+  "clean_log": true,
+  "cleanup_complete": true,
+  "cleanup_wall_seconds": 0.04999999999999716,
+  "command": [
+    "/tmp/tmp8y41cb5n/inert-engine",
+    "--path",
+    "/tmp/tmp8y41cb5n/attempt/project",
+    "--headless",
+    "--verbose",
+    "--script",
+    "res://tests/input_mode_test.gd",
+    "--",
+    "--audio-lifecycle-diagnostic"
+  ],
+  "exit": -15,
+  "label": "input-mode",
+  "log": "input-mode.log",
+  "log_bytes": 1433691,
+  "log_sha256": "03040cf981c3ce36c789916bd16cd2130bbdd1aaa2c011214524c63dc78356a0",
+  "observed": [
+    {
+      "comm": "synthetic",
+      "exe": "inert",
+      "pgid": 4004,
+      "pid": 4004,
+      "ppid": 1,
+      "sid": 4004,
+      "start_ticks": 4014,
+      "state": "R"
+    }
+  ],
+  "pid": 4004,
+  "root_identity": {
+    "comm": "synthetic",
+    "exe": "inert",
+    "pgid": 4004,
+    "pid": 4004,
+    "ppid": 1,
+    "sid": 4004,
+    "start_ticks": 4014,
+    "state": "R"
+  },
+  "signals": [
+    {
+      "pid": 4004,
+      "signal": "SIGTERM",
+      "start_ticks": 4014
+    }
+  ],
+  "terminal_group": [],
+  "terminal_observed": [],
+  "terminal_session": [],
+  "timed_out": true,
+  "timeout_seconds": 120,
+  "wall_seconds": 120.05
+}
