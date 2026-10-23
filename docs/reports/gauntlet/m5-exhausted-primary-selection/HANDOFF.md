@@ -52,7 +52,7 @@ is not acquired and no hidden coordinate is used to choose the sidearm.
 
 `audit_candidate.py` is a disclosed builder adaptation of the independently
 reviewed `b5fa18a1` all-row auditor. The original reviewer file is untouched;
-`AUDITOR_ADAPTATION.diff` retains the full changes. Thirteen original pure
+`AUDITOR_ADAPTATION.diff.gz` retains the full changes. Thirteen original pure
 geometry/math/helper ASTs remain identical. The adaptation extends exact
 registration, selection predictions and new mandatory controls, keeps the
 full resource/action/geometry/event reconstruction, and compares allowed
