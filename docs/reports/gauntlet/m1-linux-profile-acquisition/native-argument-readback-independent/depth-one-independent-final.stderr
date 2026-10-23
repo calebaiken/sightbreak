@@ -1,0 +1,55 @@
+test_both_identity_bits_are_needed_by_pinned_semantics (__main__.IndependentControls.test_both_identity_bits_are_needed_by_pinned_semantics) ... ok
+test_filtered_arguments_are_a_typed_readback_and_not_launch_authority (__main__.IndependentControls.test_filtered_arguments_are_a_typed_readback_and_not_launch_authority) ... ok
+test_fingerprint_thread_observations_reject_numeric_substitution (__main__.IndependentControls.test_fingerprint_thread_observations_reject_numeric_substitution) ... 
+  test_fingerprint_thread_observations_reject_numeric_substitution (__main__.IndependentControls.test_fingerprint_thread_observations_reject_numeric_substitution) (key='caller_is_main_thread', type='int') ... FAIL
+  test_fingerprint_thread_observations_reject_numeric_substitution (__main__.IndependentControls.test_fingerprint_thread_observations_reject_numeric_substitution) (key='caller_is_main_thread', type='float') ... FAIL
+  test_fingerprint_thread_observations_reject_numeric_substitution (__main__.IndependentControls.test_fingerprint_thread_observations_reject_numeric_substitution) (key='caller_is_render_thread', type='int') ... FAIL
+  test_fingerprint_thread_observations_reject_numeric_substitution (__main__.IndependentControls.test_fingerprint_thread_observations_reject_numeric_substitution) (key='caller_is_render_thread', type='float') ... FAIL
+test_full_argv_authorities_reject_synchronized_unsafe_and_flag_ambiguity (__main__.IndependentControls.test_full_argv_authorities_reject_synchronized_unsafe_and_flag_ambiguity) ... ok
+test_inconsistent_inner_settings_reject_even_with_rehashed_fingerprint (__main__.IndependentControls.test_inconsistent_inner_settings_reject_even_with_rehashed_fingerprint) ... ok
+test_individual_actual_and_affinity_launch_are_independent (__main__.IndependentControls.test_individual_actual_and_affinity_launch_are_independent) ... ok
+test_original_warning_rejects_at_real_outer_block_gate (__main__.IndependentControls.test_original_warning_rejects_at_real_outer_block_gate) ... ok
+test_positive_complete_block_and_negative_one_condition_states (__main__.IndependentControls.test_positive_complete_block_and_negative_one_condition_states) ... ok
+test_project_mode_and_vsync_getter_remain_required (__main__.IndependentControls.test_project_mode_and_vsync_getter_remain_required) ... ok
+test_self_consistent_forged_thread_types_and_missing_fields_reject (__main__.IndependentControls.test_self_consistent_forged_thread_types_and_missing_fields_reject) ... ok
+
+======================================================================
+FAIL: test_fingerprint_thread_observations_reject_numeric_substitution (__main__.IndependentControls.test_fingerprint_thread_observations_reject_numeric_substitution) (key='caller_is_main_thread', type='int')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/linux-effective-thread-independent-depth-one/docs/reports/gauntlet/m1-linux-profile-acquisition/native-argument-readback-independent/test_independent_controls.py", line 81, in test_fingerprint_thread_observations_reject_numeric_substitution
+    with self.subTest(key=key, type=type(value).__name__), self.assertRaises(controller.Invalid):
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Invalid not raised
+
+======================================================================
+FAIL: test_fingerprint_thread_observations_reject_numeric_substitution (__main__.IndependentControls.test_fingerprint_thread_observations_reject_numeric_substitution) (key='caller_is_main_thread', type='float')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/linux-effective-thread-independent-depth-one/docs/reports/gauntlet/m1-linux-profile-acquisition/native-argument-readback-independent/test_independent_controls.py", line 81, in test_fingerprint_thread_observations_reject_numeric_substitution
+    with self.subTest(key=key, type=type(value).__name__), self.assertRaises(controller.Invalid):
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Invalid not raised
+
+======================================================================
+FAIL: test_fingerprint_thread_observations_reject_numeric_substitution (__main__.IndependentControls.test_fingerprint_thread_observations_reject_numeric_substitution) (key='caller_is_render_thread', type='int')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/linux-effective-thread-independent-depth-one/docs/reports/gauntlet/m1-linux-profile-acquisition/native-argument-readback-independent/test_independent_controls.py", line 81, in test_fingerprint_thread_observations_reject_numeric_substitution
+    with self.subTest(key=key, type=type(value).__name__), self.assertRaises(controller.Invalid):
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Invalid not raised
+
+======================================================================
+FAIL: test_fingerprint_thread_observations_reject_numeric_substitution (__main__.IndependentControls.test_fingerprint_thread_observations_reject_numeric_substitution) (key='caller_is_render_thread', type='float')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/linux-effective-thread-independent-depth-one/docs/reports/gauntlet/m1-linux-profile-acquisition/native-argument-readback-independent/test_independent_controls.py", line 81, in test_fingerprint_thread_observations_reject_numeric_substitution
+    with self.subTest(key=key, type=type(value).__name__), self.assertRaises(controller.Invalid):
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Invalid not raised
+
+----------------------------------------------------------------------
+Ran 10 tests in 0.366s
+
+FAILED (failures=4)
