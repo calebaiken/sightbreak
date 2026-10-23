@@ -6,43 +6,38 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-Current execution is active on 2026-10-23, checkpoint 08:44 UTC. Root branch
-`codex/v1-executor-recovery-20261023`, draft PR31, preserves the contributor
-checkout and PR27 → PR24 → PR23 → PR22 → PR16 dependencies. Published history
-is recovered; missing unpublished work is not claimed recovered. The independently
-accepted dry-primary return and exact afca2f1 aggregate remain source-bound.
+Current execution is active, 2026-10-23 09:24 UTC, root code checkpoint
+cdd69b78. The exhausted-primary sidearm correction is integrated as 0f2cf636,
+with actual prepared UID 261d6ddb. Independent 63ec7271 verifies 1,268 native rows /
+75,890 predicates and the registered selection comparison; independent 720cc695
+accepts the separate three stock regressions, all 480 symmetry pairs and exact
+prior stdout equality. Both strict-clean native blocks, source/private state,
+publication/zero exits and archives verify. All 15 new 24 m shots miss; aiming,
+full matches, objectives, balance and historical audio causes remain open.
 
-Latest Windows run 39916539053 at a089473 independently passes real player plant
-with natural defuse/next buy/default restart, player defuse and seven stock rounds
-with exact 120 XP / 250 offline-credit disk/runtime reopen. Its living journey
-FAILS after ordinary death between resumed screenshot and HUD pause; focus and
-LEAVE/reopen are unreached. Fresh f314385 retains original ZIPs and actual inputs.
-A fixed ordinary route to cover, freeze af13a99, is in independent source review;
-it changes the test scenario within original budgets, not the product or outcome.
+The strict native StringName guard is integrated as fbb439cf, independently
+accepted ca71aac4; standalone/depth-one tests and real native corpus verify.
+Combined root cdd69b78 passes 37 relevant pure methods/shell syntax and exact
+source-union checks. Whole maintained aggregate/native platforms remain unrun
+at the combined source. Earlier afca2f1 whole-source pass is not transferred.
 
-Latest ARM run 39920948579 at c838907 independently FAILS before any CGEvent.
-Raw and fixed 2× full-window analysis both read the unique Deploy caption at
-confidence 0.5; the original 0.8 gate rejects both. Neither wins Deploy/gameplay.
-Fresh 460fe42, root 06ebae0, retains both official ZIPs, all 19 PNGs and 1,210
-integrity predicates. Separate 15 suites / 9,434 checks, menu, unsigned iOS compile
-and failure-path ordinary exit-0 close pass their bounded scopes. Earlier audio
-leak cause remains unresolved; two ibtoold orphans limit descendant cleanup.
-[Latest actual review](../reports/gauntlet/m2-mac-derived-ocr/native-c838-independent/NATIVE_REVIEW.md).
-No retry is approved; source research is examining actual keyboard/accessibility
-support before selecting another component.
+Latest Windows e28c8e9 run 39926044462 independently FAILS route corridor and
+legacy reload diagnostic. Live 100 HP actor overshoots to x -8.6911116; settings,
+LEAVE/reopen/focus are unreached. Separate 15 / 9,434 native, two input schedules,
+both objectives and 12 stock rounds/7:5 with exact 120 XP / 250 offline-credit reload
+pass. Full official ZIPs / 70 PNGs and 133 strict-clean logs remain retained.
+[Review](../reports/gauntlet/windows-native-e28c8e9-independent-20261023/REPORT.md).
+Route-only pulse source correction is under implementation, preserving all guards.
 
-The 1,239-row exhausted-primary baseline and verbose diagnostic retain strict
-shutdown failures and independently verified stall evidence. Selection product
-1b7ebc7 passes source review 66f31a6; wrapper c7145cd now has a fresh independent
-source critic before its one candidate acquisition. Audio observer/analyzer
-73cdfc2 is source-accepted, while rejected wrapper 90d3baa is corrected at 26a1c59
-and in re-review for closing-log/archive integrity. Linux fixed-view fixture
-3fd9718 is source-accepted; wrapper 04bc153 is in fresh source review before any
-staging/export/measurement. Touch R3 retains its numeric failure despite blind
-clarity preference; R4B receipt method b001fc5 is in re-review after rejection
-ce3510e. None of these candidates has new native acceptance. The local native
-lane remains held until exact controller reviews and a concrete root release.
-No broad release gate changes status.
+One Linux exact f242a2f controlled profiling acquisition is now running after
+source acceptance 26095386, actual criteria 4e97721b and root release e587392d.
+The sole local CPU/native lane is reserved; other heavy work is held. Original
+Linux gameplay remains failed. Touch explicit-bool correction 108d1cdc passes
+fresh 95703781 source review; no new native render/import has occurred. Mac AX
+read-only diagnostic is source-only and unfinished; c838 actual gameplay remains
+failed before input. Audio corrected pure analysis stays source-bound on its
+own branch; original acquisition REJECT / strict FAIL and unknown cause remain.
+No whole release gate changes status. NEXT_SESSION is the exact continuation.
 
 A separate future market-harness guard is independently accepted at
 `985a9d71`, [draft PR29](https://github.com/calebaiken/sightbreak/pull/29):
@@ -134,7 +129,7 @@ PR24 → PR23 → PR22 → PR16 dependencies and contributor ownership.
 | ID | Gate | Status | Evidence on record | Verified by | Next action |
 | --- | --- | --- | --- | --- | --- |
 | G1 | Offline 5v5 match runs start to finish (objectives, combat, economy, results, progression) | IN PROGRESS | Actual a089473 Windows independently passes player plant/natural defuse/next buy/default restart, player defuse and seven stock rounds / 7:0 local defeat with exact 120 XP / 250 offline-credit disk/runtime reopen. Living/settings journey fails after resume/capture and before HUD pause; focus is unreached. [Review](../reports/gauntlet/windows-native-a089-independent-20261023/REPORT.md). Earlier failures retained; Linux/Mac/human whole-match gates open. | Fresh independent native critics | Qualify complete living journey, representative objectives, Linux/Mac and human full matches on a final candidate. No stock bot-objective or causal improvement claim. |
-| G2 | Bots: reliable navigation, objectives, cooperation, difficulty | IN PROGRESS | Six squad-habit corrections independently accepted: final engine oracle 2,722 checks, candidate zero failures / zero unequal pairs versus baseline 300 / 181 of 480. Nine independent focused steps pass. One lifecycle observes a plant; historical F1 is retained. [Review](../reports/gauntlet/m5-bot-squad-symmetry/independent-critic/REVIEW.md). | Fresh independent native critic | Known-dry primary return is independently corrected: 590 native checks pass versus baseline 40 failures; all 480 symmetry pairs remain equal. [Review](../reports/gauntlet/m5-dry-weapon-recovered-independent/FINAL_REVIEW.md). Next exhausted-primary candidate 1b7ebc7 passes independent source review 66f31a6; 1,268-row native measurement and strict regressions await bounded wrapper review. Representative matches, objective reliability, navigation, cooperation, shared RNG and same-tick reports remain open. |
+| G2 | Bots: reliable navigation, objectives, cooperation, difficulty | IN PROGRESS | Known-dry primary return remains independently verified. Exhausted-primary usable-sidearm correction integrated 0f2cf636, actual source 6276f0b: critic 63ec7271 accepts 1,268 rows / 75,890 predicates and exact registered comparison; 720cc695 accepts all three unchanged stock regressions, 84 cases / 48 steps / 480 symmetry pairs and strict provenance. [Review](../reports/gauntlet/m5-exhausted-primary-selection/native-independent-r1/REVIEW.md). | Fresh independent source and actual-output critics | Full combined-root aggregate/platform runs, representative full matches, all 15 new 24 m misses, objective reliability, navigation/cooperation/difficulty/shared RNG remain open. No balance/aim/full G2 or audio-cause claim. |
 | G3 | Ten-client authoritative match: reliability, privacy, identity, integrity, impairment | IN PROGRESS | Reviewed replay freshness, phased combat authority, ten-client soak/campaign, protocol and hostile probes. Short impaired lost-close trial fails; separate full-deadline diagnostic recovers ten. Ten actual accounts complete stock rules and recover one earned result exactly once under outage/kill/lost reply. [Account evidence](../reports/gauntlet/m3-account-match/RESULTS.md). | Fresh independent source, blind-output and native/database critics | Qualify remote-host impairment, substantive activity, competitive policies and prediction feel. Complete V3, remaining PR18 components and PR19/21 remain unqualified; narrow keyed receipts are accepted separately. |
 | G4 | Gunplay: recoil, spread, fire cadence, hit and elimination feedback | IN PROGRESS | Current Windows/ARM native suites also verify the probe. All four stock weapons measured at fc5d677: 2,840 native probe checks / 52 records and 289 existing controls pass; independent critic recomputes 5,121 predicates including complete cadence, actual health, friendly shielding and reload/deploy timelines. [Evidence](../reports/gauntlet/m4-gunplay-invariants/NATIVE_RESULTS.md). | Fresh independent source and native-output critics | Measure actual rendered handling, device latency and human feel against accessible shipped-game references. No tuning or feel acceptance inferred. |
 | G5 | Viewmodel, reload and weapon switch animation | FAILED | Relay AR has authored art. Same-family review scored the weapon and hands slice 5.5/10 against 8.5. Kestrel 9, Vectorline and Longwatch are still procedural. | Reported (same-model reviewer, stills) | Native recapture, critic round, author the other three weapons. |
@@ -143,8 +138,8 @@ PR24 → PR23 → PR22 → PR16 dependencies and contributor ownership.
 | G8 | Visual quality at least 8.5/10 in each applicable category | FAILED | 0.3 aggregate 8.1 (geometry, materials, lighting, models, effects below 8.5). Fresh sequence review about 5.5. | Reported (AI reviewers, not human) | Per-category rounds after G4-G7. |
 | G9 | Audio: fire, reload, hit, objective cues consistent with animation | IN PROGRESS | Original ARM/playback-WAV leaks remain unresolved. Sole ownership diagnostic at 26a1c59 independently REJECTS acquisition and FAILS strict shutdown: native float mixrate rejected; 353 orphan StringNames missed by scanner. Source/raw/state/sidecar/UID/scoped cleanup otherwise reconcile. [Actual review](../reports/gauntlet/audio-exit-lifecycle/independent-native-r1/REVIEW.md). No listening or retaining-cause evidence. | Fresh independent source and actual-output critics | Source-only aae1f0a corrects native numeric validation and strict StringName patterns using preserved bytes. Fresh review before integration; no native retry or historical leak-fix claim. Investigate instrumentation lifetime separately, then supported owner/cause and listening/timing. |
 | G10 | Accessibility (contrast, text scale, reduced motion, controller/keyboard reach) | IN PROGRESS | R3 numeric FAIL and blind clarity preference remain separate. R4B receipt method b001fc5 is independently source-accepted by abb837b4 after preserved rejection. Sole new A/B attempt stops at candidate import: compact type inference/compile errors, zero captures. Source/UID fences unchanged, failed archive pending. | Fresh independent method/source/native and blind visual critics | Audit actual import failure, correct explicit type without geometry/method changes, freeze fresh stages and compare actual native pixels/ownership. Live HUD, human/physical reach, custom-layout and whole accessibility remain open. |
-| G11 | Linux native package | IN PROGRESS | Historical ordinary journey / layouts / defuse / stock earned restart pass. Actual 8afe0cc preserves original next-buy failure while readbacks support catch-up saturation and Mesa CPU dominance. No function-cost fix or physical performance acceptance. [Evidence](../reports/gauntlet/m1-linux-frame-sampling/NATIVE_RESULTS.md). | Fresh independent native and instrumentation critics | Fixed-view controller 3fd9718 passes source review 4b5b8cd; separately preregistered staging/export/PCK/acquisition wrapper is being finalized. No new native or performance result; preserve original gameplay failure and deadlines. |
-| G12 | Windows native package | IN PROGRESS | a089473 actual overall FAIL with separate objectives, stock/earned-reopen and input passes retained. Ordinary cover route af13a99 source accepted; exact combined e28c8e9 independently binds all 498 non-doc inputs and 233 shallow methods. ONE run 39926044462/job 120322557935 is active after pre-dispatch criteria; actual response is unqualified. | Fresh independent source and actual-output critics | Finish original living/settings/HUD/LEAVE/reopen/focus/normal-close trial and independent raw review, retain all failures. No retry or causal survival claim. Physical/human and whole-package qualification remain open. |
+| G11 | Linux native package | IN PROGRESS | Original ordinary selected gates/historical timing evidence preserved; gameplay still fails original LIVE/next-buy deadlines. Corrected overhead fixture/controller and acquisition f242a2f pass independent source reviews 4b5b8cd/26095386. ONE controlled native acquisition is running after actual prereg 4e97721b and release e587392d; no actual verdict yet. | Fresh independent source and actual-output critics | Preserve one source-bound staging/export/PCK/OFF-ON-ON-OFF/caps/host/cleanup record; independently measure registered ratios/drift/spikes. No physical FPS, total-cost, cause or gameplay-fix inference. |
+| G12 | Windows native package | IN PROGRESS | Latest e28c8e9 run 39926044462 final 2020cfa9 FAILS route corridor while alive and separate legacy reload wait. Settings/LEAVE/reopen/focus unreached. Separate 15 suites / 9,434 checks, two input schedules, plant/natural defuse/restart, defuse and 12 rounds / 7:5 / exact offline earned persistence pass; 133 strict logs/70 PNGs/official ZIPs retained. [Review](../reports/gauntlet/windows-native-e28c8e9-independent-20261023/REPORT.md). | Fresh independent native critic | Route-only in-process keypulse source investigation; preserve defaults/guards/corridor/budgets. No new native run or causal fix. Qualify combined-root source, living flow and physical/human/package gates. |
 | G13 | macOS native package (Intel and Apple Silicon) | FAILED | Actual c838907 run 39920948579 independently FAILS Deploy before input: raw and fixed 2× full-window confidence both 0.5 versus required 0.8. Separate 15 suites / 9,434 checks, menu, unsigned iOS compile and failure-path exit-0 close pass bounded scopes. Earlier audio leaks remain unresolved; two ibtoold orphans limit cleanup. [Review](../reports/gauntlet/m2-mac-derived-ocr/native-c838-independent/NATIVE_REVIEW.md). | Fresh independent source and native critics | Research actual native keyboard/accessibility semantics before a new component; no blind retry or confidence change. Establish audio ownership and supported fix. Actual ordinary/full Mac gameplay, Intel, physical and binary reparse qualification remain open. |
 | G14 | Android and iOS keep building | IN PROGRESS | Fresh frozen 6a Android debug APK and unsigned iOS project export and structural inspection pass. Independent 48/49 package checks: simulator metadata claims ARM64+x86_64 but pinned debug archive contains x86_64 only; device archive is ARM64. [Evidence](../reports/gauntlet/m2-mobile-preservation/independent-package-critic/REPORT.md). Actual Xcode 16.4 / SDK 18.5 link fails on five iOS 26 framework globals. Reviewed SDK selection is integrated; retries39721286005 at2a2b732 and39727011693 ate7718ee pass independent unsigned-device compile review, with exact source/PCK and raw unsigned codesign evidence. Final binary reparse and runtime remain open. | Fresh independent mobile package critic | Preserve accepted exact-source unsigned compile; qualify simulator metadata, installation, older OS behavior and physical play. No credential/signing action is authorized. |
 | G15 | Packaging, build provenance, Steam staging procedure | IN PROGRESS | Source-bound manifests exist. `STEAM_RELEASE_READINESS.md` is design only: no SteamPipe template, no App ID, Steamworks docs not retrievable (host denied). | Reported | Owner approval is needed for any upload or account step. |

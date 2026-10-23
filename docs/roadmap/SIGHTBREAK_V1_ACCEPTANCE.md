@@ -52,3 +52,11 @@ review rejects acquisition/strict shutdown for native serialization and missed
 StringName failures. Corrections use preserved bytes before another run. Bot
 and Linux wrapper corrections remain in independent source re-review. These
 findings change no whole-gate status or existing quality threshold.
+
+At 09:24 UTC the exhausted-primary correction and strict StringName guard are
+integrated with independent candidate/regression/source evidence. The combined
+root has 37 passing pure methods and source-union checks; it still needs a new
+whole maintained aggregate and platform qualification. Linux one controlled
+acquisition is active; latest Windows overall fails despite separate bounded
+passes. Touch bool correction is source-ready, Mac AX diagnostic source-only.
+No whole gate, score threshold, human/physical or Steam criterion is lowered.

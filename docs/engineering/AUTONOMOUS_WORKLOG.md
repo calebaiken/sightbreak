@@ -596,3 +596,24 @@ aae1f0a replays original bytes without rewriting original failed receipts. Bot
 wrapper 6276f0b and Linux wrapper d0d94bec are in independent re-review. Mac
 research b294ef9 supports a public read-only AX diagnostic, now in source-only
 implementation. No broad release gate closes. Continue NEXT_SESSION's exact queue.
+
+
+## 2026-10-23, 09:24 UTC: integrate verified bot recovery and strengthen native gates
+
+Product 0f2cf636 recovers known usable sidearms from exhausted primaries. Actual
+6276f0b candidate 35.011s / 1,268 rows is independently accepted 63ec7271; separate
+50.591s regressions independently 720cc695 verify stock AI/dry/symmetry, all 480
+pairs and exact prior stdout bytes, strict/source/state/UID/cleanup/publication.
+Root retains both full noncache archives and actual prepared UID 261d6ddb. All 15
+new 24 m shots miss, so no aim/damage/balance/whole match or audio-cause claim.
+
+Strict guard fbb439cf adds actual standalone StringName failures with self-contained
+real corpus and maintained registrations; independent ca71aac4 and root cdd69b78
+verify source preservation/standalone/shallow controls and 37 relevant pure methods.
+Combined-root aggregate/platform acceptance remains open. Latest Windows actual
+2020cfa9 retains route overshoot and legacy diagnostic failures with separate
+objectives/two schedules/12-round earned-reload passes. Source correction keeps
+all route guards. Root release e587392d starts one exact f242a2f Linux controlled
+measurement after actual precriteria 4e97721b; heavy local work is held. Touch
+108d1cdc is source-ready, no new native; Mac AX component source implementation
+continues. Mission remains ACTIVE; continue exact NEXT_SESSION queue.
