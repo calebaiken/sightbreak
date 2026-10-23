@@ -1,0 +1,53 @@
+{
+  "passed": true,
+  "acquisition_verdict": "FAILED",
+  "failing_phase": "artifact",
+  "ELF_path": "/workspace/sightbreak-linux-profile-fixture-native-types/builds/linux-profile-acquisition-r2/export/linux-profile-diagnostic.x86_64",
+  "ELF_identity": {
+    "bytes": 84426000,
+    "sha256": "a6128f8ee82951c406d223fe3699c799df055f3cb92b224d2064504e3351f7c6"
+  },
+  "PCK_identity": {
+    "bytes": 10722188,
+    "sha256": "5a9f4147a9b9225b877739912b0af1bda00cb040e0e271c06a35e0915f5eb99a"
+  },
+  "PCK_start": 73703800,
+  "PCK_header": [
+    1129333831,
+    4,
+    4,
+    7,
+    2,
+    2,
+    104,
+    10714168
+  ],
+  "resource_count": 94,
+  "failure": {
+    "resource": "assets/icon.svg.import",
+    "stage_path": "/workspace/sightbreak-linux-profile-fixture-native-types/builds/linux-profile-acquisition-r2/project/assets/icon.svg.import",
+    "staged_identity": {
+      "bytes": 1020,
+      "sha256": "9b48fb27282e20a5408a15c911b83134130c1fa359d172c35d02d46a7690d76f"
+    },
+    "packed_identity": {
+      "bytes": 193,
+      "sha256": "e8717d3311cb7cd3fb716324b219d948e6f7d68fbae1b33d9163add59b4c2203"
+    },
+    "packed_tail_repr": "b'metadata={\\n\"vram_texture\": false\\n}\\n\\x00'",
+    "reproduction": {
+      "section": "remap",
+      "key": "metadata",
+      "value_repr": "'{\\n\"vram_texture\": false\\n}\\n\\x00'",
+      "error": "Extra data: line 4 column 1 (char 26)",
+      "position": 26,
+      "line": 4,
+      "column": 1
+    }
+  },
+  "controls": {
+    "staged_import_before_failure_parses": 1,
+    "same_packed_bytes_without_single_final_NUL_parse": true
+  },
+  "scope": "Failure-input reconstruction only; stripping the final byte is a diagnostic control, not an approved repair or full payload acceptance."
+}
