@@ -76,6 +76,24 @@ class InputObservationIdentityControls(unittest.TestCase):
                         row['latest']['input_send_called']['wall_msec'] = row['wall_msec']
                 self.assertEqual(self.report(client=rows)['diagnostic_complete'], new_welcome)
 
+    def test_each_role_rejects_foreign_events_counters_and_latest(self):
+        for role, foreign in (('client', 'peer_expired'), ('authority', 'client_disconnected')):
+            for location in ('reason', 'counters', 'latest'):
+                with self.subTest(role=role, location=location):
+                    rows = declared_rows(role)
+                    if location == 'reason':
+                        rows[-1]['reason'] = foreign
+                        rows[-1]['counters'][foreign] = 1
+                    elif location == 'counters':
+                        rows[-1]['counters'][foreign] = 1
+                    else:
+                        stage = 'input_accepted' if role == 'client' else 'input_send_called'
+                        rows[-1]['latest'][stage] = {
+                            'epoch': 1, 'count': 1, 'first': 1, 'last': 1,
+                            'fire': 0, 'reload': 0, 'moving': 0, 'wall_msec': 1}
+                    kwargs = {role if role == 'client' else 'authority': rows}
+                    self.assertFalse(self.report(**kwargs)['diagnostic_complete'])
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -18,6 +18,10 @@ REQUIRED = {
     'client': set('ready client_attempt client_connected welcome_received snapshot_applied input_send_called client_tick'.split()),
     'authority': set('ready peer_connected peer_bound input_received input_accepted input_consumed authority_tick'.split()),
 }
+ROLE_STAGES = {
+    'client': set('ready client_tick client_attempt client_connected client_connection_failed client_disconnected welcome_received input_send_called snapshot_schema_rejected snapshot_order_rejected snapshot_applied'.split()),
+    'authority': set('ready authority_tick peer_connected peer_bound peer_expired peer_disconnected input_gate_rejected input_decode_rejected input_received input_stream_rejected input_accepted input_consumed'.split()),
+}
 
 
 def need(ok, message):
@@ -41,6 +45,7 @@ def record_valid(row):
     need(type(row) is dict and set(row) == COMMON, 'unexpected observation fields; privacy projection violated')
     need(row['schema'] == 1 and type(row['schema']) is int and row['scope'] == SCOPE, 'invalid schema or scope')
     need(row['role'] in REQUIRED and row['reason'] in STAGES | {'observation_limit'}, 'invalid role or stage')
+    need(row['reason'] in ROLE_STAGES[row['role']] | {'observation_limit'}, 'stage does not belong to observed role')
     need(all(integer(row[k]) for k in INTEGER_FIELDS), 'observation integer field has wrong type')
     need(1 <= row['index'] <= 1024 and row['pending_count'] in range(121), 'invalid bounded observation/history count')
     need(all(row[k] >= 0 for k in ('wall_msec', 'wall_unix_msec', 'process_frames', 'physics_frames', 'drawn_frames', 'transport_id', 'local_attempt', 'local_id', 'peer', 'bound_actor', 'last_bound_actor', 'queue_count', 'stream_rejected', 'stream_skipped', 'simulation_tick')), 'negative observation counter')
@@ -57,6 +62,7 @@ def record_valid(row):
         need(set(physical) == allowed, 'client UI context missing')
     counters = row['counters']
     need(type(counters) is dict and set(counters) <= STAGES and all(integer(v) and v > 0 for v in counters.values()), 'invalid stage counters')
+    need(set(counters) <= ROLE_STAGES[row['role']], 'counter does not belong to observed role')
     if row['reason'] != 'observation_limit':
         need(counters.get(row['reason'], 0) > 0, 'event missing its stage counter')
     snapshot = row['snapshot']
@@ -65,6 +71,7 @@ def record_valid(row):
     need((not snapshot and row['snapshot_age_msec'] == -1) or (snapshot and row['snapshot_age_msec'] == row['wall_msec'] - snapshot['wall_msec'] >= 0), 'snapshot freshness disagrees with capture time')
     latest = row['latest']
     need(type(latest) is dict and set(latest) <= {'input_send_called', 'input_received', 'input_accepted', 'input_stream_rejected', 'input_consumed', 'snapshot_applied', 'snapshot_schema_rejected', 'snapshot_order_rejected', 'welcome_received'}, 'invalid latest-stage projection')
+    need(set(latest) <= ROLE_STAGES[row['role']], 'latest metadata does not belong to observed role')
     for stage, value in latest.items():
         need(type(value) is dict, 'stage value is not an object')
         if stage == 'input_consumed':
