@@ -1,0 +1,30 @@
+name: Market refresh pure controls
+on:
+  pull_request:
+    branches: [codex/v1-mission-playability]
+    paths:
+      - scripts/postgres_receipt_oracle.py
+      - scripts/test_postgres_receipt_recovery.py
+      - scripts/test_postgres_receipt_guards.py
+      - scripts/test_postgres_receipt_refresh.py
+      - .github/workflows/market-refresh-pure.yml
+permissions:
+  contents: read
+jobs:
+  pure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Prepare exact source regression bar
+        run: git show ad6cdc20db2a2f3ac179ba3cf3bed502620b6171:scripts/test_postgres_receipt_recovery.py > "$RUNNER_TEMP/market-refresh-baseline.py"
+      - name: Pure orchestration, provenance and original controls
+        working-directory: scripts
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+          SIGHTBREAK_REFRESH_BASELINE: ${{ runner.temp }}/market-refresh-baseline.py
+        run: python3 -B -m unittest -v test_postgres_receipt_oracle test_postgres_receipt_guards test_postgres_receipt_refresh
