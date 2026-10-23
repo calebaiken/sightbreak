@@ -1,0 +1,868 @@
+{
+  "freeze": "b001fc5087960729535f63c896b40d6dc25bd272",
+  "scope": "SOURCE_PURE_ONLY",
+  "engine_invocations": 0,
+  "native_captures": 0,
+  "checks": {
+    "all22_frozen_files_exact": {
+      "pass": true,
+      "freeze_sha256": "f9d292d7cb04fc129eee7df84fdc1c0591ae14600497bcf63aac0243cd7f2563"
+    },
+    "correction_changes_only_ownership_validator_and_new_pure_tests": {
+      "pass": true,
+      "changed": [
+        "scripts/analyze_touch_contrast_r4b.py",
+        "scripts/test_touch_receipts_r4b_r2.py"
+      ],
+      "game_tree_unchanged": true
+    },
+    "prior_geometry_fixture_predicates_and_thresholds_unchanged": {
+      "pass": true,
+      "geometry_certificate_sha256": "6c8056d1362e81cf6a7a758a25cca1b6e57a4d0fb40f3a143283084519071850"
+    },
+    "new_stages_read_only_exact327_paths": {
+      "pass": true,
+      "stages": [
+        {
+          "name": "baseline",
+          "source": "a52022169241df9ff662039547a375e1c46ac1c5",
+          "original_paths": 323,
+          "checked_paths": 327,
+          "unique_uid_paths": 138,
+          "manifest_sha256": "8769df11adb16daefd652d6694b2917cf4ecd95db59e77bccfb99cc5a651788f"
+        },
+        {
+          "name": "candidate",
+          "source": "b001fc5087960729535f63c896b40d6dc25bd272",
+          "original_paths": 323,
+          "checked_paths": 327,
+          "unique_uid_paths": 138,
+          "manifest_sha256": "a423eb35530201a0b6090a146a8211c802ea80c99c328d5879d391e28ea03780"
+        }
+      ]
+    },
+    "original_falsifiers_replayed_unchanged": {
+      "pass": true,
+      "original_sha256": "82d9f52fca8e5af6c8296b3bc32ac6532df09cd69a2b912e9b7691c75b778266",
+      "block_sha256": "0dd4dfa18dd5b603c98a62200fa38a13173142a0cec1473ab21083d6bc9e788c",
+      "replays": {
+        "old": {
+          "findings": {
+            "invalid_baseline_ownership_receipt_counterexample_reproduces": {
+              "original_condition": true,
+              "synthetic_only": true,
+              "ownership_errors": [],
+              "fire_row": {
+                "action": "fire",
+                "support_pixels": 1,
+                "actual_native_wrong_owner_pixels": 0,
+                "independent_normalized_hit_replay_wrong_pixels": 1,
+                "native_record_well_formed": true,
+                "pass": false
+              },
+              "comparison_accepts_invalid_baseline": true,
+              "requirement": "Invalid baseline ownership receipt blocks comparison; legitimate baseline geometry failure remains comparable."
+            },
+            "invalid_baseline_recorded_winner_not_reconciled": {
+              "original_condition": true,
+              "synthetic_only": true,
+              "supplied_wrong_winner": "pause",
+              "independently_selected_winner": "jump",
+              "fire_row": {
+                "action": "fire",
+                "support_pixels": 1,
+                "actual_native_wrong_owner_pixels": 1,
+                "independent_normalized_hit_replay_wrong_pixels": 1,
+                "native_record_well_formed": true,
+                "pass": false
+              }
+            }
+          },
+          "false_accept": true,
+          "false_zero_errors": [],
+          "forged_winner_errors": []
+        },
+        "corrected": {
+          "findings": {
+            "invalid_baseline_ownership_receipt_counterexample_reproduces": {
+              "original_condition": false,
+              "synthetic_only": true,
+              "ownership_errors": [
+                "fire: native ownership receipt contradicts complete independent replay"
+              ],
+              "fire_row": {
+                "action": "fire",
+                "support_pixels": 1,
+                "actual_native_wrong_owner_pixels": 0,
+                "independent_normalized_hit_replay_wrong_pixels": 1,
+                "independent_replay_unclaimed_pixels": 0,
+                "native_record_well_formed": true,
+                "native_receipt_matches_replay": false,
+                "missing_native_witnesses_xy_action": [
+                  [
+                    100,
+                    50,
+                    "jump"
+                  ]
+                ],
+                "extra_native_witnesses_xy_action": [],
+                "wrong_native_winners_xy_native_replay": [],
+                "pass": false
+              },
+              "comparison_accepts_invalid_baseline": false,
+              "requirement": "Invalid baseline ownership receipt blocks comparison; legitimate baseline geometry failure remains comparable."
+            },
+            "invalid_baseline_recorded_winner_not_reconciled": {
+              "original_condition": false,
+              "synthetic_only": true,
+              "supplied_wrong_winner": "pause",
+              "independently_selected_winner": "jump",
+              "fire_row": {
+                "action": "fire",
+                "support_pixels": 1,
+                "actual_native_wrong_owner_pixels": 1,
+                "independent_normalized_hit_replay_wrong_pixels": 1,
+                "independent_replay_unclaimed_pixels": 0,
+                "native_record_well_formed": true,
+                "native_receipt_matches_replay": false,
+                "missing_native_witnesses_xy_action": [],
+                "extra_native_witnesses_xy_action": [],
+                "wrong_native_winners_xy_native_replay": [
+                  [
+                    100,
+                    50,
+                    "pause",
+                    "jump"
+                  ]
+                ],
+                "pass": false
+              }
+            }
+          },
+          "false_accept": false,
+          "false_zero_errors": [
+            "fire: native ownership receipt contradicts complete independent replay"
+          ],
+          "forged_winner_errors": [
+            "fire: native ownership receipt contradicts complete independent replay"
+          ]
+        }
+      }
+    },
+    "28_independent_receipt_mutations_reject_both_variants": {
+      "pass": true,
+      "results": [
+        {
+          "variant": "r3",
+          "mutation": "false_zero",
+          "receipt_error_count": 1
+        },
+        {
+          "variant": "r3",
+          "mutation": "omit_coordinate",
+          "receipt_error_count": 1
+        },
+        {
+          "variant": "r3",
+          "mutation": "extra_own_coordinate",
+          "receipt_error_count": 1
+        },
+        {
+          "variant": "r3",
+          "mutation": "duplicate_same",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "duplicate_other",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "forged_valid_winner",
+          "receipt_error_count": 1
+        },
+        {
+          "variant": "r3",
+          "mutation": "swap_winners",
+          "receipt_error_count": 1
+        },
+        {
+          "variant": "r3",
+          "mutation": "false_unclaimed",
+          "receipt_error_count": 1
+        },
+        {
+          "variant": "r3",
+          "mutation": "hide_unclaimed",
+          "receipt_error_count": 1
+        },
+        {
+          "variant": "r3",
+          "mutation": "unknown_winner",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "own_winner",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "movement_winner",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "nonstring_winner",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "unsupported",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "negative",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "right_oob",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "float_coordinate",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "bool_coordinate",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "short_sample",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "dict_sample",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "missing_list",
+          "receipt_error_count": 4
+        },
+        {
+          "variant": "r3",
+          "mutation": "null_record",
+          "receipt_error_count": 9
+        },
+        {
+          "variant": "r3",
+          "mutation": "support_count",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "wrong_count",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "unclaimed_count",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "float_count",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "bool_count",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r3",
+          "mutation": "negative_count",
+          "receipt_error_count": 3
+        },
+        {
+          "variant": "r4b",
+          "mutation": "false_zero",
+          "receipt_error_count": 1
+        },
+        {
+          "variant": "r4b",
+          "mutation": "omit_coordinate",
+          "receipt_error_count": 1
+        },
+        {
+          "variant": "r4b",
+          "mutation": "extra_own_coordinate",
+          "receipt_error_count": 1
+        },
+        {
+          "variant": "r4b",
+          "mutation": "duplicate_same",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "duplicate_other",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "forged_valid_winner",
+          "receipt_error_count": 1
+        },
+        {
+          "variant": "r4b",
+          "mutation": "swap_winners",
+          "receipt_error_count": 1
+        },
+        {
+          "variant": "r4b",
+          "mutation": "false_unclaimed",
+          "receipt_error_count": 1
+        },
+        {
+          "variant": "r4b",
+          "mutation": "hide_unclaimed",
+          "receipt_error_count": 1
+        },
+        {
+          "variant": "r4b",
+          "mutation": "unknown_winner",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "own_winner",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "movement_winner",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "nonstring_winner",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "unsupported",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "negative",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "right_oob",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "float_coordinate",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "bool_coordinate",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "short_sample",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "dict_sample",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "missing_list",
+          "receipt_error_count": 4
+        },
+        {
+          "variant": "r4b",
+          "mutation": "null_record",
+          "receipt_error_count": 9
+        },
+        {
+          "variant": "r4b",
+          "mutation": "support_count",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "wrong_count",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "unclaimed_count",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "float_count",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "bool_count",
+          "receipt_error_count": 2
+        },
+        {
+          "variant": "r4b",
+          "mutation": "negative_count",
+          "receipt_error_count": 3
+        }
+      ]
+    },
+    "exact_ties_follow_each_source_policy": {
+      "pass": true,
+      "results": [
+        {
+          "variant": "r3",
+          "expected_winner": "smoke",
+          "errors": []
+        },
+        {
+          "variant": "r4b",
+          "expected_winner": "grenade",
+          "errors": []
+        }
+      ]
+    },
+    "both_source_variants_both_comparison_roles_full_provenance_and_cli": {
+      "pass": true,
+      "synthetic_metadata_only": true,
+      "results": [
+        {
+          "variant": "r3",
+          "kind": "genuine_failure",
+          "provenance_valid": true,
+          "baseline_cli": 0,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "false_zero",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "omit_coordinate",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "extra_own_coordinate",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "duplicate_same",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "duplicate_other",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "forged_valid_winner",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "swap_winners",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "false_unclaimed",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "hide_unclaimed",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "unknown_winner",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "own_winner",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "movement_winner",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "nonstring_winner",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "unsupported",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "negative",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "right_oob",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "float_coordinate",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "bool_coordinate",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "short_sample",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "dict_sample",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "missing_list",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "null_record",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "support_count",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "wrong_count",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "unclaimed_count",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "float_count",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "bool_count",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r3",
+          "kind": "negative_count",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "genuine_failure",
+          "provenance_valid": true,
+          "baseline_cli": 0,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "false_zero",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "omit_coordinate",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "extra_own_coordinate",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "duplicate_same",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "duplicate_other",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "forged_valid_winner",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "swap_winners",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "false_unclaimed",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "hide_unclaimed",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "unknown_winner",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "own_winner",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "movement_winner",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "nonstring_winner",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "unsupported",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "negative",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "right_oob",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "float_coordinate",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "bool_coordinate",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "short_sample",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "dict_sample",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "missing_list",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "null_record",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "support_count",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "wrong_count",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "unclaimed_count",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "float_count",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "bool_count",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        },
+        {
+          "variant": "r4b",
+          "kind": "negative_count",
+          "provenance_valid": false,
+          "baseline_cli": 1,
+          "candidate_cli": 1
+        }
+      ]
+    }
+  },
+  "verdict": "ACCEPT_SOURCE_METHOD_ONLY_NO_NATIVE_LANE_RELEASE",
+  "native_lane_released": false,
+  "all_checks_pass": true
+}
