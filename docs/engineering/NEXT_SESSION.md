@@ -1,151 +1,141 @@
 # Next session
 
-Updated 2026-10-23, 06:39 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 07:08 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. The automatic goal remains active. Read AGENTS.md and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
 
-## Live execution checkpoint — 2026-10-23
+## Live execution checkpoint — 2026-10-23, 07:08 UTC
 
 The mission is ACTIVE. Root is `/workspace/sightbreak-v1-recovered`, own branch
 `codex/v1-executor-recovery-20261023`, [draft PR31](https://github.com/calebaiken/sightbreak/pull/31).
-Committed integration before this note is `c08889b`. Inspect actual HEAD/status;
-never reset a newer local checkpoint. No shared release branch is merged.
+Integrated source before this note is `a089473`. Inspect actual HEAD and status;
+never reset a newer checkpoint. The original contributor checkout is clean on
+`work` at `4d8cdb33`. No shared release branch is merged.
 
-1. **Complete aggregate independently ACCEPTED at exact `afca2f1`.** Original
-   unmodified validate.sh exits zero in 539.073578461s: 55 mandatory Godot logs,
-   nine 92-method Python groups (only 3 Windows reader skips), 29-definition
-   catalog, real ENet and six lifecycle logs. Source is unchanged, 783 tracked
-   input hashes bind to Git. Independent final 2afe0bb is integrated as 4861b6d;
-   [review](../reports/gauntlet/aggregate-recovered-20261023/independent-critic/REVIEW.md)
-   retains 86 originals, full audits and actual outer/inner exit receipts. No
-   errors/warnings/leaks; 197 observed identities, both groups/sessions and eight
-   readiness ports are gone. Five DISPLAY-only checks, optional backend SQL,
-   arbitrary escaped descendants and broad release gates remain unqualified.
-   Original worktree `/workspace/sightbreak-validate-recovered-afca2f1`, outputs
-   `builds/aggregate-recovered-r1`; tool session 28337 is finished, exit 0.
-2. **ARM repeat ordinary play FAILED before input.** Run
-   [39906639650](https://github.com/calebaiken/sightbreak/actions/runs/39906639650),
-   job 120260016569, exact `b2e0293a546961230afbd73e5cd2a1a307d69e94`.
-   Corrected source controls pass. The first capture shows the Godot splash;
-   the strict guard then rejects a changed window context before any CGEvent.
-   Later window rows were not recorded, so the cause remains unknown. Private
-   engine-created user:// logging and source/profile isolation have separate
-   evidence. Public close timed out and SIGTERM fallback was required.
-   Independent review e26b630 is integrated as 0231df9 with both original ZIPs
-   and the decoded log. Separate 15 suites/9,434 checks, existing menu 37.760s
-   and unsigned iOS compile 110.938s pass within their reviewed bounds.
-   Startup freeze 0146497 is independently REJECTED by bfe7b5a (root f350588):
-   three runnable falsifiers allow an additional same-PID visible window at pin,
-   later target guard and synthetic Deploy. Original zero-event pin=true rows
-   are retained. Correction 3efe35d is independently source-APPROVED by 12ecda91:
-   70 maintained tests, four alias commands, 11 unchanged falsifiers and three
-   added input-guard groups pass. Original failures/incomplete wrapper stay
-   separate. Root source integration is 06d3bb4, review 57b61bc. Exact combined
-   c08889b retains game tree 55691684d31d44f1680141954bbe530443de9d1f; its only
-   code/workflow delta from actual b2e0293 is five reviewed Mac files.
-   Independent combined approval 45a6e5d is root 67669c0. One ARM attempt is
-   active: run 39912086121 / job 120277159133, created 06:32:13 UTC, immutable ref
-   `codex/v1-qualify-mac-c08889b` at exact c08889b. Fresh actual critic
-   `/root/mac_native_c088_fresh_critic` owns run/export/preflight/menu/native
-   gameplay/pixel/cleanup review. Original 60s menu/5s focus/graphics/private-input
-   and cleanup contracts remain unchanged. No further dispatch is approved.
-3. **First ARM attempt remains FAILED.** Run 39904830917 at 34dbd97 failed four
-   test-owned /var alias paths, skipping mocked-controller and ordinary play.
-   Native 15 suites/9,434 checks, menu 39.591s and unsigned iOS compile 88.643s
-   have separate independent review 7a4d235 (root 21bae04), with original logs,
-   both bounded ZIPs, 198 receipts and 11 PNGs retained. The test-only correction
-   3730273 is root 719b3f4 and preserves every production runtime/guard byte.
-   Large final binary reparse, full Mac match/objectives/Intel/human remain open.
-4. **Windows native attempt is complete, combined verdict FAILED at `b2e0293`.** Own
-   qualification ref `codex/v1-qualify-b2e0293` binds run
-   [39907358390](https://github.com/calebaiken/sightbreak/actions/runs/39907358390),
-   job 120262263075. Source approval 44e9aea and run/auditor binding 6e0b4ce
-   are integrated as c135f90/34ea6cc. Critic owns original output review.
-   Raw ZIPs and exact decoded log through 26170e4 are root 1c52e67. Original
-   living/settings failure is 152.703s: actor dies at tick1166, before released
-   ACK tick1192 and fresh W. Held-neutral PNG shows 5 health. This does not prove
-   a missed fresh input on a living actor. Plant 78.985s genuinely arms device
-   and captures living DEFEND guidance, then all defenders are eliminated while
-   still planted; device resolution/next-buy/restart are unqualified.
-   Final independent d0514d8 is root c08889b, [report](../reports/gauntlet/windows-combined-recovered-20261023/REPORT.md).
-   It accepts separate 15-suite/9,434-check, three OS-input schedules, defuse and
-   stock-match scopes: 12 natural rounds/7:5, exact 120 XP/250 offline credits
-   saved/reloaded. One bot plant occurs in round 12; no device terminal occurs.
-   Both failed receipts have cleanup_errors=[] but clients had forced exit 1,
-   not normal closes. All 140 transferred native logs are strict-clean; 36
-   original PNGs were viewed and six exact witnesses retained. Missing
-   success-only controller/HUD fields and unreached phases remain gaps.
-   No rerun is approved. Source-only liveness fence is being built in
-   `/workspace/sightbreak-windows-focus-liveness`, branch
-   `codex/windows-focus-liveness-fence-20261023`; preserve original captures,
-   deadlines, health/AI/rules and distinguish precondition loss from input failure.
-   Candidate 19304d5 / report 0823cee has fresh critic findings requiring correction:
-   malformed timestamps can bypass the fence; malformed raw values lose their
-   rejection receipt. No liveness candidate is integrated or retry approved.
-5. **Touch R3 combined pixel gate FAILED; native/raw review is complete.** Own
-   `/workspace/sightbreak-touch-contrast-recovered`, branch
-   `codex/m6-touch-contrast-recovered`, code a520221, report f527e01; independent
-   approval da09733 follows two retained rejected method iterations. Actual
-   native root `/workspace/sightbreak-touch-contrast-native-recovered-r3`, staged
-   projects `/workspace/sightbreak-touch-contrast-fixture-recovered-r3`, display
-   :131, pinned 4.7.2, taskset 0–3/LP2/OMP2. The native lane is now idle; all
-   eleven observed PIDs and display socket/lock are gone. Sixteen backgrounds and 1,280
-   PNGs per source have been produced without engine errors or source/UID drift.
-   Each exact source passes TOUCH_TEST 34 and INPUT_MODE_TEST 462 checks; these
-   use simulated capabilities, not physical touch. Frozen analyzer exits 1:
-   candidate 240/304 resolved, 64 unresolved and eight held-border rows below
-   3:1. Independent actual review 39b5a9d/8a5f531 verifies all 2,576 image hashes,
-   ten exact pixel witnesses and complete archive (177,345,716 bytes in 8 parts,
-   SHA256 36c6e7ac9126c1d265a67bd2aab95e69c74d68fde57d99239ed852ed302026d6).
-   Root report imports 2fffc7d/84f2712 include failed original method and raw
-   evidence only; shipping touch product/analyzer remain outside root.
-   Fresh blind judge inspected all 64 normal PNGs and prefers A (candidate),
-   root 373b636, while identifying small-label crowding and increased scene
-   occlusion. This preference does not overrule numeric failure.
-   Builder is registering R4 source-only badge/label corrections and separately
-   defined final-visible boundary accounting. Preserve full glyph coverage and
-   thresholds; no hidden failures may be discarded. Require fresh source review
-   before new acquisition. Live HUD/physical/shipped-quality gates remain open.
-6. **Linux one-attempt diagnostic is complete, no repeat.** Source b1a131ab,
-   independent bca8b7fd, root c9bfb09. Actual 58.558s flow FAILS initial LIVE 45s
-   while BUY/round1/tick844/14.066667 sim. Plant/next-buy/restart unreached.
-   Thirty-five profile headers/34 row blocks establish capability, source/
-   ELF/PCK 134-resource identity and declared cleanup. Historical mean intervals
-   cannot become phase/CPU/overhead/FPS or improvement claims. Next is controlled
-   source-mapped attribution. Original 84,232,632-byte ELF and other local files
-   remain in `/workspace/sightbreak-linux-profile-recovered/builds/linux-gles-profile-native-r1`;
-   bounded raw originals/review are pushed. Next plan 8b0598c maps exact GLES
-   boundaries; independent fcb5276c (root e1c70e6) permits source-only fixed-view
-   OFF/ON/ON/OFF implementation with corrected cadence/total/mean/tail semantics.
-   `/workspace/sightbreak-linux-profile-overhead`, branch
-   `diagnostic/linux-profile-overhead-fixture`, is implementing that fixture and
-   pure controls. No new native/export/compile is approved. Require fresh exact
-   implementation review before any lane release; physical/gameplay cost remains
-   outside a software-rendering diagnostic.
-7. **Next bot component is diagnostic source work.** Builder is registering
-   exhausted-active-primary behavior against the unchanged b2e0293 game in a
-   separate worktree. Known ranges (sidearm 45m, normal/hard vision 38/46m) do
-   not establish a preferred switch policy. Retain active-ammo authority,
-   holstered unknown/default controls, target acquisition and objective guards.
-   Diagnostic freeze 114150a has 567 decisions / 576 steps but independent
-   critic fb9b113 REJECTS its obstructed rays and vacuous action witnesses, root
-   9d44367. R2 b87afb7 adds 96 positive-control steps and complete raw decision
-   fences (1,239 total rows). Fresh source critic 5fbf3ac permits ONE baseline.
-   Builder `/workspace/sightbreak-exhausted-primary-benchmark` now owns the local
-   native lane: one staged/private preparation import 120s cap, then one unchanged
-   probe 120s cap, wrapper 240s plus bounded cleanup. Stop if import fails; no
-   retry/product edit is approved. Pin/source/UID/process/raw output receipts
-   and a separate full actual-output audit are required. The partial synthetic
-   witness oracle alone cannot certify resources, lane or authority behavior.
+1. **Windows next: bind the integrated controller, then one native attempt.**
+   Original run 39907358390 at b2e0293 stays FAILED. Death at tick 1166 precedes
+   released ACK 1192 and fresh W; the plant ends by defender elimination while
+   the device remains planted. Separate independently accepted scopes are 15
+   suites / 9,434 checks, three OS-input schedules, actual player defuse and
+   12 stock rounds / 7:5 with exact 120 XP / 250 offline credits saved/reopened.
+   Final review d0514d8 is root c08889b, [report](../reports/gauntlet/windows-combined-recovered-20261023/REPORT.md).
+   All failed receipts and forced exit-1 cleanup remain failures.
+   The original source rejection 0d4f7e0 and complete builder correction are now
+   integrated through a089473. Corrected source fa718ef validates raw snapshots
+   before freshness and retains malformed values; combined freeze 691076f also
+   removes only the focus Escape's deliberate one-second post-up sleep.
+   Independent source approval 2203393 (root a089473) retains 77 original inputs,
+   335 corrected predicates and 31 additional cases / 136 predicates per freeze;
+   six pure groups pass 62 methods with three Windows reader skips on Linux.
+   Game, CI, captures, budgets and all other taps remain unchanged. This does
+   not prove survival or grant a native retry. Fresh critic
+   `/root/windows_focus_liveness_fresh_critic` is binding exact combined a089473
+   to both accepted freezes and the Mac c088 source before root selects one
+   original full Windows workflow on an immutable own ref. No dispatch yet.
+2. **ARM third attempt is independently FAILED, with original artifacts retained.**
+   Run [39912086121](https://github.com/calebaiken/sightbreak/actions/runs/39912086121),
+   job 120277159133, exact c08889b on `codex/v1-qualify-mac-c08889b`.
+   Source startup/unique-window correction worked within its declared scope:
+   six splash rejections, then one owned menu window resized from 1024×684 to
+   1004×664 and pinned at 27.208 seconds. Ordinary play fails at 28.366 seconds
+   before any CGEvent: both accepted raw Vision receipts read
+   `DEPLOY • OFFLINE 5V5` at confidence 0.5, while the selector requires the
+   middle-dot form and 0.8. This is recognition failure, not missed native input.
+   Ordinary failure closes with exit 0 and all ten groups gone without signals.
+   Strict native suite still FAILS after seven suites / 1,584 checks: original
+   and verbose input_mode logs leak AudioStreamPlaybackWAV and AudioStreamWAV,
+   plus Master StringName. Remaining eight suites are skipped. Preflight, menu
+   32.568 seconds and unsigned iOS compile 81.752 seconds have separate bounded
+   passes; two ibtoold orphans later need runner cleanup. No full descendant,
+   binary reparse, Mac gameplay, Intel or physical acceptance follows.
+   Fresh critic 5dd3e66 / 1e46e44 / 9f2a67f is integrated as 238d9f4 / 475a853 /
+   2e47047, [actual review](../reports/gauntlet/m2-mac-journey-recovered/native-actual-c088-independent/NATIVE_REVIEW.md).
+   Earlier failed attempts 39904830917 and 39906639650 and their original ZIPs
+   remain retained; do not infer their unrecorded later geometry from this run.
+   Next source component is frozen cbd0154, handoff a282b3f on
+   `codex/m2-mac-derived-ocr`, `/workspace/sightbreak-mac-derived-ocr`.
+   It opts only the focused Deploy capture into one fixed 2× whole-window OCR
+   analysis, keeps raw evidence and the 0.8 threshold, and binds a unique derived
+   label/box to the original native center. No actual OCR improvement, Swift
+   compile, native run or retry has occurred. Fresh source review is required.
+3. **Bot baseline and verbose diagnostic both FAIL strict shutdown.**
+   The accepted known-dry primary-return product correction remains root 784fb1a,
+   tested 8e8d13e / critic f947350: 590 checks pass versus 40 baseline failures,
+   existing AI and 2,722-check / 480-pair symmetry regressions pass. Full tactical
+   quality remains open. Next exhausted-active-primary diagnostic source is
+   b87afb7 in `/workspace/sightbreak-exhausted-primary-benchmark`.
+   Actual baseline 700abf8 and fresh critic b5fa18a1 are integrated as baf2cb4 /
+   d1f7fdb / 8b90cf0. Independent audit verifies all 1,239 rows, 74,142 predicates,
+   13 actual shots, seven kills and four completed stock reload controls. At
+   24 metres or with no target, a 0/0 primary repeatedly requests impossible
+   reloads despite a known loaded sidearm. This supports a bounded selection
+   investigation; it does not establish a new balance or difficulty policy.
+   Baseline exits 0 in 22.219 seconds but leaks two unidentified ObjectDB objects.
+   Its original warning cannot be retrospectively assigned types.
+   One separately preregistered verbose diagnostic at the same clean b87afb7
+   is complete in `/workspace/sightbreak-exhausted-primary-verbose-r2/.local/verbose-leak-diagnostic-r1-20261023`.
+   Import 6.484 seconds, probe 22.957 seconds, wrapper 31.890 seconds, all within
+   original 120/120/240-second caps. All 1,239 rows and 18,499 fixture assertions
+   emit, but strict shutdown still FAILS: this run identifies one playback WAV,
+   one stream WAV (each ref 1) and a Master StringName orphan. Same classes as
+   ARM do not establish a common owner or cause. All 17 archive-map originals,
+   including both explicitly force-tracked stderr files, are retained in
+   [the verbose package](../reports/gauntlet/m5-exhausted-primary-verbose-diagnostic/actual-r1/RESULT.md),
+   root 0f6f5e4 / 239ee99. Actual independent audit is active with
+   `/root/exhausted_primary_baseline_actual_critic`. No repeat is approved.
+4. **Audio owner observation is source-only, not a leak fix.**
+   Source 809dbc0, branch `codex/audio-exit-lifecycle-20261023`, own
+   `/workspace/sightbreak-audio-exit-lifecycle`, adds optional WeakRef/identity/PCM
+   observations at the input test's existing boundaries. Thirteen pure tests
+   pass. The original action/await/leave/free/quit body reconstructs exactly;
+   product audio is unchanged. Pinned upstream source establishes asynchronous
+   stop/cleanup, not this leak's owner or cause. Fresh source critic
+   `/root/audio_lifecycle_fresh_source_critic` is reviewing. No engine compile,
+   import, new waits, teardown fix or diagnostic run is approved. A later run
+   needs a separately reviewed bounded wrapper and staged isolated source.
+5. **Touch R3 remains numerically FAILED despite blind clarity preference.**
+   Native R3 retains 2,576 original PNGs and complete 177,345,716-byte archive;
+   candidate 240/304 resolved, 64 unresolved and eight held-border failures.
+   Independent actual 39b5a9d / 8a5f531 and blind evidence root 373b636 remain
+   distinct; shipping product/analyzer are not integrated. R4 freeze 16335ab,
+   handoff bb1fc88, `/workspace/sightbreak-touch-contrast-recovered`, is under
+   fresh source review. Critic finds a pre-native blocker: maximum-mobile FRAG
+   and SMOKE centers are 80.64 px apart with 84 px body diameter; later SMOKE
+   paint hides required FRAG footprint. Retain pure counterexamples and correct
+   the real overlap with separately preregistered layout/interaction scope;
+   do not discard pixels or weaken the old thresholds. No R4 acquisition is
+   approved. Live HUD, physical touch and shipped-quality acceptance remain open.
+6. **Linux original gameplay failure stays FAILED; profiling fixture is rejected.**
+   Actual b1a131ab ends after 58.558 seconds still in BUY / tick 844, missing
+   initial LIVE's original 45-second cap. Profile capability, ELF/PCK identity
+   and cleanup have independent bca8b7fd review (root c9bfb09). No function-cost,
+   overhead, FPS or improvement claim follows from its historical means.
+   Source-only fixed-view OFF/ON/ON/OFF fixture 1290172 is independently REJECTED
+   by 51add37: a dead owned Xvfb can pass readiness, and four fake clients at
+   181.047 seconds can pass the 180-second cap. Nonfinite endpoint handling also
+   needs correction. Builder `/root/linux_gles_profile_builder` is correcting
+   them in `/workspace/sightbreak-linux-profile-overhead`, branch
+   `diagnostic/linux-profile-overhead-fixture`. Preserve original counterexamples
+   and thresholds; obtain fresh exact-source review before any engine operation.
+7. **Complete aggregate remains independently ACCEPTED at exact afca2f1.**
+   Unmodified validate.sh exits zero in 539.074 seconds: 55 mandatory Godot logs,
+   nine 92-method Python groups (three Windows reader skips), 29-definition
+   catalog, real ENet and six lifecycle logs. Fresh 2afe0bb is root 4861b6d,
+   [review](../reports/gauntlet/aggregate-recovered-20261023/independent-critic/REVIEW.md).
+   Later source changes retain their own scoped checks and do not inherit this
+   whole-source pass. DISPLAY/optional backend SQL, arbitrary escaped descendants
+   and broad release gates remain unqualified.
 
-Official released Luanti Android/AssaultCube reference research is integrated as
-62e6134, B8 in BARS. Actual images/clip stay outside Git in
-`/workspace/reference-cache/recovered-20261023`. These are contextual touch/HUD
-references, not CS2/contrast/parity wins. CS2 policy, human/physical and Steam
-requirements remain open. Continue implementation/review after each increment.
+The local native/render/OCR lane is idle after the sole verbose diagnostic.
+Coordinate one owner before any new local runtime. All active candidates are
+source/pure work. Follow each verified increment with canonical gate updates,
+commit/push, blocker reassessment and the next implementation; none closes v1.
+Official Luanti Android and AssaultCube media are retained contextual references
+(B8), not CS2 parity. CS2 access, human play/listening, physical GPUs/mobile and
+Steam credentials remain explicit blockers. Do not claim background execution.
 
 ## Historical product checkpoint — 2026-10-23, 05:10 UTC
 

@@ -25,14 +25,17 @@ aggregate and narrow bot dry-primary comparison, earlier Windows selected gamepl
 gates, corrected-activity ten-account settlement/recovery, backend regression and
 four-weapon probe. Combined Windows b2e0293 has a failed overall verdict, with
 separate passing suites/input schedules/defuse/12-round earned-reload scopes.
-ARM repeat 39906639650 passes 15 suites/menu/unsigned iOS within reviewed scopes,
-but ordinary play fails before input; its splash/window-context failure and forced
-cleanup remain recorded. A corrected source-bound ARM attempt at c08889b is
-running after independent source/pure review. Touch R3's combined pixel gate
-fails independent review; the blind clarity preference retains small-text and
-occlusion limits. R4 is source-only. Linux timing and earlier unexplained Mac
-strict leaks remain failures. The canonical matrix records sources and reviewers;
-none of these increments closes the full release-candidate gates.
+ARM c08889b run 39912086121 fails Deploy recognition before input and strict
+audio-object cleanup after seven suites; its startup/pin, ordinary exit-0 close,
+menu and unsigned iOS compile have separate bounded evidence. The fixed 2× OCR
+candidate and read-only audio ownership probe remain source-only. Corrected Windows
+liveness/resume source is independently accepted but awaits combined binding and
+actual native execution. Touch R3's combined pixel gate fails independent review;
+its blind clarity preference retains small-text and occlusion limits. R4 source
+review exposes a real maximum-mobile control overlap. Linux timing still fails,
+and its next fixture is rejected for readiness/deadline defects. The bot baseline
+proves the bounded exhausted-primary stall but fails strict cleanup, as does the
+sole verbose diagnostic. Original failures remain intact; no full gate closes.
 
 Production PostgreSQL/API market recovery now has separate actual native and live
 read-only SQL qualification at `882931dd`, root integration `4150ad0a`.
