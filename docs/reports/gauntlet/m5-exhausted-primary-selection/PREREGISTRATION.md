@@ -79,19 +79,39 @@ control output. Never infer correct resources from a requested equip alone.
 The three normal and three hard `far_loaded` sequences should each draw once
 and consume sidearm ammunition, replacing their 0/0-primary command loop.
 The corresponding six `idle_loaded` sequences should each draw once without
-firing; their usable sidearm remains available. Easy and the dry/unknown/beyond
-range sequence controls remain unchanged. Reloadable primaries still begin a
+firing; their usable sidearm remains available. Normal also has no acquired
+target in the 45.5 m sequence, so those three sequences should draw under the
+no-target rule. Hard acquires that enemy and must preserve the beyond-range
+guard. Easy and the dry/unknown sequence controls remain unchanged. Reloadable primaries still begin a
 legal stock reload. All five mandatory positive controls should retain their
 observed actual shot/kill/reward or completed reload outputs.
 
-The current common matrix has no acquired target exactly at 45 m or just
-inside that range, no 24 m reserve-only repeated sequence, and no new-policy
-guard first entered during an existing primary reload. Keep those coverage
-limits explicit. The registered predicate itself will receive pure positive
-and negative boundary examples, but synthetic examples do not qualify native
-selection/action at unmeasured distances. A source critic can require a
-separate common supplement before any new baseline/candidate runtime; the
-old fixture and receipts must remain untouched.
+Frozen raw baseline inputs predict exactly 51 changed matrix weapon requests
+and 516 preserved requests. This includes no-acquired-target cells at 60 m
+for normal/hard; no hidden coordinate is consulted. The first request changes
+in exactly 15 of the 72 sequences: normal/hard far-loaded and idle-loaded,
+plus normal's three 45.5 m sequences. The five original positive controls stay
+unchanged. The pure comparator must check these counts against exact cell
+identities, rather than approving a total alone.
+
+The derived maintained test will add nine separate range cells: hard, each
+stock primary, known loaded sidearm, visible targets at 44.9, 45.0 and 45.1 m.
+They use the same centered `z=-20` settled lane and real action consumer. Six
+cells should equip, and the three beyond-range cells should preserve the
+primary. These are emitted under separate supplement tags and do not change
+the original matrix, counters or archived receipts.
+
+The maintained test will require genuine sidearm shots and round consumption,
+with no impossible reload loop, in every normal/hard 24 m loaded-sidearm
+sequence. It will also add one 20-step normal 24 m reserve-only sidearm control:
+visible only on step 0, then hidden, with no resource reset. It must draw once,
+start one real reload and complete the legal 0/15 → 15/0 transfer without
+shots, target damage or impossible reload repetition. This uses the stock
+overlapping deploy/reload timing; it does not change weapon definitions.
+The supplementary 9 + 20 action rows make the derived test 1,268 rows, while
+the original diagnostic stays exactly 1,239 rows. The test reports separate
+supplement counts. Existing primary-reload entry into the extension remains
+an explicit source-only coverage gap.
 
 ## Source boundaries and acceptance limits
 
