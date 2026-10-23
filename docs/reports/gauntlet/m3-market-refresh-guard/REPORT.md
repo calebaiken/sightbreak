@@ -34,3 +34,67 @@ changes. No merge. New native/runtime or whole-gate acceptance is not implied.
 Independent criticism is required after the candidate is frozen.
 
 Execution and independent verdict are pending.
+
+## Actual execution
+
+All edits used connected GitHub tools because the selected local environment
+was still unavailable. The branch was created from the exact baseline. Draft
+[PR29](https://github.com/calebaiken/sightbreak/pull/29) targets
+`codex/v1-mission-playability`; it remains unmerged.
+
+First freeze `a421737727a331b84b11ada16f51a792eef831fe` passed
+[run 39896121360](https://github.com/calebaiken/sightbreak/actions/runs/39896121360),
+job `120226880722`: 36 tests in 0.126 seconds, OK, zero skips. The original
+decoded job output is retained in `ci-r1-job120226880722.log`.
+
+Independent source criticism then found a queued-response deadline edge: the
+downstream timeout was computed before acquiring the publication lock. Another
+response could hold that lock until the 240-second deadline expired. This was
+a source finding; no actual runtime failure was claimed. Commit `52c0993f`
+moves the deadline check inside the lock immediately before downstream I/O.
+Commit `985a9d71` adds a deterministic lock-contention regression that expires
+the deadline while the response is queued and requires no downstream send.
+
+Corrected frozen test source `985a9d71be546723adfb38f406302537a0a3f751`
+passed [run 39896279199](https://github.com/calebaiken/sightbreak/actions/runs/39896279199),
+job `120227376236`: 37 tests in 0.084 seconds, OK, zero skips. Nine existing
+oracle groups and seventeen existing guard groups pass alongside eleven new
+refresh groups. The original decoded output is retained in
+`ci-r2-job120227376236.log`. Both jobs checked out their exact head SHA and
+prepared the original runner with `git show ad6cdc20...:scripts/test_postgres_receipt_recovery.py`.
+
+The full mocked baseline execution reaches `focused_checks_passed`, final SQL
+and observer with stale login values and no post-replay reads. Corrected full
+execution rejects that case, missing reads, failed responses, wrong phase and
+wrong proxy before final SQL or observer; it accepts a correctly fresh sequence.
+Additional pure controls cover old in-flight ingress, duplicate/mismatched
+observations, marker order/provenance, phase changes during upstream requests,
+failed/short downstream writes and concurrent replay publication.
+
+The retained archive is read without extraction or modification. Its exact
+SHA-256 remains
+`9e3eb7d7a2cb4ebdad8c94b0e0f59b25cc40b6d252074926311213630960d793`
+and its report still identifies actual native source
+`882931dd7024c2b200a72b2a52017dd98b95ee6a`. Its original success-only business
+read schema has no invented method/status/ingress fields. An explicit legacy
+audit mode accepts those original post-response reads and the native
+observation; strict future schema rejects the missing provenance. The actual
+runner always uses strict default mode.
+
+The supported compare against the baseline lists only the workflow, pure test
+tooling and this new report at the frozen source. No game, backend, server,
+accepted raw archive or accepted market report changed. Later evidence commits
+retain logs and handoff documentation only. CI emitted one checkout-action
+Node 20 deprecation warning; checkout and all test steps succeeded.
+
+## Remaining scope
+
+Independent final criticism is pending. These mocked controls do not execute
+Godot, PostgreSQL, Docker or the production API, and no new native or service
+qualification is claimed. Settlement predicates are mocked inside the full
+orchestration counterexample; the unchanged separate oracle suite still tests
+its declared synthetic economics. Full aggregate, rendered recovery/consent,
+store/case, remote hosts, power-loss durability and whole G3/G7/G16 remain open.
+The biggest remaining limitation is the absence of an actual fresh-schema
+native market campaign. The accepted historical campaign retains its original
+source and factual evidence.
