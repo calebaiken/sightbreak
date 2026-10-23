@@ -18,12 +18,11 @@ response is retained in [accepted-source-remote-metadata.json](accepted-source-r
 This does not establish Swift compilation, ABI, native report emission, capture,
 AX behavior, CF timing/lifetimes or old missing bounds/cause.
 
-At this handoff, final one-run admission is BLOCKED only on the root-declared
-frozen remote qualifier. No qualifier has been supplied or independently resolved
-by this critic. This handoff and the conditional admission are not a release.
-Root must supply its declared immutable qualifier; reactivate this critic to
-resolve the exact ref through connected GitHub metadata, bind source acceptance
-and write final admission before root commits/pushes its release and dispatches.
+The earlier pending-qualifier state is superseded by [FINAL_ADMISSION.md](FINAL_ADMISSION.md).
+At 11:24:46 UTC the critic independently resolved root's declared frozen
+`qualifier/m2-mac-guard-r1-d5277180` to exact `d5277180` and confirmed source
+acceptance remotely. Root may now commit/push its release and dispatch the ONE
+exact admitted read-only route. This critic never dispatches or authorizes retry.
 
 After root's sole dispatched run, supply exact run/job IDs and release record.
 Reactivate this critic to retain original metadata/job log/official archives,
