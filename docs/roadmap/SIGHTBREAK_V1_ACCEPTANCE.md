@@ -107,3 +107,11 @@ final actual review. Linux now imports/exports but stops on packed-remap text
 parsing before all measurements. Bot diagnostic remains independently rejected
 and is being corrected. These results close no whole release gate or external
 requirement; exact continuation is in NEXT_SESSION.
+
+At 11:54 UTC, Mac read-only diagnostic d5277180 has final independent scoped
+verification d4e25303; enabled semantic Deploy exposure does not qualify ordinary
+gameplay. Linux R3 ec6b34ce reaches artifact/seal then fails its first OFF startup
+before ready.json; synchronous render-thread readback and strict V-Sync warning
+remain unresolved. No complete condition or H1 exists. Explicit Mac targeting and
+Windows consumption traces are under fresh source reviews; neither has native
+acceptance. All whole gates and quality thresholds remain unchanged.
