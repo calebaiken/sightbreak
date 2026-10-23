@@ -1,0 +1,79 @@
+{
+  "index": 0,
+  "profile": false,
+  "output": "/workspace/sightbreak-linux-packed-import-boundary/builds/linux-profile-acquisition-r3/native-block/01-/off",
+  "token": "condition-0-bd4f5840df9bc904",
+  "engine_argv": [
+    "/workspace/sightbreak-linux-packed-import-boundary/builds/linux-profile-acquisition-r3/export/linux-profile-diagnostic.x86_64",
+    "--render-thread",
+    "safe",
+    "--audio-driver",
+    "Dummy",
+    "--accessibility",
+    "disabled",
+    "--accessibility-driver",
+    "dummy",
+    "--",
+    "--output=/workspace/sightbreak-linux-packed-import-boundary/builds/linux-profile-acquisition-r3/native-block/01-/off",
+    "--token=condition-0-bd4f5840df9bc904"
+  ],
+  "process_argv": [
+    "taskset",
+    "-c",
+    "0,1",
+    "/workspace/sightbreak-linux-packed-import-boundary/builds/linux-profile-acquisition-r3/export/linux-profile-diagnostic.x86_64",
+    "--render-thread",
+    "safe",
+    "--audio-driver",
+    "Dummy",
+    "--accessibility",
+    "disabled",
+    "--accessibility-driver",
+    "dummy",
+    "--",
+    "--output=/workspace/sightbreak-linux-packed-import-boundary/builds/linux-profile-acquisition-r3/native-block/01-/off",
+    "--token=condition-0-bd4f5840df9bc904"
+  ],
+  "timeout": false,
+  "payload_before": "a4c655dcd132fd02d0af29a50242aa2fcc62a31ebe9daedabe5feb2870ed7f0b",
+  "seal_sha256": "1a665d9a10a60a0c2d2e90d3cff40f43d297f733b7894c41541347894a085b0b",
+  "cache_initial": {
+    "paths": {
+      "data": "/workspace/sightbreak-linux-packed-import-boundary/builds/linux-profile-acquisition-r3/native-block/01-/off/state/data",
+      "config": "/workspace/sightbreak-linux-packed-import-boundary/builds/linux-profile-acquisition-r3/native-block/01-/off/state/config",
+      "cache": "/workspace/sightbreak-linux-packed-import-boundary/builds/linux-profile-acquisition-r3/native-block/01-/off/state/cache",
+      "mesa": "/workspace/sightbreak-linux-packed-import-boundary/builds/linux-profile-acquisition-r3/native-block/01-/off/state/mesa"
+    },
+    "empty": true
+  },
+  "selected_environment": {
+    "DISPLAY": ":99127",
+    "LIBGL_ALWAYS_SOFTWARE": "1",
+    "LP_NUM_THREADS": "2",
+    "XDG_DATA_HOME": "/workspace/sightbreak-linux-packed-import-boundary/builds/linux-profile-acquisition-r3/native-block/01-/off/state/data",
+    "XDG_CONFIG_HOME": "/workspace/sightbreak-linux-packed-import-boundary/builds/linux-profile-acquisition-r3/native-block/01-/off/state/config",
+    "XDG_CACHE_HOME": "/workspace/sightbreak-linux-packed-import-boundary/builds/linux-profile-acquisition-r3/native-block/01-/off/state/cache",
+    "MESA_SHADER_CACHE_DIR": "/workspace/sightbreak-linux-packed-import-boundary/builds/linux-profile-acquisition-r3/native-block/01-/off/state/mesa"
+  },
+  "timing": {
+    "bound_seconds": 180,
+    "started_monotonic_seconds": 28635.452298934,
+    "deadline_monotonic_seconds": 28815.452298934,
+    "observations": [
+      {
+        "stage": "native observations:entry",
+        "monotonic_seconds": 28635.452314985,
+        "elapsed_seconds": 1.60509989655111e-05
+      },
+      {
+        "stage": "client spawned",
+        "monotonic_seconds": 28635.453345808,
+        "elapsed_seconds": 0.0010468740001670085
+      }
+    ],
+    "ended_monotonic_seconds": 28635.453345808,
+    "elapsed_seconds": 0.0010468740001670085
+  },
+  "pid": 169290,
+  "pid_start_ticks": 2863545
+}
