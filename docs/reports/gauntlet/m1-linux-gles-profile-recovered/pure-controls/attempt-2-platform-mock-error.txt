@@ -1,0 +1,116 @@
+test_initial_engine_option_and_default_command_with_no_sampler (__main__.LinuxGpuProfileTests.test_initial_engine_option_and_default_command_with_no_sampler) ... 
+  test_initial_engine_option_and_default_command_with_no_sampler (__main__.LinuxGpuProfileTests.test_initial_engine_option_and_default_command_with_no_sampler) (extra=[]) ... ERROR
+  test_initial_engine_option_and_default_command_with_no_sampler (__main__.LinuxGpuProfileTests.test_initial_engine_option_and_default_command_with_no_sampler) (extra=['--linux-gpu-profile']) ... ERROR
+  test_initial_engine_option_and_default_command_with_no_sampler (__main__.LinuxGpuProfileTests.test_initial_engine_option_and_default_command_with_no_sampler) (extra=['--linux-gpu-profile', '--seed', '42']) ... ERROR
+test_non_native_host_rejects_before_side_effects (__main__.LinuxGpuProfileTests.test_non_native_host_rejects_before_side_effects) ... ok
+test_rejects_other_scenarios_seeds_budgets_and_sampler_before_side_effects (__main__.LinuxGpuProfileTests.test_rejects_other_scenarios_seeds_budgets_and_sampler_before_side_effects) ... ok
+
+======================================================================
+ERROR: test_initial_engine_option_and_default_command_with_no_sampler (__main__.LinuxGpuProfileTests.test_initial_engine_option_and_default_command_with_no_sampler) (extra=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-linux-profile-recovered/scripts/test_linux_gpu_profile.py", line 87, in test_initial_engine_option_and_default_command_with_no_sampler
+    controller.main()
+  File "/workspace/sightbreak-linux-profile-recovered/scripts/verify_offline_match.py", line 135, in main
+    'host': platform.platform(), 'controller_command': [sys.executable, *sys.argv],
+            ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 1245, in platform
+    system, node, release, version, machine, processor = uname()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 865, in __iter__
+    (self.processor,)
+     ^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/functools.py", line 998, in __get__
+    val = self.func(instance)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 860, in processor
+    return _unknown_as_blank(_Processor.get())
+                             ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 800, in get
+    return func() or ''
+           ^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 828, in from_subprocess
+    return subprocess.check_output(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'types.SimpleNamespace' object does not support the context manager protocol
+
+======================================================================
+ERROR: test_initial_engine_option_and_default_command_with_no_sampler (__main__.LinuxGpuProfileTests.test_initial_engine_option_and_default_command_with_no_sampler) (extra=['--linux-gpu-profile'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-linux-profile-recovered/scripts/test_linux_gpu_profile.py", line 87, in test_initial_engine_option_and_default_command_with_no_sampler
+    controller.main()
+  File "/workspace/sightbreak-linux-profile-recovered/scripts/verify_offline_match.py", line 135, in main
+    'host': platform.platform(), 'controller_command': [sys.executable, *sys.argv],
+            ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 1245, in platform
+    system, node, release, version, machine, processor = uname()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 865, in __iter__
+    (self.processor,)
+     ^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/functools.py", line 998, in __get__
+    val = self.func(instance)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 860, in processor
+    return _unknown_as_blank(_Processor.get())
+                             ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 800, in get
+    return func() or ''
+           ^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 828, in from_subprocess
+    return subprocess.check_output(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'types.SimpleNamespace' object does not support the context manager protocol
+
+======================================================================
+ERROR: test_initial_engine_option_and_default_command_with_no_sampler (__main__.LinuxGpuProfileTests.test_initial_engine_option_and_default_command_with_no_sampler) (extra=['--linux-gpu-profile', '--seed', '42'])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-linux-profile-recovered/scripts/test_linux_gpu_profile.py", line 87, in test_initial_engine_option_and_default_command_with_no_sampler
+    controller.main()
+  File "/workspace/sightbreak-linux-profile-recovered/scripts/verify_offline_match.py", line 135, in main
+    'host': platform.platform(), 'controller_command': [sys.executable, *sys.argv],
+            ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 1245, in platform
+    system, node, release, version, machine, processor = uname()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 865, in __iter__
+    (self.processor,)
+     ^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/functools.py", line 998, in __get__
+    val = self.func(instance)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 860, in processor
+    return _unknown_as_blank(_Processor.get())
+                             ^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 800, in get
+    return func() or ''
+           ^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py", line 828, in from_subprocess
+    return subprocess.check_output(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 548, in run
+    with Popen(*popenargs, **kwargs) as process:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: 'types.SimpleNamespace' object does not support the context manager protocol
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.026s
+
+FAILED (errors=3)

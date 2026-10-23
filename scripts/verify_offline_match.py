@@ -93,6 +93,8 @@ def main():
     parser.add_argument('--hosted-render-priority', choices=('inherited', 'below-normal'), default='inherited')
     parser.add_argument('--linux-frame-diagnostics', action='store_true',
                         help='Sample the owned Linux plant client CPU once per second; requires --timeout 180')
+    parser.add_argument('--linux-gpu-profile', action='store_true',
+                        help='Print initial Linux plant renderer query timings; requires --timeout 180 and sampler off')
     args = parser.parse_args()
     if platform.system() not in ('Linux', 'Windows') or args.target != ('windows' if os.name == 'nt' else 'linux'):
         parser.error('Execute the selected package on native Linux/Windows; macOS gameplay remains UNVERIFIED')
@@ -105,6 +107,10 @@ def main():
     if args.linux_frame_diagnostics and (args.target != 'linux' or args.scenario != 'plant'
                                         or args.timeout != 180 or args.seed not in (None, 42)):
         parser.error('Linux frame diagnostics requires Linux plant, seed 42 and original --timeout 180')
+    if args.linux_gpu_profile and (args.target != 'linux' or args.scenario != 'plant'
+                                  or args.timeout != 180 or args.seed not in (None, 42)
+                                  or args.linux_frame_diagnostics):
+        parser.error('Linux GPU profile requires Linux plant, seed 42, original --timeout 180 and frame sampler off')
     socket = None
     if args.target == 'linux':
         if not args.xvfb or not re.fullmatch(r':[0-9]+', args.display):
@@ -663,6 +669,8 @@ def main():
         command = [str(executable), '--audio-driver', 'Dummy', *flags, '--', '--offline-validation', '--offline-trace-dir=' + str(trace_dir)]
         if args.scenario != 'full-match':
             command += ['--offline-scenario=' + args.scenario, '--offline-seed=' + str(42 if args.seed is None else args.seed)]
+        if args.linux_gpu_profile:
+            command.insert(1, '--gpu-profile')
         client = launch('client', command, env)
         if args.linux_frame_diagnostics:
             frame_sampler = LinuxFrameSampler(client, out / 'linux-frame-samples.jsonl', trace_dir / 'status.json', min(180.0, remaining()))
