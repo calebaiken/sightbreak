@@ -929,7 +929,9 @@ def main():
             after_capture = focus_raw_observation()
             focus_receipt['capture_context']['11a-restored-focus-still-paused']['after'] = after_capture
             require_focus_context(after_capture, 'after_restored_pause_capture', focused=True, paused=True)
-            tap('Escape')
+            key('Escape', True)
+            pause(.3)
+            key('Escape', False)
             guarded = focus_observed(lambda state: state.get('ui', {}).get('paused') is False,
                                10, 'Explicit resume with W and LMB still physically held', restored['wall_msec'])
             baseline_actor = restored['local_actor']
