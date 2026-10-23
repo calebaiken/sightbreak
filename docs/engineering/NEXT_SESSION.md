@@ -1,13 +1,13 @@
 # Next session
 
-Updated 2026-10-23, 11:15 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 11:37 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. The automatic goal remains active. Read AGENTS.md and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
 
-## Active verification — 2026-10-23 11:15 UTC
+## Active verification — 2026-10-23 11:37 UTC
 
 Own root checkout `/workspace/sightbreak-v1-recovered`, branch
 `codex/v1-executor-recovery-20261023`. Inspect current HEAD/status; preserve newer
@@ -15,33 +15,48 @@ commits. Published checkpoint `0608782e`; latest local actual report `6269cbb1`.
 Contributor `/workspace/sightbreak` remains clean `work@4d8cdb33`. Preserve
 PR27 → PR24 → PR23 → PR22 → PR16 and all separate contributor branches.
 
-**Next native action: ONE Linux R2 profiling acquisition, after observer readiness.**
-The touch heavy audit has ended. Its unchanged analyzer replay ended
-11:12:13.919184Z, exit1 after1,395.902 seconds on CPU4, byte-identical original
-recomputed JSON SHA25652502a6b31198171a780bf18be8da272809e25a3506d9c3e17783b8b98abf145.
-Numeric FAIL remains; no native/render/analyzer workload remains locally.
-Source-only pure agents stay on CPU4; reserve Linux native CPUs0,1.
+**Linux R2 is terminal FAILED at the artifact inspector; next correction in source review preparation.**
+Exact source `216d39ad`, release `90a9cab6`, source acceptance `f8659bba`, actual
+prereg `2082e964`/admission `fee67503`. Root omitted the prescribed `.local`
+mkdir: first shell command11:21:25UTC failed redirection before Python/native
+execution. Exact setup failure is retained separately. After mkdir, the sole
+supervisor started11:21:35UTC, exec95035, exit1 observed11:23:26UTC.
+Outer receipt `/workspace/sightbreak-linux-profile-fixture-native-types/.local/linux-profile-acquisition-r2-outer-tool-receipt.json`
+contains both actual tool responses and the distinction. No acquisition retry.
 
-Linux exact source `216d39ada8f9d11e2d8544d01fde42da49607b14`, clean own
-`/workspace/sightbreak-linux-profile-fixture-native-types`, branch
-`diagnostic/linux-profile-fixture-native-types`; source accepted `f8659bba`
-(root `3ca4bf8e`). Fresh actual prereg `2082e964`, conditional admission/observer
-`fee67503` (root `6fa25e97`). Own critic `/root/linux_profile_r2_fresh_native_critic`
-at `/workspace/reviews/linux-profile-acquisition-r2-native` must be reactivated
-when a slot frees: the first followup was rejected by the seven-active-agent
-thread limit, so it has not received lane clearance or started the observer.
-Read its exact `native-r2-independent/HANDOFF.md`; perform deferred original
-224-file/archive identity checks and fresh source/output/claim admission, commit
-and push ONE root release, activate its read-only CPU4 observer and confirm start
-row BEFORE root executes the sole wrapper recipe. No Linux R2 release/attempt
-exists yet. Preserve original1,320-second whole/phase and180-second condition
-bounds, OFF/ON/ON/OFF, graphics/pins/selectors, no fallback/manual continuation.
-Original R1 failed import and gameplay timing failures remain FAILED.
+Independent observer started11:21:04.888317Z onCPU4, discovered actual supervisor
+159836/start2687284 after31.282248s, within60s. It ended without signals;
+version/short Git commands were not all observed live. Readiness `21908453`,
+observer `7b5c295f`, failure-input packet `eec4c7e1`; fresh critic
+`/root/linux_profile_r2_fresh_native_critic` is sealing final report/archive.
+Import and export genuinely exit0. Artifact parsing fails packed
+`assets/icon.svg.import`: exported remap includes one terminal NUL, staged text
+has none; final JSON becomes `{...}\n\x00`, yielding Extra data line4/column1/char26.
+Seal/block/finalize and ALL performance conditions are unreached; no H1 result.
+Import/export cache filesystem_cache10 changes legitimately; old cache bytes
+were not retained, so no historical cache-byte readback claim.
+
+All247 current raw files/three outer records and254 archive members verify under
+2,436 predicates. Archive52,818,307B SHA256
+cd9bd47fea39a056bcf27e0b6f3950fab46a5418fb2c61d10005927c67ca154d;
+only three independently verified official private template copies excluded.
+All originals stay in `builds/linux-profile-acquisition-r2`. No manual continuation.
+`/root/linux_packed_import_boundary_builder`, own
+`/workspace/sightbreak-linux-packed-import-boundary`, branch
+`codex/linux-packed-import-boundary-20261023`, prereg `2e486554`, is preparing
+minimal packed-remap boundary handling and fresh r3 output. Actual pinned Godot
+exporter/ustring source confirms terminal UTF-8 NUL. Candidate source/pure tests
+pass38 acquisition +22 fixture methods, including82 malformed valid-MD5 controls;
+exact source handoff/depth1/fresh review still required. No R3 native release.
+All local native/render/analyzer/profile workloads are terminal; source/pure and
+independent read-only evidence work stay onCPU4. Original1,320-second whole,
+phase/180-second condition caps, OFF/ON/ON/OFF, source/graphics/selectors/formulas
+remain fixed for a future separately preregistered acquisition.
 
 **Windows run `39940242244`, job120369601915, exact `49ae54b0`, overall FAILED.**
 Release `ab7eaebc`, dispatch10:35:54UTC, qualifier
 `codex/v1-qualify-win-49ae54b0`. Fresh `/root/windows_pulse_native_fresh_critic`
-is sealing final original evidence; integrate its docs-only report when ready.
+has sealed final `e6a2de33`; root `74105549` retains the original report and archives.
 Bounded reconstructed passes:16 native suites/29,550 checks, all33 producers,
 137 strict-clean logs, both delayed input schedules, actual objectives, default
 restarts,11 stock rounds/4:7/local WIN, exact120XP/325 earned offline credits
@@ -54,16 +69,21 @@ is not established. Living route exits corridor BEFORE ANY fine pulse: last
 accepted x−8.3977795/vx−5.10, rejected x−11.5494471/vx−2.30, xmin−8.5.
 Settings/LEAVE/reopen/focus remain unqualified; no causal input fix follows.
 
-Next optional initial-pulse source `ea6c330a272f17a8a68ef94af868c70bda95a91e`,
-handoff `e75476a9`, prereg `0bd1fe11`, own
-`/workspace/sightbreak-windows-reload-route-actual`, branch
-`codex/windows-reload-route-actual-20261023`. Three-line runtime delta starts
-explicit pulse callback at first displacement; defaults/game/R2 guards and
-all predicates/budgets unchanged. Builder source/depth1 checks155 passes/three
-old skips plus20 additional. Fresh source critic
-`/root/windows_initial_pulse_fresh_source_critic`, prereg `3fe7757f`, is evaluating.
-No new Windows qualifier/release/native run exists. Ordinary transport/consumption
-needs a separate supported investigation; this controller change does not fix it.
+Initial-pulse source `ea6c330a` is independently ACCEPTED SOURCE ONLY by
+`fcbb3ca1` after prereg `3fe7757f`, now integrated as `da7bc797`.
+Root `8a505b32` verifies ALL507 non-doc Git paths/modes/blobs equal the accepted
+source and29 focused route methods pass. Root `db9d305f` retains full source
+critique, original counterexamples and raw newline-check failure. Both own and
+proper depth1 source pass178 methods (175 pass/three old Windows skips) plus14
+independent methods/147 context cases. Model9/9 passes; actual new living route
+and Windows delivery remain UNVERIFIED. No new Windows release exists.
+
+Separate `/root/windows_reload_route_actual_builder` is implementing opt-in
+scalar guest-loopback/external-fixture connection/consumption traces, prereg
+`0bf075ee`, isolated from completed route source. It records generation/binding,
+receive/accept/consume, ACK/pending age and disconnect/expiry without RPC/wire,
+acceptance or stock schedule changes. No production cause/fix is established.
+New combined source needs independent review and separate actual release.
 
 **Mac AX R3 `39943145541`, job120379229239, FAILED before AX.**
 Exact `4854aed9`, qualifier `qualifier/m2-mac-ax-r3-read-only-4854aed9`, source
@@ -78,14 +98,27 @@ or query prerequisites; zero input/prompts, ordinary close0/all3 recorded groups
 gone. R3 untitled semantics and Deploy remain unobserved. Original ZIPs, all11
 QA members, source/payload/deadline/strict evidence and limitations are retained.
 
-Next same-read capture-guard diagnostic source
-`d5277180a7705befd64d2f40a362ad566e83d91b`, prereg `a7b60823`, builder
-`/root/mac_startup_capture_stability_builder`. It adds fixed-shape failure inputs
-without changing original native call order, short circuit, checks, success path
-or budgets; no retry. Fresh `/root/mac_capture_guard_fresh_source_critic` prereg
-`314cc65e` is evaluating. Wait exact handoff/source acceptance before any actual
-criteria/ref/release. Original d6 AXTitle failure remains retained in `ea5aeeb4`.
-No Mac gameplay, iOS, Intel, binary reparse or CF timing acceptance.
+Same-read guard source `d5277180` is independently source-accepted `75ebcccc`,
+prereg `314cc65e`, actual prereg `18528319`/final admission `81e63370`.
+Root `49170941` was committed/pushed before ONE dispatch11:30:01UTC.
+Frozen qualifier `qualifier/m2-mac-guard-r1-d5277180`; run
+[39946498627](https://github.com/calebaiken/sightbreak/actions/runs/39946498627),
+job120390346371; normal native job120390348895 skipped. Job succeeds; fresh
+`/root/mac_guard_fresh_native_critic` is independently auditing originals.
+Preliminary actual scope:37.127239917s, seven complete same-read capture guards,
+five rejected splash attempts, sixth/focused menu accepted, full36-node AX tree
+with three empty chrome titles and one enabled exact Deploy. Window changes
+between captures1024×684→1004×664, never within retained guards; old missing
+R3 frame/cause remains unknown. OCR remains0.5 versus ordinary0.8. Zero recorded
+input/prompts, one focus, ordinary close0/all ten recorded groups gone. Await
+sealed final before semantic qualification; no ordinary gameplay/iOS/Intel claim.
+
+Next `/root/mac_semantic_deploy_builder` is preparing an isolated root-code
+integration of fresh owned semantic Deploy targeting with genuine existing OS
+input, after final actual evidence. Reuse accepted probe/contract/read-only code,
+keep original OCR gate and other platforms unchanged, no AX actions/trust prompt,
+no stale/unverified click coordinates or relaxed budgets. New combined source
+needs fresh critique/actual admission/root release; no such release exists.
 
 **Touch R4B R3: preserve original numeric/strict/cleanup FAIL.**
 Product `108d1cdc`, recipe/handoff `b9bd7e62`, release `f312ee8c`. Ten producers0,
@@ -95,7 +128,8 @@ Product `108d1cdc`, recipe/handoff `b9bd7e62`, release `f312ee8c`. Ten producers
 fresh critic. Original packaging stdout was initially ignored; exact2,524B
 SHA256af5805bd846a2e22d98f1d39d2a928ad33ba0cec087edb122e038e6cfa70469a
 is force-added `e2f5cbf3`; initial gap and correction are independently preserved.
-Independent full replay/ownership audit is done; final critic report pending.
+Final independent `755ee542`, root `befe7cbb`, verifies full replay, ownership,
+source/archive identities and retains numeric/strict/full-descendant FAIL.
 Candidate all352 component maps/1,545,520 support pixels have no wrong/unclaimed
 action across32 scenes. Baseline has4,856 wrong/3,072 unclaimed samples, with
 valid provenance. Six V-Sync warning records and owned dbus-launch descendant
@@ -111,15 +145,21 @@ as design only by `19e39981` (root `cf65cf3b`), prereg `883f1b63`. New native ma
 and a pinned-renderer error model are absent; seven W−B spread2 and16 JUMP nominal
 assignment failures stay FAIL. No shipping source or current analyzer changes.
 
-**Next gameplay component:** bot objective observation candidate
-`c91d9b98a293ef8605d99ae6e83402d3af983519`, prereg `09a3ea84`, own
+**Bot objective observation is REJECTED; correction underway, no native release.**
+Original candidate `c91d9b98`, prereg `09a3ea84`, own
 `/workspace/sightbreak-objective-observability`, branch
-`codex/m5-objective-observability-20261023`. Optional debug/offline caller-owned
-AI traces/test-only authority observer and bounded historical-pose reconstruction;
-policy unchanged. Original timeout lacks decision data, while other matches have
-bot plants. Ten pure methods/grammar checks pass; native compilation unobserved.
-Fresh `/root/bot_objective_trace_fresh_source_critic` prereg `eca565bc` is reviewing.
-No native release exists. Do not infer historical cause from reconstruction.
+`codex/m5-objective-observability-20261023`. Ten maintained/pure and grammar
+checks pass; fresh critic `eca565bc`/`5eef16d1`/`705de403` rejects stale per-call
+observations, incomplete forward/command schema, weak progress/transition/source
+binding and incomplete dependency inventory. Correction `c3a89e53` preserves one
+critic no-op-control defect: two identical inputs had opposite expectations.
+Correct count is18 actual mutations,13 accepted/five rejected plus one baseline
+smoke case. Original rejection remains; no test-name branching or contradictory
+pass. Builder correction prereg `41aa040d`, isolated own branch, schema2 with
+source-bound positive and actual field-removal negative receipts. Historical052
+AI differs by13 lines; reconstruction must explicitly use newer source and cannot
+prove the original timeout cause. Optional debug/offline trace must add no RNG,
+selectors, physics or protected mutation; native compilation remains unobserved.
 
 Exact `28a3e294` combined headless aggregate remains independently VERIFIED
 `ab2ca960`/root `a84f8414`:534.403s,56 Godot invocations,129 Python methods/three
@@ -130,7 +170,7 @@ then continue the next supported milestone. All whole G1–G19,8.5/category and
 human/physical/CS2/Intel-Mac/Steam requirements stay open. No shared merge,
 production deployment, purchase, live credential change or publication.
 
-## Earlier execution detail — superseded by the current queue below
+## Earlier execution detail — superseded by the current queue above
 
 The mission is ACTIVE. Root is `/workspace/sightbreak-v1-recovered`, own branch
 `codex/v1-executor-recovery-20261023`, [draft PR31](https://github.com/calebaiken/sightbreak/pull/31).

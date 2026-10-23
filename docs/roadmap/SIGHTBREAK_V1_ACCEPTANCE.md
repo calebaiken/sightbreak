@@ -99,3 +99,11 @@ continues. ARM R2 actual FAILED review is sealed e1221ba2/root ea5aeeb4; narrow
 R3 source4854aed9 is in fresh review, with no new native release. Windows current
 ordinary-input/living journey steps fail; raw causes and full-match output are
 pending. None of these scoped results closes a whole release gate.
+
+Current continued execution: initial Windows pulse source is integrated with
+independent source/depth1 and focused root verification; native remains open.
+Mac guard diagnostic has job success and preliminary semantic output, awaiting
+final actual review. Linux now imports/exports but stops on packed-remap text
+parsing before all measurements. Bot diagnostic remains independently rejected
+and is being corrected. These results close no whole release gate or external
+requirement; exact continuation is in NEXT_SESSION.
