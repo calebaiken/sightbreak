@@ -477,3 +477,16 @@ fail and skip ordinary play. Test-only 3730273 plus independent 78d5fa1/2b43487
 allow repeat 39906639650 at b2e0293; actual ordinary play is now in progress.
 Windows frozen-ref review and fresh R3 native touch evidence acquisition are
 active. No broad release gate closes. NEXT_SESSION holds the exact continuation.
+
+## 2026-10-23: review audio R2 chronology and baseline compatibility
+
+Fresh exact-source re-review at 03d003a9 passes 21 maintained, three unchanged
+original replay and five independent chronology controls. All 17 R1 artifacts
+and 422 original source hashes remain identical. Full diagnostic source remains
+REJECTED: pinned --headless selects Dummy, which the analyzer rejects, and the
+retained ARM verbose log's normal WorkerThreadPool preamble fails its banner
+startswith check. Both compatibility errors are retained with complete pure
+inputs, pinned-source excerpts and original ARM argv/log hashes. Next is an
+explicit driver/banner policy amendment preserving baseline and product audio.
+No engine/import/compile/native/CI/OCR, nested agents or runtime release occurred.
+See `docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r2/REVIEW.md`.

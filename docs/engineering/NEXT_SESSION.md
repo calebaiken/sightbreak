@@ -1,5 +1,18 @@
 # Next session
 
+Independent R2 audio source review checkpoint, 2026-10-23: own worktree
+`/workspace/reviews/audio-exit-lifecycle-r2-source`, branch
+`codex/audio-exit-lifecycle-r2-source-critic-20261023`. Exact corrected freeze
+03d003a9 passes the R1 chronology review (21 maintained, 3 unchanged replay,
+5 independent chronology controls), but full diagnostic source is REJECTED:
+pinned Godot --headless selects Dummy, which this analyzer rejects, and the
+original ARM verbose WorkerThreadPool preamble violates its startswith banner
+check. Two baseline compatibility controls fail with originals retained. See
+`docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r2/REVIEW.md`.
+Explicitly amend driver/banner policy without changing product audio; preserve
+the 17 old critic artifacts. No engine/native/nested-agent work or runtime
+release occurred. A separate bounded reviewed wrapper remains required.
+
 Updated 2026-10-23, 06:19 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is

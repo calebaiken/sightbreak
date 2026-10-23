@@ -6,6 +6,14 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
+Independent audio R2 source review accepts the chronology correction at exact
+03d003a9 within source scope, but rejects the complete diagnostic's baseline
+compatibility: default --headless Dummy and the actual ARM verbose preamble are
+both rejected. Twenty-one maintained, three unchanged replay and five independent
+chronology controls pass; two compatibility controls fail. See
+[R2 review](../reports/gauntlet/audio-exit-lifecycle/independent-source-r2/REVIEW.md).
+Original native leak failures remain open; no runtime release follows.
+
 Current execution is active again on 2026-10-23. The executor contains an older
 snapshot. Published checkpoint `917b143b` is recovered into
 `codex/v1-executor-recovery-20261023`; unpublished local work was not found in
