@@ -567,9 +567,11 @@ class Acquisition:
                                                    == toolchain.ENGINE, 'Wrong actual engine version'))
         self.budget.phase('import', lambda: self.command('import', self.native_argv(str(self.engine), '--headless', '--editor', '--path', str(self.project), '--import', '--quit'), self.project))
         self.budget.phase('import-inventory', lambda: self.inventory_stage('import'))
-        (OUTPUT / 'export').mkdir()
-        self.budget.phase('export', lambda: self.command('export', self.native_argv(str(self.engine), '--headless', '--path', str(self.project),
-                                                                 '--export-debug', 'Linux', str(OUTPUT / 'export/linux-profile-diagnostic.x86_64')), self.project))
+        def export():
+            (OUTPUT / 'export').mkdir()
+            return self.command('export', self.native_argv(str(self.engine), '--headless', '--path', str(self.project),
+                                '--export-debug', 'Linux', str(OUTPUT / 'export/linux-profile-diagnostic.x86_64')), self.project)
+        self.budget.phase('export', export)
         self.budget.phase('artifact', lambda: {'stage': self.inventory_stage('export'), 'payload': self.inspect_artifact()})
         self.budget.phase('seal', self.seal_payload)
         self.budget.phase('block', self.run_block)
@@ -605,7 +607,11 @@ def main():
         acquisition.execute()
     except (Exception, KeyboardInterrupt) as error:
         if not claimed:
-            print(str(error), file=sys.stderr)
+            try:
+                with acquisition.budget.armed(time.monotonic() + FAILURE_PUBLICATION, 'admission failure stderr'):
+                    print(str(error), file=sys.stderr)
+            except (Exception, KeyboardInterrupt):
+                pass
             return 1
         acquisition.receipt.update(passed=False, error=str(error), error_type=type(error).__name__)
     finally:
