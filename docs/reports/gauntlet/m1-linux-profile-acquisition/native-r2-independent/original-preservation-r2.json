@@ -1,0 +1,3795 @@
+{
+  "passed": true,
+  "original_verdict": "FAILED",
+  "original_source": "f242a2f20adb3ba1d9c49feb1c6caca1bdbf52b9",
+  "original_critic": "5cbbcd3c0e58a2b381c762d11cdbc0fe92936a5e",
+  "raw_count": 224,
+  "raw_bytes": 178615722,
+  "archive_members": 231,
+  "archive_identity": {
+    "bytes": 19739886,
+    "sha256": "0f3717340bebc35313e89da57c805c016b1a4b7f8a5a45b8eb565f39d7450a6a"
+  },
+  "official_archives": {
+    "godot.zip": {
+      "bytes": 77860424,
+      "sha256": "cadd3204e728a35d3f13adb7fd0d7902636b79f6b95c40c265eb73b6c35329e4",
+      "sha512": "9aa00f7a605200940bce3027a567b782f49bd8e940dd06ae9e987bd65aee1b1467edd56ed84fcdcbdd44354bf613bdbb4e5d2913e925850368e150c59ed54c65"
+    },
+    "templates.tpz": {
+      "bytes": 1281349702,
+      "sha256": "f298490b8d44d934be425a5a65a51bf15f422428b229a06a6e11d9ffea248011",
+      "sha512": "ca4d71c4d7b81dfc15d1a98baa07534aa95b03fdda78a0075b06672e1648d2e5f40980c9adc28d23e1b92e732ee7bf3461997aa804af74ec2fcd7a93ccb84079"
+    }
+  },
+  "checks": [
+    {
+      "name": "CPU 4 only",
+      "passed": true
+    },
+    {
+      "name": "original critic frozen bytes raw-registry.json",
+      "passed": true
+    },
+    {
+      "name": "original critic frozen bytes archive-members.json",
+      "passed": true
+    },
+    {
+      "name": "original critic frozen bytes audit-results.json",
+      "passed": true
+    },
+    {
+      "name": "original critic frozen bytes REVIEW.md",
+      "passed": true
+    },
+    {
+      "name": "no original raw symlinks",
+      "passed": true
+    },
+    {
+      "name": "exact complete 224-file original set",
+      "passed": true
+    },
+    {
+      "name": "original raw identity 01-git.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "original raw identity 01-git.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "original raw identity 02-git.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "original raw identity 02-git.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "original raw identity 03-git.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "original raw identity 03-git.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "original raw identity 04-stage.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "original raw identity 04-stage.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "original raw identity 05-version.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "original raw identity 05-version.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "original raw identity 06-import.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "original raw identity 06-import.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "original raw identity attempt.claim",
+      "passed": true
+    },
+    {
+      "name": "original raw identity diagnostic-packaging-amendment.json",
+      "passed": true
+    },
+    {
+      "name": "original raw identity diagnostic-stage.json",
+      "passed": true
+    },
+    {
+      "name": "original raw identity failed-preparation-complete-stage.json",
+      "passed": true
+    },
+    {
+      "name": "original raw identity failed-preparation-generated-uids/diagnostics/linux_profile_overhead.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity original-before.json",
+      "passed": true
+    },
+    {
+      "name": "original raw identity overall.json",
+      "passed": true
+    },
+    {
+      "name": "original raw identity preflight.phase.json",
+      "passed": true
+    },
+    {
+      "name": "original raw identity private-export-state/cache/fontconfig/3830d5c3ddfd5cd38a049b759396e72e-le64.cache-9",
+      "passed": true
+    },
+    {
+      "name": "original raw identity private-export-state/cache/fontconfig/CACHEDIR.TAG",
+      "passed": true
+    },
+    {
+      "name": "original raw identity private-export-state/cache/godot/editor_doc_cache-4.7.res",
+      "passed": true
+    },
+    {
+      "name": "original raw identity private-export-state/config/godot/editor_settings-4.7.tres",
+      "passed": true
+    },
+    {
+      "name": "original raw identity private-export-state/data/godot/export_templates/4.7.2.stable/linux_debug.x86_64",
+      "passed": true
+    },
+    {
+      "name": "original raw identity private-export-state/data/godot/export_templates/4.7.2.stable/linux_release.x86_64",
+      "passed": true
+    },
+    {
+      "name": "original raw identity private-export-state/data/godot/export_templates/4.7.2.stable/version.txt",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/.gdignore",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/editor/filesystem_cache10",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/editor/linux_profile_overhead.tscn-folding-e43b52184adb349002d5de54a820619e.cfg",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/editor/project_metadata.cfg",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/editor/relay_ar.glb-b4e964bfdb8e5d86bf5f8722cc34c655.scn-folding-c223cd4bc0fe955f158af43fb5842c12.cfg",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/editor/relay_ar_arms.glb-571f25e44d0c1498610ac0d10f3b405a.scn-folding-a1f9c0720c4b6c8ab6cccf9f424efbb2.cfg",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/editor/relay_ar_hands.glb-337713e82129d5fa52dfb111a3a7e808.scn-folding-8779e4044e36e0ac461e5f6fa70cc9eb.cfg",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/global_script_class_cache.cfg",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/asphalt.png-64e4e563e24468231aa46a052a99923d.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/asphalt.png-64e4e563e24468231aa46a052a99923d.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/asphalt_normal.png-523d6b94e4040efc3aee0bb8182034ce.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/asphalt_normal.png-523d6b94e4040efc3aee0bb8182034ce.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/asphalt_roughness.png-02037ed9f4af0c4626a7e06f69845200.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/asphalt_roughness.png-02037ed9f4af0c4626a7e06f69845200.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/concrete.png-56aee7e69777ae61401b56d3ca180326.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/concrete.png-56aee7e69777ae61401b56d3ca180326.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/concrete_normal.png-2f21227745893f0bf57e261e33db21d9.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/concrete_normal.png-2f21227745893f0bf57e261e33db21d9.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/concrete_roughness.png-ee567dede458bb1bed42e99b449b65aa.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/concrete_roughness.png-ee567dede458bb1bed42e99b449b65aa.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/icon.svg-56083ea2a1f1a4f1e49773bdc6d7826c.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/icon.svg-56083ea2a1f1a4f1e49773bdc6d7826c.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/painted_metal.png-8b1a21a48886cddf733de5ff555f5fcf.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/painted_metal.png-8b1a21a48886cddf733de5ff555f5fcf.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/painted_metal_normal.png-2c66ea18fb624d4bda7b71b6e4fef35c.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/painted_metal_normal.png-2c66ea18fb624d4bda7b71b6e4fef35c.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/painted_metal_roughness.png-15b8a6ab9755c88973e4eab051669e59.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/painted_metal_roughness.png-15b8a6ab9755c88973e4eab051669e59.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar.glb-b4e964bfdb8e5d86bf5f8722cc34c655.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar.glb-b4e964bfdb8e5d86bf5f8722cc34c655.scn",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_albedo.png-b0b0d9366f798051ffa343871d9de8a2.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_albedo.png-b0b0d9366f798051ffa343871d9de8a2.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_albedo.png-b0b0d9366f798051ffa343871d9de8a2.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_arms.glb-571f25e44d0c1498610ac0d10f3b405a.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_arms.glb-571f25e44d0c1498610ac0d10f3b405a.scn",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_arms_albedo.png-b07efd8bfef64e277aba811e23b604f1.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_arms_albedo.png-b07efd8bfef64e277aba811e23b604f1.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_arms_albedo.png-b07efd8bfef64e277aba811e23b604f1.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_arms_normal.png-a3508f567360421179458ae4636bf4e6.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_arms_normal.png-a3508f567360421179458ae4636bf4e6.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_arms_normal.png-a3508f567360421179458ae4636bf4e6.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_arms_orm.png-748802f836b27baa5e415e3fbbf77146.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_arms_orm.png-748802f836b27baa5e415e3fbbf77146.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_arms_orm.png-748802f836b27baa5e415e3fbbf77146.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_hands.glb-337713e82129d5fa52dfb111a3a7e808.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_hands.glb-337713e82129d5fa52dfb111a3a7e808.scn",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_hands_albedo.png-a24e8b9f22f7903fef3d2926c2a70848.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_hands_albedo.png-a24e8b9f22f7903fef3d2926c2a70848.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_hands_albedo.png-a24e8b9f22f7903fef3d2926c2a70848.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_hands_normal.png-3b0fb40411f8a0b259276575acff3881.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_hands_normal.png-3b0fb40411f8a0b259276575acff3881.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_hands_normal.png-3b0fb40411f8a0b259276575acff3881.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_hands_orm.png-f3abb167d068f9a48972255f3b890347.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_hands_orm.png-f3abb167d068f9a48972255f3b890347.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_hands_orm.png-f3abb167d068f9a48972255f3b890347.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_normal.png-3720940a18ca01478f0b9f25c87ad29f.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_normal.png-3720940a18ca01478f0b9f25c87ad29f.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_normal.png-3720940a18ca01478f0b9f25c87ad29f.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_orm.png-937749b0797a97bbc26957256bca329c.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_orm.png-937749b0797a97bbc26957256bca329c.md5",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/imported/relay_ar_orm.png-937749b0797a97bbc26957256bca329c.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/.godot/uid_cache.bin",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/environments/relay_sky.tres",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/icon.svg",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/icon.svg.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/asphalt.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/asphalt.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/asphalt_normal.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/asphalt_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/asphalt_roughness.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/asphalt_roughness.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/concrete.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/concrete.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/concrete_normal.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/concrete_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/concrete_roughness.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/concrete_roughness.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/painted_metal.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/painted_metal.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/painted_metal_normal.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/painted_metal_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/painted_metal_roughness.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/materials/painted_metal_roughness.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar.glb",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar.glb.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_albedo.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_albedo.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_arms.glb",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_arms.glb.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_arms_albedo.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_arms_albedo.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_arms_normal.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_arms_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_arms_orm.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_arms_orm.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_body.tres",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_hands.glb",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_hands.glb.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_hands.tres",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_hands_albedo.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_hands_albedo.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_hands_normal.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_hands_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_hands_orm.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_hands_orm.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_normal.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_orm.png",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/assets/weapons/relay_ar/relay_ar_orm.png.import",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/diagnostics/linux_profile_overhead.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/diagnostics/linux_profile_overhead.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/diagnostics/linux_profile_overhead.tscn",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/diagnostics/source_ledger.json",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/export_presets.cfg",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/main.tscn",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/project.godot",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/actor.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/actor.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/arena.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/arena.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/bot_ai.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/bot_ai.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/combat_effects.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/combat_effects.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/match.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/match.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/reload_audio.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/reload_audio.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/reload_phases.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/reload_phases.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/utility.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/utility.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/viewmodel_shading.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/viewmodel_shading.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/weapon_model.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/weapon_model.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/weapons.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/gameplay/weapons.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/main.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/main.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/economy_bridge.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/economy_bridge.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/hit_history.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/hit_history.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/input_gate.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/input_gate.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/input_stream.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/input_stream.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/movement_prediction.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/movement_prediction.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/movement_step.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/movement_step.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/peer_lifecycle.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/peer_lifecycle.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/reconnect_policy.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/reconnect_policy.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/result_outbox.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/result_outbox.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/snapshot_buffer.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/snapshot_buffer.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/snapshot_schema.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/snapshot_schema.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/state_privacy.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/network/state_privacy.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/offline_diagnostics.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/offline_diagnostics.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/profile.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/profile.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/case_reveal.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/case_reveal.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/confirm_sheet.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/confirm_sheet.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/cosmetic_material.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/cosmetic_material.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/design_tokens.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/design_tokens.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/display_models.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/display_models.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/economy_api.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/economy_api.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/economy_ui.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/economy_ui.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/item_inspector.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/item_inspector.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/radar.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/radar.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/safe_area.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/safe_area.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/touch_controls.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/touch_controls.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/transaction_journal.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/transaction_journal.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/weapon_glyph.gd",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project/scripts/ui/weapon_glyph.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original raw identity project-stage.json",
+      "passed": true
+    },
+    {
+      "name": "original raw identity stage.phase.json",
+      "passed": true
+    },
+    {
+      "name": "original raw identity version.phase.json",
+      "passed": true
+    },
+    {
+      "name": "original total byte count",
+      "passed": true
+    },
+    {
+      "name": "original outer identity wrapper.stdout",
+      "passed": true
+    },
+    {
+      "name": "original outer identity wrapper.stderr",
+      "passed": true
+    },
+    {
+      "name": "original outer identity outer-tool-receipt.json",
+      "passed": true
+    },
+    {
+      "name": "only three independently bound official template copies excluded",
+      "passed": true
+    },
+    {
+      "name": "exact frozen-source member count",
+      "passed": true
+    },
+    {
+      "name": "complete independent archive ledger",
+      "passed": true
+    },
+    {
+      "name": "original archive full identity",
+      "passed": true
+    },
+    {
+      "name": "archive unique closed member set",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/01-git.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/01-git.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/01-git.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/01-git.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/02-git.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/02-git.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/02-git.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/02-git.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/03-git.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/03-git.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/03-git.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/03-git.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/04-stage.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/04-stage.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/04-stage.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/04-stage.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/05-version.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/05-version.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/05-version.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/05-version.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/06-import.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/06-import.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/06-import.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/06-import.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/attempt.claim",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/attempt.claim",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/diagnostic-packaging-amendment.json",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/diagnostic-packaging-amendment.json",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/diagnostic-stage.json",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/diagnostic-stage.json",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/failed-preparation-complete-stage.json",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/failed-preparation-complete-stage.json",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/failed-preparation-generated-uids/diagnostics/linux_profile_overhead.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/failed-preparation-generated-uids/diagnostics/linux_profile_overhead.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/original-before.json",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/original-before.json",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/overall.json",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/overall.json",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/preflight.phase.json",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/preflight.phase.json",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/private-export-state/cache/fontconfig/3830d5c3ddfd5cd38a049b759396e72e-le64.cache-9",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/private-export-state/cache/fontconfig/3830d5c3ddfd5cd38a049b759396e72e-le64.cache-9",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/private-export-state/cache/fontconfig/CACHEDIR.TAG",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/private-export-state/cache/fontconfig/CACHEDIR.TAG",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/private-export-state/cache/godot/editor_doc_cache-4.7.res",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/private-export-state/cache/godot/editor_doc_cache-4.7.res",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/private-export-state/config/godot/editor_settings-4.7.tres",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/private-export-state/config/godot/editor_settings-4.7.tres",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/.gdignore",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/.gdignore",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/editor/filesystem_cache10",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/editor/filesystem_cache10",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/editor/linux_profile_overhead.tscn-folding-e43b52184adb349002d5de54a820619e.cfg",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/editor/linux_profile_overhead.tscn-folding-e43b52184adb349002d5de54a820619e.cfg",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/editor/project_metadata.cfg",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/editor/project_metadata.cfg",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/editor/relay_ar.glb-b4e964bfdb8e5d86bf5f8722cc34c655.scn-folding-c223cd4bc0fe955f158af43fb5842c12.cfg",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/editor/relay_ar.glb-b4e964bfdb8e5d86bf5f8722cc34c655.scn-folding-c223cd4bc0fe955f158af43fb5842c12.cfg",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/editor/relay_ar_arms.glb-571f25e44d0c1498610ac0d10f3b405a.scn-folding-a1f9c0720c4b6c8ab6cccf9f424efbb2.cfg",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/editor/relay_ar_arms.glb-571f25e44d0c1498610ac0d10f3b405a.scn-folding-a1f9c0720c4b6c8ab6cccf9f424efbb2.cfg",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/editor/relay_ar_hands.glb-337713e82129d5fa52dfb111a3a7e808.scn-folding-8779e4044e36e0ac461e5f6fa70cc9eb.cfg",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/editor/relay_ar_hands.glb-337713e82129d5fa52dfb111a3a7e808.scn-folding-8779e4044e36e0ac461e5f6fa70cc9eb.cfg",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/global_script_class_cache.cfg",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/global_script_class_cache.cfg",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/asphalt.png-64e4e563e24468231aa46a052a99923d.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/asphalt.png-64e4e563e24468231aa46a052a99923d.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/asphalt.png-64e4e563e24468231aa46a052a99923d.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/asphalt.png-64e4e563e24468231aa46a052a99923d.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/asphalt_normal.png-523d6b94e4040efc3aee0bb8182034ce.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/asphalt_normal.png-523d6b94e4040efc3aee0bb8182034ce.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/asphalt_normal.png-523d6b94e4040efc3aee0bb8182034ce.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/asphalt_normal.png-523d6b94e4040efc3aee0bb8182034ce.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/asphalt_roughness.png-02037ed9f4af0c4626a7e06f69845200.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/asphalt_roughness.png-02037ed9f4af0c4626a7e06f69845200.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/asphalt_roughness.png-02037ed9f4af0c4626a7e06f69845200.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/asphalt_roughness.png-02037ed9f4af0c4626a7e06f69845200.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/concrete.png-56aee7e69777ae61401b56d3ca180326.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/concrete.png-56aee7e69777ae61401b56d3ca180326.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/concrete.png-56aee7e69777ae61401b56d3ca180326.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/concrete.png-56aee7e69777ae61401b56d3ca180326.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/concrete_normal.png-2f21227745893f0bf57e261e33db21d9.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/concrete_normal.png-2f21227745893f0bf57e261e33db21d9.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/concrete_normal.png-2f21227745893f0bf57e261e33db21d9.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/concrete_normal.png-2f21227745893f0bf57e261e33db21d9.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/concrete_roughness.png-ee567dede458bb1bed42e99b449b65aa.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/concrete_roughness.png-ee567dede458bb1bed42e99b449b65aa.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/concrete_roughness.png-ee567dede458bb1bed42e99b449b65aa.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/concrete_roughness.png-ee567dede458bb1bed42e99b449b65aa.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/icon.svg-56083ea2a1f1a4f1e49773bdc6d7826c.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/icon.svg-56083ea2a1f1a4f1e49773bdc6d7826c.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/icon.svg-56083ea2a1f1a4f1e49773bdc6d7826c.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/icon.svg-56083ea2a1f1a4f1e49773bdc6d7826c.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/painted_metal.png-8b1a21a48886cddf733de5ff555f5fcf.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/painted_metal.png-8b1a21a48886cddf733de5ff555f5fcf.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/painted_metal.png-8b1a21a48886cddf733de5ff555f5fcf.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/painted_metal.png-8b1a21a48886cddf733de5ff555f5fcf.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/painted_metal_normal.png-2c66ea18fb624d4bda7b71b6e4fef35c.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/painted_metal_normal.png-2c66ea18fb624d4bda7b71b6e4fef35c.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/painted_metal_normal.png-2c66ea18fb624d4bda7b71b6e4fef35c.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/painted_metal_normal.png-2c66ea18fb624d4bda7b71b6e4fef35c.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/painted_metal_roughness.png-15b8a6ab9755c88973e4eab051669e59.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/painted_metal_roughness.png-15b8a6ab9755c88973e4eab051669e59.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/painted_metal_roughness.png-15b8a6ab9755c88973e4eab051669e59.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/painted_metal_roughness.png-15b8a6ab9755c88973e4eab051669e59.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar.glb-b4e964bfdb8e5d86bf5f8722cc34c655.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar.glb-b4e964bfdb8e5d86bf5f8722cc34c655.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar.glb-b4e964bfdb8e5d86bf5f8722cc34c655.scn",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar.glb-b4e964bfdb8e5d86bf5f8722cc34c655.scn",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_albedo.png-b0b0d9366f798051ffa343871d9de8a2.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_albedo.png-b0b0d9366f798051ffa343871d9de8a2.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_albedo.png-b0b0d9366f798051ffa343871d9de8a2.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_albedo.png-b0b0d9366f798051ffa343871d9de8a2.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_albedo.png-b0b0d9366f798051ffa343871d9de8a2.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_albedo.png-b0b0d9366f798051ffa343871d9de8a2.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_arms.glb-571f25e44d0c1498610ac0d10f3b405a.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_arms.glb-571f25e44d0c1498610ac0d10f3b405a.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_arms.glb-571f25e44d0c1498610ac0d10f3b405a.scn",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_arms.glb-571f25e44d0c1498610ac0d10f3b405a.scn",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_arms_albedo.png-b07efd8bfef64e277aba811e23b604f1.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_arms_albedo.png-b07efd8bfef64e277aba811e23b604f1.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_arms_albedo.png-b07efd8bfef64e277aba811e23b604f1.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_arms_albedo.png-b07efd8bfef64e277aba811e23b604f1.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_arms_albedo.png-b07efd8bfef64e277aba811e23b604f1.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_arms_albedo.png-b07efd8bfef64e277aba811e23b604f1.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_arms_normal.png-a3508f567360421179458ae4636bf4e6.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_arms_normal.png-a3508f567360421179458ae4636bf4e6.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_arms_normal.png-a3508f567360421179458ae4636bf4e6.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_arms_normal.png-a3508f567360421179458ae4636bf4e6.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_arms_normal.png-a3508f567360421179458ae4636bf4e6.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_arms_normal.png-a3508f567360421179458ae4636bf4e6.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_arms_orm.png-748802f836b27baa5e415e3fbbf77146.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_arms_orm.png-748802f836b27baa5e415e3fbbf77146.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_arms_orm.png-748802f836b27baa5e415e3fbbf77146.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_arms_orm.png-748802f836b27baa5e415e3fbbf77146.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_arms_orm.png-748802f836b27baa5e415e3fbbf77146.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_arms_orm.png-748802f836b27baa5e415e3fbbf77146.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_hands.glb-337713e82129d5fa52dfb111a3a7e808.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_hands.glb-337713e82129d5fa52dfb111a3a7e808.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_hands.glb-337713e82129d5fa52dfb111a3a7e808.scn",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_hands.glb-337713e82129d5fa52dfb111a3a7e808.scn",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_hands_albedo.png-a24e8b9f22f7903fef3d2926c2a70848.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_hands_albedo.png-a24e8b9f22f7903fef3d2926c2a70848.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_hands_albedo.png-a24e8b9f22f7903fef3d2926c2a70848.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_hands_albedo.png-a24e8b9f22f7903fef3d2926c2a70848.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_hands_albedo.png-a24e8b9f22f7903fef3d2926c2a70848.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_hands_albedo.png-a24e8b9f22f7903fef3d2926c2a70848.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_hands_normal.png-3b0fb40411f8a0b259276575acff3881.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_hands_normal.png-3b0fb40411f8a0b259276575acff3881.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_hands_normal.png-3b0fb40411f8a0b259276575acff3881.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_hands_normal.png-3b0fb40411f8a0b259276575acff3881.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_hands_normal.png-3b0fb40411f8a0b259276575acff3881.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_hands_normal.png-3b0fb40411f8a0b259276575acff3881.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_hands_orm.png-f3abb167d068f9a48972255f3b890347.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_hands_orm.png-f3abb167d068f9a48972255f3b890347.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_hands_orm.png-f3abb167d068f9a48972255f3b890347.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_hands_orm.png-f3abb167d068f9a48972255f3b890347.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_hands_orm.png-f3abb167d068f9a48972255f3b890347.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_hands_orm.png-f3abb167d068f9a48972255f3b890347.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_normal.png-3720940a18ca01478f0b9f25c87ad29f.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_normal.png-3720940a18ca01478f0b9f25c87ad29f.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_normal.png-3720940a18ca01478f0b9f25c87ad29f.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_normal.png-3720940a18ca01478f0b9f25c87ad29f.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_normal.png-3720940a18ca01478f0b9f25c87ad29f.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_normal.png-3720940a18ca01478f0b9f25c87ad29f.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_orm.png-937749b0797a97bbc26957256bca329c.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_orm.png-937749b0797a97bbc26957256bca329c.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_orm.png-937749b0797a97bbc26957256bca329c.md5",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_orm.png-937749b0797a97bbc26957256bca329c.md5",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/imported/relay_ar_orm.png-937749b0797a97bbc26957256bca329c.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/imported/relay_ar_orm.png-937749b0797a97bbc26957256bca329c.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/.godot/uid_cache.bin",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/.godot/uid_cache.bin",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/environments/relay_sky.tres",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/environments/relay_sky.tres",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/icon.svg",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/icon.svg",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/icon.svg.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/icon.svg.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/asphalt.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/asphalt.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/asphalt.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/asphalt.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/asphalt_normal.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/asphalt_normal.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/asphalt_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/asphalt_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/asphalt_roughness.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/asphalt_roughness.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/asphalt_roughness.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/asphalt_roughness.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/concrete.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/concrete.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/concrete.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/concrete.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/concrete_normal.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/concrete_normal.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/concrete_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/concrete_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/concrete_roughness.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/concrete_roughness.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/concrete_roughness.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/concrete_roughness.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/painted_metal.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/painted_metal.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/painted_metal.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/painted_metal.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/painted_metal_normal.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/painted_metal_normal.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/painted_metal_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/painted_metal_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/painted_metal_roughness.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/painted_metal_roughness.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/materials/painted_metal_roughness.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/materials/painted_metal_roughness.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar.glb",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar.glb",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar.glb.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar.glb.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_albedo.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_albedo.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_albedo.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_albedo.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_arms.glb",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_arms.glb",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_arms.glb.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_arms.glb.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_arms_albedo.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_arms_albedo.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_arms_albedo.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_arms_albedo.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_arms_normal.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_arms_normal.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_arms_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_arms_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_arms_orm.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_arms_orm.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_arms_orm.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_arms_orm.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_body.tres",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_body.tres",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_hands.glb",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_hands.glb",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_hands.glb.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_hands.glb.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_hands.tres",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_hands.tres",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_hands_albedo.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_hands_albedo.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_hands_albedo.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_hands_albedo.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_hands_normal.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_hands_normal.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_hands_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_hands_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_hands_orm.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_hands_orm.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_hands_orm.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_hands_orm.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_normal.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_normal.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_orm.png",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_orm.png",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/assets/weapons/relay_ar/relay_ar_orm.png.import",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/assets/weapons/relay_ar/relay_ar_orm.png.import",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/diagnostics/linux_profile_overhead.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/diagnostics/linux_profile_overhead.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/diagnostics/linux_profile_overhead.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/diagnostics/linux_profile_overhead.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/diagnostics/linux_profile_overhead.tscn",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/diagnostics/linux_profile_overhead.tscn",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/diagnostics/source_ledger.json",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/diagnostics/source_ledger.json",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/export_presets.cfg",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/export_presets.cfg",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/main.tscn",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/main.tscn",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/project.godot",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/project.godot",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/actor.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/actor.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/actor.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/actor.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/arena.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/arena.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/arena.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/arena.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/bot_ai.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/bot_ai.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/bot_ai.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/bot_ai.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/combat_effects.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/combat_effects.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/combat_effects.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/combat_effects.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/match.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/match.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/match.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/match.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/reload_audio.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/reload_audio.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/reload_audio.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/reload_audio.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/reload_phases.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/reload_phases.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/reload_phases.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/reload_phases.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/utility.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/utility.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/utility.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/utility.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/viewmodel_shading.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/viewmodel_shading.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/viewmodel_shading.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/viewmodel_shading.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/weapon_model.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/weapon_model.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/weapon_model.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/weapon_model.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/weapons.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/weapons.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/gameplay/weapons.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/gameplay/weapons.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/main.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/main.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/main.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/main.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/economy_bridge.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/economy_bridge.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/economy_bridge.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/economy_bridge.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/hit_history.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/hit_history.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/hit_history.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/hit_history.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/input_gate.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/input_gate.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/input_gate.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/input_gate.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/input_stream.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/input_stream.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/input_stream.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/input_stream.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/movement_prediction.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/movement_prediction.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/movement_prediction.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/movement_prediction.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/movement_step.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/movement_step.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/movement_step.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/movement_step.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/peer_lifecycle.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/peer_lifecycle.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/peer_lifecycle.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/peer_lifecycle.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/reconnect_policy.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/reconnect_policy.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/reconnect_policy.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/reconnect_policy.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/result_outbox.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/result_outbox.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/result_outbox.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/result_outbox.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/snapshot_buffer.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/snapshot_buffer.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/snapshot_buffer.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/snapshot_buffer.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/snapshot_schema.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/snapshot_schema.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/snapshot_schema.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/snapshot_schema.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/state_privacy.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/state_privacy.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/network/state_privacy.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/network/state_privacy.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/offline_diagnostics.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/offline_diagnostics.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/offline_diagnostics.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/offline_diagnostics.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/profile.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/profile.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/profile.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/profile.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/case_reveal.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/case_reveal.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/case_reveal.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/case_reveal.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/confirm_sheet.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/confirm_sheet.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/confirm_sheet.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/confirm_sheet.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/cosmetic_material.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/cosmetic_material.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/cosmetic_material.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/cosmetic_material.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/design_tokens.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/design_tokens.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/design_tokens.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/design_tokens.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/display_models.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/display_models.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/display_models.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/display_models.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/economy_api.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/economy_api.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/economy_api.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/economy_api.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/economy_ui.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/economy_ui.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/economy_ui.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/economy_ui.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/item_inspector.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/item_inspector.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/item_inspector.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/item_inspector.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/radar.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/radar.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/radar.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/radar.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/safe_area.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/safe_area.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/safe_area.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/safe_area.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/touch_controls.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/touch_controls.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/touch_controls.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/touch_controls.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/transaction_journal.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/transaction_journal.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/transaction_journal.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/transaction_journal.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/weapon_glyph.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/weapon_glyph.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project/scripts/ui/weapon_glyph.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project/scripts/ui/weapon_glyph.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/project-stage.json",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/project-stage.json",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/stage.phase.json",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/stage.phase.json",
+      "passed": true
+    },
+    {
+      "name": "regular archive member attempt/version.phase.json",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity attempt/version.phase.json",
+      "passed": true
+    },
+    {
+      "name": "regular archive member outer/wrapper.stdout",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity outer/wrapper.stdout",
+      "passed": true
+    },
+    {
+      "name": "regular archive member outer/wrapper.stderr",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity outer/wrapper.stderr",
+      "passed": true
+    },
+    {
+      "name": "regular archive member outer/outer-tool-receipt.json",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity outer/outer-tool-receipt.json",
+      "passed": true
+    },
+    {
+      "name": "regular archive member frozen-source/scripts/linux_profile_acquire.py",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity frozen-source/scripts/linux_profile_acquire.py",
+      "passed": true
+    },
+    {
+      "name": "regular archive member frozen-source/scripts/linux_profile_payload.py",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity frozen-source/scripts/linux_profile_payload.py",
+      "passed": true
+    },
+    {
+      "name": "regular archive member frozen-source/scripts/linux_profile_overhead.py",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity frozen-source/scripts/linux_profile_overhead.py",
+      "passed": true
+    },
+    {
+      "name": "regular archive member frozen-source/scripts/diagnostics/linux_profile_overhead.gd",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity frozen-source/scripts/diagnostics/linux_profile_overhead.gd",
+      "passed": true
+    },
+    {
+      "name": "regular archive member frozen-source/scripts/diagnostics/linux_profile_overhead.tscn",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity frozen-source/scripts/diagnostics/linux_profile_overhead.tscn",
+      "passed": true
+    },
+    {
+      "name": "regular archive member frozen-source/scripts/native_log.py",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity frozen-source/scripts/native_log.py",
+      "passed": true
+    },
+    {
+      "name": "regular archive member frozen-source/scripts/toolchain.py",
+      "passed": true
+    },
+    {
+      "name": "reopened archive member identity frozen-source/scripts/toolchain.py",
+      "passed": true
+    },
+    {
+      "name": "official archive pin and prior identity godot.zip",
+      "passed": true
+    },
+    {
+      "name": "official archive unique names godot.zip",
+      "passed": true
+    },
+    {
+      "name": "official selected member Godot_v4.7.2-stable_linux.x86_64",
+      "passed": true
+    },
+    {
+      "name": "official archive pin and prior identity templates.tpz",
+      "passed": true
+    },
+    {
+      "name": "official archive unique names templates.tpz",
+      "passed": true
+    },
+    {
+      "name": "official selected member templates/version.txt",
+      "passed": true
+    },
+    {
+      "name": "excluded official template direct equality version.txt",
+      "passed": true
+    },
+    {
+      "name": "official selected member templates/linux_debug.x86_64",
+      "passed": true
+    },
+    {
+      "name": "excluded official template direct equality linux_debug.x86_64",
+      "passed": true
+    },
+    {
+      "name": "official selected member templates/linux_release.x86_64",
+      "passed": true
+    },
+    {
+      "name": "excluded official template direct equality linux_release.x86_64",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay 01-git.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay 01-git.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay 02-git.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay 02-git.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay 03-git.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay 03-git.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay 04-stage.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay 04-stage.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay 05-version.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay 05-version.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay 06-import.stderr.log",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay 06-import.stdout.log",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay attempt.claim",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay diagnostic-packaging-amendment.json",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay diagnostic-stage.json",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay failed-preparation-complete-stage.json",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay failed-preparation-generated-uids/diagnostics/linux_profile_overhead.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay original-before.json",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay overall.json",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay preflight.phase.json",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay private-export-state/cache/fontconfig/3830d5c3ddfd5cd38a049b759396e72e-le64.cache-9",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay private-export-state/cache/fontconfig/CACHEDIR.TAG",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay private-export-state/cache/godot/editor_doc_cache-4.7.res",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay private-export-state/config/godot/editor_settings-4.7.tres",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay private-export-state/data/godot/export_templates/4.7.2.stable/linux_debug.x86_64",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay private-export-state/data/godot/export_templates/4.7.2.stable/linux_release.x86_64",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay private-export-state/data/godot/export_templates/4.7.2.stable/version.txt",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/.gdignore",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/editor/filesystem_cache10",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/editor/linux_profile_overhead.tscn-folding-e43b52184adb349002d5de54a820619e.cfg",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/editor/project_metadata.cfg",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/editor/relay_ar.glb-b4e964bfdb8e5d86bf5f8722cc34c655.scn-folding-c223cd4bc0fe955f158af43fb5842c12.cfg",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/editor/relay_ar_arms.glb-571f25e44d0c1498610ac0d10f3b405a.scn-folding-a1f9c0720c4b6c8ab6cccf9f424efbb2.cfg",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/editor/relay_ar_hands.glb-337713e82129d5fa52dfb111a3a7e808.scn-folding-8779e4044e36e0ac461e5f6fa70cc9eb.cfg",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/global_script_class_cache.cfg",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/asphalt.png-64e4e563e24468231aa46a052a99923d.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/asphalt.png-64e4e563e24468231aa46a052a99923d.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/asphalt_normal.png-523d6b94e4040efc3aee0bb8182034ce.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/asphalt_normal.png-523d6b94e4040efc3aee0bb8182034ce.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/asphalt_roughness.png-02037ed9f4af0c4626a7e06f69845200.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/asphalt_roughness.png-02037ed9f4af0c4626a7e06f69845200.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/concrete.png-56aee7e69777ae61401b56d3ca180326.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/concrete.png-56aee7e69777ae61401b56d3ca180326.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/concrete_normal.png-2f21227745893f0bf57e261e33db21d9.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/concrete_normal.png-2f21227745893f0bf57e261e33db21d9.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/concrete_roughness.png-ee567dede458bb1bed42e99b449b65aa.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/concrete_roughness.png-ee567dede458bb1bed42e99b449b65aa.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/icon.svg-56083ea2a1f1a4f1e49773bdc6d7826c.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/icon.svg-56083ea2a1f1a4f1e49773bdc6d7826c.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/painted_metal.png-8b1a21a48886cddf733de5ff555f5fcf.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/painted_metal.png-8b1a21a48886cddf733de5ff555f5fcf.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/painted_metal_normal.png-2c66ea18fb624d4bda7b71b6e4fef35c.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/painted_metal_normal.png-2c66ea18fb624d4bda7b71b6e4fef35c.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/painted_metal_roughness.png-15b8a6ab9755c88973e4eab051669e59.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/painted_metal_roughness.png-15b8a6ab9755c88973e4eab051669e59.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar.glb-b4e964bfdb8e5d86bf5f8722cc34c655.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar.glb-b4e964bfdb8e5d86bf5f8722cc34c655.scn",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_albedo.png-b0b0d9366f798051ffa343871d9de8a2.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_albedo.png-b0b0d9366f798051ffa343871d9de8a2.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_albedo.png-b0b0d9366f798051ffa343871d9de8a2.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_arms.glb-571f25e44d0c1498610ac0d10f3b405a.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_arms.glb-571f25e44d0c1498610ac0d10f3b405a.scn",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_arms_albedo.png-b07efd8bfef64e277aba811e23b604f1.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_arms_albedo.png-b07efd8bfef64e277aba811e23b604f1.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_arms_albedo.png-b07efd8bfef64e277aba811e23b604f1.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_arms_normal.png-a3508f567360421179458ae4636bf4e6.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_arms_normal.png-a3508f567360421179458ae4636bf4e6.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_arms_normal.png-a3508f567360421179458ae4636bf4e6.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_arms_orm.png-748802f836b27baa5e415e3fbbf77146.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_arms_orm.png-748802f836b27baa5e415e3fbbf77146.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_arms_orm.png-748802f836b27baa5e415e3fbbf77146.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_hands.glb-337713e82129d5fa52dfb111a3a7e808.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_hands.glb-337713e82129d5fa52dfb111a3a7e808.scn",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_hands_albedo.png-a24e8b9f22f7903fef3d2926c2a70848.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_hands_albedo.png-a24e8b9f22f7903fef3d2926c2a70848.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_hands_albedo.png-a24e8b9f22f7903fef3d2926c2a70848.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_hands_normal.png-3b0fb40411f8a0b259276575acff3881.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_hands_normal.png-3b0fb40411f8a0b259276575acff3881.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_hands_normal.png-3b0fb40411f8a0b259276575acff3881.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_hands_orm.png-f3abb167d068f9a48972255f3b890347.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_hands_orm.png-f3abb167d068f9a48972255f3b890347.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_hands_orm.png-f3abb167d068f9a48972255f3b890347.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_normal.png-3720940a18ca01478f0b9f25c87ad29f.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_normal.png-3720940a18ca01478f0b9f25c87ad29f.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_normal.png-3720940a18ca01478f0b9f25c87ad29f.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_orm.png-937749b0797a97bbc26957256bca329c.etc2.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_orm.png-937749b0797a97bbc26957256bca329c.md5",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/imported/relay_ar_orm.png-937749b0797a97bbc26957256bca329c.s3tc.ctex",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/.godot/uid_cache.bin",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/environments/relay_sky.tres",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/icon.svg",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/icon.svg.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/asphalt.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/asphalt.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/asphalt_normal.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/asphalt_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/asphalt_roughness.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/asphalt_roughness.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/concrete.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/concrete.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/concrete_normal.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/concrete_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/concrete_roughness.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/concrete_roughness.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/painted_metal.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/painted_metal.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/painted_metal_normal.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/painted_metal_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/painted_metal_roughness.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/materials/painted_metal_roughness.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar.glb",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar.glb.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_albedo.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_albedo.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_arms.glb",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_arms.glb.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_arms_albedo.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_arms_albedo.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_arms_normal.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_arms_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_arms_orm.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_arms_orm.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_body.tres",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_hands.glb",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_hands.glb.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_hands.tres",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_hands_albedo.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_hands_albedo.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_hands_normal.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_hands_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_hands_orm.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_hands_orm.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_normal.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_orm.png",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/assets/weapons/relay_ar/relay_ar_orm.png.import",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/diagnostics/linux_profile_overhead.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/diagnostics/linux_profile_overhead.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/diagnostics/linux_profile_overhead.tscn",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/diagnostics/source_ledger.json",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/export_presets.cfg",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/main.tscn",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/project.godot",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/actor.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/actor.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/arena.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/arena.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/bot_ai.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/bot_ai.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/combat_effects.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/combat_effects.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/match.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/match.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/reload_audio.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/reload_audio.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/reload_phases.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/reload_phases.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/utility.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/utility.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/viewmodel_shading.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/viewmodel_shading.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/weapon_model.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/weapon_model.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/weapons.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/gameplay/weapons.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/main.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/main.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/economy_bridge.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/economy_bridge.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/hit_history.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/hit_history.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/input_gate.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/input_gate.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/input_stream.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/input_stream.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/movement_prediction.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/movement_prediction.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/movement_step.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/movement_step.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/peer_lifecycle.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/peer_lifecycle.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/reconnect_policy.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/reconnect_policy.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/result_outbox.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/result_outbox.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/snapshot_buffer.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/snapshot_buffer.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/snapshot_schema.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/snapshot_schema.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/state_privacy.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/network/state_privacy.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/offline_diagnostics.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/offline_diagnostics.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/profile.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/profile.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/case_reveal.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/case_reveal.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/confirm_sheet.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/confirm_sheet.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/cosmetic_material.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/cosmetic_material.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/design_tokens.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/design_tokens.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/display_models.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/display_models.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/economy_api.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/economy_api.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/economy_ui.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/economy_ui.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/item_inspector.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/item_inspector.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/radar.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/radar.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/safe_area.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/safe_area.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/touch_controls.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/touch_controls.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/transaction_journal.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/transaction_journal.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/weapon_glyph.gd",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project/scripts/ui/weapon_glyph.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay project-stage.json",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay stage.phase.json",
+      "passed": true
+    },
+    {
+      "name": "original remains equal after archive replay version.phase.json",
+      "passed": true
+    },
+    {
+      "name": "outer remains equal after archive replay wrapper.stdout",
+      "passed": true
+    },
+    {
+      "name": "outer remains equal after archive replay wrapper.stderr",
+      "passed": true
+    },
+    {
+      "name": "outer remains equal after archive replay outer-tool-receipt.json",
+      "passed": true
+    }
+  ],
+  "native_launches": 0,
+  "scope": "Finite original raw/outer/archive/official-member identity replay only. No R2 runtime or root release.",
+  "started_monotonic": 26747.879695441,
+  "ended_monotonic": 26767.897407254,
+  "utc": "2026-10-23T11:19:51.125745+00:00",
+  "observer_affinity": [
+    4
+  ]
+}
