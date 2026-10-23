@@ -27,6 +27,7 @@ from PIL import Image, ImageChops
 from native_log import failed
 from native_observation import read_observation_json
 from native_focus_fence import FocusContextFence, FocusPreconditionLost, fresh_focus_movement
+from native_settings_route import relocate_settings_actor
 from verify_integration_export import NativeUI, WinUI, windows_job
 import toolchain
 
@@ -729,8 +730,23 @@ def main():
         purchased_hud = read_hud('06e-purchased-smg')
         if purchased_hud['ammo'] != 30 or purchased_hud['reserve'] != 120:
             raise RuntimeError('Authoritative requisition did not equip the purchased SMG')
+        second_live_until = min(deadline, time.monotonic() + 35)
         wait_for(lambda: (out / 'client.log').read_text(encoding='utf-8', errors='replace').count('MATCH: Round live.') >= 2,
-                 35, 'Second active round for weapon switching', client)
+                 transition_budget(second_live_until, 'Second active round for weapon switching'),
+                 'Second active round for weapon switching', client)
+        # This fixed ordinary-control route changes the test scenario: use the
+        # existing freight container before spending time in settings captures.
+        # Readiness and walking share the original 35s cap; no new life or budget.
+        settings_route_start = observed(lambda state: state.get('phase') != 'buy',
+                                        transition_budget(second_live_until, 'Living settings route start'),
+                                        'Living second-round player before fixed settings route',
+                                        next_round_receipt['after_capture']['wall_msec'])
+        settings_route = result['settings_cover_route'] = {}
+        relocate_settings_actor(settings_route_start, actor_id=initial_offline['local_actor']['id'], round_number=2,
+                                observe=offline_observation, key=key, pause=pause,
+                                record=lambda event, **data: trace('settings_route_' + event, **data),
+                                deadline=second_live_until, receipt=settings_route)
+        transition_budget(second_live_until, 'Completed fixed settings route before weapon switching')
         tap('2')
         capture('06f-switched-sidearm')
         switched_hud = read_hud('06f-switched-sidearm')
