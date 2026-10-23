@@ -71,7 +71,9 @@ def discover_startup_menu(api, client, select_candidate, capture, remaining, tra
         time.sleep(min(.05, remaining(until)))
 
 
-def run(output, preflight_path):
+def run(output, preflight_path, *, deploy_target='ocr'):
+    if deploy_target not in ('ocr', 'owned-ax'):
+        raise ValueError('Unknown explicit Mac Deploy target mode')
     output = Path(output).absolute()
     no_symlinks(output)
     if output.exists() and any(output.iterdir()):
@@ -86,7 +88,8 @@ def run(output, preflight_path):
     result = {'scope': 'ARM Mac stock Deploy/living sidearm fire+reload/FIELD MENU/leave/ordinary close only; '
                        'no objectives, full match, restart, Intel or physical-device acceptance',
               'passed': False, 'permission_requests_made': 0, 'controller_pid': os.getpid(),
-              'budgets_seconds': BUDGETS, 'actions': actions, 'captures': [], 'capture_attempts': []}
+              'budgets_seconds': BUDGETS, 'actions': actions, 'captures': [], 'capture_attempts': [],
+              'deploy_target_mode': deploy_target}
 
     def remaining(until=None):
         value = min(deadline, until if until is not None else deadline) - time.monotonic()
@@ -104,7 +107,7 @@ def run(output, preflight_path):
         time.sleep(seconds)
         remaining()
 
-    def command(name, arguments, budget, *, allow_failure=False):
+    def command(name, arguments, budget, *, allow_failure=False, return_process=False):
         until = min(deadline, time.monotonic()+budget)
         trace('helper_command', name=name, command=arguments, budget_seconds=budget)
         with (output / (name+'.log')).open('w', encoding='utf-8') as log:
@@ -116,13 +119,13 @@ def run(output, preflight_path):
             raise RuntimeError('Strict native error/leak signature in '+name)
         if process.returncode and not allow_failure:
             raise RuntimeError(name+' failed; original log retained')
-        return process.returncode
+        return process if return_process else process.returncode
 
     def capture(name, screen=None, *, require_focus=True, until=None):
         remaining(until)
         png, receipt = output / (name+'.png'), output / (name+'.json')
         analysis_png = output / (name+'-deploy-2x.png')
-        analyze_deploy = name == '01-focused-menu'
+        analyze_deploy = name == '01-focused-menu' and deploy_target == 'ocr'
         attempt = {'name': name, 'screen': screen, 'foreground_required': require_focus,
                    'started_seconds': time.monotonic()-started, 'accepted': False}
         result['capture_attempts'].append(attempt)
@@ -270,6 +273,11 @@ def run(output, preflight_path):
         arguments = [str(executable), '--audio-driver', 'Dummy', '--log-file', 'user://mac-ordinary-engine.log',
                      '--windowed', '--resolution', '1280x720', '--position', '40,60', '--',
                      '--offline-validation', '--offline-trace-dir='+str(trace_directory)]
+        if deploy_target == 'owned-ax':
+            # Explicit engine exposure only; never request or force OS trust.
+            arguments[arguments.index('--'):arguments.index('--')] = ['--accessibility', 'always']
+            from macos_semantic_deploy import SOURCES
+            result['semantic_deploy_source_sha256'] = {path.name: digest(path) for path in SOURCES}
         result['client_command'] = arguments
         with (output / 'client.log').open('w', encoding='utf-8') as log:
             client = subprocess.Popen(arguments, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
@@ -301,6 +309,9 @@ def run(output, preflight_path):
             remaining(menu_deadline)
             result['selected_client_window'] = {'owner_pid': ui.pid, 'window_id': ui.window,
                                                 'bounds_points_including_chrome': list(ui.bounds)}
+            if deploy_target == 'owned-ax':
+                from macos_semantic_deploy import acquire_target
+                ui.semantic_deploy_target = acquire_target(ui, menu, output, command, remaining, menu_deadline, result)
             ui.click_label(menu, 'DEPLOY · OFFLINE 5V5')
             ready = observed(lambda state: state.get('ui', {}).get('screen') == 'game' and bool(state.get('local_actor')),
                              BUDGETS['deploy'], 'Stock match after one native Deploy click')
@@ -482,12 +493,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--preflight', type=Path, required=True)
+    parser.add_argument('--deploy-target', choices=('ocr', 'owned-ax'), default='ocr')
     arguments = parser.parse_args()
     def interrupted(signum, _frame):
         raise SystemExit('Native Mac ordinary component interrupted by signal '+str(signum))
     for signum in (signal.SIGTERM, signal.SIGINT):
         signal.signal(signum, interrupted)
-    return run(arguments.output, arguments.preflight)
+    return run(arguments.output, arguments.preflight, deploy_target=arguments.deploy_target)
 
 
 if __name__ == '__main__':

@@ -249,6 +249,21 @@ class MacOrdinaryUI(MacMenuUI):
             if event:
                 self.cf.CFRelease(event)
             raise RuntimeError('No CGEvent attempt is allowed before permanent input geometry pinning')
+        target = getattr(self, 'semantic_deploy_target', None)
+        if target is not None and kind in ('pointer_move', 'lmb_down'):
+            try:
+                from macos_semantic_deploy import SemanticDeployTarget
+                if type(target) is not SemanticDeployTarget:
+                    raise RuntimeError('Semantic Deploy target is not controller-bound')
+                target.point(target.capture, self)
+            except BaseException:
+                # button() records ownership immediately before post(). This
+                # semantic rejection happens before any OS down attempt.
+                if kind == 'lmb_down':
+                    self.held.discard('lmb')
+                if event:
+                    self.cf.CFRelease(event)
+                raise
         super().post(event, kind)
 
     def pin_for_input(self, capture):
@@ -310,12 +325,29 @@ class MacOrdinaryUI(MacMenuUI):
             raise RuntimeError('Native OS state did not acknowledge owned R release')
 
     def click_label(self, capture, label):
+        target = getattr(self, 'semantic_deploy_target', None)
+        if target is None:
+            return self._click_label(capture, label)
+        from macos_semantic_deploy import SemanticDeployTarget
+        if type(target) is not SemanticDeployTarget or label != DEPLOY_LABEL:
+            raise RuntimeError('Semantic target is restricted to one explicit Deploy transaction')
+        try:
+            return self._click_label(capture, label, target)
+        finally:
+            target.consume()
+            self.semantic_deploy_target = None
+
+    def _click_label(self, capture, label, semantic_target=None):
         self.require_target()
         self.neutral()
         if (capture.get('owner_pid') != self.pid or capture.get('window_id') != self.window
                 or not same_bounds(capture.get('bounds_points_including_chrome', []), self.bounds)):
             raise RuntimeError('Label screenshot belongs to a different native window')
-        point = label_point(capture, label)
+        point = (label_point(capture, label) if semantic_target is None
+                 else semantic_target.point(capture, self))
+        if semantic_target is not None:
+            self.trace('semantic_deploy_target', label=label, target_points=list(point),
+                       expires_monotonic=semantic_target.expires)
         if label == DEPLOY_LABEL and BINDING in capture:
             self.trace('derived_deploy_target', label=label, target_points=list(point),
                        original_native_row=derived_deploy_row(capture), analysis=deploy_provenance(capture))

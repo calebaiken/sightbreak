@@ -248,6 +248,8 @@ class DeployAnalysisControls(unittest.TestCase):
         golden = (fixtures/reference['helper_default_fixture']).read_bytes()
         self.assertEqual(hashlib.sha256(golden).hexdigest(), reference['helper_default_sha256'])
         native = (ROOT/reference['helper_source_path']).read_bytes()
+        from test_macos_capture_diagnostics import original_capture_helper
+        native = original_capture_helper(native)
         start = reference['helper_default_start'].encode()
         self.assertEqual(native[native.index(start):native.index(b'            if let url = analysisURL {')], golden)
         current = native.decode()
@@ -259,6 +261,9 @@ class DeployAnalysisControls(unittest.TestCase):
         self.assertNotIn('request.customWords', current)
         current = (ROOT/reference['driver_source_path']).read_bytes()
         boundary = reference['driver_gameplay_boundary'].encode()
+        current = current.replace(b"    parser.add_argument('--deploy-target', choices=('ocr', 'owned-ax'), default='ocr')\n", b'')
+        current = current.replace(b'return run(arguments.output, arguments.preflight, deploy_target=arguments.deploy_target)',
+                                  b'return run(arguments.output, arguments.preflight)')
         self.assertEqual(hashlib.sha256(current[current.index(boundary):]).hexdigest(),
                          reference['driver_gameplay_tail_sha256'])
 

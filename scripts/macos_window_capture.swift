@@ -162,10 +162,19 @@ struct WindowCapture {
             configuration.height = Int(ceil(Double(rect.height) * scale))
             let image = try await SCScreenshotManager.captureImage(contentFilter: filter, configuration: configuration)
             report["image_dimensions"] = [image.width, image.height]
-            guard image.width == configuration.width, image.height == configuration.height,
-                  closeRect(frame, try ownedWindow(pid, windowID)) else {
+            report["configured_image_dimensions"] = [configuration.width, configuration.height]
+            report["post_capture_validation_stage"] = "pixel_dimensions"
+            guard image.width == configuration.width, image.height == configuration.height else {
                 throw CaptureFailure("Captured pixel dimensions or owned-window bounds changed")
             }
+            report["post_capture_validation_stage"] = "exact_owned_window"
+            let postCaptureFrame = try ownedWindow(pid, windowID)
+            report["post_capture_owned_window_bounds_points"] = rectValues(postCaptureFrame)
+            report["post_capture_validation_stage"] = "bounds_agreement"
+            guard closeRect(frame, postCaptureFrame) else {
+                throw CaptureFailure("Captured pixel dimensions or owned-window bounds changed")
+            }
+            report["post_capture_validation_stage"] = "complete"
             guard let output = CGImageDestinationCreateWithURL(pngURL as CFURL, UTType.png.identifier as CFString, 1, nil) else {
                 throw CaptureFailure("CGImageDestinationCreateWithURL failed")
             }

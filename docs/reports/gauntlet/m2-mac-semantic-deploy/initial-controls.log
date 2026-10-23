@@ -1,0 +1,81 @@
+test_collection_identity_geometry_duplicate_disabled_privacy_and_late_fail_before_any_move (__main__.SemanticControls.test_collection_identity_geometry_duplicate_disabled_privacy_and_late_fail_before_any_move) ... ok
+test_default_cli_and_workflow_remain_original_and_no_new_native_api_exists (__main__.SemanticControls.test_default_cli_and_workflow_remain_original_and_no_new_native_api_exists) ... ok
+test_explicit_semantic_target_runs_existing_os_input_sequence_with_original_point_five_ocr (__main__.SemanticControls.test_explicit_semantic_target_runs_existing_os_input_sequence_with_original_point_five_ocr) ... FAIL
+test_original_c838_both_point_five_receipt_still_rejects_original_ocr_gate (__main__.SemanticControls.test_original_c838_both_point_five_receipt_still_rejects_original_ocr_gate) ... ok
+test_stale_or_mutated_after_move_never_posts_button_down (__main__.SemanticControls.test_stale_or_mutated_after_move_never_posts_button_down) ... 
+  test_stale_or_mutated_after_move_never_posts_button_down (__main__.SemanticControls.test_stale_or_mutated_after_move_never_posts_button_down) (fault='stale_before_down') ... FAIL
+  test_stale_or_mutated_after_move_never_posts_button_down (__main__.SemanticControls.test_stale_or_mutated_after_move_never_posts_button_down) (fault='geometry_before_down') ... FAIL
+  test_stale_or_mutated_after_move_never_posts_button_down (__main__.SemanticControls.test_stale_or_mutated_after_move_never_posts_button_down) (fault='bytes_before_down') ... FAIL
+test_target_replay_or_foreign_capture_controller_and_json_spoof_fail (__main__.SemanticControls.test_target_replay_or_foreign_capture_controller_and_json_spoof_fail) ... FAIL
+
+======================================================================
+FAIL: test_explicit_semantic_target_runs_existing_os_input_sequence_with_original_point_five_ocr (__main__.SemanticControls.test_explicit_semantic_target_runs_existing_os_input_sequence_with_original_point_five_ocr)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-semantic-deploy/scripts/test_macos_semantic_deploy.py", line 148, in test_explicit_semantic_target_runs_existing_os_input_sequence_with_original_point_five_ocr
+    self.assertEqual(code, 0, result.get('failure'))
+AssertionError: 1 != 0 : {'type': 'TypeError', 'message': 'super(type, obj): obj must be an instance or subtype of type'}
+
+======================================================================
+FAIL: test_stale_or_mutated_after_move_never_posts_button_down (__main__.SemanticControls.test_stale_or_mutated_after_move_never_posts_button_down) (fault='stale_before_down')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-semantic-deploy/scripts/test_macos_semantic_deploy.py", line 192, in test_stale_or_mutated_after_move_never_posts_button_down
+    self.assertEqual(harness.native_posts, [5])
+AssertionError: Lists differ: [] != [5]
+
+Second list contains 1 additional elements.
+First extra element 0:
+5
+
+- []
++ [5]
+?  +
+
+
+======================================================================
+FAIL: test_stale_or_mutated_after_move_never_posts_button_down (__main__.SemanticControls.test_stale_or_mutated_after_move_never_posts_button_down) (fault='geometry_before_down')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-semantic-deploy/scripts/test_macos_semantic_deploy.py", line 192, in test_stale_or_mutated_after_move_never_posts_button_down
+    self.assertEqual(harness.native_posts, [5])
+AssertionError: Lists differ: [] != [5]
+
+Second list contains 1 additional elements.
+First extra element 0:
+5
+
+- []
++ [5]
+?  +
+
+
+======================================================================
+FAIL: test_stale_or_mutated_after_move_never_posts_button_down (__main__.SemanticControls.test_stale_or_mutated_after_move_never_posts_button_down) (fault='bytes_before_down')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-semantic-deploy/scripts/test_macos_semantic_deploy.py", line 192, in test_stale_or_mutated_after_move_never_posts_button_down
+    self.assertEqual(harness.native_posts, [5])
+AssertionError: Lists differ: [] != [5]
+
+Second list contains 1 additional elements.
+First extra element 0:
+5
+
+- []
++ [5]
+?  +
+
+
+======================================================================
+FAIL: test_target_replay_or_foreign_capture_controller_and_json_spoof_fail (__main__.SemanticControls.test_target_replay_or_foreign_capture_controller_and_json_spoof_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-semantic-deploy/scripts/test_macos_semantic_deploy.py", line 198, in test_target_replay_or_foreign_capture_controller_and_json_spoof_fail
+    self.assertEqual(code, 0)
+AssertionError: 1 != 0
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.158s
+
+FAILED (failures=5)
