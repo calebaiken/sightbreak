@@ -5,6 +5,7 @@ from dataclasses import FrozenInstanceError
 import hashlib
 import io
 import json
+import os
 from pathlib import Path
 import struct
 import tempfile
@@ -97,6 +98,11 @@ class SemanticController(SyntheticController):
         elif self.fault == 'privacy_node': node['AXValue'] = 'PRIVATE SYNTHETIC ONLY'
         elif self.fault == 'privacy_structural': receipt['snapshots'][-1]['nodes'][3]['frame_points'] = ['PRIVATE']
         elif self.fault == 'bool_cap': receipt['caps']['snapshots'] = 3.0
+        elif self.fault == 'float_window_pid': receipt['snapshots'][-1]['windows'][0]['pid'] = float(self.client.pid)
+        elif self.fault == 'float_cg_pid': receipt['snapshots'][-1]['cg_after'][0]['owner_pid'] = float(self.client.pid)
+        elif self.fault == 'float_count': receipt['examined_nodes'] = float(receipt['examined_nodes'])
+        elif self.fault == 'bool_events': receipt['input_events_posted'] = False
+        elif self.fault == 'bool_prompts': receipt['permission_requests_made'] = False
         elif self.fault == 'privacy_display': receipt['displays'][0]['mode_dimensions'] = ['PRIVATE', 768]
         elif self.fault == 'privacy_window': receipt['last_owned_layer_zero_rows'][0]['title'] = 'PRIVATE'
         elif self.fault == 'oversize': receipt['unexpected'] = 'x'*(semantic.CAPS['receipt_bytes']+1)
@@ -131,7 +137,13 @@ class SemanticController(SyntheticController):
             confirm_release = native.MacMenuUI.confirm_release
             def __init__(self, pid, window, bounds, trace):
                 super().__init__(pid, window, bounds, trace)
-                self.trace, self.held = trace, set()
+                self.held = set()
+                def delayed_trace(event, **details):
+                    trace(event, **details)
+                    if event == 'cg_event_post_attempt' and ((harness.fault == 'trace_move_late' and details['event_kind'] == 'pointer_move')
+                            or (harness.fault == 'trace_down_late' and details['event_kind'] == 'lmb_down')):
+                        harness.now += 5.001
+                self.trace = delayed_trace
                 self.cf = SimpleNamespace(CFRelease=lambda _: None)
                 def posted(_, event):
                     kind, x, y = event
@@ -141,6 +153,15 @@ class SemanticController(SyntheticController):
                         if harness.fault == 'stale_before_down': harness.now += 4.8
                         if harness.fault == 'geometry_before_down': harness.window_id += 1
                         if harness.fault == 'bytes_before_down': (harness.directory/'semantic-deploy-ax.json').write_text('MUTATED')
+                        for fault, name in [('replace_png', '01-focused-menu.png'), ('replace_native', '01-focused-menu.json'),
+                                            ('replace_ax', 'semantic-deploy-ax.json')]:
+                            if harness.fault == fault:
+                                path = harness.directory/name
+                                previous = path.stat()
+                                replacement = path.with_suffix('.replacement')
+                                replacement.write_bytes(path.read_bytes())
+                                os.utime(replacement, ns=(previous.st_atime_ns, previous.st_mtime_ns))
+                                replacement.replace(path)
                         if harness.fault == 'symlink_before_down':
                             original = harness.directory/'semantic-deploy-ax.json'
                             retained = original.with_suffix('.retained')
@@ -151,6 +172,14 @@ class SemanticController(SyntheticController):
                 self.cg = SimpleNamespace(CGEventCreateMouseEvent=lambda _, kind, point, button: (kind, point.x, point.y),
                     CGEventSetFlags=lambda *_: None, CGEventPost=posted,
                     CGEventSourceButtonState=lambda *_: harness.mouse_down)
+            def pin_for_input(self, image):
+                super().pin_for_input(image)
+                if harness.fault == 'png_before_acquire':
+                    path = harness.directory/'01-focused-menu.png'
+                    path.write_bytes(path.read_bytes()+b'SUBSTITUTED AFTER ACCEPTED CAPTURE')
+                if harness.fault == 'receipt_before_acquire':
+                    image['text'][3]['confidence'] = .6
+                    (harness.directory/'01-focused-menu.json').write_text(json.dumps(image))
             def require_target(self):
                 super().require_target()
                 if getattr(self, 'semantic_deploy_target', None) is not None:
@@ -164,7 +193,15 @@ class SemanticController(SyntheticController):
 
     def execute(self):
         run = driver.run
-        with patch.object(driver, 'run', lambda output, preflight: run(output, preflight, deploy_target='owned-ax')):
+        def semantic_run(output, preflight):
+            # Actual file hashes for this pure target-binding harness; absent
+            # synthetic executable/helper paths retain their non-native marker.
+            from test_macos_ordinary_controller import SYNTHETIC_DIGEST
+            def file_digest(path):
+                return semantic.digest(path) if Path(path).is_file() else SYNTHETIC_DIGEST
+            with patch.object(driver, 'digest', file_digest):
+                return run(output, preflight, deploy_target='owned-ax')
+        with patch.object(driver, 'run', semantic_run):
             return super().execute()
 
 
@@ -208,7 +245,8 @@ class SemanticControls(unittest.TestCase):
     def test_collection_identity_geometry_duplicate_disabled_privacy_and_late_fail_before_any_move(self):
         for fault in ('duplicate', 'disabled', 'title', 'foreign_pid', 'foreign_window', 'wrong_frame', 'stale_ax',
                       'nonce', 'untrusted', 'incomplete', 'privacy_top', 'privacy_node', 'privacy_display',
-                      'privacy_window', 'privacy_structural', 'bool_cap', 'oversize', 'raw_changed', 'ax_late', 'ax_exit', 'stale_before_move'):
+                      'privacy_window', 'privacy_structural', 'bool_cap', 'float_window_pid', 'float_cg_pid',
+                      'float_count', 'bool_events', 'bool_prompts', 'oversize', 'raw_changed', 'ax_late', 'ax_exit', 'stale_before_move'):
             with self.subTest(fault=fault):
                 code, result, harness = self.execute(fault)
                 self.assertEqual(code, 1, result)
@@ -217,8 +255,18 @@ class SemanticControls(unittest.TestCase):
                 self.assertFalse(harness.deployed)
                 self.assertEqual(result['cg_event_post_attempts'], 0)
 
+    def test_original_capture_hashes_cannot_be_renewed_after_pre_acquisition_substitution(self):
+        for fault in ('png_before_acquire', 'receipt_before_acquire'):
+            with self.subTest(fault=fault):
+                code, result, harness = self.execute(fault)
+                self.assertEqual(code, 1, result.get('failure'))
+                self.assertEqual(harness.native_posts, [])
+                self.assertEqual(harness.ax_calls, 0)
+                self.assertFalse(harness.deployed)
+
     def test_stale_or_mutated_after_move_never_posts_button_down(self):
-        for fault in ('stale_before_down', 'geometry_before_down', 'bytes_before_down', 'symlink_before_down'):
+        for fault in ('stale_before_down', 'geometry_before_down', 'bytes_before_down', 'symlink_before_down',
+                      'replace_png', 'replace_native', 'replace_ax'):
             with self.subTest(fault=fault):
                 code, result, harness = self.execute(fault)
                 self.assertEqual(code, 2 if fault == 'symlink_before_down' else 1, result.get('failure', result.get('blocker')))
@@ -226,6 +274,33 @@ class SemanticControls(unittest.TestCase):
                 self.assertFalse(harness.deployed)
                 self.assertEqual(harness.active_ui.held, set())
                 self.assertEqual(result['cg_event_post_attempts'], 1)
+
+    def test_trace_io_delay_cannot_deliver_stale_move_or_down(self):
+        for fault, posts, attempts in [('trace_move_late', [], 1), ('trace_down_late', [5], 2)]:
+            with self.subTest(fault=fault):
+                code, result, harness = self.execute(fault)
+                self.assertEqual(code, 1, result.get('failure'))
+                self.assertEqual(harness.native_posts, posts)
+                self.assertEqual(result['cg_event_post_attempts'], attempts)
+                self.assertFalse(harness.deployed)
+                self.assertEqual(harness.active_ui.held, set())
+
+    def test_descriptor_reader_rejects_fifo_and_bounds_file_growth_without_path_read_text(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary).resolve()
+            fifo = root/'fifo';os.mkfifo(fifo)
+            with patch.object(Path, 'read_text', side_effect=AssertionError('Unbounded path read')):
+                with self.assertRaises(RuntimeError): semantic.read_public_json(fifo)
+            path = root/'growing.json';path.write_text('{}')
+            native_read, lengths, grown = os.read, [], [False]
+            def grow(descriptor, count):
+                if not grown[0]:
+                    with path.open('ab') as stream: stream.write(b' '*(semantic.CAPS['receipt_bytes']+1))
+                    grown[0] = True
+                result = native_read(descriptor, count);lengths.append(len(result));return result
+            with patch.object(semantic.os, 'read', grow):
+                with self.assertRaises(RuntimeError): semantic.read_public_json(path)
+            self.assertLessEqual(sum(lengths), semantic.CAPS['receipt_bytes']+1)
 
     def test_target_replay_or_foreign_capture_controller_and_json_spoof_fail(self):
         code, _, harness = self.execute()

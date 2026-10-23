@@ -455,7 +455,7 @@ class SourceControls(unittest.TestCase):
             data=(ROOT/path).read_bytes()
             if path=='scripts/macos_window_capture.swift':
                 data=original_capture_helper(data)
-            elif path in ('scripts/macos_ordinary_input.py', 'scripts/verify_macos_ordinary.py'):
+            elif path in ('scripts/macos_ordinary_input.py', 'scripts/verify_macos_ordinary.py', 'scripts/macos_native_input.py'):
                 # This union explicitly adds the ordinary semantic route. The
                 # independent new source controls bind its exact delta/defaults.
                 from test_macos_semantic_deploy import original_ordinary_source

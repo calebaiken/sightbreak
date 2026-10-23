@@ -211,9 +211,14 @@ class MacMenuUI(MacReadOnly):
             self.event_post_attempts += 1
             self.trace('cg_event_post_attempt', event_kind=kind, attempt=self.event_post_attempts,
                        held_by_driver=sorted(self.held))
+            self.before_event_post(kind)
             self.cg.CGEventPost(0, event)  # Public kCGHIDEventTap; ordinary global OS input.
         finally:
             self.cf.CFRelease(event)
+
+    def before_event_post(self, kind):
+        """Optional controller guard after trace IO, immediately before OS post."""
+        pass
 
     def button(self, down, point):
         if down:

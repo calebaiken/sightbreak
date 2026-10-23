@@ -1,7 +1,7 @@
 {
   "scripts/macos_ordinary_input.py": {
     "base_sha256": "c763aa4129f74a7d9fc6ac932d6312d7ffafac2a05a90701c9037ed9d200ded7",
-    "candidate_sha256": "9d89264337be9f7a6939320d1c3bfcc55069249648cc5a29c8004ec30163db72",
+    "candidate_sha256": "15ad6cd9dde1f08cb18980a3330fbbbcb2479b2ac9fbccca38c39065f4104677",
     "parts": [
       {
         "new_start": 251,
@@ -26,8 +26,28 @@
         ]
       },
       {
-        "new_start": 327,
-        "new_end": 340,
+        "new_start": 267,
+        "new_end": 280,
+        "old": [],
+        "new": [
+          "\n",
+          "    def before_event_post(self, kind):\n",
+          "        target = getattr(self, 'semantic_deploy_target', None)\n",
+          "        if target is not None and kind in ('pointer_move', 'lmb_down'):\n",
+          "            try:\n",
+          "                from macos_semantic_deploy import SemanticDeployTarget\n",
+          "                if type(target) is not SemanticDeployTarget:\n",
+          "                    raise RuntimeError('Semantic Deploy target is not controller-bound')\n",
+          "                target.point(target.capture, self)\n",
+          "            except BaseException:\n",
+          "                if kind == 'lmb_down':\n",
+          "                    self.held.discard('lmb')  # No OS down call has occurred.\n",
+          "                raise\n"
+        ]
+      },
+      {
+        "new_start": 340,
+        "new_end": 353,
         "old": [],
         "new": [
           "        target = getattr(self, 'semantic_deploy_target', None)\n",
@@ -46,8 +66,8 @@
         ]
       },
       {
-        "new_start": 345,
-        "new_end": 350,
+        "new_start": 358,
+        "new_end": 363,
         "old": [
           "        point = label_point(capture, label)\n"
         ],
@@ -63,7 +83,7 @@
   },
   "scripts/verify_macos_ordinary.py": {
     "base_sha256": "9e7d52338865e6b5c4ad32b32d44f83fea39d1e6645931e678c91feb21412518",
-    "candidate_sha256": "b5aa3a3743fcff440f3fcb59fae46bed1cf3d9c3d42bce0240d0df2a4c945871",
+    "candidate_sha256": "930c96bf6ad9624b544a40bdede728f0562002b18bbb3270dc92aabb51001f0b",
     "parts": [
       {
         "new_start": 73,
@@ -119,8 +139,28 @@
         ]
       },
       {
-        "new_start": 275,
-        "new_end": 280,
+        "new_start": 165,
+        "new_end": 174,
+        "old": [
+          "            result['captures'].append({'name': name, 'screen': screen, 'png_sha256': digest(png),\n",
+          "                                       'receipt_sha256': digest(receipt), 'window_id': ui.window,\n",
+          "                                       'foreground_required': require_focus})\n"
+        ],
+        "new": [
+          "            capture_record = {'name': name, 'screen': screen, 'png_sha256': digest(png),\n",
+          "                              'receipt_sha256': digest(receipt), 'window_id': ui.window,\n",
+          "                              'foreground_required': require_focus}\n",
+          "            if deploy_target == 'owned-ax' and name == '01-focused-menu':\n",
+          "                from macos_semantic_deploy import seal_native_capture\n",
+          "                seals = seal_native_capture(png, receipt, data)\n",
+          "                capture_record.update(png_sha256=seals[0].sha256, receipt_sha256=seals[1].sha256,\n",
+          "                                      semantic_original_files=[seal.metadata() for seal in seals])\n",
+          "            result['captures'].append(capture_record)\n"
+        ]
+      },
+      {
+        "new_start": 281,
+        "new_end": 286,
         "old": [],
         "new": [
           "        if deploy_target == 'owned-ax':\n",
@@ -131,8 +171,8 @@
         ]
       },
       {
-        "new_start": 311,
-        "new_end": 314,
+        "new_start": 317,
+        "new_end": 320,
         "old": [],
         "new": [
           "            if deploy_target == 'owned-ax':\n",
@@ -141,21 +181,46 @@
         ]
       },
       {
-        "new_start": 495,
-        "new_end": 496,
+        "new_start": 501,
+        "new_end": 502,
         "old": [],
         "new": [
           "    parser.add_argument('--deploy-target', choices=('ocr', 'owned-ax'), default='ocr')\n"
         ]
       },
       {
-        "new_start": 501,
-        "new_end": 502,
+        "new_start": 507,
+        "new_end": 508,
         "old": [
           "    return run(arguments.output, arguments.preflight)\n"
         ],
         "new": [
           "    return run(arguments.output, arguments.preflight, deploy_target=arguments.deploy_target)\n"
+        ]
+      }
+    ]
+  },
+  "scripts/macos_native_input.py": {
+    "base_sha256": "82e53581bd36a1c258bf67d9b3067cd7bcd639f44015c4723f4bf1f3b2a102d6",
+    "candidate_sha256": "ac4421dbbfac06faebad5fe71ec5f3227dbef83b97012322e56bd651f5b423e7",
+    "parts": [
+      {
+        "new_start": 213,
+        "new_end": 214,
+        "old": [],
+        "new": [
+          "            self.before_event_post(kind)\n"
+        ]
+      },
+      {
+        "new_start": 217,
+        "new_end": 221,
+        "old": [],
+        "new": [
+          "\n",
+          "    def before_event_post(self, kind):\n",
+          "        \"\"\"Optional controller guard after trace IO, immediately before OS post.\"\"\"\n",
+          "        pass\n"
         ]
       }
     ]

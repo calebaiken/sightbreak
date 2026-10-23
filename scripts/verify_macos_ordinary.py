@@ -163,9 +163,15 @@ def run(output, preflight_path, *, deploy_target='ocr'):
                 raise ValueError('Unknown native screenshot screen')
             (ui.require_target if require_focus else ui.require_window)()
             remaining(until)
-            result['captures'].append({'name': name, 'screen': screen, 'png_sha256': digest(png),
-                                       'receipt_sha256': digest(receipt), 'window_id': ui.window,
-                                       'foreground_required': require_focus})
+            capture_record = {'name': name, 'screen': screen, 'png_sha256': digest(png),
+                              'receipt_sha256': digest(receipt), 'window_id': ui.window,
+                              'foreground_required': require_focus}
+            if deploy_target == 'owned-ax' and name == '01-focused-menu':
+                from macos_semantic_deploy import seal_native_capture
+                seals = seal_native_capture(png, receipt, data)
+                capture_record.update(png_sha256=seals[0].sha256, receipt_sha256=seals[1].sha256,
+                                      semantic_original_files=[seal.metadata() for seal in seals])
+            result['captures'].append(capture_record)
             attempt['accepted'] = True
             trace('native_capture', capture=name, screen=screen, native_state=ui.diagnostics() if require_focus else ui.focus_state())
             return data

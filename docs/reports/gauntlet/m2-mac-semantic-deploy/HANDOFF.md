@@ -41,7 +41,7 @@ ordinary verifier with its exact fresh preflight and fresh output directory.
 This is a recipe description only. There is no workflow amendment, native
 execution, import/export, CI dispatch, new qualifier, release or actual verdict
 for this combined candidate. The default OCR route and Windows/Linux defaults
-remain unchanged. Game tree remains `55691684d31d44f1680141954bbe530443de9d1f`.
+remain unchanged. Game tree remains `1632ae1175028665ddb4cb72e0afba56f723de5d`.
 
 Retained failed harness iterations and their corrections are described in
 IMPLEMENTATION.md. Raw unittest trailing spaces are preserved with a scoped

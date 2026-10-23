@@ -3,6 +3,9 @@ import copy
 from dataclasses import dataclass, field
 import hashlib
 import json
+import os
+import stat
+import struct
 from pathlib import Path
 import sys
 import time
@@ -10,7 +13,6 @@ import uuid
 
 from macos_ax_contract import (CAPS, LABEL, PRUNED_ROLES, normalized_title, number, rectangle,
                                validate_observation)
-from macos_deploy_ocr import png_dimensions
 from probe_macos_input import digest
 from macos_ordinary_input import no_symlinks
 
@@ -32,10 +34,78 @@ def fingerprint(value):
                                     ensure_ascii=False, allow_nan=False).encode()).hexdigest()
 
 
-def read_public_json(path):
+@dataclass(frozen=True)
+class FileSeal:
+    path: str
+    sha256: str
+    identity: tuple
+    directories: tuple
+    limit: int
+
+    def metadata(self):
+        return {'path': self.path, 'sha256': self.sha256, 'identity': list(self.identity),
+                'directories': [list(row) for row in self.directories], 'limit': self.limit}
+
+    @classmethod
+    def from_metadata(cls, value):
+        if set(value) != {'path', 'sha256', 'identity', 'directories', 'limit'}:
+            raise RuntimeError('Malformed original native file seal')
+        return cls(value['path'], value['sha256'], tuple(value['identity']),
+                   tuple(tuple(row) for row in value['directories']), value['limit'])
+
+
+def file_identity(value):
+    return (value.st_dev, value.st_ino, value.st_mode, value.st_uid, value.st_gid,
+            value.st_nlink, value.st_size, value.st_mtime_ns, value.st_ctime_ns)
+
+
+def read_regular(path, limit, expected=None):
+    """One bounded descriptor read, no-follow ancestors, stable regular-file identity."""
+    path = Path(path).absolute()
     no_symlinks(path)
-    if Path(path).stat().st_size > CAPS['receipt_bytes']:
-        raise RuntimeError('Semantic source receipt exceeds the original byte cap')
+    if type(limit) is not int or limit <= 0 or any(part == '..' for part in path.parts):
+        raise RuntimeError('Invalid bounded native evidence file request')
+    directory_flags = os.O_RDONLY | os.O_DIRECTORY | os.O_NOFOLLOW | os.O_CLOEXEC
+    parent, descriptor, directories = None, None, []
+    try:
+        parent = os.open(path.anchor, directory_flags)
+        for part in path.parts[1:-1]:
+            row = os.fstat(parent)
+            directories.append((row.st_dev, row.st_ino, row.st_mode, row.st_uid, row.st_gid))
+            child = os.open(part, directory_flags, dir_fd=parent)
+            os.close(parent); parent = child
+        row = os.fstat(parent)
+        directories.append((row.st_dev, row.st_ino, row.st_mode, row.st_uid, row.st_gid))
+        descriptor = os.open(path.name, os.O_RDONLY | os.O_NONBLOCK | os.O_NOFOLLOW | os.O_CLOEXEC, dir_fd=parent)
+        before = os.fstat(descriptor)
+        if not stat.S_ISREG(before.st_mode) or not 0 <= before.st_size <= limit:
+            raise RuntimeError('Native evidence must be a bounded regular file')
+        if expected is not None and (type(expected) is not FileSeal or expected.path != str(path)
+                or expected.limit != limit or expected.identity != file_identity(before)
+                or expected.directories != tuple(directories)):
+            raise RuntimeError('Original native evidence file or ancestor identity changed')
+        chunks, size = [], 0
+        while size <= limit:
+            chunk = os.read(descriptor, min(65536, limit + 1 - size))
+            if not chunk:
+                break
+            chunks.append(chunk); size += len(chunk)
+        after = os.fstat(descriptor)
+        named = os.stat(path.name, dir_fd=parent, follow_symlinks=False)
+        if (size > limit or size != before.st_size or file_identity(before) != file_identity(after)
+                or file_identity(after) != file_identity(named)):
+            raise RuntimeError('Native evidence grew, changed or was replaced during its bounded read')
+        data = b''.join(chunks)
+        seal = FileSeal(str(path), hashlib.sha256(data).hexdigest(), file_identity(after), tuple(directories), limit)
+        if expected is not None and seal != expected:
+            raise RuntimeError('Original native evidence bytes or identity changed')
+        return data, seal
+    finally:
+        if descriptor is not None: os.close(descriptor)
+        if parent is not None: os.close(parent)
+
+
+def decode_public_json(data):
     def pairs(items):
         result = {}
         for name, value in items:
@@ -45,7 +115,23 @@ def read_public_json(path):
         return result
     def nonfinite(_value):
         raise RuntimeError('Nonfinite semantic source receipt')
-    return json.loads(Path(path).read_text(), object_pairs_hook=pairs, parse_constant=nonfinite)
+    return json.loads(data.decode('utf-8', errors='strict'), object_pairs_hook=pairs, parse_constant=nonfinite)
+
+
+def read_public_json(path):
+    data, _seal = read_regular(path, CAPS['receipt_bytes'])
+    return decode_public_json(data)
+
+
+def seal_native_capture(png, native, capture):
+    # Finite original full-window PNG bound; the AX/JSON512KiB cap is unchanged.
+    image, png_seal = read_regular(png, 32 * 1024 * 1024)
+    raw, native_seal = read_regular(native, CAPS['receipt_bytes'])
+    if (len(image) < 24 or image[:16] != b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR'
+            or list(struct.unpack('>II', image[16:24])) != capture['image_dimensions']
+            or decode_public_json(raw) != capture or 'derived_deploy_analysis' in capture):
+        raise RuntimeError('Original semantic native PNG/receipt binding failed')
+    return png_seal, native_seal
 
 
 def private_shape(receipt):
@@ -58,6 +144,11 @@ def private_shape(receipt):
     for key in ('owner_pid', 'window_id', 'observer_pid'):
         if type(receipt[key]) is not int or receipt[key] <= 0:
             raise RuntimeError('Semantic receipt identity must be a positive native integer')
+    if type(receipt['examined_nodes']) is not int or receipt['examined_nodes'] <= 0:
+        raise RuntimeError('Semantic examined-node count must retain its native integer type')
+    for key in ('input_events_posted', 'permission_requests_made'):
+        if type(receipt[key]) is not int or receipt[key] != 0:
+            raise RuntimeError('Semantic zero-event counters must be native integer zero')
     displays = receipt['displays']
     if not isinstance(displays, list) or not 1 <= len(displays) < 16:
         raise RuntimeError('Malformed bounded public display metadata')
@@ -78,6 +169,9 @@ def private_shape(receipt):
         if set(snapshot) != SNAPSHOT_KEYS:
             raise RuntimeError('Semantic snapshot contains unexpected public fields')
         inventories.extend((snapshot['cg_before'], snapshot['cg_after']))
+        for window in snapshot['windows']:
+            if type(window.get('pid')) is not int:
+                raise RuntimeError('AX window PID must retain its native integer type')
         for node in snapshot['nodes']:
             role = node.get('role')
             keys = {'node', 'parent', 'depth', 'pid', 'role'}
@@ -93,8 +187,10 @@ def private_shape(receipt):
             if set(node) != keys or type(node['pid']) is not int:
                 raise RuntimeError('Semantic node contains missing or private fields')
     for rows in inventories:
-        if not isinstance(rows, list) or any(set(row) != WINDOW_KEYS for row in rows):
-            raise RuntimeError('Unexpected public owned-window metadata fields')
+        if (not isinstance(rows, list) or any(set(row) != WINDOW_KEYS
+                or type(row['owner_pid']) is not int or type(row['window_id']) is not int
+                or type(row['onscreen']) is not bool for row in rows)):
+            raise RuntimeError('Unexpected or mistyped public owned-window metadata fields')
 
 
 @dataclass(frozen=True)
@@ -123,10 +219,8 @@ class SemanticDeployTarget:
         if (ui.pid != self.binding['pid'] or ui.window != self.binding['window']
                 or list(ui.bounds) != list(self.binding['bounds']) or not ui.input_geometry_pinned):
             raise RuntimeError('Semantic Deploy target does not bind the pinned input owner')
-        for path, expected in self.files:
-            no_symlinks(path)
-            if digest(path) != expected:
-                raise RuntimeError('Original native capture or AX receipt changed before input')
+        for seal in self.files:
+            read_regular(seal.path, seal.limit, seal)
         ui.require_target()  # Original private/profile, permissions, unique window and foreground guards.
         if not self.binding['finished'] <= time.monotonic() < self.expires:
             raise TimeoutError('Semantic Deploy target exceeded its original nonrenewable AX deadline')
@@ -145,12 +239,18 @@ def acquire_target(ui, capture, output, command, remaining, menu_deadline, resul
         raise RuntimeError('Semantic Deploy acquisition requires a fresh pre-input pinned owner')
     output = Path(output)
     png, native = output / '01-focused-menu.png', output / '01-focused-menu.json'
-    no_symlinks(png)
-    if png_dimensions(png) != capture['image_dimensions']:
-        raise RuntimeError('Original semantic corroboration PNG dimensions disagree')
-    if read_public_json(native) != capture or 'derived_deploy_analysis' in capture:
-        raise RuntimeError('Semantic route requires unchanged original focused native receipt')
-    native_files = tuple((path, digest(path)) for path in (png, native))
+    accepted = [row for row in result['captures'] if row.get('name') == '01-focused-menu']
+    if len(accepted) != 1 or accepted[0].get('window_id') != ui.window:
+        raise RuntimeError('One original focused native capture acceptance required')
+    record = accepted[0]
+    native_files = tuple(FileSeal.from_metadata(value) for value in record['semantic_original_files'])
+    if (len(native_files) != 2 or [seal.path for seal in native_files] != [str(png), str(native)]
+            or [seal.sha256 for seal in native_files] != [record['png_sha256'], record['receipt_sha256']]):
+        raise RuntimeError('Original native capture seal provenance mismatch')
+    for seal in native_files:
+        read_regular(seal.path, seal.limit, seal)
+    if tuple(seal_native_capture(png, native, capture)) != native_files:
+        raise RuntimeError('Original focused native capture was substituted before acquisition')
     ui.require_target()
     nonce = uuid.uuid4().hex
     budget = min(CAPS['seconds'], remaining(menu_deadline))
@@ -164,18 +264,17 @@ def acquire_target(ui, capture, output, command, remaining, menu_deadline, resul
     ui.require_target()
     finished = time.monotonic()
     remaining(expires)
-    if ax_file.stat().st_size > CAPS['receipt_bytes']:
-        raise RuntimeError('Semantic receipt exceeds the original byte cap')
-    receipt = read_public_json(ax_file)
+    raw_ax, ax_seal = read_regular(ax_file, CAPS['receipt_bytes'])
+    receipt = decode_public_json(raw_ax)
     binding = dict(pid=ui.pid, window=ui.window, bounds=list(ui.bounds), nonce=nonce,
                    observer_pid=child.pid, started=started, finished=finished, budget=budget)
-    result['semantic_deploy_observation'] = {'receipt_sha256': digest(ax_file), **copy.deepcopy(binding),
+    result['semantic_deploy_observation'] = {'receipt_sha256': ax_seal.sha256, **copy.deepcopy(binding),
                                             'expires_monotonic': expires}
     if child.returncode:
         raise RuntimeError('Semantic Deploy observer failed; original evidence retained')
     private_shape(receipt)
     exposure = validate_observation(receipt, capture, **binding)
-    files = (*native_files, (ax_file, digest(ax_file)))
+    files = (*native_files, ax_seal)
     target = SemanticDeployTarget(capture, receipt, binding, files, expires, ui,
                                   fingerprint([capture, receipt, binding]))
     point = target.point(capture, ui)

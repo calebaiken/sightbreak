@@ -266,6 +266,19 @@ class MacOrdinaryUI(MacMenuUI):
                 raise
         super().post(event, kind)
 
+    def before_event_post(self, kind):
+        target = getattr(self, 'semantic_deploy_target', None)
+        if target is not None and kind in ('pointer_move', 'lmb_down'):
+            try:
+                from macos_semantic_deploy import SemanticDeployTarget
+                if type(target) is not SemanticDeployTarget:
+                    raise RuntimeError('Semantic Deploy target is not controller-bound')
+                target.point(target.capture, self)
+            except BaseException:
+                if kind == 'lmb_down':
+                    self.held.discard('lmb')  # No OS down call has occurred.
+                raise
+
     def pin_for_input(self, capture):
         if getattr(self, 'input_geometry_pinned', False) or self.event_post_attempts or self.held:
             raise RuntimeError('Input geometry may be pinned only once before any owned event')
