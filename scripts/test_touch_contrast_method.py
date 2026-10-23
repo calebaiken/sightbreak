@@ -8,7 +8,7 @@ import unittest
 
 import numpy as np
 
-from analyze_touch_contrast import audit_pixels
+from analyze_touch_contrast import audit_pixels, matrix, scene_identity
 from prepare_touch_contrast import BASELINE, TOUCH, instrument, split_args
 
 REPO = Path(__file__).resolve().parents[1]
@@ -27,10 +27,15 @@ def synthetic(foreground=(1, 1, 1), alpha=1.0, backdrop=.05):
             convert(u * (1 - a)), convert(u * (1 - a) + a))
 
 
+def footprint():
+    _, _, black, white = synthetic()
+    return white.astype(int) - black.astype(int)
+
+
 class PixelMethod(unittest.TestCase):
     def test_full_disconnected_support(self):
         p, u, b, w = synthetic()
-        result = audit_pixels(p, u, b, w, 1.0)
+        result = audit_pixels(p, u, b, w, 1.0, footprint=footprint())
         self.assertTrue(result["resolved"], result)
         self.assertEqual(result["support_pixels"], 54)
         self.assertGreater(result["low_coverage_pixels"], 0)
@@ -41,24 +46,58 @@ class PixelMethod(unittest.TestCase):
         p2, u2, b2, w2 = synthetic(backdrop=.98)
         for dest, replacement in zip((p, u, b, w), (p2, u2, b2, w2)):
             dest[1, 12] = replacement[1, 12]
-        result = audit_pixels(p, u, b, w, 1.0)
+        result = audit_pixels(p, u, b, w, 1.0, footprint=footprint())
         self.assertLess(result["contrast_lower_bound"], 1.1)
 
     def test_changed_backdrop_is_rejected(self):
         p, u, b, w = synthetic()
         p[0, 0] = 180
-        result = audit_pixels(p, u, b, w, 1.0)
+        result = audit_pixels(p, u, b, w, 1.0, footprint=footprint())
         self.assertFalse(result["resolved"])
         self.assertEqual(result["outside_changed"], 1)
 
     def test_translucent_foreground_is_not_treated_opaque(self):
-        result = audit_pixels(*synthetic(alpha=.24, backdrop=.8), .24)
+        result = audit_pixels(*synthetic(alpha=.24, backdrop=.8), .24, footprint=footprint())
         self.assertLess(result["contrast_lower_bound"], 3.0)
 
     def test_nonconstant_foreground_is_rejected(self):
         p, u, b, w = synthetic()
         p[4:6, 3] = [255, 0, 0]
-        self.assertFalse(audit_pixels(p, u, b, w, 1.0)["resolved"])
+        self.assertFalse(audit_pixels(p, u, b, w, 1.0, footprint=footprint())["resolved"])
+
+
+    def test_supported_underlay_substitution_is_rejected(self):
+        p, u, b, w = synthetic(backdrop=.8)
+        u[footprint().max(axis=-1) >= 1] = 13
+        result = audit_pixels(p, u, b, w, 1.0, footprint=footprint())
+        self.assertFalse(result["resolved"])
+        self.assertGreater(result["underlay_compositing_errors"], 0)
+
+    def test_diagnostic_changes_outside_support_are_rejected(self):
+        p, u, b, w = synthetic()
+        b[0, 0] = w[0, 0] = 180
+        self.assertFalse(audit_pixels(p, u, b, w, 1.0, footprint=footprint())["resolved"])
+
+    def test_post_glyph_occlusion_is_rejected(self):
+        values = [np.round(x.astype(float) * .1).astype(np.uint8) for x in synthetic()]
+        result = audit_pixels(*values, 1.0, footprint=footprint())
+        self.assertFalse(result["resolved"])
+        self.assertGreater(result["missing_footprint_pixels"], 0)
+
+    def test_complete_disconnected_glyph_loss_is_rejected(self):
+        p, u, b, w = synthetic()
+        for image in [p, b, w]: image[3:9, 2:5] = u[3:9, 2:5]
+        result = audit_pixels(p, u, b, w, 1.0, footprint=footprint())
+        self.assertFalse(result["resolved"])
+        self.assertEqual(result["missing_footprint_pixels"], 18)
+
+    def test_footprint_is_required(self):
+        self.assertFalse(audit_pixels(*synthetic(), 1.0)["resolved"])
+
+    def test_exact_scene_identity(self):
+        self.assertEqual(len(matrix()), 32)
+        invalid = {"id": "invented-00-idle"}
+        self.assertTrue(scene_identity(invalid, matrix()["mobile-min-white-idle"]))
 
 
 class SourceScope(unittest.TestCase):

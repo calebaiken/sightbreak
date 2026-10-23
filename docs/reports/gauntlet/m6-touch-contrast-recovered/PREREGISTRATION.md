@@ -124,3 +124,39 @@ The minimal source projects are ~10 MiB each; diagnostics are bounded at 32 scen
 per source, 64 ordinary and wrapped-normal PNGs plus 912 diagnostic PNGs each.
 Raw output and any native failure stay outside the source checkout until archived
 with path/hash/size receipts; no raw files are deleted to conceal failed rounds.
+
+## R2 amendment, before any native run
+
+The fresh critic retained four pure false-pass witnesses against first freeze
+`090892d`: changed supported underlay, changed diagnostics outside support,
+post-glyph occlusion mistaken for antialiasing, and fabricated tiny scene rows
+with unresolved inactive groups. R1 is rejected for native qualification. Its
+source projects, receipts and original pure results remain retained.
+
+R2 adds an isolated opaque native footprint for each named group, using the
+same primitives and geometry. Every other draw color, including text outlines,
+becomes transparent for that pass, and the frozen background is modulated black.
+Retain these PNGs. Their complete >=1-code footprint supplies the audit mask;
+effective B/W coverage must remain at least minimum source alpha × isolated
+coverage, allowing two code values for quantization. Missing or attenuated
+strokes fail. At every footprint pixel require B≈U×(1-(W-B)/255), within two code
+values. Source layers after a tested foreground may fail this check; that result
+stays unresolved instead of being described as harmless antialiasing. Diagnostic
+P/B/W changes outside the complete isolated footprint also fail.
+
+Require the exact 32 scene IDs, native dimensions, scale, inset, held state,
+counts, movement, actions and all 12 named component geometries. Native capture
+receipts bind every image hash, the complete shared 16-image background set and
+its native receipt, pinned engine/renderer identity, and the exact prepared
+source manifest. The fixture checks all original sources, fixture sources and
+UID hashes before and after capture. The analyzer requires the frozen source
+receipt and rejects changed/missing image or source/background identities.
+Inactive contrast exceptions remain, but every inactive reconstruction must
+resolve. R2 retains 1,280 PNGs per source (64 ordinary/wrapped normals and 1,216
+underlay/black/white/isolated-footprint diagnostics), plus 16 shared backgrounds.
+
+The dark surround versus external background still requires an independent
+review of the native output. The analyzer names that scope UNRESOLVED; a numeric
+light-foreground-versus-retained-underlay pass cannot close that boundary scope.
+The fresh critic must review R2 source/method before the root releases native
+execution. No engine, import, export, OCR or render has run in either round.

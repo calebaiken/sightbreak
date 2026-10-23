@@ -12,6 +12,7 @@ const LAYOUTS := [
 	{"id": "desktop-max", "size": Vector2i(1280, 720), "scale": 1.5, "inset": 0}]
 var options: Dictionary = {}
 var records: Array = []
+var written_images: Dictionary = {}
 
 func _initialize() -> void:
 	for arg in OS.get_cmdline_user_args():
@@ -27,6 +28,7 @@ func image_at(path: String) -> void:
 	await settle()
 	var image := root.get_texture().get_image()
 	assert(image.save_png(path) == OK, "cannot save " + path)
+	written_images[path] = FileAccess.get_sha256(path)
 
 func layout(config: Dictionary) -> void:
 	root.content_scale_size = config.size
@@ -118,11 +120,16 @@ func controls(out: String, background_dir: String) -> void:
 				for group in GROUPS:
 					if group == "held_border" and not held: continue
 					probe.probe_group = group
-					for pass_name in ["underlay", "black", "white"]:
+					for pass_name in ["underlay", "black", "white", "footprint"]:
+						back.modulate = Color.BLACK if pass_name == "footprint" else Color.WHITE
 						probe.probe_pass = pass_name
 						probe.queue_redraw()
 						await image_at(folder.path_join(group + "-" + pass_name + ".png"))
-				var record := {"id": scene_id, "geometry": geometry, "alphas": probe.probe_alphas.duplicate(), "background": background_path}
+				back.modulate = Color.WHITE
+				var scene_images: Dictionary = {}
+				for path in written_images:
+					if path.get_base_dir() == folder: scene_images[path.get_file()] = written_images[path]
+				var record := {"id": scene_id, "layout": config.id, "size": [config.size.x, config.size.y], "scale": config.scale, "inset": config.inset, "held": held, "counts": {"grenade": 0, "smoke": 1}, "movement": [0.65, 0.45] if held else [0.0, 0.0], "actions": ["fire", "reload", "interact"] if held else [], "geometry": geometry, "alphas": probe.probe_alphas.duplicate(), "background": background_path, "background_sha256": FileAccess.get_sha256(background_path), "images": scene_images}
 				records.append(record)
 				var file := FileAccess.open(folder.path_join("scene.json"), FileAccess.WRITE)
 				file.store_string(JSON.stringify(record, "\t"))
@@ -132,7 +139,19 @@ func controls(out: String, background_dir: String) -> void:
 	back.queue_free()
 	await settle()
 
+func verify_source() -> Dictionary:
+	var source_root := ProjectSettings.globalize_path("res://").path_join("..").simplify_path()
+	var file := FileAccess.open(source_root.path_join("SOURCE.json"), FileAccess.READ)
+	var receipt: Dictionary = JSON.parse_string(file.get_as_text())
+	file.close()
+	for entry in receipt.files + receipt.fixture:
+		assert(FileAccess.get_sha256(source_root.path_join(entry.path)) == entry.sha256, "source/UID changed: " + entry.path)
+	assert(FileAccess.get_sha256("res://tests/touch_contrast_instrumented.gd") == receipt.instrumented_sha256, "instrumented source changed")
+	assert(FileAccess.get_sha256("res://tests/touch_contrast_instrumented.gd.uid") == receipt.instrumented_uid_sha256, "instrumented UID changed")
+	return receipt
+
 func run() -> void:
+	var source_receipt := verify_source()
 	var out: String = options.get("out", "")
 	assert(not out.is_empty(), "--out is required")
 	DirAccess.make_dir_recursive_absolute(out)
@@ -140,7 +159,10 @@ func run() -> void:
 	elif options.get("mode", "") == "controls": await controls(out, options.get("background-dir", ""))
 	else: assert(false, "--mode must be backgrounds or controls")
 	var file := FileAccess.open(out.path_join("capture.json"), FileAccess.WRITE)
-	file.store_string(JSON.stringify({"engine": Engine.get_version_info(), "renderer": RenderingServer.get_video_adapter_name(), "mode": options.get("mode"), "records": records}, "\t"))
+	var source_path := ProjectSettings.globalize_path("res://").path_join("../SOURCE.json").simplify_path()
+	assert(verify_source() == source_receipt, "source receipt changed during capture")
+	var background_manifest: String = options.get("background-dir", "").path_join("capture.json")
+	file.store_string(JSON.stringify({"engine": Engine.get_version_info(), "renderer": RenderingServer.get_video_adapter_name(), "mode": options.get("mode"), "source": source_receipt.source, "source_verified_before_after": true, "source_manifest_sha256": FileAccess.get_sha256(source_path), "background_manifest_sha256": FileAccess.get_sha256(background_manifest) if options.get("mode") == "controls" else "", "images": written_images, "records": records}, "\t"))
 	file.close()
 	print("TOUCH_CONTRAST_CAPTURE records=", records.size())
 	quit(0)

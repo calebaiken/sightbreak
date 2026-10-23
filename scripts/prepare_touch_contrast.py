@@ -42,11 +42,11 @@ def instrument(source):
     """Change only designated foreground color arguments; retain all geometry."""
     lines, receipt, section = [], [], ""
     color_index = {"draw_circle": 2, "draw_arc": 5, "draw_line": 2,
-                   "draw_rect": 1, "draw_string": 6}
+                   "draw_rect": 1, "draw_string": 6, "draw_string_outline": 7}
     for number, line in enumerate(source.splitlines(), 1):
         if line.startswith("func "):
             section = line.split("(")[0][5:]
-        match = re.search(r"\b(draw_circle|draw_arc|draw_line|draw_rect|draw_string)\((.*)\)$", line)
+        match = re.search(r"\b(draw_circle|draw_arc|draw_line|draw_rect|draw_string_outline|draw_string)\((.*)\)$", line)
         group = None
         if match and section in ("_draw", "_draw_action_icon"):
             kind, text = match.groups()
@@ -65,6 +65,7 @@ def instrument(source):
                 group = '"joystick_ring"'
             elif kind == "draw_circle" and "Color(0.8," in args[2]:
                 group = '"joystick_knob"'
+            group = group or '"backdrop"'
             if group:
                 index = color_index[kind]
                 original = args[index]
@@ -90,6 +91,8 @@ var probe_depleted := false
 var probe_alphas: Dictionary = {}
 func _contrast_color(group: String, original: Color) -> Color:
 	probe_alphas[group] = minf(float(probe_alphas.get(group, 1.0)), original.a)
+	if probe_pass == "footprint":
+		return Color.WHITE if group == probe_group else Color(0, 0, 0, 0)
 	if group != probe_group or probe_pass == "normal": return original
 	if probe_pass == "underlay": return Color(0, 0, 0, 0)
 	if probe_pass == "black": return Color(0, 0, 0, original.a)
@@ -118,7 +121,8 @@ def prepare(repo, source, out):
     wrapped = wrapped.replace("class_name TacticalTouch\n", "", 1)
     wrapped_path = out / "game/tests/touch_contrast_instrumented.gd"
     wrapped_path.write_text(wrapped)
-    wrapped_path.with_suffix(".gd.uid").write_text("uid://d1x3t7c9m2n5p\n")
+    instrumented_uid = b"uid://d1x3t7c9m2n5p\n"
+    wrapped_path.with_suffix(".gd.uid").write_bytes(instrumented_uid)
     fixture_paths = ["game/tests/touch_contrast_capture.gd", "game/tests/touch_contrast_capture.gd.uid"]
     for name in fixture_paths:
         data = (repo / "scripts/fixtures/touch_contrast" / Path(name).name).read_bytes()
@@ -126,7 +130,8 @@ def prepare(repo, source, out):
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_bytes(data)
     manifest = {"source": source, "original_touch_sha256": sha(touch.encode()),
-                "instrumented_sha256": sha(wrapped.encode()), "files": entries,
+                "instrumented_sha256": sha(wrapped.encode()),
+                "instrumented_uid_sha256": sha(instrumented_uid), "files": entries,
                 "instrumentation": receipt, "fixture": [
                     {"path": x, "sha256": sha((repo / "scripts/fixtures/touch_contrast" / Path(x).name).read_bytes())} for x in fixture_paths]}
     (out / "SOURCE.json").write_text(json.dumps(manifest, indent=2) + "\n")
@@ -140,6 +145,7 @@ def main():
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     for name, source in [("baseline", BASELINE), ("candidate", args.candidate)]:
+        source = git(args.repo, "rev-parse", source).decode().strip()
         manifest = prepare(args.repo, source, args.out / name)
         print(name, source, len(manifest["files"]), manifest["instrumented_sha256"])
 
