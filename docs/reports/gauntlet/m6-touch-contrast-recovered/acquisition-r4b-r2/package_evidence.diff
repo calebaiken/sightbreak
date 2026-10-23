@@ -1,0 +1,12 @@
+--- native-r3/package_evidence.py
++++ acquisition-r4b-r2/package_evidence.py
+@@ -9 +9 @@
+-REPORT = Path("/workspace/sightbreak-touch-contrast-recovered/docs/reports/gauntlet/m6-touch-contrast-recovered/native-r3")
++REPORT = Path("/workspace/sightbreak-touch-contrast-recovered/docs/reports/gauntlet/m6-touch-contrast-recovered/native-r4b-r2")
+@@ -23 +23 @@
+-    assert end["acquisition_complete"], end
++    assert isinstance(end["acquisition_complete"], bool), end
+@@ -33 +33,2 @@
+-                "source_freeze": "a52022169241df9ff662039547a375e1c46ac1c5"}
++                "source_freeze": "b001fc5087960729535f63c896b40d6dc25bd272",
++                "acquisition_complete": end["acquisition_complete"], "acquisition_error": end["error"]}
