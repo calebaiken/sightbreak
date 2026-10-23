@@ -14,6 +14,7 @@ import verify_offline_match as controller
 
 class LinuxGpuProfileTests(unittest.TestCase):
     def test_rejects_other_scenarios_seeds_budgets_and_sampler_before_side_effects(self):
+        admission_error = 'Linux GPU profile requires Linux plant, seed 42, original --timeout 180 and frame sampler off'
         for extra in ([], ['--timeout', '179'], ['--timeout', '181'],
                       ['--timeout', '180', '--scenario', 'defuse'],
                       ['--timeout', '180', '--scenario', 'full-match'],
@@ -23,13 +24,26 @@ class LinuxGpuProfileTests(unittest.TestCase):
             with self.subTest(extra=extra), tempfile.TemporaryDirectory() as temporary:
                 out = Path(temporary) / 'must-not-exist'
                 argv = ['verify_offline_match.py', '--output', str(out), '--scenario', 'plant',
-                        '--target', 'linux', '--linux-gpu-profile', *extra]
+                        '--target', 'linux', '--linux-gpu-profile', '--xvfb', '/pure-xvfb',
+                        '--display', ':99107', *extra]
+                exists = Path.exists
+
+                def unused_display(path):
+                    return False if str(path) == '/tmp/.X11-unix/X99107' else exists(path)
+
+                error_output = io.StringIO()
                 with patch('sys.argv', argv), patch.object(controller.platform, 'system', return_value='Linux'), \
-                        patch.object(controller.subprocess, 'Popen') as launch, \
-                        patch.object(controller, 'source') as source, redirect_stderr(io.StringIO()), \
+                        patch.object(controller.platform, 'platform', return_value='pure-Linux-fixture'), \
+                        patch.object(Path, 'exists', unused_display), patch.object(controller.signal, 'signal'), \
+                        patch.object(controller.subprocess, 'Popen', side_effect=AssertionError('Unexpected process')) as launch, \
+                        patch.object(controller, 'source', side_effect=AssertionError('Unexpected source check')) as source, \
+                        redirect_stderr(error_output), redirect_stdout(io.StringIO()), \
                         self.assertRaises(SystemExit) as rejected:
                     controller.main()
                 self.assertEqual(rejected.exception.code, 2)
+                expected_error = ('Execute the selected package on native Linux/Windows'
+                                  if '--target' in extra else admission_error)
+                self.assertIn(expected_error, error_output.getvalue())
                 launch.assert_not_called()
                 source.assert_not_called()
                 self.assertFalse(out.exists())

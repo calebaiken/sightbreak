@@ -14,7 +14,13 @@ report and retained pure outputs:
 Pure controls pass 3 new / 18 sampler / 4 role / 15 capture-fence groups, plus
 compile and structural checks. The recovered shared venv lacks Pillow; use
 system `python3` for these controls. Two initial setup failures and their exact
-raw bytes are retained. Fresh independent source review is pending. Root owns
+raw bytes are retained. Fresh critic `1b7eb213` rejected initial freeze `3631f2d`
+because missing Xvfb could mask deletion of sampler admission in the negative
+test. Maintained cases now supply fake Xvfb/unused socket and assert the intended
+error with source/Popen/output forbidden. The corrected three tests pass; four
+isolated source mutants fail. Controller bytes are unchanged. See
+`docs/reports/gauntlet/m1-linux-gles-profile-recovered/REVIEW_CORRECTION.md`.
+Fresh independent re-review of the corrected source is pending. Root owns
 the native lane and may release one registered sampler-off capability attempt
 only after that review, using a fresh exact-source export. No engine/export/
 native/CI/service run occurred. Historical GLES averaged query rows cannot be

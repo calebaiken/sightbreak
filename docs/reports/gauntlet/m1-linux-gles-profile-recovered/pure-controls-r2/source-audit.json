@@ -1,0 +1,14 @@
+{
+  "base": "917b143ba4e4b0d9644a7a0ddeee1dd64c139682",
+  "path": "scripts/verify_offline_match.py",
+  "base_sha256": "dd4558ebd1bbdeea94f2261613aac347b7ac1c80c41df73d69eb885f7ea66688",
+  "candidate_sha256": "f6f45ed28feceb1140e02bf5faffc6293c7d3cac96e83a5e1ab2d70dd07baabf",
+  "removed_statements": [
+    "parser.add_argument('--linux-gpu-profile', action='store_true', help='Print initial Linux plant renderer query timings; requires --timeout 180 and sampler off')",
+    "if args.linux_gpu_profile and (args.target != 'linux' or args.scenario != 'plant' or args.timeout != 180 or (args.seed not in (None, 42)) or args.linux_frame_diagnostics):\n    parser.error('Linux GPU profile requires Linux plant, seed 42, original --timeout 180 and frame sampler off')",
+    "if args.linux_gpu_profile:\n    command.insert(1, '--gpu-profile')"
+  ],
+  "remaining_controller_ast_identical": true,
+  "reopened_command_and_all_deadlines_preserved": true,
+  "game_diff_empty": true
+}
