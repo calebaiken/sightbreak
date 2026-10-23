@@ -351,7 +351,11 @@ static func safe_navigate(arena: RelayYard, from: Vector3, to: Vector3) -> Vecto
 			return path[i]
 	return path[1] if path.size() > 1 else path[0]
 
-static func acquire_target(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary) -> SBActor:
+static func acquire_target(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary, observation: Dictionary = {}) -> SBActor:
+	# OBJECTIVE_OBSERVATION_BEGIN
+	var observing: bool = _objective_observing(match_node, observation)
+	if observing: observation["candidates"] = []
+	# OBJECTIVE_OBSERVATION_END
 	var best_enemy: SBActor = null
 	var best_score: float = float(profile.get("vision_range", 35.0))
 	var fov_dot: float = float(profile.get("fov_dot", -0.15))
@@ -366,13 +370,22 @@ static func acquire_target(match_node: Node, actor: SBActor, state: Dictionary, 
 			continue
 		var distance: float = actor.position.distance_to(enemy.position)
 		if distance > float(profile.get("vision_range", 35.0)):
+			# OBJECTIVE_OBSERVATION_BEGIN
+			if observing: observation["candidates"].append({"id": enemy.actor_id, "distance": distance, "reason": "range"})
+			# OBJECTIVE_OBSERVATION_END
 			continue
 		var toward: Vector3 = (enemy.position - actor.position).normalized()
 		# Allow peripheral awareness if this specific enemy just shot us and is within line of sight.
 		var in_fov: bool = facing.dot(toward) > fov_dot or (recently_damaged and enemy.actor_id == recent_attacker_id)
 		if not in_fov:
+			# OBJECTIVE_OBSERVATION_BEGIN
+			if observing: observation["candidates"].append({"id": enemy.actor_id, "distance": distance, "reason": "fov"})
+			# OBJECTIVE_OBSERVATION_END
 			continue
 		if not actor.can_see(enemy):
+			# OBJECTIVE_OBSERVATION_BEGIN
+			if observing: observation["candidates"].append({"id": enemy.actor_id, "distance": distance, "reason": "visibility"})
+			# OBJECTIVE_OBSERVATION_END
 			continue
 		var score: float = distance
 		if enemy.actor_id == current_target_id:
@@ -383,6 +396,9 @@ static func acquire_target(match_node: Node, actor: SBActor, state: Dictionary, 
 			score -= 6.0
 		if recently_damaged and enemy.actor_id == recent_attacker_id:
 			score -= 4.0
+		# OBJECTIVE_OBSERVATION_BEGIN
+		if observing: observation["candidates"].append({"id": enemy.actor_id, "distance": distance, "reason": "eligible", "score": score})
+		# OBJECTIVE_OBSERVATION_END
 		if score < best_score:
 			best_score = score
 			best_enemy = enemy
@@ -533,7 +549,13 @@ static func select_destination(match_node: Node, actor: SBActor, state: Dictiona
 static func tick_bot(match_node: Node, actor: SBActor, delta: float) -> void:
 	compute_bot_input(match_node, actor, delta)
 
-static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) -> void:
+# OBJECTIVE_OBSERVATION_BEGIN
+## Caller-owned debug/offline observations never feed back into bot decisions.
+static func _objective_observing(match_node: Node, observation: Dictionary) -> bool:
+	return bool(observation.get("enabled", false)) and OS.is_debug_build() and bool(match_node.get("_authority")) and str(match_node.options.get("mode", "offline")) == "offline"
+
+# OBJECTIVE_OBSERVATION_END
+static func compute_bot_input(match_node: Node, actor: SBActor, delta: float, observation: Dictionary = {}) -> void:
 	if not actor.alive or match_node.phase != "live":
 		return
 	if not match_node._bot_state.has(actor.actor_id):
@@ -544,10 +566,21 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) ->
 	var reaction_delay: float = float(profile.reaction_delay)
 
 	_update_auditory_and_team_memory(match_node, actor, state, profile)
-	var target: SBActor = acquire_target(match_node, actor, state, profile)
+	# OBJECTIVE_OBSERVATION_BEGIN
+	var observing: bool = _objective_observing(match_node, observation)
+	if observing:
+		observation["rng_before"] = str(match_node._rng.state)
+	# OBJECTIVE_OBSERVATION_END
+	var target: SBActor = acquire_target(match_node, actor, state, profile, observation if observing else {})
 	var plan: Dictionary = _select_objective_and_destination(match_node, actor, state, profile)
 	var destination: Vector3 = plan.destination
 	var interact: bool = bool(plan.interact)
+	# OBJECTIVE_OBSERVATION_BEGIN
+	if observing:
+		observation["plan"] = plan.duplicate(true)
+		observation["movement_mode"] = "interact" if interact else "idle"
+		observation["navigation_waypoint"] = actor.position
+	# OBJECTIVE_OBSERVATION_END
 
 	var look := Vector2(actor.yaw, actor.pitch)
 	var firing: bool = false
@@ -618,18 +651,37 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) ->
 		# Movement in combat: counter-strafe/brake at long range, strafe at close/mid range, or seek cover when reloading/critical HP.
 		var should_seek_cover: bool = actor.reload_remaining > 0.0 or (actor.health <= float(profile.get("retreat_hp", 0.0)) and not interact)
 		if should_seek_cover:
+			# OBJECTIVE_OBSERVATION_BEGIN
+			if observing: observation["movement_mode"] = "combat_cover"
+			# OBJECTIVE_OBSERVATION_END
 			var cover: Vector3 = cover_position(match_node, actor, target)
 			var next_wp: Vector3 = safe_navigate(match_node.arena, actor.position, cover)
+			# OBJECTIVE_OBSERVATION_BEGIN
+			if observing:
+				observation["navigation_waypoint"] = next_wp
+				observation["navigation_destination"] = cover
+			# OBJECTIVE_OBSERVATION_END
 			var step: Vector3 = next_wp - actor.position
 			if step.length_squared() > 0.01:
 				var local_step: Vector3 = Basis(Vector3.UP, -look.x) * step.normalized()
 				move = Vector2(local_step.x, -local_step.z)
 		elif bool(profile.get("counter_strafe", false)) and target_distance > 20.0 and aligned:
+			# OBJECTIVE_OBSERVATION_BEGIN
+			if observing: observation["movement_mode"] = "combat_brake"
+			# OBJECTIVE_OBSERVATION_END
 			move = Vector2.ZERO
 		else:
 			move = Vector2(sin(match_node._elapsed * 1.1 + float(squad_index(actor))) * 0.4, 0.0)
+			# OBJECTIVE_OBSERVATION_BEGIN
+			if observing: observation["movement_mode"] = "combat_strafe"
+			# OBJECTIVE_OBSERVATION_END
 
 		crouch = (squad_index(actor) % 3 == 0) or (bool(profile.get("counter_strafe", false)) and target_distance > 18.0 and aligned)
+		# OBJECTIVE_OBSERVATION_BEGIN
+		if observing:
+			observation["target_distance"] = target_distance
+			observation["aligned"] = aligned
+		# OBJECTIVE_OBSERVATION_END
 	else:
 		state["target"] = 0
 		state["reaction"] = 0.0
@@ -676,12 +728,21 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) ->
 
 		if actor.position.distance_to(destination) > 1.8 and not interact:
 			var waypoint: Vector3 = safe_navigate(match_node.arena, actor.position, destination)
+			# OBJECTIVE_OBSERVATION_BEGIN
+			if observing:
+				observation["movement_mode"] = "navigate"
+				observation["navigation_waypoint"] = waypoint
+				observation["navigation_destination"] = destination
+			# OBJECTIVE_OBSERVATION_END
 			var direction: Vector3 = waypoint - actor.position
 			if direction.length_squared() > 0.001:
 				look = Vector2(atan2(-direction.x, -direction.z), 0.0)
 				move = Vector2(0.0, 1.0)
 		elif not interact:
 			# Scan the approach rather than staring permanently away from the attackers.
+			# OBJECTIVE_OBSERVATION_BEGIN
+			if observing: observation["movement_mode"] = "scan"
+			# OBJECTIVE_OBSERVATION_END
 			var approach := Vector3(0.0, 0.0, -18.0) if actor.team == 1 else Vector3(0.0, 0.0, 20.0)
 			if match_node._elapsed - float(state.get("heard_at", -100.0)) < SOUND_MEMORY_SECONDS:
 				approach = state.get("heard_pos", approach)
@@ -713,3 +774,10 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) ->
 		"smoke": use_smoke,
 		"grenade": use_grenade
 	}
+	# OBJECTIVE_OBSERVATION_BEGIN
+	if observing:
+		observation["decision"] = {"actor_id": actor.actor_id, "target_id": int(state.get("target", 0)),
+			"role": str(state.get("role", "")), "destination": destination, "interact": interact,
+			"stuck": float(state.get("stuck", 0.0)), "command": actor.input_state.duplicate(true),
+			"rng_after": str(match_node._rng.state)}
+	# OBJECTIVE_OBSERVATION_END

@@ -72,3 +72,12 @@ No blanket never-plants claim or whole G1/G2 acceptance follows.
 The largest open gap is the absent historical decision stream. This fixture can
 explain a bounded reconstruction and qualify passive observations for later stock
 matches; it cannot retrospectively identify why the original carrier timed out.
+
+Implementation clarification, after writing the fixture source and before any
+native execution: the forward slice uses event
+122, the last retained actual LIVE pose. POST event 127 has a 4.95-second POST
+timer, which cannot stand for unknown remaining LIVE time. Event 127 is used for
+one paired decision only, explicitly changing its phase to LIVE. The forward
+slice retains event 122's original LIVE phase and remaining time. Isolated
+interaction controls keep other actors stationary while the subject uses real
+movement/actions and every actor remains subject to the objective consumer.
