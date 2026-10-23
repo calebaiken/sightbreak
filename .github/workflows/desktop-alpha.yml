@@ -11,6 +11,11 @@ on:
         required: true
         default: all
         options: [all, arm-macos-ios, windows, linux]
+      observe_windows_input:
+        description: Retain bounded guest-loopback Windows input stage observations
+        type: boolean
+        required: false
+        default: false
 permissions:
   contents: read
   actions: read
@@ -140,7 +145,7 @@ jobs:
         run: python scripts/verify_macos_ordinary.py --preflight builds/desktop-playability/macos-input-preflight/results.json --output builds/desktop-playability/macos-ordinary-input
       - name: Real exported keyboard and pointer input (Windows/Linux)
         if: always() && steps.export.outcome == 'success' && runner.os != 'macOS'
-        run: python scripts/verify_integration_export.py --target ${{ matrix.target }} --visit-armory --timeout 240 --output builds/desktop-playability/native-input
+        run: python scripts/verify_integration_export.py --target ${{ matrix.target }} --visit-armory --timeout 240 --output builds/desktop-playability/native-input ${{ runner.os == 'Windows' && inputs.observe_windows_input && '--observe-input-consumption' || '' }}
       - name: Controlled delayed-capture reload comparison (Windows)
         if: always() && steps.export.outcome == 'success' && runner.os == 'Windows'
         run: python scripts/verify_integration_export.py --target windows --input-schedule release-first --fire-capture-delay 4 --timeout 240 --output builds/desktop-playability/reload-release-first
