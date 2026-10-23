@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Pure synthetic OCR counterexamples; no OCR, Swift, native capture or engine."""
 import copy
+import hashlib
 import json
 from pathlib import Path
 import struct
-import subprocess
 import tempfile
 import unittest
 
@@ -237,23 +237,30 @@ class DeployAnalysisControls(unittest.TestCase):
                 self.assertTrue(all(row['owned_group_gone'] for row in report['cleanup']))
 
     def test_default_native_helper_ocr_and_gameplay_tail_are_byte_preserved(self):
-        path = 'scripts/macos_window_capture.swift'
-        old = subprocess.check_output(['git', 'show', 'c08889b:'+path], cwd=ROOT).decode()
-        current = (ROOT/path).read_text()
-        start, end = '            let permissions = ', '            report["passed"] = true'
-        old_default = old[old.index(start):old.index(end)]
-        current_default = current[current.index(start):current.index('            if let url = analysisURL {')]
-        self.assertEqual(current_default, old_default)
+        # This check runs in the workflow's depth-one checkout. Pin the exact
+        # c08889b reference instead of asking CI for an unavailable Git object.
+        fixtures = ROOT/'scripts/fixtures/macos_ordinary_source'
+        reference_bytes = (fixtures/'reference.json').read_bytes()
+        self.assertEqual(hashlib.sha256(reference_bytes).hexdigest(),
+                         '47d2484fe191af3a374dbb586474af53d36448d48acf3c8e00ed7a9f6b45d92a')
+        reference = json.loads(reference_bytes)
+        self.assertEqual(reference['source_commit'], 'c08889b8c1118c89e83c151079df4dc224076760')
+        golden = (fixtures/reference['helper_default_fixture']).read_bytes()
+        self.assertEqual(hashlib.sha256(golden).hexdigest(), reference['helper_default_sha256'])
+        native = (ROOT/reference['helper_source_path']).read_bytes()
+        start = reference['helper_default_start'].encode()
+        self.assertEqual(native[native.index(start):native.index(b'            if let url = analysisURL {')], golden)
+        current = native.decode()
         self.assertIn('args.count == 8 || args.count == 12', current)
         self.assertEqual(current.count('"'+analysis.PROFILE+'"'), 2)
         self.assertEqual(current.count('"'+analysis.SCOPE+'"'), 1)
         self.assertEqual(current.count('context.draw(image,'), 1)
         self.assertEqual(current.count('report["derived_deploy_analysis"] = try derivedDeployAnalysis('), 1)
         self.assertNotIn('request.customWords', current)
-        path = 'scripts/verify_macos_ordinary.py'
-        old = subprocess.check_output(['git', 'show', 'c08889b:'+path], cwd=ROOT)
-        current = (ROOT/path).read_bytes();boundary = b"            ui.click_label(menu, 'DEPLOY"
-        self.assertEqual(current[current.index(boundary):], old[old.index(boundary):])
+        current = (ROOT/reference['driver_source_path']).read_bytes()
+        boundary = reference['driver_gameplay_boundary'].encode()
+        self.assertEqual(hashlib.sha256(current[current.index(boundary):]).hexdigest(),
+                         reference['driver_gameplay_tail_sha256'])
 
 
 if __name__ == '__main__':
