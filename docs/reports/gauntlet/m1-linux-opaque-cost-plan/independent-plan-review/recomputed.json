@@ -1,0 +1,544 @@
+{
+  "reviewed_commit": "8b0598c40efaa98883ec2ef3f5f74cd499ebf3ce",
+  "review_scope": "read-only Git/retained-byte inspection and synthetic arithmetic; no engine, compile, export, workload, OCR, service, or native gameplay",
+  "game_tree": "55691684d31d44f1680141954bbe530443de9d1f",
+  "shipping_content_sha256": "bcb872f6998ed8504c852dee354ab0acf5b6f19e58e40717267a1927e6d68a50",
+  "shipping_file_count": 128,
+  "game_equals_base_and_b2e0293": true,
+  "repo_sources": [
+    {
+      "path": "game/scripts/gameplay/arena.gd",
+      "bytes": 35138,
+      "sha256": "ba0b4545931b2bdf77cb0e1e6ae0662e5c7c7345c4f6436cca665faddb4265c5",
+      "git_blob": "d70e4ac4f9a3f16948743849e5ea98cba7a7a5a9",
+      "matches_ledger": true
+    },
+    {
+      "path": "game/scripts/gameplay/actor.gd",
+      "bytes": 59412,
+      "sha256": "38155fb501bfb8db7fb2a0c72352d247cfb66afddb8ec7f18f0585b20d29f872",
+      "git_blob": "430169676a1fedef687bd156d579e827cf0e6182",
+      "matches_ledger": true
+    },
+    {
+      "path": "game/scripts/main.gd",
+      "bytes": 93271,
+      "sha256": "0e94a4580715011f9b2f425de34c03a3843b9e10d6ce7637ce41bff9a25da320",
+      "git_blob": "996edab146d70c72f654876259f2fb16eb5b5a65",
+      "matches_ledger": true
+    },
+    {
+      "path": "game/project.godot",
+      "bytes": 1020,
+      "sha256": "2916998610c4fa397b853c8f0e7a89b6c8a947177bc69202d6b034b6bf163465",
+      "git_blob": "cdfef244f9afe3415dcb8c2c1f6f3d04a1967a56",
+      "matches_ledger": true
+    },
+    {
+      "path": "game/tests/render_benchmark.gd",
+      "bytes": 4953,
+      "sha256": "cd97c7fb69d8bc424f6be0a69214cf9301988e4d03f38dbec1ebb73310db424d",
+      "git_blob": "69b90c06249b4c47fb0efcb9800d0b451a0ebe5b",
+      "matches_ledger": true
+    },
+    {
+      "path": "game/tests/integration_render_profile.gd",
+      "bytes": 6535,
+      "sha256": "5b3c923f83b3b82faca2e603173e381acadde5c6b06adb79687033ff2d074cc7",
+      "git_blob": "d2a226bc73c0c39ee9a0caca0ce1eabcf15b6a81",
+      "matches_ledger": true
+    },
+    {
+      "path": "scripts/profile_render.sh",
+      "bytes": 2428,
+      "sha256": "3fcc9462ab7bbcf36d09e80175899bf67efa6e04c67b966339923d378978f762",
+      "git_blob": "3b65be9eaeca79442035d468925f6fe56c6ae801",
+      "matches_ledger": true
+    },
+    {
+      "path": "scripts/diagnostics/render_feature_probe.gd",
+      "bytes": 3054,
+      "sha256": "7ffcc1451ae46226b8efe76cf8924e697d7c8268b434af827bfd4bba339670f3",
+      "git_blob": "c83f164a81de623541453bd860210bbae18f3066",
+      "matches_ledger": true
+    },
+    {
+      "path": "docs/reports/PERFORMANCE-0.3.md",
+      "bytes": 8297,
+      "sha256": "ca25296b32ee71a2702a59d5334f46a3eaf653e1b37ec2493fddac63b2f4f342",
+      "git_blob": "bbb916791136e850a86929975d1e1e5603f6797b",
+      "matches_ledger": true
+    }
+  ],
+  "upstream_sources": [
+    {
+      "source": "main/main.cpp",
+      "inspected_path": "/workspace/sightbreak-linux-opaque-cost/.local/godot-opaque-source/main/main.cpp",
+      "bytes": 210345,
+      "sha256": "1831257f5c8eb0707d278f04b21b1e4b3ba863f8dca5cab36022d4b19e36b8c1",
+      "matches_ledger": true,
+      "original_bytes_compared": [
+        "/workspace/sightbreak-linux-profile-recovered/.local/godot-gles-profile-upstream/main/main.cpp"
+      ]
+    },
+    {
+      "source": "servers/rendering/rendering_server_default.cpp",
+      "inspected_path": "/workspace/sightbreak-linux-opaque-cost/.local/godot-opaque-source/servers/rendering/rendering_server_default.cpp",
+      "bytes": 16829,
+      "sha256": "60cdf149a4cb8c8c7b49d562edcce2273e028e4a0a6cb067c7c478054a3dc3c9",
+      "matches_ledger": true,
+      "original_bytes_compared": [
+        "/workspace/sightbreak-linux-profile-recovered/.local/godot-gles-profile-upstream/servers/rendering/rendering_server_default.cpp"
+      ]
+    },
+    {
+      "source": "servers/rendering/rendering_server_default.h",
+      "inspected_path": "/workspace/sightbreak-linux-opaque-cost/.local/godot-opaque-source/servers/rendering/rendering_server_default.h",
+      "bytes": 50483,
+      "sha256": "1edab81178754a27e70eb897b3a8d22e246c20dee060072e785674f4ff62d6e6",
+      "matches_ledger": true,
+      "original_bytes_compared": [
+        "/workspace/sightbreak-linux-profile-recovered/.local/godot-gles-profile-upstream/servers/rendering/rendering_server_default.h"
+      ]
+    },
+    {
+      "source": "drivers/gles3/storage/utilities.cpp",
+      "inspected_path": "/workspace/sightbreak-linux-opaque-cost/.local/godot-opaque-source/drivers/gles3/storage/utilities.cpp",
+      "bytes": 18908,
+      "sha256": "8bf1c99190175b2f1aced92a27fae5bd5f360bcfa7c72a59992b13ca87b31fc4",
+      "matches_ledger": true,
+      "original_bytes_compared": [
+        "/workspace/sightbreak-linux-profile-recovered/.local/godot-gles-profile-upstream/drivers/gles3/storage/utilities.cpp"
+      ]
+    },
+    {
+      "source": "drivers/gles3/storage/utilities.h",
+      "inspected_path": "/workspace/sightbreak-linux-opaque-cost/.local/godot-opaque-source/drivers/gles3/storage/utilities.h",
+      "bytes": 9410,
+      "sha256": "0030fdcdb2b3a4fce76c10a17ec33d52520f28573e6a1851fb93b5583ad7f714",
+      "matches_ledger": true,
+      "original_bytes_compared": [
+        "/workspace/sightbreak-linux-profile-recovered/.local/godot-gles-profile-upstream/drivers/gles3/storage/utilities.h"
+      ]
+    },
+    {
+      "source": "drivers/gles3/rasterizer_gles3.cpp",
+      "inspected_path": "/workspace/sightbreak-linux-opaque-cost/.local/godot-opaque-source/drivers/gles3/rasterizer_gles3.cpp",
+      "bytes": 20253,
+      "sha256": "7906073ee78a23816dfa0a0a21ec5879980f10f4eb5119ffa39051aba957311e",
+      "matches_ledger": true,
+      "original_bytes_compared": [
+        "/workspace/sightbreak-linux-profile-recovered/.local/godot-gles-profile-upstream/drivers/gles3/rasterizer_gles3.cpp"
+      ]
+    },
+    {
+      "source": "servers/rendering/storage/utilities.h",
+      "inspected_path": "/workspace/sightbreak-linux-opaque-cost/.local/godot-opaque-source/servers/rendering/storage/utilities.h",
+      "bytes": 7461,
+      "sha256": "d1da80f29e8ce5f26cd390a58ffdcea517ffaf4070ab58b951f54a1ab2471781",
+      "matches_ledger": true,
+      "original_bytes_compared": [
+        "/workspace/sightbreak-linux-profile-recovered/.local/godot-gles-profile-upstream/servers/rendering/storage/utilities.h"
+      ]
+    },
+    {
+      "source": "drivers/gles3/rasterizer_scene_gles3.cpp",
+      "inspected_path": "/workspace/sightbreak-linux-opaque-cost/.local/godot-opaque-source/drivers/gles3/rasterizer_scene_gles3.cpp",
+      "bytes": 212186,
+      "sha256": "6d0719c9cd2caf685a9825028183bdf058081d7bc92d4b27ed2587f39b081221",
+      "matches_ledger": true,
+      "original_bytes_compared": [
+        "/workspace/review-cache/linux-gles-profile-recovered/rasterizer_scene_gles3.cpp"
+      ]
+    },
+    {
+      "source": "drivers/gles3/rasterizer_scene_gles3.h",
+      "inspected_path": "/workspace/sightbreak-linux-opaque-cost/.local/godot-opaque-source/drivers/gles3/rasterizer_scene_gles3.h",
+      "bytes": 36818,
+      "sha256": "4e3d4c1b13ec5982afb5f6ab477e317bb83b2b2dd7e631ae7738891ef35ffaf7",
+      "matches_ledger": true,
+      "original_bytes_compared": []
+    },
+    {
+      "source": "drivers/gles3/shaders/scene.glsl",
+      "inspected_path": "/workspace/sightbreak-linux-opaque-cost/.local/godot-opaque-source/drivers/gles3/shaders/scene.glsl",
+      "bytes": 99241,
+      "sha256": "2c77be0c85b7ab1a85ed8009c77cdb6216f1494d43083592213ad68f9e812977",
+      "matches_ledger": true,
+      "original_bytes_compared": []
+    },
+    {
+      "source": "scene/resources/material.cpp",
+      "inspected_path": "/workspace/sightbreak-linux-opaque-cost/.local/godot-opaque-source/scene/resources/material.cpp",
+      "bytes": 154241,
+      "sha256": "1e0c14e2ca82d14cc8896fb79aff95dc01e002db93718f6e31a1c0509ded1453",
+      "matches_ledger": true,
+      "original_bytes_compared": []
+    }
+  ],
+  "timing_anchors": [
+    {
+      "source": "main/main.cpp",
+      "first_line": 1982,
+      "last_line": 1983,
+      "lines": [
+        "1982: \t\t} else if (arg == \"--gpu-profile\") {",
+        "1983: \t\t\tprofile_gpu = true;"
+      ]
+    },
+    {
+      "source": "main/main.cpp",
+      "first_line": 3571,
+      "last_line": 3573,
+      "lines": [
+        "3571: \t\tif (profile_gpu || (!editor && bool(GLOBAL_GET(\"debug/settings/stdout/print_gpu_profile\")))) {",
+        "3572: \t\t\trendering_server->set_print_gpu_profile(true);",
+        "3573: \t\t}"
+      ]
+    },
+    {
+      "source": "servers/rendering/rendering_server_default.cpp",
+      "first_line": 364,
+      "last_line": 367,
+      "lines": [
+        "364: void RenderingServerDefault::set_print_gpu_profile(bool p_enable) {",
+        "365: \tRSG::utilities->capturing_timestamps = p_enable;",
+        "366: \tprint_gpu_profile = p_enable;",
+        "367: }"
+      ]
+    },
+    {
+      "source": "servers/rendering/storage/utilities.h",
+      "first_line": 159,
+      "last_line": 171,
+      "lines": [
+        "159: \tbool capturing_timestamps = false;",
+        "160: ",
+        "161: #define TIMESTAMP_BEGIN() \\",
+        "162: \t{ \\",
+        "163: \t\tif (RSG::utilities->capturing_timestamps) \\",
+        "164: \t\t\tRSG::utilities->capture_timestamps_begin(); \\",
+        "165: \t}",
+        "166: ",
+        "167: #define RENDER_TIMESTAMP(m_text) \\",
+        "168: \t{ \\",
+        "169: \t\tif (RSG::utilities->capturing_timestamps) \\",
+        "170: \t\t\tRSG::utilities->capture_timestamp(m_text); \\",
+        "171: \t}"
+      ]
+    },
+    {
+      "source": "drivers/gles3/rasterizer_gles3.cpp",
+      "first_line": 112,
+      "last_line": 122,
+      "lines": [
+        "112: ",
+        "113: \tGLES3::Utilities *utils = GLES3::Utilities::get_singleton();",
+        "114: \tutils->_capture_timestamps_begin();",
+        "115: ",
+        "116: \t//scene->iteration();",
+        "117: }",
+        "118: ",
+        "119: void RasterizerGLES3::end_frame(bool p_swap_buffers) {",
+        "120: \tGLES3::Utilities *utils = GLES3::Utilities::get_singleton();",
+        "121: \tutils->capture_timestamps_end();",
+        "122: }"
+      ]
+    },
+    {
+      "source": "drivers/gles3/storage/utilities.cpp",
+      "first_line": 329,
+      "last_line": 367,
+      "lines": [
+        "329: void Utilities::capture_timestamp(const String &p_name) {",
+        "330: \tERR_FAIL_COND(frames[frame].timestamp_count >= max_timestamp_query_elements);",
+        "331: ",
+        "332: #ifdef GL_API_ENABLED",
+        "333: \tif (RasterizerUtilGLES3::is_gles_over_gl()) {",
+        "334: \t\tglQueryCounter(frames[frame].queries[frames[frame].timestamp_count], GL_TIMESTAMP);",
+        "335: \t}",
+        "336: #endif // GL_API_ENABLED",
+        "337: ",
+        "338: \tframes[frame].timestamp_names[frames[frame].timestamp_count] = p_name;",
+        "339: \tframes[frame].timestamp_cpu_values[frames[frame].timestamp_count] = OS::get_singleton()->get_ticks_usec();",
+        "340: \tframes[frame].timestamp_count++;",
+        "341: }",
+        "342: ",
+        "343: void Utilities::_capture_timestamps_begin() {",
+        "344: \t// frame is incremented at the end of the frame so this gives us the queries for frame - 2. By then they should be ready.",
+        "345: \tif (frames[frame].timestamp_count) {",
+        "346: #ifdef GL_API_ENABLED",
+        "347: \t\tif (RasterizerUtilGLES3::is_gles_over_gl()) {",
+        "348: \t\t\tfor (uint32_t i = 0; i < frames[frame].timestamp_count; i++) {",
+        "349: \t\t\t\tuint64_t temp = 0;",
+        "350: \t\t\t\tglGetQueryObjectui64v(frames[frame].queries[i], GL_QUERY_RESULT, &temp);",
+        "351: \t\t\t\tframes[frame].timestamp_result_values[i] = temp;",
+        "352: \t\t\t}",
+        "353: \t\t}",
+        "354: #endif // GL_API_ENABLED",
+        "355: \t\tSWAP(frames[frame].timestamp_names, frames[frame].timestamp_result_names);",
+        "356: \t\tSWAP(frames[frame].timestamp_cpu_values, frames[frame].timestamp_cpu_result_values);",
+        "357: \t}",
+        "358: ",
+        "359: \tframes[frame].timestamp_result_count = frames[frame].timestamp_count;",
+        "360: \tframes[frame].timestamp_count = 0;",
+        "361: \tframes[frame].index = Engine::get_singleton()->get_frames_drawn();",
+        "362: \tcapture_timestamp(\"Internal Begin\");",
+        "363: }",
+        "364: ",
+        "365: void Utilities::capture_timestamps_end() {",
+        "366: \tcapture_timestamp(\"Internal End\");",
+        "367: \tframe = (frame + 1) % FRAME_COUNT;"
+      ]
+    },
+    {
+      "source": "servers/rendering/rendering_server_default.cpp",
+      "first_line": 129,
+      "last_line": 140,
+      "lines": [
+        "129: \tGodotProfileZoneGrouped(_profile_zone, \"post_draw_steps\");",
+        "130: \tif (create_thread) {",
+        "131: \t\tcallable_mp(this, &RenderingServerDefault::_run_post_draw_steps).call_deferred();",
+        "132: \t} else {",
+        "133: \t\t_run_post_draw_steps();",
+        "134: \t}",
+        "135: ",
+        "136: \tif (RSG::utilities->get_captured_timestamps_count()) {",
+        "137: \t\tGodotProfileZoneGrouped(_profile_zone, \"frame_profile\");",
+        "138: \t\tVector<RenderingServerTypes::FrameProfileArea> new_profile;",
+        "139: \t\tif (RSG::utilities->capturing_timestamps) {",
+        "140: \t\t\tnew_profile.resize(RSG::utilities->get_captured_timestamps_count());"
+      ]
+    },
+    {
+      "source": "servers/rendering/rendering_server_default.cpp",
+      "first_line": 190,
+      "last_line": 209,
+      "lines": [
+        "190: \t\t\ttotal_time = frame_profile[frame_profile.size() - 1].gpu_msec;",
+        "191: \t\t}",
+        "192: ",
+        "193: \t\tuint64_t ticks_elapsed = OS::get_singleton()->get_ticks_usec() - print_frame_profile_ticks_from;",
+        "194: \t\tprint_frame_profile_frame_count++;",
+        "195: \t\tif (ticks_elapsed > 1000000) {",
+        "196: \t\t\tprint_line(\"GPU PROFILE (total \" + rtos(total_time) + \"ms): \");",
+        "197: ",
+        "198: \t\t\tfloat print_threshold = 0.01;",
+        "199: \t\t\tfor (const KeyValue<String, float> &E : print_gpu_profile_task_time) {",
+        "200: \t\t\t\tdouble time = E.value / double(print_frame_profile_frame_count);",
+        "201: \t\t\t\tif (time > print_threshold) {",
+        "202: \t\t\t\t\tprint_line(\"\\t-\" + E.key + \": \" + rtos(time) + \"ms\");",
+        "203: \t\t\t\t}",
+        "204: \t\t\t}",
+        "205: \t\t\tprint_gpu_profile_task_time.clear();",
+        "206: \t\t\tprint_frame_profile_ticks_from = OS::get_singleton()->get_ticks_usec();",
+        "207: \t\t\tprint_frame_profile_frame_count = 0;",
+        "208: \t\t}",
+        "209: \t}"
+      ]
+    },
+    {
+      "source": "servers/rendering/rendering_server_default.cpp",
+      "first_line": 213,
+      "last_line": 230,
+      "lines": [
+        "213: }",
+        "214: ",
+        "215: void RenderingServerDefault::_run_post_draw_steps() {",
+        "216: \twhile (frame_drawn_callbacks.front()) {",
+        "217: \t\tCallable c = frame_drawn_callbacks.front()->get();",
+        "218: \t\tVariant result;",
+        "219: \t\tCallable::CallError ce;",
+        "220: \t\tc.callp(nullptr, 0, result, ce);",
+        "221: \t\tif (ce.error != Callable::CallError::CALL_OK) {",
+        "222: \t\t\tString err = Variant::get_callable_error_text(c, nullptr, 0, ce);",
+        "223: \t\t\tERR_PRINT(\"Error calling frame drawn function: \" + err);",
+        "224: \t\t}",
+        "225: ",
+        "226: \t\tframe_drawn_callbacks.pop_front();",
+        "227: \t}",
+        "228: ",
+        "229: \temit_signal(SNAME(\"frame_post_draw\"));",
+        "230: }"
+      ]
+    },
+    {
+      "source": "main/main.cpp",
+      "first_line": 5086,
+      "last_line": 5096,
+      "lines": [
+        "5086: \t\twants_present |= force_redraw_requested;",
+        "5087: \t\tif ((!force_redraw_requested) && OS::get_singleton()->is_in_low_processor_usage_mode()) {",
+        "5088: \t\t\tif (RenderingServer::get_singleton()->has_changed()) {",
+        "5089: \t\t\t\tRenderingServer::get_singleton()->draw(wants_present, scaled_step); // flush visual commands",
+        "5090: \t\t\t\tEngine::get_singleton()->increment_frames_drawn();",
+        "5091: \t\t\t}",
+        "5092: \t\t} else {",
+        "5093: \t\t\tRenderingServer::get_singleton()->draw(wants_present, scaled_step); // flush visual commands",
+        "5094: \t\t\tEngine::get_singleton()->increment_frames_drawn();",
+        "5095: \t\t\tforce_redraw_requested = false;",
+        "5096: \t\t}"
+      ]
+    },
+    {
+      "source": "main/main.cpp",
+      "first_line": 5174,
+      "last_line": 5178,
+      "lines": [
+        "5174: \tSceneTree *scene_tree = SceneTree::get_singleton();",
+        "5175: \tbool wake_for_events = scene_tree && scene_tree->is_accessibility_enabled();",
+        "5176: ",
+        "5177: \tGodotProfileZoneGrouped(_profile_zone, \"OS::add_frame_delay\");",
+        "5178: \tOS::get_singleton()->add_frame_delay(DisplayServer::get_singleton()->window_can_draw(), wake_for_events);"
+      ]
+    }
+  ],
+  "previous_attempt": {
+    "path": "docs/reports/gauntlet/m1-linux-gles-profile-recovered/native-r1/native-plant/results.json",
+    "bytes": 15432,
+    "sha256": "e1e324c2985065ed7a10c1c46ebc1450a459f84e9985d641d2cc34916dcf0e38",
+    "source": "b1a131ab4790ac84371b54ee236441a66faf4125",
+    "passed": false,
+    "error": "Objective scenario live phase",
+    "elapsed_seconds": 58.557767851999415,
+    "partial_checks": {},
+    "cleanup_errors": []
+  },
+  "sparse_print_counterexample": {
+    "kind": "synthetic estimator counterexample; no engine execution",
+    "off_samples_ms": [
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668
+    ],
+    "on_samples_ms": [
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      216.66666666666666,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668,
+      16.666666666666668
+    ],
+    "median_ratio": 1.0,
+    "mean_ratio": 1.1875
+  }
+}
