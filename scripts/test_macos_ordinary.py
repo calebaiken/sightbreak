@@ -24,6 +24,12 @@ def capture():
     return result
 
 
+def hud_capture():
+    result = capture()
+    result['text'] = result['text'][-2:]
+    return result
+
+
 def state():
     return {'schema': 1, 'scope': 'debug_offline_read_only_observation', 'scenario': 'standard',
             'time_scale': 1, 'phase': 'live', 'wall_msec': 100, 'drawn_frames': 20,
@@ -73,9 +79,9 @@ class OrdinaryControls(unittest.TestCase):
                 ordinary.label_point(bad, 'DEPLOY · OFFLINE 5V5')
 
     def test_native_hud_rejects_missing_ambiguous_foreign_or_dead_values(self):
-        self.assertEqual(ordinary.hud_values(capture()), {'health': 100, 'ammo': 14, 'reserve': 60})
+        self.assertEqual(ordinary.hud_values(hud_capture()), {'health': 100, 'ammo': 14, 'reserve': 60})
         for change in ('dead', 'zero', 'weapon', 'reload', 'partial', 'duplicate', 'low', 'region', 'outside'):
-            bad = capture()
+            bad = hud_capture()
             health, ammo = bad['text'][-2:]
             if change == 'dead': health['text'] = 'ELIMINATED · SPECTATING'
             elif change == 'zero': health['text'] = '000 · HEALTH'

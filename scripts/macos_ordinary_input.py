@@ -204,6 +204,8 @@ def require_initial(initial):
 def hud_values(capture):
     """Require native Vision health and sidearm values in separate HUD regions."""
     capture_geometry(capture)
+    if any(screen_text(capture, label) for label in ('OPERATOR RECORD', 'FIELD MENU', 'FIELD SETTINGS')):
+        raise RuntimeError('Native HUD capture shows a menu or settings overlay')
     health, ammo = [], []
     for entry in capture.get('text', []):
         text = ' '.join(entry.get('text', '').upper().split())

@@ -74,12 +74,13 @@ def run(output, preflight_path):
         remaining()
 
     def command(name, arguments, budget, *, allow_failure=False):
+        until = min(deadline, time.monotonic()+budget)
         trace('helper_command', name=name, command=arguments, budget_seconds=budget)
         with (output / (name+'.log')).open('w', encoding='utf-8') as log:
             process = subprocess.Popen(arguments, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
             processes.append((name, process))
-            process.wait(timeout=min(budget, remaining()))
-        remaining()
+            process.wait(timeout=remaining(until))
+        remaining(until)
         if failed((output / (name+'.log')).read_text(errors='replace')):
             raise RuntimeError('Strict native error/leak signature in '+name)
         if process.returncode and not allow_failure:
@@ -248,14 +249,19 @@ def run(output, preflight_path):
             if actor['ammo'] != 15 or actor['reserve'] != 60 or actor['reload'] != 0:
                 raise RuntimeError('Native fire requires the initial full sidearm')
             for _ in range(2):
+                hold_deadline = min(deadline, time.monotonic()+1)
+                trace('fire_hold_slot', hold_budget_seconds=1)
                 ui.fire_button(True)
                 try:
-                    ui.observed_state('lmb', True)
-                    pause(1)
+                    ui.observed_state('lmb', True, seconds=min(2, remaining(hold_deadline)))
+                    # OS acknowledgement consumes the existing one-second hold;
+                    # a delayed receipt cannot add another second of firing.
+                    pause(remaining(hold_deadline))
                 finally:
+                    release_deadline = min(deadline, time.monotonic()+.35)
                     ui.fire_button(False)
-                ui.observed_state('lmb', False)
-                pause(.35)
+                ui.observed_state('lmb', False, seconds=min(2, remaining(release_deadline)))
+                pause(remaining(release_deadline))
             fire_frame = [None]
             def fired(state):
                 actor = check_context(state)
@@ -279,9 +285,10 @@ def run(output, preflight_path):
             try:
                 ui.observed_state('reload', True, seconds=min(2, remaining(reload_deadline)))
                 beginning = observed(reload_started, remaining(reload_deadline), 'Real native R begins reload', depleted['wall_msec'])
+                completion_deadline = min(deadline, time.monotonic()+BUDGETS['reload_complete'])
             finally:
                 ui.reload_key(False)
-            ui.observed_state('reload', False)
+            ui.observed_state('reload', False, seconds=min(2, remaining(completion_deadline)))
             def reload_completed(state):
                 actor = check_context(state)
                 if actor['reload'] > 0:
@@ -290,14 +297,15 @@ def run(output, preflight_path):
                         or state['elapsed']-beginning['elapsed'] < beginning['local_actor']['reload']-1/60):
                     raise RuntimeError('Reload did not conserve ammunition over its observed simulation countdown')
                 return True
-            completed = observed(reload_completed, BUDGETS['reload_complete'], 'Native reload completion', beginning['wall_msec'])
+            completed = observed(reload_completed, remaining(completion_deadline), 'Native reload completion', beginning['wall_msec'])
             rendered = observed(lambda state: reload_completed(state) and state['drawn_frames'] >= completed['drawn_frames']+2,
                                 BUDGETS['reload_frames'], 'Two drawn frames after native reload', completed['wall_msec'])
             result['native_reload'] = {'before': depleted, 'started': beginning, 'completed': completed, 'rendered': rendered}
             settled = screenshot_hud('06-after-reload', rendered)
+            field_deadline = min(deadline, time.monotonic()+BUDGETS['field_menu'])
             ui.tap_escape()
             paused = observed(lambda state: state.get('ui', {}).get('paused') is True,
-                              BUDGETS['field_menu'], 'Native Escape opens FIELD MENU', settled['wall_msec'])
+                              remaining(field_deadline), 'Native Escape opens FIELD MENU', settled['wall_msec'])
             check_context(paused, paused=True)
             field = capture('07-field-menu', 'field_menu')
             after_field = observed(lambda state: state.get('ui', {}).get('paused') is True, 5,
@@ -314,11 +322,12 @@ def run(output, preflight_path):
             result['input_release'] = release
             if release['held_after_release'] or release['errors'] or any(release['native_state'][key] for key in ('lmb_down', 'escape_down', 'reload_down')):
                 raise RuntimeError('Native controls failed final neutral release')
+            close_deadline = min(deadline, time.monotonic()+BUDGETS['close'])
             result['ordinary_termination_requested'] = ui.request_close()
             if not result['ordinary_termination_requested']:
                 raise RuntimeError('Public AppKit ordinary close refused')
-            client.wait(timeout=min(BUDGETS['close'], remaining()))
-            remaining()
+            client.wait(timeout=remaining(close_deadline))
+            remaining(close_deadline)
             result['normal_exit_code'] = client.returncode
             if client.returncode:
                 raise RuntimeError('Ordinary native close returned nonzero')
