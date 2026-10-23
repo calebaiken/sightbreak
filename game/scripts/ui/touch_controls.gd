@@ -188,25 +188,37 @@ func _draw() -> void:
 		if key == "move": continue
 		var point := control_point(key)
 		var r := radius(key)
-		draw_circle(point, r, Color(0.045, 0.058, 0.072, 0.86))
-		draw_arc(point, r, 0, TAU, 48, Color(0.015, 0.02, 0.028, 0.96), 5.25)
-		draw_arc(point, r, 0, TAU, 48, Color(0.85, 0.72, 0.45, 0.95) if editing else Color(0.83, 0.87, 0.89, 0.95), 1.25)
+		# The compact plate stays within the existing 1.25-radius hit region.
+		var compact := key != "fire" and r < 32.0
+		var paint_r := minf(r * 1.25, maxf(r, 26.0)) if compact else r
+		var rim_r := paint_r + 1.0 if compact else paint_r
+		var rim_shadow := 3.5 if compact else 5.25
+		var icon_y := -13.0 if compact else -8.0
+		var label_y := 6.0 if compact else 17.0
+		draw_circle(point, paint_r, Color(0.045, 0.058, 0.072, 0.86))
+		draw_arc(point, rim_r, 0, TAU, 48, Color(0.015, 0.02, 0.028, 0.96), rim_shadow)
+		draw_arc(point, rim_r, 0, TAU, 48, Color(0.85, 0.72, 0.45, 0.95) if editing else Color(0.83, 0.87, 0.89, 0.95), 1.25)
 		if key == "fire":
-			draw_arc(point, r - 5, -PI * 0.8, -PI * 0.2, 24, Color(0.77, 0.24, 0.30, 0.95), 2.5)
+			draw_arc(point, paint_r - 5, -PI * 0.8, -PI * 0.2, 24, Color(0.77, 0.24, 0.30, 0.95), 2.5)
 		if actions.get(key, false):
-			draw_circle(point, r - 3, Color(0.7, 0.15, 0.22, 0.65))
-			draw_arc(point, r, 0, TAU, 48, Color(0.85, 0.72, 0.45, 0.95), 2.0)
+			draw_circle(point, paint_r - 3, Color(0.7, 0.15, 0.22, 0.65))
+			draw_arc(point, rim_r, 0, TAU, 48, Color(0.85, 0.72, 0.45, 0.95), 2.0)
 		var label_text: String = LABELS[key]
 		var width := font.get_string_size(label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
 		var depleted: bool = counts.has(key) and int(counts[key]) <= 0
 		var ink := Color(0.9, 0.92, 0.94, 0.35 if depleted else 0.9)
-		_draw_action_icon(key, point + Vector2(0, -8), ink)
-		draw_string_outline(font, point + Vector2(-width / 2, 17), label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, 3, Color(0, 0, 0, 0.4 if depleted else 1.0))
-		draw_string(font, point + Vector2(-width / 2, 17), label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(1, 1, 1, 0.4 if depleted else 1.0))
+		var badge := point + Vector2(r * 0.72, -r * 0.72)
 		if counts.has(key):
-			# Remaining-utility badge on the upper right of the button.
-			var badge := point + Vector2(r * 0.72, -r * 0.72)
+			# Badge paint precedes glyphs; digits remain above the original icon.
+			draw_arc(badge, 9, 0, TAU, 48, Color(0.015, 0.02, 0.028, 0.96), 5.25)
 			draw_circle(badge, 9, Color(0.78, 0.67, 0.43, 0.95) if not depleted else Color(0.3, 0.33, 0.37, 0.9))
+			draw_arc(badge, 9, 0, TAU, 48, Color(0.83, 0.87, 0.89, 0.95), 1.25)
+		var icon_surround := Color(0, 0, 0, 0.4 if depleted else 1.0)
+		_draw_action_icon(key, point + Vector2(0, icon_y), icon_surround, 2.0)
+		draw_string_outline(font, point + Vector2(-width / 2, label_y), label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, 3, Color(0, 0, 0, 0.4 if depleted else 1.0))
+		_draw_action_icon(key, point + Vector2(0, icon_y), ink)
+		draw_string(font, point + Vector2(-width / 2, label_y), label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(1, 1, 1, 0.4 if depleted else 1.0))
+		if counts.has(key):
 			var digits := str(int(counts[key]))
 			var digit_width := font.get_string_size(digits, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
 			draw_string(font, badge + Vector2(-digit_width / 2, 4.5), digits, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(1, 1, 1) if depleted else Color(0.04, 0.05, 0.07))
@@ -221,38 +233,38 @@ func _draw() -> void:
 		draw_string(font, Vector2(size.x * 0.30, size.y * 0.45), "DRAG CONTROLS  /  TAP SAVE ABOVE", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color(0.9, 0.78, 0.5))
 
 # Shared geometric glyphs require no textures or shader variants.
-func _draw_action_icon(action: String, at: Vector2, color: Color) -> void:
+func _draw_action_icon(action: String, at: Vector2, color: Color, stroke_extra: float = 0.0) -> void:
 	match action:
 		"fire":
-			draw_arc(at, 7, 0, TAU, 24, color, 1.5)
-			for axis in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]: draw_line(at + axis * 10, at + axis * 14, color, 2)
-			draw_circle(at, 2, color)
+			draw_arc(at, 7, 0, TAU, 24, color, 1.5 + stroke_extra)
+			for axis in [Vector2.LEFT, Vector2.RIGHT, Vector2.UP, Vector2.DOWN]: draw_line(at + axis * 10, at + axis * 14, color, 2 + stroke_extra)
+			draw_circle(at, 2 + stroke_extra * 0.5, color)
 		"reload":
-			draw_arc(at, 8, -PI * 0.8, PI * 0.7, 22, color, 1.5)
-			draw_line(at + Vector2(-5, -6), at + Vector2(-5, -1), color, 1.5)
-			draw_line(at + Vector2(-5, -6), at + Vector2(0, -6), color, 1.5)
+			draw_arc(at, 8, -PI * 0.8, PI * 0.7, 22, color, 1.5 + stroke_extra)
+			draw_line(at + Vector2(-5, -6), at + Vector2(-5, -1), color, 1.5 + stroke_extra)
+			draw_line(at + Vector2(-5, -6), at + Vector2(0, -6), color, 1.5 + stroke_extra)
 		"jump", "crouch":
 			var sign_y := -1 if action == "jump" else 1
-			draw_line(at + Vector2(-8, 3 * sign_y), at + Vector2(0, 8 * sign_y), color, 2)
-			draw_line(at + Vector2(0, 8 * sign_y), at + Vector2(8, 3 * sign_y), color, 2)
-			draw_line(at + Vector2(0, 8 * sign_y), at + Vector2(0, -7 * sign_y), color, 2)
+			draw_line(at + Vector2(-8, 3 * sign_y), at + Vector2(0, 8 * sign_y), color, 2 + stroke_extra)
+			draw_line(at + Vector2(0, 8 * sign_y), at + Vector2(8, 3 * sign_y), color, 2 + stroke_extra)
+			draw_line(at + Vector2(0, 8 * sign_y), at + Vector2(0, -7 * sign_y), color, 2 + stroke_extra)
 		"switch":
-			draw_line(at + Vector2(-10, -4), at + Vector2(10, -4), color, 1.5)
-			draw_line(at + Vector2(10, -4), at + Vector2(6, -8), color, 1.5)
-			draw_line(at + Vector2(10, 4), at + Vector2(-10, 4), color, 1.5)
-			draw_line(at + Vector2(-10, 4), at + Vector2(-6, 8), color, 1.5)
+			draw_line(at + Vector2(-10, -4), at + Vector2(10, -4), color, 1.5 + stroke_extra)
+			draw_line(at + Vector2(10, -4), at + Vector2(6, -8), color, 1.5 + stroke_extra)
+			draw_line(at + Vector2(10, 4), at + Vector2(-10, 4), color, 1.5 + stroke_extra)
+			draw_line(at + Vector2(-10, 4), at + Vector2(-6, 8), color, 1.5 + stroke_extra)
 		"grenade", "smoke":
-			draw_rect(Rect2(at + Vector2(-5, -5), Vector2(10, 13)), color, false, 1.5)
-			draw_line(at + Vector2(-3, -8), at + Vector2(4, -8), color, 2)
-			if action == "smoke": draw_line(at + Vector2(-3, 0), at + Vector2(3, 0), color, 1.5)
+			draw_rect(Rect2(at + Vector2(-5, -5), Vector2(10, 13)), color, false, 1.5 + stroke_extra)
+			draw_line(at + Vector2(-3, -8), at + Vector2(4, -8), color, 2 + stroke_extra)
+			if action == "smoke": draw_line(at + Vector2(-3, 0), at + Vector2(3, 0), color, 1.5 + stroke_extra)
 		"pause":
-			draw_line(at + Vector2(-4, -6), at + Vector2(-4, 7), color, 3)
-			draw_line(at + Vector2(4, -6), at + Vector2(4, 7), color, 3)
+			draw_line(at + Vector2(-4, -6), at + Vector2(-4, 7), color, 3 + stroke_extra)
+			draw_line(at + Vector2(4, -6), at + Vector2(4, 7), color, 3 + stroke_extra)
 		"score":
-			for row in [-5, 0, 5]: draw_line(at + Vector2(-8, row), at + Vector2(8, row), color, 1.5)
+			for row in [-5, 0, 5]: draw_line(at + Vector2(-8, row), at + Vector2(8, row), color, 1.5 + stroke_extra)
 		"buy":
-			draw_rect(Rect2(at + Vector2(-8, -5), Vector2(16, 12)), color, false, 1.5)
-			draw_line(at + Vector2(-3, -8), at + Vector2(3, -8), color, 2)
+			draw_rect(Rect2(at + Vector2(-8, -5), Vector2(16, 12)), color, false, 1.5 + stroke_extra)
+			draw_line(at + Vector2(-3, -8), at + Vector2(3, -8), color, 2 + stroke_extra)
 		"interact":
-			draw_line(at + Vector2(-7, 0), at + Vector2(7, 0), color, 2)
-			draw_line(at + Vector2(0, -7), at + Vector2(0, 7), color, 2)
+			draw_line(at + Vector2(-7, 0), at + Vector2(7, 0), color, 2 + stroke_extra)
+			draw_line(at + Vector2(0, -7), at + Vector2(0, 7), color, 2 + stroke_extra)

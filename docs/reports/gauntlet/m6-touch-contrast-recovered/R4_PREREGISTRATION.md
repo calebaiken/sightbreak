@@ -27,9 +27,9 @@ layout persistence/edit behavior, action label word and 12-pixel action font.
 No text shrinking or abbreviations. Glyph paths remain unchanged.
 
 Paint utility badge backgrounds and their protected rim before icons/labels;
-keep count digits on top. Draw a one-pixel black icon surround using the same
-original glyph paths at eight neighboring offsets, then the original foreground
-paths. Preserve depleted foreground alpha and report its contrast exception;
+keep count digits on top. Draw a one-pixel black icon surround using the same original glyph paths
+with stroke widths increased by two, then the unchanged foreground paths. The
+filled FIRE center expands by one pixel only in the surround pass. Preserve depleted foreground alpha and report its contrast exception;
 its complete glyph footprint and count readability remain mandatory.
 
 For non-fire buttons below a 32-pixel nominal radius, move the icon center from
@@ -37,8 +37,12 @@ For non-fire buttons below a 32-pixel nominal radius, move the icon center from
 all larger stacks unchanged. This uses the same words/font while separating the
 small icon and label foregrounds. A compact plate radius is
 `min(1.25*r, max(r,26))`; other plate radii remain r. The 1.25*r cap is the EXISTING
-physical hit radius, not a new interaction region. Body fill, held fill and
-visible rim follow the registered plate radius. Badge center/radius/digits stay
+physical hit radius, not a new interaction region. Body fill and held fill follow
+the registered plate radius. Compact rim center radius is `paint_r+1`, with a
+3.5-pixel dark stroke; larger rim center radius remains r with its 5.25-pixel dark
+stroke. Light/held strokes stay 1.25/2 pixels. This clears the full RELOAD glyph
+without changing its size; the outer compact dark halo stays within `r+8` across
+the full scale clamp. Badge center/radius/digits stay
 at their original positions; a dark/light rim protects their final silhouette.
 
 At minimum clamp, ten ordinary plates expand from 19.6 to at most 24.5 pixels,
@@ -102,3 +106,22 @@ Record all actual visual footprint changes alongside unchanged physical geometry
 Keep failed rows and full raw outputs. No new native run occurs until a fresh
 independent source/method review and explicit root lane release. No product
 integration or shipped-title/accessibility acceptance follows this preregistration.
+
+## Source implementation refinement, still before native
+
+The glyph surround uses one wider-stroke pass, rather than the initially
+considered eight shifted passes. This keeps the same glyph paths and default
+foreground widths/radii, with a default-zero draw-only width parameter. The R3
+native icon footprints have only 0/255 coverage, so their raster endpoints can
+be checked against the wider stroke before qualification; no glyph is dropped.
+The physical/input methods remain byte-identical. This refinement adds no
+native output and grants no acceptance.
+
+The first pure translation check is retained as `r4-source-pure-attempt-1.log`:
+desktop-min RELOAD reached 24.240451 pixels from its center, beyond the first
+candidate's inner idle rim at 23.875. It failed before native. The registered
+compact rim offset above replaces that failed spacing. At minimum radius the
+body is inside the 24.5-pixel hit circle, but the light/held rim extends 1.625/2
+pixels beyond it and the dark surround extends 2.75 pixels beyond it. This
+visual-versus-hit discrepancy is explicit and can be rejected by the critic;
+it does not enlarge the actual touch target.
