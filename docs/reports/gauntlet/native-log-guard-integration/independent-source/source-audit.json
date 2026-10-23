@@ -1,0 +1,1784 @@
+{
+  "base": "358b240ebadb8f32b581922ab99baec11ff9ed81",
+  "implementation": "64a7afbad452d9559a39844bde7f25026029c97b",
+  "handoff": "d4e6b0be66afd5400a6a9bfd78d3884b7d429c78",
+  "matcher": {
+    "bytes": 390,
+    "sha256": "8684252c3ec4ca466fe24a31f938a7614b8ce993c91041b0a2c42d2d483f94e1"
+  },
+  "fixture": {
+    "bytes": 2000315,
+    "sha256": "a50a819152083c3d73564f21a5f15d36571c1b79c7178831667092f07537a218"
+  },
+  "changed_paths": [
+    ".github/workflows/desktop-alpha.yml",
+    "docs/reports/gauntlet/native-log-guard-integration/PREREGISTRATION.md",
+    "docs/reports/gauntlet/native-log-guard-integration/baseline-red.json",
+    "docs/reports/gauntlet/native-log-guard-integration/baseline-red.stderr",
+    "docs/reports/gauntlet/native-log-guard-integration/baseline-red.stdout",
+    "docs/reports/gauntlet/native-log-guard-integration/build-manifest-restored.json",
+    "docs/reports/gauntlet/native-log-guard-integration/build-manifest-restored.stderr",
+    "docs/reports/gauntlet/native-log-guard-integration/build-manifest-restored.stdout",
+    "docs/reports/gauntlet/native-log-guard-integration/build-manifest.stderr",
+    "docs/reports/gauntlet/native-log-guard-integration/build-manifest.stdout",
+    "docs/reports/gauntlet/native-log-guard-integration/native-log.stderr",
+    "docs/reports/gauntlet/native-log-guard-integration/native-log.stdout",
+    "docs/reports/gauntlet/native-log-guard-integration/package-qa-receipts.stderr",
+    "docs/reports/gauntlet/native-log-guard-integration/package-qa-receipts.stdout",
+    "docs/reports/gauntlet/native-log-guard-integration/pure-command-receipts.json",
+    "docs/reports/gauntlet/native-log-guard-integration/source-binding.json",
+    "docs/reports/gauntlet/native-log-guard-integration/validate-shell-syntax.stderr",
+    "docs/reports/gauntlet/native-log-guard-integration/validate-shell-syntax.stdout",
+    "scripts/fixtures/native_log/.gitattributes",
+    "scripts/fixtures/native_log/input-mode.log",
+    "scripts/fixtures/native_log/provenance.json",
+    "scripts/native_log.py",
+    "scripts/test_native_log.py",
+    "scripts/validate.sh"
+  ],
+  "protected_paths_unchanged": 10623,
+  "archive_members_original_byte_exact": 375,
+  "assertions": 435,
+  "checks": [
+    {
+      "name": "exact existing-file edit set",
+      "passed": true
+    },
+    {
+      "name": "all additions component scoped",
+      "passed": true
+    },
+    {
+      "name": "no removed paths",
+      "passed": true
+    },
+    {
+      "name": "handoff changes only component reports",
+      "passed": true
+    },
+    {
+      "name": "all implementation handoff bytes exact",
+      "passed": true
+    },
+    {
+      "name": "unchanged exact game tree",
+      "passed": true
+    },
+    {
+      "name": "scripts/validate.sh exact one registration",
+      "passed": true
+    },
+    {
+      "name": "scripts/validate.sh all existing bytes preserved",
+      "passed": true
+    },
+    {
+      "name": ".github/workflows/desktop-alpha.yml exact one registration",
+      "passed": true
+    },
+    {
+      "name": ".github/workflows/desktop-alpha.yml all existing bytes preserved",
+      "passed": true
+    },
+    {
+      "name": "accepted matcher byte exact",
+      "passed": true
+    },
+    {
+      "name": "all checked-out implementation bytes exact",
+      "passed": true
+    },
+    {
+      "name": "five standalone test methods",
+      "passed": true
+    },
+    {
+      "name": "only stdlib and matcher imports",
+      "passed": true
+    },
+    {
+      "name": "no execution or history calls",
+      "passed": true
+    },
+    {
+      "name": "ordered builder prereg implementation handoff",
+      "passed": true
+    },
+    {
+      "name": "original complete corpus exact",
+      "passed": true
+    },
+    {
+      "name": "original corpus bytes hash lines",
+      "passed": true
+    },
+    {
+      "name": "corpus provenance exact",
+      "passed": true
+    },
+    {
+      "name": "exact original orphan range",
+      "passed": true
+    },
+    {
+      "name": "original summary exact",
+      "passed": true
+    },
+    {
+      "name": "diagnostic hash and length exact",
+      "passed": true
+    },
+    {
+      "name": "native orphan formats all exact",
+      "passed": true
+    },
+    {
+      "name": "original metadata hash source-before.json",
+      "passed": true
+    },
+    {
+      "name": "original metadata hash source-sealed.json",
+      "passed": true
+    },
+    {
+      "name": "original metadata hash input-mode.receipt.json",
+      "passed": true
+    },
+    {
+      "name": "original metadata hash overall.json",
+      "passed": true
+    },
+    {
+      "name": "original metadata hash engine-version.log",
+      "passed": true
+    },
+    {
+      "name": "original metadata hash engine-version.receipt.json",
+      "passed": true
+    },
+    {
+      "name": "historical native receipt unchanged false clean",
+      "passed": true
+    },
+    {
+      "name": "historical acquisition reject strict fail preserved",
+      "passed": true
+    },
+    {
+      "name": "original source tree metadata exact",
+      "passed": true
+    },
+    {
+      "name": "engine bytes hash exact",
+      "passed": true
+    },
+    {
+      "name": "original engine version exact",
+      "passed": true
+    },
+    {
+      "name": "original critic archive exact",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes after-input-mode.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes after-input-mode.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes after-input-mode.receipt.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes before-input-mode.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes before-input-mode.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes before-input-mode.receipt.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes engine-version.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes engine-version.receipt.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes exact-copy-map.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes final-phase-logs/after-input-mode.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes final-phase-logs/before-input-mode.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes final-phase-logs/engine-version.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes final-phase-logs/input-mode.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes final-phase-logs/private-import.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes final-phase-snapshots.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes generated-uids/tests/audio_lifecycle_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes identity_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes import-additions.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes input-mode.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes input-mode.receipt.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes overall.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes phase-seal.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes private-import.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes private-import.receipt.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes private-state/cache/fontconfig/3830d5c3ddfd5cd38a049b759396e72e-le64.cache-9",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes private-state/cache/fontconfig/CACHEDIR.TAG",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes private-state/cache/godot/editor_doc_cache-4.7.res",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes private-state/config/godot/editor_settings-4.7.tres",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes private-state/data/SIGHTBREAK-audio-lifecycle-e42b99f7067f4d048be000b0f63dde13/input_mode/logs/godot.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes private-state/data/SIGHTBREAK-audio-lifecycle-e42b99f7067f4d048be000b0f63dde13/input_mode/logs/godot2026-10-23T08.26.35.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes private-state/data/SIGHTBREAK-audio-lifecycle-e42b99f7067f4d048be000b0f63dde13/input_mode/logs/godot2026-10-23T08.26.41.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes private-state/data/SIGHTBREAK-audio-lifecycle-e42b99f7067f4d048be000b0f63dde13/input_mode/offline_training.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes private-state-after-copy.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes private-state-archive.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes private-state-final.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes produced-private-state/cache/fontconfig/3830d5c3ddfd5cd38a049b759396e72e-le64.cache-9",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes produced-private-state/cache/fontconfig/CACHEDIR.TAG",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes produced-private-state/cache/godot/editor_doc_cache-4.7.res",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes produced-private-state/config/godot/editor_settings-4.7.tres",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes produced-private-state/data/SIGHTBREAK-audio-lifecycle-e42b99f7067f4d048be000b0f63dde13/input_mode/logs/godot.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes produced-private-state/data/SIGHTBREAK-audio-lifecycle-e42b99f7067f4d048be000b0f63dde13/input_mode/logs/godot2026-10-23T08.26.35.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes produced-private-state/data/SIGHTBREAK-audio-lifecycle-e42b99f7067f4d048be000b0f63dde13/input_mode/logs/godot2026-10-23T08.26.41.log",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes produced-private-state/data/SIGHTBREAK-audio-lifecycle-e42b99f7067f4d048be000b0f63dde13/input_mode/offline_training.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/environments/relay_sky.tres",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/icon.svg",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/icon.svg.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/asphalt.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/asphalt.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/asphalt_normal.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/asphalt_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/asphalt_roughness.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/asphalt_roughness.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/concrete.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/concrete.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/concrete_normal.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/concrete_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/concrete_roughness.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/concrete_roughness.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/painted_metal.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/painted_metal.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/painted_metal_normal.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/painted_metal_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/painted_metal_roughness.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/materials/painted_metal_roughness.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar.glb",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar.glb.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_albedo.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_albedo.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_arms.glb",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_arms.glb.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_arms_albedo.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_arms_albedo.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_arms_normal.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_arms_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_arms_orm.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_arms_orm.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_body.tres",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_hands.glb",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_hands.glb.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_hands.tres",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_hands_albedo.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_hands_albedo.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_hands_normal.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_hands_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_hands_orm.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_hands_orm.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_normal.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_normal.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_orm.png",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/assets/weapons/relay_ar/relay_ar_orm.png.import",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/export_presets.cfg",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/main.tscn",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/project.godot",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/actor.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/actor.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/arena.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/arena.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/bot_ai.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/bot_ai.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/combat_effects.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/combat_effects.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/match.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/match.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/reload_audio.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/reload_audio.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/reload_phases.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/reload_phases.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/utility.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/utility.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/viewmodel_shading.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/viewmodel_shading.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/weapon_model.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/weapon_model.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/weapons.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/gameplay/weapons.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/main.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/main.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/economy_bridge.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/economy_bridge.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/hit_history.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/hit_history.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/input_gate.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/input_gate.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/input_stream.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/input_stream.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/movement_prediction.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/movement_prediction.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/movement_step.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/movement_step.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/peer_lifecycle.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/peer_lifecycle.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/reconnect_policy.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/reconnect_policy.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/result_outbox.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/result_outbox.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/snapshot_buffer.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/snapshot_buffer.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/snapshot_schema.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/snapshot_schema.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/state_privacy.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/network/state_privacy.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/offline_diagnostics.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/offline_diagnostics.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/profile.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/profile.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/case_reveal.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/case_reveal.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/confirm_sheet.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/confirm_sheet.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/cosmetic_material.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/cosmetic_material.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/design_tokens.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/design_tokens.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/display_models.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/display_models.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/economy_api.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/economy_api.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/economy_ui.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/economy_ui.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/item_inspector.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/item_inspector.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/radar.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/radar.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/safe_area.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/safe_area.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/touch_controls.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/touch_controls.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/transaction_journal.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/transaction_journal.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/weapon_glyph.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/scripts/ui/weapon_glyph.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/account_match_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/account_match_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/account_network_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/account_network_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/activity_provenance_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/activity_provenance_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/activity_provenance_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/activity_provenance_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/actor_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/actor_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/admission_capacity_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/admission_capacity_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/armory_state_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/armory_state_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/armory_ui_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/armory_ui_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/audio_lifecycle_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/audio_lifecycle_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/authority_order_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/authority_order_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/bot_ai_regression_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/bot_ai_regression_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/bot_dry_weapon_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/bot_dry_weapon_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/bot_lifecycle_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/bot_lifecycle_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/bot_match_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/bot_match_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/bot_squad_observation.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/bot_squad_observation.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/bot_squad_symmetry_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/bot_squad_symmetry_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/bridge_transport_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/bridge_transport_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/combat_presentation_capture.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/combat_presentation_capture.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/connection_lifecycle_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/connection_lifecycle_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/cosmetic_lifecycle_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/cosmetic_lifecycle_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/cosmetic_presentation_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/cosmetic_presentation_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/economy_recovery_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/economy_recovery_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/economy_ui_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/economy_ui_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/environment_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/environment_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/fixtures/backend_world.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/gunplay_rules_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/gunplay_rules_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/handshake_attack_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/handshake_attack_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/handshake_server_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/handshake_server_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/hit_feedback_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/hit_feedback_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/hit_history_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/hit_history_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/hit_volume_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/hit_volume_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/hud_objective_hint_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/hud_objective_hint_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/hud_overflow_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/hud_overflow_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/independent_reconnect_review_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/independent_reconnect_review_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/independent_resume_admission_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/independent_resume_admission_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/independent_resume_alias_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/independent_resume_alias_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/input_freshness_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/input_freshness_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/input_lifecycle_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/input_lifecycle_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/input_mode_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/input_mode_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/input_stream_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/input_stream_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/integration_actor_lifecycle_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/integration_actor_lifecycle_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/integration_aspect_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/integration_aspect_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/integration_render_profile.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/integration_render_profile.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/landscape_ui_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/landscape_ui_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/lost_welcome_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/lost_welcome_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/main_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/main_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/match_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/match_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/menu_capture.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/menu_capture.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/menu_contrast_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/menu_contrast_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/menu_focus_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/menu_focus_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/menu_occlusion_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/menu_occlusion_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/menu_state_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/menu_state_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/movement_prediction_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/movement_prediction_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/native_economy_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/native_economy_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/network_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/network_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/network_profile.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/network_profile.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/network_simulation_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/network_simulation_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/offline_diagnostics_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/offline_diagnostics_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/paint_visibility_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/paint_visibility_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/peer_lifecycle_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/peer_lifecycle_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/postgres_receipt_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/postgres_receipt_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/profile_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/profile_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/protocol_client_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/protocol_client_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/receipt_lifecycle_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/receipt_lifecycle_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reconnect_policy_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reconnect_policy_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_audio_capture.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_audio_capture.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_audio_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_audio_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_discolour_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_discolour_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_legibility_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_legibility_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_perf_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_perf_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_sequence_capture.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_sequence_capture.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_sequence_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_sequence_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_visibility_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reload_visibility_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/render_benchmark.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/render_benchmark.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/render_budget_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/render_budget_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/render_lifecycle_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/render_lifecycle_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/render_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/render_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/result_outbox_crash_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/result_outbox_crash_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/result_outbox_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/result_outbox_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/resume_auth_loss_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/resume_auth_loss_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reward_bridge_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/reward_bridge_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/smoke_presentation_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/smoke_presentation_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/smoke_render_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/smoke_render_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/smoke_visual_capture.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/smoke_visual_capture.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/snapshot_buffer_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/snapshot_buffer_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/state_privacy_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/state_privacy_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/touch_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/touch_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/transaction_crash_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/transaction_crash_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/transaction_journal_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/transaction_journal_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/transaction_lock_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/transaction_lock_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/ux_contract_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/ux_contract_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/viewmodel_light_probe.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/viewmodel_light_probe.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/visual_scene.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/visual_scene.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/weapon_art_capture.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/weapon_art_capture.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/weapon_art_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/weapon_art_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/weapon_integrity_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/weapon_integrity_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/weapon_motion_capture.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/weapon_motion_capture.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/weapon_render_benchmark.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/weapon_render_benchmark.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/world_test.gd",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project/tests/world_test.gd.uid",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project-after-import.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project-before-import.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes project-final.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes retained-uids-final.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes source-after.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes source-before.json",
+      "passed": true
+    },
+    {
+      "name": "archive member original bytes source-sealed.json",
+      "passed": true
+    },
+    {
+      "name": "archived complete native corpus exact",
+      "passed": true
+    },
+    {
+      "name": "archive member count",
+      "passed": true
+    },
+    {
+      "name": "pinned upstream source hash exact",
+      "passed": true
+    },
+    {
+      "name": "upstream orphan emission exact",
+      "passed": true
+    },
+    {
+      "name": "upstream summary emission exact",
+      "passed": true
+    },
+    {
+      "name": "old root full corpus false clean retained",
+      "passed": true
+    },
+    {
+      "name": "candidate full corpus rejects",
+      "passed": true
+    },
+    {
+      "name": "builder binding matches exact source",
+      "passed": true
+    },
+    {
+      "name": "builder output native-log.stdout",
+      "passed": true
+    },
+    {
+      "name": "builder output native-log.stderr",
+      "passed": true
+    },
+    {
+      "name": "builder output build-manifest.stdout",
+      "passed": true
+    },
+    {
+      "name": "builder output build-manifest.stderr",
+      "passed": true
+    },
+    {
+      "name": "builder output package-qa-receipts.stdout",
+      "passed": true
+    },
+    {
+      "name": "builder output package-qa-receipts.stderr",
+      "passed": true
+    },
+    {
+      "name": "builder output validate-shell-syntax.stdout",
+      "passed": true
+    },
+    {
+      "name": "builder output validate-shell-syntax.stderr",
+      "passed": true
+    },
+    {
+      "name": "builder output shallow-native-log.stdout",
+      "passed": true
+    },
+    {
+      "name": "builder output shallow-native-log.stderr",
+      "passed": true
+    },
+    {
+      "name": "builder output shallow-build-manifest.stdout",
+      "passed": true
+    },
+    {
+      "name": "builder output shallow-build-manifest.stderr",
+      "passed": true
+    },
+    {
+      "name": "builder output shallow-package-qa-receipts.stdout",
+      "passed": true
+    },
+    {
+      "name": "builder output shallow-package-qa-receipts.stderr",
+      "passed": true
+    },
+    {
+      "name": "retained expected red baseline receipt",
+      "passed": true
+    },
+    {
+      "name": "retained sparse setup failure",
+      "passed": true
+    },
+    {
+      "name": "retained manifest passing rerun",
+      "passed": true
+    }
+  ]
+}
