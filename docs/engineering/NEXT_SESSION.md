@@ -1,3 +1,20 @@
+# Own capture guard evidence checkpoint — 2026-10-23
+
+This note belongs to isolated branch `codex/m2-mac-startup-capture-stability`;
+root's canonical queue remains `/workspace/sightbreak-v1-recovered`. Exact
+candidate `d5277180a7705befd64d2f40a362ad566e83d91b`, base R3 `4854aed9`,
+adds only same-read capture guard input evidence. Registration `a7b60823`
+preceded edits. [The handoff](../reports/gauntlet/m2-mac-startup-capture-stability/HANDOFF.md)
+retains actual failed run `39943145541`, byte-exact original helper/failed receipt,
+the test-only expectation failure and correction, and clean one-commit depth-one
+15-command / 139-method CPU 4 replay. No candidate tests fail. Original native
+failure remains FAILED; no retry, Apple compile, engine/export, native/CI run,
+input or product rendering/input fix is claimed. Fresh independent source review
+is in progress under `/root/mac_capture_guard_fresh_source_critic`; builder gives
+no approval. Next: review exact source, then separately preregister/review admission
+if root chooses a later native diagnostic. Actual second frame and its cause,
+AX/Deploy exposure, ordinary gameplay and broader Mac gates remain unverified.
+
 # Next session
 
 Updated 2026-10-23, 07:25 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,

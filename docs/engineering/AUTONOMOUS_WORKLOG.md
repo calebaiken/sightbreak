@@ -519,3 +519,19 @@ performance, physical input or the original failed Linux gameplay deadline.
 All accepted source/results and original rejections are recoverable on the own
 mission branch. No broad release gate closes. Continue NEXT_SESSION's exact
 implementation/review queue; do not treat these engineering increments as v1.0.
+
+## 2026-10-23 — Own same-read capture guard diagnostics
+
+Branch `codex/m2-mac-startup-capture-stability`, registered `a7b60823`, frozen
+source `d5277180`. The inspected original helper and actual failed receipt from
+run `39943145541` are the reference. The source records the existing configured
+pixel size and exact same-read post-capture owned bounds without changing guards,
+native calls, failure/success conditions, privacy or deadlines. No retry is added.
+All 15 source-only commands / 139 methods pass in clean one-commit depth-one
+source on CPU 4. An initial test-only whole-deadline close expectation failed and
+was corrected; its output remains. The original actual receipt remains failed
+in unchanged controller replay. Exact source transformation preserves every
+original helper byte outside the registered diagnostic block. Fresh independent
+source review is pending; no native/CI/engine/Apple compile or product rendering
+fix is claimed. Largest remaining gap is the original unrecorded second frame
+and cause. See the own capture stability HANDOFF; root owns canonical gate updates.

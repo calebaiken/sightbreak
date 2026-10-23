@@ -1,0 +1,6 @@
+Initial registration staging failed before any code edits because the new report path was outside the sparse definition:
+The following paths and/or pathspecs matched paths that exist
+outside of your sparse-checkout definition, so will not be
+updated in the index:
+docs/reports/gauntlet/m2-mac-startup-capture-stability/PREREGISTRATION.md
+The command exited 1. Adding only this report directory to the own sparse definition corrected the setup; registration a7b60823 was then committed before code edits. No source or candidate test failure is inferred from this staging failure.
