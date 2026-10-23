@@ -1,0 +1,49 @@
+--- original_controls.py
++++ semantic_controls.py
+@@ -25,6 +25,7 @@
+         self.calls = []
+         self.owner, self.foreground, self.visible, self.thread = 12, 34, True, 56
+         self.state_index, self.read_delay = 0, {}
++        self.semantic_read_error = {}
+         self.read_error, self.send_error, self.map_error = {}, {}, {}
+         self.edge_delay, self.sleep_extra = .005, 0.
+         self.sleep_error, self.send_hook = None, None
+@@ -32,7 +33,20 @@
+         self.ui.window, self.ui.pid, self.ui.user = 34, 12, self
+         self.receipt = {}
+ 
++    def semantic_stage(self):
++        checks = self.receipt.get('down_checks', [])
++        if checks and checks[-1].get('status') == 'IN_PROGRESS':
++            return 'before_key_down'
++        if self.calls and self.calls[-1]['down']:
++            return 'after_down'
++        if self.calls:
++            return 'after_release'
++        return 'before_down'
++
+     def IsWindowVisible(self, window):
++        stage = self.semantic_stage()
++        if stage in self.semantic_read_error:
++            raise self.semantic_read_error[stage]
+         self.state_index += 1
+         self.now += self.read_delay.get(self.state_index, 0)
+         if self.state_index in self.read_error:
+@@ -170,7 +184,7 @@
+         for stage in ('read', 'sleep'):
+             with self.subTest(stage=stage):
+                 rig = Rig()
+-                if stage == 'read': rig.read_error[2] = OSError('post down read')
++                if stage == 'read': rig.semantic_read_error['after_down'] = OSError('post down read')
+                 else: rig.sleep_error = SystemExit('cancel sleep')
+                 with self.assertRaises(BaseException): rig.run(('w', 'd'))
+                 self.assertEqual(rig.edges()[-2:], [('w', False), ('d', False)])
+@@ -186,7 +200,7 @@
+ 
+     def test_after_release_read_failure_retains_all_edges(self):
+         rig = Rig()
+-        rig.read_error[3] = OSError('post release read')
++        rig.semantic_read_error['after_release'] = OSError('post release read')
+         with self.assertRaises(RuntimeError): rig.run()
+         self.assertEqual(rig.edges(), [('d', True), ('d', False)])
+         self.assertEqual(len(rig.receipt['edges']), 2)

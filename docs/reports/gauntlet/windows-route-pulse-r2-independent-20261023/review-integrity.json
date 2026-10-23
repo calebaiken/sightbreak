@@ -1,0 +1,56 @@
+{
+  "checks": {
+    "immutable_critic_PREREGISTRATION.md": true,
+    "immutable_critic_REPORT.md": true,
+    "immutable_critic_VERDICT.json": true,
+    "immutable_critic_audit_source_and_originals-r1.py": true,
+    "immutable_critic_audit_source_and_originals.py": true,
+    "immutable_critic_depth-one-checks.json": true,
+    "immutable_critic_depth-one-test_focus_resume_timing.log": true,
+    "immutable_critic_depth-one-test_macos_menu.log": true,
+    "immutable_critic_depth-one-test_native_approach.log": true,
+    "immutable_critic_depth-one-test_native_focus_fence.log": true,
+    "immutable_critic_depth-one-test_native_observation.log": true,
+    "immutable_critic_depth-one-test_native_route_pulse.log": true,
+    "immutable_critic_depth-one-test_native_settings_route.log": true,
+    "immutable_critic_depth-one-test_offline_capture_fences.log": true,
+    "immutable_critic_depth-one-test_offline_export_ocr.log": true,
+    "immutable_critic_independent-controls-r1.log": true,
+    "immutable_critic_independent-controls-r2.log": true,
+    "immutable_critic_independent-controls.log": true,
+    "immutable_critic_independent-receipts-r1.json": true,
+    "immutable_critic_independent-receipts-r2.json": true,
+    "immutable_critic_independent-receipts.json": true,
+    "immutable_critic_independent_controls.py": true,
+    "immutable_critic_source-and-originals-r1.json": true,
+    "immutable_critic_source-and-originals-r1.log": true,
+    "immutable_critic_source-and-originals.json": true,
+    "immutable_critic_source-and-originals.log": true,
+    "immutable_original_critic_HEAD": true,
+    "immutable_original_critic_tracked_clean": true,
+    "R2_only_two_source_files": true,
+    "original_builder_report_git_objects_unchanged": true,
+    "all_exact_depth_one_source_hashes_match": true,
+    "all_original_control_assertions_and_behavior_unchanged_except_two_stage_selectors": true,
+    "semantic_same23_still_rejects_original_source_with_exact_two_failures": true
+  },
+  "all_pass": true,
+  "source": "a4899dd5534553ae832a433dd704f3539914a421",
+  "handoff": "d3b0fc1676b8904b96f69cf738edb0c312f1981a",
+  "semantic_rejected_source_replay": {
+    "command": [
+      "python",
+      "/workspace/reviews/windows-route-pulse-r2-source/docs/reports/gauntlet/windows-route-pulse-r2-independent-20261023/semantic_controls.py",
+      "/workspace/reviews/windows-route-pulse-depth-one"
+    ],
+    "exit": 1
+  },
+  "source_sha256": {
+    "scripts/verify_integration_export.py": "6de6b78597d5af681f3ee883886422b065ebe2c2f96a72f628ff52e502f698fe",
+    "scripts/verify_offline_export.py": "ddeb838c1cf3682e0fcf11b098f1f175c4d51ac3eadb85878932290547635308",
+    "scripts/native_approach.py": "d58b9530958e746a487ed45cf57e8dc2012df6ef0676173f63be2d054efeb6b0",
+    "scripts/native_settings_route.py": "7ca33fde40a35e7383d8225abc23dbb8d9e2b59c0d16d6c90572c6110c85a102",
+    "scripts/test_native_route_pulse.py": "00c31db63546cce15ea91fb11f0d21aadb9882e7b998bbece3b3763b34d88855",
+    "scripts/validate.sh": "20f703562a85a8eec1b28dd7057854af0c6673ca8084a2cbcbcbb985ea8ea2ad"
+  }
+}
