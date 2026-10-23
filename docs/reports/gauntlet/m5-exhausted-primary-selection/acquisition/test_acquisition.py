@@ -82,8 +82,8 @@ class PureInputs(unittest.TestCase):
             with self.assertRaises(acquisition.BoundExceeded): budget.arm()
 
     def test_finalization_allowance_does_not_reset(self):
-        with patch.object(acquisition.time,'monotonic',side_effect=[0,241,241,244]),patch.object(acquisition.signal,'setitimer') as alarm:
-            budget=acquisition.Budget(240);budget.finish_alarm();budget.finish_alarm()
+        with patch.object(acquisition.time,'monotonic',side_effect=[0,241,241,244,244]),patch.object(acquisition.signal,'setitimer') as alarm:
+            budget=acquisition.Budget(240);budget.finish_alarm(failed=True);budget.finish_alarm(failed=True)
             self.assertEqual(budget.finalization_deadline,246)
             self.assertEqual(alarm.call_args_list[-1].args[1],2)
 

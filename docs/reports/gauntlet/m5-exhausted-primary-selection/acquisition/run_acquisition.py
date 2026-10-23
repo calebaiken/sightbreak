@@ -5,6 +5,7 @@ No production/test policy changes. A passed receipt is acquisition evidence,
 never independent acceptance. Complete streams and strict failures are kept.
 """
 import argparse
+import copy
 from contextlib import contextmanager
 from datetime import datetime, timezone
 import hashlib
@@ -75,6 +76,93 @@ def sha(path):
 
 def write(path, value):
     path.write_text(json.dumps(value, indent=2, sort_keys=True) + '\n')
+
+
+def read_record(path):
+    return json.loads(path.read_text())
+
+
+def checked_publication(records, budget, deadline, *, failed_publication=False):
+    """Every required write/readback completes under one unchanged deadline."""
+    snapshots = [(path,copy.deepcopy(value)) for path,value in records]
+    if failed_publication:
+        require(all(value.get('passed') is False for _,value in snapshots), 'Emergency publication is failure-only')
+    evidence = []
+    for path,value in snapshots:
+        budget.arm_until(deadline,failed_publication=failed_publication)
+        write(path,value)
+        budget.check_until(deadline)
+    for path,value in snapshots:
+        budget.arm_until(deadline,failed_publication=failed_publication)
+        observed = read_record(path)
+        budget.check_until(deadline)
+        require(observed == value, 'Published receipt readback differs: '+str(path))
+        evidence.append(dict(path=str(path),readback_elapsed_seconds=time.monotonic()-budget.started))
+    budget.check_until(deadline)
+    return evidence
+
+
+def fail_report(report, error, stage):
+    report['passed'] = False
+    current = dict(type=type(error).__name__,message=str(error),stage=stage)
+    if report.get('failure') is None:
+        report['failure'] = current
+    else:
+        report['finalization_failures'].append(current)
+
+
+def publish_overall(output, journal, report, budget):
+    """No success survives a late/failed required publication or readback."""
+    def records():
+        report['wall_seconds_before_publication'] = time.monotonic()-budget.started
+        report['duration_scope'] = ('Stored snapshot precedes its own publication; final wall_seconds and '
+                                    'confirmed readbacks are in the returned report/terminal summary')
+        report['publication_contract'] = 'Requires confirmed overall receipt + claim journal readbacks and zero wrapper exit'
+        report['end_utc'] = utc()
+        return [(output/'overall.receipt.json',report),
+                (journal,dict(source_head=report['expected_source_head'],block=report['block'],
+                              output=str(output),finished_utc=utc(),passed=report['passed'],
+                              publication_contract=report['publication_contract']))]
+
+    failed_attempt = False
+    report['publication_confirmed'] = False
+    try:
+        if report['passed']:
+            budget.arm()
+            report['publication_readbacks'] = checked_publication(records(),budget,budget.deadline)
+            budget.check_until(budget.deadline)
+        else:
+            failed_attempt = True
+            emergency = budget.finish_alarm(failed=True)
+            report['publication_readbacks'] = checked_publication(records(),budget,emergency,failed_publication=True)
+        report['publication_confirmed'] = True
+    except BaseException as error:
+        fail_report(report,error,'overall publication/readback')
+        if not failed_attempt:
+            try:
+                failed_attempt = True
+                emergency = budget.finish_alarm(failed=True)
+                report['publication_readbacks'] = checked_publication(records(),budget,emergency,failed_publication=True)
+                report['publication_confirmed'] = True
+            except BaseException as recovery_error:
+                fail_report(report,recovery_error,'failure-only overall publication/readback')
+    report['wall_seconds'] = time.monotonic()-budget.started
+    # This last normal-success check follows every required I/O and readback.
+    if report['passed']:
+        try:
+            budget.check_until(budget.deadline)
+        except BaseException as error:
+            fail_report(report,error,'final whole completion boundary')
+            report['publication_confirmed'] = False
+            try:
+                emergency = budget.finish_alarm(failed=True)
+                report['publication_readbacks'] = checked_publication(records(),budget,emergency,failed_publication=True)
+                report['publication_confirmed'] = True
+            except BaseException as recovery_error:
+                fail_report(report,recovery_error,'failure-only completion publication/readback')
+            report['wall_seconds'] = time.monotonic()-budget.started
+    report['end_utc'] = utc()
+    return report
 
 
 def git(source, *args):
@@ -192,25 +280,34 @@ class Budget:
         self.started = time.monotonic()
         self.deadline = self.started + seconds
         self.finalization_deadline = None
+        self.failed = False
 
     def remaining(self):
         return self.deadline - time.monotonic()
 
     def arm(self):
-        remaining = self.remaining()
+        self.arm_until(self.deadline)
+
+    def arm_until(self, deadline, *, failed_publication=False):
+        require(not self.failed or failed_publication, 'Normal work cannot resume after failure publication')
+        remaining = deadline-time.monotonic()
         if remaining <= 0:
-            raise BoundExceeded('Whole block wall bound exceeded')
+            raise BoundExceeded('Acquisition publication/work deadline exceeded')
         signal.setitimer(signal.ITIMER_REAL, remaining)
 
-    def finish_alarm(self):
-        # A single receipt-finalization allowance, never reset by nested finally.
+    def check_until(self, deadline):
+        if time.monotonic() > deadline:
+            raise BoundExceeded('Acquisition publication/work deadline exceeded')
+
+    def finish_alarm(self, *, failed):
+        # Failure-only allowance, never reset by nested cleanup/publication.
+        require(failed, 'Emergency receipt allowance cannot publish success')
+        self.failed = True
         now = time.monotonic()
         if self.finalization_deadline is None:
-            self.finalization_deadline = now + 5 if self.remaining() <= 0 else min(now+5,self.deadline)
-        remaining = self.finalization_deadline-now
-        if remaining <= 0:
-            raise BoundExceeded('Bounded receipt finalization exhausted')
-        signal.setitimer(signal.ITIMER_REAL,remaining)
+            self.finalization_deadline = now+5
+        self.arm_until(self.finalization_deadline,failed_publication=True)
+        return self.finalization_deadline
 
 
 @contextmanager
@@ -328,6 +425,7 @@ class Runner:
         self.budget.arm()
         started = time.monotonic()
         deadline = min(started + cap, self.budget.deadline)
+        self.budget.arm_until(deadline)
         receipt = dict(label=label, command=command, cwd=str(self.output), start_utc=utc(),
                        start_monotonic=started, phase_cap_seconds=cap, timeout_seconds=deadline-started,
                        timed_out=False, exit_code=None, signals=[], failure=None, cleanup_failures=[],
@@ -384,31 +482,65 @@ class Runner:
                         except BaseException as error:
                             receipt['cleanup_failures'].append(dict(type=type(error).__name__,message=str(error)))
                 receipt['exit_code'] = process.poll()
-            if self.budget.remaining() > 0:
-                self.budget.arm()
-            else:
-                self.budget.finish_alarm()
-            receipt['wall_seconds'] = time.monotonic()-started
+            failure_publication_attempted = False
+            try:
+                if original_error or receipt['cleanup_failures']:
+                    self.budget.finish_alarm(failed=True)
+                else:
+                    self.budget.arm_until(deadline)
+                streams = []
+                for stream in ['stdout','stderr']:
+                    path = self.output/(label+'.'+stream+'.log')
+                    data = path.read_bytes() if path.exists() else b''
+                    receipt[stream] = dict(path=str(path), bytes=len(data), sha256=hashlib.sha256(data).hexdigest(), present=path.exists())
+                    streams.append(data)
+                complete = b'\n'.join(streams)
+                (self.output/(label+'.classification.log')).write_bytes(complete)
+                receipt['strict_log_failed'] = failed(complete.decode(errors='replace'))
+                receipt['complete_log_scope'] = 'Original stdout + newline + original stderr, no cross-stream chronology claimed'
+                receipt['passed'] = (receipt['failure'] is None and not receipt['cleanup_failures']
+                    and receipt['exit_code'] == 0 and not receipt['timed_out'] and not receipt['strict_log_failed']
+                    and not receipt['signals'] and not receipt.get('unexpected_members_after_root_exit')
+                    and not receipt.get('terminal_observed') and not receipt.get('terminal_same_session')
+                    and not receipt.get('terminal_recognized_godot') and time.monotonic() <= deadline
+                    and not self.budget.failed and owned is not None and owned.root is not None)
+                if not receipt['passed'] and receipt['failure'] is None:
+                    receipt['failure'] = dict(type='PhaseFailed',message=label+' failed; complete streams/strict failure retained')
+                receipt['wall_seconds_before_publication'] = time.monotonic()-started
+                receipt['duration_scope'] = 'Snapshot precedes its own publication; final phase wall_seconds/readback is in the later overall report'
+                receipt['end_utc'] = utc()
+                if receipt['passed']:
+                    receipt['publication_readbacks'] = checked_publication(
+                        [(self.output/(label+'.receipt.json'),receipt)],self.budget,deadline)
+                else:
+                    failure_publication_attempted = True
+                    emergency = self.budget.finish_alarm(failed=True)
+                    receipt['publication_readbacks'] = checked_publication(
+                        [(self.output/(label+'.receipt.json'),receipt)],self.budget,emergency,failed_publication=True)
+                receipt['wall_seconds'] = time.monotonic()-started
+                if receipt['passed']:
+                    self.budget.check_until(deadline)
+            except BaseException as publication_error:
+                receipt['passed'] = False
+                current = dict(type=type(publication_error).__name__,message=str(publication_error))
+                if receipt['failure'] is None:
+                    receipt['failure'] = current
+                else:
+                    receipt.setdefault('publication_failures',[]).append(current)
+                if original_error is None:
+                    original_error = publication_error
+                receipt['wall_seconds_before_publication'] = time.monotonic()-started
+                if not failure_publication_attempted:
+                    try:
+                        failure_publication_attempted = True
+                        emergency = self.budget.finish_alarm(failed=True)
+                        receipt['publication_readbacks'] = checked_publication(
+                            [(self.output/(label+'.receipt.json'),receipt)],self.budget,emergency,failed_publication=True)
+                    except BaseException as recovery_error:
+                        receipt.setdefault('publication_failures',[]).append(dict(type=type(recovery_error).__name__,message=str(recovery_error)))
+            if not receipt['passed']:
+                receipt['wall_seconds'] = time.monotonic()-started
             receipt['end_utc'] = utc()
-            streams = []
-            for stream in ['stdout','stderr']:
-                path = self.output/(label+'.'+stream+'.log')
-                data = path.read_bytes() if path.exists() else b''
-                receipt[stream] = dict(path=str(path), bytes=len(data), sha256=hashlib.sha256(data).hexdigest(), present=path.exists())
-                streams.append(data)
-            complete = b'\n'.join(streams)
-            (self.output/(label+'.classification.log')).write_bytes(complete)
-            receipt['strict_log_failed'] = failed(complete.decode(errors='replace'))
-            receipt['complete_log_scope'] = 'Original stdout + newline + original stderr, no cross-stream chronology claimed'
-            receipt['passed'] = (receipt['failure'] is None and not receipt['cleanup_failures']
-                and receipt['exit_code'] == 0 and not receipt['timed_out'] and not receipt['strict_log_failed']
-                and not receipt['signals'] and not receipt.get('unexpected_members_after_root_exit')
-                and not receipt.get('terminal_observed') and not receipt.get('terminal_same_session')
-                and not receipt.get('terminal_recognized_godot') and receipt['wall_seconds'] <= cap
-                and self.budget.remaining() >= 0 and owned is not None and owned.root is not None)
-            if not receipt['passed'] and receipt['failure'] is None:
-                receipt['failure'] = dict(type='PhaseFailed',message=label+' failed; complete streams/strict failure retained')
-            write(self.output/(label+'.receipt.json'), receipt)
         if original_error:
             raise original_error
         if not receipt['passed']:
@@ -418,13 +550,18 @@ class Runner:
 
 
 def completed_suite(suite, text):
+    lines = [line.strip() for line in text.splitlines()]
+    require(not any(line.startswith(('BOT_AI_REGRESSION_FAILURE','BOT_DRY_WEAPON_FAILURE','BOT_SQUAD_FAILURE'))
+                    for line in lines), 'Explicit bot regression failure record')
     if suite == 'bot_ai_regression':
-        require(text.splitlines().count('BOT_AI_REGRESSION_TESTS_OK') == 1, 'Missing/duplicate existing AI success marker')
+        require([line for line in lines if line.startswith(('BOT_AI_REGRESSION_TESTS_','BOT_AI_REGRESSION_RESULT'))]
+                == ['BOT_AI_REGRESSION_TESTS_OK'], 'Missing/duplicate/contradictory existing AI success marker')
     elif suite == 'bot_dry_weapon':
-        rows = [json.loads(line.split(' ',1)[1]) for line in text.splitlines() if line.startswith('BOT_DRY_WEAPON_RESULT ')]
+        rows = [json.loads(line.split(' ',1)[1]) for line in lines if line.startswith('BOT_DRY_WEAPON_RESULT')]
         require(rows == [dict(cases=84,sequence_steps=48,checks=590,failures=0,passed=True)], 'Existing dry-weapon result incomplete/failed')
     elif suite == 'bot_squad_symmetry':
-        require(text.splitlines().count('BOT_SQUAD_SYMMETRY_RESULT samples=960 checks=2722 failures=0 mode=assertion') == 1,
+        require([line for line in lines if line.startswith('BOT_SQUAD_SYMMETRY_RESULT')]
+                == ['BOT_SQUAD_SYMMETRY_RESULT samples=960 checks=2722 failures=0 mode=assertion'],
                 'Existing squad-symmetry result incomplete/failed')
 
 
@@ -536,6 +673,9 @@ def run(args):
             runner.native(suite,prefix()+['--script','res://tests/'+suite+'_test.gd'],env,120)
             stable()
             text = (output/(suite+'.stdout.log')).read_text()
+            stderr = output/(suite+'.stderr.log')
+            if stderr.exists():
+                text += '\n'+stderr.read_text()
             if suite == 'bot_exhausted_primary':
                 try:
                     report['candidate_builder_audit'] = candidate_audit(source,output)
@@ -560,12 +700,18 @@ def run(args):
             report['finalization_failures'].append(dict(current,stage='native receipt finalization; original phase failure preserved'))
     finally:
         # No further native command is launched, including after a strict leak.
-        signal.setitimer(signal.ITIMER_REAL,0)
         try:
-            budget.finish_alarm()
+            if report['passed']:
+                budget.arm()
+            else:
+                budget.finish_alarm(failed=True)
             if args.block=='candidate' and candidate_attempted and 'candidate_builder_audit' not in report and budget.remaining()>0:
                 try:
+                    # This existing failure diagnostic gets no time beyond the
+                    # original whole cap or the non-resetting failure allowance.
+                    budget.arm_until(min(budget.deadline,budget.finalization_deadline),failed_publication=True)
                     report['candidate_builder_audit'] = candidate_audit(source,output)
+                    budget.check_until(min(budget.deadline,budget.finalization_deadline))
                 except BaseException as error:
                     report['candidate_builder_audit'] = dict(passed=False,type=type(error).__name__,message=str(error))
                     report['passed'] = False
@@ -593,19 +739,13 @@ def run(args):
             report['recognized_godot_after'] = recognized(proc_snapshot())
             require(not report['recognized_godot_after'],'Recognized Godot process remains')
         except BaseException as error:
-            report['passed'] = False
-            report['finalization_failures'].append(dict(type=type(error).__name__,message=str(error)))
+            fail_report(report,error,'final source/state checks')
         finally:
-            signal.setitimer(signal.ITIMER_REAL,0)
-            report['wall_seconds'] = time.monotonic()-budget.started
-            if report['wall_seconds'] > seconds:
-                report['passed'] = False
-                report['finalization_failures'].append(dict(type='BoundExceeded',message='Whole normal acquisition bound exceeded; only bounded cleanup/finalization was allowed'))
             report.update(end_utc=utc(),processes=runner.receipts)
             try:
-                write(output/'overall.receipt.json',report)
-                write(journal,dict(source_head=args.expected_head,block=args.block,output=str(output),finished_utc=utc(),passed=report['passed']))
+                publish_overall(output,journal,report,budget)
             finally:
+                signal.setitimer(signal.ITIMER_REAL,0)
                 for sig,handler in old_handlers.items():
                     signal.signal(sig,handler)
     return report
@@ -619,7 +759,12 @@ def main():
     parser.add_argument('--block',choices=BLOCKS,required=True)
     args = parser.parse_args()
     report = run(args)
-    print(json.dumps({'passed':report['passed'],'block':args.block,'receipt':str(args.output/'overall.receipt.json'),'scope':'Acquisition only; independent actual-output review remains required'}))
+    print(json.dumps({'passed':report['passed'],'block':args.block,
+                      'wall_seconds':report['wall_seconds'],
+                      'publication_confirmed':report['publication_confirmed'],
+                      'publication_readbacks':report.get('publication_readbacks',[]),
+                      'receipt':str(args.output/'overall.receipt.json'),
+                      'scope':'Acquisition only; independent actual-output review remains required'}))
     return 0 if report['passed'] else 1
 
 
