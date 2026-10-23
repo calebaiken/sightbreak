@@ -45,3 +45,5 @@ taskset -c 4 python docs/reports/gauntlet/windows-reload-route-actual-20261023/i
 REVIEW_SOURCE="$PWD/.local/depth-one-source" REVIEW_ROWS="$PWD/.local/recheck-rows.json" taskset -c 4 python docs/reports/gauntlet/windows-reload-route-actual-20261023/independent-source/test_independent_controls.py
 taskset -c 4 python docs/reports/gauntlet/windows-reload-route-actual-20261023/independent-source/audit_source.py --source . --depth-one .local/depth-one-source --output .local/recheck-source.json
 ```
+
+The standard whitespace check rejected preserved Windows CRLF data. Its complete reproduced output remains compressed, and the CRLF-aware check passes. The source and evidence manifest was verified separately before final handoff; no original bytes were normalized. See reviewer-whitespace-check.json.
