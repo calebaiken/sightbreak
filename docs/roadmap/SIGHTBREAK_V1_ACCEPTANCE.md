@@ -43,3 +43,12 @@ read-only SQL qualification at `882931dd`, root integration `4150ad0a`.
 retains both lost-response kills, final exact settlement, guard checks and cleanup.
 Synthetic test balances are not earned progression. Store/case, rendered consent,
 remote hosting and whole G3/G7/G16 remain open.
+
+
+Current a089473 Windows has separate independently accepted objective, stock-match
+and earned-reopen scopes, while its overall living journey remains failed before
+focus. One c838907 ARM trial is running after pre-dispatch independent criteria;
+ordinary step failure has no final raw diagnosis yet. Exhausted-primary selection,
+audio-owner observation and Linux profiling have scoped source acceptances with
+native acquisition still held. Touch R4B receipt reconciliation and audio wrapper
+integrity remain source-rejected. These records advance no whole RC gate.

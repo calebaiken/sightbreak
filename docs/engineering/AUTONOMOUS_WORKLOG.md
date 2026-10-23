@@ -519,3 +519,28 @@ performance, physical input or the original failed Linux gameplay deadline.
 All accepted source/results and original rejections are recoverable on the own
 mission branch. No broad release gate closes. Continue NEXT_SESSION's exact
 implementation/review queue; do not treat these engineering increments as v1.0.
+
+
+## 2026-10-23: verify Windows objectives and continue native platform work
+
+Independent f314385 accepts a089473 player plant with natural ordinary defuse,
+next buy/default restart, player defuse and seven stock rounds / 7:0 local defeat
+with exact 120 XP / 250 offline credits reloaded from disk and reopened runtime.
+All 138 retained native logs are strict-clean. Combined run 39916539053 FAILS:
+the same actor is alive through resume/capture, then dies before HUD-analysis
+pause; LEAVE/reopen/focus never run. Source experiment is untested at that
+boundary. The source-bound ZIPs, 77 PNGs, independent 35-image review and failures
+are retained. No causal, performance, full bot-quality or package reparse claim.
+A legitimate-cover-route source investigation begins within unchanged budgets.
+
+Mac derived-caption source 3973447 passes independent shallow review d134adf;
+combined c838907 passes 2a3bcdf across all 439 files and 216 pure methods. Root
+releases ONE ARM run 39920948579 after actual critic prereg 0abfd19 is pushed,
+dispatch 07:54:40 UTC. Native actual review continues; ordinary-step failure is
+not diagnosed from step status. No retry. Bot selection 1b7ebc7 passes source
+review 66f31a6; candidate and three bot regressions await wrapper qualification.
+Audio analyzer 73cdfc2 passes 146dc17 after preserved rejections, while wrapper
+90d3baa fails independent retained-byte/archive controls. Touch R4B geometry
+improves declared source cases, but inconsistent baseline receipt acceptance
+still fails review. Linux acquisition wrapper is source-only. Continue the exact
+NEXT_SESSION queue; all full release gates remain open.
