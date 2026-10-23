@@ -1,0 +1,9 @@
+ERROR: Out of memory
+Traceback (most recent call last):
+  File "<string>", line 12, in <module>
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-env\python\cpython-3.12-windows-x86_64-none\Lib\subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-env\python\cpython-3.12-windows-x86_64-none\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['tasklist', '/FI', 'IMAGENAME eq Godot_v4.7.2-stable_win64.exe', '/FO', 'CSV', '/NH']' returned non-zero exit status 1.

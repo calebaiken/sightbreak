@@ -1,0 +1,22 @@
+Native slot idle; beginning frozen r1
+['C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\venv312\\Scripts\\python.exe', 'C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-pr18-native-restart\\scripts\\validate_native_transaction_restart.py', '--source', 'C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-pr18-native-restart', '--revision', '701ce2c', '--cache-source', 'C:/Users/blith/AppData/Local/Temp/opencode/sightbreak-v2-baseline/game/.godot', '--godot', 'C:/Users/blith/AppData/Local/Temp/opencode/godot/Godot_v4.7.2-stable_win64.exe', '--out', 'C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-pr18-native-restart\\.runtime\\native-restart-r1\\baseline', '--repetitions', '3', '--expect-recovered', '0']
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-pr18-native-restart\scripts\validate_native_transaction_restart.py", line 557, in <module>
+    main()
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-pr18-native-restart\scripts\validate_native_transaction_restart.py", line 496, in main
+    import app as service
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-receipt-ykovz23g\source\backend\app.py", line 22, in <module>
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-env\venv312\Lib\site-packages\sqlalchemy\__init__.py", line 13, in <module>
+    from .engine import AdaptedConnection as AdaptedConnection
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-env\venv312\Lib\site-packages\sqlalchemy\engine\__init__.py", line 18, in <module>
+    from . import events as events
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-env\venv312\Lib\site-packages\sqlalchemy\engine\events.py", line 20, in <module>
+    from .base import Connection
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-env\venv312\Lib\site-packages\sqlalchemy\engine\base.py", line 29, in <module>
+    from .interfaces import BindTyping
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-env\venv312\Lib\site-packages\sqlalchemy\engine\interfaces.py", line 40, in <module>
+    from ..sql.compiler import Compiled as Compiled
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-env\venv312\Lib\site-packages\sqlalchemy\sql\__init__.py", line 16, in <module>
+    from .compiler import COLLECT_CARTESIAN_PRODUCTS as COLLECT_CARTESIAN_PRODUCTS
+SystemError: <built-in function compile> returned NULL without setting an exception
+baseline exit 1
