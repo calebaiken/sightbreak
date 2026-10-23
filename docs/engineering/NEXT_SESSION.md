@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-23, 11:54 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 12:05 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. The automatic goal remains active. Read AGENTS.md and the canonical
@@ -11,7 +11,7 @@ implementation after each verified increment; these corrections do not finish v1
 
 Own root checkout `/workspace/sightbreak-v1-recovered`, branch
 `codex/v1-executor-recovery-20261023`. Read current HEAD/status and preserve newer
-commits. Last pushed checkpoint `801e4514`. Contributor checkout
+commits. Last pushed mission checkpoint `e77e61e3`; inspect newer local commits before resuming. Contributor checkout
 `/workspace/sightbreak` remains separate `work@4d8cdb33`; do not reset it. Preserve
 PR27 → PR24 → PR23 → PR22 → PR16 and all separate contributor branches.
 
@@ -42,17 +42,26 @@ requires independent actual review, not optimistic reinterpretation.
 Independent observer terminates11:51:09.952576 UTC, nine observed identities gone,
 recorded groups/sessions and fixed display absent, listeners unchanged; short or
 escaped processes remain limited. `/root/linux_profile_r3_fresh_native_critic`
-is cleared for CPU4 full original/artifact/archive review plus R1/R2 preservation.
+sealed actual review `c9c5c64d`; root retains it. All 370 original raw files, three
+outer records and 377 archive members verify; archive 58,661,240 bytes, SHA-256
+`b3868bc6659e22cdf03ef2111c60e9e5d2c290552bc51ecddda57dcda19d0025`.
+The independent decoder passes 5,811 predicates. Full R1/R2 preservation also
+passes, with old overwritten cache bytes and missed short processes explicit.
 Own `/workspace/reviews/linux-profile-acquisition-r3-native`, branch
 `codex/critic-linux-profile-native-r3-20261023`. No native remains active.
 
-Next source builder `/root/linux_native_argument_readback_builder` is creating a
-separate preregistered correction from exact ec6b. Research pinned Godot startup
-argument consumption and effective rendering state before changing diagnostic
-verification. Do not relax synchronous rendering, strict warning checks, source
+Next source freeze `93f32edf` (implementation `525b17f1`, preregistration
+`4554462b`) is on `codex/linux-native-argument-readback-20261023`, checkout
+`/workspace/sightbreak-linux-native-argument-readback`. Pinned Godot source
+confirms startup consumes the flag. The candidate keeps explicit launch intent
+and reads effective main/render thread state; runtime is unverified. Own and
+initialized depth-one checkouts pass 69 pure methods. Fresh source critic
+`/root/linux_effective_thread_fresh_source_critic` is preregistering review.
+The unchanged software driver warning remains an explicit strict blocker; no
+new native recipe or release is requested. Do not relax synchronous rendering, strict warning checks, source
 pins, CPUs0,1/LP2/display99127, original1,320s whole/phase/180s conditions,
-OFF/ON/ON/OFF, selectors or formulas. A fresh r4 needs independent source review,
-new actual criteria and one root release. No such release exists.
+OFF/ON/ON/OFF, selectors or formulas. Any future r4 needs independent source review, resolution or proper isolation
+of the strict environment blocker, new actual criteria and one root release. No such release exists.
 
 R1 strict import FAIL and R2 artifact terminal-NUL FAIL remain intact. R2 actual
 final `2cf656f0` verifies247 raw files/three outer records/254 archive members under
@@ -88,17 +97,33 @@ proper depth1 source pass178 methods (175 pass/three old Windows skips) plus14
 independent methods/147 context cases. Model9/9 passes; actual new living route
 and Windows delivery remain UNVERIFIED. No new Windows release exists.
 
-Separate Windows diagnostic exact source `c0738163`, handoff `161d72c5`, prereg
-`0bf075ee`, is frozen in `/workspace/sightbreak-windows-input-consumption-diagnostic`,
-branch `codex/windows-input-consumption-diagnostic-20261023`, separate from route
-source. Both own/depth-one pass173 maintained methods (three original skips)
-plus20 additional methods and five analyzer mutation controls. Three GDScript
-files pass grammar parsing only; Godot type/API/native checks are unexecuted.
-Fresh critic `/root/windows_connection_trace_fresh_source_critic`, prereg `2a25c7cb`,
-is reviewing scalar guest-loopback/external-fixture connection/consumption traces. It records generation/binding,
-receive/accept/consume, ACK/pending age and disconnect/expiry without RPC/wire,
-acceptance or stock schedule changes. No production cause/fix is established.
-New combined source needs independent review and separate actual release.
+Separate Windows runtime trace `c0738163`, handoff `161d72c5`, was independently
+REJECTED by `02725f9c` after preregistration `2a25c7cb`. Its protected runtime
+source erasure passes, but 10 synthetic impossible traces falsely claim reader
+completeness. The frozen 25-case rig and four supplemental cases remain unchanged;
+reviewer contradictory/overstrict cases are disclosed and corrected separately.
+
+Root implemented reader correction `86fe3cbe` in
+`/workspace/sightbreak-windows-input-consumption-r2`, branch
+`codex/windows-input-consumption-r2-20261023`, preregistration `d97b8e53` with
+supported additions registered before edits. Runtime code is unchanged from
+c073. The first nine false passes now reject; legitimate malformed receive and
+coalesced observations stay allowed. Role-stage checks also reject the tenth.
+The broad 193-method suite passes with three existing Windows skips; six new
+identity methods pass. Original 16/25 false-pass replay and first message-assertion
+failures remain retained. `/root/windows_reload_route_actual_builder` owns final
+depth-one packaging; fresh `/root/windows_connection_trace_fresh_source_critic`
+is reviewing under preregistration `2f709b12`. No native/type/API test is run.
+
+Root added default-off `observe_windows_input` workflow-dispatch adapter
+`b4a2cf4a`, criteria `b4145dde`. Only the fixed Windows undelayed-controller flag
+changes when selected; reversing those two additions recovers original bytes.
+An initial sparse-path preregistration commit failed; the unexecuted proposal was
+retained, workflow restored, criteria committed, then source reapplied. No dispatch
+occurred. `/root/windows_trace_combined_source_critic` is preregistering adapter
+and later exact combined-source review. Runtime trace is NOT integrated in root;
+its acceptance and combined source verification must precede use of that option.
+No new Windows actual release exists.
 
 **Mac AX R3 `39943145541`, job120379229239, FAILED before AX.**
 Exact `4854aed9`, qualifier `qualifier/m2-mac-ax-r3-read-only-4854aed9`, source
@@ -129,15 +154,23 @@ input/prompts, one focus, ordinary close0/all ten recorded groups gone. Official
 failure-stage emission, old missing-frame cause, full descendant telemetry, binary
 reparse, ordinary gameplay/iOS/Intel or physical claim.
 
-Next `/root/mac_semantic_deploy_builder` has frozen isolated source `d370774c`,
+Next `/root/mac_semantic_deploy_builder` initially froze source `d370774c`,
 prereg `05fe6a8a`, own `/workspace/sightbreak-mac-semantic-deploy`, branch
 `codex/m2-mac-semantic-deploy-20261023`. It adds explicit `--deploy-target owned-ax`
 using fresh owned semantic Deploy targeting and genuine existing OS input. Reuse accepted probe/contract/read-only code,
 keep original OCR gate and other platforms unchanged, no AX actions/trust prompt,
 no stale/unverified click coordinates or relaxed budgets. New combined source
-is under fresh source review by `/root/mac_semantic_deploy_fresh_source_critic`,
-prereg `c63f071d`, own `/workspace/reviews/m2-mac-semantic-deploy-fresh-source-critic`.
-It needs source acceptance, actual admission and root release; none is implied.
+was independently REJECTED by `1d17f273` after preregistration `c63f071d`: stale
+actual OS posts, evidence replacement, unsafe file reads, malformed types and
+missing current semantic validation. Original failures and passing release cleanup
+are retained. Builder corrects sealed original-capture/file identities and the
+final pre-post guard, then separately preregisters a bounded persistent read-only
+validator for the SAME selected AX element. Initial full-tree uniqueness remains
+a snapshot; current role/title/enabled/frame/window/PID must be rechecked before
+move/down under the original absolute five seconds, with no deadline renewal.
+No second full-tree selection is required. A qualification-only explicit CI
+invocation also needs source review; existing normal CI still defaults to OCR.
+Corrected source acceptance, actual admission and root release remain required.
 
 **Touch R4B R3: preserve original numeric/strict/cleanup FAIL.**
 Product `108d1cdc`, recipe/handoff `b9bd7e62`, release `f312ee8c`. Ten producers0,
@@ -165,7 +198,7 @@ and a pinned-renderer error model are absent; seven W−B spread2 and16 JUMP nom
 assignment failures stay FAIL. No shipping source or current analyzer changes.
 
 **Bot objective observation is REJECTED; correction underway, no native release.**
-Original candidate `c91d9b98`, prereg `09a3ea84`, own
+Initial candidate `c91d9b98`, prereg `09a3ea84`, own
 `/workspace/sightbreak-objective-observability`, branch
 `codex/m5-objective-observability-20261023`. Ten maintained/pure and grammar
 checks pass; fresh critic `eca565bc`/`5eef16d1`/`705de403` rejects stale per-call
