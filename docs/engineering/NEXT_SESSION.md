@@ -1,11 +1,58 @@
 # Next session
 
-Updated 2026-10-23, 09:34 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 09:44 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. The automatic goal remains active. Read AGENTS.md and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
+
+## Active verification — 2026-10-23 09:44:12 UTC
+
+This checkpoint supersedes earlier queues below. Root release 0e66bc78 is pushed.
+ONE full maintained aggregate is RUNNING at exact 28a3e294c850482475b7ab74067c08538ae6310d
+in /workspace/sightbreak-aggregate-frozen-28a3e294, exec session 41224. The child
+is unchanged ./scripts/validate.sh, no DISPLAY/no --backend. Accepted wrapper
+bcfc7c3c SHA bf48ee4e38fa5a62b94bd2394f40981e02fb5ff795cb25e64afed6bed32c3cdd
+is in /workspace/sightbreak-aggregate-combined-28a3e294. Fresh critic 897597ea
+accepts 2,455 source/setup predicates and nine adversarial controls after retained
+rejection 2198721a. Actual prereg206e2a11 precedes dispatch. This is not a test pass.
+
+- Poll the actual session with write_stdin; preserve terminal tool return and
+  .local/aggregate-combined-r1-wrapper.stdout/stderr/outer-launch.json. The latter
+  is the real initial tool return, not an invented whole runtime. Raw run is
+  builds/aggregate-combined-r1. Keep original 1200-second finite inner whole and
+  540-second per-Godot bounds; no retry or manual continuation after STOP.
+- /root/combined_aggregate_fresh_critic is capturing independent live identities
+  before the terminal output, then reviews full actual logs/observables/provenance,
+  source/UID/private state/ENet/cleanup and original archive. Outer and archived
+  strict scans, including orphan/unclaimed StringNames, are separately required.
+- Linux failed r1 now has final independent 5cbbcd3c, root 6eb45cf8: 1,695 integrity
+  predicates pass; actual import remains FAIL, all 224 originals unchanged, no
+  export/Xvfb/measurement. Bounded 231-member archive 19,739,886B is committed.
+  Narrow Array/hash/output correction 216d39ad is source-only in
+  /workspace/sightbreak-linux-profile-fixture-native-types; new fresh critic
+  /root/linux_type_fresh_source_critic is reviewing it. No native retry released.
+- Windows pulse source 977633e4 is independently REJECTED by bf47f7c9, root 5c779633:
+  after first key-down changes foreground/owner, a second key-down still sends.
+  Existing 93 methods have 90 passes / 3 existing skips; two independent real-key-path
+  failures control acceptance. Builder is preregistering a per-edge correction.
+- Mac AX source cf4de47f is independently REJECTED by 12ec93dd, root 549fe1bd:
+  late native call accepted, three Create/Copy references lost on guard failure,
+  embedded NUL title truncated. Existing 110 methods pass; five fresh safety
+  assertions fail. Builder has exact controls and is preparing narrow R2 fixes.
+  No Windows/Apple/native/CI rerun is released.
+- Touch R3 actual critic /root/touch_r3_native_fresh_critic has prereg 86c2c9b3
+  before output; source recipe b9bd7e62/108d1cdc remains source-accepted 95703781.
+  It is next actual rendering work after this aggregate and its evidence are
+  preserved. Root must release ONE exact new pipeline; no captures exist yet.
+- Current PR31 pure CI at exact cf0df0f1 passes 37 tests, run 39932688892/job 120344571235.
+  Decoded log/metadata retained under mission-live-state-20261023. Latest PR refs
+  and main 4d8cdb33 are rechecked, unchanged dependencies. Contributor checkout safe.
+
+Update permanent evidence/gates, commit/push, then continue the next milestone.
+Human/physical/CS2/Steam and every whole G1–G19 gate remain open. No background
+execution after session termination is promised.
 
 ## Earlier execution detail — superseded by the current queue below
 

@@ -68,3 +68,10 @@ for independent actual review. The combined bot/guard aggregate at exact
 28a3e294 is being prepared with separate builder and fresh critic; no maintained
 aggregate at the combined root has run yet. Current mission and draft PR metadata
 are updated. All existing release gates and external blockers remain unchanged.
+
+At the 09:44 UTC checkpoint the full combined-source aggregate 28a3e294 is
+actually running after independent corrected-wrapper acceptance and preregistered
+actual criteria. It is not yet a pass. Windows pulse and Mac AX source candidates
+are independently rejected by meaningful new boundary controls despite passing
+maintained pure tests; narrow corrections must withstand those controls before
+runtime. Linux failed evidence is independently verified, not relabeled passing.

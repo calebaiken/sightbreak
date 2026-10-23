@@ -6,7 +6,7 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-Current execution is active, 2026-10-23 09:34 UTC, root code checkpoint
+Current execution is active, 2026-10-23 09:44 UTC, root code checkpoint
 cdd69b78. The exhausted-primary sidearm correction is integrated as 0f2cf636,
 with actual prepared UID 261d6ddb. Independent 63ec7271 verifies 1,268 native rows /
 75,890 predicates and the registered selection comparison; independent 720cc695
@@ -40,6 +40,14 @@ Mac read-only AX source cf4de47f awaits final pure/depth-one validation and fres
 review; c838 actual gameplay still fails before input. Audio corrected pure
 analysis stays source-bound on its own branch; original acquisition REJECT /
 strict FAIL and unknown cause remain.
+The new full aggregate at exact 28a3e294 is now RUNNING after source acceptance
+897597ea, actual criteria 206e2a11 and root release 0e66bc78; exec 41224. No actual
+pass is inferred. Source rejections bf47f7c9 (Windows pulse) and 12ec93dd (Mac AX)
+are retained and guide narrow corrections; neither is runtime-ready. Linux
+actual 5cbbcd3c verifies failed import/evidence preservation only. Latest PR pure
+CI cf0df0f1 passes 37 tests; it does not replace the aggregate. Touch actual
+prereg 86c2c9b3 precedes its still-pending new pipeline release.
+
 No whole release gate changes status. NEXT_SESSION is the exact continuation.
 
 A separate future market-harness guard is independently accepted at
