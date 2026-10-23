@@ -83,11 +83,16 @@
     "path": "audit_windows_source.py",
     "original_source": "a089473481ced0f2e7b2a7468bbc5d079f92f0ff:docs/reports/gauntlet/windows-combined-recovered-20261023/audit_windows_source.py",
     "original_sha256": "42a6372f8f83ce70940caec8586f3bc3c65df1c734ecdff98ed66d3bd4b11336",
-    "ported_sha256": "bd3842d57a839136a3a43ac1d0e52ed011b7f42e103f592f9c024cc59ff4e5ef",
+    "ported_sha256": "26ddefdba62bfb9b5dd07a02edd24680d7c74ee63b675d5b6c5fd9ca834866e4",
     "edits": [
       {
         "old": "b2e0293a546961230afbd73e5cd2a1a307d69e94",
         "new": "a089473481ced0f2e7b2a7468bbc5d079f92f0ff"
+      },
+      {
+        "old": "      'scripts/fixtures/offline_capture_observations.json','scripts/macos_window_capture.swift'}",
+        "new": "      'scripts/fixtures/offline_capture_observations.json','scripts/fixtures/offline_focus_observations.json',\n      'scripts/macos_window_capture.swift'}",
+        "reason": "New tracked JSON fixture has unspecified text/eol attributes like the existing capture fixture; Windows checkout converts it to CRLF. Native source validation must account for its exact bytes independently."
       }
     ]
   },

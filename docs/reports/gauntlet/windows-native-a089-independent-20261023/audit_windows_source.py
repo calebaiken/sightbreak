@@ -9,7 +9,8 @@ import subprocess
 SOURCE='a089473481ced0f2e7b2a7468bbc5d079f92f0ff'
 CRLF={'scripts/diagnostics/render_feature_probe.gd','scripts/fixtures/export_integration.gd',
       'scripts/fixtures/network_soak.gd','game/tests/fixtures/backend_world.json',
-      'scripts/fixtures/offline_capture_observations.json','scripts/macos_window_capture.swift'}
+      'scripts/fixtures/offline_capture_observations.json','scripts/fixtures/offline_focus_observations.json',
+      'scripts/macos_window_capture.swift'}
 READ=lambda p:json.loads(p.read_text())
 
 def audit(checkout,receipts):
