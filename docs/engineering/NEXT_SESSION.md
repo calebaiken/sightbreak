@@ -6,6 +6,43 @@ No native Codex goal API is exposed. Read AGENTS.md, the mission and the canonic
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
 
+## Current product checkpoint — 2026-10-23, 05:10 UTC
+
+Root `/workspace/sightbreak-v1-recovered`, own branch
+`codex/v1-executor-recovery-20261023`, [draft PR31](https://github.com/calebaiken/sightbreak/pull/31).
+Integration through `690887e` accepts the narrow bot dry-primary correction.
+Product `bd4ea03` is mapped to root `784fb1a`; reviewed/tested source is
+`8e8d13e`, actual raw report `6a0ef573`, final independent review `f947350`
+(root `138a1ab`). Native candidate 84 cases / 48 steps / 590 checks passes;
+baseline retains 40 failures. Bot AI and 2,722-check symmetry regressions pass.
+Critic verifies 1,974 observable predicates per side, intended changes, 63
+unchanged request controls and all 480 symmetry pairs. Root game/registration
+bytes equal the tested source. Deep raw authority snapshots and escaped-process
+cleanup are not qualified; representative matches and the full aggregate remain
+open. No complete G1/G2/G17 gate closes.
+
+Current next work:
+
+1. Freeze and run the unmodified complete aggregate on the recovered combined
+   source, with backend/server and exact tracked hands/OCR fixtures present.
+   Shared backend interpreter is available; catalog checking must run, not skip.
+   Use a fresh isolated worktree/state/output and a separate actual-output critic.
+2. Mac controller freeze `bd9ac47` is under fresh critic review. It corrects two
+   independently caught draft timing defects; no native CI has run. Preserve
+   original stage and whole budgets, strict platform suites and private profile
+   checks. Actual exported ordinary play remains unverified.
+3. Linux profile source `b1a131ab` corrects a rejected vacuous test. Controller
+   bytes are unchanged from `3631f2d`; critic re-review is pending. No export or
+   native attempt has run. Only one declared sampler-off / GPU-profile-on plant
+   capability attempt is in scope after source approval, with original budgets.
+4. New touch source investigation is on `codex/m6-touch-contrast-recovered` at
+   `/workspace/sightbreak-touch-contrast-recovered`, base `138a1ab`. All native
+   fixtures, pixel checks and blind comparisons must be regenerated. Historical
+   missing evidence cannot qualify the reconstruction.
+
+All own accepted work is pushed. Preserve this checkpoint and the historical
+recovery inventory below. Continue development after each verified increment.
+
 ## Active recovered execution — 2026-10-23, 04:54 UTC
 
 The executor is available again, but its workspace is an older snapshot. Root

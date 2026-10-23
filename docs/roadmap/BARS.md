@@ -38,3 +38,15 @@ actual native Godot command and role outputs, with [declared gates and raw
 comparison](../reports/gauntlet/m5-bot-squad-symmetry/README.md). Final native
 oracle compares 480 paired outputs: 181 unequal on baseline, zero on candidate.
 This establishes bounded habit symmetry, not CS2 parity or complete-match balance.
+
+
+## B7: M5 known-dry primary selection, 2026-10-23
+
+Named retrievable engineering bar: production `917b143b` with common native
+fixture `b063596`, compared to narrow candidate `8e8d13e` using identical fixture
+bytes. [Preregistration](../reports/gauntlet/m5-dry-weapon-recovered/PREREGISTRATION.md)
+and [independent actual comparison](../reports/gauntlet/m5-dry-weapon-recovered-independent/FINAL_REVIEW.md)
+retain 84 cases / 48 authority steps, baseline 40 failures, candidate zero and
+preserved controls. Injected visibility and headless steps establish bounded
+selection correctness; they do not establish shipped-game quality or full-match
+balance. Exact source, raw logs, failure and critique remain retrievable in Git.

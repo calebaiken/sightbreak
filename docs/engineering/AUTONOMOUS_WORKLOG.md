@@ -429,3 +429,20 @@ retained. No production or native runtime was started. New builders investigate
 bot dry-weapon selection and actual macOS ordinary play; source critics and
 source-bound runtime acceptance remain required. See the executor recovery
 report and NEXT_SESSION. No full release gate closes.
+
+
+## 2026-10-23: independently correct dry-primary return
+
+The shared native fixture at b063596 reproduces known-empty primary return,
+ineffective reloads and alternating-visibility switch loops. Candidate product
+bd4ea03 adds three lines, skipping only recorded `(0, 0)` holstered primaries.
+Unknown equip defaults, reserve-positive weapons, literal priority and existing
+fallback/reload/objective/authority policies stay intact. Tested 8e8d13e passes
+590 checks versus baseline 40 failures; existing bot AI and 2,722 symmetry checks
+pass. Fresh critic f947350 chooses the candidate, recomputes 1,974 observable
+predicates per side and all 480 symmetry pairs, and verifies source/raw receipts.
+Root integrates builder and critic history through 690887e. Representative full
+matches, full aggregate, unlogged deep snapshots and escaped-descendant cleanup
+remain outside this bounded acceptance. No broad release gate closes.
+Next execution is combined validation, actual Mac ordinary play, Linux rendering
+cost isolation and fresh touch-contrast reconstruction; see NEXT_SESSION.

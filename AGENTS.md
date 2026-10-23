@@ -51,3 +51,9 @@ Do not skip the check or reinterpret that failure as passing.
 After an executor interruption, inspect actual local HEAD/status before fetching
 or integrating recovery notes. The last observed local root may contain unpushed
 commits. Never reset it to the older remote head.
+
+When network access permits, push an own committed checkpoint before a long
+native run or session end. Keep unverified candidates labeled as such. A local
+commit alone may be absent from a restored executor snapshot; retain bounded
+source-bound evidence in the pushed own branch without credentials or copied
+third-party media. Never force-push or replace another contributor's history.
