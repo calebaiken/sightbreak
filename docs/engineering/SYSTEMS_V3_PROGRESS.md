@@ -1,6 +1,6 @@
 # Astra systems V3 — live progress
 
-Updated 2026-10-19. Systems implementation: Astra. Integration and independent QA: Sol.
+Updated 2026-10-22. Systems implementation: Astra. Integration and independent QA: Sol.
 Branch: `astra/systems-v3-recovery`, based on PR #16
 `d2439acdd5f73df7bae5ada62ee1e3dec2cf30db`.
 
@@ -11,7 +11,8 @@ including the retained [74-case matrix and impairment/PostgreSQL evidence](../re
 PR #16 changes after this reference affect documentation/export verification, not game or backend code.
 New comparisons run both sources on the same host; Windows timings are not compared as if they were the retained Linux campaign.
 
-Current refs fetched 2026-10-19; `git merge-base --is-ancestor` and `git cherry` distinguish ancestry from equivalent patches:
+Original stack reconciled 2026-10-19; refs and recorded handoffs refreshed after the restart on 2026-10-22.
+`git merge-base --is-ancestor` and `git cherry` distinguish ancestry from equivalent patches:
 
 | PR | Current head | Reconciled state in #11 / frozen V2 / #16 |
 |---|---|---|
@@ -35,9 +36,9 @@ B-28 lists further backend work; the bounded trade-read efficiency candidate is 
 | Slice | Declared failure mode / metric | State | Source and evidence |
 |---|---|---|---|
 | S1 / B-21 | Process exit around commit; exact receipt must survive restart and settle once | Source, r6 blind and r7 second-kill critics pass; PostgreSQL oracle pending | [PR #18](https://github.com/calebaiken/sightbreak/pull/18), runtime `7b6f379`; **0/27 → 27/27 recovered**; follow-up harness `e0cd1e4` adds kill after retry409, **0/9 → 9/9**; journal41/recovery12/armory749/menu51 pass; [report](../reports/CLIENT_RECOVERY_V3.md) |
-| S2 | Fully acknowledged stale input batches incorrectly refresh transport liveness | Independent source critic passes; matched native results published, blind packet being prepared | [PR #20](https://github.com/calebaiken/sightbreak/pull/20), runtime `f3ceaad`, tested `77f2040`, evidence `1627a9a`; stale-window travel **1.003–1.020m → 0m**, stop315–332ms, stale peer retired32.057–32.072s vs still bound34s;16valid native pairs and11regression groups per source |
-| S3 | Per-trade item/name hydration scales database statements with history size | Astra and Sol source critics pass; artifact-complete blind critic prefers V, verdict frozen before identity disclosure; Sol's two assurance controls pending | [PR #19](https://github.com/calebaiken/sightbreak/pull/19), runtime `4a8e9ea`, enhanced harness `8070436`, evidence `89215fb`; 40 trades × 20 items/side **1,643 → 8 SQL statements**; baseline 61/candidate 74 PostgreSQL checks pass; 168 received responses and 336 table snapshots retained; small-read timing regressions disclosed |
-| S4 | Missing repeated-ACK observations during experimental prediction/reconciliation | Source critic passes; fresh blind review of additive diagnostic result underway; earlier TIE retained | [PR #21](https://github.com/calebaiken/sightbreak/pull/21), runtime `0fbce12`, harness `1a941e8`, evidence `6d2b38d`; held-snapshot visibility **20/40 → 40/40**, all **1,224 reconciliations** observed; legacy outputs identical, six maintained gates pass; no gameplay-accuracy win claimed, default-off gate retained |
+| S2 | Fully acknowledged stale input batches incorrectly refresh transport liveness | Source and blind critics pass the bounded native comparison; individual queued-to-ACK transition trace pending | [PR #20](https://github.com/calebaiken/sightbreak/pull/20), runtime `f3ceaad`, tested `77f2040`, neutral evidence `0cbc3ae`; stale-window travel **1.003–1.020m → 0m**, horizontal stop315–332ms, stale peer retired32.057–32.072s vs still bound34s;16valid native pairs and11regression groups per source |
+| S3 | Per-trade item/name hydration scales database statements with history size | Astra and Sol source/blind critics pass the bounded read slice with qualifications; both selected V, now disclosed as the candidate; Sol's two assurance controls pending | [PR #19](https://github.com/calebaiken/sightbreak/pull/19), runtime `4a8e9ea`, executed checkout/harness `8070436`, evidence `89215fb`; 40 trades × 20 items/side **1,643 → 8 SQL statements**; baseline 61/candidate 74 PostgreSQL checks pass; 168 received responses and 336 table snapshots retained; small-read timing regressions disclosed |
+| S4 | Missing repeated-ACK observations during experimental prediction/reconciliation | Source and fresh blind critics pass the coverage improvement; per-insertion 121-snapshot bound trace pending; earlier TIE retained | [PR #21](https://github.com/calebaiken/sightbreak/pull/21), runtime `0fbce12`, campaign harness `1a941e8`, evidence `6d2b38d`; held-snapshot visibility **20/40 → 40/40**, all **1,224 reconciliations** observed; legacy outputs identical, six maintained gates pass; no gameplay-accuracy win claimed, default-off gate retained |
 
 Each candidate needs an exact runtime commit, repeatable command, raw logs, matched
 baseline, separate blind critic, and a recorded Sol handoff. A passing smoke test
@@ -48,9 +49,18 @@ does not activate a feature gate. Failed trials remain in the evidence record.
 - [PR16 systems handoff](https://github.com/calebaiken/sightbreak/pull/16#issuecomment-6274885599)
 - [PR12 narrow transaction-hook handoff](https://github.com/calebaiken/sightbreak/pull/12#issuecomment-6274889863); comments/reviews refreshed before editing.
 - [Sol V3 integration / QA PR #17](https://github.com/calebaiken/sightbreak/pull/17); shared harness portability belongs to Sol. Systems slices use focused separate harnesses.
-- Sol handoffs refreshed through integration head `bd12301`. Its [source-bound PR19 findings](https://github.com/calebaiken/sightbreak/pull/19#issuecomment-6275997901)
+- Sol handoffs refreshed through integration head `320e0ef`. Its [source-bound PR19 findings](https://github.com/calebaiken/sightbreak/pull/19#issuecomment-6275997901)
   request an executed SQL-parameter-bound negative control and actual imported-fixture
   provenance. Both are being addressed as test/harness changes against frozen runtime `4a8e9ea`.
+- [Sol's second backend blind verdict](https://github.com/calebaiken/sightbreak/pull/19#issuecomment-6354432171)
+  was frozen before [the verified second identity release](https://github.com/calebaiken/sightbreak/pull/19#issuecomment-6354506652).
+  M is V2 `701ce2c`; V is checkout `8070436` with runtime `4a8e9ea`. The read-only fixture's
+  eight empty monetary tables do not establish mutation/concurrency safety on their own.
+- The [network blind verdict](https://github.com/calebaiken/sightbreak/pull/20#issuecomment-6354437453)
+  distinguishes simulation-time input neutralization from wall-time peer retirement. Four
+  reported live-peer structures empty after retirement; this is not universal actor-state erasure.
+- The [prediction blind verdict](https://github.com/calebaiken/sightbreak/pull/21#issuecomment-6276374296)
+  accepts observation coverage, not gameplay accuracy. Its cache-bound trace follow-up uses frozen harness `b4b3db0`.
 - Protocol 6 remains matched. Prediction defaults off; live rewind stays disabled.
 - Preserve Claude UI/visual nodes and API, Gemini bot interfaces, movement delegation,
   expected-price capture, authoritative economy, and offline-training separation.
@@ -60,7 +70,7 @@ does not activate a feature gate. Failed trials remain in the evidence record.
 ## Next recorded actions
 
 1. Finish the S1 exact-source native PostgreSQL lost-response oracle.
-2. Publish S2 matched outcomes and independent critic; retain its failed fixture trials.
-3. Publish the frozen second S3 verdict and release its identity key after Sol's independent verdict; close Sol's two assurance findings and retain the first qualified verdict.
-4. Judge S4 additive diagnostics against a declared coverage metric; no prediction activation from diagnostic improvement.
+2. Retain the S2 single-batch queued/unacknowledged-to-fully-acknowledged trace and judge it against both sources; preserve the completed native campaign and failed fixture trials.
+3. Close Sol's two S3 assurance findings, archive the now-released second key and frozen verdicts, and retain the first qualified verdict.
+4. Finish and independently judge S4's 121-insertion cache/anchor trace; preserve its completed coverage win and activation gates.
 5. Refresh Sol's source-bound findings and keep each candidate independently reviewable. Repair and verify raw Git-blob byte preservation before evidence handoff.
