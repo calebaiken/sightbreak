@@ -1,0 +1,43 @@
+[
+  {
+    "name": "numeric-controls",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_audio_native_compatibility.py",
+      "-k",
+      "NativeMixRateControls",
+      "-v"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "maintained-analyzer",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_analyze_audio_lifecycle.py",
+      "-v"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "numeric-full-raw",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "scripts/analyze_audio_lifecycle.py",
+      "/workspace/sightbreak-audio-exit-lifecycle/.local/audio-owner-r1-20261023/input-mode.log"
+    ],
+    "exit": 0
+  }
+]

@@ -3,6 +3,7 @@
 import argparse
 import hashlib
 import json
+import math
 from pathlib import Path
 import re
 
@@ -65,7 +66,8 @@ def analyze(text):
                 raise ValueError('Non-weak record interleaves the weak snapshot loop')
             if kind == 'header':
                 if (row['sequence'] != 0 or not isinstance(row.get('driver'), str) or not row['driver']
-                        or type(row.get('mix_rate')) is not int or row['mix_rate'] <= 0
+                        or type(row.get('mix_rate')) not in (int, float) or row['mix_rate'] <= 0
+                        or (type(row['mix_rate']) is float and not math.isfinite(row['mix_rate']))
                         or row.get('scope') != 'read_only_latest_playback_not_server_drain'):
                     raise ValueError('Probe header is invalid')
                 headers.append(row)
