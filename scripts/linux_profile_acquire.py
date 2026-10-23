@@ -27,7 +27,7 @@ import toolchain
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORT = ROOT / 'docs/reports/gauntlet/m1-linux-profile-acquisition'
-OUTPUT = ROOT / 'builds/linux-profile-acquisition-r2'
+OUTPUT = ROOT / 'builds/linux-profile-acquisition-r3'
 PINS = REPORT / 'pins.json'
 INSTALL = Path('/workspace/tools/godot-4.7.2')
 LANE_LOCK = Path('/tmp/sightbreak-linux-profile-overhead.lock')

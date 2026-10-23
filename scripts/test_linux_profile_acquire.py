@@ -119,7 +119,7 @@ export/convert_text_resources_to_binary=false
 '''}
     record = {'source': source, 'base_files': base, 'files': {name: descriptor(raw) for name, raw in files.items()}}
     resources = {name: raw for name, raw in files.items() if name.startswith('diagnostics/')}
-    resources.update({'assets/a.png.import': b'[remap]\nimporter="texture"\ntype="CompressedTexture2D"\nuid="uid://synthetic"\npath="res://.godot/imported/a.ctex"\nmetadata={\n"vram_texture": false\n}\n',
+    resources.update({'assets/a.png.import': b'[remap]\nimporter="texture"\ntype="CompressedTexture2D"\nuid="uid://synthetic"\npath="res://.godot/imported/a.ctex"\nmetadata={\n"vram_texture": false\n}\n\0',
                       '.godot/imported/a.ctex': b'fresh imported cache bytes', 'project.binary': project_binary(),
                       '.godot/global_script_class_cache.cfg': b'list=[]\n',
                       '.godot/uid_cache.bin': uid_binary({'res://diagnostics/linux_profile_overhead.gd': 42})})

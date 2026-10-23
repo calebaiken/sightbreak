@@ -1,0 +1,22 @@
+test_actual_import_metadata_passes_full_inspector_after_md5 (test_linux_profile_acquire_remaps.PackedRemapTests.test_actual_import_metadata_passes_full_inspector_after_md5) ... ok
+test_actual_packed_representation_equals_staged_remap (test_linux_profile_acquire_remaps.PackedRemapTests.test_actual_packed_representation_equals_staged_remap) ... ok
+test_frozen_stage_hash_precedes_staged_control_parsing (test_linux_profile_acquire_remaps.PackedRemapTests.test_frozen_stage_hash_precedes_staged_control_parsing) ... ok
+test_observed_fixtures_and_original_reader_are_byte_pinned (test_linux_profile_acquire_remaps.PackedRemapTests.test_observed_fixtures_and_original_reader_are_byte_pinned) ... ok
+test_original_reader_retains_exact_actual_failure_and_staged_positive (test_linux_profile_acquire_remaps.PackedRemapTests.test_original_reader_retains_exact_actual_failure_and_staged_positive) ... ok
+test_rebuilt_md5_valid_actual_remap_boundary_and_value_mutations_reject (test_linux_profile_acquire_remaps.PackedRemapTests.test_rebuilt_md5_valid_actual_remap_boundary_and_value_mutations_reject) ... 
+  test_rebuilt_md5_valid_actual_remap_boundary_and_value_mutations_reject (test_linux_profile_acquire_remaps.PackedRemapTests.test_rebuilt_md5_valid_actual_remap_boundary_and_value_mutations_reject) (name='duplicate metadata key') ... FAIL
+test_unauthenticated_actual_import_mutation_rejects_before_boundary (test_linux_profile_acquire_remaps.PackedRemapTests.test_unauthenticated_actual_import_mutation_rejects_before_boundary) ... ok
+
+======================================================================
+FAIL: test_rebuilt_md5_valid_actual_remap_boundary_and_value_mutations_reject (test_linux_profile_acquire_remaps.PackedRemapTests.test_rebuilt_md5_valid_actual_remap_boundary_and_value_mutations_reject) (name='duplicate metadata key')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-linux-packed-import-boundary/scripts/test_linux_profile_acquire_remaps.py", line 114, in test_rebuilt_md5_valid_actual_remap_boundary_and_value_mutations_reject
+    with self.assertRaises((pack.Invalid, UnicodeError, json.JSONDecodeError)):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (<class 'linux_profile_overhead.Invalid'>, <class 'UnicodeError'>, <class 'json.decoder.JSONDecodeError'>) not raised
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.494s
+
+FAILED (failures=1)

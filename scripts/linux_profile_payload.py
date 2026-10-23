@@ -209,12 +209,22 @@ def unpack_payload(executable, template):
 
 
 def sections(text):
+    require(not any(ord(char) < 32 and char != '\n' or 127 <= ord(char) < 160
+                    for char in text), 'Unexpected import text control')
     result, current, pending = {}, None, []
+    def unique_object(pairs):
+        value = {}
+        for key, item in pairs:
+            require(key not in value, 'Duplicate import JSON key')
+            value[key] = item
+        return value
     def flush():
         if pending:
             key, value = '\n'.join(pending).split('=', 1)
             require(key not in result[current], 'Duplicate import key')
             result[current][key] = strict_json(value)
+            # Preserve the shared finite-number gate; also reject duplicate fields.
+            json.loads(value, object_pairs_hook=unique_object)
             pending.clear()
     for line in text.splitlines():
         if not line.strip() or line.startswith(';'):
@@ -233,6 +243,15 @@ def sections(text):
             pending.append(line)
     flush()
     return result
+
+
+def packed_import_sections(data):
+    # Pinned 4.7.2 export copies encode_to_text().utf8().size(): LF + one
+    # terminal zero (ed1daf0bf editor_export_platform.cpp:1693-1699).
+    # Only packed .import resources reach this boundary, after resource MD5.
+    require(data.endswith(b'\n\0') and data.count(b'\0') == 1,
+            'Invalid packed import terminator')
+    return sections(data[:-1].decode('utf-8'))
 
 
 def uid_cache(data):
@@ -281,10 +300,10 @@ def inspect(executable, template, stage, record):
             expected.add(name)
             source_paths.add('res://' + name)
         if name.endswith('.import'):
-            original = sections(path.read_text())
+            original = sections(original_bytes.decode('utf-8'))
             require(set(original) == {'remap', 'deps', 'params'}, 'Unexpected staged import sections')
             require(name in resources, 'Missing packed import metadata: ' + name)
-            packed = sections(resources[name].decode())
+            packed = packed_import_sections(resources[name])
             require(set(packed) == {'remap'}, 'Unexpected packed import sections')
             wanted = {key: value for key, value in original['remap'].items()
                       if not key.startswith('path.') or key == 'path.s3tc'}
