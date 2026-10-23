@@ -26,6 +26,7 @@ from build_manifest import BUILDS, OUTPUTS, source, validate_record
 from PIL import Image, ImageChops
 from native_log import failed
 from native_observation import read_observation_json
+from native_focus_fence import FocusContextFence, FocusPreconditionLost, fresh_focus_movement
 from verify_integration_export import NativeUI, WinUI, windows_job
 import toolchain
 
@@ -853,15 +854,25 @@ def main():
                                and state.get('time_scale') == 1
                                and state.get('phase') == 'live' and state.get('local_actor', {}).get('alive') is True,
                                60, 'Fresh stock match reaches a living active player before native focus loss', loaded['wall_msec'])
-        def require_focus_context(state):
-            if (state.get('phase') != 'live' or state.get('round_number') != focus_start['round_number']
-                    or state.get('time_scale') != 1
-                    or state.get('local_actor', {}).get('id') != focus_start['local_actor']['id']):
-                raise RuntimeError('Native focus validation changed live round, actor, or simulation speed')
+        focus_receipt = result['native_focus_recovery'] = {
+            'scope': 'fresh stock match after settings restart', 'passed': False,
+            'context_fence': {}, 'fresh_press': {}, 'capture_context': {}}
+        fence = FocusContextFence(focus_start, focus_receipt['context_fence'])
+
+        def require_focus_context(state, stage='focus_context', **context):
+            return fence.require(state, stage, **context)
+
+        def focus_observed(predicate, seconds, label, after=-1):
+            def checked(state):
+                require_focus_context(state, label)
+                return predicate(state)
+            return observed(checked, seconds, label, after)
+
+        require_focus_context(offline_observation(), 'before_held_w_down', focused=True, paused=False)
         try:
             key('w', True)
             button(True)
-            input_ack = observed(lambda state: state.get('local_input', {}).get('fire') is True
+            input_ack = focus_observed(lambda state: state.get('local_input', {}).get('fire') is True
                                  and state.get('local_input', {}).get('move', [0, 0]) != [0, 0],
                                  10, 'Game consumed physical W and LMB before native focus loss', focus_start['wall_msec'])
             require_focus_context(input_ack)
@@ -870,6 +881,7 @@ def main():
                     or input_ack.get('ui', {}).get('paused') is not False):
                 raise RuntimeError('Physical input acknowledgment lost the living active focus-test context')
             trace('native_focus_held_input_acknowledged', state=input_ack)
+            focus_receipt['held_input_acknowledged'] = input_ack
             trace('native_focus_loss_before', method='XSetInputFocus(root)' if args.target == 'linux' else 'ShowWindow(SW_MINIMIZE)')
             if args.target == 'linux':
                 ui.x.XSetInputFocus(ui.d, ui.x.XDefaultRootWindow(ui.d), 1, 0)
@@ -877,26 +889,32 @@ def main():
             else:
                 ui.user.ShowWindow(ui.window, 6)  # SW_MINIMIZE
             trace('native_focus_loss_after')
-            lost = observed(lambda state: state.get('ui', {}).get('focused') is False
+            lost = focus_observed(lambda state: state.get('ui', {}).get('focused') is False
                             and state.get('ui', {}).get('paused') is True,
                             10, 'Native focus loss pauses actual offline match', focus_start['wall_msec'])
             require_focus_context(lost)
+            focus_receipt['lost'] = lost
             trace('native_focus_restore_before')
             if args.target == 'windows':
                 ui.user.ShowWindow(ui.window, 9)  # SW_RESTORE; focus_game retains the same HWND
             wait_for(ui.focus_game, 10, 'Restore actual native input focus', client)
             trace('native_focus_restore_after')
-            restored = observed(lambda state: state.get('ui', {}).get('focused') is True,
+            restored = focus_observed(lambda state: state.get('ui', {}).get('focused') is True,
                                 10, 'Actual game observes restored focus', lost['wall_msec'])
             require_focus_context(restored)
             if restored['ui'].get('paused') is not True or restored['ui'].get('mouse_mode') != 0:
                 raise RuntimeError('Native focus restoration resumed gameplay or hid the pointer without explicit resume')
+            focus_receipt['restored_paused'] = restored
+            focus_receipt['capture_context']['11a-restored-focus-still-paused'] = {'before': restored}
             capture('11a-restored-focus-still-paused')
+            after_capture = offline_observation()
+            focus_receipt['capture_context']['11a-restored-focus-still-paused']['after'] = after_capture
+            require_focus_context(after_capture, 'after_restored_pause_capture', focused=True, paused=True)
             tap('Escape')
-            guarded = observed(lambda state: state.get('ui', {}).get('paused') is False,
+            guarded = focus_observed(lambda state: state.get('ui', {}).get('paused') is False,
                                10, 'Explicit resume with W and LMB still physically held', restored['wall_msec'])
             baseline_actor = restored['local_actor']
-            guard_samples = []
+            guard_samples = focus_receipt['held_neutral_samples'] = []
             def check_guard(state, stable_position=None):
                 require_focus_context(state)
                 inputs, actor = state.get('local_input', {}), state.get('local_actor', {})
@@ -917,37 +935,36 @@ def main():
             # Neutral input must hold throughout its bounded natural decay.
             settle_start = guarded['elapsed']
             while any(abs(guarded['local_actor']['velocity'][axis]) > .01 for axis in (0, 2)):
-                guarded = observed(lambda state: True, 10, 'Neutral held input while ordinary inertia settles',
+                guarded = focus_observed(lambda state: True, 10, 'Neutral held input while ordinary inertia settles',
                                    guarded['wall_msec'])
                 check_guard(guarded)
                 if guarded['elapsed'] - settle_start > 1.0:
                     raise RuntimeError('Neutral movement inertia failed to settle within one simulation second')
             stable_position = guarded['local_actor']['position'][:]
             for index in range(2):
-                guarded = observed(lambda state: True, 10, 'Fresh held-input guard sample ' + str(index + 1),
+                guarded = focus_observed(lambda state: True, 10, 'Fresh held-input guard sample ' + str(index + 1),
                                    guarded['wall_msec'])
                 check_guard(guarded, stable_position)
+            focus_receipt['capture_context']['11b-resumed-held-input-neutral'] = {'before': guarded}
             capture('11b-resumed-held-input-neutral')
+            after_capture = offline_observation()
+            focus_receipt['capture_context']['11b-resumed-held-input-neutral']['after'] = after_capture
+            require_focus_context(after_capture, 'after_held_neutral_capture', focused=True, paused=False)
         finally:
             key('w', False)
             button(False)
-        released = observed(focus_controls_released,
+        released = focus_observed(focus_controls_released,
                             10, 'Released held focus-test controls', guarded['wall_msec'])
-        require_focus_context(released)
-        try:
-            key('w', True)
-            moved = observed(lambda state: state.get('local_actor', {}).get('alive') is True
-                             and state.get('local_input', {}).get('move', [0, 0]) != [0, 0]
-                             and state.get('local_actor', {}).get('position') != released['local_actor']['position'],
-                             10, 'Fresh W press moves actual player after focus recovery', released['wall_msec'])
-            require_focus_context(moved)
-        finally:
-            key('w', False)
+        focus_receipt['released'] = released
+        moved = fresh_focus_movement(fence=fence, released=released, snapshot=offline_observation,
+                                    observed=observed, key=key, receipt=focus_receipt['fresh_press'])
+        focus_receipt['capture_context']['11c-fresh-press-movement'] = {'before': moved}
         capture('11c-fresh-press-movement')
-        result['native_focus_recovery'] = {'scope': 'fresh stock match after settings restart', 'held_input_acknowledged': input_ack,
-                                           'lost': lost, 'restored_paused': restored,
-                                           'held_neutral_samples': guard_samples, 'released': released,
-                                           'fresh_press_movement': moved}
+        after_capture = offline_observation()
+        focus_receipt['capture_context']['11c-fresh-press-movement']['after'] = after_capture
+        require_focus_context(after_capture, 'after_fresh_movement_capture', focused=True, paused=False)
+        focus_receipt['context_fence']['status'] = 'LIVING_CONTEXT_PRESERVED_THROUGH_CAPTURE'
+        focus_receipt.update(passed=True, fresh_press_movement=moved)
         ui.request_close()
         reopened.wait(timeout=min(20, remaining()))
         reopened_exit = reopened.returncode
@@ -976,6 +993,9 @@ def main():
                       limits='Screenshots require visual review; no physical-device/performance acceptance. Linux isolated automation disables accessibility and D-Bus portals; their coverage remains UNVERIFIED.')
     except (Exception, SystemExit) as error:
         result.update(passed=False, error=str(error), source=before, artifact_source=manifest)
+        if (isinstance(error, FocusPreconditionLost)
+                or result.get('native_focus_recovery', {}).get('context_fence', {}).get('status') == 'FOCUS_PRECONDITION_LOST'):
+            result['failure_kind'] = 'FOCUS_PRECONDITION_LOST'
         trace('failure', error=str(error))
     finally:
         cleanup_errors = []
