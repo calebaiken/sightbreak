@@ -1,0 +1,612 @@
+{
+  "source_freeze": "977633e44a61352cbf666273931021ebebfe70d9",
+  "scope": "Declared fake clock/OS/API callbacks only; not real native or physical timing evidence",
+  "cases": [
+    {
+      "case": "ordinary",
+      "events": [
+        [
+          "d",
+          true,
+          0.0
+        ],
+        [
+          "d",
+          false,
+          0.125
+        ]
+      ],
+      "receipt": {
+        "status": "API_RETURNED_WITH_OS_RELEASE",
+        "keys": [
+          "d"
+        ],
+        "requested_seconds": 0.125,
+        "absolute_deadline": 35,
+        "edges": [
+          {
+            "key": "d",
+            "down": true,
+            "before_monotonic": 0.0,
+            "after_monotonic": 0.005
+          },
+          {
+            "key": "d",
+            "down": false,
+            "before_monotonic": 0.125,
+            "after_monotonic": 0.13
+          }
+        ],
+        "os_states": [
+          {
+            "label": "before_down",
+            "read_begin_monotonic": 0.0,
+            "read_end_monotonic": 0.0,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_down",
+            "read_begin_monotonic": 0.005,
+            "read_end_monotonic": 0.005,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": true
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_release",
+            "read_begin_monotonic": 0.13,
+            "read_end_monotonic": 0.13,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          }
+        ],
+        "attempted_keys": [
+          "d"
+        ],
+        "released_keys": [
+          "d"
+        ],
+        "release_errors": [],
+        "release_complete": true,
+        "scope": "in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified",
+        "hold_until_monotonic": 0.125,
+        "finished_monotonic": 0.13
+      },
+      "exception": null,
+      "mock_os_keys_after": []
+    },
+    {
+      "case": "partial_down_error",
+      "events": [
+        [
+          "w",
+          true,
+          0.0
+        ],
+        [
+          "d",
+          true,
+          0.005
+        ],
+        [
+          "w",
+          false,
+          0.01
+        ],
+        [
+          "d",
+          false,
+          0.015
+        ]
+      ],
+      "receipt": {
+        "status": "FAILED",
+        "keys": [
+          "w",
+          "d"
+        ],
+        "requested_seconds": 0.125,
+        "absolute_deadline": 35,
+        "edges": [
+          {
+            "key": "w",
+            "down": true,
+            "before_monotonic": 0.0,
+            "after_monotonic": 0.005
+          },
+          {
+            "key": "d",
+            "down": true,
+            "before_monotonic": 0.005,
+            "error": "OSError: declared native edge failure",
+            "after_monotonic": 0.01
+          },
+          {
+            "key": "w",
+            "down": false,
+            "before_monotonic": 0.01,
+            "after_monotonic": 0.015
+          },
+          {
+            "key": "d",
+            "down": false,
+            "before_monotonic": 0.015,
+            "after_monotonic": 0.02
+          }
+        ],
+        "os_states": [
+          {
+            "label": "before_down",
+            "read_begin_monotonic": 0.0,
+            "read_end_monotonic": 0.0,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_release",
+            "read_begin_monotonic": 0.02,
+            "read_end_monotonic": 0.02,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          }
+        ],
+        "attempted_keys": [
+          "w",
+          "d"
+        ],
+        "released_keys": [
+          "w",
+          "d"
+        ],
+        "release_errors": [],
+        "release_complete": true,
+        "scope": "in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified",
+        "hold_until_monotonic": 0.125,
+        "error_type": "OSError",
+        "error": "declared native edge failure",
+        "finished_monotonic": 0.02
+      },
+      "exception": {
+        "type": "OSError",
+        "message": "declared native edge failure"
+      },
+      "mock_os_keys_after": []
+    },
+    {
+      "case": "sleep_error",
+      "events": [
+        [
+          "d",
+          true,
+          0.0
+        ],
+        [
+          "d",
+          false,
+          0.005
+        ]
+      ],
+      "receipt": {
+        "status": "FAILED",
+        "keys": [
+          "d"
+        ],
+        "requested_seconds": 0.125,
+        "absolute_deadline": 35,
+        "edges": [
+          {
+            "key": "d",
+            "down": true,
+            "before_monotonic": 0.0,
+            "after_monotonic": 0.005
+          },
+          {
+            "key": "d",
+            "down": false,
+            "before_monotonic": 0.005,
+            "after_monotonic": 0.01
+          }
+        ],
+        "os_states": [
+          {
+            "label": "before_down",
+            "read_begin_monotonic": 0.0,
+            "read_end_monotonic": 0.0,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_down",
+            "read_begin_monotonic": 0.005,
+            "read_end_monotonic": 0.005,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": true
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_release",
+            "read_begin_monotonic": 0.01,
+            "read_end_monotonic": 0.01,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          }
+        ],
+        "attempted_keys": [
+          "d"
+        ],
+        "released_keys": [
+          "d"
+        ],
+        "release_errors": [],
+        "release_complete": true,
+        "scope": "in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified",
+        "hold_until_monotonic": 0.125,
+        "error_type": "OSError",
+        "error": "declared sleep failure",
+        "finished_monotonic": 0.01
+      },
+      "exception": {
+        "type": "OSError",
+        "message": "declared sleep failure"
+      },
+      "mock_os_keys_after": []
+    },
+    {
+      "case": "late_up",
+      "events": [
+        [
+          "d",
+          true,
+          0.0
+        ],
+        [
+          "d",
+          false,
+          0.1
+        ]
+      ],
+      "receipt": {
+        "status": "FAILED",
+        "keys": [
+          "d"
+        ],
+        "requested_seconds": 0.1,
+        "absolute_deadline": 0.15,
+        "edges": [
+          {
+            "key": "d",
+            "down": true,
+            "before_monotonic": 0.0,
+            "after_monotonic": 0.005
+          },
+          {
+            "key": "d",
+            "down": false,
+            "before_monotonic": 0.1,
+            "after_monotonic": 0.30000000000000004
+          }
+        ],
+        "os_states": [
+          {
+            "label": "before_down",
+            "read_begin_monotonic": 0.0,
+            "read_end_monotonic": 0.0,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_down",
+            "read_begin_monotonic": 0.005,
+            "read_end_monotonic": 0.005,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": true
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_release",
+            "read_begin_monotonic": 0.30000000000000004,
+            "read_end_monotonic": 0.30000000000000004,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          }
+        ],
+        "attempted_keys": [
+          "d"
+        ],
+        "released_keys": [
+          "d"
+        ],
+        "release_errors": [],
+        "release_complete": true,
+        "scope": "in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified",
+        "hold_until_monotonic": 0.1,
+        "error_type": "TimeoutError",
+        "error": "Original route deadline expired during native key pulse",
+        "finished_monotonic": 0.30000000000000004
+      },
+      "exception": {
+        "type": "TimeoutError",
+        "message": "Original route deadline expired during native key pulse"
+      },
+      "mock_os_keys_after": []
+    },
+    {
+      "case": "late_os_read",
+      "events": [
+        [
+          "d",
+          true,
+          0.0
+        ],
+        [
+          "d",
+          false,
+          0.1
+        ]
+      ],
+      "receipt": {
+        "status": "FAILED",
+        "keys": [
+          "d"
+        ],
+        "requested_seconds": 0.1,
+        "absolute_deadline": 0.15,
+        "edges": [
+          {
+            "key": "d",
+            "down": true,
+            "before_monotonic": 0.0,
+            "after_monotonic": 0.005
+          },
+          {
+            "key": "d",
+            "down": false,
+            "before_monotonic": 0.1,
+            "after_monotonic": 0.10500000000000001
+          }
+        ],
+        "os_states": [
+          {
+            "label": "before_down",
+            "read_begin_monotonic": 0.0,
+            "read_end_monotonic": 0.0,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_down",
+            "read_begin_monotonic": 0.005,
+            "read_end_monotonic": 0.005,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": true
+            },
+            "lmb_down": false
+          },
+          {
+            "label": "after_release",
+            "read_begin_monotonic": 0.10500000000000001,
+            "read_end_monotonic": 0.30500000000000005,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          }
+        ],
+        "attempted_keys": [
+          "d"
+        ],
+        "released_keys": [
+          "d"
+        ],
+        "release_errors": [],
+        "release_complete": true,
+        "scope": "in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified",
+        "hold_until_monotonic": 0.1,
+        "error_type": "TimeoutError",
+        "error": "Original route deadline expired during native key pulse",
+        "finished_monotonic": 0.30500000000000005
+      },
+      "exception": {
+        "type": "TimeoutError",
+        "message": "Original route deadline expired during native key pulse"
+      },
+      "mock_os_keys_after": []
+    },
+    {
+      "case": "external_a",
+      "events": [],
+      "receipt": {
+        "status": "FAILED",
+        "keys": [
+          "d"
+        ],
+        "requested_seconds": 0.125,
+        "absolute_deadline": 35,
+        "edges": [],
+        "os_states": [
+          {
+            "label": "before_down",
+            "read_begin_monotonic": 0.0,
+            "read_end_monotonic": 0.0,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": true,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          }
+        ],
+        "attempted_keys": [],
+        "released_keys": [],
+        "release_errors": [],
+        "release_complete": false,
+        "scope": "in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified",
+        "error_type": "RuntimeError",
+        "error": "Native route key pulse requires physically neutral controls",
+        "finished_monotonic": 0.0
+      },
+      "exception": {
+        "type": "RuntimeError",
+        "message": "Native route key pulse requires physically neutral controls"
+      },
+      "mock_os_keys_after": [
+        "a"
+      ]
+    }
+  ]
+}
