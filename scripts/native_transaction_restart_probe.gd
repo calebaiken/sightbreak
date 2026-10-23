@@ -14,9 +14,20 @@ func record(event: String, fields := {}) -> void:
 
 func run() -> void:
 	record("read_fixture")
-	var config: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(OS.get_environment("SIGHTBREAK_RECEIPT_FIXTURE")))
-	# Exactly the integer captured by the market buy button; JSON.parse makes floats.
-	config.payload.expected_price = int(config.payload.expected_price)
+	var fixture_text := FileAccess.get_file_as_string(OS.get_environment("SIGHTBREAK_RECEIPT_FIXTURE"))
+	var config: Dictionary = JSON.parse_string(fixture_text)
+	var config_keys := config.keys()
+	config_keys.sort()
+	var minimal_keys := ["journal", "mode", "owner", "password", "url", "username"]
+	record("fixture_read", {"keys": config_keys, "sha256": fixture_text.sha256_text(), "bytes": fixture_text.to_utf8_buffer().size(), "mode": config.mode,
+		"source_file_sha256": {"probe": FileAccess.get_sha256(get_script().resource_path),
+			"economy_ui": FileAccess.get_sha256("res://scripts/ui/economy_ui.gd"),
+			"economy_api": FileAccess.get_sha256("res://scripts/ui/economy_api.gd"),
+			"transaction_journal": FileAccess.get_sha256("res://scripts/ui/transaction_journal.gd") if FileAccess.file_exists("res://scripts/ui/transaction_journal.gd") else ""}})
+	if config.mode != "send" and (config.mode != "retry" or config_keys != minimal_keys):
+		record("invalid_retry_fixture")
+		quit(1)
+		return
 	record("construct_ui")
 	var ui := UI.new()
 	for property in ui.get_property_list():
@@ -38,6 +49,8 @@ func run() -> void:
 		return
 	var result: Dictionary
 	if config.mode == "send":
+		# Exactly the integer captured by the market buy button; JSON.parse makes floats.
+		config.payload.expected_price = int(config.payload.expected_price)
 		record("perform_entered", {"path": config.path, "payload": config.payload, "expected_price_is_int": config.payload.expected_price is int})
 		result = await ui._perform(config.path, config.payload)
 	else:

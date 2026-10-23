@@ -38,6 +38,10 @@ from psycopg.rows import dict_row
 HARNESS = Path(__file__).resolve()
 PROBE = HARNESS.with_name("native_transaction_restart_probe.gd")
 CONNECT = dict(host="127.0.0.1", port=55439, user="sightbreak", password="sightbreak_local_only")
+RETRY_CONFIG_KEYS = {"url", "journal", "mode", "username", "password", "owner"}
+NATIVE_ENV_KEYS = {"SYSTEMROOT", "WINDIR", "COMSPEC", "PATH", "PATHEXT", "TEMP", "TMP",
+                   "APPDATA", "LOCALAPPDATA", "USERPROFILE", "HOMEDRIVE", "HOMEPATH",
+                   "NUMBER_OF_PROCESSORS", "PROCESSOR_ARCHITECTURE", "OS"}
 TABLES = {
     "players": "id, username, display_name, credits, xp, active, last_trade",
     "items": "*", "listings": "*", "operations": "*", "ledger": "*",
@@ -234,7 +238,7 @@ def native_pids(exe: Path) -> list[int]:
     return [int(row[1]) for row in csv.reader(io.StringIO(output)) if len(row) > 1 and row[0].lower() == exe.name.lower()]
 
 
-def launch(command: list[str], environment: dict, evidence: Evidence, phase: str):
+def launch(command: list[str], environment: dict, evidence: Evidence, phase: str, cwd=None):
     others = native_pids(Path(command[0]))
     if others:
         raise RuntimeError(f"Native slot occupied by PIDs {others}; run serially after they finish")
@@ -245,13 +249,13 @@ def launch(command: list[str], environment: dict, evidence: Evidence, phase: str
     stdout = tempfile.TemporaryFile(dir=temporary)
     stderr = tempfile.TemporaryFile(dir=temporary)
     try:
-        process = subprocess.Popen(command, env=environment, stdout=stdout, stderr=stderr)
+        process = subprocess.Popen(command, env=environment, cwd=cwd, stdout=stdout, stderr=stderr)
     except Exception:
         stdout.close()
         stderr.close()
         raise
     process.receipt_logs = (stdout, stderr)
-    evidence.event("native_started", phase=phase, pid=process.pid, command=command, other_native_pids=others)
+    evidence.event("native_started", phase=phase, pid=process.pid, command=command, cwd=str(cwd) if cwd else None, other_native_pids=others)
     return process
 
 
@@ -354,6 +358,54 @@ def verify_commit(before, after, fixture, purchase, fee) -> dict:
     )
 
 
+def capture_launch_inputs(config, original, fixture, environment, command, root, directory, phase, evidence):
+    """Overwrite the only supplied fixture; retain original purchase data in the driver only."""
+    if phase != "send" and (set(config) != RETRY_CONFIG_KEYS or config["mode"] != "retry"):
+        raise RuntimeError("Restart config must contain exactly the six permitted keys")
+    if set(key.upper() for key in environment) - NATIVE_ENV_KEYS - {"SIGHTBREAK_RECEIPT_FIXTURE"}:
+        raise RuntimeError("Unexpected native environment variable")
+    write_json(fixture, config)  # Truncates the send fixture; no sibling original is retained here.
+    raw = fixture.read_bytes()
+    assert json.loads(raw) == config
+    purchase_values = [original[key] for key in ["path", "item", "listing", "seller"]]
+    purchase_values.append(original["payload"]["idempotency_key"])
+    other_inputs = json.dumps(dict(environment=environment, command=command))
+    if any(value in other_inputs for value in purchase_values):
+        raise RuntimeError("Original purchase data found in native environment/argv")
+    if phase != "send" and any(value.encode() in raw for value in purchase_values):
+        raise RuntimeError("Original purchase data found in restart fixture")
+    redacted = directory / (phase + ".fixture.redacted.json")
+    write_json(redacted, evidence.redact(config))
+    source_files = {"driver": HARNESS, "probe": PROBE,
+                    "economy_ui": root / "game/scripts/ui/economy_ui.gd",
+                    "economy_api": root / "game/scripts/ui/economy_api.gd",
+                    "transaction_journal": root / "game/scripts/ui/transaction_journal.gd"}
+    binding = dict(phase=phase, fixture_path=str(fixture), keys=sorted(config),
+                   fixture_sha256=sha(raw), fixture_bytes=len(raw),
+                   redacted_fixture_sha256=sha(redacted.read_bytes()),
+                   source_file_sha256={name: sha(path.read_bytes()) if path.exists() else "" for name, path in source_files.items()},
+                   command=command, cwd=str(root / "game"), environment=environment,
+                   environment_sha256=sha(json.dumps(environment, sort_keys=True, separators=(",", ":")).encode()),
+                   environment_hash_encoding="UTF-8 JSON, sorted keys, compact separators, ensure_ascii=True",
+                   purchase_values_absent_from_environment_and_argv=True,
+                   strict_minimal_restart_config=phase != "send" and set(config) == RETRY_CONFIG_KEYS)
+    write_json(directory / (phase + ".launch-inputs.json"), evidence.redact(binding))
+    evidence.event("native_inputs_prepared", **binding)
+    return binding
+
+
+def verify_native_read(events, binding):
+    reads = [event for event in events if event["event"] == "fixture_read"]
+    expected_sources = {key: value for key, value in binding["source_file_sha256"].items() if key != "driver"}
+    if len(reads) != 1 or any(reads[0].get(key) != expected for key, expected in {
+        "keys": binding["keys"], "sha256": binding["fixture_sha256"], "bytes": binding["fixture_bytes"],
+        "mode": "send" if binding["phase"] == "send" else "retry", "source_file_sha256": expected_sources,
+    }.items()):
+        raise RuntimeError("Native fixture/source read does not match the captured prelaunch binding")
+    return dict(phase=binding["phase"], native_pid=reads[0]["pid"], matched=True,
+                strict_minimal_restart_config=binding["strict_minimal_restart_config"], native_read=reads[0])
+
+
 def run_case(args, root, private, seeded, fee_basis_points, database, backend_port, directory):
     directory.mkdir()
     evidence = Evidence(directory)
@@ -368,14 +420,15 @@ def run_case(args, root, private, seeded, fee_basis_points, database, backend_po
                   owner=buyer["owner"], username=buyer["username"], password=buyer["password"],
                   seller=seller["owner"], item=item, listing=listing["id"])
     fixture = private / (directory.name + "-fixture.json")
-    write_json(fixture, config)
     write_json(directory / "fixture.redacted.json", evidence.redact(config))
-    environment = dict(os.environ, SIGHTBREAK_RECEIPT_FIXTURE=str(fixture))
+    environment = {key: value for key, value in os.environ.items() if key.upper() in NATIVE_ENV_KEYS}
+    environment["SIGHTBREAK_RECEIPT_FIXTURE"] = str(fixture)
     command = [str(args.godot), "--headless", "--verbose", "--path", str(root / "game"), "--script", str(PROBE)]
     process = None
     try:
         before = snapshot(database, directory, "01-before", evidence)
-        process = launch(command, environment, evidence, "send")
+        binding = capture_launch_inputs(config, config, fixture, environment, command, root, directory, "send", evidence)
+        process = launch(command, environment, evidence, "send", cwd=root / "game")
         if not proxy.reached.wait(25):
             raise RuntimeError("Native request did not reach upstream response barrier")
         committed = snapshot(database, directory, "02-committed-before-kill", evidence)
@@ -391,6 +444,7 @@ def run_case(args, root, private, seeded, fee_basis_points, database, backend_po
         stdout, stderr, killed_events = collect(process, directory, "killed-client", evidence, timeout=10)
         if any(event["event"] == "completed" for event in killed_events) or "SCRIPT ERROR" in stderr:
             raise RuntimeError("Client completed or script failed before the intended kill")
+        input_reads = [verify_native_read(killed_events, binding)]
         evidence.event("kill_confirmed", pid=process.pid, returncode=process.returncode)
         process = None
         after_kill_journal = journal_snapshot(journal, directory, "journal-after-kill", evidence)
@@ -403,12 +457,14 @@ def run_case(args, root, private, seeded, fee_basis_points, database, backend_po
         phases = []
         for phase in ["recovery", "second-restart"]:
             proxy.phase = phase
-            config["mode"] = "retry"
-            write_json(fixture, config)
-            process = launch(command, environment, evidence, phase)
+            retry_config = {key: config[key] for key in RETRY_CONFIG_KEYS}
+            retry_config["mode"] = "retry"
+            binding = capture_launch_inputs(retry_config, config, fixture, environment, command, root, directory, phase, evidence)
+            process = launch(command, environment, evidence, phase, cwd=root / "game")
             stdout, stderr, events = collect(process, directory, phase, evidence)
             if process.returncode or "ERROR:" in stderr:
                 raise RuntimeError(f"Native {phase} failed")
+            input_reads.append(verify_native_read(events, binding))
             process = None
             completed = [event for event in events if event["event"] == "completed"]
             if len(completed) != 1:
@@ -425,6 +481,8 @@ def run_case(args, root, private, seeded, fee_basis_points, database, backend_po
         recovery_requests = [row for row in proxy.purchases if row["phase"] == "recovery"]
         recovered_exactly = recovered["result"] == proxy.held["response"]
         checks.update(
+            native_input_read_bindings=len(input_reads) == 3 and all(row["matched"] for row in input_reads),
+            strict_minimal_restart_inputs=all(row["strict_minimal_restart_config"] for row in input_reads[1:]),
             state_unchanged_at_kill=after_kill == committed,
             stable_journal_at_kill=before_kill == after_kill_journal,
             three_fresh_native_logins=len(logins) == 3 and len({row["token_sha256"] for row in logins}) == 3
@@ -441,8 +499,8 @@ def run_case(args, root, private, seeded, fee_basis_points, database, backend_po
                 and type(recovery_requests[0]["body"].get("expected_price")) is int and recovery_requests[0]["response"] == proxy.held["response"],
         )
         result = dict(price=price, checks=checks, recovery_checks=recovery_checks,
-                      authoritative_pass=all(checks.values()), recovered=all(recovery_checks.values()),
-                      logins=logins, purchases=proxy.purchases, phases=phases)
+                       authoritative_pass=all(checks.values()), recovered=all(recovery_checks.values()),
+                       logins=logins, purchases=proxy.purchases, phases=phases, input_reads=input_reads)
         write_json(directory / "result.json", result)
         return result
     finally:
