@@ -160,6 +160,105 @@ class StartupControls(unittest.TestCase):
         self.assertEqual(records[-1][1]['cg_event_post_attempts'], 1)
         self.assertEqual(ui.bounds, [40, 32, 960, 568])
 
+    def actual_window_ui(self, rows):
+        ui = self.fake_ui()
+        ui.private_directory, ui.default_before = Path('/synthetic-only'), {}
+        ui.preflight = lambda: {'CGPreflightPostEventAccess': True, 'CGPreflightScreenCaptureAccess': True}
+        ui.windows = lambda pid: copy.deepcopy(rows)
+        ui.current_foreground_pid = lambda: ui.pid
+        ui.require_target = types.MethodType(base.MacMenuUI.require_target, ui)
+        return ui
+
+    def test_discovery_and_actual_pin_share_exact_owned_visible_selection(self):
+        selected = {'owner_pid': 123, 'onscreen': True, 'window_id': 34,
+                    'bounds_points_including_chrome': [40, 32, 960, 568]}
+        for extra in (None, dict(selected, window_id=35, onscreen=False),
+                      dict(selected, window_id=35, owner_pid=999),
+                      dict(selected, window_id=35, onscreen=1)):
+            rows = [selected] + ([extra] if extra else [])
+            with self.subTest(extra=extra):
+                self.assertEqual(ordinary.owned_visible_windows(rows, 123), [selected])
+                result, calls, error = self.discover(rows)
+                self.assertIsNone(error)
+                self.assertEqual(calls, ['select', 'capture'])
+                ui = self.actual_window_ui(rows)
+                with patch.object(ordinary, 'require_private_userdir'):
+                    ui.pin_for_input(capture())
+                    ui.require_target()
+                self.assertTrue(ui.input_geometry_pinned)
+                self.assertEqual((ui.window, ui.bounds, ui.event_post_attempts),
+                                 (34, [40, 32, 960, 568], 0))
+
+    def test_second_owned_visible_window_rejects_actual_pin_and_every_later_target_guard(self):
+        selected = {'owner_pid': 123, 'onscreen': True, 'window_id': 34,
+                    'bounds_points_including_chrome': [40, 32, 960, 568]}
+        for pinned in (False, True):
+            for extra in (dict(selected, window_id=35), dict(selected)):
+                rows, records = [selected, extra], []
+                ui = self.actual_window_ui(rows)
+                ui.input_geometry_pinned, ui.event_post_attempts = pinned, int(pinned)
+                ui.trace = lambda event, **details: records.append((event, copy.deepcopy(details)))
+                with self.subTest(pinned=pinned, extra=extra), patch.object(ordinary, 'require_private_userdir'):
+                    with self.assertRaises(ordinary.OwnedWindowChanged):
+                        if pinned: ui.require_target()
+                        else: ui.pin_for_input(capture())
+                self.assertEqual(records[-1][1]['observed_owned_layer_zero_windows'], rows)
+                self.assertEqual((ui.input_geometry_pinned, ui.event_post_attempts), (pinned, int(pinned)))
+                self.assertEqual((ui.window, ui.bounds), (34, [40, 32, 960, 568]))
+
+    def test_full_controller_uses_actual_unique_window_guard_before_and_after_input(self):
+        class ActualWindowController(SyntheticController):
+            ambiguous = False
+
+            def native_capture(self, name):
+                image = super().native_capture(name)
+                if self.fault == 'late_window' and name == '01-focused-menu':
+                    self.ambiguous = True
+                return image
+
+            def make_ui(self):
+                harness, synthetic_ui = self, super().make_ui()
+                class UI(synthetic_ui):
+                    def __init__(self, pid, window, bounds, trace):
+                        super().__init__(pid, window, bounds, trace)
+                        self.trace = trace
+                        self.preflight = lambda: {'CGPreflightPostEventAccess': True,
+                                                  'CGPreflightScreenCaptureAccess': True}
+                        self.current_foreground_pid = lambda: self.pid
+
+                    def windows(self, pid):
+                        row = {'owner_pid': pid, 'onscreen': True, 'window_id': self.window,
+                               'bounds_points_including_chrome': self.bounds[:]}
+                        return [row, dict(row, window_id=self.window+1)] if harness.ambiguous else [row]
+
+                    def click_label(self, image, label):
+                        self.require_target()
+                        super().click_label(image, label)
+                        if label.startswith('DEPLOY') and harness.fault == 'post_input_window':
+                            harness.ambiguous = True
+
+                    require_window = ordinary.MacOrdinaryUI.require_window
+                    require_target = base.MacMenuUI.require_target
+                    pin_for_input = ordinary.MacOrdinaryUI.pin_for_input
+                return UI
+
+        for fault in (None, 'late_window', 'post_input_window'):
+            with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temporary:
+                harness = ActualWindowController(Path(temporary).resolve(strict=True) / 'synthetic', fault)
+                with patch.object(ordinary, 'require_private_userdir'):
+                    code, report = harness.execute()
+                self.assertEqual(code, int(fault is not None), report.get('failure'))
+                self.assertEqual(harness.focus_calls, 1)
+                self.assertEqual(harness.deployed, fault != 'late_window')
+                self.assertEqual(harness.active_ui.input_geometry_pinned, fault != 'late_window')
+                self.assertEqual((harness.active_ui.window, harness.active_ui.bounds), (34, [40, 32, 960, 568]))
+                if fault:
+                    self.assertEqual(report['failure']['type'], 'OwnedWindowChanged')
+                    rows = [row for row in report['actions'] if row['event'] == 'owned_window_guard']
+                    self.assertEqual(len(rows[-1]['observed_owned_layer_zero_windows']), 2)
+                    self.assertEqual(report['cg_event_post_attempts'], int(fault == 'post_input_window'))
+                self.assertTrue(all(row['owned_group_gone'] for row in report['cleanup']))
+
 
 if __name__ == '__main__':
     unittest.main()
