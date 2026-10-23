@@ -1,0 +1,222 @@
+{
+  "source_freeze": "16335abfaf2068b2b2ea54c7e100a1505f62b5c1",
+  "scope": "SOURCE_AND_SYNTHETIC_ONLY",
+  "engine_invocations": 0,
+  "checks": {
+    "fifteen_frozen_files_exact": {
+      "pass": true,
+      "errors": [],
+      "count": 15,
+      "freeze_sha256": "aa32b3a08f2682ddbbd5c5ecc811af216bf1aa42b7dd210166235806eab14906"
+    },
+    "independent_read_only_staging_exact": {
+      "pass": true,
+      "fixtures": [
+        {
+          "name": "baseline",
+          "checked_paths": 327,
+          "original_paths": 323,
+          "unique_uid_paths": 138,
+          "manifest_sha256": "6c0e396142c5cf13a33500f6e3cb6ffd062781cd5b1fc81e94dcbb1d9fa02e03",
+          "godot_cache_present": false
+        },
+        {
+          "name": "candidate",
+          "checked_paths": 327,
+          "original_paths": 323,
+          "unique_uid_paths": 138,
+          "manifest_sha256": "ff86d326823a713e7a2c995b5ed165400aeae8971f0cda1fbf51f365f8fc6f07",
+          "godot_cache_present": false
+        }
+      ]
+    },
+    "retained_glyph_mask_inputs_bound_to_r3": {
+      "pass": true,
+      "errors": [],
+      "input_images": 16,
+      "control_assignments": 44
+    },
+    "input_and_physical_geometry_unchanged": {
+      "pass": true
+    },
+    "later_smoke_body_is_source_bound": {
+      "pass": true
+    },
+    "known_overlap_contains_full_pixel_centers": {
+      "pass": true,
+      "centers": {
+        "grenade": [
+          569.6,
+          576.0
+        ],
+        "smoke": [
+          650.24,
+          576.0
+        ]
+      },
+      "radius": 42.0,
+      "center_distance": 80.63999999999999,
+      "body_overlap": 3.3600000000000136,
+      "halo_overlap": 8.610000000000014,
+      "pixel_centers_one_px_inside_both": 16,
+      "witnesses_yx": [
+        [
+          571,
+          609
+        ],
+        [
+          572,
+          609
+        ],
+        [
+          573,
+          609
+        ],
+        [
+          573,
+          610
+        ],
+        [
+          574,
+          609
+        ],
+        [
+          574,
+          610
+        ],
+        [
+          575,
+          609
+        ],
+        [
+          575,
+          610
+        ],
+        [
+          576,
+          609
+        ],
+        [
+          576,
+          610
+        ],
+        [
+          577,
+          609
+        ],
+        [
+          577,
+          610
+        ]
+      ],
+      "later_body_alpha": 0.86,
+      "maximum_selected_d_after_body_codes": 35.7,
+      "missing_threshold_codes": 87.25
+    },
+    "visible_frag_body_point_selects_smoke": {
+      "pass": true,
+      "point_xy": [
+        610.5,
+        575.5
+      ],
+      "actual_action_at_winner": "smoke",
+      "normalized_distances": {
+        "grenade": 0.9738822885842722,
+        "smoke": 0.9462653647838801
+      },
+      "hit_circle_overlap": 24.360000000000014,
+      "interpretation": "Inside-own-hit-circle is insufficient to establish ownership when normalized nearest-action selection wins for a neighbor"
+    },
+    "legacy_max_pause_hit_region_exceeds_safe_area": {
+      "pass": true,
+      "pause_center": [
+        878.0,
+        50.400000000000006
+      ],
+      "hit_radius": 52.5,
+      "safe_right": 928,
+      "right_spill": 2.5,
+      "top_spill": 2.0999999999999943,
+      "interpretation": "Existing unchanged geometry; radius+8 inset is smaller than radius*1.25 at maximum scale. No physical safe-area acceptance follows from source identity."
+    },
+    "unoccluded_source_body_model_passes": {
+      "pass": true,
+      "result": {
+        "pass": true,
+        "resolved": true,
+        "support_pixels": 5538,
+        "missing_footprint_pixels": 0,
+        "underlay_compositing_errors": 0,
+        "contrast_lower_bound": 13.084024250658178,
+        "unqualified_contours": 0
+      }
+    },
+    "source_overlap_model_fails_frozen_gate": {
+      "pass": true,
+      "result": {
+        "pass": false,
+        "resolved": false,
+        "support_pixels": 5538,
+        "missing_footprint_pixels": 56,
+        "underlay_compositing_errors": 56,
+        "contrast_lower_bound": 13.084024250658178,
+        "unqualified_contours": 0
+      },
+      "expected_failure": "Cross-control full-footprint loss is retained even for depleted component alpha .35"
+    },
+    "opaque_positive": {
+      "pass": true
+    },
+    "opaque_unrelated_underlay_can_pass_pixels": {
+      "pass": true,
+      "result": {
+        "pass": true,
+        "resolved": true,
+        "support_pixels": 484,
+        "missing_footprint_pixels": 0,
+        "underlay_compositing_errors": 0,
+        "contrast_lower_bound": 16.129157333212646,
+        "unqualified_contours": 0
+      },
+      "interpretation": "Identifiability limitation, not native evidence; exact suppression source and receipts remain necessary"
+    },
+    "invisible_outer_contour_can_pass_registered_band": {
+      "pass": true,
+      "result": {
+        "pass": true,
+        "resolved": true,
+        "support_pixels": 484,
+        "missing_footprint_pixels": 0,
+        "underlay_compositing_errors": 0,
+        "contrast_lower_bound": 20.847626821588463,
+        "unqualified_contours": 0
+      },
+      "outer_contour_normal_equals_underlay": true,
+      "inward_offset": 2
+    },
+    "interior_sixty_percent_replacement_can_pass_component": {
+      "pass": true,
+      "result": {
+        "pass": true,
+        "resolved": true,
+        "support_pixels": 484,
+        "missing_footprint_pixels": 0,
+        "underlay_compositing_errors": 0,
+        "contrast_lower_bound": 20.847626821588463,
+        "unqualified_contours": 0
+      },
+      "interpretation": "Minimum-alpha and contour scope permit this; it must not be called complete action nonocclusion"
+    }
+  },
+  "minimum_correction": {
+    "drawing_only": "Separate the complete FRAG/SMOKE decorative footprints before native; preserve all glyphs and unchanged hit geometry.",
+    "max_mobile_equal_rim_radius_without_margin": 37.69499999999999,
+    "current_rim_radius": 42.0,
+    "required_radius_reduction_before_raster_margin": 4.305000000000007,
+    "alternative_extra_center_spacing_before_raster_margin": 8.610000000000014,
+    "warning": "These are analytic limits, not a validated patch; include raster margin and inspect all layouts/neighbor badges in the next freeze."
+  },
+  "all_review_checks_pass": true,
+  "native_acquisition_authorized_by_review": false,
+  "verdict": "NO_GO_PRODUCT_GEOMETRY_CHANGE_BEFORE_NATIVE"
+}
