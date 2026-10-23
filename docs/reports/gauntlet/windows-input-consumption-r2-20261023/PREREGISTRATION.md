@@ -33,3 +33,16 @@ A separate critic decides source readiness. Builder tests cannot approve this
 candidate. Any additional supported findings require explicit documentation and
 retests. Largest remaining product gap is still actual Windows input consumption
 through reconnect, followed by the living route/settings/focus journey.
+
+Before implementation, the sealed rejection packet `bed06bc9` adds supported
+cases for an unbound receive, a send outside its pending interval, and first
+consumption before any receive/accept observation. The final unchanged r3 rig
+contains 25 cases: 16 expectations met and nine false passes at the original.
+Four malformed-receive/sparse relationship cases are explicitly permitted;
+receive precedes packet validation, and coalescing prevents full batch pairing.
+Do not impose matching sequence/epoch relationships across coalesced batches.
+
+Root's initial no-checkout setup left selected tracked files absent despite an
+initialized index. The printed deleted-file status is a setup failure, not a
+source change. An exact `git restore --source=HEAD --worktree -- .` materialized
+the selected tracked bytes and returned a clean status before implementation.
