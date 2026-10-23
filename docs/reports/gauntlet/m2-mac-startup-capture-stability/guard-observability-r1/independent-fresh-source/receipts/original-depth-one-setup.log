@@ -1,0 +1,21 @@
+COMMAND ["git", "clone", "--no-checkout", "--shared", "/workspace/reviews/mac-capture-original-4854-depth1", "/workspace/reviews/m2-mac-capture-guard-original-depth-one"]
+Cloning into '/workspace/reviews/m2-mac-capture-guard-original-depth-one'...
+EXIT 0
+COMMAND ["git", "sparse-checkout", "init", "--cone"]
+EXIT 0
+COMMAND ["git", "sparse-checkout", "set", "scripts", ".github", ".claude", "docs/engineering", "docs/roadmap"]
+EXIT 0
+COMMAND ["git", "checkout", "--detach", "4854aed946d25d27482af66c332f84aa51cea8fb"]
+HEAD is now at 4854aed fix(macos): traverse legitimate untitled AX buttons fail closed
+EXIT 0
+COMMAND ["git", "rev-parse", "HEAD"]
+4854aed946d25d27482af66c332f84aa51cea8fb
+EXIT 0
+COMMAND ["git", "rev-parse", "--is-shallow-repository"]
+true
+EXIT 0
+COMMAND ["git", "rev-list", "--count", "HEAD"]
+1
+EXIT 0
+COMMAND ["git", "status", "--short"]
+EXIT 0
