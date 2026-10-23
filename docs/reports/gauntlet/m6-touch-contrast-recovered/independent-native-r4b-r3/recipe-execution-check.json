@@ -1,0 +1,104 @@
+{
+  "kind": "INDEPENDENT_ORIGINAL_RECIPE_EXECUTION_IDENTITY",
+  "admission_only_actual_release_literal_and_terminal_newline_difference": true,
+  "admission_script_sha256": "75bc9446e02aff6261bddab380d8040d3499d87397520507cb69f39ba5e505aa",
+  "outer_controller_shell_exact_frozen_plan_block_2_observed_live": [
+    {
+      "pid": 136006,
+      "state": "S",
+      "ppid": 561,
+      "stat_pgid": 136006,
+      "stat_sid": 136006,
+      "start_ticks": 2198429,
+      "command": [
+        "/bin/bash",
+        "-c",
+        "python3 /workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/controller.py > /workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/controller.log 2>&1\nSIGHTBREAK_TOUCH_CONTROLLER_EXIT=$?\nexport SIGHTBREAK_TOUCH_CONTROLLER_EXIT\npython3 - <<'PY'\nimport datetime, json, os\nfrom pathlib import Path\np = Path('/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/controller-exit.json')\nassert not p.exists()\np.write_text(json.dumps({'exit_code': int(os.environ['SIGHTBREAK_TOUCH_CONTROLLER_EXIT']),\n    'recorded_utc': datetime.datetime.now(datetime.timezone.utc).isoformat()}, indent=2) + '\\n')\nPY"
+      ],
+      "getpgid": 136006,
+      "getsid": 136006,
+      "affinity": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "environment_selectors": {
+        "DISPLAY": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "XDG_DATA_HOME": null,
+        "XDG_CONFIG_HOME": null,
+        "XDG_CACHE_HOME": null,
+        "LP_NUM_THREADS": null,
+        "OMP_NUM_THREADS": null
+      }
+    }
+  ],
+  "controller_or_outer_identities": [
+    {
+      "pid": 136006,
+      "state": "S",
+      "ppid": 561,
+      "stat_pgid": 136006,
+      "stat_sid": 136006,
+      "start_ticks": 2198429,
+      "command": [
+        "/bin/bash",
+        "-c",
+        "python3 /workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/controller.py > /workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/controller.log 2>&1\nSIGHTBREAK_TOUCH_CONTROLLER_EXIT=$?\nexport SIGHTBREAK_TOUCH_CONTROLLER_EXIT\npython3 - <<'PY'\nimport datetime, json, os\nfrom pathlib import Path\np = Path('/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/controller-exit.json')\nassert not p.exists()\np.write_text(json.dumps({'exit_code': int(os.environ['SIGHTBREAK_TOUCH_CONTROLLER_EXIT']),\n    'recorded_utc': datetime.datetime.now(datetime.timezone.utc).isoformat()}, indent=2) + '\\n')\nPY"
+      ],
+      "getpgid": 136006,
+      "getsid": 136006,
+      "affinity": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "environment_selectors": {
+        "DISPLAY": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "XDG_DATA_HOME": null,
+        "XDG_CONFIG_HOME": null,
+        "XDG_CACHE_HOME": null,
+        "LP_NUM_THREADS": null,
+        "OMP_NUM_THREADS": null
+      }
+    },
+    {
+      "pid": 136007,
+      "state": "S",
+      "ppid": 136006,
+      "stat_pgid": 136006,
+      "stat_sid": 136006,
+      "start_ticks": 2198430,
+      "command": [
+        "python3",
+        "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/controller.py"
+      ],
+      "getpgid": 136006,
+      "getsid": 136006,
+      "affinity": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "environment_selectors": {
+        "DISPLAY": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "XDG_DATA_HOME": null,
+        "XDG_CONFIG_HOME": null,
+        "XDG_CACHE_HOME": null,
+        "LP_NUM_THREADS": null,
+        "OMP_NUM_THREADS": null
+      }
+    }
+  ],
+  "initial_query_assumption_failure": "Expected bash -lc, but original observed outer is bash -c; exact shell body matches Plan. Initial unmatched receipt retained. No source, gate or original producer change.",
+  "native_pipeline_modified": false,
+  "engine_invocations_by_reviewer": 0
+}
