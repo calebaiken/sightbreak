@@ -1,0 +1,25 @@
+{
+  "command": [
+    "timeout",
+    "60s",
+    "taskset",
+    "-c",
+    "4",
+    "env",
+    "PYTHONPATH=scripts",
+    "python3",
+    "/workspace/sightbreak-touch-label-edge-r5/docs/reports/gauntlet/m6-touch-label-edge-r5/checks.py"
+  ],
+  "started_utc": "2026-10-23T10:52:50.484978+00:00",
+  "exit_code": 0,
+  "elapsed_seconds": 35.73670868699992,
+  "engine_invocations": 0,
+  "source_only": true,
+  "sources_before": {
+    "docs/reports/gauntlet/m6-touch-label-edge-r5/prototype.py": "e439d299317dae5e69f77043e463306379b1e580237e2a89f99880337428cb59",
+    "docs/reports/gauntlet/m6-touch-label-edge-r5/checks.py": "97f9eca6796e39125473cee8469fb8880b778c0f27d358238615975a65908d72",
+    "docs/reports/gauntlet/m6-touch-label-edge-r5/retained-inputs.json": "8a332de6bdd634b0cc2eacd925ca353e2fd7a81fa92def6bd77d057619c46ce3"
+  },
+  "source_hashes_unchanged_after": true,
+  "log_sha256": "9e214cecd4380580667da80b5c58a6f303c1cc65484a515e5482afadbe7095c5"
+}
