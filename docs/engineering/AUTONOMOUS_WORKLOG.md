@@ -1,5 +1,19 @@
 # Autonomous worklog
 
+## Linux profile admission regression correction, 2026-10-23
+
+Fresh independent critic `1b7eb213` rejected source freeze `3631f2d`: omitted
+Xvfb allowed the existing display check to mask removal of the new sampler
+exclusion. The original passing control and critic's counterexample remain
+retained. Maintained negative cases now supply fake Xvfb, force an unused socket,
+assert the intended parser error and forbid source/process/output side effects.
+The corrected three tests pass; isolated sampler-removal, missing-option,
+default-profile and after-separator mutations fail for their intended reasons.
+Raw mutation outputs/hashes and reproduction are in
+`docs/reports/gauntlet/m1-linux-gles-profile-recovered/REVIEW_CORRECTION.md`.
+Controller bytes are unchanged. Fresh re-review is pending; no engine, export,
+native client, CI or service ran. The original next-buy gate remains FAILED.
+
 ## Recovered Linux GLES source capability, 2026-10-23
 
 Builder `diagnostic/linux-gles-profile-recovered` starts at exact recovered

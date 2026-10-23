@@ -4,6 +4,14 @@ Source/pure candidate only; fresh independent acceptance is pending. Runtime,
 export and performance remain UNVERIFIED. The ordinary Linux next-buy deadline
 remains FAILED.
 
+The initial source freeze `3631f2d` was independently rejected because missing
+Xvfb could mask a deleted sampler admission guard in the maintained negative
+test. The corrected test now supplies fake Xvfb, forces an unused socket and
+checks the intended rejection message before source/process/output side
+effects. All three corrected tests pass and four meaningful source mutations
+fail. See [the retained rejection and correction](REVIEW_CORRECTION.md).
+The controller's bytes are unchanged; fresh independent re-review is pending.
+
 The builder preregistered one capability attempt at `98cd21c`, before code, then
 committed the eight-line controller extension and pure controls at `2bf9be1`.
 Both commits are pushed on `diagnostic/linux-gles-profile-recovered`. The source
