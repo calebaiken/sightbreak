@@ -1,0 +1,481 @@
+{
+  "started_at": "2026-10-19T19:13:37.473495+00:00",
+  "source": {
+    "commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+    "backend_tree": "67027b4fa17674ef067c84401af76eb1524419ac",
+    "backend_dirty": "",
+    "backend_files": {
+      "backend/app.py": "78816607ee70fe47ae1f1c97f48d4d2a360eebe7c0e64ac73c296dfd53fb8121",
+      "backend/bridge_fixture.py": "00548df28d2ad6a8fdca9eeaed34af39e30bebbb205fb9b69b2d7112434b29db",
+      "backend/migrate.py": "0f06597968c1e0de8461083448306496f4cc53e6a0f3d94dbc0f1b0c003f1d58",
+      "backend/models.py": "5fa4e0ac4157e4ad883d4c2bf1df06d915a395c5303c063a1004aaabd071e09a",
+      "backend/pyproject.toml": "9fd253aaaa3d39616eeb076d991cd2836c4cddcc8f56d72f31776cd134ab0190",
+      "backend/simulate.py": "218299e27743c58eac64f2d5820f3320945321d3d58bdd2caee5d195c536afa2",
+      "backend/uv.lock": "c66ef08d0ef36424da51008f59e3905f544d15dbd602ed6e204c588b4ca93db5",
+      "backend/config/economy.json": "8d85944aff0a6531b8a022350cbe0562295573aff5f3bd96e474e06f192aec7a",
+      "backend/config/simulation-baseline.json": "0a7965dd37a68fd2960d6b6912dffb635fcb26ffa6f251b92a7872c688755a16",
+      "backend/migrations/001_integrity.sql": "83189d1d06cbec62db325dbcf376476bc3aa7c0984d7439bb8048360ff737392",
+      "backend/migrations/002_game_tickets.sql": "c063f4376339b013fc79cda3e6f7782c61654d51fe6e479c658f2e30a1eddd7e",
+      "backend/migrations/003_loadouts.sql": "cc8acafba73b07889b25f2b9ee594cd09094d0ff8fd34d64767e6fcde62ee017",
+      "backend/migrations/004_market_index.sql": "cc51bd7647a6bd6abb272efd9564e089c0cc3d7afa0e76586503b3225535a5af",
+      "backend/tests/test_economy.py": "d3ada3e8590fb30a5a5e812525ccaea4be3778af50903eb2d02de41e201d528a"
+    }
+  },
+  "harness_sha256": "6e4aac58ad913144e2c41455124afd6756e500c5d795636e15ba52b1aa5a3b19",
+  "fixture_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.14 (main, Sep  1 2026, 14:17:39) [MSC v.1944 64 bit (AMD64)]",
+  "packages": {
+    "sqlalchemy": "2.1.4",
+    "psycopg": "3.3.6",
+    "psycopg-binary": "3.3.6",
+    "fastapi": "0.143.0",
+    "starlette": "1.7.0",
+    "httpx": "0.28.1",
+    "pytest": "9.1.1"
+  },
+  "database": "sightbreak_trade_read_7dc9f23704e7_test",
+  "rows": [
+    {
+      "trades": 0,
+      "items_per_side": 0,
+      "samples": [
+        {
+          "milliseconds": 11.9433,
+          "statements": 3
+        },
+        {
+          "milliseconds": 11.308,
+          "statements": 3
+        },
+        {
+          "milliseconds": 12.7294,
+          "statements": 3
+        },
+        {
+          "milliseconds": 12.0326,
+          "statements": 3
+        },
+        {
+          "milliseconds": 14.3006,
+          "statements": 3
+        },
+        {
+          "milliseconds": 13.4255,
+          "statements": 3
+        },
+        {
+          "milliseconds": 12.892,
+          "statements": 3
+        },
+        {
+          "milliseconds": 12.7098,
+          "statements": 3
+        },
+        {
+          "milliseconds": 12.7579,
+          "statements": 3
+        },
+        {
+          "milliseconds": 13.3491,
+          "statements": 3
+        }
+      ],
+      "budget": 3,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR"
+      ],
+      "response_sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd",
+      "read_only": true,
+      "median_ms": 12.743649999999999,
+      "p95_ms": 14.3006,
+      "query_counts": [
+        3
+      ]
+    },
+    {
+      "trades": 1,
+      "items_per_side": 0,
+      "samples": [
+        {
+          "milliseconds": 13.934,
+          "statements": 4
+        },
+        {
+          "milliseconds": 14.4283,
+          "statements": 4
+        },
+        {
+          "milliseconds": 14.37,
+          "statements": 4
+        },
+        {
+          "milliseconds": 15.1068,
+          "statements": 4
+        },
+        {
+          "milliseconds": 16.5198,
+          "statements": 4
+        },
+        {
+          "milliseconds": 13.6992,
+          "statements": 4
+        },
+        {
+          "milliseconds": 17.1316,
+          "statements": 4
+        },
+        {
+          "milliseconds": 13.5115,
+          "statements": 4
+        },
+        {
+          "milliseconds": 15.3927,
+          "statements": 4
+        },
+        {
+          "milliseconds": 14.5855,
+          "statements": 4
+        }
+      ],
+      "budget": 4,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR"
+      ],
+      "response_sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4",
+      "read_only": true,
+      "median_ms": 14.5069,
+      "p95_ms": 17.1316,
+      "query_counts": [
+        4
+      ]
+    },
+    {
+      "trades": 1,
+      "items_per_side": 2,
+      "samples": [
+        {
+          "milliseconds": 44.4686,
+          "statements": 8
+        },
+        {
+          "milliseconds": 26.339,
+          "statements": 8
+        },
+        {
+          "milliseconds": 24.5376,
+          "statements": 8
+        },
+        {
+          "milliseconds": 23.1854,
+          "statements": 8
+        },
+        {
+          "milliseconds": 23.8872,
+          "statements": 8
+        },
+        {
+          "milliseconds": 24.0965,
+          "statements": 8
+        },
+        {
+          "milliseconds": 23.3418,
+          "statements": 8
+        },
+        {
+          "milliseconds": 22.7058,
+          "statements": 8
+        },
+        {
+          "milliseconds": 22.5835,
+          "statements": 8
+        },
+        {
+          "milliseconds": 21.8596,
+          "statements": 8
+        }
+      ],
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id = %(pk_1)s::VARCHAR"
+      ],
+      "response_sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b",
+      "read_only": true,
+      "median_ms": 23.6145,
+      "p95_ms": 44.4686,
+      "query_counts": [
+        8
+      ]
+    },
+    {
+      "trades": 10,
+      "items_per_side": 1,
+      "samples": [
+        {
+          "milliseconds": 66.6518,
+          "statements": 33
+        },
+        {
+          "milliseconds": 66.518,
+          "statements": 33
+        },
+        {
+          "milliseconds": 98.3006,
+          "statements": 33
+        },
+        {
+          "milliseconds": 76.3998,
+          "statements": 33
+        },
+        {
+          "milliseconds": 68.693,
+          "statements": 33
+        },
+        {
+          "milliseconds": 65.4401,
+          "statements": 33
+        },
+        {
+          "milliseconds": 65.8331,
+          "statements": 33
+        },
+        {
+          "milliseconds": 66.8142,
+          "statements": 33
+        },
+        {
+          "milliseconds": 66.6469,
+          "statements": 33
+        },
+        {
+          "milliseconds": 68.5779,
+          "statements": 33
+        }
+      ],
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id = %(pk_1)s::VARCHAR"
+      ],
+      "response_sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34",
+      "read_only": true,
+      "median_ms": 66.733,
+      "p95_ms": 98.3006,
+      "query_counts": [
+        33
+      ]
+    },
+    {
+      "trades": 40,
+      "items_per_side": 1,
+      "samples": [
+        {
+          "milliseconds": 218.1965,
+          "statements": 123
+        },
+        {
+          "milliseconds": 228.1049,
+          "statements": 123
+        },
+        {
+          "milliseconds": 211.945,
+          "statements": 123
+        },
+        {
+          "milliseconds": 191.6203,
+          "statements": 123
+        },
+        {
+          "milliseconds": 220.1959,
+          "statements": 123
+        },
+        {
+          "milliseconds": 220.5778,
+          "statements": 123
+        },
+        {
+          "milliseconds": 221.0891,
+          "statements": 123
+        },
+        {
+          "milliseconds": 230.7752,
+          "statements": 123
+        },
+        {
+          "milliseconds": 239.9198,
+          "statements": 123
+        },
+        {
+          "milliseconds": 295.2011,
+          "statements": 123
+        }
+      ],
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id = %(pk_1)s::VARCHAR"
+      ],
+      "response_sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010",
+      "read_only": true,
+      "median_ms": 220.83345,
+      "p95_ms": 295.2011,
+      "query_counts": [
+        123
+      ]
+    },
+    {
+      "trades": 40,
+      "items_per_side": 20,
+      "samples": [
+        {
+          "milliseconds": 2876.4546,
+          "statements": 1643
+        },
+        {
+          "milliseconds": 3175.3972,
+          "statements": 1643
+        },
+        {
+          "milliseconds": 2854.5519,
+          "statements": 1643
+        },
+        {
+          "milliseconds": 4141.7075,
+          "statements": 1643
+        },
+        {
+          "milliseconds": 3444.1006,
+          "statements": 1643
+        },
+        {
+          "milliseconds": 3074.0316,
+          "statements": 1643
+        },
+        {
+          "milliseconds": 2986.0391,
+          "statements": 1643
+        },
+        {
+          "milliseconds": 3952.8221,
+          "statements": 1643
+        },
+        {
+          "milliseconds": 3891.7647,
+          "statements": 1643
+        },
+        {
+          "milliseconds": 4010.0293,
+          "statements": 1643
+        }
+      ],
+      "budget": 8,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id = %(pk_1)s::VARCHAR"
+      ],
+      "response_sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db",
+      "read_only": true,
+      "median_ms": 3309.7489,
+      "p95_ms": 4141.7075,
+      "query_counts": [
+        1643
+      ]
+    },
+    {
+      "trades": 501,
+      "items_per_side": 0,
+      "samples": [
+        {
+          "milliseconds": 946.9469,
+          "statements": 504
+        },
+        {
+          "milliseconds": 1079.8377,
+          "statements": 504
+        },
+        {
+          "milliseconds": 1150.0074,
+          "statements": 504
+        },
+        {
+          "milliseconds": 1271.7206,
+          "statements": 504
+        },
+        {
+          "milliseconds": 790.8697,
+          "statements": 504
+        },
+        {
+          "milliseconds": 740.3392,
+          "statements": 504
+        },
+        {
+          "milliseconds": 1279.1273,
+          "statements": 504
+        },
+        {
+          "milliseconds": 3303.8036,
+          "statements": 504
+        },
+        {
+          "milliseconds": 1203.1299,
+          "statements": 504
+        },
+        {
+          "milliseconds": 1400.2164,
+          "statements": 504
+        }
+      ],
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR"
+      ],
+      "response_sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b",
+      "read_only": true,
+      "median_ms": 1176.56865,
+      "p95_ms": 3303.8036,
+      "query_counts": [
+        504
+      ]
+    }
+  ],
+  "completed": true,
+  "postgresql": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
+  "final_source": {
+    "commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+    "backend_tree": "67027b4fa17674ef067c84401af76eb1524419ac",
+    "backend_dirty": "",
+    "backend_files": {
+      "backend/app.py": "78816607ee70fe47ae1f1c97f48d4d2a360eebe7c0e64ac73c296dfd53fb8121",
+      "backend/bridge_fixture.py": "00548df28d2ad6a8fdca9eeaed34af39e30bebbb205fb9b69b2d7112434b29db",
+      "backend/migrate.py": "0f06597968c1e0de8461083448306496f4cc53e6a0f3d94dbc0f1b0c003f1d58",
+      "backend/models.py": "5fa4e0ac4157e4ad883d4c2bf1df06d915a395c5303c063a1004aaabd071e09a",
+      "backend/pyproject.toml": "9fd253aaaa3d39616eeb076d991cd2836c4cddcc8f56d72f31776cd134ab0190",
+      "backend/simulate.py": "218299e27743c58eac64f2d5820f3320945321d3d58bdd2caee5d195c536afa2",
+      "backend/uv.lock": "c66ef08d0ef36424da51008f59e3905f544d15dbd602ed6e204c588b4ca93db5",
+      "backend/config/economy.json": "8d85944aff0a6531b8a022350cbe0562295573aff5f3bd96e474e06f192aec7a",
+      "backend/config/simulation-baseline.json": "0a7965dd37a68fd2960d6b6912dffb635fcb26ffa6f251b92a7872c688755a16",
+      "backend/migrations/001_integrity.sql": "83189d1d06cbec62db325dbcf376476bc3aa7c0984d7439bb8048360ff737392",
+      "backend/migrations/002_game_tickets.sql": "c063f4376339b013fc79cda3e6f7782c61654d51fe6e479c658f2e30a1eddd7e",
+      "backend/migrations/003_loadouts.sql": "cc8acafba73b07889b25f2b9ee594cd09094d0ff8fd34d64767e6fcde62ee017",
+      "backend/migrations/004_market_index.sql": "cc51bd7647a6bd6abb272efd9564e089c0cc3d7afa0e76586503b3225535a5af",
+      "backend/tests/test_economy.py": "d3ada3e8590fb30a5a5e812525ccaea4be3778af50903eb2d02de41e201d528a"
+    }
+  },
+  "database_dropped": true
+}
