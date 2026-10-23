@@ -462,3 +462,18 @@ largest emitted named historical interval in 34/34; no phase/CPU/overhead/FPS,
 cause or improvement claim follows. Next is controlled source-mapped cost
 attribution. Root integrates history/reviews through c9bfb09. Historical builder
 NEXT/worklog insertions were removed on root to preserve the newer live queue.
+
+
+## 2026-10-23: accept recovered aggregate and continue native play
+
+Exact afca2f1 passes the unmodified maintained aggregate in 539.074 seconds.
+Independent 2afe0bb verifies 55 mandatory logs, nine 92-method Python groups,
+29-definition catalog, ENet/lifecycle, 783 Git-bound inputs, both zero exits,
+all 86 originals and terminal 197 observed identities/eight ports. No warnings,
+errors or leaks are observed; five rendered checks and optional backend remain
+unrun. Root integration 4861b6d preserves the exact original runtime identity.
+First ARM 34dbd97 native/menu/iOS scope passes, while new temporary-root tests
+fail and skip ordinary play. Test-only 3730273 plus independent 78d5fa1/2b43487
+allow repeat 39906639650 at b2e0293; actual ordinary play is now in progress.
+Windows frozen-ref review and fresh R3 native touch evidence acquisition are
+active. No broad release gate closes. NEXT_SESSION holds the exact continuation.

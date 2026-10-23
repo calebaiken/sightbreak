@@ -8,57 +8,69 @@ implementation after each verified increment; these corrections do not finish v1
 
 ## Live execution checkpoint — 2026-10-23
 
-The mission is ACTIVE. Root own branch is
+The mission is ACTIVE. Root is `/workspace/sightbreak-v1-recovered`, own branch
 `codex/v1-executor-recovery-20261023`, [draft PR31](https://github.com/calebaiken/sightbreak/pull/31).
-Frozen combined source `afca2f1040ad0ce668b2a9a2201d9f4b2dde636f` is pushed.
-No release branch is merged. The root tip may have later metadata-only commits;
-inspect actual HEAD and status before any action.
+Committed integration before this note is `62e6134`. Inspect actual HEAD/status;
+never reset a newer local checkpoint. No shared release branch is merged.
 
-- Actual ARM job [39904830917](https://github.com/calebaiken/sightbreak/actions/runs/39904830917),
-  job `120254254021`, runs exact `34dbd97a99068642cf07fa62288fe7437751c37e`.
-  Independent combined-source approval is `d53e7c9`. The job is complete and FAILED the new source-control step: four helper
-  tests reject their own macOS /var temporary-path symlink. Mocked-controller
-  command and ordinary gameplay are skipped. Actual 15 native suites / 9,434
-  checks, menu 39.591s and unsigned iOS compile 88.643s have independent raw checks;
-  the final report is pending. Test-only correction 3730273 canonicalizes owned
-  temporary roots; production guards/runtime remain unchanged. Fresh critic
-  review is required before one repeat at a new exact combined source.
-- Full local aggregate is RUNNING in tool session 28337 (started 05:21:49 UTC). Frozen clean detached checkout is
-  `/workspace/sightbreak-validate-recovered-afca2f1`. Committed runner is
-  `docs/reports/gauntlet/aggregate-recovered-20261023/run_aggregate.py`.
-  Critic preregistration `4c409a6`, pure auditor `7b411ad`, own branch
-  `codex/aggregate-recovered-critic-20261023`. Pre-run source/runner ACCEPT is committed be541a5. Actual outer PID 13394 /
-  start 528612 / inner PID 13434 is bound in outer-live.json. Command running: `python3
-  docs/reports/gauntlet/aggregate-recovered-20261023/run_aggregate.py
-  /workspace/sightbreak-validate-recovered-afca2f1
-  afca2f1040ad0ce668b2a9a2201d9f4b2dde636f
-  /workspace/sightbreak-validate-recovered-afca2f1/builds/aggregate-recovered-r1`
-  (join these as one shell command). Original validate.sh, no DISPLAY/--backend,
-  55 mandatory Godot logs, nine Python groups, catalog must run. Backend/server
-  and exact hands/OCR tracked fixtures are present. The aggregate owns the local native lane until completion.
-- One Linux profile attempt is complete; do not repeat it. Tested/exported
-  source `b1a131ab`, independent source approval `8a1df18c`, pushed raw handoff
-  `afb4d173`. It FAILS the original 45-second initial-LIVE wait, ending at
-  58.558 seconds in BUY/round1/tick844/14.066667 simulation seconds. Plant,
-  next buy and restart are unreached. It contains 35 profile headers and 34
-  row-bearing blocks. Historical query means cannot be assigned to current
-  phases or CPU work, summed to the header total, or treated as a performance
-  improvement. Independent actual capability/data-integrity review bca8b7fd ACCEPTS
-  the original bytes/source/ELF/PCK/declared cleanup while preserving gameplay
-  FAILURE. Root integrates this diagnostic through c9bfb09. No repeat ran.
-  Original local ELF and outputs remain under
-  `/workspace/sightbreak-linux-profile-recovered/builds/linux-gles-profile-native-r1`;
-  bounded raw files are pushed with the component report. No sampler ran.
-- Touch reconstruction: product `b4d0c1b`, rejected initial fixture freeze `090892d`,
-  revised R2 freeze `3c954d33546d70bf59cf6f9b6846f1cb82b6bca3`, branch `codex/m6-touch-contrast-recovered`.
-  Fresh critic found oracle false-pass risks in underlay consistency, matrix
-  identity and unresolved inactive results. Builder corrections reject the original four witnesses; independent R2
-  review is pending. No engine/import/native/render/OCR run is released. New actual reference
-  research has viewed official released Luanti Android HUD media outside Git;
-  it is contextual touch-interface evidence, not CS2 or contrast acceptance.
+1. **Complete aggregate independently ACCEPTED at exact `afca2f1`.** Original
+   unmodified validate.sh exits zero in 539.073578461s: 55 mandatory Godot logs,
+   nine 92-method Python groups (only 3 Windows reader skips), 29-definition
+   catalog, real ENet and six lifecycle logs. Source is unchanged, 783 tracked
+   input hashes bind to Git. Independent final 2afe0bb is integrated as 4861b6d;
+   [review](../reports/gauntlet/aggregate-recovered-20261023/independent-critic/REVIEW.md)
+   retains 86 originals, full audits and actual outer/inner exit receipts. No
+   errors/warnings/leaks; 197 observed identities, both groups/sessions and eight
+   readiness ports are gone. Five DISPLAY-only checks, optional backend SQL,
+   arbitrary escaped descendants and broad release gates remain unqualified.
+   Original worktree `/workspace/sightbreak-validate-recovered-afca2f1`, outputs
+   `builds/aggregate-recovered-r1`; tool session 28337 is finished, exit 0.
+2. **ARM repeat is executing actual ordinary play.** Run
+   [39906639650](https://github.com/calebaiken/sightbreak/actions/runs/39906639650),
+   job 120260016569, exact `b2e0293a546961230afbd73e5cd2a1a307d69e94`.
+   Corrected source controls pass; stock Deploy/living-sidearm/leave is in
+   progress at last observation. Independent repeat approval 2b43487 is root
+   b029cb7. No ordinary gameplay outcome is inferred yet. Retrieve completed
+   original decoded logs and bounded artifacts through supported GitHub tools,
+   then independent pixel/state/source/cleanup review.
+3. **First ARM attempt remains FAILED.** Run 39904830917 at 34dbd97 failed four
+   test-owned /var alias paths, skipping mocked-controller and ordinary play.
+   Native 15 suites/9,434 checks, menu 39.591s and unsigned iOS compile 88.643s
+   have separate independent review 7a4d235 (root 21bae04), with original logs,
+   both bounded ZIPs, 198 receipts and 11 PNGs retained. The test-only correction
+   3730273 is root 719b3f4 and preserves every production runtime/guard byte.
+   Large final binary reparse, full Mac match/objectives/Intel/human remain open.
+4. **Windows pre-run review is active at frozen `b2e0293`.** Own qualification
+   ref `codex/v1-qualify-b2e0293` is pushed at that exact source; dispatch this
+   ref after independent source approval, not the moving root metadata tip.
+   Critic branch `critic/windows-combined-recovered`, preregistration d1ae6d3.
+   No Windows native job has been dispatched yet. Preserve original contracts,
+   all 15 suites, objectives/full-match/earned disk reload and deadlines.
+5. **Touch source/method R3 is approved; native acquisition is running.** Own
+   `/workspace/sightbreak-touch-contrast-recovered`, branch
+   `codex/m6-touch-contrast-recovered`, code a520221, report f527e01; independent
+   approval da09733 follows two retained rejected method iterations. Actual
+   native root `/workspace/sightbreak-touch-contrast-native-recovered-r3`, staged
+   projects `/workspace/sightbreak-touch-contrast-fixture-recovered-r3`, display
+   :131, pinned 4.7.2, taskset 0–3/LP2/OMP2. Builder owns sole local native lane.
+   No contrast/pixel/blind/live-HUD acceptance yet. Require actual raw independent
+   method/pixel/geometry review, a fresh blinded visual judge and regressions;
+   heavy-plate occlusion/dark surround/physical small text remain questions.
+6. **Linux one-attempt diagnostic is complete, no repeat.** Source b1a131ab,
+   independent bca8b7fd, root c9bfb09. Actual 58.558s flow FAILS initial LIVE 45s
+   while BUY/round1/tick844/14.066667 sim. Plant/next-buy/restart unreached.
+   Thirty-five profile headers/34 row blocks establish capability, source/
+   ELF/PCK 134-resource identity and declared cleanup. Historical mean intervals
+   cannot become phase/CPU/overhead/FPS or improvement claims. Next is controlled
+   source-mapped attribution. Original 84,232,632-byte ELF and other local files
+   remain in `/workspace/sightbreak-linux-profile-recovered/builds/linux-gles-profile-native-r1`;
+   bounded raw originals/review are pushed.
 
-Continue actual implementation and review. Keep the original failed outputs,
-exact sources and reviewer limitations. All broad release gates remain open.
+Official released Luanti Android/AssaultCube reference research is integrated as
+62e6134, B8 in BARS. Actual images/clip stay outside Git in
+`/workspace/reference-cache/recovered-20261023`. These are contextual touch/HUD
+references, not CS2/contrast/parity wins. CS2 policy, human/physical and Steam
+requirements remain open. Continue implementation/review after each increment.
 
 ## Current product checkpoint — 2026-10-23, 05:10 UTC
 

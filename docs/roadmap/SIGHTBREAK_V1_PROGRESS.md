@@ -17,14 +17,16 @@ root integration `690887e`: native 590 checks / zero failures versus 40 baseline
 failures, existing bot AI and 2,722-check symmetry regressions pass. Critic
 `f947350` verifies the actual comparison and all 480 symmetry pairs. See
 [final review](../reports/gauntlet/m5-dry-weapon-recovered-independent/FINAL_REVIEW.md).
-Whole-source aggregate and representative full matches remain open. Actual ARM CI 39904830917 at 34dbd97 fails new pure source controls on
-aliased test-owned temporary paths; ordinary play is skipped. A test-only
-correction is in independent review. Full local aggregate afca2f1 is running
-after pre-run approval. The single Linux profile attempt b1a131ab fails initial
-LIVE while still BUY; independent bca8b7fd accepts capability/data integrity,
-with no performance improvement or gameplay pass. Touch R2 oracle review still
-precedes any native run.
-See NEXT_SESSION for exact sources and commands. No broader gate changes status.
+The complete maintained aggregate independently passes at exact afca2f1:
+55 mandatory Godot logs, nine Python groups, catalog/ENet/lifecycle, unchanged
+source and scoped cleanup; [review](../reports/gauntlet/aggregate-recovered-20261023/independent-critic/REVIEW.md).
+Later validation-source changes retain their own exact-source tests. First ARM
+run 39904830917 passes 15 native suites/menu/iOS but fails new fixture-path pure
+controls, skipping ordinary play. Corrected repeat 39906639650 at b2e0293 has
+reached actual play; outcome is pending. Windows source review and approved
+R3 touch native acquisition are active. Linux profiling capability/data integrity
+is independently accepted while its original initial-LIVE failure stays failed.
+No broad release gate changes status.
 
 A separate future market-harness guard is independently accepted at
 `985a9d71`, [draft PR29](https://github.com/calebaiken/sightbreak/pull/29):
