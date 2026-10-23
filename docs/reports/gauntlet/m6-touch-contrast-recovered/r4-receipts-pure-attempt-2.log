@@ -1,0 +1,48 @@
+test_all_native_glyphs_assigned_once_and_decorative_spill_reported (__main__.AffordanceControls.test_all_native_glyphs_assigned_once_and_decorative_spill_reported) ... ok
+test_foreground_hit_spill_rejects (__main__.AffordanceControls.test_foreground_hit_spill_rejects) ... ok
+test_missing_glyph_foreground_rejects (__main__.AffordanceControls.test_missing_glyph_foreground_rejects) ... ok
+test_unassigned_foreground_pixel_rejects (__main__.AffordanceControls.test_unassigned_foreground_pixel_rejects) ... ok
+test_changed_footprint_or_background_bytes_reject (__main__.ReceiptControls.test_changed_footprint_or_background_bytes_reject) ... Traceback (most recent call last):
+  File "/workspace/sightbreak-touch-contrast-recovered/scripts/test_touch_contrast_r4_receipts.py", line 195, in <module>
+    
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/main.py", line 105, in __init__
+    self.runTests()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/main.py", line 281, in runTests
+    self.result = testRunner.run(self.test)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/runner.py", line 240, in run
+    test(result)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122, in run
+    test(result)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 84, in __call__
+    return self.run(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/suite.py", line 122, in run
+    test(result)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 690, in __call__
+    return self.run(*args, **kwds)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 634, in run
+    self._callTestMethod(testMethod)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/case.py", line 589, in _callTestMethod
+    if method() is not None:
+       ^^^^^^^^
+  File "/workspace/sightbreak-touch-contrast-recovered/scripts/test_touch_contrast_r4_receipts.py", line 112, in test_changed_footprint_or_background_bytes_reject
+    path.write_bytes(b"CHANGED PURE MARKER")
+                     ^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-touch-contrast-recovered/scripts/test_touch_contrast_r4_receipts.py", line 77, in run_receipts
+    stack.enter_context(patch.object(method, "intermediate_overlap", lambda *a, **k: {"scope": "PURE METADATA STUB"}))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-touch-contrast-recovered/scripts/analyze_touch_contrast_r4.py", line 344, in audit_source
+    row["hidden_coverage_accounting"] = intermediate_overlap(scene, row["group"], info["alphas"][row["group"]],
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-touch-contrast-recovered/scripts/analyze_touch_contrast_r4.py", line 221, in intermediate_overlap
+    mask = image.max(axis=-1) >= 1
+           ^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/site-packages/numpy/_core/_methods.py", line 43, in _amax
+    return umr_maximum(a, axis, None, out, keepdims, initial, where)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

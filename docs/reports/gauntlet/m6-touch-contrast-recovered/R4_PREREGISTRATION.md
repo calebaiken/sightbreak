@@ -97,6 +97,38 @@ The fresh critic must audit its definition, source and falsifiers before native.
 Dark surround/external-background inspection and heavy-plate scene occlusion also
 remain independent actual-image requirements.
 
+Implementation detail fixed before native: contours use every 8-neighbor boundary
+pixel, including holes. Witness contribution requires `min(W-B)>=206`, so the
+existing ±2-code subtraction bound still leaves >=0.8 contribution. Glyph gates
+import the unchanged R3 oracle. There are 2,816 PNGs per source: original/normal,
+the 304 original group rows and 352 whole-action rows, each diagnostic row with
+underlay/black/white/isolated-footprint images, plus 128 isolated layer footprints
+for label/icon surrounds, badge paint and held fill. These retain exact spatial
+intersections with every lost intermediate regular/held-border pixel, including
+unattributed pixels; overlapping layers are not presented as exclusive causes.
+All 48 intermediate border rows
+remain diagnostics; the 608 other rows plus complete glyph/target accounting are
+the new candidate gates. This is declared before R4 native, not a reinterpretation
+of the R3 failure.
+
+The first pure method attempt is retained. It exposed an overstrong *test*
+assertion: at fully opaque `W-B=255`, the three selected-component images contain
+no information about the removed U. Pixel algebra alone cannot prove that U.
+The exact source-bound suppression wrapper, source/UID fences, unwrapped normal
+equality, native background and PNG receipts are therefore essential; no claim
+of independent opaque-U reconstruction is made. The corrected falsifier checks
+an actual translucent contribution, where an unrelated U must fail the unchanged
+compositing predicate. The opaque-underlay limitation is explicitly for the fresh
+critic to review, not a dropped native error.
+
+Receipt-control attempt 2 was interrupted with SIGINT before completion because
+the metadata-only test was unnecessarily running full-resolution pixel overlap
+work. Its log/exit 130 are retained. Attempt 3 stubs that unrelated pixel layer,
+as it already stubs decode/contrast for these metadata-only controls; it passes
+all 15 controls. A separate small pure overlap control verifies that attributed
+and unattributed hidden intermediate pixels remain reported. No native image,
+product failure or threshold was changed by this test-harness correction.
+
 ## Native acquisition requirements, not yet released
 
 Use a fresh source/UID freeze and the same 32 scene matrix, all exact-source
