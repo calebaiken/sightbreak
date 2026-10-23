@@ -44,3 +44,12 @@ Both require fresh source critics and source-bound native outputs before
 acceptance. Missing historical touch-contrast and cleanup work remains pending;
 its old pixel results cannot qualify a newly reconstructed candidate.
 The release gates remain open.
+
+## Dependency refresh
+
+Actual open-PR query confirms main `4d8cdb33`, mission PR27 `ad6cdc20`,
+checkpoint PR30 `917b143b`, market guard PR29 `b696ca93`, map PR26 `778c89a6`
+and actor-order PR28 `2641ddf8`. V3 PR17–21 remain siblings on PR16. PR17
+still reports two failed checks and one passing audio check. PR1 and art PR2
+have newer heads than the restored contributor snapshot; neither is integrated.
+The full query result is retained in open-prs.json.
