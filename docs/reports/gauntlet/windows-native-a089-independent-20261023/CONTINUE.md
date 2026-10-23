@@ -1,5 +1,9 @@
 # Continue the independent actual review
 
+Current state: actual review is complete. `REPORT.md` contains the independent
+FAIL verdict and separate passing scopes; `REPLAY.md` reopens the retained
+originals. The monitoring handoff below is retained as historical context.
+
 Monitoring paused at root's request on 2026-10-23 while the original remote
 stock match continues. No cancellation, source edit, workflow change, retry or
 final actual verdict is issued. Root will reactivate this critic after the job
