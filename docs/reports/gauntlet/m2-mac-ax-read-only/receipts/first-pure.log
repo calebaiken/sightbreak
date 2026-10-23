@@ -1,0 +1,50 @@
+test_existing_normal_workflow_job_is_exact_except_explicit_diagnostic_exclusion (__main__.SourceControls.test_existing_normal_workflow_job_is_exact_except_explicit_diagnostic_exclusion) ... ok
+test_launch_amendment_and_original_finite_caps (__main__.SourceControls.test_launch_amendment_and_original_finite_caps) ... ok
+test_new_native_sources_have_only_declared_read_api_and_appkit_selectors (__main__.SourceControls.test_new_native_sources_have_only_declared_read_api_and_appkit_selectors) ... ok
+test_original_helper_selector_hud_and_runtime_sources_are_byte_identical (__main__.SourceControls.test_original_helper_selector_hud_and_runtime_sources_are_byte_identical) ... ok
+test_actual_attribute_gate_rejects_private_account_value_and_text_reads (__main__.StructuralControls.test_actual_attribute_gate_rejects_private_account_value_and_text_reads) ... ok
+test_every_current_cg_row_set_rejects_late_extra_window_or_pinned_change (__main__.StructuralControls.test_every_current_cg_row_set_rejects_late_extra_window_or_pinned_change) ... ok
+test_exact_title_words_role_enabled_duplicate_and_bounded_frame (__main__.StructuralControls.test_exact_title_words_role_enabled_duplicate_and_bounded_frame) ... ERROR
+test_owner_window_nonce_trust_stale_time_caps_and_raw_context_reject (__main__.StructuralControls.test_owner_window_nonce_trust_stale_time_caps_and_raw_context_reject) ... ok
+test_textfield_subtree_and_static_text_titles_are_never_read (__main__.StructuralControls.test_textfield_subtree_and_static_text_titles_are_never_read) ... ok
+test_three_empty_snapshots_share_original_clock_and_cumulative_node_cap (__main__.StructuralControls.test_three_empty_snapshots_share_original_clock_and_cumulative_node_cap) ... ok
+test_valid_synthetic_exposure_preserves_original_point_eight_rejection (__main__.StructuralControls.test_valid_synthetic_exposure_preserves_original_point_eight_rejection) ... ERROR
+test_window_duplicates_foreign_containing_window_and_geometry_disagreement_fail (__main__.StructuralControls.test_window_duplicates_foreign_containing_window_and_geometry_disagreement_fail) ... ok
+test_wrong_pid_cycle_depth_and_node_exhaustion_fail_real_traversal (__main__.StructuralControls.test_wrong_pid_cycle_depth_and_node_exhaustion_fail_real_traversal) ... ok
+
+======================================================================
+ERROR: test_exact_title_words_role_enabled_duplicate_and_bounded_frame (__main__.StructuralControls.test_exact_title_words_role_enabled_duplicate_and_bounded_frame)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-ax-read-only/scripts/test_macos_ax_read_only.py", line 178, in test_exact_title_words_role_enabled_duplicate_and_bounded_frame
+    self.assertTrue(validate(receipt)['unique_semantic_candidate'])
+                    ^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-ax-read-only/scripts/test_macos_ax_read_only.py", line 106, in validate
+    return contract.validate_observation(receipt, image or synthetic_capture(), **args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-ax-read-only/scripts/macos_ax_contract.py", line 88, in validate_observation
+    require_capture(capture, pid, window, bounds)
+  File "/workspace/sightbreak-mac-ax-read-only/scripts/macos_ax_contract.py", line 66, in require_capture
+    raise RuntimeError('Original native menu capture is not bound to the pinned owner/window')
+RuntimeError: Original native menu capture is not bound to the pinned owner/window
+
+======================================================================
+ERROR: test_valid_synthetic_exposure_preserves_original_point_eight_rejection (__main__.StructuralControls.test_valid_synthetic_exposure_preserves_original_point_eight_rejection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-ax-read-only/scripts/test_macos_ax_read_only.py", line 113, in test_valid_synthetic_exposure_preserves_original_point_eight_rejection
+    result = validate(receipt, image)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-ax-read-only/scripts/test_macos_ax_read_only.py", line 106, in validate
+    return contract.validate_observation(receipt, image or synthetic_capture(), **args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-ax-read-only/scripts/macos_ax_contract.py", line 88, in validate_observation
+    require_capture(capture, pid, window, bounds)
+  File "/workspace/sightbreak-mac-ax-read-only/scripts/macos_ax_contract.py", line 66, in require_capture
+    raise RuntimeError('Original native menu capture is not bound to the pinned owner/window')
+RuntimeError: Original native menu capture is not bound to the pinned owner/window
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.034s
+
+FAILED (errors=2)
