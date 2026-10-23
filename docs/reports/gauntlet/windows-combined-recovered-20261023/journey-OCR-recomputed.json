@@ -1,0 +1,486 @@
+{
+  "checks": {
+    "all_per_call_original_stdout_bytes_match": true,
+    "all_OCR_exits_zero_without_timeout": true,
+    "unique_retained_file_per_call": true,
+    "sidecar_matches_native_result_commands": true,
+    "whole_ordinary_journey_passed": false,
+    "strict_actual_LEAVE_and_heading_captions": true,
+    "actual_LEAVE_return_and_capture_within_original_30s": true,
+    "actual_living_same_player_HUD_pause_context": true,
+    "HUD_pause_stays_frozen_through_analysis": true,
+    "pause_retained_for_LEAVE": true,
+    "numeric_HUD_readings_recomputed_from_original_stdout": false
+  },
+  "all_checks_passed": false,
+  "calls": [
+    {
+      "call": 1,
+      "label": "05-after-fire:(0, 630, 450, 720)",
+      "stdout_path": "ocr-stdout/001.log",
+      "bytes": 26,
+      "sha256": "adbb8594d4bc3b842a9f079e658a5f4e49bfd0805b9728d7e461aff283a1d21b",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 50.422000000000025,
+      "finished_seconds": 50.90600000000006,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ]
+    },
+    {
+      "call": 2,
+      "label": "05-after-fire:(980, 648, 1280, 680)",
+      "stdout_path": "ocr-stdout/002.log",
+      "bytes": 15,
+      "sha256": "6991be70cf4429fcbb7157643fc2689ab5cdc84af01aea2ab1cb60eb621e37ea",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 50.93700000000001,
+      "finished_seconds": 51.60900000000004,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ]
+    },
+    {
+      "call": 3,
+      "label": "06-after-reload:(0, 630, 450, 720)",
+      "stdout_path": "ocr-stdout/003.log",
+      "bytes": 26,
+      "sha256": "adbb8594d4bc3b842a9f079e658a5f4e49bfd0805b9728d7e461aff283a1d21b",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 54.3900000000001,
+      "finished_seconds": 54.93700000000001,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ]
+    },
+    {
+      "call": 4,
+      "label": "06-after-reload:(980, 648, 1280, 680)",
+      "stdout_path": "ocr-stdout/004.log",
+      "bytes": 15,
+      "sha256": "f5be6af93961c60d6733308b871b831fa962d842a8865473127c927ce0393105",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 54.96900000000005,
+      "finished_seconds": 55.422000000000025,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ]
+    },
+    {
+      "call": 5,
+      "label": "current-native-ui",
+      "stdout_path": "ocr-stdout/005.log",
+      "bytes": 4127,
+      "sha256": "98e4b5ccbe4d7537f813be9a91331c5a8c633937cbbc17ae62f48dcc3a12989c",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 79.60900000000004,
+      "finished_seconds": 80.84400000000005,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "11",
+        "tsv"
+      ]
+    },
+    {
+      "call": 6,
+      "label": "06e-purchased-smg:(0, 630, 450, 720)",
+      "stdout_path": "ocr-stdout/006.log",
+      "bytes": 26,
+      "sha256": "3cf5d59a5831f1b2488cd7ca4a0b7cd976f48ee2e7b60dcbeae002dd5e2b2886",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 83.0,
+      "finished_seconds": 83.54700000000003,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ]
+    },
+    {
+      "call": 7,
+      "label": "06e-purchased-smg:(980, 648, 1280, 680)",
+      "stdout_path": "ocr-stdout/007.log",
+      "bytes": 12,
+      "sha256": "9237b3cb7f60d6e4685a500fc6a7dacfac432d1ed76beb6b202138c484fdf3f8",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 83.57800000000009,
+      "finished_seconds": 84.29700000000003,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ]
+    },
+    {
+      "call": 8,
+      "label": "06f-switched-sidearm:(0, 630, 450, 720)",
+      "stdout_path": "ocr-stdout/008.log",
+      "bytes": 26,
+      "sha256": "3cf5d59a5831f1b2488cd7ca4a0b7cd976f48ee2e7b60dcbeae002dd5e2b2886",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 92.3900000000001,
+      "finished_seconds": 92.84400000000005,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ]
+    },
+    {
+      "call": 9,
+      "label": "06f-switched-sidearm:(980, 648, 1280, 680)",
+      "stdout_path": "ocr-stdout/009.log",
+      "bytes": 15,
+      "sha256": "c2893c06d521303854a14e64f410367aec0bcec4d1b8d0ff4594df0a916ad7a0",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 92.85900000000004,
+      "finished_seconds": 93.375,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ]
+    },
+    {
+      "call": 10,
+      "label": "06g-switched-primary:(0, 630, 450, 720)",
+      "stdout_path": "ocr-stdout/010.log",
+      "bytes": 26,
+      "sha256": "3cf5d59a5831f1b2488cd7ca4a0b7cd976f48ee2e7b60dcbeae002dd5e2b2886",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 96.0,
+      "finished_seconds": 96.56200000000001,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ]
+    },
+    {
+      "call": 11,
+      "label": "06g-switched-primary:(980, 648, 1280, 680)",
+      "stdout_path": "ocr-stdout/011.log",
+      "bytes": 12,
+      "sha256": "9237b3cb7f60d6e4685a500fc6a7dacfac432d1ed76beb6b202138c484fdf3f8",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 96.57800000000009,
+      "finished_seconds": 97.07800000000009,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ]
+    },
+    {
+      "call": 12,
+      "label": "current-native-ui",
+      "stdout_path": "ocr-stdout/012.log",
+      "bytes": 990,
+      "sha256": "33e128a8dd07ea3fd018d64024842dba21f72b441843bea4d628cf2eca255a65",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 97.60900000000004,
+      "finished_seconds": 98.28100000000006,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "11",
+        "tsv"
+      ]
+    },
+    {
+      "call": 13,
+      "label": "current-native-ui",
+      "stdout_path": "ocr-stdout/013.log",
+      "bytes": 2907,
+      "sha256": "54e83351927573225c16c3e332beaa856f2d54e9144cc813ce17504ecca703ae",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 100.17200000000003,
+      "finished_seconds": 101.54700000000003,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "11",
+        "tsv"
+      ]
+    },
+    {
+      "call": 14,
+      "label": "07d-explicit-resume:(0, 630, 450, 720)",
+      "stdout_path": "ocr-stdout/014.log",
+      "bytes": 26,
+      "sha256": "3cf5d59a5831f1b2488cd7ca4a0b7cd976f48ee2e7b60dcbeae002dd5e2b2886",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 105.15600000000006,
+      "finished_seconds": 105.85900000000004,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "6"
+      ]
+    },
+    {
+      "call": 15,
+      "label": "07d-explicit-resume:(980, 648, 1280, 680)",
+      "stdout_path": "ocr-stdout/015.log",
+      "bytes": 12,
+      "sha256": "9237b3cb7f60d6e4685a500fc6a7dacfac432d1ed76beb6b202138c484fdf3f8",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 105.875,
+      "finished_seconds": 106.57800000000009,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "7"
+      ]
+    },
+    {
+      "call": 16,
+      "label": "current-native-ui",
+      "stdout_path": "ocr-stdout/016.log",
+      "bytes": 990,
+      "sha256": "33e128a8dd07ea3fd018d64024842dba21f72b441843bea4d628cf2eca255a65",
+      "hash_matches": true,
+      "byte_counts_match": true,
+      "complete_untruncated": true,
+      "exit_code": 0,
+      "timed_out": false,
+      "started_seconds": 107.0,
+      "finished_seconds": 108.18700000000001,
+      "command": [
+        "C:/Program Files/Tesseract-OCR/tesseract.exe",
+        "stdin",
+        "stdout",
+        "--psm",
+        "11",
+        "tsv"
+      ]
+    }
+  ],
+  "LEAVE_call": 16,
+  "LEAVE_stdout_path": "ocr-stdout/016.log",
+  "FIELD_MENU_boxes": [
+    {
+      "left": 60,
+      "top": 69,
+      "width": 205,
+      "height": 23,
+      "caption": "FIELD MENU"
+    }
+  ],
+  "LEAVE_MATCH_boxes": [
+    {
+      "left": 587,
+      "top": 379,
+      "width": 106,
+      "height": 11,
+      "caption": "LEAVE MATCH"
+    }
+  ],
+  "LEAVE_action": {
+    "event": "click_text",
+    "seconds": 108.68700000000001,
+    "wall_unix_msec": 1792734771563,
+    "held_keys": [],
+    "text": "LEAVE",
+    "caption": "LEAVE MATCH",
+    "heading": "FIELD MENU",
+    "native_state": {
+      "target_window": 524696,
+      "foreground_window": 524696,
+      "target_focused": true,
+      "lmb_down": false,
+      "keys_down": {
+        "r": false,
+        "d": false,
+        "w": false
+      },
+      "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+    }
+  },
+  "return_wait": {
+    "event": "wait_completed",
+    "seconds": 110.04700000000003,
+    "wall_unix_msec": 1792734772922,
+    "held_keys": [],
+    "label": "Return from offline match",
+    "native_state": {
+      "target_window": 524696,
+      "foreground_window": 524696,
+      "target_focused": true,
+      "lmb_down": false,
+      "keys_down": {
+        "r": false,
+        "d": false,
+        "w": false
+      },
+      "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+    }
+  },
+  "actual_return_capture_actions": [
+    {
+      "event": "capture_end",
+      "seconds": 110.46900000000005,
+      "wall_unix_msec": 1792734773355,
+      "held_keys": [],
+      "capture": "08-return-menu",
+      "dimensions": [
+        976,
+        549
+      ],
+      "native_state": {
+        "target_window": 524696,
+        "foreground_window": 524696,
+        "target_focused": true,
+        "lmb_down": false,
+        "keys_down": {
+          "r": false,
+          "d": false,
+          "w": false
+        },
+        "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+      }
+    }
+  ],
+  "LEAVE_return_wall_seconds": 1.3600000000000136,
+  "HUD_original_stdout_recomputation": [
+    {
+      "capture": "05-after-fire",
+      "parsed_original_stdout": {
+        "health": 100,
+        "ammo": 14,
+        "reserve": 60,
+        "status_ocr": "\u00a300 FUNDS\r\n100 - HEALTH\r\n",
+        "ammo_ocr": "SIDEARM 14/60\r\n"
+      },
+      "native_numeric_receipt_available": false,
+      "matches_receipt": false,
+      "living_reading": true
+    },
+    {
+      "capture": "06-after-reload",
+      "parsed_original_stdout": {
+        "health": 100,
+        "ammo": 15,
+        "reserve": 59,
+        "status_ocr": "\u00a300 FUNDS\r\n100 - HEALTH\r\n",
+        "ammo_ocr": "SIDEARM 15/59\r\n"
+      },
+      "native_numeric_receipt_available": false,
+      "matches_receipt": false,
+      "living_reading": true
+    },
+    {
+      "capture": "07d-explicit-resume",
+      "parsed_original_stdout": {
+        "health": 100,
+        "ammo": 30,
+        "reserve": 120,
+        "status_ocr": "1609 FUNDS\r\n100 - HEALTH\r\n",
+        "ammo_ocr": "SMG 30/120\r\n"
+      },
+      "native_numeric_receipt_available": false,
+      "matches_receipt": false,
+      "living_reading": true
+    }
+  ],
+  "scope": "Original native stdout/caption and journey evidence only. Individual LEAVE before/after guard reads execute in the frozen controller but are not separately serialized; original per-call input PNGs are not all retained. No new OCR is run."
+}

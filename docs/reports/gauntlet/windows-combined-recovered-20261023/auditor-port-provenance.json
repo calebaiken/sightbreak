@@ -46,14 +46,19 @@
     "name": "audit_journey_ocr.py",
     "original_git_path": "docs/reports/gauntlet/windows-0527715-39741504894/audit_journey_ocr.py",
     "original_sha256": "c96ac6dcd226c71a7a30343c57feac3ddbc7b9411c92ed4269bd8f7ed852e3d2",
-    "ported_sha256": "c96ac6dcd226c71a7a30343c57feac3ddbc7b9411c92ed4269bd8f7ed852e3d2",
-    "edits": []
+    "ported_sha256": "dc0adbc2e24f6c6971cfcc5d3cb67b37a68a257d1a6bac9e625d6dabc941dde9",
+    "edits": [
+      {
+        "old": "'matches_receipt':parsed==receipt[key]",
+        "new": "'native_numeric_receipt_available':key in receipt,'matches_receipt':parsed==receipt.get(key)"
+      }
+    ]
   },
   {
     "name": "audit_native_commands.py",
     "original_git_path": "docs/reports/gauntlet/windows-0527715-39741504894/audit_native_commands.py",
     "original_sha256": "2d28da9e875068bc39ab6d68868ebc95f9b9fc1c1e8d61295a25af82e17054a7",
-    "ported_sha256": "253b51baab7f4dcc5afd475fe31131ac8913e4354b440d4b177b660ac36d7c78",
+    "ported_sha256": "4f9b14081cc1c13d1a0305f6d29dc83cca9a155120f1892372bc2a80e3448033",
     "edits": [
       {
         "old": "'transaction_journal',",
@@ -72,8 +77,8 @@
         "new": "if suite == 'gunplay_rules' else ['--headless', '--audio-driver', 'Dummy', '--script', 'res://tests/bot_dry_weapon_test.gd'] if suite == 'bot_dry_weapon' else"
       },
       {
-        "old": "        if suite == 'transaction_journal':",
-        "new": "        if suite == 'bot_dry_weapon':\n            native = [json.loads(line.removeprefix('BOT_DRY_WEAPON_RESULT ')) for line in log.splitlines() if line.startswith('BOT_DRY_WEAPON_RESULT ')]\n            counts = [(r['checks'], r['failures']) for r in native]\n        if suite == 'transaction_journal':"
+        "old": "        checks[prefix + 'single_expected_native_summary']",
+        "new": "        if suite == 'bot_dry_weapon':\n            native = [json.loads(line.removeprefix('BOT_DRY_WEAPON_RESULT ')) for line in log.splitlines() if line.startswith('BOT_DRY_WEAPON_RESULT ')]\n            counts = [(r['checks'], r['failures']) for r in native]\n        checks[prefix + 'single_expected_native_summary']"
       },
       {
         "old": "distinct_29_native_producers",

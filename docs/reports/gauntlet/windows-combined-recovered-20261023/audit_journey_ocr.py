@@ -56,7 +56,7 @@ def audit(root):
         health=re.search(r'(?<!\d)(\d{1,3})\s*[^A-Z0-9]*HEALTH',health_text.upper())
         ammo=re.search(r'(\d+)\s*/\s*(\d+)',ammo_text)
         parsed={'health':int(health[1]),'ammo':int(ammo[1]),'reserve':int(ammo[2]),'status_ocr':health_text,'ammo_ocr':ammo_text}
-        hud.append({'capture':capture,'parsed_original_stdout':parsed,'matches_receipt':parsed==receipt[key],
+        hud.append({'capture':capture,'parsed_original_stdout':parsed,'native_numeric_receipt_available':key in receipt,'matches_receipt':parsed==receipt.get(key),
                     'living_reading':0<parsed['health']<=100 and all(word not in health_text.upper() for word in ('ELIMINATED','SPECTATING'))})
     checks={'all_per_call_original_stdout_bytes_match':all(e['hash_matches'] and e['byte_counts_match'] and e['complete_untruncated'] for e in raw),
             'all_OCR_exits_zero_without_timeout':all(e['exit_code']==0 and e['timed_out'] is False for e in raw),

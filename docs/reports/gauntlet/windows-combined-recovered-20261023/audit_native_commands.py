@@ -43,10 +43,10 @@ def audit(root):
         if suite == 'gunplay_rules':
             native = [json.loads(line.removeprefix('GUNPLAY_RULES ')) for line in log.splitlines() if line.startswith('GUNPLAY_RULES ')]
             counts = [(r['checks'], len(r['failures'])) for r in native]
-        checks[prefix + 'single_expected_native_summary'] = counts == [(EXPECTED[SUITES.index(suite)], 0)]
         if suite == 'bot_dry_weapon':
             native = [json.loads(line.removeprefix('BOT_DRY_WEAPON_RESULT ')) for line in log.splitlines() if line.startswith('BOT_DRY_WEAPON_RESULT ')]
             counts = [(r['checks'], r['failures']) for r in native]
+        checks[prefix + 'single_expected_native_summary'] = counts == [(EXPECTED[SUITES.index(suite)], 0)]
         if suite == 'transaction_journal':
             children = [json.loads(line.removeprefix('COMPETING_PROCESS ')) for line in log.splitlines() if line.startswith('COMPETING_PROCESS ')]
             for child in children:
