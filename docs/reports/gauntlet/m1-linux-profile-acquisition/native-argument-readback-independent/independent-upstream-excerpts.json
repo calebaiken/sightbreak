@@ -1,0 +1,89 @@
+{
+  "commit": "ed1daf0bf001b61586d9930840f2f1394092c079",
+  "excerpts": [
+    {
+      "path": "main/main.cpp",
+      "first_line": 1570,
+      "last_line": 1597,
+      "text": "\t\t} else if (arg == \"--render-thread\") { // render thread mode\n\n\t\t\tif (N) {\n\t\t\t\tif (N->get() == \"safe\") {\n\t\t\t\t\tseparate_thread_render = 0;\n#ifndef DISABLE_DEPRECATED\n\t\t\t\t} else if (N->get() == \"unsafe\") {\n\t\t\t\t\tOS::get_singleton()->print(\"The --render-thread unsafe option is unsupported in Godot 4 and will be removed.\\n\");\n\t\t\t\t\tseparate_thread_render = 0;\n#endif\n\t\t\t\t} else if (N->get() == \"separate\") {\n\t\t\t\t\tseparate_thread_render = 1;\n\t\t\t\t} else {\n\t\t\t\t\tOS::get_singleton()->print(\"Unknown render thread mode, aborting.\\n\");\n#ifdef DISABLE_DEPRECATED\n\t\t\t\t\tOS::get_singleton()->print(\"Valid options are 'safe' and 'separate'.\\n\");\n#else\n\t\t\t\t\tOS::get_singleton()->print(\"Valid options are 'unsafe', 'safe' and 'separate'.\\n\");\n#endif\n\t\t\t\t\tgoto error;\n\t\t\t\t}\n\n\t\t\t\tN = N->next();\n\t\t\t} else {\n\t\t\t\tOS::get_singleton()->print(\"Missing render thread mode argument, aborting.\\n\");\n\t\t\t\tgoto error;\n\t\t\t}\n#ifdef TOOLS_ENABLED\n"
+    },
+    {
+      "path": "main/main.cpp",
+      "first_line": 2775,
+      "last_line": 2786,
+      "text": "\tif (separate_thread_render == -1) {\n\t\tseparate_thread_render = (int)GLOBAL_DEF(\"rendering/driver/threads/thread_model\", OS::RENDER_THREAD_SAFE) == OS::RENDER_SEPARATE_THREAD;\n\t}\n\n\tif (editor || project_manager) {\n\t\t// Editor and project manager cannot run with rendering in a separate thread (they will crash on startup).\n\t\tseparate_thread_render = 0;\n\t}\n#if !defined(THREADS_ENABLED)\n\tseparate_thread_render = 0;\n#endif\n\tOS::get_singleton()->_separate_thread_render = separate_thread_render;\n"
+    },
+    {
+      "path": "main/main.cpp",
+      "first_line": 3561,
+      "last_line": 3572,
+      "text": "\n\t{\n\t\tOS::get_singleton()->benchmark_begin_measure(\"Servers\", \"Rendering\");\n\n\t\trendering_server = memnew(RenderingServerDefault(OS::get_singleton()->is_separate_thread_rendering_enabled()));\n\n\t\trendering_server->init();\n\t\t//rendering_server->call_set_use_vsync(OS::get_singleton()->_use_vsync);\n\t\trendering_server->set_render_loop_enabled(!disable_render_loop);\n\n\t\tif (profile_gpu || (!editor && bool(GLOBAL_GET(\"debug/settings/stdout/print_gpu_profile\")))) {\n\t\t\trendering_server->set_print_gpu_profile(true);\n"
+    },
+    {
+      "path": "core/os/thread.h",
+      "first_line": 67,
+      "last_line": 75,
+      "text": "\n\ttypedef uint64_t ID;\n\n\tenum : ID {\n\t\tUNASSIGNED_ID = 0,\n\t\tMAIN_ID = 1\n\t};\n\n\tenum Priority {\n"
+    },
+    {
+      "path": "core/os/thread.h",
+      "first_line": 120,
+      "last_line": 130,
+      "text": "\t_FORCE_INLINE_ static void yield() { std::this_thread::yield(); }\n\n\t_FORCE_INLINE_ ID get_id() const { return id; }\n\t// get the ID of the caller thread\n\t_FORCE_INLINE_ static ID get_caller_id() {\n\t\treturn caller_id;\n\t}\n\t// get the ID of the main thread\n\t_FORCE_INLINE_ static ID get_main_id() { return MAIN_ID; }\n\n\t_FORCE_INLINE_ static bool is_main_thread() { return caller_id == MAIN_ID; } // Gain a tiny bit of perf here because there is no need to validate caller_id here, because only main thread will be set as 1.\n"
+    },
+    {
+      "path": "core/core_bind.cpp",
+      "first_line": 577,
+      "last_line": 583,
+      "text": "::Thread::ID OS::get_thread_caller_id() const {\n\treturn ::Thread::get_caller_id();\n}\n\n::Thread::ID OS::get_main_thread_id() const {\n\treturn ::Thread::get_main_id();\n}\n"
+    },
+    {
+      "path": "core/core_bind.cpp",
+      "first_line": 849,
+      "last_line": 850,
+      "text": "\tClassDB::bind_method(D_METHOD(\"get_thread_caller_id\"), &OS::get_thread_caller_id);\n\tClassDB::bind_method(D_METHOD(\"get_main_thread_id\"), &OS::get_main_thread_id);\n"
+    },
+    {
+      "path": "servers/rendering/rendering_server.cpp",
+      "first_line": 3577,
+      "last_line": 3578,
+      "text": "\tClassDB::bind_method(D_METHOD(\"is_on_render_thread\"), &RenderingServer::is_on_render_thread);\n\tClassDB::bind_method(D_METHOD(\"call_on_render_thread\", \"callable\"), &RenderingServer::call_on_render_thread);\n"
+    },
+    {
+      "path": "servers/rendering/rendering_server_default.cpp",
+      "first_line": 276,
+      "last_line": 289,
+      "text": "void RenderingServerDefault::init() {\n\tif (create_thread) {\n\t\tprint_verbose(\"RenderingServerWrapMT: Starting render thread\");\n\t\tDisplayServer::get_singleton()->release_rendering_thread();\n\t\tWorkerThreadPool::TaskID tid = WorkerThreadPool::get_singleton()->add_task(callable_mp(this, &RenderingServerDefault::_thread_loop), true, \"Rendering Server pump task\", true);\n\t\tcommand_queue.set_pump_task_id(tid);\n\t\tcommand_queue.push(this, &RenderingServerDefault::_assign_mt_ids, tid);\n\t\tcommand_queue.push_and_sync(this, &RenderingServerDefault::_init);\n\t\tDEV_ASSERT(server_task_id == tid);\n\t} else {\n\t\tserver_thread = Thread::MAIN_ID;\n\t\t_init();\n\t}\n}\n"
+    },
+    {
+      "path": "servers/rendering/rendering_server_default.cpp",
+      "first_line": 400,
+      "last_line": 408,
+      "text": "void RenderingServerDefault::_assign_mt_ids(WorkerThreadPool::TaskID p_pump_task_id) {\n\tserver_thread = Thread::get_caller_id();\n\tserver_task_id = p_pump_task_id;\n\n\tRenderingDevice *rd = RenderingDevice::get_singleton();\n\tif (rd) {\n\t\t// This is needed because the main RD is created on the main thread.\n\t\trd->make_current();\n\t}\n"
+    },
+    {
+      "path": "servers/rendering/rendering_server_default.h",
+      "first_line": 1212,
+      "last_line": 1214,
+      "text": "\tvirtual bool is_on_render_thread() override {\n\t\treturn Thread::get_caller_id() == server_thread;\n\t}\n"
+    },
+    {
+      "path": "platform/linuxbsd/x11/gl_manager_x11.cpp",
+      "first_line": 356,
+      "last_line": 380,
+      "text": "void GLManager_X11::set_use_vsync(bool p_use) {\n\t// we need an active window to get a display to set the vsync\n\tif (!_current_window) {\n\t\treturn;\n\t}\n\tconst GLDisplay &disp = get_current_display();\n\n\tint val = p_use ? 1 : 0;\n\tif (GLAD_GLX_MESA_swap_control) {\n\t\tglXSwapIntervalMESA(val);\n\t} else if (GLAD_GLX_SGI_swap_control) {\n\t\tglXSwapIntervalSGI(val);\n\t} else if (GLAD_GLX_EXT_swap_control) {\n\t\tGLXDrawable drawable = glXGetCurrentDrawable();\n\t\tglXSwapIntervalEXT(disp.x11_display, drawable, val);\n\t} else {\n\t\tWARN_PRINT_ONCE(\"Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.\");\n\t\treturn;\n\t}\n\tuse_vsync = p_use;\n}\n\nbool GLManager_X11::is_using_vsync() const {\n\treturn use_vsync;\n}\n"
+    },
+    {
+      "path": "platform/linuxbsd/x11/display_server_x11.cpp",
+      "first_line": 5857,
+      "last_line": 5891,
+      "text": "void DisplayServerX11::window_set_vsync_mode(DisplayServerEnums::VSyncMode p_vsync_mode, DisplayServerEnums::WindowID p_window) {\n\t_THREAD_SAFE_METHOD_\n#if defined(RD_ENABLED)\n\tif (rendering_context) {\n\t\trendering_context->window_set_vsync_mode(p_window, p_vsync_mode);\n\t}\n#endif\n\n#if defined(GLES3_ENABLED)\n\tif (gl_manager) {\n\t\tgl_manager->set_use_vsync(p_vsync_mode != DisplayServerEnums::VSYNC_DISABLED);\n\t}\n\tif (gl_manager_egl) {\n\t\tgl_manager_egl->set_use_vsync(p_vsync_mode != DisplayServerEnums::VSYNC_DISABLED);\n\t}\n#endif\n}\n\nDisplayServerEnums::VSyncMode DisplayServerX11::window_get_vsync_mode(DisplayServerEnums::WindowID p_window) const {\n\t_THREAD_SAFE_METHOD_\n#if defined(RD_ENABLED)\n\tif (rendering_context) {\n\t\treturn rendering_context->window_get_vsync_mode(p_window);\n\t}\n#endif\n#if defined(GLES3_ENABLED)\n\tif (gl_manager) {\n\t\treturn gl_manager->is_using_vsync() ? DisplayServerEnums::VSYNC_ENABLED : DisplayServerEnums::VSYNC_DISABLED;\n\t}\n\tif (gl_manager_egl) {\n\t\treturn gl_manager_egl->is_using_vsync() ? DisplayServerEnums::VSYNC_ENABLED : DisplayServerEnums::VSYNC_DISABLED;\n\t}\n#endif\n\treturn DisplayServerEnums::VSYNC_ENABLED;\n}\n"
+    },
+    {
+      "path": "platform/linuxbsd/x11/display_server_x11.cpp",
+      "first_line": 6674,
+      "last_line": 6685,
+      "text": "#ifdef GLES3_ENABLED\n\t\tif (gl_manager) {\n\t\t\tError err = gl_manager->window_create(id, wd.x11_window, x11_display, win_rect.size.width, win_rect.size.height);\n\t\t\tERR_FAIL_COND_V_MSG(err != OK, DisplayServerEnums::INVALID_WINDOW_ID, \"Can't create an OpenGL window\");\n\t\t}\n\t\tif (gl_manager_egl) {\n\t\t\tError err = gl_manager_egl->window_create(id, x11_display, &wd.x11_window, win_rect.size.width, win_rect.size.height);\n\t\t\tERR_FAIL_COND_V_MSG(err != OK, DisplayServerEnums::INVALID_WINDOW_ID, \"Failed to create an OpenGLES window.\");\n\t\t}\n\t\twindow_set_vsync_mode(p_vsync_mode, id);\n#endif\n\n"
+    }
+  ]
+}
