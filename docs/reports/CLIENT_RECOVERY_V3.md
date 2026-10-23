@@ -64,6 +64,27 @@ The [verdict](systems-v3-evidence/client-recovery/independent-review-r7.md) and
 This is post-response/pre-teardown termination, not arbitrary
 instruction-level or host power-loss qualification.
 
+### Real PostgreSQL market settlement
+
+The separate [native PostgreSQL oracle](NATIVE_TRANSACTION_RESTART_RESULTS.md)
+measured the same shipping runtime `7b6f379` against frozen V2 with an identical
+`31438cbc` harness and unmodified backend. At integer prices 400, 401 and 10,000,000,
+**V2 recovered 0/3; the candidate recovered 3/3** after the server committed and a
+proxy held every response byte. Native termination was acknowledged before
+fresh authentication and exact receipt recovery. Each purchase added exactly one
+Operation, two Ledger rows and one settlement Audit row; wallet debits, seller
+credits, fee, item ownership and sold listing matched. A second restart made no
+purchase request or further economic change. All 237 committed raw-evidence blobs
+were reverified after incorporation into this branch.
+
+This oracle used Python 3.12.14/PostgreSQL 17.11 and the same Godot 4.7.2 executable
+for both arms. The completed V2 run was retained across the host interruption;
+these are matching crash workloads, not a latency comparison. Fresh independent
+blind review of this PostgreSQL packet is pending. The original maintained native
+economy regression's 36/37 Windows port-9 failure is retained; a one-literal reserved
+DNS calibration passed 37/37 and is now adopted by the maintained test in `5da86b28`.
+Its LF Git bytes reproduce the executed CRLF probe exactly after newline expansion.
+
 ## Implementation boundaries
 
 `TransactionJournal` acquires a local OS-released exclusive owner, writes and flushes
@@ -93,9 +114,9 @@ At `7b6f379`: journal **41/41**, recovery **12/12**, armory **749/749**, menu
 engine errors. [Commands and raw logs](systems-v3-evidence/client-recovery/native-checks-r6/summary.json).
 The journal checks include a separate competing native process, two live stale-UI
 owners, account/server mismatch, retry failures, malformed success, corrupt storage,
-unwritable paths and actual-file truncation fault injection. Native PostgreSQL recovery
-remains pending; the current source re-review
-found no blocking defect in this bounded slice.
+unwritable paths and actual-file truncation fault injection. The independent source
+re-review found no blocking defect in this bounded slice. The real PostgreSQL
+recovery and native economy results are recorded separately above.
 
 ## Reproduce
 
@@ -176,7 +197,8 @@ terminates at a stable post-response boundary.
 
 The largest evidence gap from the first blind review was real PostgreSQL market
 settlement through a lost response, fresh authentication, recovery and a second
-restart. That independent oracle is in progress, with exact-source results to follow.
+restart. Its exact-source result is now published; the separate blinded review is
+the remaining acceptance step for that packet.
 The original backend does not durably fence terminal rejected receipts, so a
 permanently rejected uncertain intent can remain blocked. Forgetting it would be
 unsafe while an earlier request may still commit. Port collisions fail closed;

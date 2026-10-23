@@ -79,7 +79,7 @@ does not activate a feature gate. Failed trials remain in the evidence record.
 
 ## Next recorded actions
 
-1. Independently judge S1's completed exact-source native PostgreSQL oracle and integrate its harness/raw evidence into PR18. The dedicated service was restored; original native economy36/37 and separately calibrated37/37 are both retained.
+1. Independently judge S1's completed exact-source native PostgreSQL oracle. Its harness/raw evidence is integrated into PR18 at `aad54c89`; original native economy36/37 and separately calibrated37/37 are both retained, and the maintained test adopts the executed calibration in `5da86b28`.
 2. Preserve S2's completed source/blind-passed campaign, failed fixture trials and isolated interrupted follow-up; claim no supplemental trace result.
-3. Complete S4's reviewed controller/key archive; S3's second key and frozen verdict archive are published. Preserve original packet hashes and verify committed Git-blob bytes.
+3. S4 controller/key closure is published at `37924d1531029b7429ee9289a266a497388001b4`; outcome and capture/API-binding reviews pass and all14 archive Git-blob hashes verify. [Final handoff](https://github.com/calebaiken/sightbreak/pull/21#issuecomment-6354741011). S3's second key and frozen verdict archive are also published; original packet hashes remain fixed.
 4. Refresh Sol's source-bound findings and hand off the independently judged candidates for integration. Draft status and activation gates remain in force.
