@@ -76,7 +76,7 @@ methods. All17 per-group logs are retained and hash-verified in each checkout.
 Bash syntax passes. Both three-file pure grammar checks pass using the existing
 gdtoolkit4.3.4/Lark1.2.2; no tool was installed by this critic. Depth one is
 shallow=true, exactly one commit at c0738163, clean tracked state, and859 present
-tracked files independently match exact candidate blobs (473 non-document paths;
+tracked files independently match exact candidate blobs (469 non-document paths;
 10,257 explicitly listed sparse omissions include historical reports). The same
 25 independent controls replay unchanged with the same16 met/nine failed result.
 The complete review HEAD includes only report additions over the candidate.
