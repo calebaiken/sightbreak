@@ -1,0 +1,80 @@
+{
+  "scope": "Pure actual-method counterexample, native APIs mocked",
+  "selected_window": {
+    "owner_pid": 123,
+    "onscreen": true,
+    "window_id": 34,
+    "bounds_points_including_chrome": [
+      40,
+      32,
+      960,
+      568
+    ]
+  },
+  "current_owned_visible_windows": [
+    {
+      "owner_pid": 123,
+      "onscreen": true,
+      "window_id": 34,
+      "bounds_points_including_chrome": [
+        40,
+        32,
+        960,
+        568
+      ]
+    },
+    {
+      "owner_pid": 123,
+      "onscreen": true,
+      "window_id": 35,
+      "bounds_points_including_chrome": [
+        40,
+        32,
+        960,
+        568
+      ]
+    }
+  ],
+  "error": "Unique owned visible window or its geometry changed before input",
+  "input_geometry_pinned": false,
+  "cg_event_post_attempts": 0,
+  "actions": [
+    {
+      "event": "owned_window_guard",
+      "target_pid": 123,
+      "expected_window": 34,
+      "expected_bounds_points": [
+        40,
+        32,
+        960,
+        568
+      ],
+      "observed_owned_layer_zero_windows": [
+        {
+          "owner_pid": 123,
+          "onscreen": true,
+          "window_id": 34,
+          "bounds_points_including_chrome": [
+            40,
+            32,
+            960,
+            568
+          ]
+        },
+        {
+          "owner_pid": 123,
+          "onscreen": true,
+          "window_id": 35,
+          "bounds_points_including_chrome": [
+            40,
+            32,
+            960,
+            568
+          ]
+        }
+      ],
+      "input_geometry_pinned": false,
+      "cg_event_post_attempts": 0
+    }
+  ]
+}
