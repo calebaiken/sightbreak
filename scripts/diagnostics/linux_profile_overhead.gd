@@ -64,7 +64,9 @@ func _settings() -> Dictionary:
 		"physics_limit": Engine.max_physics_steps_per_frame, "jitter_fix": Engine.physics_jitter_fix,
 		"time_scale": Engine.time_scale, "vsync_mode": DisplayServer.window_get_vsync_mode(),
 		"thread_model_project": ProjectSettings.get_setting("rendering/driver/threads/thread_model", 1),
-		"thread_mode_argument": "safe", "print_profile_setting": ProjectSettings.get_setting("debug/settings/stdout/print_gpu_profile", false)}
+		"caller_is_main_thread": OS.get_thread_caller_id() == OS.get_main_thread_id(),
+		"caller_is_render_thread": RenderingServer.is_on_render_thread(),
+		"print_profile_setting": ProjectSettings.get_setting("debug/settings/stdout/print_gpu_profile", false)}
 
 func _canonical(value):
 	# No RID, runtime instance ID or unused actor RNG state enters the result.
@@ -264,10 +266,11 @@ func _run() -> void:
 	if ProjectSettings.get_setting("debug/settings/stdout/print_gpu_profile", false) != false:
 		_fail("Project profile printing must be off")
 		return
-	var argv := OS.get_cmdline_args()
-	var thread_index := argv.find("--render-thread")
-	if thread_index < 0 or thread_index + 1 >= argv.size() or argv[thread_index + 1] != "safe":
-		_fail("Pinned synchronous safe render-thread argument required")
+	# Godot consumes --render-thread before exposing its filtered argument list.
+	# The controller verifies exact full argv separately; verify effective state
+	# here on the main thread, including a rejection of a separate render thread.
+	if OS.get_thread_caller_id() != OS.get_main_thread_id() or not RenderingServer.is_on_render_thread():
+		_fail("Pinned synchronous safe main/render thread identity required")
 		return
 	ledger_hash = FileAccess.get_sha256("res://diagnostics/source_ledger.json")
 	ledger = JSON.parse_string(FileAccess.get_file_as_string("res://diagnostics/source_ledger.json"))
@@ -308,6 +311,7 @@ func _run() -> void:
 	# fingerprint. This endpoint is outside cold/anchor and sampled intervals.
 	await get_tree().process_frame
 	report = {"schema": 1, "token": token, "settings": _settings(), "engine": Engine.get_version_info(),
+		"engine_arguments_filtered": OS.get_cmdline_args(),
 		"adapter": {"name": RenderingServer.get_video_adapter_name(), "vendor": RenderingServer.get_video_adapter_vendor(),
 			"api": RenderingServer.get_video_adapter_api_version()}, "source_ledger_sha256": ledger_hash,
 		"workload": {"actors": 5, "view": "approach", "static": true, "authority_ticks": 0, "visual_ticks": 0},

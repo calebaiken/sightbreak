@@ -646,6 +646,8 @@ class BlockBindingTests(unittest.TestCase):
                 for name in ('host_begin', 'host_end'): row[name]['affinity'] = [0, 1]
                 row['fixture']['png_sha256'] = hashlib.sha256(proof).hexdigest()
                 if mode == 'warning' and index == 0: row['stdout'] += 'WARNING: zero-exit native warning\n'
+                if mode == 'VSync' and index == 0:
+                    row['stdout'] += 'WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.\n'
                 acq.write(directory / 'condition.json', row)
                 row['publication_sha256'] = acq.digest(directory / 'condition.json')
                 (directory / 'client.log').write_text(row['stdout'])
@@ -674,7 +676,7 @@ class BlockBindingTests(unittest.TestCase):
                     with self.assertRaises(acq.accepted.Invalid): controller.run_block()
 
     def test_real_outer_block_gate_accepts_bound_data_and_rejects_otherwise_valid_mutations(self):
-        for mode in ('valid', 'warning', 'Xvfb', 'PNG', 'metrics', 'condition', 'escaped', 'seal', 'failed'):
+        for mode in ('valid', 'warning', 'VSync', 'Xvfb', 'PNG', 'metrics', 'condition', 'escaped', 'seal', 'failed'):
             with self.subTest(mode=mode): self.execute(mode)
 
 

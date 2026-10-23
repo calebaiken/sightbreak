@@ -32,7 +32,7 @@ ENGINE_HASH = 'ed1daf0bf'
 SETTINGS = {'viewport': [1280, 720], 'texture_size': [1280, 720], 'msaa_3d': 1,
             'render_scale': 1.0, 'scaling_3d_mode': 0, 'max_fps': 60, 'physics_hz': 60, 'physics_limit': 8,
             'jitter_fix': 0.5, 'time_scale': 1.0, 'thread_model_project': 1,
-            'thread_mode_argument': 'safe', 'print_profile_setting': False}
+            'caller_is_main_thread': True, 'caller_is_render_thread': True, 'print_profile_setting': False}
 FIXTURE = ROOT / 'scripts/diagnostics/linux_profile_overhead.gd'
 SCENE = ROOT / 'scripts/diagnostics/linux_profile_overhead.tscn'
 
@@ -348,6 +348,10 @@ def validate_condition(record, expected):
     report = record['fixture']
     require(report['schema'] == 1 and report['token'] == record['token'], 'Fixture identity mismatch')
     require(report['source_ledger_sha256'] == expected['source_ledger_sha256'], 'Fixture source ledger differs')
+    for key in ('caller_is_main_thread', 'caller_is_render_thread'):
+        require(report['settings'].get(key) is True, 'Synchronous safe thread readback failed: ' + key)
+    require(type(report.get('engine_arguments_filtered')) is list and
+            all(type(value) is str for value in report['engine_arguments_filtered']), 'Missing filtered argument readback')
     for key, value in SETTINGS.items():
         require(report['settings'].get(key) == value, 'Altered setting: ' + key)
     require(type(report['settings'].get('vsync_mode')) is int, 'Missing V-Sync getter')
