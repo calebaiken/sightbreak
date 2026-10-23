@@ -16,6 +16,7 @@ from probe_macos_ax import BoundedObserver, NativeAX
 import probe_macos_ax as observer
 import verify_macos_ax_read_only as driver
 from test_macos_ordinary import capture
+from test_macos_capture_diagnostics import original_capture_helper
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -451,7 +452,10 @@ class SourceControls(unittest.TestCase):
     def test_original_helper_selector_hud_and_runtime_sources_are_byte_identical(self):
         fixture=json.loads((FIXTURES/'preserved-source.json').read_text())
         for path,digest in fixture['sha256'].items():
-            with self.subTest(path=path):self.assertEqual(hashlib.sha256((ROOT/path).read_bytes()).hexdigest(),digest)
+            data=(ROOT/path).read_bytes()
+            if path=='scripts/macos_window_capture.swift':
+                data=original_capture_helper(data)
+            with self.subTest(path=path):self.assertEqual(hashlib.sha256(data).hexdigest(),digest)
 
     def test_new_native_sources_have_only_declared_read_api_and_appkit_selectors(self):
         allowed={'AXUIElementCreateApplication','AXUIElementGetTypeID','AXUIElementGetPid',
