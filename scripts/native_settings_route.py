@@ -57,7 +57,7 @@ def relocate_settings_actor(start, *, actor_id, round_number, observe, key, paus
             value = actor.get(field)
             if not isinstance(value, list) or len(value) != size or not all(finite(item) for item in value):
                 reject('invalid_' + field, state)
-        if not finite(actor.get('yaw')) or not finite(state.get('elapsed')):
+        if not finite(actor.get('yaw')) or not finite(state.get('elapsed')) or state['elapsed'] < 0:
             reject('invalid_motion_counters', state)
         move = inputs.get('move')
         if (not isinstance(move, list) or len(move) != 2 or not all(finite(value) for value in move)
@@ -75,8 +75,8 @@ def relocate_settings_actor(start, *, actor_id, round_number, observe, key, paus
         if last is not None and any(actor.get(field) != start['local_actor'].get(field)
                                     for field in ('deaths', 'team', 'weapon', 'ammo', 'reserve')):
             reject('changed_life_weapon_or_ammunition', state)
-        x, _, z = actor['position']
-        if not -8.5 <= x <= -3.9 or not -21.75 <= z <= -20.25:
+        x, y, z = actor['position']
+        if not -8.5 <= x <= -3.9 or not -.1 <= y <= .1 or not -21.75 <= z <= -20.25:
             reject('left_declared_clear_corridor', state)
         if last is None or any(state[field] != last[field] for field in ('wall_msec', 'simulation_tick')):
             receipt['observations'].append(deepcopy(state))

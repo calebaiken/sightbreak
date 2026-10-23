@@ -82,15 +82,16 @@ class SettingsRouteControls(unittest.TestCase):
             self.assertNotIn('endpoint', world.receipt)
 
     def test_fixed_corridor_loss_fails_and_retains_actual_bad_position(self):
-        world = SettingsWalker()
-        def outside(state):
-            state['local_actor']['position'][2] = -19
-            return state
-        world.mutation = outside
-        with self.assertRaisesRegex(RuntimeError, 'left_declared_clear_corridor'):
-            world.route()
-        self.assertFalse(world.requested)
-        self.assertEqual(world.receipt['precondition_loss']['rejected_state']['local_actor']['position'][2], -19)
+        for axis, value in ((2, -19), (1, 100)):
+            world = SettingsWalker()
+            def outside(state):
+                state['local_actor']['position'][axis] = value
+                return state
+            world.mutation = outside
+            with self.subTest(axis=axis), self.assertRaisesRegex(RuntimeError, 'left_declared_clear_corridor'):
+                world.route()
+            self.assertFalse(world.requested)
+            self.assertEqual(world.receipt['precondition_loss']['rejected_state']['local_actor']['position'][axis], value)
 
     def test_no_alternate_origin_or_malformed_health_can_start_route(self):
         for field, value in (('position', [-7, 0, -21]), ('health', True), ('health', float('nan')),
