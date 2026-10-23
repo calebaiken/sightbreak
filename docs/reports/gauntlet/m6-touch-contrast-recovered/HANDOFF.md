@@ -1,22 +1,22 @@
 # Touch contrast source handoff
 
-Native execution is BLOCKED on independent R2 source/method review and the root's
+Native execution is BLOCKED on independent R3 source/method review and the root's
 single shared CPU/render-lane release. No engine, import, export, render, OCR or
 recording ran. Product improvement and contrast remain unverified.
 
 Branch `codex/m6-touch-contrast-recovered` is pushed. Product commit `b4d0c1b`
 changes only `_draw` in touch_controls.gd. Preregistration `61151b5`; latest
-source/method freeze `3c954d33546d70bf59cf6f9b6846f1cb82b6bca3`; exact receipt
-[SOURCE_FREEZE-r2.json](SOURCE_FREEZE-r2.json). Baseline is exact published
+source/method freeze `a52022169241df9ff662039547a375e1c46ac1c5`; exact receipt
+[SOURCE_FREEZE-r3.json](SOURCE_FREEZE-r3.json). Baseline is exact published
 `138a1ab810a29e3c504f5811a0051a08e1ad52b9`.
 
-R2 has fourteen passing pure controls and replays all four independent retained
-R1 falsifiers with zero false accepts. The two prepared projects have verified
+R3 has sixteen passing pure controls and replays the unchanged independent R2
+pixel/provenance reproducer with `independent_checks_pass=true`. The two prepared projects have verified
 323 original paths each, plus exact fixture and generated diagnostic UID/source
-hashes. They are under `/workspace/sightbreak-touch-contrast-fixture-recovered-r2`.
-R1 projects and rejected source/receipts remain retained separately.
+hashes. They are under `/workspace/sightbreak-touch-contrast-fixture-recovered-r3`.
+R1 and R2 projects and rejected source/receipts remain retained separately.
 
-The next critic must audit the actual R2 code, isolated footprints, full-support
+The next critic must audit the actual R3 code, isolated footprints, full-support
 underlay/occlusion checks, exact matrix/source/background/image identities, and
 inactive reconstruction gate. Native later-layer overlap may fail the strict
 oracle; retain such failures. The complete dark surround against external
@@ -28,16 +28,16 @@ process, timeout, command receipts and cleanup belong to the root's released lan
 
 ```sh
 sightbreak_engine=/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64
-touch_r2_root=/workspace/sightbreak-touch-contrast-fixture-recovered-r2
-touch_r2_raw=/workspace/sightbreak-touch-contrast-native-recovered-r2
-mkdir -p "$touch_r2_raw/backgrounds" "$touch_r2_raw/baseline" "$touch_r2_raw/candidate"
-"$sightbreak_engine" --path "$touch_r2_root/baseline/game" --headless --editor --import --quit
-"$sightbreak_engine" --path "$touch_r2_root/candidate/game" --headless --editor --import --quit
+touch_r3_root=/workspace/sightbreak-touch-contrast-fixture-recovered-r3
+touch_r3_raw=/workspace/sightbreak-touch-contrast-native-recovered-r3
+mkdir -p "$touch_r3_raw/backgrounds" "$touch_r3_raw/baseline" "$touch_r3_raw/candidate"
+"$sightbreak_engine" --path "$touch_r3_root/baseline/game" --headless --editor --import --quit
+"$sightbreak_engine" --path "$touch_r3_root/candidate/game" --headless --editor --import --quit
 # DISPLAY must be the root-owned released display.
-"$sightbreak_engine" --path "$touch_r2_root/baseline/game" --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/touch_contrast_capture.gd -- --mode=backgrounds --out="$touch_r2_raw/backgrounds"
-"$sightbreak_engine" --path "$touch_r2_root/baseline/game" --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/touch_contrast_capture.gd -- --mode=controls --out="$touch_r2_raw/baseline" --background-dir="$touch_r2_raw/backgrounds"
-"$sightbreak_engine" --path "$touch_r2_root/candidate/game" --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/touch_contrast_capture.gd -- --mode=controls --out="$touch_r2_raw/candidate" --background-dir="$touch_r2_raw/backgrounds"
-python3 scripts/analyze_touch_contrast.py --baseline "$touch_r2_raw/baseline" --candidate "$touch_r2_raw/candidate" --backgrounds "$touch_r2_raw/backgrounds" --freeze docs/reports/gauntlet/m6-touch-contrast-recovered/SOURCE_FREEZE-r2.json --out "$touch_r2_raw/recomputed.json"
+"$sightbreak_engine" --path "$touch_r3_root/baseline/game" --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/touch_contrast_capture.gd -- --mode=backgrounds --out="$touch_r3_raw/backgrounds"
+"$sightbreak_engine" --path "$touch_r3_root/baseline/game" --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/touch_contrast_capture.gd -- --mode=controls --out="$touch_r3_raw/baseline" --background-dir="$touch_r3_raw/backgrounds"
+"$sightbreak_engine" --path "$touch_r3_root/candidate/game" --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/touch_contrast_capture.gd -- --mode=controls --out="$touch_r3_raw/candidate" --background-dir="$touch_r3_raw/backgrounds"
+python3 scripts/analyze_touch_contrast.py --baseline "$touch_r3_raw/baseline" --candidate "$touch_r3_raw/candidate" --backgrounds "$touch_r3_raw/backgrounds" --freeze docs/reports/gauntlet/m6-touch-contrast-recovered/SOURCE_FREEZE-r3.json --out "$touch_r3_raw/recomputed.json"
 ```
 
 Then retain exact original PNGs, native logs, source/UID receipts, all failures,
