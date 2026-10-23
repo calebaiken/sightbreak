@@ -77,3 +77,9 @@ First pure layout attempt is retained in `r4b-geometry-attempt-1.json`. SMOKE
 x=.70 leaves its maximum-mobile rim envelope overlapping LOW by 1.66725px and
 produces an actual wrong-owner witness. Amend the proposed responsive SMOKE x
 to .68 before native; FRAG remains .58. No failed footprint is excluded.
+
+The 96-case pure sweep then retained 14 failing short/notched/portrait cases in
+`r4b-geometry-attempt-2.json`: USE and SMOKE remain too close vertically, and
+the narrow portrait utility row needs the middle spacing. Register responsive
+USE y=.61 and retain SMOKE's original x=.69; FRAG x=.58, JUMP y=.72 and SWAP
+y=.91 remain. This supersedes both provisional SMOKE values before source freeze.
