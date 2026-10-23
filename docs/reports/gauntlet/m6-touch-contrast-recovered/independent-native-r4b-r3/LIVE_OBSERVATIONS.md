@@ -22,11 +22,11 @@ scans; their live identities cannot be invented. Their original command/result
 receipts remain separate evidence.
 
 Full process-group cleanup FAILS its preregistered terminal absence condition.
-At the observer's terminal scan, PID136526 was sleeping with PPID1 and group/
-session136513, the background producer's actual observed group/session. Its
-start tick2199755 follows the background leader's2199750. By the separate
+At the observer's terminal scan, PID 136526 was sleeping with PPID 1 and group/
+session 136513, the background producer's actual observed group/session. Its
+start tick 2199755 follows the background leader's 2199750. By the separate
 10:40:34.970411Z check it was a zombie with the same start/group/session and
-affinity CPU0-3. The later exact comm/stat/status read identifies `dbus-launch`.
+affinity CPU 0-3. The later exact comm/stat/status read identifies `dbus-launch`.
 No reviewer signal was sent. The 10:44:17 independent terminal scan still found
 that zombie, with no unreadable `/proc` records and no :131 socket/lock.
 

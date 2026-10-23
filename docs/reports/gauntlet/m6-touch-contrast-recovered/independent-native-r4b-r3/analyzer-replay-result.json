@@ -1,0 +1,36 @@
+{
+  "command": [
+    "taskset",
+    "-c",
+    "4",
+    "python3",
+    "/workspace/sightbreak-touch-contrast-recovered/scripts/analyze_touch_contrast_r4b.py",
+    "--baseline",
+    "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/baseline",
+    "--candidate",
+    "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/candidate",
+    "--backgrounds",
+    "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/backgrounds",
+    "--freeze",
+    "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/SOURCE_FREEZE-r4b-r3.json",
+    "--out",
+    "/workspace/reviews/touch-r4b-r3-native-fresh/docs/reports/gauntlet/m6-touch-contrast-recovered/independent-native-r4b-r3/recomputed-independent.json"
+  ],
+  "start_utc": "2026-10-23T10:48:58.016827+00:00",
+  "independent_audit_timeout_seconds": 2400,
+  "original_pipeline_bound_unchanged": true,
+  "engine_invocations": 0,
+  "source_analyzer_sha256": "c47bb2fd7a3b8eab83765fd75ee76885815fc5ae467ffac6b99859e72be05141",
+  "inherited_numeric_thread_selectors": {
+    "LP_NUM_THREADS": null,
+    "OMP_NUM_THREADS": null,
+    "OPENBLAS_NUM_THREADS": null,
+    "MKL_NUM_THREADS": null
+  },
+  "exit_code": 1,
+  "end_utc": "2026-10-23T11:12:13.919184+00:00",
+  "wall_seconds": 1395.902045941999,
+  "stdout_sha256": "a80ae35442d06894efad8c29b886e44da4fd29cd4e559a74dbfc56de5d81be67",
+  "output_sha256": "52502a6b31198171a780bf18be8da272809e25a3506d9c3e17783b8b98abf145",
+  "exact_original_json_bytes": true
+}
