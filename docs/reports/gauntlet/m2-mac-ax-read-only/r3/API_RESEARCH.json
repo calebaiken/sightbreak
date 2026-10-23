@@ -1,0 +1,86 @@
+{
+  "retrieved_utc": "2026-10-23T10:43:20.480603+00:00",
+  "scope": "Source/API semantics only; Apple SDK headers retrieved from an immutable mirror, not the blocked Apple documentation host. No native inference.",
+  "blocked_official_urls": [
+    "https://developer.apple.com/tutorials/data/documentation/applicationservices/axerror/novalue.json",
+    "https://developer.apple.com/tutorials/data/documentation/applicationservices/axuielementcopyattributevalue(_:_:_:).json"
+  ],
+  "blocked_result": "Tunnel connection failed: 403 Forbidden",
+  "files": [
+    {
+      "name": "Apple AXError SDK declaration",
+      "url": "https://raw.githubusercontent.com/phracker/MacOSX-SDKs/041600eda65c6a668f66cb7d56b7d1da3e8bcc93/MacOSX11.3.sdk/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/Headers/AXError.h",
+      "bytes": 2528,
+      "sha256": "2e34038d1cc0c2251693223e0f911b89c0548be5731e09ab89fbf3f26ccd220a",
+      "excerpts": [
+        {
+          "first_line": 68,
+          "last_line": 80,
+          "text": "\n    /*! The accessibility API is disabled (as when, for example, the user deselects \"Enable access for assistive devices\" in Universal Access Preferences). */\n    kAXErrorAPIDisabled\t\t\t\t= -25211,\n\n    /*! The requested value or AXUIElementRef does not exist. */\n    kAXErrorNoValue\t\t\t\t= -25212,\n\n    /*! The parameterized attribute is not supported by the AXUIElementRef. */\n    kAXErrorParameterizedAttributeUnsupported\t= -25213,\n\n    /*! Not enough precision. */\n\tkAXErrorNotEnoughPrecision\t= -25214\n};"
+        }
+      ]
+    },
+    {
+      "name": "Apple AXUIElementCopyAttributeValue SDK contract",
+      "url": "https://raw.githubusercontent.com/phracker/MacOSX-SDKs/041600eda65c6a668f66cb7d56b7d1da3e8bcc93/MacOSX11.3.sdk/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/Headers/AXUIElement.h",
+      "bytes": 37014,
+      "sha256": "23c4ea4f15015ac00e2e07f369228345fa82512446b9216a47dd3d95d3df4de8",
+      "excerpts": [
+        {
+          "first_line": 130,
+          "last_line": 148,
+          "text": "extern AXError \tAXUIElementCopyAttributeNames (AXUIElementRef element, CFArrayRef __nullable * __nonnull CF_RETURNS_RETAINED names);\n\n/*!\n @function AXUIElementCopyAttributeValue\n @abstract Returns the value of an accessibility object's attribute.\n \n @param element The AXUIElementRef representing the accessibility object.\n @param attribute The attribute name.\n @param value On return, the value associated with the specified attribute.\n \n @result If unsuccessful, <code>AXUIElementCopyAttributeValue</code> may return one of the following error codes, among others:\n <dl><dt><code>kAXErrorAttributeUnsupported</code></dt><dd>The specified AXUIElementRef does not support the specified attribute.</dd>\n <dt><code>kAXErrorNoValue</code></dt><dd>The specified attribute does not have a value.</dd>\n <dt><code>kAXErrorIllegalArgument</code></dt><dd>One or more of the arguments is an illegal value.</dd>\n <dt><code>kAXErrorInvalidUIElement</code></dt><dd>The AXUIElementRef is invalid.</dd>\n <dt><code>kAXErrorCannotComplete</code></dt><dd>The function cannot complete because messaging has failed in some way.</dd>\n <dt><code>kAXErrorNotImplemented</code></dt><dd>The process does not fully support the accessibility API.</dd></dl>\n */\nextern AXError\tAXUIElementCopyAttributeValue (AXUIElementRef element, CFStringRef attribute, CFTypeRef __nullable * __nonnull CF_RETURNS_RETAINED value);"
+        }
+      ]
+    },
+    {
+      "name": "Pinned Godot Button text default",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf001b61586d9930840f2f1394092c079/doc/classes/Button.xml",
+      "bytes": 12034,
+      "sha256": "961a61264211eee38f0675630fb4504d538476965b6766f2dd9b197ca817882f",
+      "excerpts": [
+        {
+          "first_line": 1,
+          "last_line": 8,
+          "text": "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n<class name=\"Button\" inherits=\"BaseButton\" api_type=\"core\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"../class.xsd\">\n\t<brief_description>\n\t\tA themed button that can contain text and an icon.\n\t</brief_description>\n\t<description>\n\t\t[Button] is the standard themed button. It can contain text and an icon, and it will display them according to the current [Theme].\n\t\t[b]Example:[/b] Create a button and connect a method that will be called when the button is pressed:"
+        },
+        {
+          "first_line": 71,
+          "last_line": 74,
+          "text": "\t\t<member name=\"text\" type=\"String\" setter=\"set_text\" getter=\"get_text\" default=\"&quot;&quot;\">\n\t\t\tThe button's text that will be displayed inside the button's area.\n\t\t</member>\n\t\t<member name=\"text_direction\" type=\"int\" setter=\"set_text_direction\" getter=\"get_text_direction\" enum=\"Control.TextDirection\" default=\"0\">"
+        }
+      ]
+    },
+    {
+      "name": "Pinned Godot accessible button name",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf001b61586d9930840f2f1394092c079/scene/gui/button.cpp",
+      "bytes": 32166,
+      "sha256": "8fd726a156dd72dfcca68044e8d3823c313c4fe66a856cc15fd8503ed01337cd",
+      "excerpts": [
+        {
+          "first_line": 145,
+          "last_line": 175,
+          "text": "\t\t\tif (rtl && has_theme_stylebox(SNAME(\"disabled_mirrored\"))) {\n\t\t\t\tstylebox = theme_cache.disabled_mirrored;\n\t\t\t} else {\n\t\t\t\tstylebox = theme_cache.disabled;\n\t\t\t}\n\t\t} break;\n\t}\n\n\treturn stylebox;\n}\n\nString Button::_get_accessibility_name() const {\n\tconst String &ac_name = Control::_get_accessibility_name();\n\tif (!xl_text.is_empty() && ac_name.is_empty()) {\n\t\treturn xl_text;\n\t} else if (!xl_text.is_empty() && !ac_name.is_empty() && ac_name != xl_text) {\n\t\treturn ac_name + \": \" + xl_text;\n\t} else if (xl_text.is_empty() && ac_name.is_empty() && !get_tooltip_text().is_empty()) {\n\t\treturn get_tooltip_text(); // Fall back to tooltip.\n\t} else {\n\t\treturn ac_name;\n\t}\n}\n\nvoid Button::_notification(int p_what) {\n\tswitch (p_what) {\n\t\tcase NOTIFICATION_ACCESSIBILITY_UPDATE: {\n\t\t\tRID ae = get_accessibility_element();\n\t\t\tERR_FAIL_COND(ae.is_null());\n\n\t\t\tAcceptDialog *dlg = Object::cast_to<AcceptDialog>(get_parent());"
+        }
+      ]
+    },
+    {
+      "name": "Pinned AccessKit macOS optional title",
+      "url": "https://raw.githubusercontent.com/AccessKit/accesskit/c88605b96d04431f9c3c792464a0f2f253480e94/platforms/macos/src/node.rs",
+      "bytes": 58078,
+      "sha256": "7fcbb84ed76e25d1ba4f69ef646a5b0cd83f96aaccfa7a0b500518da1ef43e91",
+      "excerpts": [
+        {
+          "first_line": 303,
+          "last_line": 330,
+          "text": "        self.0.is_root()\n    }\n\n    pub(crate) fn title(&self) -> Option<String> {\n        if self.is_root() && self.0.role() == Role::Window {\n            // If the group element that we expose for the top-level window\n            // includes a title, VoiceOver behavior is broken.\n            return None;\n        }\n        self.0.label()\n    }\n\n    pub(crate) fn description(&self) -> Option<String> {\n        self.0.description()\n    }\n\n    pub(crate) fn placeholder(&self) -> Option<&str> {\n        self.0.placeholder()\n    }\n\n    pub(crate) fn value(&self) -> Option<Value> {\n        if let Some(toggled) = self.0.toggled() {\n            return Some(Value::Bool(toggled != Toggled::False));\n        }\n        if self.0.role() == Role::Tab {\n            // On Mac, tabs are exposed as radio buttons, and are treated as checkable.\n            // Also, `Node::is_selected` is mapped to checked via `accessibilityValue`.\n            return Some(Value::Bool(self.0.is_selected().unwrap_or(false)));"
+        },
+        {
+          "first_line": 508,
+          "last_line": 516,
+          "text": "\n        #[method_id(accessibilityTitle)]\n        fn title(&self) -> Option<Id<NSString>> {\n            self.resolve(|node| {\n                let wrapper = NodeWrapper(node);\n                wrapper.title().map(|title| NSString::from_str(&title))\n            })\n            .flatten()\n        }"
+        }
+      ]
+    }
+  ]
+}
