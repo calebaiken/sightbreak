@@ -1,0 +1,77 @@
+{
+  "cases": [
+    {
+      "name": "continuous_wrong_20m_control_lane",
+      "reason": "line 1219 control/kill_rifle step 0: exact registered shooter/target poses",
+      "rejected": true
+    },
+    {
+      "name": "continuous_unconsumed_kill_round",
+      "reason": "line 1221 control/kill_rifle step 2: all raw resource projections",
+      "rejected": true
+    },
+    {
+      "name": "duplicate_matrix_identity",
+      "reason": "line 4 core/easy/smg/exhausted/loaded/near/none step -1: exact registered identity/order",
+      "rejected": true
+    },
+    {
+      "name": "decision_target_mutation",
+      "reason": "line 1219 control/kill_rifle step 0: all planning authority fences",
+      "rejected": true
+    },
+    {
+      "name": "decision_objective_mutation",
+      "reason": "line 1228 control/reload_smg step 0: all planning authority fences",
+      "rejected": true
+    },
+    {
+      "name": "illegal_reload_transfer",
+      "reason": "line 1267 control/reload_rifle step 19: all raw resource projections",
+      "rejected": true
+    },
+    {
+      "name": "forged_elimination_snapshot",
+      "reason": "line 1221 control/kill_rifle step 2: elimination shooter snapshot before recoil/trigger latch",
+      "rejected": true
+    },
+    {
+      "name": "actual_shot_without_damage_event",
+      "reason": "line 1221 control/kill_rifle step 2: physical shot damage/death causes",
+      "rejected": true
+    },
+    {
+      "name": "missing_kill_reward",
+      "reason": "line 1221 control/kill_rifle step 2: complete shooter action consumption",
+      "rejected": true
+    },
+    {
+      "name": "unexpected_initial_active_cache",
+      "reason": "line 4 core/easy/smg/exhausted/loaded/near/none step -1: exact initial ammo/cache/inventory",
+      "rejected": true
+    },
+    {
+      "name": "unsettled_world_query",
+      "reason": "line 1228 control/reload_smg step 0: settled world query",
+      "rejected": true
+    },
+    {
+      "name": "forged_ray_endpoint",
+      "reason": "line 1228 control/reload_smg step 0: actual ray endpoints",
+      "rejected": true
+    },
+    {
+      "name": "missing_positive_control",
+      "reason": "exact row-kind inventory",
+      "rejected": true
+    },
+    {
+      "name": "terminal_control_not_bound",
+      "reason": "terminal full control binding",
+      "rejected": true
+    }
+  ],
+  "originals_modified": false,
+  "rejected": 14,
+  "synthetic_mutations_of_actual_memory_copies": true
+}
