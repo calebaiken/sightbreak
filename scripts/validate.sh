@@ -117,4 +117,7 @@ python3 scripts/test_native_focus_fence.py -v
 python3 scripts/test_focus_resume_timing.py -v
 python3 scripts/test_native_settings_route.py -v
 python3 scripts/test_native_route_pulse.py -v
+# BEGIN INPUT OBSERVATION VALIDATION
+python3 scripts/test_input_consumption_observation.py -v
+# END INPUT OBSERVATION VALIDATION
 printf 'Validation completed. Logs: %s\n' "$validation_dir"

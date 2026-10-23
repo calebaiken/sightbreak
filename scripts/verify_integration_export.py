@@ -617,6 +617,10 @@ def main():
                         help='Diagnostic comparison only: retain legacy capture while LMB is held, or capture after release; qualification gates are unchanged')
     parser.add_argument('--fire-capture-delay', type=float, default=0,
                         help='Explicit synthetic capture pressure in seconds (0..10); delays only the fire screenshot and is recorded separately from spontaneous failures')
+    # BEGIN INPUT OBSERVATION FLAG
+    parser.add_argument('--observe-input-consumption', action='store_true',
+                        help='Opt-in debug guest-loopback stage observations; unchanged schedules and gates, unmeasured observer overhead')
+    # END INPUT OBSERVATION FLAG
     args = parser.parse_args()
     if args.target != ('windows' if os.name == 'nt' else 'linux') or platform.system() not in ('Linux', 'Windows'):
         parser.error('Execute the selected export on its matching native Linux/Windows host; macOS input is UNVERIFIED')
@@ -641,6 +645,10 @@ def main():
     result = {'passed': False, 'target': args.target, 'host': platform.platform(),
               'input_schedule': args.input_schedule, 'synthetic_fire_capture_delay_seconds': args.fire_capture_delay,
               'qualification_note': 'Any nonzero synthetic capture pressure is a diagnostic experiment, not physical performance or a spontaneous Windows failure'}
+    # BEGIN INPUT OBSERVATION RESULT
+    if args.observe_input_consumption:
+        result['input_consumption_observation'] = {'enabled': True, 'scope': 'Debug guest-loopback read-only stage observations; observer overhead unmeasured; original schedules, waits and pass predicates unchanged'}
+    # END INPUT OBSERVATION RESULT
     (output / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
     started = time.monotonic()
     deadline = started + args.timeout
@@ -796,6 +804,10 @@ def main():
         server_command = toolchain.command('--headless', *accessibility_flags, '--script', str(ROOT / 'scripts/fixtures/export_integration.gd'), '--', '--output=' + str(output))
         if args.reload_mode == 'authority':
             server_command.append('--automatic-reload')
+        # BEGIN INPUT OBSERVATION SERVER COMMAND
+        if args.observe_input_consumption:
+            server_command.append('--native-input-observation')
+        # END INPUT OBSERVATION SERVER COMMAND
         server = launch('server', server_command, env, ROOT)
         wait_for(lambda: server_has('SIGHTBREAK_SERVER_READY'), 15, 'Authority readiness', server)
         client_command = [str(executable), '--audio-driver', 'Dummy', '--position', '0,0', *accessibility_flags]
@@ -803,6 +815,10 @@ def main():
             client_command += ['--resolution', f'{ui.width}x{ui.height}']
         if args.quit_after:
             client_command += ['--quit-after', str(args.quit_after)]
+        # BEGIN INPUT OBSERVATION CLIENT COMMAND
+        if args.observe_input_consumption:
+            client_command += ['--', '--native-input-observation']
+        # END INPUT OBSERVATION CLIENT COMMAND
         client = launch('client', client_command, env)
         if args.target == 'windows':
             ui.pid = client.pid
