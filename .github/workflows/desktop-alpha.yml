@@ -130,6 +130,7 @@ jobs:
           python scripts/test_macos_ordinary.py -v
           python scripts/test_macos_ordinary_controller.py -v
           python scripts/test_macos_ordinary_paths.py -v
+          python scripts/test_macos_ordinary_startup.py -v
       - name: ARM Mac stock Deploy living sidearm and ordinary leave
         if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15' && steps.macos_input_preflight.outcome == 'success' && steps.macos_menu_input.outcome == 'success' && steps.macos_ordinary_controls.outcome == 'success'
         timeout-minutes: 6

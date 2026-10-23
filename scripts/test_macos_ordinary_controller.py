@@ -23,6 +23,7 @@ class SyntheticController:
         self.ammo, self.reserve, self.reload_elapsed = 15, 60, None
         self.reads, self.next_pid, self.client = 0, 9000, None
         self.default_reads, self.source_reads = 0, 0
+        self.startup_captures, self.focus_calls, self.window_id, self.active_ui = 0, 0, 34, None
         self.identity = {'source_commit': 'synthetic', 'source_game_tree': 'synthetic-game',
                          'source_content_sha256': 'synthetic-content', 'source_validation_sha256': 'synthetic-tools',
                          'source_dirty': False, 'source_game_dirty': False}
@@ -74,7 +75,17 @@ class SyntheticController:
         else:
             image = capture()
         image['owner_pid'] = self.client.pid
-        image['window_id'] = 34
+        image['window_id'] = self.active_ui.window
+        if name.startswith('00-startup'):
+            self.startup_captures += 1
+            if self.fault == 'startup_splash' and self.startup_captures == 1:
+                image['text'] = [dict(image['text'][0], text='GODOT')]
+            if self.fault in ('startup_change', 'startup_churn') and (self.startup_captures == 1 or self.fault == 'startup_churn'):
+                self.window_id += 1
+            if self.fault == 'startup_foreign': image['owner_pid'] += 1
+            if self.fault == 'startup_mapping': image['point_pixel_scale'] = True
+        if name == '01-focused-menu' and self.fault == 'focused_change':
+            self.window_id += 1
         image.update(input_events_posted=0, permission_requests_made=0)
         return image
 
@@ -91,6 +102,8 @@ class SyntheticController:
                 if not is_client:
                     if harness.fault == 'helper_deadline' and '-parse-as-library' in arguments:
                         harness.now += 61
+                    if harness.fault in ('startup_churn', 'startup_foreign', 'startup_mapping') and '--pid' in arguments:
+                        harness.now += 1
                     process.returncode = 0
                 return process.returncode
         process = Process()
@@ -104,6 +117,8 @@ class SyntheticController:
         elif '--pid' in arguments:
             receipt = Path(arguments[arguments.index('--report')+1])
             receipt.write_text(json.dumps(self.native_capture(receipt.stem)))
+            if self.fault == 'startup_helper_error':
+                kwargs['stdout'].write('ERROR: synthetic helper error\n')
         return process
 
     def make_ui(self):
@@ -113,13 +128,24 @@ class SyntheticController:
             held = set()
             def __init__(self, pid, window, bounds, trace):
                 self.pid, self.window, self.bounds = pid, window, bounds
-            def require_target(self): pass
-            def require_window(self): pass
+                self.event_post_attempts, self.input_geometry_pinned = 0, False
+                harness.active_ui = self
+            def require_target(self): self.require_window()
+            def require_window(self):
+                if self.window != harness.window_id:
+                    raise driver.OwnedWindowChanged('synthetic current owned window changed')
             def focus_state(self): return {'foreground_pid': self.pid}
             def diagnostics(self):
                 return {'foreground_pid': self.pid, 'lmb_down': False, 'escape_down': False, 'reload_down': False}
             def neutral(self): pass
-            def focus(self): pass
+            def focus(self, seconds=5):
+                harness.focus_calls += 1
+                if harness.fault == 'focus_late': harness.now += seconds+.001
+            def pin_for_input(self, image):
+                if self.event_post_attempts or self.input_geometry_pinned:
+                    raise RuntimeError('synthetic repeated/late pin')
+                self.require_target()
+                self.input_geometry_pinned = True
             def observed_state(self, control, down, **kwargs):
                 if harness.fault == 'fire_ack_delay' and control == 'lmb' and down:
                     harness.now += 1.01
@@ -128,6 +154,9 @@ class SyntheticController:
                 if harness.fault == 'reload_release_delay' and control == 'reload' and not down:
                     harness.now += 15.01
             def click_label(self, image, label):
+                if not self.input_geometry_pinned:
+                    raise RuntimeError('synthetic input before pin')
+                self.event_post_attempts += 1
                 if label.startswith('DEPLOY'):
                     harness.deployed = True
             def fire_button(self, down):
@@ -154,7 +183,7 @@ class SyntheticController:
 
     def execute(self):
         api = types.SimpleNamespace(preflight=lambda: {'CGPreflightPostEventAccess': True, 'CGPreflightScreenCaptureAccess': True},
-            windows=lambda pid: [{'owner_pid': pid, 'onscreen': True, 'window_id': 34,
+            windows=lambda pid: [{'owner_pid': pid, 'onscreen': True, 'window_id': self.window_id,
                                   'bounds_points_including_chrome': [40, 32, 960, 568]}])
         manifest = {**self.identity, 'artifact': {'sha256': 'synthetic-hash'}}
         preflight = self.directory.parent / 'synthetic-preflight.json'
