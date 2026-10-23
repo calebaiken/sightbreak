@@ -33,7 +33,8 @@ separate inventory. Missing sparse inputs, changed bytes, extra generated source
 or dirty source fail. Runtime repeats the full comparison before and after.
 The original inventories, commands and engine/archive receipt are retained in
 `preparation-r1`; a later wrapper-only refinement is retained in a fresh
-`preparation-r2`, without overwriting the first.
+`preparation-r2`, without overwriting the first. Final terminal-budget refinement
+has fresh matching `preparation-r3` receipts; earlier preparations remain intact.
 
 | Binding | Exact value |
 | --- | --- |
@@ -65,8 +66,10 @@ python3 /workspace/sightbreak-aggregate-combined-28a3e294/docs/reports/gauntlet/
 The sole child command is exactly `./scripts/validate.sh`, with no arguments.
 DISPLAY is absent. The default per-Godot timeout stays 540 seconds; ambient
 SIGHTBREAK_TEST_TIMEOUT is removed so it cannot enlarge or shrink that default.
-The supervisor preserves the previous 1,200-second whole bound. The source
-connection lifecycle waits remain 45 seconds, readiness 100 × 0.05 seconds and
+The supervisor preserves the previous 1,200-second whole bound. Its terminal
+result must also measure strictly less than 1,200 seconds, including
+receipt work after child exit; a late terminal receipt cannot pass.
+The source connection lifecycle waits remain 45 seconds, readiness 100 × 0.05 seconds and
 owned cleanup five seconds. Smoke readiness remains 80 × 0.1 seconds and owned
 cleanup five seconds; its clients and other helper phases are bounded by the
 whole supervisor. These internal waits are not asserted to be independent whole
