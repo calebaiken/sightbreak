@@ -1,7 +1,7 @@
 # R2 independent source verdict: REJECT 86fe3cbe
 
-Exact reader86fe3cbe3f191b328c1e08bf8d5adc0a937e39b1, independently preregistered
-at2f709b129987dcc0b681e62deede058083bad3dd before changed source/output inspection.
+Exact reader 86fe3cbe3f191b328c1e08bf8d5adc0a937e39b1, independently preregistered
+at 2f709b129987dcc0b681e62deede058083bad3dd before changed source/output inspection.
 Initial REJECT02725f9c and its inputs are untouched. No Godot/native/CI work ran.
 
 R2 fixes all29 frozen controls: the exact unchanged25 main and four supplement
@@ -68,7 +68,30 @@ hook, protocol/RPC, authority/privacy/economy path, route, default, schedule,
 deadline, graphics, fixture and controller remains exact c0738163. source-union.json
 retains the full path/mode/blob inventory. No diagnostic code fixes gameplay.
 
-Complete and independently initialized depth-one pure checks will be sealed next.
+Builder handoff f01881dd0a57be6e4e524f5ddca173eaaf482bcd explicitly preserves
+this rejection and the unchanged source. Independent complete and depth-one
+checks each pass 199 methods: 196 passes and the same three existing Windows
+skips. This comprises 193 previously reviewed methods plus six new identity
+methods. Every pure-group raw log is retained and hash-verified; both identity
+streams and hashes are retained. Shell syntax passes.
+
+The independently initialized shallow checkout has exactly one commit at
+86fe3cbe, clean tracked state, and 860 present files (470 non-document files)
+matched byte-for-byte to frozen Git blobs. Its 10,318 sparse omissions are
+listed explicitly. Both checkouts reproduce the same frozen 29/29 and additional
+1/9 results without changing inputs or expectations. Complete source HEADs
+include only this reviewer report over the candidate, as bound in source-union
+and verification-summary receipts. All work used CPU 4.
+
+The seven invalid new traces also replay through the actual pure CLI with
+exit 0 and complete=true; the valid unordered authority projection returns
+exit 1. additional-cli/ retains all eight actual command receipts, output JSON
+and stdout/stderr. These are retained correctness failures, independent of the
+passing maintained suite. The original log copies consumed by the frozen rig
+use its original text-mode newline normalization; no raw-byte equivalence is
+claimed for those derivatives. Initial source-audit.json independently bound
+the original CRLF bytes, which remain unchanged.
+
 Godot type/API compilation and the queued runtime controls remain unexecuted.
 input_send_called is invocation only; input_consumed means pop/input assignment
 before actor action gates. The old failed Windows logs lack trace and remain

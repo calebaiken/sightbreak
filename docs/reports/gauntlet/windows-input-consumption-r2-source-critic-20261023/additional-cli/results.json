@@ -1,0 +1,153 @@
+{
+  "scope": "Actual pure CLI replay of source-review counterexamples; no native execution",
+  "candidate": "86fe3cbe3f191b328c1e08bf8d5adc0a937e39b1",
+  "cpu_affinity": [
+    4
+  ],
+  "cases": [
+    {
+      "name": "bound_generation_never_connected",
+      "expected_exit": 1,
+      "actual_exit": 0,
+      "diagnostic_complete": true,
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/bound_generation_never_connected/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/bound_generation_never_connected/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-cli/bound_generation_never_connected.json"
+      ],
+      "stdout_sha256": "2785fbeb232e02d48a191437a552fcaac57244e945adb16ac06854405416b152",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "bound_peer_never_connected",
+      "expected_exit": 1,
+      "actual_exit": 0,
+      "diagnostic_complete": true,
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/bound_peer_never_connected/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/bound_peer_never_connected/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-cli/bound_peer_never_connected.json"
+      ],
+      "stdout_sha256": "3813df380857a14c319b371487d5b59be009ca6264e569b21e06615762d39808",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "binding_before_connection",
+      "expected_exit": 1,
+      "actual_exit": 0,
+      "diagnostic_complete": true,
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/binding_before_connection/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/binding_before_connection/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-cli/binding_before_connection.json"
+      ],
+      "stdout_sha256": "8113d047c230d8685000290753bf43187f7174ae64d61a720262b6e96951664e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "same_generation_rebound_to_other_actor",
+      "expected_exit": 1,
+      "actual_exit": 0,
+      "diagnostic_complete": true,
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/same_generation_rebound_to_other_actor/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/same_generation_rebound_to_other_actor/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-cli/same_generation_rebound_to_other_actor.json"
+      ],
+      "stdout_sha256": "da5d61af1e84dd0259780abf29a922ecd5a41f692c1799de2c6bf5a4a44a0d18",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "first_accept_before_first_receive",
+      "expected_exit": 1,
+      "actual_exit": 0,
+      "diagnostic_complete": true,
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/first_accept_before_first_receive/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/first_accept_before_first_receive/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-cli/first_accept_before_first_receive.json"
+      ],
+      "stdout_sha256": "7b299b6cdd54179e47762b804358ae1bf8940d1e14739f86ffb44bc64bf96c0e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "one_command_two_sequence_endpoints",
+      "expected_exit": 1,
+      "actual_exit": 0,
+      "diagnostic_complete": true,
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/one_command_two_sequence_endpoints/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/one_command_two_sequence_endpoints/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-cli/one_command_two_sequence_endpoints.json"
+      ],
+      "stdout_sha256": "cd2de384dd1e31d8c5db28950d7287f773d8142477ddfdd894e538260d46f2cb",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "welcome_claims_unobserved_attempt",
+      "expected_exit": 1,
+      "actual_exit": 0,
+      "diagnostic_complete": true,
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/welcome_claims_unobserved_attempt/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/welcome_claims_unobserved_attempt/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-cli/welcome_claims_unobserved_attempt.json"
+      ],
+      "stdout_sha256": "806d5e880f7eba50948f28a4e53ee4276c8be0f34cadd7f237dd2a4c3bbc86a0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "accepted_unordered_two_command_batch",
+      "expected_exit": 0,
+      "actual_exit": 1,
+      "diagnostic_complete": false,
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/accepted_unordered_two_command_batch/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-controls-r2/accepted_unordered_two_command_batch/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/additional-cli/accepted_unordered_two_command_batch.json"
+      ],
+      "stdout_sha256": "f2cf06bd784090f4006ffcfa6614fa1ce587f5b77b3bc3a6c035c5a6afc73558",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}
