@@ -189,7 +189,7 @@ class SyntheticController:
 class ControllerFalsifiers(unittest.TestCase):
     def test_complete_synthetic_schedule_exercises_all_acceptance_stages(self):
         with tempfile.TemporaryDirectory() as temporary:
-            harness = SyntheticController(Path(temporary) / 'synthetic')
+            harness = SyntheticController(Path(temporary).resolve(strict=True) / 'synthetic')
             code, report = harness.execute()
         self.assertEqual(code, 0)
         self.assertTrue(report['passed'])
@@ -202,7 +202,7 @@ class ControllerFalsifiers(unittest.TestCase):
     def test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail(self):
         for fault in ('stale', 'depletion', 'frames', 'reload_frames'):
             with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temporary:
-                code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                code, report = SyntheticController(Path(temporary).resolve(strict=True) / 'synthetic', fault).execute()
                 self.assertEqual(code, 1)
                 self.assertFalse(report['passed'])
                 self.assertEqual(report['failure']['type'], 'TimeoutError')
@@ -210,7 +210,7 @@ class ControllerFalsifiers(unittest.TestCase):
     def test_unobserved_reload_or_early_transfer_never_pass(self):
         for fault in ('reload_start', 'reload_early'):
             with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temporary:
-                code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                code, report = SyntheticController(Path(temporary).resolve(strict=True) / 'synthetic', fault).execute()
                 self.assertEqual(code, 1)
                 self.assertFalse(report['passed'])
                 self.assertIn('failure', report)
@@ -218,13 +218,13 @@ class ControllerFalsifiers(unittest.TestCase):
     def test_dead_or_mismatched_native_hud_never_pass(self):
         for fault in ('dead', 'hud'):
             with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temporary:
-                code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                code, report = SyntheticController(Path(temporary).resolve(strict=True) / 'synthetic', fault).execute()
                 self.assertEqual(code, 1)
                 self.assertFalse(report['passed'])
 
     def test_zero_exit_after_helper_stage_deadline_is_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:
-            code, report = SyntheticController(Path(temporary) / 'synthetic', 'helper_deadline').execute()
+            code, report = SyntheticController(Path(temporary).resolve(strict=True) / 'synthetic', 'helper_deadline').execute()
         self.assertEqual(code, 1)
         self.assertEqual(report['failure']['type'], 'TimeoutError')
         self.assertFalse(report['passed'])
@@ -233,7 +233,7 @@ class ControllerFalsifiers(unittest.TestCase):
     def test_delayed_os_acknowledgement_cannot_extend_original_input_slots(self):
         for fault in ('fire_ack_delay', 'fire_release_delay', 'reload_release_delay'):
             with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temporary:
-                code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                code, report = SyntheticController(Path(temporary).resolve(strict=True) / 'synthetic', fault).execute()
                 self.assertEqual(code, 1)
                 self.assertEqual(report['failure']['type'], 'TimeoutError')
                 self.assertFalse(report['passed'])
@@ -241,7 +241,7 @@ class ControllerFalsifiers(unittest.TestCase):
     def test_finalization_checks_cannot_be_replaced_by_completed_gameplay(self):
         for fault in ('cleanup', 'payload', 'source', 'default', 'leak', 'close'):
             with self.subTest(fault=fault), tempfile.TemporaryDirectory() as temporary:
-                code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                code, report = SyntheticController(Path(temporary).resolve(strict=True) / 'synthetic', fault).execute()
                 self.assertEqual(code, 1)
                 self.assertFalse(report['passed'])
                 self.assertTrue(report.get('failure') or report.get('finalization_failures'))

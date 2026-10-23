@@ -148,7 +148,7 @@ class OrdinaryControls(unittest.TestCase):
 
     def test_staged_native_bytes_modes_and_only_two_setting_overrides(self):
         with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
+            root = Path(temporary).resolve(strict=True)
             original = root / 'export/SIGHTBREAK.app'
             executable = original / 'Contents/MacOS/SIGHTBREAK'
             executable.parent.mkdir(parents=True)
@@ -170,7 +170,7 @@ class OrdinaryControls(unittest.TestCase):
 
     def test_symlinked_app_or_native_userdata_is_refused_without_following(self):
         with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
+            root = Path(temporary).resolve(strict=True)
             target = root / 'target'
             target.mkdir()
             link = root / 'link'
@@ -192,7 +192,7 @@ class OrdinaryControls(unittest.TestCase):
 
     def test_private_userdir_requires_native_log_and_unchanged_default_directory(self):
         with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
+            root = Path(temporary).resolve(strict=True)
             default = {'files': {}, 'directories': [], 'directory_exists': False}
             with patch.object(ordinary, 'require_absent_profile'), patch.object(ordinary, 'default_inventory', return_value=default):
                 with self.assertRaises(NativePrerequisiteBlocked):
@@ -214,7 +214,7 @@ class OrdinaryControls(unittest.TestCase):
     def test_default_userdata_rejects_symlinked_ancestors_and_tracks_file_modes(self):
         for ancestor in ('Godot', 'app_userdata'):
             with self.subTest(ancestor=ancestor), tempfile.TemporaryDirectory() as temporary:
-                root = Path(temporary)
+                root = Path(temporary).resolve(strict=True)
                 base = root / 'Library/Application Support/Godot/app_userdata/SIGHTBREAK'
                 selected = next(path for path in base.parents if path.name == ancestor)
                 selected.parent.mkdir(parents=True)
@@ -224,7 +224,7 @@ class OrdinaryControls(unittest.TestCase):
                 with patch.object(ordinary, 'user_directory', return_value=base), self.assertRaises(NativePrerequisiteBlocked):
                     ordinary.default_inventory()
         with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
+            root = Path(temporary).resolve(strict=True)
             file = root / 'existing.cache'
             file.write_bytes(b'invented cache')
             before = ordinary.inventory(root)
@@ -269,9 +269,9 @@ class OrdinaryControls(unittest.TestCase):
 
     def test_non_native_host_never_compiles_or_launches(self):
         with tempfile.TemporaryDirectory() as temporary:
-            output = Path(temporary) / 'evidence'
+            output = Path(temporary).resolve(strict=True) / 'evidence'
             with patch.object(driver, 'MacReadOnly', side_effect=RuntimeError('requires native ARM Mac')), patch.object(driver.subprocess, 'Popen') as launch:
-                self.assertEqual(driver.run(output, Path(temporary) / 'unused.json'), 1)
+                self.assertEqual(driver.run(output, Path(temporary).resolve(strict=True) / 'unused.json'), 1)
                 launch.assert_not_called()
             report = json.loads((output / 'results.json').read_text())
             self.assertFalse(report['passed'])
