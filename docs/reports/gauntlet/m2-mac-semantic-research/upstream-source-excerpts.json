@@ -1,0 +1,557 @@
+{
+  "scope": "Read-only connector source inspection; not compiled or native evidence. Full-source hashes describe UTF-8 content returned by GitHub connector. Excerpts retain upstream line numbers.",
+  "immutable_commits": [
+    {
+      "project": "godot",
+      "sha": "ed1daf0bf001b61586d9930840f2f1394092c079",
+      "tree": "8cce5a783df3eb396336ecfb9331aaab0c172807",
+      "message": "Bump version to 4.7.2-stable \\o/\n\nSee the release page for details: https://godotengine.org/article/maintenance-release-godot-4-7-2/",
+      "url": "https://github.com/godotengine/godot/commit/ed1daf0bf001b61586d9930840f2f1394092c079",
+      "commit_date": "2026-08-17T01:18:38Z"
+    },
+    {
+      "project": "godot-accesskit-sdk",
+      "sha": "29831e59e0e8ed5439f7d809b983abefc0c3d096",
+      "tree": "27aa2167d716c564eae9dd81c0cc6d67f3fa02f5",
+      "message": "Merge pull request #10 from bruvzg/upd0_22_3\n\nUpdate access-kit to 0.22.3",
+      "url": "https://github.com/godotengine/godot-accesskit-c-static/commit/29831e59e0e8ed5439f7d809b983abefc0c3d096",
+      "commit_date": "2026-07-15T04:47:00Z"
+    },
+    {
+      "project": "accesskit-macos",
+      "sha": "c88605b96d04431f9c3c792464a0f2f253480e94",
+      "tree": "90d743dc80197630ef56f40cdfd60bfe8a0dce6d",
+      "message": "chore: release main (#735)",
+      "url": "https://github.com/AccessKit/accesskit/commit/c88605b96d04431f9c3c792464a0f2f253480e94",
+      "commit_date": "2026-07-14T17:03:33Z"
+    },
+    {
+      "project": "apple-sdk-mirror",
+      "sha": "041600eda65c6a668f66cb7d56b7d1da3e8bcc93",
+      "tree": "a5a701a0dcdb27edeea4837b0b09a2af0c196a63",
+      "message": "Update README.md",
+      "url": "https://github.com/phracker/MacOSX-SDKs/commit/041600eda65c6a668f66cb7d56b7d1da3e8bcc93",
+      "commit_date": "2021-05-03T19:26:25Z"
+    }
+  ],
+  "sdk_accesskit_c_gitlink": {
+    "name": "accesskit-c",
+    "sha": "826d672661f9453c8b269ab3946dbcbae6300555",
+    "html_url": "https://github.com/AccessKit/accesskit-c/tree/826d672661f9453c8b269ab3946dbcbae6300555"
+  },
+  "files": [
+    {
+      "path": "godot/SConstruct",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/SConstruct",
+      "source_utf8_sha256": "b67bd31bf2d3bc1d91d4a1c5b2e4117c3d2dbd9c066ba3bb040cdd61226845f7",
+      "source_utf8_bytes": 53054,
+      "source_line_count": 1261,
+      "excerpts": [
+        {
+          "first_line": 196,
+          "last_line": 205,
+          "text": "opts.Add(BoolVariable(\"xaudio2\", \"Enable the XAudio2 audio driver on supported platforms\", False))\nopts.Add(BoolVariable(\"vulkan\", \"Enable the Vulkan rendering driver\", True))\nopts.Add(BoolVariable(\"opengl3\", \"Enable the OpenGL/GLES3 rendering driver\", True))\nopts.Add(BoolVariable(\"d3d12\", \"Enable the Direct3D 12 rendering driver on supported platforms\", False))\nopts.Add(BoolVariable(\"metal\", \"Enable the Metal rendering driver on supported platforms (Apple arm64 only)\", False))\nopts.Add(BoolVariable(\"use_volk\", \"Use the volk library to load the Vulkan loader dynamically\", True))\nopts.Add(BoolVariable(\"accesskit\", \"Enable the AccessKit driver for screen reader support\", True))\nopts.Add(BoolVariable(\"angle\", \"Enable the ANGLE rendering driver for OpenGL ES 3.0 on supported platforms\", True))\nopts.Add(BoolVariable(\"sdl\", \"Enable the SDL3 input driver\", True))\nopts.Add(\n",
+          "utf8_sha256": "5c68a4421ec995374d8e29a586cc97913d79a2ec9bb4f4a833992a56d682a3ba"
+        }
+      ]
+    },
+    {
+      "path": "godot/platform/macos/detect.py",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/platform/macos/detect.py",
+      "source_utf8_sha256": "fa9dd87c9387b59e7e3ab1cbd4a83cbebe77507448ee86c915b42babfb6bef09",
+      "source_utf8_bytes": 13410,
+      "source_line_count": 344,
+      "excerpts": [
+        {
+          "first_line": 210,
+          "last_line": 235,
+          "text": "        env.Append(CCFLAGS=[\"-ftest-coverage\", \"-fprofile-arcs\"])\n        env.Append(LINKFLAGS=[\"-ftest-coverage\", \"-fprofile-arcs\"])\n\n    ## Dependencies\n\n    if env[\"accesskit\"]:\n        if os.path.exists(env[\"accesskit_sdk_path\"]):\n            env.Prepend(CPPPATH=[env[\"accesskit_sdk_path\"] + \"/include\"])\n            if env[\"arch\"] == \"arm64\" or env[\"arch\"] == \"universal\":\n                env.Append(LINKFLAGS=[\"-L\" + env[\"accesskit_sdk_path\"] + \"/lib/macos/arm64/static/\"])\n            if env[\"arch\"] == \"x86_64\" or env[\"arch\"] == \"universal\":\n                env.Append(LINKFLAGS=[\"-L\" + env[\"accesskit_sdk_path\"] + \"/lib/macos/x86_64/static/\"])\n            env.Append(LINKFLAGS=[\"-laccesskit\"])\n            env.Append(CPPDEFINES=[\"ACCESSKIT_ENABLED\"])\n        else:\n            print_warning(\n                \"The screen reader support driver requires dependencies to be installed.\\n\"\n                f\"You can install them by running `python3 {os.path.join('misc', 'scripts', 'install_accesskit.py')}`.\\n\"\n                \"See the documentation for more information:\\n\"\n                \"\\thttps://docs.godotengine.org/en/latest/engine_details/development/compiling/compiling_for_macos.html\\n\"\n                \"Alternatively, disable this driver by compiling with `accesskit=no` explicitly.\"\n            )\n            env[\"accesskit\"] = False\n\n    if env[\"builtin_libtheora\"] and env[\"arch\"] == \"x86_64\":\n        env[\"x86_libtheora_opt_gcc\"] = True\n",
+          "utf8_sha256": "d82bfc10291613ee0456d4e2a1a7d1230c829b5c2dc2c26a3f77e1c0c757b347"
+        }
+      ]
+    },
+    {
+      "path": "godot/drivers/SCsub",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/drivers/SCsub",
+      "source_utf8_sha256": "9f729847a8d87bd1fde6ccf0a0987c9d6360a08970e9bf1095d4ab15d2b03082",
+      "source_utf8_bytes": 2110,
+      "source_line_count": 74,
+      "excerpts": [
+        {
+          "first_line": 28,
+          "last_line": 42,
+          "text": "# Shared Apple platform drivers\nif env[\"platform\"] in [\"macos\", \"ios\", \"visionos\"]:\n    SConscript(\"apple/SCsub\")\n    SConscript(\"coreaudio/SCsub\")\nif env[\"platform\"] in [\"ios\", \"visionos\"]:\n    SConscript(\"apple_embedded/SCsub\")\n\n# Accessibility\nif env[\"accesskit\"] and env[\"platform\"] in [\"macos\", \"windows\", \"linuxbsd\"]:\n    SConscript(\"accesskit/SCsub\")\n\n# Midi drivers\nSConscript(\"alsamidi/SCsub\")\nif env[\"platform\"] in [\"macos\"]:\n    SConscript(\"coremidi/SCsub\")\n",
+          "utf8_sha256": "83fdedf98225481adb9fb3354efa04aa4a93c3f29454f6c894d53a96495af0c9"
+        }
+      ]
+    },
+    {
+      "path": "godot/misc/scripts/install_accesskit.py",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/misc/scripts/install_accesskit.py",
+      "source_utf8_sha256": "c2ce8c848762a14ebd993786f6eda1ff45fbf20be9ca247be14e5b8b74ec5dd2",
+      "source_utf8_bytes": 1533,
+      "source_line_count": 49,
+      "excerpts": [
+        {
+          "first_line": 15,
+          "last_line": 45,
+          "text": "# If cross-compiling (no LOCALAPPDATA), we install in `bin`\ndeps_folder = os.getenv(\"LOCALAPPDATA\")\nif deps_folder and not os.getenv(\"MSYSTEM\"):\n    deps_folder = os.path.join(deps_folder, \"Godot\", \"build_deps\")\nelse:\n    deps_folder = os.path.join(\"bin\", \"build_deps\")\n\n# AccessKit\nac_version = \"0.22.3\"\n\n# Create dependencies folder\nif not os.path.exists(deps_folder):\n    os.makedirs(deps_folder)\n\nac_filename = \"accesskit-c-\" + ac_version + \".zip\"\nac_archive = os.path.join(deps_folder, \"accesskit.zip\")\nac_folder = os.path.join(deps_folder, \"accesskit\")\n\nif os.path.isfile(ac_archive):\n    os.remove(ac_archive)\n\nprint(f\"Downloading AccessKit {ac_filename} ...\")\nurllib.request.urlretrieve(\n    f\"https://github.com/godotengine/godot-accesskit-c-static/releases/download/{ac_version}/{ac_filename}\",\n    ac_archive,\n)\nif os.path.exists(ac_folder):\n    print(f\"Removing existing local AccessKit installation in {ac_folder} ...\")\n    shutil.rmtree(ac_folder)\nprint(f\"Extracting AccessKit {ac_filename} to {ac_folder} ...\")\nshutil.unpack_archive(ac_archive, deps_folder)\n",
+          "utf8_sha256": "765d4663383764b193bda2cb62f3025d38f5617613a9805e44104fbb6229dc5f"
+        }
+      ]
+    },
+    {
+      "path": "godot/core/config/project_settings.cpp",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/core/config/project_settings.cpp",
+      "source_utf8_sha256": "7de9335773ee4498d7559300d06f14717e715909db92b62b52dd44887e19cc94",
+      "source_utf8_bytes": 74535,
+      "source_line_count": 1899,
+      "excerpts": [
+        {
+          "first_line": 1706,
+          "last_line": 1718,
+          "text": "\n\tGLOBAL_DEF(\"application/run/main_loop_type\", \"SceneTree\");\n\tGLOBAL_DEF(\"application/config/auto_accept_quit\", true);\n\tGLOBAL_DEF(\"application/config/quit_on_go_back\", true);\n\n\tGLOBAL_DEF_BASIC(PropertyInfo(Variant::INT, \"accessibility/general/accessibility_support\", PROPERTY_HINT_ENUM, \"Auto (When Screen Reader is Running),Always Active,Disabled\"), 0);\n\tGLOBAL_DEF_BASIC(PropertyInfo(Variant::INT, \"accessibility/general/updates_per_second\", PROPERTY_HINT_RANGE, \"1,100,1\"), 60);\n\tGLOBAL_DEF(PropertyInfo(Variant::STRING, \"accessibility/general/accessibility_driver\", PROPERTY_HINT_ENUM, \"accesskit,dummy\"), \"accesskit\");\n\n\t// The default window size is tuned to:\n\t// - Have a 16:9 aspect ratio,\n\t// - Have both dimensions divisible by 8 to better play along with video recording,\n\t// - Be displayable correctly in windowed mode on a 1366\u00d7768 display (tested on Windows 10 with default settings).\n",
+          "utf8_sha256": "42c22d275df6a2d754c02d667e0086dbaa2846ff2dd69957b56dcd7a8e67b347"
+        }
+      ]
+    },
+    {
+      "path": "godot/main/main.cpp",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/main/main.cpp",
+      "source_utf8_sha256": "1831257f5c8eb0707d278f04b21b1e4b3ba863f8dca5cab36022d4b19e36b8c1",
+      "source_utf8_bytes": 210345,
+      "source_line_count": 5406,
+      "excerpts": [
+        {
+          "first_line": 640,
+          "last_line": 650,
+          "text": "\tprint_help_option(\"--position <X>,<Y>\", \"Request window position.\\n\");\n\tprint_help_option(\"--screen <N>\", \"Request window screen.\\n\");\n\tprint_help_option(\"--single-window\", \"Use a single window (no separate subwindows).\\n\");\n#ifndef _3D_DISABLED\n\tprint_help_option(\"--xr-mode <mode>\", \"Select XR (Extended Reality) mode [\\\"default\\\", \\\"off\\\", \\\"on\\\"].\\n\");\n#endif\n\tprint_help_option(\"--wid <window_id>\", \"Request parented to window.\\n\");\n\tprint_help_option(\"--accessibility <mode>\", \"Select accessibility mode ['auto' (when screen reader is running, default), 'always', 'disabled'].\\n\");\n\tprint_help_option(\"--accessibility-driver <driver>\", \"Select accessibility driver ['accesskit', 'dummy'].\\n\");\n\n\tprint_help_title(\"Debug options\");\n",
+          "utf8_sha256": "1e6143505c2183ced2958ea2a47a7be4e2cbfd8da729bff02f37acccfa2ed7bf"
+        },
+        {
+          "first_line": 1400,
+          "last_line": 1437,
+          "text": "\t\t\t\tgoto error;\n\t\t\t}\n\t\t} else if (arg == \"--single-window\") { // force single window\n\n\t\t\tsingle_window = true;\n\t\t} else if (arg == \"--accessibility\") {\n\t\t\tif (N) {\n\t\t\t\tString string = N->get();\n\t\t\t\tif (string == \"auto\") {\n\t\t\t\t\taccessibility_mode = AccessibilityServerEnums::AccessibilityMode::ACCESSIBILITY_AUTO;\n\t\t\t\t\taccessibility_mode_set = true;\n\t\t\t\t} else if (string == \"always\") {\n\t\t\t\t\taccessibility_mode = AccessibilityServerEnums::AccessibilityMode::ACCESSIBILITY_ALWAYS;\n\t\t\t\t\taccessibility_mode_set = true;\n\t\t\t\t} else if (string == \"disabled\") {\n\t\t\t\t\taccessibility_mode = AccessibilityServerEnums::AccessibilityMode::ACCESSIBILITY_DISABLED;\n\t\t\t\t\taccessibility_mode_set = true;\n\t\t\t\t} else {\n\t\t\t\t\tOS::get_singleton()->print(\"Accessibility mode argument not recognized, aborting.\\n\");\n\t\t\t\t\tgoto error;\n\t\t\t\t}\n\t\t\t\tN = N->next();\n\t\t\t} else {\n\t\t\t\tOS::get_singleton()->print(\"Missing accessibility mode argument, aborting.\\n\");\n\t\t\t\tgoto error;\n\t\t\t}\n\t\t} else if (arg == \"--accessibility-driver\") {\n\t\t\tif (N) {\n\t\t\t\tString string = N->get();\n\t\t\t\taccessibility_driver_name = string;\n\t\t\t\tN = N->next();\n\t\t\t} else {\n\t\t\t\tOS::get_singleton()->print(\"Missing accessibility driver argument, aborting.\\n\");\n\t\t\t\tgoto error;\n\t\t\t}\n\t\t} else if (arg == \"-t\" || arg == \"--always-on-top\") { // force always-on-top window\n\n\t\t\tinit_always_on_top = true;\n",
+          "utf8_sha256": "e2d8c14d31328962dfa3206a93a0e5d5add2d66efc67af64893eb41ca79c9735"
+        },
+        {
+          "first_line": 3300,
+          "last_line": 3368,
+          "text": "#ifdef TOOLS_ENABLED\n\t\tif ((project_manager || editor) && init_expand_to_title) {\n\t\t\twindow_flags |= DisplayServerEnums::WINDOW_FLAG_EXTEND_TO_TITLE_BIT;\n\t\t}\n#endif\n\n\t\tif (!accessibility_mode_set) {\n#ifdef TOOLS_ENABLED\n\t\t\tif (editor || project_manager || cmdline_tool) {\n\t\t\t\taccessibility_mode = (AccessibilityServerEnums::AccessibilityMode)accessibility_mode_editor;\n\t\t\t} else {\n#else\n\t\t\t{\n#endif\n\t\t\t\taccessibility_mode = (AccessibilityServerEnums::AccessibilityMode)GLOBAL_GET(\"accessibility/general/accessibility_support\").operator int64_t();\n\t\t\t}\n\t\t}\n\t\tif (accessibility_driver_name.is_empty()) {\n\t\t\tif (!editor && !project_manager) {\n\t\t\t\taccessibility_driver_name = GLOBAL_GET(\"accessibility/general/accessibility_driver\");\n\t\t\t} else {\n\t\t\t\taccessibility_driver_name = \"accesskit\";\n\t\t\t}\n\t\t}\n\t\tif (display_driver == NULL_DISPLAY_DRIVER || display_driver == EMBEDDED_DISPLAY_DRIVER || accessibility_mode == AccessibilityServerEnums::AccessibilityMode::ACCESSIBILITY_DISABLED) {\n\t\t\taccessibility_driver_name = \"dummy\";\n\t\t}\n\t\tint accessibility_driver_idx = -1;\n\n\t\tif (accessibility_driver_name.is_empty() || accessibility_driver_name == \"default\") {\n\t\t\taccessibility_driver_idx = 0;\n\t\t} else {\n\t\t\tfor (int i = 0; i < AccessibilityServer::get_create_function_count(); i++) {\n\t\t\t\tString name = AccessibilityServer::get_create_function_name(i);\n\t\t\t\tif (accessibility_driver_name == name) {\n\t\t\t\t\taccessibility_driver_idx = i;\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t}\n\n\t\t\tif (accessibility_driver_idx < 0) {\n\t\t\t\t// If the requested driver wasn't found, pick the first entry.\n\t\t\t\t// If all else failed it would be the headless server.\n\t\t\t\taccessibility_driver_idx = 0;\n\t\t\t}\n\t\t}\n\n\t\tError err;\n\t\taccessibility_server = AccessibilityServer::create(accessibility_driver_idx, err);\n\t\tif (err != OK || accessibility_server == nullptr) {\n\t\t\tString last_name = AccessibilityServer::get_create_function_name(accessibility_driver_idx);\n\n\t\t\tfor (int i = 0; i < AccessibilityServer::get_create_function_count(); i++) {\n\t\t\t\tif (i == accessibility_driver_idx) {\n\t\t\t\t\tcontinue; // Don't try the same twice.\n\t\t\t\t}\n\t\t\t\tString name = AccessibilityServer::get_create_function_name(i);\n\t\t\t\tWARN_VERBOSE(vformat(\"Accessibility driver %s failed, falling back to %s.\", last_name, name));\n\n\t\t\t\taccessibility_server = AccessibilityServer::create(i, err);\n\t\t\t\tif (err == OK && accessibility_server != nullptr) {\n\t\t\t\t\tbreak;\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\taccessibility_server->set_mode(accessibility_mode);\n\n\t\tString rendering_driver = OS::get_singleton()->get_current_rendering_driver_name();\n\t\tdisplay_server = DisplayServer::create(display_driver_idx, rendering_driver, window_mode, window_vsync_mode, window_flags, window_position, window_size, init_screen, context, init_embed_parent_window_id, err);\n",
+          "utf8_sha256": "f7d5268c28827aa561bb2e14f30629726dee6f10738fbfa489abb5a382e1bb96"
+        }
+      ]
+    },
+    {
+      "path": "godot/scene/main/scene_tree.cpp",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/scene/main/scene_tree.cpp",
+      "source_utf8_sha256": "eed6dbff323344efff19f2de6763705aff062a76e00fd7cbe42a4ee849b7e5a4",
+      "source_utf8_bytes": 75907,
+      "source_line_count": 2262,
+      "excerpts": [
+        {
+          "first_line": 213,
+          "last_line": 237,
+          "text": "bool SceneTree::is_accessibility_enabled() const {\n\tif (!DisplayServer::get_singleton()->has_feature(DisplayServerEnums::FEATURE_ACCESSIBILITY_SCREEN_READER)) {\n\t\treturn false;\n\t}\n\n\tAccessibilityServerEnums::AccessibilityMode accessibility_mode = AccessibilityServer::get_singleton()->get_mode();\n\tint screen_reader_active = DisplayServer::get_singleton()->accessibility_screen_reader_active();\n\tif ((accessibility_mode == AccessibilityServerEnums::AccessibilityMode::ACCESSIBILITY_DISABLED) || ((accessibility_mode == AccessibilityServerEnums::AccessibilityMode::ACCESSIBILITY_AUTO) && (screen_reader_active != 1))) {\n\t\treturn false;\n\t}\n\treturn true;\n}\n\nbool SceneTree::is_accessibility_supported() const {\n\tif (!DisplayServer::get_singleton()->has_feature(DisplayServerEnums::FEATURE_ACCESSIBILITY_SCREEN_READER)) {\n\t\treturn false;\n\t}\n\n\tAccessibilityServerEnums::AccessibilityMode accessibility_mode = AccessibilityServer::get_singleton()->get_mode();\n\tif (accessibility_mode == AccessibilityServerEnums::AccessibilityMode::ACCESSIBILITY_DISABLED) {\n\t\treturn false;\n\t}\n\treturn true;\n}\n\n",
+          "utf8_sha256": "4cd9d7b5efb0d5195469556d0ddd92e30698af7c2a15c6bb631d03fd62773e59"
+        },
+        {
+          "first_line": 304,
+          "last_line": 322,
+          "text": "void SceneTree::_flush_accessibility_changes() {\n\tif (is_accessibility_enabled()) {\n\t\tuint64_t time = OS::get_singleton()->get_ticks_msec();\n\t\tif (!accessibility_force_update) {\n\t\t\tif (time - accessibility_last_update < 1000 / accessibility_upd_per_sec) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t}\n\t\taccessibility_force_update = false;\n\t\taccessibility_last_update = time;\n\n\t\t// Push update to the accessibility driver.\n\t\tAccessibilityServer::get_singleton()->update_if_active(callable_mp(this, &SceneTree::_process_accessibility_changes));\n\t}\n}\n\nvoid SceneTree::_flush_ugc() {\n\tugc_locked = true;\n\n",
+          "utf8_sha256": "03571daa7ded8e9053166a2614c7ba9edf0699a13c432e14a26facd4c3a97937"
+        }
+      ]
+    },
+    {
+      "path": "godot/platform/macos/display_server_macos_base.mm",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/platform/macos/display_server_macos_base.mm",
+      "source_utf8_sha256": "89f6be64d90f78603e9fbc609b144b39a98d1664e1b16338731e45394d6526c3",
+      "source_utf8_bytes": 27485,
+      "source_line_count": 758,
+      "excerpts": [
+        {
+          "first_line": 482,
+          "last_line": 493,
+          "text": "int DisplayServerMacOSBase::accessibility_should_reduce_animation() const {\n\treturn [(GodotApplicationDelegate *)[[NSApplication sharedApplication] delegate] getReduceMotion];\n}\n\nint DisplayServerMacOSBase::accessibility_should_reduce_transparency() const {\n\treturn [(GodotApplicationDelegate *)[[NSApplication sharedApplication] delegate] getReduceTransparency];\n}\n\nint DisplayServerMacOSBase::accessibility_screen_reader_active() const {\n\treturn [(GodotApplicationDelegate *)[[NSApplication sharedApplication] delegate] getVoiceOver];\n}\n\n",
+          "utf8_sha256": "378425c5a51584efee73ac92df150d04359a8279eba27e5bb4d7c357b21679c1"
+        }
+      ]
+    },
+    {
+      "path": "godot/platform/macos/godot_application_delegate.mm",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/platform/macos/godot_application_delegate.mm",
+      "source_utf8_sha256": "add49e7036a5559f54bce1798950d435103281042baa6d47f6a1e4663911b4cc",
+      "source_utf8_bytes": 12774,
+      "source_line_count": 338,
+      "excerpts": [
+        {
+          "first_line": 58,
+          "last_line": 75,
+          "text": "\n- (GodotApplicationDelegate *)initWithOS:(OS_MacOS_NSApp *)os {\n\tself = [super init];\n\tif (self) {\n\t\tos_mac = os;\n\t}\n\n\t[[NSWorkspace sharedWorkspace] addObserver:self forKeyPath:@\"voiceOverEnabled\" options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld) context:(void *)godot_ac_ctx];\n\t[[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(accessibilityDisplayOptionsChange:) name:NSWorkspaceAccessibilityDisplayOptionsDidChangeNotification object:nil];\n\thigh_contrast = [[NSWorkspace sharedWorkspace] accessibilityDisplayShouldIncreaseContrast];\n\treduce_motion = [[NSWorkspace sharedWorkspace] accessibilityDisplayShouldReduceMotion];\n\treduce_transparency = [[NSWorkspace sharedWorkspace] accessibilityDisplayShouldReduceTransparency];\n\tvoice_over = [[NSWorkspace sharedWorkspace] isVoiceOverEnabled];\n\n\t[[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(system_theme_changed:) name:@\"AppleInterfaceThemeChangedNotification\" object:nil];\n\t[[NSDistributedNotificationCenter defaultCenter] addObserver:self selector:@selector(system_theme_changed:) name:@\"AppleColorPreferencesChangedNotification\" object:nil];\n\n\treturn self;\n",
+          "utf8_sha256": "f5f847935aee1ca7f9ec9067fb4a4cf988d15be87f7c2e7916e8c6e3e89e45e8"
+        },
+        {
+          "first_line": 150,
+          "last_line": 164,
+          "text": "\t[[NSDistributedNotificationCenter defaultCenter] removeObserver:self name:@\"AppleColorPreferencesChangedNotification\" object:nil];\n\t[[NSWorkspace sharedWorkspace] removeObserver:self forKeyPath:@\"voiceOverEnabled\" context:(void *)godot_ac_ctx];\n}\n\n- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {\n\tif (context == (void *)godot_ac_ctx) {\n\t\tvoice_over = [[NSWorkspace sharedWorkspace] isVoiceOverEnabled];\n\t} else {\n\t\t[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];\n\t}\n}\n\n- (void)accessibilityDisplayOptionsChange:(NSNotification *)notification {\n\thigh_contrast = [[NSWorkspace sharedWorkspace] accessibilityDisplayShouldIncreaseContrast];\n\treduce_motion = [[NSWorkspace sharedWorkspace] accessibilityDisplayShouldReduceMotion];\n",
+          "utf8_sha256": "eee6d52148c2b3d526afce9b484136a50c66072cd19a80fec0185e6def95d1d8"
+        },
+        {
+          "first_line": 176,
+          "last_line": 184,
+          "text": "- (bool)getReduceTransparency {\n\treturn reduce_transparency;\n}\n\n- (bool)getVoiceOver {\n\treturn voice_over;\n}\n\n- (void)application:(NSApplication *)application openURLs:(NSArray<NSURL *> *)urls {\n",
+          "utf8_sha256": "c02652fd57e9fe33cf16f6208d890898816c8cfba6bc3e25e3a0610910e40ae2"
+        }
+      ]
+    },
+    {
+      "path": "godot/drivers/accesskit/accessibility_server_accesskit.cpp",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/drivers/accesskit/accessibility_server_accesskit.cpp",
+      "source_utf8_sha256": "60f4c0ea872ce2142d684507b5b44fc4d1fae0e9c4c7df466115806cadfdf0b1",
+      "source_utf8_bytes": 75134,
+      "source_line_count": 1793,
+      "excerpts": [
+        {
+          "first_line": 48,
+          "last_line": 85,
+          "text": "\treturn ACCESSKIT_ACTION_CLICK;\n}\n\nbool AccessibilityServerAccessKit::window_create(DisplayServerEnums::WindowID p_window_id, void *p_handle) {\n\tERR_FAIL_COND_V(windows.has(p_window_id), false);\n\n\tWindowData &wd = windows[p_window_id];\n\n\tAccessibilityElement *ae = memnew(AccessibilityElement);\n\tae->role = ACCESSKIT_ROLE_WINDOW;\n\tae->window_id = p_window_id;\n\twd.root_id = rid_owner.make_rid(ae);\n\n#ifdef WINDOWS_ENABLED\n\twd.adapter = accesskit_windows_subclassing_adapter_new(static_cast<HWND>(p_handle), &_accessibility_initial_tree_update_callback, (void *)(size_t)p_window_id, &_accessibility_action_callback, (void *)(size_t)p_window_id);\n#endif\n#ifdef MACOS_ENABLED\n\twd.adapter = accesskit_macos_subclassing_adapter_for_window(p_handle, &_accessibility_initial_tree_update_callback, (void *)(size_t)p_window_id, &_accessibility_action_callback, (void *)(size_t)p_window_id);\n#endif\n#ifdef LINUXBSD_ENABLED\n\twd.adapter = accesskit_unix_adapter_new(&_accessibility_initial_tree_update_callback, (void *)(size_t)p_window_id, &_accessibility_action_callback, (void *)(size_t)p_window_id, &_accessibility_deactivation_callback, (void *)(size_t)p_window_id);\n#endif\n\tprint_verbose(vformat(\"Accessibility: window %d adapter created.\", p_window_id));\n\n\tif (wd.adapter == nullptr) {\n\t\tmemdelete(ae);\n\t\trid_owner.free(wd.root_id);\n\t\twindows.erase(p_window_id);\n\n\t\treturn false;\n\t} else {\n\t\treturn true;\n\t}\n}\n\nvoid AccessibilityServerAccessKit::window_destroy(DisplayServerEnums::WindowID p_window_id) {\n\tWindowData *wd = windows.getptr(p_window_id);\n\tERR_FAIL_NULL(wd);\n",
+          "utf8_sha256": "a2f19aec6004fba18edab8e2ea133de0dff66e357bcc1334599e900a4f5bb0df"
+        },
+        {
+          "first_line": 212,
+          "last_line": 263,
+          "text": "\t\t}\n\t}\n}\n\naccesskit_tree_update *AccessibilityServerAccessKit::_accessibility_initial_tree_update_callback(void *p_user_data) {\n\tDisplayServerEnums::WindowID window_id = (DisplayServerEnums::WindowID)(size_t)p_user_data;\n\tWindowData *wd = static_cast<AccessibilityServerAccessKit *>(get_singleton())->windows.getptr(window_id);\n\tERR_FAIL_NULL_V(wd, nullptr);\n\n\taccesskit_node *win_node = accesskit_node_new(ACCESSKIT_ROLE_WINDOW);\n\taccesskit_node_set_label(win_node, \"Godot Engine\");\n\taccesskit_node_set_busy(win_node);\n\n\taccesskit_node_id win_id = (accesskit_node_id)wd->root_id.get_id();\n\n\taccesskit_tree_update *tree_update = accesskit_tree_update_with_capacity_and_focus(1, win_id);\n\n\taccesskit_tree_update_set_tree(tree_update, accesskit_tree_new(win_id));\n\taccesskit_tree_update_push_node(tree_update, win_id, win_node);\n\n\tprint_verbose(vformat(\"Accessibility: window %d adapter activated.\", window_id));\n\n\tif (wd->activate.is_valid()) {\n\t\twd->activate.call_deferred(); // Should be called on main thread only.\n\t}\n\twd->activated = true;\n\n\treturn tree_update;\n}\n\nvoid AccessibilityServerAccessKit::set_window_callbacks(DisplayServerEnums::WindowID p_window_id, const Callable &p_activate_callable, const Callable &p_deativate_callable) {\n\tWindowData *wd = static_cast<AccessibilityServerAccessKit *>(get_singleton())->windows.getptr(p_window_id);\n\tERR_FAIL_NULL(wd);\n\n\twd->activate = p_activate_callable;\n\twd->deactivate = p_deativate_callable;\n}\n\nvoid AccessibilityServerAccessKit::window_activation_completed(DisplayServerEnums::WindowID p_window_id) {\n\tWindowData *wd = static_cast<AccessibilityServerAccessKit *>(get_singleton())->windows.getptr(p_window_id);\n\tif (!wd) {\n\t\treturn;\n\t}\n\n\tprint_verbose(vformat(\"Accessibility: window %d adapter initial update completed.\", p_window_id));\n\n\twd->initial_update_completed = true;\n}\n\nvoid AccessibilityServerAccessKit::window_deactivation_completed(DisplayServerEnums::WindowID p_window_id) {\n\tWindowData *wd = static_cast<AccessibilityServerAccessKit *>(get_singleton())->windows.getptr(p_window_id);\n\tif (!wd) {\n",
+          "utf8_sha256": "8ba6390e556ac19299e9a23d14c393a7f85de09ba83f3f432b10214e634dced6"
+        },
+        {
+          "first_line": 674,
+          "last_line": 700,
+          "text": "\n\treturn tree_update;\n}\n\nvoid AccessibilityServerAccessKit::update_if_active(const Callable &p_callable) {\n\tERR_FAIL_COND(!p_callable.is_valid());\n\tupdate_cb = p_callable;\n\tfor (KeyValue<DisplayServerEnums::WindowID, WindowData> &window : windows) {\n#ifdef WINDOWS_ENABLED\n\t\taccesskit_windows_queued_events *events = accesskit_windows_subclassing_adapter_update_if_active(window.value.adapter, _accessibility_build_tree_update, (void *)(size_t)window.key);\n\t\tif (events) {\n\t\t\taccesskit_windows_queued_events_raise(events);\n\t\t}\n#endif\n#ifdef MACOS_ENABLED\n\t\taccesskit_macos_queued_events *events = accesskit_macos_subclassing_adapter_update_if_active(window.value.adapter, _accessibility_build_tree_update, (void *)(size_t)window.key);\n\t\tif (events) {\n\t\t\taccesskit_macos_queued_events_raise(events);\n\t\t}\n#endif\n#ifdef LINUXBSD_ENABLED\n\t\taccesskit_unix_adapter_update_if_active(window.value.adapter, _accessibility_build_tree_update, (void *)(size_t)window.key);\n#endif\n\t}\n\tupdate_cb = Callable();\n}\n\n",
+          "utf8_sha256": "637ffea74d8db120f6a98e6c30136920d3e6576cf222c9eb2fb994c5b8535d94"
+        },
+        {
+          "first_line": 754,
+          "last_line": 780,
+          "text": "\t_ensure_node(p_id, ae);\n\n\taccesskit_node_set_role(ae->node, ae->role);\n}\n\nvoid AccessibilityServerAccessKit::update_set_name(const RID &p_id, const String &p_name) {\n\tERR_FAIL_COND_MSG(!in_accessibility_update, \"Accessibility updates are only allowed inside the NOTIFICATION_ACCESSIBILITY_UPDATE notification.\");\n\n\tAccessibilityElement *ae = rid_owner.get_or_null(p_id);\n\tERR_FAIL_NULL(ae);\n\t_ensure_node(p_id, ae);\n\n\tae->name = p_name;\n\tString full_name = (ae->name + \" \" + ae->name_extra_info).strip_edges();\n\tif (!full_name.is_empty()) {\n\t\taccesskit_node_set_label(ae->node, full_name.utf8().ptr());\n\t} else {\n\t\taccesskit_node_clear_label(ae->node);\n\t}\n}\n\nvoid AccessibilityServerAccessKit::update_set_braille_label(const RID &p_id, const String &p_name) {\n\tERR_FAIL_COND_MSG(!in_accessibility_update, \"Accessibility updates are only allowed inside the NOTIFICATION_ACCESSIBILITY_UPDATE notification.\");\n\n\tAccessibilityElement *ae = rid_owner.get_or_null(p_id);\n\tERR_FAIL_NULL(ae);\n\t_ensure_node(p_id, ae);\n",
+          "utf8_sha256": "b703a87575c761c0dd0ed9cae33036a0deabde89bb518c96623353ec2cc88110"
+        },
+        {
+          "first_line": 860,
+          "last_line": 886,
+          "text": "\t\taccesskit_node_set_tooltip(ae->node, p_tooltip.utf8().ptr());\n\t} else {\n\t\taccesskit_node_clear_tooltip(ae->node);\n\t}\n}\n\nvoid AccessibilityServerAccessKit::update_set_bounds(const RID &p_id, const Rect2 &p_rect) {\n\tERR_FAIL_COND_MSG(!in_accessibility_update, \"Accessibility updates are only allowed inside the NOTIFICATION_ACCESSIBILITY_UPDATE notification.\");\n\n\tAccessibilityElement *ae = rid_owner.get_or_null(p_id);\n\tERR_FAIL_NULL(ae);\n\t_ensure_node(p_id, ae);\n\n\taccesskit_rect rect;\n\trect.x0 = p_rect.position.x;\n\trect.y0 = p_rect.position.y;\n\trect.x1 = p_rect.position.x + p_rect.size.x;\n\trect.y1 = p_rect.position.y + p_rect.size.y;\n\taccesskit_node_set_bounds(ae->node, rect);\n}\n\nvoid AccessibilityServerAccessKit::update_set_transform(const RID &p_id, const Transform2D &p_transform) {\n\tERR_FAIL_COND_MSG(!in_accessibility_update, \"Accessibility updates are only allowed inside the NOTIFICATION_ACCESSIBILITY_UPDATE notification.\");\n\n\tAccessibilityElement *ae = rid_owner.get_or_null(p_id);\n\tERR_FAIL_NULL(ae);\n\t_ensure_node(p_id, ae);\n",
+          "utf8_sha256": "cd127314893df8988f3dd138b5b093ce39b79834d68c264e076d7bfe1357f423"
+        },
+        {
+          "first_line": 1710,
+          "last_line": 1723,
+          "text": "\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_UNKNOWN] = ACCESSKIT_ROLE_UNKNOWN;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_DEFAULT_BUTTON] = ACCESSKIT_ROLE_DEFAULT_BUTTON;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_AUDIO] = ACCESSKIT_ROLE_AUDIO;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_VIDEO] = ACCESSKIT_ROLE_VIDEO;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_STATIC_TEXT] = ACCESSKIT_ROLE_LABEL;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_CONTAINER] = ACCESSKIT_ROLE_GENERIC_CONTAINER;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_PANEL] = ACCESSKIT_ROLE_PANE;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_BUTTON] = ACCESSKIT_ROLE_BUTTON;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_LINK] = ACCESSKIT_ROLE_LINK;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_CHECK_BOX] = ACCESSKIT_ROLE_CHECK_BOX;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_RADIO_BUTTON] = ACCESSKIT_ROLE_RADIO_BUTTON;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_CHECK_BUTTON] = ACCESSKIT_ROLE_SWITCH;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_SCROLL_BAR] = ACCESSKIT_ROLE_SCROLL_BAR;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_SCROLL_VIEW] = ACCESSKIT_ROLE_SCROLL_VIEW;\n",
+          "utf8_sha256": "92ed8600e9a4928f385a159fe4e898b035c6d2e4e8567b577491eb1ab551ddef"
+        },
+        {
+          "first_line": 1753,
+          "last_line": 1764,
+          "text": "\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_TITLE_BAR] = ACCESSKIT_ROLE_TITLE_BAR;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_DIALOG] = ACCESSKIT_ROLE_DIALOG;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_TOOLTIP] = ACCESSKIT_ROLE_TOOLTIP;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_REGION] = ACCESSKIT_ROLE_REGION;\n\trole_map[AccessibilityServerEnums::AccessibilityRole::ROLE_TEXT_RUN] = ACCESSKIT_ROLE_TEXT_RUN;\n\n\taction_map[AccessibilityServerEnums::AccessibilityAction::ACTION_CLICK] = ACCESSKIT_ACTION_CLICK;\n\taction_map[AccessibilityServerEnums::AccessibilityAction::ACTION_FOCUS] = ACCESSKIT_ACTION_FOCUS;\n\taction_map[AccessibilityServerEnums::AccessibilityAction::ACTION_BLUR] = ACCESSKIT_ACTION_BLUR;\n\taction_map[AccessibilityServerEnums::AccessibilityAction::ACTION_COLLAPSE] = ACCESSKIT_ACTION_COLLAPSE;\n\taction_map[AccessibilityServerEnums::AccessibilityAction::ACTION_EXPAND] = ACCESSKIT_ACTION_EXPAND;\n\taction_map[AccessibilityServerEnums::AccessibilityAction::ACTION_DECREMENT] = ACCESSKIT_ACTION_DECREMENT;\n",
+          "utf8_sha256": "cbef9691f1ffa4ae4532df266d25ea3fd00eac838a4be93f9608a57268ac73b5"
+        }
+      ]
+    },
+    {
+      "path": "godot/platform/macos/display_server_macos.mm",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/platform/macos/display_server_macos.mm",
+      "source_utf8_sha256": "57800301ae2770745c92854f38eee1f0dd859ae08f5c7d711f4d13fd48a9cf27",
+      "source_utf8_bytes": 142274,
+      "source_line_count": 3981,
+      "excerpts": [
+        {
+          "first_line": 132,
+          "last_line": 170,
+          "text": "\t\twpos += _get_screens_origin();\n\t\twpos /= scale;\n\n\t\t// initWithContentRect uses bottom-left corner of the window\u2019s frame as origin.\n\t\twd.window_object = [[GodotWindow alloc]\n\t\t\t\tinitWithContentRect:NSMakeRect(100, 100, MAX(1, p_rect.size.width / scale), MAX(1, p_rect.size.height / scale))\n\t\t\t\t\t\t  styleMask:NSWindowStyleMaskTitled | NSWindowStyleMaskClosable | NSWindowStyleMaskMiniaturizable | NSWindowStyleMaskResizable\n\t\t\t\t\t\t\tbacking:NSBackingStoreBuffered\n\t\t\t\t\t\t\t  defer:NO];\n\t\tERR_FAIL_NULL_V_MSG(wd.window_object, DisplayServerEnums::INVALID_WINDOW_ID, \"Can't create a window\");\n\t\t[wd.window_object setWindowID:id];\n\t\t[wd.window_object setReleasedWhenClosed:NO];\n\n\t\twd.window_view = [[GodotContentView alloc] init];\n\t\tif (wd.window_view == nil) {\n\t\t\twindows.erase(id);\n\t\t\tERR_FAIL_V_MSG(DisplayServerEnums::INVALID_WINDOW_ID, \"Can't create a window view\");\n\t\t}\n\t\t[wd.window_view setWindowID:id];\n\t\t[wd.window_view setWantsLayer:TRUE];\n\n\t\t[wd.window_object setCollectionBehavior:NSWindowCollectionBehaviorFullScreenPrimary];\n\t\t[wd.window_object setContentView:wd.window_view];\n\t\t[wd.window_object setDelegate:wd.window_delegate];\n\t\t[wd.window_object setAcceptsMouseMovedEvents:YES];\n\t\t[wd.window_object setRestorable:NO];\n\t\t[wd.window_object setColorSpace:[NSColorSpace sRGBColorSpace]];\n\n\t\tif (!AccessibilityServer::get_singleton()->window_create(id, (__bridge void *)wd.window_object)) {\n\t\t\tif (OS::get_singleton()->is_stdout_verbose()) {\n\t\t\t\tERR_PRINT(\"Can't create an accessibility adapter for window, accessibility support disabled!\");\n\t\t\t}\n\t\t}\n\n\t\tif ([wd.window_object respondsToSelector:@selector(setTabbingMode:)]) {\n\t\t\t[wd.window_object setTabbingMode:NSWindowTabbingModeDisallowed];\n\t\t}\n\n\t\tCALayer *layer = [wd.window_view layer];\n",
+          "utf8_sha256": "8181433da32558be2dfb3fc54f80f5fba84c4b42c613c933b1997c0910b694cb"
+        },
+        {
+          "first_line": 850,
+          "last_line": 864,
+          "text": "\t\tcase DisplayServerEnums::FEATURE_STATUS_INDICATOR:\n\t\tcase DisplayServerEnums::FEATURE_NATIVE_HELP:\n\t\tcase DisplayServerEnums::FEATURE_WINDOW_DRAG:\n\t\tcase DisplayServerEnums::FEATURE_SCREEN_EXCLUDE_FROM_CAPTURE:\n\t\tcase DisplayServerEnums::FEATURE_EMOJI_AND_SYMBOL_PICKER:\n\t\tcase DisplayServerEnums::FEATURE_WINDOW_EMBEDDING:\n\t\tcase DisplayServerEnums::FEATURE_HDR_OUTPUT:\n\t\t\treturn true;\n\t\tcase DisplayServerEnums::FEATURE_ACCESSIBILITY_SCREEN_READER: {\n\t\t\treturn AccessibilityServer::get_singleton()->is_supported();\n\t\t} break;\n\t\tdefault: {\n\t\t}\n\t}\n\treturn false;\n",
+          "utf8_sha256": "ee504c3230f8ec3fdea9a4ddeea2382821e378160ca06e1a3a248bdf3c86d124"
+        }
+      ]
+    },
+    {
+      "path": "godot/scene/gui/base_button.cpp",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/scene/gui/base_button.cpp",
+      "source_utf8_sha256": "98b17be1146da1f32752befd0def0bc5963f9bbcea624f45fdc20b9b038bf61a",
+      "source_utf8_bytes": 22255,
+      "source_line_count": 694,
+      "excerpts": [
+        {
+          "first_line": 87,
+          "last_line": 150,
+          "text": "\t\t\tstatus.pressing_inside = has_point(drag->get_position());\n\n\t\t\tif (last_press_inside != status.pressing_inside) {\n\t\t\t\tqueue_redraw();\n\t\t\t}\n\t\t}\n\t}\n\n\tRef<InputEventMouseButton> mouse_button = p_event;\n\tbool ui_accept = p_event->is_action(\"ui_accept\", true) && !p_event->is_echo();\n\n\tbool button_masked = mouse_button.is_valid() && button_mask.has_flag(mouse_button_to_mask(mouse_button->get_button_index()));\n\tif (button_masked || ui_accept) {\n\t\twas_mouse_pressed = button_masked;\n\t\ton_action_event(p_event);\n\t\twas_mouse_pressed = false;\n\t} else {\n\t\tRef<InputEventMouseMotion> mouse_motion = p_event;\n\t\tif (mouse_motion.is_valid()) {\n\t\t\tif (status.press_attempt) {\n\t\t\t\tbool last_press_inside = status.pressing_inside;\n\t\t\t\tstatus.pressing_inside = has_point(mouse_motion->get_position());\n\t\t\t\tif (last_press_inside != status.pressing_inside) {\n\t\t\t\t\tqueue_redraw();\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n}\n\nvoid BaseButton::_accessibility_action_click(const Variant &p_data) {\n\tif (toggle_mode) {\n\t\tstatus.pressed = !status.pressed;\n\n\t\tif (status.pressed) {\n\t\t\t_unpress_group();\n\t\t\tif (button_group.is_valid()) {\n\t\t\t\tbutton_group->emit_signal(SceneStringName(pressed), this);\n\t\t\t}\n\t\t}\n\n\t\t_toggled(status.pressed);\n\t\t_pressed();\n\t} else {\n\t\t_pressed();\n\t}\n\tqueue_accessibility_update();\n\tqueue_redraw();\n}\n\nvoid BaseButton::_notification(int p_what) {\n\tswitch (p_what) {\n\t\tcase NOTIFICATION_ACCESSIBILITY_UPDATE: {\n\t\t\tRID ae = get_accessibility_element();\n\t\t\tERR_FAIL_COND(ae.is_null());\n\n\t\t\tAccessibilityServer::get_singleton()->update_set_role(ae, AccessibilityServerEnums::AccessibilityRole::ROLE_BUTTON);\n\n\t\t\tAccessibilityServer::get_singleton()->update_add_action(ae, AccessibilityServerEnums::AccessibilityAction::ACTION_CLICK, callable_mp(this, &BaseButton::_accessibility_action_click));\n\t\t\tAccessibilityServer::get_singleton()->update_set_flag(ae, AccessibilityServerEnums::AccessibilityFlags::FLAG_DISABLED, status.disabled);\n\t\t\tif (toggle_mode) {\n\t\t\t\tAccessibilityServer::get_singleton()->update_set_checked(ae, status.pressed);\n\t\t\t}\n\t\t\tif (button_group.is_valid()) {\n",
+          "utf8_sha256": "7f847c39e58e6912a3bf8093ab5a67448fa9456f2ee08142325e14d39695ab04"
+        },
+        {
+          "first_line": 628,
+          "last_line": 648,
+          "text": "\tBIND_ENUM_CONSTANT(DRAW_PRESSED);\n\tBIND_ENUM_CONSTANT(DRAW_HOVER);\n\tBIND_ENUM_CONSTANT(DRAW_DISABLED);\n\tBIND_ENUM_CONSTANT(DRAW_HOVER_PRESSED);\n\n\tBIND_ENUM_CONSTANT(ACTION_MODE_BUTTON_PRESS);\n\tBIND_ENUM_CONSTANT(ACTION_MODE_BUTTON_RELEASE);\n\n\tGLOBAL_DEF(PropertyInfo(Variant::FLOAT, \"gui/timers/button_shortcut_feedback_highlight_time\", PROPERTY_HINT_RANGE, \"0.01,10,0.01,suffix:s\"), 0.2);\n}\n\nBaseButton::BaseButton() {\n\tset_focus_mode(FOCUS_ALL);\n}\n\nBaseButton::~BaseButton() {\n\tif (button_group.is_valid()) {\n\t\tbutton_group->buttons.erase(this);\n\t}\n}\n\n",
+          "utf8_sha256": "0b3b72e394994608896b4caa83e8d7e82aecc49dd49a718aa37c54f94540d6f9"
+        }
+      ]
+    },
+    {
+      "path": "godot/scene/gui/button.cpp",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/scene/gui/button.cpp",
+      "source_utf8_sha256": "8fd726a156dd72dfcca68044e8d3823c313c4fe66a856cc15fd8503ed01337cd",
+      "source_utf8_bytes": 32166,
+      "source_line_count": 887,
+      "excerpts": [
+        {
+          "first_line": 150,
+          "last_line": 182,
+          "text": "\t\t} break;\n\t}\n\n\treturn stylebox;\n}\n\nString Button::_get_accessibility_name() const {\n\tconst String &ac_name = Control::_get_accessibility_name();\n\tif (!xl_text.is_empty() && ac_name.is_empty()) {\n\t\treturn xl_text;\n\t} else if (!xl_text.is_empty() && !ac_name.is_empty() && ac_name != xl_text) {\n\t\treturn ac_name + \": \" + xl_text;\n\t} else if (xl_text.is_empty() && ac_name.is_empty() && !get_tooltip_text().is_empty()) {\n\t\treturn get_tooltip_text(); // Fall back to tooltip.\n\t} else {\n\t\treturn ac_name;\n\t}\n}\n\nvoid Button::_notification(int p_what) {\n\tswitch (p_what) {\n\t\tcase NOTIFICATION_ACCESSIBILITY_UPDATE: {\n\t\t\tRID ae = get_accessibility_element();\n\t\t\tERR_FAIL_COND(ae.is_null());\n\n\t\t\tAcceptDialog *dlg = Object::cast_to<AcceptDialog>(get_parent());\n\t\t\tif (dlg && dlg->get_ok_button() == this) {\n\t\t\t\tAccessibilityServer::get_singleton()->update_set_role(ae, AccessibilityServerEnums::AccessibilityRole::ROLE_DEFAULT_BUTTON);\n\t\t\t}\n\t\t} break;\n\n\t\tcase NOTIFICATION_LAYOUT_DIRECTION_CHANGED: {\n\t\t\tqueue_redraw();\n",
+          "utf8_sha256": "4234fe6f4f1cdf954407345ca0dff5c0e588bf7b31dd2ab8fd0f0b112201b9fb"
+        }
+      ]
+    },
+    {
+      "path": "godot/scene/gui/control.cpp",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/scene/gui/control.cpp",
+      "source_utf8_sha256": "2b55287a767ffc44a0c89a1a772696eced2058d8b82c92a43d32132c7c9ca5a2",
+      "source_utf8_bytes": 184881,
+      "source_line_count": 5199,
+      "excerpts": [
+        {
+          "first_line": 2940,
+          "last_line": 2986,
+          "text": "}\n\nControl::FocusBehaviorRecursive Control::get_focus_behavior_recursive() const {\n\tERR_READ_THREAD_GUARD_V(FOCUS_BEHAVIOR_INHERITED);\n\treturn data.focus_behavior_recursive;\n}\n\nbool Control::_is_focusable() const {\n\tbool ac_enabled = is_inside_tree() && get_tree()->is_accessibility_enabled();\n\treturn (is_visible_in_tree() && ((get_focus_mode_with_override() == FOCUS_ALL) || (get_focus_mode_with_override() == FOCUS_CLICK) || (ac_enabled && get_focus_mode_with_override() == FOCUS_ACCESSIBILITY)));\n}\n\nbool Control::_is_focus_mode_enabled() const {\n\tif (data.focus_behavior_recursive == FOCUS_BEHAVIOR_INHERITED) {\n\t\tif (data.parent_control) {\n\t\t\treturn data.parent_focus_behavior_recursive_enabled;\n\t\t}\n\t\treturn true;\n\t}\n\treturn data.focus_behavior_recursive == FOCUS_BEHAVIOR_ENABLED;\n}\n\nvoid Control::_update_focus_behavior_recursive() {\n\tif (data.focus_behavior_recursive == FOCUS_BEHAVIOR_INHERITED) {\n\t\tControl *parent = get_parent_control();\n\t\tif (parent) {\n\t\t\t_propagate_focus_behavior_recursive_recursively(parent->_is_focus_mode_enabled(), false);\n\t\t} else {\n\t\t\t_propagate_focus_behavior_recursive_recursively(true, false);\n\t\t}\n\t} else {\n\t\t_propagate_focus_behavior_recursive_recursively(data.focus_behavior_recursive == FOCUS_BEHAVIOR_ENABLED, false);\n\t}\n}\n\nvoid Control::_propagate_focus_behavior_recursive_recursively(bool p_enabled, bool p_skip_non_inherited) {\n\tif (is_inside_tree() && (data.focus_behavior_recursive == FOCUS_BEHAVIOR_DISABLED || (data.focus_behavior_recursive == FOCUS_BEHAVIOR_INHERITED && !p_enabled)) && has_focus()) {\n\t\trelease_focus();\n\t}\n\n\tif (p_skip_non_inherited && data.focus_behavior_recursive != FOCUS_BEHAVIOR_INHERITED) {\n\t\treturn;\n\t}\n\n\tdata.parent_focus_behavior_recursive_enabled = p_enabled;\n\n\tfor (int i = 0; i < get_child_count(); i++) {\n",
+          "utf8_sha256": "998de5b8173ca6eddd4938ac27704683042d432f6d5bffdd04a4b54c68b279ef"
+        },
+        {
+          "first_line": 3058,
+          "last_line": 3078,
+          "text": "\t// No next in parent, try the same in parent.\n\treturn _next_control(parent);\n}\n\nControl *Control::find_next_valid_focus() const {\n\tERR_READ_THREAD_GUARD_V(nullptr);\n\n\t// If the focus property is manually overwritten, attempt to use it.\n\tif (!data.focus_next.is_empty()) {\n\t\tNode *n = get_node_or_null(data.focus_next);\n\t\tERR_FAIL_NULL_V_MSG(n, nullptr, \"Next focus node path is invalid: '\" + String(data.focus_next) + \"'.\");\n\t\tControl *c = Object::cast_to<Control>(n);\n\t\tERR_FAIL_NULL_V_MSG(c, nullptr, \"Next focus node is not a control: '\" + n->get_name() + \"'.\");\n\t\tif (c->_is_focusable()) {\n\t\t\treturn c;\n\t\t}\n\t}\n\n\tControl *from = const_cast<Control *>(this);\n\tHashSet<Control *> checked;\n\tbool ac_enabled = get_tree() && get_tree()->is_accessibility_enabled();\n",
+          "utf8_sha256": "98260ee170d33dbfb7d6df138609efd28cd6e9d06095cd54ae5263b154ad34ec"
+        },
+        {
+          "first_line": 4415,
+          "last_line": 4455,
+          "text": "\t\t\tsaving = true;\n\t\t} break;\n\t\tcase NOTIFICATION_EDITOR_POST_SAVE: {\n\t\t\tsaving = false;\n\t\t} break;\n#endif // TOOLS_ENABLED\n\n\t\tcase NOTIFICATION_ACCESSIBILITY_UPDATE: {\n\t\t\tRID ae = get_accessibility_element();\n\t\t\tERR_FAIL_COND(ae.is_null());\n\n\t\t\t// Base info.\n\t\t\tAccessibilityServer::get_singleton()->update_set_name(ae, _get_accessibility_name());\n\t\t\tAccessibilityServer::get_singleton()->update_set_description(ae, get_accessibility_description());\n\t\t\tAccessibilityServer::get_singleton()->update_set_live(ae, get_accessibility_live());\n\n\t\t\tAccessibilityServer::get_singleton()->update_set_transform(ae, get_transform());\n\t\t\tAccessibilityServer::get_singleton()->update_set_bounds(ae, Rect2(Vector2(), data.size_cache));\n\t\t\tAccessibilityServer::get_singleton()->update_set_tooltip(ae, data.tooltip);\n\t\t\tAccessibilityServer::get_singleton()->update_set_flag(ae, AccessibilityServerEnums::AccessibilityFlags::FLAG_CLIPS_CHILDREN, data.clip_contents);\n\t\t\tAccessibilityServer::get_singleton()->update_set_flag(ae, AccessibilityServerEnums::AccessibilityFlags::FLAG_TOUCH_PASSTHROUGH, data.mouse_filter == MOUSE_FILTER_PASS);\n\n\t\t\tif (_is_focusable()) {\n\t\t\t\tAccessibilityServer::get_singleton()->update_add_action(ae, AccessibilityServerEnums::AccessibilityAction::ACTION_FOCUS, callable_mp(this, &Control::_accessibility_action_foucs));\n\t\t\t\tAccessibilityServer::get_singleton()->update_add_action(ae, AccessibilityServerEnums::AccessibilityAction::ACTION_BLUR, callable_mp(this, &Control::_accessibility_action_blur));\n\t\t\t}\n\t\t\tAccessibilityServer::get_singleton()->update_add_action(ae, AccessibilityServerEnums::AccessibilityAction::ACTION_SHOW_TOOLTIP, callable_mp(this, &Control::_accessibility_action_show_tooltip));\n\t\t\tAccessibilityServer::get_singleton()->update_add_action(ae, AccessibilityServerEnums::AccessibilityAction::ACTION_HIDE_TOOLTIP, callable_mp(this, &Control::_accessibility_action_hide_tooltip));\n\t\t\tAccessibilityServer::get_singleton()->update_add_action(ae, AccessibilityServerEnums::AccessibilityAction::ACTION_SCROLL_INTO_VIEW, callable_mp(this, &Control::_accessibility_action_scroll_into_view));\n\t\t\tif (is_inside_tree() && get_viewport()->gui_is_dragging()) {\n\t\t\t\tif (can_drop_data(Vector2(Math::INF, Math::INF), get_viewport()->gui_get_drag_data())) {\n\t\t\t\t\tAccessibilityServer::get_singleton()->update_set_extra_info(ae, vformat(RTR(\"%s can be dropped here. Use %s to drop, use %s to cancel.\"), get_viewport()->gui_get_drag_description(), InputMap::get_singleton()->get_action_description(\"ui_accessibility_drag_and_drop\"), InputMap::get_singleton()->get_action_description(\"ui_cancel\")));\n\t\t\t\t} else {\n\t\t\t\t\tAccessibilityServer::get_singleton()->update_set_extra_info(ae, vformat(RTR(\"%s can not be dropped here. Use %s to cancel.\"), get_viewport()->gui_get_drag_description(), InputMap::get_singleton()->get_action_description(\"ui_cancel\")));\n\t\t\t\t}\n\t\t\t}\n\n\t\t\t// Related nodes.\n\t\t\tfor (int i = 0; i < data.accessibility_controls_nodes.size(); i++) {\n\t\t\t\tconst NodePath &np = data.accessibility_controls_nodes[i];\n\t\t\t\tif (!np.is_empty()) {\n",
+          "utf8_sha256": "700f3ac90a923677493bc37b33ae38573055f44902fa2e682800a017a6f5eecb"
+        }
+      ]
+    },
+    {
+      "path": "godot/scene/main/viewport.cpp",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/scene/main/viewport.cpp",
+      "source_utf8_sha256": "db949779da96c93cbbdd3d97976efe00211fe900ca2e1283d67ce44671c4a652",
+      "source_utf8_bytes": 200690,
+      "source_line_count": 5897,
+      "excerpts": [
+        {
+          "first_line": 2307,
+          "last_line": 2390,
+          "text": "\t\t}\n\n\t\tif (gui.key_focus && !gui.key_focus->is_visible_in_tree()) {\n\t\t\tgui.key_focus->release_focus();\n\t\t}\n\n\t\tif (gui.key_focus) {\n\t\t\tif (gui.key_focus->can_process()) {\n\t\t\t\tgui.key_focus->_call_gui_input(p_event);\n\t\t\t}\n\n\t\t\tif (is_input_handled()) {\n\t\t\t\treturn;\n\t\t\t}\n\t\t}\n\n\t\tControl *from = gui.key_focus ? gui.key_focus : nullptr;\n\t\tif (!from) {\n\t\t\tfor (int i = 0; i < get_child_count(true); i++) {\n\t\t\t\tControl *c = Object::cast_to<Control>(get_child(i, true));\n\t\t\t\tif (!c || !c->is_visible_in_tree() || c->is_set_as_top_level()) {\n\t\t\t\t\tcontinue;\n\t\t\t\t}\n\n\t\t\t\tfrom = c;\n\t\t\t\tbreak;\n\t\t\t}\n\t\t}\n\n\t\tif (from && p_event->is_pressed()) {\n\t\t\tControl *next = nullptr;\n\t\t\tbool show_focus = false;\n\n\t\t\tRef<InputEventJoypadMotion> joypadmotion_event = p_event;\n\t\t\tif (joypadmotion_event.is_valid()) {\n\t\t\t\tInput *input = Input::get_singleton();\n\n\t\t\t\tif (p_event->is_action_pressed(SNAME(\"ui_focus_next\")) && input->is_action_just_pressed_by_event(SNAME(\"ui_focus_next\"), p_event)) {\n\t\t\t\t\tnext = from->find_next_valid_focus();\n\t\t\t\t\tshow_focus = true;\n\t\t\t\t}\n\n\t\t\t\tif (p_event->is_action_pressed(SNAME(\"ui_focus_prev\")) && input->is_action_just_pressed_by_event(SNAME(\"ui_focus_prev\"), p_event)) {\n\t\t\t\t\tnext = from->find_prev_valid_focus();\n\t\t\t\t\tshow_focus = true;\n\t\t\t\t}\n\n\t\t\t\tif (p_event->is_action_pressed(SNAME(\"ui_accessibility_drag_and_drop\")) && input->is_action_just_pressed_by_event(SNAME(\"ui_accessibility_drag_and_drop\"), p_event)) {\n\t\t\t\t\tif (gui_is_dragging()) {\n\t\t\t\t\t\tfrom->accessibility_drop();\n\t\t\t\t\t} else {\n\t\t\t\t\t\tfrom->accessibility_drag();\n\t\t\t\t\t}\n\t\t\t\t}\n\n\t\t\t\tif (p_event->is_action_pressed(SNAME(\"ui_up\")) && input->is_action_just_pressed_by_event(SNAME(\"ui_up\"), p_event)) {\n\t\t\t\t\tnext = from->_get_focus_neighbor(SIDE_TOP);\n\t\t\t\t\tshow_focus = true;\n\t\t\t\t}\n\n\t\t\t\tif (p_event->is_action_pressed(SNAME(\"ui_left\")) && input->is_action_just_pressed_by_event(SNAME(\"ui_left\"), p_event)) {\n\t\t\t\t\tnext = from->_get_focus_neighbor(SIDE_LEFT);\n\t\t\t\t\tshow_focus = true;\n\t\t\t\t}\n\n\t\t\t\tif (p_event->is_action_pressed(SNAME(\"ui_right\")) && input->is_action_just_pressed_by_event(SNAME(\"ui_right\"), p_event)) {\n\t\t\t\t\tnext = from->_get_focus_neighbor(SIDE_RIGHT);\n\t\t\t\t\tshow_focus = true;\n\t\t\t\t}\n\n\t\t\t\tif (p_event->is_action_pressed(SNAME(\"ui_down\")) && input->is_action_just_pressed_by_event(SNAME(\"ui_down\"), p_event)) {\n\t\t\t\t\tnext = from->_get_focus_neighbor(SIDE_BOTTOM);\n\t\t\t\t\tshow_focus = true;\n\t\t\t\t}\n\t\t\t} else {\n\t\t\t\tif (p_event->is_action_pressed(SNAME(\"ui_focus_next\"), true, true)) {\n\t\t\t\t\tnext = from->find_next_valid_focus();\n\t\t\t\t\tshow_focus = true;\n\t\t\t\t}\n\n\t\t\t\tif (p_event->is_action_pressed(SNAME(\"ui_focus_prev\"), true, true)) {\n\t\t\t\t\tnext = from->find_prev_valid_focus();\n\t\t\t\t\tshow_focus = true;\n\t\t\t\t}\n",
+          "utf8_sha256": "cd16c39d4b1ce33c659c8497aacd35cf68bf69e2c8d76f8acbbc19683effde09"
+        }
+      ]
+    },
+    {
+      "path": "godot/core/input/input_map.cpp",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/core/input/input_map.cpp",
+      "source_utf8_sha256": "6eae47309dcba4cb0210df548e2553ae10bcaa6d80176badc04d9bdf23903379",
+      "source_utf8_bytes": 41921,
+      "source_line_count": 957,
+      "excerpts": [
+        {
+          "first_line": 453,
+          "last_line": 490,
+          "text": "\t// Return cache if it has already been built.\n\tif (default_builtin_cache.size()) {\n\t\treturn default_builtin_cache;\n\t}\n\n\tList<Ref<InputEvent>> inputs;\n\tinputs.push_back(InputEventKey::create_reference(Key::ENTER));\n\tinputs.push_back(InputEventKey::create_reference(Key::KP_ENTER));\n\tinputs.push_back(InputEventKey::create_reference(Key::SPACE));\n\tdefault_builtin_cache.insert(\"ui_accept\", inputs);\n\n\tinputs = List<Ref<InputEvent>>();\n\tinputs.push_back(InputEventJoypadButton::create_reference(JoyButton::Y));\n\tinputs.push_back(InputEventKey::create_reference(Key::SPACE));\n\tdefault_builtin_cache.insert(\"ui_select\", inputs);\n\n\tinputs = List<Ref<InputEvent>>();\n\tinputs.push_back(InputEventKey::create_reference(Key::ESCAPE));\n\tdefault_builtin_cache.insert(\"ui_cancel\", inputs);\n\n\tinputs = List<Ref<InputEvent>>();\n\tinputs.push_back(InputEventKey::create_reference(Key::ESCAPE));\n\tdefault_builtin_cache.insert(\"ui_close_dialog\", inputs);\n\n\tinputs = List<Ref<InputEvent>>();\n\tinputs.push_back(InputEventKey::create_reference(Key::W | KeyModifierMask::META));\n\tinputs.push_back(InputEventKey::create_reference(Key::ESCAPE));\n\tdefault_builtin_cache.insert(\"ui_close_dialog.macos\", inputs);\n\n\tinputs = List<Ref<InputEvent>>();\n\tinputs.push_back(InputEventKey::create_reference(Key::TAB));\n\tdefault_builtin_cache.insert(\"ui_focus_next\", inputs);\n\n\tinputs = List<Ref<InputEvent>>();\n\tinputs.push_back(InputEventKey::create_reference(Key::TAB | KeyModifierMask::SHIFT));\n\tdefault_builtin_cache.insert(\"ui_focus_prev\", inputs);\n\n\tinputs = List<Ref<InputEvent>>();\n",
+          "utf8_sha256": "704b6d0e2a2d527978c1fc3be6e41c807faa26b4ec7a61cdd2110e596581b8ae"
+        }
+      ]
+    },
+    {
+      "path": "godot/scene/main/window.cpp",
+      "url": "https://github.com/godotengine/godot/blob/ed1daf0bf001b61586d9930840f2f1394092c079/scene/main/window.cpp",
+      "source_utf8_sha256": "1e94ba6ccef7fea34b00aab4e40d06730e796471f232d21ced7255d06d45f9fb",
+      "source_utf8_bytes": 135562,
+      "source_line_count": 3741,
+      "excerpts": [
+        {
+          "first_line": 730,
+          "last_line": 742,
+          "text": "\tDisplayServer::get_singleton()->window_set_mouse_passthrough(mpath, window_id);\n\tDisplayServer::get_singleton()->window_set_title(displayed_title, window_id);\n\tDisplayServer::get_singleton()->window_attach_instance_id(get_instance_id(), window_id);\n\tDisplayServer::get_singleton()->window_request_hdr_output(hdr_output_requested, window_id);\n\tAccessibilityServer::get_singleton()->set_window_callbacks(window_id, callable_mp(this, &Window::_accessibility_activate), callable_mp(this, &Window::_accessibility_deactivate));\n\n\t_update_window_size();\n\n\tif (transient_parent) {\n\t\tfor (const Window *E : transient_children) {\n\t\t\tif (E->window_id != DisplayServerEnums::INVALID_WINDOW_ID) {\n\t\t\t\tDisplayServer::get_singleton()->window_set_transient(E->window_id, transient_parent->window_id);\n\t\t\t}\n",
+          "utf8_sha256": "e934c2b9380c8822f7ba0646b608b54f0c853dbf259c2eefe09d50b4a9fbfb17"
+        },
+        {
+          "first_line": 958,
+          "last_line": 986,
+          "text": "\tERR_MAIN_THREAD_GUARD;\n\tset_visible(false);\n}\n\nvoid Window::_accessibility_activate() {\n\t_accessibility_notify_enter(this);\n\tif (!get_embedder()) {\n\t\tAccessibilityServer::get_singleton()->window_activation_completed(get_window_id());\n\t}\n}\n\nvoid Window::_accessibility_deactivate() {\n\t_accessibility_notify_exit(this);\n\tif (!get_embedder()) {\n\t\tAccessibilityServer::get_singleton()->window_deactivation_completed(get_window_id());\n\t}\n}\n\nvoid Window::_accessibility_notify_enter(Node *p_node) {\n\tp_node->queue_accessibility_update();\n\n\tif (p_node != this) {\n\t\tconst Window *window = Object::cast_to<Window>(p_node);\n\t\tif (window) {\n\t\t\treturn;\n\t\t}\n\t}\n\n\tfor (int i = 0; i < p_node->get_child_count(); i++) {\n",
+          "utf8_sha256": "f38ec49fadf71c1f310914b2c2413d528d95ca828a91185d3d154d188b99244e"
+        }
+      ]
+    },
+    {
+      "path": "accesskit-c/Cargo.lock",
+      "url": "https://github.com/AccessKit/accesskit-c/blob/826d672661f9453c8b269ab3946dbcbae6300555/Cargo.lock",
+      "source_utf8_sha256": "3ccb9fd5d519938c2350cd74660224a9568185396f3a7d95945dc35fb720276d",
+      "source_utf8_bytes": 40748,
+      "source_line_count": 1623,
+      "excerpts": [
+        {
+          "first_line": 64,
+          "last_line": 91,
+          "text": "version = \"0.1.2\"\nsource = \"registry+https://github.com/rust-lang/crates.io-index\"\nchecksum = \"750c4e9f6ce888dfe8a10c0f1b5ceb646a7854fd46579d74919219d1bb314083\"\ndependencies = [\n \"accesskit\",\n \"accesskit_consumer\",\n \"hashbrown\",\n \"objc2\",\n \"objc2-foundation\",\n \"objc2-ui-kit\",\n]\n\n[[package]]\nname = \"accesskit_macos\"\nversion = \"0.26.3\"\nsource = \"registry+https://github.com/rust-lang/crates.io-index\"\nchecksum = \"ce02dc63b43f0c9296af9ac946312a2dc8814427d7a64d2d600971dac55b6076\"\ndependencies = [\n \"accesskit\",\n \"accesskit_consumer\",\n \"hashbrown\",\n \"objc2\",\n \"objc2-app-kit\",\n \"objc2-foundation\",\n]\n\n[[package]]\nname = \"accesskit_unix\"\n",
+          "utf8_sha256": "ae66f4bcd93d37a3b21ae5569993aaa34af4063d890971597da6d984b8e24859"
+        }
+      ]
+    },
+    {
+      "path": "accesskit-c/Cargo.toml",
+      "url": "https://github.com/AccessKit/accesskit-c/blob/826d672661f9453c8b269ab3946dbcbae6300555/Cargo.toml",
+      "source_utf8_sha256": "a805dee5b71f5f020623e626d076cb60a564aa67c84a92b260589abbe3232995",
+      "source_utf8_bytes": 1021,
+      "source_line_count": 42,
+      "excerpts": [
+        {
+          "first_line": 1,
+          "last_line": 42,
+          "text": "[package]\nname = \"accesskit-c\"\nversion = \"0.22.3\"\nauthors = [\"The AccessKit contributors\"]\nlicense = \"MIT OR Apache-2.0\"\npublish = false\nedition = \"2021\"\nrust-version = \"1.85\"\n\n[lib]\nname = \"accesskit\"\ncrate-type = [\"cdylib\", \"staticlib\"]\ndoc = false\n\n[features]\ncbindgen = []\nandroid-embedded-dex = [\"accesskit_android/embedded-dex\"]\n\n[dependencies]\naccesskit = \"0.24.0\"\n\n[target.'cfg(target_os = \"windows\")'.dependencies]\naccesskit_windows = \"0.34.0\"\n\n[target.'cfg(target_os = \"macos\")'.dependencies]\naccesskit_macos = \"0.26.1\"\n\n[target.'cfg(any(target_os = \"linux\", target_os = \"dragonfly\", target_os = \"freebsd\", target_os = \"openbsd\", target_os = \"netbsd\"))'.dependencies]\naccesskit_unix = \"0.22.0\"\n\n[target.'cfg(target_os = \"android\")'.dependencies]\naccesskit_android = \"0.7.3\"\n\n[target.'cfg(any(target_os = \"ios\", target_os = \"tvos\", target_os = \"visionos\", target_os = \"watchos\"))'.dependencies]\naccesskit_ios = \"0.1.0\"\n\n[profile.release]\nlto = true\nopt-level = \"z\"\ncodegen-units = 1\npanic = \"abort\"\ndebug = true\n",
+          "utf8_sha256": "a805dee5b71f5f020623e626d076cb60a564aa67c84a92b260589abbe3232995"
+        }
+      ]
+    },
+    {
+      "path": "accesskit-c/src/macos.rs",
+      "url": "https://github.com/AccessKit/accesskit-c/blob/826d672661f9453c8b269ab3946dbcbae6300555/src/macos.rs",
+      "source_utf8_sha256": "b267c1803c2a62159504023fb117d36489fae49d1ea20cf093730c6a85f1c1aa",
+      "source_utf8_bytes": 10867,
+      "source_line_count": 275,
+      "excerpts": [
+        {
+          "first_line": 174,
+          "last_line": 215,
+          "text": "    /// `window` must be a valid, unreleased pointer to an `NSWindow`.\n    ///\n    /// # Panics\n    ///\n    /// This function panics if the specified window doesn't currently have\n    /// a content view.\n    #[no_mangle]\n    pub unsafe extern \"C\" fn accesskit_macos_subclassing_adapter_for_window(\n        window: *mut c_void,\n        activation_handler: ActivationHandlerCallback,\n        activation_handler_userdata: *mut c_void,\n        action_handler: ActionHandlerCallback,\n        action_handler_userdata: *mut c_void,\n    ) -> *mut macos_subclassing_adapter {\n        let activation_handler =\n            FfiActivationHandler::new(activation_handler, activation_handler_userdata);\n        let action_handler = FfiActionHandler::new(action_handler, action_handler_userdata);\n        let adapter = SubclassingAdapter::for_window(window, activation_handler, action_handler);\n        BoxCastPtr::to_mut_ptr(adapter)\n    }\n\n    #[no_mangle]\n    pub extern \"C\" fn accesskit_macos_subclassing_adapter_free(\n        adapter: *mut macos_subclassing_adapter,\n    ) {\n        drop(box_from_ptr(adapter));\n    }\n\n    /// You must call `accesskit_macos_queued_events_raise` on the returned pointer. It can be null if the adapter is not active.\n    #[no_mangle]\n    pub extern \"C\" fn accesskit_macos_subclassing_adapter_update_if_active(\n        adapter: *mut macos_subclassing_adapter,\n        update_factory: tree_update_factory,\n        update_factory_userdata: *mut c_void,\n    ) -> *mut macos_queued_events {\n        let update_factory = update_factory.unwrap();\n        let update_factory_userdata = tree_update_factory_userdata(update_factory_userdata);\n        let adapter = mut_from_ptr(adapter);\n        let events =\n            adapter.update_if_active(|| *box_from_ptr(update_factory(update_factory_userdata)));\n        BoxCastPtr::to_nullable_mut_ptr(events)\n    }\n",
+          "utf8_sha256": "49ce490304a06b869810d0c90ea5ad9c6c89a7a76909c089972f3caef284b109"
+        }
+      ]
+    },
+    {
+      "path": "accesskit/platforms/macos/src/node.rs",
+      "url": "https://github.com/AccessKit/accesskit/blob/c88605b96d04431f9c3c792464a0f2f253480e94/platforms/macos/src/node.rs",
+      "source_utf8_sha256": "7fcbb84ed76e25d1ba4f69ef646a5b0cd83f96aaccfa7a0b500518da1ef43e91",
+      "source_utf8_bytes": 58078,
+      "source_line_count": 1338,
+      "excerpts": [
+        {
+          "first_line": 44,
+          "last_line": 78,
+          "text": "            Role::Label => NSAccessibilityStaticTextRole,\n            Role::Image => NSAccessibilityImageRole,\n            Role::Link => NSAccessibilityLinkRole,\n            Role::Row => NSAccessibilityRowRole,\n            Role::ListItem => NSAccessibilityGroupRole,\n            Role::ListMarker => ns_string!(\"AXListMarker\"),\n            Role::TreeItem => NSAccessibilityRowRole,\n            Role::ListBoxOption => NSAccessibilityStaticTextRole,\n            Role::MenuItem => NSAccessibilityMenuItemRole,\n            Role::MenuListOption => NSAccessibilityMenuItemRole,\n            Role::Paragraph => NSAccessibilityGroupRole,\n            Role::GenericContainer => NSAccessibilityUnknownRole,\n            Role::CheckBox => NSAccessibilityCheckBoxRole,\n            Role::RadioButton => NSAccessibilityRadioButtonRole,\n            Role::TextInput\n            | Role::SearchInput\n            | Role::EmailInput\n            | Role::NumberInput\n            | Role::PasswordInput\n            | Role::PhoneNumberInput\n            | Role::UrlInput => NSAccessibilityTextFieldRole,\n            Role::Button => {\n                if node.toggled().is_some() {\n                    NSAccessibilityCheckBoxRole\n                } else {\n                    NSAccessibilityButtonRole\n                }\n            }\n            Role::DefaultButton => NSAccessibilityButtonRole,\n            Role::Pane => NSAccessibilityUnknownRole,\n            Role::RowHeader => NSAccessibilityCellRole,\n            Role::ColumnHeader => NSAccessibilityCellRole,\n            Role::RowGroup => NSAccessibilityGroupRole,\n            Role::List => NSAccessibilityListRole,\n            Role::Table => NSAccessibilityTableRole,\n",
+          "utf8_sha256": "553bff8c5dd0928bb1aef3c0223dea023b265077d47283ce113b88dd1626bda5"
+        },
+        {
+          "first_line": 299,
+          "last_line": 314,
+          "text": "pub(crate) struct NodeWrapper<'a>(pub(crate) &'a Node<'a>);\n\nimpl NodeWrapper<'_> {\n    fn is_root(&self) -> bool {\n        self.0.is_root()\n    }\n\n    pub(crate) fn title(&self) -> Option<String> {\n        if self.is_root() && self.0.role() == Role::Window {\n            // If the group element that we expose for the top-level window\n            // includes a title, VoiceOver behavior is broken.\n            return None;\n        }\n        self.0.label()\n    }\n\n",
+          "utf8_sha256": "2e3ddbc0f1c313ebfdc78a23a266a1ccce7c450266a9525fd71d23407fee63c4"
+        },
+        {
+          "first_line": 451,
+          "last_line": 515,
+          "text": "        #[method(accessibilityFrame)]\n        fn frame(&self) -> NSRect {\n            self.resolve_with_context(|node, _, context| {\n                let view = match context.view.load() {\n                    Some(view) => view,\n                    None => {\n                        return NSRect::ZERO;\n                    }\n                };\n\n                node.bounding_box().map_or_else(\n                    || {\n                        if node.is_root() {\n                            unsafe { NSAccessibility::accessibilityFrame(&*view) }\n                        } else {\n                            NSRect::ZERO\n                        }\n                    },\n                    |rect| to_ns_rect(&view, rect),\n                )\n            })\n            .unwrap_or(NSRect::ZERO)\n        }\n\n        #[method_id(accessibilityRole)]\n        fn role(&self) -> Id<NSAccessibilityRole> {\n            self.resolve(ns_role)\n                .unwrap_or(unsafe { NSAccessibilityUnknownRole })\n                .copy()\n        }\n\n        #[method_id(accessibilitySubrole)]\n        fn sub_role(&self) -> Id<NSAccessibilitySubrole> {\n            self.resolve(ns_sub_role)\n                .unwrap_or(unsafe { NSAccessibilityUnknownSubrole })\n                .copy()\n        }\n\n        #[method_id(accessibilityRoleDescription)]\n        fn role_description(&self) -> Option<Id<NSString>> {\n            self.resolve(|node| {\n                if let Some(role_description) = node.role_description() {\n                    Some(NSString::from_str(role_description))\n                } else {\n                    unsafe { msg_send_id![super(self), accessibilityRoleDescription] }\n                }\n            })\n            .flatten()\n        }\n\n        #[method_id(accessibilityIdentifier)]\n        fn identifier(&self) -> Option<Id<NSString>> {\n            self.resolve(|node| {\n                node.author_id().map(NSString::from_str)\n            })\n            .flatten()\n        }\n\n        #[method_id(accessibilityTitle)]\n        fn title(&self) -> Option<Id<NSString>> {\n            self.resolve(|node| {\n                let wrapper = NodeWrapper(node);\n                wrapper.title().map(|title| NSString::from_str(&title))\n            })\n            .flatten()\n",
+          "utf8_sha256": "960929fd21cbfcfd6df6c6274a3bbece0c5fc50b7a7eac742a2c222241a4af3a"
+        }
+      ]
+    },
+    {
+      "path": "accesskit/platforms/macos/src/subclass.rs",
+      "url": "https://github.com/AccessKit/accesskit/blob/c88605b96d04431f9c3c792464a0f2f253480e94/platforms/macos/src/subclass.rs",
+      "source_utf8_sha256": "54bfb61ddd2f8f10d5b2d632849c20a2f6b0d6716cae5091ae4122d8afbb42b9",
+      "source_utf8_bytes": 9925,
+      "source_line_count": 273,
+      "excerpts": [
+        {
+          "first_line": 65,
+          "last_line": 125,
+          "text": "        let state = RefCell::new(AssociatedObjectState {\n            adapter,\n            activation_handler: Box::new(activation_handler),\n        });\n        let this = Self::alloc().set_ivars(AssociatedObjectIvars { state, prev_class });\n\n        unsafe { msg_send_id![super(this), init] }\n    }\n}\n\nfn associated_object(view: &NSView) -> &AssociatedObject {\n    unsafe {\n        (objc_getAssociatedObject(view as *const NSView as *const _, associated_object_key())\n            as *const AssociatedObject)\n            .as_ref()\n    }\n    .unwrap()\n}\n\n// Some view classes, like the one in winit 0.27, assume that they are the\n// lowest subclass, and call [self superclass] to get their superclass.\n// Give them the answer they need.\nunsafe extern \"C\" fn superclass(this: &NSView, _cmd: Sel) -> Option<&AnyClass> {\n    let associated = associated_object(this);\n    associated.ivars().prev_class.superclass()\n}\n\nunsafe extern \"C\" fn children(this: &NSView, _cmd: Sel) -> *mut NSArray<NSObject> {\n    let associated = associated_object(this);\n    let mut state = associated.ivars().state.borrow_mut();\n    let state_mut = &mut *state;\n    state_mut\n        .adapter\n        .view_children(&mut *state_mut.activation_handler)\n}\n\nunsafe extern \"C\" fn focus(this: &NSView, _cmd: Sel) -> *mut NSObject {\n    let associated = associated_object(this);\n    let mut state = associated.ivars().state.borrow_mut();\n    let state_mut = &mut *state;\n    state_mut.adapter.focus(&mut *state_mut.activation_handler)\n}\n\nunsafe extern \"C\" fn hit_test(this: &NSView, _cmd: Sel, point: NSPoint) -> *mut NSObject {\n    let associated = associated_object(this);\n    let mut state = associated.ivars().state.borrow_mut();\n    let state_mut = &mut *state;\n    state_mut\n        .adapter\n        .hit_test(point, &mut *state_mut.activation_handler)\n}\n\n/// Uses dynamic Objective-C subclassing to implement the `NSView`\n/// accessibility methods when normal subclassing isn't an option.\npub struct SubclassingAdapter {\n    view: Id<NSView>,\n    associated: Id<AssociatedObject>,\n}\n\nimpl SubclassingAdapter {\n    /// Create an adapter that dynamically subclasses the specified view.\n",
+          "utf8_sha256": "c689353b10bdc0e02609cdefc7dc9ad17aed1970ce0c83dc597a19d43fd648a9"
+        },
+        {
+          "first_line": 198,
+          "last_line": 235,
+          "text": "            }\n        };\n        // SAFETY: Changing the view's class is only safe because\n        // the subclass doesn't add any instance variables;\n        // it uses an associated object instead.\n        unsafe { object_setClass(view as *mut _, (subclass as *const AnyClass).cast()) };\n        Self {\n            view: retained_view,\n            associated,\n        }\n    }\n\n    /// Create an adapter that dynamically subclasses the content view\n    /// of the specified window.\n    ///\n    /// The action handler will always be called on the main thread.\n    ///\n    /// # Safety\n    ///\n    /// `window` must be a valid, unreleased pointer to an `NSWindow`.\n    ///\n    /// # Panics\n    ///\n    /// This function panics if the specified window doesn't currently have\n    /// a content view.\n    pub unsafe fn for_window(\n        window: *mut c_void,\n        activation_handler: impl 'static + ActivationHandler,\n        action_handler: impl 'static + ActionHandler,\n    ) -> Self {\n        let window = unsafe { &*(window as *const NSWindow) };\n        let retained_view = window.contentView().unwrap();\n        Self::new_internal(retained_view, activation_handler, action_handler)\n    }\n\n    /// If and only if the tree has been initialized, call the provided function\n    /// and apply the resulting update. Note: If the caller's implementation of\n    /// [`ActivationHandler::request_initial_tree`] initially returned `None`,\n",
+          "utf8_sha256": "d7d34460b6798854b52ba56ab70727d0944d0981a2d03d021ce1efc801659a69"
+        }
+      ]
+    },
+    {
+      "path": "accesskit/platforms/macos/src/util.rs",
+      "url": "https://github.com/AccessKit/accesskit/blob/c88605b96d04431f9c3c792464a0f2f253480e94/platforms/macos/src/util.rs",
+      "source_utf8_sha256": "e7794ebf3c23843329289eff60ede76b783c6167e7cf7328bcfa0a8324d5262f",
+      "source_utf8_bytes": 3757,
+      "source_line_count": 108,
+      "excerpts": [
+        {
+          "first_line": 49,
+          "last_line": 81,
+          "text": "        } else {\n            let view_bounds = view.bounds();\n            (view_bounds.size.height - point.y) * factor\n        },\n    );\n    node.transform().inverse() * point\n}\n\npub(crate) fn to_ns_rect(view: &NSView, rect: Rect) -> NSRect {\n    let window = view.window().unwrap();\n    // AccessKit coordinates are in physical (DPI-dependent)\n    // pixels, but macOS expects logical (DPI-independent)\n    // coordinates here.\n    let factor = window.backingScaleFactor();\n    let rect = NSRect {\n        origin: NSPoint {\n            x: rect.x0 / factor,\n            y: if view.isFlipped() {\n                rect.y0 / factor\n            } else {\n                let view_bounds = view.bounds();\n                view_bounds.size.height - rect.y1 / factor\n            },\n        },\n        size: NSSize {\n            width: rect.width() / factor,\n            height: rect.height() / factor,\n        },\n    };\n    let rect = view.convertRect_toView(rect, None);\n    let window = view.window().unwrap();\n    window.convertRectToScreen(rect)\n}\n",
+          "utf8_sha256": "f47b30f5a53c47068c77fe7cddf261d17eabd82ec47c372fb461cf367c2d7c22"
+        }
+      ]
+    },
+    {
+      "path": "sdk/README.md",
+      "url": "https://github.com/godotengine/godot-accesskit-c-static/blob/29831e59e0e8ed5439f7d809b983abefc0c3d096/README.md",
+      "source_utf8_sha256": "4fae3da2e6eff56760af66f5756f051cd177eb300dfdaefc2344301ac48de6e0",
+      "source_utf8_bytes": 1498,
+      "source_line_count": 23,
+      "excerpts": [
+        {
+          "first_line": 1,
+          "last_line": 23,
+          "text": "This repo contains prebuilt versions of [AccessKit C](https://github.com/AccessKit/accesskit-c) library and CI build configs.\n\nSee [Releases page](https://github.com/godotengine/godot-accesskit-c-static/releases).\n\n---\n\n> [!IMPORTANT]\n> AccessKit API is unstable, only the versions listed below can be used to build specific version of Godot:\n> \n> - Godot [4.5](https://github.com/godotengine/godot/releases/tag/4.5-stable), [4.5.1](https://github.com/godotengine/godot/releases/tag/4.5.1-stable), [4.5.2](https://github.com/godotengine/godot/releases/tag/4.5.2-stable) - [AcceeKit 0.17.0](https://github.com/godotengine/godot-accesskit-c-static/releases/tag/0.17.0)\n>\n> - Godot [4.6](https://github.com/godotengine/godot/releases/tag/4.6-stable), [4.6.1](https://github.com/godotengine/godot/releases/tag/4.6.1-stable) - [AcceeKit 0.18.0](https://github.com/godotengine/godot-accesskit-c-static/releases/tag/0.18.0)\n> \n> - Godot [4.7.dev](https://github.com/godotengine/godot/tree/master), [4.6.dev](https://github.com/godotengine/godot/tree/4.6), [4.6.2](https://github.com/godotengine/godot/releases/tag/4.6.2-stable) - [AcceeKit 0.21.2](https://github.com/godotengine/godot-accesskit-c-static/releases/tag/0.21.2)\n\n---\n\nPatches:\n\n- `patch_arm32.diff` - Adds target path for the 32-bit ARM Linux (`arm-unknown-linux-gnueabihf`) build.\n- `patch_gnullvm.diff` - Updates Corrosion to the commit with MinGW/LLVM toolchain support (`*-pc-windows-gnullvm`).\n\nThere are no changes to the library code.\n",
+          "utf8_sha256": "4fae3da2e6eff56760af66f5756f051cd177eb300dfdaefc2344301ac48de6e0"
+        }
+      ]
+    },
+    {
+      "path": "apple-sdk/AXUIElement.h",
+      "url": "https://github.com/phracker/MacOSX-SDKs/blob/041600eda65c6a668f66cb7d56b7d1da3e8bcc93/MacOSX11.3.sdk/System/Library/Frameworks/ApplicationServices.framework/Versions/A/Frameworks/HIServices.framework/Versions/A/Headers/AXUIElement.h",
+      "source_utf8_sha256": "23c4ea4f15015ac00e2e07f369228345fa82512446b9216a47dd3d95d3df4de8",
+      "source_utf8_bytes": 37014,
+      "source_line_count": 560,
+      "excerpts": [
+        {
+          "first_line": 55,
+          "last_line": 75,
+          "text": " @function AXIsProcessTrustedWithOptions\n @abstract Returns whether the current process is a trusted accessibility client.\n @param options A dictionary of options, or NULL to specify no options. The following options are available:\n     \n KEY: kAXTrustedCheckOptionPrompt\n VALUE: ACFBooleanRef indicating whether the user will be informed if the current process is untrusted. This could be used, for example, on application startup to always warn a user if accessibility is not enabled for the current process. Prompting occurs asynchronously and does not affect the return value.\n     \n @result Returns TRUE if the current process is a trusted accessibility client, FALSE if it is not.\n */\nextern Boolean AXIsProcessTrustedWithOptions (CFDictionaryRef __nullable options) CF_AVAILABLE_MAC(10_9);\n    \nextern CFStringRef kAXTrustedCheckOptionPrompt CF_AVAILABLE_MAC(10_9);\n\n/*!\n @function AXIsProcessTrusted\n @abstract Returns whether the current process is a trusted accessibility client.\n \n @result Returns TRUE if the current process is a trusted accessibility client, FALSE if it is not.\n */\nextern Boolean AXIsProcessTrusted (void) CF_AVAILABLE_MAC(10_4);\n\n",
+          "utf8_sha256": "47740e782211a3eb0323d818986914e7e0cf8b2a27538c7d80cc1dae53ba6ae9"
+        },
+        {
+          "first_line": 130,
+          "last_line": 149,
+          "text": "extern AXError \tAXUIElementCopyAttributeNames (AXUIElementRef element, CFArrayRef __nullable * __nonnull CF_RETURNS_RETAINED names);\n\n/*!\n @function AXUIElementCopyAttributeValue\n @abstract Returns the value of an accessibility object's attribute.\n \n @param element The AXUIElementRef representing the accessibility object.\n @param attribute The attribute name.\n @param value On return, the value associated with the specified attribute.\n \n @result If unsuccessful, <code>AXUIElementCopyAttributeValue</code> may return one of the following error codes, among others:\n <dl><dt><code>kAXErrorAttributeUnsupported</code></dt><dd>The specified AXUIElementRef does not support the specified attribute.</dd>\n <dt><code>kAXErrorNoValue</code></dt><dd>The specified attribute does not have a value.</dd>\n <dt><code>kAXErrorIllegalArgument</code></dt><dd>One or more of the arguments is an illegal value.</dd>\n <dt><code>kAXErrorInvalidUIElement</code></dt><dd>The AXUIElementRef is invalid.</dd>\n <dt><code>kAXErrorCannotComplete</code></dt><dd>The function cannot complete because messaging has failed in some way.</dd>\n <dt><code>kAXErrorNotImplemented</code></dt><dd>The process does not fully support the accessibility API.</dd></dl>\n */\nextern AXError\tAXUIElementCopyAttributeValue (AXUIElementRef element, CFStringRef attribute, CFTypeRef __nullable * __nonnull CF_RETURNS_RETAINED value);\n\n",
+          "utf8_sha256": "d5654672a9d8b081f60f99b98e6dd9b8ea4c56bfc6b61048c4801a83814ede4c"
+        },
+        {
+          "first_line": 149,
+          "last_line": 186,
+          "text": "\n/*!\n @function AXUIElementGetAttributeValueCount\n @abstract Returns the count of the array of an accessibility object's attribute value.\n \n @param element The AXUIElementRef representing the accessibility object.\n @param attribute The attribute name.\n @param count On return, the size of the array that is the attribute's value.\n \n @result If unsuccessful, <code>AXUIElementGetAttributeValueCount</code> may return one of the following error codes, among others:\n <dl><dt><code>kAXErrorIllegalArgument</code></dt><dd>The attribute's value is not an array or one of the other arguments is an illegal value.</dd>\n <dt><code>kAXErrorAttributeUnsupported</code></dt><dd>The specified AXUIElementRef does not support the specified attribute.</dd>\n <dt><code>kAXErrorInvalidUIElement</code></dt><dd>The AXUIElementRef is invalid.</dd>\n <dt><code>kAXErrorCannotComplete</code></dt><dd>The function cannot complete because messaging has failed in some way.</dd>\n <dt><code>kAXErrorNotImplemented</code></dt><dd>The process does not fully support the accessibility API.</dd></dl>\n */\nextern AXError  AXUIElementGetAttributeValueCount (AXUIElementRef element, CFStringRef attribute, CFIndex *count);\n\n/*!\n @function AXUIElementCopyAttributeValues\n @abstract Returns an array of attribute values for the accessibility object's attribute, starting at the specified index.\n @discussion This function is useful for dealing with large arrays, for example, a table view with a large number of children.\n \n @param element The AXUIElementRef representing the accessibility object.\n @param attribute The attribute name.\n @param index The index into the array.\n @param maxValues The maximum number of values you want (this may be more or less than the number of values associated with the attribute).\n @param values On return, the attribute values you requested. If <code>maxValues</code> is greater than the number of values associated with the attribute, the <code>values</code> array will contain values found between <code>index</code> and the end of the attribute's array, inclusive.\n \n @result If unsuccessful, <code>AXUIElementCopyAttributeValues</code> may return one of the following error codes, among others:\n <dl><dt><code>kAXErrorIllegalArgument</code></dt><dd>The attribute's value is not array, the <code>index</code> or <code>maxValues</code> arguments are outside the array's range, or one of the other arguments is an illegal value.</dd>\n <dt><code>kAXErrorNoValue</code></dt><dd>The specified attribute does not have a value.</dd>\n <dt><code>kAXErrorInvalidUIElement</code></dt><dd>The AXUIElementRef is invalid.</dd>\n <dt><code>kAXErrorCannotComplete</code></dt><dd>The function cannot complete because messaging has failed in some way.</dd>\n <dt><code>kAXErrorNotImplemented</code></dt><dd>The process does not fully support the accessibility API.</dd></dl>\n */\nextern AXError  AXUIElementCopyAttributeValues (AXUIElementRef element, CFStringRef attribute, CFIndex index, CFIndex maxValues, CFArrayRef __nullable * __nonnull CF_RETURNS_RETAINED values);\n\n",
+          "utf8_sha256": "796d7d06eadaa7a88208a0bec670c40277fc8b6251b54427158a912219380c8d"
+        },
+        {
+          "first_line": 168,
+          "last_line": 186,
+          "text": " @function AXUIElementCopyAttributeValues\n @abstract Returns an array of attribute values for the accessibility object's attribute, starting at the specified index.\n @discussion This function is useful for dealing with large arrays, for example, a table view with a large number of children.\n \n @param element The AXUIElementRef representing the accessibility object.\n @param attribute The attribute name.\n @param index The index into the array.\n @param maxValues The maximum number of values you want (this may be more or less than the number of values associated with the attribute).\n @param values On return, the attribute values you requested. If <code>maxValues</code> is greater than the number of values associated with the attribute, the <code>values</code> array will contain values found between <code>index</code> and the end of the attribute's array, inclusive.\n \n @result If unsuccessful, <code>AXUIElementCopyAttributeValues</code> may return one of the following error codes, among others:\n <dl><dt><code>kAXErrorIllegalArgument</code></dt><dd>The attribute's value is not array, the <code>index</code> or <code>maxValues</code> arguments are outside the array's range, or one of the other arguments is an illegal value.</dd>\n <dt><code>kAXErrorNoValue</code></dt><dd>The specified attribute does not have a value.</dd>\n <dt><code>kAXErrorInvalidUIElement</code></dt><dd>The AXUIElementRef is invalid.</dd>\n <dt><code>kAXErrorCannotComplete</code></dt><dd>The function cannot complete because messaging has failed in some way.</dd>\n <dt><code>kAXErrorNotImplemented</code></dt><dd>The process does not fully support the accessibility API.</dd></dl>\n */\nextern AXError  AXUIElementCopyAttributeValues (AXUIElementRef element, CFStringRef attribute, CFIndex index, CFIndex maxValues, CFArrayRef __nullable * __nonnull CF_RETURNS_RETAINED values);\n\n",
+          "utf8_sha256": "13cf37e39d01c4d2431504fa1a3f705d2a9479e040a3f3fc275d2242e53a6b0e"
+        },
+        {
+          "first_line": 351,
+          "last_line": 405,
+          "text": " <dt><code>kAXErrorNotImplemented</code></dt><dd>The process does not fully support the accessibility API.</dd></dl>\n */\nextern AXError\tAXUIElementCopyElementAtPosition (AXUIElementRef application, float x,float y, AXUIElementRef __nullable * __nonnull CF_RETURNS_RETAINED element);\n\n/*!\n @function AXUIElementCreateApplication\n @abstract Creates and returns the top-level accessibility object for the application with the specified process ID.\n \n @param pid The process ID of an application.\n @result The AXUIElementRef representing the top-level accessibility object for the application with the specified process ID.\n */\nextern AXUIElementRef  AXUIElementCreateApplication (pid_t pid);\n\n/*!\n @function AXUIElementCreateSystemWide\n @abstract Returns an accessibility object that provides access to system attributes.\n @discussion This is useful for things like finding the focused accessibility object regardless of which application is currently active.\n \n @result The AXUIElementRef representing the system-wide accessibility object.\n */\nextern AXUIElementRef  AXUIElementCreateSystemWide (void);\n\n/*!\n @function AXUIElementGetPid\n @abstract Returns the process ID associated with the specified accessibility object.\n \n @param element The AXUIElementRef representing an accessibility object.\n @param pid On return, the process ID associated with the specified accessibility object.\n \n @result If unsuccessful, <code>AXUIElementGetPid</code> may return one of the following error codes, among others:\n <dl><dt><code>kAXErrorIllegalArgument</code></dt><dd>One or more of the arguments is an illegal value.</dd>\n <dt><code>kAXErrorInvalidUIElement</code></dt><dd>The AXUIElementRef is invalid.</dd></dl>\n */\nextern AXError  AXUIElementGetPid (AXUIElementRef element, pid_t *pid);\n\n/*!\n @function AXUIElementSetMessagingTimeout\n @abstract Sets the timeout value used in the accessibility API.\n @discussion Pass the system-wide accessibility object (see @link AXUIElementCreateSystemWide AXUIElementCreateSystemWide@/link) if you want to set the timeout globally for this process.\n Setting the timeout on another accessibility object sets it only for that object, not for other accessibility objects that are equal to it.\n \n Setting <code>timeoutInSeconds</code> to 0 for the system-wide accessibility object resets the global timeout to its default value. Setting <code>timeoutInSeconds</code>\n to 0 for any other accessibility object makes that element use the current global timeout value.\n \n @param element The AXUIElementRef representing an accessibility object.\n @param timeoutInSeconds The number of seconds for the new timeout value.\n \n @result If unsuccessful, <code>AXUIElementSetMessagingTimeout</code> may return one of the following error codes, among others:\n <dl><dt><code>kAXErrorIllegalArgument</code></dt><dd>One or more of the arguments is an illegal value (timeout values must be positive).</dd>\n <dt><code>kAXErrorInvalidUIElement</code></dt><dd>The AXUIElementRef is invalid.</dd></dl>\n */\nextern AXError AXUIElementSetMessagingTimeout (AXUIElementRef element, float timeoutInSeconds) CF_AVAILABLE_MAC(10_4);\n\n/*!\n @function AXUIElementPostKeyboardEvent\n",
+          "utf8_sha256": "df38defad86da9f174d1a2bc382eade7b3c582903af00011c2567b443c976e7d"
+        }
+      ]
+    }
+  ]
+}
