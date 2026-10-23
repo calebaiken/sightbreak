@@ -5,13 +5,32 @@ import copy
 import io
 import json
 from pathlib import Path
+import struct
 import tempfile
 import types
 import unittest
 from unittest.mock import patch
 
 import verify_macos_ordinary as driver
+from macos_deploy_ocr import PROFILE, SCOPE
 from test_macos_ordinary import capture, hud_capture, initial, state
+
+SYNTHETIC_DIGEST = '1'*64
+
+
+def synthetic_analysis(image):
+    """Fixture metadata only; no OCR, native pixels or real file hash is claimed."""
+    width, height = image['image_dimensions']
+    return {'schema': 1, 'profile': PROFILE, 'scope': SCOPE,
+            'source_png_sha256': SYNTHETIC_DIGEST, 'analysis_png_sha256': SYNTHETIC_DIGEST,
+            'owner_pid': image['owner_pid'], 'window_id': image['window_id'],
+            'bounds_points_including_chrome': copy.deepcopy(image['bounds_points_including_chrome']),
+            'source_point_pixel_scale': image['point_pixel_scale'],
+            'source_image_dimensions': [width, height], 'analysis_image_dimensions': [width*2, height*2],
+            'source_crop_pixels_top_left': [0, 0, width, height], 'scale': 2,
+            'normalized_box_space': 'native-full-window-bottom-left', 'resampling': 'CoreGraphics-high',
+            'recognition_level': 'accurate', 'recognition_languages': ['en-US'],
+            'uses_language_correction': False, 'custom_words': [], 'text': copy.deepcopy(image['text'])}
 
 
 class SyntheticController:
@@ -116,7 +135,16 @@ class SyntheticController:
                 kwargs['stdout'].write('ObjectDB instances leaked at exit\n')
         elif '--pid' in arguments:
             receipt = Path(arguments[arguments.index('--report')+1])
-            receipt.write_text(json.dumps(self.native_capture(receipt.stem)))
+            image = self.native_capture(receipt.stem)
+            if '--analysis-mode' in arguments:
+                image['derived_deploy_analysis'] = synthetic_analysis(image)
+                for flag, dimensions in (('--png', image['image_dimensions']),
+                                         ('--deploy-analysis-png', image['derived_deploy_analysis']['analysis_image_dimensions'])):
+                    # Only IHDR headers for pure dimension validation. These
+                    # bytes are synthetic fixtures, never captured PNG evidence.
+                    Path(arguments[arguments.index(flag)+1]).write_bytes(
+                        b'\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR'+struct.pack('>II', *dimensions)+b'SYNTHETIC FIXTURE ONLY')
+            receipt.write_text(json.dumps(image))
             if self.fault == 'startup_helper_error':
                 kwargs['stdout'].write('ERROR: synthetic helper error\n')
         return process
@@ -185,10 +213,10 @@ class SyntheticController:
         api = types.SimpleNamespace(preflight=lambda: {'CGPreflightPostEventAccess': True, 'CGPreflightScreenCaptureAccess': True},
             windows=lambda pid: [{'owner_pid': pid, 'onscreen': True, 'window_id': self.window_id,
                                   'bounds_points_including_chrome': [40, 32, 960, 568]}])
-        manifest = {**self.identity, 'artifact': {'sha256': 'synthetic-hash'}}
+        manifest = {**self.identity, 'artifact': {'sha256': SYNTHETIC_DIGEST}}
         preflight = self.directory.parent / 'synthetic-preflight.json'
         preflight.write_text('{}')
-        staged = {'staged': str(self.directory / 'native/SIGHTBREAK.app'), 'executable_sha256': 'synthetic-hash'}
+        staged = {'staged': str(self.directory / 'native/SIGHTBREAK.app'), 'executable_sha256': SYNTHETIC_DIGEST}
         def reap(process):
             return {'pid': process.pid, 'exit_code': process.returncode, 'owned_group_gone': True,
                     'signals_sent': ['SIGTERM'] if self.fault == 'cleanup' else []}
@@ -203,7 +231,7 @@ class SyntheticController:
                        (driver, 'inventory', lambda *args: copy.deepcopy(self.default)),
                        (driver, 'stage_app', lambda *args: staged), (driver, 'verify_staged_app', payload),
                        (driver, 'require_private_userdir', lambda *args: {'scope': 'synthetic only'}),
-                       (driver, 'MacOrdinaryUI', self.ui), (driver, 'digest', lambda *args: 'synthetic-hash'),
+                       (driver, 'MacOrdinaryUI', self.ui), (driver, 'digest', lambda *args: SYNTHETIC_DIGEST),
                        (driver, 'read_observation_json', self.snapshot), (driver, 'reap', reap),
                        (driver.toolchain, 'verify_engine', lambda: {'scope': 'synthetic only'}),
                        (driver.subprocess, 'Popen', self.popen), (driver.time, 'monotonic', lambda: self.now),
