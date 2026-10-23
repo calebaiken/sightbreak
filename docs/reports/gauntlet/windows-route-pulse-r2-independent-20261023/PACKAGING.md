@@ -7,7 +7,8 @@ packaging check printed two whitespace warnings for blank context lines in
 with a single space. Those raw patch bytes and every retained log stay exact.
 
 The local `.gitattributes` now exempts only `semantic-selection.patch` from
-whitespace checking, alongside the existing raw-log rule. The manifest updates
+whitespace checking, alongside the existing raw-log rule. The exact warning
+excerpt also preserves the quoted trailing spaces and has its own exemption. The manifest updates
 only this attribute file and the two new small packaging records. No source,
 control, receipt, patch or log changed. The full report diff passes whitespace
 checking with the evidence treatment applied.
