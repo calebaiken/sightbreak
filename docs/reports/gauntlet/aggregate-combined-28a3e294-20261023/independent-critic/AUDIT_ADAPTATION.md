@@ -17,3 +17,7 @@ checked separately. No engine, import, renderer, OCR, service or CI executes.
 - independent exhausted oracle: `c88f52d3e9e37453ffcc392e5e75d6889b41465c593a9f0dda74edea55539295`
 
 Before inspecting runtime output, the aggregate auditor also adds direct raw-to-summary reserve reload binding, exact steps 1/14, and each registered normal/hard 24 m draw/fire consumption check. These evaluate the new actual rows, without carrying forward a prior result.
+
+Eight established independent corruption controls are also rerun on the new actual record bytes: planning mutation, request-only draw, free deploy, extra round with consistent projection, false shot, unexplained reward, wrong lane with matching planning state, and false resource projection. They add no native run.
+
+Final pre-output adapted auditor SHA256: `c554ae4e164816612e0db8643292f1a23e871daf00d734591f0c7ce11d7d3936`.
