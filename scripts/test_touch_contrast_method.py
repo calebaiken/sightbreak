@@ -8,7 +8,7 @@ import unittest
 
 import numpy as np
 
-from analyze_touch_contrast import audit_pixels, matrix, scene_identity
+from analyze_touch_contrast import audit_pixels, comparison_passes, matrix, scene_identity
 from prepare_touch_contrast import BASELINE, TOUCH, instrument, split_args
 
 REPO = Path(__file__).resolve().parents[1]
@@ -101,6 +101,18 @@ class PixelMethod(unittest.TestCase):
 
 
 class SourceScope(unittest.TestCase):
+    def test_invalid_baseline_provenance_blocks_comparison(self):
+        result = {"baseline": {"pass": False, "errors": ["incorrect baseline source"]},
+                  "candidate": {"pass": True, "errors": []}, "geometry_equal": True,
+                  "analysis_matches_freeze": True}
+        self.assertFalse(comparison_passes(result))
+
+    def test_valid_low_contrast_baseline_remains_comparable(self):
+        result = {"baseline": {"pass": False, "errors": []},
+                  "candidate": {"pass": True, "errors": []}, "geometry_equal": True,
+                  "analysis_matches_freeze": True}
+        self.assertTrue(comparison_passes(result))
+
     def test_only_draw_body_changes(self):
         before = subprocess.check_output(["git", "-C", str(REPO), "show", BASELINE + ":" + TOUCH]).decode()
         after = (REPO / TOUCH).read_text()

@@ -128,7 +128,7 @@ def read(path):
     return np.asarray(Image.open(path).convert("RGB"))
 
 
-def audit_source(folder, expected_receipt=None, background_folder=None):
+def audit_source(folder, expected_receipt=None, background_folder=None, expected_background_receipt=None):
     rows, errors = [], []
     required = matrix()
     scenes = sorted(folder.glob("*/scene.json"))
@@ -142,12 +142,17 @@ def audit_source(folder, expected_receipt=None, background_folder=None):
             capture = json.loads((folder / "capture.json").read_text())
             bg_manifest = background_folder / "capture.json"
             background_capture = json.loads(bg_manifest.read_text())
+            background_expected = expected_background_receipt or expected_receipt
             if capture.get("source_manifest_sha256") != expected_receipt["manifest_sha256"] or capture.get("source") != expected_receipt["source_full"]:
                 errors.append("native capture source differs from frozen fixture receipt")
+            if background_capture.get("source_manifest_sha256") != background_expected["manifest_sha256"] or background_capture.get("source") != background_expected["source_full"]:
+                errors.append("native background source differs from frozen baseline fixture receipt")
             if capture.get("background_manifest_sha256") != digest(bg_manifest):
                 errors.append("native background receipt mismatch")
             if capture.get("mode") != "controls" or background_capture.get("mode") != "backgrounds":
                 errors.append("incorrect native capture mode")
+            if capture.get("engine") != background_capture.get("engine") or capture.get("renderer") != background_capture.get("renderer"):
+                errors.append("controls/background engine or renderer differs")
             for identity in (capture, background_capture):
                 if [identity.get("engine", {}).get(k) for k in ("major", "minor", "patch")] != [4, 7, 2] or not identity.get("renderer"):
                     errors.append("missing pinned native renderer identity")
@@ -213,8 +218,17 @@ def audit_source(folder, expected_receipt=None, background_folder=None):
             row["pass"] = bool(row["resolved"] and (group not in LIMITS or row.get("contrast_lower_bound", 0) >= LIMITS[group]))
             rows.append(row)
     return {"folder": str(folder), "scenes": len(scenes), "errors": errors, "rows": rows,
+            "provenance_valid": bool(not errors and len(rows) == 304),
             "pass": bool(not errors and len(rows) == 304 and all(x["resolved"] and (x["inactive_exception"] or x["pass"]) for x in rows)),
             "external_surround_scope": "UNRESOLVED: independent inspection of the complete dark surround against external backgrounds is still required."}
+
+
+def comparison_passes(result):
+    # A low-contrast baseline is a valid bar. A baseline with invalid source,
+    # matrix, native renderer, backgrounds or image identities is not comparable.
+    return bool(not result["baseline"]["errors"] and not result["candidate"]["errors"] and
+                result["candidate"]["pass"] and result["geometry_equal"] and
+                result["analysis_matches_freeze"])
 
 
 def main():
@@ -227,7 +241,8 @@ def main():
     args = parser.parse_args()
     freeze = json.loads(args.freeze.read_text())
     receipts = {x["name"]: x for x in freeze["fixtures"]}
-    result = {name: audit_source(getattr(args, name), receipts[name], args.backgrounds) for name in ("baseline", "candidate")}
+    result = {name: audit_source(getattr(args, name), receipts[name], args.backgrounds, receipts["baseline"])
+              for name in ("baseline", "candidate")}
     result["analysis_matches_freeze"] = digest(__file__) == next(x["sha256"] for x in freeze["frozen_files"] if x["path"] == "scripts/analyze_touch_contrast.py")
     baseline_geometry = {p.parent.name: json.loads(p.read_text())["geometry"] for p in args.baseline.glob("*/scene.json")}
     candidate_geometry = {p.parent.name: json.loads(p.read_text())["geometry"] for p in args.candidate.glob("*/scene.json")}
@@ -235,7 +250,7 @@ def main():
     result["analysis_sha256"] = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
     args.out.write_text(json.dumps(result, indent=2) + "\n")
     print(json.dumps({"baseline_pass": result["baseline"]["pass"], "candidate_pass": result["candidate"]["pass"], "geometry_equal": result["geometry_equal"]}))
-    return 0 if result["candidate"]["pass"] and result["geometry_equal"] and result["analysis_matches_freeze"] else 1
+    return 0 if comparison_passes(result) else 1
 
 
 if __name__ == "__main__":

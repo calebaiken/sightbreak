@@ -160,3 +160,27 @@ review of the native output. The analyzer names that scope UNRESOLVED; a numeric
 light-foreground-versus-retained-underlay pass cannot close that boundary scope.
 The fresh critic must review R2 source/method before the root releases native
 execution. No engine, import, export, OCR or render has run in either round.
+
+## R3 amendment, before any native run
+
+The R2 independent reviewer rejected three remaining receipt gates: unrelated
+background source/manifest, different background renderer, and CLI success with
+an invalid baseline source receipt. The exact independent reproducer and its
+R2 rejection output are retained under `retained-r2-critic/`; they remain pure
+metadata/pixel controls and are not native image evidence.
+
+R3 binds the one shared background capture to the frozen baseline fixture's
+source and manifest hash, for both baseline and candidate audits. Controls must
+match the background's complete native engine dictionary and renderer string.
+Existing pinned-version, source/UID, image, background, exact matrix and geometry
+checks remain. CLI comparison succeeds only when both baseline and candidate
+provenance errors are empty, candidate numeric gates pass, geometry matches and
+the analyzer matches its freeze. A baseline's legitimate contrast failure does
+not block comparison when its provenance remains valid. No product drawing,
+native fixture generator or capture script changes for R3.
+
+The unchanged independent R2 reproducer now reports `independent_checks_pass=true`;
+all sixteen builder controls pass, including invalid-baseline rejection and a
+valid low-contrast baseline positive control. R3 source/method still requires
+independent re-review and root render-lane release. Native calls remain zero;
+dark-surround/external-background inspection and blind visual judgment are open.
