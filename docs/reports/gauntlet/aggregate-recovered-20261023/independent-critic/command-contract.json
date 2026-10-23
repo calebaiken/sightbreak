@@ -1,0 +1,921 @@
+{
+  "inspected_source": "8e9f58ac224233f5c491773a6f779169614173c4",
+  "validate_sha256": "7720cc15ccf052f5e4d28e9d53088e0a4fc8764c6dd0a5f887f2718a02e9a953",
+  "mandatory_godot_count": 55,
+  "display_godot_count": 5,
+  "godot_commands": [
+    {
+      "line": 13,
+      "label": "import",
+      "scope": "mandatory",
+      "command": "run_godot import --headless --editor --import --quit",
+      "test_source": null,
+      "test_sha256": null,
+      "source_print_lines": []
+    },
+    {
+      "line": 14,
+      "label": "actor",
+      "scope": "mandatory",
+      "command": "run_godot actor --headless --script res://tests/actor_test.gd",
+      "test_source": "game/tests/actor_test.gd",
+      "test_sha256": "8a87d4db2543ed3164ecc24812fd36e20a76691b08d7ddbe0f4e5fc5285fe2e9",
+      "source_print_lines": [
+        "print(\"ACTOR TESTS: %d checks, %d failures\" % [checks, failures.size()])"
+      ]
+    },
+    {
+      "line": 15,
+      "label": "world",
+      "scope": "mandatory",
+      "command": "run_godot world --headless --script res://tests/world_test.gd",
+      "test_source": "game/tests/world_test.gd",
+      "test_sha256": "4d2412f1091d7dbd91d497029060bfe01d1e2d5f582902e117da5dbee64d132c",
+      "source_print_lines": [
+        "print(\"WORLD_PRESENTATION_STATS \", JSON.stringify(arena.presentation_stats))",
+        "print(\"WORLD_TEST \", checks, \" checks; \", failures.size(), \" failures\")"
+      ]
+    },
+    {
+      "line": 16,
+      "label": "hit-feedback",
+      "scope": "mandatory",
+      "command": "run_godot hit-feedback --headless --script res://tests/hit_feedback_test.gd",
+      "test_source": "game/tests/hit_feedback_test.gd",
+      "test_sha256": "1df4b84bd45a86385f9421c04a7baaa6c56c35dcf5071360d3532aeb50740336",
+      "source_print_lines": [
+        "print(\"HIT_FEEDBACK_TEST checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 17,
+      "label": "weapon-integrity",
+      "scope": "mandatory",
+      "command": "run_godot weapon-integrity --headless --script res://tests/weapon_integrity_test.gd",
+      "test_source": "game/tests/weapon_integrity_test.gd",
+      "test_sha256": "81720bcf65628c3462293c1960436504e5ebd74798e08f31453ccba89f66b34f",
+      "source_print_lines": [
+        "print(\"WEAPON_INTEGRITY_TEST checks=%d failures=%d\" % [checks, failures.size()])"
+      ]
+    },
+    {
+      "line": 18,
+      "label": "gunplay-rules",
+      "scope": "mandatory",
+      "command": "run_godot gunplay-rules --headless --audio-driver Dummy --script res://tests/gunplay_rules_probe.gd",
+      "test_source": "game/tests/gunplay_rules_probe.gd",
+      "test_sha256": "d8fcbabb739e903d6273ea8d1e59f6d03f8e358a434536f90f9ce02ad38e9488",
+      "source_print_lines": [
+        "print(\"GUNPLAY_CASE \" + JSON.stringify(values))",
+        "print(\"GUNPLAY_SOURCE \" + JSON.stringify({\"engine\": Engine.get_version_info().string, \"physics_hz\": Engine.physics_ticks_per_second, \"fixture\": \"real_actor_actions_real_rays\"}))",
+        "print(\"GUNPLAY_RULES \" + JSON.stringify({\"checks\": checks, \"failures\": failures}))"
+      ]
+    },
+    {
+      "line": 19,
+      "label": "hit-volume",
+      "scope": "mandatory",
+      "command": "run_godot hit-volume --headless --script res://tests/hit_volume_test.gd",
+      "test_source": "game/tests/hit_volume_test.gd",
+      "test_sha256": "f60392b0d4cfba829da4afbb584c6fab3ee580b3be8598aaff6c2e2a009e9881",
+      "source_print_lines": [
+        "print(\"HIT_VOLUME_TEST checks=%d failures=%d\" % [checks, failures.size()])"
+      ]
+    },
+    {
+      "line": 20,
+      "label": "hit-history",
+      "scope": "mandatory",
+      "command": "run_godot hit-history --headless --script res://tests/hit_history_test.gd",
+      "test_source": "game/tests/hit_history_test.gd",
+      "test_sha256": "7c686f558a21fd511d61d1a05653be3c0f0dd7fe68d46f039bd5d584bc01606c",
+      "source_print_lines": [
+        "print(\"HIT_HISTORY_TEST checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 21,
+      "label": "render-budget",
+      "scope": "mandatory",
+      "command": "run_godot render-budget --headless --script res://tests/render_budget_test.gd",
+      "test_source": "game/tests/render_budget_test.gd",
+      "test_sha256": "01213ff65838999ba6d73839ce5353d64ab7f388ccf0c65fec408a3789e60e19",
+      "source_print_lines": [
+        "print(\"RENDER_BUDGET_TEST checks=%d failures=%d\" % [checks, failures.size()])"
+      ]
+    },
+    {
+      "line": 22,
+      "label": "smoke-presentation",
+      "scope": "mandatory",
+      "command": "run_godot smoke-presentation --headless --script res://tests/smoke_presentation_test.gd",
+      "test_source": "game/tests/smoke_presentation_test.gd",
+      "test_sha256": "f31c906ab1d20aaad4641825daa0167b2072d8fb14b2f8b7d90ea5aac3b1cd4c",
+      "source_print_lines": [
+        "print(\"SMOKE_PRESENTATION_TEST checks=%d failures=%d\" % [checks, failures.size()])"
+      ]
+    },
+    {
+      "line": 23,
+      "label": "match",
+      "scope": "mandatory",
+      "command": "run_godot match --headless --script res://tests/match_test.gd",
+      "test_source": "game/tests/match_test.gd",
+      "test_sha256": "e8e7f11834b80b1a97d0451924b17ad05c97e86f3cd5947eeb56c86e1e917e0d",
+      "source_print_lines": [
+        "print(\"MATCH_TEST: %d/%d passed\" % [checks - failures, checks])"
+      ]
+    },
+    {
+      "line": 24,
+      "label": "authority-order",
+      "scope": "mandatory",
+      "command": "run_godot authority-order --headless --script res://tests/authority_order_test.gd",
+      "test_source": "game/tests/authority_order_test.gd",
+      "test_sha256": "87e79a6baa19475fbb0c7cf2567d39a26c7b93efc585ff052cd0f2d37f002277",
+      "source_print_lines": [
+        "print(\"AUTHORITY_ORDER engine=%s observe=%s\" % [Engine.get_version_info().string, observe])",
+        "print(\"AUTHORITY_ORDER_BENCHMARK checks=%d failures=%d\" % [checks, failures.size()])",
+        "print(\"AUTHORITY_ORDER checks=%d failures=%d mode=%s\" % [checks, failures.size(), \"observation\" if observe else \"assertion\"])",
+        "print(\"CASE \" + JSON.stringify({\"kind\": \"duel\", \"seed\": seed_value, \"mirror\": mirror, \"reverse\": reverse, \"a\": _state(a), \"b\": _state(b), \"shots\": shots.duplicate(), \"eliminations\": eliminations.duplicate()}))",
+        "print(\"CASE \" + JSON.stringify({\"kind\": \"moving\", \"reverse\": reverse, \"a\": _state(a), \"b\": _state(b), \"shots\": shots.duplicate(), \"eliminations\": eliminations.duplicate()}))",
+        "print(\"CASE \" + JSON.stringify({\"kind\": \"stance\", \"reverse\": reverse, \"a\": _state(a), \"b\": _state(b), \"head_height\": b.head_height}))",
+        "print(\"CASE \" + JSON.stringify({\"kind\": \"shield\", \"reverse\": reverse, \"front\": _state(front), \"behind\": _state(behind), \"a\": _state(a), \"b\": _state(b), \"shots\": shots.duplicate(), \"eliminations\": eliminations.duplicate()}))",
+        "print(\"CASE \" + JSON.stringify({\"kind\": \"nonlethal\", \"reverse\": reverse, \"a\": _state(a), \"b\": _state(b), \"shots\": shots.duplicate()}))",
+        "print(\"CPU \" + JSON.stringify({\"fire\": firing, \"sample\": sample, \"ticks\": 2000, \"total_usec\": elapsed, \"usec_per_tick\": float(elapsed) / 2000, \"shots\": shot_count, \"damage_events\": hit_count, \"fixture\": \"ammo_sufficient_recoil_compensated\"}))"
+      ]
+    },
+    {
+      "line": 25,
+      "label": "state-privacy",
+      "scope": "mandatory",
+      "command": "run_godot state-privacy --headless --script res://tests/state_privacy_test.gd",
+      "test_source": "game/tests/state_privacy_test.gd",
+      "test_sha256": "a6bd9fcafc3b375691dacfeb60ad319a126ece72ebe77b2b800df1dc26604575",
+      "source_print_lines": [
+        "print(\"STATE_PRIVACY_TEST checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 26,
+      "label": "snapshot-buffer",
+      "scope": "mandatory",
+      "command": "run_godot snapshot-buffer --headless --script res://tests/snapshot_buffer_test.gd",
+      "test_source": "game/tests/snapshot_buffer_test.gd",
+      "test_sha256": "77a53643321577f44de0b70f4e7f3306205a00ed6a7bd5b868e062a2185c2374",
+      "source_print_lines": [
+        "print(\"SNAPSHOT_BUFFER_TEST checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 27,
+      "label": "input-stream",
+      "scope": "mandatory",
+      "command": "run_godot input-stream --headless --script res://tests/input_stream_test.gd",
+      "test_source": "game/tests/input_stream_test.gd",
+      "test_sha256": "08433f325afcfc82fbecdb218537bfd5f598fbb9a794c3f5646a4fc78deb5913",
+      "source_print_lines": [
+        "print(\"INPUT_STREAM_TEST checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 28,
+      "label": "activity-provenance",
+      "scope": "mandatory",
+      "command": "run_godot activity-provenance --headless --script res://tests/activity_provenance_test.gd",
+      "test_source": "game/tests/activity_provenance_test.gd",
+      "test_sha256": "7557492239be701961e9fd2a855401cbea3fdb929a8a2c39ab2424d9321b2904",
+      "source_print_lines": [
+        "print(\"ACTIVITY_PROVENANCE_TEST checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 29,
+      "label": "movement-replay",
+      "scope": "mandatory",
+      "command": "run_godot movement-replay --headless --script res://tests/movement_prediction_test.gd",
+      "test_source": "game/tests/movement_prediction_test.gd",
+      "test_sha256": "aad242761fcd1541183fd29470530e6a883ed57b0b55134e418987691b0e344d",
+      "source_print_lines": [
+        "print(\"MOVEMENT_PREDICTION_TEST checks=%d failures=%d maximum_error_m=%f\" % [checks, failures, maximum])"
+      ]
+    },
+    {
+      "line": 30,
+      "label": "input-lifecycle",
+      "scope": "mandatory",
+      "command": "run_godot input-lifecycle --headless --script res://tests/input_lifecycle_test.gd",
+      "test_source": "game/tests/input_lifecycle_test.gd",
+      "test_sha256": "ab35db57f1627d0261c3df062d325225afa884e8435c2148831d1caade3ad6a0",
+      "source_print_lines": [
+        "print(\"EDGE_PROBE steady_held_shots=%d gap_held_shots=%d gap_rejected=%d\" % [15 - steady.actors[1].ammo, 15 - gap.actors[1].ammo, gap._input_stream.rejected])",
+        "print(\"EPOCH_PROBE accepted=%d ack=%d client_sequence=%d pending=%d first_sequence=%d last_sequence=%d\" % [accepted, stream.acknowledged[99], prediction.sequence, prediction.pending.size(), prediction.sequence, prediction.sequence])",
+        "print(\"INPUT_LIFECYCLE_TEST checks=3 failures=%d\" % failures)"
+      ]
+    },
+    {
+      "line": 31,
+      "label": "peer-lifecycle",
+      "scope": "mandatory",
+      "command": "run_godot peer-lifecycle --headless --script res://tests/peer_lifecycle_test.gd",
+      "test_source": "game/tests/peer_lifecycle_test.gd",
+      "test_sha256": "64186ff17669d41a28c0ff6580e490f522f0e67598d79e5e552697babcb35a93",
+      "source_print_lines": [
+        "print(\"PEER_LIFECYCLE_TEST checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 32,
+      "label": "result-outbox",
+      "scope": "mandatory",
+      "command": "run_godot result-outbox --headless --script res://tests/result_outbox_test.gd",
+      "test_source": "game/tests/result_outbox_test.gd",
+      "test_sha256": "89f2015367fafcabbdfa9652b5e429a93a65501d6d9b61993c7bf1ff8b3a7019",
+      "source_print_lines": [
+        "print(\"RESULT_OUTBOX_TEST checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 34,
+      "label": "reconnect-policy",
+      "scope": "mandatory",
+      "command": "run_godot reconnect-policy --headless --script res://tests/reconnect_policy_test.gd",
+      "test_source": "game/tests/reconnect_policy_test.gd",
+      "test_sha256": "041232bd145ba3fb0250ecc11d8d96aa8f9a06bb736158d86add08b6f986edbf",
+      "source_print_lines": [
+        "print(\"RECONNECT_POLICY_TEST checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 35,
+      "label": "reconnect-independent",
+      "scope": "mandatory",
+      "command": "run_godot reconnect-independent --headless --script res://tests/independent_reconnect_review_test.gd",
+      "test_source": "game/tests/independent_reconnect_review_test.gd",
+      "test_sha256": "495120c975d9fbd02ffc640d9a4cdb9963a77897c0792ad337161202f976a3f5",
+      "source_print_lines": [
+        "print(\"REVIEW_CHECK %s %s\" % [\"PASS\" if ok else \"FAIL\", label])",
+        "print(\"INDEPENDENT_RECONNECT_REVIEW checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 36,
+      "label": "resume-admission",
+      "scope": "mandatory",
+      "command": "run_godot resume-admission --headless --script res://tests/independent_resume_admission_test.gd",
+      "test_source": "game/tests/independent_resume_admission_test.gd",
+      "test_sha256": "8a33d8424ad659773644f1cff1a82e9d14a7c7947c2353a2ab276871ee465fea",
+      "source_print_lines": [
+        "print(\"REVIEW_ADMISSION %s %s\" % [\"PASS\" if ok else \"FAIL\", label])",
+        "print(\"INDEPENDENT_RESUME_ADMISSION checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 37,
+      "label": "lost-welcome",
+      "scope": "mandatory",
+      "command": "run_godot lost-welcome --headless --script res://tests/lost_welcome_test.gd",
+      "test_source": "game/tests/lost_welcome_test.gd",
+      "test_sha256": "1b873f5376f054f854e0ef57e6481c034c22627bec25af4c648a974681e6bd60",
+      "source_print_lines": [
+        "print(\"LOST_WELCOME_REVIEW \" + JSON.stringify({\"fixture_valid\": fixture_valid, \"welcome_suppressed_after_authority_commit\": welcome_lost, \"old_credential_retained_by_client\": credential.length() == 64, \"old_credential_still_valid\": server._reservations.has(credential), \"restored_same_actor\": recovered, \"final_state\": final_client.connection_state, \"scope\": \"one native process; ENet; deterministic application delivery suppression\"}))"
+      ]
+    },
+    {
+      "line": 38,
+      "label": "resume-alias",
+      "scope": "mandatory",
+      "command": "run_godot resume-alias --headless --script res://tests/independent_resume_alias_test.gd",
+      "test_source": "game/tests/independent_resume_alias_test.gd",
+      "test_sha256": "e69c019036c4a56ec86a1f7d9ce7f21a1ca7525f5334969f1bbb4e2090a7e8e4",
+      "source_print_lines": [
+        "print(\"REVIEW_ALIAS %s %s\" % [\"PASS\" if ok else \"FAIL\", label])",
+        "print(\"INDEPENDENT_RESUME_ALIAS checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 39,
+      "label": "resume-auth-loss",
+      "scope": "mandatory",
+      "command": "run_godot resume-auth-loss --headless --script res://tests/resume_auth_loss_test.gd",
+      "test_source": "game/tests/resume_auth_loss_test.gd",
+      "test_sha256": "3b23e09d5b7d35b32775e1dd722bd9de42d914d4602403272e24a4dc8f15274e",
+      "source_print_lines": [
+        "print(\"AUTH_LOSS_REVIEW \" + JSON.stringify({\"fixture_valid\": initial and retired, \"suppressed_server_hellos\": resumed.discarded_hellos, \"recovered_same_actor\": resumed.local_id == actor, \"fresh_accepted_tick\": resumed._replica_buffer.last_tick, \"state\": resumed.connection_state, \"elapsed_msec\": Time.get_ticks_msec() - start, \"original_deadline_msec\": deadline, \"notifications\": notices, \"passed\": success, \"scope\": \"one native process; ENet; one application hello reply suppressed\"}))"
+      ]
+    },
+    {
+      "line": 40,
+      "label": "bot-ai-regression",
+      "scope": "mandatory",
+      "command": "run_godot bot-ai-regression --headless --script res://tests/bot_ai_regression_test.gd",
+      "test_source": "game/tests/bot_ai_regression_test.gd",
+      "test_sha256": "0a7caffaabf92f4f1f259cd22221adb14df9b9b22e0a400d47c74d660c0cf5c6",
+      "source_print_lines": [
+        "print(\"BOT_AI_REGRESSION_TESTS_OK\")"
+      ]
+    },
+    {
+      "line": 41,
+      "label": "bot-dry-weapon",
+      "scope": "mandatory",
+      "command": "run_godot bot-dry-weapon --headless --audio-driver Dummy --script res://tests/bot_dry_weapon_test.gd",
+      "test_source": "game/tests/bot_dry_weapon_test.gd",
+      "test_sha256": "059a49bdf1e755a049e0fa4a904d303eb5fc9ce1fd05cbfc993ee9881aa46863",
+      "source_print_lines": [
+        "print(\"BOT_DRY_WEAPON_ENGINE \" + JSON.stringify(Engine.get_version_info()))",
+        "print(\"BOT_DRY_WEAPON_FAILURE \" + failure)",
+        "print(\"BOT_DRY_WEAPON_RESULT \" + JSON.stringify({",
+        "print(\"BOT_DRY_WEAPON_CASE \" + JSON.stringify({",
+        "print(\"BOT_DRY_WEAPON_STEP \" + JSON.stringify({",
+        "print(\"BOT_DRY_WEAPON_SEQUENCE \" + JSON.stringify({"
+      ]
+    },
+    {
+      "line": 42,
+      "label": "bot-squad-symmetry",
+      "scope": "mandatory",
+      "command": "run_godot bot-squad-symmetry --headless --script res://tests/bot_squad_symmetry_test.gd",
+      "test_source": "game/tests/bot_squad_symmetry_test.gd",
+      "test_sha256": "0f2ce7e26d85405c633b4cda6807f8a2f36acd5f3fdb2766ea99238ab907dc77",
+      "source_print_lines": [
+        "print(\"BOT_SQUAD_SYMMETRY engine=%s observe=%s\" % [Engine.get_version_info().string, observe])",
+        "for failure in failures: print(\"BOT_SQUAD_FAILURE \" + failure)",
+        "print(\"BOT_SQUAD_SYMMETRY_RESULT samples=%d checks=%d failures=%d mode=%s\" % [samples, checks, failures.size(), \"observation\" if observe else \"assertion\"])",
+        "print(\"BOT_SQUAD_SAMPLE \" + JSON.stringify({\"id\": id, \"slot\": slot, \"difficulty\": difficulty, \"team\": team, \"kind\": kind, \"output\": result}))"
+      ]
+    },
+    {
+      "line": 43,
+      "label": "bots",
+      "scope": "mandatory",
+      "command": "run_godot bots --headless --script res://tests/bot_match_test.gd",
+      "test_source": "game/tests/bot_match_test.gd",
+      "test_sha256": "9ff5c11e57e321671c3dd58852a90f57066d09bb4808cf1fc99ed704365b2c08",
+      "source_print_lines": [
+        "print(\"BOT_MATCH_OBSERVATION elapsed=%0.1f kills=%d planted=%s score=%d:%d\" % [elapsed, kills, planted, match_node.attack_score, match_node.defend_score])",
+        "print(\"BOT %s alive=%s position=%s\" % [actor.display_name,actor.alive,actor.position])"
+      ]
+    },
+    {
+      "line": 44,
+      "label": "bot-lifecycle",
+      "scope": "mandatory",
+      "command": "run_godot bot-lifecycle --headless --script res://tests/bot_lifecycle_test.gd",
+      "test_source": "game/tests/bot_lifecycle_test.gd",
+      "test_sha256": "ffcbe6ff948fbf07eb1f1b9b80bba62875989c6ad45e1a9cdc97f8ff765407d6",
+      "source_print_lines": [
+        "print(\"BOT_LIFECYCLE round=%d score=%d:%d simulated_seconds=%.1f\" % [observed_round, match_node.attack_score, match_node.defend_score, elapsed])",
+        "print(\"BOT_LIFECYCLE_RESULT passed=%s rounds=%d score=%d:%d kills=%d halftime=%s plant_observed=%s reports=%d simulated_seconds=%.1f\" % [success, observed_round, match_node.attack_score, match_node.defend_score, kills, halftime_seen, planted_seen, results.size(), elapsed])"
+      ]
+    },
+    {
+      "line": 45,
+      "label": "profile",
+      "scope": "mandatory",
+      "command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/profile-state\" run_godot profile --headless --script res://tests/profile_test.gd",
+      "test_source": "game/tests/profile_test.gd",
+      "test_sha256": "d5dff08902daf8f36c913e936feabaa86ac647c43c25713eabe4a03a1275a4bb",
+      "source_print_lines": [
+        "print(\"PROFILE_TEST checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 46,
+      "label": "touch",
+      "scope": "mandatory",
+      "command": "run_godot touch --headless --script res://tests/touch_test.gd",
+      "test_source": "game/tests/touch_test.gd",
+      "test_sha256": "c958f4a40438aad68aae88b86357ab56188fed32e6717b067ca1786d1c50f42a",
+      "source_print_lines": [
+        "print(\"TOUCH_TEST checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 47,
+      "label": "main",
+      "scope": "mandatory",
+      "command": "run_godot main --headless --script res://tests/main_test.gd",
+      "test_source": "game/tests/main_test.gd",
+      "test_sha256": "4e65086634461d7ab0d4c0ddd206216a7aaca3691c98fb021df3525fa2e26de6",
+      "source_print_lines": [
+        "print(\"MAIN_TEST checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 48,
+      "label": "input-mode",
+      "scope": "mandatory",
+      "command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/input-mode-state\" run_godot input-mode --headless --script res://tests/input_mode_test.gd",
+      "test_source": "game/tests/input_mode_test.gd",
+      "test_sha256": "3683b784175ec82b402383e46698f560da3e30b563e2dfe0c4263b676c74e52f",
+      "source_print_lines": [
+        "print(\"FOCUS_RELEASE_ORDERING \" + JSON.stringify({\"before_controller_tick\": released_before_tick, \"premature_press\": premature, \"acknowledged_release\": acknowledged, \"fresh_input\": [game._local_input.move.x, game._local_input.move.y]}))",
+        "print(\"INPUT_MODE_TEST checks=%d failures=%d graphical_pointer=%s scope=simulated_capabilities_and_input_not_physical_hardware baseline=%s\" % [checks,failures,graphical,not baseline.is_empty()])"
+      ]
+    },
+    {
+      "line": 49,
+      "label": "menu-focus",
+      "scope": "mandatory",
+      "command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/menu-focus-state\" run_godot menu-focus --headless --script res://tests/menu_focus_test.gd",
+      "test_source": "game/tests/menu_focus_test.gd",
+      "test_sha256": "25b4136d79d2de20e2d880e05ebf9a7849de93363dd77bed7d37f5e42d980d96",
+      "source_print_lines": [
+        "print(\"MENU_FOCUS_TEST checks=%d failures=%d scope=scene_focus_synthetic_actions_not_physical_hardware\" % [checks,failures])"
+      ]
+    },
+    {
+      "line": 50,
+      "label": "offline-diagnostics",
+      "scope": "mandatory",
+      "command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/offline-diagnostics-state\" run_godot offline-diagnostics --headless --script res://tests/offline_diagnostics_test.gd",
+      "test_source": "game/tests/offline_diagnostics_test.gd",
+      "test_sha256": "f82f60ae002a7aae761c5efdbe1e5ebec3aa6d7ac73f5ea198c1b70155eba607",
+      "source_print_lines": [
+        "print(\"OFFLINE_DIAGNOSTICS_TEST checks=%d failures=%d scope=source_initialization_and_read_only_observer_not_exported_gameplay\" % [checks,failures])"
+      ]
+    },
+    {
+      "line": 51,
+      "label": "objective-hud",
+      "scope": "mandatory",
+      "command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/objective-hud-state\" run_godot objective-hud --headless --script res://tests/hud_objective_hint_test.gd",
+      "test_source": "game/tests/hud_objective_hint_test.gd",
+      "test_sha256": "73d9898aac7b3cf9eb2c7fcf5ce62f7384051a6d65cb7d3409ae487dd0326e49",
+      "source_print_lines": [
+        "print(\"HUD_OBJECTIVE_HINT_TEST_STATE native_user_dir=%s original_user_dir=%s owner=%s\" % [fixture_user_dir, original_user_dir, fixture_name])",
+        "print(\"HUD_OBJECTIVE_HINT_TEST_CLEANUP \" + JSON.stringify({\"native_user_dir\":fixture_user_dir, \"owner\":fixture_name, \"owned\":fixture_created, \"removed\":fixture_removed, \"original_user_dir_restored\":restored, \"reason\":reason, \"original_exit\":exit_code, \"exit\":final_exit}))",
+        "print(\"HUD_PRIORITY_SAMPLE \" + JSON.stringify({\"touch\":touch_enabled, \"connection\":state, \"role\":role.name, \"sample\":index, \"ui_elapsed\":main.elapsed, \"until\":main.status_label.get_meta(\"until\", 0.0), \"actual\":main.status_label.text, \"expected\":role.expected, \"correct\":correct, \"game_tick\":game._simulation_tick}))",
+        "print(\"HUD_PRIORITY_BENCHMARK \" + JSON.stringify({\"touch\":touch_enabled, \"samples\":samples, \"wrong_frames\":wrong_frames, \"scope\":\"frozen HUD fixture; no gameplay tick advanced\"}))",
+        "print(\"HUD_OBJECTIVE_HINT_TEST source=%s scope=frozen_source_ui checks=%d failures=%d\" % [source, checks, failures])"
+      ]
+    },
+    {
+      "line": 52,
+      "label": "landscape",
+      "scope": "mandatory",
+      "command": "run_godot landscape --headless --script res://tests/landscape_ui_test.gd",
+      "test_source": "game/tests/landscape_ui_test.gd",
+      "test_sha256": "7ed80843b1b6859c71af3e82106ad0a82c2890e0af9c4c9592f9211cd1d46b4a",
+      "source_print_lines": [
+        "print(\"LANDSCAPE_UI_TEST checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 53,
+      "label": "ux-contract",
+      "scope": "mandatory",
+      "command": "run_godot ux-contract --headless --script res://tests/ux_contract_test.gd",
+      "test_source": "game/tests/ux_contract_test.gd",
+      "test_sha256": "8f03cb7296971eda8920819954e89bdea8ea4614aefcfb42340f3d81cca2e1e2",
+      "source_print_lines": [
+        "print(\"UX_CONTRACT_TEST checks=%d failures=%d\" % [checks, failures])",
+        "for line in table: print(\"MENU_LAYOUT \", line)"
+      ]
+    },
+    {
+      "line": 54,
+      "label": "hud-overflow",
+      "scope": "mandatory",
+      "command": "run_godot hud-overflow --headless --script res://tests/hud_overflow_test.gd",
+      "test_source": "game/tests/hud_overflow_test.gd",
+      "test_sha256": "470dd79d42fcf2dc6b4d3f53d448a8cd75c9ea166407182e7961097f29253cc8",
+      "source_print_lines": [
+        "print(\"HUD_OVERFLOW_TEST taller-fallback pass skipped: no system face covers the CJK sample\")",
+        "print(\"HUD_OVERFLOW_TEST checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 55,
+      "label": "economy-ui",
+      "scope": "mandatory",
+      "command": "run_godot economy-ui --headless --script res://tests/economy_ui_test.gd",
+      "test_source": "game/tests/economy_ui_test.gd",
+      "test_sha256": "334200fc5d5869b578812e714b88ec57f7bfdc4091d8096bd34854c4fb72bc88",
+      "source_print_lines": [
+        "print(\"PASS: Economy native screens, offline separation, URL policy, UUIDs\" + (\" and live HTTP authentication\" if not server.is_empty() else \"\"))"
+      ]
+    },
+    {
+      "line": 56,
+      "label": "armory-ui",
+      "scope": "mandatory",
+      "command": "run_godot armory-ui --headless --script res://tests/armory_ui_test.gd",
+      "test_source": "game/tests/armory_ui_test.gd",
+      "test_sha256": "18f177d82bd9873e24c102365cc3f002906b6071dfd6a205d2e37a54c4c0bf36",
+      "source_print_lines": [
+        "print(\"LAYOUT %d screens (4 tabs x %d sizes x %d text scales)\" % [tally, SIZES.size(), SCALES.size()])",
+        "print(\"PASS: Armory states, money terms, trade sides and collection order (%d checks)\" % checks)",
+        "print(\"FAIL: %d of %d armory checks\" % [failures.size(), checks])",
+        "print(\"  - \" + failure)"
+      ]
+    },
+    {
+      "line": 57,
+      "label": "armory-state",
+      "scope": "mandatory",
+      "command": "run_godot armory-state --headless --script res://tests/armory_state_test.gd",
+      "test_source": "game/tests/armory_state_test.gd",
+      "test_sha256": "e55a6968c8ec80d4b65d9761419cb2540c8ae89c4c35476d0276fb319acb78a5",
+      "source_print_lines": [
+        "print(\"CONFIRM_SHEET \", line)",
+        "print(\"CONFIRM_SHEET %d configurations through the real button\" % cases)",
+        "print(\"PASS: Armory account, text-size and transaction behaviour (%d checks)\" % checks)",
+        "print(\"FAIL: %d of %d armory-state checks\" % [failures.size(), checks])",
+        "print(\"  - \" + failure)"
+      ]
+    },
+    {
+      "line": 58,
+      "label": "menu-state",
+      "scope": "mandatory",
+      "command": "run_godot menu-state --headless --script res://tests/menu_state_test.gd",
+      "test_source": "game/tests/menu_state_test.gd",
+      "test_sha256": "09633e467edcb1ea137fd914310d302d8e600dd9bfd135cc4e8852c8d7a1cf07",
+      "source_print_lines": [
+        "print(\"PASS: Menu account lines and resize handling (%d checks)\" % checks)",
+        "print(\"FAIL: %d of %d menu-state checks\" % [failures.size(), checks])",
+        "print(\"  - \" + failure)"
+      ]
+    },
+    {
+      "line": 59,
+      "label": "economy-recovery",
+      "scope": "mandatory",
+      "command": "run_godot economy-recovery --headless --script res://tests/economy_recovery_test.gd",
+      "test_source": "game/tests/economy_recovery_test.gd",
+      "test_sha256": "432d4406aaf18e4c71fe9abc610eaf384475698ab49ba9669b3e8ea800121d98",
+      "source_print_lines": [
+        "print(\"PASS: %d economy recovery and cosmetic material assertions\" % checks)"
+      ]
+    },
+    {
+      "line": 60,
+      "label": "transaction-journal",
+      "scope": "mandatory",
+      "command": "SIGHTBREAK_STATE_DIR=\"$validation_dir/transaction-journal-state\" run_godot transaction-journal --headless --script res://tests/transaction_journal_test.gd",
+      "test_source": "game/tests/transaction_journal_test.gd",
+      "test_sha256": "5d459648d8794ae0eaa024ed993a52e71144523bbf783f5196e42d370599d38b",
+      "source_print_lines": [
+        "print(\"COMPETING_PROCESS \" + JSON.stringify(child_output))",
+        "print(\"TRANSACTION_JOURNAL %d/%d passed\" % [checks - failures.size(), checks])"
+      ]
+    },
+    {
+      "line": 62,
+      "label": "cosmetics",
+      "scope": "mandatory",
+      "command": "run_godot cosmetics --headless --script res://tests/cosmetic_presentation_test.gd",
+      "test_source": "game/tests/cosmetic_presentation_test.gd",
+      "test_sha256": "58628c45897245e910f0037a442523a3fbdad1cb12fa6eece4082f4caaee9c44",
+      "source_print_lines": [
+        "print(\"Cosmetic presentation: %d assertions / %d failures\" % [assertions, failures])"
+      ]
+    },
+    {
+      "line": 63,
+      "label": "weapon-art",
+      "scope": "mandatory",
+      "command": "run_godot weapon-art --headless --script res://tests/weapon_art_test.gd",
+      "test_source": "game/tests/weapon_art_test.gd",
+      "test_sha256": "78775cd6482897351eeb6eb8ca4491a2667d2957425400e8181937ba2d4e81b2",
+      "source_print_lines": [
+        "print(\"WEAPON_ART_TEST checks=%d failures=%d\" % [checks, failures.size()])"
+      ]
+    },
+    {
+      "line": 64,
+      "label": "integration-actor-lifecycle",
+      "scope": "mandatory",
+      "command": "run_godot integration-actor-lifecycle --headless --script res://tests/integration_actor_lifecycle_test.gd",
+      "test_source": "game/tests/integration_actor_lifecycle_test.gd",
+      "test_sha256": "bc8b1d87dcd5465762ebf8e95eef8fdff04cce71e1f6e1243eeecb3b5daec170",
+      "source_print_lines": [
+        "print(\"INTEGRATION_ACTOR_LIFECYCLE checks=%d failures=%s\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 67,
+      "label": "reload-sequence",
+      "scope": "mandatory",
+      "command": "run_godot reload-sequence --headless --script res://tests/reload_sequence_test.gd",
+      "test_source": "game/tests/reload_sequence_test.gd",
+      "test_sha256": "3510974a872d31b2dc170fef96b0e9d95a2a87fec7dc4b0535bc9119c6efc3c9",
+      "source_print_lines": [
+        "print(\"%s %s\" % [\"ok  \" if condition else \"FAIL\", message])",
+        "print(\"RELOAD_SEQUENCE_TEST checks=%d failures=%d\" % [checks, failures.size()])",
+        "print(\"VIS %.3f over=%.3f digits=%d thumb=%s\" % [t.progress, t.wrist_overshoot, t.digits_in_frame, t.thumb_in_frame])"
+      ]
+    },
+    {
+      "line": 68,
+      "label": "reload-audio",
+      "scope": "mandatory",
+      "command": "run_godot reload-audio --headless --script res://tests/reload_audio_test.gd",
+      "test_source": "game/tests/reload_audio_test.gd",
+      "test_sha256": "9c5368cf666db83ad09b10bba2524a8e7664d3eb75d2d35fdbd6c1dbca31da9d",
+      "source_print_lines": [
+        "print(\"%s %s\" % [\"ok  \" if condition else \"FAIL\", message])",
+        "print(\"RELOAD_AUDIO_TEST checks=%d failures=%d\" % [checks, failures.size()])"
+      ]
+    },
+    {
+      "line": 70,
+      "label": "reload-audio-capture",
+      "scope": "mandatory",
+      "command": "run_godot reload-audio-capture --headless --audio-driver Dummy --script res://tests/reload_audio_capture.gd -- --scenario=reload",
+      "test_source": "game/tests/reload_audio_capture.gd",
+      "test_sha256": "8d37c5b390d537cb49c542f2fe49348bab3dfc9c9cc0f6e6057652bd6f798013",
+      "source_print_lines": [
+        "print(line)",
+        "print(\"RELOAD_AUDIO_CAPTURE scenario=%s reduced=%s checks=%d failures=%d\" % [scenario, reduced, checks, failures.size()])"
+      ]
+    },
+    {
+      "line": 71,
+      "label": "reload-audio-cancel",
+      "scope": "mandatory",
+      "command": "run_godot reload-audio-cancel --headless --audio-driver Dummy --script res://tests/reload_audio_capture.gd -- --scenario=cancel",
+      "test_source": "game/tests/reload_audio_capture.gd",
+      "test_sha256": "8d37c5b390d537cb49c542f2fe49348bab3dfc9c9cc0f6e6057652bd6f798013",
+      "source_print_lines": [
+        "print(line)",
+        "print(\"RELOAD_AUDIO_CAPTURE scenario=%s reduced=%s checks=%d failures=%d\" % [scenario, reduced, checks, failures.size()])"
+      ]
+    },
+    {
+      "line": 72,
+      "label": "reload-audio-shot",
+      "scope": "mandatory",
+      "command": "run_godot reload-audio-shot --headless --audio-driver Dummy --script res://tests/reload_audio_capture.gd -- --scenario=shot",
+      "test_source": "game/tests/reload_audio_capture.gd",
+      "test_sha256": "8d37c5b390d537cb49c542f2fe49348bab3dfc9c9cc0f6e6057652bd6f798013",
+      "source_print_lines": [
+        "print(line)",
+        "print(\"RELOAD_AUDIO_CAPTURE scenario=%s reduced=%s checks=%d failures=%d\" % [scenario, reduced, checks, failures.size()])"
+      ]
+    },
+    {
+      "line": 76,
+      "label": "reload-visibility",
+      "scope": "DISPLAY",
+      "command": "  run_godot reload-visibility --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_visibility_test.gd -- --step=2",
+      "test_source": "game/tests/reload_visibility_test.gd",
+      "test_sha256": "edae4dcff9385735b56e0f928d439dd97affabbee8bfca28e6dde295a8cdaa8a",
+      "source_print_lines": [
+        "print(\"%s %s\" % [\"ok  \" if condition else \"FAIL\", message])",
+        "print(\"RELOAD_VISIBILITY_TEST view=%s reduced=%s frames=%d checks=%d failures=%d\" % [view, reduced, results.size(), checks, failures.size()])"
+      ]
+    },
+    {
+      "line": 78,
+      "label": "reload-finish-sunlit",
+      "scope": "DISPLAY",
+      "command": "  run_godot reload-finish-sunlit --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base",
+      "test_source": "game/tests/reload_discolour_probe.gd",
+      "test_sha256": "e8ae1141303ca74e3e1a8c049cefc75332f3acdc8d30dfc28d50810481fbe4a7",
+      "source_print_lines": [
+        "print(\"DISCOLOUR note: furniture material is %s\" % body_node.material_override)",
+        "print(\"DISCOLOUR \", line)",
+        "print(\"%s the %s median luma stays within %.2f of its lowest through the reload (%.1f to %.1f, ratio %.2f, %d cases)\" % [\"ok  \" if ok else \"FAIL\", part, RATIO_MAX, low, high, high / low, values.size()])",
+        "print(\"%s the receiver's (r - b) / luma stays within %.2f of its first value through the reload (largest shift %.3f, from %.3f, %d cases)\" % [\"ok  \" if chroma_ok else \"FAIL\", CHROMA_SHIFT_MAX, shift, chroma[0], chroma.size()])",
+        "print(\"RELOAD_DISCOLOUR_TEST view=%s skin=%s authored=%s sweep=%s checks=%d failures=%d\" % [view, skin, SBWeaponModel.use_authored, sweep, checks, failures])"
+      ]
+    },
+    {
+      "line": 79,
+      "label": "reload-finish-shade",
+      "scope": "DISPLAY",
+      "command": "  run_godot reload-finish-shade --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --view=shade",
+      "test_source": "game/tests/reload_discolour_probe.gd",
+      "test_sha256": "e8ae1141303ca74e3e1a8c049cefc75332f3acdc8d30dfc28d50810481fbe4a7",
+      "source_print_lines": [
+        "print(\"DISCOLOUR note: furniture material is %s\" % body_node.material_override)",
+        "print(\"DISCOLOUR \", line)",
+        "print(\"%s the %s median luma stays within %.2f of its lowest through the reload (%.1f to %.1f, ratio %.2f, %d cases)\" % [\"ok  \" if ok else \"FAIL\", part, RATIO_MAX, low, high, high / low, values.size()])",
+        "print(\"%s the receiver's (r - b) / luma stays within %.2f of its first value through the reload (largest shift %.3f, from %.3f, %d cases)\" % [\"ok  \" if chroma_ok else \"FAIL\", CHROMA_SHIFT_MAX, shift, chroma[0], chroma.size()])",
+        "print(\"RELOAD_DISCOLOUR_TEST view=%s skin=%s authored=%s sweep=%s checks=%d failures=%d\" % [view, skin, SBWeaponModel.use_authored, sweep, checks, failures])"
+      ]
+    },
+    {
+      "line": 82,
+      "label": "viewmodel-light",
+      "scope": "DISPLAY",
+      "command": "  run_godot viewmodel-light --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/viewmodel_light_probe.gd -- --assert --poses=ready,grab",
+      "test_source": "game/tests/viewmodel_light_probe.gd",
+      "test_sha256": "2df3788a196ee8380181be45db95419384bc9160590b2887734b1284eff28f77",
+      "source_print_lines": [
+        "print(\"LIGHT %s | %s | %s | %s | n=%d (not visible)\" % [tag, scenario, pose, part, s.n])",
+        "print(\"LIGHT %s | %s | %s | %s | n=%d median=%.1f p10=%.1f p90=%.1f detail=%.2f\" % [tag, scenario, pose, part, s.n, s.median, s.p10, s.p90, s.detail])",
+        "print(\"%s %s: grip %.1f / receiver %.1f = %.2f (at most 0.85)\" % [\"ok  \" if ok else \"FAIL\", key, v.grip, v.receiver, ratio])",
+        "print(\"%s %s: gloves %.1f / sleeves %.1f = %.2f (at most 0.78)\" % [\"ok  \" if ok else \"FAIL\", key, v.gloves, v.sleeves, ratio])",
+        "print(\"%s %s: receiver %.1f and handguard %.1f in the dark interior (at least 22)\" % [\"ok  \" if ok else \"FAIL\", key, v.receiver, v.handguard])",
+        "print(\"VIEWMODEL_LIGHT_TEST checks=%d failures=%d\" % [checks, failures])"
+      ]
+    },
+    {
+      "line": 83,
+      "label": "reload-finish-skin",
+      "scope": "DISPLAY",
+      "command": "  run_godot reload-finish-skin --audio-driver Dummy --rendering-method gl_compatibility --script res://tests/reload_discolour_probe.gd -- --assert --conditions=base --skin",
+      "test_source": "game/tests/reload_discolour_probe.gd",
+      "test_sha256": "e8ae1141303ca74e3e1a8c049cefc75332f3acdc8d30dfc28d50810481fbe4a7",
+      "source_print_lines": [
+        "print(\"DISCOLOUR note: furniture material is %s\" % body_node.material_override)",
+        "print(\"DISCOLOUR \", line)",
+        "print(\"%s the %s median luma stays within %.2f of its lowest through the reload (%.1f to %.1f, ratio %.2f, %d cases)\" % [\"ok  \" if ok else \"FAIL\", part, RATIO_MAX, low, high, high / low, values.size()])",
+        "print(\"%s the receiver's (r - b) / luma stays within %.2f of its first value through the reload (largest shift %.3f, from %.3f, %d cases)\" % [\"ok  \" if chroma_ok else \"FAIL\", CHROMA_SHIFT_MAX, shift, chroma[0], chroma.size()])",
+        "print(\"RELOAD_DISCOLOUR_TEST view=%s skin=%s authored=%s sweep=%s checks=%d failures=%d\" % [view, skin, SBWeaponModel.use_authored, sweep, checks, failures])"
+      ]
+    }
+  ],
+  "python_groups": [
+    {
+      "line": 33,
+      "command": "python3 -m unittest discover -s server/tests -v",
+      "methods_from_source": 11,
+      "methods": {
+        "server/tests/test_result_outbox.py": [
+          "test_restart_and_exact_identity",
+          "test_retry_then_ack_without_duplicate_local_delivery",
+          "test_capacity_and_retention",
+          "test_pending_is_not_silently_pruned",
+          "test_spool_import_commit_before_unlink_and_partial_recovery",
+          "test_producer_rename_during_scan",
+          "test_producer_finishes_during_quarantine",
+          "test_capacity_keeps_spool",
+          "test_bad_success_is_retried_redirect_is_terminal",
+          "test_payload_and_origin_limits"
+        ],
+        "server/tests/test_supervision.py": [
+          "test_worker_death_stops_and_reaps_game"
+        ]
+      }
+    },
+    {
+      "line": 61,
+      "command": "python3 scripts/test_transaction_restart_oracle.py",
+      "methods_from_source": 7,
+      "methods": {
+        "scripts/test_transaction_restart_oracle.py": [
+          "test_complete_routes_and_boundaries",
+          "test_individual_missing_evidence_rejects",
+          "test_complete_lifecycle",
+          "test_logout_and_retry_evidence_required",
+          "test_changed_retry_receipt_or_missing_call_rejects",
+          "test_no_confirmation_or_locally_invented_balance_rejects",
+          "test_native_errors_on_either_output_stream_reject"
+        ]
+      }
+    },
+    {
+      "line": 65,
+      "command": "python3 scripts/test_account_network_output.py",
+      "methods_from_source": 4,
+      "methods": {
+        "scripts/test_account_network_output.py": [
+          "test_expected_terminal_rejections",
+          "test_explicit_success_markers",
+          "test_missing_or_wrong_role_is_failure",
+          "test_errors_never_pass"
+        ]
+      }
+    },
+    {
+      "line": 66,
+      "command": "python3 scripts/test_account_match_output.py",
+      "methods_from_source": 15,
+      "methods": {
+        "scripts/test_account_match_output.py": [
+          "test_complete_synthetic_validator_control",
+          "test_incomplete_match",
+          "test_short_match_or_activity",
+          "test_wrong_rules",
+          "test_lost_or_changed_identity",
+          "test_short_stock_fuse",
+          "test_missing_round",
+          "test_reconnect_ineligible_or_missing_replica_result",
+          "test_missing_halftime",
+          "test_premature_score",
+          "test_missing_client_rounds",
+          "test_unrelated_activity_actor_keys",
+          "test_contradictory_client_summary",
+          "test_payload_awards_must_agree_with_observations",
+          "test_activity_is_capped_at_terminal_duration"
+        ]
+      }
+    },
+    {
+      "line": 109,
+      "command": "python3 scripts/test_build_manifest.py",
+      "methods_from_source": 24,
+      "methods": {
+        "scripts/test_build_manifest.py": [
+          "test_actual_engine_warning_and_errors_rejected",
+          "test_normal_log_and_vsync_warning_allowed",
+          "test_source_change_during_export_rejected",
+          "test_missing_artifact_rejected",
+          "test_modified_artifact_rejected",
+          "test_uncommitted_game_rejected",
+          "test_changed_secondary_payload_rejected",
+          "test_stale_source_rejected",
+          "test_completed_export_has_exact_digest",
+          "test_all_targets_package_with_current_version_and_license",
+          "test_single_target_needs_no_other_sdks",
+          "test_identical_runtime_different_commit_rejected",
+          "test_validation_source_change_rejected",
+          "test_existing_export_and_reattestation_rejected",
+          "test_executable_permission_change_rejected",
+          "test_developer_file_cannot_be_attested",
+          "test_all_source_dirt_rejected",
+          "test_apple_developer_files_rejected",
+          "test_android_signature_sidecar_is_preserved",
+          "test_required_ios_asset_catalog_is_preserved",
+          "test_receipt_version_tampering_rejected",
+          "test_packaged_executable_mode_matches_receipt",
+          "test_export_versions_match_manifest",
+          "test_prebuilt_android_template_does_not_override_gradle_sdk"
+        ]
+      }
+    },
+    {
+      "line": 110,
+      "command": "python3 scripts/test_native_observation.py -v",
+      "methods_from_source": 7,
+      "methods": {
+        "scripts/test_native_observation.py": [
+          "test_open_reader_allows_godot_publication_and_keeps_original_snapshot",
+          "test_ordinary_windows_reader_blocks_godot_publication_until_closed",
+          "test_shared_windows_reader_does_not_promise_legacy_os_replace",
+          "test_windows_publication_gap_is_unreadable_then_new_snapshot_is_complete",
+          "test_byte_limit_counts_utf8_bytes_and_rejects_oversized_snapshot",
+          "test_missing_invalid_utf8_and_malformed_json_are_not_accepted",
+          "test_exception_inside_reader_closes_its_actual_descriptor"
+        ]
+      }
+    },
+    {
+      "line": 111,
+      "command": "python3 scripts/test_offline_role_guidance.py -v",
+      "methods_from_source": 4,
+      "methods": {
+        "scripts/test_offline_role_guidance.py": [
+          "test_living_original_attacker_context_is_accepted",
+          "test_death_reports_actual_context_even_with_stale_attacker_text",
+          "test_replacement_role_round_or_objective_cannot_be_accepted",
+          "test_missing_or_invalid_life_is_context_failure"
+        ]
+      }
+    },
+    {
+      "line": 112,
+      "command": "python3 scripts/test_offline_export_ocr.py -v",
+      "methods_from_source": 5,
+      "methods": {
+        "scripts/test_offline_export_ocr.py": [
+          "test_complete_caption_locates_the_union_of_its_visible_words",
+          "test_misread_partial_reordered_and_extra_text_cannot_match",
+          "test_words_on_different_lines_cannot_form_a_caption",
+          "test_duplicate_complete_captions_are_ambiguous",
+          "test_missing_line_identity_cannot_authorize_a_click"
+        ]
+      }
+    },
+    {
+      "line": 113,
+      "command": "python3 scripts/test_offline_capture_fences.py -v",
+      "methods_from_source": 15,
+      "methods": {
+        "scripts/test_offline_capture_fences.py": [
+          "test_actual_old_post_and_loaded_menu_cannot_authorize_capture",
+          "test_declared_natural_round_fence_preserves_old_post_then_waits_two_frames",
+          "test_declared_reopened_trace_requires_game_hud_after_initial_profile_event",
+          "test_one_frame_and_stalled_counter_never_capture",
+          "test_stale_observation_does_not_supply_the_frame_fence",
+          "test_invalid_frame_and_clock_values_fail_without_capture",
+          "test_frame_regression_between_ready_and_capture_is_rejected",
+          "test_frame_regression_after_raw_capture_cannot_pass",
+          "test_life_actor_phase_focus_speed_context_loss_never_passes",
+          "test_source_process_trace_and_loaded_settings_races_cannot_pass",
+          "test_original_absolute_budget_is_shared_across_all_waits",
+          "test_frame_wait_cannot_gain_a_new_budget_after_event_arrival",
+          "test_capture_cannot_extend_the_original_deadline",
+          "test_unready_intermediate_counter_regression_is_rejected",
+          "test_state_available_before_capture_cannot_be_sole_after_proof"
+        ]
+      }
+    }
+  ],
+  "python_counts": [
+    11,
+    7,
+    4,
+    15,
+    24,
+    7,
+    4,
+    5,
+    15
+  ]
+}
