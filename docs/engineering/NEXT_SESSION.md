@@ -1,17 +1,17 @@
 # Next session
 
-Updated 2026-10-23, 08:31 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 08:44 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. The automatic goal remains active. Read AGENTS.md and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
 
-## Live execution checkpoint — 2026-10-23, 08:31 UTC
+## Live execution checkpoint — 2026-10-23, 08:44 UTC
 
 The mission is ACTIVE. Root is `/workspace/sightbreak-v1-recovered`, own branch
 `codex/v1-executor-recovery-20261023`, [draft PR31](https://github.com/calebaiken/sightbreak/pull/31).
-Current ARM trial source is `c838907`; root checkpoint before this note is `06ebae0`. Inspect actual HEAD and status;
+Current ARM trial source is `c838907`; root checkpoint before this note is `ea4db3b`. Inspect actual HEAD and status;
 never reset a newer checkpoint. The original contributor checkout is clean on
 `work` at `4d8cdb33`. No shared release branch is merged.
 
@@ -622,40 +622,72 @@ credential change. Human play/listening, physical GPUs/mobile/controllers, CS2
 media and Steam credentials remain explicit external gates. No background work
 is promised after execution stops.
 
-## Current execution queue — 08:31 UTC
+## Current execution queue — 08:44 UTC
 
-One native audio-owner diagnostic has completed, FAILED, at exact 26a1c59.
-Root prereg dcee3e1/release 1d70987 and fresh critic criteria 33a2b31 precede it.
-Raw `/workspace/sightbreak-audio-exit-lifecycle/.local/audio-owner-r1-20261023`;
-wrapper exit 1, whole 18.303288 seconds, all five native phases exit 0/scoped groups
-gone/no signals. Acquisition integrity is false: final analyzer rejects actual
-header `mix_rate:44100.0` because it requires int. The critic also finds 353
-`Orphan StringName:` lines and a 353-unclaimed summary missed by native_log.failed;
-root's preliminary clean-log description was corrected to the user. Originals
-are preserved. No strict-clean or leak-fix claim; full fresh actual review by
-`/root/audio_owner_native_fresh_critic` is active. No retry. All standalone
-identity sidecars must match validated embedded receipts. Use preserved raw
-bytes for any narrowly preregistered analyzer/scanner correction before another
-native release. Root outer tool responses are retained in native-owner-r1-root.
+1. **Windows sole cover-route run is ACTIVE.** Exact e28c8e9 on immutable
+   codex/v1-qualify-win-e28c8e9; run 39926044462, job 120322557935, dispatched
+   08:38:12 UTC after root prereg 86620c3/release e2d9cbd and fresh pre-dispatch
+   criteria 339f974. Combined independent 47c8600 is root 864e162: all 498 non-doc
+   inputs match accepted c838 + four route paths; 233 shallow methods/22 groups
+   pass, 3 original Windows skips, plus independent/alias controls. No retry.
+   Fresh /root/windows_native_e28_fresh_critic owns actual review. Metadata
+   reports native suites complete and input schedules active; status is not
+   acceptance. The critic separately verifies all 138 old a089 logs against new
+   orphan/unclaimed StringName patterns, finding none; original living failure
+   remains. Retain full raw/image/input/provenance/cleanup evidence and compare
+   identified compatible scopes without causal or survival claims.
+2. **Touch one A/B attempt STOPPED at candidate import.** Recipe 2ecc3083,
+   admission 9b8424a, root release ea4db3b precede actual admission 08:40:32.995347.
+   Raw /workspace/sightbreak-touch-contrast-native-recovered-r4b-r2. Controller
+   exit 1 at 08:41:14.960559; native candidate import exit 0 has 3 parse/compile
+   errors: compact type inference at touch_controls.gd:214, dependency compile,
+   main.gd load. No Xvfb/background/capture/regression/analyzer ran; PNG 0.
+   Version/baseline import pass; source/UID post-fences unchanged. Actual current
+   PGIDs 96995/96998/97238 empty, leaders/controller absent and :131 socket/lock
+   absent at 08:42:32.924662. PGIDs derive from start_new_session launch receipts;
+   no pre-exit live getpgid was captured. Archive/failed handoff is finishing.
+   No retry or repair of original raw. Fresh touch_r4b_native_fresh_critic must
+   audit that failed output before narrow explicit-bool source correction and
+   fresh stages/recipe. Method b001fc5 still has source acceptance abb837b4 only;
+   no rendered pixel/ownership quality pass follows. Lane remains reserved
+   through current archive/cleanup; root must clear it before another native.
+3. **Audio actual verdict is acquisition REJECT / strict FAIL.** Source 26a1c59,
+   sole 18.303288-second attempt/raw path unchanged. Final fresh ae6abe14 is root
+   1fb99ed, with verified 15,137,320-byte/375-member archive and 8,108 predicates.
+   Real mix_rate 44100.0 is rejected by integer-only analyzer; 353 standalone
+   orphan StringNames escape original scanner. All native phase exits 0, source,
+   324-file copy, one generated UID, eight state files, sidecars/embedded values
+   and six observed identities/scoped cleanup otherwise reconcile. All originals
+   preserved, no cause/drain/leak-fix claim. New source-only builder at
+   /workspace/sightbreak-audio-native-evidence, branch
+   codex/audio-native-serialization-strict-20261023, prereg 4cbc1f3, code aae1f0a:
+   finite positive numeric mixrate +strict orphan/unclaimed scanner, pure replay
+   of original bytes only. Final handoff/review pending; no native retry.
+4. **Bot wrapper correction is in independent re-review.** Exact 6276f0b,
+   /workspace/sightbreak-exhausted-primary-selection, prereg 2671fa6/code d941cc3.
+   Prior c7145cd/b8ccf8f false successes remain. Builder 25 old +10 new +6 original
+   critic methods pass; actual source critic bot_acquisition_fresh_source_critic
+   checks exact whole/phase publication/caps/failure propagation and markers.
+   Accepted product 1b7ebc7 remains unchanged. Once accepted and lane clear, root
+   prereg/releases ONE 240-second candidate block, followed by fresh actual review;
+   existing 480-second regressions require a separate release, never automatic.
+5. **Linux wrapper correction is in independent re-review.** Exact d0d94bec,
+   /workspace/sightbreak-linux-profile-acquisition, prereg b75017d/code af8d299.
+   Prior 04bc153e/ff4cc71 late-log/proof/receipt and effective ECFG override false
+   successes remain. Builder 27 acquisition +22 unchanged fixture methods and
+   original 10 falsifiers pass corrected bytes, 64 publication mutations reject.
+   Fresh linux_acquisition_fresh_source_critic reviews source-only. No engine,
+   staging/export/profile block is released. Original gameplay timing stays failed.
+6. **Mac supported semantic preflight is being implemented source-only.**
+   Research b294ef9 proves public pinned AccessKit button semantics and AUTO/
+   VoiceOver gating. Actual exported AX tree is unobserved. Builder now implements
+   separately opt-in diagnostic-only ARM route, --accessibility always and bounded
+   own-PID/window read-only AX button title/role/frame collection, keeping raw
+   OCR/confidence gate, game, privacy and normal workflow behavior unchanged.
+   Exact source review and root release precede compile/CI. No click or gameplay
+   retry. See research READ_ONLY_AX_PREREGISTRATION.md and builder's live branch.
 
-The local native lane is now idle. Bot wrapper c7145cd is independently REJECTED
-b8ccf8f (root 47a7322): final whole/phase receipt writes escape caps and contradictory
-squad failure text is accepted. Builder correction prereg 2671fa6 precedes code;
-accepted product 1b7ebc7 stays unchanged. Linux wrapper 04bc153 is independently
-REJECTED ff4cc71 (root 5fd468e): seven late-byte false successes and three critical
-ECFG Linux override false accepts. Narrow correction is source-only.
-
-Touch R4B method b001fc5 independently passes abb837b4 (root 960c5fe): original
-falsifiers now reject, 54 supplied controls/56 independent mutation cases pass;
-genuine failing baseline stays comparable. Builder prepares concrete original
-bounded A/B recipe; no engine/render/import released. Windows cover-route af13a99
-passes 5820ca7; ordered root integration e28c8e9 is under combined shallow source
-review before ONE full hosted Windows run. Mac native accessibility source
-research identifies public AccessKit support and --accessibility always, but
-actual exported AX tree remains unobserved. Source-only read preflight planning
-must preserve privacy, original raw OCR/confidence gate and no arbitrary click.
-
-Next achievable native acquisition is touch A/B or corrected bot candidate,
-according to exact source readiness; root owns the lane and must assign fresh
-actual critics before release. Audio strict/analysis failures need pure evidence
-correction first. Keep all original failures and source IDs. No full RC gate closes.
+Highest next native priority after exact review/lane clearance: bot candidate,
+then separate regressions; fixed touch acquisition; Linux controlled block.
+Audio correction reuses original bytes and grants no historical native pass.
+Keep all original failures and source identities. No whole RC gate closes.

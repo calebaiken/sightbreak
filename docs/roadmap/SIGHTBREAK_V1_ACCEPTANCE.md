@@ -43,3 +43,12 @@ read-only SQL qualification at `882931dd`, root integration `4150ad0a`.
 retains both lost-response kills, final exact settlement, guard checks and cleanup.
 Synthetic test balances are not earned progression. Store/case, rendered consent,
 remote hosting and whole G3/G7/G16 remain open.
+
+At the 08:44 UTC checkpoint, one e28c8e9 Windows run is active after exact
+combined source approval and pre-dispatch independent criteria. The sole R4B
+touch acquisition stops at candidate import with three compile errors and zero
+captures; method readiness is not native acceptance. Audio ownership actual
+review rejects acquisition/strict shutdown for native serialization and missed
+StringName failures. Corrections use preserved bytes before another run. Bot
+and Linux wrapper corrections remain in independent source re-review. These
+findings change no whole-gate status or existing quality threshold.

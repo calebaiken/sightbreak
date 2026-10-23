@@ -577,3 +577,22 @@ or root-cause/leak-fix claim. Bot and Linux acquisition wrappers independently
 fail their exact source reviews; narrow corrections retain falsifiers. Touch R4B
 receipt method passes source readiness; Windows cover-route is integrated through
 e28c8e9 and combined shallow review is underway. Native and full RC gates stay open.
+
+
+## 2026-10-23, 08:44 UTC: continue native trials and retain import failure
+
+Windows combined e28c8e9 passes fresh 47c8600 shallow/source binding; root
+releases ONE existing full Windows run 39926044462/job 120322557935 at 08:38:12
+after actual criteria 339f974. No retry; actual source/game unchanged except
+accepted ordinary route. Touch recipe 2ecc3083 passes source admission 9b8424a,
+root release ea4db3b precedes admission 08:40:32.995347. It STOPs candidate import
+on compact type inference and dependent compile errors at 08:41:14.960559, PNG 0.
+No later producer runs. Source/UID fences unchanged; observed PGIDs/display
+are absent and failed archive is finishing for independent actual review.
+
+Audio final ae6abe14 (root 1fb99ed) rejects actual acquisition/strict sample,
+retaining native archive and scanner/header failures. New source-only correction
+aae1f0a replays original bytes without rewriting original failed receipts. Bot
+wrapper 6276f0b and Linux wrapper d0d94bec are in independent re-review. Mac
+research b294ef9 supports a public read-only AX diagnostic, now in source-only
+implementation. No broad release gate closes. Continue NEXT_SESSION's exact queue.
