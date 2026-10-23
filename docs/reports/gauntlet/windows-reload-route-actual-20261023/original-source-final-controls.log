@@ -1,0 +1,285 @@
+IN_MEMORY_ORIGINAL_SHA256=d58b9530958e746a487ed45cf57e8dc2012df6ef0676173f63be2d054efeb6b0
+test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route (test_native_route_pulse.FirstDisplacementPulseControls.test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route) ... 
+  test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route (test_native_route_pulse.FirstDisplacementPulseControls.test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route) (field='deaths') ... FAIL
+  test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route (test_native_route_pulse.FirstDisplacementPulseControls.test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route) (field='round_number') ... FAIL
+  test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route (test_native_route_pulse.FirstDisplacementPulseControls.test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route) (field='focused') ... FAIL
+  test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route (test_native_route_pulse.FirstDisplacementPulseControls.test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route) (field='alive') ... FAIL
+test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) ... 
+  test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=0.4, delivery=0) ... FAIL
+  test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=0.4, delivery=0.1) ... ERROR
+  test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=0.4, delivery=0.2) ... ERROR
+  test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=0.7, delivery=0) ... ERROR
+  test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=0.7, delivery=0.1) ... ERROR
+  test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=0.7, delivery=0.2) ... ERROR
+  test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=1, delivery=0) ... ERROR
+  test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=1, delivery=0.1) ... ERROR
+  test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=1, delivery=0.2) ... ERROR
+test_original_continuous_walk_loses_unchanged_corridor_with_slow_diagnostics (test_native_route_pulse.FirstDisplacementPulseControls.test_original_continuous_walk_loses_unchanged_corridor_with_slow_diagnostics) ... ok
+test_pulse_route_block_or_read_failure_keeps_original_cap_and_releases (test_native_route_pulse.FirstDisplacementPulseControls.test_pulse_route_block_or_read_failure_keeps_original_cap_and_releases) ... 
+  test_pulse_route_block_or_read_failure_keeps_original_cap_and_releases (test_native_route_pulse.FirstDisplacementPulseControls.test_pulse_route_block_or_read_failure_keeps_original_cap_and_releases) (failure='blocked') ... FAIL
+  test_pulse_route_block_or_read_failure_keeps_original_cap_and_releases (test_native_route_pulse.FirstDisplacementPulseControls.test_pulse_route_block_or_read_failure_keeps_original_cap_and_releases) (failure='unreadable') ... FAIL
+
+======================================================================
+ERROR: test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=0.4, delivery=0.1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 170, in test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint
+    endpoint = world.route_with_pulse()
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 149, in route_with_pulse
+    return relocate_settings_actor(self.observe(), actor_id=1, round_number=2,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 102, in relocate_settings_actor
+    endpoint = approach_floor(*SETTINGS_COVER, observe=read, key=key, pause=pause,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "original49:native_approach.py", line 49, in approach_floor
+    release()
+              
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 100, in read
+    return checked(value)
+           ^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 80, in checked
+    reject('left_declared_clear_corridor', state)
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 28, in reject
+    raise RuntimeError('Living settings route lost precondition: ' + reason)
+RuntimeError: Living settings route lost precondition: left_declared_clear_corridor
+
+======================================================================
+ERROR: test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=0.4, delivery=0.2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 170, in test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint
+    endpoint = world.route_with_pulse()
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 149, in route_with_pulse
+    return relocate_settings_actor(self.observe(), actor_id=1, round_number=2,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 102, in relocate_settings_actor
+    endpoint = approach_floor(*SETTINGS_COVER, observe=read, key=key, pause=pause,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "original49:native_approach.py", line 49, in approach_floor
+    release()
+              
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 100, in read
+    return checked(value)
+           ^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 80, in checked
+    reject('left_declared_clear_corridor', state)
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 28, in reject
+    raise RuntimeError('Living settings route lost precondition: ' + reason)
+RuntimeError: Living settings route lost precondition: left_declared_clear_corridor
+
+======================================================================
+ERROR: test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=0.7, delivery=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 170, in test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint
+    endpoint = world.route_with_pulse()
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 149, in route_with_pulse
+    return relocate_settings_actor(self.observe(), actor_id=1, round_number=2,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 102, in relocate_settings_actor
+    endpoint = approach_floor(*SETTINGS_COVER, observe=read, key=key, pause=pause,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "original49:native_approach.py", line 49, in approach_floor
+    release()
+              
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 100, in read
+    return checked(value)
+           ^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 80, in checked
+    reject('left_declared_clear_corridor', state)
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 28, in reject
+    raise RuntimeError('Living settings route lost precondition: ' + reason)
+RuntimeError: Living settings route lost precondition: left_declared_clear_corridor
+
+======================================================================
+ERROR: test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=0.7, delivery=0.1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 170, in test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint
+    endpoint = world.route_with_pulse()
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 149, in route_with_pulse
+    return relocate_settings_actor(self.observe(), actor_id=1, round_number=2,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 102, in relocate_settings_actor
+    endpoint = approach_floor(*SETTINGS_COVER, observe=read, key=key, pause=pause,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "original49:native_approach.py", line 49, in approach_floor
+    release()
+              
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 100, in read
+    return checked(value)
+           ^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 80, in checked
+    reject('left_declared_clear_corridor', state)
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 28, in reject
+    raise RuntimeError('Living settings route lost precondition: ' + reason)
+RuntimeError: Living settings route lost precondition: left_declared_clear_corridor
+
+======================================================================
+ERROR: test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=0.7, delivery=0.2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 170, in test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint
+    endpoint = world.route_with_pulse()
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 149, in route_with_pulse
+    return relocate_settings_actor(self.observe(), actor_id=1, round_number=2,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 102, in relocate_settings_actor
+    endpoint = approach_floor(*SETTINGS_COVER, observe=read, key=key, pause=pause,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "original49:native_approach.py", line 49, in approach_floor
+    release()
+              
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 100, in read
+    return checked(value)
+           ^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 80, in checked
+    reject('left_declared_clear_corridor', state)
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 28, in reject
+    raise RuntimeError('Living settings route lost precondition: ' + reason)
+RuntimeError: Living settings route lost precondition: left_declared_clear_corridor
+
+======================================================================
+ERROR: test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=1, delivery=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 170, in test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint
+    endpoint = world.route_with_pulse()
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 149, in route_with_pulse
+    return relocate_settings_actor(self.observe(), actor_id=1, round_number=2,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 102, in relocate_settings_actor
+    endpoint = approach_floor(*SETTINGS_COVER, observe=read, key=key, pause=pause,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "original49:native_approach.py", line 49, in approach_floor
+    release()
+              
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 100, in read
+    return checked(value)
+           ^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 80, in checked
+    reject('left_declared_clear_corridor', state)
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 28, in reject
+    raise RuntimeError('Living settings route lost precondition: ' + reason)
+RuntimeError: Living settings route lost precondition: left_declared_clear_corridor
+
+======================================================================
+ERROR: test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=1, delivery=0.1)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 170, in test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint
+    endpoint = world.route_with_pulse()
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 149, in route_with_pulse
+    return relocate_settings_actor(self.observe(), actor_id=1, round_number=2,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 102, in relocate_settings_actor
+    endpoint = approach_floor(*SETTINGS_COVER, observe=read, key=key, pause=pause,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "original49:native_approach.py", line 49, in approach_floor
+    release()
+              
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 100, in read
+    return checked(value)
+           ^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 80, in checked
+    reject('left_declared_clear_corridor', state)
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 28, in reject
+    raise RuntimeError('Living settings route lost precondition: ' + reason)
+RuntimeError: Living settings route lost precondition: left_declared_clear_corridor
+
+======================================================================
+ERROR: test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=1, delivery=0.2)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 170, in test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint
+    endpoint = world.route_with_pulse()
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 149, in route_with_pulse
+    return relocate_settings_actor(self.observe(), actor_id=1, round_number=2,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 102, in relocate_settings_actor
+    endpoint = approach_floor(*SETTINGS_COVER, observe=read, key=key, pause=pause,
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "original49:native_approach.py", line 49, in approach_floor
+    release()
+              
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 100, in read
+    return checked(value)
+           ^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 80, in checked
+    reject('left_declared_clear_corridor', state)
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/native_settings_route.py", line 28, in reject
+    raise RuntimeError('Living settings route lost precondition: ' + reason)
+RuntimeError: Living settings route lost precondition: left_declared_clear_corridor
+
+======================================================================
+FAIL: test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route (test_native_route_pulse.FirstDisplacementPulseControls.test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route) (field='deaths')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 215, in test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route
+    with self.assertRaisesRegex(RuntimeError, 'lost precondition'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route (test_native_route_pulse.FirstDisplacementPulseControls.test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route) (field='round_number')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 215, in test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route
+    with self.assertRaisesRegex(RuntimeError, 'lost precondition'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route (test_native_route_pulse.FirstDisplacementPulseControls.test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route) (field='focused')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 215, in test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route
+    with self.assertRaisesRegex(RuntimeError, 'lost precondition'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route (test_native_route_pulse.FirstDisplacementPulseControls.test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route) (field='alive')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 215, in test_identity_focus_or_life_loss_after_a_pulse_cannot_reuse_the_route
+    with self.assertRaisesRegex(RuntimeError, 'lost precondition'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint (test_native_route_pulse.FirstDisplacementPulseControls.test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint) (rate=0.4, delivery=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 171, in test_opt_in_pulses_own_first_displacement_and_reach_stopped_original_endpoint
+    self.assertTrue(world.pulses)
+AssertionError: [] is not true
+
+======================================================================
+FAIL: test_pulse_route_block_or_read_failure_keeps_original_cap_and_releases (test_native_route_pulse.FirstDisplacementPulseControls.test_pulse_route_block_or_read_failure_keeps_original_cap_and_releases) (failure='blocked')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 200, in test_pulse_route_block_or_read_failure_keeps_original_cap_and_releases
+    self.assertFalse(world.fallback_downs)
+AssertionError: [('d', 1.580000000000001), ('d', 2.1400000000000015), ('d', 2.7000000000000015), ('d', 3.2600000000000016), ('d', 3.8200000000000016), ('d', 4.379999999999999), ('d', 4.939999999999996)] is not false
+
+======================================================================
+FAIL: test_pulse_route_block_or_read_failure_keeps_original_cap_and_releases (test_native_route_pulse.FirstDisplacementPulseControls.test_pulse_route_block_or_read_failure_keeps_original_cap_and_releases) (failure='unreadable')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reload-route-actual/scripts/test_native_route_pulse.py", line 200, in test_pulse_route_block_or_read_failure_keeps_original_cap_and_releases
+    self.assertFalse(world.fallback_downs)
+AssertionError: [('d', 1.580000000000001), ('d', 2.1400000000000015)] is not false
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.071s
+
+FAILED (failures=7, errors=8)
