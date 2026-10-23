@@ -243,7 +243,7 @@ def native_input(base):
         final=player[-1]
         checks={
             'receipt_passed':receipt['passed'],'clean_frozen_source':identity(receipt),
-            'authority_summary_matches_raw':receipt['authority']==authority,
+            'authority_summary_matches_raw':receipt.get('authority')==authority,
             'protocol6_prediction_off':authority['protocol']==6 and authority['prediction_default'] is False,
             'positive_consumed_ack_and_fire':max(sample.get('ack',0) for sample in player)==authority['largest_ack'] and authority['largest_ack']>0 and final['shots']==authority['shots'] and final['shots']>0,
             'depletion_recorded':min(sample['ammo'] for sample in player)==authority['lowest_ammo'] and authority['lowest_ammo']<30,
@@ -255,6 +255,8 @@ def native_input(base):
         diagnostic=read(directory/'diagnostic-exit.json') if (directory/'diagnostic-exit.json').is_file() else None
         if diagnostic is not None:checks['diagnostic_actual_exit_zero']=diagnostic['exit_code']==0
         output.append({'scenario':name,'checks':checks,'all_checks_passed':all(checks.values()),
+                       'original_error':receipt.get('error'), 'original_passed':receipt.get('passed'),
+                       'failure_authority_observation':receipt.get('failure_authority_observation'),
                        'wall_seconds':receipt['elapsed_seconds'],'shots':final['shots'],
                        'lowest_ammo':authority['lowest_ammo'],'final_ammunition':[final['ammo'],final['reserve']],
                        'raw_samples':len(telemetry),'executable_sha256_receipt':receipt['executable_sha256'],

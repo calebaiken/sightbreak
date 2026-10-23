@@ -35,7 +35,8 @@ def audit(root, full=None):
     initial = json.loads((directory / 'initial-offline-trace/events.jsonl').read_text().splitlines()[0])
     loaded_path = directory / 'restart-profile-trace/events.jsonl'
     loaded = json.loads(loaded_path.read_text().splitlines()[0]) if loaded_path.is_file() else None
-    disk = READ(next(directory.rglob('offline_training.json')))
+    disk_path = next(directory.rglob('offline_training.json'), None)
+    disk = READ(disk_path) if disk_path else None
     cases = []
     for name, round_number, watchdog, process_name, trace_name, first in [
             ('06c-next-round', 2, 160, 'client', 'initial-offline-trace', initial),

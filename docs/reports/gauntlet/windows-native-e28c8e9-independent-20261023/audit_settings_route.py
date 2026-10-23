@@ -66,6 +66,29 @@ def audit(root):
         previous = state
     checks['every_retained_route_state_valid'] = bool(rows) and all(row['all_passed'] for row in rows)
     details = {}
+    loss = route.get('precondition_loss')
+    if loss:
+        rejected = loss['rejected_state']
+        prior = loss['previous_valid_state']
+        position = rejected['local_actor']['position']
+        independent_reason = ('left_declared_clear_corridor' if not (
+            -8.5 <= position[0] <= -3.9 and -.1 <= position[1] <= .1
+            and -21.75 <= position[2] <= -20.25) else None)
+        details['failure_reconstruction'] = {
+            'original_reason': loss['reason'], 'independent_reason': independent_reason,
+            'reason_matches': loss['reason'] == independent_reason,
+            'previous_valid_state_is_last_accepted_original': bool(states) and prior == states[-1],
+            'rejection_is_newer': rejected['wall_msec'] > prior['wall_msec']
+                and rejected['simulation_tick'] > prior['simulation_tick'],
+            'same_living_actor_at_rejection': rejected['local_actor']['alive'] is True
+                and rejected['local_actor']['health'] == 100
+                and all(rejected['local_actor'][k] == start['local_actor'][k]
+                    for k in ('id','deaths','team','weapon','ammo','reserve')),
+            'rejected_position': position, 'rejected_velocity': rejected['local_actor']['velocity'],
+            'previous_tick': prior['simulation_tick'], 'rejected_tick': rejected['simulation_tick'],
+            'outside_corridor_by_x_metres': max(-8.5-position[0], position[0]+3.9, 0),
+            'target_distance_metres': math.hypot(position[0]-TARGET[0],position[2]-TARGET[1]),
+        }
     if start:
         p, v = start['local_actor']['position'], start['local_actor']['velocity']
         checks['neutral_stopped_original_stock_spawn'] = math.hypot(p[0]-SPAWN[0], p[2]-SPAWN[1]) <= .25 \
