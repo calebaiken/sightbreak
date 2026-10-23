@@ -1,0 +1,192 @@
+{
+  "schema": 2,
+  "scope": "current_source_component_reconstruction_not_historical_replay",
+  "profiles": {
+    "easy": {
+      "reaction_delay": 0.6,
+      "turn_speed": 3.5,
+      "aim_error": 0.045,
+      "vision_range": 28.0,
+      "fov_dot": -0.05,
+      "memory_duration": 2.0,
+      "hearing_range": 18.0,
+      "sound_noise": 2.4,
+      "recoil_compensation": 0.15,
+      "retreat_hp": 0.0,
+      "team_comms": false,
+      "counter_strafe": false,
+      "utility_use": false,
+      "sidearm_fallback": false
+    },
+    "normal": {
+      "reaction_delay": 0.35,
+      "turn_speed": 5.0,
+      "aim_error": 0.022,
+      "vision_range": 38.0,
+      "fov_dot": -0.15,
+      "memory_duration": 3.8,
+      "hearing_range": 26.0,
+      "sound_noise": 1.1,
+      "recoil_compensation": 0.65,
+      "retreat_hp": 28.0,
+      "team_comms": true,
+      "counter_strafe": true,
+      "utility_use": true,
+      "sidearm_fallback": true
+    },
+    "hard": {
+      "reaction_delay": 0.18,
+      "turn_speed": 7.0,
+      "aim_error": 0.008,
+      "vision_range": 46.0,
+      "fov_dot": -0.25,
+      "memory_duration": 5.5,
+      "hearing_range": 34.0,
+      "sound_noise": 0.35,
+      "recoil_compensation": 0.92,
+      "retreat_hp": 38.0,
+      "team_comms": true,
+      "counter_strafe": true,
+      "utility_use": true,
+      "sidearm_fallback": true
+    }
+  },
+  "rules": {
+    "buy_seconds": 15.0,
+    "defuse_seconds": 5.0,
+    "device_seconds": 35.0,
+    "plant_seconds": 3.0,
+    "round_seconds": 100.0,
+    "win_score": 7
+  },
+  "protocol": 6,
+  "source_events": [
+    120,
+    122,
+    127
+  ],
+  "controls": [
+    "plant",
+    "defuse",
+    "wrong_site",
+    "moving",
+    "no_interact"
+  ],
+  "forward_source_event": 122,
+  "forward_ticks": 120,
+  "seed_policy": "original_initial_seeds_not_original_later_rng_state",
+  "initial_match_seed": "6040358624777539927",
+  "initial_actor_seeds": {
+    "1": "7752406489079111104",
+    "10": "-5816446228600715836",
+    "2": "-6031787897092824073",
+    "3": "-3412659869296888639",
+    "4": "-1334595415190734185",
+    "5": "-502687151087549235",
+    "6": "5283769538113438410",
+    "7": "2156799905130892208",
+    "8": "4703315405520209678",
+    "9": "-4008476112889335830"
+  },
+  "reconstruction_baseline": "022d60faa830696af3f03c554e99356c1beac0dd",
+  "historical_source": "05277154c6b8c92b80fd7c25e8365de9efdc4fae",
+  "historical_ai_sha256": "5151900b3cd457570f3e43b5091fc4e2262ebdfa59d790cf5d6d74912f2b68c3",
+  "baseline_ai_sha256": "742ae5c96becf4e27071423e0bdd604a13b528c201d38df52f837359fe9214cb",
+  "historical_ai_added_lines": 13,
+  "missing_state_reset": [
+    "bot_memory",
+    "team_contacts",
+    "heard",
+    "recoil",
+    "holstered_ammo",
+    "utility",
+    "rng_state",
+    "deploy_remaining",
+    "weapon_cooldowns",
+    "shot_index",
+    "stance_head_collision",
+    "previous_fire_jump_grenade_smoke_edges",
+    "damage_history",
+    "interactions_contributions",
+    "bot_clock",
+    "input_state",
+    "engine_floor_contact_unrestored"
+  ],
+  "freshness_cases": [
+    "live_complete",
+    "live_to_dead",
+    "live_to_post",
+    "enabled_to_disabled",
+    "integer_opt_in",
+    "string_opt_in",
+    "offline_to_online",
+    "direct_perception",
+    "branch_change",
+    "empty_default"
+  ],
+  "ammo_defaults": {
+    "sidearm": [
+      15,
+      60
+    ],
+    "smg": [
+      30,
+      120
+    ],
+    "rifle": [
+      30,
+      90
+    ],
+    "marksman": [
+      8,
+      32
+    ]
+  },
+  "bot_reset": {
+    "reaction": 0.0,
+    "target": 0,
+    "last_position": [
+      0,
+      0,
+      0
+    ],
+    "stuck": 0.0,
+    "last_seen": [
+      0,
+      0,
+      0
+    ],
+    "seen_at": -100.0,
+    "heard_pos": [
+      0,
+      0,
+      0
+    ],
+    "heard_at": -100.0,
+    "damaged_at": -100.0,
+    "damaged_from": [
+      0,
+      0,
+      0
+    ],
+    "attacker_id": 0,
+    "burst_time": 0.0,
+    "burst_cooldown": 0.0,
+    "recovery_wp": -1,
+    "recovery_until": -100.0,
+    "smoke_used": false,
+    "grenade_used": false,
+    "role": "support"
+  },
+  "team_reset": {
+    "primary_site": 0,
+    "target_site": 0,
+    "contacts": {},
+    "death_alert_pos": [
+      0,
+      0,
+      0
+    ],
+    "death_alert_at": -100.0
+  }
+}

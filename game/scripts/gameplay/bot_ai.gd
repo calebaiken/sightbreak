@@ -351,9 +351,9 @@ static func safe_navigate(arena: RelayYard, from: Vector3, to: Vector3) -> Vecto
 			return path[i]
 	return path[1] if path.size() > 1 else path[0]
 
-static func acquire_target(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary, observation: Dictionary = {}) -> SBActor:
+static func _acquire_target(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary, observation: Dictionary = {}) -> SBActor:
 	# OBJECTIVE_OBSERVATION_BEGIN
-	var observing: bool = _objective_observing(match_node, observation)
+	var observing: bool = observation.get("status", "") == "collecting" and _objective_observation_allowed(match_node, observation) and actor.alive and match_node.phase == "live"
 	if observing: observation["candidates"] = []
 	# OBJECTIVE_OBSERVATION_END
 	var best_enemy: SBActor = null
@@ -550,12 +550,44 @@ static func tick_bot(match_node: Node, actor: SBActor, delta: float) -> void:
 	compute_bot_input(match_node, actor, delta)
 
 # OBJECTIVE_OBSERVATION_BEGIN
-## Caller-owned debug/offline observations never feed back into bot decisions.
-static func _objective_observing(match_node: Node, observation: Dictionary) -> bool:
-	return bool(observation.get("enabled", false)) and OS.is_debug_build() and bool(match_node.get("_authority")) and str(match_node.options.get("mode", "offline")) == "offline"
+## An empty default is not a request. Every nonempty request replaces old output.
+static func _objective_observation_allowed(match_node: Node, observation: Dictionary) -> bool:
+	return observation.get("enabled") is bool and observation.get("enabled") == true and OS.is_debug_build() and bool(match_node.get("_authority")) and str(match_node.options.get("mode", "offline")) == "offline"
+
+static func _objective_observation_begin(match_node: Node, actor: SBActor, observation: Dictionary, operation: String) -> bool:
+	if observation.is_empty(): return false
+	var enabled: Variant = observation.get("enabled", false)
+	var requested: bool = enabled is bool and enabled == true
+	observation.clear()
+	observation["enabled"] = requested
+	observation["operation"] = operation
+	observation["status"] = "disabled"
+	if not requested: return false
+	if not _objective_observation_allowed(match_node, observation):
+		observation["status"] = "blocked"
+		return false
+	if not actor.alive:
+		observation["status"] = "dead"
+		return false
+	if match_node.phase != "live":
+		observation["status"] = "non_live"
+		return false
+	observation["status"] = "collecting"
+	return true
+
+static func acquire_target(match_node: Node, actor: SBActor, state: Dictionary, profile: Dictionary, observation: Dictionary = {}) -> SBActor:
+	var observing: bool = _objective_observation_begin(match_node, actor, observation, "perception")
+	var target: SBActor = _acquire_target(match_node, actor, state, profile, observation if observing else {})
+	if observing:
+		observation["target_id"] = target.actor_id if target != null else 0
+		observation["status"] = "complete"
+	return target
 
 # OBJECTIVE_OBSERVATION_END
 static func compute_bot_input(match_node: Node, actor: SBActor, delta: float, observation: Dictionary = {}) -> void:
+	# OBJECTIVE_OBSERVATION_BEGIN
+	var observing: bool = _objective_observation_begin(match_node, actor, observation, "decision")
+	# OBJECTIVE_OBSERVATION_END
 	if not actor.alive or match_node.phase != "live":
 		return
 	if not match_node._bot_state.has(actor.actor_id):
@@ -567,11 +599,10 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float, ob
 
 	_update_auditory_and_team_memory(match_node, actor, state, profile)
 	# OBJECTIVE_OBSERVATION_BEGIN
-	var observing: bool = _objective_observing(match_node, observation)
 	if observing:
 		observation["rng_before"] = str(match_node._rng.state)
 	# OBJECTIVE_OBSERVATION_END
-	var target: SBActor = acquire_target(match_node, actor, state, profile, observation if observing else {})
+	var target: SBActor = _acquire_target(match_node, actor, state, profile, observation if observing else {})
 	var plan: Dictionary = _select_objective_and_destination(match_node, actor, state, profile)
 	var destination: Vector3 = plan.destination
 	var interact: bool = bool(plan.interact)
@@ -580,6 +611,9 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float, ob
 		observation["plan"] = plan.duplicate(true)
 		observation["movement_mode"] = "interact" if interact else "idle"
 		observation["navigation_waypoint"] = actor.position
+		observation["navigation_destination"] = null
+		observation["target_distance"] = null
+		observation["aligned"] = null
 	# OBJECTIVE_OBSERVATION_END
 
 	var look := Vector2(actor.yaw, actor.pitch)
@@ -776,6 +810,7 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float, ob
 	}
 	# OBJECTIVE_OBSERVATION_BEGIN
 	if observing:
+		observation["status"] = "complete"
 		observation["decision"] = {"actor_id": actor.actor_id, "target_id": int(state.get("target", 0)),
 			"role": str(state.get("role", "")), "destination": destination, "interact": interact,
 			"stuck": float(state.get("stuck", 0.0)), "command": actor.input_state.duplicate(true),

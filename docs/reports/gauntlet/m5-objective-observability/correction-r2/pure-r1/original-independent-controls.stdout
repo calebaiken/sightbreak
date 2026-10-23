@@ -1,0 +1,150 @@
+{
+  "candidate": "c91d9b98a293ef8605d99ae6e83402d3af983519",
+  "fixture": "/workspace/sightbreak-objective-observability-r2",
+  "native_executed": false,
+  "total": 20,
+  "met_expectation": 19,
+  "unexpected_acceptances": 1,
+  "results": [
+    {
+      "name": "valid_maintained_synthetic_receipt",
+      "expected_rejection": false,
+      "rejected": false,
+      "accepted_scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance",
+      "met_expectation": true
+    },
+    {
+      "name": "forward_rows_have_no_dt_pose_command_objective_or_progress",
+      "expected_rejection": true,
+      "rejected": false,
+      "accepted_scope": "current_source_reconstruction_not_historical_cause_or_G2_acceptance",
+      "met_expectation": false
+    },
+    {
+      "name": "forward_negative_dt_and_impossible_objective_accepted",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: interaction fixed positive 60 Hz timestep",
+      "met_expectation": true
+    },
+    {
+      "name": "forward_decision_not_bound_to_actor_or_tick_state",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: decision tick/actor/timestep",
+      "met_expectation": true
+    },
+    {
+      "name": "missing_fire_reload_weapon_utility_command_fields",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: incomplete command schema",
+      "met_expectation": true
+    },
+    {
+      "name": "plant_progress_jumps_then_resets_between_rows",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: authority summary contradicts states",
+      "met_expectation": true
+    },
+    {
+      "name": "last_plant_row_keeps_impossible_negative_progress",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: authority summary contradicts states",
+      "met_expectation": true
+    },
+    {
+      "name": "authority_rows_contradict_control_summary",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: authority summary contradicts states",
+      "met_expectation": true
+    },
+    {
+      "name": "negative_dt_in_plant_with_same_total_duration",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: interaction fixed positive 60 Hz timestep",
+      "met_expectation": true
+    },
+    {
+      "name": "plant_uses_two_1p5_second_steps_instead_of_stock_60hz",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: interaction fixed positive 60 Hz timestep",
+      "met_expectation": true
+    },
+    {
+      "name": "paired_decision_pose_tick_plan_disagree_with_protected_state",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: decision tick/actor/timestep",
+      "met_expectation": true
+    },
+    {
+      "name": "wrong_profile_not_bound_to_source",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: header/source contract mismatch",
+      "met_expectation": true
+    },
+    {
+      "name": "wrong_protocol_is_rejected",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: header/source contract mismatch",
+      "met_expectation": true
+    },
+    {
+      "name": "missing_terminal_is_rejected",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: missing header or terminal result",
+      "met_expectation": true
+    },
+    {
+      "name": "changed_paired_ammo_is_rejected",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: trace changed protected state",
+      "met_expectation": true
+    },
+    {
+      "name": "wrong_duration_is_rejected",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: interaction fixed positive 60 Hz timestep",
+      "met_expectation": true
+    },
+    {
+      "name": "negative_control_retained_progress_is_rejected",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: authority summary contradicts states",
+      "met_expectation": true
+    },
+    {
+      "name": "boolean_actor_id_is_not_a_typed_integer",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: decision tick/actor/timestep",
+      "met_expectation": true
+    },
+    {
+      "name": "boolean_time_scale_is_not_a_typed_number",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: header scalar roles",
+      "met_expectation": true
+    },
+    {
+      "name": "float_protocol_is_not_a_typed_integer",
+      "expected_rejection": true,
+      "rejected": true,
+      "error": "ValueError: header scalar roles",
+      "met_expectation": true
+    }
+  ]
+}

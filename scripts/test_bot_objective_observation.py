@@ -1,183 +1,221 @@
 #!/usr/bin/env python3
-"""Synthetic receipt falsifiers and source preservation; no native execution."""
+"""Complete synthetic schema controls. No fixture here claims native execution."""
 import copy
 import json
+import math
 from pathlib import Path
 import shutil
 import tempfile
 import unittest
-
 import verify_bot_objective_observation as oracle
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def command():
-    return {"move": [0, 0], "look": [0, 0], "interact": False, "fire": False,
-            "reload": False, "jump": False, "crouch": False, "weapon": "", "smoke": False, "grenade": False}
+def command(look=None, interact=False):
+    return {'move': [0, 0], 'look': look or [0, 0], **dict.fromkeys(oracle.BOOL_COMMAND, False), 'weapon': '', 'interact': interact}
 
 
-def protected():
+def protected(index=122):
+    pose = oracle.original()[index]
+    c = oracle.contract()
     actors = {}
-    for i in range(1, 11):
-        actors[str(i)] = {"team": 0, "position": [0, 0, 0], "velocity": [0, 0, 0],
-                          "yaw": 0, "pitch": 0, "alive": True, "health": 100,
-                          "weapon": "smg", "ammo": 30, "reserve": 0, "reload": 0,
-                          "deploy": 0, "ammo_store": {}, "inventory": ["smg"],
-                          "credits": 800, "grenades": 1, "smokes": 1, "recoil": [0, 0],
-                          "rng": "-9215223372036854755", "input": command()}
-    return {"actors": actors, "rng": "9223372036854775801", "bots": {}, "teams": {},
-            "heard": {}, "objective": "carried", "carrier": 6, "interactions": {},
-            "time_left": 90, "tick": 13415, "elapsed": 223.58, "phase": "live"}
+    for r in pose['actors']:
+        a = {k: copy.deepcopy(r[k]) for k in ('team', 'kills', 'assists', 'deaths', 'position', 'velocity', 'yaw', 'pitch', 'alive', 'health', 'weapon', 'ammo', 'reserve', 'reload', 'inventory', 'credits', 'grenades', 'smokes')}
+        a.update(deploy=0.0, ammo_store={w: c['ammo_defaults'][w] for w in r['inventory']}, recoil=[0, 0], rng='-9215223372036854755', cooldowns={}, shot_index=0, fire_previous=False, jump_previous=False, grenade_previous=False, smoke_previous=False, crouching=False, head_height=1.62, floor_contact=False, collision_disabled=not r['alive'], collision_height=1.8, collision_position=[0, .9, 0], input=command([r['yaw'], r['pitch']]))
+        actors[str(r['id'])] = a
+    bots = {}
+    for r in pose['actors']:
+        b = copy.deepcopy(c['bot_reset']); b['last_position'] = r['position']; bots[str(r['id'])] = b
+    teams = {'0': copy.deepcopy(c['team_reset']), '1': copy.deepcopy(c['team_reset'])}
+    teams['0'].update(primary_site=pose['round_number'] % 2, target_site=pose['round_number'] % 2)
+    return {'actors': actors, 'utilities': [], 'rng': '9223372036854775801', 'bots': bots, 'teams': teams, 'heard': {}, 'objective': pose['objective_state'], 'carrier': pose['objective_carrier'], 'objective_position': pose['objective_position'], 'objective_timer': pose['objective_timer'], 'contributions': {}, 'interaction_progress': 0.0, 'damage_history': {}, 'round': pose['round_number'], 'attack_score': pose['attack_score'], 'defend_score': pose['defend_score'], 'bot_clock': 0.0, 'interactions': {}, 'time_left': pose['time_left'], 'tick': pose['simulation_tick'], 'elapsed': pose['elapsed'], 'phase': 'live'}
 
 
-def decision(label, tick=1):
-    return {"label": label, "tick": tick, "actor_id": 6, "position": [0, 0, 0],
-            "observation": {"enabled": True, "candidates": [], "rng_before": "9223372036854775801",
-                            "plan": {"destination": [15, 0, 10]}, "movement_mode": "navigate",
-                            "navigation_waypoint": [0, 0, 3],
-                            "decision": {"actor_id": 6, "target_id": 0, "role": "carrier",
-                                         "destination": [15, 0, 10], "interact": False,
-                                         "command": command(), "rng_after": "9223372036854775801"}}}
+def decision(label, before, aid=6, interact=False):
+    before = copy.deepcopy(before)
+    after = copy.deepcopy(before)
+    actor = before['actors'][str(aid)]
+    cmd = command([actor['yaw'], actor['pitch']], interact)
+    after['actors'][str(aid)]['input'] = cmd
+    candidates = [{'id': int(i), 'distance': math.dist(actor['position'], a['position']), 'reason': ('range' if math.dist(actor['position'], a['position']) > 38 else 'visibility')} for i, a in before['actors'].items() if a['alive'] and a['team'] != actor['team']]
+    destination = [15, 0, 10]
+    obs = {'enabled': True, 'operation': 'decision', 'status': 'complete', 'candidates': candidates, 'rng_before': before['rng'], 'plan': {'destination': destination, 'interact': interact, 'primary_site': 1}, 'movement_mode': 'interact' if interact else 'navigate', 'navigation_waypoint': actor['position'], 'navigation_destination': None if interact else destination, 'target_distance': None, 'aligned': None, 'decision': {'actor_id': aid, 'target_id': 0, 'role': ('defuser' if interact and actor['team'] == 1 else ('carrier' if aid == before['carrier'] else ('anchor' if actor['team'] == 1 else 'escort'))), 'destination': destination, 'interact': interact, 'stuck': 0.0, 'command': cmd, 'rng_after': after['rng']}}
+    return {'label': label, 'tick': before['tick'], 'elapsed': before['elapsed'], 'dt': .12, 'actor_id': aid, 'position': actor['position'], 'before': before, 'after': after, 'observation': obs}
+
+
+def interaction(label, before, after):
+    predicates = {aid: {'alive': a['alive'], 'team': a['team'], 'position': a['position'], 'interact': a['input']['interact'], 'move': a['input']['move'], 'site': oracle.site(a['position']), 'objective_distance': math.dist(a['position'], before['objective_position']), 'progress': before['interactions'].get(aid, 0.0)} for aid, a in before['actors'].items()}
+    return {'label': label, 'tick': before['tick'], 'dt': oracle.DT, 'objective_before': before['objective'], 'objective_after': after['objective'], 'carrier_before': before['carrier'], 'carrier_after': after['carrier'], 'actors_before': predicates, 'progress_after': copy.deepcopy(after['interactions']), 'before': copy.deepcopy(before), 'after': copy.deepcopy(after)}
 
 
 def synthetic_records():
-    rows = [("HEADER", {"schema": 1, "engine": {"major": 4, "minor": 7, "patch": 2},
-                        "scope": "component_reconstruction_not_historical_replay", "time_scale": 1,
-                        "protocol": 6, "source_events": oracle.POSES, "controls": oracle.CONTROLS,
-                        "forward_source_event": 122, "forward_ticks": 120,
-                        "rules": {"buy_seconds": 15, "round_seconds": 100, "device_seconds": 35,
-                                  "plant_seconds": 3, "defuse_seconds": 5, "win_score": 7},
-                        "seed_policy": "original_initial_seeds_not_original_later_rng_state",
-                        "missing_state_reset": ["bot_memory", "team_contacts", "heard", "recoil", "holstered_ammo", "utility", "rng_state"]})]
+    """Schema-positive data, with source poses and all streams. Not an engine model."""
+    header = oracle.contract()
+    header.update(engine={'major': 4, 'minor': 7, 'patch': 2}, time_scale=1.0, physics_ticks_per_second=60)
+    rows = [('HEADER', header)]
+    complete = decision('unused', protected(120))['observation']
+    for name in header['freshness_cases']:
+        if name in ('live_complete', 'branch_change'):
+            out = copy.deepcopy(complete)
+        elif name == 'empty_default': out = {}
+        elif name == 'direct_perception': out = {'enabled': True, 'operation': 'perception', 'status': 'complete', 'candidates': [], 'target_id': 0}
+        else:
+            status = {'live_to_dead': 'dead', 'live_to_post': 'non_live', 'offline_to_online': 'blocked'}.get(name, 'disabled')
+            out = {'enabled': status != 'disabled', 'operation': 'decision', 'status': status}
+        rows.append(('CALL', {'case': name, 'output': out}))
     for index in oracle.POSES:
-        state = protected()
-        rows.append(("PAIR", {"event_index": index, "equal": True, **{k: copy.deepcopy(state) for k in ("before_off", "before_on", "after_off", "after_on")}}))
-        rows.append(("DECISION", decision("pose_" + str(index))))
-    rows.append(("DECISION", decision("forward_live_122", 13416)))
-    for tick in range(13416, 13536):
-        rows.append(("INTERACTION", {"label": "forward_live_122", "tick": tick}))
+        before = protected(index)
+        row = decision('pose_' + str(index), before)
+        rows.append(('PAIR', {'event_index': index, 'equal': True, 'before_off': copy.deepcopy(before), 'before_on': copy.deepcopy(before), 'after_off': copy.deepcopy(row['after']), 'after_on': copy.deepcopy(row['after'])}))
+        rows.append(('DECISION', row))
+    current = protected()
+    rows.append(('START', {'label': 'forward_live_122', 'source_event': 122, 'state': copy.deepcopy(current)}))
+    for tick in range(120):
+        before = copy.deepcopy(current); before['elapsed'] += oracle.DT
+        working = copy.deepcopy(before); working['tick'] += 1
+        clock = working['bot_clock'] - oracle.DT
+        turn = clock <= 0
+        working['bot_clock'] = .12 if turn else clock
+        if turn:
+            for aid, actor in list(working['actors'].items()):
+                if not actor['alive']: continue
+                row = decision('forward_live_122', working, int(aid))
+                rows.append(('DECISION', row)); working = copy.deepcopy(row['after'])
+        after_objective = copy.deepcopy(working)
+        rows.append(('INTERACTION', interaction('forward_live_122', working, after_objective)))
+        current = copy.deepcopy(after_objective); current['time_left'] -= oracle.DT
+        rows.append(('AUTHORITY', {'label': 'forward_live_122', 'tick': current['tick'], 'dt': oracle.DT, 'before': before, 'after': copy.deepcopy(current)}))
     for name in oracle.CONTROLS:
-        count = 180 if name == "plant" else (300 if name == "defuse" else 1)
-        positive = name in ("plant", "defuse")
-        for tick in range(count):
-            actor = {"alive": True, "team": 1 if name == "defuse" else 0,
-                     "interact": name != "no_interact", "move": [0, 1] if name == "moving" else [0, 0],
-                     "site": -1 if name == "wrong_site" else 0, "objective_distance": 0,
-                     "progress": tick / 60 if positive else .25}
-            rows.append(("INTERACTION", {"label": "control_" + name, "tick": tick, "dt": 1 / 60,
-                                         "actors_before": {"6": actor}, "carrier_before": 6,
-                                         "progress_after": {"6": (tick + 1) / 60} if positive and tick < count - 1 else {}}))
-        rows.append(("CONTROL", {"name": name, "valid": True, "ticks": count,
-                                 "objective": "planted" if name == "plant" else ("defused" if name == "defuse" else "carried"),
-                                 "contributions": {"6": 1} if positive else {}}))
-    rows.append(("RESULT", {"checks": 20, "failures": [], "pairs": 3, "controls": 5,
-                            "decisions": 4, "interactions": 603,
-                            "scope": "diagnostic_only_no_objective_quality_acceptance"}))
+        current = protected(127)
+        actor = current['actors']['6']
+        actor['position'] = [0, 0, -20] if name == 'wrong_site' else [-15, 0, 10]
+        if name == 'defuse':
+            actor['team'] = 1
+            current.update(objective='planted', objective_position=[-15, 0, 10], objective_timer=35.0)
+        positive = name in ('plant', 'defuse')
+        if not positive: current['interactions'] = {'6': .25}
+        rows.append(('CONTROL_START', {'name': name, 'state': copy.deepcopy(current)}))
+        count = 0
+        while True:
+            current['tick'] += 1; current['elapsed'] += oracle.DT
+            if count % 8 == 0:
+                row = decision('control_' + name, current, interact=name != 'wrong_site')
+                rows.append(('DECISION', row)); current = copy.deepcopy(row['after'])
+            if not positive:
+                current['actors']['6']['input']['interact'] = name != 'no_interact'
+                current['actors']['6']['input']['move'] = [0, 1] if name == 'moving' else [0, 0]
+            before = copy.deepcopy(current)
+            if name == 'defuse': current['objective_timer'] -= oracle.DT
+            if positive:
+                progress = current['interactions'].get('6', 0.0) + oracle.DT
+                current['interactions']['6'] = progress
+                if progress >= (3 if name == 'plant' else 5):
+                    current['interactions'] = {}; current['contributions'] = {'6': 1}
+                    current['actors']['6']['credits'] += 300
+                    if name == 'plant': current.update(objective='planted', objective_position=[-15, 0, 10], objective_timer=35.0)
+                    else:
+                        current.update(objective='defused', phase='post', time_left=5)
+                        current['defend_score'] += 1
+                        for a in current['actors'].values(): a['credits'] = min(9000, a['credits'] + (2700 if a['team'] == 1 else 1900))
+            else: current['interactions'] = {}
+            rows.append(('INTERACTION', interaction('control_' + name, before, current)))
+            count += 1
+            if not positive or current['objective'] == ('planted' if name == 'plant' else 'defused'): break
+        rows.append(('CONTROL', {'name': name, 'valid': True, 'ticks': count, 'objective': current['objective'], 'contributions': current['contributions'], 'final': copy.deepcopy(current)}))
+    rows.append(('RESULT', {'checks': 30, 'failures': [], 'pairs': 3, 'controls': 5, 'decisions': sum(k == 'DECISION' for k, _ in rows), 'interactions': sum(k == 'INTERACTION' for k, _ in rows), 'authority': 120, 'scope': 'diagnostic_only_no_objective_quality_acceptance'}))
     return rows
 
 
 def log(rows):
-    return "\n".join(oracle.PREFIX + kind + " " + json.dumps(value) for kind, value in rows) + "\n"
+    return '\n'.join(oracle.PREFIX + kind + ' ' + json.dumps(value, separators=(',', ':')) for kind, value in rows) + '\n'
 
 
 class ObjectiveOracleTests(unittest.TestCase):
-    def setUp(self):
-        self.rows = synthetic_records()
+    @classmethod
+    def setUpClass(cls):
+        cls.valid = synthetic_records()
 
     def reject(self, rows):
         with self.assertRaises((ValueError, KeyError, TypeError)):
-            oracle.verify(log(rows))
+            oracle.verify_records(rows)
 
-    def test_synthetic_complete_contract(self):
-        self.assertTrue(oracle.verify(log(self.rows))["observable_contract_passed"])
+    def test_complete_source_bound_synthetic_contract(self):
+        self.assertTrue(oracle.verify_records(self.valid)['observable_contract_passed'])
 
-    def test_truncation_duplicate_and_unknown_records(self):
-        for rows in [self.rows[:-1], self.rows[1:], self.rows + [self.rows[-1]], self.rows[:1] + self.rows]:
-            with self.subTest(case=len(rows)):
-                self.reject(rows)
-        with self.assertRaises(ValueError): oracle.verify(log(self.rows) + "BOT_OBJECTIVE_FUTURE {}\n")
-
-    def test_native_warnings_and_errors_stay_failures(self):
-        for warning in ["WARNING: leak", "SCRIPT ERROR: bad type", "ObjectDB instances leaked", "Orphan StringName: Master"]:
-            with self.subTest(warning=warning), self.assertRaises(ValueError):
-                oracle.verify(warning + "\n" + log(self.rows))
-
-    def test_parity_rejects_resource_memory_rng_and_command_mutations(self):
-        mutations = [
-            lambda p: p["after_on"]["actors"]["6"].update(ammo=31),
-            lambda p: p["after_on"]["actors"]["6"]["input"].update(fire=True),
-            lambda p: p["after_on"]["bots"].update(target=4),
-            lambda p: p["after_on"].update(rng="9223372036854775800"),
-            lambda p: p["before_on"].update(time_left=91),
-            lambda p: p["after_on"]["actors"]["6"].pop("ammo_store"),
-        ]
-        for mutate in mutations:
-            rows = copy.deepcopy(self.rows)
-            mutate(rows[1][1])
-            self.reject(rows)
-
-    def test_trace_must_bind_actual_command_and_rng(self):
-        for mutate in [lambda o: o["decision"]["command"].update(fire=True),
-                       lambda o: o.update(rng_before="7"), lambda o: o["decision"].update(rng_after="8")]:
-            rows = copy.deepcopy(self.rows)
-            mutate(rows[2][1]["observation"])
-            self.reject(rows)
-
-    def test_perception_cannot_omit_or_invent_target(self):
-        rows = copy.deepcopy(self.rows)
-        for key in ("before_off", "before_on", "after_off", "after_on"):
-            rows[1][1][key]["actors"]["4"]["team"] = 1
-        self.reject(rows)
-        rows = copy.deepcopy(self.rows)
-        rows[2][1]["observation"]["decision"]["target_id"] = 4
+    def mutate(self, kind, predicate, change):
+        rows = list(self.valid)
+        index = next(i for i, (tag, row) in enumerate(rows) if tag == kind and predicate(row))
+        tag, row = rows[index]
+        row = copy.deepcopy(row); rows[index] = (tag, row)
+        change(row)
         self.reject(rows)
 
-    def test_forward_ticks_and_controls_are_mandatory(self):
-        for kind, predicate in [("INTERACTION", lambda r: r.get("label") == "forward_live_122"),
-                                ("CONTROL", lambda r: r["name"] == "defuse"),
-                                ("DECISION", lambda r: r["label"] == "pose_127")]:
-            rows = copy.deepcopy(self.rows)
-            index = next(i for i, (tag, row) in enumerate(rows) if tag == kind and predicate(row))
-            del rows[index]
-            self.reject(rows)
+    def test_forward_missing_fields_are_explicit_mutations(self):
+        for field in ('dt', 'before', 'after', 'actors_before', 'objective_before', 'progress_after'):
+            self.mutate('INTERACTION', lambda r: r['label'] == 'forward_live_122', lambda r, key=field: r.pop(key))
+        for field in ('dt', 'before', 'after'):
+            self.mutate('AUTHORITY', lambda r: True, lambda r, key=field: r.pop(key))
 
-    def test_positive_and_negative_authority_falsifiers(self):
-        for label, mutate in [
-            ("control_plant", lambda r: r["actors_before"]["6"].update(interact=False)),
-            ("control_defuse", lambda r: r["actors_before"]["6"].update(objective_distance=3)),
-            ("control_plant", lambda r: r["progress_after"].update({"6": 1})),
-            ("control_wrong_site", lambda r: r["progress_after"].update({"6": .26})),
-            ("control_moving", lambda r: r["actors_before"]["6"].update(move=[0, 0])),
-            ("control_no_interact", lambda r: r["actors_before"]["6"].update(interact=True)),
-        ]:
-            rows = copy.deepcopy(self.rows)
-            row = next(row for tag, row in rows if tag == "INTERACTION" and row.get("label") == label)
-            mutate(row)
-            self.reject(rows)
+    def test_complete_commands_and_scalar_boundaries(self):
+        for field in oracle.COMMAND:
+            self.mutate('DECISION', lambda r: True, lambda r, key=field: r['observation']['decision']['command'].pop(key))
+        for field, value in [('protocol', 6.0), ('time_scale', True), ('physics_ticks_per_second', 60.0), ('profiles', {'normal': {'vision_range': -1}})]:
+            self.mutate('HEADER', lambda r: True, lambda r, key=field, v=value: r.update({key: v}))
 
-    def test_original_source_erasure_and_bytes(self):
-        result = oracle.source_audit(ROOT)
-        self.assertTrue(result["source_erasure_passed"])
-        self.assertFalse(result["native_executed"])
+    def test_freshness_branch_and_gate_boundaries(self):
+        for case in oracle.contract()['freshness_cases']:
+            self.mutate('CALL', lambda r, c=case: r['case'] == c, lambda r: r['output'].update(decision={'stale': True}))
+        self.mutate('CALL', lambda r: r['case'] == 'branch_change', lambda r: r['output'].update(target_distance=9))
+        self.mutate('CALL', lambda r: r['case'] == 'live_to_dead', lambda r: r['output'].update(enabled=1))
 
-    def test_source_audit_rejects_policy_map_and_fixture_mutations(self):
-        identity = json.loads((ROOT / oracle.REPORT / "benchmark-identity.json").read_text())
-        paths = list(identity["source"]) + [oracle.REPORT + "/benchmark-identity.json",
-                                          oracle.REPORT + "/original-timeout-slice.jsonl",
-                                          "game/tests/fixtures/bot_objective_timeout.jsonl"]
-        with tempfile.TemporaryDirectory() as temporary:
-            root = Path(temporary)
-            for path in paths:
-                (root / path).parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(ROOT / path, root / path)
-            for path in ["game/scripts/gameplay/bot_ai.gd", "game/scripts/gameplay/arena.gd", "game/tests/fixtures/bot_objective_timeout.jsonl"]:
-                with self.subTest(path=path):
-                    original = (root / path).read_bytes()
-                    (root / path).write_bytes(original + b"# deliberate falsifier\n")
-                    with self.assertRaises(ValueError): oracle.source_audit(root)
-                    (root / path).write_bytes(original)
+    def test_source_pose_and_decision_context_boundaries(self):
+        for change in [lambda r: r.update(tick=-50), lambda r: r.update(position=[900, 900, 900]), lambda r: r['observation']['plan'].update(destination=[8, 8, 8]), lambda r: r['before']['actors']['6'].update(ammo=31), lambda r: r.update(actor_id=True)]:
+            self.mutate('DECISION', lambda r: r['label'] == 'forward_live_122', change)
+        self.mutate('START', lambda r: True, lambda r: r['state']['actors']['6'].update(position=[0, 0, 0]))
+        self.mutate('DECISION', lambda r: True, lambda r: r['observation'].update(rng_before=str(2**65)))
+
+    def test_continuous_progress_fixed_dt_and_terminal_outcomes(self):
+        changes = [lambda r: r.update(dt=-1.0), lambda r: r.update(dt=1.5), lambda r: r['before']['interactions'].update({'6': 1.5}), lambda r: r['after']['interactions'].update({'6': -1}), lambda r: r.update(objective_after='defused'), lambda r: r['after']['actors']['6'].update(credits=9000), lambda r: r['after'].update(phase='buy')]
+        for change in changes:
+            self.mutate('INTERACTION', lambda r: r['label'] == 'control_plant', change)
+        self.mutate('CONTROL', lambda r: r['name'] == 'plant', lambda r: r.update(objective='defused'))
+        rows = [row for row in self.valid if not (row[0] == 'DECISION' and row[1]['label'] == 'control_plant')]
+        self.reject(rows)
+
+    def test_pair_protection_includes_action_movement_and_objective_state(self):
+        for field, value in [('shot_index', 1), ('jump_previous', True), ('head_height', 1.13), ('floor_contact', True)]:
+            self.mutate('PAIR', lambda r: True, lambda r, k=field, v=value: r['after_on']['actors']['6'].update({k: v}))
+        for field, value in [('objective_timer', 1), ('objective_position', [1, 2, 3]), ('contributions', {'6': 1}), ('damage_history', {'6': {}})]:
+            self.mutate('PAIR', lambda r: True, lambda r, k=field, v=value: r['after_on'].update({k: v}))
+        self.mutate('PAIR', lambda r: True, lambda r: r['before_on'].update(bots={}))
+
+    def test_truncation_duplicates_unknown_and_strict_warnings(self):
+        for rows in (self.valid[:-1], self.valid[1:], self.valid + [self.valid[-1]]): self.reject(rows)
+        for warning in ('WARNING: leak', 'SCRIPT ERROR: bad type', 'ObjectDB instances leaked', 'Orphan StringName: Master'):
+            with self.assertRaises(ValueError): oracle.records(warning + '\n')
+        with self.assertRaises(ValueError): oracle.records('BOT_OBJECTIVE_HEADER {"x":1,"x":2}\n')
+
+    def test_full_source_and_dependency_inventory(self):
+        self.assertTrue(oracle.source_audit(ROOT)['source_erasure_passed'])
+
+    def test_inventory_rejects_probe_utility_hidden_marker_and_resource_changes(self):
+        files = json.loads((ROOT / oracle.R2 / 'acquisition-inventory.json').read_text())['files']
+        extras = [oracle.REPORT + '/benchmark-identity.json', oracle.REPORT + '/original-timeout-slice.jsonl', oracle.R2 + '/acquisition-inventory.json', oracle.R2 + '/source-reference/original-0527715-bot_ai.gd.txt']
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            for path in list(files) + extras:
+                (root / path).parent.mkdir(parents=True, exist_ok=True); shutil.copyfile(ROOT / path, root / path)
+            for path in ('game/tests/bot_objective_observation_probe.gd', 'game/scripts/gameplay/utility.gd', 'game/project.godot', 'game/scripts/gameplay/bot_ai.gd'):
+                raw = (root / path).read_bytes()
+                if path.endswith('bot_ai.gd'):
+                    changed = raw.replace(b'# OBJECTIVE_OBSERVATION_BEGIN\n', b'# OBJECTIVE_OBSERVATION_BEGIN\n\tmatch_node._rng.randf() # hidden inside erasure marker\n', 1)
+                elif path.endswith('bot_objective_observation_probe.gd'):
+                    changed = raw.replace(b'super._objective_tick(delta)', b'pass # removed authority consumer')
+                else: changed = raw + b'\n# mutation control\n'
+                (root / path).write_bytes(changed)
+                with self.assertRaises(ValueError): oracle.source_audit(root)
+                (root / path).write_bytes(raw)
 
 
-if __name__ == "__main__":
-    unittest.main()
+if __name__ == '__main__': unittest.main()
