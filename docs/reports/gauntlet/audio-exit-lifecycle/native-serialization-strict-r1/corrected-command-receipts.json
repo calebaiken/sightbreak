@@ -1,0 +1,110 @@
+[
+  {
+    "name": "test_audio_native_compatibility",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_audio_native_compatibility.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_bytes": 2373,
+    "stderr_sha256": "c00dc53c7f6283416f1001573663212b6ebcac05039bb4365c9cca2095cf3668"
+  },
+  {
+    "name": "test_analyze_audio_lifecycle",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_analyze_audio_lifecycle.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_bytes": 4415,
+    "stderr_sha256": "f402807a582d9c3a4699e18f6d63d547e2fa92ca0eec5af5f4dc915063c94b4a"
+  },
+  {
+    "name": "test_acquire_audio_lifecycle",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_acquire_audio_lifecycle.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_bytes": 2529,
+    "stderr_sha256": "d336fcea3eea6d1981d498bf7a713dffe772136bb21b9ec4728016e3b8fb75de"
+  },
+  {
+    "name": "test_audio_acquisition_finalization",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_audio_acquisition_finalization.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_bytes": 1749,
+    "stderr_sha256": "3bf6c510d9de3e6913ecd92fbf33600964f237732999c5e7fe5d14d9f336c59b"
+  },
+  {
+    "name": "test_build_manifest",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_build_manifest.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stdout_bytes": 0,
+    "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderr_bytes": 3209,
+    "stderr_sha256": "2129d2c3378bf6c9861d659f95726f5cefd7f15c5ceac5fb032168b2ff70bda2"
+  },
+  {
+    "name": "corrected-full-raw",
+    "argv": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "scripts/analyze_audio_lifecycle.py",
+      "/workspace/sightbreak-audio-exit-lifecycle/.local/audio-owner-r1-20261023/input-mode.log"
+    ],
+    "exit": 0,
+    "stdout_bytes": 3593,
+    "stdout_sha256": "8a7a8aa9d514eeafa925e2f1c6ee60d9998ff8f4122b39d445b0e4e8ea0fec4a",
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]
