@@ -444,7 +444,7 @@ class WinUI:
         physical hold interval. Existing key() schedules remain unchanged.
         """
         receipt.update(status='IN_PROGRESS', keys=list(names) if isinstance(names, (tuple, list)) else names, requested_seconds=seconds,
-                       absolute_deadline=deadline, edges=[], os_states=[], attempted_keys=[],
+                       absolute_deadline=deadline, edges=[], os_states=[], down_checks=[], attempted_keys=[],
                        released_keys=[], release_errors=[], release_complete=False,
                        scope='in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified')
         attempted, failure = [], None
@@ -454,7 +454,7 @@ class WinUI:
             if clock() >= deadline:
                 raise TimeoutError('Original route deadline expired during native key pulse')
 
-        def state(label):
+        def state(label, samples=None):
             begin = clock()
             owner = C.c_uint32()
             visible = bool(self.window and self.user.IsWindowVisible(self.window))
@@ -467,7 +467,7 @@ class WinUI:
                                    for name in ('w', 'a', 's', 'd')},
                      'lmb_down': bool(self.user.GetAsyncKeyState(0x01) & 0x8000)}
             value['read_end_monotonic'] = clock()
-            receipt['os_states'].append(value)
+            (receipt['os_states'] if samples is None else samples).append(value)
             if (self.window != pinned_window or self.pid != pinned_pid
                     or not visible or not thread or type(pinned_pid) is not int or pinned_pid <= 0
                     or owner.value != pinned_pid or foreground != pinned_window):
@@ -502,6 +502,23 @@ class WinUI:
             try:
                 for name in names:
                     budget()
+                    check = {'key': name, 'owned_keys': list(attempted), 'os_states': [],
+                             'read_begin_monotonic': clock(), 'status': 'IN_PROGRESS'}
+                    receipt['down_checks'].append(check)
+                    try:
+                        current = state('before_key_down', check['os_states'])
+                        if (current['lmb_down'] or any(down and key not in attempted
+                                                      for key, down in current['keys_down'].items())):
+                            raise RuntimeError('Native route key pulse observed unowned controls before down')
+                        budget()
+                        if clock() >= receipt['hold_until_monotonic']:
+                            raise TimeoutError('Native route checks exhausted its requested pulse window')
+                        check['status'] = 'CHECKED'
+                    except BaseException as error:
+                        check.update(status='FAILED', error_type=type(error).__name__, error=str(error))
+                        raise
+                    finally:
+                        check['read_end_monotonic'] = clock()
                     attempted.append(name)
                     receipt['attempted_keys'].append(name)
                     edge(name, True)

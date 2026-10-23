@@ -58,6 +58,53 @@ class MockPulse:
                                  clock=lambda: self.now, sleep=self.sleep)
 
 
+class RealKeyPulse(MockPulse):
+    """Keep actual key mapping/_input; replace User32 and time only."""
+    def __init__(self):
+        super().__init__()
+        self.state_user = self.ui.user
+        self.ui.user = self
+        del self.ui.key
+        self.calls, self.read_stages = [], []
+        self.read_hook = None
+        self.thread = 56
+
+    def IsWindowVisible(self, window):
+        checks = self.receipt.get('down_checks', [])
+        if checks and checks[-1]['status'] == 'IN_PROGRESS':
+            stage = 'before_key_down:' + checks[-1]['key']
+        elif self.events:
+            stage = 'after_down' if self.events[-1][1] else 'after_release'
+        else:
+            stage = 'before_down'
+        self.read_stages.append(stage)
+        if self.read_hook:
+            self.read_hook(stage)
+        return self.state_user.IsWindowVisible(window)
+
+    def GetWindowThreadProcessId(self, window, pointer):
+        self.state_user.GetWindowThreadProcessId(window, pointer)
+        return self.thread
+
+    def GetForegroundWindow(self):
+        return self.state_user.GetForegroundWindow()
+
+    def GetAsyncKeyState(self, vk):
+        return self.state_user.GetAsyncKeyState(vk)
+
+    def MapVirtualKeyW(self, vk, mode):
+        return vk
+
+    def SendInput(self, count, pointer, size):
+        event = pointer._obj
+        name, down = chr(event.data.key.scan).lower(), not bool(event.data.key.flags & 0x2)
+        self.calls.append({'key': name, 'down': down, 'time': self.now,
+                           'foreground': self.foreground, 'owner': self.owner,
+                           'visible': self.visible, 'flags': event.data.key.flags})
+        self.key(name, down)
+        return 1
+
+
 class NativeRoutePulseControls(unittest.TestCase):
     def test_actual_method_keeps_edge_brackets_and_all_wasd_os_states(self):
         trial = MockPulse()
@@ -127,7 +174,7 @@ class NativeRoutePulseControls(unittest.TestCase):
 
     def test_late_successful_os_release_read_cannot_pass_original_cap(self):
         trial = MockPulse()
-        trial.state_delays[3] = .2
+        trial.state_delays[4] = .2
         with self.assertRaisesRegex(TimeoutError, 'Original route deadline'):
             trial.run(seconds=.1, deadline=.15)
         self.assertTrue(trial.receipt['release_complete'])
@@ -212,6 +259,138 @@ class NativeRoutePulseControls(unittest.TestCase):
             approach_floor(-7.8, -21, observe=world.observe, key=world.key, pause=world.pause,
                            record=world.record, deadline=35, clock=world.clock, pulse=late)
         self.assertFalse(world.requested)
+
+
+class RealKeyPerDownControls(unittest.TestCase):
+    def test_real_key_two_key_positive_recognizes_prior_owned_input(self):
+        for names in (('w', 'd'), ['w', 'd'], ('a', 's')):
+            with self.subTest(names=names):
+                trial = RealKeyPulse()
+                result = trial.run(names)
+                self.assertEqual([row['flags'] for row in trial.calls], [8, 8, 10, 10])
+                self.assertEqual(result['down_checks'][1]['owned_keys'], [names[0]])
+                state = result['down_checks'][1]['os_states'][0]
+                self.assertTrue(state['keys_down'][names[0]])
+                self.assertFalse(state['keys_down'][names[1]])
+                self.assertAlmostEqual(trial.calls[2]['time'], .125)
+                self.assertTrue(result['release_complete'])
+
+    def test_real_key_focus_or_owner_loss_stops_second_down(self):
+        for field in ('foreground', 'owner'):
+            with self.subTest(field=field):
+                trial = RealKeyPulse()
+                trial.after_down_hook = lambda: setattr(trial, field, 99)
+                with self.assertRaisesRegex(RuntimeError, 'owned visible focused window'):
+                    trial.run(('w', 'd'))
+                self.assertEqual([(r['key'], r['down']) for r in trial.calls], [('w', True), ('w', False)])
+                self.assertFalse(trial.down)
+                self.assertEqual(trial.receipt['attempted_keys'], ['w'])
+                check = trial.receipt['down_checks'][-1]
+                self.assertEqual(check['status'], 'FAILED')
+                self.assertEqual(check['os_states'][0]['foreground_window' if field == 'foreground' else 'window_pid'], 99)
+
+    def test_real_key_visibility_or_pinned_identity_loss_stops_second_down(self):
+        for field, value in (('visible', False), ('thread', 0), ('window', 99), ('pid', 99)):
+            with self.subTest(field=field):
+                trial = RealKeyPulse()
+                target = trial if field in ('visible', 'thread') else trial.ui
+                trial.after_down_hook = lambda: setattr(target, field, value)
+                with self.assertRaises(RuntimeError): trial.run(('w', 'd'))
+                self.assertEqual(trial.events, [('w', True, 0), ('w', False, .005)])
+                self.assertFalse(trial.down)
+
+    def test_real_key_later_external_controls_stop_down_without_owning_them(self):
+        for name in ('a', 's', 'd', 'lmb'):
+            with self.subTest(name=name):
+                trial = RealKeyPulse()
+                trial.after_down_hook = lambda: trial.down.add(name)
+                with self.assertRaisesRegex(RuntimeError, 'unowned controls'):
+                    trial.run(('w', 'd'))
+                self.assertEqual([(r['key'], r['down']) for r in trial.calls], [('w', True), ('w', False)])
+                self.assertEqual(trial.down, {name})
+                self.assertEqual(trial.receipt['released_keys'], ['w'])
+                self.assertFalse(trial.receipt['release_complete'])
+
+    def test_real_key_first_down_is_rechecked_after_initial_preflight(self):
+        for field, value in (('foreground', 99), ('owner', 99), ('visible', False)):
+            with self.subTest(field=field):
+                trial = RealKeyPulse()
+                trial.read_hook = lambda stage: setattr(trial, field, value) if stage == 'before_key_down:d' else None
+                with self.assertRaises(RuntimeError): trial.run()
+                self.assertFalse(trial.calls)
+                self.assertEqual(trial.receipt['down_checks'][0]['status'], 'FAILED')
+
+    def test_real_key_unknown_later_read_or_interrupt_releases_prior_attempt(self):
+        for error in (OSError('unknown read'), KeyboardInterrupt(), SystemExit('cancel')):
+            with self.subTest(error=type(error).__name__):
+                trial = RealKeyPulse()
+                def read(stage):
+                    if stage == 'before_key_down:d': raise error
+                trial.read_hook = read
+                with self.assertRaises(type(error)): trial.run(('w', 'd'))
+                self.assertEqual(trial.events, [('w', True, 0), ('w', False, .005)])
+                self.assertTrue(trial.receipt['release_complete'])
+                self.assertEqual(trial.receipt['down_checks'][-1]['error_type'], type(error).__name__)
+
+    def test_real_key_late_per_down_check_consumes_fixed_hold_and_absolute_cap(self):
+        for deadline, delay in ((35, .2), (.1, .2)):
+            with self.subTest(deadline=deadline):
+                trial = RealKeyPulse()
+                def read(stage):
+                    if stage == 'before_key_down:d': trial.now += delay
+                trial.read_hook = read
+                with self.assertRaises(TimeoutError): trial.run(('w', 'd'), seconds=.125, deadline=deadline)
+                self.assertEqual([(r['key'], r['down']) for r in trial.calls], [('w', True), ('w', False)])
+                self.assertEqual(trial.receipt['hold_until_monotonic'], min(.125, deadline))
+                self.assertTrue(trial.receipt['release_complete'])
+                self.assertGreater(trial.receipt['down_checks'][-1]['read_end_monotonic'], .2)
+
+    def test_real_key_post_down_and_release_unknown_reads_keep_semantic_stages(self):
+        for stage in ('after_down', 'after_release'):
+            with self.subTest(stage=stage):
+                trial = RealKeyPulse()
+                def read(actual):
+                    if actual == stage: raise OSError('unknown ' + stage)
+                trial.read_hook = read
+                with self.assertRaises(BaseException): trial.run(('w', 'd'))
+                self.assertEqual([(r['key'], r['down']) for r in trial.calls],
+                                 [('w', True), ('d', True), ('w', False), ('d', False)])
+                self.assertFalse(trial.down)
+                self.assertEqual(len(trial.receipt['edges']), 4)
+
+    def test_real_key_late_release_read_fails_after_all_releases(self):
+        trial = RealKeyPulse()
+        trial.read_hook = lambda stage: setattr(trial, 'now', trial.now + .2) if stage == 'after_release' else None
+        with self.assertRaises(TimeoutError): trial.run(('w', 'd'), seconds=.1, deadline=.15)
+        self.assertTrue(trial.receipt['release_complete'])
+        self.assertEqual(trial.receipt['status'], 'FAILED')
+        self.assertFalse(trial.down)
+
+    def test_real_key_partial_down_and_up_interrupt_still_attempt_all_owned_releases(self):
+        trial = RealKeyPulse()
+        trial.error_down, trial.error_up = {'d'}, {'w'}
+        with self.assertRaises(OSError): trial.run(('w', 'd'))
+        self.assertEqual([(r['key'], r['down']) for r in trial.calls],
+                         [('w', True), ('d', True), ('w', False), ('d', False)])
+        self.assertEqual(trial.receipt['attempted_keys'], ['w', 'd'])
+        self.assertFalse(trial.receipt['release_complete'])
+        self.assertFalse(trial.down)
+
+    def test_real_key_receipts_own_samples_and_request_list_after_return(self):
+        trial = RealKeyPulse()
+        names = ['w', 'd']
+        result = trial.run(names)
+        names[:] = ['s']
+        trial.down.add('a')
+        trial.foreground = trial.owner = trial.ui.pid = trial.ui.window = 99
+        self.assertEqual(result['keys'], ['w', 'd'])
+        self.assertEqual(result['down_checks'][0]['owned_keys'], [])
+        self.assertEqual(result['down_checks'][1]['owned_keys'], ['w'])
+        for check in result['down_checks']:
+            state = check['os_states'][0]
+            self.assertEqual((state['target_window'], state['window_pid'], state['foreground_window']), (34, 12, 34))
+            self.assertFalse(state['keys_down']['a'])
+        self.assertFalse(any(result['os_states'][-1]['keys_down'].values()))
 
 
 if __name__ == '__main__':
