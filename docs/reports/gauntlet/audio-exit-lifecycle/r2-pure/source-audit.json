@@ -1,0 +1,40 @@
+{
+  "scope": "source/pure only; no engine or runtime",
+  "base_freeze": "809dbc0921b1faa2abe25eb6bab3576becb48db8",
+  "unchanged_game_observer_and_hooks": [
+    {
+      "path": "game/tests/audio_lifecycle_probe.gd",
+      "sha256": "0e6eda0f2a6bcfd64a0daf5a2ea4443f19daa69eb96d393347b81dafa49c78a1",
+      "equals_809dbc0": true
+    },
+    {
+      "path": "game/tests/input_mode_test.gd",
+      "sha256": "160f052b71547fb056fb565dab7d323d03112822ff86426eb74b50da3625055e",
+      "equals_809dbc0": true
+    }
+  ],
+  "original_incomplete_fixture_unchanged": true,
+  "fixture_sha256": "dfdb768a6619f92a9580ab826a3a8a736c6cc46c2bbadee2987f006be5dc431f",
+  "generated_counterexamples_equal_originals": [
+    {
+      "name": "final_weak_before_all_leave_boundaries.synthetic.log",
+      "sha256": "9c17c255171371d8d573b8fac7ab9e16836823a7ab2a7a2aa5f46a0c3fff1b5a",
+      "replayed_bytes_equal": true
+    },
+    {
+      "name": "late_weak_after_final_checkpoint.synthetic.log",
+      "sha256": "222624c4e6fc2beee50b2657d2bb06804c451d9ba6897e215b62f836128b2852",
+      "replayed_bytes_equal": true
+    },
+    {
+      "name": "missing_all_post_leave_weak_observations.synthetic.log",
+      "sha256": "b20ea3be85264d7abda75b93f9d0e1b9e0e13ed863fdf09fa1879be4f732b11b",
+      "replayed_bytes_equal": true
+    }
+  ],
+  "changed_game_paths_since_809dbc0": [],
+  "r2_python_source_sha256": {
+    "scripts/analyze_audio_lifecycle.py": "db6f46d80a08932f23db1d845fe2ef5c0a282e8bb2fee1f7f0a4fdea3213c009",
+    "scripts/test_analyze_audio_lifecycle.py": "fdc072af7bbd62b6cd3f23edf9f78965b5c35764376fb32748cdd7edb11857f4"
+  }
+}

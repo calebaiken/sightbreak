@@ -11,6 +11,7 @@ from native_log import failed
 PREFIX = 'AUDIO_LIFECYCLE '
 ENGINE = 'Godot Engine v4.7.2.stable.official.ed1daf0bf'
 ROLES = {'actor_shot', 'actor_hurt', 'reload_voice', 'utility', 'match_device', 'network_shot', 'unknown'}
+FORCED_STAGES = {'before_hud_leave', 'after_hud_leave', 'before_final_leave', 'after_final_leave', 'final_pre_quit'}
 
 
 def object_id(value, optional=False):
@@ -27,8 +28,12 @@ def object_id(value, optional=False):
 def analyze(text):
     objects, players, weak, checkpoints, headers = {}, [], {}, [], []
     rows = []
+    pending_weak, snapshots, final_weak = [], [], {}
+    sealed = False
     for line in text.splitlines():
         if line.startswith(PREFIX):
+            if sealed:
+                raise ValueError('Probe record appears after the sealed final checkpoint')
             row = json.loads(line[len(PREFIX):])
             if (not isinstance(row, dict) or type(row.get('schema')) is not int or row['schema'] != 1
                     or type(row.get('sequence')) is not int or row['sequence'] != len(rows)):
@@ -36,8 +41,12 @@ def analyze(text):
             if (not isinstance(row.get('stage'), str) or any(type(row.get(key)) is not int or row[key] < 0
                     for key in ('process_frame', 'physics_frame', 'usec'))):
                 raise ValueError('Probe stage/frame/time fields are invalid')
+            if rows and any(row[key] < rows[-1][key] for key in ('process_frame', 'physics_frame', 'usec')):
+                raise ValueError('Probe frame/time chronology moves backward')
             rows.append(row)
             kind = row.get('kind')
+            if pending_weak and kind not in ('weak', 'checkpoint'):
+                raise ValueError('Non-weak record interleaves the weak snapshot loop')
             if kind == 'header':
                 if (row['sequence'] != 0 or not isinstance(row.get('driver'), str) or not row['driver']
                         or type(row.get('mix_rate')) is not int or row['mix_rate'] <= 0
@@ -86,9 +95,27 @@ def analyze(text):
                 if identity not in objects or type(row.get('alive')) is not bool:
                     raise ValueError('Weak observation is invalid')
                 weak.setdefault(identity, []).append(row)
+                pending_weak.append((identity, row))
             elif kind == 'checkpoint':
                 if any(type(row.get(key)) not in (int, float) for key in ('time_since_last_mix', 'time_to_next_mix')):
                     raise ValueError('Public mix timing fields are invalid')
+                stage = row['stage']
+                if stage not in FORCED_STAGES | {'existing_process_frame'}:
+                    raise ValueError('Unknown snapshot checkpoint stage')
+                identities = [identity for identity, _ in pending_weak]
+                if any(observation['stage'] != stage for _, observation in pending_weak):
+                    raise ValueError('Weak row lies outside its matching checkpoint window')
+                if len(set(identities)) != len(identities):
+                    raise ValueError('Weak object is duplicated within one checkpoint window')
+                if stage in FORCED_STAGES:
+                    if set(identities) != set(objects):
+                        raise ValueError('Forced checkpoint window lacks complete weak object coverage')
+                    snapshots.append({'stage': stage, 'checkpoint_sequence': row['sequence'],
+                                      'registered_object_count': len(objects), 'weak_count': len(identities)})
+                if stage == 'final_pre_quit':
+                    final_weak = {identity: observation for identity, observation in pending_weak}
+                    sealed = True
+                pending_weak = []
                 checkpoints.append(row)
             else:
                 raise ValueError('Unknown probe record kind')
@@ -105,8 +132,8 @@ def analyze(text):
     if ([stage for stage in stages if stage in expected] != expected_order
             or stages[-1:] != ['final_pre_quit']):
         raise ValueError('Original leave/final checkpoint coverage is incomplete')
-    if any(not any(row['stage'] == 'final_pre_quit' for row in weak.get(identity, [])) for identity in objects):
-        raise ValueError('Final weak liveness coverage is incomplete')
+    if pending_weak or not sealed:
+        raise ValueError('Probe ends with an incomplete or unsealed weak snapshot')
     footers = re.findall(r'^INPUT_MODE_TEST checks=(\d+) failures=(\d+) graphical_pointer=(\w+) .* baseline=(\w+)$', text, re.M)
     if footers != [('462', '0', 'false', 'false')]:
         raise ValueError('Exact headless base input_mode assertion result is absent')
@@ -135,7 +162,7 @@ def analyze(text):
     unclassified = sorted({row['id'] for row in players} - classified)
     final_alive_players = [identity for identity, descriptor in objects.items()
                            if descriptor['class'] == 'AudioStreamPlayer3D'
-                           and weak[identity][-1]['alive']]
+                           and final_weak[identity]['alive']]
     return {'schema': 1, 'scope': 'read-only ownership evidence; no fix or drain qualification',
             'driver': headers[0]['driver'], 'records': len(rows), 'objects': len(objects),
             'player_role_counts': coverage, 'expected_input_mode_role_counts': expected_roles,
@@ -143,6 +170,7 @@ def analyze(text):
             'fixture_owner_coverage_complete': (all(coverage[role] == count for role, count in expected_roles.items())
                                                 and len(classified) == 427 and not unclassified),
             'final_alive_player_ids': final_alive_players,
+            'final_checkpoint_sequence': checkpoints[-1]['sequence'], 'forced_weak_snapshots': snapshots,
             'strict_raw_log_failed': failed(text), 'leaks': leaks,
             'sample_status': ('leak_observed' if leaks else
                               'untyped_strict_failure' if failed(text) else 'no_typed_leak_in_this_sample'),

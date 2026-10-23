@@ -1,0 +1,115 @@
+{
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "scripts/test_analyze_audio_lifecycle.py",
+        "-v"
+      ],
+      "exit": 0,
+      "output": "maintained-final.log",
+      "output_sha256": "f57ae8cc95a81acc76b003f66467708b80bdfde031b9d59156405d131dd40a5c"
+    },
+    {
+      "argv": [
+        "python3",
+        "docs/reports/gauntlet/audio-exit-lifecycle/r2-pure/replay_counterexamples.py",
+        "-v"
+      ],
+      "exit": 0,
+      "output": "unchanged-independent-replay.log",
+      "output_sha256": "b5386e172677478ae6cb2c4c9284ead9c49974e6b542429df9c07320038bb767"
+    }
+  ],
+  "unchanged_replay_sha256": "23f064ac8b9ca7e6da182c1b32230eb25fa6c85a95d840490622d3dc9f2e3e4d",
+  "saved_raw_counterexamples": [
+    {
+      "input": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/final_weak_before_all_leave_boundaries.synthetic.log",
+      "sha256": "9c17c255171371d8d573b8fac7ab9e16836823a7ab2a7a2aa5f46a0c3fff1b5a",
+      "rejected": true,
+      "reason": "Weak row lies outside its matching checkpoint window"
+    },
+    {
+      "input": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/late_weak_after_final_checkpoint.synthetic.log",
+      "sha256": "222624c4e6fc2beee50b2657d2bb06804c451d9ba6897e215b62f836128b2852",
+      "rejected": true,
+      "reason": "Forced checkpoint window lacks complete weak object coverage"
+    },
+    {
+      "input": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/missing_all_post_leave_weak_observations.synthetic.log",
+      "sha256": "b20ea3be85264d7abda75b93f9d0e1b9e0e13ed863fdf09fa1879be4f732b11b",
+      "rejected": true,
+      "reason": "Forced checkpoint window lacks complete weak object coverage"
+    }
+  ],
+  "retained_originals": [
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/PREREGISTRATION.md",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/REVIEW.md",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/counterexample-summary.json",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/final_weak_before_all_leave_boundaries.accepted-report.json",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/final_weak_before_all_leave_boundaries.synthetic.log",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/independent-byte-audit.json",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/independent-counterexamples.log",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/inspected-benchmarks.json",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/late_weak_after_final_checkpoint.accepted-report.json",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/late_weak_after_final_checkpoint.synthetic.log",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/maintained-tests.log",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/missing_all_post_leave_weak_observations.accepted-report.json",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/missing_all_post_leave_weak_observations.synthetic.log",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/pure-command-receipts.json",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/replay_counterexamples.py",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/setup-failures.json",
+      "matches_critic_bytes": true
+    },
+    {
+      "file": "docs/reports/gauntlet/audio-exit-lifecycle/independent-source-r1-original/sha256.json",
+      "matches_critic_bytes": true
+    }
+  ]
+}
