@@ -98,13 +98,34 @@ func reset_input() -> void:
 	look_delta = Vector2.ZERO
 	queue_redraw()
 
+func layout_rect() -> Rect2:
+	return safe_rect if safe_rect.size.x > 0 and safe_rect.size.y > 0 else Rect2(Vector2.ZERO, size)
+
+func effective_scale() -> float:
+	var rect := layout_rect()
+	return minf(hud_scale, clampf(minf(rect.size.x / 640.0, rect.size.y / 480.0), 0.7, 1.5))
+
 func radius(action: String) -> float:
-	return (65.0 if action == "move" else (40.0 if action == "fire" else 28.0)) * hud_scale
+	return (65.0 if action == "move" else (40.0 if action == "fire" else 28.0)) * effective_scale()
+
+func hit_radius(action: String) -> float:
+	var scaled := radius(action) * 1.25
+	return scaled if action in ["fire", "move"] else maxf(31.0, scaled)
+
+func resolved_position(action: String) -> Vector2:
+	var normalized: Vector2 = positions[action]
+	var rect := layout_rect()
+	if (rect.size.x < 1100 or rect.size.y < 650) and normalized.is_equal_approx(DEFAULT_POSITIONS[action]):
+		if action == "grenade": normalized.x = 0.58
+		elif action == "interact": normalized.y = 0.61
+		elif action == "jump": normalized.y = 0.72
+		elif action == "switch": normalized.y = 0.91
+	return normalized
 
 func control_point(action: String) -> Vector2:
-	var rect := safe_rect if safe_rect.size.x > 0 else Rect2(Vector2.ZERO, size)
-	var point: Vector2 = rect.position + positions[action] * rect.size
-	var inset := Vector2.ONE * (radius(action) + 8.0)
+	var rect := layout_rect()
+	var point: Vector2 = rect.position + resolved_position(action) * rect.size
+	var inset := Vector2.ONE * (hit_radius(action) + 1.0)
 	# Keep the entire touch target inside notches and gesture insets, even at maximum scale.
 	inset = inset.min(rect.size * 0.5)
 	return point.clamp(rect.position + inset, rect.end - inset)
@@ -114,8 +135,8 @@ func action_at(point: Vector2) -> String:
 	var best := INF
 	for key in positions:
 		if key == "move" and not editing: continue
-		var distance := point.distance_to(control_point(key)) / radius(key)
-		if distance <= 1.25 and distance < best:
+		var distance := point.distance_to(control_point(key)) / hit_radius(key)
+		if distance <= 1.0 and (distance < best or (distance == best and str(key) < closest)):
 			closest = key
 			best = distance
 	return closest
@@ -184,6 +205,7 @@ func _draw() -> void:
 	if not enabled:
 		return
 	var font := ThemeDB.fallback_font
+	var draw_scale := effective_scale()
 	for key in positions:
 		if key == "move": continue
 		var point := control_point(key)
@@ -207,7 +229,8 @@ func _draw() -> void:
 		var width := font.get_string_size(label_text, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
 		var depleted: bool = counts.has(key) and int(counts[key]) <= 0
 		var ink := Color(0.9, 0.92, 0.94, 0.35 if depleted else 0.9)
-		var badge := point + Vector2(r * 0.72, -r * 0.72)
+		var badge_offset := minf(r * 0.66, (hit_radius(key) - 12.625) / sqrt(2.0))
+		var badge := point + Vector2(badge_offset, -badge_offset)
 		if counts.has(key):
 			# Badge paint precedes glyphs; digits remain above the original icon.
 			draw_arc(badge, 9, 0, TAU, 48, Color(0.015, 0.02, 0.028, 0.96), 5.25)
@@ -223,12 +246,12 @@ func _draw() -> void:
 			var digit_width := font.get_string_size(digits, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
 			draw_string(font, badge + Vector2(-digit_width / 2, 4.5), digits, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(1, 1, 1) if depleted else Color(0.04, 0.05, 0.07))
 	var origin := move_origin if not editing and fingers.values().has("move") else control_point("move")
-	draw_arc(origin, 65 * hud_scale, 0, TAU, 48, Color(0.015, 0.02, 0.028, 0.96), 6.0)
-	draw_arc(origin, 65 * hud_scale, 0, TAU, 48, Color(0.8, 0.85, 0.9, 0.95), 2.0)
-	var knob := origin + Vector2(movement.x, -movement.y) * 40 * hud_scale
-	draw_circle(knob, 23 * hud_scale, Color(0.015, 0.02, 0.028, 0.96))
-	draw_arc(knob, 23 * hud_scale, 0, TAU, 48, Color(0.015, 0.02, 0.028, 0.96), 4.0)
-	draw_circle(knob, 23 * hud_scale, Color(0.8, 0.85, 0.9, 0.9))
+	draw_arc(origin, 65 * draw_scale, 0, TAU, 48, Color(0.015, 0.02, 0.028, 0.96), 6.0)
+	draw_arc(origin, 65 * draw_scale, 0, TAU, 48, Color(0.8, 0.85, 0.9, 0.95), 2.0)
+	var knob := origin + Vector2(movement.x, -movement.y) * 40 * draw_scale
+	draw_circle(knob, 23 * draw_scale, Color(0.015, 0.02, 0.028, 0.96))
+	draw_arc(knob, 23 * draw_scale, 0, TAU, 48, Color(0.015, 0.02, 0.028, 0.96), 4.0)
+	draw_circle(knob, 23 * draw_scale, Color(0.8, 0.85, 0.9, 0.9))
 	if editing:
 		draw_string(font, Vector2(size.x * 0.30, size.y * 0.45), "DRAG CONTROLS  /  TAP SAVE ABOVE", HORIZONTAL_ALIGNMENT_LEFT, -1, 22, Color(0.9, 0.78, 0.5))
 

@@ -161,9 +161,58 @@ func run() -> void:
 			var b: String = keys[other]
 			if touch.control_point(a).distance_to(touch.control_point(b)) < touch.radius(a) + touch.radius(b): overlaps.append(a + "/" + b)
 	check(overlaps.is_empty(), "Maximum-size default controls do not visually overlap on tablet landscape: " + str(overlaps))
+	verify_target_ownership(touch)
 	restored.free()
 	save.queue_free()
 	touch.queue_free()
 	await process_frame
 	print("TOUCH_TEST checks=%d failures=%d" % [checks, failures])
 	quit(1 if failures else 0)
+
+# Unexecuted until the separately reviewed native lane is released. These call
+# the actual product methods, independently of the Python geometry translator.
+func verify_target_ownership(touch) -> void:
+	for viewport in [Vector2(960,540),Vector2(960,720),Vector2(1280,720),Vector2(1280,800),Vector2(1920,720),Vector2(1920,1080),Vector2(860,480),Vector2(720,1280)]:
+		for inset in [Vector4.ZERO,Vector4(32,0,32,0),Vector4(80,24,80,56),Vector4(100,40,20,30)]:
+			for scale in [0.7,1.0,1.5]:
+				touch.reset_layout()
+				touch.size = viewport
+				touch.safe_rect = Rect2(inset.x,inset.y,viewport.x-inset.x-inset.z,viewport.y-inset.y-inset.w)
+				touch.hud_scale = scale
+				touch.editing = false
+				var samples: Array = []
+				for action in touch.positions:
+					var center: Vector2 = touch.control_point(action)
+					var hit: float = touch.hit_radius(action)
+					check(center.x-hit >= touch.safe_rect.position.x-0.001 and center.y-hit >= touch.safe_rect.position.y-0.001 and center.x+hit <= touch.safe_rect.end.x+0.001 and center.y+hit <= touch.safe_rect.end.y+0.001,"Full target inside safe rectangle: "+action)
+					if action == "move": continue
+					var r: float = touch.radius(action)
+					var compact: bool = action != "fire" and r < 32.0
+					var plate: float = minf(r*1.25,maxf(r,26.0)) if compact else r
+					var outer: float = plate+2.75 if compact else plate+2.625
+					var circles: Array = [[center,outer+0.75]]
+					if action in ["grenade","smoke"]:
+						var offset := minf(r*0.66,(hit-12.625)/sqrt(2.0))
+						circles.append([center+Vector2(offset,-offset),12.375])
+					for circle in circles:
+						for step in 24:
+							var p: Vector2 = circle[0]+Vector2.from_angle(TAU*step/24.0)*float(circle[1])
+							var winner: String = touch.action_at(p)
+							check(winner == action,"Actual winning action across complete plate/badge affordance: "+action+" selected "+winner)
+							samples.append([p,winner])
+				var original: Dictionary = touch.positions.duplicate()
+				var order: Array = touch.positions.keys()
+				order.reverse()
+				touch.positions.clear()
+				for action in order: touch.positions[action] = original[action]
+				for sample in samples: check(touch.action_at(sample[0]) == sample[1],"Nearest action independent of neighbor dictionary order")
+				touch.positions = original
+	touch.reset_layout()
+	touch.size = Vector2(1280,720)
+	touch.safe_rect = Rect2(Vector2.ZERO,touch.size)
+	touch.hud_scale = 1.0
+	touch.positions.grenade = Vector2(0.5,0.5)
+	touch.positions.smoke = Vector2(0.5,0.5)
+	var tie: Vector2 = touch.control_point("grenade")
+	check(touch.action_at(tie) == "grenade","Exact coincident-target tie uses stable action identity")
+	touch.reset_layout()
