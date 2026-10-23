@@ -217,8 +217,22 @@ PASS/tie**. It does not evaluate source/monetary-contract safety or waive these
 separate assurance findings. The exact source bytes, copy receipt and a separate
 manifest are retained; this publication did not conduct a new critique.
 
-**The second M/V key remains withheld pending Sol's own explicit frozen
-second-round verdict.** The main critic freeze alone does not release it. Both original neutral
+**The second M/V key is released.** The parent verified
+[Sol's second frozen verdict](https://github.com/calebaiken/sightbreak/pull/19#issuecomment-6354432171)
+and the main critic's frozen parent record before the
+[release handoff](https://github.com/calebaiken/sightbreak/pull/19#issuecomment-6354506652).
+The [exact existing key and Sol freeze anchors](backend-trade-read-v3/identity-release-r2/)
+are now archived byte-for-byte. Key SHA256:
+`28f0de31229e531e7164ce3905ae88cedcbd07ce89e62f046983000ebdecf93a`.
+**M executed `701ce2c`; V executed checkout `8070436`, with shipping runtime
+reference `4a8e9ea`.** Both used enhanced harness `8070436`; the later assurance
+test/harness/control commits listed above are a separate follow-up.
+
+The archived Sol anchors are attributed to Sol: `FROZEN.json` SHA256
+`185d7b4cd1dacde52d8d9cc48bc35b43fde9b1453ef98a362d798e9bb9ab0f9e` and verdict SHA256
+`1248f66b7b80e2acbf69595ef084b164957547497f7c40c2e56c4489847fcf3e`.
+Historical withholding fields in the earlier frozen receipts remain unchanged;
+this release record supersedes them as current handoff status. Both original neutral
 packets and both raw measurement rounds still match their prior manifests; this
 follow-up neither rewrites them nor changes their expected-versus-actual response
 hash qualifications. No new critic was spawned or polled.

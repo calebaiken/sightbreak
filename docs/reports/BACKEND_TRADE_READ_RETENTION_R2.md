@@ -142,10 +142,14 @@ C:\Users\blith\AppData\Local\Temp\opencode\blind-trade-retention-r2-527acf0980f8
 
 Read `README.md`, `METHOD.md`, `REVIEW_QUESTIONS.md`, both anonymous records and
 their referenced bodies/rows. Run `python -B verify_packet.py` if desired. The
-packet uses a new independently shuffled **M/V** assignment. Source identities,
-original headers, input checksums and the generator are held in a separate
-controller-only key directory outside the repository; the key path is supplied
-directly to the coordinator. Save both blind verdicts before opening it.
+packet used an independently shuffled **M/V** assignment. After both second-round
+verdicts were frozen, the parent verified their anchors and
+[released the key](https://github.com/calebaiken/sightbreak/pull/19#issuecomment-6354506652).
+The [exact existing mapping and Sol freeze anchors](backend-trade-read-v3/identity-release-r2/)
+are now archived. **M executed `701ce2c`; V executed checkout `8070436` with
+shipping runtime reference `4a8e9ea`.** The key's original headers, input checksums
+and historical controller-only fields are preserved byte-for-byte. Original
+neutral-packet instructions continue to describe the pre-release review protocol.
 
 The packet contains **387 files**, including its manifest. An exact-byte
 [archive copy](backend-trade-read-v3/blind-packet-retention-r2-527acf0980f8/)
@@ -206,5 +210,7 @@ harness/fixture, or a backend tree different from the runtime reference.
 - **Largest code gap remains unpaginated history**: 500-ID batches bound query
   parameter lists, not total response size or retained memory. Peak memory,
   large-database query plans and concurrent load remain unmeasured.
-- A second-round critic verdict and affected integration acceptance remain
-  pending. This evidence is not a merge, deployment or full V3 acceptance.
+- Both second-round verdicts are frozen and the identity key is released with
+  [freeze anchors](backend-trade-read-v3/identity-release-r2/). Sol's affected
+  integration acceptance remains pending; PR19 stays draft. This evidence is not
+  a merge, deployment or full V3 acceptance.
