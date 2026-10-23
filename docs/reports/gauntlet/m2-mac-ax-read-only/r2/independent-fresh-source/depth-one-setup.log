@@ -1,0 +1,39 @@
+Root phase clearance: touch native producers/regressions exited0, all5648images fixed; only deterministic analyzer PID137647 (~265MB RSS) remains. Exact d6cb78aa source replay/depth-one/pure boundary checks cleared on taskset -c4. No engine/native/Apple compile/OCR/CI/large archives. Native/profiling lane unavailable. Original cf4de47f/12ec93dd rejection untouched.
+Parent process affinity: [4]
+COMMAND: taskset -c 4 ['git', 'init', '/workspace/reviews/m2-mac-ax-r2-fresh-source-depth1']
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /workspace/reviews/m2-mac-ax-r2-fresh-source-depth1/.git/
+EXIT: 0
+COMMAND: taskset -c 4 ['git', '-C', '/workspace/reviews/m2-mac-ax-r2-fresh-source-depth1', '-c', 'protocol.file.allow=always', 'fetch', '--depth=1', '--filter=blob:none', '--upload-pack=git -c uploadpack.allowFilter=true upload-pack', 'file:///workspace/sightbreak-mac-ax-read-only-r2', 'd6cb78aa4b0bc5a8265d9b82a0d379b4ee386e53']
+From file:///workspace/sightbreak-mac-ax-read-only-r2
+ * branch            d6cb78aa4b0bc5a8265d9b82a0d379b4ee386e53 -> FETCH_HEAD
+EXIT: 0
+COMMAND: taskset -c 4 ['git', '-C', '/workspace/reviews/m2-mac-ax-r2-fresh-source-depth1', 'sparse-checkout', 'set', 'scripts', '.github', 'docs/reports/gauntlet/m2-macos-screen-identity/fixtures', 'docs/reports/gauntlet/m2-mac-derived-ocr/original-native-39912086121/macos-ordinary-input']
+EXIT: 0
+COMMAND: taskset -c 4 ['git', '-C', '/workspace/reviews/m2-mac-ax-r2-fresh-source-depth1', 'checkout', '--detach', 'FETCH_HEAD']
+warning: filtering not recognized by server, ignoring
+HEAD is now at d6cb78a fix: enforce AX return timing ownership and complete title semantics
+EXIT: 0
+COMMAND: taskset -c 4 ['git', '-C', '/workspace/reviews/m2-mac-ax-r2-fresh-source-depth1', 'rev-parse', 'HEAD']
+d6cb78aa4b0bc5a8265d9b82a0d379b4ee386e53
+EXIT: 0
+COMMAND: taskset -c 4 ['git', '-C', '/workspace/reviews/m2-mac-ax-r2-fresh-source-depth1', 'rev-parse', '--is-shallow-repository']
+true
+EXIT: 0
+COMMAND: taskset -c 4 ['git', '-C', '/workspace/reviews/m2-mac-ax-r2-fresh-source-depth1', 'rev-list', '--count', 'HEAD']
+1
+EXIT: 0
+COMMAND: taskset -c 4 ['git', '-C', '/workspace/reviews/m2-mac-ax-r2-fresh-source-depth1', 'status', '--porcelain']
+EXIT: 0
