@@ -52,19 +52,20 @@ class Evidence:
     def __init__(self, receipt):
         self.rows, self.logs, self.receipt = {}, set(), receipt
 
-    def identity(self, path):
+    def identity(self, path, raw=None):
         path = Path(path)
         require(path.is_relative_to(OUTPUT) and path.is_file()
                 and not any(part.is_symlink() for part in (path, *path.parents) if part.is_relative_to(OUTPUT)),
                 'Missing/unsafe retained evidence: ' + str(path))
         before = path.stat().st_size
-        value = {'bytes': before, 'sha256': digest(path)}
-        require(path.stat().st_size == before, 'Evidence changed during hash: ' + str(path))
+        value = {'bytes': before, 'sha256': digest(path)} if raw is None else {'bytes': len(raw), 'sha256': payload.sha(raw)}
+        require(path.stat().st_size == before == value['bytes'], 'Evidence changed during hash: ' + str(path))
         return value
 
     def bind(self, path, raw=None, wanted=None, log=False):
         path = Path(path)
-        observed = self.identity(path)
+        observed_raw = path.read_bytes() if log else None
+        observed = self.identity(path, raw=observed_raw)
         expected = {'bytes': len(raw), 'sha256': payload.sha(raw)} if raw is not None else wanted
         if expected is not None:
             require(all(observed.get(key) == value for key, value in expected.items()),
@@ -74,7 +75,7 @@ class Evidence:
                 'Retained evidence identity drift: ' + name)
         self.rows.setdefault(name, observed)
         if log:
-            require(not strict_log(path.read_text(errors='replace')), 'Retained strict log drift: ' + name)
+            require(not strict_log(observed_raw.decode(errors='replace')), 'Retained strict log drift: ' + name)
             self.logs.add(name)
         return observed
 
@@ -91,9 +92,10 @@ class Evidence:
         # No rebinding and no fresh baseline: compare with every original gate.
         for name, wanted in self.rows.items():
             path = OUTPUT / name
-            require(self.identity(path) == wanted, 'Retained evidence identity drift: ' + name)
+            raw = path.read_bytes() if name in self.logs else None
+            require(self.identity(path, raw=raw) == wanted, 'Retained evidence identity drift: ' + name)
             if name in self.logs:
-                require(not strict_log(path.read_text(errors='replace')), 'Retained strict log drift: ' + name)
+                require(not strict_log(raw.decode(errors='replace')), 'Retained strict log drift: ' + name)
         if closed:
             paths = list(OUTPUT.rglob('*'))
             require(not any(path.is_symlink() for path in paths), 'Unexpected output symlink')
@@ -670,6 +672,27 @@ class Acquisition:
         self.evidence.validate()
         return {'source_unchanged': True, 'stage_unchanged': True, 'payload_unchanged': True, 'host_unchanged': True}
 
+    def observe_publication_source(self):
+        """One finite observation, after manifest readback, before overall write."""
+        row = {'boundary': 'after output-manifest readback and before overall publication',
+               'scope': 'Exact clean source HEAD and tracked game/scripts Git-blob inventory during this observation; no immutability assertion afterward',
+               'source_commit': self.commit, 'started_monotonic': time.monotonic(),
+               'deadline_monotonic': min(self.budget.until, self.budget.phase_until), 'passed': False}
+        self.receipt['publication_source_observation'] = row
+        try:
+            self.budget.check('publication source observation:entry')
+            require(self.sources() == self.original, 'Source changed at final publication observation')
+            self.budget.check('publication source observation:complete')
+            row.update(passed=True, source_files=len(self.original))
+        except (Exception, KeyboardInterrupt) as error:
+            row.update(error=str(error), error_type=type(error).__name__)
+            raise
+        finally:
+            row['ended_monotonic'] = time.monotonic()
+            if row['passed'] and row['ended_monotonic'] >= row['deadline_monotonic']:
+                row.update(passed=False, error='Source observation completed after publication deadline')
+                raise TimeoutError(row['error'])
+
     def execute(self):
         self.budget.phase('preflight', self.preflight)
         self.budget.phase('stage', self.stage)
@@ -758,6 +781,10 @@ def main():
                 acquisition.evidence.publication(OUTPUT / 'outputs.json', outputs)
                 acquisition.evidence.validate(closed=True)
                 acquisition.receipt['output_manifest_sha256'] = digest(OUTPUT / 'outputs.json')
+                # This final source checker may create new, gate-bound Git logs.
+                # Overall's complete registry includes them and the manifest.
+                acquisition.observe_publication_source()
+                acquisition.evidence.validate(closed=True)
                 # Overall cannot contain its own byte identity. This snapshot
                 # includes the manifest; the private registry also binds overall.
                 acquisition.receipt['validated_evidence'] = deepcopy(acquisition.evidence.rows)

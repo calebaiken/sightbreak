@@ -550,8 +550,11 @@ class MainPublicationTests(unittest.TestCase):
         original_write, original_read = acq.write, acq.read_json
         original_class = acq.Acquisition
         class Controller(original_class):
+            def sources(self):
+                return self.original
             def execute(self):
                 called.append('execute')
+                self.original = []
                 if mode == 'preparation_failure':
                     self.project = acq.OUTPUT / 'project'; self.project.mkdir()
                     (self.project / 'fixture.gd.uid').write_text('uid://retained')
