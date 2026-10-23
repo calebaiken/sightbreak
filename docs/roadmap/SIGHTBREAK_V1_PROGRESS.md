@@ -6,55 +6,42 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-Current execution is active again on 2026-10-23. The executor contains an older
-snapshot. Published checkpoint `917b143b` is recovered into
-`codex/v1-executor-recovery-20261023`; unpublished local work was not found in
-checked sources. The independent inventory and retained test failures are in
-[the recovery report](../reports/gauntlet/executor-recovery-20261023/REPORT.md).
-Accepted guard integration reaches `7795632`; 37 local pure tests pass, zero
-skips. The dry-primary correction is independently accepted at tested `8e8d13e`,
-root integration `690887e`: native 590 checks / zero failures versus 40 baseline
-failures, existing bot AI and 2,722-check symmetry regressions pass. Critic
-`f947350` verifies the actual comparison and all 480 symmetry pairs. See
-[final review](../reports/gauntlet/m5-dry-weapon-recovered-independent/FINAL_REVIEW.md).
-The complete maintained aggregate independently passes at exact afca2f1:
-55 mandatory Godot logs, nine Python groups, catalog/ENet/lifecycle, unchanged
-source and scoped cleanup; [review](../reports/gauntlet/aggregate-recovered-20261023/independent-critic/REVIEW.md).
-Later validation-source changes retain their own exact-source tests. First ARM
-run 39904830917 passes 15 native suites/menu/iOS but fails new fixture-path pure
-controls, skipping ordinary play. Corrected repeat 39906639650 at b2e0293 fails
-before any input: splash capture, then strict window-context rejection with
-later geometry unrecorded; failure close requires SIGTERM. Independent review
-[e26b630](../reports/gauntlet/m2-mac-ordinary-independent/native-39906639650/NATIVE_REVIEW.md)
-retains both raw ZIPs and separately passing native/menu/iOS scopes. Corrected
-startup source 3efe35d and exact combined c08889b pass independent source/pure
-review. Actual ARM run 39912086121 is independently FAILED: menu startup/pin and
-ordinary exit-0 close work, but Deploy recognition rejects confidence 0.5 before
-any input. Its strict input_mode suite leaks playback/stream WAV objects and
-Master StringName; only seven suites / 1,584 checks run before failure. Separate
-menu and unsigned iOS compile pass within bounded review scopes.
-[Actual review](../reports/gauntlet/m2-mac-journey-recovered/native-actual-c088-independent/NATIVE_REVIEW.md).
-A fixed 2× Deploy-only OCR candidate keeps the 0.8 gate but fails fresh source
-review bde551c on a real shallow-checkout history dependency. Test-only correction
-continues; actual confidence/orientation improvement is unproved.
-Windows run 39907358390 at exact b2e0293 has completed with living/settings and
-plant-resolution failures. Original traces show death before fresh input and
-defender elimination after genuine plant. Final independent d0514d8
-[rejects the combined attempt while accepting separate scopes](../reports/gauntlet/windows-combined-recovered-20261023/REPORT.md):
-15 suites, three input schedules, defuse and a 12-round/7:5 stock match with exact
-120 XP/250 offline-credit disk/reopen equality. Reviewed raw-liveness and isolated
-focus-resume scheduling corrections are integrated through a089473; exact combined
-binding independently passes 04d930b; ONE unchanged full Windows attempt
-39916539053 is running at exact a089473. Native living response is unqualified.
-R3 touch captures and numeric failures remain intact despite the blind clarity
-preference. R4 source review identifies overlapping maximum-mobile FRAG/SMOKE
-bodies before reacquisition. Linux profiling capability is independently accepted
-while initial LIVE still fails; its next overhead fixture first fails
-readiness/deadline review, then corrected 3fd9718 passes independent source review
-4b5b8cd. A separately reviewed bounded acquisition wrapper is still required. The exhausted-primary baseline
-has 1,239 independently audited action rows proving a bounded 24 m/idle dry-primary
-stall. Both baseline and sole verbose followup fail strict audio-object cleanup;
-the latter's actual audit and a separate read-only ownership probe review continue.
+Current execution is active on 2026-10-23, checkpoint 08:20 UTC. Root branch
+`codex/v1-executor-recovery-20261023`, draft PR31, preserves the contributor
+checkout and PR27 → PR24 → PR23 → PR22 → PR16 dependencies. Published history
+is recovered; missing unpublished work is not claimed recovered. The independently
+accepted dry-primary return and exact afca2f1 aggregate remain source-bound.
+
+Latest Windows run 39916539053 at a089473 independently passes real player plant
+with natural defuse/next buy/default restart, player defuse and seven stock rounds
+with exact 120 XP / 250 offline-credit disk/runtime reopen. Its living journey
+FAILS after ordinary death between resumed screenshot and HUD pause; focus and
+LEAVE/reopen are unreached. Fresh f314385 retains original ZIPs and actual inputs.
+A fixed ordinary route to cover, freeze af13a99, is in independent source review;
+it changes the test scenario within original budgets, not the product or outcome.
+
+Latest ARM run 39920948579 at c838907 independently FAILS before any CGEvent.
+Raw and fixed 2× full-window analysis both read the unique Deploy caption at
+confidence 0.5; the original 0.8 gate rejects both. Neither wins Deploy/gameplay.
+Fresh 460fe42, root 06ebae0, retains both official ZIPs, all 19 PNGs and 1,210
+integrity predicates. Separate 15 suites / 9,434 checks, menu, unsigned iOS compile
+and failure-path ordinary exit-0 close pass their bounded scopes. Earlier audio
+leak cause remains unresolved; two ibtoold orphans limit descendant cleanup.
+[Latest actual review](../reports/gauntlet/m2-mac-derived-ocr/native-c838-independent/NATIVE_REVIEW.md).
+No retry is approved; source research is examining actual keyboard/accessibility
+support before selecting another component.
+
+The 1,239-row exhausted-primary baseline and verbose diagnostic retain strict
+shutdown failures and independently verified stall evidence. Selection product
+1b7ebc7 passes source review 66f31a6; wrapper c7145cd now has a fresh independent
+source critic before its one candidate acquisition. Audio observer/analyzer
+73cdfc2 is source-accepted, while rejected wrapper 90d3baa is corrected at 26a1c59
+and in re-review for closing-log/archive integrity. Linux fixed-view fixture
+3fd9718 is source-accepted; wrapper 04bc153 is in fresh source review before any
+staging/export/measurement. Touch R3 retains its numeric failure despite blind
+clarity preference; R4B receipt method b001fc5 is in re-review after rejection
+ce3510e. None of these candidates has new native acceptance. The local native
+lane remains held until exact controller reviews and a concrete root release.
 No broad release gate changes status.
 
 A separate future market-harness guard is independently accepted at
@@ -158,7 +145,7 @@ PR24 → PR23 → PR22 → PR16 dependencies and contributor ownership.
 | G10 | Accessibility (contrast, text scale, reduced motion, controller/keyboard reach) | IN PROGRESS | R3 combined pixel gate FAILS after actual native audit: candidate 240/304 resolved, 64 unresolved, eight held-border failures. All 2,576 PNG hashes/raw archive verify. [Review](../reports/gauntlet/m6-touch-contrast-recovered-critic/NATIVE_REVIEW_R3.md). Fresh blind judge prefers candidate clarity but finds crowded small text and scene-occlusion costs. No screen-reader or physical-controller evidence. | Fresh independent method/native and blinded visual critics | R4B geometry has no blocker in declared cases, but ce3510e rejects inconsistent baseline ownership-receipt acceptance. Correct reconciliation without weakening numeric gates or requiring bad baseline quality to pass; then fresh native/live-HUD review. No broad accessibility pass. |
 | G11 | Linux native package | IN PROGRESS | Historical ordinary journey / layouts / defuse / stock earned restart pass. Actual 8afe0cc preserves original next-buy failure while readbacks support catch-up saturation and Mesa CPU dominance. No function-cost fix or physical performance acceptance. [Evidence](../reports/gauntlet/m1-linux-frame-sampling/NATIVE_RESULTS.md). | Fresh independent native and instrumentation critics | Fixed-view controller 3fd9718 passes source review 4b5b8cd; separately preregistered staging/export/PCK/acquisition wrapper is being finalized. No new native or performance result; preserve original gameplay failure and deadlines. |
 | G12 | Windows native package | IN PROGRESS | Current a089473 run 39916539053 independently FAILS living continuity: resumed screenshot alive, ordinary kill before HUD pause; LEAVE/reopen/focus unreached. Separate 15 suites / 9,434 checks, three input schedules, plant with natural device resolution, player defuse and seven-round earned disk/runtime reopen pass. All 138 native logs strict-clean; failed client uses exit-1 cleanup. [Review](../reports/gauntlet/windows-native-a089-independent-20261023/REPORT.md). | Fresh independent native critic | Source-only ordinary cover-route/scheduling investigation on codex/windows-settings-exposure-a089-20261023. Preserve actor assertions, rules and original budgets; no retry yet. Physical/human and whole package qualification remain open. |
-| G13 | macOS native package (Intel and Apple Silicon) | FAILED | Actual c08889b run 39912086121 passes bounded startup/pin and ordinary exit-0 close but FAILS Deploy recognition before input: native label confidence 0.5 versus required 0.8. Native suite FAILS after seven suites / 1,584 checks with playback/stream WAV and Master StringName leaks; remaining suites skip. Original artifacts and failures retained. [Review](../reports/gauntlet/m2-mac-journey-recovered/native-actual-c088-independent/NATIVE_REVIEW.md). | Fresh independent source and native critics | Fixed 2× Deploy-only source 3973447 and combined root c838907 pass independent source/shallow review. One ARM run 39920948579 is active; ordinary step failed, raw cause pending. Establish audio ownership and supported fix. Then actual ordinary/full Mac gameplay, Intel and physical qualification. |
+| G13 | macOS native package (Intel and Apple Silicon) | FAILED | Actual c838907 run 39920948579 independently FAILS Deploy before input: raw and fixed 2× full-window confidence both 0.5 versus required 0.8. Separate 15 suites / 9,434 checks, menu, unsigned iOS compile and failure-path exit-0 close pass bounded scopes. Earlier audio leaks remain unresolved; two ibtoold orphans limit cleanup. [Review](../reports/gauntlet/m2-mac-derived-ocr/native-c838-independent/NATIVE_REVIEW.md). | Fresh independent source and native critics | Research actual native keyboard/accessibility semantics before a new component; no blind retry or confidence change. Establish audio ownership and supported fix. Actual ordinary/full Mac gameplay, Intel, physical and binary reparse qualification remain open. |
 | G14 | Android and iOS keep building | IN PROGRESS | Fresh frozen 6a Android debug APK and unsigned iOS project export and structural inspection pass. Independent 48/49 package checks: simulator metadata claims ARM64+x86_64 but pinned debug archive contains x86_64 only; device archive is ARM64. [Evidence](../reports/gauntlet/m2-mobile-preservation/independent-package-critic/REPORT.md). Actual Xcode 16.4 / SDK 18.5 link fails on five iOS 26 framework globals. Reviewed SDK selection is integrated; retries39721286005 at2a2b732 and39727011693 ate7718ee pass independent unsigned-device compile review, with exact source/PCK and raw unsigned codesign evidence. Final binary reparse and runtime remain open. | Fresh independent mobile package critic | Preserve accepted exact-source unsigned compile; qualify simulator metadata, installation, older OS behavior and physical play. No credential/signing action is authorized. |
 | G15 | Packaging, build provenance, Steam staging procedure | IN PROGRESS | Source-bound manifests exist. `STEAM_RELEASE_READINESS.md` is design only: no SteamPipe template, no App ID, Steamworks docs not retrievable (host denied). | Reported | Owner approval is needed for any upload or account step. |
 | G16 | Economy and progression integrity | IN PROGRESS | Corrected-source trial 2 at 3b5cf764 independently passes stock ten-account settlement and pre-ACK / post-replay SQL witnesses: one operation / ten rewards / ten ledger rows, 2,875 credits / 2,650 XP. Trial 1 remains blocked. Separate backend regression passes 61 cases. [Trial evidence](../reports/gauntlet/m3-account-activity/TRIAL_2_HANDOFF.md). | Fresh independent native / live-database and regression critics | Keyed store/armory receipt component independently passes 12/12 native fixture recoveries versus baseline 0/12. Production PostgreSQL/API market lost-response recovery independently passes at 882931dd with two live SQL witnesses and owned cleanup; synthetic fixture value only. Next qualify store/case and rendered player recovery; meaningful activity, AFK policy, remote recovery and deployment security remain separate. |

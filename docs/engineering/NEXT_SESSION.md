@@ -1,17 +1,17 @@
 # Next session
 
-Updated 2026-10-23, 08:03 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 08:20 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. The automatic goal remains active. Read AGENTS.md and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
 
-## Live execution checkpoint — 2026-10-23, 08:03 UTC
+## Live execution checkpoint — 2026-10-23, 08:20 UTC
 
 The mission is ACTIVE. Root is `/workspace/sightbreak-v1-recovered`, own branch
 `codex/v1-executor-recovery-20261023`, [draft PR31](https://github.com/calebaiken/sightbreak/pull/31).
-Current ARM trial source is `c838907`; root checkpoint before this note is `4bcafdd`. Inspect actual HEAD and status;
+Current ARM trial source is `c838907`; root checkpoint before this note is `06ebae0`. Inspect actual HEAD and status;
 never reset a newer checkpoint. The original contributor checkout is clean on
 `work` at `4d8cdb33`. No shared release branch is merged.
 
@@ -77,15 +77,24 @@ never reset a newer checkpoint. The original contributor checkout is clean on
    2a3bcdf (root f059523) binds all 439 files to that nine-path Mac delta plus
    untouched Windows/Linux code and unchanged game tree. Exact shallow root
    passes 216 methods / 20 groups, three Windows skips, plus eight controls/five aliases.
-   ONE existing full ARM trial was dispatched at 07:54:40 UTC after source
-   approval, root release d9820be and critic pre-dispatch criteria 0abfd19.
+   ONE full ARM trial was dispatched at 07:54:40 UTC after source approval,
+   root release d9820be and critic pre-dispatch criteria 0abfd19.
    Run [39920948579](https://github.com/calebaiken/sightbreak/actions/runs/39920948579),
    job 120305758766, immutable `codex/v1-qualify-mac-c838907` at exact c838907.
-   Fresh `/root/mac_native_c838_fresh_critic` owns actual review. Ordinary-play
-   step reports failure; final raw cause/images are pending. Other step metadata
-   is not acceptance. No retry. Root dispatch/binding receipts are retained in
-   `m2-mac-derived-ocr/native-c838-root`; critic prereg/source identities are in
-   `native-c838-independent`. Actual confidence/orientation and gameplay remain open.
+   Fresh final 460fe42 is root 06ebae0, [actual review](../reports/gauntlet/m2-mac-derived-ocr/native-c838-independent/NATIVE_REVIEW.md).
+   Ordinary/overall FAIL at 34.506823 seconds before any CGEvent. Original
+   1004×664 and fixed 2× 2008×1328 upright images both yield unique full Deploy
+   caption at confidence 0.5; the original 0.8 gate rejects. Neither wins actual
+   Deploy/gameplay. Nine observed groups exit 0 without signals. Separate 15 suites /
+   9,434 checks and all 145 native logs pass; prior audio cause remains unresolved.
+   Preflight 4.412420 seconds, menu 31.566818 seconds and unsigned iOS compile
+   108.968931 seconds pass bounded scopes. Runner reaps ibtoold 7092/7084, so
+   complete descendant cleanup is unqualified. Both original ZIPs/official digests,
+   217 indexed receipts, 234 QA files, all 19 PNGs / 15 unique hashes, 439 source
+   objects and 1,210 independent integrity predicates are retained. Binary bundles
+   remain untransferred/reparse-unqualified. No retry. Source-only builder now
+   investigates existing keyboard focus and pinned Godot native accessibility
+   semantics; do not lower confidence or alter product solely to game OCR.
 3. **Bot baseline and verbose diagnostic both FAIL strict shutdown.**
    The accepted known-dry primary-return product correction remains root 784fb1a,
    tested 8e8d13e / critic f947350: 590 checks pass versus 40 baseline failures,
@@ -612,3 +621,15 @@ push, protected merge, production deploy, Steam publication, paid action or live
 credential change. Human play/listening, physical GPUs/mobile/controllers, CS2
 media and Steam credentials remain explicit external gates. No background work
 is promised after execution stops.
+
+## Exact source review queue — 08:20 UTC
+
+The local native lane is idle and held. Five independent source reviews are active:
+bot acquisition c7145cd (accepted product 1b7ebc7), audio corrected wrapper 26a1c59
+(prior rejection 062147c/337d82aa retained), Linux wrapper 04bc153 (fixture 3fd9718),
+Windows ordinary cover-route af13a99 (handoff 66cf2cb), touch R4B corrected method
+b001fc5 (handoff 548e3569; prior rejection ce3510e retained). Use each exact pushed
+handoff and preserve original falsifiers. Native priority after source acceptance:
+one bot candidate acquisition, then independently reviewed actual output and
+separate existing regressions; audio ownership probe; Linux controlled block;
+touch comparable A/B. Each needs concrete root release and fresh actual critic.

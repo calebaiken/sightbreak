@@ -544,3 +544,22 @@ Audio analyzer 73cdfc2 passes 146dc17 after preserved rejections, while wrapper
 improves declared source cases, but inconsistent baseline receipt acceptance
 still fails review. Linux acquisition wrapper is source-only. Continue the exact
 NEXT_SESSION queue; all full release gates remain open.
+
+
+## 2026-10-23, 08:20 UTC: retain actual ARM recognition failure
+
+Fresh actual critic 460fe42 is root 06ebae0. Sole c838907 ARM run 39920948579
+FAILS ordinary gameplay at 34.506823 seconds before any CGEvent: original and
+fixed 2× complete upright windows both yield Deploy confidence 0.5 against 0.8.
+Neither wins Deploy/gameplay. Original ZIPs/digests, all 19 PNGs and 1,210 integrity
+predicates are retained. Separate 15 suites / 9,434 checks, menu, unsigned iOS compile
+and nine-group exit 0 close pass bounded scopes. Earlier audio cause is unresolved;
+two ibtoold orphans limit complete cleanup. No retry. Source investigation now
+examines actual keyboard/accessibility support before another component.
+
+Five exact source reviews proceed independently: bot acquisition c7145cd, audio
+corrected wrapper 26a1c59, Linux wrapper 04bc153, Windows cover-route af13a99 and
+touch receipt method b001fc5. No engine/import/native acquisition has run for them.
+Original source rejections and falsifiers remain intact. Highest native priority
+is the bot candidate after controller qualification, then separate regressions.
+No full release gate closes; mission remains ACTIVE.

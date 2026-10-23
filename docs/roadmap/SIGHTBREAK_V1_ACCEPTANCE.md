@@ -21,21 +21,21 @@ A script, simulated match, software render or successful export cannot silently
 satisfy a different gate. No deployment, Steam publication or paid action is implied.
 
 Current bounded evidence includes the independently passing recovered afca2f1
-aggregate and narrow bot dry-primary comparison, earlier Windows selected gameplay
-gates, corrected-activity ten-account settlement/recovery, backend regression and
-four-weapon probe. Combined Windows b2e0293 has a failed overall verdict, with
-separate passing suites/input schedules/defuse/12-round earned-reload scopes.
-ARM c08889b run 39912086121 fails Deploy recognition before input and strict
-audio-object cleanup after seven suites; its startup/pin, ordinary exit-0 close,
-menu and unsigned iOS compile have separate bounded evidence. The fixed 2× OCR
-candidate and read-only audio ownership probe remain source-only. Corrected Windows
-liveness/resume source is independently accepted but awaits combined binding and
-actual native execution. Touch R3's combined pixel gate fails independent review;
-its blind clarity preference retains small-text and occlusion limits. R4 source
-review exposes a real maximum-mobile control overlap. Linux timing still fails,
-and its next fixture is rejected for readiness/deadline defects. The bot baseline
-proves the bounded exhausted-primary stall but fails strict cleanup, as does the
-sole verbose diagnostic. Original failures remain intact; no full gate closes.
+aggregate, narrow bot dry-primary comparison, ten-account settlement/recovery,
+backend regression and four-weapon probe. Latest a089473 Windows independently
+passes real player plant/natural defuse/next buy/default restart, player defuse
+and seven stock rounds with exact earned-offline disk/runtime reopen. Its overall
+living/settings journey still fails before focus. Latest c838907 ARM independently
+fails before input: raw and fixed 2× Deploy confidence are both 0.5 against 0.8.
+Separate 15 native suites / 9,434 checks, menu, unsigned iOS compile and clean
+failure-path close do not qualify gameplay or resolve earlier audio leaks.
+
+Exhausted-primary selection and audio ownership have scoped source acceptances;
+corrected acquisition wrappers are in independent review before native work.
+Touch R3 numeric gates remain failed; R4B receipt reconciliation is in re-review.
+Linux timing still fails, with its source-accepted fixed-view fixture awaiting
+wrapper review and one controlled acquisition. Original failures remain intact;
+no whole release gate closes. See the canonical matrix for exact evidence.
 
 Production PostgreSQL/API market recovery now has separate actual native and live
 read-only SQL qualification at `882931dd`, root integration `4150ad0a`.
@@ -43,12 +43,3 @@ read-only SQL qualification at `882931dd`, root integration `4150ad0a`.
 retains both lost-response kills, final exact settlement, guard checks and cleanup.
 Synthetic test balances are not earned progression. Store/case, rendered consent,
 remote hosting and whole G3/G7/G16 remain open.
-
-
-Current a089473 Windows has separate independently accepted objective, stock-match
-and earned-reopen scopes, while its overall living journey remains failed before
-focus. One c838907 ARM trial is running after pre-dispatch independent criteria;
-ordinary step failure has no final raw diagnosis yet. Exhausted-primary selection,
-audio-owner observation and Linux profiling have scoped source acceptances with
-native acquisition still held. Touch R4B receipt reconciliation and audio wrapper
-integrity remain source-rejected. These records advance no whole RC gate.
