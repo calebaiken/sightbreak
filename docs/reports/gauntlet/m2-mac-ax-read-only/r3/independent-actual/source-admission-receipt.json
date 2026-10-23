@@ -1,0 +1,109 @@
+{
+  "registered_preregistration": "a55c1e8e",
+  "observed_utc": "2026-10-23T10:54:46.943259+00:00",
+  "cpu_affinity": [
+    4
+  ],
+  "exact_proposed_source": "4854aed946d25d27482af66c332f84aa51cea8fb",
+  "review_head": "a55c1e8e1edd987c517fc19bd5a7fb61a1214afc",
+  "initial_status": "",
+  "game_tree": "55691684d31d44f1680141954bbe530443de9d1f",
+  "prior_game_tree": "55691684d31d44f1680141954bbe530443de9d1f",
+  "source_sha256": {
+    "scripts/probe_macos_ax.py": "298bf62dbb60d324b006ab970683e6278464005b9af30917460fc8f49de8097e",
+    "scripts/verify_macos_ax_read_only.py": "862de0ac7d4d4a10ad2551a779aa4fefcb163eb5b33d80f2e6ad7368a81ec733",
+    "scripts/macos_ax_contract.py": "fdf5acf120fdbf0c5e916d8efd3749ebd4722ef48fffdbf38cb92d8bc09aff8b",
+    "scripts/macos_ax_appkit.py": "be2c9969cdc084cb27980651da65b95e29a460ec1c2b7ef83536900b18f02e97",
+    "scripts/macos_window_capture.swift": "6b64561032d86b60dc1276aea1a642f427b48a1b5257934e89b71afb4269f71f",
+    ".github/workflows/desktop-alpha.yml": "c5d7b6d5afcc92fe67240497121f8a295d92a3c2771d2af2bfcd484b6cdfe56b",
+    "scripts/test_macos_ax_untitled.py": "10b48e29b379fab923d1d1a24bdba25ac0dbac7dc9b2b7b8a14efed31218aa3b"
+  },
+  "same_as_prior": {
+    "scripts/probe_macos_ax.py": false,
+    "scripts/verify_macos_ax_read_only.py": true,
+    "scripts/macos_ax_contract.py": true,
+    "scripts/macos_ax_appkit.py": true,
+    "scripts/macos_window_capture.swift": true,
+    ".github/workflows/desktop-alpha.yml": true,
+    "scripts/test_macos_ax_untitled.py": false
+  },
+  "commands": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ax_untitled.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "top_level_methods": 7
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ax_read_only.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "top_level_methods": 25
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ax_controller.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "top_level_methods": 8
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ax_paths.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "top_level_methods": 2
+    }
+  ],
+  "original_r2_replay": {
+    "review_commit": "e1221ba2ab391810005f63a3e43b58bc26d06e21",
+    "observation_sha256": "f795b8f263668b7e4e6960969fd9f23dc57fbbf97c7b88e541999f75919c8be8",
+    "observation_bytes": 2083,
+    "request_binding_pass": true,
+    "collection_failure": "AX traversal did not complete",
+    "reported_failure": {
+      "message": "Required AX attribute unavailable: AXTitle code=-25212",
+      "type": "RuntimeError"
+    },
+    "examined_nodes": 3,
+    "roles": [
+      "AXWindow",
+      "AXGroup",
+      "AXButton"
+    ],
+    "overall_status": "FAILED",
+    "event_posts": 0,
+    "ordinary_close": true,
+    "default_unchanged": true,
+    "focused_png_sha256": "9abb4debf0e04f4688dbe1357977ade41eda46d8f9ffd892dbd2f19e3078a051",
+    "focused_png_bytes": 386237,
+    "focused_vision_sha256": "7e61598d473cb391d576419aafc53c0c04a93694beeb775df470b49b3657f082",
+    "qa_archive_sha256": "09486d7f72e8ca3290ff4a8d395447668f7a7f11bc762c5c635494f6f2208273",
+    "qa_archive_bytes": 956961,
+    "original_deploy_row": {
+      "box_normalized_bottom_left": [
+        0.10991379109608065,
+        0.5179153098445015,
+        0.16810344984806866,
+        0.019735292497887746
+      ],
+      "confidence": 0.5,
+      "text": "DEPLOY \u2022 OFFLINE 5V5"
+    },
+    "ordinary_ocr_rejection": "Expected one exact confident in-bounds native label: DEPLOY \u00b7 OFFLINE 5V5",
+    "image_opened": "/workspace/reviews/m2-mac-ax-r2-actual-independent/docs/reports/gauntlet/m2-mac-ax-read-only/r2/independent-actual/native-39939989024/qa/ax-read-only/01-focused-menu.png",
+    "image_observation": "Original focused menu visibly contains Deploy caption; no AX node identity can be assigned from the partial receipt."
+  },
+  "total_top_level_methods": 42,
+  "final_status": ""
+}
