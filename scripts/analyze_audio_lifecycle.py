@@ -25,7 +25,23 @@ def object_id(value, optional=False):
     return str(number % (1 << 64))
 
 
+def engine_context(text):
+    lines = text.splitlines()
+    mentions = [(index, line) for index, line in enumerate(lines) if 'Godot Engine' in line]
+    banner = ENGINE + ' - https://godotengine.org'
+    if len(mentions) != 1 or mentions[0][1] != banner:
+        raise ValueError('Exactly one complete pinned engine banner is required')
+    index = mentions[0][0]
+    preamble = lines[:index]
+    if preamble:
+        worker = re.fullmatch(r'WorkerThreadPool: ([1-9][0-9]*) threads, ([0-9]+) max low-priority\.', preamble[0])
+        if len(preamble) != 1 or worker is None or int(worker[2]) > int(worker[1]):
+            raise ValueError('Engine banner has an unsupported or buried preamble')
+    return {'banner_line': index + 1, 'verbose_preamble': preamble}
+
+
 def analyze(text):
+    context = engine_context(text)
     objects, players, weak, checkpoints, headers = {}, [], {}, [], []
     rows = []
     pending_weak, snapshots, final_weak = [], [], {}
@@ -119,10 +135,8 @@ def analyze(text):
                 checkpoints.append(row)
             else:
                 raise ValueError('Unknown probe record kind')
-    if len(headers) != 1 or not text.startswith(ENGINE):
-        raise ValueError('Pinned engine banner or sole probe header is absent')
-    if headers[0]['driver'].lower() == 'dummy':
-        raise ValueError('Dummy audio cannot qualify this diagnostic')
+    if len(headers) != 1:
+        raise ValueError('Sole probe header is absent')
     if not players:
         raise ValueError('Player ownership observations are absent')
     stages = [row['stage'] for row in checkpoints]
@@ -165,6 +179,9 @@ def analyze(text):
                            and final_weak[identity]['alive']]
     return {'schema': 1, 'scope': 'read-only ownership evidence; no fix or drain qualification',
             'driver': headers[0]['driver'], 'records': len(rows), 'objects': len(objects),
+            'engine_context': context,
+            'audio_scope': 'ownership and strict exit only; no audible or physical qualification',
+            'driver_provenance': 'probe-reported; exact argv and engine binding required separately',
             'player_role_counts': coverage, 'expected_input_mode_role_counts': expected_roles,
             'unclassified_player_ids': unclassified,
             'fixture_owner_coverage_complete': (all(coverage[role] == count for role, count in expected_roles.items())

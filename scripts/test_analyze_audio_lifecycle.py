@@ -226,9 +226,29 @@ class AudioLifecycleAnalysisTests(unittest.TestCase):
         first['stage'], second['stage'] = second['stage'], first['stage']
         with self.assertRaises(ValueError): diagnostic.analyze(log(rows))
 
-    def test_dummy_changed_engine_or_changed_assertion_result_is_rejected(self):
+    def test_default_headless_dummy_is_retained_without_audible_qualification(self):
+        report = diagnostic.analyze(log(complete_fixture()).replace('CoreAudio', 'Dummy'))
+        self.assertEqual(report['driver'], 'Dummy')
+        self.assertIn('no audible or physical', report['audio_scope'])
+        self.assertIn('required separately', report['driver_provenance'])
+
+    def test_original_worker_preamble_is_accepted_but_engine_spoofs_are_rejected(self):
         original = log(complete_fixture())
-        for text in [original.replace('CoreAudio', 'Dummy'), original.replace('ed1daf0bf', 'unknown'),
+        preamble = 'WorkerThreadPool: 3 threads, 1 max low-priority.\n'
+        self.assertEqual(diagnostic.analyze(preamble + original)['engine_context']['verbose_preamble'], [preamble.strip()])
+        banner = diagnostic.ENGINE + ' - https://godotengine.org'
+        negatives = ['arbitrary prefix\n' + original, '\n' + original,
+                     preamble + preamble + original, 'WorkerThreadPool: 1 threads, 2 max low-priority.\n' + original,
+                     original.replace(banner, 'quoted "' + banner + '"'),
+                     original.replace(banner, banner + ' extra'), original.replace(banner, ''),
+                     original + banner + '\n', original + 'Godot Engine vwrong\n',
+                     original.replace(banner, 'Godot Engine vwrong\n' + banner)]
+        for text in negatives:
+            with self.subTest(text=text[:100]), self.assertRaises(ValueError): diagnostic.analyze(text)
+
+    def test_changed_engine_or_changed_assertion_result_is_rejected(self):
+        original = log(complete_fixture())
+        for text in [original.replace('ed1daf0bf', 'unknown'),
                      original.replace('checks=462', 'checks=461'), original.replace('failures=0', 'failures=1')]:
             with self.subTest(text=text[:70]), self.assertRaises(ValueError):
                 diagnostic.analyze(text)

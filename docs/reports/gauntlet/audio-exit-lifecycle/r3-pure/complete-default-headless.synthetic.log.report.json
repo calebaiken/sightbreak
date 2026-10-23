@@ -1,0 +1,1877 @@
+{
+  "schema": 1,
+  "scope": "read-only ownership evidence; no fix or drain qualification",
+  "driver": "Dummy",
+  "records": 130,
+  "objects": 4,
+  "engine_context": {
+    "banner_line": 1,
+    "verbose_preamble": []
+  },
+  "audio_scope": "ownership and strict exit only; no audible or physical qualification",
+  "driver_provenance": "probe-reported; exact argv and engine binding required separately",
+  "player_role_counts": {
+    "actor_hurt": 0,
+    "actor_shot": 2,
+    "match_device": 0,
+    "network_shot": 0,
+    "reload_voice": 0,
+    "unknown": 0,
+    "utility": 0
+  },
+  "expected_input_mode_role_counts": {
+    "match_device": 7,
+    "actor_shot": 70,
+    "actor_hurt": 70,
+    "reload_voice": 280
+  },
+  "unclassified_player_ids": [],
+  "fixture_owner_coverage_complete": false,
+  "final_alive_player_ids": [
+    "11"
+  ],
+  "final_checkpoint_sequence": 129,
+  "forced_weak_snapshots": [
+    {
+      "stage": "before_hud_leave",
+      "checkpoint_sequence": 9,
+      "registered_object_count": 3,
+      "weak_count": 3
+    },
+    {
+      "stage": "after_hud_leave",
+      "checkpoint_sequence": 16,
+      "registered_object_count": 3,
+      "weak_count": 3
+    },
+    {
+      "stage": "before_hud_leave",
+      "checkpoint_sequence": 27,
+      "registered_object_count": 4,
+      "weak_count": 4
+    },
+    {
+      "stage": "after_hud_leave",
+      "checkpoint_sequence": 35,
+      "registered_object_count": 4,
+      "weak_count": 4
+    },
+    {
+      "stage": "before_hud_leave",
+      "checkpoint_sequence": 44,
+      "registered_object_count": 4,
+      "weak_count": 4
+    },
+    {
+      "stage": "after_hud_leave",
+      "checkpoint_sequence": 52,
+      "registered_object_count": 4,
+      "weak_count": 4
+    },
+    {
+      "stage": "before_hud_leave",
+      "checkpoint_sequence": 61,
+      "registered_object_count": 4,
+      "weak_count": 4
+    },
+    {
+      "stage": "after_hud_leave",
+      "checkpoint_sequence": 69,
+      "registered_object_count": 4,
+      "weak_count": 4
+    },
+    {
+      "stage": "before_hud_leave",
+      "checkpoint_sequence": 78,
+      "registered_object_count": 4,
+      "weak_count": 4
+    },
+    {
+      "stage": "after_hud_leave",
+      "checkpoint_sequence": 86,
+      "registered_object_count": 4,
+      "weak_count": 4
+    },
+    {
+      "stage": "before_hud_leave",
+      "checkpoint_sequence": 95,
+      "registered_object_count": 4,
+      "weak_count": 4
+    },
+    {
+      "stage": "after_hud_leave",
+      "checkpoint_sequence": 103,
+      "registered_object_count": 4,
+      "weak_count": 4
+    },
+    {
+      "stage": "before_final_leave",
+      "checkpoint_sequence": 112,
+      "registered_object_count": 4,
+      "weak_count": 4
+    },
+    {
+      "stage": "after_final_leave",
+      "checkpoint_sequence": 120,
+      "registered_object_count": 4,
+      "weak_count": 4
+    },
+    {
+      "stage": "final_pre_quit",
+      "checkpoint_sequence": 129,
+      "registered_object_count": 4,
+      "weak_count": 4
+    }
+  ],
+  "strict_raw_log_failed": true,
+  "leaks": [
+    {
+      "class": "AudioStreamPlaybackWAV",
+      "id": "9223372036854775821",
+      "references_at_engine_exit": 1,
+      "observed": true,
+      "descriptor": {
+        "kind": "object",
+        "stage": "attach",
+        "id": "-9223372036854775795",
+        "class": "AudioStreamPlaybackWAV",
+        "schema": 1,
+        "sequence": 3,
+        "process_frame": 0,
+        "physics_frame": 0,
+        "usec": 3
+      },
+      "player_observations": [
+        {
+          "sequence": 4,
+          "stage": "attach",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 5,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 10,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 12,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 17,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 21,
+          "stage": "after_hud_leave",
+          "player_id": "22",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 22,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 28,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 30,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 36,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 39,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 45,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 47,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 53,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 56,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 62,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 64,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 70,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 73,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 79,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 81,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 87,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 90,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 96,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 98,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 104,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 107,
+          "stage": "before_final_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 113,
+          "stage": "before_final_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 115,
+          "stage": "after_final_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 121,
+          "stage": "after_final_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 124,
+          "stage": "final_pre_quit",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        }
+      ],
+      "weak_observations": [
+        {
+          "kind": "weak",
+          "stage": "before_hud_leave",
+          "id": "-9223372036854775795",
+          "alive": true,
+          "schema": 1,
+          "sequence": 8,
+          "process_frame": 1,
+          "physics_frame": 2,
+          "usec": 8
+        },
+        {
+          "kind": "weak",
+          "stage": "after_hud_leave",
+          "id": "-9223372036854775795",
+          "alive": true,
+          "schema": 1,
+          "sequence": 15,
+          "process_frame": 1,
+          "physics_frame": 3,
+          "usec": 15
+        },
+        {
+          "kind": "weak",
+          "stage": "before_hud_leave",
+          "id": "-9223372036854775795",
+          "alive": true,
+          "schema": 1,
+          "sequence": 25,
+          "process_frame": 3,
+          "physics_frame": 6,
+          "usec": 25
+        },
+        {
+          "kind": "weak",
+          "stage": "after_hud_leave",
+          "id": "-9223372036854775795",
+          "alive": true,
+          "schema": 1,
+          "sequence": 33,
+          "process_frame": 4,
+          "physics_frame": 8,
+          "usec": 33
+        },
+        {
+          "kind": "weak",
+          "stage": "before_hud_leave",
+          "id": "-9223372036854775795",
+          "alive": true,
+          "schema": 1,
+          "sequence": 42,
+          "process_frame": 5,
+          "physics_frame": 10,
+          "usec": 42
+        },
+        {
+          "kind": "weak",
+          "stage": "after_hud_leave",
+          "id": "-9223372036854775795",
+          "alive": true,
+          "schema": 1,
+          "sequence": 50,
+          "process_frame": 6,
+          "physics_frame": 12,
+          "usec": 50
+        },
+        {
+          "kind": "weak",
+          "stage": "before_hud_leave",
+          "id": "-9223372036854775795",
+          "alive": true,
+          "schema": 1,
+          "sequence": 59,
+          "process_frame": 7,
+          "physics_frame": 14,
+          "usec": 59
+        },
+        {
+          "kind": "weak",
+          "stage": "after_hud_leave",
+          "id": "-9223372036854775795",
+          "alive": true,
+          "schema": 1,
+          "sequence": 67,
+          "process_frame": 8,
+          "physics_frame": 16,
+          "usec": 67
+        },
+        {
+          "kind": "weak",
+          "stage": "before_hud_leave",
+          "id": "-9223372036854775795",
+          "alive": true,
+          "schema": 1,
+          "sequence": 76,
+          "process_frame": 9,
+          "physics_frame": 19,
+          "usec": 76
+        },
+        {
+          "kind": "weak",
+          "stage": "after_hud_leave",
+          "id": "-9223372036854775795",
+          "alive": true,
+          "schema": 1,
+          "sequence": 84,
+          "process_frame": 10,
+          "physics_frame": 21,
+          "usec": 84
+        },
+        {
+          "kind": "weak",
+          "stage": "before_hud_leave",
+          "id": "-9223372036854775795",
+          "alive": true,
+          "schema": 1,
+          "sequence": 93,
+          "process_frame": 11,
+          "physics_frame": 23,
+          "usec": 93
+        },
+        {
+          "kind": "weak",
+          "stage": "after_hud_leave",
+          "id": "-9223372036854775795",
+          "alive": true,
+          "schema": 1,
+          "sequence": 101,
+          "process_frame": 12,
+          "physics_frame": 25,
+          "usec": 101
+        },
+        {
+          "kind": "weak",
+          "stage": "before_final_leave",
+          "id": "-9223372036854775795",
+          "alive": true,
+          "schema": 1,
+          "sequence": 110,
+          "process_frame": 13,
+          "physics_frame": 27,
+          "usec": 110
+        },
+        {
+          "kind": "weak",
+          "stage": "after_final_leave",
+          "id": "-9223372036854775795",
+          "alive": true,
+          "schema": 1,
+          "sequence": 118,
+          "process_frame": 14,
+          "physics_frame": 29,
+          "usec": 118
+        },
+        {
+          "kind": "weak",
+          "stage": "final_pre_quit",
+          "id": "-9223372036854775795",
+          "alive": true,
+          "schema": 1,
+          "sequence": 127,
+          "process_frame": 15,
+          "physics_frame": 31,
+          "usec": 127
+        }
+      ]
+    },
+    {
+      "class": "AudioStreamWAV",
+      "id": "9223372036854775820",
+      "references_at_engine_exit": 1,
+      "observed": true,
+      "descriptor": {
+        "kind": "object",
+        "stage": "attach",
+        "id": "-9223372036854775796",
+        "class": "AudioStreamWAV",
+        "wav": {
+          "format": 1,
+          "mix_rate": 22050,
+          "stereo": false,
+          "bytes": 8,
+          "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+        },
+        "schema": 1,
+        "sequence": 2,
+        "process_frame": 0,
+        "physics_frame": 0,
+        "usec": 2
+      },
+      "player_observations": [
+        {
+          "sequence": 4,
+          "stage": "attach",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 5,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 10,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 12,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 17,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 21,
+          "stage": "after_hud_leave",
+          "player_id": "22",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 22,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 28,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 30,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 36,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 39,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 45,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 47,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 53,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 56,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 62,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 64,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 70,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 73,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 79,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 81,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 87,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 90,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 96,
+          "stage": "before_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 98,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 104,
+          "stage": "after_hud_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 107,
+          "stage": "before_final_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 113,
+          "stage": "before_final_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 115,
+          "stage": "after_final_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 121,
+          "stage": "after_final_leave",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": false,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        },
+        {
+          "sequence": 124,
+          "stage": "final_pre_quit",
+          "player_id": "11",
+          "state": {
+            "path": "/root/Match/Actor/Audio",
+            "owner": {
+              "role": "actor_shot",
+              "id": "10",
+              "path": "/root/Match/Actor",
+              "script": "res://scripts/gameplay/actor.gd"
+            },
+            "inside_tree": true,
+            "queued_for_deletion": false,
+            "playing": false,
+            "stream_paused": false,
+            "has_stream_playback": true,
+            "stream_id": "9223372036854775820",
+            "latest_playback_id": "9223372036854775821",
+            "latest_playing": false
+          }
+        }
+      ],
+      "weak_observations": [
+        {
+          "kind": "weak",
+          "stage": "before_hud_leave",
+          "id": "-9223372036854775796",
+          "alive": true,
+          "schema": 1,
+          "sequence": 7,
+          "process_frame": 0,
+          "physics_frame": 1,
+          "usec": 7
+        },
+        {
+          "kind": "weak",
+          "stage": "after_hud_leave",
+          "id": "-9223372036854775796",
+          "alive": true,
+          "schema": 1,
+          "sequence": 14,
+          "process_frame": 1,
+          "physics_frame": 3,
+          "usec": 14
+        },
+        {
+          "kind": "weak",
+          "stage": "before_hud_leave",
+          "id": "-9223372036854775796",
+          "alive": true,
+          "schema": 1,
+          "sequence": 24,
+          "process_frame": 3,
+          "physics_frame": 6,
+          "usec": 24
+        },
+        {
+          "kind": "weak",
+          "stage": "after_hud_leave",
+          "id": "-9223372036854775796",
+          "alive": true,
+          "schema": 1,
+          "sequence": 32,
+          "process_frame": 4,
+          "physics_frame": 8,
+          "usec": 32
+        },
+        {
+          "kind": "weak",
+          "stage": "before_hud_leave",
+          "id": "-9223372036854775796",
+          "alive": true,
+          "schema": 1,
+          "sequence": 41,
+          "process_frame": 5,
+          "physics_frame": 10,
+          "usec": 41
+        },
+        {
+          "kind": "weak",
+          "stage": "after_hud_leave",
+          "id": "-9223372036854775796",
+          "alive": true,
+          "schema": 1,
+          "sequence": 49,
+          "process_frame": 6,
+          "physics_frame": 12,
+          "usec": 49
+        },
+        {
+          "kind": "weak",
+          "stage": "before_hud_leave",
+          "id": "-9223372036854775796",
+          "alive": true,
+          "schema": 1,
+          "sequence": 58,
+          "process_frame": 7,
+          "physics_frame": 14,
+          "usec": 58
+        },
+        {
+          "kind": "weak",
+          "stage": "after_hud_leave",
+          "id": "-9223372036854775796",
+          "alive": true,
+          "schema": 1,
+          "sequence": 66,
+          "process_frame": 8,
+          "physics_frame": 16,
+          "usec": 66
+        },
+        {
+          "kind": "weak",
+          "stage": "before_hud_leave",
+          "id": "-9223372036854775796",
+          "alive": true,
+          "schema": 1,
+          "sequence": 75,
+          "process_frame": 9,
+          "physics_frame": 18,
+          "usec": 75
+        },
+        {
+          "kind": "weak",
+          "stage": "after_hud_leave",
+          "id": "-9223372036854775796",
+          "alive": true,
+          "schema": 1,
+          "sequence": 83,
+          "process_frame": 10,
+          "physics_frame": 20,
+          "usec": 83
+        },
+        {
+          "kind": "weak",
+          "stage": "before_hud_leave",
+          "id": "-9223372036854775796",
+          "alive": true,
+          "schema": 1,
+          "sequence": 92,
+          "process_frame": 11,
+          "physics_frame": 23,
+          "usec": 92
+        },
+        {
+          "kind": "weak",
+          "stage": "after_hud_leave",
+          "id": "-9223372036854775796",
+          "alive": true,
+          "schema": 1,
+          "sequence": 100,
+          "process_frame": 12,
+          "physics_frame": 25,
+          "usec": 100
+        },
+        {
+          "kind": "weak",
+          "stage": "before_final_leave",
+          "id": "-9223372036854775796",
+          "alive": true,
+          "schema": 1,
+          "sequence": 109,
+          "process_frame": 13,
+          "physics_frame": 27,
+          "usec": 109
+        },
+        {
+          "kind": "weak",
+          "stage": "after_final_leave",
+          "id": "-9223372036854775796",
+          "alive": true,
+          "schema": 1,
+          "sequence": 117,
+          "process_frame": 14,
+          "physics_frame": 29,
+          "usec": 117
+        },
+        {
+          "kind": "weak",
+          "stage": "final_pre_quit",
+          "id": "-9223372036854775796",
+          "alive": true,
+          "schema": 1,
+          "sequence": 126,
+          "process_frame": 15,
+          "physics_frame": 31,
+          "usec": 126
+        }
+      ]
+    }
+  ],
+  "sample_status": "leak_observed",
+  "unobserved_leaks": [],
+  "server_drain": "unknown; no public acknowledgment",
+  "polyphonic_coverage": "latest public playback only; earlier voices unknown",
+  "cause": "unproven; observing a player association does not identify the retaining reference"
+}
