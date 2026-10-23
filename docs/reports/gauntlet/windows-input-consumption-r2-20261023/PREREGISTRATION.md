@@ -46,3 +46,10 @@ Root's initial no-checkout setup left selected tracked files absent despite an
 initialized index. The printed deleted-file status is a setup failure, not a
 source change. An exact `git restore --source=HEAD --worktree -- .` materialized
 the selected tracked bytes and returned a clean status before implementation.
+
+After the first source freeze `e0acf040`, the critic supplied one further actual
+false pass: an authority expiry stage injected into client-role evidence. Before
+the next edit, extend the correction to enforce each role's emitted stage set
+for direct reasons, counters and retained latest metadata. Duplicate JSON/index/
+consumed-sequence controls already reject and must remain so. Retain the first
+source freeze and its original results; native code remains unchanged.
