@@ -1,0 +1,134 @@
+{
+  "scope": "ONE read-only observer; no native acquisition launched by this critic",
+  "root_release": "801e4514ab869ad6869e5631dc303f58ca28772f",
+  "initial_tool_response": {
+    "chunk_id": "322122",
+    "wall_time_seconds": 1.000902909,
+    "session_id": 93533,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "initial_start_row": {
+    "cap_seconds": 1440,
+    "discovery_cap_seconds": 60,
+    "event": "start",
+    "interval_seconds": 0.1,
+    "monotonic": 28574.498358819,
+    "observer": {
+      "affinity": [
+        4
+      ],
+      "argv": [
+        "python3",
+        "-B",
+        "docs/reports/gauntlet/m1-linux-profile-acquisition/native-r3-independent/observe_processes.py",
+        "--root-release-ref",
+        "801e4514ab869ad6869e5631dc303f58ca28772f"
+      ],
+      "comm": "python3",
+      "cwd": "/workspace/reviews/linux-profile-acquisition-r3-native",
+      "exe": "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "identity_revalidated": true,
+      "nice": 0,
+      "pgid": 168293,
+      "pid": 168293,
+      "ppid": 561,
+      "scheduler": 0,
+      "selected_environment": {},
+      "sid": 168293,
+      "sockets": [],
+      "start_ticks": 2857431,
+      "state": "R",
+      "threads": {
+        "168293": [
+          4
+        ]
+      }
+    },
+    "preexisting_listeners": {
+      "/tmp/.X11-unix/X99127": {
+        "exists": false
+      },
+      "/tmp/.X99127-lock": {
+        "exists": false
+      },
+      "tcp": [
+        "0: 00000000:0410 00000000:0000 0A 00000000:00000000 00:00000000 00000000  1000        0 1779 1 0000000095642f56 100 0 0 10 0"
+      ],
+      "tcp6": [],
+      "udp": [],
+      "udp6": [],
+      "unix_display_or_owned": []
+    },
+    "release_reference": "801e4514ab869ad6869e5631dc303f58ca28772f",
+    "semantics": "Read-only observations; no signals or children; no CPU utilization sampling",
+    "source": "ec6b34ce9af4db1199cd5266b2f7cfcc9831f5ef",
+    "source_path": "/workspace/sightbreak-linux-packed-import-boundary",
+    "terminal_grace_seconds": 10,
+    "utc": "2026-10-23T11:49:57.726604+00:00"
+  },
+  "recorded_utc": "2026-10-23T11:50:40.244557+00:00",
+  "terminal_tool_response": {
+    "chunk_id": "df834d",
+    "wall_time_seconds": 3.1837e-05,
+    "exit_code": 0,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "poll_tool_responses": [
+    {
+      "chunk_id": "f69837",
+      "wall_time_seconds": 5.001024292,
+      "session_id": 93533,
+      "original_token_count": 0,
+      "output": ""
+    }
+  ],
+  "timeline_identity": {
+    "bytes": 271721,
+    "sha256": "d24c6ebd863ef3c1be1e57ae53955a62413256e301222d5c55f42d4e516de6cc"
+  },
+  "terminal_event": {
+    "all_observed_absent": true,
+    "event": "terminal",
+    "listeners": {
+      "/tmp/.X11-unix/X99127": {
+        "exists": false
+      },
+      "/tmp/.X99127-lock": {
+        "exists": false
+      },
+      "tcp": [
+        "0: 00000000:0410 00000000:0000 0A 00000000:00000000 00:00000000 00000000  1000        0 1779 1 0000000095642f56 100 0 0 10 0"
+      ],
+      "tcp6": [],
+      "udp": [],
+      "udp6": [],
+      "unix_display_or_owned": []
+    },
+    "monotonic": 28646.724330271,
+    "observed": [],
+    "observed_identity_count": 9,
+    "original_groups": [],
+    "original_sessions": [],
+    "supervisor": [
+      168507,
+      2861205
+    ],
+    "supervisor_original_group_members": [],
+    "supervisor_original_ids": {
+      "pgid": 168505,
+      "sid": 168505
+    },
+    "supervisor_original_session_members": [],
+    "utc": "2026-10-23T11:51:09.952576+00:00"
+  },
+  "observer_return": {
+    "elapsed_seconds": 72.2981279889973,
+    "event": "observer_return",
+    "monotonic": 28646.724383229,
+    "samples": 477,
+    "utc": "2026-10-23T11:51:09.952643+00:00"
+  },
+  "recorded_terminal_utc": "2026-10-23T11:51:37.002322+00:00"
+}
