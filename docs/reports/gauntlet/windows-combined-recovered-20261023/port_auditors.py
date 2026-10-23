@@ -34,9 +34,11 @@ for name in FILES:
     if name == 'audit_native_commands.py':
         replace('2722, 41, 2840', '2722, 590, 41, 2840')
         replace("if suite == 'gunplay_rules' else", "if suite == 'gunplay_rules' else ['--headless', '--audio-driver', 'Dummy', '--script', 'res://tests/bot_dry_weapon_test.gd'] if suite == 'bot_dry_weapon' else")
-        replace("        if suite == 'transaction_journal':", "        if suite == 'bot_dry_weapon':\n            native = [json.loads(line.removeprefix('BOT_DRY_WEAPON_RESULT ')) for line in log.splitlines() if line.startswith('BOT_DRY_WEAPON_RESULT ')]\n            counts = [(r['checks'], r['failures']) for r in native]\n        if suite == 'transaction_journal':")
+        replace("        checks[prefix + 'single_expected_native_summary']", "        if suite == 'bot_dry_weapon':\n            native = [json.loads(line.removeprefix('BOT_DRY_WEAPON_RESULT ')) for line in log.splitlines() if line.startswith('BOT_DRY_WEAPON_RESULT ')]\n            counts = [(r['checks'], r['failures']) for r in native]\n        checks[prefix + 'single_expected_native_summary']")
         replace('distinct_29_native_producers', 'distinct_31_native_producers')
         replace("== 29", "== 31")
+    if name == 'audit_journey_ocr.py':
+        replace("'matches_receipt':parsed==receipt[key]", "'native_numeric_receipt_available':key in receipt,'matches_receipt':parsed==receipt.get(key)")
     raw = value.encode()
     (ROOT / name).write_bytes(raw)
     manifest.append({'name': name, 'original_git_path': OLD + name,
