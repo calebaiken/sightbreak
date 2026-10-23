@@ -290,6 +290,53 @@ class RefreshTests(unittest.TestCase):
         self.assertFalse(any(e["phase"] == "business_read" for e in run.events))
         self.assertEqual(run.events[-1]["phase"], "proxy_failure")
 
+    def test_queued_response_rechecks_work_deadline_after_publication_lock(self):
+        run = self.run_object()
+        upstream_ready, upstream_release, publication_waiting = (threading.Event() for _ in range(3))
+        class WatchedLock:
+            def __init__(self):
+                self.inner, self.worker_acquisitions = threading.RLock(), 0
+            def __enter__(self):
+                if threading.current_thread().name == "queued-response":
+                    self.worker_acquisitions += 1
+                    if self.worker_acquisitions == 2:
+                        publication_waiting.set()
+                self.inner.acquire()
+                return self
+            def __exit__(self, *_args):
+                self.inner.release()
+        run.lock = WatchedLock()
+        handler, connection = self.handler(run, "/me", {"credits": 600})
+        def upstream_read():
+            upstream_ready.set()
+            if not upstream_release.wait(2):
+                raise AssertionError("fixture upstream release missing")
+            return b'{"credits":600}'
+        connection.getresponse.return_value.read.side_effect = upstream_read
+        thread_errors = []
+        def forward():
+            try: handler.forward()
+            except BaseException as error: thread_errors.append(error)
+        with mock.patch.object(campaign.http.client, "HTTPConnection", return_value=connection):
+            thread = threading.Thread(target=forward, name="queued-response", daemon=True)
+            thread.start()
+            try:
+                self.assertTrue(upstream_ready.wait(2))
+                with run.lock:
+                    upstream_release.set()
+                    self.assertTrue(publication_waiting.wait(2))
+                    run.deadline = campaign.time.monotonic() - 1
+            finally:
+                upstream_release.set()
+                thread.join(3)
+        self.assertFalse(thread.is_alive(), "queued fixture leaked thread")
+        self.assertFalse(thread_errors)
+        handler.send_response.assert_not_called()
+        handler.connection.settimeout.assert_not_called()
+        self.assertFalse(any(e["phase"] == "business_read" for e in run.events))
+        self.assertEqual(run.events[-1]["phase"], "proxy_failure")
+        self.assertIn("240-second", run.events[-1]["exception"])
+
     def test_proxy_market_marker_precedes_concurrent_followup_ingress(self):
         run = self.run_object()
         run.current_phase = "final_recovery"
