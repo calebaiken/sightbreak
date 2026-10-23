@@ -1,0 +1,1033 @@
+{
+  "scope": "Fresh exact-ref local depth-one Git checkout and pure/synthetic tests only; no native/OCR/Swift/engine/CI",
+  "head": "3973447175370d64ef2d790a3551102a89bb3a8e",
+  "shallow": "true",
+  "reachable_commit_count": 1,
+  "baseline_c08889b_absent": true,
+  "normal_top_level_tests": 83,
+  "aliased_suite_commands": 5,
+  "independent_test_methods": 8,
+  "original_source_mutations_rejected": 4,
+  "reference_mutations_rejected": 3,
+  "tested_file_sha256": {
+    "scripts/macos_window_capture.swift": "6b64561032d86b60dc1276aea1a642f427b48a1b5257934e89b71afb4269f71f",
+    "scripts/macos_deploy_ocr.py": "ed523c8badcad9f7d6060e52eb5759b72d2736937fe35a87782544f725a512fd",
+    "scripts/macos_ordinary_input.py": "c763aa4129f74a7d9fc6ac932d6312d7ffafac2a05a90701c9037ed9d200ded7",
+    "scripts/verify_macos_ordinary.py": "9e7d52338865e6b5c4ad32b32d44f83fea39d1e6645931e678c91feb21412518",
+    "scripts/test_macos_ordinary_controller.py": "51048628829ac6c67a0ed6b50af3d43254068fe691a5e272181015894abb42b5",
+    ".github/workflows/desktop-alpha.yml": "ee4ef46548272186ff42feb5b806589e35072ebc2597e9ba03f904735fde3f69",
+    "scripts/test_macos_deploy_ocr.py": "e5b46bc4aa739e80ba53e9e4d4c01f3efe1ee48e17344c6e29ba3750646d9d16",
+    "scripts/fixtures/macos_ordinary_source/reference.json": "47d2484fe191af3a374dbb586474af53d36448d48acf3c8e00ed7a9f6b45d92a",
+    "scripts/fixtures/macos_ordinary_source/default_capture_body.swift.txt": "1b0f4c909a3bb274083ab72e40baf507f8b7f1984c52b1b02e08443747deabd1"
+  },
+  "tested_files_unchanged": true,
+  "commands": [
+    {
+      "label": "init",
+      "command": [
+        "git",
+        "init"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.011409725000703475,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "init.txt",
+      "bytes": 686,
+      "sha256": "8558bb5e89ffc14546f5bbf8fdebaa8611ac738491f0c1ec8c4a7e50ef746fdb"
+    },
+    {
+      "label": "remote",
+      "command": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "file:///workspace/reviews/mac-derived-ocr-corrected-source"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.004287955000108923,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "remote.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "fetch",
+      "command": [
+        "git",
+        "fetch",
+        "--depth=1",
+        "--filter=blob:none",
+        "--upload-pack=git -c uploadpack.allowFilter=true upload-pack",
+        "origin",
+        "3973447175370d64ef2d790a3551102a89bb3a8e"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.11351743199884368,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "fetch.txt",
+      "bytes": 140,
+      "sha256": "29966d9d4927772f8280e42854a9a41c6d93dced7e1790e709b281ed35c19950"
+    },
+    {
+      "label": "sparse",
+      "command": [
+        "git",
+        "sparse-checkout",
+        "set",
+        "--cone",
+        "scripts",
+        ".github",
+        "docs/reports/gauntlet/m2-mac-derived-ocr",
+        "docs/reports/gauntlet/m2-macos-screen-identity/fixtures"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.0042074009998032125,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "sparse.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "checkout",
+      "command": [
+        "git",
+        "checkout",
+        "--detach",
+        "FETCH_HEAD"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.6001211620005051,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "checkout.txt",
+      "bytes": 136,
+      "sha256": "27e493d3ccecaeda5d41cce2ea51e17b9bab84ee06723f8a73b430c7d48256b8"
+    },
+    {
+      "label": "head",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.0025024110000231303,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "head.txt",
+      "bytes": 41,
+      "sha256": "5969d31648f70c6d9fa378327bf8e1f9f7503e46250065017e6fb45985a305d9"
+    },
+    {
+      "label": "shallow",
+      "command": [
+        "git",
+        "rev-parse",
+        "--is-shallow-repository"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.0030255319998104824,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "shallow.txt",
+      "bytes": 5,
+      "sha256": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74"
+    },
+    {
+      "label": "commit-count",
+      "command": [
+        "git",
+        "rev-list",
+        "--count",
+        "HEAD"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.003456677999565727,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "commit-count.txt",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    {
+      "label": "baseline-absent",
+      "command": [
+        "git",
+        "show",
+        "c08889b:scripts/macos_window_capture.swift"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 128,
+      "expected_exit_code": 128,
+      "seconds": 0.0028314299997873604,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "baseline-absent.txt",
+      "bytes": 38,
+      "sha256": "33e899f4ed32a39a6aab181e0f65f2781bd4bba9733fb514efcfbcd375c9b265"
+    },
+    {
+      "label": "normal-test_macos_ordinary",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.3267670690001978,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "normal-test_macos_ordinary.txt",
+      "bytes": 3255,
+      "sha256": "5867309fe1654f988020d0f11dd4982e43907397ecd4a7552344c53fe382fb2f"
+    },
+    {
+      "label": "normal-test_macos_ordinary_controller",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary_controller.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.4669846550004877,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "normal-test_macos_ordinary_controller.txt",
+      "bytes": 1199,
+      "sha256": "442ba1648d84f74a36edadcce2f6cbe8b1008ee1fd79afc4c7773e8f977d92d8"
+    },
+    {
+      "label": "normal-test_macos_ordinary_paths",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary_paths.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.48618676499972935,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "normal-test_macos_ordinary_paths.txt",
+      "bytes": 470,
+      "sha256": "e29e1607c10f3646e0815371b2b6e89f337508930144d22ba7a02cf0818a5f5c"
+    },
+    {
+      "label": "normal-test_macos_ordinary_startup",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary_startup.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.5734189670001797,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "normal-test_macos_ordinary_startup.txt",
+      "bytes": 2095,
+      "sha256": "5afc2c14574cbe695ccebacf590a9e24b83cd5d99a0fa5108652bacf404ced18"
+    },
+    {
+      "label": "normal-test_macos_deploy_ocr",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_deploy_ocr.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.30225141499977326,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "normal-test_macos_deploy_ocr.txt",
+      "bytes": 2454,
+      "sha256": "835369b54188ccf604b47dc734f85366a8c8e5530f2996f2cf601bfa9fd38b21"
+    },
+    {
+      "label": "normal-test_macos_menu",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_menu.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.21107956699961505,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "normal-test_macos_menu.txt",
+      "bytes": 2216,
+      "sha256": "c324b07ccf68f2a3143cf3bc2d8a3202b44008f802389cc925253dddeb05420d"
+    },
+    {
+      "label": "normal-test_macos_focus",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_focus.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.2073926709999796,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "normal-test_macos_focus.txt",
+      "bytes": 1494,
+      "sha256": "f5bb667a9373834536c3fcb7951d42caced237736e9a515830c3438337f2dc2e"
+    },
+    {
+      "label": "normal-test_macos_screen_identity",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_screen_identity.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.1960426269997697,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "normal-test_macos_screen_identity.txt",
+      "bytes": 1235,
+      "sha256": "58b62483382d04048522ee4f75ad07741e63446c1fa39223c369aa095d26454e"
+    },
+    {
+      "label": "normal-test_probe_macos_input",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_probe_macos_input.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.23246980900148628,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "normal-test_probe_macos_input.txt",
+      "bytes": 1844,
+      "sha256": "4b9729b57f824018be7b150e7eb01e197a7d0965b4e8bc221d432cb0d5e6c352"
+    },
+    {
+      "label": "alias-test_macos_ordinary",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.24093338300008327,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/aliased-temp",
+        "TMP": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/aliased-temp",
+        "TEMP": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/aliased-temp",
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "alias-test_macos_ordinary.txt",
+      "bytes": 3254,
+      "sha256": "4af43f9d02426dc0ddb0ddd00fa8279b10650002fe57ef4b1851d667a5627115"
+    },
+    {
+      "label": "alias-test_macos_ordinary_controller",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary_controller.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.5958073469992087,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/aliased-temp",
+        "TMP": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/aliased-temp",
+        "TEMP": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/aliased-temp",
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "alias-test_macos_ordinary_controller.txt",
+      "bytes": 1199,
+      "sha256": "3b80da3ab434d0bb7fab703ca8f31e7451ec6d5e2e08050ba593634f30e27fc7"
+    },
+    {
+      "label": "alias-test_macos_ordinary_paths",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary_paths.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.5119804049991217,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/aliased-temp",
+        "TMP": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/aliased-temp",
+        "TEMP": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/aliased-temp",
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "alias-test_macos_ordinary_paths.txt",
+      "bytes": 470,
+      "sha256": "d82c269c38d94356537fa715f6c44d25b04d4b51632436a2cb013cd599bf69a4"
+    },
+    {
+      "label": "alias-test_macos_ordinary_startup",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_ordinary_startup.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.6649403310002526,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/aliased-temp",
+        "TMP": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/aliased-temp",
+        "TEMP": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/aliased-temp",
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "alias-test_macos_ordinary_startup.txt",
+      "bytes": 2095,
+      "sha256": "377bb8e614551f079436e9828ed23e3ea565018fbfea5023037bef9720065d07"
+    },
+    {
+      "label": "alias-test_macos_deploy_ocr",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_deploy_ocr.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.30126151299919,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/aliased-temp",
+        "TMP": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/aliased-temp",
+        "TEMP": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/aliased-temp",
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "alias-test_macos_deploy_ocr.txt",
+      "bytes": 2454,
+      "sha256": "3541e5ad63c525295d68f927fc51c0329231658c5ebb98d04c05ebef24a91470"
+    },
+    {
+      "label": "independent-controls",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "docs/reports/gauntlet/m2-mac-derived-ocr/shallow-checkout-correction/independent_controls.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.2892507350006781,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "independent-controls.txt",
+      "bytes": 1304,
+      "sha256": "b626b406bf5699c7675817881ea614cbe4123e4c429e7ce344f0f683cef90fa0"
+    },
+    {
+      "label": "original-mutation-lower-confidence",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-c",
+        "import sys,unittest;sys.path[:0]=['/tmp/sightbreak-deploy-complete-shallow-zt3loug0/mutations/lower-confidence', '/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout/scripts'];import test_macos_deploy_ocr as module;unittest.main(module=module,verbosity=2)"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "seconds": 0.3373630450005294,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "original-mutation-lower-confidence.txt",
+      "bytes": 4552,
+      "sha256": "d94734152f0622373047344180bbba378812a124571a68175dc18cc47a033b65"
+    },
+    {
+      "label": "original-mutation-unbound-file-hashes",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-c",
+        "import sys,unittest;sys.path[:0]=['/tmp/sightbreak-deploy-complete-shallow-zt3loug0/mutations/unbound-file-hashes', '/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout/scripts'];import test_macos_deploy_ocr as module;unittest.main(module=module,verbosity=2)"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "seconds": 0.3521447259990964,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "original-mutation-unbound-file-hashes.txt",
+      "bytes": 9019,
+      "sha256": "9add7d3f8544fdb1325e79cdf05ceeb0e00462face3d866a9d2062599c581cb3"
+    },
+    {
+      "label": "original-mutation-wrong-target-center",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-c",
+        "import sys,unittest;sys.path[:0]=['/tmp/sightbreak-deploy-complete-shallow-zt3loug0/mutations/wrong-target-center', '/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout/scripts'];import test_macos_deploy_ocr as module;unittest.main(module=module,verbosity=2)"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "seconds": 0.3415810840015183,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "original-mutation-wrong-target-center.txt",
+      "bytes": 8922,
+      "sha256": "3865faeef18770a4e4f1878be929532df952c578c4fd958ef8182a45c9c40210"
+    },
+    {
+      "label": "original-mutation-changed-bound-receipt",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-c",
+        "import sys,unittest;sys.path[:0]=['/tmp/sightbreak-deploy-complete-shallow-zt3loug0/mutations/changed-bound-receipt', '/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout/scripts'];import test_macos_deploy_ocr as module;unittest.main(module=module,verbosity=2)"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "seconds": 0.33279499399941415,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "original-mutation-changed-bound-receipt.txt",
+      "bytes": 5612,
+      "sha256": "66508103d3d4d4b0178ebffd0ac08dbcd18829fe7fff64fb43bcbf1d58c57460"
+    },
+    {
+      "label": "reference-mutation-golden-fixture",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-c",
+        "import sys,unittest;from pathlib import Path;sys.path.insert(0,'/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout/scripts');import test_macos_deploy_ocr as module;module.ROOT=Path('/tmp/sightbreak-deploy-complete-shallow-zt3loug0/mutations/golden-fixture');suite=unittest.TestSuite([module.DeployAnalysisControls('test_default_native_helper_ocr_and_gameplay_tail_are_byte_preserved')]);result=unittest.TextTestRunner(verbosity=2).run(suite);sys.exit(not result.wasSuccessful())"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "seconds": 0.21460877500067,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "reference-mutation-golden-fixture.txt",
+      "bytes": 1236,
+      "sha256": "51bf1c9fd73982f894ca80d9d4e693e55b16404ea7cf6a16b66d4e4c8bcd1ca8"
+    },
+    {
+      "label": "reference-mutation-default-helper",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-c",
+        "import sys,unittest;from pathlib import Path;sys.path.insert(0,'/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout/scripts');import test_macos_deploy_ocr as module;module.ROOT=Path('/tmp/sightbreak-deploy-complete-shallow-zt3loug0/mutations/default-helper');suite=unittest.TestSuite([module.DeployAnalysisControls('test_default_native_helper_ocr_and_gameplay_tail_are_byte_preserved')]);result=unittest.TextTestRunner(verbosity=2).run(suite);sys.exit(not result.wasSuccessful())"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "seconds": 0.2250684110003931,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "reference-mutation-default-helper.txt",
+      "bytes": 1150,
+      "sha256": "0db0903330fc701a3869400f80a6a4e55f7a62f3abe46eb372c00931e232bc6d"
+    },
+    {
+      "label": "reference-mutation-gameplay-tail",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-c",
+        "import sys,unittest;from pathlib import Path;sys.path.insert(0,'/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout/scripts');import test_macos_deploy_ocr as module;module.ROOT=Path('/tmp/sightbreak-deploy-complete-shallow-zt3loug0/mutations/gameplay-tail');suite=unittest.TestSuite([module.DeployAnalysisControls('test_default_native_helper_ocr_and_gameplay_tail_are_byte_preserved')]);result=unittest.TextTestRunner(verbosity=2).run(suite);sys.exit(not result.wasSuccessful())"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "seconds": 0.22913388199958717,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "reference-mutation-gameplay-tail.txt",
+      "bytes": 1227,
+      "sha256": "28b7fa2c11b2992d4418c3cdbc2f22aabf567be2400369f5d077e69d7049c4a4"
+    },
+    {
+      "label": "status",
+      "command": [
+        "git",
+        "status",
+        "--porcelain"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.04879210500075715,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "status.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "source-whitespace",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "scripts",
+        ".github",
+        "game"
+      ],
+      "cwd": "/tmp/sightbreak-deploy-complete-shallow-zt3loug0/checkout",
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.006545173999256804,
+      "environment_allowlist": {
+        "HOME": "/home/agent",
+        "PATH": "/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/override:/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin:/opt/codex/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/home/agent/.local/bin:/opt/codex/runtimes/codex-primary-runtime/dependencies/bin/fallback",
+        "TMPDIR": null,
+        "TMP": null,
+        "TEMP": null,
+        "DISPLAY": null,
+        "LANG": "C.UTF-8",
+        "LC_ALL": "C.UTF-8",
+        "PYTHONPATH": null,
+        "PYTHONDONTWRITEBYTECODE": "1",
+        "SIGHTBREAK_TOOLS_DIR": null,
+        "SIGHTBREAK_STATE_DIR": null,
+        "SIGHTBREAK_BUILDS_DIR": null
+      },
+      "log": "source-whitespace.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "passed": true
+}
