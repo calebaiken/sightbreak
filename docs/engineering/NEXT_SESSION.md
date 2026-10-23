@@ -1,21 +1,21 @@
 # Next session
 
-Updated 2026-10-23, 07:18 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 07:25 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. The automatic goal remains active. Read AGENTS.md and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
 
-## Live execution checkpoint — 2026-10-23, 07:18 UTC
+## Live execution checkpoint — 2026-10-23, 07:25 UTC
 
 The mission is ACTIVE. Root is `/workspace/sightbreak-v1-recovered`, own branch
 `codex/v1-executor-recovery-20261023`, [draft PR31](https://github.com/calebaiken/sightbreak/pull/31).
-Trial source is `a089473`; root report checkpoint before this note is `db1e9cb`. Inspect actual HEAD and status;
+Trial source is `a089473`; root diagnostic integration before this note is `439803c`. Inspect actual HEAD and status;
 never reset a newer checkpoint. The original contributor checkout is clean on
 `work` at `4d8cdb33`. No shared release branch is merged.
 
-1. **Windows one frozen native attempt is queued.**
+1. **Windows one frozen native attempt is running.**
    Original run 39907358390 at b2e0293 stays FAILED. Death at tick 1166 precedes
    released ACK 1192 and fresh W; the plant ends by defender elimination while
    the device remains planted. Separate independently accepted scopes are 15
@@ -37,7 +37,7 @@ never reset a newer checkpoint. The original contributor checkout is clean on
    Root selected ONE unchanged full Windows workflow, exact a089473, immutable
    ref `codex/v1-qualify-win-a089473`, pre-dispatch root prereg cb95c10.
    Run [39916539053](https://github.com/calebaiken/sightbreak/actions/runs/39916539053)
-   was dispatched once at 07:15:05 UTC; job 120291226421 is queued at this note.
+   was dispatched once at 07:15:05 UTC; job 120291226421 is running. Step status alone is not acceptance.
    Fresh `/root/windows_native_a089_fresh_critic` owns actual output review.
    Its criteria commit 69d3bde follows dispatch by 36 seconds and precedes any
    output inspection; do not label that critic commit pre-dispatch. Root's
@@ -68,7 +68,12 @@ never reset a newer checkpoint. The original contributor checkout is clean on
    It opts only the focused Deploy capture into one fixed 2× whole-window OCR
    analysis, keeps raw evidence and the 0.8 threshold, and binds a unique derived
    label/box to the original native center. No actual OCR improvement, Swift
-   compile, native run or retry has occurred. Fresh source review is required.
+   compile, native run or retry has occurred. Fresh source critic bde551c
+   REJECTS readiness: maintained test lines 241/254 need historical c08889b,
+   absent in actual depth-one checkout. Two exact shallow reproductions fail.
+   Builder is correcting only the test/history dependency without increasing
+   fetch depth or changing helper/controller/workflow/runtime bytes. Actual
+   upright derived-image confidence improvement remains unproved.
 3. **Bot baseline and verbose diagnostic both FAIL strict shutdown.**
    The accepted known-dry primary-return product correction remains root 784fb1a,
    tested 8e8d13e / critic f947350: 590 checks pass versus 40 baseline failures,
@@ -113,7 +118,12 @@ never reset a newer checkpoint. The original contributor checkout is clean on
    REJECTS analyzer chronology/coverage; root report-only import is 5836361.
    Three independent falsifiers pass wrongly, while WeakRef hooks and stripped
    original bytes pass source review. Builder is correcting chronology/coverage
-   without adding game waits or actions. No engine compile,
+   without adding game waits or actions. Revised freeze 03d003a has 21 passing
+   maintained tests and unchanged counterexample replay; fresh re-review finds
+   two further baseline incompatibilities: --headless selects Dummy by default,
+   and real verbose output has a WorkerThreadPool preamble before the banner.
+   Both currently reject. Preserve actual default context and strict raw logs;
+   any amendment must retain no audible/physical claim. No engine compile,
    import, new waits, teardown fix or diagnostic run is approved. A later run
    needs a separately reviewed bounded wrapper and staged isolated source.
 5. **Touch R3 remains numerically FAILED despite blind clarity preference.**
@@ -141,8 +151,13 @@ never reset a newer checkpoint. The original contributor checkout is clean on
    needs correction. Corrected freeze 3fd9718 (implementation b7552a8) is in
    `/workspace/sightbreak-linux-profile-overhead`, branch
    `diagnostic/linux-profile-overhead-fixture`. All 22 pure methods pass in builder
-   evidence; fresh `/root/linux_profile_fixture_fresh_critic` re-review is active.
-   Preserve original counterexamples/thresholds. No engine operation is approved.
+   evidence. Fresh 4b5b8cd source ACCEPT is integrated as 939f2f0, with ordered
+   controller/fixture correction through c18909f; root 439803c binds exact bytes
+   and independently reruns all 22 pure methods. Game bytes remain unchanged.
+   The builder is now creating a separately preregistered bounded acquisition
+   wrapper for private staging/import/export/ELF-PCK validation/seal and one fixed
+   block. Source approval alone releases none of those engine operations.
+   Preserve original counterexamples/thresholds; fresh wrapper review is required.
 7. **Complete aggregate remains independently ACCEPTED at exact afca2f1.**
    Unmodified validate.sh exits zero in 539.074 seconds: 55 mandatory Godot logs,
    nine 92-method Python groups (three Windows reader skips), 29-definition

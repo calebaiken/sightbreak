@@ -477,3 +477,45 @@ fail and skip ordinary play. Test-only 3730273 plus independent 78d5fa1/2b43487
 allow repeat 39906639650 at b2e0293; actual ordinary play is now in progress.
 Windows frozen-ref review and fresh R3 native touch evidence acquisition are
 active. No broad release gate closes. NEXT_SESSION holds the exact continuation.
+
+
+## 2026-10-23: retain actual platform failures and advance the next corrections
+
+Windows b2e0293 run 39907358390 is independently rejected by d0514d8: death
+precedes fresh input; genuine plant ends by defender elimination. Separate
+15-suite / 9,434-check, OS-input, defuse and 12-round / 7:5 earned-reopen scopes
+pass. The revised living-actor fence and isolated resume scheduling change are
+independently accepted at 691076f, then exact combined a089473 is bound by
+04d930b across 431 files / 465 assertions and 128 pure methods. Root prereg
+cb95c10 precedes one unchanged full Windows dispatch 39916539053 at 07:15:05.
+Fresh actual-output critic owns that running attempt; no retry is authorized.
+
+ARM c08889b run 39912086121 reaches/pins the menu and ordinary close exits 0,
+but Deploy recognition fails at native confidence 0.5 versus 0.8 before input.
+Strict input_mode also leaks playback/stream WAV objects and Master StringName;
+remaining suites skip. Fresh 9f2a67f retains both raw ZIPs, all selected native
+pixels and bounded menu/iOS scopes. Derived 2× OCR source cbd0154 is separately
+rejected by bde551c because maintained tests need history absent in a real
+shallow checkout. Test-only correction continues; confidence gates stay intact.
+
+Exhausted-primary baseline 700abf8 is strictly rejected for leaked objects.
+Independent b5fa18a1 verifies all 1,239 rows, including real shots/kills/reloads,
+and the bounded 24 m/idle stall. One source-frozen verbose diagnostic preserves
+every one of the 1,318 original fixture lines exactly, with separately identified
+playback/stream WAV leaks. Independent d549f54 verifies all 17 package members,
+full raw/resource/source checks and scoped cleanup. Matching ARM classes do not
+prove a common owner or cause. A narrow selection candidate is preregistered
+at 2624815; an opt-in owner probe is in corrective source review. No leak fix
+or new selection policy has native acceptance yet.
+
+Touch R3's independently failed numeric gates remain despite blind preference.
+Fresh R4 source critic 6eb990f identifies overlapping utility footprints and
+FRAG-painted points selecting SMOKE; separate layout/ownership correction begins.
+Linux fixture 1290172 is rejected on actual controller counterexamples; corrected
+3fd9718 passes fresh 4b5b8cd source review and root 22-method integration replay.
+A bounded acquisition wrapper is next. Neither source result qualifies native
+performance, physical input or the original failed Linux gameplay deadline.
+
+All accepted source/results and original rejections are recoverable on the own
+mission branch. No broad release gate closes. Continue NEXT_SESSION's exact
+implementation/review queue; do not treat these engineering increments as v1.0.
