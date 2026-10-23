@@ -1,0 +1,22 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "exit_code": 2,
+  "output": "docs/reports/gauntlet/m2-mac-journey-recovered/late-window-ambiguity/candidate-independent-first.txt:9: trailing whitespace.\n+test_late_same_pid_ambiguity_cannot_reach_deploy (__main__.IndependentReview.test_late_same_pid_ambiguity_cannot_reach_deploy) ... \n",
+  "reason": "The raw incomplete unittest line ends in a space because the 60s wrapper cut it off. Preserve original bytes.",
+  "source_command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check",
+    "--",
+    "scripts",
+    ".github",
+    "game"
+  ],
+  "source_exit_code": 0
+}

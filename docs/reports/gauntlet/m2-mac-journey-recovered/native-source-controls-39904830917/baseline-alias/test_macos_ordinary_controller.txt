@@ -1,0 +1,333 @@
+test_complete_synthetic_schedule_exercises_all_acceptance_stages (__main__.ControllerFalsifiers.test_complete_synthetic_schedule_exercises_all_acceptance_stages) ... ERROR
+test_dead_or_mismatched_native_hud_never_pass (__main__.ControllerFalsifiers.test_dead_or_mismatched_native_hud_never_pass) ... 
+  test_dead_or_mismatched_native_hud_never_pass (__main__.ControllerFalsifiers.test_dead_or_mismatched_native_hud_never_pass) (fault='dead') ... ERROR
+  test_dead_or_mismatched_native_hud_never_pass (__main__.ControllerFalsifiers.test_dead_or_mismatched_native_hud_never_pass) (fault='hud') ... ERROR
+test_delayed_os_acknowledgement_cannot_extend_original_input_slots (__main__.ControllerFalsifiers.test_delayed_os_acknowledgement_cannot_extend_original_input_slots) ... 
+  test_delayed_os_acknowledgement_cannot_extend_original_input_slots (__main__.ControllerFalsifiers.test_delayed_os_acknowledgement_cannot_extend_original_input_slots) (fault='fire_ack_delay') ... ERROR
+  test_delayed_os_acknowledgement_cannot_extend_original_input_slots (__main__.ControllerFalsifiers.test_delayed_os_acknowledgement_cannot_extend_original_input_slots) (fault='fire_release_delay') ... ERROR
+  test_delayed_os_acknowledgement_cannot_extend_original_input_slots (__main__.ControllerFalsifiers.test_delayed_os_acknowledgement_cannot_extend_original_input_slots) (fault='reload_release_delay') ... ERROR
+test_finalization_checks_cannot_be_replaced_by_completed_gameplay (__main__.ControllerFalsifiers.test_finalization_checks_cannot_be_replaced_by_completed_gameplay) ... 
+  test_finalization_checks_cannot_be_replaced_by_completed_gameplay (__main__.ControllerFalsifiers.test_finalization_checks_cannot_be_replaced_by_completed_gameplay) (fault='cleanup') ... ERROR
+  test_finalization_checks_cannot_be_replaced_by_completed_gameplay (__main__.ControllerFalsifiers.test_finalization_checks_cannot_be_replaced_by_completed_gameplay) (fault='payload') ... ERROR
+  test_finalization_checks_cannot_be_replaced_by_completed_gameplay (__main__.ControllerFalsifiers.test_finalization_checks_cannot_be_replaced_by_completed_gameplay) (fault='source') ... ERROR
+  test_finalization_checks_cannot_be_replaced_by_completed_gameplay (__main__.ControllerFalsifiers.test_finalization_checks_cannot_be_replaced_by_completed_gameplay) (fault='default') ... ERROR
+  test_finalization_checks_cannot_be_replaced_by_completed_gameplay (__main__.ControllerFalsifiers.test_finalization_checks_cannot_be_replaced_by_completed_gameplay) (fault='leak') ... ERROR
+  test_finalization_checks_cannot_be_replaced_by_completed_gameplay (__main__.ControllerFalsifiers.test_finalization_checks_cannot_be_replaced_by_completed_gameplay) (fault='close') ... ERROR
+test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail (__main__.ControllerFalsifiers.test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail) ... 
+  test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail (__main__.ControllerFalsifiers.test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail) (fault='stale') ... ERROR
+  test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail (__main__.ControllerFalsifiers.test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail) (fault='depletion') ... ERROR
+  test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail (__main__.ControllerFalsifiers.test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail) (fault='frames') ... ERROR
+  test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail (__main__.ControllerFalsifiers.test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail) (fault='reload_frames') ... ERROR
+test_unobserved_reload_or_early_transfer_never_pass (__main__.ControllerFalsifiers.test_unobserved_reload_or_early_transfer_never_pass) ... 
+  test_unobserved_reload_or_early_transfer_never_pass (__main__.ControllerFalsifiers.test_unobserved_reload_or_early_transfer_never_pass) (fault='reload_start') ... ERROR
+  test_unobserved_reload_or_early_transfer_never_pass (__main__.ControllerFalsifiers.test_unobserved_reload_or_early_transfer_never_pass) (fault='reload_early') ... ERROR
+test_zero_exit_after_helper_stage_deadline_is_rejected (__main__.ControllerFalsifiers.test_zero_exit_after_helper_stage_deadline_is_rejected) ... ERROR
+
+======================================================================
+ERROR: test_complete_synthetic_schedule_exercises_all_acceptance_stages (__main__.ControllerFalsifiers.test_complete_synthetic_schedule_exercises_all_acceptance_stages)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 193, in test_complete_synthetic_schedule_exercises_all_acceptance_stages
+    code, report = harness.execute()
+                   ^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_dead_or_mismatched_native_hud_never_pass (__main__.ControllerFalsifiers.test_dead_or_mismatched_native_hud_never_pass) (fault='dead')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 221, in test_dead_or_mismatched_native_hud_never_pass
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_dead_or_mismatched_native_hud_never_pass (__main__.ControllerFalsifiers.test_dead_or_mismatched_native_hud_never_pass) (fault='hud')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 221, in test_dead_or_mismatched_native_hud_never_pass
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_delayed_os_acknowledgement_cannot_extend_original_input_slots (__main__.ControllerFalsifiers.test_delayed_os_acknowledgement_cannot_extend_original_input_slots) (fault='fire_ack_delay')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 236, in test_delayed_os_acknowledgement_cannot_extend_original_input_slots
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_delayed_os_acknowledgement_cannot_extend_original_input_slots (__main__.ControllerFalsifiers.test_delayed_os_acknowledgement_cannot_extend_original_input_slots) (fault='fire_release_delay')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 236, in test_delayed_os_acknowledgement_cannot_extend_original_input_slots
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_delayed_os_acknowledgement_cannot_extend_original_input_slots (__main__.ControllerFalsifiers.test_delayed_os_acknowledgement_cannot_extend_original_input_slots) (fault='reload_release_delay')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 236, in test_delayed_os_acknowledgement_cannot_extend_original_input_slots
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_finalization_checks_cannot_be_replaced_by_completed_gameplay (__main__.ControllerFalsifiers.test_finalization_checks_cannot_be_replaced_by_completed_gameplay) (fault='cleanup')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 244, in test_finalization_checks_cannot_be_replaced_by_completed_gameplay
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_finalization_checks_cannot_be_replaced_by_completed_gameplay (__main__.ControllerFalsifiers.test_finalization_checks_cannot_be_replaced_by_completed_gameplay) (fault='payload')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 244, in test_finalization_checks_cannot_be_replaced_by_completed_gameplay
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_finalization_checks_cannot_be_replaced_by_completed_gameplay (__main__.ControllerFalsifiers.test_finalization_checks_cannot_be_replaced_by_completed_gameplay) (fault='source')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 244, in test_finalization_checks_cannot_be_replaced_by_completed_gameplay
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_finalization_checks_cannot_be_replaced_by_completed_gameplay (__main__.ControllerFalsifiers.test_finalization_checks_cannot_be_replaced_by_completed_gameplay) (fault='default')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 244, in test_finalization_checks_cannot_be_replaced_by_completed_gameplay
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_finalization_checks_cannot_be_replaced_by_completed_gameplay (__main__.ControllerFalsifiers.test_finalization_checks_cannot_be_replaced_by_completed_gameplay) (fault='leak')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 244, in test_finalization_checks_cannot_be_replaced_by_completed_gameplay
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_finalization_checks_cannot_be_replaced_by_completed_gameplay (__main__.ControllerFalsifiers.test_finalization_checks_cannot_be_replaced_by_completed_gameplay) (fault='close')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 244, in test_finalization_checks_cannot_be_replaced_by_completed_gameplay
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail (__main__.ControllerFalsifiers.test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail) (fault='stale')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 205, in test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail (__main__.ControllerFalsifiers.test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail) (fault='depletion')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 205, in test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail (__main__.ControllerFalsifiers.test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail) (fault='frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 205, in test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail (__main__.ControllerFalsifiers.test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail) (fault='reload_frames')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 205, in test_stale_samples_no_ammo_effect_or_missing_drawn_frames_fail
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_unobserved_reload_or_early_transfer_never_pass (__main__.ControllerFalsifiers.test_unobserved_reload_or_early_transfer_never_pass) (fault='reload_start')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 213, in test_unobserved_reload_or_early_transfer_never_pass
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_unobserved_reload_or_early_transfer_never_pass (__main__.ControllerFalsifiers.test_unobserved_reload_or_early_transfer_never_pass) (fault='reload_early')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 213, in test_unobserved_reload_or_early_transfer_never_pass
+    code, report = SyntheticController(Path(temporary) / 'synthetic', fault).execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+======================================================================
+ERROR: test_zero_exit_after_helper_stage_deadline_is_rejected (__main__.ControllerFalsifiers.test_zero_exit_after_helper_stage_deadline_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 227, in test_zero_exit_after_helper_stage_deadline_is_rejected
+    code, report = SyntheticController(Path(temporary) / 'synthetic', 'helper_deadline').execute()
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/test_macos_ordinary_controller.py", line 185, in execute
+    status = driver.run(self.directory, preflight)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/verify_macos_ordinary.py", line 45, in run
+    no_symlinks(output)
+  File "/workspace/sightbreak-mac-journey-recovered/scripts/macos_ordinary_input.py", line 28, in no_symlinks
+    raise NativePrerequisiteBlocked('Symlink in native isolation path: ' + str(entry))
+probe_macos_input.NativePrerequisiteBlocked: Symlink in native isolation path: /tmp/sightbreak-mac-test-root-reproduction-p7t0u264/alias
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.015s
+
+FAILED (errors=19)

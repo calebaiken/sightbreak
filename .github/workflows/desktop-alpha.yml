@@ -119,9 +119,22 @@ jobs:
           python scripts/test_macos_focus.py -v
           python scripts/test_macos_screen_identity.py -v
       - name: ARM Mac real exported Settings pointer and Escape navigation
+        id: macos_menu_input
         if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15' && steps.macos_input_preflight.outcome == 'success' && steps.macos_menu_controls.outcome == 'success'
         timeout-minutes: 5
         run: python scripts/verify_macos_menu.py --preflight builds/desktop-playability/macos-input-preflight/results.json --output builds/desktop-playability/macos-menu-input
+      - name: ARM Mac ordinary exported gameplay source controls
+        id: macos_ordinary_controls
+        if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15'
+        run: |
+          python scripts/test_macos_ordinary.py -v
+          python scripts/test_macos_ordinary_controller.py -v
+          python scripts/test_macos_ordinary_paths.py -v
+          python scripts/test_macos_ordinary_startup.py -v
+      - name: ARM Mac stock Deploy living sidearm and ordinary leave
+        if: always() && steps.export.outcome == 'success' && matrix.os == 'macos-15' && steps.macos_input_preflight.outcome == 'success' && steps.macos_menu_input.outcome == 'success' && steps.macos_ordinary_controls.outcome == 'success'
+        timeout-minutes: 6
+        run: python scripts/verify_macos_ordinary.py --preflight builds/desktop-playability/macos-input-preflight/results.json --output builds/desktop-playability/macos-ordinary-input
       - name: Real exported keyboard and pointer input (Windows/Linux)
         if: always() && steps.export.outcome == 'success' && runner.os != 'macOS'
         run: python scripts/verify_integration_export.py --target ${{ matrix.target }} --visit-armory --timeout 240 --output builds/desktop-playability/native-input

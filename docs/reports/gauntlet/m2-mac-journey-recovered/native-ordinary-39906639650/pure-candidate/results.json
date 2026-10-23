@@ -1,0 +1,293 @@
+{
+  "scope": "Pure source/readiness/controller tests and intentional mutations only; no engine/native/OCR/CI",
+  "source_parent": "61871bf4b6268b8c5ee17274a9bfe943f9aaceee",
+  "tested_file_sha256": {
+    "scripts/macos_ordinary_input.py": "c1eae6072ca6ec4784ceed91d8357b90256c8144c622a9ad39792a8b7593e8cd",
+    "scripts/verify_macos_ordinary.py": "2663ca35011accab07973046aa80193d3c38dddff8b671395b43dee7d66bb984",
+    "scripts/test_macos_ordinary_controller.py": "6ca6555f3940a73f3d48b293ab24ba592fbc292753ce070b0da8f105fdf80933",
+    "scripts/test_macos_ordinary_startup.py": "4892bfe00a7a22ed431be98141ad3f16dda351c5da06489e0696623ef18326ce",
+    ".github/workflows/desktop-alpha.yml": "9ec21d47574b3a78008e4d630557ab09fb47818a8ec4178a49e869645a552ff6"
+  },
+  "tested_files_unchanged": true,
+  "normal_top_level_tests": 67,
+  "aliased_control_commands": 4,
+  "intentional_mutations_rejected": 5,
+  "commands": [
+    {
+      "label": "normal-test_macos_ordinary",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.5474310509998759,
+      "log": "normal-test_macos_ordinary.txt",
+      "bytes": 3254,
+      "sha256": "94871c810b6ced5035159456354ab63e67661ab7300392a4c375b3565b6c8fcf"
+    },
+    {
+      "label": "normal-test_macos_ordinary_controller",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_controller.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.6710011459999805,
+      "log": "normal-test_macos_ordinary_controller.txt",
+      "bytes": 1199,
+      "sha256": "0e8a75ea5c0ec17e8c2ae0e2e18d9f35327f558c6b3d8e57c0699d9de5f6a731"
+    },
+    {
+      "label": "normal-test_macos_ordinary_paths",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_paths.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.5387116279998736,
+      "log": "normal-test_macos_ordinary_paths.txt",
+      "bytes": 470,
+      "sha256": "06f844c51920b42d9c11f45048a9473cf2277ae45d8c10107e122da8c481a3c4"
+    },
+    {
+      "label": "normal-test_macos_ordinary_startup",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_startup.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.46946973400008574,
+      "log": "normal-test_macos_ordinary_startup.txt",
+      "bytes": 1546,
+      "sha256": "f0b58cabab47780a08bfd006fdc61d8020f7852a48afca41c4eaef97234f286f"
+    },
+    {
+      "label": "normal-test_macos_menu",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_menu.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.21734579100029805,
+      "log": "normal-test_macos_menu.txt",
+      "bytes": 2217,
+      "sha256": "f166683f37e60208283bd77388ca09713d2e75819c8fb2c895bbda02c21dbe0b"
+    },
+    {
+      "label": "normal-test_macos_focus",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_focus.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.2188813120001214,
+      "log": "normal-test_macos_focus.txt",
+      "bytes": 1494,
+      "sha256": "29d4207aab341220c5421822c8dc52e3c9e69866dcf93720c4e96313ce37d49f"
+    },
+    {
+      "label": "normal-test_macos_screen_identity",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_screen_identity.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.16505171500011784,
+      "log": "normal-test_macos_screen_identity.txt",
+      "bytes": 1235,
+      "sha256": "9bab085c281b8a5e050103538c81840c0497f39d0847a888c2e0a3406469d179"
+    },
+    {
+      "label": "normal-test_probe_macos_input",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_probe_macos_input.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.21676795599978504,
+      "log": "normal-test_probe_macos_input.txt",
+      "bytes": 1845,
+      "sha256": "f8cb903dac14c03f0837bd3556368a1632e81da0e772c2f19855942105a6ffe1"
+    },
+    {
+      "label": "alias-test_macos_ordinary",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.45495249700070417,
+      "log": "alias-test_macos_ordinary.txt",
+      "bytes": 3254,
+      "sha256": "111dafd35feca8fbe1e4946cfa1180aa6488b645e29bae03aef076628331e1ed"
+    },
+    {
+      "label": "alias-test_macos_ordinary_controller",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_controller.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 1.4546669840001414,
+      "log": "alias-test_macos_ordinary_controller.txt",
+      "bytes": 1199,
+      "sha256": "9fa34b3e48063a9312f1454273452f7c2f82ca336375e0e0d7bfdad3a89bc7f1"
+    },
+    {
+      "label": "alias-test_macos_ordinary_paths",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_paths.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.7272640299997875,
+      "log": "alias-test_macos_ordinary_paths.txt",
+      "bytes": 470,
+      "sha256": "d83ee545d6cf4596cb506da5d52c0e756ab37ec5ae719b417019b80b79876ddc"
+    },
+    {
+      "label": "alias-test_macos_ordinary_startup",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_startup.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.7442289549999259,
+      "log": "alias-test_macos_ordinary_startup.txt",
+      "bytes": 1546,
+      "sha256": "1002ac2dafecdd3f2836f975dd742a8eb82aa1357d6d5de3370b46c4e1af7521"
+    },
+    {
+      "label": "mutation-late-menu",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-c",
+        "import sys,unittest;sys.path[:0]=['/tmp/sightbreak-mac-startup-falsifiers-3lcz3ad8/late-menu', '/workspace/sightbreak-mac-journey-recovered/scripts'];import test_macos_ordinary_startup as module;unittest.main(module=module,verbosity=2)"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "seconds": 0.7261910279994481,
+      "log": "mutation-late-menu.txt",
+      "bytes": 2360,
+      "sha256": "ddb334c2728e9c8c6ab7f3aefb4c9605e65cc7abe09fb58ea845af39620e8439",
+      "intended_falsifier_seen": true
+    },
+    {
+      "label": "mutation-pre-pin-event",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-c",
+        "import sys,unittest;sys.path[:0]=['/tmp/sightbreak-mac-startup-falsifiers-3lcz3ad8/pre-pin-event', '/workspace/sightbreak-mac-journey-recovered/scripts'];import test_macos_ordinary_startup as module;unittest.main(module=module,verbosity=2)"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "seconds": 0.5168318070000169,
+      "log": "mutation-pre-pin-event.txt",
+      "bytes": 2463,
+      "sha256": "63675e40648ab97def85ec069b3fea3985695cad831ea32acb7d9bb2bbf65e26",
+      "intended_falsifier_seen": true
+    },
+    {
+      "label": "mutation-post-input-geometry",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-c",
+        "import sys,unittest;sys.path[:0]=['/tmp/sightbreak-mac-startup-falsifiers-3lcz3ad8/post-input-geometry', '/workspace/sightbreak-mac-journey-recovered/scripts'];import test_macos_ordinary_startup as module;unittest.main(module=module,verbosity=2)"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "seconds": 0.593150837000394,
+      "log": "mutation-post-input-geometry.txt",
+      "bytes": 2518,
+      "sha256": "185182b45f00deff37cc197f0ff5b49c675a79f6ac6b728f92f1c3aa288773b7",
+      "intended_falsifier_seen": true
+    },
+    {
+      "label": "mutation-splash-pin",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-c",
+        "import sys,unittest;sys.path[:0]=['/tmp/sightbreak-mac-startup-falsifiers-3lcz3ad8/splash-pin', '/workspace/sightbreak-mac-journey-recovered/scripts'];import test_macos_ordinary_startup as module;unittest.main(module=module,verbosity=2)"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "seconds": 0.6808985340003346,
+      "log": "mutation-splash-pin.txt",
+      "bytes": 3525,
+      "sha256": "85afe28db471b6b4b17f18490729d5810466e72f5de35cb0ea4e9ca3e4ddabc2",
+      "intended_falsifier_seen": true
+    },
+    {
+      "label": "mutation-after-event-selection",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-c",
+        "import sys,unittest;sys.path[:0]=['/tmp/sightbreak-mac-startup-falsifiers-3lcz3ad8/after-event-selection', '/workspace/sightbreak-mac-journey-recovered/scripts'];import test_macos_ordinary_startup as module;unittest.main(module=module,verbosity=2)"
+      ],
+      "exit_code": 1,
+      "expected_exit_code": 1,
+      "seconds": 0.7199842889995125,
+      "log": "mutation-after-event-selection.txt",
+      "bytes": 2361,
+      "sha256": "49be7c16d9771f588c905511dcc9c36016e55d451c990548ea7d95e83521685f",
+      "intended_falsifier_seen": true
+    },
+    {
+      "label": "compile",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "-m",
+        "py_compile",
+        "scripts/macos_ordinary_input.py",
+        "scripts/verify_macos_ordinary.py",
+        "scripts/test_macos_ordinary_controller.py",
+        "scripts/test_macos_ordinary_startup.py"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.06444038699919474,
+      "log": "compile.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "expected_exit_code": 0,
+      "seconds": 0.01619448499968712,
+      "log": "diff-check.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "passed": true
+}
