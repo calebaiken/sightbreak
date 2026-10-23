@@ -1,0 +1,15 @@
+--- native-r3/controller.py
++++ acquisition-r4b-r3/controller.py
+@@ -51 +51 @@
+-    freeze = json.loads((RAW / "SOURCE_FREEZE-r3.json").read_text())
++    freeze = json.loads((RAW / "SOURCE_FREEZE-r4b-r3.json").read_text())
+@@ -153,3 +153,3 @@
+-        freeze = json.loads((RAW / "SOURCE_FREEZE-r3.json").read_text())
+-        analyzer = REPO / "scripts/analyze_touch_contrast.py"
+-        if sha(analyzer) != next(x["sha256"] for x in freeze["frozen_files"] if x["path"] == "scripts/analyze_touch_contrast.py"):
++        freeze = json.loads((RAW / "SOURCE_FREEZE-r4b-r3.json").read_text())
++        analyzer = REPO / "scripts/analyze_touch_contrast_r4b.py"
++        if sha(analyzer) != next(x["sha256"] for x in freeze["frozen_files"] if x["path"] == "scripts/analyze_touch_contrast_r4b.py"):
+@@ -157 +157 @@
+-        cmd = [sys.executable, str(analyzer), "--baseline", str(RAW / "baseline"), "--candidate", str(RAW / "candidate"), "--backgrounds", str(background), "--freeze", str(RAW / "SOURCE_FREEZE-r3.json"), "--out", str(RAW / "recomputed.json")]
++        cmd = [sys.executable, str(analyzer), "--baseline", str(RAW / "baseline"), "--candidate", str(RAW / "candidate"), "--backgrounds", str(background), "--freeze", str(RAW / "SOURCE_FREEZE-r4b-r3.json"), "--out", str(RAW / "recomputed.json")]

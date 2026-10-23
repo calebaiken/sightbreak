@@ -1,0 +1,11 @@
+--- acquisition-r4b-r2/controller.py
++++ acquisition-r4b-r3/controller.py
+@@ -51 +51 @@
+-    freeze = json.loads((RAW / "SOURCE_FREEZE-r4b-r2.json").read_text())
++    freeze = json.loads((RAW / "SOURCE_FREEZE-r4b-r3.json").read_text())
+@@ -153 +153 @@
+-        freeze = json.loads((RAW / "SOURCE_FREEZE-r4b-r2.json").read_text())
++        freeze = json.loads((RAW / "SOURCE_FREEZE-r4b-r3.json").read_text())
+@@ -157 +157 @@
+-        cmd = [sys.executable, str(analyzer), "--baseline", str(RAW / "baseline"), "--candidate", str(RAW / "candidate"), "--backgrounds", str(background), "--freeze", str(RAW / "SOURCE_FREEZE-r4b-r2.json"), "--out", str(RAW / "recomputed.json")]
++        cmd = [sys.executable, str(analyzer), "--baseline", str(RAW / "baseline"), "--candidate", str(RAW / "candidate"), "--backgrounds", str(background), "--freeze", str(RAW / "SOURCE_FREEZE-r4b-r3.json"), "--out", str(RAW / "recomputed.json")]
