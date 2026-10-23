@@ -1,0 +1,77 @@
+{
+  "passed": true,
+  "original": "216d39ada8f9d11e2d8544d01fde42da49607b14",
+  "candidate": "ec6b34ce9af4db1199cd5266b2f7cfcc9831f5ef",
+  "implementation": "7965320db8fbac4598eeb86fc191e589d08b61de",
+  "preregistration": "2e486554",
+  "union_all_tracked_paths": 9142,
+  "union_non_doc_paths": 493,
+  "unchanged_non_doc_paths": 489,
+  "changed_non_doc_paths": [
+    "scripts/linux_profile_acquire.py",
+    "scripts/linux_profile_payload.py",
+    "scripts/test_linux_profile_acquire.py",
+    "scripts/test_linux_profile_acquire_remaps.py"
+  ],
+  "all_changes_outside_delta_inside_component_report": true,
+  "candidate_source_equals_implementation": true,
+  "supervisor_exact_after_only_r3_to_r2_reversal": true,
+  "synthetic_fixture_exact_after_only_terminal_NUL_reversal": true,
+  "payload_AST_changed_functions": [
+    "sections",
+    "inspect"
+  ],
+  "payload_AST_added_functions": [
+    "packed_import_sections"
+  ],
+  "inspect_exact_after_only_two_read_boundary_replacements": true,
+  "immutable_failure_packet_provenance": [
+    {
+      "path": "packed-assets-icon.svg.import",
+      "independent_packet": "eec4c7e1",
+      "bytes": 193,
+      "sha256": "e8717d3311cb7cd3fb716324b219d948e6f7d68fbae1b33d9163add59b4c2203"
+    },
+    {
+      "path": "staged-assets-icon.svg.import",
+      "independent_packet": "eec4c7e1",
+      "bytes": 1020,
+      "sha256": "9b48fb27282e20a5408a15c911b83134130c1fa359d172c35d02d46a7690d76f"
+    },
+    {
+      "path": "reader-216d39a.py",
+      "original_source": "216d39ada8f9d11e2d8544d01fde42da49607b14",
+      "bytes": 17270,
+      "sha256": "bbba56a05f860d617889dec4f65a9256e6f003f7220316a6708a5009d2d152b3"
+    },
+    {
+      "path": "payload-failure-readback.json",
+      "packet_source": "eec4c7e1",
+      "bytes": 26014,
+      "sha256": "fb846e8a786299cbb411fa7e9eff1968de841f019dfabae2cc91be5436aa6805"
+    }
+  ],
+  "original_artifact_not_reinspected_or_continued": true,
+  "depth_one": {
+    "root": "/workspace/reviews/linux-packed-import-fresh-source/.local/depth-one",
+    "HEAD": "ec6b34ce9af4db1199cd5266b2f7cfcc9831f5ef",
+    "reachable_commits": 1,
+    "shallow": true,
+    "clean": true,
+    "complete_tree_equals_candidate": true,
+    "historical_object_negative_probes": {
+      "216d39ada8f9d11e2d8544d01fde42da49607b14": {
+        "commit_object_absent": true,
+        "expected_negative_returncode": 128
+      },
+      "7965320db8fbac4598eeb86fc191e589d08b61de": {
+        "commit_object_absent": true,
+        "expected_negative_returncode": 128
+      },
+      "2e486554": {
+        "commit_object_absent": true,
+        "expected_negative_returncode": 128
+      }
+    }
+  }
+}
