@@ -112,6 +112,8 @@ def parse_log(text):
 def analyze_role(rows, role):
     need(bool(rows), 'no observation records for ' + role)
     prior, bindings, ended, consumed_sequences = None, {}, set(), {}
+    connected = set()
+    observed_attempts = 0
     current_welcome = None
     received = []
     highest_generation = 0
@@ -128,13 +130,21 @@ def analyze_role(rows, role):
             need(all(row['counters'].get(k, 0) >= v for k, v in prior['counters'].items()), 'regressed stage counter')
             max_gap = max(max_gap, row['wall_msec'] - prior['wall_msec'])
         identity = (row['peer'], row['generation'])
+        if role == 'client':
+            if row['reason'] == 'client_attempt':
+                observed_attempts += 1
+            need(row['local_attempt'] == observed_attempts and row['counters'].get('client_attempt', 0) == observed_attempts,
+                 'client attempt has no matching observed attempt event')
         if role == 'client' and row['reason'] in {'client_attempt', 'client_connection_failed', 'client_disconnected'}:
             current_welcome = None
         if row['reason'] == 'peer_connected':
             need(role == 'authority' and row['generation'] > highest_generation, 'connection generation reused or regressed')
             highest_generation = row['generation']
+            connected.add(identity)
         if row['reason'] == 'peer_bound':
             need(role == 'authority' and row['peer_bound'] and row['joined'] and row['generation'] > 0 and identity not in ended, 'invalid/reused retired peer generation')
+            need(identity in connected, 'binding has no preceding matching connected peer generation')
+            need(identity not in bindings, 'peer generation already has an observed binding')
             need(not any(actor == row['bound_actor'] and key != identity and key not in ended for key, actor in bindings.items()), 'actor bound to two live peer generations')
             bindings[identity] = row['bound_actor']
             binding_events.append({k: row[k] for k in ('peer', 'generation', 'bound_actor', 'wall_unix_msec')})
@@ -163,8 +173,11 @@ def analyze_role(rows, role):
                 consumed_sequences[key] = value['sequence']
                 consumed.append({'index': row['index'], **value})
             elif row['reason'] == 'input_accepted':
+                need(received, 'direct pipeline acceptance precedes observed receive')
                 need(value['epoch'] == row['authority_epoch'] and value['count'] in range(1, 13), 'accepted packet has wrong epoch or count')
-                need(1 <= value['first'] <= value['last'], 'accepted packet has invalid sequence interval')
+                # These are incoming array endpoints, not sorted extrema.
+                need(value['first'] >= 1 and value['last'] >= 1 and (value['count'] > 1 or value['first'] == value['last']),
+                     'accepted packet has invalid sequence endpoints')
                 accepted.append({'index': row['index'], **value})
             else:
                 # Receive is after the identity gate but before packet validation.
