@@ -1,0 +1,105 @@
+{
+  "acquisition_verdict": "FAILED",
+  "source": "ec6b34ce9af4db1199cd5266b2f7cfcc9831f5ef",
+  "root_release": "801e4514ab869ad6869e5631dc303f58ca28772f",
+  "outer_error": "Command exit/timeout: 15-accepted-block",
+  "block_error": "Incomplete condition: Fixture exited before ready.json",
+  "first_condition": {
+    "index": 0,
+    "profile": false,
+    "exit_code": 2,
+    "error": "Fixture exited before ready.json",
+    "recorded_full_argv_contains_render_thread_safe": true,
+    "ready_metrics_proof_absent": true
+  },
+  "actual_strict_failure_lines": [
+    "WARNING: Could not set V-Sync mode, as changing V-Sync mode is not supported by the graphics driver.",
+    "ERROR: LINUX_PROFILE_OVERHEAD Pinned synchronous safe render-thread argument required"
+  ],
+  "fixture_guard": "OS.get_cmdline_args(); argv.find(\"--render-thread\"); requires next token safe, lines 267-270",
+  "runtime_argv_return_not_retained": true,
+  "later_unreached": [
+    "ready barrier",
+    "cold anchor",
+    "32 warm intervals",
+    "64 measured intervals",
+    "ON2",
+    "ON3",
+    "OFF4",
+    "block comparison",
+    "finalization"
+  ],
+  "H1": "UNREACHED",
+  "ELF": {
+    "bytes": 84426016,
+    "sha256": "a4c655dcd132fd02d0af29a50242aa2fcc62a31ebe9daedabe5feb2870ed7f0b"
+  },
+  "PCK": {
+    "bytes": 10722204,
+    "sha256": "31cf317e5d5c87df8e3a9e2c57f11d936b0bd078c8bc108593325585d4d1449b"
+  },
+  "initial_raw_file_count": 370,
+  "preserved_failure_inputs": {
+    "overall.json": {
+      "bytes": 349756,
+      "sha256": "37b2bc257dbbd5a3ecb36bc63d473dd1cbc912333c6a866383d31a5ca5c86483"
+    },
+    "attempt.claim": {
+      "bytes": 41,
+      "sha256": "54ca385bf6db2a2f7ff5fe33b1eec46a3d9fff06c8ea47fd431b0f87f96d76d6"
+    },
+    "15-accepted-block.stdout.log": {
+      "bytes": 91,
+      "sha256": "93a64815b15d14c2b3ed14e6d841180131577f73e0c47784ebd306389b08a383"
+    },
+    "15-accepted-block.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "native-block/block.json": {
+      "bytes": 9568,
+      "sha256": "6340638b43086ab14722668dd25dfe58cd04d5dd413d1f75f06384bd51fc1364"
+    },
+    "native-block/01-/off/launch.json": {
+      "bytes": 3342,
+      "sha256": "dbef5e15d702572b7f50ef2125afa9e128de3ce5af71820c9eb694e388b45325"
+    },
+    "native-block/01-/off/client.log": {
+      "bytes": 692,
+      "sha256": "33ea2c9456ca308b66f2a956831b3899f60987c9f471d2047217d608ee815ada"
+    },
+    "native-block/xvfb.log": {
+      "bytes": 64,
+      "sha256": "87e9572cf030493a1f7ba83d385129046b224374ca1414911674b30fc44276d7"
+    },
+    "seal.json": {
+      "bytes": 998,
+      "sha256": "1a665d9a10a60a0c2d2e90d3cff40f43d297f733b7894c41541347894a085b0b"
+    },
+    "independent-payload.json": {
+      "bytes": 52521,
+      "sha256": "afd7a5d781091ad2f27f74ad39d1c2ad727fea1ef2d840aa300f1dd70ad0d38b"
+    },
+    "diagnostic-stage.json": {
+      "bytes": 35320,
+      "sha256": "88b09edbb47f82fa9d0e9ee2411be1a9dcdc3f72216dc1759b59098939dd0103"
+    },
+    "outer-wrapper.stdout": {
+      "bytes": 170,
+      "sha256": "c2618c43b0358f0ed56b23f939d66361e99750cc88e6d972da1a073d3a76bf4c"
+    },
+    "outer-wrapper.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "outer-outer-tool-receipt.json": {
+      "bytes": 1285,
+      "sha256": "fa3e317298d3676ad530e801861317ca04798cdb384a1fbafd2bcbb2031c2758"
+    },
+    "linux_profile_overhead.gd": {
+      "bytes": 16343,
+      "sha256": "bac96e5c3aa9e63dfe0aa41522076cb6352293a3d5d9e70657a19cdfa4d52b92"
+    }
+  },
+  "scope": "Exact original failed bytes and frozen source guard only. Recorded full process argv differs from the unretained OS.get_cmdline_args return; no engine-consumption cause is asserted here."
+}
