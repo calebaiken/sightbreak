@@ -2,8 +2,8 @@
 
 Root prepares ONE existing full `desktop-alpha.yml` `lane=arm-macos-ios`
 trial at `c838907cf4978e53c57423e08c23277c34f4496d`, immutable own ref
-`codex/v1-qualify-mac-c838907`. Dispatch is held pending final independent
-combined-source verdict and an actual-output critic's recorded criteria.
+`codex/v1-qualify-mac-c838907`. Independent combined-source verdict 2a3bcdf accepts source readiness. Dispatch
+is held pending an actual-output critic's pushed criteria.
 
 Compare against actual failed c08889b run 39912086121: startup/pin succeeds,
 but raw Deploy caption confidence 0.5 and bullet punctuation fail the 0.8
