@@ -3,6 +3,7 @@
 from copy import deepcopy
 import hashlib
 import json
+import signal
 from pathlib import Path
 import tempfile
 import unittest
@@ -64,6 +65,9 @@ def manual_record(index, payload='payload', duration=20000):
                 'XDG_DATA_HOME': output + '/state/data', 'XDG_CONFIG_HOME': output + '/state/config',
                 'XDG_CACHE_HOME': output + '/state/cache', 'MESA_SHADER_CACHE_DIR': output + '/state/mesa'}
     return {'index': index, 'profile': profile, 'output': output, 'token': token, 'engine_argv': argv,
+            'timing': {'bound_seconds': 180, 'started_monotonic_seconds': 0.0,
+                       'deadline_monotonic_seconds': 180.0, 'ended_monotonic_seconds': 2.0,
+                       'elapsed_seconds': 2.0, 'observations': []},
             'process_argv': ['taskset', '-c', '2,3', *argv], 'timeout': False, 'exit_code': 0,
             'actual_cmdline': deepcopy(argv), 'selected_environment': selected,
             'actual_environment': deepcopy(selected),
@@ -185,6 +189,30 @@ class EvaluatorTests(unittest.TestCase):
         for value in (float('nan'), float('inf'), 0, -100):
             self.reject(lambda rows, value=value: rows[0]['fixture']['measured'][0]['end'].update(clock_usec=value))
 
+    def test_cold_endpoints_reject_nonfinite_in_api_and_strict_json(self):
+        for value in (float('nan'), float('inf'), float('-inf'), -1, True):
+            with self.subTest(value=value):
+                self.reject(lambda rows, value=value: rows[0]['fixture']['cold_before'].update(clock_usec=value))
+        self.rows[0]['fixture']['cold_before']['clock_usec'] = 0
+        self.assertEqual(diagnostic.evaluate(self.rows, self.expected)['conditions'][0]['cold_anchor_ms'], 2)
+        for text in ('NaN', 'Infinity', '-Infinity', '1e999', '-1e999'):
+            with self.subTest(json_number=text), self.assertRaises(diagnostic.Invalid):
+                diagnostic.strict_json('{"clock_usec":' + text + '}')
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / 'invalid.json'
+            path.write_text('{"clock_usec":-Infinity}')
+            with self.assertRaises(diagnostic.Invalid):
+                diagnostic.read_json(path)
+        self.assertEqual(diagnostic.strict_json('{"clock_usec":0,"finite":1e2}'),
+                         {'clock_usec': 0, 'finite': 100})
+
+    def test_whole_condition_deadline_api_rejects_at_and_after_boundary(self):
+        for elapsed in (180, 180.001, float('inf'), float('nan'), -1):
+            self.reject(lambda rows, elapsed=elapsed: rows[0]['timing'].update(
+                elapsed_seconds=elapsed, ended_monotonic_seconds=elapsed))
+        self.rows[0]['timing'].update(elapsed_seconds=179.999, ended_monotonic_seconds=179.999)
+        self.assertTrue(diagnostic.evaluate(self.rows, self.expected)['comparable'])
+
     def test_incomplete_timeout_throttling_missing_readback_and_cleanup_reject(self):
         self.reject(lambda rows: rows[1].update(timeout=True))
         self.reject(lambda rows: rows[1].update(exit_code=-15))
@@ -209,7 +237,7 @@ class SyntheticRunner:
         self.stopped = True
         return {'pid_absent': True, 'group_absent': True, 'forced': True}
 
-    def condition(self, actual, environment):
+    def condition(self, actual, environment, deadline):
         self.commands.append(deepcopy(actual))
         index = actual['index']
         require_keys = {'DISPLAY', 'LIBGL_ALWAYS_SOFTWARE', 'LP_NUM_THREADS', 'XDG_DATA_HOME',
@@ -225,6 +253,7 @@ class SyntheticRunner:
         fixture['payload_after'] = actual['payload_before']
         if index == self.fail_index:
             fixture['timeout'] = True
+        deadline.check('synthetic condition completed')
         return fixture
 
 
@@ -354,8 +383,13 @@ class NativeRunnerMockTests(unittest.TestCase):
             stack.enter_context(patch.object(diagnostic, 'absent', side_effect=gone))
             stack.enter_context(patch.object(diagnostic.os, 'killpg', side_effect=stop_group))
             stack.enter_context(patch.object(Path, 'exists', socket_ready))
+            stack.enter_context(patch.object(diagnostic, 'owned_display', return_value={'mock_owned': True}))
             if timeout:
-                stack.enter_context(patch.object(diagnostic.time, 'monotonic', side_effect=[0, 0, 181]))
+                clock = {'now': 0}
+                def advance(_delay):
+                    clock['now'] = 181
+                stack.enter_context(patch.object(diagnostic.time, 'monotonic', side_effect=lambda: clock['now']))
+                stack.enter_context(patch.object(diagnostic.time, 'sleep', side_effect=advance))
             output = root / 'block'
             runner = diagnostic.NativeRunner('/fake-xvfb', ':99108', output)
             result = diagnostic.run_block(expected, output, [2, 3], runner)
@@ -381,6 +415,207 @@ class NativeRunnerMockTests(unittest.TestCase):
             self.assertTrue(result['records'][0]['timeout'])
             self.assertTrue(result['records'][0]['cleanup']['forced'])
             self.assertTrue(result['xvfb_cleanup']['pid_absent'])
+
+
+class ReadinessTests(unittest.TestCase):
+    def test_dead_owned_server_cannot_borrow_a_newly_appearing_socket(self):
+        class Dead:
+            pid, returncode, args = 43210, 1, ['/fake-xvfb', ':99119']
+            def poll(self):
+                return self.returncode
+        checks = {'count': 0}
+        exists = Path.exists
+        def racing_socket(path):
+            if str(path) == '/tmp/.X11-unix/X99119':
+                checks['count'] += 1
+                return checks['count'] > 1
+            return exists(path)
+        with tempfile.TemporaryDirectory() as temporary, ExitStack() as stack:
+            runner = diagnostic.NativeRunner('/fake-xvfb', ':99119', temporary)
+            stack.enter_context(patch.object(diagnostic.subprocess, 'Popen', return_value=Dead()))
+            stack.enter_context(patch.object(diagnostic, 'pid_start', return_value=12345))
+            proof = stack.enter_context(patch.object(diagnostic, 'owned_display', side_effect=AssertionError('Dead server cannot be ready')))
+            stack.enter_context(patch.object(Path, 'exists', racing_socket))
+            try:
+                with self.assertRaisesRegex(diagnostic.Invalid, 'readiness failure'):
+                    runner.start()
+                proof.assert_not_called()
+                self.assertEqual(diagnostic.read_json(Path(temporary) / 'xvfb-readiness.json')['owned_exit_code'], 1)
+            finally:
+                runner.log.close()
+
+    def test_existing_lock_rejects_before_process_creation(self):
+        exists = Path.exists
+        def locked(path):
+            return True if str(path) == '/tmp/.X99119-lock' else exists(path)
+        with tempfile.TemporaryDirectory() as temporary, patch.object(Path, 'exists', locked), \
+                patch.object(diagnostic.subprocess, 'Popen', side_effect=AssertionError('Must reject before spawn')):
+            with self.assertRaisesRegex(diagnostic.Invalid, 'already in use'):
+                diagnostic.NativeRunner('/fake-xvfb', ':99119', temporary).start()
+
+    def test_socket_ownership_joins_live_pid_lock_and_held_kernel_inode(self):
+        from types import SimpleNamespace
+        process = SimpleNamespace(pid=43210, sightbreak_start_ticks=12345, poll=lambda: None)
+        socket, lock = Path('/tmp/.X11-unix/X99119'), Path('/tmp/.X99119-lock')
+        actual_text = Path.read_text
+        inode = {'held': 'socket:[777]', 'pid': '43210', 'live_start': 12345}
+        def text(path, **kwargs):
+            if path == lock:
+                return inode['pid']
+            if str(path) == '/proc/43210/net/unix':
+                return 'Num RefCount Protocol Flags Type St Inode Path\n0: 2 0 00010000 0001 01 777 /tmp/.X11-unix/X99119\n'
+            return actual_text(path, **kwargs)
+        def info(path):
+            return SimpleNamespace(st_mode=0o140777 if path == socket else 0o100600, st_dev=1, st_ino=2)
+        with patch.object(Path, 'read_text', text), patch.object(Path, 'lstat', info), \
+                patch.object(Path, 'iterdir', return_value=iter([Path('/proc/43210/fd/3')])), \
+                patch.object(diagnostic.os, 'readlink', side_effect=lambda _path: inode['held']), \
+                patch.object(diagnostic, 'pid_start', side_effect=lambda _pid: inode['live_start']):
+            result = diagnostic.owned_display(process, socket, lock)
+            self.assertEqual(result['owned_kernel_socket_inodes'], ['777'])
+        for mutation in ({'held': 'socket:[888]'}, {'pid': '99999'}, {'live_start': 12346}):
+            original = dict(inode)
+            inode.update(mutation)
+            with patch.object(Path, 'read_text', text), patch.object(Path, 'lstat', info), \
+                    patch.object(Path, 'iterdir', return_value=iter([Path('/proc/43210/fd/3')])), \
+                    patch.object(diagnostic.os, 'readlink', side_effect=lambda _path: inode['held']), \
+                    patch.object(diagnostic, 'pid_start', side_effect=lambda _pid: inode['live_start']):
+                with self.assertRaises(diagnostic.Invalid):
+                    diagnostic.owned_display(process, socket, lock)
+            inode.clear()
+            inode.update(original)
+
+
+class DeadlineReplayTests(unittest.TestCase):
+    """Causal fake clients exercise real condition, acceptance and cleanup code."""
+    def execute(self, mode):
+        clock, registry, current = {'now': 0.0}, {}, {}
+        host = manual_record(0)['host_begin']
+        original_ack, original_write = diagnostic.acknowledge, diagnostic.write
+        original_read, original_digest = diagnostic.read_json, diagnostic.digest
+        class Process:
+            def __init__(self, args, env, output):
+                self.args, self.env, self.output = args, env, output
+                self.pid, self.returncode = 44000 + len(registry), None
+                self.started = clock['now']
+                self.token = next(a[8:] for a in args if a.startswith('--token='))
+                self.report = manual_report(self.token)
+                proof = b'synthetic proof, no renderer'
+                (output / 'proof.png').write_bytes(proof)
+                self.report['png_sha256'] = hashlib.sha256(proof).hexdigest()
+                registry[self.pid], current['process'] = self, self
+                clock['now'] += 181 if mode == 'ready_path_late' else 178
+                original_write(output / 'ready.json', {'token': self.token})
+            def poll(self):
+                return self.returncode
+            def wait(self, timeout):
+                if self.returncode == 0 and mode == 'completed_wait_late':
+                    clock['now'] = self.started + 180.001
+                return self.returncode
+        def launch(args, **kwargs):
+            process = Process(args, kwargs['env'], Path(kwargs['cwd']))
+            kwargs['stdout'].write(b'GPU PROFILE (total 20ms): \n\t-Render Opaque Pass: 18ms\n'
+                                   if '--gpu-profile' in args else b'Synthetic OFF\n')
+            return process
+        def ack(path, token):
+            original_ack(path, token)
+            process = current['process']
+            if path.name == 'begin.ack':
+                clock['now'] += 1.947 if mode == 'critic_host_observation_late' else 1
+                original_write(process.output / 'metrics.json', process.report)
+            else:
+                process.returncode = 0
+        def snapshot(pid):
+            process = registry[pid]
+            if (process.output / 'metrics.json').exists():
+                if mode == 'critic_host_observation_late':
+                    clock['now'] += 1.1
+                elif mode in ('valid_before_boundary', 'invalid_at_boundary'):
+                    clock['now'] = process.started + (179.999 if mode == 'valid_before_boundary' else 180)
+                elif mode == 'blocking_host_alarm':
+                    signal.raise_signal(signal.SIGALRM)
+            return deepcopy(host)
+        def write(path, value):
+            original_write(path, value)
+            if Path(path).name == 'condition.json' and mode == 'publication_late':
+                clock['now'] = current['process'].started + 180.001
+        def read(path):
+            value = original_read(path)
+            if Path(path).name == 'condition.json' and mode == 'final_read_late':
+                clock['now'] = current['process'].started + 180.001
+            return value
+        def stop_group(pid, signum):
+            registry[abs(pid)].returncode = -int(signum)
+        def owned(pid, selected):
+            process = registry[pid]
+            return process.args[3:], {key: process.env[key] for key in selected}
+        class Runner(diagnostic.NativeRunner):
+            def start(self):
+                pass
+            def stop(self):
+                return {'pid_absent': True, 'group_absent': True, 'forced': True}
+        with tempfile.TemporaryDirectory() as temporary, ExitStack() as stack:
+            root = Path(temporary)
+            payload = root / 'payload'
+            payload.write_bytes(b'handwritten payload, never executable or launched')
+            expected = manual_expected(original_digest(payload), str(payload))
+            for name, value in [('pid_start', lambda pid: pid * 2), ('owned_launch_state', owned),
+                                ('host_snapshot', snapshot), ('cgroup_snapshot', lambda pid: deepcopy(host)),
+                                ('absent', lambda pid, group=False: registry[pid].returncode is not None),
+                                ('acknowledge', ack), ('write', write), ('read_json', read)]:
+                stack.enter_context(patch.object(diagnostic, name, side_effect=value))
+            stack.enter_context(patch.object(diagnostic.subprocess, 'Popen', side_effect=launch))
+            stack.enter_context(patch.object(diagnostic.os, 'killpg', side_effect=stop_group))
+            stack.enter_context(patch.object(diagnostic.time, 'monotonic', side_effect=lambda: clock['now']))
+            # Virtual boundary tests must not mix a 1 ms virtual remainder with
+            # real test execution time. The explicit SIGALRM case below still
+            # delivers the production handler; arming arguments are tested too.
+            stack.enter_context(patch.object(diagnostic.signal, 'setitimer'))
+            runner = Runner('/fake-xvfb', ':99108', root / 'block')
+            summary = diagnostic.run_block(expected, root / 'block', [2, 3], runner)
+        return summary, registry
+
+    def test_critic_late_host_observation_and_other_late_success_paths_reject(self):
+        for mode in ('ready_path_late', 'critic_host_observation_late', 'completed_wait_late',
+                     'publication_late', 'final_read_late', 'invalid_at_boundary', 'blocking_host_alarm'):
+            with self.subTest(mode=mode):
+                summary, registry = self.execute(mode)
+                self.assertFalse(summary['passed'], mode)
+                self.assertEqual(len(registry), 1)
+                self.assertEqual(len(summary['records']), 1)
+                row = summary['records'][0]
+                self.assertTrue(row['timeout'], row.get('error'))
+                self.assertTrue(row['cleanup']['pid_absent'] and row['cleanup']['group_absent'])
+                if mode == 'critic_host_observation_late':
+                    self.assertAlmostEqual(row['timing']['elapsed_seconds'], 181.047)
+                if mode != 'blocking_host_alarm':
+                    self.assertGreaterEqual(row['timing']['elapsed_seconds'], 180)
+                else:
+                    self.assertIn('interrupted native observations', row['error'])
+
+    def test_complete_publication_and_final_read_before_original_boundary_pass(self):
+        summary, registry = self.execute('valid_before_boundary')
+        self.assertTrue(summary['passed'], summary.get('error'))
+        self.assertEqual(len(registry), 4)
+        for row in summary['records']:
+            self.assertAlmostEqual(row['timing']['elapsed_seconds'], 179.999)
+            self.assertEqual(len(row['publication_sha256']), 64)
+            self.assertTrue(any(item['stage'] == 'condition accepted after final read'
+                                for item in row['timing']['observations']))
+
+    def test_alarm_uses_remaining_time_and_restores_handler(self):
+        clock = {'now': 100.0}
+        previous = signal.getsignal(signal.SIGALRM)
+        with patch.object(diagnostic.time, 'monotonic', side_effect=lambda: clock['now']), \
+                patch.object(diagnostic.signal, 'setitimer') as arm:
+            deadline = diagnostic.Deadline({})
+            clock['now'] = 279.5
+            with deadline.armed('synthetic blocking read'):
+                arm.assert_called_with(signal.ITIMER_REAL, 0.5)
+                with self.assertRaisesRegex(TimeoutError, 'interrupted synthetic blocking read'):
+                    signal.raise_signal(signal.SIGALRM)
+            self.assertEqual(signal.getsignal(signal.SIGALRM), previous)
+            arm.assert_called_with(signal.ITIMER_REAL, 0)
 
 
 if __name__ == '__main__':
