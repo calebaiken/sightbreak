@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import shutil
+import subprocess
 
 
 def intersects(start, end, lower, upper):
@@ -54,7 +55,8 @@ if __name__ == '__main__':
         data = path.read_bytes()
         bindings.append({'path': name, 'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()})
         shutil.copyfile(path, out / ('original-' + name))
-    sources = {name: hashlib.sha256(Path(name).read_bytes()).hexdigest() for name in (
+    sources = {name: hashlib.sha256(subprocess.check_output(['git', 'show',
+               'a089473481ced0f2e7b2a7468bbc5d079f92f0ff:' + name])).hexdigest() for name in (
         'game/scripts/gameplay/arena.gd', 'game/scripts/gameplay/actor.gd',
         'game/scripts/network/movement_step.gd', 'scripts/verify_offline_export.py', 'scripts/native_approach.py')}
     receipt = {'source': result['source'], 'run': 39916539053, 'job': 120291226421,
