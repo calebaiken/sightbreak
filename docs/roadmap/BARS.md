@@ -50,3 +50,17 @@ retain 84 cases / 48 authority steps, baseline 40 failures, candidate zero and
 preserved controls. Injected visibility and headless steps establish bounded
 selection correctness; they do not establish shipped-game quality or full-match
 balance. Exact source, raw logs, failure and critique remain retrievable in Git.
+
+
+## B8: released touch and HUD context, 2026-10-23
+
+Official Luanti 5.15 Android release media and 5.12 touchscreen footage were
+fetched and inspected anew, alongside official AssaultCube gameplay HUD media.
+[Findings and source provenance](../reports/gauntlet/m6-shipped-hud-reference-recovered/FINDINGS.md)
+retain pinned URLs, hashes and actual inspection limits. Luanti supplies a
+touch joystick/edge-control reference and an adverse snow-visibility example;
+AssaultCube supplies tactical health/ammo/radar placement without touch. These
+are contextual shipped-interface references, not a measured contrast success
+bar, tactical-FPS presentation parity or CS2 evidence. Third-party pixels remain
+outside Git. B4 and matched native SIGHTBREAK captures remain the pass/fail bars.
+The source research is preserved on 733986d3; B7 is reserved for the bot benchmark.
