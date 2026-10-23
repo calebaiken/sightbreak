@@ -114,4 +114,5 @@ python3 scripts/test_offline_capture_fences.py -v
 python3 scripts/test_native_focus_fence.py -v
 python3 scripts/test_focus_resume_timing.py -v
 python3 scripts/test_native_settings_route.py -v
+python3 scripts/test_native_route_pulse.py -v
 printf 'Validation completed. Logs: %s\n' "$validation_dir"

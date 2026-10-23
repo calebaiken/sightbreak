@@ -11,7 +11,7 @@ SETTINGS_SPAWN = (-4.4, -21.0)
 
 
 def relocate_settings_actor(start, *, actor_id, round_number, observe, key, pause,
-                            record, deadline, receipt, clock=time.monotonic):
+                            record, deadline, receipt, clock=time.monotonic, pulse=None):
     """Share the caller's existing second-LIVE cap; never choose another life.
 
     Only ordinary WASD callbacks reach the native approach helper. The fixed
@@ -100,7 +100,7 @@ def relocate_settings_actor(start, *, actor_id, round_number, observe, key, paus
             return checked(value)
 
         endpoint = approach_floor(*SETTINGS_COVER, observe=read, key=key, pause=pause,
-                                  record=record, deadline=deadline, clock=clock)
+                                  record=record, deadline=deadline, clock=clock, pulse=pulse)
         budget()
         receipt.update(status='FIXED_ROUTE_REACHED', after=deepcopy(last), endpoint=endpoint,
                        remaining_original_second_live_budget=budget())

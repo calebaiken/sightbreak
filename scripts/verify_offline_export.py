@@ -742,10 +742,23 @@ def main():
                                         'Living second-round player before fixed settings route',
                                         next_round_receipt['after_capture']['wall_msec'])
         settings_route = result['settings_cover_route'] = {}
+        def settings_route_pulse(names, seconds, until):
+            remaining()
+            receipt = {}
+            settings_route.setdefault('native_pulses', []).append(receipt)
+            trace('settings_route_native_pulse_before', keys=list(names), requested_seconds=seconds)
+            held_keys.update(names)
+            try:
+                return ui.key_pulse(names, seconds, deadline=until, receipt=receipt)
+            finally:
+                if receipt.get('release_complete') or not receipt.get('attempted_keys'):
+                    held_keys.difference_update(names)
+                trace('settings_route_native_pulse_after', receipt=receipt)
         relocate_settings_actor(settings_route_start, actor_id=initial_offline['local_actor']['id'], round_number=2,
                                 observe=offline_observation, key=key, pause=pause,
                                 record=lambda event, **data: trace('settings_route_' + event, **data),
-                                deadline=second_live_until, receipt=settings_route)
+                                deadline=second_live_until, receipt=settings_route,
+                                pulse=settings_route_pulse if args.target == 'windows' else None)
         transition_budget(second_live_until, 'Completed fixed settings route before weapon switching')
         tap('2')
         capture('06f-switched-sidearm')
