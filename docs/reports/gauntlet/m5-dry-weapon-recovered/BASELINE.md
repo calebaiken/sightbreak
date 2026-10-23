@@ -28,8 +28,9 @@ They do not identify the cause of a historical full-journey failure.
 
 The private state path, exact command, observed PID/session/start tick, source
 hashes, actual exit and cleanup are in `baseline-r1/receipt.json`. Both process
-tables contain no engine before or after the run; no owned process remained and
-no cleanup signal was needed. The source snapshots match. Raw output SHA-256 is
+tables contain no engine before or after the run. No same-session process or
+recognized Godot process remained in the terminal scan; no cleanup signal was
+needed. The source snapshots match. Raw output SHA-256 is
 `54982dfa591dbdaa5d213d4b0f53040dc6aa657e9a9d20813a3405c210298347`.
 
 The fresh critic identified limits in the common fixture before runtime. Raw JSON
@@ -39,6 +40,11 @@ matrix omits all-three-loaded and dry-rifle/dry-marksman/usable-SMG priority
 cases. The candidate must preserve the literal priority list. Visibility is
 injected, and the interaction checks are narrow controls. These outputs establish
 neither complete perception/objective coverage nor full-match bot quality.
+
+The controller enumerates session membership, not recursive PID ancestry. It
+does not qualify escaped-descendant discovery or timeout/failure cleanup. Its
+actual normal-exit evidence covers one observed engine PID and the terminal
+session/recognized-engine scan.
 
 Product code is still unchanged at this baseline checkpoint. The next permitted
 product delta is the registered skip of a known holstered `(0, 0)` primary.
