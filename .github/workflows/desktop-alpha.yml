@@ -52,6 +52,8 @@ jobs:
         run: python scripts/toolchain.py setup --targets ${{ matrix.target }}
       - name: Packaging integrity controls
         run: python scripts/test_build_manifest.py -v
+      - name: Strict native log failure controls
+        run: python scripts/test_native_log.py -v
       - name: Atomic observation reader filesystem semantics
         run: python scripts/test_native_observation.py -v
       - name: Verify strict native menu captions

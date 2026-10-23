@@ -107,6 +107,7 @@ if [[ "${1:-}" == --backend ]]; then
   .venv/bin/python backend/simulate.py
 fi
 python3 scripts/test_build_manifest.py
+python3 scripts/test_native_log.py -v
 python3 scripts/test_native_observation.py -v
 python3 scripts/test_offline_role_guidance.py -v
 python3 scripts/test_offline_export_ocr.py -v
