@@ -1,0 +1,80 @@
+{
+  "original_reference": "git HEAD (local pre-working-tree implementation)",
+  "baseline_command_constants_identical": {
+    "SEQ": true,
+    "ART": true,
+    "AUD": true,
+    "CAP": true,
+    "CAP_CANCEL": true,
+    "VIS": true,
+    "VIS_REDUCED": true,
+    "DISC": true,
+    "LIGHT": true
+  },
+  "baseline_groups": [
+    "SEQ",
+    "ART",
+    "AUD",
+    "CAP",
+    "CAP_CANCEL",
+    "VIS",
+    "VIS_REDUCED",
+    "DISC",
+    "LIGHT"
+  ],
+  "audio_control_tuples": {
+    "A5": {
+      "identical_ast": true,
+      "original": "('A5', 'the reload sounds play 80 dB down (the voices are muted)', [(AUDIO, '\\tvoice.volume_db = -15.0 + float(LEVELS.get(event, 0.0))', '\\tvoice.volume_db = -95.0')], None, [CAP])",
+      "reviewed": "('A5', 'the reload sounds play 80 dB down (the voices are muted)', [(AUDIO, '\\tvoice.volume_db = -15.0 + float(LEVELS.get(event, 0.0))', '\\tvoice.volume_db = -95.0')], None, [CAP])"
+    },
+    "A6": {
+      "identical_ast": true,
+      "original": "('A6', 'a cancelled reload does not stop its voices (real audio, a cancel as the landing starts)', [(ACTOR, '\\t_reload_audio.stop_all() # a weapon change cancels a reload: nothing of it keeps sounding', '\\tpass'), (ACTOR, '\\telif _reload_visual_active and not _reload_fired.has(\"seat\"):\\n\\t\\t_reload_audio.stop_all() # cancelled before the seat: the sounds that were playing stop with it\\n', '')], None, [CAP_CANCEL])",
+      "reviewed": "('A6', 'a cancelled reload does not stop its voices (real audio, a cancel as the landing starts)', [(ACTOR, '\\t_reload_audio.stop_all() # a weapon change cancels a reload: nothing of it keeps sounding', '\\tpass'), (ACTOR, '\\telif _reload_visual_active and not _reload_fired.has(\"seat\"):\\n\\t\\t_reload_audio.stop_all() # cancelled before the seat: the sounds that were playing stop with it\\n', '')], None, [CAP_CANCEL])"
+    },
+    "A7": {
+      "identical_ast": true,
+      "original": "('A7', 'an unlogged reload voice plays before the first scheduled event', [(CAPTURE_SCRIPT, '\\tactor.start_reload()\\n', '\\taudio._voices[0].stream = SBReloadAudio._streams[\"unlatch\"][1]\\n\\taudio._voices[0].play()\\n\\tactor.start_reload()\\n')], None, [CAP])",
+      "reviewed": "('A7', 'an unlogged reload voice plays before the first scheduled event', [(CAPTURE_SCRIPT, '\\tactor.start_reload()\\n', '\\taudio._voices[0].stream = SBReloadAudio._streams[\"unlatch\"][1]\\n\\taudio._voices[0].play()\\n\\tactor.start_reload()\\n')], None, [CAP])"
+    }
+  },
+  "capture_thresholds": {
+    "ONSET_LEVEL": {
+      "original": "0.012",
+      "reviewed": "0.012",
+      "identical": true
+    },
+    "TOLERANCE_MS": {
+      "original": "90.0",
+      "reviewed": "90.0",
+      "identical": true
+    },
+    "SILENT": {
+      "original": "0.0008",
+      "reviewed": "0.0008",
+      "identical": true
+    },
+    "CANCEL_AT": {
+      "original": "0.63",
+      "reviewed": "0.63",
+      "identical": true
+    },
+    "MAX_LATENCY": {
+      "original": "0.120",
+      "reviewed": "0.120",
+      "identical": true
+    }
+  },
+  "original_inline_bounds_preserved": {
+    "int(0.06 * rate)": true,
+    "int(0.40 * rate)": true,
+    "maxf(0.10 * peak, 0.004)": true,
+    "f.peak > 0.02": true,
+    "typical > -45.0": true,
+    "int(0.080 * rate)": true,
+    "int(0.060 * rate)": true,
+    "early < SILENT": true,
+    "loud_after < SILENT": true
+  }
+}

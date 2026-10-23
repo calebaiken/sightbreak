@@ -1,0 +1,805 @@
+{
+  "schema": "append-only-qualified-first-round-publication-v1",
+  "created_utc": "2026-10-23T00:28:51.241655+00:00",
+  "post_restart_revalidation": [
+    {
+      "check": "post-restart supplied anchor verdict",
+      "passed": true
+    },
+    {
+      "check": "post-restart supplied anchor freeze",
+      "passed": true
+    },
+    {
+      "check": "post-restart supplied anchor packet_manifest",
+      "passed": true
+    },
+    {
+      "check": "post-restart supplied anchor released_key",
+      "passed": true
+    },
+    {
+      "check": "post-restart supplied anchor source_review",
+      "passed": true
+    },
+    {
+      "check": "post-restart supplied anchor unexecuted_controls",
+      "passed": true
+    },
+    {
+      "check": "retained copy stable round1/verdict/audit_packet.ps1",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/verdict/audit_packet.ps1",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable round1/verdict/freeze_artifacts.ps1",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/verdict/freeze_artifacts.ps1",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable round1/verdict/FROZEN.json",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/verdict/FROZEN.json",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable round1/verdict/NEUTRAL_VERDICT.md",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/verdict/NEUTRAL_VERDICT.md",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable round1/verdict/per_workload_assessment.json",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/verdict/per_workload_assessment.json",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable round1/verdict/SHA256SUMS.txt",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/verdict/SHA256SUMS.txt",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable round1/verdict/source_hashes.json",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/verdict/source_hashes.json",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable round1/packet/equivalence.json",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/packet/equivalence.json",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable round1/packet/METHOD.md",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/packet/METHOD.md",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable round1/packet/README.md",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/packet/README.md",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable round1/packet/REVIEW_QUESTIONS.md",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/packet/REVIEW_QUESTIONS.md",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable round1/packet/SHA256SUMS.txt",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/packet/SHA256SUMS.txt",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable round1/packet/verify_packet.py",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/packet/verify_packet.py",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable round1/packet/K/measurement.json",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/packet/K/measurement.json",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable round1/packet/R/measurement.json",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/packet/R/measurement.json",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable round1/released-key/mapping.json",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact round1/released-key/mapping.json",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/ARTIFACT_SHA256.txt",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/ARTIFACT_SHA256.txt",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/candidate-app-contract-context.txt",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/candidate-app-contract-context.txt",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/candidate-app-trade-slice.txt",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/candidate-app-trade-slice.txt",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/candidate-benchmark_trade_reads.py.txt",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/candidate-benchmark_trade_reads.py.txt",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/candidate-model-contract-context.txt",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/candidate-model-contract-context.txt",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/candidate-test_trade_reads.py.txt",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/candidate-test_trade_reads.py.txt",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/collect_review_sources.ps1",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/collect_review_sources.ps1",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/collect_review_sources.py",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/collect_review_sources.py",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/COMMANDS.md",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/COMMANDS.md",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/git-commands.json",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/git-commands.json",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/isolated_assurance_controls.py",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/isolated_assurance_controls.py",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/manifest.json",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/manifest.json",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/pr16-app-trade-slice.txt",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/pr16-app-trade-slice.txt",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/pr16-to-candidate-app.diff",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/pr16-to-candidate-app.diff",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/pr16-to-candidate-authorized.diff",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/pr16-to-candidate-authorized.diff",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/SOURCE_REVIEW.md",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/SOURCE_REVIEW.md",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "retained copy stable source-review/original/v2-app-trade-slice.txt",
+      "passed": true
+    },
+    {
+      "check": "original still available and exact source-review/original/v2-app-trade-slice.txt",
+      "passed": true,
+      "original_available": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-001.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-001.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-001.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-002.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-002.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-002.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-003.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-003.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-003.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-004.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-004.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-004.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-005.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-005.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-005.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-006.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-006.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-006.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-007.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-007.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-007.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-008.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-008.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-008.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-009.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-009.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-009.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-010.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-010.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-010.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-011.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-011.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-011.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-012.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-012.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-012.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-013.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-013.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-013.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-014.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-014.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-014.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-015.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-015.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-015.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-016.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-016.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-016.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-017.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-017.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-017.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stdout retained raw/collect-018.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "raw command stderr retained raw/collect-018.stderr.log",
+      "passed": true
+    },
+    {
+      "check": "explicit successful nonempty Git result raw/collect-018.stdout.bin",
+      "passed": true
+    },
+    {
+      "check": "source evidence manifest remains key-bound",
+      "passed": true
+    },
+    {
+      "check": "K original manifest entry binds measurement bytes",
+      "passed": true
+    },
+    {
+      "check": "K neutral rows remain exact numeric/string objects after restart",
+      "passed": true
+    },
+    {
+      "check": "K neutral bytes remain key-bound",
+      "passed": true
+    },
+    {
+      "check": "R original manifest entry binds measurement bytes",
+      "passed": true
+    },
+    {
+      "check": "R neutral rows remain exact numeric/string objects after restart",
+      "passed": true
+    },
+    {
+      "check": "R neutral bytes remain key-bound",
+      "passed": true
+    },
+    {
+      "check": "initial candidate fingerprint failure remains explicitly retained",
+      "passed": true
+    },
+    {
+      "check": "line-ending attempts do not claim a match",
+      "passed": true
+    }
+  ],
+  "publication_integrity_revalidation_passed": true,
+  "failed_revalidation_checks": [],
+  "original_binding_check_history": {
+    "passed": 165,
+    "failed": 1,
+    "all_passed": false
+  },
+  "complete_measured_app_byte_binding": "NOT_ESTABLISHED_K_APP_FINGERPRINT",
+  "K_reported_app_sha256": "9f94a55f1b19858eec3ac54036601b5c26a330749454a6cb89650d51e298f020",
+  "K_git_app_sha256": "703c20b298d734395f292d4a8c5e415e55e6f35109e9a51dcb36fbcb62647441",
+  "source_identity_binding": "Released first key and original headers bind reported K/R commits and Git trees; not execution authentication.",
+  "permitted_acceptance": "Frozen retained SQL statement-count preference only; no new independent performance verdict.",
+  "response_and_state_acceptance": "NOT_ESTABLISHED; actual response/state payloads not retained in first round",
+  "source_safety": "INSPECTION_ONLY; no current shipping runtime/test certification",
+  "controls": "UNEXECUTED; no retained scripts rerun",
+  "second_round": "NOT_INSPECTED",
+  "supersedes": [],
+  "preservation": "All original artifacts and failed checks remain exact and authoritative for what they recorded; this receipt only adds qualification.",
+  "copied_original_revalidation": [
+    {
+      "published_group": "round1",
+      "path": "verdict/audit_packet.ps1",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "round1",
+      "path": "verdict/freeze_artifacts.ps1",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "round1",
+      "path": "verdict/FROZEN.json",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "round1",
+      "path": "verdict/NEUTRAL_VERDICT.md",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "round1",
+      "path": "verdict/per_workload_assessment.json",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "round1",
+      "path": "verdict/SHA256SUMS.txt",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "round1",
+      "path": "verdict/source_hashes.json",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "round1",
+      "path": "packet/equivalence.json",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "round1",
+      "path": "packet/METHOD.md",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "round1",
+      "path": "packet/README.md",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "round1",
+      "path": "packet/REVIEW_QUESTIONS.md",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "round1",
+      "path": "packet/SHA256SUMS.txt",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "round1",
+      "path": "packet/verify_packet.py",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "round1",
+      "path": "packet/K/measurement.json",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "round1",
+      "path": "packet/R/measurement.json",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "round1",
+      "path": "released-key/mapping.json",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/ARTIFACT_SHA256.txt",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/candidate-app-contract-context.txt",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/candidate-app-trade-slice.txt",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/candidate-benchmark_trade_reads.py.txt",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/candidate-model-contract-context.txt",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/candidate-test_trade_reads.py.txt",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/collect_review_sources.ps1",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/collect_review_sources.py",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/COMMANDS.md",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/git-commands.json",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/isolated_assurance_controls.py",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/manifest.json",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/pr16-app-trade-slice.txt",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/pr16-to-candidate-app.diff",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/pr16-to-candidate-authorized.diff",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/SOURCE_REVIEW.md",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    },
+    {
+      "published_group": "source-review",
+      "path": "original/v2-app-trade-slice.txt",
+      "original_available": true,
+      "exact_bytes_reverified": true
+    }
+  ],
+  "original_anchors": {
+    "verdict": "f76906b5b3ee735d65eedef6bf23998d274a614778fb9e76c196ba39957bfdfa",
+    "freeze": "cfeaa74dce6172fb222e6a7cbbefadb7383fd9169332dd51fd94865294908e8a",
+    "packet_manifest": "d9a6ea8e0721d573bea5437e84fcc25b899d7b8172f092c4ae7d1415b3c56c36",
+    "released_key": "04a96c5d995e755924435b6f48225191f66e6fe0c5832fcc8014db70aecedaf0",
+    "source_review": "cf40870f6a894aeddaab51f1fab64a6817e58d2f29385984bed7d45f1dff9899",
+    "unexecuted_controls": "cf7fae19e0151694dd76a70e9883e020bab4d0d5f0485852a4161d91f0010d4d"
+  }
+}

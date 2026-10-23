@@ -1,0 +1,22 @@
+{
+  "scope": "Actual existing test + actual POSIX-initialized CPython 3.13.15 pathlib, linked private OS namespace; NOT actual Linux or workflow Python 3.12",
+  "python": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-tools\\python\\cpython-3.13.15-windows-x86_64-none\\python.exe",
+  "version": "3.13.15 (main, Sep  1 2026, 14:16:48) [MSC v.1944 64 bit (AMD64)]",
+  "stdlib_module": "pathlib._local",
+  "stdlib_source_sha256": "0530b4186ec5845e000bedf5817ff1ac970b9a39a6891ba6789a1776abdea42b",
+  "existing_test": "test_matrix_process.SupervisorTests.test_parent_keeps_actual_exit",
+  "tests_run": 1,
+  "errors": 1,
+  "failures": 0,
+  "captured_harness_errors": [
+    "cannot instantiate 'WindowsPath' on your system"
+  ],
+  "defect_reproduced": true,
+  "module_local_os_comparison": {
+    "returned_exit": 7,
+    "log": "\nHARNESS_ERROR supervisor cleanup failed: [Errno 17] File exists: 'C:\\\\Users\\\\blith\\\\AppData\\\\Local\\\\Temp\\\\opencode\\\\sol-freeze-final-critic-20261023T002632558647Z\\\\linux-pathlib-local-os.process.json'\n",
+    "mock_launch_calls": 1,
+    "job_stop_calls": 1,
+    "passed": false
+  }
+}

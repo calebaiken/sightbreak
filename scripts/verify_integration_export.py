@@ -20,11 +20,58 @@ import shutil
 import subprocess
 import time
 
-from PIL import ImageGrab
-from build_manifest import source
+from build_manifest import source, require_clean, same_source
 from native_log import failed as native_log_failed
+from export_flow import entry, prepare_flow_output
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+class ClientMessageData(C.Union):
+    _fields_ = [('b', C.c_char * 20), ('s', C.c_short * 10), ('l', C.c_long * 5)]
+
+
+class ClientMessage(C.Structure):
+    _fields_ = [('type', C.c_int), ('serial', C.c_ulong), ('send_event', C.c_int),
+                ('display', C.c_void_p), ('window', C.c_ulong), ('message_type', C.c_ulong),
+                ('format', C.c_int), ('data', ClientMessageData)]
+
+
+class XEvent(C.Union):
+    _fields_ = [('xclient', ClientMessage), ('pad', C.c_long * 24)]
+
+
+def frozen_export(executable, output):
+    """Retain a current failed receipt even when preflight rejects the export."""
+    manifest, before, digest = None, None, None
+    try:
+        manifest = json.loads((executable.parent / 'source.json').read_text())
+        before = source()
+        require_clean(before)
+        require_clean(manifest)
+        with executable.open('rb') as stream:
+            digest = hashlib.file_digest(stream, 'sha256').hexdigest()
+        if not manifest['export_completed'] or not same_source(manifest, before) or digest != manifest['artifact']['sha256']:
+            raise RuntimeError('Export does not match the exact frozen source and manifest')
+        return manifest, before, digest
+    except (Exception, SystemExit) as error:
+        (output / 'results.json').write_text(json.dumps({'passed': False, 'stage': 'preflight',
+            'error': str(error), 'artifact_source': manifest, 'authority_source': before,
+            'executable_sha256': digest}, indent=2) + '\n')
+        raise
+
+
+def unchanged_export(executable, manifest, before, digest):
+    """Recheck the actual receipt/binary, not only ignored build-independent source."""
+    if source() != before:
+        raise RuntimeError('Frozen source changed during verification')
+    if json.loads((executable.parent / 'source.json').read_text()) != manifest:
+        raise RuntimeError('Export receipt changed during verification')
+    with executable.open('rb') as stream:
+        actual = hashlib.file_digest(stream, 'sha256').hexdigest()
+    if actual != digest:
+        raise RuntimeError('Export executable changed during verification')
+    return actual
 
 
 class NativeUI:
@@ -47,6 +94,10 @@ class NativeUI:
         self.x.XStringToKeysym.restype = C.c_ulong
         self.x.XFree.argtypes = [C.c_void_p]
         self.x.XCloseDisplay.argtypes = [C.c_void_p]
+        self.x.XInternAtom.argtypes = [C.c_void_p, C.c_char_p, C.c_int]
+        self.x.XInternAtom.restype = C.c_ulong
+        self.x.XSendEvent.argtypes = [C.c_void_p, C.c_ulong, C.c_int, C.c_long, C.POINTER(XEvent)]
+        self.x.XSendEvent.restype = C.c_int
         self.t.XTestFakeMotionEvent.argtypes = [C.c_void_p, C.c_int, C.c_int, C.c_int, C.c_ulong]
         self.t.XTestFakeButtonEvent.argtypes = [C.c_void_p, C.c_uint, C.c_int, C.c_ulong]
         self.t.XTestFakeKeyEvent.argtypes = [C.c_void_p, C.c_uint, C.c_int, C.c_ulong]
@@ -106,28 +157,48 @@ class NativeUI:
         self.button(False)
 
     def capture(self, path):
+        from PIL import ImageGrab
         image = ImageGrab.grab(xdisplay=self.display)
         if image.size != (1280, 720):
             raise RuntimeError('Expected isolated 1280x720 display, got ' + str(image.size))
         image.save(path)
 
     def menu_visible(self):
+        from PIL import ImageGrab
         # The connect page also has a crimson button at y=299. Sample the
         # deploy button's lower edge, outside the connect button's rectangle.
         pixel = ImageGrab.grab(xdisplay=self.display).getpixel((450, 340))
         return pixel[0] > 80 and pixel[0] > pixel[1] * 1.5
+
+    def request_close(self):
+        # Deliver the normal desktop window-close protocol directly. No frame
+        # budget, process signal, private game hook or window manager is needed.
+        protocols = self.x.XInternAtom(self.d, b'WM_PROTOCOLS', 0)
+        delete = self.x.XInternAtom(self.d, b'WM_DELETE_WINDOW', 0)
+        event = XEvent()
+        event.xclient.type = 33  # ClientMessage
+        event.xclient.send_event = 1
+        event.xclient.display = self.d
+        event.xclient.window = self.window
+        event.xclient.message_type = protocols
+        event.xclient.format = 32
+        event.xclient.data.l[0] = delete
+        event.xclient.data.l[1] = 0  # CurrentTime
+        if not protocols or not delete or not self.x.XSendEvent(self.d, self.window, 0, 0, C.byref(event)):
+            raise RuntimeError('Native window-close request was not delivered')
+        self.x.XFlush(self.d)
 
     def close(self):
         self.x.XCloseDisplay(self.d)
 
 
 
-def main():
+def main(supervised=False):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=ROOT / 'builds/verification/integration')
     parser.add_argument('--display', default=':101', help='A free isolated X11 display')
     parser.add_argument('--xvfb', default=os.environ.get('XVFB_BIN') or shutil.which('Xvfb'))
-    parser.add_argument('--quit-after', type=int, default=300)
+    parser.add_argument('--quit-after', type=int, default=0, help='Optional premature-exit control; normal exit is completion-driven window close')
     parser.add_argument('--timeout', type=float, default=180)
     parser.add_argument('--visit-armory', action='store_true', help='Capture actual exported inventory navigation; screenshots require visual inspection')
     parser.add_argument('--reload-mode', choices=('authority', 'keyboard'), default='authority')
@@ -136,25 +207,16 @@ def main():
         parser.error('Set --xvfb or XVFB_BIN to the Xvfb executable')
     if not re.fullmatch(r':[0-9]+', args.display):
         parser.error('Use a local numbered display such as :101')
-    if args.quit_after <= 0 or args.timeout <= 0:
-        parser.error('Exit iterations and timeout must be positive')
+    if args.quit_after < 0 or args.timeout <= 0:
+        parser.error('Exit iterations must be nonnegative and timeout positive')
     display_socket = Path('/tmp/.X11-unix/X' + args.display[1:])
     if display_socket.exists():
         parser.error('Display is already in use: ' + args.display)
-    output = args.output.resolve()
-    output.mkdir(parents=True, exist_ok=True)
-    # Reject stale success records; retain each campaign in a separate directory.
-    for name in ('finish', 'authority.json', 'results.json'):
-        (output / name).unlink(missing_ok=True)
+    output = prepare_flow_output(args.output, supervised)
     executable = ROOT / 'builds/linux/sightbreak.x86_64'
-    manifest = json.loads((executable.parent / 'source.json').read_text())
-    source_before = source()
-    if manifest['source_content_sha256'] != source_before['source_content_sha256']:
-        raise RuntimeError('Export and source authority have different runtime content')
-    executable_hash = hashlib.file_digest(executable.open('rb'), 'sha256').hexdigest()
-    if executable_hash != manifest['artifact']['sha256']:
-        raise RuntimeError('Export no longer matches its build manifest')
+    manifest, source_before, executable_hash = frozen_export(executable, output)
     processes, logs, ui = [], [], None
+    started = time.monotonic()
 
     def launch(name, command, env=None, cwd=output):
         log = (output / (name + '.log')).open('w')
@@ -164,7 +226,7 @@ def main():
         return process
 
     def wait_for(condition, seconds, label, process=None):
-        deadline = time.monotonic() + seconds
+        deadline = min(time.monotonic() + seconds, started + args.timeout)
         while time.monotonic() < deadline:
             if condition():
                 return
@@ -203,7 +265,11 @@ def main():
         server = launch('server', server_command,
                         {**env, 'SIGHTBREAK_STATE_DIR': str(output / 'server-state')}, ROOT)
         wait_for(lambda: server_has('SIGHTBREAK_SERVER_READY'), 15, 'Authority readiness', server)
-        client = launch('client', [str(executable), '--audio-driver', 'Dummy', '--quit-after', str(args.quit_after)], env)
+        client_command = [str(executable), '--audio-driver', 'Dummy']
+        if args.quit_after:
+            client_command += ['--quit-after', str(args.quit_after)]
+        unchanged_export(executable, manifest, source_before, executable_hash)
+        client = launch('client', client_command, env)
         ui = NativeUI(args.display)
         wait_for(ui.focus_game, 30, 'Export window readiness', client)
         wait_for(ui.menu_visible, 60, 'Actual native menu readiness', client)
@@ -247,7 +313,10 @@ def main():
         ui.capture(output / '08-settled.png')
         # Rendered capture stages must be visually reviewed: software rendering
         # can lag the authority. The filenames describe capture timing only.
-        client.wait(timeout=args.timeout)
+        if client.poll() is not None:
+            raise RuntimeError('Client exited before completion-driven native close')
+        ui.request_close()
+        client.wait(timeout=max(1, args.timeout - (time.monotonic() - started)))
         (output / 'finish').write_text('finish\n')
         server.wait(timeout=10)
         authority = json.loads((output / 'authority.json').read_text())
@@ -257,8 +326,7 @@ def main():
             log_text = (output / (name + '.log')).read_text()
             if native_log_failed(log_text):
                 raise RuntimeError(name + ': error or resource leak; inspect log')
-        if source()['source_content_sha256'] != source_before['source_content_sha256']:
-            raise RuntimeError('Runtime source changed during verification')
+        unchanged_export(executable, manifest, source_before, executable_hash)
         result = {'passed': True, 'artifact_source': manifest, 'authority_source': source_before,
                   'executable_sha256': executable_hash, 'authority': authority,
                   'client_exit': client.returncode, 'server_exit': server.returncode,
@@ -267,7 +335,8 @@ def main():
                   'reload_trigger': authority['reload_trigger'],
                   'inventory_navigation_captured': args.visit_armory,
                   'desktop_R_key_input': 'VERIFIED via server-observed reload command' if args.reload_mode == 'keyboard' else 'UNVERIFIED',
-                  'exit_method': 'supported --quit-after ' + str(args.quit_after),
+                  'exit_method': 'completion-driven native WM_DELETE_WINDOW; separate wall-clock watchdog',
+                  'premature_exit_control_frames': args.quit_after,
                   'scope': 'Actual exported Linux client through native UI; source Godot authority on loopback; llvmpipe software rendering; no physical-device performance claim'}
         (output / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
         print(json.dumps(result, indent=2))
@@ -291,4 +360,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit(entry(main, __file__, ROOT / 'builds/verification/integration', 180))

@@ -1,0 +1,123 @@
+44: @contextmanager
+45: def transaction():
+46:     with DBSession(engine) as db, db.begin():
+47:         db.execute(text('SELECT pg_advisory_xact_lock(:key)'), {'key': LOCK_ID})
+48:         yield db
+49: 
+61: def authenticated(db, authorization):
+62:     if not authorization or not authorization.startswith('Bearer '): fail('Authentication required', 401)
+63:     session = db.get(Session, digest(authorization[7:]))
+64:     if not session or session.expires_at <= now(): fail('Session expired or invalid', 401)
+65:     player = db.get(Player, session.player_id)
+66:     if not player or not player.active: fail('Account unavailable', 403)
+67:     return player
+68: 
+97: def item_json(item):
+98:     d = DEFINITIONS[item.definition_id]
+99:     return dict(id=item.id,definition_id=item.definition_id,rarity=item.rarity,pattern_seed=item.pattern_seed,wear=item.wear / 10000.0,variant=item.variant,collection=d['collection'],kind=d['kind'],name=d['name'],reserved=item.reservation is not None,trade_eligible=not item.consumed and not item.reservation,marketplace_eligible=not item.consumed and not item.reservation,acquired_at=item.acquired_at.isoformat())
+122: def owned(db, owner, item_id, reservation=None):
+123:     item = db.get(Item, str(item_id))
+124:     if not item or item.owner_id != owner or item.consumed or item.reservation != reservation: fail('Item unavailable or not owned')
+125:     return item
+126: 
+127: def replay(db, actor, route, body):
+128:     key = f'{actor}:{route}:{body.idempotency_key}'
+129:     payload = body.model_dump(mode='json')
+130:     # Preserve pre-guard receipt hashes for callers that omit the new field.
+131:     if isinstance(body, MarketBuy) and body.expected_price is None:
+132:         payload.pop('expected_price', None)
+133:     hashed = fingerprint(payload)
+134:     previous = db.get(Operation, key)
+135:     if previous:
+136:         if previous.request_hash != hashed: fail('Idempotency key reused with a different request')
+137:         return key, hashed, previous.response
+138:     return key, hashed, None
+139: 
+158: class MarketBuy(Idempotent):
+159:     expected_price: int | None = Field(default=None, strict=True, gt=0, le=10000000)
+279: @app.post('/market/{listing_id}/buy')
+280: def market_buy(listing_id:UUID,body:MarketBuy,request:Request,authorization:Auth=None):
+281:     rate(request,'economy')
+282:     with transaction() as db:
+283:         p=authenticated(db,authorization); key,h,old=replay(db,p.id,'buy:'+str(listing_id),body)
+284:         if old: return old
+285:         listing=db.get(Listing,str(listing_id))
+286:         if not listing or listing.state!='active' or listing.seller_id==p.id: fail('Listing unavailable')
+287:         if body.expected_price is not None and body.expected_price != listing.price:
+288:             fail('Listing price changed; refresh and confirm the current price')
+289:         seller=db.get(Player,listing.seller_id)
+290:         if not seller.active: fail('Seller unavailable')
+291:         item=owned(db,seller.id,listing.item_id,'market:'+listing.id)
+292:         fee=listing.price*CONFIG['market_fee_basis_points']//10000
+293:         credit(db,p,-listing.price,'market_purchase',listing.id); credit(db,seller,listing.price-fee,'market_sale',listing.id)
+294:         unequip_transferred_item(db, item.id)
+295:         item.owner_id=p.id; item.reservation=None; listing.buyer_id=p.id; listing.state='sold'
+296:         audit(db,p.id,'market_settled',listing_id=listing.id,item_id=item.id,from_player=seller.id,to_player=p.id,fee=fee)
+297:         return remember(db,key,h,dict(item=item_json(item),credits=p.credits,fee=fee))
+298: 
+305: def get_trade(db, player, trade_id):
+306:     trade=db.get(Trade,str(trade_id))
+307:     if not trade or player.id not in (trade.a,trade.b): fail('Trade unavailable',404)
+308:     return trade
+325: @app.post('/trades',status_code=201)
+326: def new_trade(body:NewTrade,request:Request,authorization:Auth=None):
+327:     rate(request,'trade',20)
+328:     with transaction() as db:
+329:         p=authenticated(db,authorization); other=db.get(Player,str(body.partner_id))
+330:         if not other or not other.active or other.id==p.id: fail('Partner unavailable',400)
+331:         if p.last_trade and (now()-p.last_trade).total_seconds()<CONFIG['trade_cooldown_seconds']: fail('Trade cooldown',429)
+332:         t=Trade(a=p.id,b=other.id,offers={p.id:[],other.id:[]},confirmations=[])
+333:         p.last_trade=now(); db.add(t); db.flush(); audit(db,p.id,'trade_created',trade_id=t.id)
+334:         return trade_json(t)
+335: @app.put('/trades/{trade_id}/offer')
+336: def offer(trade_id:UUID,body:Offer,request:Request,authorization:Auth=None):
+337:     rate(request,'trade',20)
+338:     with transaction() as db:
+339:         p=authenticated(db,authorization); t=get_trade(db,p,trade_id)
+340:         if t.state!='open' or t.revision!=body.revision: fail('Trade changed; refresh the offer')
+341:         ids=[str(i) for i in body.item_ids]
+342:         if len(set(ids))!=len(ids): fail('Duplicate items',400)
+343:         reservation='trade:'+t.id
+344:         # Validate before replacing; reservations are held until cancel/settle.
+345:         for item_id in ids:
+346:             item=db.get(Item,item_id)
+347:             owned(db,p.id,item_id,reservation if item and item.reservation==reservation else None)
+348:         for item_id in t.offers.get(p.id,[]): owned(db,p.id,item_id,reservation).reservation=None
+349:         for item_id in ids: db.get(Item,item_id).reservation=reservation
+350:         t.offers={**t.offers,p.id:ids}; t.confirmations=[]; t.revision+=1
+351:         audit(db,p.id,'trade_revised',trade_id=t.id,revision=t.revision,offers=t.offers)
+352:         return trade_json(t)
+353: @app.post('/trades/{trade_id}/confirm')
+354: def confirm(trade_id:UUID,body:Revision,request:Request,authorization:Auth=None):
+355:     rate(request,'trade',20)
+356:     with transaction() as db:
+357:         p=authenticated(db,authorization); t=get_trade(db,p,trade_id)
+358:         if t.revision!=body.revision: fail('Trade changed; inspect the current revision')
+359:         if t.state=='completed': return trade_json(t)
+360:         if t.state!='open': fail('Trade is closed')
+361:         if not any(t.offers.values()): fail('An empty trade cannot be confirmed')
+362:         for owner in (t.a,t.b):
+363:             if not db.get(Player,owner).active: fail('Account unavailable')
+364:             for item_id in t.offers.get(owner,[]): owned(db,owner,item_id,'trade:'+t.id)
+365:         t.confirmations=list(set(t.confirmations+[p.id]))
+366:         if set(t.confirmations)=={t.a,t.b}:
+367:             for owner,receiver in ((t.a,t.b),(t.b,t.a)):
+368:                 for item_id in t.offers.get(owner,[]):
+369:                     item=owned(db,owner,item_id,'trade:'+t.id)
+370:                     unequip_transferred_item(db, item.id)
+371:                     item.owner_id=receiver; item.reservation=None
+372:                     audit(db,p.id,'item_traded',trade_id=t.id,item_id=item_id,from_player=owner,to_player=receiver)
+373:             t.state='completed'
+374:         return trade_json(t)
+375: @app.post('/trades/{trade_id}/cancel')
+376: def cancel_trade(trade_id:UUID,request:Request,authorization:Auth=None):
+377:     rate(request,'trade',20)
+378:     with transaction() as db:
+379:         p=authenticated(db,authorization); t=get_trade(db,p,trade_id)
+380:         if t.state=='cancelled': return trade_json(t)
+381:         if t.state!='open': fail('Trade completed')
+382:         for owner,items in t.offers.items():
+383:             for item_id in items: owned(db,owner,item_id,'trade:'+t.id).reservation=None
+384:         t.state='cancelled'; t.confirmations=[]; audit(db,p.id,'trade_cancelled',trade_id=t.id)
+385:         return trade_json(t)
+386: 

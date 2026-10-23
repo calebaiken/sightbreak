@@ -1,0 +1,23 @@
+{
+  "kind": "pure mock of Linux kernel state; no actual POSIX process or signal",
+  "returned_exit": 1,
+  "raw_log_has_harness_error": true,
+  "inspected_pids": [
+    41000
+  ],
+  "attempted_group_signals": [
+    [
+      41000,
+      0
+    ],
+    [
+      41000,
+      9
+    ]
+  ],
+  "detached_pid": 41001,
+  "detached_child_alive": true,
+  "popen_was_mocked": true,
+  "mock_popen_call_count": 1,
+  "boundary": "fails evidence gate but leaves no owner able to discover detached process after supervisor death"
+}

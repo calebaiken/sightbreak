@@ -1,0 +1,491 @@
+{
+  "started_at": "2026-10-19T19:17:33.763095+00:00",
+  "source": {
+    "commit": "4a8e9ea73aa8b286d9f1751b0a6b485479737294",
+    "backend_tree": "4ef756639c2e90037bce79a30e2867aebcc798a7",
+    "backend_dirty": "",
+    "backend_files": {
+      "backend/app.py": "9f94a55f1b19858eec3ac54036601b5c26a330749454a6cb89650d51e298f020",
+      "backend/bridge_fixture.py": "00548df28d2ad6a8fdca9eeaed34af39e30bebbb205fb9b69b2d7112434b29db",
+      "backend/migrate.py": "0f06597968c1e0de8461083448306496f4cc53e6a0f3d94dbc0f1b0c003f1d58",
+      "backend/models.py": "5fa4e0ac4157e4ad883d4c2bf1df06d915a395c5303c063a1004aaabd071e09a",
+      "backend/pyproject.toml": "9fd253aaaa3d39616eeb076d991cd2836c4cddcc8f56d72f31776cd134ab0190",
+      "backend/simulate.py": "218299e27743c58eac64f2d5820f3320945321d3d58bdd2caee5d195c536afa2",
+      "backend/uv.lock": "c66ef08d0ef36424da51008f59e3905f544d15dbd602ed6e204c588b4ca93db5",
+      "backend/config/economy.json": "8d85944aff0a6531b8a022350cbe0562295573aff5f3bd96e474e06f192aec7a",
+      "backend/config/simulation-baseline.json": "0a7965dd37a68fd2960d6b6912dffb635fcb26ffa6f251b92a7872c688755a16",
+      "backend/migrations/001_integrity.sql": "83189d1d06cbec62db325dbcf376476bc3aa7c0984d7439bb8048360ff737392",
+      "backend/migrations/002_game_tickets.sql": "c063f4376339b013fc79cda3e6f7782c61654d51fe6e479c658f2e30a1eddd7e",
+      "backend/migrations/003_loadouts.sql": "cc8acafba73b07889b25f2b9ee594cd09094d0ff8fd34d64767e6fcde62ee017",
+      "backend/migrations/004_market_index.sql": "cc51bd7647a6bd6abb272efd9564e089c0cc3d7afa0e76586503b3225535a5af",
+      "backend/tests/test_economy.py": "d3ada3e8590fb30a5a5e812525ccaea4be3778af50903eb2d02de41e201d528a",
+      "backend/tests/test_trade_reads.py": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1"
+    }
+  },
+  "harness_sha256": "6e4aac58ad913144e2c41455124afd6756e500c5d795636e15ba52b1aa5a3b19",
+  "fixture_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.14 (main, Sep  1 2026, 14:17:39) [MSC v.1944 64 bit (AMD64)]",
+  "packages": {
+    "sqlalchemy": "2.1.4",
+    "psycopg": "3.3.6",
+    "psycopg-binary": "3.3.6",
+    "fastapi": "0.143.0",
+    "starlette": "1.7.0",
+    "httpx": "0.28.1",
+    "pytest": "9.1.1"
+  },
+  "database": "sightbreak_trade_read_29db8d9c2062_test",
+  "rows": [
+    {
+      "trades": 0,
+      "items_per_side": 0,
+      "samples": [
+        {
+          "milliseconds": 12.2441,
+          "statements": 3
+        },
+        {
+          "milliseconds": 10.5675,
+          "statements": 3
+        },
+        {
+          "milliseconds": 10.2578,
+          "statements": 3
+        },
+        {
+          "milliseconds": 10.896,
+          "statements": 3
+        },
+        {
+          "milliseconds": 10.3363,
+          "statements": 3
+        },
+        {
+          "milliseconds": 12.4832,
+          "statements": 3
+        },
+        {
+          "milliseconds": 10.2793,
+          "statements": 3
+        },
+        {
+          "milliseconds": 10.2748,
+          "statements": 3
+        },
+        {
+          "milliseconds": 11.0247,
+          "statements": 3
+        },
+        {
+          "milliseconds": 10.6532,
+          "statements": 3
+        }
+      ],
+      "budget": 3,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR"
+      ],
+      "response_sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd",
+      "read_only": true,
+      "median_ms": 10.61035,
+      "p95_ms": 12.4832,
+      "query_counts": [
+        3
+      ]
+    },
+    {
+      "trades": 1,
+      "items_per_side": 0,
+      "samples": [
+        {
+          "milliseconds": 12.2063,
+          "statements": 4
+        },
+        {
+          "milliseconds": 12.3059,
+          "statements": 4
+        },
+        {
+          "milliseconds": 13.382,
+          "statements": 4
+        },
+        {
+          "milliseconds": 12.439,
+          "statements": 4
+        },
+        {
+          "milliseconds": 12.7543,
+          "statements": 4
+        },
+        {
+          "milliseconds": 13.2607,
+          "statements": 4
+        },
+        {
+          "milliseconds": 12.9334,
+          "statements": 4
+        },
+        {
+          "milliseconds": 14.0893,
+          "statements": 4
+        },
+        {
+          "milliseconds": 13.8179,
+          "statements": 4
+        },
+        {
+          "milliseconds": 13.7263,
+          "statements": 4
+        }
+      ],
+      "budget": 4,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT players.id, players.display_name \nFROM players \nWHERE players.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR)"
+      ],
+      "response_sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4",
+      "read_only": true,
+      "median_ms": 13.09705,
+      "p95_ms": 14.0893,
+      "query_counts": [
+        4
+      ]
+    },
+    {
+      "trades": 1,
+      "items_per_side": 2,
+      "samples": [
+        {
+          "milliseconds": 18.1419,
+          "statements": 5
+        },
+        {
+          "milliseconds": 18.984,
+          "statements": 5
+        },
+        {
+          "milliseconds": 16.0126,
+          "statements": 5
+        },
+        {
+          "milliseconds": 18.9844,
+          "statements": 5
+        },
+        {
+          "milliseconds": 15.8987,
+          "statements": 5
+        },
+        {
+          "milliseconds": 17.5494,
+          "statements": 5
+        },
+        {
+          "milliseconds": 17.2493,
+          "statements": 5
+        },
+        {
+          "milliseconds": 17.0033,
+          "statements": 5
+        },
+        {
+          "milliseconds": 15.9897,
+          "statements": 5
+        },
+        {
+          "milliseconds": 17.1224,
+          "statements": 5
+        }
+      ],
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR)",
+        "SELECT players.id, players.display_name \nFROM players \nWHERE players.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR)"
+      ],
+      "response_sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b",
+      "read_only": true,
+      "median_ms": 17.185850000000002,
+      "p95_ms": 18.9844,
+      "query_counts": [
+        5
+      ]
+    },
+    {
+      "trades": 10,
+      "items_per_side": 1,
+      "samples": [
+        {
+          "milliseconds": 20.9074,
+          "statements": 5
+        },
+        {
+          "milliseconds": 20.5695,
+          "statements": 5
+        },
+        {
+          "milliseconds": 21.772,
+          "statements": 5
+        },
+        {
+          "milliseconds": 22.6128,
+          "statements": 5
+        },
+        {
+          "milliseconds": 19.3631,
+          "statements": 5
+        },
+        {
+          "milliseconds": 19.9795,
+          "statements": 5
+        },
+        {
+          "milliseconds": 21.3263,
+          "statements": 5
+        },
+        {
+          "milliseconds": 20.9419,
+          "statements": 5
+        },
+        {
+          "milliseconds": 22.6162,
+          "statements": 5
+        },
+        {
+          "milliseconds": 21.15,
+          "statements": 5
+        }
+      ],
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR, %(id_1_12)s::VARCHAR, %(id_1_13)s::VARCHAR, %(id_1_14)s::VARCHAR, %(id_1_15)s::VARCHAR, %(id_1_16)s::VARCHAR, %(id_1_17)s::VARCHAR, %(id_1_18)s::VARCHAR, %(id_1_19)s::VARCHAR, %(id_1_20)s::VARCHAR)",
+        "SELECT players.id, players.display_name \nFROM players \nWHERE players.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR)"
+      ],
+      "response_sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34",
+      "read_only": true,
+      "median_ms": 21.045949999999998,
+      "p95_ms": 22.6162,
+      "query_counts": [
+        5
+      ]
+    },
+    {
+      "trades": 40,
+      "items_per_side": 1,
+      "samples": [
+        {
+          "milliseconds": 33.2644,
+          "statements": 5
+        },
+        {
+          "milliseconds": 32.5372,
+          "statements": 5
+        },
+        {
+          "milliseconds": 35.5539,
+          "statements": 5
+        },
+        {
+          "milliseconds": 37.0519,
+          "statements": 5
+        },
+        {
+          "milliseconds": 33.3458,
+          "statements": 5
+        },
+        {
+          "milliseconds": 35.5575,
+          "statements": 5
+        },
+        {
+          "milliseconds": 32.6116,
+          "statements": 5
+        },
+        {
+          "milliseconds": 31.4536,
+          "statements": 5
+        },
+        {
+          "milliseconds": 64.6221,
+          "statements": 5
+        },
+        {
+          "milliseconds": 33.9047,
+          "statements": 5
+        }
+      ],
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR, %(id_1_12)s::VARCHAR, %(id_1_13)s::VARCHAR, %(id_1_14)s::VARCHAR, %(id_1_15)s::VARCHAR, %(id_1_16)s::VARCHAR, %(id_1_17)s::VARCHAR, %(id_1_18)s::VARCHAR, %(id_1_19)s::VARCHAR, %(id_1_20)s::VARCHAR, %(id_1_21)s::VARCHAR, %(id_1_22)s::VARCHAR, %(id_1_23)s::VARCHAR, %(id_1_24)s::VARCHAR, %(id_1_25)s::VARCHAR, %(id_1_26)s::VARCHAR, %(id_1_27)s::VARCHAR, %(id_1_28)s::VARCHAR, %(id_1_29)s::VARCHAR, %(id_1_30)s::VARCHAR, %(id_1_31)s::VARCHAR, %(id_1_32)s::VARCHAR, %(id_1_33)s::VARCHAR, %(id_1_34)s::VARCHAR, %(id_1_35)s::VARCHAR, %(id_1_36)s::VARCHAR, %(id_1_37)s::VARCHAR, %(id_1_38)s::VARCHAR, %(id_1_39)s::VARCHAR, %(id_1_40)s::VARCHAR, %(id_1_41)s::VARCHAR, %(id_1_42)s::VARCHAR, %(id_1_43)s::VARCHAR, %(id_1_44)s::VARCHAR, %(id_1_45)s::VARCHAR, %(id_1_46)s::VARCHAR, %(id_1_47)s::VARCHAR, %(id_1_48)s::VARCHAR, %(id_1_49)s::VARCHAR, %(id_1_50)s::VARCHAR, %(id_1_51)s::VARCHAR, %(id_1_52)s::VARCHAR, %(id_1_53)s::VARCHAR, %(id_1_54)s::VARCHAR, %(id_1_55)s::VARCHAR, %(id_1_56)s::VARCHAR, %(id_1_57)s::VARCHAR, %(id_1_58)s::VARCHAR, %(id_1_59)s::VARCHAR, %(id_1_60)s::VARCHAR, %(id_1_61)s::VARCHAR, %(id_1_62)s::VARCHAR, %(id_1_63)s::VARCHAR, %(id_1_64)s::VARCHAR, %(id_1_65)s::VARCHAR, %(id_1_66)s::VARCHAR, %(id_1_67)s::VARCHAR, %(id_1_68)s::VARCHAR, %(id_1_69)s::VARCHAR, %(id_1_70)s::VARCHAR, %(id_1_71)s::VARCHAR, %(id_1_72)s::VARCHAR, %(id_1_73)s::VARCHAR, %(id_1_74)s::VARCHAR, %(id_1_75)s::VARCHAR, %(id_1_76)s::VARCHAR, %(id_1_77)s::VARCHAR, %(id_1_78)s::VARCHAR, %(id_1_79)s::VARCHAR, %(id_1_80)s::VARCHAR)",
+        "SELECT players.id, players.display_name \nFROM players \nWHERE players.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR, %(id_1_12)s::VARCHAR, %(id_1_13)s::VARCHAR, %(id_1_14)s::VARCHAR, %(id_1_15)s::VARCHAR, %(id_1_16)s::VARCHAR, %(id_1_17)s::VARCHAR, %(id_1_18)s::VARCHAR, %(id_1_19)s::VARCHAR, %(id_1_20)s::VARCHAR, %(id_1_21)s::VARCHAR, %(id_1_22)s::VARCHAR, %(id_1_23)s::VARCHAR, %(id_1_24)s::VARCHAR, %(id_1_25)s::VARCHAR, %(id_1_26)s::VARCHAR, %(id_1_27)s::VARCHAR, %(id_1_28)s::VARCHAR, %(id_1_29)s::VARCHAR, %(id_1_30)s::VARCHAR, %(id_1_31)s::VARCHAR, %(id_1_32)s::VARCHAR, %(id_1_33)s::VARCHAR, %(id_1_34)s::VARCHAR, %(id_1_35)s::VARCHAR, %(id_1_36)s::VARCHAR, %(id_1_37)s::VARCHAR, %(id_1_38)s::VARCHAR, %(id_1_39)s::VARCHAR, %(id_1_40)s::VARCHAR, %(id_1_41)s::VARCHAR)"
+      ],
+      "response_sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010",
+      "read_only": true,
+      "median_ms": 33.625249999999994,
+      "p95_ms": 64.6221,
+      "query_counts": [
+        5
+      ]
+    },
+    {
+      "trades": 40,
+      "items_per_side": 20,
+      "samples": [
+        {
+          "milliseconds": 369.7471,
+          "statements": 8
+        },
+        {
+          "milliseconds": 236.5004,
+          "statements": 8
+        },
+        {
+          "milliseconds": 237.4597,
+          "statements": 8
+        },
+        {
+          "milliseconds": 256.5601,
+          "statements": 8
+        },
+        {
+          "milliseconds": 271.3211,
+          "statements": 8
+        },
+        {
+          "milliseconds": 316.9072,
+          "statements": 8
+        },
+        {
+          "milliseconds": 243.5702,
+          "statements": 8
+        },
+        {
+          "milliseconds": 253.4543,
+          "statements": 8
+        },
+        {
+          "milliseconds": 244.7919,
+          "statements": 8
+        },
+        {
+          "milliseconds": 240.1984,
+          "statements": 8
+        }
+      ],
+      "budget": 8,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR, %(id_1_12)s::VARCHAR, %(id_1_13)s::VARCHAR, %(id_1_14)s::VARCHAR, %(id_1_15)s::VARCHAR, %(id_1_16)s::VARCHAR, %(id_1_17)s::VARCHAR, %(id_1_18)s::VARCHAR, %(id_1_19)s::VARCHAR, %(id_1_20)s::VARCHAR, %(id_1_21)s::VARCHAR, %(id_1_22)s::VARCHAR, %(id_1_23)s::VARCHAR, %(id_1_24)s::VARCHAR, %(id_1_25)s::VARCHAR, %(id_1_26)s::VARCHAR, %(id_1_27)s::VARCHAR, %(id_1_28)s::VARCHAR, %(id_1_29)s::VARCHAR, %(id_1_30)s::VARCHAR, %(id_1_31)s::VARCHAR, %(id_1_32)s::VARCHAR, %(id_1_33)s::VARCHAR, %(id_1_34)s::VARCHAR, %(id_1_35)s::VARCHAR, %(id_1_36)s::VARCHAR, %(id_1_37)s::VARCHAR, %(id_1_38)s::VARCHAR, %(id_1_39)s::VARCHAR, %(id_1_40)s::VARCHAR, %(id_1_41)s::VARCHAR, %(id_1_42)s::VARCHAR, %(id_1_43)s::VARCHAR, %(id_1_44)s::VARCHAR, %(id_1_45)s::VARCHAR, %(id_1_46)s::VARCHAR, %(id_1_47)s::VARCHAR, %(id_1_48)s::VARCHAR, %(id_1_49)s::VARCHAR, %(id_1_50)s::VARCHAR, %(id_1_51)s::VARCHAR, %(id_1_52)s::VARCHAR, %(id_1_53)s::VARCHAR, %(id_1_54)s::VARCHAR, %(id_1_55)s::VARCHAR, %(id_1_56)s::VARCHAR, %(id_1_57)s::VARCHAR, %(id_1_58)s::VARCHAR, %(id_1_59)s::VARCHAR, %(id_1_60)s::VARCHAR, %(id_1_61)s::VARCHAR, %(id_1_62)s::VARCHAR, %(id_1_63)s::VARCHAR, %(id_1_64)s::VARCHAR, %(id_1_65)s::VARCHAR, %(id_1_66)s::VARCHAR, %(id_1_67)s::VARCHAR, %(id_1_68)s::VARCHAR, %(id_1_69)s::VARCHAR, %(id_1_70)s::VARCHAR, %(id_1_71)s::VARCHAR, %(id_1_72)s::VARCHAR, %(id_1_73)s::VARCHAR, %(id_1_74)s::VARCHAR, %(id_1_75)s::VARCHAR, %(id_1_76)s::VARCHAR, %(id_1_77)s::VARCHAR, %(id_1_78)s::VARCHAR, %(id_1_79)s::VARCHAR, %(id_1_80)s::VARCHAR, %(id_1_81)s::VARCHAR, %(id_1_82)s::VARCHAR, %(id_1_83)s::VARCHAR, %(id_1_84)s::VARCHAR, %(id_1_85)s::VARCHAR, %(id_1_86)s::VARCHAR, %(id_1_87)s::VARCHAR, %(id_1_88)s::VARCHAR, %(id_1_89)s::VARCHAR, %(id_1_90)s::VARCHAR, %(id_1_91)s::VARCHAR, %(id_1_92)s::VARCHAR, %(id_1_93)s::VARCHAR, %(id_1_94)s::VARCHAR, %(id_1_95)s::VARCHAR, %(id_1_96)s::VARCHAR, %(id_1_97)s::VARCHAR, %(id_1_98)s::VARCHAR, %(id_1_99)s::VARCHAR, %(id_1_100)s::VARCHAR, %(id_1_101)s::VARCHAR, %(id_1_102)s::VARCHAR, %(id_1_103)s::VARCHAR, %(id_1_104)s::VARCHAR, %(id_1_105)s::VARCHAR, %(id_1_106)s::VARCHAR, %(id_1_107)s::VARCHAR, %(id_1_108)s::VARCHAR, %(id_1_109)s::VARCHAR, %(id_1_110)s::VARCHAR, %(id_1_111)s::VARCHAR, %(id_1_112)s::VARCHAR, %(id_1_113)s::VARCHAR, %(id_1_114)s::VARCHAR, %(id_1_115)s::VARCHAR, %(id_1_116)s::VARCHAR, %(id_1_117)s::VARCHAR, %(id_1_118)s::VARCHAR, %(id_1_119)s::VARCHAR, %(id_1_120)s::VARCHAR, %(id_1_121)s::VARCHAR, %(id_1_122)s::VARCHAR, %(id_1_123)s::VARCHAR, %(id_1_124)s::VARCHAR, %(id_1_125)s::VARCHAR, %(id_1_126)s::VARCHAR, %(id_1_127)s::VARCHAR, %(id_1_128)s::VARCHAR, %(id_1_129)s::VARCHAR, %(id_1_130)s::VARCHAR, %(id_1_131)s::VARCHAR, %(id_1_132)s::VARCHAR, %(id_1_133)s::VARCHAR, %(id_1_134)s::VARCHAR, %(id_1_135)s::VARCHAR, %(id_1_136)s::VARCHAR, %(id_1_137)s::VARCHAR, %(id_1_138)s::VARCHAR, %(id_1_139)s::VARCHAR, %(id_1_140)s::VARCHAR, %(id_1_141)s::VARCHAR, %(id_1_142)s::VARCHAR, %(id_1_143)s::VARCHAR, %(id_1_144)s::VARCHAR, %(id_1_145)s::VARCHAR, %(id_1_146)s::VARCHAR, %(id_1_147)s::VARCHAR, %(id_1_148)s::VARCHAR, %(id_1_149)s::VARCHAR, %(id_1_150)s::VARCHAR, %(id_1_151)s::VARCHAR, %(id_1_152)s::VARCHAR, %(id_1_153)s::VARCHAR, %(id_1_154)s::VARCHAR, %(id_1_155)s::VARCHAR, %(id_1_156)s::VARCHAR, %(id_1_157)s::VARCHAR, %(id_1_158)s::VARCHAR, %(id_1_159)s::VARCHAR, %(id_1_160)s::VARCHAR, %(id_1_161)s::VARCHAR, %(id_1_162)s::VARCHAR, %(id_1_163)s::VARCHAR, %(id_1_164)s::VARCHAR, %(id_1_165)s::VARCHAR, %(id_1_166)s::VARCHAR, %(id_1_167)s::VARCHAR, %(id_1_168)s::VARCHAR, %(id_1_169)s::VARCHAR, %(id_1_170)s::VARCHAR, %(id_1_171)s::VARCHAR, %(id_1_172)s::VARCHAR, %(id_1_173)s::VARCHAR, %(id_1_174)s::VARCHAR, %(id_1_175)s::VARCHAR, %(id_1_176)s::VARCHAR, %(id_1_177)s::VARCHAR, %(id_1_178)s::VARCHAR, %(id_1_179)s::VARCHAR, %(id_1_180)s::VARCHAR, %(id_1_181)s::VARCHAR, %(id_1_182)s::VARCHAR, %(id_1_183)s::VARCHAR, %(id_1_184)s::VARCHAR, %(id_1_185)s::VARCHAR, %(id_1_186)s::VARCHAR, %(id_1_187)s::VARCHAR, %(id_1_188)s::VARCHAR, %(id_1_189)s::VARCHAR, %(id_1_190)s::VARCHAR, %(id_1_191)s::VARCHAR, %(id_1_192)s::VARCHAR, %(id_1_193)s::VARCHAR, %(id_1_194)s::VARCHAR, %(id_1_195)s::VARCHAR, %(id_1_196)s::VARCHAR, %(id_1_197)s::VARCHAR, %(id_1_198)s::VARCHAR, %(id_1_199)s::VARCHAR, %(id_1_200)s::VARCHAR, %(id_1_201)s::VARCHAR, %(id_1_202)s::VARCHAR, %(id_1_203)s::VARCHAR, %(id_1_204)s::VARCHAR, %(id_1_205)s::VARCHAR, %(id_1_206)s::VARCHAR, %(id_1_207)s::VARCHAR, %(id_1_208)s::VARCHAR, %(id_1_209)s::VARCHAR, %(id_1_210)s::VARCHAR, %(id_1_211)s::VARCHAR, %(id_1_212)s::VARCHAR, %(id_1_213)s::VARCHAR, %(id_1_214)s::VARCHAR, %(id_1_215)s::VARCHAR, %(id_1_216)s::VARCHAR, %(id_1_217)s::VARCHAR, %(id_1_218)s::VARCHAR, %(id_1_219)s::VARCHAR, %(id_1_220)s::VARCHAR, %(id_1_221)s::VARCHAR, %(id_1_222)s::VARCHAR, %(id_1_223)s::VARCHAR, %(id_1_224)s::VARCHAR, %(id_1_225)s::VARCHAR, %(id_1_226)s::VARCHAR, %(id_1_227)s::VARCHAR, %(id_1_228)s::VARCHAR, %(id_1_229)s::VARCHAR, %(id_1_230)s::VARCHAR, %(id_1_231)s::VARCHAR, %(id_1_232)s::VARCHAR, %(id_1_233)s::VARCHAR, %(id_1_234)s::VARCHAR, %(id_1_235)s::VARCHAR, %(id_1_236)s::VARCHAR, %(id_1_237)s::VARCHAR, %(id_1_238)s::VARCHAR, %(id_1_239)s::VARCHAR, %(id_1_240)s::VARCHAR, %(id_1_241)s::VARCHAR, %(id_1_242)s::VARCHAR, %(id_1_243)s::VARCHAR, %(id_1_244)s::VARCHAR, %(id_1_245)s::VARCHAR, %(id_1_246)s::VARCHAR, %(id_1_247)s::VARCHAR, %(id_1_248)s::VARCHAR, %(id_1_249)s::VARCHAR, %(id_1_250)s::VARCHAR, %(id_1_251)s::VARCHAR, %(id_1_252)s::VARCHAR, %(id_1_253)s::VARCHAR, %(id_1_254)s::VARCHAR, %(id_1_255)s::VARCHAR, %(id_1_256)s::VARCHAR, %(id_1_257)s::VARCHAR, %(id_1_258)s::VARCHAR, %(id_1_259)s::VARCHAR, %(id_1_260)s::VARCHAR, %(id_1_261)s::VARCHAR, %(id_1_262)s::VARCHAR, %(id_1_263)s::VARCHAR, %(id_1_264)s::VARCHAR, %(id_1_265)s::VARCHAR, %(id_1_266)s::VARCHAR, %(id_1_267)s::VARCHAR, %(id_1_268)s::VARCHAR, %(id_1_269)s::VARCHAR, %(id_1_270)s::VARCHAR, %(id_1_271)s::VARCHAR, %(id_1_272)s::VARCHAR, %(id_1_273)s::VARCHAR, %(id_1_274)s::VARCHAR, %(id_1_275)s::VARCHAR, %(id_1_276)s::VARCHAR, %(id_1_277)s::VARCHAR, %(id_1_278)s::VARCHAR, %(id_1_279)s::VARCHAR, %(id_1_280)s::VARCHAR, %(id_1_281)s::VARCHAR, %(id_1_282)s::VARCHAR, %(id_1_283)s::VARCHAR, %(id_1_284)s::VARCHAR, %(id_1_285)s::VARCHAR, %(id_1_286)s::VARCHAR, %(id_1_287)s::VARCHAR, %(id_1_288)s::VARCHAR, %(id_1_289)s::VARCHAR, %(id_1_290)s::VARCHAR, %(id_1_291)s::VARCHAR, %(id_1_292)s::VARCHAR, %(id_1_293)s::VARCHAR, %(id_1_294)s::VARCHAR, %(id_1_295)s::VARCHAR, %(id_1_296)s::VARCHAR, %(id_1_297)s::VARCHAR, %(id_1_298)s::VARCHAR, %(id_1_299)s::VARCHAR, %(id_1_300)s::VARCHAR, %(id_1_301)s::VARCHAR, %(id_1_302)s::VARCHAR, %(id_1_303)s::VARCHAR, %(id_1_304)s::VARCHAR, %(id_1_305)s::VARCHAR, %(id_1_306)s::VARCHAR, %(id_1_307)s::VARCHAR, %(id_1_308)s::VARCHAR, %(id_1_309)s::VARCHAR, %(id_1_310)s::VARCHAR, %(id_1_311)s::VARCHAR, %(id_1_312)s::VARCHAR, %(id_1_313)s::VARCHAR, %(id_1_314)s::VARCHAR, %(id_1_315)s::VARCHAR, %(id_1_316)s::VARCHAR, %(id_1_317)s::VARCHAR, %(id_1_318)s::VARCHAR, %(id_1_319)s::VARCHAR, %(id_1_320)s::VARCHAR, %(id_1_321)s::VARCHAR, %(id_1_322)s::VARCHAR, %(id_1_323)s::VARCHAR, %(id_1_324)s::VARCHAR, %(id_1_325)s::VARCHAR, %(id_1_326)s::VARCHAR, %(id_1_327)s::VARCHAR, %(id_1_328)s::VARCHAR, %(id_1_329)s::VARCHAR, %(id_1_330)s::VARCHAR, %(id_1_331)s::VARCHAR, %(id_1_332)s::VARCHAR, %(id_1_333)s::VARCHAR, %(id_1_334)s::VARCHAR, %(id_1_335)s::VARCHAR, %(id_1_336)s::VARCHAR, %(id_1_337)s::VARCHAR, %(id_1_338)s::VARCHAR, %(id_1_339)s::VARCHAR, %(id_1_340)s::VARCHAR, %(id_1_341)s::VARCHAR, %(id_1_342)s::VARCHAR, %(id_1_343)s::VARCHAR, %(id_1_344)s::VARCHAR, %(id_1_345)s::VARCHAR, %(id_1_346)s::VARCHAR, %(id_1_347)s::VARCHAR, %(id_1_348)s::VARCHAR, %(id_1_349)s::VARCHAR, %(id_1_350)s::VARCHAR, %(id_1_351)s::VARCHAR, %(id_1_352)s::VARCHAR, %(id_1_353)s::VARCHAR, %(id_1_354)s::VARCHAR, %(id_1_355)s::VARCHAR, %(id_1_356)s::VARCHAR, %(id_1_357)s::VARCHAR, %(id_1_358)s::VARCHAR, %(id_1_359)s::VARCHAR, %(id_1_360)s::VARCHAR, %(id_1_361)s::VARCHAR, %(id_1_362)s::VARCHAR, %(id_1_363)s::VARCHAR, %(id_1_364)s::VARCHAR, %(id_1_365)s::VARCHAR, %(id_1_366)s::VARCHAR, %(id_1_367)s::VARCHAR, %(id_1_368)s::VARCHAR, %(id_1_369)s::VARCHAR, %(id_1_370)s::VARCHAR, %(id_1_371)s::VARCHAR, %(id_1_372)s::VARCHAR, %(id_1_373)s::VARCHAR, %(id_1_374)s::VARCHAR, %(id_1_375)s::VARCHAR, %(id_1_376)s::VARCHAR, %(id_1_377)s::VARCHAR, %(id_1_378)s::VARCHAR, %(id_1_379)s::VARCHAR, %(id_1_380)s::VARCHAR, %(id_1_381)s::VARCHAR, %(id_1_382)s::VARCHAR, %(id_1_383)s::VARCHAR, %(id_1_384)s::VARCHAR, %(id_1_385)s::VARCHAR, %(id_1_386)s::VARCHAR, %(id_1_387)s::VARCHAR, %(id_1_388)s::VARCHAR, %(id_1_389)s::VARCHAR, %(id_1_390)s::VARCHAR, %(id_1_391)s::VARCHAR, %(id_1_392)s::VARCHAR, %(id_1_393)s::VARCHAR, %(id_1_394)s::VARCHAR, %(id_1_395)s::VARCHAR, %(id_1_396)s::VARCHAR, %(id_1_397)s::VARCHAR, %(id_1_398)s::VARCHAR, %(id_1_399)s::VARCHAR, %(id_1_400)s::VARCHAR, %(id_1_401)s::VARCHAR, %(id_1_402)s::VARCHAR, %(id_1_403)s::VARCHAR, %(id_1_404)s::VARCHAR, %(id_1_405)s::VARCHAR, %(id_1_406)s::VARCHAR, %(id_1_407)s::VARCHAR, %(id_1_408)s::VARCHAR, %(id_1_409)s::VARCHAR, %(id_1_410)s::VARCHAR, %(id_1_411)s::VARCHAR, %(id_1_412)s::VARCHAR, %(id_1_413)s::VARCHAR, %(id_1_414)s::VARCHAR, %(id_1_415)s::VARCHAR, %(id_1_416)s::VARCHAR, %(id_1_417)s::VARCHAR, %(id_1_418)s::VARCHAR, %(id_1_419)s::VARCHAR, %(id_1_420)s::VARCHAR, %(id_1_421)s::VARCHAR, %(id_1_422)s::VARCHAR, %(id_1_423)s::VARCHAR, %(id_1_424)s::VARCHAR, %(id_1_425)s::VARCHAR, %(id_1_426)s::VARCHAR, %(id_1_427)s::VARCHAR, %(id_1_428)s::VARCHAR, %(id_1_429)s::VARCHAR, %(id_1_430)s::VARCHAR, %(id_1_431)s::VARCHAR, %(id_1_432)s::VARCHAR, %(id_1_433)s::VARCHAR, %(id_1_434)s::VARCHAR, %(id_1_435)s::VARCHAR, %(id_1_436)s::VARCHAR, %(id_1_437)s::VARCHAR, %(id_1_438)s::VARCHAR, %(id_1_439)s::VARCHAR, %(id_1_440)s::VARCHAR, %(id_1_441)s::VARCHAR, %(id_1_442)s::VARCHAR, %(id_1_443)s::VARCHAR, %(id_1_444)s::VARCHAR, %(id_1_445)s::VARCHAR, %(id_1_446)s::VARCHAR, %(id_1_447)s::VARCHAR, %(id_1_448)s::VARCHAR, %(id_1_449)s::VARCHAR, %(id_1_450)s::VARCHAR, %(id_1_451)s::VARCHAR, %(id_1_452)s::VARCHAR, %(id_1_453)s::VARCHAR, %(id_1_454)s::VARCHAR, %(id_1_455)s::VARCHAR, %(id_1_456)s::VARCHAR, %(id_1_457)s::VARCHAR, %(id_1_458)s::VARCHAR, %(id_1_459)s::VARCHAR, %(id_1_460)s::VARCHAR, %(id_1_461)s::VARCHAR, %(id_1_462)s::VARCHAR, %(id_1_463)s::VARCHAR, %(id_1_464)s::VARCHAR, %(id_1_465)s::VARCHAR, %(id_1_466)s::VARCHAR, %(id_1_467)s::VARCHAR, %(id_1_468)s::VARCHAR, %(id_1_469)s::VARCHAR, %(id_1_470)s::VARCHAR, %(id_1_471)s::VARCHAR, %(id_1_472)s::VARCHAR, %(id_1_473)s::VARCHAR, %(id_1_474)s::VARCHAR, %(id_1_475)s::VARCHAR, %(id_1_476)s::VARCHAR, %(id_1_477)s::VARCHAR, %(id_1_478)s::VARCHAR, %(id_1_479)s::VARCHAR, %(id_1_480)s::VARCHAR, %(id_1_481)s::VARCHAR, %(id_1_482)s::VARCHAR, %(id_1_483)s::VARCHAR, %(id_1_484)s::VARCHAR, %(id_1_485)s::VARCHAR, %(id_1_486)s::VARCHAR, %(id_1_487)s::VARCHAR, %(id_1_488)s::VARCHAR, %(id_1_489)s::VARCHAR, %(id_1_490)s::VARCHAR, %(id_1_491)s::VARCHAR, %(id_1_492)s::VARCHAR, %(id_1_493)s::VARCHAR, %(id_1_494)s::VARCHAR, %(id_1_495)s::VARCHAR, %(id_1_496)s::VARCHAR, %(id_1_497)s::VARCHAR, %(id_1_498)s::VARCHAR, %(id_1_499)s::VARCHAR, %(id_1_500)s::VARCHAR)",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR, %(id_1_12)s::VARCHAR, %(id_1_13)s::VARCHAR, %(id_1_14)s::VARCHAR, %(id_1_15)s::VARCHAR, %(id_1_16)s::VARCHAR, %(id_1_17)s::VARCHAR, %(id_1_18)s::VARCHAR, %(id_1_19)s::VARCHAR, %(id_1_20)s::VARCHAR, %(id_1_21)s::VARCHAR, %(id_1_22)s::VARCHAR, %(id_1_23)s::VARCHAR, %(id_1_24)s::VARCHAR, %(id_1_25)s::VARCHAR, %(id_1_26)s::VARCHAR, %(id_1_27)s::VARCHAR, %(id_1_28)s::VARCHAR, %(id_1_29)s::VARCHAR, %(id_1_30)s::VARCHAR, %(id_1_31)s::VARCHAR, %(id_1_32)s::VARCHAR, %(id_1_33)s::VARCHAR, %(id_1_34)s::VARCHAR, %(id_1_35)s::VARCHAR, %(id_1_36)s::VARCHAR, %(id_1_37)s::VARCHAR, %(id_1_38)s::VARCHAR, %(id_1_39)s::VARCHAR, %(id_1_40)s::VARCHAR, %(id_1_41)s::VARCHAR, %(id_1_42)s::VARCHAR, %(id_1_43)s::VARCHAR, %(id_1_44)s::VARCHAR, %(id_1_45)s::VARCHAR, %(id_1_46)s::VARCHAR, %(id_1_47)s::VARCHAR, %(id_1_48)s::VARCHAR, %(id_1_49)s::VARCHAR, %(id_1_50)s::VARCHAR, %(id_1_51)s::VARCHAR, %(id_1_52)s::VARCHAR, %(id_1_53)s::VARCHAR, %(id_1_54)s::VARCHAR, %(id_1_55)s::VARCHAR, %(id_1_56)s::VARCHAR, %(id_1_57)s::VARCHAR, %(id_1_58)s::VARCHAR, %(id_1_59)s::VARCHAR, %(id_1_60)s::VARCHAR, %(id_1_61)s::VARCHAR, %(id_1_62)s::VARCHAR, %(id_1_63)s::VARCHAR, %(id_1_64)s::VARCHAR, %(id_1_65)s::VARCHAR, %(id_1_66)s::VARCHAR, %(id_1_67)s::VARCHAR, %(id_1_68)s::VARCHAR, %(id_1_69)s::VARCHAR, %(id_1_70)s::VARCHAR, %(id_1_71)s::VARCHAR, %(id_1_72)s::VARCHAR, %(id_1_73)s::VARCHAR, %(id_1_74)s::VARCHAR, %(id_1_75)s::VARCHAR, %(id_1_76)s::VARCHAR, %(id_1_77)s::VARCHAR, %(id_1_78)s::VARCHAR, %(id_1_79)s::VARCHAR, %(id_1_80)s::VARCHAR, %(id_1_81)s::VARCHAR, %(id_1_82)s::VARCHAR, %(id_1_83)s::VARCHAR, %(id_1_84)s::VARCHAR, %(id_1_85)s::VARCHAR, %(id_1_86)s::VARCHAR, %(id_1_87)s::VARCHAR, %(id_1_88)s::VARCHAR, %(id_1_89)s::VARCHAR, %(id_1_90)s::VARCHAR, %(id_1_91)s::VARCHAR, %(id_1_92)s::VARCHAR, %(id_1_93)s::VARCHAR, %(id_1_94)s::VARCHAR, %(id_1_95)s::VARCHAR, %(id_1_96)s::VARCHAR, %(id_1_97)s::VARCHAR, %(id_1_98)s::VARCHAR, %(id_1_99)s::VARCHAR, %(id_1_100)s::VARCHAR)",
+        "SELECT players.id, players.display_name \nFROM players \nWHERE players.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR, %(id_1_12)s::VARCHAR, %(id_1_13)s::VARCHAR, %(id_1_14)s::VARCHAR, %(id_1_15)s::VARCHAR, %(id_1_16)s::VARCHAR, %(id_1_17)s::VARCHAR, %(id_1_18)s::VARCHAR, %(id_1_19)s::VARCHAR, %(id_1_20)s::VARCHAR, %(id_1_21)s::VARCHAR, %(id_1_22)s::VARCHAR, %(id_1_23)s::VARCHAR, %(id_1_24)s::VARCHAR, %(id_1_25)s::VARCHAR, %(id_1_26)s::VARCHAR, %(id_1_27)s::VARCHAR, %(id_1_28)s::VARCHAR, %(id_1_29)s::VARCHAR, %(id_1_30)s::VARCHAR, %(id_1_31)s::VARCHAR, %(id_1_32)s::VARCHAR, %(id_1_33)s::VARCHAR, %(id_1_34)s::VARCHAR, %(id_1_35)s::VARCHAR, %(id_1_36)s::VARCHAR, %(id_1_37)s::VARCHAR, %(id_1_38)s::VARCHAR, %(id_1_39)s::VARCHAR, %(id_1_40)s::VARCHAR, %(id_1_41)s::VARCHAR)"
+      ],
+      "response_sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db",
+      "read_only": true,
+      "median_ms": 249.1231,
+      "p95_ms": 369.7471,
+      "query_counts": [
+        8
+      ]
+    },
+    {
+      "trades": 501,
+      "items_per_side": 0,
+      "samples": [
+        {
+          "milliseconds": 118.1071,
+          "statements": 5
+        },
+        {
+          "milliseconds": 117.3025,
+          "statements": 5
+        },
+        {
+          "milliseconds": 100.9603,
+          "statements": 5
+        },
+        {
+          "milliseconds": 177.5231,
+          "statements": 5
+        },
+        {
+          "milliseconds": 94.299,
+          "statements": 5
+        },
+        {
+          "milliseconds": 95.0207,
+          "statements": 5
+        },
+        {
+          "milliseconds": 90.1573,
+          "statements": 5
+        },
+        {
+          "milliseconds": 96.8222,
+          "statements": 5
+        },
+        {
+          "milliseconds": 107.4215,
+          "statements": 5
+        },
+        {
+          "milliseconds": 102.9494,
+          "statements": 5
+        }
+      ],
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT players.id, players.display_name \nFROM players \nWHERE players.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR, %(id_1_12)s::VARCHAR, %(id_1_13)s::VARCHAR, %(id_1_14)s::VARCHAR, %(id_1_15)s::VARCHAR, %(id_1_16)s::VARCHAR, %(id_1_17)s::VARCHAR, %(id_1_18)s::VARCHAR, %(id_1_19)s::VARCHAR, %(id_1_20)s::VARCHAR, %(id_1_21)s::VARCHAR, %(id_1_22)s::VARCHAR, %(id_1_23)s::VARCHAR, %(id_1_24)s::VARCHAR, %(id_1_25)s::VARCHAR, %(id_1_26)s::VARCHAR, %(id_1_27)s::VARCHAR, %(id_1_28)s::VARCHAR, %(id_1_29)s::VARCHAR, %(id_1_30)s::VARCHAR, %(id_1_31)s::VARCHAR, %(id_1_32)s::VARCHAR, %(id_1_33)s::VARCHAR, %(id_1_34)s::VARCHAR, %(id_1_35)s::VARCHAR, %(id_1_36)s::VARCHAR, %(id_1_37)s::VARCHAR, %(id_1_38)s::VARCHAR, %(id_1_39)s::VARCHAR, %(id_1_40)s::VARCHAR, %(id_1_41)s::VARCHAR, %(id_1_42)s::VARCHAR, %(id_1_43)s::VARCHAR, %(id_1_44)s::VARCHAR, %(id_1_45)s::VARCHAR, %(id_1_46)s::VARCHAR, %(id_1_47)s::VARCHAR, %(id_1_48)s::VARCHAR, %(id_1_49)s::VARCHAR, %(id_1_50)s::VARCHAR, %(id_1_51)s::VARCHAR, %(id_1_52)s::VARCHAR, %(id_1_53)s::VARCHAR, %(id_1_54)s::VARCHAR, %(id_1_55)s::VARCHAR, %(id_1_56)s::VARCHAR, %(id_1_57)s::VARCHAR, %(id_1_58)s::VARCHAR, %(id_1_59)s::VARCHAR, %(id_1_60)s::VARCHAR, %(id_1_61)s::VARCHAR, %(id_1_62)s::VARCHAR, %(id_1_63)s::VARCHAR, %(id_1_64)s::VARCHAR, %(id_1_65)s::VARCHAR, %(id_1_66)s::VARCHAR, %(id_1_67)s::VARCHAR, %(id_1_68)s::VARCHAR, %(id_1_69)s::VARCHAR, %(id_1_70)s::VARCHAR, %(id_1_71)s::VARCHAR, %(id_1_72)s::VARCHAR, %(id_1_73)s::VARCHAR, %(id_1_74)s::VARCHAR, %(id_1_75)s::VARCHAR, %(id_1_76)s::VARCHAR, %(id_1_77)s::VARCHAR, %(id_1_78)s::VARCHAR, %(id_1_79)s::VARCHAR, %(id_1_80)s::VARCHAR, %(id_1_81)s::VARCHAR, %(id_1_82)s::VARCHAR, %(id_1_83)s::VARCHAR, %(id_1_84)s::VARCHAR, %(id_1_85)s::VARCHAR, %(id_1_86)s::VARCHAR, %(id_1_87)s::VARCHAR, %(id_1_88)s::VARCHAR, %(id_1_89)s::VARCHAR, %(id_1_90)s::VARCHAR, %(id_1_91)s::VARCHAR, %(id_1_92)s::VARCHAR, %(id_1_93)s::VARCHAR, %(id_1_94)s::VARCHAR, %(id_1_95)s::VARCHAR, %(id_1_96)s::VARCHAR, %(id_1_97)s::VARCHAR, %(id_1_98)s::VARCHAR, %(id_1_99)s::VARCHAR, %(id_1_100)s::VARCHAR, %(id_1_101)s::VARCHAR, %(id_1_102)s::VARCHAR, %(id_1_103)s::VARCHAR, %(id_1_104)s::VARCHAR, %(id_1_105)s::VARCHAR, %(id_1_106)s::VARCHAR, %(id_1_107)s::VARCHAR, %(id_1_108)s::VARCHAR, %(id_1_109)s::VARCHAR, %(id_1_110)s::VARCHAR, %(id_1_111)s::VARCHAR, %(id_1_112)s::VARCHAR, %(id_1_113)s::VARCHAR, %(id_1_114)s::VARCHAR, %(id_1_115)s::VARCHAR, %(id_1_116)s::VARCHAR, %(id_1_117)s::VARCHAR, %(id_1_118)s::VARCHAR, %(id_1_119)s::VARCHAR, %(id_1_120)s::VARCHAR, %(id_1_121)s::VARCHAR, %(id_1_122)s::VARCHAR, %(id_1_123)s::VARCHAR, %(id_1_124)s::VARCHAR, %(id_1_125)s::VARCHAR, %(id_1_126)s::VARCHAR, %(id_1_127)s::VARCHAR, %(id_1_128)s::VARCHAR, %(id_1_129)s::VARCHAR, %(id_1_130)s::VARCHAR, %(id_1_131)s::VARCHAR, %(id_1_132)s::VARCHAR, %(id_1_133)s::VARCHAR, %(id_1_134)s::VARCHAR, %(id_1_135)s::VARCHAR, %(id_1_136)s::VARCHAR, %(id_1_137)s::VARCHAR, %(id_1_138)s::VARCHAR, %(id_1_139)s::VARCHAR, %(id_1_140)s::VARCHAR, %(id_1_141)s::VARCHAR, %(id_1_142)s::VARCHAR, %(id_1_143)s::VARCHAR, %(id_1_144)s::VARCHAR, %(id_1_145)s::VARCHAR, %(id_1_146)s::VARCHAR, %(id_1_147)s::VARCHAR, %(id_1_148)s::VARCHAR, %(id_1_149)s::VARCHAR, %(id_1_150)s::VARCHAR, %(id_1_151)s::VARCHAR, %(id_1_152)s::VARCHAR, %(id_1_153)s::VARCHAR, %(id_1_154)s::VARCHAR, %(id_1_155)s::VARCHAR, %(id_1_156)s::VARCHAR, %(id_1_157)s::VARCHAR, %(id_1_158)s::VARCHAR, %(id_1_159)s::VARCHAR, %(id_1_160)s::VARCHAR, %(id_1_161)s::VARCHAR, %(id_1_162)s::VARCHAR, %(id_1_163)s::VARCHAR, %(id_1_164)s::VARCHAR, %(id_1_165)s::VARCHAR, %(id_1_166)s::VARCHAR, %(id_1_167)s::VARCHAR, %(id_1_168)s::VARCHAR, %(id_1_169)s::VARCHAR, %(id_1_170)s::VARCHAR, %(id_1_171)s::VARCHAR, %(id_1_172)s::VARCHAR, %(id_1_173)s::VARCHAR, %(id_1_174)s::VARCHAR, %(id_1_175)s::VARCHAR, %(id_1_176)s::VARCHAR, %(id_1_177)s::VARCHAR, %(id_1_178)s::VARCHAR, %(id_1_179)s::VARCHAR, %(id_1_180)s::VARCHAR, %(id_1_181)s::VARCHAR, %(id_1_182)s::VARCHAR, %(id_1_183)s::VARCHAR, %(id_1_184)s::VARCHAR, %(id_1_185)s::VARCHAR, %(id_1_186)s::VARCHAR, %(id_1_187)s::VARCHAR, %(id_1_188)s::VARCHAR, %(id_1_189)s::VARCHAR, %(id_1_190)s::VARCHAR, %(id_1_191)s::VARCHAR, %(id_1_192)s::VARCHAR, %(id_1_193)s::VARCHAR, %(id_1_194)s::VARCHAR, %(id_1_195)s::VARCHAR, %(id_1_196)s::VARCHAR, %(id_1_197)s::VARCHAR, %(id_1_198)s::VARCHAR, %(id_1_199)s::VARCHAR, %(id_1_200)s::VARCHAR, %(id_1_201)s::VARCHAR, %(id_1_202)s::VARCHAR, %(id_1_203)s::VARCHAR, %(id_1_204)s::VARCHAR, %(id_1_205)s::VARCHAR, %(id_1_206)s::VARCHAR, %(id_1_207)s::VARCHAR, %(id_1_208)s::VARCHAR, %(id_1_209)s::VARCHAR, %(id_1_210)s::VARCHAR, %(id_1_211)s::VARCHAR, %(id_1_212)s::VARCHAR, %(id_1_213)s::VARCHAR, %(id_1_214)s::VARCHAR, %(id_1_215)s::VARCHAR, %(id_1_216)s::VARCHAR, %(id_1_217)s::VARCHAR, %(id_1_218)s::VARCHAR, %(id_1_219)s::VARCHAR, %(id_1_220)s::VARCHAR, %(id_1_221)s::VARCHAR, %(id_1_222)s::VARCHAR, %(id_1_223)s::VARCHAR, %(id_1_224)s::VARCHAR, %(id_1_225)s::VARCHAR, %(id_1_226)s::VARCHAR, %(id_1_227)s::VARCHAR, %(id_1_228)s::VARCHAR, %(id_1_229)s::VARCHAR, %(id_1_230)s::VARCHAR, %(id_1_231)s::VARCHAR, %(id_1_232)s::VARCHAR, %(id_1_233)s::VARCHAR, %(id_1_234)s::VARCHAR, %(id_1_235)s::VARCHAR, %(id_1_236)s::VARCHAR, %(id_1_237)s::VARCHAR, %(id_1_238)s::VARCHAR, %(id_1_239)s::VARCHAR, %(id_1_240)s::VARCHAR, %(id_1_241)s::VARCHAR, %(id_1_242)s::VARCHAR, %(id_1_243)s::VARCHAR, %(id_1_244)s::VARCHAR, %(id_1_245)s::VARCHAR, %(id_1_246)s::VARCHAR, %(id_1_247)s::VARCHAR, %(id_1_248)s::VARCHAR, %(id_1_249)s::VARCHAR, %(id_1_250)s::VARCHAR, %(id_1_251)s::VARCHAR, %(id_1_252)s::VARCHAR, %(id_1_253)s::VARCHAR, %(id_1_254)s::VARCHAR, %(id_1_255)s::VARCHAR, %(id_1_256)s::VARCHAR, %(id_1_257)s::VARCHAR, %(id_1_258)s::VARCHAR, %(id_1_259)s::VARCHAR, %(id_1_260)s::VARCHAR, %(id_1_261)s::VARCHAR, %(id_1_262)s::VARCHAR, %(id_1_263)s::VARCHAR, %(id_1_264)s::VARCHAR, %(id_1_265)s::VARCHAR, %(id_1_266)s::VARCHAR, %(id_1_267)s::VARCHAR, %(id_1_268)s::VARCHAR, %(id_1_269)s::VARCHAR, %(id_1_270)s::VARCHAR, %(id_1_271)s::VARCHAR, %(id_1_272)s::VARCHAR, %(id_1_273)s::VARCHAR, %(id_1_274)s::VARCHAR, %(id_1_275)s::VARCHAR, %(id_1_276)s::VARCHAR, %(id_1_277)s::VARCHAR, %(id_1_278)s::VARCHAR, %(id_1_279)s::VARCHAR, %(id_1_280)s::VARCHAR, %(id_1_281)s::VARCHAR, %(id_1_282)s::VARCHAR, %(id_1_283)s::VARCHAR, %(id_1_284)s::VARCHAR, %(id_1_285)s::VARCHAR, %(id_1_286)s::VARCHAR, %(id_1_287)s::VARCHAR, %(id_1_288)s::VARCHAR, %(id_1_289)s::VARCHAR, %(id_1_290)s::VARCHAR, %(id_1_291)s::VARCHAR, %(id_1_292)s::VARCHAR, %(id_1_293)s::VARCHAR, %(id_1_294)s::VARCHAR, %(id_1_295)s::VARCHAR, %(id_1_296)s::VARCHAR, %(id_1_297)s::VARCHAR, %(id_1_298)s::VARCHAR, %(id_1_299)s::VARCHAR, %(id_1_300)s::VARCHAR, %(id_1_301)s::VARCHAR, %(id_1_302)s::VARCHAR, %(id_1_303)s::VARCHAR, %(id_1_304)s::VARCHAR, %(id_1_305)s::VARCHAR, %(id_1_306)s::VARCHAR, %(id_1_307)s::VARCHAR, %(id_1_308)s::VARCHAR, %(id_1_309)s::VARCHAR, %(id_1_310)s::VARCHAR, %(id_1_311)s::VARCHAR, %(id_1_312)s::VARCHAR, %(id_1_313)s::VARCHAR, %(id_1_314)s::VARCHAR, %(id_1_315)s::VARCHAR, %(id_1_316)s::VARCHAR, %(id_1_317)s::VARCHAR, %(id_1_318)s::VARCHAR, %(id_1_319)s::VARCHAR, %(id_1_320)s::VARCHAR, %(id_1_321)s::VARCHAR, %(id_1_322)s::VARCHAR, %(id_1_323)s::VARCHAR, %(id_1_324)s::VARCHAR, %(id_1_325)s::VARCHAR, %(id_1_326)s::VARCHAR, %(id_1_327)s::VARCHAR, %(id_1_328)s::VARCHAR, %(id_1_329)s::VARCHAR, %(id_1_330)s::VARCHAR, %(id_1_331)s::VARCHAR, %(id_1_332)s::VARCHAR, %(id_1_333)s::VARCHAR, %(id_1_334)s::VARCHAR, %(id_1_335)s::VARCHAR, %(id_1_336)s::VARCHAR, %(id_1_337)s::VARCHAR, %(id_1_338)s::VARCHAR, %(id_1_339)s::VARCHAR, %(id_1_340)s::VARCHAR, %(id_1_341)s::VARCHAR, %(id_1_342)s::VARCHAR, %(id_1_343)s::VARCHAR, %(id_1_344)s::VARCHAR, %(id_1_345)s::VARCHAR, %(id_1_346)s::VARCHAR, %(id_1_347)s::VARCHAR, %(id_1_348)s::VARCHAR, %(id_1_349)s::VARCHAR, %(id_1_350)s::VARCHAR, %(id_1_351)s::VARCHAR, %(id_1_352)s::VARCHAR, %(id_1_353)s::VARCHAR, %(id_1_354)s::VARCHAR, %(id_1_355)s::VARCHAR, %(id_1_356)s::VARCHAR, %(id_1_357)s::VARCHAR, %(id_1_358)s::VARCHAR, %(id_1_359)s::VARCHAR, %(id_1_360)s::VARCHAR, %(id_1_361)s::VARCHAR, %(id_1_362)s::VARCHAR, %(id_1_363)s::VARCHAR, %(id_1_364)s::VARCHAR, %(id_1_365)s::VARCHAR, %(id_1_366)s::VARCHAR, %(id_1_367)s::VARCHAR, %(id_1_368)s::VARCHAR, %(id_1_369)s::VARCHAR, %(id_1_370)s::VARCHAR, %(id_1_371)s::VARCHAR, %(id_1_372)s::VARCHAR, %(id_1_373)s::VARCHAR, %(id_1_374)s::VARCHAR, %(id_1_375)s::VARCHAR, %(id_1_376)s::VARCHAR, %(id_1_377)s::VARCHAR, %(id_1_378)s::VARCHAR, %(id_1_379)s::VARCHAR, %(id_1_380)s::VARCHAR, %(id_1_381)s::VARCHAR, %(id_1_382)s::VARCHAR, %(id_1_383)s::VARCHAR, %(id_1_384)s::VARCHAR, %(id_1_385)s::VARCHAR, %(id_1_386)s::VARCHAR, %(id_1_387)s::VARCHAR, %(id_1_388)s::VARCHAR, %(id_1_389)s::VARCHAR, %(id_1_390)s::VARCHAR, %(id_1_391)s::VARCHAR, %(id_1_392)s::VARCHAR, %(id_1_393)s::VARCHAR, %(id_1_394)s::VARCHAR, %(id_1_395)s::VARCHAR, %(id_1_396)s::VARCHAR, %(id_1_397)s::VARCHAR, %(id_1_398)s::VARCHAR, %(id_1_399)s::VARCHAR, %(id_1_400)s::VARCHAR, %(id_1_401)s::VARCHAR, %(id_1_402)s::VARCHAR, %(id_1_403)s::VARCHAR, %(id_1_404)s::VARCHAR, %(id_1_405)s::VARCHAR, %(id_1_406)s::VARCHAR, %(id_1_407)s::VARCHAR, %(id_1_408)s::VARCHAR, %(id_1_409)s::VARCHAR, %(id_1_410)s::VARCHAR, %(id_1_411)s::VARCHAR, %(id_1_412)s::VARCHAR, %(id_1_413)s::VARCHAR, %(id_1_414)s::VARCHAR, %(id_1_415)s::VARCHAR, %(id_1_416)s::VARCHAR, %(id_1_417)s::VARCHAR, %(id_1_418)s::VARCHAR, %(id_1_419)s::VARCHAR, %(id_1_420)s::VARCHAR, %(id_1_421)s::VARCHAR, %(id_1_422)s::VARCHAR, %(id_1_423)s::VARCHAR, %(id_1_424)s::VARCHAR, %(id_1_425)s::VARCHAR, %(id_1_426)s::VARCHAR, %(id_1_427)s::VARCHAR, %(id_1_428)s::VARCHAR, %(id_1_429)s::VARCHAR, %(id_1_430)s::VARCHAR, %(id_1_431)s::VARCHAR, %(id_1_432)s::VARCHAR, %(id_1_433)s::VARCHAR, %(id_1_434)s::VARCHAR, %(id_1_435)s::VARCHAR, %(id_1_436)s::VARCHAR, %(id_1_437)s::VARCHAR, %(id_1_438)s::VARCHAR, %(id_1_439)s::VARCHAR, %(id_1_440)s::VARCHAR, %(id_1_441)s::VARCHAR, %(id_1_442)s::VARCHAR, %(id_1_443)s::VARCHAR, %(id_1_444)s::VARCHAR, %(id_1_445)s::VARCHAR, %(id_1_446)s::VARCHAR, %(id_1_447)s::VARCHAR, %(id_1_448)s::VARCHAR, %(id_1_449)s::VARCHAR, %(id_1_450)s::VARCHAR, %(id_1_451)s::VARCHAR, %(id_1_452)s::VARCHAR, %(id_1_453)s::VARCHAR, %(id_1_454)s::VARCHAR, %(id_1_455)s::VARCHAR, %(id_1_456)s::VARCHAR, %(id_1_457)s::VARCHAR, %(id_1_458)s::VARCHAR, %(id_1_459)s::VARCHAR, %(id_1_460)s::VARCHAR, %(id_1_461)s::VARCHAR, %(id_1_462)s::VARCHAR, %(id_1_463)s::VARCHAR, %(id_1_464)s::VARCHAR, %(id_1_465)s::VARCHAR, %(id_1_466)s::VARCHAR, %(id_1_467)s::VARCHAR, %(id_1_468)s::VARCHAR, %(id_1_469)s::VARCHAR, %(id_1_470)s::VARCHAR, %(id_1_471)s::VARCHAR, %(id_1_472)s::VARCHAR, %(id_1_473)s::VARCHAR, %(id_1_474)s::VARCHAR, %(id_1_475)s::VARCHAR, %(id_1_476)s::VARCHAR, %(id_1_477)s::VARCHAR, %(id_1_478)s::VARCHAR, %(id_1_479)s::VARCHAR, %(id_1_480)s::VARCHAR, %(id_1_481)s::VARCHAR, %(id_1_482)s::VARCHAR, %(id_1_483)s::VARCHAR, %(id_1_484)s::VARCHAR, %(id_1_485)s::VARCHAR, %(id_1_486)s::VARCHAR, %(id_1_487)s::VARCHAR, %(id_1_488)s::VARCHAR, %(id_1_489)s::VARCHAR, %(id_1_490)s::VARCHAR, %(id_1_491)s::VARCHAR, %(id_1_492)s::VARCHAR, %(id_1_493)s::VARCHAR, %(id_1_494)s::VARCHAR, %(id_1_495)s::VARCHAR, %(id_1_496)s::VARCHAR, %(id_1_497)s::VARCHAR, %(id_1_498)s::VARCHAR, %(id_1_499)s::VARCHAR, %(id_1_500)s::VARCHAR)",
+        "SELECT players.id, players.display_name \nFROM players \nWHERE players.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR)"
+      ],
+      "response_sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b",
+      "read_only": true,
+      "median_ms": 101.95485,
+      "p95_ms": 177.5231,
+      "query_counts": [
+        5
+      ]
+    }
+  ],
+  "completed": true,
+  "postgresql": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
+  "final_source": {
+    "commit": "4a8e9ea73aa8b286d9f1751b0a6b485479737294",
+    "backend_tree": "4ef756639c2e90037bce79a30e2867aebcc798a7",
+    "backend_dirty": "",
+    "backend_files": {
+      "backend/app.py": "9f94a55f1b19858eec3ac54036601b5c26a330749454a6cb89650d51e298f020",
+      "backend/bridge_fixture.py": "00548df28d2ad6a8fdca9eeaed34af39e30bebbb205fb9b69b2d7112434b29db",
+      "backend/migrate.py": "0f06597968c1e0de8461083448306496f4cc53e6a0f3d94dbc0f1b0c003f1d58",
+      "backend/models.py": "5fa4e0ac4157e4ad883d4c2bf1df06d915a395c5303c063a1004aaabd071e09a",
+      "backend/pyproject.toml": "9fd253aaaa3d39616eeb076d991cd2836c4cddcc8f56d72f31776cd134ab0190",
+      "backend/simulate.py": "218299e27743c58eac64f2d5820f3320945321d3d58bdd2caee5d195c536afa2",
+      "backend/uv.lock": "c66ef08d0ef36424da51008f59e3905f544d15dbd602ed6e204c588b4ca93db5",
+      "backend/config/economy.json": "8d85944aff0a6531b8a022350cbe0562295573aff5f3bd96e474e06f192aec7a",
+      "backend/config/simulation-baseline.json": "0a7965dd37a68fd2960d6b6912dffb635fcb26ffa6f251b92a7872c688755a16",
+      "backend/migrations/001_integrity.sql": "83189d1d06cbec62db325dbcf376476bc3aa7c0984d7439bb8048360ff737392",
+      "backend/migrations/002_game_tickets.sql": "c063f4376339b013fc79cda3e6f7782c61654d51fe6e479c658f2e30a1eddd7e",
+      "backend/migrations/003_loadouts.sql": "cc8acafba73b07889b25f2b9ee594cd09094d0ff8fd34d64767e6fcde62ee017",
+      "backend/migrations/004_market_index.sql": "cc51bd7647a6bd6abb272efd9564e089c0cc3d7afa0e76586503b3225535a5af",
+      "backend/tests/test_economy.py": "d3ada3e8590fb30a5a5e812525ccaea4be3778af50903eb2d02de41e201d528a",
+      "backend/tests/test_trade_reads.py": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1"
+    }
+  },
+  "database_dropped": true
+}
