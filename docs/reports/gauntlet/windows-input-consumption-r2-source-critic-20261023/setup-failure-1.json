@@ -1,0 +1,9 @@
+{
+  "scope": "Preserved reviewer setup failure before analyzer execution",
+  "command": "taskset -c 4 python3 <frozen independent rig> --source . --output <R2 report>/frozen-main > <R2 report>/frozen-main.stdout",
+  "exit_code": 1,
+  "stderr": "/bin/bash: line 1: /workspace/reviews/windows-input-consumption-r2-source-critic/docs/reports/gauntlet/windows-input-consumption-r2-source-critic-20261023/frozen-main.stdout: No such file or directory",
+  "cause": "Sparse checkout population omitted the own tracked report directory. Restored the explicit own report cone before retry; no candidate or control change.",
+  "analyzer_started": false,
+  "native_started": false
+}

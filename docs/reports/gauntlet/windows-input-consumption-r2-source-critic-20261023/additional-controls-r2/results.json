@@ -1,0 +1,75 @@
+{
+  "candidate": "86fe3cbe3f191b328c1e08bf8d5adc0a937e39b1",
+  "checkout_head": "2f709b129987dcc0b681e62deede058083bad3dd",
+  "cpu_affinity": [
+    4
+  ],
+  "analyzer_sha256": "555632cafffa24f9ffc8514bba530f138feea455a83f42b2600d77d27d6aa23e",
+  "cases": [
+    {
+      "name": "coherent_control",
+      "expected_complete": true,
+      "actual_complete": true,
+      "expectation_met": true,
+      "source_basis": "Frozen independently authored schema baseline; no native execution claim."
+    },
+    {
+      "name": "bound_generation_never_connected",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false,
+      "source_basis": "peer_lifecycle.connected allocates generation; admitted and peer_bound use the same pending attempt. Connected generation1 cannot bind generation2 without another connected event."
+    },
+    {
+      "name": "bound_peer_never_connected",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false,
+      "source_basis": "Only peer71 has connected; peer72 binding cannot be admitted from its nonexistent lifecycle entry."
+    },
+    {
+      "name": "binding_before_connection",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false,
+      "source_basis": "begin_join/current/admitted require the lifecycle entry created by connected before any binding."
+    },
+    {
+      "name": "same_generation_rebound_to_other_actor",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false,
+      "source_basis": "Match._join_rpc returns when _peer_actors.has(peer_id); the same live peer/generation cannot bind another actor."
+    },
+    {
+      "name": "first_accept_before_first_receive",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false,
+      "source_basis": "First input_received always precedes first input_accepted within the synchronous _input_rpc body; its first transition emits before any acceptance."
+    },
+    {
+      "name": "one_command_two_sequence_endpoints",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false,
+      "source_basis": "_native_input_packet first and last derive from the same sole command when count1. A positive increasing interval alone is insufficient."
+    },
+    {
+      "name": "welcome_claims_unobserved_attempt",
+      "expected_complete": false,
+      "actual_complete": true,
+      "expectation_met": false,
+      "source_basis": "diagnostic.attempt increments only in client_attempt, which always emits. A single observed/counted attempt cannot yield local_attempt2 at welcome."
+    },
+    {
+      "name": "accepted_unordered_two_command_batch",
+      "expected_complete": true,
+      "actual_complete": false,
+      "expectation_met": false,
+      "source_basis": "SBInputStream.accept validates commands and stages a dictionary without an array-order requirement. With no prior ACK, valid commands2 and1 can both be accepted, then pop consumes1. Header first/last are array endpoints, not extrema. This tests valid authority projection semantics; sparse client/authority observations do not establish packet identity or delivery, and this is no native proof."
+    }
+  ],
+  "cases_total": 9,
+  "expectations_met": 1
+}
