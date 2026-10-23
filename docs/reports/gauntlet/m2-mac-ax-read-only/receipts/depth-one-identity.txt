@@ -1,0 +1,10 @@
+Fresh clone command:
+git clone --depth 1 --filter=blob:none --no-checkout --single-branch --branch codex/m2-mac-ax-read-only --upload-pack='git -c uploadpack.allowFilter=true upload-pack' file:///workspace/sightbreak /workspace/reviews/mac-ax-read-only-depth1-cf4de47f
+Sparse checkout: game scripts .github .claude docs/engineering docs/roadmap docs/reports/gauntlet/m2-macos-screen-identity/fixtures docs/reports/gauntlet/m2-mac-derived-ocr/original-native-39912086121/macos-ordinary-input
+HEAD: cf4de47f5a94e64146dc3f6402da677c41d1b012
+Shallow: true
+Reachable commit count: 1
+Shallow boundary: cf4de47f5a94e64146dc3f6402da677c41d1b012
+Status: ''
+All eight source/test/workflow files byte-identical between exact own source and fresh clone.
+All 12 maintained pure commands passed; final status clean; no historical Git comparison is in the maintained checks.

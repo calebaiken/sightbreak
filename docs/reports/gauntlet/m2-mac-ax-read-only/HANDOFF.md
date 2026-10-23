@@ -1,6 +1,6 @@
 # Read-only AX implementation checkpoint
 
-Status: **SOURCE CANDIDATE; final exact-source/depth-one replay pending the reserved Linux CPU lane**. No source approval, Apple compile, native API/OCR/engine execution or CI release is claimed. Root explicitly reserved the local CPU lane for its fixed Linux OFF/ON/ON/OFF acquisition after the completed pure replay below. Do not run the pending clone/tests until root releases that lane.
+Status: **FROZEN FOR INDEPENDENT SOURCE REVIEW at `cf4de47f5a94e64146dc3f6402da677c41d1b012`**. Root released the CPU lane after its Linux attempt ended, then the final exact-source and fresh depth-one replays each passed all 12 commands / 110 methods. See [FINAL_VALIDATION.md](FINAL_VALIDATION.md) and retained raw outputs. No source approval, Apple compile, native API/OCR/engine execution or CI release is claimed.
 
 ## Implemented component
 
@@ -18,11 +18,11 @@ The completed pre-freeze replay, [pre-freeze-pure.log](receipts/pre-freeze-pure.
 
 The first structural run had two positive-fixture errors: reused owner 123/bounds y32 did not match the new synthetic owner 12/bounds y60; the fixture was corrected, retaining [first-pure.log](receipts/first-pure.log). Negative controls were then rerun with the valid positive fixture. The first original replay also retained seven missing sparse screen-identity fixture errors in [original-mac-pure.log](receipts/original-mac-pure.log). Exact tracked `docs/reports/gauntlet/m2-macos-screen-identity/fixtures` were restored without source changes; [original-screen-restored.log](receipts/original-screen-restored.log) passes all seven and the complete later replay passes all 83 original methods. These setup/fixture failures are not relabeled native observations.
 
-After that completed 110-method run, the explicit pruned-role list was conservatively expanded to include secure/search field role spellings and its matching pure loop. That final source delta has **not** yet been replayed. Root's CPU reservation then blocked further expensive testing and the required exact depth-one clone. This checkpoint must not be treated as fully validated on its final bytes.
+After that first completed 110-method run, the explicit pruned-role list was conservatively expanded to include secure/search field role spellings and its matching pure loop. Root's CPU reservation temporarily blocked its exact replay and the required clone. Those checks subsequently completed on unchanged `cf4de47f`: [final-exact-pure.log](receipts/final-exact-pure.log), [depth-one-pure.log](receipts/depth-one-pure.log). The earlier checkpoint's pending status remains historical; source review and actual AX behavior remain unverified.
 
-## Pending exact-source checks after root releases CPU
+## Completed exact-source checks and replay commands
 
-Run these source/pure commands from a fresh exact depth-one sparse clone of this branch/ref, retaining new raw outputs and `git rev-list --count HEAD` (must be 1), exact HEAD and clean status. Do not increase workflow fetch depth. Include the two existing fixture directories named above and `docs/reports/gauntlet/m2-mac-derived-ocr/original-native-39912086121/macos-ordinary-input` in the sparse clone. No historical Git comparison is part of the maintained checks.
+These source/pure commands passed from a fresh exact depth-one sparse clone. [depth-one-identity.txt](receipts/depth-one-identity.txt) records exact HEAD, shallow=true, reachable commit count=1 and clean final status. Workflow fetch depth is unchanged. The clone includes the existing screen-identity fixtures and `docs/reports/gauntlet/m2-mac-derived-ocr/original-native-39912086121/macos-ordinary-input`. No historical Git comparison is part of the maintained checks.
 
 ```sh
 python scripts/test_macos_ax_read_only.py -v
@@ -39,6 +39,6 @@ python scripts/test_macos_ordinary_startup.py -v
 python scripts/test_macos_deploy_ocr.py -v
 ```
 
-Retain a source audit of unchanged original runtime/game files and exact normal workflow preservation; then freeze/push the tested source identity and send the raw outputs to a fresh independent critic. Root must review/bind any combined workflow ref before separately releasing the diagnostic-only ARM lane. No dispatch is authorized by this handoff.
+[final-source-audit.txt](receipts/final-source-audit.txt) verifies unchanged original runtime/game files and exact normal workflow preservation. The source is now frozen/pushed for a fresh independent critic. Root must review/bind any combined workflow ref before separately releasing the diagnostic-only ARM lane. No dispatch is authorized by this handoff.
 
 The largest remaining uncertainty is the actual exported AX tree, TCC trust of this new observer, public AX/native frame agreement and completion within the fixed 5s collection budget. Source/pure observations prove none of these. An unexpected serialized-size invariant failure refuses to write a truncated substitute; the controller retains failure logs/native captures/CG guards and cannot qualify an absent AX receipt. A real unavailable/busy/ambiguous/late tree must remain failed evidence. No OCR confidence improvement, semantic gameplay targeting, ordinary Deploy/fire/reload/leave, Intel/physical/human or release acceptance is claimed.
