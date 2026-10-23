@@ -1,0 +1,32 @@
+test_actual_owned_process_is_reaped (__main__.PreflightControls.test_actual_owned_process_is_reaped) ... ok
+test_actual_plist_bytes_decode_through_cf_boundary (__main__.PreflightControls.test_actual_plist_bytes_decode_through_cf_boundary) ... ok
+test_existing_profile_and_dangling_entries_block_without_reading (__main__.PreflightControls.test_existing_profile_and_dangling_entries_block_without_reading) ... ok
+test_native_cache_inventory_is_observed_without_deletion (__main__.PreflightControls.test_native_cache_inventory_is_observed_without_deletion) ... ok
+test_native_framework_objects_are_released_on_bad_payload (__main__.PreflightControls.test_native_framework_objects_are_released_on_bad_payload) ... ok
+test_non_native_run_retains_failure_and_never_launches (__main__.PreflightControls.test_non_native_run_retains_failure_and_never_launches) ... ok
+test_only_owned_layer_zero_metadata_survives (__main__.PreflightControls.test_only_owned_layer_zero_metadata_survives) ... ok
+test_prior_attempt_is_preserved (__main__.PreflightControls.test_prior_attempt_is_preserved) ... ok
+test_required_permissions_fail_closed (__main__.PreflightControls.test_required_permissions_fail_closed) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.013s
+
+OK
+{
+  "scope": "Read-only permission queries plus ordinary exported smoke; no native input or OS screenshot acceptance",
+  "status": "FAILED",
+  "native_input_verified": false,
+  "input_events_posted": 0,
+  "permission_requests_made": 0,
+  "host": "Linux observer control",
+  "architecture": "x86_64",
+  "failure": {
+    "type": "RuntimeError",
+    "message": "Requires native ARM macOS; no native-input claim from another host"
+  },
+  "cleanup": {
+    "owned_group_gone": true,
+    "process_started": false
+  },
+  "seconds": 8.36670005810447e-05
+}
