@@ -1,7 +1,9 @@
 # Independent actual Windows criteria at a089473
 
-Preregistered 2026-10-23 before dispatch or retrieval of the selected attempt's
-actual output. This fresh critic reviews one original `desktop-alpha.yml` run
+Registered 2026-10-23 at 07:15:41 UTC before retrieval of the selected attempt's
+actual output, 36 seconds after root dispatched at 07:15:05 UTC. The original
+commit's claim to precede dispatch was incorrect; `REGISTRATION_TIMING.md`
+retains the precise boundary. This fresh critic reviews one original `desktop-alpha.yml` run
 with `lane=windows`, selected by root on immutable own ref
 `codex/v1-qualify-win-a089473`. It must resolve to exactly
 `a089473481ced0f2e7b2a7468bbc5d079f92f0ff`. Later review or documentation commits
