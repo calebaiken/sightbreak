@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Pure declared counterexamples based on retained raw Windows observations."""
 from copy import deepcopy
+import ast
 import json
 from pathlib import Path
 import unittest
@@ -45,7 +46,106 @@ class DeclaredInput:
                                     receipt=self.receipt)
 
 
+class ActualObservedInput(DeclaredInput):
+    """Use the real controller's reader/freshness/wait logic with declared data."""
+    def __init__(self, *, reader_guard=False, **kwargs):
+        super().__init__(**kwargs)
+        self.elapsed = 0
+
+        def read():
+            state = self.states.pop(0) if self.states else {}
+            if isinstance(state, OSError):
+                raise state
+            return state
+
+        class Clock:
+            def monotonic(_):
+                return self.elapsed
+            def sleep(_, seconds):
+                self.elapsed += seconds
+
+        namespace = {'time': Clock(), 'deadline': 300, 'trace': lambda *args, **kw: None,
+                     'client': None, 'offline_observation': read,
+                     'read_observation_json': lambda path: read(),
+                     'initial_trace': Path('/declared/trace'), 'result': {}}
+        tree = ast.parse((Path(__file__).parent / 'verify_offline_export.py').read_text())
+        for name in (('offline_observation',) if reader_guard else ()) + ('wait_for', 'observed'):
+            node = next(node for node in ast.walk(tree) if isinstance(node, ast.FunctionDef) and node.name == name)
+            exec(compile(ast.Module(body=[node], type_ignores=[]), 'actual-controller:' + name, 'exec'), namespace)
+        self.actual_observed = namespace['observed']
+
+    def observed(self, predicate, seconds, label, after):
+        self.waits.append({'seconds': seconds, 'label': label, 'after': after})
+        return self.actual_observed(predicate, seconds, label, after)
+
+
 class FocusFenceControls(unittest.TestCase):
+    def test_invalid_timestamp_cannot_hide_dead_state_before_actual_freshness_filter(self):
+        for value in (None, -1, False, True, 'later', 1.0):
+            bad = living(2, True)
+            bad['local_actor'].update(alive=False, health=0)
+            if value is None:
+                del bad['wall_msec']
+            else:
+                bad['wall_msec'] = value
+            trial = ActualObservedInput(states=[bad, living(3, True)])
+            with self.subTest(value=value), self.assertRaises(FocusPreconditionLost):
+                trial.run()
+            self.assertEqual(trial.context['precondition_loss']['rejected_state'], bad)
+            self.assertEqual(trial.keys, [('w', True), ('w', False)])
+
+    def test_malformed_nested_and_nonobject_values_retain_exact_raw_json(self):
+        for value in (None, [], True, 'raw-string', 3):
+            for field in ('local_input', 'local_actor', 'ui', None):
+                bad = living(2)
+                if field is None:
+                    bad = value
+                else:
+                    bad[field] = value
+                for boundary in ('before', 'during'):
+                    trial = ActualObservedInput(before=bad if boundary == 'before' else living(1),
+                                                states=[bad, living(3, True)])
+                    # DeclaredInput's None default predates raw-null controls.
+                    if boundary == 'before':
+                        trial.before = deepcopy(bad)
+                    with self.subTest(field=field, value=value, boundary=boundary), self.assertRaises(FocusPreconditionLost):
+                        trial.run()
+                    self.assertEqual(trial.context['precondition_loss']['rejected_state'], bad)
+                    self.assertNotIn('moved', trial.receipt)
+
+    def test_actual_reader_scope_rejection_is_structured_and_retains_raw_state(self):
+        bad = living(2, True)
+        bad['scope'] = 'other'
+        trial = ActualObservedInput(reader_guard=True, states=[bad, living(3, True)])
+        with self.assertRaises(FocusPreconditionLost):
+            trial.run()
+        self.assertEqual(trial.context['precondition_loss']['rejected_state'], bad)
+
+    def test_boolean_or_wrong_type_movement_rejects_before_key_and_during_actual_wait(self):
+        for move in ([False, False], [True, 0], [0, '1'], [], None, '0,0', [0, float('nan')]):
+            bad = living(2, True)
+            bad['local_input']['move'] = move
+            for boundary in ('before', 'during'):
+                trial = ActualObservedInput(before=bad if boundary == 'before' else living(1),
+                                            states=[bad, living(3, True)])
+                with self.subTest(move=move, boundary=boundary), self.assertRaisesRegex(FocusPreconditionLost, 'invalid_input_move'):
+                    trial.run()
+                self.assertEqual(trial.keys, [] if boundary == 'before' else [('w', True), ('w', False)])
+
+    def test_actual_wait_preserves_stale_and_unavailable_reads_then_valid_living_move(self):
+        for numeric in (0, 0.0):
+            stale = living(1, True)
+            stale.update(phase='buy', round_number=99)
+            moved = living(3, True)
+            moved['time_scale'] = 1.0
+            moved['local_input']['move'] = [numeric, 1.0]
+            trial = ActualObservedInput(reader_guard=True,
+                                        states=[OSError('declared publication gap'), stale, living(2), moved])
+            self.assertEqual(trial.run(), moved)
+            self.assertEqual(trial.receipt['status'], 'LIVING_MOVEMENT_OBSERVED')
+            self.assertEqual(trial.keys, [('w', True), ('w', False)])
+            self.assertEqual(trial.waits[0]['seconds'], 10)
+
     def test_original_dead_release_never_dispatches_fresh_key_or_wait(self):
         trial = DeclaredInput(released=RAW['dead_release_ack'])
         with self.assertRaisesRegex(FocusPreconditionLost, 'actor_life_changed|actor_not_alive'):

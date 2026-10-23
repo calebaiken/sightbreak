@@ -547,16 +547,26 @@ def main():
                 state = read_observation_json(initial_trace / 'status.json')
             except (OSError, ValueError):
                 return {}
-            if state.get('scope') != 'debug_offline_read_only_observation':
-                raise RuntimeError('Unexpected offline observation scope')
             result['last_offline_observation'] = state
+            if not isinstance(state, dict) or state.get('scope') != 'debug_offline_read_only_observation':
+                error = RuntimeError('Unexpected offline observation scope')
+                error.observation_state = state
+                raise error
             return state
 
         def observed(predicate, seconds, label, after=-1):
             latest = {}
             def ready():
                 nonlocal latest
-                latest = offline_observation()
+                validate = getattr(predicate, 'validate_observation', None)
+                try:
+                    latest = offline_observation()
+                except RuntimeError as error:
+                    if validate is not None and hasattr(error, 'observation_state'):
+                        validate(error.observation_state)
+                    raise
+                if validate is not None and latest != {}:
+                    validate(latest)
                 return latest.get('wall_msec', -1) > after and predicate(latest)
             wait_for(ready, seconds, label, client)
             trace('offline_observation', label=label, state=latest)
@@ -862,13 +872,22 @@ def main():
         def require_focus_context(state, stage='focus_context', **context):
             return fence.require(state, stage, **context)
 
+        def focus_raw_observation():
+            try:
+                return offline_observation()
+            except RuntimeError as error:
+                if not hasattr(error, 'observation_state'):
+                    raise
+                return error.observation_state
+
         def focus_observed(predicate, seconds, label, after=-1):
             def checked(state):
                 require_focus_context(state, label)
                 return predicate(state)
+            checked.validate_observation = lambda state: fence.validate_observation(state, label + ':before_freshness')
             return observed(checked, seconds, label, after)
 
-        require_focus_context(offline_observation(), 'before_held_w_down', focused=True, paused=False)
+        require_focus_context(focus_raw_observation(), 'before_held_w_down', focused=True, paused=False)
         try:
             key('w', True)
             button(True)
@@ -907,7 +926,7 @@ def main():
             focus_receipt['restored_paused'] = restored
             focus_receipt['capture_context']['11a-restored-focus-still-paused'] = {'before': restored}
             capture('11a-restored-focus-still-paused')
-            after_capture = offline_observation()
+            after_capture = focus_raw_observation()
             focus_receipt['capture_context']['11a-restored-focus-still-paused']['after'] = after_capture
             require_focus_context(after_capture, 'after_restored_pause_capture', focused=True, paused=True)
             tap('Escape')
@@ -947,7 +966,7 @@ def main():
                 check_guard(guarded, stable_position)
             focus_receipt['capture_context']['11b-resumed-held-input-neutral'] = {'before': guarded}
             capture('11b-resumed-held-input-neutral')
-            after_capture = offline_observation()
+            after_capture = focus_raw_observation()
             focus_receipt['capture_context']['11b-resumed-held-input-neutral']['after'] = after_capture
             require_focus_context(after_capture, 'after_held_neutral_capture', focused=True, paused=False)
         finally:
@@ -956,11 +975,11 @@ def main():
         released = focus_observed(focus_controls_released,
                             10, 'Released held focus-test controls', guarded['wall_msec'])
         focus_receipt['released'] = released
-        moved = fresh_focus_movement(fence=fence, released=released, snapshot=offline_observation,
+        moved = fresh_focus_movement(fence=fence, released=released, snapshot=focus_raw_observation,
                                     observed=observed, key=key, receipt=focus_receipt['fresh_press'])
         focus_receipt['capture_context']['11c-fresh-press-movement'] = {'before': moved}
         capture('11c-fresh-press-movement')
-        after_capture = offline_observation()
+        after_capture = focus_raw_observation()
         focus_receipt['capture_context']['11c-fresh-press-movement']['after'] = after_capture
         require_focus_context(after_capture, 'after_fresh_movement_capture', focused=True, paused=False)
         focus_receipt['context_fence']['status'] = 'LIVING_CONTEXT_PRESERVED_THROUGH_CAPTURE'
