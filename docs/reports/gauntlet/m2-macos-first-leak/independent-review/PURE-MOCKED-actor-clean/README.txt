@@ -1,1 +1,0 @@
-PURE MOCKED lifecycle evidence. Every engine process and native producer was fake. This is not a native execution result. Unvalidated bootstrap namespaces are intentionally preserved in the bootstrap-foreign case.

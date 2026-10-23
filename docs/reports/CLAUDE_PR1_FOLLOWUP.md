@@ -1,9 +1,0 @@
-Independent follow-up on `77e0433166b71c9de1456ef8639ce125d1b92029`: **request changes for the remaining Unicode HUD regression**.
-
-`game/scripts/main.gd:662–666` still derives the four-row clipped frame height from Latin `Ag`. CJK fallback glyphs are taller in this Godot4.7.2/Linux environment. Your unchanged maintained HUD test reproduces **1325 checks/10 failures headless** and **1331 checks/10 failures native**, one fourth-row visibility failure at every viewport size and both100%/130% text settings. Native screenshot visibly cuts off the fourth row.
-
-Measured geometry: at100% frame bottom166, fourth-row bottom174 (**8px clipped**); at130% frame bottom197, fourth-row bottom203 (**6px clipped**). Label minimum height: `Ag`20/CJK22px atfont14,26/28px atfont18. Grapheme-safe truncation and stacked-mark filtering pass their cases but do not fix this height dependency.
-
-Please derive frame height from actual row/font-fallback metrics while preserving width isolation, then rerun native and headless tests. Avoid a fixed pixel allowance that only fits one installed fallback font. Reproduction: `scripts/godot.sh --headless --script res://tests/hud_overflow_test.gd`; native uses Xvfb, `--audio-driver Dummy --rendering-method gl_compatibility` with the same script. Evidence: `claude77-hud-native-complete/1560x720-killfeed-unicode-130.png`, `claude77-hud-metrics.log`, `claude77-font-metrics.log` in the independent review archive.
-
-Confirmed: hit volumes40/40, weapon integrity28/28, independent lower-leg grid1468/1468 with no added body cells in both stances, and handshake hardening8/8. Original fractional-version and rejected-then-compatible raw-peer probes now reject correctly. Compatible raw peers that never join still remain connected after26s; that is a separate pre-existing PhaseD hardening task. No Claude branch was modified or merged.

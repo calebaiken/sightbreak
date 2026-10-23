@@ -1,1 +1,0 @@
-The preregistration's phrase `display range 99..127` was a transcription error while reading the task envelope. The task and frozen source require the single fixed display `:99127`. This clarification was recorded after candidate inspection and before adversarial controls. The original preregistration is retained unchanged; no range or alternate display is accepted.

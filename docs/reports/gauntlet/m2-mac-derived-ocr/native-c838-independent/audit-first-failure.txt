@@ -1,7 +1,0 @@
-Traceback (most recent call last):
-  File "/workspace/reviews/mac-native-c838907-actual/docs/reports/gauntlet/m2-mac-derived-ocr/native-c838-independent/audit_actual.py", line 224, in <module>
-    main()
-  File "/workspace/reviews/mac-native-c838907-actual/docs/reports/gauntlet/m2-mac-derived-ocr/native-c838-independent/audit_actual.py", line 190, in main
-    counts[row['suite']] = int(matches[-1]) if matches else int(next(v for v in match.groups() if v is not None))
-                                                                                ^^^^^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'groups'
