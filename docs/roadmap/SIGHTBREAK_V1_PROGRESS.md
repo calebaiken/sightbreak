@@ -6,12 +6,14 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-**Current execution BLOCKED:** the managed executor failed provisioning on
-2026-10-23 (container_creation / container_service_failed / transport_timeout).
-The persistent mission remains IN PROGRESS / PRIMARY. Exact local branch
-recovery and verified remote commits are in [NEXT_SESSION](../engineering/NEXT_SESSION.md).
-Local root was last observed at `da46730b`; remote mission remains `ad6cdc20`.
-Neither unpushed files nor native process state can be inspected during this failure.
+Current execution is active again on 2026-10-23. The executor contains an older
+snapshot. Published checkpoint `917b143b` is recovered into
+`codex/v1-executor-recovery-20261023`; unpublished local work was not found in
+checked sources. The independent inventory and retained test failures are in
+[the recovery report](../reports/gauntlet/executor-recovery-20261023/REPORT.md).
+Accepted guard integration reaches `7795632`; 37 local pure tests pass, zero
+skips. Bot dry-weapon and macOS ordinary-play builders are active from the
+recoverable source. No broader release gate changes status.
 
 A separate future market-harness guard is independently accepted at
 `985a9d71`, [draft PR29](https://github.com/calebaiken/sightbreak/pull/29):

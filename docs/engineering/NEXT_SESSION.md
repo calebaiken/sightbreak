@@ -6,6 +6,30 @@ No native Codex goal API is exposed. Read AGENTS.md, the mission and the canonic
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
 
+## Active recovered execution — 2026-10-23, 04:55 UTC
+
+The executor is available again, but its workspace is an older snapshot. Root
+recovered published checkpoint `917b143b` into `/workspace/sightbreak-v1-recovered`,
+branch `codex/v1-executor-recovery-20261023`. The original contributor checkout
+remains clean on `work` at `4d8cdb33`. A read-only inventory did not find the
+unpublished commits or prior worktrees in the checked sources; do not claim their
+raw evidence recovered or permanently deleted.
+
+Accepted PR29 guard and independent reports are integrated through `7795632`.
+The oracle/runner/refresh-test bytes match reviewed `985a9d71`; local 37-test
+rerun passes with zero skips after restoring the exact sparse archive fixture.
+The preceding missing-fixture failure is retained in
+`docs/reports/gauntlet/executor-recovery-20261023/`.
+
+New own builder branches start at recoverable `917b143b`:
+`codex/m5-dry-weapon-recovered` in `/workspace/sightbreak-bot-dry-weapon-recovered`
+and `codex/m2-mac-journey-recovered` in
+`/workspace/sightbreak-mac-journey-recovered`. Source investigation is active;
+no new product candidate or native result has been accepted. Fresh critics and
+coordinated native runs are required. Root owns canonical mission updates.
+The historical queue below is preserved, with its missing local work now
+requiring recovery or a newly identified candidate and fresh evidence.
+
 ## Recovery checkpoint — read this before the previous queue
 
 The 2026-10-22 session was interrupted by an actual agent usage limit. On

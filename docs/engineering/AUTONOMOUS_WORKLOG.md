@@ -416,3 +416,16 @@ Synthetic value only; store/case/rendered/remote and broad gates remain open.
 Continued immediately with separate store recovery source work. M6 final contrast
 native underlay and blind comparison pass their bounded scope; live capture keeps
 its OCR/cleanup failure until a fresh unchanged-budget run verifies corrections.
+
+
+## 2026-10-23: recover published execution and resume product work
+
+Published checkpoint PR30 and accepted PR29 guard/review are integrated on the
+new own recovery branch, through `7795632`. A separate read-only inventory
+verifies the restored snapshot and pinned engine assets; unpublished prior
+branches/raw evidence were not found in checked sources. Local pure controls
+pass 37/37 after restoring a missing sparse fixture, with the failed attempt
+retained. No production or native runtime was started. New builders investigate
+bot dry-weapon selection and actual macOS ordinary play; source critics and
+source-bound runtime acceptance remain required. See the executor recovery
+report and NEXT_SESSION. No full release gate closes.
