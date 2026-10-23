@@ -1,3 +1,12 @@
+# Actual ARM source-control failure and test-only follow-up
+
+Actual run `39904830917` at combined `34dbd97` failed four new helper tests on
+macOS's `/var` symlink; ordinary gameplay was skipped. The original decoded log,
+Linux alias reproduction and narrow test-only correction are retained in
+[native-source-controls-39904830917/RESULTS.md](native-source-controls-39904830917/RESULTS.md).
+Corrected tests freeze at `3730273`; independent follow-up review is pending.
+Production runtime bytes remain identical to the source accepted below.
+
 # Source candidate frozen; native result unverified
 
 Frozen source/workflow is `bd9ac47` on `codex/m2-mac-journey-recovered`, based on
