@@ -1,3 +1,11 @@
+# Actual startup failure and source-only discovery correction
+
+Repeat `39906639650` passed source controls but failed before any CGEvent or
+Deploy while the retained screenshot showed the Godot splash. The separate failed
+iteration and correction freeze `0146497` are recorded in
+[native-ordinary-39906639650/RESULTS.md](native-ordinary-39906639650/RESULTS.md).
+Independent source re-review and native execution remain open.
+
 # Actual ARM source-control failure and test-only follow-up
 
 Actual run `39904830917` at combined `34dbd97` failed four new helper tests on
