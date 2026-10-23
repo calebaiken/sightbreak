@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-23, 06:05 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 06:19 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. The automatic goal remains active. Read AGENTS.md and the canonical
@@ -11,7 +11,7 @@ implementation after each verified increment; these corrections do not finish v1
 
 The mission is ACTIVE. Root is `/workspace/sightbreak-v1-recovered`, own branch
 `codex/v1-executor-recovery-20261023`, [draft PR31](https://github.com/calebaiken/sightbreak/pull/31).
-Committed integration before this note is `84f2712`. Inspect actual HEAD/status;
+Committed integration before this note is `e1c70e6`. Inspect actual HEAD/status;
 never reset a newer local checkpoint. No shared release branch is merged.
 
 1. **Complete aggregate independently ACCEPTED at exact `afca2f1`.** Original
@@ -37,12 +37,15 @@ never reset a newer local checkpoint. No shared release branch is merged.
    Independent review e26b630 is integrated as 0231df9 with both original ZIPs
    and the decoded log. Separate 15 suites/9,434 checks, existing menu 37.760s
    and unsigned iOS compile 110.938s pass within their reviewed bounds.
-   Startup-readiness correction is frozen at 0146497, pure report 8799bbc:
-   67 top-level tests, four alias commands and five mutation controls pass.
-   Fresh fork-none critic `/root/mac_startup_readiness_fresh_critic` is reviewing
-   zero-event discovery, permanent pin, the original 60s menu/5s focus budgets
-   and strict later guards. Root has not integrated the new controller or
-   approved a third ARM dispatch.
+   Startup freeze 0146497 is independently REJECTED by bfe7b5a (root f350588):
+   three runnable falsifiers allow an additional same-PID visible window at pin,
+   later target guard and synthetic Deploy. Original zero-event pin=true rows
+   are retained. Correction is frozen at 3efe35d on builder branch; 70 maintained
+   pure tests pass, unchanged independent replay is completing under a distinct
+   pure-test wrapper. Retain its initial incomplete 60s wrapper separately.
+   Re-review exact 3efe35d with the preserved counterexamples before integration.
+   Original 60s menu/5s focus and strict later guards remain unchanged. Root has
+   not integrated either rejected controller or approved a third ARM dispatch.
 3. **First ARM attempt remains FAILED.** Run 39904830917 at 34dbd97 failed four
    test-owned /var alias paths, skipping mocked-controller and ordinary play.
    Native 15 suites/9,434 checks, menu 39.591s and unsigned iOS compile 88.643s
@@ -50,17 +53,25 @@ never reset a newer local checkpoint. No shared release branch is merged.
    both bounded ZIPs, 198 receipts and 11 PNGs retained. The test-only correction
    3730273 is root 719b3f4 and preserves every production runtime/guard byte.
    Large final binary reparse, full Mac match/objectives/Intel/human remain open.
-4. **Windows approved native attempt is running at frozen `b2e0293`.** Own
+4. **Windows native attempt is complete, combined verdict FAILED at `b2e0293`.** Own
    qualification ref `codex/v1-qualify-b2e0293` binds run
    [39907358390](https://github.com/calebaiken/sightbreak/actions/runs/39907358390),
    job 120262263075. Source approval 44e9aea and run/auditor binding 6e0b4ce
    are integrated as c135f90/34ea6cc. Critic owns original output review.
-   Preserve all 15 suites, objectives/full-match/earned disk reload, source
-   identity, cleanup and deadlines. No rerun is approved; metadata success
-   observations do not substitute for the completed raw audit. Living/settings
-   and plant/natural-resolution steps show FAILURE in metadata; defuse reports
-   success and stock-match/earned restart is running. Wait for original logs,
-   pixels, state, clocks and cleanup before diagnosing or changing code.
+   Raw ZIPs and exact decoded log through 26170e4 are root 1c52e67. Original
+   living/settings failure is 152.703s: actor dies at tick1166, before released
+   ACK tick1192 and fresh W. Held-neutral PNG shows 5 health. This does not prove
+   a missed fresh input on a living actor. Plant 78.985s genuinely arms device
+   and captures living DEFEND guidance, then all defenders are eliminated while
+   still planted; device resolution/next-buy/restart are unqualified.
+   Both failure receipts have cleanup_errors=[]. Separate partial independent
+   audit verifies 15 suites/9,434 checks, four-weapon and dry-fixture outputs,
+   and stock full match: 12 natural rounds/7:5, exact 120 XP/250 offline credits
+   saved and reloaded. Complete source/pixel/receipt/cleanup verdict is pending.
+   No rerun is approved. Source-only liveness fence is being built in
+   `/workspace/sightbreak-windows-focus-liveness`, branch
+   `codex/windows-focus-liveness-fence-20261023`; preserve original captures,
+   deadlines, health/AI/rules and distinguish precondition loss from input failure.
 5. **Touch R3 combined pixel gate FAILED; native/raw review is complete.** Own
    `/workspace/sightbreak-touch-contrast-recovered`, branch
    `codex/m6-touch-contrast-recovered`, code a520221, report f527e01; independent
@@ -93,19 +104,26 @@ never reset a newer local checkpoint. No shared release branch is merged.
    cannot become phase/CPU/overhead/FPS or improvement claims. Next is controlled
    source-mapped attribution. Original 84,232,632-byte ELF and other local files
    remain in `/workspace/sightbreak-linux-profile-recovered/builds/linux-gles-profile-native-r1`;
-   bounded raw originals/review are pushed. Source-only next preregistration is
-   being prepared in `/workspace/sightbreak-linux-opaque-cost`, branch
-   `diagnostic/linux-opaque-cost-preregistration`; no new native/export run.
+   bounded raw originals/review are pushed. Next plan 8b0598c maps exact GLES
+   boundaries; independent fcb5276c (root e1c70e6) permits source-only fixed-view
+   OFF/ON/ON/OFF implementation with corrected cadence/total/mean/tail semantics.
+   `/workspace/sightbreak-linux-profile-overhead`, branch
+   `diagnostic/linux-profile-overhead-fixture`, is implementing that fixture and
+   pure controls. No new native/export/compile is approved. Require fresh exact
+   implementation review before any lane release; physical/gameplay cost remains
+   outside a software-rendering diagnostic.
 7. **Next bot component is diagnostic source work.** Builder is registering
    exhausted-active-primary behavior against the unchanged b2e0293 game in a
    separate worktree. Known ranges (sidearm 45m, normal/hard vision 38/46m) do
    not establish a preferred switch policy. Retain active-ammo authority,
    holstered unknown/default controls, target acquisition and objective guards.
    Diagnostic freeze 114150a has 567 decisions / 576 steps but independent
-   source critic found target rays crossing a freight container and missing
-   positive shot/damage/reward/reload witnesses. Review is pending; no engine
-   or product edit is approved. Correct the fixture after the retained verdict,
-   then independent review before a bounded baseline run.
+   critic fb9b113 REJECTS its obstructed rays and vacuous action witnesses, root
+   9d44367. R2 source correction preserves that matrix and adds settled clear-line
+   positive shot/damage/ordinary-kill-reward and completed-reload controls, plus
+   full target/objective decision-boundary snapshots. Source work is active in
+   `/workspace/sightbreak-exhausted-primary-benchmark`. No engine or product edit
+   is approved. Re-review exact R2 source before a bounded baseline run.
 
 Official released Luanti Android/AssaultCube reference research is integrated as
 62e6134, B8 in BARS. Actual images/clip stay outside Git in
