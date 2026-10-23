@@ -1,0 +1,54 @@
+{
+  "scope": "Pure alias-root controls only",
+  "results": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary.py",
+        "-v"
+      ],
+      "TMPDIR": "symlink to owned real temp root",
+      "exit_code": 0,
+      "seconds": 0.18603341900052328,
+      "log": "alias-test_macos_ordinary.txt",
+      "sha256": "7dfc1348b5b1ebd6aa167c16b6309f2fab87560ae1349016d05d20f47c6f2a49"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_controller.py",
+        "-v"
+      ],
+      "TMPDIR": "symlink to owned real temp root",
+      "exit_code": 0,
+      "seconds": 0.4542285300003641,
+      "log": "alias-test_macos_ordinary_controller.txt",
+      "sha256": "dd40fcc270ebec379e8370c892bdd39b6551a86a649061ef593440f7eed3022e"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_paths.py",
+        "-v"
+      ],
+      "TMPDIR": "symlink to owned real temp root",
+      "exit_code": 0,
+      "seconds": 0.4100123660000463,
+      "log": "alias-test_macos_ordinary_paths.txt",
+      "sha256": "ba948dbcea65016aeac9d2ada7999ebba07e761de78c12087c1943056f522801"
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_startup.py",
+        "-v"
+      ],
+      "TMPDIR": "symlink to owned real temp root",
+      "exit_code": 0,
+      "seconds": 0.527532625999811,
+      "log": "alias-test_macos_ordinary_startup.txt",
+      "sha256": "867e13e5144aae31bf74164d8e8f01ef7125cb4448504ff4b7f715afdc8ec844"
+    }
+  ],
+  "passed": true
+}
