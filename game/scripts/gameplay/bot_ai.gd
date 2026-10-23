@@ -632,6 +632,9 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) ->
 		if actor.weapon_id == "sidearm" and actor.inventory.size() > 1:
 			for w_id in ["rifle", "marksman", "smg"]:
 				if actor.inventory.has(w_id):
+					# Missing holstered state keeps the actor's normal equip defaults.
+					if actor._ammo_store.get(w_id, Vector2i(-1, -1)) == Vector2i.ZERO:
+						continue
 					requested_weapon = w_id
 					break
 
