@@ -1,0 +1,115 @@
+{
+  "source_freeze": "af13a9979988d8b19de670fe27b78672ad2369ed",
+  "pure_only": true,
+  "methods_discovered": 79,
+  "native_windows_skips": 3,
+  "checks": [
+    {
+      "command": [
+        "python",
+        "scripts/test_native_settings_route.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 8,
+      "skipped": 0,
+      "seconds": 0.27050828900064516,
+      "log": "pure-01.log",
+      "sha256": "067f20cce789d10a407675e8570676122bd591eaf9436a426fc60d38d0284099"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/test_native_approach.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 9,
+      "skipped": 0,
+      "seconds": 0.17346059900046384,
+      "log": "pure-02.log",
+      "sha256": "34f6916f3df8f15071689194bd5740e2df7226b888afe0c52561a6a08e1b8206"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/test_native_focus_fence.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 16,
+      "skipped": 0,
+      "seconds": 1.6492636749990197,
+      "log": "pure-03.log",
+      "sha256": "2f81575b1982bdf65297138f5a6be7a2225e411007541acad149df677b6ea5e9"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/test_focus_resume_timing.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 8,
+      "skipped": 0,
+      "seconds": 0.2008889310000086,
+      "log": "pure-04.log",
+      "sha256": "bdb4d80a226867fb2fc0b7388acb58861ac9572feda77ada76528f54fe6502b0"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/test_offline_capture_fences.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 15,
+      "skipped": 0,
+      "seconds": 0.5845465500005957,
+      "log": "pure-05.log",
+      "sha256": "37c937953cbf5d9bdd53c202766f1eeef6e80f31c1d619ec23f2d8466ee5aa8d"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/test_macos_menu.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 11,
+      "skipped": 0,
+      "seconds": 0.19970128200111503,
+      "log": "pure-06.log",
+      "sha256": "f2498c1d3a1ed7036e117a654f4d8d2548aedeb3909b3b55ca4869bce505f9e5"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/test_native_observation.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 7,
+      "skipped": 3,
+      "seconds": 0.16458024100029434,
+      "log": "pure-07.log",
+      "sha256": "a5633fd36b5c95a5ba6a7efbcc0fece867f2a94630db42da8ab156be2e7f6824"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/test_offline_export_ocr.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 5,
+      "skipped": 0,
+      "seconds": 0.4232853960002103,
+      "log": "pure-08.log",
+      "sha256": "27654309c972a44f9308d625cb595fc08e60613a43bbd5d7e5a6bab259deb0c8"
+    }
+  ],
+  "ast_parse_passed": true,
+  "diff_check_passed": true,
+  "original_raw_recomputation_byte_exact": true
+}
