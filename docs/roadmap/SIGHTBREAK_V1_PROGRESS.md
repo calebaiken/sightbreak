@@ -6,33 +6,36 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-The mission remains active, 2026-10-23 10:03 UTC. The full maintained aggregate
-is independently VERIFIED at exact 28a3e294 in 534.403222822 seconds, critic
-ab2ca960/root a84f8414: all 56 Godot invocations, 129 Python methods (three
-original Windows skips), observable reconstructions, strict logs, source/138 UIDs,
-202 observed process identities/eight cleared ports and both archives verify.
-Root actual evidence is 2250af3c. All originals remain. This verifies headless
-engineering correctness only; all 15 new 24 m sidearm shots miss.
+The mission remains IN PROGRESS / PRIMARY, 2026-10-23 10:43 UTC. Exact
+`28a3e294` full maintained aggregate is independently VERIFIED (`ab2ca960`,
+root `a84f8414`): 534.403222822 seconds, 56 Godot invocations, 129 Python
+methods (three original Windows skips), strict logs/source/UID/ownership/archives.
+This is headless engineering evidence; all 15 new 24 m sidearm shots miss.
 
-ONE touch R4B R3 native comparison is running after release f312ee8c and actual
-admission at 09:59:27.374264 UTC. Controller session 18804 uses the exact prepared
-source/recipe and original limits. Fresh actual critic e439aa93/86c2c9b3 records
-live ownership; a separate blinded visual judge has preregistered criteria and
-inspected real Luanti Android/AssaultCube references. No new numeric, visual or
-accessibility pass is inferred before terminal outputs and independent review.
-Previous R3 numeric failure and R4B R2 import failure remain unchanged.
+Touch R4B R3 has completed all ten native producers and the original analyzer,
+with 5,648 images and unchanged source. Both baseline and candidate numeric gates
+FAIL; geometry policy is valid. Frozen post-source checks pass; packaging and
+fresh actual critique continue. Independent live observation finds a surviving
+owned dbus-launch descendant (S at terminal, later Z), so leader-only cleanup
+receipts are insufficient. A separate visual comparison will use all32 unmodified
+matching normal pairs; it cannot override numeric or cleanup failure.
 
-Windows R2 pulse a4899dd5 is source-accepted by 791998d3 after two meaningful
-focus/owner failures in the first candidate. It needs integration and independent
-combined-root qualification before any Windows rerun. Actual e28c8e9 still fails
-its live route and legacy reload deadline despite bounded objectives, full-match
-and earned-offline persistence passes. Mac R2 source d6cb78aa has 118 passing
-builder methods but awaits independent re-review after retained AX boundary
-rejection. Linux type correction 216d39ad is source-accepted f8659bba; compilation
-and new profiling data remain unobserved after the original failed import.
+Windows R2 is integrated at `49ae54b0`; fresh combined source critic `97714ae6`
+accepts its exact union, maintained pure checks and fresh controls. One actual
+run [39940242244](https://github.com/calebaiken/sightbreak/actions/runs/39940242244)
+was dispatched10:35:54UTC after independent preregistration, source-bound to
+`codex/v1-qualify-win-49ae54b0`. Actual qualification is pending. Previous live
+route/reload failures and bounded objective/progression passes remain intact.
 
-All G1–G19 whole release gates and human/physical/CS2/Steam blockers remain open.
-[NEXT_SESSION](../engineering/NEXT_SESSION.md) is the exact continuation.
+Mac AX R2 source `d6cb78aa` is independently accepted `114f2224`, but the one
+read-only diagnostic [39939989024](https://github.com/calebaiken/sightbreak/actions/runs/39939989024)
+FAILS on an untitled AXButton's unavailable AXTitle (-25212). Trust/prerequisites
+pass; traversal aborts before Deploy selection, with zero CGEvents/prompts and
+ordinary clean close. Fresh actual audit continues; a builder has begun a narrow
+untitled-node investigation. No Mac gameplay or iOS/Intel gate closes. Linux
+`216d39ad` source correction remains accepted `f8659bba`; native compilation and
+profiling are unobserved. Whole G1–G19 and human/physical/CS2/Steam blockers stay
+open. [NEXT_SESSION](../engineering/NEXT_SESSION.md) gives the exact continuation.
 
 A separate future market-harness guard is independently accepted at
 `985a9d71`, [draft PR29](https://github.com/calebaiken/sightbreak/pull/29):

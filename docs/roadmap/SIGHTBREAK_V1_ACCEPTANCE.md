@@ -81,3 +81,12 @@ ab2ca960, preserving exact native/pure/source/cleanup/archive scope. This closes
 the scoped regression requirement, not any whole release gate. The next touch
 A/B native pipeline is actually running; its numeric, interaction ownership,
 strict-log and blinded visual requirements stay unverified until actual review.
+
+At 10:43 UTC, touch R4B R3 completes acquisition but FAILS both numeric gates;
+source/post-source pass and a surviving owned descendant remains a cleanup
+limitation. Fresh actual and all-pairs visual review are pending. Exact Windows
+49ae54b0 has independent combined-source acceptance and one active native run
+39940242244. ARM read-only AX diagnostic39939989024 FAILS at untitled AXButton
+AXTitle -25212; partial traversal cannot qualify Deploy exposure or gameplay.
+These findings leave all whole release gates, thresholds and external blockers
+unchanged. See NEXT_SESSION for exact immutable refs, jobs and continuation.

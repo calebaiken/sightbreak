@@ -1,80 +1,90 @@
 # Next session
 
-Updated 2026-10-23, 09:44 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 10:43 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. The automatic goal remains active. Read AGENTS.md and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
 
-## Active verification — 2026-10-23 10:01 UTC
+## Active verification — 2026-10-23 10:43 UTC
 
-This checkpoint supersedes earlier queues below. Root is on own branch
-codex/v1-executor-recovery-20261023; inspect actual HEAD before recovery.
+Root branch: `codex/v1-executor-recovery-20261023`, own checkout
+`/workspace/sightbreak-v1-recovered`; inspect current HEAD/status before resuming.
+Last published implementation checkpoint is `ab7eaebc`. Preserve contributor
+`/workspace/sightbreak`, `work@4d8cdb33`, and PR27 → 24 → 23 → 22 → 16.
 
-**The combined aggregate is independently VERIFIED at exact 28a3e294.**
-Actual 534.4032228220021 seconds, inner/outer0, all56 Godot invocations and
-129 Python methods (three original Windows skips). Critic ab2ca960, root a84f8414,
-accepts 3,812 output +1,974 dry +75,890 exhausted predicates, eight counterfeit
-rejections, 843 provenance/16 final checks, all808 file modes/138UIDs,
-202 observed identities/eight cleared ports, full strict logs and both original
-archives. Full report is aggregate-combined-28a3e294-20261023/independent-critic/REVIEW.md.
-Root actual evidence2250af3c and critic archive are committed. All originals remain.
-All15 new24m shots miss; no visual/physical/full-match/whole-goal acceptance.
+**Combined aggregate independently VERIFIED at exact `28a3e294`.**
+Critic `ab2ca960`, root `a84f8414`; actual 534.403222822 seconds, all 56 Godot
+invocations and 129 Python methods (three original Windows skips), strict logs,
+source/UID/ownership/archives. This does not transfer whole-aggregate acceptance
+to later Windows validation changes. All 15 new 24 m sidearm shots miss.
 
-**ONE touch R4B R3 native pipeline is now RUNNING.** Release f312ee8c pushed,
-admitted09:59:27.374264 UTC, actual controller exec session18804 began10:00:08UTC.
-Raw /workspace/sightbreak-touch-contrast-native-recovered-r4b-r3. Source/recipe
-b9bd7e62/108d1cdc accepted95703781 and fresh actual admission e439aa93 after
-criteria86c2c9b3. Native stages remain separately prepared under
-/workspace/sightbreak-touch-contrast-fixture-recovered-r4b-r3. Poll session18804,
-then read controller-exit.json: shell exit alone covers receipt publication.
-Keep original PLAN/controller/order/phase limits/selectors, no outer timeout,
-retry or manual continuation afterSTOP. Full analyzer/final waits lack a whole
-hard cap;3330sum is not a whole bound. Current original logs/partial images stay.
+**Touch R4B R3 actual acquisition ended; candidate numeric gate FAILED.**
+Exact product `108d1cdc`, recipe/handoff `b9bd7e62`, release `f312ee8c`.
+Controller exec18804 terminal observed 10:39:35 UTC, shell0; actual
+controller-exit.json0 recorded10:33:21.906336Z. Original analyzer stdout says
+baseline_pass=false, candidate_pass=false, geometry_policy_valid=true. Do not
+replace the numeric failure with aesthetic preference. All ten producers exit0;
+5,648 original PNGs. Frozen PLAN block3 post-source ran once, exit0, errors[],
+source unchanged, PNG counts baseline2816/candidate2816/backgrounds16. Frozen
+block4 packager is running in exec62529; poll it, do not rerun or change it.
+Raw `/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3`, original
+recipe `/workspace/sightbreak-touch-contrast-recovered/docs/reports/gauntlet/m6-touch-contrast-recovered/acquisition-r4b-r3/PLAN.md`.
 
-Root admission script/transform hashes/stdout/stderr/outer-launch.json are in
-/workspace/sightbreak-touch-contrast-recovered/.local/touch-r4b-r3-root-*.
-After terminal preserve actual tool return; execute ONLY frozen PLAN post-source
-receipt and packager once, retain cleanup/actualPNG counts/failures. Tell fresh
-/root/touch_r3_native_fresh_critic raw-ready; its CPU4 live metadata observer
-session49199 captures PGID/SID/start/affinity and stops at lane-end.json. The native producers have all exited0 and all5648PNGs exist; the original
-analyzer is still active. Root SOURCE_TEST_PHASE_CLEARANCE.md now permits
-queued source-only sparse/pure checks pinnedCPU4; no new native, export, OCR,
-service or large archive until final cleanup. This deterministic phase is not a
-performance comparison. Fresh touch actual review still waits terminal evidence.
-No premature quality claim. Separate blind judge /root/touch_blind_visual_critic
-has inspected five real shipped references and committed criteria retained in
-ef5c4231 BEFORE outputs. It knows no mapping: later supply randomized matching
-native A/B pairs with provenance map withheld, preserving numeric and visual
-gates separately. Prior numericFAIL/R2importFAIL remain unchanged.
+Fresh actual critic `/root/touch_r3_native_fresh_critic` is auditing raw evidence.
+Its live observer stopped10:33:22.841824Z after1,919 scans and found surviving
+owned descendant136526/start2199755, PPID1, PGID/SID136513, stateS. At10:40:34
+it remained the same identity in zombieZ state, comm dbus-launch. Original
+controller leader-absence/socket checks do not establish full descendant cleanup.
+Preserve all original receipts; no broad process signals or retrospective pass.
+Local native/render/analyzer workloads have ended. Source-only pure work on CPU4
+is allowed while packaging/audit continues; hold new heavy native/profile work.
 
-**Next source work:** Windows route pulse R2 exact a4899dd5/handoff d3b0fc16 is
-independently source-accepted791998d3 after bf47f7c9 rejection. Per-down context
-checks now stop original two blockers; semantic23/eight extra controls pass;
-101 maintained methods pass with three old skips. Original full-rig ordinal
-failures and legacy/corridor runtime failures retained. Six accepted Windows paths are now integrated as 55f27596/c82fbf6c, clean
-freeze 49ae54b0. Fresh /root/windows_pulse_combined_fresh_critic independently
-confirms the exact six-path source union and awaits touch lane clearance for
-full combined pure/depth-one tests. No old aggregate pass transfers to the
-changed validation source. After exact union acceptance, preregister a fresh
-actual critic and ONE new combined Windows run. No Windows native/CI release yet. Tiny raw-patch
-whitespace packaging note is not a product defect; don't alter raw evidence.
+Separate `/root/touch_blind_visual_critic` has preregistered criteria and inspected
+five real shipped references. Follow `blind-native-r4b-r3/PACKET_SELECTION.md`:
+ALL32 normal screenshots per variant, matching cases/dimensions, unmodified bytes,
+neutral randomized pairs, seed/map withheld. Check visible identity before claiming
+blinding. Root seed remains outside packet in source `.local`; no new pixels have
+been inspected yet. Prior numeric failures and R2 import failure remain retained.
 
-Mac R2 source d6cb78aa on codex/m2-mac-ax-read-only-r2 fixes the five fresh AX
-boundary failures; final own/depth-one replay and exact handoff are being sealed,
-handoff 5cf20855 is complete (118 exact depth-one methods); /root/mac_ax_fresh_source_critic
-has been reactivated for light prereg/source review, with heavy replays paused during touch. It needs independent re-review before
-any diagnostic-only ARM release. Original cf4de47f source REJECT12ec93dd and
-actual c838907 gameplay FAIL remain. No confidence lowering, input injection or
-full Mac retry. Linux minimal type/hash/output source216d39ad is accepted
-f8659bba (root3ca4bf8e), native compilation still unobserved; new r2 profiling
-acquisition needs separate actual criteria/release AFTER touch lane clears.
-Original Linux r1 actual5cbbcd3c verifies failed import/preservation only.
+**Windows actual qualification running once at exact `49ae54b0`.**
+Accepted six-path R2 source integrated `55f27596`/`c82fbf6c`; fresh combined
+source critic `97714ae6`, root `5848c741`, accepts 154 maintained methods (151
+passes/three old skips), independent controls, source union and isolated depth1.
+Immutable ref `codex/v1-qualify-win-49ae54b0`. Prereg `80b635f2`, root `8d7b8bf8`,
+release `ab7eaebc`, dispatch10:35:54 UTC; no duplicate dispatch.
+Run [39940242244](https://github.com/calebaiken/sightbreak/actions/runs/39940242244),
+job120369601915, fresh `/root/windows_pulse_native_fresh_critic` auditing actual
+originals. All three OS-input schedules, living route/settings/LEAVE/reopen/focus,
+objectives, next buy, full match and exact earned-offline persistence still require
+actual independent acceptance. Historical e28c8e9 live-route/reload failures stay.
 
-Update mission/gates, commit/push and continue. Human/physical/CS2/Steam and all
-whole G1–G19 gates remain open. Preserve contributor checkout work@4d8cdb33 and
-PR27→24→23→22→16 dependencies. No protected/shared merge or deployment is released.
+**ARM AX diagnostic actual FAILED; corrective source investigation started.**
+Exact `d6cb78aa`, immutable `qualifier/m2-mac-ax-r2-read-only-d6cb78aa`, source
+critic `114f2224`, actual prereg `6cfc5d8d`/`d602b208`/`a4d8cb46`, release
+`493f7ed2`, dispatch10:33:46 UTC. Run
+[39939989024](https://github.com/calebaiken/sightbreak/actions/runs/39939989024),
+job120368768573. Fresh `/root/mac_ax_native_fresh_critic` reports trusted=true,
+query_prerequisites=true, then abort at node2 AXButton: required AXTitle
+code=-25212. Partial tree does not prove Deploy absent. Whole51.579790666s,
+zeroCGEvents/prompts, onefocus, ordinary close0/all ten groups gone/no signals;
+full raw/source/PNG audit is ongoing. Both original small artifacts downloaded.
+No gameplay/native iOS/Intel acceptance. `/root/mac_ax_untitled_builder` is
+investigating minimal untitled-node semantics with source-only controls in its
+own branch. No new diagnostic or gameplay dispatch is released.
+
+**Next heavy native priority:** Linux fixture correction `216d39ad`, source
+accepted `f8659bba` (root `3ca4bf8e`), native compilation still unobserved. Original
+R1 actual failed import; critic `5cbbcd3c` verifies preservation only. After touch
+packaging/audit CPU clearance, preregister fresh actual criteria and ONE controlled
+R2 acquisition at its new fixed output. Preserve original1320 whole/phase bounds,
+OFF/ON/ON/OFF, renderer/CPUs/selectors, no manual continuation after STOP.
+
+Update current issue25/PR31, canonical acceptance matrix and mission state after
+actual verdicts, commit/push recoverable changes and continue implementation.
+Human/physical/CS2/Steam and all whole G1–G19 gates stay open. No protected/shared
+merge, production deployment, purchase or publication is authorized.
 
 ## Earlier execution detail — superseded by the current queue below
 
