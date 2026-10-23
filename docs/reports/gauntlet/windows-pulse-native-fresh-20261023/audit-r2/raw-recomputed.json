@@ -1,0 +1,1045 @@
+{
+  "raw_artifact_index": {
+    "files": 224,
+    "all_sizes_and_hashes_match": true,
+    "complete_selected_file_set": true,
+    "failures": []
+  },
+  "regressions": {
+    "checks": {
+      "sixteen_exact_maintained_suites": true,
+      "all_native_exits_clean": true,
+      "native_logs_clean": true,
+      "every_suite_has_native_assertion_summary": true,
+      "fresh_before_state": true,
+      "distinct_native_producer_paths": true,
+      "before_after_same_native_path": true,
+      "native_custom_identity_selected": true,
+      "native_path_matches_namespace": true,
+      "original_resources_unchanged": true,
+      "copied_resources_unchanged": true,
+      "owned_cleanup_complete": true,
+      "no_finalization_failure": true,
+      "isolation_pass_receipt": true,
+      "retained_produced_files_match_hashes": true,
+      "separate_HUD_fixture_cleanup_attested": true
+    },
+    "all_checks_passed": true,
+    "native_test_summaries": {
+      "actor": [
+        "ACTOR TESTS: 73 checks, 0 failures"
+      ],
+      "match": [
+        "MATCH_TEST: 75/75 passed"
+      ],
+      "authority_order": [
+        "AUTHORITY_ORDER checks=178 failures=0 mode=assertion"
+      ],
+      "state_privacy": [
+        "STATE_PRIVACY_TEST checks=55 failures=0"
+      ],
+      "movement_prediction": [
+        "MOVEMENT_PREDICTION_TEST checks=725 failures=0 maximum_error_m=0.075834"
+      ],
+      "peer_lifecycle": [
+        "PEER_LIFECYCLE_TEST checks=16 failures=0"
+      ],
+      "input_mode": [
+        "INPUT_MODE_TEST checks=462 failures=0 graphical_pointer=false scope=simulated_capabilities_and_input_not_physical_hardware baseline=false"
+      ],
+      "menu_focus": [
+        "MENU_FOCUS_TEST checks=30 failures=0 scope=scene_focus_synthetic_actions_not_physical_hardware"
+      ],
+      "offline_diagnostics": [
+        "OFFLINE_DIAGNOSTICS_TEST checks=60 failures=0 scope=source_initialization_and_read_only_observer_not_exported_gameplay"
+      ],
+      "hud_objective_hint": [
+        "HUD_OBJECTIVE_HINT_TEST source=res://scripts/main.gd scope=frozen_source_ui checks=1535 failures=0"
+      ],
+      "activity_provenance": [
+        "ACTIVITY_PROVENANCE_TEST checks=32 failures=0"
+      ],
+      "bot_squad_symmetry": [
+        "BOT_SQUAD_SYMMETRY_RESULT samples=960 checks=2722 failures=0 mode=assertion"
+      ],
+      "bot_dry_weapon": [
+        "BOT_DRY_WEAPON_RESULT {\"cases\":84,\"checks\":590,\"failures\":0,\"passed\":true,\"sequence_steps\":48}"
+      ],
+      "bot_exhausted_primary": [
+        "BOT_EXHAUSTED_RESULT {\"authority_checks_passed\":true,\"behavior_acceptance\":\"diagnostic only; no new selection policy asserted\",\"checks\":20116,\"control_steps\":96,\"failures\":[],\"matrix_cases\":567,\"positive_controls\":[{\"damage_events\":1,\"draws\":0,\"eliminations\":1,\"final_shooter\":{\"actor_id\":6,\"actual_action_spread\":0.047,\"alive\":true,\"ammo\":0,\"ammo_store\":{},\"assists\":0,\"cooldowns\":{\"rifle\":0.0},\"credits\":1100,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":0,\"health\":100.0,\"inventory\":[\"rifle\"],\"kills\":1,\"pitch\":-0.173245666452365,\"position\":[-1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":0,\"smokes\":0,\"team\":1,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"rifle\",\"yaw\":-1.5707963267949},\"final_target\":{\"actor_id\":1,\"actual_action_spread\":0.048,\"alive\":false,\"ammo\":15,\"ammo_store\":{\"sidearm\":[15,60]},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":1,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":1,\"health\":0.0,\"input_state\":{},\"inventory\":[\"sidearm\"],\"kills\":0,\"pitch\":0.0,\"position\":[1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":60,\"smokes\":1,\"team\":0,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"sidearm\",\"yaw\":3.14159265358979},\"initial_lane\":{\"in_bounds\":true,\"observation_frame\":1281,\"pose_settle\":{\"after_frame\":1281,\"barriers\":2,\"before_frame\":1279},\"ray_from\":[-1.0,1.62000000476837,-20.0],\"ray_to\":[1.46257615089417,1.189049243927,-20.0],\"shooter\":[-1.0,0.0,-20.0],\"stock_trace\":{\"actor_id\":1,\"distance\":1.71568298339844,\"headshot\":false,\"hit\":true,\"position\":[0.690000057220459,1.32424998283386,-20.0]},\"target\":[1.0,0.0,-20.0],\"world_clear\":true,\"world_hit_path\":\"\",\"world_hit_position\":null,\"world_mask\":1},\"initial_shooter\":{\"actor_id\":6,\"actual_action_spread\":0.047,\"alive\":true,\"ammo\":1,\"ammo_store\":{},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":0,\"health\":100.0,\"inventory\":[\"rifle\"],\"kills\":0,\"pitch\":-0.173245666452365,\"position\":[-1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":0,\"smokes\":0,\"team\":1,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"rifle\",\"yaw\":-1.5707963267949},\"initial_target\":{\"actor_id\":1,\"actual_action_spread\":0.048,\"alive\":true,\"ammo\":15,\"ammo_store\":{\"sidearm\":[15,60]},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":1,\"health\":10.0,\"input_state\":{},\"inventory\":[\"sidearm\"],\"kills\":0,\"pitch\":0.0,\"position\":[1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":60,\"smokes\":1,\"team\":0,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"sidearm\",\"yaw\":3.14159265358979},\"name\":\"kill_rifle\",\"reload_completion_steps\":[],\"reload_completions\":0,\"reload_start_steps\":[],\"reload_starts\":0,\"shots\":1,\"steps\":8,\"target_damage\":10.0},{\"damage_events\":0,\"draws\":0,\"eliminations\":0,\"final_shooter\":{\"actor_id\":6,\"actual_action_spread\":0.054,\"alive\":true,\"ammo\":30,\"ammo_store\":{},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":0,\"health\":100.0,\"inventory\":[\"smg\"],\"kills\":0,\"pitch\":-0.173245666452365,\"position\":[-1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":0,\"smokes\":0,\"team\":1,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"smg\",\"yaw\":-1.5707963267949},\"final_target\":{\"actor_id\":1,\"actual_action_spread\":0.048,\"alive\":true,\"ammo\":15,\"ammo_store\":{\"sidearm\":[15,60]},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":1,\"health\":100.0,\"input_state\":{},\"inventory\":[\"sidearm\"],\"kills\":0,\"pitch\":0.0,\"position\":[1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":60,\"smokes\":1,\"team\":0,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"sidearm\",\"yaw\":3.14159265358979},\"initial_lane\":{\"in_bounds\":true,\"observation_frame\":1283,\"pose_settle\":{\"after_frame\":1283,\"barriers\":2,\"before_frame\":1281},\"ray_from\":[-1.0,1.62000000476837,-20.0],\"ray_to\":[1.46257615089417,1.189049243927,-20.0],\"shooter\":[-1.0,0.0,-20.0],\"stock_trace\":{\"actor_id\":1,\"distance\":1.71568298339844,\"headshot\":false,\"hit\":true,\"position\":[0.690000057220459,1.32424998283386,-20.0]},\"target\":[1.0,0.0,-20.0],\"world_clear\":true,\"world_hit_path\":\"\",\"world_hit_position\":null,\"world_mask\":1},\"initial_shooter\":{\"actor_id\":6,\"actual_action_spread\":0.054,\"alive\":true,\"ammo\":0,\"ammo_store\":{},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":0,\"health\":100.0,\"inventory\":[\"smg\"],\"kills\":0,\"pitch\":-0.173245666452365,\"position\":[-1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":30,\"smokes\":0,\"team\":1,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"smg\",\"yaw\":-1.5707963267949},\"initial_target\":{\"actor_id\":1,\"actual_action_spread\":0.048,\"alive\":true,\"ammo\":15,\"ammo_store\":{\"sidearm\":[15,60]},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":1,\"health\":100.0,\"input_state\":{},\"inventory\":[\"sidearm\"],\"kills\":0,\"pitch\":0.0,\"position\":[1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":60,\"smokes\":1,\"team\":0,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"sidearm\",\"yaw\":3.14159265358979},\"name\":\"reload_smg\",\"reload_completion_steps\":[16],\"reload_completions\":1,\"reload_start_steps\":[0],\"reload_starts\":1,\"shots\":0,\"steps\":19,\"target_damage\":0.0},{\"damage_events\":0,\"draws\":0,\"eliminations\":0,\"final_shooter\":{\"actor_id\":6,\"actual_action_spread\":0.047,\"alive\":true,\"ammo\":30,\"ammo_store\":{},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":0,\"health\":100.0,\"inventory\":[\"rifle\"],\"kills\":0,\"pitch\":-0.173245666452365,\"position\":[-1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":0,\"smokes\":0,\"team\":1,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"rifle\",\"yaw\":-1.5707963267949},\"final_target\":{\"actor_id\":1,\"actual_action_spread\":0.048,\"alive\":true,\"ammo\":15,\"ammo_store\":{\"sidearm\":[15,60]},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":1,\"health\":100.0,\"input_state\":{},\"inventory\":[\"sidearm\"],\"kills\":0,\"pitch\":0.0,\"position\":[1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":60,\"smokes\":1,\"team\":0,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"sidearm\",\"yaw\":3.14159265358979},\"initial_lane\":{\"in_bounds\":true,\"observation_frame\":1285,\"pose_settle\":{\"after_frame\":1285,\"barriers\":2,\"before_frame\":1283},\"ray_from\":[-1.0,1.62000000476837,-20.0],\"ray_to\":[1.46257615089417,1.189049243927,-20.0],\"shooter\":[-1.0,0.0,-20.0],\"stock_trace\":{\"actor_id\":1,\"distance\":1.71568298339844,\"headshot\":false,\"hit\":true,\"position\":[0.690000057220459,1.32424998283386,-20.0]},\"target\":[1.0,0.0,-20.0],\"world_clear\":true,\"world_hit_path\":\"\",\"world_hit_position\":null,\"world_mask\":1},\"initial_shooter\":{\"actor_id\":6,\"actual_action_spread\":0.047,\"alive\":true,\"ammo\":0,\"ammo_store\":{},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":0,\"health\":100.0,\"inventory\":[\"rifle\"],\"kills\":0,\"pitch\":-0.173245666452365,\"position\":[-1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":30,\"smokes\":0,\"team\":1,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"rifle\",\"yaw\":-1.5707963267949},\"initial_target\":{\"actor_id\":1,\"actual_action_spread\":0.048,\"alive\":true,\"ammo\":15,\"ammo_store\":{\"sidearm\":[15,60]},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":1,\"health\":100.0,\"input_state\":{},\"inventory\":[\"sidearm\"],\"kills\":0,\"pitch\":0.0,\"position\":[1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":60,\"smokes\":1,\"team\":0,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"sidearm\",\"yaw\":3.14159265358979},\"name\":\"reload_rifle\",\"reload_completion_steps\":[19],\"reload_completions\":1,\"reload_start_steps\":[0],\"reload_starts\":1,\"shots\":0,\"steps\":22,\"target_damage\":0.0},{\"damage_events\":0,\"draws\":0,\"eliminations\":0,\"final_shooter\":{\"actor_id\":6,\"actual_action_spread\":0.046,\"alive\":true,\"ammo\":8,\"ammo_store\":{},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":0,\"health\":100.0,\"inventory\":[\"marksman\"],\"kills\":0,\"pitch\":-0.173245666452365,\"position\":[-1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":0,\"smokes\":0,\"team\":1,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"marksman\",\"yaw\":-1.5707963267949},\"final_target\":{\"actor_id\":1,\"actual_action_spread\":0.048,\"alive\":true,\"ammo\":15,\"ammo_store\":{\"sidearm\":[15,60]},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":1,\"health\":100.0,\"input_state\":{},\"inventory\":[\"sidearm\"],\"kills\":0,\"pitch\":0.0,\"position\":[1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":60,\"smokes\":1,\"team\":0,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"sidearm\",\"yaw\":3.14159265358979},\"initial_lane\":{\"in_bounds\":true,\"observation_frame\":1287,\"pose_settle\":{\"after_frame\":1287,\"barriers\":2,\"before_frame\":1285},\"ray_from\":[-1.0,1.62000000476837,-20.0],\"ray_to\":[1.46257615089417,1.189049243927,-20.0],\"shooter\":[-1.0,0.0,-20.0],\"stock_trace\":{\"actor_id\":1,\"distance\":1.71568298339844,\"headshot\":false,\"hit\":true,\"position\":[0.690000057220459,1.32424998283386,-20.0]},\"target\":[1.0,0.0,-20.0],\"world_clear\":true,\"world_hit_path\":\"\",\"world_hit_position\":null,\"world_mask\":1},\"initial_shooter\":{\"actor_id\":6,\"actual_action_spread\":0.046,\"alive\":true,\"ammo\":0,\"ammo_store\":{},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":0,\"health\":100.0,\"inventory\":[\"marksman\"],\"kills\":0,\"pitch\":-0.173245666452365,\"position\":[-1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":8,\"smokes\":0,\"team\":1,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"marksman\",\"yaw\":-1.5707963267949},\"initial_target\":{\"actor_id\":1,\"actual_action_spread\":0.048,\"alive\":true,\"ammo\":15,\"ammo_store\":{\"sidearm\":[15,60]},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":1,\"health\":100.0,\"input_state\":{},\"inventory\":[\"sidearm\"],\"kills\":0,\"pitch\":0.0,\"position\":[1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":60,\"smokes\":1,\"team\":0,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"sidearm\",\"yaw\":3.14159265358979},\"name\":\"reload_marksman\",\"reload_completion_steps\":[24],\"reload_completions\":1,\"reload_start_steps\":[0],\"reload_starts\":1,\"shots\":0,\"steps\":27,\"target_damage\":0.0},{\"damage_events\":0,\"draws\":1,\"eliminations\":0,\"final_shooter\":{\"actor_id\":6,\"actual_action_spread\":0.048,\"alive\":true,\"ammo\":15,\"ammo_store\":{\"rifle\":[0,0],\"sidearm\":[0,15]},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":0,\"health\":100.0,\"inventory\":[\"sidearm\",\"rifle\"],\"kills\":0,\"pitch\":-0.173245666452365,\"position\":[-1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":0,\"smokes\":0,\"team\":1,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"sidearm\",\"yaw\":-1.5707963267949},\"final_target\":{\"actor_id\":1,\"actual_action_spread\":0.048,\"alive\":true,\"ammo\":15,\"ammo_store\":{\"sidearm\":[15,60]},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":1,\"health\":100.0,\"input_state\":{},\"inventory\":[\"sidearm\"],\"kills\":0,\"pitch\":0.0,\"position\":[1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":60,\"smokes\":1,\"team\":0,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"sidearm\",\"yaw\":3.14159265358979},\"initial_lane\":{\"in_bounds\":true,\"observation_frame\":1289,\"pose_settle\":{\"after_frame\":1289,\"barriers\":2,\"before_frame\":1287},\"ray_from\":[-1.0,1.62000000476837,-20.0],\"ray_to\":[1.46257615089417,1.189049243927,-20.0],\"shooter\":[-1.0,0.0,-20.0],\"stock_trace\":{\"actor_id\":1,\"distance\":1.71568298339844,\"headshot\":false,\"hit\":true,\"position\":[0.690000057220459,1.32424998283386,-20.0]},\"target\":[1.0,0.0,-20.0],\"world_clear\":true,\"world_hit_path\":\"\",\"world_hit_position\":null,\"world_mask\":1},\"initial_shooter\":{\"actor_id\":6,\"actual_action_spread\":0.047,\"alive\":true,\"ammo\":0,\"ammo_store\":{\"sidearm\":[0,15]},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":0,\"health\":100.0,\"inventory\":[\"sidearm\",\"rifle\"],\"kills\":0,\"pitch\":-0.173245666452365,\"position\":[-1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":0,\"smokes\":0,\"team\":1,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"rifle\",\"yaw\":-1.5707963267949},\"initial_target\":{\"actor_id\":1,\"actual_action_spread\":0.048,\"alive\":true,\"ammo\":15,\"ammo_store\":{\"sidearm\":[15,60]},\"assists\":0,\"cooldowns\":{},\"credits\":800,\"crouching\":false,\"deaths\":0,\"deploy\":0.0,\"fire_previous\":false,\"floor_contact\":false,\"grenades\":1,\"health\":100.0,\"input_state\":{},\"inventory\":[\"sidearm\"],\"kills\":0,\"pitch\":0.0,\"position\":[1.0,0.0,-20.0],\"recoil\":[0.0,0.0],\"reload\":0.0,\"reserve\":60,\"smokes\":1,\"team\":0,\"velocity\":[0.0,0.0,0.0],\"weapon\":\"sidearm\",\"yaw\":3.14159265358979},\"name\":\"reload_sidearm\",\"reload_completion_steps\":[14],\"reload_completions\":1,\"reload_start_steps\":[1],\"reload_starts\":1,\"shots\":0,\"steps\":20,\"target_damage\":0.0}],\"sequence_steps\":576,\"sequences\":72}"
+      ],
+      "transaction_journal": [
+        "TRANSACTION_JOURNAL 41/41 passed"
+      ],
+      "gunplay_rules": [
+        "GUNPLAY_RULES {\"checks\":2840,\"failures\":[]}"
+      ]
+    },
+    "retained_produced_files_verified": [
+      "actor/logs/godot.log",
+      "actor/logs/godot2026-10-23T10.38.22.log",
+      "actor/logs/godot2026-10-23T10.38.24.log",
+      "match/logs/godot.log",
+      "match/logs/godot2026-10-23T10.38.25.log",
+      "match/logs/godot2026-10-23T10.38.26.log",
+      "authority_order/logs/godot.log",
+      "authority_order/logs/godot2026-10-23T10.38.27.log",
+      "authority_order/logs/godot2026-10-23T10.38.35.log",
+      "state_privacy/logs/godot.log",
+      "state_privacy/logs/godot2026-10-23T10.38.36.log",
+      "state_privacy/logs/godot2026-10-23T10.38.37.log",
+      "movement_prediction/logs/godot.log",
+      "movement_prediction/logs/godot2026-10-23T10.38.37.log",
+      "movement_prediction/logs/godot2026-10-23T10.38.44.log",
+      "peer_lifecycle/logs/godot.log",
+      "peer_lifecycle/logs/godot2026-10-23T10.38.45.log",
+      "input_mode/logs/godot.log",
+      "input_mode/logs/godot2026-10-23T10.38.46.log",
+      "input_mode/logs/godot2026-10-23T10.38.51.log",
+      "input_mode/offline_training.json",
+      "menu_focus/logs/godot.log",
+      "menu_focus/logs/godot2026-10-23T10.38.52.log",
+      "menu_focus/logs/godot2026-10-23T10.38.54.log",
+      "offline_diagnostics/logs/godot.log",
+      "offline_diagnostics/logs/godot2026-10-23T10.38.54.log",
+      "offline_diagnostics/logs/godot2026-10-23T10.38.56.log",
+      "offline_diagnostics/offline-diagnostics-unit/defuse/events.jsonl",
+      "offline_diagnostics/offline-diagnostics-unit/defuse/status.json",
+      "offline_diagnostics/offline-diagnostics-unit/events.jsonl",
+      "offline_diagnostics/offline-diagnostics-unit/plant/events.jsonl",
+      "offline_diagnostics/offline-diagnostics-unit/plant/status.json",
+      "offline_diagnostics/offline-diagnostics-unit/status.json",
+      "hud_objective_hint/logs/godot.log",
+      "hud_objective_hint/logs/godot2026-10-23T10.38.56.log",
+      "hud_objective_hint/logs/godot2026-10-23T10.38.59.log",
+      "activity_provenance/logs/godot.log",
+      "activity_provenance/logs/godot2026-10-23T10.38.59.log",
+      "activity_provenance/logs/godot2026-10-23T10.39.01.log",
+      "bot_squad_symmetry/logs/godot.log",
+      "bot_squad_symmetry/logs/godot2026-10-23T10.39.01.log",
+      "bot_squad_symmetry/logs/godot2026-10-23T10.39.39.log",
+      "bot_dry_weapon/logs/godot.log",
+      "bot_dry_weapon/logs/godot2026-10-23T10.39.40.log",
+      "bot_dry_weapon/logs/godot2026-10-23T10.39.41.log",
+      "bot_exhausted_primary/logs/godot.log",
+      "bot_exhausted_primary/logs/godot2026-10-23T10.39.41.log",
+      "bot_exhausted_primary/logs/godot2026-10-23T10.40.04.log",
+      "transaction_journal/logs/godot.log",
+      "transaction_journal/logs/godot2026-10-23T10.40.05.log",
+      "transaction_journal/logs/godot2026-10-23T10.40.06.log",
+      "gunplay_rules/logs/godot.log",
+      "gunplay_rules/logs/godot2026-10-23T10.40.06.log",
+      "gunplay_rules/logs/godot2026-10-23T10.40.13.log"
+    ],
+    "produced_files_not_in_selected_receipts": [],
+    "HUD_fixture_cleanup_native_receipts": [
+      {
+        "exit": 0,
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK_QA/hud-objective-hint-5404-187652",
+        "original_exit": 0,
+        "original_user_dir_restored": true,
+        "owned": true,
+        "owner": "SIGHTBREAK_QA/hud-objective-hint-5404-187652",
+        "reason": "",
+        "removed": true
+      }
+    ],
+    "suites": [
+      {
+        "suite": "actor",
+        "exit": 0,
+        "wall_seconds": 2.2339999999999804,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.22.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.24.log": "b8e2168531c1e39291f053a26c132e01527769d91b30ae36a0e32ed55f3862a0"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/actor"
+      },
+      {
+        "suite": "match",
+        "exit": 0,
+        "wall_seconds": 1.5,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.25.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.26.log": "b11b15756a6eef96df83c685da3c13eeaf90e590e9ed25a9e1c9889e8c0c3e5d"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/match"
+      },
+      {
+        "suite": "authority_order",
+        "exit": 0,
+        "wall_seconds": 8.375,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.27.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.35.log": "2d9869d0b91829a65d5b639a553e4c7eb24139d3ac59f9e86f804b4bb101c574"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/authority_order"
+      },
+      {
+        "suite": "state_privacy",
+        "exit": 0,
+        "wall_seconds": 1.1400000000000432,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.36.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.37.log": "969f048e66207cb6a404485b99551a5bef91a9b82cdb461a11d4188a6946e089"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/state_privacy"
+      },
+      {
+        "suite": "movement_prediction",
+        "exit": 0,
+        "wall_seconds": 6.3279999999999745,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.37.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.44.log": "3915d3bd005f9b7080eb91e09b23dc98da4969c27f357feec56816be248b3b12"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/movement_prediction"
+      },
+      {
+        "suite": "peer_lifecycle",
+        "exit": 0,
+        "wall_seconds": 0.5779999999999745,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.45.log": "8c9dd9672fd512b281a03a7738a3b317de457b9f8067d535fd4a976ab05ff59b"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/peer_lifecycle"
+      },
+      {
+        "suite": "input_mode",
+        "exit": 0,
+        "wall_seconds": 5.359000000000037,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.46.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.51.log": "0d77024465e52cafbbd175142480f823c9debd6176b31d7aae5bad4834d2ea36",
+          "offline_training.json": "8de01e1c9044cf30e7e87849d899bf41b27d2caac82bd576783ca1c043121b11"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/input_mode"
+      },
+      {
+        "suite": "menu_focus",
+        "exit": 0,
+        "wall_seconds": 1.6720000000000255,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.52.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.54.log": "4edfc0577795adcaeffcc3d825432a2050032f0bdfe17cc27174ff4c67cb3562"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/menu_focus"
+      },
+      {
+        "suite": "offline_diagnostics",
+        "exit": 0,
+        "wall_seconds": 1.219000000000051,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.54.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.56.log": "e669c97a8c3db430d4dfce67a5abe8c8a7ebbe69f74eaadef8f1e9d93ccd3d30",
+          "offline-diagnostics-unit/defuse/events.jsonl": "f2fa57cb25738eca0f2ca84689279c88db5ac477f3786c875c3639bef5458711",
+          "offline-diagnostics-unit/defuse/status.json": "14d5a50c43a04b7001bca8ba76407f8e7f5e8e884a3dd0b1f3d08fbe1831e20b",
+          "offline-diagnostics-unit/events.jsonl": "49585f212407a78a562ac2215dafb8c1beba9ccdc24041d578b8a07fd4678670",
+          "offline-diagnostics-unit/plant/events.jsonl": "c944f04decf0170b42e714168bec7db9a3e4fe39a892f096b85510868331279d",
+          "offline-diagnostics-unit/plant/status.json": "ba4ccce1e1b2b225261b7e94c1f2c3823d9a65d4243f9c57b81ba55d31453c23",
+          "offline-diagnostics-unit/status.json": "9408da67227ebc5d0598c7f7851664012a93f90923ec314ee9c468c6f4aee34d"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/offline_diagnostics"
+      },
+      {
+        "suite": "hud_objective_hint",
+        "exit": 0,
+        "wall_seconds": 2.5470000000000255,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.56.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.59.log": "f5adc12038ec89fa524c46bf4343db5243813dd0bc43f1e4ab66e25eab6c885a"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/hud_objective_hint"
+      },
+      {
+        "suite": "activity_provenance",
+        "exit": 0,
+        "wall_seconds": 1.3279999999999745,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.38.59.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.39.01.log": "8709901203dc52ce0e6b72daf64a9ff7738d084348661e682731010255915dab"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/activity_provenance"
+      },
+      {
+        "suite": "bot_squad_symmetry",
+        "exit": 0,
+        "wall_seconds": 37.90599999999995,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.39.01.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.39.39.log": "3725f195e56368a8b33e38291f73bb06db8e64dbcc1bad071a23a91bb5c461f6"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/bot_squad_symmetry"
+      },
+      {
+        "suite": "bot_dry_weapon",
+        "exit": 0,
+        "wall_seconds": 1.032000000000039,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.39.40.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.39.41.log": "6b10f2ca5bf3a5c32aaf427da5c61fc80ecff3e817846d21d875203cdaf984f1"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/bot_dry_weapon"
+      },
+      {
+        "suite": "bot_exhausted_primary",
+        "exit": 0,
+        "wall_seconds": 22.890999999999963,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.39.41.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.40.04.log": "3fb22106298e67a781cefd7033d5074fb1831428abb4e659b9b5410128663e10"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/bot_exhausted_primary"
+      },
+      {
+        "suite": "transaction_journal",
+        "exit": 0,
+        "wall_seconds": 0.9379999999999882,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.40.05.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.40.06.log": "5b3432c32948106ef10d2f1704d3d8abcf9c50026873cdf03a73072261e29534"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/transaction_journal"
+      },
+      {
+        "suite": "gunplay_rules",
+        "exit": 0,
+        "wall_seconds": 6.437999999999988,
+        "produced_files": {
+          "logs/godot.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.40.06.log": "6d1c065383a27c36804949b6ffa4b09714470b112e5dacc0bd5aeb7b9c147c4e",
+          "logs/godot2026-10-23T10.40.13.log": "40685d55d0eaede375a7e3f83cbd4a5e67a6cd9ecff3bd7ff0207ca5644dd80c"
+        },
+        "native_user_dir": "C:/Users/runneradmin/AppData/Roaming/SIGHTBREAK-native-tests-b7c55deb2bb34fb987479ec0e8ad436e/gunplay_rules"
+      }
+    ]
+  },
+  "full_match": {
+    "checks": {
+      "clean_frozen_source": true,
+      "receipt_passed": true,
+      "normal_stock_rules": true,
+      "protocol6_prediction_off": true,
+      "all_natural_rounds_once": true,
+      "score_matches_stock_end": true,
+      "halftime_side_swap": true,
+      "ten_unique_actors_five_each_one_human": true,
+      "human_summary_matches_roster": true,
+      "outcome_matches_human_side": true,
+      "one_completion_zero_dropped": true,
+      "earned_xp_level_credits": true,
+      "accumulated_stats_correct": true,
+      "one_offline_history_record": true,
+      "saved_reopened_exact_profile": true,
+      "settings_preserved": true,
+      "all_native_exits_clean": true,
+      "native_reload_conserves_ammo": true
+    },
+    "all_checks_passed": true,
+    "raw_events": 198,
+    "rounds": 11,
+    "score": [
+      4,
+      7
+    ],
+    "human_stats": {
+      "kills": 0,
+      "assists": 0,
+      "deaths": 9,
+      "objectives": 0
+    },
+    "xp_gain": 120,
+    "credits_gain": 325,
+    "simulation_seconds": 382.94999999998,
+    "wall_seconds": 466.2189999999998,
+    "planted_state_events": 2,
+    "round_end_reasons": [
+      "Defenders win \u2022 Attackers eliminated",
+      "Defenders win \u2022 Attackers eliminated",
+      "Defenders win \u2022 Attackers eliminated",
+      "Attackers win \u2022 Defenders eliminated",
+      "Defenders win \u2022 Attackers eliminated",
+      "Attackers win \u2022 Defenders eliminated",
+      "Defenders win \u2022 Attackers eliminated",
+      "Defenders win \u2022 Relay device defused",
+      "Defenders win \u2022 Attackers eliminated",
+      "Defenders win \u2022 Relay device defused",
+      "Defenders win \u2022 Attackers eliminated"
+    ],
+    "executable_sha256_receipt": "eaadf9cc5f1d126bb53c3d709701d552f3cea74fa6f048edcabf953e6c56ecd7",
+    "native_binary_independently_downloaded": false
+  },
+  "objectives": [
+    {
+      "scenario": "plant",
+      "checks": {
+        "receipt_passed": true,
+        "clean_frozen_source": true,
+        "movement_original_budget_and_tolerance": true,
+        "distinct_settled_tick_ids": true,
+        "exact_hold_ticks": true,
+        "raw_hold_edges_match_receipt": true,
+        "single_uninterrupted_consumed_E": true,
+        "interrupted_hold_reset": true,
+        "one_player_contribution": true,
+        "normal_rules": true,
+        "clean_exit_and_restart": true
+      },
+      "all_checks_passed": true,
+      "initial_conditions": "declared_initial_spawns_side_and_seeds_only",
+      "movement_endpoint_error_m": 0.3899984359741202,
+      "movement_wall_upper_bound_seconds": 4.0779999999999745,
+      "settled_ticks": [
+        1247,
+        1260
+      ],
+      "hold_ticks": 180,
+      "hold_simulation_seconds": 2.999999999999801,
+      "wall_seconds": 92.78199999999993,
+      "exact_two_raw_settled_input_snapshots_retained": false
+    },
+    {
+      "scenario": "defuse",
+      "checks": {
+        "receipt_passed": true,
+        "clean_frozen_source": true,
+        "movement_original_budget_and_tolerance": true,
+        "distinct_settled_tick_ids": true,
+        "exact_hold_ticks": true,
+        "raw_hold_edges_match_receipt": true,
+        "single_uninterrupted_consumed_E": true,
+        "interrupted_hold_reset": true,
+        "one_player_contribution": true,
+        "normal_rules": true,
+        "clean_exit_and_restart": true
+      },
+      "all_checks_passed": true,
+      "initial_conditions": "declared_initial_spawns_side_and_seeds_only",
+      "movement_endpoint_error_m": 0.020551681518600873,
+      "movement_wall_upper_bound_seconds": 5.391000000000076,
+      "settled_ticks": [
+        1325,
+        1338
+      ],
+      "hold_ticks": 300,
+      "hold_simulation_seconds": 4.999999999999702,
+      "wall_seconds": 81.78100000000018,
+      "exact_two_raw_settled_input_snapshots_retained": false
+    }
+  ],
+  "journey": {
+    "receipt_passed": false,
+    "error": "Living settings route lost precondition: left_declared_clear_corridor",
+    "wall_seconds": 105.70299999999997,
+    "last_observation": {
+      "actors": [
+        {
+          "alive": true,
+          "ammo": 30,
+          "assists": 0,
+          "credits": 1600,
+          "deaths": 1,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 1,
+          "inventory": [
+            "sidearm",
+            "smg"
+          ],
+          "kills": 0,
+          "pitch": 0.0,
+          "position": [
+            -11.5494470596313,
+            -0.000745564699172974,
+            -21.0
+          ],
+          "reload": 0.0,
+          "reserve": 120,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            -2.29999971389771,
+            0.0,
+            0.0
+          ],
+          "weapon": "smg",
+          "yaw": -3.14159256616701
+        },
+        {
+          "alive": false,
+          "ammo": 16,
+          "assists": 0,
+          "credits": 600,
+          "deaths": 2,
+          "grenades": 1,
+          "health": 0.0,
+          "id": 2,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "kills": 1,
+          "pitch": -0.0521946735680103,
+          "position": [
+            -2.31865429878235,
+            0.000195310218259692,
+            -18.282585144043
+          ],
+          "reload": 0.0,
+          "reserve": 90,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "rifle",
+          "yaw": -2.98675608634949
+        },
+        {
+          "alive": false,
+          "ammo": 24,
+          "assists": 0,
+          "credits": 300,
+          "deaths": 2,
+          "grenades": 1,
+          "health": 0.0,
+          "id": 3,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "kills": 0,
+          "pitch": -0.0260212384164333,
+          "position": [
+            -0.52349728345871,
+            0.000195310218259692,
+            -18.3304252624512
+          ],
+          "reload": 0.0,
+          "reserve": 90,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "rifle",
+          "yaw": 3.0922155380249
+        },
+        {
+          "alive": true,
+          "ammo": 30,
+          "assists": 0,
+          "credits": 300,
+          "deaths": 1,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 4,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "kills": 0,
+          "pitch": -0.0116101605817676,
+          "position": [
+            0.817259073257446,
+            0.000195310218259692,
+            -14.5375862121582
+          ],
+          "reload": 0.0,
+          "reserve": 90,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "rifle",
+          "yaw": 3.07949900627136
+        },
+        {
+          "alive": true,
+          "ammo": 23,
+          "assists": 0,
+          "credits": 600,
+          "deaths": 1,
+          "grenades": 1,
+          "health": 70.2380814361572,
+          "id": 5,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "kills": 1,
+          "pitch": -0.0107681797817349,
+          "position": [
+            2.67232203483582,
+            -0.000745564699172974,
+            -16.6488819122314
+          ],
+          "reload": 0.0,
+          "reserve": 90,
+          "smokes": 1,
+          "team": 0,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "rifle",
+          "yaw": 3.02216911315918
+        },
+        {
+          "alive": false,
+          "ammo": 23,
+          "assists": 2,
+          "credits": 1400,
+          "deaths": 1,
+          "grenades": 1,
+          "health": 0.0,
+          "id": 6,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "kills": 1,
+          "pitch": -0.0258173756301403,
+          "position": [
+            -6.03800868988037,
+            0.000195310218259692,
+            17.9667320251465
+          ],
+          "reload": 0.0,
+          "reserve": 90,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "rifle",
+          "yaw": -0.2538703083992
+        },
+        {
+          "alive": true,
+          "ammo": 30,
+          "assists": 0,
+          "credits": 1400,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 100.0,
+          "id": 7,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "kills": 1,
+          "pitch": -0.0116594936698675,
+          "position": [
+            -0.98727947473526,
+            0.000937312899623066,
+            15.0538082122803
+          ],
+          "reload": 0.0,
+          "reserve": 90,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "rifle",
+          "yaw": -0.0783724710345268
+        },
+        {
+          "alive": true,
+          "ammo": 7,
+          "assists": 0,
+          "credits": 900,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 70.0995570373535,
+          "id": 8,
+          "inventory": [
+            "sidearm",
+            "marksman"
+          ],
+          "kills": 2,
+          "pitch": -0.0114987874403596,
+          "position": [
+            -2.01426863670349,
+            0.000937312899623066,
+            15.3963270187378
+          ],
+          "reload": 0.0,
+          "reserve": 32,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "marksman",
+          "yaw": -0.0755524337291718
+        },
+        {
+          "alive": false,
+          "ammo": 22,
+          "assists": 2,
+          "credits": 1400,
+          "deaths": 1,
+          "grenades": 1,
+          "health": 0.0,
+          "id": 9,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "kills": 1,
+          "pitch": -0.0096325408667326,
+          "position": [
+            2.85199689865112,
+            0.000942375860176981,
+            17.7600173950195
+          ],
+          "reload": 0.0,
+          "reserve": 90,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "rifle",
+          "yaw": 0.148085251450539
+        },
+        {
+          "alive": true,
+          "ammo": 18,
+          "assists": 0,
+          "credits": 1700,
+          "deaths": 0,
+          "grenades": 1,
+          "health": 40.3001834106445,
+          "id": 10,
+          "inventory": [
+            "sidearm",
+            "rifle"
+          ],
+          "kills": 2,
+          "pitch": -0.0108611760661006,
+          "position": [
+            3.46691060066223,
+            0.000942375860176981,
+            17.2103576660156
+          ],
+          "reload": 0.0,
+          "reserve": 90,
+          "smokes": 1,
+          "team": 1,
+          "velocity": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "weapon": "rifle",
+          "yaw": 0.0932568982243538
+        }
+      ],
+      "attack_score": 0,
+      "completion_calls": 0,
+      "defend_score": 1,
+      "drawn_frames": 569,
+      "elapsed": 55.8666666666648,
+      "events_dropped": 0,
+      "frame_diagnostics": {
+        "draw_calls_last_rendered_frame": 192.0,
+        "drawn_frames": 569,
+        "internal_3d_target_size": {
+          "available": false,
+          "reason": "Inspected Viewport API exposes output texture size, not internal 3D target size."
+        },
+        "max_fps": 60,
+        "max_physics_steps_per_frame": 8,
+        "physics_frames": 3727,
+        "physics_jitter_fix": 0.5,
+        "physics_step_max_seconds_last_engine_window": 0.179858,
+        "physics_ticks_per_second": 60,
+        "primitives_last_rendered_frame": 77476.0,
+        "process_frames": 569,
+        "process_max_seconds_last_engine_window": 0.182533,
+        "read_begin_usec": 104151094,
+        "read_end_usec": 104151109,
+        "viewport_3d_scale": 1.0,
+        "viewport_texture_size_pixels": [
+          745.0,
+          419.0
+        ],
+        "viewport_visible_size": [
+          1280.0,
+          720.0
+        ]
+      },
+      "interaction_progress": 0.0,
+      "local_actor": {
+        "alive": true,
+        "ammo": 30,
+        "assists": 0,
+        "credits": 1600,
+        "deaths": 1,
+        "grenades": 1,
+        "health": 100.0,
+        "id": 1,
+        "inventory": [
+          "sidearm",
+          "smg"
+        ],
+        "kills": 0,
+        "pitch": 0.0,
+        "position": [
+          -11.5494470596313,
+          -0.000745564699172974,
+          -21.0
+        ],
+        "reload": 0.0,
+        "reserve": 120,
+        "smokes": 1,
+        "team": 0,
+        "velocity": [
+          -2.29999971389771,
+          0.0,
+          0.0
+        ],
+        "weapon": "smg",
+        "yaw": -3.14159256616701
+      },
+      "local_contribution": 0,
+      "local_input": {
+        "fire": false,
+        "interact": false,
+        "move": [
+          0.0,
+          0.0
+        ],
+        "reload": false
+      },
+      "objective_carrier": 1,
+      "objective_position": [
+        -4.89777755737305,
+        0.000156247988343239,
+        -21.0
+      ],
+      "objective_state": "carried",
+      "objective_timer": 0.0,
+      "phase": "live",
+      "round_number": 2,
+      "scenario": "standard",
+      "schema": 1,
+      "scope": "debug_offline_read_only_observation",
+      "simulation_tick": 3352,
+      "time_left": 96.8166666666668,
+      "time_scale": 1.0,
+      "ui": {
+        "capabilities": {
+          "mobile": false,
+          "touchscreen": false
+        },
+        "focused": true,
+        "mouse_mode": 2,
+        "paused": false,
+        "scoreboard_visible": false,
+        "screen": "game",
+        "status_text": "Echo  \u203a  Sable",
+        "touch_controls": false,
+        "waiting_for_input_release": false,
+        "window_mode": 0,
+        "window_size": [
+          976,
+          549
+        ]
+      },
+      "wall_msec": 104151
+    },
+    "completed_waits": [
+      "Native export window",
+      "Native menu",
+      "Real offline match readiness after one Deploy click",
+      "Actual offline live phase",
+      "Living-player input focus",
+      "Authoritative depleted sidearm and two drawn frames",
+      "Native pause before saved-HUD OCR: 05-after-fire",
+      "Fresh paused observation after saved-HUD OCR: 05-after-fire",
+      "Explicit native resume after saved-HUD OCR: 05-after-fire",
+      "Real R input starts authoritative offline reload",
+      "Authoritative offline reload completion",
+      "Two rendered frames after authoritative reload transfer",
+      "Native pause before saved-HUD OCR: 06-after-reload",
+      "Fresh paused observation after saved-HUD OCR: 06-after-reload",
+      "Explicit native resume after saved-HUD OCR: 06-after-reload",
+      "Natural exported round completion",
+      "Named living buy phase: 06c-next-round",
+      "Two drawn frames before named capture: 06c-next-round",
+      "Fresh named context immediately before capture: 06c-next-round",
+      "Observation barrier after raw capture: 06c-next-round",
+      "Fresh named context beyond post-capture barrier: 06c-next-round",
+      "Native pause before saved-HUD OCR: 06e-purchased-smg",
+      "Fresh paused observation after saved-HUD OCR: 06e-purchased-smg",
+      "Explicit native resume after saved-HUD OCR: 06e-purchased-smg",
+      "Second active round for weapon switching",
+      "Living second-round player before fixed settings route"
+    ],
+    "cleanup_errors": []
+  },
+  "layouts": {
+    "not_applicable": true
+  },
+  "native_input": [
+    {
+      "scenario": "native-input",
+      "checks": {
+        "receipt_passed": false,
+        "authority_summary_available": false,
+        "actual_fire_and_reload_consumed": false,
+        "all_native_exits_clean": false
+      },
+      "all_checks_passed": false,
+      "original_error": "Authority confirms reload start",
+      "original_passed": false,
+      "failure_authority_observation": {
+        "ack": 502,
+        "alive": true,
+        "ammo": 30,
+        "authority_elapsed_seconds": 57.9833333333313,
+        "fire_input": false,
+        "fixture_elapsed_seconds": 58.0166666666636,
+        "joined_id": 1,
+        "peer_bound": false,
+        "peer_count": 0,
+        "phase": "live",
+        "reason": "periodic",
+        "reload_input": false,
+        "reload_remaining": 0.0,
+        "reserve": 90,
+        "shots": 0,
+        "simulation_tick": 3479,
+        "wall_elapsed_msec": 184462,
+        "wall_unix_msec": 1792752200271,
+        "weapon": "rifle",
+        "weapon_input": ""
+      },
+      "wall_seconds": 187.82799999999997,
+      "raw_samples": 117,
+      "joined_actor_samples": 44,
+      "shots": 0,
+      "any_native_fire_input": false,
+      "any_native_reload_input": false,
+      "scope": "Failed original schedule retains incomplete native telemetry and missing success-only authority summary; no fallback success is inferred."
+    },
+    {
+      "scenario": "reload-release-first",
+      "checks": {
+        "receipt_passed": true,
+        "clean_frozen_source": true,
+        "authority_summary_matches_raw": true,
+        "protocol6_prediction_off": true,
+        "positive_consumed_ack_and_fire": true,
+        "depletion_recorded": true,
+        "actual_reload_input_seen": true,
+        "completed_reload_conserves_total_ammo": true,
+        "all_native_exits_clean": true,
+        "native_logs_clean": true
+      },
+      "all_checks_passed": true,
+      "original_error": null,
+      "original_passed": true,
+      "failure_authority_observation": null,
+      "wall_seconds": 147.125,
+      "shots": 4,
+      "lowest_ammo": 26,
+      "final_ammunition": [
+        30,
+        86
+      ],
+      "raw_samples": 128,
+      "executable_sha256_receipt": "eaadf9cc5f1d126bb53c3d709701d552f3cea74fa6f048edcabf953e6c56ecd7",
+      "diagnostic": null,
+      "scope": "Exported client with source-engine loopback authority; movement displacement and physical input-to-photon not measured."
+    },
+    {
+      "scenario": "reload-legacy-delayed",
+      "checks": {
+        "receipt_passed": true,
+        "clean_frozen_source": true,
+        "authority_summary_matches_raw": true,
+        "protocol6_prediction_off": true,
+        "positive_consumed_ack_and_fire": true,
+        "depletion_recorded": true,
+        "actual_reload_input_seen": true,
+        "completed_reload_conserves_total_ammo": true,
+        "all_native_exits_clean": true,
+        "native_logs_clean": true,
+        "diagnostic_actual_exit_zero": true
+      },
+      "all_checks_passed": true,
+      "original_error": null,
+      "original_passed": true,
+      "failure_authority_observation": null,
+      "wall_seconds": 73.34400000000005,
+      "shots": 7,
+      "lowest_ammo": 23,
+      "final_ammunition": [
+        30,
+        83
+      ],
+      "raw_samples": 125,
+      "executable_sha256_receipt": "eaadf9cc5f1d126bb53c3d709701d552f3cea74fa6f048edcabf953e6c56ecd7",
+      "diagnostic": {
+        "command": [
+          "C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\python.EXE",
+          "scripts/verify_integration_export.py",
+          "--target",
+          "windows",
+          "--input-schedule",
+          "legacy",
+          "--fire-capture-delay",
+          "4",
+          "--timeout",
+          "240",
+          "--output",
+          "builds\\desktop-playability\\reload-legacy-delayed"
+        ],
+        "exit_code": 0,
+        "scope": "Controlled diagnostic: delays capture while original schedule still holds fire. Does not replace the normal undelayed gameplay gate."
+      },
+      "scope": "Exported client with source-engine loopback authority; movement displacement and physical input-to-photon not measured."
+    }
+  ],
+  "settings_transaction": {
+    "transaction_receipt_available": false,
+    "journey_passed": false,
+    "error": "Living settings route lost precondition: left_declared_clear_corridor"
+  }
+}

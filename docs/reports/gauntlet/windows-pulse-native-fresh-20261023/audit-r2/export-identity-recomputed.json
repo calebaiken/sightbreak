@@ -1,0 +1,80 @@
+{
+  "checks": {
+    "manifest_current_clean_source": true,
+    "one_current_completed_export": true,
+    "native_export_source_record_matches": true,
+    "native_verification_source_record_matches": true,
+    "debug_development_scope": true,
+    "manifest_embedded_executable_identity_join": true,
+    "same_native_executable:native-input/results.json": true,
+    "same_native_executable:offline-defuse/results.json": true,
+    "same_native_executable:offline-full-match/results.json": true,
+    "same_native_executable:offline-input/results.json": true,
+    "same_native_executable:offline-plant/results.json": true,
+    "same_native_executable:reload-legacy-delayed/results.json": true,
+    "same_native_executable:reload-release-first/results.json": true,
+    "actual_embedded_PCK_inspection_receipt": true,
+    "startup_headless_and_graphical_receipts": true,
+    "three_clean_native_startup_commands": true,
+    "actual_startup_strict_logs_clean": true
+  },
+  "all_checks_passed": true,
+  "native_executable_receipt": {
+    "path": "windows/SIGHTBREAK.exe",
+    "bytes": 113575912,
+    "sha256": "eaadf9cc5f1d126bb53c3d709701d552f3cea74fa6f048edcabf953e6c56ecd7",
+    "mode": 511,
+    "archive_mode": 420
+  },
+  "embedded_PCK_resource_count_receipt": 134,
+  "runtime_executable_joins": [
+    {
+      "path": "native-input/results.json",
+      "executable_sha256": "eaadf9cc5f1d126bb53c3d709701d552f3cea74fa6f048edcabf953e6c56ecd7"
+    },
+    {
+      "path": "offline-defuse/results.json",
+      "executable_sha256": "eaadf9cc5f1d126bb53c3d709701d552f3cea74fa6f048edcabf953e6c56ecd7"
+    },
+    {
+      "path": "offline-full-match/results.json",
+      "executable_sha256": "eaadf9cc5f1d126bb53c3d709701d552f3cea74fa6f048edcabf953e6c56ecd7"
+    },
+    {
+      "path": "offline-input/results.json",
+      "executable_sha256": "eaadf9cc5f1d126bb53c3d709701d552f3cea74fa6f048edcabf953e6c56ecd7"
+    },
+    {
+      "path": "offline-plant/results.json",
+      "executable_sha256": "eaadf9cc5f1d126bb53c3d709701d552f3cea74fa6f048edcabf953e6c56ecd7"
+    },
+    {
+      "path": "reload-legacy-delayed/results.json",
+      "executable_sha256": "eaadf9cc5f1d126bb53c3d709701d552f3cea74fa6f048edcabf953e6c56ecd7"
+    },
+    {
+      "path": "reload-release-first/results.json",
+      "executable_sha256": "eaadf9cc5f1d126bb53c3d709701d552f3cea74fa6f048edcabf953e6c56ecd7"
+    }
+  ],
+  "verification_logs": [
+    {
+      "path": "verification/windows-demo.log",
+      "sha256": "83cf0b082206af2aa236c83064fbcfa76be1e00a4aa3558574b2f65965d9481c",
+      "failure_lines": []
+    },
+    {
+      "path": "verification/windows-graphical-menu.log",
+      "sha256": "d05662951d4c89025d546ec422fc99232ef29e379063a96ccb187646a2fedd21",
+      "failure_lines": []
+    },
+    {
+      "path": "verification/windows-menu.log",
+      "sha256": "649365e0809b217d6e63415a35be86f6ec14b9b59ac5093940a4edf31450f78d",
+      "failure_lines": []
+    }
+  ],
+  "native_executable_bytes_independently_transferred": false,
+  "PCK_bytes_or_directory_independently_reparsed": false,
+  "scope": "Source/manifest/runtime hash joins and original native embedded-PCK inspection receipt; native binary above transfer cap is not downloaded or independently reparsed."
+}

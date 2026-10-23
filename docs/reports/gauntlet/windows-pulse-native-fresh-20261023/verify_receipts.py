@@ -237,6 +237,20 @@ def native_input(base):
         directory=base/name
         if not (directory/'results.json').is_file():continue
         receipt=read(directory/'results.json')
+        if not (directory/'authority.json').is_file():
+            telemetry=read(directory/'authority-telemetry.json')['samples']
+            player=[sample for sample in telemetry if sample.get('joined_id')==1 and 'ammo' in sample]
+            output.append({'scenario':name,'checks':{'receipt_passed':receipt.get('passed') is True,
+                'authority_summary_available':False,'actual_fire_and_reload_consumed':False,
+                'all_native_exits_clean':exits(receipt)},'all_checks_passed':False,
+                'original_error':receipt.get('error'),'original_passed':receipt.get('passed'),
+                'failure_authority_observation':receipt.get('failure_authority_observation'),
+                'wall_seconds':receipt.get('elapsed_seconds'),'raw_samples':len(telemetry),
+                'joined_actor_samples':len(player),'shots':max((s.get('shots',0) for s in player),default=0),
+                'any_native_fire_input':any(s.get('fire_input') for s in player),
+                'any_native_reload_input':any(s.get('reload_input') for s in player),
+                'scope':'Failed original schedule retains incomplete native telemetry and missing success-only authority summary; no fallback success is inferred.'})
+            continue
         authority=read(directory/'authority.json')
         telemetry=read(directory/'authority-telemetry.json')['samples']
         player=[sample for sample in telemetry if sample.get('joined_id')==authority['joined_id'] and 'ammo' in sample]
