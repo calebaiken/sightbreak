@@ -493,3 +493,14 @@ hooks, waits, audio and wrapper stay identical. No native operation runs.
 [Result and fresh review](../reports/gauntlet/audio-exit-lifecycle/native-serialization-strict-r1/RESULT.md)
 remain pending independent source review. Retaining-root/instrumentation lifetime
 is the largest supported gap; original acquisition REJECT and strict FAIL remain.
+
+
+2026-10-23: Fresh independent critic preregistered 52cc8df and reviewed exact
+native serialization/scanner implementation aae1f0a against actual baseline
+26a1c59. Independently ACCEPTED bounded pure correction: 100 methods pass/no
+skips; full 6,884-record actual census/chronology and all 437 raw/16 original
+critic files preserved; existing 375-member archive verified. Original native
+acquisition REJECT / strict FAIL remains. No native operation or retry. Largest
+gap remains unproven retaining-root/instrumentation-lifetime causality. Full
+source-bound outputs and integration fixture requirement are in
+`docs/reports/gauntlet/audio-exit-lifecycle/independent-native-serialization-strict-r1/REVIEW.md`.
