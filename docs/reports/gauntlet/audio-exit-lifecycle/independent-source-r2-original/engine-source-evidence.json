@@ -1,0 +1,106 @@
+[
+  {
+    "path": "main/main.cpp",
+    "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf001b61586d9930840f2f1394092c079/main/main.cpp",
+    "bytes": 210345,
+    "sha256": "1831257f5c8eb0707d278f04b21b1e4b3ba863f8dca5cab36022d4b19e36b8c1",
+    "excerpts": [
+      {
+        "first_line": 298,
+        "last_line": 303,
+        "text": "// Constants.\n\nstatic const String NULL_DISPLAY_DRIVER(\"headless\");\nstatic const String EMBEDDED_DISPLAY_DRIVER(\"embedded\");\nstatic const String NULL_AUDIO_DRIVER(\"Dummy\");\n"
+      },
+      {
+        "first_line": 623,
+        "last_line": 627,
+        "text": "\tprint_help_option(\"--gpu-index <device_index>\", \"Use a specific GPU (only available on the Forward+/Mobile renderers; run with --verbose to get a list of available devices).\\n\");\n\tprint_help_option(\"--text-driver <driver>\", \"Text driver (used for font rendering, bidirectional support and shaping).\\n\");\n\tprint_help_option(\"--tablet-driver <driver>\", \"Pen tablet input driver.\\n\");\n\tprint_help_option(\"--headless\", \"Enable headless mode (--display-driver headless --audio-driver Dummy). Useful for servers and with --script.\\n\");\n\tprint_help_option(\"--log-file <file>\", \"Write output/error log to the specified path instead of the default location defined by the project.\\n\");"
+      },
+      {
+        "first_line": 1504,
+        "last_line": 1509,
+        "text": "\n\t\t} else if (arg == \"--headless\") { // enable headless mode (no audio, no rendering).\n\n\t\t\taudio_driver = NULL_AUDIO_DRIVER;\n\t\t\tdisplay_driver = NULL_DISPLAY_DRIVER;\n"
+      },
+      {
+        "first_line": 2802,
+        "last_line": 2821,
+        "text": "\tGLOBAL_DEF_RST_NOVAL(\"audio/driver/driver\", AudioDriverManager::get_driver(0)->get_name());\n\tif (audio_driver.is_empty()) { // Specified in project.godot.\n\t\tif (project_manager) {\n\t\t\t// The project manager doesn't need to play sound (TTS audio output is not emitted by Godot, but by the system itself).\n\t\t\t// Disable audio output so it doesn't appear in the list of applications outputting sound in the OS.\n\t\t\t// On macOS, this also prevents the project manager from inhibiting suspend.\n\t\t\taudio_driver = \"Dummy\";\n\t\t} else {\n\t\t\taudio_driver = GLOBAL_GET(\"audio/driver/driver\");\n\t\t}\n\t}\n\n\t// Make sure that dummy is the last one, which it is assumed to be by design.\n\tDEV_ASSERT(NULL_AUDIO_DRIVER == AudioDriverManager::get_driver(AudioDriverManager::get_driver_count() - 1)->get_name());\n\tfor (int i = 0; i < AudioDriverManager::get_driver_count(); i++) {\n\t\tif (audio_driver == AudioDriverManager::get_driver(i)->get_name()) {\n\t\t\taudio_driver_idx = i;\n\t\t\tbreak;\n\t\t}\n\t}"
+      }
+    ]
+  },
+  {
+    "path": "servers/audio/audio_driver_dummy.cpp",
+    "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf001b61586d9930840f2f1394092c079/servers/audio/audio_driver_dummy.cpp",
+    "bytes": 4717,
+    "sha256": "fd1000997903aef8ca9005f7b0008ba8652e351b6c520e8ae37d42af503a111d",
+    "excerpts": [
+      {
+        "first_line": 37,
+        "last_line": 73,
+        "text": "Error AudioDriverDummy::init() {\n\tactive.clear();\n\texit_thread.clear();\n\tsamples_in = nullptr;\n\n\tif (mix_rate == -1) {\n\t\tmix_rate = _get_configured_mix_rate();\n\t}\n\n\tchannels = get_channels();\n\tsamples_in = memnew_arr(int32_t, size_t(buffer_frames) * channels);\n\n\tif (use_threads) {\n\t\tthread.start(AudioDriverDummy::thread_func, this);\n\t}\n\n\treturn OK;\n}\n\nvoid AudioDriverDummy::thread_func(void *p_udata) {\n\tAudioDriverDummy *ad = static_cast<AudioDriverDummy *>(p_udata);\n\n\tuint64_t usdelay = (ad->buffer_frames / float(ad->mix_rate)) * 1000000;\n\n\twhile (!ad->exit_thread.is_set()) {\n\t\tif (ad->active.is_set()) {\n\t\t\tad->lock();\n\t\t\tad->start_counting_ticks();\n\n\t\t\tad->audio_server_process(ad->buffer_frames, ad->samples_in);\n\n\t\t\tad->stop_counting_ticks();\n\t\t\tad->unlock();\n\t\t}\n\n\t\tOS::get_singleton()->delay_usec(usdelay);\n\t}"
+      }
+    ]
+  },
+  {
+    "path": "servers/audio/audio_driver_dummy.h",
+    "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf001b61586d9930840f2f1394092c079/servers/audio/audio_driver_dummy.h",
+    "bytes": 3432,
+    "sha256": "2d10c6efc01a7c4fb916cbb617fac2ec2a1f6837717d4a6c3c7f24c71cbd87e0",
+    "excerpts": [
+      {
+        "first_line": 44,
+        "last_line": 63,
+        "text": "\tstatic void thread_func(void *p_udata);\n\n\tuint32_t buffer_frames = 4096;\n\tint32_t mix_rate = -1;\n\tSpeakerMode speaker_mode = SPEAKER_MODE_STEREO;\n\n\tint channels;\n\n\tSafeFlag active;\n\tSafeFlag exit_thread;\n\n\tbool use_threads = true;\n\n\tstatic AudioDriverDummy *singleton;\n\npublic:\n\tvirtual const char *get_name() const override {\n\t\treturn \"Dummy\";\n\t}\n"
+      }
+    ]
+  },
+  {
+    "path": "servers/audio/audio_server.cpp",
+    "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf001b61586d9930840f2f1394092c079/servers/audio/audio_server.cpp",
+    "bytes": 76637,
+    "sha256": "d7641ef5852aa86f75c4d506759de2838a2c3886c29f7eb25fd9e9310d87c102",
+    "excerpts": [
+      {
+        "first_line": 1498,
+        "last_line": 1501,
+        "text": "String AudioServer::get_driver_name() const {\n\treturn AudioDriver::get_singleton()->get_name();\n}\n"
+      },
+      {
+        "first_line": 2090,
+        "last_line": 2093,
+        "text": "\tClassDB::bind_method(D_METHOD(\"get_driver_name\"), &AudioServer::get_driver_name);\n\n\tClassDB::bind_method(D_METHOD(\"get_output_device_list\"), &AudioServer::get_output_device_list);\n\tClassDB::bind_method(D_METHOD(\"get_output_device\"), &AudioServer::get_output_device);"
+      }
+    ]
+  },
+  {
+    "path": "servers/audio/audio_server.h",
+    "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf001b61586d9930840f2f1394092c079/servers/audio/audio_server.h",
+    "bytes": 20088,
+    "sha256": "fb97202eb2148536c06f193f1ccd838ce121b8cfddbb9f1bcd30e7fdbe74647c",
+    "excerpts": []
+  },
+  {
+    "path": "core/object/worker_thread_pool.cpp",
+    "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf001b61586d9930840f2f1394092c079/core/object/worker_thread_pool.cpp",
+    "bytes": 31779,
+    "sha256": "34c2c18535ea8c6f86b658f07921e891becbdd6a9deec8c99fdb8e79b54b16a8",
+    "excerpts": [
+      {
+        "first_line": 820,
+        "last_line": 824,
+        "text": "\tmax_low_priority_threads = CLAMP(p_thread_count * p_low_priority_task_ratio, 1, p_thread_count - 1);\n\n\tprint_verbose(vformat(\"WorkerThreadPool: %d threads, %d max low-priority.\", p_thread_count, max_low_priority_threads));\n\n#ifdef THREADS_ENABLED"
+      }
+    ]
+  },
+  {
+    "path": "servers/audio_server.cpp",
+    "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf001b61586d9930840f2f1394092c079/servers/audio_server.cpp",
+    "error": "HTTP Error 404: Not Found",
+    "resolution": "Correct location is servers/audio/; retrieval failure retained."
+  },
+  {
+    "path": "servers/audio_server.h",
+    "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf001b61586d9930840f2f1394092c079/servers/audio_server.h",
+    "error": "HTTP Error 404: Not Found",
+    "resolution": "Correct location is servers/audio/; retrieval failure retained."
+  }
+]
