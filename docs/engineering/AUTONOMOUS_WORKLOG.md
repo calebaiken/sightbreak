@@ -1,38 +1,5 @@
 # Autonomous worklog
 
-## Linux profile admission regression correction, 2026-10-23
-
-Fresh independent critic `1b7eb213` rejected source freeze `3631f2d`: omitted
-Xvfb allowed the existing display check to mask removal of the new sampler
-exclusion. The original passing control and critic's counterexample remain
-retained. Maintained negative cases now supply fake Xvfb, force an unused socket,
-assert the intended parser error and forbid source/process/output side effects.
-The corrected three tests pass; isolated sampler-removal, missing-option,
-default-profile and after-separator mutations fail for their intended reasons.
-Raw mutation outputs/hashes and reproduction are in
-`docs/reports/gauntlet/m1-linux-gles-profile-recovered/REVIEW_CORRECTION.md`.
-Controller bytes are unchanged. Fresh re-review is pending; no engine, export,
-native client, CI or service ran. The original next-buy gate remains FAILED.
-
-## Recovered Linux GLES source capability, 2026-10-23
-
-Builder `diagnostic/linux-gles-profile-recovered` starts at exact recovered
-`917b143b`; no old unpublished approval is reused. Preregistration `98cd21c`
-names the original plant controller and accepted failing `8afe0cc` native
-attempt, and allows only one future sampler-off profile capability attempt.
-Implementation `2bf9be1` adds eight controller lines; complete remaining AST
-and game source match the base. Pure checks pass 3 new / 18 sampler / 4 role /
-15 capture-fence groups, compile and whitespace checks. Initial missing-Pillow
-and fixture-host-query failures remain archived with byte-identical hashes.
-Exact pinned upstream source establishes historical GLES query timing, repeated
-retained profiles, periodic row averages and a latest-profile header total.
-No phase, CPU-cost, physical-FPS or improvement attribution is supported.
-
-Fresh independent source acceptance and root release of a new exact-source
-export/native attempt are pending. No engine, export, native client, CI or
-service ran. The original Linux next-buy gate remains FAILED. Evidence:
-`docs/reports/gauntlet/m1-linux-gles-profile-recovered/SOURCE_REPORT.md`.
-
 ## ARM Mac input preflight source readiness, 2026-10-22
 
 Builder branch `codex/m2-macos-native-input` begins at `e38ec3c`. Existing actual
@@ -479,3 +446,19 @@ matches, full aggregate, unlogged deep snapshots and escaped-descendant cleanup
 remain outside this bounded acceptance. No broad release gate closes.
 Next execution is combined validation, actual Mac ordinary play, Linux rendering
 cost isolation and fresh touch-contrast reconstruction; see NEXT_SESSION.
+
+
+## 2026-10-23: qualify Linux profiling capability, retain gameplay failure
+
+Preregistered source 98cd21c and eight-line controller 2bf9be1 are independently
+reviewed after a vacuous-test counterexample is corrected. Tested b1a131ab
+permits only one sampler-off/profile-on Linux plant attempt with original
+limits. Fresh export passes; the one actual flow FAILS initial LIVE 45s while
+still BUY/tick844/14.066667 simulation seconds, ending 58.558s. Plant/next-buy/
+restart are unreached. Independent critic bca8b7fd verifies 29 archived and 124
+local-only originals, exact source/engine/ELF/PCK 134 resources and declared cleanup.
+The 35 headers / 34 row-bearing profile blocks establish capability. Opaque is the
+largest emitted named historical interval in 34/34; no phase/CPU/overhead/FPS,
+cause or improvement claim follows. Next is controlled source-mapped cost
+attribution. Root integrates history/reviews through c9bfb09. Historical builder
+NEXT/worklog insertions were removed on root to preserve the newer live queue.
