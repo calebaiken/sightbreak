@@ -377,7 +377,8 @@ def main():
             "scope": "sampled ancestry, subreaper-adopted children, original session, observed PID/start identities and checkout-bound argv; unseen arbitrary escaped descendants remain unqualified"})
         record.update(completed_utc=now(), seconds=time.monotonic() - started, source_unchanged=before == after,
             failure=failure, log_failures=audit["failures"], forced_cleanup=any("signal" in event for event in events))
-        passed = failure is None and before == after and not terminal and not terminal_ports and not audit["failures"] and record.get("exit_code") == 0
+        record["whole_budget_met"] = record["seconds"] < WHOLE_SECONDS
+        passed = failure is None and before == after and not terminal and not terminal_ports and not audit["failures"] and record.get("exit_code") == 0 and record["whole_budget_met"]
         write(out, "result.json", dict(record, passed=passed))
         print(json.dumps({"passed": passed, "exit_code": record.get("exit_code"), "failure": failure,
             "log_failures": audit["failures"], "seconds": record["seconds"], "source_unchanged": before == after,
