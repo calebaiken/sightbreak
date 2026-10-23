@@ -1,0 +1,70 @@
+{
+  "scope": "Source/reference and pure evidence audit only; no native/Swift/OCR/engine/CI",
+  "source_freeze": "3973447175370d64ef2d790a3551102a89bb3a8e",
+  "handoff": "39cb67402c8dbeef3e85c15bfd0e761846ff4f0c",
+  "changed_source_paths": [
+    "scripts/fixtures/macos_ordinary_source/default_capture_body.swift.txt",
+    "scripts/fixtures/macos_ordinary_source/reference.json",
+    "scripts/test_macos_deploy_ocr.py"
+  ],
+  "source_sha256": {
+    "scripts/fixtures/macos_ordinary_source/default_capture_body.swift.txt": "1b0f4c909a3bb274083ab72e40baf507f8b7f1984c52b1b02e08443747deabd1",
+    "scripts/fixtures/macos_ordinary_source/reference.json": "47d2484fe191af3a374dbb586474af53d36448d48acf3c8e00ed7a9f6b45d92a",
+    "scripts/test_macos_deploy_ocr.py": "e5b46bc4aa739e80ba53e9e4d4c01f3efe1ee48e17344c6e29ba3750646d9d16",
+    "scripts/macos_window_capture.swift": "6b64561032d86b60dc1276aea1a642f427b48a1b5257934e89b71afb4269f71f",
+    "scripts/macos_deploy_ocr.py": "ed523c8badcad9f7d6060e52eb5759b72d2736937fe35a87782544f725a512fd",
+    "scripts/macos_ordinary_input.py": "c763aa4129f74a7d9fc6ac932d6312d7ffafac2a05a90701c9037ed9d200ded7",
+    "scripts/verify_macos_ordinary.py": "9e7d52338865e6b5c4ad32b32d44f83fea39d1e6645931e678c91feb21412518",
+    "scripts/test_macos_ordinary_controller.py": "51048628829ac6c67a0ed6b50af3d43254068fe691a5e272181015894abb42b5",
+    ".github/workflows/desktop-alpha.yml": "ee4ef46548272186ff42feb5b806589e35072ebc2597e9ba03f904735fde3f69"
+  },
+  "baseline_source": "c08889b8c1118c89e83c151079df4dc224076760",
+  "reference_manifest_sha256": "47d2484fe191af3a374dbb586474af53d36448d48acf3c8e00ed7a9f6b45d92a",
+  "default_helper_body": {
+    "bytes": 3601,
+    "sha256": "1b0f4c909a3bb274083ab72e40baf507f8b7f1984c52b1b02e08443747deabd1",
+    "baseline_fixture_current_equal": true
+  },
+  "gameplay_tail": {
+    "bytes": 11726,
+    "sha256": "3a2abc588525152b922bc97ca7640d2baa8a90030fdb8f3111242c5dd18bc837",
+    "baseline_current_equal": true
+  },
+  "test_methods": 13,
+  "unchanged_test_methods": 12,
+  "prior_critic_files_byte_verified": 55,
+  "original_native_files_hash_verified": 32,
+  "unchanged_critic_scripts": [
+    "independent_controls.py",
+    "replay_shallow.py"
+  ],
+  "runtime_helper_controller_workflow_unchanged": true,
+  "game_tree_unchanged": true,
+  "exact_depth_one_pure_counts": {
+    "normal-test_macos_ordinary": 14,
+    "normal-test_macos_ordinary_controller": 7,
+    "normal-test_macos_ordinary_paths": 2,
+    "normal-test_macos_ordinary_startup": 11,
+    "normal-test_macos_deploy_ocr": 13,
+    "normal-test_macos_menu": 11,
+    "normal-test_macos_focus": 9,
+    "normal-test_macos_screen_identity": 7,
+    "normal-test_probe_macos_input": 9,
+    "alias-test_macos_ordinary": 14,
+    "alias-test_macos_ordinary_controller": 7,
+    "alias-test_macos_ordinary_paths": 2,
+    "alias-test_macos_ordinary_startup": 11,
+    "alias-test_macos_deploy_ocr": 13,
+    "independent-controls": 8,
+    "original-mutation-lower-confidence": 13,
+    "original-mutation-unbound-file-hashes": 13,
+    "original-mutation-wrong-target-center": 13,
+    "original-mutation-changed-bound-receipt": 13,
+    "reference-mutation-golden-fixture": 1,
+    "reference-mutation-default-helper": 1,
+    "reference-mutation-gameplay-tail": 1
+  },
+  "exact_depth_one_clean": true,
+  "original_falsifier_now_passes_without_baseline_object": true,
+  "passed": true
+}
