@@ -105,6 +105,8 @@ def parse_log(text):
 def analyze_role(rows, role):
     need(bool(rows), 'no observation records for ' + role)
     prior, bindings, ended, consumed_sequences = None, {}, set(), {}
+    current_welcome = None
+    received = []
     highest_generation = 0
     consumed, accepted, expiries, disconnects, saturations, welcomes, binding_events = [], [], [], [], [], [], []
     max_gap = 0
@@ -119,6 +121,8 @@ def analyze_role(rows, role):
             need(all(row['counters'].get(k, 0) >= v for k, v in prior['counters'].items()), 'regressed stage counter')
             max_gap = max(max_gap, row['wall_msec'] - prior['wall_msec'])
         identity = (row['peer'], row['generation'])
+        if role == 'client' and row['reason'] in {'client_attempt', 'client_connection_failed', 'client_disconnected'}:
+            current_welcome = None
         if row['reason'] == 'peer_connected':
             need(role == 'authority' and row['generation'] > highest_generation, 'connection generation reused or regressed')
             highest_generation = row['generation']
@@ -129,6 +133,7 @@ def analyze_role(rows, role):
             binding_events.append({k: row[k] for k in ('peer', 'generation', 'bound_actor', 'wall_unix_msec')})
         if row['reason'] == 'welcome_received':
             need(role == 'client' and row['transport_id'] > 0 and row['local_attempt'] > 0 and row['local_id'] > 0, 'welcome has no client transport/attempt identity')
+            current_welcome = tuple(row[k] for k in ('transport_id', 'local_attempt', 'local_id'))
             welcomes.append({k: row[k] for k in ('transport_id', 'local_attempt', 'local_id', 'wall_unix_msec')})
         if row['reason'] in {'peer_expired', 'peer_disconnected'}:
             ended.add(identity)
@@ -137,19 +142,27 @@ def analyze_role(rows, role):
             value = row['latest'].get('input_send_called')
             need(role == 'client' and row['connection_state'] == 'connected' and value is not None and value['wall_msec'] == row['wall_msec'], 'send call refers to stale/missing client metadata')
             need(value['epoch'] == row['prediction_epoch'] and 1 <= value['count'] <= min(12, row['pending_count']) and 1 <= value['first'] <= value['last'] <= row['prediction_sequence'], 'send-call sequence/history projection disagrees')
-        if row['reason'] in {'input_accepted', 'input_consumed'}:
+            need(current_welcome == tuple(row[k] for k in ('transport_id', 'local_attempt', 'local_id')), 'welcome cannot bind send call to its current client identity')
+            need(row['pending_oldest_sequence'] <= value['first'] <= value['last'] <= row['pending_newest_sequence'], 'send-call sequence is outside pending history')
+        if row['reason'] in {'input_received', 'input_accepted', 'input_consumed'}:
             need(role == 'authority' and row['peer_bound'] and row['joined'] and bindings.get(identity) == row['bound_actor'] and identity not in ended, 'input stage has no current observed peer-generation binding')
             value = row['latest'].get(row['reason'])
             need(value is not None and value['wall_msec'] == row['wall_msec'], 'input stage refers to stale metadata')
             if row['reason'] == 'input_consumed':
+                need(received and accepted, 'direct pipeline consumption precedes observed receive and acceptance')
                 need((value['peer'], value['generation'], value['actor']) == (*identity, row['bound_actor']), 'consumed identity differs from current binding')
                 key = (*identity, row['authority_epoch'])
                 need(value['sequence'] > consumed_sequences.get(key, 0), 'consumption sequence replayed or regressed')
                 consumed_sequences[key] = value['sequence']
                 consumed.append({'index': row['index'], **value})
-            else:
+            elif row['reason'] == 'input_accepted':
                 need(value['epoch'] == row['authority_epoch'] and value['count'] in range(1, 13), 'accepted packet has wrong epoch or count')
+                need(1 <= value['first'] <= value['last'], 'accepted packet has invalid sequence interval')
                 accepted.append({'index': row['index'], **value})
+            else:
+                # Receive is after the identity gate but before packet validation.
+                # Its malformed payload fields can describe real rejected input.
+                received.append({'index': row['index'], **value})
         if row['pending_count'] == 120:
             saturations.append(row['index'])
         prior = row
