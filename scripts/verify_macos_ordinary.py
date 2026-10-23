@@ -16,6 +16,7 @@ import uuid
 
 from build_manifest import BUILDS, OUTPUTS, clean, source, validate_record
 from macos_native_input import same_bounds
+from macos_deploy_ocr import PROFILE as DEPLOY_ANALYSIS_PROFILE, bind_analysis, png_dimensions
 from macos_ordinary_input import (MacOrdinaryUI, OwnedWindowChanged, account_home, capture_geometry, default_inventory, hud_values, inventory,
     living_context, no_symlinks, owned_visible_windows, require_field_menu, require_initial, require_private_userdir,
     stage_app, verify_staged_app)
@@ -120,13 +121,18 @@ def run(output, preflight_path):
     def capture(name, screen=None, *, require_focus=True, until=None):
         remaining(until)
         png, receipt = output / (name+'.png'), output / (name+'.json')
+        analysis_png = output / (name+'-deploy-2x.png')
+        analyze_deploy = name == '01-focused-menu'
         attempt = {'name': name, 'screen': screen, 'foreground_required': require_focus,
                    'started_seconds': time.monotonic()-started, 'accepted': False}
         result['capture_attempts'].append(attempt)
         try:
             (ui.require_target if require_focus else ui.require_window)()
-            status = command(name, [str(helper), '--pid', str(client.pid), '--window', str(ui.window),
-                             '--png', str(png), '--report', str(receipt)],
+            arguments = [str(helper), '--pid', str(client.pid), '--window', str(ui.window),
+                         '--png', str(png), '--report', str(receipt)]
+            if analyze_deploy:
+                arguments += ['--analysis-mode', DEPLOY_ANALYSIS_PROFILE, '--deploy-analysis-png', str(analysis_png)]
+            status = command(name, arguments,
                              min(BUDGETS['capture'], remaining(until)), allow_failure=True)
             data = json.loads(receipt.read_text())
             if data.get('permissions', {}).get('CGPreflightScreenCaptureAccess') is not True:
@@ -137,6 +143,10 @@ def run(output, preflight_path):
                     or data.get('input_events_posted') != 0 or data.get('permission_requests_made') != 0):
                 raise RuntimeError('OS screenshot does not bind the exact successful owned window')
             capture_geometry(data)
+            if analyze_deploy:
+                bind_analysis(data, digest(png), digest(analysis_png), png_dimensions(png), png_dimensions(analysis_png))
+            elif 'derived_deploy_analysis' in data:
+                raise RuntimeError('Derived Deploy analysis is forbidden outside the one focused menu capture')
             if screen in ('menu', 'settings'):
                 try:
                     require_screen(data, screen)
@@ -162,7 +172,7 @@ def run(output, preflight_path):
         finally:
             attempt['finished_seconds'] = time.monotonic()-started
             attempt['retained_files'] = {path.name: {'bytes': path.stat().st_size, 'sha256': digest(path)}
-                                         for path in (png, receipt) if path.is_file()}
+                                         for path in (png, receipt, analysis_png) if path.is_file()}
 
     def wait(predicate, budget, label):
         until = min(deadline, time.monotonic()+budget)
