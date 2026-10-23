@@ -1,0 +1,117 @@
+{
+  "phase": "SOURCE_AND_PURE_ONLY_REVIEW_PENDING",
+  "round": 4,
+  "freeze_commit": "16335abfaf2068b2b2ea54c7e100a1505f62b5c1",
+  "baseline_commit": "a52022169241df9ff662039547a375e1c46ac1c5",
+  "preregistration_commit": "d583359",
+  "product_commit": "4153d91",
+  "r3_result": "FAIL; immutable evidence 0f83243; independent verdict 39b5a9d/8a5f531",
+  "engine_invocations": 0,
+  "native_captures": 0,
+  "pure_controls": 46,
+  "expected_native_images_per_source": 2816,
+  "expected_group_rows_per_source": 304,
+  "expected_component_rows_per_source": 352,
+  "retained_intermediate_rows_per_source": 48,
+  "candidate_gated_rows_per_source": 608,
+  "fixtures": [
+    {
+      "name": "baseline",
+      "path": "/workspace/sightbreak-touch-contrast-fixture-recovered-r4/baseline",
+      "source_full": "a52022169241df9ff662039547a375e1c46ac1c5",
+      "manifest_sha256": "6c0e396142c5cf13a33500f6e3cb6ffd062781cd5b1fc81e94dcbb1d9fa02e03",
+      "paint_variant": "r3",
+      "original_paths": 323,
+      "original_bytes": 9924649
+    },
+    {
+      "name": "candidate",
+      "path": "/workspace/sightbreak-touch-contrast-fixture-recovered-r4/candidate",
+      "source_full": "16335abfaf2068b2b2ea54c7e100a1505f62b5c1",
+      "manifest_sha256": "ff86d326823a713e7a2c995b5ed165400aeae8971f0cda1fbf51f365f8fc6f07",
+      "paint_variant": "r4",
+      "original_paths": 323,
+      "original_bytes": 9925753
+    }
+  ],
+  "frozen_files": [
+    {
+      "path": "game/scripts/ui/touch_controls.gd",
+      "sha256": "ba3b23f795947b79e8e1f780827c65139ebcd993319a483feba89ca85c94938a",
+      "bytes": 12666
+    },
+    {
+      "path": "game/scripts/ui/touch_controls.gd.uid",
+      "sha256": "2f4e64596905c7df3561425084553306fd4810e06e68a34b6bab3c7402e938a0",
+      "bytes": 19
+    },
+    {
+      "path": "scripts/prepare_touch_contrast_r4.py",
+      "sha256": "acb13c38a8daeb9935d89cd93131f1c70d11157970cfbb3bd7038f5d38cc8b43",
+      "bytes": 9026
+    },
+    {
+      "path": "scripts/analyze_touch_contrast_r4.py",
+      "sha256": "ebb98982433348a146c4ae724770ffe5e7d93db56c4c3d249991d37c4fd54095",
+      "bytes": 25317
+    },
+    {
+      "path": "scripts/analyze_touch_contrast.py",
+      "sha256": "2501fc714ca07d77aa883689d3003f06ae40db6210eba08f1002f33a1afda4ab",
+      "bytes": 15561
+    },
+    {
+      "path": "scripts/test_touch_contrast_r4.py",
+      "sha256": "8e63143dc81ab67efcad445fe924d88de824fbc6c6b73201fcda7d6fa8c5fa89",
+      "bytes": 5047
+    },
+    {
+      "path": "scripts/test_touch_contrast_r4_method.py",
+      "sha256": "3d71ed4743f51dcad92ed97b48483a184ff40a1bd9e01980d7936dabb5d474e1",
+      "bytes": 7843
+    },
+    {
+      "path": "scripts/test_touch_contrast_r4_receipts.py",
+      "sha256": "ffac0a36b1f81739f59225b7136c480ac51d5940acf6286f638fac2f677d0854",
+      "bytes": 12293
+    },
+    {
+      "path": "scripts/test_touch_contrast_method.py",
+      "sha256": "5046aa29730e68e6d7b207a3bb82a5c89e38a984e0c2da2a363e567451a32af4",
+      "bytes": 6911
+    },
+    {
+      "path": "scripts/prepare_touch_contrast.py",
+      "sha256": "3045fd88d938e6926dc7e08b7a9137c53fbb98036360fb23cd192c52d55949be",
+      "bytes": 6933
+    },
+    {
+      "path": "scripts/derive_touch_r4_reference.py",
+      "sha256": "63a18507bec4ac6a59a365d3508f7389b0a4f58f5e92732cc81992bed70fd66d",
+      "bytes": 3015
+    },
+    {
+      "path": "scripts/fixtures/touch_contrast_r4/touch_contrast_capture.gd",
+      "sha256": "af7102d6806faaf880616f9f92f5cca8e16cb6b7f75876b3d526d11122ef5d40",
+      "bytes": 8768
+    },
+    {
+      "path": "scripts/fixtures/touch_contrast_r4/touch_contrast_capture.gd.uid",
+      "sha256": "6770e17017eecf6ab560b243eaaba4a7dd77700f05f1a750a87263e48ce260d5",
+      "bytes": 20
+    },
+    {
+      "path": "scripts/fixtures/touch_contrast_r4/r3_glyph_support.json",
+      "sha256": "a4fc3b3d3c9bb9d045f886becda42d5ba358bfc2a3c2fa6f2df1167a1321d8a9",
+      "bytes": 131632
+    },
+    {
+      "path": "docs/reports/gauntlet/m6-touch-contrast-recovered/R4_PREREGISTRATION.md",
+      "sha256": "0f3680f839d13cb4912a233f549e838d814d46982438b5fb1f6f868e499acef8",
+      "bytes": 10196
+    }
+  ],
+  "staging_audit_sha256": "b8663d236310a14616f8df28d2d49d28e9d05a5ce2ad814f8a1c3b5564c4a7d3",
+  "pure_log_sha256": "515ca9fd71a47ea18f8bb2cf34861cda099a732e076a8a70950aeb06946f577f",
+  "remaining": "Fresh independent source/method critique, then explicit root native lane release. Actual contrast, visibility/occlusion, final dark surround, truthful affordance, scene occlusion and blind actual-image comparison remain unqualified."
+}
