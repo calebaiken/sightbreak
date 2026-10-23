@@ -1,0 +1,101 @@
+{
+  "source": "d5277180a7705befd64d2f40a362ad566e83d91b",
+  "base": "4854aed946d25d27482af66c332f84aa51cea8fb",
+  "game_tree": "55691684d31d44f1680141954bbe530443de9d1f",
+  "review_cpu_affinity": [
+    4
+  ],
+  "files": {
+    "scripts/macos_window_capture.swift": {
+      "bytes": 12702,
+      "sha256": "6fa1ca610e84daecc988c9fa46c980fce50e10d1a5029242b2e8da0cc480b6a9",
+      "unchanged_from_base": false
+    },
+    "scripts/verify_macos_ax_read_only.py": {
+      "bytes": 21912,
+      "sha256": "862de0ac7d4d4a10ad2551a779aa4fefcb163eb5b33d80f2e6ad7368a81ec733",
+      "unchanged_from_base": true
+    },
+    "scripts/macos_ax_contract.py": {
+      "bytes": 12088,
+      "sha256": "fdf5acf120fdbf0c5e916d8efd3749ebd4722ef48fffdbf38cb92d8bc09aff8b",
+      "unchanged_from_base": true
+    },
+    "scripts/macos_ax_appkit.py": {
+      "bytes": 6679,
+      "sha256": "be2c9969cdc084cb27980651da65b95e29a460ec1c2b7ef83536900b18f02e97",
+      "unchanged_from_base": true
+    },
+    "scripts/probe_macos_ax.py": {
+      "bytes": 21177,
+      "sha256": "298bf62dbb60d324b006ab970683e6278464005b9af30917460fc8f49de8097e",
+      "unchanged_from_base": true
+    },
+    ".github/workflows/desktop-alpha.yml": {
+      "bytes": 21131,
+      "sha256": "c5d7b6d5afcc92fe67240497121f8a295d92a3c2771d2af2bfcd484b6cdfe56b",
+      "unchanged_from_base": true
+    }
+  },
+  "original_capture": {
+    "bytes": 859,
+    "sha256": "d63129b91900c6ad5d2a99767e6d4c35dacc8ec254e54be28981a1613adb1ecf",
+    "byte_exact_candidate_fixture": true,
+    "parsed": {
+      "bounds_points_including_chrome": [
+        0,
+        25,
+        1024,
+        684
+      ],
+      "failure": {
+        "code": 1,
+        "domain": "main.CaptureFailure",
+        "localized_description": "The operation couldn\u2019t be completed. (main.CaptureFailure error 1.)",
+        "message": "Captured pixel dimensions or owned-window bounds changed"
+      },
+      "filter_content_rect_points": [
+        0,
+        25,
+        1024,
+        684
+      ],
+      "image_dimensions": [
+        1024,
+        684
+      ],
+      "input_events_posted": 0,
+      "owner_pid": 3602,
+      "passed": false,
+      "permission_requests_made": 0,
+      "permissions": {
+        "CGPreflightPostEventAccess": true,
+        "CGPreflightScreenCaptureAccess": true
+      },
+      "point_pixel_scale": 1,
+      "scope": "OS window screenshot from ScreenCaptureKit; read-only helper",
+      "scwindow_frame_points": [
+        0,
+        25,
+        1024,
+        684
+      ],
+      "window_id": 24
+    }
+  },
+  "commands": [
+    {
+      "name": "test_macos_capture_diagnostics.py",
+      "exit_code": 0
+    },
+    {
+      "name": "test_macos_ax_controller.py",
+      "exit_code": 0
+    },
+    {
+      "name": "test_macos_ax_read_only.py",
+      "exit_code": 0
+    }
+  ],
+  "passed": true
+}
