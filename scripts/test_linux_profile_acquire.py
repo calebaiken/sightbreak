@@ -195,7 +195,9 @@ class BudgetTests(unittest.TestCase):
             root = Path(temporary)
             stack.enter_context(patch.object(acq, 'OUTPUT', root))
             stack.enter_context(patch.object(acq.time, 'monotonic', side_effect=lambda: clock['now']))
-            stack.enter_context(patch.object(acq.signal, 'setitimer'))
+            def timer(_kind, seconds):
+                if seconds == 0 and mode == 'alarm_restore': clock['now'] = 15.001
+            stack.enter_context(patch.object(acq.signal, 'setitimer', side_effect=timer))
             budget = acq.Budget({})
             original_write, original_read, original_digest = acq.write, acq.read_json, acq.digest
             def operation():
@@ -226,7 +228,7 @@ class BudgetTests(unittest.TestCase):
         self.run_phase('valid')
         self.run_phase('complete', 15)
         self.run_phase('complete', 15.001)
-        for mode in ('publication', 'reread', 'hash'):
+        for mode in ('publication', 'reread', 'hash', 'alarm_restore'):
             with self.subTest(mode=mode): self.run_phase(mode)
 
     def test_whole_cap_is_not_restarted_and_original_active_alarm_rejects(self):
@@ -529,7 +531,9 @@ class MainPublicationTests(unittest.TestCase):
             for key, value in [('ROOT', root), ('OUTPUT', output), ('LANE_LOCK', root / 'lane.lock'), ('ACQUISITION_LOCK', root / 'acquisition.lock'), ('Acquisition', Controller)]:
                 stack.enter_context(patch.object(acq, key, value))
             stack.enter_context(patch.object(acq.time, 'monotonic', side_effect=lambda: clock['now']))
-            stack.enter_context(patch.object(acq.signal, 'setitimer'))
+            def timer(_kind, seconds):
+                if seconds == 0 and called and mode == 'late_alarm_restore': clock['now'] = 61.001
+            stack.enter_context(patch.object(acq.signal, 'setitimer', side_effect=timer))
             stack.enter_context(patch.object(acq.subprocess, 'Popen', side_effect=AssertionError('No native process permitted')))
             stack.enter_context(patch.object(acq, 'write', side_effect=write))
             stack.enter_context(patch.object(acq, 'read_json', side_effect=read))
@@ -547,17 +551,83 @@ class MainPublicationTests(unittest.TestCase):
             if mode == 'preparation_failure':
                 self.assertEqual((output / 'failed-preparation-generated-uids/fixture.gd.uid').read_text(), 'uid://retained')
             if mode.startswith('late_') and mode != 'late_manifest_write':
+                self.assertEqual(code, 1, 'A late finalization must not return success')
                 self.assertTrue((output / 'rejected-overall-publication.json').is_file())
             return code, receipt
 
     def test_main_positive_final_boundary_and_all_late_finalization_paths_reject(self):
         code, receipt = self.execute('valid')
         self.assertEqual(code, 0); self.assertTrue(receipt['passed'])
-        for mode in ('late_manifest_write', 'late_overall_write', 'late_overall_read', 'late_stdout', 'preparation_failure', 'existing_claim'):
+        for mode in ('late_manifest_write', 'late_overall_write', 'late_overall_read', 'late_stdout', 'late_alarm_restore', 'preparation_failure', 'existing_claim'):
             with self.subTest(mode=mode):
                 code, receipt = self.execute(mode)
                 self.assertEqual(code, 1)
                 if receipt: self.assertFalse(receipt['passed'])
+
+
+class BlockBindingTests(unittest.TestCase):
+    def execute(self, mode):
+        with tempfile.TemporaryDirectory() as temporary, patch.object(acq, 'OUTPUT', Path(temporary)), \
+                patch.object(acq.subprocess, 'Popen', side_effect=AssertionError('No native process permitted')):
+            root = Path(temporary)
+            controller = acq.Acquisition('c' * 40)
+            controller.python_path, controller.xvfb, controller.display = '/fake-python', '/fake-xvfb', ':99127'
+            controller.executable = root / 'ELF'; controller.executable.write_bytes(b'placeholder, never executed')
+            controller.seal = {'source': {'commit': 'c' * 40}, 'payload_sha256': acq.digest(controller.executable)}
+            acq.write(root / 'seal.json', controller.seal)
+            controller.receipt['seal_sha256'] = acq.digest(root / 'seal.json')
+            expected = fixture_data.manual_expected(controller.seal['payload_sha256'], str(controller.executable))
+            expected.update(source=controller.seal['source'], display=':99127', cpus=[0, 1],
+                            seal_sha256='wrong' if mode == 'seal' else controller.receipt['seal_sha256'])
+            block_root = root / 'native-block'; block_root.mkdir()
+            proof = b'identical synthetic PNG stand-in, never rendered'
+            rows = []
+            for index in range(4):
+                row = fixture_data.manual_record(index, controller.seal['payload_sha256'])
+                directory = block_root / f'{index + 1:02d}-' / ('on' if index in (1, 2) else 'off')
+                if mode == 'escaped' and index == 0: directory = root / 'outside-registered-condition'
+                directory.mkdir(parents=True)
+                paths = {key: str(directory / 'state' / key) for key in ('data', 'config', 'cache', 'mesa')}
+                row.update(output=str(directory), engine_argv=acq.accepted.engine_argv(controller.executable, row['profile'], directory, row['token']),
+                           seal_sha256=expected['seal_sha256'], cache_initial={'paths': paths, 'empty': True})
+                row['process_argv'] = ['taskset', '-c', '0,1', *row['engine_argv']]
+                row['actual_cmdline'] = deepcopy(row['engine_argv'])
+                row['selected_environment'].update(DISPLAY=':99127', XDG_DATA_HOME=paths['data'], XDG_CONFIG_HOME=paths['config'],
+                                                    XDG_CACHE_HOME=paths['cache'], MESA_SHADER_CACHE_DIR=paths['mesa'])
+                row['actual_environment'] = deepcopy(row['selected_environment'])
+                for name in ('host_begin', 'host_end'): row[name]['affinity'] = [0, 1]
+                row['fixture']['png_sha256'] = hashlib.sha256(proof).hexdigest()
+                if mode == 'warning' and index == 0: row['stdout'] += 'WARNING: zero-exit native warning\n'
+                acq.write(directory / 'condition.json', row)
+                row['publication_sha256'] = acq.digest(directory / 'condition.json')
+                (directory / 'client.log').write_text(row['stdout'])
+                (directory / 'proof.png').write_bytes(proof + (b'changed' if mode == 'PNG' and index == 0 else b''))
+                metrics = deepcopy(row['fixture'])
+                if mode == 'metrics' and index == 0: metrics['token'] = 'changed'
+                acq.write(directory / 'metrics.json', metrics)
+                if mode == 'condition' and index == 0:
+                    (directory / 'condition.json').write_text('{}')
+                rows.append(row)
+            # These controls remain valid to the accepted evaluator. The new
+            # outer raw-file/binding gate must independently detect the change.
+            self.assertTrue(acq.accepted.evaluate(rows, expected)['comparable'])
+            (block_root / 'xvfb.log').write_text('WARNING: zero-exit display warning\n' if mode == 'Xvfb' else '')
+            block = {'passed': mode != 'failed', 'expected': expected, 'records': rows,
+                     'xvfb_cleanup': {'pid_absent': True, 'group_absent': True}}
+            acq.write(block_root / 'block.json', block)
+            with patch.object(controller, 'command') as command:
+                if mode == 'valid':
+                    value = controller.run_block()
+                    self.assertTrue(value['passed'])
+                    argv = command.call_args.args[1]
+                    self.assertEqual(argv[:3], ['/usr/bin/taskset', '-c', '0,1'])
+                    self.assertEqual(argv[-2:], ['--cpus', '0,1'])
+                else:
+                    with self.assertRaises(acq.accepted.Invalid): controller.run_block()
+
+    def test_real_outer_block_gate_accepts_bound_data_and_rejects_otherwise_valid_mutations(self):
+        for mode in ('valid', 'warning', 'Xvfb', 'PNG', 'metrics', 'condition', 'escaped', 'seal', 'failed'):
+            with self.subTest(mode=mode): self.execute(mode)
 
 
 if __name__ == '__main__':

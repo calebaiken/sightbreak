@@ -1,0 +1,22 @@
+{
+  "initial_savepoint": "22bb1f8891b273d3c9f57379e47dc29d909649fc",
+  "old_wrapper_sha256": "c15fc4c508866f849a3c164b769c3e3ee20d87f755a5c52a2fef9d09ffbc52da",
+  "corrected_wrapper_sha256": "47a7527ce989391384efad9899042986f95af94def3ee4911ad6fc9707e997e2",
+  "controls_sha256": "61ccaa8a5cb4b0ed039348a9c51c008dd84fd2e875446d8a86605697920642b4",
+  "results": {
+    "before": {
+      "methods": 2,
+      "failures": 2,
+      "errors": 0,
+      "passed": false
+    },
+    "corrected": {
+      "methods": 2,
+      "failures": 0,
+      "errors": 0,
+      "passed": true
+    }
+  },
+  "scope": "Virtual time advances when the alarm is disarmed/restored. The old phase returns late and old main returns exit 0 after the final cap. Corrected source rejects. All Popen is fake/forbidden; no native process.",
+  "engine_import_compile_export_native_runs": 0
+}

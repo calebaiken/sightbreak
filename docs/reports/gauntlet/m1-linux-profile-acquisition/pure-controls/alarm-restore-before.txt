@@ -1,0 +1,32 @@
+test_positive_original_phase_boundary_and_late_publication_read_hash (test_linux_profile_acquire.BudgetTests.test_positive_original_phase_boundary_and_late_publication_read_hash) ... 
+  test_positive_original_phase_boundary_and_late_publication_read_hash (test_linux_profile_acquire.BudgetTests.test_positive_original_phase_boundary_and_late_publication_read_hash) (mode='alarm_restore') ... FAIL
+test_main_positive_final_boundary_and_all_late_finalization_paths_reject (test_linux_profile_acquire.MainPublicationTests.test_main_positive_final_boundary_and_all_late_finalization_paths_reject) ... 
+  test_main_positive_final_boundary_and_all_late_finalization_paths_reject (test_linux_profile_acquire.MainPublicationTests.test_main_positive_final_boundary_and_all_late_finalization_paths_reject) (mode='late_alarm_restore') ... FAIL
+
+======================================================================
+FAIL: test_positive_original_phase_boundary_and_late_publication_read_hash (test_linux_profile_acquire.BudgetTests.test_positive_original_phase_boundary_and_late_publication_read_hash) (mode='alarm_restore')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/test_linux_profile_acquire.py", line 232, in test_positive_original_phase_boundary_and_late_publication_read_hash
+    with self.subTest(mode=mode): self.run_phase(mode)
+                                  ^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/test_linux_profile_acquire.py", line 224, in run_phase
+    with self.assertRaises(TimeoutError): budget.phase('version', operation)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: TimeoutError not raised
+
+======================================================================
+FAIL: test_main_positive_final_boundary_and_all_late_finalization_paths_reject (test_linux_profile_acquire.MainPublicationTests.test_main_positive_final_boundary_and_all_late_finalization_paths_reject) (mode='late_alarm_restore')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/test_linux_profile_acquire.py", line 563, in test_main_positive_final_boundary_and_all_late_finalization_paths_reject
+    code, receipt = self.execute(mode)
+                    ^^^^^^^^^^^^^^^^^^
+  File "/workspace/sightbreak-linux-profile-acquisition/scripts/test_linux_profile_acquire.py", line 554, in execute
+    self.assertEqual(code, 1, 'A late finalization must not return success')
+AssertionError: 0 != 1 : A late finalization must not return success
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.037s
+
+FAILED (failures=2)

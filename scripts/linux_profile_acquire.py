@@ -101,6 +101,7 @@ class Budget:
                 self.check(name + ':reread')
                 row['publication_sha256'] = digest(OUTPUT / (name + '.phase.json'))
                 self.check(name + ':receipt hashed')
+            self.check(name + ':alarm restored')
             row['passed'] = True
             return value
         except (Exception, KeyboardInterrupt) as error:
@@ -110,6 +111,9 @@ class Budget:
             ended = time.monotonic()
             row.update(ended_monotonic=ended, elapsed_seconds=ended - started)
             self.phase_until = self.until
+            if row['passed'] and ended >= row['deadline_monotonic']:
+                row.update(passed=False, error='Acquisition deadline at phase return', error_type='TimeoutError')
+                raise TimeoutError(row['error'])
 
 
 def process_scan():
@@ -647,6 +651,8 @@ def main():
             print(json.dumps({'passed': acquisition.receipt['passed'], 'output': str(OUTPUT), 'error': acquisition.receipt.get('error')}), flush=True)
             if acquisition.receipt['passed']:
                 acquisition.budget.check('overall final stdout')
+        if acquisition.receipt['passed']:
+            acquisition.budget.check('overall alarm restored')
     except (Exception, KeyboardInterrupt) as error:
         acquisition.receipt.update(passed=False, publication_error=str(error))
         failure_until = failure_until or time.monotonic() + FAILURE_PUBLICATION
