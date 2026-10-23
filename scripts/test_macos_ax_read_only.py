@@ -2,14 +2,18 @@
 """Pure AX structural/privacy counterexamples; no native APIs, engine or OCR."""
 import ast
 import copy
+import ctypes as C
 import hashlib
 import json
 from pathlib import Path
+from types import SimpleNamespace
 import unittest
+from unittest.mock import patch
 
 import macos_ax_contract as contract
 import macos_ordinary_input as ordinary
 from probe_macos_ax import BoundedObserver, NativeAX
+import probe_macos_ax as observer
 import verify_macos_ax_read_only as driver
 from test_macos_ordinary import capture
 
@@ -273,6 +277,174 @@ class StructuralControls(unittest.TestCase):
         reader.guard=guard
         with self.assertRaises(TimeoutError):reader.call('AXUIElementGetPid',1,2)
         self.assertEqual(reader.calls,{'AXUIElementGetPid':1})
+
+
+def boundary_reader():
+    """Real adapter with fake C endpoints only; no libraries are constructed."""
+    reader=NativeAX.__new__(NativeAX)
+    reader.pid,reader.window,reader.bounds=12,34,[40,60,960,568]
+    reader.calls,reader.refs,reader.keys,reader.latest_rows={ },[],{ },[]
+    reader.deadline=15.
+    reader.released,reader.retained=[],[]
+    reader.rows=[{'owner_pid':12,'window_id':34,'onscreen':True,
+                  'bounds_points_including_chrome':[40,60,960,568]}]
+    reader.windows=lambda _pid:copy.deepcopy(reader.rows)
+    def retain(value):
+        reader.retained.append(value)
+        return value
+    reader.cf=SimpleNamespace(CFRelease=reader.released.append,CFRetain=retain,
+        CFGetTypeID=lambda _:7,CFArrayGetTypeID=lambda:7,CFArrayGetCount=lambda _:1,
+        CFArrayGetValueAtIndex=lambda *_:0xB44)
+    return reader
+
+
+class NativeBoundaryControls(unittest.TestCase):
+    def test_actual_call_elapsed_bound_rejects_point_two_five_without_renewing_whole_deadline(self):
+        for elapsed,accepted in ((0.,True),(.249,True),(.25,False),(.300,False),(5.001,False)):
+            with self.subTest(elapsed=elapsed):
+                reader,now=boundary_reader(),[10.]
+                def native(*_arguments):now[0]+=elapsed;return 0
+                reader.ax=SimpleNamespace(AXUIElementGetPid=native)
+                with patch.object(observer.time,'monotonic',lambda:now[0]):
+                    if accepted:self.assertEqual(reader.call('AXUIElementGetPid',1,None),0)
+                    else:
+                        with self.assertRaises(TimeoutError):reader.call('AXUIElementGetPid',1,None)
+                self.assertEqual(reader.deadline,15.)
+                self.assertEqual(reader.calls,{'AXUIElementGetPid':1})
+
+    def test_create_and_copy_plus_one_references_survive_post_call_rejection_and_native_error(self):
+        for kind,pointer in (('application',0xA11),('attribute',0xA22),('array',0xA33)):
+            for fault in ('none','call_late','whole_late','window','native_error','native_exception'):
+                if kind=='application' and fault in ('native_error','native_exception'):continue
+                with self.subTest(kind=kind,fault=fault):
+                    reader,now=boundary_reader(),[10.]
+                    reader.check_element=lambda _element:None
+                    reader.key=lambda name:name
+                    def finish():
+                        if fault=='call_late':now[0]+=.300
+                        elif fault=='whole_late':now[0]+=5.001
+                        elif fault=='window':reader.rows.append(dict(reader.rows[0],window_id=35))
+                        elif fault=='native_exception':raise RuntimeError('Synthetic native boundary exception')
+                        return -25205 if fault=='native_error' else 0
+                    def copied(*arguments):
+                        arguments[-1]._obj.value=pointer
+                        return finish()
+                    def created(_pid):finish();return pointer
+                    def count(_element,_key,output):output._obj.value=1;return 0
+                    reader.ax=SimpleNamespace(AXUIElementCreateApplication=created,
+                        AXUIElementCopyAttributeValue=copied,AXUIElementGetAttributeValueCount=count,
+                        AXUIElementCopyAttributeValues=copied)
+                    operation={'application':lambda:reader.application(),'attribute':lambda:reader.attribute(1,'AXRole'),
+                               'array':lambda:reader.elements(1,'AXChildren',4)}[kind]
+                    with patch.object(observer.time,'monotonic',lambda:now[0]):
+                        if fault=='none':operation()
+                        else:
+                            with self.assertRaises((RuntimeError,TimeoutError)):operation()
+                    reader.close()
+                    self.assertEqual(reader.released.count(pointer),1)
+                    self.assertEqual(reader.refs,[])
+                    if kind=='array' and fault=='none':
+                        self.assertEqual(reader.retained,[0xB44])
+                        self.assertEqual(reader.released,[0xB44,0xA33])
+
+    def test_copy_array_wrong_type_count_or_null_child_preserves_array_cleanup(self):
+        for fault in ('type','count','null_child'):
+            with self.subTest(fault=fault):
+                reader=boundary_reader();reader.check_element=lambda _element:None;reader.key=lambda name:name
+                def count(_element,_key,output):output._obj.value=1;return 0
+                def copied(_element,_key,_start,_count,output):output._obj.value=0xA33;return 0
+                reader.ax=SimpleNamespace(AXUIElementGetAttributeValueCount=count,AXUIElementCopyAttributeValues=copied)
+                if fault=='type':reader.cf.CFGetTypeID=lambda _:8
+                elif fault=='count':reader.cf.CFArrayGetCount=lambda _:2
+                else:reader.cf.CFArrayGetValueAtIndex=lambda *_:None
+                with patch.object(observer.time,'monotonic',lambda:10.):
+                    with self.assertRaises(RuntimeError):reader.elements(1,'AXChildren',4)
+                reader.close()
+                self.assertEqual(reader.released,[0xA33])
+
+    def test_reference_limit_or_registry_failure_releases_owned_but_not_borrowed_pointers(self):
+        for retained in (False,True):
+            reader=boundary_reader();reader.refs=list(range(0xD00,0xD00+2048))
+            with self.assertRaises(RuntimeError):reader.hold(0xA22,retained=retained)
+            self.assertEqual(reader.retained,[])
+            self.assertEqual(reader.released,[0xA22] if retained else [])
+            reader.close()
+            self.assertEqual(reader.released.count(0xA22),int(retained))
+        class BrokenRegistry(list):
+            def append(self,_value):raise MemoryError('Synthetic append failure')
+        for retained in (False,True):
+            reader=boundary_reader();reader.refs=BrokenRegistry()
+            with self.assertRaises(MemoryError):reader.hold(0xA22,retained=retained)
+            reader.close()
+            self.assertEqual(reader.released,[0xA22])
+        reader=boundary_reader();reader.refs=list(range(0xD00,0xD00+2048))
+        reader.cf.CFStringCreateWithCString=lambda *_:0xA44
+        with self.assertRaises(RuntimeError):reader.key('AXRole')
+        self.assertNotIn('AXRole',reader.keys)
+        reader.close()
+        self.assertEqual(reader.released.count(0xA44),1)
+
+    @staticmethod
+    def string_reader(title=None,*,raw=None,units=None,conversion_ok=True):
+        reader=boundary_reader()
+        if raw is None:raw=title.encode('utf-8')
+        if units is None:units=len(title.encode('utf-16-le'))//2
+        reader.role=lambda _element:'AXButton'
+        reader.attribute=lambda *_arguments:1
+        def converted(_value,buffer,capacity,_encoding):
+            if not conversion_ok or len(raw)+1>capacity:return False
+            C.memmove(buffer,raw+b'\0',len(raw)+1)
+            return True
+        reader.cf=SimpleNamespace(CFGetTypeID=lambda _:7,CFStringGetTypeID=lambda:7,
+            CFStringGetLength=lambda _:units,CFStringGetCString=converted)
+        return reader
+
+    def test_complete_counted_native_strings_preserve_utf8_non_bmp_and_exact_byte_boundary(self):
+        for title in ('','SIGHTBREAK (DEBUG)','DEPLOY   ·   OFFLINE 5V5','DEPLOY • OFFLINE 5V5',
+                      'é'*256,'🙂'*128,'a'*512,'e\u0301'*170):
+            with self.subTest(title=title[:24]):
+                self.assertEqual(self.string_reader(title).title(1),title)
+        backend=FakeBackend();backend.objects[1]['title']=self.string_reader('DEPLOY   ·   OFFLINE 5V5').title(1)
+        self.assertTrue(validate(observation(backend))['unique_semantic_candidate'])
+
+    def test_native_nul_control_and_trailing_nul_cannot_become_exact_deploy(self):
+        label=contract.LABEL
+        titles=[label+'\0DIFFERENT TITLE',label+'\0',label+'\0\0','\0'+label,'\0']
+        titles+=['DEPLOY'+char+' · OFFLINE 5V5' for char in ('\x01','\t','\n','\r','\x7f','\x85')]
+        for title in titles:
+            with self.subTest(title=repr(title)):
+                with self.assertRaises(RuntimeError):
+                    backend=FakeBackend();backend.objects[1]['title']=self.string_reader(title).title(1)
+                    validate(observation(backend))
+                with self.assertRaises(RuntimeError):contract.normalized_title(title)
+
+    def test_string_bad_utf8_count_conversion_failure_and_oversize_fail_without_prefix_acceptance(self):
+        readers=[self.string_reader(raw=b'\xff',units=1),self.string_reader(raw=b'\xed\xa0\x80',units=1),
+                 self.string_reader('DEPLOY · OFFLINE 5V5',units=1),self.string_reader('a'*513),
+                 self.string_reader('é'*257),self.string_reader('DEPLOY · OFFLINE 5V5',conversion_ok=False)]
+        for reader in readers:
+            with self.assertRaises(RuntimeError):reader.title(1)
+        with self.assertRaises(RuntimeError):contract.normalized_title('\ud800')
+
+    def test_owned_string_type_length_conversion_and_control_failures_release_original_copy(self):
+        for fault in ('type','length','conversion','utf8','nul'):
+            with self.subTest(fault=fault):
+                reader=boundary_reader();reader.check_element=lambda _element:None;reader.key=lambda name:name
+                reader.role=lambda _element:'AXButton'
+                def copied(_element,_key,output):output._obj.value=0xA22;return 0
+                reader.ax=SimpleNamespace(AXUIElementCopyAttributeValue=copied)
+                raw=b'x\0y' if fault=='nul' else b'\xff' if fault=='utf8' else b'x'
+                reader.cf.CFStringGetTypeID=lambda:8 if fault=='type' else 7
+                reader.cf.CFStringGetLength=lambda _pointer:513 if fault=='length' else len(raw)
+                def converted(_pointer,buffer,_capacity,_encoding):
+                    if fault=='conversion':return False
+                    C.memmove(buffer,raw+b'\0',len(raw)+1)
+                    return True
+                reader.cf.CFStringGetCString=converted
+                with patch.object(observer.time,'monotonic',lambda:10.):
+                    with self.assertRaises(RuntimeError):reader.title(1)
+                reader.close()
+                self.assertEqual(reader.released,[0xA22])
 
 
 class SourceControls(unittest.TestCase):

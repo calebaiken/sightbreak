@@ -1,5 +1,6 @@
 """Pure read-only AX receipt checks. No semantic observation authorizes input."""
 import math
+import unicodedata
 
 from macos_native_input import same_bounds
 from macos_ordinary_input import capture_geometry, owned_visible_windows
@@ -39,9 +40,14 @@ def inside(inner, outer, tolerance=0):
 
 
 def normalized_title(value):
-    if (not isinstance(value, str) or len(value.encode('utf-8')) > CAPS['title_bytes']
-            or any(ord(char) < 32 and char not in '\n\r\t' for char in value)):
+    if not isinstance(value, str):
         raise RuntimeError('Allowed title is malformed or exceeds its finite byte cap')
+    try:
+        size = len(value.encode('utf-8', errors='strict'))
+    except UnicodeError:
+        raise RuntimeError('Allowed title is not strict Unicode') from None
+    if size > CAPS['title_bytes'] or any(unicodedata.category(char) == 'Cc' for char in value):
+        raise RuntimeError('Allowed title contains controls or exceeds its finite byte cap')
     return ' '.join(value.replace('•', '·').split())
 
 

@@ -86,21 +86,45 @@ class NativeAX(MacReadOnly):
             raise TimeoutError('Owned-window query returned after AX deadline')
         return self.latest_rows
 
-    def call(self, name, *arguments):
+    def call(self, name, *arguments, owned_result=False, owned_out=None):
         if name not in READ_APIS:
             raise RuntimeError('Native AX call outside read-only allowlist')
         self.guard()
         self.calls[name] = self.calls.get(name, 0) + 1
-        result = getattr(self.ax, name)(*arguments)
+        result = None
+        native_started = time.monotonic()
+        try:
+            result = getattr(self.ax, name)(*arguments)
+            native_finished = time.monotonic()
+        finally:
+            # A Create/Copy result is already +1-owned when the C call returns,
+            # including a Copy out-parameter written before a boundary error.
+            # Secure it before any timing/window rejection can unwind the caller.
+            pointer = result if owned_result else owned_out.value if owned_out is not None else None
+            if pointer:
+                self.hold(pointer, retained=True)
         self.guard()  # Successful late returns and geometry changes still fail.
+        if native_finished - native_started >= CAPS['call_seconds']:
+            # This rejects a late return; it cannot interrupt the native call.
+            raise TimeoutError('Native AX call returned at or beyond its original 0.25s budget')
         return result
 
     def hold(self, pointer, *, retained=False):
-        if not pointer or len(self.refs) >= 2048:
+        if not pointer:
+            raise RuntimeError('Null or excessive retained native reference')
+        if len(self.refs) >= 2048:
+            if retained:
+                self.cf.CFRelease(pointer)
             raise RuntimeError('Null or excessive retained native reference')
         if not retained:
             pointer = self.cf.CFRetain(pointer)
-        self.refs.append(pointer)
+            if not pointer:
+                raise RuntimeError('Native reference retain returned NULL')
+        try:
+            self.refs.append(pointer)
+        except BaseException:
+            self.cf.CFRelease(pointer)
+            raise
         return pointer
 
     def key(self, name):
@@ -111,7 +135,7 @@ class NativeAX(MacReadOnly):
         return self.keys[name]
 
     def application(self):
-        value = self.hold(self.call('AXUIElementCreateApplication', self.pid), retained=True)
+        value = self.call('AXUIElementCreateApplication', self.pid, owned_result=True)
         self.check_element(value)
         return value
 
@@ -129,12 +153,10 @@ class NativeAX(MacReadOnly):
     def attribute(self, element, name):
         self.check_element(element)
         value = C.c_void_p()
-        error = self.call('AXUIElementCopyAttributeValue', element, self.key(name), C.byref(value))
+        error = self.call('AXUIElementCopyAttributeValue', element, self.key(name), C.byref(value), owned_out=value)
         if error or not value.value:
-            if value.value:
-                self.cf.CFRelease(value)
             raise RuntimeError('Required AX attribute unavailable: ' + name + ' code=' + str(error))
-        return self.hold(value.value, retained=True)
+        return value.value
 
     def string(self, element, name, limit=512):
         if name not in ('AXRole', 'AXTitle'):
@@ -144,12 +166,27 @@ class NativeAX(MacReadOnly):
         value = self.attribute(element, name)
         if self.cf.CFGetTypeID(value) != self.cf.CFStringGetTypeID():
             raise RuntimeError('Malformed AX string type')
-        if not 0 <= self.cf.CFStringGetLength(value) <= limit:
+        units = self.cf.CFStringGetLength(value)  # Counted UTF-16 units, not UTF-8 bytes.
+        if not 0 <= units <= limit:
             raise RuntimeError('AX string exceeds finite title/role cap')
         buffer = C.create_string_buffer(limit + 1)
         if not self.cf.CFStringGetCString(value, buffer, len(buffer), 0x08000100):
             raise RuntimeError('AX UTF-8 string exceeds finite byte cap')
-        return buffer.value.decode('utf-8', errors='strict')
+        # CFStringGetCString supplies no byte count. Inspect the entire bounded
+        # buffer, keeping interior NULs. Removing only zero padding/terminators
+        # is safe because the counted UTF-16 check rejects any lost trailing NUL.
+        encoded = buffer.raw.rstrip(b'\0')
+        if len(encoded) > limit:
+            raise RuntimeError('AX UTF-8 string exceeds finite byte cap')
+        try:
+            text = encoded.decode('utf-8', errors='strict')
+            converted_units = len(text.encode('utf-16-le')) // 2
+        except UnicodeError:
+            raise RuntimeError('AX string conversion is not strict Unicode') from None
+        if converted_units != units:
+            raise RuntimeError('AX complete string conversion/count mismatch')
+        normalized_title(text)  # Reject NUL/control characters; return raw text unchanged.
+        return text
 
     def role(self, element):
         return self.string(element, 'AXRole', 64)
@@ -193,12 +230,10 @@ class NativeAX(MacReadOnly):
         if not count.value:
             return []
         array = C.c_void_p()
-        error = self.call('AXUIElementCopyAttributeValues', element, self.key(name), 0, count.value, C.byref(array))
+        error = self.call('AXUIElementCopyAttributeValues', element, self.key(name), 0, count.value, C.byref(array), owned_out=array)
         if error or not array.value:
-            if array.value:
-                self.cf.CFRelease(array)
             raise RuntimeError('Bounded AX structural read failed: ' + name + ' code=' + str(error))
-        array = self.hold(array.value, retained=True)
+        array = array.value
         if (self.cf.CFGetTypeID(array) != self.cf.CFArrayGetTypeID()
                 or self.cf.CFArrayGetCount(array) != count.value):
             raise RuntimeError('AX child collection type/count changed')
