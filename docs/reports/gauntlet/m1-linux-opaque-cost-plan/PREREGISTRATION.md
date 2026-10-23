@@ -1,10 +1,11 @@
 # Linux opaque-render cost: source map and next controlled diagnostic
 
-2026-10-23. Source investigation and registration proposal only. No fixture or
-controller is implemented here. No engine, compile, profiler, OCR, export or
-native process ran. This report authorizes no additional process. Root must
-review the proposal, then a separately implemented exact-source fixture and
-controller need fresh independent review before any runtime release.
+2026-10-23. Updated at the source implementation checkpoint following independent
+plan review `fcb5276ca620c86a1a1342e9ac1dd32bec4eecff`. The separate fixture,
+controller and pure controls are now implemented; their exact-source review is
+pending. No engine, compile, profiler, OCR, export or native process ran. This
+report authorizes no runtime process. The current implementation and limits are
+in [IMPLEMENTATION.md](IMPLEMENTATION.md).
 
 Own branch `diagnostic/linux-opaque-cost-preregistration`, sparse worktree
 `/workspace/sightbreak-linux-opaque-cost`, exact root base
@@ -77,12 +78,24 @@ registration and quality/restoration controls. None is proposed for runtime now.
 
 ## Smallest next contrast: incremental profiling cost
 
-Testable hypothesis H1: **adding `--gpu-profile` increases the median warm
-fixed-work draw wall duration by at least 10%** in the declared full-Standard
+Testable hypothesis H1: **adding `--gpu-profile` increases median warm wall
+cadence of consecutive post-draw intervals at the declared pacing by at least
+10%** in the declared full-Standard
 fixture. The threshold is an actionable screening resolution, not a release
-target or a statistical confidence claim. This first contrast attributes the
-combined incremental flag cost, including query capture/retrieval, profile
-processing and stdout. It preserves all visual settings and materials.
+target or a statistical confidence claim. This first contrast screens a
+flag-associated median cadence effect. It does not measure complete incremental
+profiling cost: rare stdout stalls can disappear from a median. Preserve total,
+mean and largest interval as descriptive secondary data, without replacing H1
+or adding retrospective decision thresholds. It preserves visual settings and
+materials.
+
+The pinned synchronous renderer emits `frame_post_draw` before its profile tail;
+`main.cpp` increments the drawn counter after draw returns and applies frame
+delay later. Consecutive post-draw intervals therefore include the previous
+frame's profile tail, probe tail, pacing and scheduling. They do not isolate a
+draw call, prove GPU completion or bound uncapped/full profiler cost. Hold the
+default synchronous `safe` model explicitly in every argv and project overlay;
+retain that source-bound selection, actual argv and project-setting readback.
 
 This question comes first because the two existing ordinary attempts changed
 instrumentation and did not complete the same flow. Comparing their outcomes
@@ -113,10 +126,12 @@ Future fixture specification, requiring implementation/source review first:
   the project's V-Sync selection and record its actual getter/log result.
   All actor/camera transforms, meshes, materials, lights and scene counters
   must be serialized into a stable setup fingerprint before measurement.
-- After construction, draw exactly 32 warm-up frames and then exactly 64
-  measured frames. Each sample surrounds the same process-frame/post-draw
-  await pair with the same monotonic clock and frame-counter reads. Require
-  one new drawn-frame identity per sample. Store arrays in memory; write no
+- Retain construction-only settling outside sampling, then a separately timed
+  cold/anchor draw. In synchronous mode its callback advances while the drawn
+  counter has not yet incremented. After that anchor, retain exactly 32 warm
+  intervals and 64 measured consecutive post-draw intervals, with both clock,
+  drawn-counter and callback-serial endpoints. Require one new drawn identity
+  and callback per interval. Store arrays in memory; write no
   fixture telemetry, PNG or status file inside the measured region.
 - Retain raw warm-up and measurement durations/counters. Take the proof PNG
   after the measured region closes. Pixel hashes and stable scene/material/
@@ -169,23 +184,28 @@ or incomparable. No runtime release or extra retry follows from elapsed time.
 
 ## Preregistered computation and decision
 
-Use each process's 64 raw wall samples to compute its median, keeping all
-samples. Do not treat samples as independent experiment replicates or create a
+Use each process's 64 raw cadence samples to compute its median, keeping order
+and every sample. For even-length arrays use the arithmetic mean of the two
+middle sorted values. Retain the sum, arithmetic mean and largest interval.
+Do not treat samples as independent experiment replicates or create a
 confidence interval by resampling individual frames. Compare two paired ratios:
 `median(ON2)/median(OFF1)` and `median(ON3)/median(OFF4)`.
 
 The block is interpretable only if all source/scene/pixel/counter controls pass,
-throttling does not increase, the two OFF medians differ by at most 5%, the two
-ON medians differ by at most 5%, and the two halves of each fixed warm-up differ
-by at most 10% in median. These are predeclared drift/stabilization screens,
+throttling does not increase, the two OFF medians and the two ON medians each
+satisfy `max(a,b)/min(a,b)-1 <= 0.05`, and each fixed warm-up's two 16-interval
+halves satisfy the same formula `<= 0.10`. Durations must be finite and positive;
+array/counter identities must be exact. A 1e-12 numerical tolerance applies only
+to the drift boundary's floating-point evaluation. These are drift/stabilization screens,
 not proof that all shared-host noise is absent. If the scene is frame-cap paced,
 the result cannot bound underlying uncapped render cost; record that limitation
 and require a separate pacing study before changing the cap.
 
-- Both paired ratios greater than or equal to 1.10 support a material
-  incremental profiling cost in this fixture.
+- Both paired ratios greater than or equal to 1.10 support a flag-associated
+  median cadence increase in this block and fixture.
 - Both ratios at least 0.90 and strictly below 1.10 support only that this block did not resolve
-  a 10% flag effect. They do not prove zero overhead or formal equivalence.
+  a 10% median cadence increase. They do not bound sparse stalls, total overhead,
+  zero overhead or formal equivalence.
 - Opposite signs, excessive drift, materially faster ON or failed controls
   leave attribution unresolved; retain the exact data and stop the block.
 
@@ -206,10 +226,11 @@ Neither outcome changes quality defaults or closes any gameplay/release gate.
 
 ## Present checkpoint
 
-Only this registration and its source/hash ledger are added. Read-only checks
-verify the retained upstream bytes and root/b2e0293 game equality; final
-`git diff --check` verifies document whitespace. No tests, engine, compilation,
-export, profiler, OCR or native run is claimed. The largest open gap is
-controlled measurement of instrumentation cost at an unchanged full-quality
-workload. Root may now critique this concrete plan; implementation and runtime
-remain separate unreleased steps.
+Source implementation and pure synthetic/mock controls now accompany this
+corrected registration. Their receipts establish evaluator/launch/stop behavior
+under supplied synthetic data, not Godot behavior. The GDScript has not been
+compiled or executed. The original source-map ledger and root/b2e0293 game
+equality remain intact; game and canonical mission documents are unchanged.
+Fresh exact implementation review, compilation/export and runtime are separate
+unreleased steps. The largest gap remains actual source-bound unchanged-work
+cadence data and the limits of a median in the presence of sparse stalls.
