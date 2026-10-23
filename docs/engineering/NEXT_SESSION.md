@@ -1,21 +1,21 @@
 # Next session
 
-Updated 2026-10-23, 07:08 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 07:18 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. The automatic goal remains active. Read AGENTS.md and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
 
-## Live execution checkpoint — 2026-10-23, 07:08 UTC
+## Live execution checkpoint — 2026-10-23, 07:18 UTC
 
 The mission is ACTIVE. Root is `/workspace/sightbreak-v1-recovered`, own branch
 `codex/v1-executor-recovery-20261023`, [draft PR31](https://github.com/calebaiken/sightbreak/pull/31).
-Integrated source before this note is `a089473`. Inspect actual HEAD and status;
+Trial source is `a089473`; root report checkpoint before this note is `db1e9cb`. Inspect actual HEAD and status;
 never reset a newer checkpoint. The original contributor checkout is clean on
 `work` at `4d8cdb33`. No shared release branch is merged.
 
-1. **Windows next: bind the integrated controller, then one native attempt.**
+1. **Windows one frozen native attempt is queued.**
    Original run 39907358390 at b2e0293 stays FAILED. Death at tick 1166 precedes
    released ACK 1192 and fresh W; the plant ends by defender elimination while
    the device remains planted. Separate independently accepted scopes are 15
@@ -31,10 +31,18 @@ never reset a newer checkpoint. The original contributor checkout is clean on
    335 corrected predicates and 31 additional cases / 136 predicates per freeze;
    six pure groups pass 62 methods with three Windows reader skips on Linux.
    Game, CI, captures, budgets and all other taps remain unchanged. This does
-   not prove survival or grant a native retry. Fresh critic
-   `/root/windows_focus_liveness_fresh_critic` is binding exact combined a089473
-   to both accepted freezes and the Mac c088 source before root selects one
-   original full Windows workflow on an immutable own ref. No dispatch yet.
+   not prove survival. Fresh combined approval 04d930b is root 65fd90e:
+   431 files / 465 binding assertions, twelve pure groups / 128 methods, three
+   Windows skips. The sparse preset setup failure and corrected rerun are retained.
+   Root selected ONE unchanged full Windows workflow, exact a089473, immutable
+   ref `codex/v1-qualify-win-a089473`, pre-dispatch root prereg cb95c10.
+   Run [39916539053](https://github.com/calebaiken/sightbreak/actions/runs/39916539053)
+   was dispatched once at 07:15:05 UTC; job 120291226421 is queued at this note.
+   Fresh `/root/windows_native_a089_fresh_critic` owns actual output review.
+   Its criteria commit 69d3bde follows dispatch by 36 seconds and precedes any
+   output inspection; do not label that critic commit pre-dispatch. Root's
+   existing registration precedes dispatch. No retry is authorized. Receipts
+   are in `docs/reports/gauntlet/windows-native-a089-20261023/`.
 2. **ARM third attempt is independently FAILED, with original artifacts retained.**
    Run [39912086121](https://github.com/calebaiken/sightbreak/actions/runs/39912086121),
    job 120277159133, exact c08889b on `codex/v1-qualify-mac-c08889b`.
@@ -84,16 +92,28 @@ never reset a newer checkpoint. The original contributor checkout is clean on
    ARM do not establish a common owner or cause. All 17 archive-map originals,
    including both explicitly force-tracked stderr files, are retained in
    [the verbose package](../reports/gauntlet/m5-exhausted-primary-verbose-diagnostic/actual-r1/RESULT.md),
-   root 0f6f5e4 / 239ee99. Actual independent audit is active with
-   `/root/exhausted_primary_baseline_actual_critic`. No repeat is approved.
+   root 0f6f5e4 / 239ee99. Independent actual review d549f54 (root d744ffb)
+   verifies 74,142 raw predicates, 12,314 identity checks and all 17 members.
+   Every one of the 1,318 fixture lines is byte-identical to baseline. Strict
+   REJECT remains. The outer tool transcript/identity is not in the package;
+   root launch metadata does not substitute for that missing artifact.
+   No repeat is approved. Selection-policy source work is active in
+   `/workspace/sightbreak-exhausted-primary-selection`, branch
+   `codex/m5-exhausted-primary-selection-20261023`, base c7c9552, prereg 2624815.
+   Preserve easy difficulty, old near behavior, active ammo authority, unknown
+   state, reloadable primary, range and interaction controls. Fresh source review
+   precedes any native candidate measurement; audio failure is kept separate.
 4. **Audio owner observation is source-only, not a leak fix.**
    Source 809dbc0, branch `codex/audio-exit-lifecycle-20261023`, own
    `/workspace/sightbreak-audio-exit-lifecycle`, adds optional WeakRef/identity/PCM
    observations at the input test's existing boundaries. Thirteen pure tests
    pass. The original action/await/leave/free/quit body reconstructs exactly;
    product audio is unchanged. Pinned upstream source establishes asynchronous
-   stop/cleanup, not this leak's owner or cause. Fresh source critic
-   `/root/audio_lifecycle_fresh_source_critic` is reviewing. No engine compile,
+   stop/cleanup, not this leak's owner or cause. Fresh source critic 800f605
+   REJECTS analyzer chronology/coverage; root report-only import is 5836361.
+   Three independent falsifiers pass wrongly, while WeakRef hooks and stripped
+   original bytes pass source review. Builder is correcting chronology/coverage
+   without adding game waits or actions. No engine compile,
    import, new waits, teardown fix or diagnostic run is approved. A later run
    needs a separately reviewed bounded wrapper and staged isolated source.
 5. **Touch R3 remains numerically FAILED despite blind clarity preference.**
@@ -101,13 +121,15 @@ never reset a newer checkpoint. The original contributor checkout is clean on
    candidate 240/304 resolved, 64 unresolved and eight held-border failures.
    Independent actual 39b5a9d / 8a5f531 and blind evidence root 373b636 remain
    distinct; shipping product/analyzer are not integrated. R4 freeze 16335ab,
-   handoff bb1fc88, `/workspace/sightbreak-touch-contrast-recovered`, is under
-   fresh source review. Critic finds a pre-native blocker: maximum-mobile FRAG
+   handoff bb1fc88, `/workspace/sightbreak-touch-contrast-recovered`, is rejected
+   by fresh critic 6eb990f (root 781d404). Source-derived blocker: maximum-mobile FRAG
    and SMOKE centers are 80.64 px apart with 84 px body diameter; later SMOKE
-   paint hides required FRAG footprint. Retain pure counterexamples and correct
-   the real overlap with separately preregistered layout/interaction scope;
+   paint hides required FRAG footprint. Some FRAG-painted points select SMOKE;
+   maximum MENU target also spills outside the safe area. Retain counterexamples
+   and correct real overlap with separately preregistered layout/interaction scope;
    do not discard pixels or weaken the old thresholds. No R4 acquisition is
-   approved. Live HUD, physical touch and shipped-quality acceptance remain open.
+   approved. Builder is beginning that separate correction. Live HUD, physical
+   touch and shipped-quality acceptance remain open.
 6. **Linux original gameplay failure stays FAILED; profiling fixture is rejected.**
    Actual b1a131ab ends after 58.558 seconds still in BUY / tick 844, missing
    initial LIVE's original 45-second cap. Profile capability, ELF/PCK identity
@@ -116,10 +138,11 @@ never reset a newer checkpoint. The original contributor checkout is clean on
    Source-only fixed-view OFF/ON/ON/OFF fixture 1290172 is independently REJECTED
    by 51add37: a dead owned Xvfb can pass readiness, and four fake clients at
    181.047 seconds can pass the 180-second cap. Nonfinite endpoint handling also
-   needs correction. Builder `/root/linux_gles_profile_builder` is correcting
-   them in `/workspace/sightbreak-linux-profile-overhead`, branch
-   `diagnostic/linux-profile-overhead-fixture`. Preserve original counterexamples
-   and thresholds; obtain fresh exact-source review before any engine operation.
+   needs correction. Corrected freeze 3fd9718 (implementation b7552a8) is in
+   `/workspace/sightbreak-linux-profile-overhead`, branch
+   `diagnostic/linux-profile-overhead-fixture`. All 22 pure methods pass in builder
+   evidence; fresh `/root/linux_profile_fixture_fresh_critic` re-review is active.
+   Preserve original counterexamples/thresholds. No engine operation is approved.
 7. **Complete aggregate remains independently ACCEPTED at exact afca2f1.**
    Unmodified validate.sh exits zero in 539.074 seconds: 55 mandatory Godot logs,
    nine 92-method Python groups (three Windows reader skips), 29-definition
