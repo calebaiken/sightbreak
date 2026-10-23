@@ -1,8 +1,9 @@
 # Next session
 
-Updated 2026-10-23, 03:44 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-23, 05:53 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
-No native Codex goal API is exposed. Read AGENTS.md, the mission and the canonical
+No native goal creation/update API or goal ID is exposed; only stop-goal is
+available. The automatic goal remains active. Read AGENTS.md and the canonical
 G1–G20 progress matrix. Reuse the installed original quality skills. Continue
 implementation after each verified increment; these corrections do not finish v1.
 
@@ -10,7 +11,7 @@ implementation after each verified increment; these corrections do not finish v1
 
 The mission is ACTIVE. Root is `/workspace/sightbreak-v1-recovered`, own branch
 `codex/v1-executor-recovery-20261023`, [draft PR31](https://github.com/calebaiken/sightbreak/pull/31).
-Committed integration before this note is `62e6134`. Inspect actual HEAD/status;
+Committed integration before this note is `0231df9`. Inspect actual HEAD/status;
 never reset a newer local checkpoint. No shared release branch is merged.
 
 1. **Complete aggregate independently ACCEPTED at exact `afca2f1`.** Original
@@ -25,14 +26,21 @@ never reset a newer local checkpoint. No shared release branch is merged.
    arbitrary escaped descendants and broad release gates remain unqualified.
    Original worktree `/workspace/sightbreak-validate-recovered-afca2f1`, outputs
    `builds/aggregate-recovered-r1`; tool session 28337 is finished, exit 0.
-2. **ARM repeat is executing actual ordinary play.** Run
+2. **ARM repeat ordinary play FAILED before input.** Run
    [39906639650](https://github.com/calebaiken/sightbreak/actions/runs/39906639650),
    job 120260016569, exact `b2e0293a546961230afbd73e5cd2a1a307d69e94`.
-   Corrected source controls pass; stock Deploy/living-sidearm/leave is in
-   progress at last observation. Independent repeat approval 2b43487 is root
-   b029cb7. No ordinary gameplay outcome is inferred yet. Retrieve completed
-   original decoded logs and bounded artifacts through supported GitHub tools,
-   then independent pixel/state/source/cleanup review.
+   Corrected source controls pass. The first capture shows the Godot splash;
+   the strict guard then rejects a changed window context before any CGEvent.
+   Later window rows were not recorded, so the cause remains unknown. Private
+   engine-created user:// logging and source/profile isolation have separate
+   evidence. Public close timed out and SIGTERM fallback was required.
+   Independent review e26b630 is integrated as 0231df9 with both original ZIPs
+   and the decoded log. Separate 15 suites/9,434 checks, existing menu 37.760s
+   and unsigned iOS compile 110.938s pass within their reviewed bounds.
+   Builder is preregistering a source-only startup-readiness correction with
+   zero-event reselection before permanent pinning, the existing 60s menu/5s
+   focus budgets and strict later guards. No third dispatch is approved before
+   an exact-source independent review.
 3. **First ARM attempt remains FAILED.** Run 39904830917 at 34dbd97 failed four
    test-owned /var alias paths, skipping mocked-controller and ordinary play.
    Native 15 suites/9,434 checks, menu 39.591s and unsigned iOS compile 88.643s
@@ -40,21 +48,29 @@ never reset a newer local checkpoint. No shared release branch is merged.
    both bounded ZIPs, 198 receipts and 11 PNGs retained. The test-only correction
    3730273 is root 719b3f4 and preserves every production runtime/guard byte.
    Large final binary reparse, full Mac match/objectives/Intel/human remain open.
-4. **Windows pre-run review is active at frozen `b2e0293`.** Own qualification
-   ref `codex/v1-qualify-b2e0293` is pushed at that exact source; dispatch this
-   ref after independent source approval, not the moving root metadata tip.
-   Critic branch `critic/windows-combined-recovered`, preregistration d1ae6d3.
-   No Windows native job has been dispatched yet. Preserve original contracts,
-   all 15 suites, objectives/full-match/earned disk reload and deadlines.
-5. **Touch source/method R3 is approved; native acquisition is running.** Own
+4. **Windows approved native attempt is running at frozen `b2e0293`.** Own
+   qualification ref `codex/v1-qualify-b2e0293` binds run
+   [39907358390](https://github.com/calebaiken/sightbreak/actions/runs/39907358390),
+   job 120262263075. Source approval 44e9aea and run/auditor binding 6e0b4ce
+   are integrated as c135f90/34ea6cc. Critic owns original output review.
+   Preserve all 15 suites, objectives/full-match/earned disk reload, source
+   identity, cleanup and deadlines. No rerun is approved; metadata success
+   observations do not substitute for the completed raw audit.
+5. **Touch R3 native captures/regressions are complete; analysis is active.** Own
    `/workspace/sightbreak-touch-contrast-recovered`, branch
    `codex/m6-touch-contrast-recovered`, code a520221, report f527e01; independent
    approval da09733 follows two retained rejected method iterations. Actual
    native root `/workspace/sightbreak-touch-contrast-native-recovered-r3`, staged
    projects `/workspace/sightbreak-touch-contrast-fixture-recovered-r3`, display
-   :131, pinned 4.7.2, taskset 0–3/LP2/OMP2. Builder owns sole local native lane.
-   No contrast/pixel/blind/live-HUD acceptance yet. Require actual raw independent
-   method/pixel/geometry review, a fresh blinded visual judge and regressions;
+   :131, pinned 4.7.2, taskset 0–3/LP2/OMP2. Builder owns the local lane until
+   analysis/archive/cleanup finish. Sixteen frozen native backgrounds and 1,280
+   PNGs per source have been produced without engine errors or source/UID drift.
+   Each exact source passes TOUCH_TEST 34 and INPUT_MODE_TEST 462 checks; these
+   use simulated capabilities, not physical touch. Frozen analyzer is running.
+   Fresh fork-none visual critic sees only the 32 matched A/B pairs in
+   `/workspace/sightbreak-touch-contrast-blind-recovered-r3`; key remains outside.
+   No contrast/pixel/blind/live-HUD acceptance yet. Require actual independent
+   method/pixel/geometry review and the blind verdict;
    heavy-plate occlusion/dark surround/physical small text remain questions.
 6. **Linux one-attempt diagnostic is complete, no repeat.** Source b1a131ab,
    independent bca8b7fd, root c9bfb09. Actual 58.558s flow FAILS initial LIVE 45s
@@ -65,6 +81,13 @@ never reset a newer local checkpoint. No shared release branch is merged.
    source-mapped attribution. Original 84,232,632-byte ELF and other local files
    remain in `/workspace/sightbreak-linux-profile-recovered/builds/linux-gles-profile-native-r1`;
    bounded raw originals/review are pushed.
+7. **Next bot component is diagnostic source work.** Builder is registering
+   exhausted-active-primary behavior against the unchanged b2e0293 game in a
+   separate worktree. Known ranges (sidearm 45m, normal/hard vision 38/46m) do
+   not establish a preferred switch policy. Retain active-ammo authority,
+   holstered unknown/default controls, target acquisition and objective guards.
+   No product change or engine run before the baseline fixture/source review;
+   touch still owns the local lane.
 
 Official released Luanti Android/AssaultCube reference research is integrated as
 62e6134, B8 in BARS. Actual images/clip stay outside Git in
@@ -72,7 +95,7 @@ Official released Luanti Android/AssaultCube reference research is integrated as
 references, not CS2/contrast/parity wins. CS2 policy, human/physical and Steam
 requirements remain open. Continue implementation/review after each increment.
 
-## Current product checkpoint — 2026-10-23, 05:10 UTC
+## Historical product checkpoint — 2026-10-23, 05:10 UTC
 
 Root `/workspace/sightbreak-v1-recovered`, own branch
 `codex/v1-executor-recovery-20261023`, [draft PR31](https://github.com/calebaiken/sightbreak/pull/31).
