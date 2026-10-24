@@ -229,6 +229,20 @@ class ObjectiveOracleTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'protected match/objective state'):
             oracle.action_handoff(before, after)
 
+    def test_complete_trace_requires_device_drop_when_carrier_dies(self):
+        rows = copy.deepcopy(self.valid)
+        row = [r for k, r in rows if k == 'INTERACTION' and r['label'] == 'forward_live_122'][-1]
+        authority = [r for k, r in rows if k == 'AUTHORITY' and r['label'] == 'forward_live_122'][-1]
+        victim = str(row['before']['carrier'])
+        for value in (row['before'], row['after'], authority['after']):
+            self.assertEqual(value['objective'], 'carried')
+            self.assertTrue(value['actors'][victim]['alive'])
+            value['actors'][victim].update(alive=False, health=0)
+            value['actors'][victim]['deaths'] += 1
+        row.update(interaction(row['label'], row['before'], row['after']))
+        with self.assertRaisesRegex(ValueError, 'required carrier drop'):
+            oracle.verify_records(rows)
+
     def test_isolated_control_rejects_locally_consistent_other_actor_teleport(self):
         rows = copy.deepcopy(self.valid)
         row = [r for k, r in rows if k == 'INTERACTION' and r['label'] == 'control_plant'][-1]

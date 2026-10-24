@@ -387,15 +387,15 @@ def action_handoff(current, observed):
         kills[before['team']] += kill_delta
         require(after['credits'] == min(9000, before['credits'] + 300 * kill_delta), 'action credits do not bind kill awards')
     require(all(kills[team] <= deaths[1 - team] for team in (0, 1)), 'action kills exceed opposing eliminations')
-    if observed['objective'] != current['objective']:
-        carrier = str(current['carrier'])
-        require(current['objective'] == 'carried' and observed['objective'] == 'dropped'
-                and carrier in IDS and current['actors'][carrier]['alive']
-                and not observed['actors'][carrier]['alive'] and observed['carrier'] == 0
+    carrier = str(current['carrier'])
+    carrier_died = (current['objective'] == 'carried' and carrier in IDS
+                    and current['actors'][carrier]['alive'] and not observed['actors'][carrier]['alive'])
+    if carrier_died:
+        require(observed['objective'] == 'dropped' and observed['carrier'] == 0
                 and same(observed['objective_position'], observed['actors'][carrier]['position']),
-                'action phase invented objective transition')
+                'action phase omitted required carrier drop')
     else:
-        require(observed['carrier'] == current['carrier'] and same(observed['objective_position'], current['objective_position']), 'action phase changed device identity/position')
+        require(observed['objective'] == current['objective'] and observed['carrier'] == current['carrier'] and same(observed['objective_position'], current['objective_position']), 'action phase invented objective transition or device identity/position')
 
 
 def verify_records(rows, root=ROOT):
