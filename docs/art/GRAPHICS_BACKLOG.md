@@ -53,7 +53,15 @@ Across all twelve review views (`m6-final`, mean of per-view fractions):
 
 HIGH keeps sunlit surfaces from clipping (0.62% to 0.10%) and holds its shadows a little deeper than MEDIUM (1.3% against 0.3% below 40), still far above the old 14.8%. ULTRA's tonal statistics match HIGH's to within 0.1: the ambient occlusion is a small local effect.
 
-C keeps shadows readable as shapes (lit to shaded floor stays near 5:1 in linear light) and does not add clipping. Open check: enemy silhouettes against the new fill have not been rendered (no players in the capture scene); the next milestone adds an operator-in-shadow capture.
+C keeps shadows readable as shapes (lit to shaded floor stays near 5:1 in linear light) and does not add clipping. **Operator check.** `game/tests/operator_readability_capture.gd` stands operators of both teams on open floor in the sun and in the shade at 8 to 32 m, renders each frame with and without them, and takes the difference as the silhouette. Weber contrast in linear light, operator against the ring around it (`graphics-tiers-m6/data/operator-contrast-*.json`, same placements both runs):
+
+| Operator | Before (ambient 0.41, sun 1.18) | After (0.85, 1.05) |
+| --- | --- | --- |
+| Shade, 16.5 m | background 0.041, operator 0.016, Weber -0.62 | 0.064, 0.025, -0.60 |
+| Shade, 20.5 m | 0.084, 0.021, -0.75 | 0.105, 0.032, -0.70 |
+| Sun, 8.5 to 32.5 m (six operators) | Weber -0.66 to -0.94 | -0.69 to -0.94 |
+
+The fill leaves the contrast ratio of an operator in the shade within 0.05 Weber of before (background-to-operator ratio 2.6 and 3.9 before, 2.5 and 3.3 after) while the absolute luminance difference rises by about 16%: it lifts the dark end without flattening the figure. Operators are darker than the floor in every case, so a shaded floor that was nearly black was where they would have merged. Only two shaded placements exist in the open floor in view of this camera; this is a spot check on a standing fixture, not a visibility study.
 
 ## Blind comparison (fresh-context critic, labels removed, key kept outside the review directory)
 
