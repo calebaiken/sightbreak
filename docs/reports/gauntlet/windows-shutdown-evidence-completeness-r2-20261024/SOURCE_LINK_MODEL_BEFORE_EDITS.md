@@ -173,3 +173,26 @@ The sealed independent81-case corpus stays an exact separate regression set.
 Static discovery tried two nonexistent helper filenames before locating the
 actual helper in verify_offline_export.py via rg. Those read failures changed no
 source and skipped no check. No new tests/loader executed during this mapping.
+
+## Additional source limits, still before edits
+
+Read-only builder support confirmed rules buy15/round100/device35/plant3/defuse5/
+win7 from Match18–23, protocol6 and the unchanged stock options. Physics tick rate
+60 is pinned by project.godot. In contrast max_physics_steps_per_frame, jitter fix
+and monitor maxima are runtime observations; do not turn the fixture's8/.5 into
+invented source constants. No60-rendered-frames-per-second rule is supported.
+
+The action recorder284–294 catches ui.diagnostics errors into native_state_error
+and continues, so that field alone cannot contradict a successful default driver.
+key() normally emits before/after, but analysis_escape has direct key_after-only
+cleanup variants with explicit scope. button trace precedes button delivery; its
+native diagnostic state need not already equal the requested button state. These
+legal forms belong in generated valid pairs. The new fixture requires a source-
+ordered action plan interleaved with observations/captures/OCR, not a list of
+retimestamped observation records appended after all capture events.
+
+ownership_error, original_close_error, rejected_binding, counter_regression and
+focus precondition_loss instead arise on failed paths and cannot accompany the
+claimed successful transaction. No FILETIME-to-monotonic equality is emitted.
+Outer held-process history can contain earlier trial roots; do not force its
+length to equal two or its cumulative total to equal the current roots.
