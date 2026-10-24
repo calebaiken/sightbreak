@@ -127,12 +127,21 @@ class OwnedTree:
     def __init__(self,kernel,root_pid):
         self.kernel,self.root_pid=kernel,root_pid
         self.seen={};self.signals=[];self.reaped=[]
+        self.supervisor_identity=None
 
     @staticmethod
     def key(value):
         return value['pid'],value['start_ticks']
 
+    def supervisor_key(self):
+        current=self.kernel.identity(self.kernel.supervisor)
+        require(current is not None,'supervisor birth identity unavailable')
+        if self.supervisor_identity is None:self.supervisor_identity=current
+        require(self.key(current)==self.key(self.supervisor_identity),'supervisor birth identity changed')
+        return self.key(current)
+
     def bind_root(self):
+        self.supervisor_key()
         current=self.kernel.identity(self.root_pid)
         require(current is not None,'known Popen root identity unavailable')
         require(current['ppid']==self.kernel.supervisor,'known Popen root parent mismatch')
@@ -149,23 +158,38 @@ class OwnedTree:
         return after
 
     def observe(self):
-        queue=[self.kernel.supervisor];visited=set()
+        queue=[self.supervisor_key()];visited=set()
         while queue:
-            parent=queue.pop()
-            if parent in visited:continue
-            visited.add(parent)
-            for pid in self.kernel.children(parent):
+            parent_key=queue.pop();parent=parent_key[0]
+            if parent_key in visited:continue
+            visited.add(parent_key)
+            def parent_alive():
+                value=self.kernel.identity(parent)
+                if value is None:
+                    require(parent!=self.kernel.supervisor,'supervisor identity disappeared')
+                    return False
+                require(self.key(value)==parent_key,'queued owned parent birth identity changed')
+                return True
+            if not parent_alive():continue
+            children=self.kernel.children(parent)
+            if not parent_alive():continue
+            for pid in children:
                 current=self.kernel.identity(pid)
                 if current is None:continue
+                require(pid!=self.kernel.supervisor and current['ppid']==parent,'child ancestry differs from observed owned parent')
+                if not parent_alive():break
                 key=self.key(current)
                 if key not in self.seen:
                     fd=self.kernel.open_pid(pid)
-                    after=self.kernel.identity(pid)
-                    if after is None or self.key(after)!=key:
+                    try:
+                        after=self.kernel.identity(pid)
+                        require(after is not None and self.key(after)==key and after['ppid']==parent and parent_alive(),
+                                'owned process birth identity or ancestry changed during observation')
+                    except BaseException:
                         self.kernel.close_pid(fd)
-                        raise RuntimeError('owned process birth identity changed during observation')
+                        raise
                     self.seen[key]=dict(identity=current,fd=fd)
-                queue.append(pid)
+                queue.append(key)
         return self.live()
 
     def live(self):
@@ -182,6 +206,7 @@ class OwnedTree:
                 if result[0]:self.reaped.append(dict(pid=result[0],status=result[1]))
 
     def signal_all(self,signum):
+        self.supervisor_key()
         for value in self.live():
             entry=self.seen[self.key(value)]
             try:

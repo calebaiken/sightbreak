@@ -158,11 +158,15 @@ class FakeClock:
 class FakeKernel:
     supervisor=50
     def __init__(self,*,survivor=False,observer_error=False):
+        self.supervisor_birth=1
         self.table={100:dict(pid=100,state='R',ppid=50,pgrp=100,session=100,start_ticks=123)}
         if survivor:self.table[101]=dict(pid=101,state='R',ppid=50,pgrp=777,session=777,start_ticks=124)
         self.survivor=survivor;self.observer_error=observer_error;self.sent=[];self.closed=[];self.enabled=False
     def enable_subreaper(self):self.enabled=True
-    def identity(self,pid):return copy.deepcopy(self.table.get(pid))
+    def identity(self,pid):
+        if pid==self.supervisor:
+            return dict(pid=pid,state='R',ppid=49,pgrp=50,session=50,start_ticks=self.supervisor_birth)
+        return copy.deepcopy(self.table.get(pid))
     def children(self,pid):
         if self.observer_error:raise OSError('declared observer error')
         return [p for p,r in self.table.items() if r['ppid']==pid]
