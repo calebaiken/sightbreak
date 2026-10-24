@@ -174,6 +174,8 @@ class ObjectiveOracleTests(unittest.TestCase):
 
     def test_target_score_preserves_exact_independent_bonuses(self):
         before = protected(122)
+        before['actors']['6']['position'] = [0, 0, 0]
+        before['actors']['1']['position'] = [10, 0, 0]
         before['bots']['6'].update(target=0, attacker_id=0, damaged_at=-100)
         candidate = {'id': 1, 'distance': 10.0}
         self.assertEqual(oracle.target_score(before, 6, candidate), 10.0)
@@ -187,12 +189,16 @@ class ObjectiveOracleTests(unittest.TestCase):
     def test_target_score_accepts_legitimate_negative_total(self):
         before = protected(122)
         before.update(objective='carried', carrier=6)
+        before['actors']['1']['position'] = [0, 0, 0]
+        before['actors']['6']['position'] = [1, 0, 0]
         before['bots']['1'].update(target=6, attacker_id=6, damaged_at=before['elapsed'] - .5)
         self.assertEqual(oracle.target_score(before, 1, {'id': 6, 'distance': 1.0}), -11.0)
 
     def test_recent_attacker_bonus_expires_at_strict_boundary(self):
         before = protected(122)
         before.update(elapsed=1.2, carrier=6)
+        before['actors']['6']['position'] = [0, 0, 0]
+        before['actors']['1']['position'] = [10, 0, 0]
         before['bots']['6'].update(target=0, attacker_id=1, damaged_at=0.0)
         self.assertEqual(oracle.target_score(before, 6, {'id': 1, 'distance': 10.0}), 10.0)
         before['elapsed'] = math.nextafter(1.2, 0.0)
@@ -200,15 +206,19 @@ class ObjectiveOracleTests(unittest.TestCase):
 
     def test_planted_nearest_defender_bonus_uses_device_pose(self):
         before = protected(122)
-        before.update(objective='planted', objective_position=[-15, 0, 10])
+        before.update(objective='planted', objective_position=[0, 0, 0])
+        before['actors']['6']['position'] = [10, 0, 0]
         before['bots']['6'].update(target=0, attacker_id=0, damaged_at=-100)
         for aid, actor in before['actors'].items():
             if actor['team'] == 1:
                 actor['position'] = [100 + int(aid), 0, 100]
-        before['actors']['1'].update(team=1, position=[-15, 0, 10])
+        before['actors']['1'].update(team=1, position=[0, 0, 0])
         self.assertEqual(oracle.target_score(before, 6, {'id': 1, 'distance': 10.0}), 4.0)
         before['actors']['1']['alive'] = False
-        self.assertEqual(oracle.target_score(before, 6, {'id': 1, 'distance': 10.0}), 10.0)
+        before['actors']['2'].update(alive=True, team=1, position=[0, 0, 0])
+        self.assertEqual(oracle.target_score(before, 6, {'id': 2, 'distance': 10.0}), 4.0)
+        before['actors']['3'].update(alive=True, team=1, position=[-10, 0, 0])
+        self.assertEqual(oracle.target_score(before, 6, {'id': 3, 'distance': 20.0}), 20.0)
 
     def test_fabricated_eligible_score_cannot_choose_target(self):
         def corrupt(row):
