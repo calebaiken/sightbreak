@@ -165,3 +165,28 @@ the actual empty-output guard. Cover original failure witness, corrected success
 fake invocation error/partial stdout, fresh-capture collision, existing publication
 collision, and injected partial-copy error. No actual verify_offline_export.main,
 engine/API/helper trial, native process or CI runs. Public preflight stays BLOCKED.
+
+## Source-shape clarifications retained before expanded tests
+
+The first28-method iteration has two false-negative positive assertions because
+the draft validator required settings_cover_route.native_pulses universally.
+That field is created by setdefault only when a route pulse occurs; it is not an
+unconditional field. Retain full r1 logs/source/errors, correct the reader rather
+than altering the adjudicated fixture to satisfy an invented universal condition.
+The read_hud already-paused branch also emits no new pause receipt, so do not
+invent a universal six-pause count; validate emitted receipts and required six
+HUD OCR pairs instead. PNG command resolution is the requested WinUI size, not a
+universal identity with every later captured client-area size. Require its source
+shape and constant request across restart while checking each PNG against its
+own emitted dimensions. Controller stdout permits the exact source LF or Windows
+CRLF print form, with original bytes/hash preserved. No general normalization.
+
+## Final numeric/publication boundary controls
+
+Before final edits register a huge-but-valid JSON integer in reported elapsed
+clock: it must yield an explicit incomplete-evidence error, not leak a float-
+conversion OverflowError. Also inject publication-receipt write failure after a
+fake invocation error: preserve both full captures and the original invocation
+cause, fail collection, and never replace unique bytes. Retain the failing
+iteration/source before correcting these routine boundaries. No actual driver,
+API, process or archive source bytes are changed by these generated controls.

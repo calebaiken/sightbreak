@@ -149,31 +149,9 @@ def driver_arguments(output,verbose):
             '--display',':102','--timeout','300','--output',str(output),*(['--reopened-verbose'] if verbose else [])]
 
 
-def trial_evidence(directory):
-    result=json.loads((directory/'results.json').read_text())
-    seeds=[]
-    for part in ('initial-offline-trace','restart-profile-trace'):
-        p=directory/part/'events.jsonl';initial=None
-        if p.exists():
-            for line in p.read_text().splitlines():
-                event=json.loads(line)
-                if event.get('event')=='initial':initial=event;break
-        seeds.append(dict(process_trace=part,initial_event=initial,
-                          provenance='exact retained trace event' if initial else 'UNREACHED_OR_UNRESOLVED'))
-    logs=[];leaks=[]
-    for name in ('client.log','reopened.log'):
-        p=directory/name
-        if p.exists():
-            b=p.read_bytes();logs.append(dict(path=name,bytes=len(b),sha256=retention.sha(b),strict_failure=failed(b.decode(errors='replace')),
-                                               stream='original combined stdout/stderr, unmodified'))
-            leaks.append(dict(path=name,**typed_leak_rows(b)))
-    ocr=result.get('ocr_commands',[])
-    complete=all(row.get('stdout_complete') is True and not row.get('stdout_truncated') for row in ocr)
-    return dict(result=result,process_seed_initial_events=seeds,native_logs=logs,
-                typed_leak_observations=leaks,
-                original_stream_retention_complete=complete,
-                close_observations=result.get('shutdown_study_observations',[]),
-                strict_passed=result.get('passed') is True and all(not row['strict_failure'] for row in logs) and complete)
+def trial_evidence(directory, *, context=None):
+    from shutdown_study_evidence import validate_trial
+    return validate_trial(directory,context=context,leak_parser=typed_leak_rows)
 
 
 def typed_leak_rows(raw):
@@ -194,7 +172,7 @@ def typed_leak_rows(raw):
                 retaining_owner='UNRESOLVED',allocation_stack='UNAVAILABLE',old_failure_identity='NOT_ATTRIBUTED')
 
 
-def collect_trials(output,identity,owner,driver,*,identity_reader,load_evidence=trial_evidence):
+def collect_trials(output,identity,owner,driver,*,identity_reader,load_evidence=None):
     """Pure orchestration seam. The public command is separately preflight gated."""
     output=Path(output);require(not output.exists(),'preserve existing study output');output.mkdir(parents=True)
     report=dict(schema=1,order=list(ORDER),identity=identity,trials=[],attempts=0,
@@ -242,9 +220,23 @@ def collect_trials(output,identity,owner,driver,*,identity_reader,load_evidence=
                     require(owner.baseline_only(after),'owned descendant survives attempted flow')
                 require(not fatal,'ownership observation failed during flow')
                 require(identity_reader()==identity,'source/export/host identity changed after trial')
-                try:trial['evidence']=load_evidence(Path(trial['output']))
-                except BaseException as error:trial['evidence_error']=str(error)
-                trial['strict_passed']=not trial.get('driver_error') and trial.get('evidence',{}).get('strict_passed') is True
+                # A model loader may veto, never replace actual retained-file
+                # validation or authorize an optimistic/incomplete receipt.
+                veto_passed=True
+                if load_evidence is not None:
+                    try:
+                        model=load_evidence(Path(trial['output']))
+                        veto_passed=type(model) is dict and model.get('strict_passed') is True
+                    except BaseException as error:
+                        veto_passed=False;trial['evidence_loader_error']=type(error).__name__+': '+str(error)
+                try:
+                    trial['evidence']=trial_evidence(Path(trial['output']),context=dict(identity=identity,trial=trial))
+                    if trial['evidence']['evidence_errors']:
+                        trial['evidence_error']='; '.join(trial['evidence']['evidence_errors'])
+                except BaseException as error:trial['evidence_error']=type(error).__name__+': '+str(error)
+                trial['strict_passed']=(not trial.get('driver_error') and veto_passed and
+                                        trial.get('evidence',{}).get('evidence_complete') is True and
+                                        trial.get('evidence',{}).get('strict_passed') is True)
                 # Ordinary strict failure still consumes this arm. It is never
                 # replaced or retried. Ownership/source uncertainty stops all.
             except BaseException as error:
@@ -300,15 +292,40 @@ def runtime_identity(expected):
 
 
 def real_driver(arguments,observer,directory):
+    import shutil
     import verify_offline_export
+    directory=Path(directory)
     directory.mkdir()
-    old=sys.argv
+    capture=directory.with_name(directory.name+'.controller-capture')
+    capture.mkdir()  # Fresh owned sibling inside the overall study evidence tree.
+    old=sys.argv;invocation_error=None;publication_errors=[]
     try:
         sys.argv=list(arguments)
-        with (directory/'controller-stdout.log').open('w') as out,(directory/'controller-stderr.log').open('w') as err:
+        with (capture/'controller-stdout.log').open('x') as out,(capture/'controller-stderr.log').open('x') as err:
             with contextlib.redirect_stdout(out),contextlib.redirect_stderr(err):
                 verify_offline_export.main(study_observer=observer)
-    finally:sys.argv=old
+    except BaseException as error:
+        invocation_error=error
+    finally:
+        sys.argv=old
+        # Keep capture originals even after publication. Exclusive destination
+        # creation never overwrites a collision; partial copies are retained.
+        for name in ('controller-stdout.log','controller-stderr.log'):
+            source=capture/name;target=directory/name
+            try:
+                with source.open('rb') as reader,target.open('xb') as writer:
+                    shutil.copyfileobj(reader,writer)
+            except BaseException as error:publication_errors.append(dict(path=str(target),error=type(error).__name__+': '+str(error)))
+        try:
+            write(capture/'publication.json',dict(invocation_error=None if invocation_error is None else
+                  type(invocation_error).__name__+': '+str(invocation_error),publication_errors=publication_errors,
+                  capture_scope='Complete original streams retained; publication never overwrites',
+                  files=[dict(path=name,bytes=(capture/name).stat().st_size,sha256=retention.sha((capture/name).read_bytes()))
+                         for name in ('controller-stdout.log','controller-stderr.log') if (capture/name).is_file()]))
+        except BaseException as error:
+            publication_errors.append(dict(path=str(capture/'publication.json'),error=type(error).__name__+': '+str(error)))
+    if publication_errors:raise RuntimeError('Controller stream publication failed; originals and partial files retained: '+str(publication_errors)) from invocation_error
+    if invocation_error is not None:raise invocation_error
 
 
 def main():
