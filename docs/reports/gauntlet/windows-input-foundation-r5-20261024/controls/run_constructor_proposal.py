@@ -1,0 +1,10 @@
+#!/usr/bin/env python3
+import argparse,hashlib,importlib.util,json,os,sys,unittest
+from pathlib import Path
+p=argparse.ArgumentParser();p.add_argument('--source',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();assert sorted(os.sched_getaffinity(0))==[4];out=a.output;out.mkdir(parents=True,exist_ok=False);sys.path.insert(0,str(a.source.resolve()/'scripts'));import analyze_input_consumption as m
+assert hashlib.sha256((a.source/'scripts/analyze_input_consumption.py').read_bytes()).hexdigest()=='104d998dc504e30fb6702426025b611aa5ee86390a1734f06142d92a3473e4d4';home=Path(__file__).resolve().parents[1];folder=home/'constructor-proposal';proof=json.loads((folder/'PROPOSAL.json').read_text());ct=(home/'constructor-conflict/client.txt').read_text();results=[]
+for name,expected in [('original','INVALID'),('versioned','UNKNOWN')]:
+ rows=json.loads((folder/(name+'-rows.json')).read_text());at='\n'.join(m.PREFIX+json.dumps(row,separators=(',',':')) for row in rows)+'\n';dest=out/name;dest.mkdir();(dest/'client.txt').write_text(ct);(dest/'authority.txt').write_text(at);r=m.analyze(ct,at);(dest/'RESULT.json').write_text(json.dumps(r,indent=2)+'\n');results.append(dict(name=name,expected=expected,actual=r['transition_status'],matched=r['transition_status']==expected))
+spec=importlib.util.spec_from_file_location('proposal_only_test',folder/'proposal-only-adapter.py');mod=importlib.util.module_from_spec(spec);spec.loader.exec_module(mod)
+with (out/'proposal-only.stderr').open('w') as stream:r=unittest.TextTestRunner(stream=stream,verbosity=2).run(unittest.defaultTestLoader.loadTestsFromModule(mod))
+summary=dict(scope='Separate precise constructor proposal; no maintained candidate credit/adjudication',results=results,proposal_methods=r.testsRun,proposal_failures=len(r.failures),proposal_errors=len(r.errors),candidate_maintained_pass_credit=0,original_assertions_preserved=True);(out/'SUMMARY.json').write_text(json.dumps(summary,indent=2)+'\n');print(json.dumps(summary,indent=2));raise SystemExit(not(r.wasSuccessful() and all(x['matched'] for x in results)))
