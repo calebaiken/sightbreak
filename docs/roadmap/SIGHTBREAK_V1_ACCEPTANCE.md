@@ -20,7 +20,15 @@ signing, credentials and unavailable hosts stay explicitly blocked until observe
 A script, simulated match, software render or successful export cannot silently
 satisfy a different gate. No deployment, Steam publication or paid action is implied.
 
-Current bounded evidence includes the independently passing recovered afca2f1
+Current source-only status at 15:50 UTC: R7 expiry component independently
+accepts `09b2a1f7`; whole-reader foundation and actual replay remain blocked.
+Ancestry `8cc38cdc` independently fails `85cba435`. Receipt candidate `0f478a07`
+awaits the separate critic. The revised bounded capture contract `e73a5a2b` awaits
+feasibility review and owner approval; no changed study/capability execution is
+released. These statuses close no whole release gate. Read the current checkpoint
+in the canonical progress record for exact branches, evidence and continuation.
+
+Historical bounded evidence includes the independently passing recovered afca2f1
 aggregate, narrow bot dry-primary comparison, ten-account settlement/recovery,
 backend regression and four-weapon probe. Latest a089473 Windows independently
 passes real player plant/natural defuse/next buy/default restart, player defuse

@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-24 14:44 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-24 15:50 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. No native goal ID has been verified. Read AGENTS.md and the canonical
@@ -22,7 +22,61 @@ root ref was stale because the fetch configuration covers main; actual ls-remote
 and GitHub PR metadata agree. Never reset the newer local work to that stale ref.
 No shared merge, history rewrite, release or production deployment is authorized.
 
-## Current checkpoint — 2026-10-24 14:44 UTC
+## Current checkpoint — 2026-10-24 15:50 UTC
+
+The mission remains IN PROGRESS / PRIMARY in [issue25](https://github.com/calebaiken/sightbreak/issues/25).
+Root branch `codex/v1-executor-recovery-20261023`, draft PR31 over PR27; preserve
+PR27→24→23→22→16 and contributor ownership. Runtime source remains exact
+`4cf6ac8e` / 508 non-document paths. All whole G1–G19 are open; G20 covers persistence.
+
+- R7 expiry source `2d4214c4`, handoff `2fd161e4`, independently accepts **only the
+  expiry component** in `09b2a1f7`: 8,222 model expectations and 139 retained
+  verdicts match in each initialized source view; 254 selected pure methods pass
+  with three inherited skips. All 32 old impossible completions reject and eight
+  feasible siblings remain consistent. Whole-reader lifecycle foundation remains
+  BLOCKED; the old connected fixture is source-inconsistent. Builder continues
+  emitter-derived foundation work. The 207-row replay is UNEXECUTED.
+- Ancestry source `8cc38cdc` / handoff `9807106c` is independently REJECTED
+  `85cba435`: coarse birth ticks alias a reused PID, importing a foreign child in
+  two pure schedules. Sixty-two maintained passes do not override that result.
+  Held-lifetime/API protection amendment `7b98abd8` is preregistered before code;
+  no guard change or native retry is released.
+- Shutdown receipt source `0f478a07` / handoff `99a864a8` is sealed for the existing
+  independent critic. Builder reports 69 unique pure passes in each source view,
+  source-derived receipt checks and corrected empty-directory wrapper staging.
+  This is not independent approval. Real public preflight and collection stay
+  BLOCKED; no Windows API/helper/native/CI action occurred.
+- Physical binding `ebc1a941` / critic `f05741f8` remains accepted only for its
+  POSIX source slice. Binary codec `329d3ff5` / critic `9fa673ab` remains accepted
+  only for exact transport. Neither qualifies native execution or the whole study.
+- Revised shutdown evidence contract is frozen/pushed in root `e73a5a2b`:
+  [decision](../reports/gauntlet/windows-shutdown-revised-contract-20261024/APPROVAL_SUMMARY.md).
+  It proposes a fixed evidence volume, quota-abort/inconclusive semantics and up
+  to ten sub-32 MiB artifacts / 160 MiB total. Independent feasibility review and
+  owner approval are pending. The old two-artifact count was our admission rule;
+  32 MiB comes from the Sediment download tool, not an established GitHub quota.
+  No changed study or capability run is authorized. Existing workflow390221868
+  previously dispatched a feature ref; prepare that same registered path, never
+  merge/register through main. Any rejected exact route blocks execution.
+- Windows math `b16b012d` / handoff `25603855` is SOURCE/BLOCKED: 85 builder pure
+  passes per view, no native/capability/SDK/CI calls. Retention, service envelope,
+  source review and execution admission remain open.
+
+Windows run40089125575 remains strict FAIL_WARNINGS / leak NONREPRODUCTION
+(critic `e88d2cb9`), despite successful workflow, player objectives, stock rounds
+and exact 120 XP / 250 earned-offline-credit reopen. Original run40080238905
+three-object leak is unresolved. Sole Linux math550 attempt is consumed and
+REJECTED `6e6d7159`; missing child-list interface, process identity and 18 operand
+bit mismatches are not waived. No replacement acquisition is released.
+
+Automatable work continues on reader models, receipt validation, source lifetime
+and finite capture design. Physical-device gameplay/performance, human CS2 and
+8.5/category review, signing/Steam credentials and owner release sign-off remain
+external. Mac ordinary gameplay, Linux software-driver warnings and touch child
+cleanup remain unqualified. The automated Mac source-review rejection for possible
+cybersecurity risk stays recorded; no alternate route is authorized.
+
+## Historical checkpoint — 2026-10-24 14:44 UTC
 
 SIGHTBREAK — Steam-Ready v1.0 remains IN PROGRESS / PRIMARY in issue25 and the
 committed mission documents. Root /workspace/sightbreak-v1-recovered, branch
