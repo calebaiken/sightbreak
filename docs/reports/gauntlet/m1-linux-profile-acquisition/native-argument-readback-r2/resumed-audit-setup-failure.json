@@ -1,0 +1,8 @@
+{
+  "actual_tool_chunk": "4c982e",
+  "exit_code": 1,
+  "error": "FileNotFoundError: [Errno 2] No such file or directory: 'wrapper.stdout'",
+  "cause": "The first temporary audit treated logical outer-record labels as file paths. The raw registry stores these records outside its source tree.",
+  "correction": "Resolve the three original external paths from the recorded R3 checkout and fixed filename prefix, then rerun the complete audit.",
+  "scope": "Audit setup failure retained; no whole-audit pass claimed for that invocation. Candidate and original files were unchanged."
+}
