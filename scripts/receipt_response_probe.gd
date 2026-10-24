@@ -8,7 +8,7 @@ func _initialize() -> void:
 func disk(path: String) -> Dictionary:
 	var exists := FileAccess.file_exists(path)
 	var bytes := FileAccess.get_file_as_bytes(path) if exists else PackedByteArray()
-	return {"exists": exists, "base64": Marshalls.raw_to_base64(bytes), "bytes": bytes.size()}
+	return {"exists": exists, "base64": "" if bytes.is_empty() else Marshalls.raw_to_base64(bytes), "bytes": bytes.size()}
 
 func run() -> void:
 	var config: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(OS.get_environment("SIGHTBREAK_RESPONSE_FIXTURE")))
