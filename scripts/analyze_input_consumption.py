@@ -258,7 +258,7 @@ class InputTransitions:
             need(context and value['actor'] == context['row']['bound_actor'] and value['sequence'] > 0,
                  'new consumed metadata disagrees with its bound stream identity')
             if dc == 1:
-                self.consumed_calls[counters['input_consumed']] = consumed_owner
+                self.consumed_calls[counters['input_consumed']] = (consumed_owner, deepcopy(value))
             if consumed_owner != identity:
                 old = context['row']
                 if (old['authority_epoch'] != row['authority_epoch']
@@ -279,7 +279,7 @@ class InputTransitions:
                 owner = identity
             elif len(owners_before) == 1:
                 owner = next(iter(owners_before))
-            elif da == 1 and state:
+            elif da == 1 and state and delta('input_accepted', state['row']) == 1:
                 previous = state['row']
                 # A sole acceptance must supply a newly empty stream's pop,
                 # or its otherwise unexplained queue growth. No packet is guessed.
@@ -296,10 +296,22 @@ class InputTransitions:
             if context is None:
                 raise UnknownTransition('UNKNOWN prior ACK context for newly counted acceptance')
             old = context['row']
+            pop_amount = delta('input_consumed', old)
+            proved_pops = [(index, projection) for index,(who,projection) in self.consumed_calls.items()
+                           if old['counters'].get('input_consumed',0) < index <= counters.get('input_consumed',0)]
+            if len(proved_pops) == pop_amount:
+                owned_pops = [(index,projection) for index,projection in proved_pops
+                              if (projection['peer'],projection['generation']) == owner]
+                owner_pop_count = len(owned_pops)
+                last_pop = max(owned_pops,default=(0,None),key=lambda item:item[0])[1]
+            elif context['exclusive'] and self.consumed_identity(row) == owner:
+                owner_pop_count, last_pop = pop_amount, row['latest']['input_consumed']
+            else:
+                owner_pop_count, last_pop = None, None
             validation_epoch = row['authority_epoch']
             crossed_epoch = old['authority_epoch'] != row['authority_epoch']
             if crossed_epoch and row['reason'] != 'input_accepted':
-                if delta('input_consumed', old):
+                if owner_pop_count != 0:
                     raise UnknownTransition('UNKNOWN acceptance/pop ordering across an epoch boundary')
                 validation_epoch = row['latest']['input_accepted']['epoch']
                 need(old['authority_epoch'] <= validation_epoch <= row['authority_epoch'],
@@ -311,22 +323,22 @@ class InputTransitions:
                 low = old['stream_ack']
                 if owner == identity:
                     high = row['stream_ack']
-                elif delta('input_consumed', old) == 0:
+                elif owner_pop_count == 0:
                     high = low
-                elif self.consumed_identity(row) == owner:
-                    high = row['latest']['input_consumed']['sequence']
+                elif last_pop:
+                    high = last_pop['sequence']
                 else:
                     raise UnknownTransition('UNKNOWN hidden acceptance ACK interval for unselected stream')
-                if delta('input_consumed', old) and self.consumed_identity(row) == owner:
+                if owner_pop_count and last_pop:
                     at = row['latest']['input_accepted']['wall_msec']
-                    ct = row['latest']['input_consumed']['wall_msec']
+                    ct = last_pop['wall_msec']
                     if ct < at:
                         low = high
                     elif at < ct or row['reason'] == 'input_consumed':
-                        high = low if delta('input_consumed', old) == 1 else max(low, high - 1)
+                        high = low if owner_pop_count == 1 else max(low, high - 1)
             accepted_header(row['latest']['input_accepted'], validation_epoch, low, high)
             if da == 1:
-                self.accepted_calls[counters['input_accepted']] = owner
+                self.accepted_calls[counters['input_accepted']] = (owner, deepcopy(row['latest']['input_accepted']))
 
         need(row['stream_ack'] == -1 or row['stream_ack'] > 0, 'stream ACK is neither absent nor a popped positive sequence')
         if row['generation'] <= 0 or row['reason'] in {'peer_connected', 'peer_bound'}:
@@ -341,14 +353,22 @@ class InputTransitions:
                 k = row['stream_skipped'] - previous['stream_skipped']
                 exact_a = a if state['exclusive'] else (0 if a == 0 else (1 if a == 1 and owner == identity else None))
                 exact_c = c if state['exclusive'] else (0 if c == 0 else (int(self.consumed_identity(row) == identity) if c == 1 else None))
+                local_packets = {}
                 for stage, ledger, amount in (('input_accepted',self.accepted_calls,a), ('input_consumed',self.consumed_calls,c)):
-                    proved = [who for index,who in ledger.items() if previous['counters'].get(stage,0) < index <= counters.get(stage,0)]
+                    proved = [entry for index,entry in ledger.items() if previous['counters'].get(stage,0) < index <= counters.get(stage,0)]
                     if len(proved) == amount:
+                        owned = [projection for who,projection in proved if who == identity]
                         if stage == 'input_accepted':
-                            exact_a = sum(who == identity for who in proved)
+                            exact_a = len(owned)
                         else:
-                            exact_c = sum(who == identity for who in proved)
+                            exact_c = len(owned)
+                        if len(owned) == 1:
+                            local_packets[stage] = owned[0]
                 exact_k = k if state['exclusive'] or (c == 1 and exact_c == 1) else (0 if exact_c == 0 else None)
+                if (exact_k is None and exact_c == 1 and exact_a in (0,1)
+                        and (not exact_a or 'input_accepted' in local_packets)
+                        and previous['queue_count'] + (local_packets['input_accepted']['count'] if exact_a else 0) <= 6):
+                    exact_k = 0
                 if same_epoch:
                     need(row['stream_ack'] >= previous['stream_ack'], 'stream ACK regressed/cleared without reset')
                     if exact_c == 0:
@@ -373,7 +393,10 @@ class InputTransitions:
                         need(row['stream_ack'] >= max(previous['stream_ack'], 0) + cmin + kmin,
                              'ACK violates consumed/skipped unique sequence rank')
                     if exact_a in (0, 1) and exact_c in (0, 1) and exact_k is not None:
-                        required, histories = self.queue_transition(state, row, exact_a, exact_c, exact_k)
+                        if (exact_a and 'input_accepted' not in local_packets) or (exact_c and 'input_consumed' not in local_packets):
+                            raise UnknownTransition('UNKNOWN missing local call projection in persistent receipt history')
+                        transition_row = {**row, 'latest':{**row['latest'], **local_packets}}
+                        required, histories = self.queue_transition(state, transition_row, exact_a, exact_c, exact_k)
                     else:
                         raise UnknownTransition('UNKNOWN unexposed local call history for persistent receipt constraints')
                 else:
@@ -381,19 +404,20 @@ class InputTransitions:
                     # that boundary; current direct consumption still needs input.
                     need(row['queue_count'] <= min(120, 12 * a), 'epoch reset queue has no new accepted input')
                     need(row['stream_ack'] == -1 or c > 0, 'epoch reset ACK has no new consumed input')
-                    if a == c == 0:
+                    if exact_a == exact_c == 0:
                         need(row['stream_ack'] == -1 and row['queue_count'] == 0, 'epoch reset failed to clear queue/ACK')
-                    elif a == 1 and c == 0:
-                        if row['latest']['input_accepted']['epoch'] == row['authority_epoch']:
+                    elif exact_a == 1 and exact_c == 0 and 'input_accepted' in local_packets:
+                        if local_packets['input_accepted']['epoch'] == row['authority_epoch']:
                             fresh = dict(row={**previous, 'authority_epoch':row['authority_epoch'],
                                               'stream_ack':-1, 'queue_count':0},
                                          required={}, histories=[ReceiptHistory.empty()])
-                            required, histories = self.queue_transition(fresh, row, 1, 0, 0)
+                            transition_row = {**row, 'latest':{**row['latest'], **local_packets}}
+                            required, histories = self.queue_transition(fresh, transition_row, 1, 0, 0)
                         else:
                             need(row['stream_ack'] == -1 and row['queue_count'] == 0,
                                  'epoch reset retained input from an older accepted epoch')
                     else:
-                        need(row['reason'] != 'input_consumed' or a > 0, 'epoch-reset pop has no newly accepted input')
+                        need(row['reason'] != 'input_consumed' or exact_a != 0, 'epoch-reset pop has no newly accepted input')
                         raise UnknownTransition('UNKNOWN receipt ordering across an unobserved epoch boundary')
             self.streams[identity] = dict(row=row, required=required, histories=histories,
                                           exclusive=not (owners_before - {identity}))

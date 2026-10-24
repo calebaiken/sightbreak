@@ -277,5 +277,30 @@ class InputObservationTransitionControls(unittest.TestCase):
                     row['actor']['input'] = control(1, True)
                     self.assertTrue(self.report(authority=rows)['diagnostic_complete'])
 
+    def test_delayed_selected_stream_uses_its_owned_header_not_global_latest(self):
+        rows = declared_rows('authority')
+        actor_a = deepcopy(rows[-1]['actor'])
+        row = append_event(rows, 'peer_connected', peer=10, generation=2,
+                           bound_actor=0, peer_bound=False, joined=False,
+                           stream_ack=-1, queue_count=0)
+        for stage in ('input_received','input_accepted'):
+            row['counters'][stage] += 1
+            row['latest'][stage] = packet(row['wall_msec']-1,2,2)
+        row = append_event(rows, 'peer_bound', bound_actor=2,last_bound_actor=2,
+                           peer_bound=True,joined=True)
+        row['actor'].update(id=2,input=control())
+        for reason in ('input_received','input_accepted'):
+            row = append_event(rows,reason,queue_count=int(reason=='input_accepted'))
+            row['latest'][reason] = packet(row['wall_msec'],1,1,fire=0)
+        row = append_event(rows,'input_received',peer=9,generation=1,bound_actor=1,
+                           last_bound_actor=1,stream_ack=1,queue_count=1,actor=actor_a)
+        row['latest']['input_received'] = packet(row['wall_msec'],-9,-9,epoch=-1)
+        result = self.report(authority=rows)
+        self.assertTrue(result['diagnostic_complete'],result['errors'])
+        # Global latest is B's sequence1/fireFalse; A owns the earlier
+        # sequence2/fireTrue header recorded before B was bound.
+        self.assertEqual(row['latest']['input_accepted']['first'],1)
+        self.assertEqual(row['latest']['input_accepted']['fire'],0)
+
 if __name__ == '__main__':
     unittest.main()
