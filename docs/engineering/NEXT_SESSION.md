@@ -1,3 +1,16 @@
+# Owned Mac semantic source handoff — 2026-10-24
+
+Continue only this owned branch/source scope. Frozen source `a96a7ae50d3f54ed6fae021962a5650a29b6e8a6`, branch
+`codex/m2-mac-semantic-deploy-20261023`, checkout `/workspace/sightbreak-mac-semantic-deploy`.
+WIP preserved/pushed543ce5cb before changes. Complete source/pure evidence is in
+`docs/reports/gauntlet/m2-mac-semantic-deploy/recovery-20261024/HANDOFF.md`.
+Own and initialized shared-store one-commit views pass164pure methods; full532path
+union matches, default game/controller/OCR/workflow preserved. Original critic
+rig still has its obsolete Path.read_text growth injection failure; descriptor
+os.read growth equivalent passes. No native or CI ran; no builder approval.
+Root is commissioning a fresh independent source critic; do not dispatch or
+release a native run. Actual ordinary Mac gameplay remains the largest gap.
+
 # Next session
 
 Updated 2026-10-23, 11:15 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
