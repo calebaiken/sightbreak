@@ -188,6 +188,65 @@ class ObjectiveOracleTests(unittest.TestCase):
         self.assertFalse(row['observation']['decision']['interact'])
         self.assertEqual(row['observation']['plan']['destination'], [-15, 0, 10])
 
+    def test_action_handoff_accepts_capped_kill_award_and_carrier_drop(self):
+        before = protected(122)
+        victim = str(before['carrier'])
+        killer = next(aid for aid, actor in before['actors'].items() if actor['alive'] and actor['team'] != before['actors'][victim]['team'])
+        before['actors'][killer]['credits'] = 8900
+        after = copy.deepcopy(before)
+        after['actors'][killer]['kills'] += 1
+        after['actors'][killer]['credits'] = 9000
+        after['actors'][victim].update(alive=False, health=0, position=[1, 0, 1])
+        after['actors'][victim]['deaths'] += 1
+        after.update(objective='dropped', carrier=0, objective_position=[1, 0, 1])
+        oracle.action_handoff(before, after)
+
+    def test_action_handoff_accepts_uncredited_world_elimination(self):
+        before = protected(122)
+        victim = next(aid for aid, actor in before['actors'].items() if actor['alive'] and int(aid) != before['carrier'])
+        after = copy.deepcopy(before)
+        after['actors'][victim].update(alive=False, health=0)
+        after['actors'][victim]['deaths'] += 1
+        oracle.action_handoff(before, after)
+
+    def test_action_handoff_rejects_unearned_reward_and_team_change(self):
+        before = protected(122)
+        for field, value in (('credits', before['actors']['6']['credits'] + 100), ('team', 1 - before['actors']['6']['team']), ('kills', before['actors']['6']['kills'] + 1)):
+            with self.subTest(field=field):
+                after = copy.deepcopy(before)
+                after['actors']['6'][field] = value
+                with self.assertRaises(ValueError):
+                    oracle.action_handoff(before, after)
+
+    def test_action_handoff_rejects_preconsumer_objective_and_progress(self):
+        before = protected(122)
+        after = copy.deepcopy(before)
+        after['objective'] = 'planted'
+        with self.assertRaisesRegex(ValueError, 'invented objective transition'):
+            oracle.action_handoff(before, after)
+        after = copy.deepcopy(before)
+        after['interactions']['6'] = 2.9
+        with self.assertRaisesRegex(ValueError, 'protected match/objective state'):
+            oracle.action_handoff(before, after)
+
+    def test_isolated_control_rejects_locally_consistent_other_actor_teleport(self):
+        rows = copy.deepcopy(self.valid)
+        row = [r for k, r in rows if k == 'INTERACTION' and r['label'] == 'control_plant'][-1]
+        summary = next(r for k, r in rows if k == 'CONTROL' and r['name'] == 'plant')
+        for value in (row['before'], row['after'], summary['final']):
+            value['actors']['1']['position'] = [999, 999, 999]
+        row.update(interaction(row['label'], row['before'], row['after']))
+        self.reject(rows)
+
+    def test_isolated_control_rejects_match_rng_drift_without_thinking(self):
+        rows = copy.deepcopy(self.valid)
+        row = [r for k, r in rows if k == 'INTERACTION' and r['label'] == 'control_plant'][-1]
+        self.assertFalse(any(k == 'DECISION' and r['label'] == row['label'] and r['tick'] == row['tick'] for k, r in rows))
+        summary = next(r for k, r in rows if k == 'CONTROL' and r['name'] == 'plant')
+        for value in (row['before'], row['after'], summary['final']):
+            value['rng'] = '777'
+        self.reject(rows)
+
     def test_complete_commands_and_scalar_boundaries(self):
         for field in oracle.COMMAND:
             self.mutate('DECISION', lambda r: True, lambda r, key=field: r['observation']['decision']['command'].pop(key))

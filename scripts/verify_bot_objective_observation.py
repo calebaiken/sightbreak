@@ -14,7 +14,7 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 REPORT = 'docs/reports/gauntlet/m5-objective-observability'
 R2 = REPORT + '/correction-r2'
-ACQUISITION_INVENTORY = 'docs/reports/gauntlet/m5-objective-observability-r3-20261024/acquisition-inventory.json'
+ACQUISITION_INVENTORY = 'docs/reports/gauntlet/m5-objective-observability-r4-20261024/acquisition-inventory.json'
 PREFIX = 'BOT_OBJECTIVE_'
 POSES = [120, 122, 127]
 CONTROLS = ['plant', 'defuse', 'wrong_site', 'moving', 'no_interact']
@@ -363,6 +363,41 @@ def interaction(row):
     require(same(expected, after), 'objective progress/first threshold/transition/reward mismatch')
 
 
+def action_handoff(current, observed):
+    """Necessary source invariants between decisions/actions and the consumer.
+
+    This does not reconstruct damage rays or validate the whole combat outcome.
+    """
+    unchanged = {'tick', 'elapsed', 'rng', 'bot_clock', 'round', 'phase', 'time_left',
+                 'objective_timer', 'interactions', 'interaction_progress',
+                 'contributions', 'attack_score', 'defend_score'}
+    require(all(same(observed[k], current[k]) for k in unchanged), 'action phase changed protected match/objective state')
+    deaths = Counter()
+    kills = Counter()
+    for aid in IDS:
+        before, after = current['actors'][aid], observed['actors'][aid]
+        require(after['team'] == before['team'], 'action phase reassigned actor team')
+        require(same(after['input'], before['input']), 'actual command does not reach authority')
+        require(not (not before['alive'] and after['alive']), 'action phase revived an actor')
+        death_delta = after['deaths'] - before['deaths']
+        require(death_delta == int(before['alive'] and not after['alive']), 'action death counter does not bind elimination')
+        kill_delta = after['kills'] - before['kills']
+        require(kill_delta >= 0, 'action phase removed kills')
+        deaths[before['team']] += death_delta
+        kills[before['team']] += kill_delta
+        require(after['credits'] == min(9000, before['credits'] + 300 * kill_delta), 'action credits do not bind kill awards')
+    require(all(kills[team] <= deaths[1 - team] for team in (0, 1)), 'action kills exceed opposing eliminations')
+    if observed['objective'] != current['objective']:
+        carrier = str(current['carrier'])
+        require(current['objective'] == 'carried' and observed['objective'] == 'dropped'
+                and carrier in IDS and current['actors'][carrier]['alive']
+                and not observed['actors'][carrier]['alive'] and observed['carrier'] == 0
+                and same(observed['objective_position'], observed['actors'][carrier]['position']),
+                'action phase invented objective transition')
+    else:
+        require(observed['carrier'] == current['carrier'] and same(observed['objective_position'], current['objective_position']), 'action phase changed device identity/position')
+
+
 def verify_records(rows, root=ROOT):
     require(rows and rows[0][0] == 'HEADER' and rows[-1][0] == 'RESULT', 'missing header or terminal result')
     groups = {k: [r for tag, r in rows if tag == k] for k in KINDS}
@@ -434,8 +469,7 @@ def verify_records(rows, root=ROOT):
         require(len(objectives) == (1 if before['phase'] == 'live' else 0), 'forward objective observation missing')
         if objectives:
             obj = objectives[0]
-            require(all(same(obj['before'][k], current[k]) for k in {'tick', 'elapsed', 'rng', 'bot_clock'}), 'forward objective context unbound')
-            require(all(same(obj['before']['actors'][aid]['input'], current['actors'][aid]['input']) for aid in IDS), 'actual command does not reach authority')
+            action_handoff(current, obj['before'])
             # Movement, actions and resulting damage occur between input and objective.
             post = copy.deepcopy(obj['after'])
             if post['phase'] == 'live':
@@ -467,12 +501,20 @@ def verify_records(rows, root=ROOT):
                 expected = copy.deepcopy(previous); expected['tick'] += 1; expected['elapsed'] += DT
                 require(event['actor_id'] == 6 and same(event['before'], expected), 'control decision state unbound')
                 current_command = copy.deepcopy(event['after']['actors']['6']['input'])
+                context = copy.deepcopy(event['after'])
                 consumed_control.add(event['tick'])
-            else: current_command = copy.deepcopy(previous['actors']['6']['input'])
+            else:
+                current_command = copy.deepcopy(previous['actors']['6']['input'])
+                context = copy.deepcopy(previous)
+                context['tick'] += 1
+                context['elapsed'] += DT
             if name not in ('plant', 'defuse'):
                 current_command['interact'] = name != 'no_interact'
                 current_command['move'] = [0, 1] if name == 'moving' else [0, 0]
             require(same(row['before']['actors']['6']['input'], current_command), 'control actual command unbound')
+            context['actors']['6']['input'] = current_command
+            action_handoff(context, row['before'])
+            require(all(same(row['before']['actors'][aid]['position'], context['actors'][aid]['position']) for aid in IDS - {'6'}), 'isolated control moved a non-subject actor')
             require(all(same(row['before'][key], previous[key]) for key in OBJECTIVE_FIELDS), 'cross-row objective/progress discontinuity')
             require(all(row['before']['actors'][aid]['credits'] == previous['actors'][aid]['credits'] for aid in IDS), 'cross-row credit discontinuity')
             previous = row['after']
