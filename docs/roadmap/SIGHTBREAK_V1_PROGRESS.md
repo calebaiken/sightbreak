@@ -1,6 +1,6 @@
 # SIGHTBREAK v1.0 progress
 
-Last updated: 2026-10-23 (continuing recovered execution). Permanent tracker: [issue #25](https://github.com/calebaiken/sightbreak/issues/25), IN PROGRESS / PRIMARY. Existing Claude baseline and worklog remain historical evidence. Mission and gates: [SIGHTBREAK_V1_MISSION.md](SIGHTBREAK_V1_MISSION.md). Resume point: [../engineering/NEXT_SESSION.md](../engineering/NEXT_SESSION.md). Log: [../engineering/AUTONOMOUS_WORKLOG.md](../engineering/AUTONOMOUS_WORKLOG.md).
+Last updated: 2026-10-24 (continuing recovered execution). Permanent tracker: [issue #25](https://github.com/calebaiken/sightbreak/issues/25), IN PROGRESS / PRIMARY. Existing Claude baseline and worklog remain historical evidence. Mission and gates: [SIGHTBREAK_V1_MISSION.md](SIGHTBREAK_V1_MISSION.md). Resume point: [../engineering/NEXT_SESSION.md](../engineering/NEXT_SESSION.md). Log: [../engineering/AUTONOMOUS_WORKLOG.md](../engineering/AUTONOMOUS_WORKLOG.md).
 
 Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALLY`. **Verified by** says who ran it. "Reported" means a source document says so and nobody on this line has re-run it. Reported results are not promoted to `VERIFIED` until someone re-runs them.
 
@@ -18,7 +18,10 @@ UNREACHED. Driver-warning and large-binary-reparse limits remain explicit.
 Default-off reopened-only verbose source7101350e is independently accepted by
 3d07b3ec and integrated874c968c with all508 non-doc identities equal. Whole game
 source is unchanged; no leak cause/fix is established. Fresh actual diagnostic
-admission is being completed; no new run is released.
+preregistrationf44d6dd4/admission78e972bc and pushed root release43dbc058
+preceded the sole dispatch. Run40083894472/job120842796227/attempt1 is active
+on its fixed qualifier at exact710, created09:55:51UTC. Review this existing
+attempt; no redispatch or rerun. Current dispatch receipts are committed707d6e54.
 
 Strict fingerprint-type correction8da2add4 remains independently accepted by
 3a0fcddb:69 maintained+10 original methods and190 fresh cases pass both views,

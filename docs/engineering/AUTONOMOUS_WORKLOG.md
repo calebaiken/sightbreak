@@ -620,3 +620,12 @@ continues. Mission remains ACTIVE; continue exact NEXT_SESSION queue.
 
 
 2026-10-24: independent exact Windows collector source review, own codex/critic-windows-input-collector-final-20261024 after prereg16d5766a. ACCEPT SOURCE ONLY c3241514 against root11c5773e/four exact c073 files. Own and initialized disclosed-alternate depth1:178 methods/3oldskips, source union/erasure,960 admission cases/14negatives,90adapter contexts,14accepted route methods/147guards,3stage methods pass. Historical23 rig failure preserved/reproduced on unchanged root; no candidate source changed. Enabled runtime/API/overhead, physical timing, complete coverage and reader acceptance remain unverified. Report: docs/reports/gauntlet/windows-input-collector-final-source-20261024/REVIEW.md. No native or CI release.
+
+## 2026-10-24 10:06UTC — Existing verbose attempt and persistent state
+
+Root707d6e54 has the sole dispatch receipts for run40083894472/job120842796227
+at exact710. Independent actual review is active; no raw type/owner finding
+is established. Builder normal game-lifetime inspection is read-only and cannot
+approve a cause or fix without evidence. Corrected NEXT_SESSION opening damage
+and relocated its stale source-only collector paragraph into historical context,
+preserving the text. G1–G19 stay open; no native retry or new admission.

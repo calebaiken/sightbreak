@@ -1,24 +1,6 @@
-## Independent collector review checkpoint — 2026-10-24
-
-Own review /workspace/reviews/windows-input-collector-final-source, branch
-codex/critic-windows-input-collector-final-20261024. Exact c3241514 is ACCEPT
-SOURCE ONLY; final report docs/reports/gauntlet/windows-input-collector-final-source-20261024/REVIEW.md
-and manifest retain own/depth1 178 methods (175 pass/3 old skips), full 507-path
-union/four erasures, 960 admission cases/14 mutation controls, 90 adapter contexts,
-14 accepted route methods/147 guard subcases and 3 named-stage methods. Historical
-23-method rig still has 1 failure/1 error on both candidate and unchanged root;
-its obsolete positional-read assumptions and replacement stage controls are explicit.
-Initialized exact depth1 shares the disclosed object alternate; reachable history
-is one commit with HEAD^ absent, storage is not self-contained. Initial read-only
-setup affinity deviation and first custom harness error are retained. No native,
-Godot/API, export, render, CI, real OS input or cleanup ran. Enabled observer and
-overhead remain the largest gap; reader c073/R2 remain rejected, separate R3 is
-unqualified. Next action belongs to root: separately preregister bounded pinned
-Godot compilation/API preflight. This report releases no native or CI run.
-
 # Next session
 
-Updated 2026-10-24 09:57 UTC.0**,
+Updated 2026-10-24 10:06 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. No native goal ID has been verified. Read AGENTS.md and the canonical
@@ -60,7 +42,9 @@ ONE dispatch. Active run40083894472, job120842796227, attempt1, created
 2026-10-24T09:55:51Z, exact710 on its fixed qualifier. Inputs are lane=windows,
 observe_windows_input=true and verbose_reopened_shutdown=true. Exact tool and
 release receipts are in this component's ROOT_DISPATCH_RECEIPTS.json. The critic
-is reactivated for this same run. No redispatch, rerun or manual continuation. Original300-second flow,20-second close and every
+is reactivated for this same run. Dispatch receipts and active-run state were
+committed/pushed as707d6e54. At09:59:47UTC its native regressions were active;
+no complete diagnostic raw or leak-type finding had been acquired. No redispatch, rerun or manual continuation. Original300-second flow,20-second close and every
 other original schedule/gate stay binding. No arbitrary drain/sleep/owner fix.
 Verbose output can identify classes/IDs/refcounts and some paths, not an allocation
 stack or retaining owner; a non-reproduction is INCONCLUSIVE, not a fix.
@@ -173,6 +157,26 @@ cleanup failures remain binding, including the surviving child observation.
 All whole G1–G19, 8.5/category, human/physical, CS2 comparison, Intel Mac, mobile
 runtime and distribution/Steam gates remain open. After this native preflight,
 retain actual outputs/independent verdict, commit, update gates and continue.
+
+## Historical collector source review
+
+## Independent collector review checkpoint — 2026-10-24
+
+Own review /workspace/reviews/windows-input-collector-final-source, branch
+codex/critic-windows-input-collector-final-20261024. Exact c3241514 is ACCEPT
+SOURCE ONLY; final report docs/reports/gauntlet/windows-input-collector-final-source-20261024/REVIEW.md
+and manifest retain own/depth1 178 methods (175 pass/3 old skips), full 507-path
+union/four erasures, 960 admission cases/14 mutation controls, 90 adapter contexts,
+14 accepted route methods/147 guard subcases and 3 named-stage methods. Historical
+23-method rig still has 1 failure/1 error on both candidate and unchanged root;
+its obsolete positional-read assumptions and replacement stage controls are explicit.
+Initialized exact depth1 shares the disclosed object alternate; reachable history
+is one commit with HEAD^ absent, storage is not self-contained. Initial read-only
+setup affinity deviation and first custom harness error are retained. No native,
+Godot/API, export, render, CI, real OS input or cleanup ran. Enabled observer and
+overhead remain the largest gap; reader c073/R2 remain rejected, separate R3 is
+unqualified. Next action belongs to root: separately preregister bounded pinned
+Godot compilation/API preflight. This report releases no native or CI run.
 
 ## Prior checkpoint — 2026-10-23 11:54 UTC
 

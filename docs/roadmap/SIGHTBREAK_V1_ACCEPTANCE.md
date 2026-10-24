@@ -122,3 +122,14 @@ source-correctness requirements. Collector native compilation is being separatel
 admitted; Linux V-Sync, ordinary Windows/Mac gameplay, touch descendant cleanup
 and all whole-release/external gates remain unverified or failed. Original
 schedules, deadlines, privacy and quality thresholds are unchanged.
+
+At2026-10-24 10:06UTC, Windows collector actual40080238905 has final independent
+FAIL6801f592: bounded ordinary input, route/settings/focus, objectives and stock
+match persistence verify, but three leaked ObjectDB instances and strict driver
+warnings block acceptance. The default-off reopened-only verbose diagnostic
+source7101350e is source-accepted3d07b3ec and integrated874c968c. Its sole active
+run40083894472 follows preregf44d6dd4/admission78e972bc/pushed release43dbc058;
+no final actual diagnostic finding exists yet. Linux strict-type source-only
+acceptance remains scoped; Mac source review was stopped by an automated possible-
+cybersecurity-risk flag after a partial defect finding, with no final verdict or
+retry. Whole gates, thresholds and external requirements remain unchanged.
