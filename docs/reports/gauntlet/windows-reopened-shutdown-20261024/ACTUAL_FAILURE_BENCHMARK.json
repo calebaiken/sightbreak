@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-10-24T09:28:06.304846+00:00",
+  "source_commit": "c32415148db1f110bbc7eadfca3793d4693429ff",
+  "run_id": 40080238905,
+  "job_id": 120832097220,
+  "attempt": 1,
+  "run_conclusion": "failure",
+  "raw_directory": "/workspace/reviews/windows-collector-actual-20261024/.local/windows40080238905/full/offline-input",
+  "originals": {
+    "reopened.log": {
+      "bytes": 691,
+      "sha256": "be8dcaa93523c43561087bf9e99070211f63d5331690633d4579ed7be1e3c166"
+    },
+    "client.log": {
+      "bytes": 952,
+      "sha256": "7872f6ffd044886b7aae8d05560ae7a967d2bde5e02a2199e7b93b450589eb65"
+    },
+    "results.json": {
+      "bytes": 1091361,
+      "sha256": "aa15085a6597d06b57011c1d866aa229c55b59feaa21c132dba1cb777f23160e"
+    },
+    "commands.json": {
+      "bytes": 1052,
+      "sha256": "0085322ca8bc9ad65dabf5f37248c229446d1dd36d8d043588da74d8989ea781"
+    },
+    "actions.json": {
+      "bytes": 675461,
+      "sha256": "16f3b1231eaadcb8bdedb9a0fc4c3e675d8b06ccf3747600d23fbb10a0d2c3a6"
+    }
+  },
+  "facts": {
+    "error": "Reopened export failed clean shutdown",
+    "initial_exit": 0,
+    "reopened_exit": 0,
+    "elapsed_seconds": 111.14099999999996,
+    "cleanup_errors": [],
+    "events": [
+      "01-menu",
+      "02-offline-spawn",
+      "03-requisition",
+      "04-move-aim",
+      "05-after-fire",
+      "06-after-reload",
+      "06b-scoreboard",
+      "06c-next-round",
+      "06d-funded-requisition",
+      "06e-purchased-smg",
+      "06f-switched-sidearm",
+      "06g-switched-primary",
+      "07-field-menu",
+      "07b-field-settings",
+      "07c-settings-changed",
+      "07d-explicit-resume",
+      "08-return-menu",
+      "09-reopened-menu",
+      "10-reopened-loaded-settings",
+      "11a-restored-focus-still-paused",
+      "11b-resumed-held-input-neutral",
+      "11c-fresh-press-movement"
+    ],
+    "commands": [
+      {
+        "name": "client",
+        "command": [
+          "D:\\a\\sightbreak\\sightbreak\\builds\\desktop-playability\\windows\\SIGHTBREAK.exe",
+          "--audio-driver",
+          "Dummy",
+          "--position",
+          "0,0",
+          "--resolution",
+          "976x549",
+          "--",
+          "--offline-validation",
+          "--offline-trace-dir=D:\\a\\sightbreak\\sightbreak\\builds\\desktop-playability\\offline-input\\initial-offline-trace"
+        ],
+        "pid": 9080,
+        "started_seconds": 0.4379999999999882,
+        "exit_code": 0
+      },
+      {
+        "name": "reopened",
+        "command": [
+          "D:\\a\\sightbreak\\sightbreak\\builds\\desktop-playability\\windows\\SIGHTBREAK.exe",
+          "--audio-driver",
+          "Dummy",
+          "--position",
+          "0,0",
+          "--resolution",
+          "976x549",
+          "--",
+          "--offline-validation",
+          "--offline-trace-dir=D:\\a\\sightbreak\\sightbreak\\builds\\desktop-playability\\offline-input\\restart-profile-trace"
+        ],
+        "pid": 7968,
+        "started_seconds": 89.31299999999999,
+        "exit_code": 0
+      }
+    ]
+  },
+  "observed_leak_warning": "WARNING: 3 ObjectDB instances were leaked at exit (run with `--verbose` for details).",
+  "object_types": "UNKNOWN: no verbose allocation details in original",
+  "allocation_owner": "UNKNOWN",
+  "cause": "NOT ESTABLISHED",
+  "strict_reopened_gate": "scripts/verify_offline_export.py:1021-1022",
+  "driver_warning": "OpenGL 3.3 driver fallback to ANGLE is separate and retained; no cause attribution",
+  "scope": "Builder factual subset only; independent actual reconstruction remains owned by /root/windows_collector_actual_critic_20261024"
+}
