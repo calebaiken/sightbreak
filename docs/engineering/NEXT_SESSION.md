@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-24 10:06 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-24 10:13 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. No native goal ID has been verified. Read AGENTS.md and the canonical
@@ -50,6 +50,30 @@ no complete diagnostic raw or leak-type finding had been acquired. No redispatch
 other original schedule/gate stay binding. No arbitrary drain/sleep/owner fix.
 Verbose output can identify classes/IDs/refcounts and some paths, not an allocation
 stack or retaining owner; a non-reproduction is INCONCLUSIVE, not a fix.
+
+**Additional active source work: preserve these owned checkouts.**
+The verbose run's living/settings step30 is FAILURE as of10:08:42UTC; its
+full-match step33 is active as of10:11:19UTC. Supported job-log retrieval returned
+404 BlobNotFound. There is no supported leak-class finding until official raw.
+No rerun or new native action is released.
+
+Fresh optional-reader critic `/root/input_reader_r3_fresh_critic_20261024` owns
+`/workspace/reviews/windows-input-consumption-r3-fresh-source`, prereg `b22c2790`.
+R3 exact `342c3641` passes the old38 expectations but preliminary new tests expose
+nine false accepts; final source verdict is pending. Builder
+`/root/input_reader_r4_builder_20261024` owns new sparse
+`/workspace/sightbreak-windows-input-consumption-r4`, branch
+`codex/windows-input-consumption-r4-20261024`, exact342 base/shared-object storage.
+Only read-only investigation is active until final supported critic fixtures and
+pre-edit criteria are frozen. Preserve old R3 untracked packaging. No optional
+reader is integrated into root and no runtime/controller/native change is allowed.
+
+Independent objective reviewer `/root/objective_r2_review_recovery_20261024` has
+resumed the related owned reviewer checkout
+`/workspace/reviews/m5-objective-observability-r2-fresh-source` at `4e9ef3c3`.
+Its existing own/depth-one raw evidence is preserved. It is verifying the retained
+12 false accepts and completing the interrupted source-only verdict; no native
+or production edits. All original contradictory-no-op rig history stays explicit.
 
 **Completed Windows qualification: overall FAIL, preserve all originals.**
 Run40080238905/job120832097220/attempt1 at exactc324 completed FAILURE at
