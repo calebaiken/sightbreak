@@ -43,3 +43,14 @@ scripts/outputs or execute the withheld fixture compiler. New fixture/compiler
 and any additional existing-test construction change still need independently
 adjudicated exact proposal before application. Source/public collection stays
 unqualified/BLOCKED; no native/API/proc/helper/CI action is authorized.
+
+First expanded held model188 cases exposes one unsupported accept at source
+7bf8c8f5: removing direct cleanup Escape-down leaves an accepted scoped up. Raw
+source, all188 inputs/results and185 named controls are retained in r4. Before
+fixing, register exact direct macro policy from analysis_escape429–443 and field
+resume859–865: cleanup scope is downTrue only; saved_hud_analysis and field_
+settings_resume are upFalse only and require Escape already tracked held. Cleanup
+down's next emitted action is the direct saved_hud_analysis up (the sleep emits
+no action). Preserve generic already-up key(False) pairs, and all existing valid
+direct release controls. Repeat the exact188 after that correction as a new
+iteration, with original r4 unchanged. This is a source/model failure, not native.
