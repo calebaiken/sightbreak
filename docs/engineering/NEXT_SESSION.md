@@ -18,7 +18,7 @@ Godot compilation/API preflight. This report releases no native or CI run.
 
 # Next session
 
-Updated 2026-10-24 09:53 UTC.0**,
+Updated 2026-10-24 09:57 UTC.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. No native goal ID has been verified. Read AGENTS.md and the canonical
@@ -40,7 +40,7 @@ root ref was stale because the fetch configuration covers main; actual ls-remote
 and GitHub PR metadata agree. Never reset the newer local work to that stale ref.
 No shared merge, history rewrite, release or production deployment is authorized.
 
-**Next action: admit one reopened-only verbose diagnostic.**
+**Active diagnostic: review this existing attempt; do not redispatch.**
 Exact source `7101350e5d0a2f6e4afb9a913b5b1bcf2107857a` is source-accepted by
 `3d07b3ec` after `1285a984`. Builder handoff `a936ae96` and source findings are in
 `/workspace/sightbreak-windows-reopened-shutdown`, branch
@@ -54,12 +54,13 @@ report was retained; no older NEXT/WORKLOG replaced current mission state.
 
 Qualifier `qualifier/windows-reopened-verbose-7101350e-20261024` was created
 only after empty actual absence check ec1067, then read back at exact710. Root
-creation receipts are committed/pushed in f05fe31e. Fresh actual critic
-`/root/reopened_verbose_actual_critic_20261024` preregistered f44d6dd4 and is
-finishing admission. Read that final admission, commit/push ONE root release,
-then issue the exact existing workflow with lane=windows,
-observe_windows_input=true and verbose_reopened_shutdown=true. No release or
-verbose dispatch exists yet. Original300-second flow,20-second close and every
+creation receipts are committed/pushed in f05fe31e. Fresh actual critic `/root/reopened_verbose_actual_critic_20261024` preregistered
+f44d6dd4 and admitted78e972bc. Root release43dbc058 was committed/pushed before
+ONE dispatch. Active run40083894472, job120842796227, attempt1, created
+2026-10-24T09:55:51Z, exact710 on its fixed qualifier. Inputs are lane=windows,
+observe_windows_input=true and verbose_reopened_shutdown=true. Exact tool and
+release receipts are in this component's ROOT_DISPATCH_RECEIPTS.json. The critic
+is reactivated for this same run. No redispatch, rerun or manual continuation. Original300-second flow,20-second close and every
 other original schedule/gate stay binding. No arbitrary drain/sleep/owner fix.
 Verbose output can identify classes/IDs/refcounts and some paths, not an allocation
 stack or retaining owner; a non-reproduction is INCONCLUSIVE, not a fix.
