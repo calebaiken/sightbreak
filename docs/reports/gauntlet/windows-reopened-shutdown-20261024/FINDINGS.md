@@ -89,9 +89,14 @@ whole 300s, close 20s, existing cleanup, ownership, privacy, protocol 6, physics
 controls and earned economy remain unchanged.
 
 No Godot, native client/helper, export, CI, replay or retry ran for this task.
+The full staged whitespace check exits2 on seven original mutation-failure log
+lines emitted by unittest. Those raw bytes remain unchanged; raw-whitespace-check.json
+retains the exact output. A separate source/doc check excludes only raw .log paths.
 The source scan's suggested shared flag would have affected both clients; the
 implemented reopened-only argument is narrower and matches preregistration.
-Two setup errors are retained: guessed native-validation.yml search exit2; an
+Three setup/package omissions are retained: .gitignore initially omitted the raw
+.log files from evidence commit14f2a4f8; the following checkpoint explicitly
+force-adds only this task's own original logs. Other setup errors were the guessed native-validation.yml search exit2; an
 unmatched optional filesystem glob made a read-only listing exit2 and prevented
 that command's following reads. Correct paths were read in separate calls. Initial
 instruction reads before CPU4 pinning were read-only and disclosed in prereg.

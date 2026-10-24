@@ -1,0 +1,12 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "exit_code": 2,
+  "stdout": "docs/reports/gauntlet/windows-reopened-shutdown-20261024/mutation-always-verbose.log:1: trailing whitespace.\n+test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) ... \ndocs/reports/gauntlet/windows-reopened-shutdown-20261024/mutation-default-enabled.log:2: trailing whitespace.\n+test_real_parser_defaults_to_disabled_and_accepts_opt_in (declared_mutation_control.ReopenedDiagnosticTests.test_real_parser_defaults_to_disabled_and_accepts_opt_in) ... \ndocs/reports/gauntlet/windows-reopened-shutdown-20261024/mutation-expanded-whole-budget.log:2: trailing whitespace.\n+test_real_parser_defaults_to_disabled_and_accepts_opt_in (declared_mutation_control.ReopenedDiagnosticTests.test_real_parser_defaults_to_disabled_and_accepts_opt_in) ... \ndocs/reports/gauntlet/windows-reopened-shutdown-20261024/mutation-initial-also-verbose.log:1: trailing whitespace.\n+test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) ... \ndocs/reports/gauntlet/windows-reopened-shutdown-20261024/mutation-misspelled-engine-flag.log:1: trailing whitespace.\n+test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) ... \ndocs/reports/gauntlet/windows-reopened-shutdown-20261024/mutation-never-verbose.log:1: trailing whitespace.\n+test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) ... \ndocs/reports/gauntlet/windows-reopened-shutdown-20261024/mutation-verbose-after-separator.log:1: trailing whitespace.\n+test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) ... \n",
+  "stderr": "",
+  "scope": "Original expected mutation-failure logs contain unittest trailing whitespace; retained byte-exact. Source/doc whitespace is checked separately excluding only .log raw outputs."
+}

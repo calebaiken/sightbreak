@@ -1,0 +1,117 @@
+test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) ... 
+  test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) (flags=['--position', '0,0', '--resolution', '976x549'], quit_after=0) ... FAIL
+  test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) (flags=['--position', '0,0', '--resolution', '976x549'], quit_after=17) ... FAIL
+  test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) (flags=['--accessibility', 'disabled', '--accessibility-driver', 'dummy'], quit_after=0) ... FAIL
+  test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) (flags=['--accessibility', 'disabled', '--accessibility-driver', 'dummy'], quit_after=17) ... FAIL
+test_real_parser_defaults_to_disabled_and_accepts_opt_in (declared_mutation_control.ReopenedDiagnosticTests.test_real_parser_defaults_to_disabled_and_accepts_opt_in) ... ok
+test_real_parser_rejects_a_value_instead_of_silently_enabling (declared_mutation_control.ReopenedDiagnosticTests.test_real_parser_rejects_a_value_instead_of_silently_enabling) ... ok
+test_workflow_default_is_false_and_adapter_occurs_only_on_existing_step (declared_mutation_control.ReopenedDiagnosticTests.test_workflow_default_is_false_and_adapter_occurs_only_on_existing_step) ... ok
+
+======================================================================
+FAIL: test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) (flags=['--position', '0,0', '--resolution', '976x549'], quit_after=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reopened-shutdown/scripts/test_reopened_shutdown_diagnostic.py", line 98, in test_only_reopened_engine_argv_changes_and_original_commands_are_preserved
+    self.assertEqual(disabled[1], ('reopened', original, {'DECLARED': 'same'}))
+AssertionError: Tuples differ: ('reo[110 chars], '--verbose', '--', '--offline-validation', '[58 chars]me'}) != ('reo[110 chars], '--', '--offline-validation', '--offline-tra[45 chars]me'})
+
+First differing element 1:
+['/de[97 chars], '--verbose', '--', '--offline-validation', '[35 chars]ned']
+['/de[97 chars], '--', '--offline-validation', '--offline-tra[22 chars]ned']
+
+  ('reopened',
+   ['/declared/SIGHTBREAK.exe',
+    '--audio-driver',
+    'Dummy',
+    '--position',
+    '0,0',
+    '--resolution',
+    '976x549',
+-   '--verbose',
+    '--',
+    '--offline-validation',
+    '--offline-trace-dir=/declared/reopened'],
+   {'DECLARED': 'same'})
+
+======================================================================
+FAIL: test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) (flags=['--position', '0,0', '--resolution', '976x549'], quit_after=17)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reopened-shutdown/scripts/test_reopened_shutdown_diagnostic.py", line 98, in test_only_reopened_engine_argv_changes_and_original_commands_are_preserved
+    self.assertEqual(disabled[1], ('reopened', original, {'DECLARED': 'same'}))
+AssertionError: Tuples differ: ('reo[110 chars], '--verbose', '--', '--offline-validation', '[58 chars]me'}) != ('reo[110 chars], '--', '--offline-validation', '--offline-tra[45 chars]me'})
+
+First differing element 1:
+['/de[97 chars], '--verbose', '--', '--offline-validation', '[35 chars]ned']
+['/de[97 chars], '--', '--offline-validation', '--offline-tra[22 chars]ned']
+
+  ('reopened',
+   ['/declared/SIGHTBREAK.exe',
+    '--audio-driver',
+    'Dummy',
+    '--position',
+    '0,0',
+    '--resolution',
+    '976x549',
+-   '--verbose',
+    '--',
+    '--offline-validation',
+    '--offline-trace-dir=/declared/reopened'],
+   {'DECLARED': 'same'})
+
+======================================================================
+FAIL: test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) (flags=['--accessibility', 'disabled', '--accessibility-driver', 'dummy'], quit_after=0)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reopened-shutdown/scripts/test_reopened_shutdown_diagnostic.py", line 98, in test_only_reopened_engine_argv_changes_and_original_commands_are_preserved
+    self.assertEqual(disabled[1], ('reopened', original, {'DECLARED': 'same'}))
+AssertionError: Tuples differ: ('reo[128 chars], '--verbose', '--', '--offline-validation', '[58 chars]me'}) != ('reo[128 chars], '--', '--offline-validation', '--offline-tra[45 chars]me'})
+
+First differing element 1:
+['/de[115 chars], '--verbose', '--', '--offline-validation', '[35 chars]ned']
+['/de[115 chars], '--', '--offline-validation', '--offline-tra[22 chars]ned']
+
+  ('reopened',
+   ['/declared/SIGHTBREAK.exe',
+    '--audio-driver',
+    'Dummy',
+    '--accessibility',
+    'disabled',
+    '--accessibility-driver',
+    'dummy',
+-   '--verbose',
+    '--',
+    '--offline-validation',
+    '--offline-trace-dir=/declared/reopened'],
+   {'DECLARED': 'same'})
+
+======================================================================
+FAIL: test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) (flags=['--accessibility', 'disabled', '--accessibility-driver', 'dummy'], quit_after=17)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reopened-shutdown/scripts/test_reopened_shutdown_diagnostic.py", line 98, in test_only_reopened_engine_argv_changes_and_original_commands_are_preserved
+    self.assertEqual(disabled[1], ('reopened', original, {'DECLARED': 'same'}))
+AssertionError: Tuples differ: ('reo[128 chars], '--verbose', '--', '--offline-validation', '[58 chars]me'}) != ('reo[128 chars], '--', '--offline-validation', '--offline-tra[45 chars]me'})
+
+First differing element 1:
+['/de[115 chars], '--verbose', '--', '--offline-validation', '[35 chars]ned']
+['/de[115 chars], '--', '--offline-validation', '--offline-tra[22 chars]ned']
+
+  ('reopened',
+   ['/declared/SIGHTBREAK.exe',
+    '--audio-driver',
+    'Dummy',
+    '--accessibility',
+    'disabled',
+    '--accessibility-driver',
+    'dummy',
+-   '--verbose',
+    '--',
+    '--offline-validation',
+    '--offline-trace-dir=/declared/reopened'],
+   {'DECLARED': 'same'})
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.058s
+
+FAILED (failures=4)

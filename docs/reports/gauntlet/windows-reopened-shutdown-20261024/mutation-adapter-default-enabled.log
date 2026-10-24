@@ -1,0 +1,28 @@
+test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) ... ok
+test_real_parser_defaults_to_disabled_and_accepts_opt_in (declared_mutation_control.ReopenedDiagnosticTests.test_real_parser_defaults_to_disabled_and_accepts_opt_in) ... ok
+test_real_parser_rejects_a_value_instead_of_silently_enabling (declared_mutation_control.ReopenedDiagnosticTests.test_real_parser_rejects_a_value_instead_of_silently_enabling) ... ok
+test_workflow_default_is_false_and_adapter_occurs_only_on_existing_step (declared_mutation_control.ReopenedDiagnosticTests.test_workflow_default_is_false_and_adapter_occurs_only_on_existing_step) ... FAIL
+
+======================================================================
+FAIL: test_workflow_default_is_false_and_adapter_occurs_only_on_existing_step (declared_mutation_control.ReopenedDiagnosticTests.test_workflow_default_is_false_and_adapter_occurs_only_on_existing_step)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reopened-shutdown/scripts/test_reopened_shutdown_diagnostic.py", line 109, in test_workflow_default_is_false_and_adapter_occurs_only_on_existing_step
+    self.assertEqual([line.strip() for line in block.splitlines() if line.strip().startswith(('type:', 'required:', 'default:'))],
+AssertionError: Lists differ: ['type: boolean', 'required: false', 'default: true'] != ['type: boolean', 'required: false', 'default: false']
+
+First differing element 2:
+'default: true'
+'default: false'
+
+- ['type: boolean', 'required: false', 'default: true']
+?                                                ^^^
+
++ ['type: boolean', 'required: false', 'default: false']
+?                                                ^^^^
+
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.050s
+
+FAILED (failures=1)

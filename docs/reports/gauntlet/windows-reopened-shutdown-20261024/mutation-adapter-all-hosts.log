@@ -1,0 +1,17 @@
+test_only_reopened_engine_argv_changes_and_original_commands_are_preserved (declared_mutation_control.ReopenedDiagnosticTests.test_only_reopened_engine_argv_changes_and_original_commands_are_preserved) ... ok
+test_real_parser_defaults_to_disabled_and_accepts_opt_in (declared_mutation_control.ReopenedDiagnosticTests.test_real_parser_defaults_to_disabled_and_accepts_opt_in) ... ok
+test_real_parser_rejects_a_value_instead_of_silently_enabling (declared_mutation_control.ReopenedDiagnosticTests.test_real_parser_rejects_a_value_instead_of_silently_enabling) ... ok
+test_workflow_default_is_false_and_adapter_occurs_only_on_existing_step (declared_mutation_control.ReopenedDiagnosticTests.test_workflow_default_is_false_and_adapter_occurs_only_on_existing_step) ... FAIL
+
+======================================================================
+FAIL: test_workflow_default_is_false_and_adapter_occurs_only_on_existing_step (declared_mutation_control.ReopenedDiagnosticTests.test_workflow_default_is_false_and_adapter_occurs_only_on_existing_step)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-reopened-shutdown/scripts/test_reopened_shutdown_diagnostic.py", line 111, in test_workflow_default_is_false_and_adapter_occurs_only_on_existing_step
+    self.assertEqual(WORKFLOW.count(ADAPTER), 1)
+AssertionError: 0 != 1
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.042s
+
+FAILED (failures=1)
