@@ -4,7 +4,7 @@ import unittest
 from unittest.mock import patch
 
 from analyze_input_consumption import (analyze, authority_lifecycle_foundation,
-                                       UnknownTransition)
+                                       record_valid, UnknownTransition)
 from input_consumption_foundation_model import (AuthorityProjectionEmitter,
                                                 declared_histories)
 from test_input_consumption_foundation_model import source_negative_proposals
@@ -134,6 +134,39 @@ class AuthorityFoundationEnforcement(unittest.TestCase):
         rows.append(later)
         with self.assertRaises(UnknownTransition):
             authority_lifecycle_foundation(rows)
+
+    def test_definite_prefix_faults_are_not_hidden_by_unknown_lifecycle(self):
+        unresolved = declared_rows('authority')
+        for stage in ('input_received', 'input_accepted'):
+            unresolved[-1]['counters'][stage] = 2
+            unresolved[-1]['latest'][stage]['wall_msec'] = unresolved[-1]['wall_msec']
+        later = deepcopy(unresolved[-1])
+        later.update(index=8, wall_msec=12000, wall_unix_msec=112000,
+                     process_frames=8, physics_frames=16, drawn_frames=8,
+                     input_age_msec=3000, deadline_remaining_msec=10000)
+        later['counters']['authority_tick'] = 2
+        unresolved.append(later)
+        control = analyze(text(declared_rows('client')), text(unresolved))
+        self.assertEqual(control['transition_status'], 'UNKNOWN', control)
+        mutations = {
+            'process-frame': lambda row: row.update(process_frames=1),
+            'physics-frame': lambda row: row.update(physics_frames=1),
+            'drawn-frame': lambda row: row.update(drawn_frames=1),
+            'index': lambda row: row.update(index=9),
+            'counter-regression': lambda row: row['counters'].update(input_received=1, input_accepted=1),
+            'unobserved-lifecycle': lambda row: row['counters'].update(peer_connected=2),
+            'stale-latest': lambda row: row['latest']['input_received'].update(wall_msec=1),
+        }
+        for label, mutate in mutations.items():
+            rows = deepcopy(unresolved)
+            mutate(rows[-1])
+            before = deepcopy(rows)
+            with self.subTest(case=label):
+                for row in rows:
+                    record_valid(row)  # Every priority case reaches prefix validation.
+                result = analyze(text(declared_rows('client')), text(rows))
+                self.assertEqual(result['transition_status'], 'INVALID', result)
+                self.assertEqual(rows, before)
 
 
 if __name__ == '__main__':

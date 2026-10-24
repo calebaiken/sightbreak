@@ -769,6 +769,39 @@ def parse_log(text):
     return rows
 
 
+def observation_prefix_invariants(rows, role):
+    """Reject known prefix contradictions before any unresolved inference.
+
+    These are the existing role/index/counter/latest/clock conditions. The main
+    analysis retains its checks; this phase prevents UNKNOWN hiding later facts.
+    """
+    prior, lifecycle_counts = None, {}
+    for row in rows:
+        need(row['role'] == role, 'mixed role evidence')
+        need(row['index'] == (prior['index'] + 1 if prior else 1), 'missing or reordered observation index')
+        need(row['reason'] != 'observation_limit', 'observer reached its hard cap; evidence truncated')
+        reason, counters, latest = row['reason'], row['counters'], row['latest']
+        previous_counters = prior['counters'] if prior else {}
+        need(counters.get(reason, 0) > previous_counters.get(reason, 0), 'emitted reason did not increment its stage counter')
+        if reason in LIFECYCLE_STAGES:
+            lifecycle_counts[reason] = lifecycle_counts.get(reason, 0) + 1
+        need(all(counters.get(stage, 0) == lifecycle_counts.get(stage, 0) for stage in LIFECYCLE_STAGES),
+             'lifecycle counter has no matching observed event')
+        need(set(latest) == set(counters) & LATEST_STAGES, 'latest metadata missing from persistent stage history')
+        if prior:
+            for key in ('wall_msec', 'wall_unix_msec', 'process_frames', 'physics_frames', 'drawn_frames'):
+                need(row[key] >= prior[key], 'regressed observation ' + key)
+            need(all(row['counters'].get(k, 0) >= v for k, v in prior['counters'].items()), 'regressed stage counter')
+            need(set(prior['latest']) <= set(latest), 'latest metadata disappeared from persistent stage history')
+            need(all(latest[stage] == value for stage, value in prior['latest'].items()
+                     if counters.get(stage, 0) == previous_counters.get(stage, 0)),
+                 'latest metadata changed without a stage counter increment')
+            need(all(value['wall_msec'] >= prior['wall_msec'] for stage, value in latest.items()
+                     if counters[stage] > previous_counters.get(stage, 0)),
+                 'latest stage call predates the preceding observation')
+        prior = row
+
+
 def authority_lifecycle_foundation(rows):
     """Check observed authority identity/timer histories before packet inference.
 
@@ -869,6 +902,7 @@ def analyze_role(rows, role):
     need(REQUIRED[role] <= coverage, 'missing pipeline stages: ' + ','.join(sorted(REQUIRED[role] - coverage)))
     observed_events = {row['reason'] for row in rows}
     need(REQUIRED[role] - {'snapshot_applied'} <= observed_events, 'missing direct pipeline event records')
+    observation_prefix_invariants(rows, role)
     if role == 'authority':
         authority_lifecycle_foundation(rows)
     prior, bindings, ended, consumed_sequences = None, {}, set(), {}
