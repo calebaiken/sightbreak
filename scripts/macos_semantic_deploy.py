@@ -11,13 +11,16 @@ import sys
 import time
 import uuid
 
-from macos_ax_contract import (CAPS, LABEL, PRUNED_ROLES, normalized_title, number, rectangle,
+from macos_ax_contract import (CAPS, LABEL, PRUNED_ROLES, normalized_title, number, rectangle, require_owned, inside,
                                validate_observation)
 from probe_macos_input import digest
 from macos_ordinary_input import no_symlinks
+from macos_native_input import same_bounds
+from macos_ax_live import LIVE_SCHEMA, LIVE_SOURCE, GUARD_BYTES, start_live
 
 AX_SOURCE = Path(__file__).with_name('probe_macos_ax.py')
-SOURCES = (Path(__file__), AX_SOURCE, Path(__file__).with_name('macos_ax_contract.py'))
+SOURCES = (Path(__file__), AX_SOURCE, Path(__file__).with_name('macos_ax_contract.py'),
+           LIVE_SOURCE, Path(__file__).with_name('macos_ax_live.py'))
 RECEIPT_KEYS = {'schema', 'scope', 'owner_pid', 'window_id', 'observer_pid', 'nonce',
                 'started_monotonic', 'finished_monotonic', 'caps', 'snapshots', 'examined_nodes',
                 'complete', 'input_events_posted', 'permission_requests_made', 'coordinate_mapping',
@@ -202,6 +205,8 @@ class SemanticDeployTarget:
     expires: float
     owner: object
     proof: str
+    live: object
+    live_records: list
     used: bool = field(default=False, init=False)
 
     def point(self, capture, ui):
@@ -221,6 +226,9 @@ class SemanticDeployTarget:
             raise RuntimeError('Semantic Deploy target does not bind the pinned input owner')
         for seal in self.files:
             read_regular(seal.path, seal.limit, seal)
+        for record in self.live_records:
+            seal = FileSeal.from_metadata(record['file_seal'])
+            read_regular(seal.path, seal.limit, seal)
         ui.require_target()  # Original private/profile, permissions, unique window and foreground guards.
         if not self.binding['finished'] <= time.monotonic() < self.expires:
             raise TimeoutError('Semantic Deploy target exceeded its original nonrenewable AX deadline')
@@ -229,11 +237,74 @@ class SemanticDeployTarget:
         x, y, width, height = exposure['original_text_frame_points']
         return (x + width / 2, y + height / 2)
 
+    def require_current(self, kind):
+        started = time.monotonic()
+        raw = self.live.query(kind)
+        finished = time.monotonic()
+        if not isinstance(raw, bytes) or len(raw) > GUARD_BYTES:
+            raise RuntimeError('Retained live AX response exceeds its byte cap')
+        response = decode_public_json(raw)
+        expected_keys = {'schema', 'nonce', 'sequence', 'kind', 'owner_pid', 'window_id', 'observer_pid',
+                         'original_node', 'started_monotonic', 'finished_monotonic', 'button', 'owned_rows',
+                         'api_call_counts', 'input_events_posted', 'permission_requests_made'}
+        exposure = validate_observation(self.receipt, self.capture, **self.binding)
+        initial = exposure['button']
+        if (set(response) != expected_keys or response['schema'] != LIVE_SCHEMA
+                or response['nonce'] != self.binding['nonce'] or response['kind'] != kind
+                or type(response['sequence']) is not int or response['sequence'] != len(self.live_records)+1
+                or response['original_node'] != initial['node']
+                or type(response['original_node']) is not int
+                or any(type(response[key]) is not int or response[key] != self.binding[expected]
+                       for key, expected in [('owner_pid', 'pid'), ('window_id', 'window'), ('observer_pid', 'observer_pid')])
+                or any(type(response[key]) is not int or response[key] != 0
+                       for key in ('input_events_posted', 'permission_requests_made'))):
+            raise RuntimeError('Retained live AX response identity, privacy or order failed')
+        first, last = response['started_monotonic'], response['finished_monotonic']
+        if (not all(number(value) for value in (first,last))
+                or not started <= first <= last <= finished < self.expires):
+            raise TimeoutError('Retained live AX response is stale or exceeds original request deadline')
+        button = response['button']
+        expected = {key: value for key,value in initial.items() if key not in ('node','parent','depth')}
+        if (set(button) != set(expected) or type(button.get('pid')) is not int
+                or button['pid'] != self.binding['pid'] or button['role'] != 'AXButton'
+                or normalized_title(button['title']) != LABEL or button['normalized_title'] != LABEL
+                or button['enabled'] is not True or not same_bounds(button['frame_points'], initial['frame_points'])
+                or not same_bounds(button['window_frame_points'], self.binding['bounds'])
+                or not inside(button['frame_points'], self.binding['bounds'])):
+            raise RuntimeError('Original retained AX target changed current semantic properties')
+        x,y,width,height = exposure['original_text_frame_points']
+        bx,by,bw,bh = button['frame_points']
+        if not bx < x+width/2 < bx+bw or not by < y+height/2 < by+bh:
+            raise RuntimeError('Corroborated native click center is outside the current retained AX button')
+        require_owned(response['owned_rows'], self.binding['pid'], self.binding['window'], self.binding['bounds'])
+        for row in response['owned_rows']:
+            if (set(row) != WINDOW_KEYS or type(row['owner_pid']) is not int
+                    or type(row['window_id']) is not int or row['onscreen'] is not True):
+                raise RuntimeError('Malformed current retained AX owned-window identity')
+        calls = response['api_call_counts']
+        from macos_ax_contract import READ_APIS
+        previous = self.live_records[-1]['response']['api_call_counts'] if self.live_records else self.receipt['api_call_counts']
+        if (not isinstance(calls,dict) or set(calls)-set(READ_APIS)
+                or any(type(value) is not int or not 0 <= value <= 32768 for value in calls.values())
+                or sum(calls.values()) > 32768 or any(calls.get(key,0) < value for key,value in previous.items())):
+            raise RuntimeError('Retained AX cumulative read-only call cap failed')
+        path = Path(self.files[-1].path).with_name('semantic-live-'+str(response['sequence'])+'.json')
+        with path.open('xb') as stream:
+            stream.write(raw); stream.flush()
+            written_identity = file_identity(os.fstat(stream.fileno()))
+        data, seal = read_regular(path, GUARD_BYTES)
+        if (data != raw or seal.identity != written_identity
+                or seal.directories != self.files[-1].directories):
+            raise RuntimeError('Original live AX response file was replaced or changed before sealing')
+        self.live_records.append({'response': response, 'file_seal': seal.metadata(),
+                                  'request_started': started, 'request_finished': finished})
+
     def consume(self):
         object.__setattr__(self, 'used', True)
+        self.live.close()
 
 
-def acquire_target(ui, capture, output, command, remaining, menu_deadline, result):
+def acquire_target(ui, capture, output, command, remaining, menu_deadline, result, processes):
     """One bounded subprocess, owned guards and immutable original-byte binding."""
     if ui.event_post_attempts or ui.held or not ui.input_geometry_pinned:
         raise RuntimeError('Semantic Deploy acquisition requires a fresh pre-input pinned owner')
@@ -257,29 +328,42 @@ def acquire_target(ui, capture, output, command, remaining, menu_deadline, resul
     started = time.monotonic()
     expires = min(menu_deadline, started + budget)
     ax_file = output / 'semantic-deploy-ax.json'
-    child = command('semantic-deploy-ax', [sys.executable, str(AX_SOURCE), '--pid', str(ui.pid),
-                    '--window', str(ui.window), '--bounds', *map(str, ui.bounds), '--nonce', nonce,
-                    '--budget', str(budget), '--report', str(ax_file)], budget, allow_failure=True,
-                    return_process=True)
-    ui.require_target()
-    finished = time.monotonic()
-    remaining(expires)
-    raw_ax, ax_seal = read_regular(ax_file, CAPS['receipt_bytes'])
-    receipt = decode_public_json(raw_ax)
-    binding = dict(pid=ui.pid, window=ui.window, bounds=list(ui.bounds), nonce=nonce,
-                   observer_pid=child.pid, started=started, finished=finished, budget=budget)
-    result['semantic_deploy_observation'] = {'receipt_sha256': ax_seal.sha256, **copy.deepcopy(binding),
-                                            'expires_monotonic': expires}
-    if child.returncode:
-        raise RuntimeError('Semantic Deploy observer failed; original evidence retained')
-    private_shape(receipt)
-    exposure = validate_observation(receipt, capture, **binding)
-    files = (*native_files, ax_seal)
-    target = SemanticDeployTarget(capture, receipt, binding, files, expires, ui,
-                                  fingerprint([capture, receipt, binding]))
-    point = target.point(capture, ui)
-    result['semantic_deploy_target'] = {'method': 'fresh-owned-ax-and-original-native-text',
-        'button': copy.deepcopy(exposure['button']), 'original_native_row': copy.deepcopy(exposure['original_native_row']),
-        'target_points': list(point), 'ocr_confidence_threshold_changed': False,
-        'input_delivery_or_gameplay_accepted': False}
-    return target
+    result['semantic_deploy_request'] = {'nonce': nonce, 'owner_pid': ui.pid, 'window_id': ui.window,
+        'bounds_points': list(ui.bounds), 'started_monotonic': started, 'budget_seconds': budget,
+        'deadline_monotonic': expires, 'helper_source_sha256': digest(LIVE_SOURCE)}
+    channel, raw_response = start_live(ui.pid, ui.window, ui.bounds, nonce, budget, expires, ax_file,
+                                       output/'semantic-deploy-live.log', processes)
+    child = channel.process
+    try:
+        ui.require_target()
+        finished = time.monotonic()
+        remaining(expires)
+        raw_ax, ax_seal = read_regular(ax_file, CAPS['receipt_bytes'])
+        if raw_ax != raw_response:
+            raise RuntimeError('Retained AX initial pipe/file evidence disagrees')
+        receipt = decode_public_json(raw_ax)
+    except BaseException:
+        channel.close()
+        raise
+    try:
+        binding = dict(pid=ui.pid, window=ui.window, bounds=list(ui.bounds), nonce=nonce,
+                       observer_pid=child.pid, started=started, finished=finished, budget=budget)
+        result['semantic_deploy_observation'] = {'receipt_sha256': ax_seal.sha256, **copy.deepcopy(binding),
+                                                'expires_monotonic': expires, 'helper_command': getattr(child, 'args', None)}
+        if child.poll() is not None:
+            raise RuntimeError('Semantic Deploy observer failed; original evidence retained')
+        private_shape(receipt)
+        exposure = validate_observation(receipt, capture, **binding)
+        files = (*native_files, ax_seal)
+        records = result.setdefault('semantic_live_guards', [])
+        target = SemanticDeployTarget(capture, receipt, binding, files, expires, ui,
+                                      fingerprint([capture, receipt, binding]), channel, records)
+        point = target.point(capture, ui)
+        result['semantic_deploy_target'] = {'method': 'fresh-owned-ax-and-original-native-text',
+            'button': copy.deepcopy(exposure['button']), 'original_native_row': copy.deepcopy(exposure['original_native_row']),
+            'target_points': list(point), 'ocr_confidence_threshold_changed': False,
+            'input_delivery_or_gameplay_accepted': False}
+        return target
+    except BaseException:
+        channel.close()
+        raise

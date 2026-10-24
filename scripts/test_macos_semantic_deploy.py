@@ -60,7 +60,7 @@ def semantic_receipt(pid, bounds, observer_pid, nonce, started):
 class SemanticController(SyntheticController):
     def __init__(self, directory, fault=None):
         self.native_posts, self.pointer, self.mouse_down = [], [280, 344.4], False
-        self.ax_calls, self.semantic_guard_calls = 0, 0
+        self.ax_calls, self.semantic_guard_calls, self.live_calls = 0, 0, []
         super().__init__(directory, fault)
 
     def native_capture(self, name):
@@ -154,7 +154,7 @@ class SemanticController(SyntheticController):
                         if harness.fault == 'geometry_before_down': harness.window_id += 1
                         if harness.fault == 'bytes_before_down': (harness.directory/'semantic-deploy-ax.json').write_text('MUTATED')
                         for fault, name in [('replace_png', '01-focused-menu.png'), ('replace_native', '01-focused-menu.json'),
-                                            ('replace_ax', 'semantic-deploy-ax.json')]:
+                                            ('replace_ax', 'semantic-deploy-ax.json'), ('replace_live', 'semantic-live-1.json')]:
                             if harness.fault == fault:
                                 path = harness.directory/name
                                 previous = path.stat()
@@ -197,9 +197,50 @@ class SemanticController(SyntheticController):
             # Actual file hashes for this pure target-binding harness; absent
             # synthetic executable/helper paths retain their non-native marker.
             from test_macos_ordinary_controller import SYNTHETIC_DIGEST
+            from macos_ax_live import LIVE_SCHEMA, encode, GUARD_BYTES
+            harness = self
             def file_digest(path):
                 return semantic.digest(path) if Path(path).is_file() else SYNTHETIC_DIGEST
-            with patch.object(driver, 'digest', file_digest):
+            def start_live(pid, window, bounds, nonce, budget, expires, report, log, processes):
+                process = harness.popen([str(semantic.AX_SOURCE), '--pid', str(pid), '--window', str(window),
+                    '--nonce', nonce, '--report', str(report)], stdout=io.StringIO())
+                process.wait(timeout=budget)
+                if process.returncode == 0: process.returncode = None
+                processes.append(('semantic-deploy-live', process))
+                receipt = json.loads(Path(report).read_text())
+                class Channel:
+                    sequence, closed = 0, False
+                    def query(channel, kind):
+                        channel.sequence += 1; harness.live_calls.append(kind)
+                        first = harness.now;harness.now += .01
+                        node = copy.deepcopy(receipt['snapshots'][-1]['nodes'][1])
+                        button = {key:value for key,value in node.items() if key not in ('node','parent','depth')}
+                        if kind == 'lmb_down':
+                            if harness.fault == 'live_disabled': button['enabled'] = False
+                            if harness.fault == 'live_title': button['title'] = 'CHANGED'
+                            if harness.fault == 'live_frame': button['frame_points'][0] += 10
+                            if harness.fault == 'live_window': button['window_frame_points'][0] += 10
+                            if harness.fault == 'live_pid': button['pid'] += 1
+                            if harness.fault == 'live_late': harness.now += 5.001
+                        response = {'schema': LIVE_SCHEMA, 'nonce': nonce, 'sequence': channel.sequence, 'kind': kind,
+                            'owner_pid':pid,'window_id':window,'observer_pid':process.pid,'original_node':node['node'],
+                            'started_monotonic':first,'finished_monotonic':harness.now,'button':button,
+                            'owned_rows':copy.deepcopy(receipt['last_owned_layer_zero_rows']),
+                            'api_call_counts':{'AXUIElementGetPid':4+channel.sequence},
+                            'input_events_posted':0,'permission_requests_made':0}
+                        if kind == 'lmb_down':
+                            if harness.fault == 'live_nonce': response['nonce']='f'*32
+                            if harness.fault == 'live_sequence': response['sequence']=True
+                            if harness.fault == 'live_private': response['private_account']='SYNTHETIC PRIVATE'
+                            if harness.fault == 'live_zero': response['input_events_posted']=False
+                            if harness.fault == 'live_count': response['api_call_counts']={'AXUIElementPerformAction':1}
+                        return encode(response, GUARD_BYTES)
+                    def close(channel):
+                        channel.closed = True
+                        if process.returncode is None: process.returncode = 0
+                channel = Channel();channel.process = process
+                return channel, Path(report).read_bytes()
+            with patch.object(driver, 'digest', file_digest), patch.object(semantic, 'start_live', start_live):
                 return run(output, preflight, deploy_target='owned-ax')
         with patch.object(driver, 'run', semantic_run):
             return super().execute()
@@ -216,6 +257,7 @@ class SemanticControls(unittest.TestCase):
         code, result, harness = self.execute()
         self.assertEqual(code, 0, result.get('failure'))
         self.assertEqual(harness.ax_calls, 1)
+        self.assertEqual(harness.live_calls, ['pointer_move', 'lmb_down'])
         self.assertEqual(harness.native_posts[:3], [5, 1, 2])
         self.assertTrue(result['native_reload'])
         self.assertFalse(result['semantic_deploy_target']['input_delivery_or_gameplay_accepted'])
@@ -266,7 +308,7 @@ class SemanticControls(unittest.TestCase):
 
     def test_stale_or_mutated_after_move_never_posts_button_down(self):
         for fault in ('stale_before_down', 'geometry_before_down', 'bytes_before_down', 'symlink_before_down',
-                      'replace_png', 'replace_native', 'replace_ax'):
+                      'replace_png', 'replace_native', 'replace_ax', 'replace_live'):
             with self.subTest(fault=fault):
                 code, result, harness = self.execute(fault)
                 self.assertEqual(code, 2 if fault == 'symlink_before_down' else 1, result.get('failure', result.get('blocker')))
@@ -274,6 +316,18 @@ class SemanticControls(unittest.TestCase):
                 self.assertFalse(harness.deployed)
                 self.assertEqual(harness.active_ui.held, set())
                 self.assertEqual(result['cg_event_post_attempts'], 1)
+
+    def test_same_retained_target_current_changes_after_move_reject_before_down(self):
+        for fault in ('live_disabled', 'live_title', 'live_frame', 'live_window', 'live_pid', 'live_late',
+                      'live_nonce', 'live_sequence', 'live_private', 'live_zero', 'live_count'):
+            with self.subTest(fault=fault):
+                code, result, harness = self.execute(fault)
+                self.assertEqual(code, 1, result.get('failure'))
+                self.assertEqual(harness.native_posts, [5])
+                self.assertEqual(harness.live_calls, ['pointer_move','lmb_down'])
+                self.assertFalse(harness.deployed)
+                self.assertTrue(harness.target.live.closed)
+                self.assertEqual(harness.active_ui.held, set())
 
     def test_trace_io_delay_cannot_deliver_stale_move_or_down(self):
         for fault, posts, attempts in [('trace_move_late', [], 1), ('trace_down_late', [5], 2)]:
@@ -342,6 +396,19 @@ class SemanticControls(unittest.TestCase):
         for name in ('label_point', 'capture_geometry', 'require_private_userdir', 'living_context',
                      'require_initial', 'hud_values', 'pin_for_input', 'require_window', 'reload_key', 'fire_button'):
             self.assertEqual(function(current,name), function(original,name))
+
+    def test_manual_qualification_recipe_pins_source_and_explicit_mode_without_changing_default_workflow(self):
+        recipe = (ROOT/'.github/workflows/macos-semantic-qualification.yml').read_text()
+        self.assertIn('  workflow_dispatch:', recipe)
+        self.assertNotIn('  push:', recipe)
+        self.assertIn("re.fullmatch('[0-9a-f]{40}', expected)", recipe)
+        self.assertIn("os.environ['GITHUB_SHA'] != expected", recipe)
+        self.assertIn('runs-on: macos-15', recipe)
+        self.assertEqual(recipe.count('--deploy-target owned-ax'),1)
+        for action in ('actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683',
+                       'actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065',
+                       'actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02'):
+            self.assertIn(action,recipe)
 
     def test_default_cli_and_workflow_remain_original_and_no_new_native_api_exists(self):
         self.assertEqual((ROOT/'.github/workflows/desktop-alpha.yml').read_bytes(),

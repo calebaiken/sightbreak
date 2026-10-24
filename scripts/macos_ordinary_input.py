@@ -274,6 +274,8 @@ class MacOrdinaryUI(MacMenuUI):
                 if type(target) is not SemanticDeployTarget:
                     raise RuntimeError('Semantic Deploy target is not controller-bound')
                 target.point(target.capture, self)
+                target.require_current(kind)
+                target.point(target.capture, self)  # After all live-receipt IO, beside actual OS post.
             except BaseException:
                 if kind == 'lmb_down':
                     self.held.discard('lmb')  # No OS down call has occurred.
@@ -347,8 +349,10 @@ class MacOrdinaryUI(MacMenuUI):
         try:
             return self._click_label(capture, label, target)
         finally:
-            target.consume()
-            self.semantic_deploy_target = None
+            try:
+                target.consume()
+            finally:
+                self.semantic_deploy_target = None
 
     def _click_label(self, capture, label, semantic_target=None):
         self.require_target()

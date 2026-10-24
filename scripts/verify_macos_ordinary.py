@@ -317,7 +317,7 @@ def run(output, preflight_path, *, deploy_target='ocr'):
                                                 'bounds_points_including_chrome': list(ui.bounds)}
             if deploy_target == 'owned-ax':
                 from macos_semantic_deploy import acquire_target
-                ui.semantic_deploy_target = acquire_target(ui, menu, output, command, remaining, menu_deadline, result)
+                ui.semantic_deploy_target = acquire_target(ui, menu, output, command, remaining, menu_deadline, result, processes)
             ui.click_label(menu, 'DEPLOY · OFFLINE 5V5')
             ready = observed(lambda state: state.get('ui', {}).get('screen') == 'game' and bool(state.get('local_actor')),
                              BUDGETS['deploy'], 'Stock match after one native Deploy click')

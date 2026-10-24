@@ -1,0 +1,102 @@
+name: Manual ARM Mac semantic Deploy qualification
+on:
+  workflow_dispatch:
+    inputs:
+      expected_source:
+        description: Exact independently admitted 40-character source commit
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+jobs:
+  ordinary_semantic:
+    if: github.event.repository.private == false
+    runs-on: macos-15
+    timeout-minutes: 60
+    env:
+      SIGHTBREAK_BUILDS_DIR: ${{ github.workspace }}/builds/desktop-playability
+      EXPECTED_SOURCE: ${{ inputs.expected_source }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12'
+      - name: Bind the one explicitly admitted source before native work
+        shell: python
+        run: |
+          import os, platform, re, subprocess
+          expected = os.environ['EXPECTED_SOURCE']
+          actual = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          if not re.fullmatch('[0-9a-f]{40}', expected) or actual != expected or os.environ['GITHUB_SHA'] != expected:
+              raise SystemExit('Exact admitted source does not match this immutable workflow ref')
+          if subprocess.check_output(['git', 'status', '--porcelain'], text=True).strip():
+              raise SystemExit('Qualification source must start clean')
+          if platform.system() != 'Darwin' or platform.machine() != 'arm64':
+              raise SystemExit('This explicit qualification requires native ARM macOS')
+      - name: Pure source controls including retained AX and protocol boundaries
+        id: controls
+        run: |
+          python -m unittest discover -s scripts -p 'test_macos*.py' -v
+          python scripts/test_probe_macos_input.py -v
+          python scripts/test_native_log.py -v
+          python scripts/test_native_observation.py -v
+          python scripts/test_build_manifest.py -v
+          python scripts/test_package_qa_receipts.py -v
+      - name: Install checksum-pinned native editor and Mac templates
+        run: python scripts/toolchain.py setup --targets macos
+      - name: Export exact clean source
+        id: export
+        run: python scripts/export.py macos
+      - name: Inspect exact development package
+        run: python scripts/verify_builds.py --targets macos --graphical
+      - name: Current source native regression suites
+        id: native_regressions
+        run: python scripts/run_native_regressions.py --output builds/desktop-playability/native-regressions
+      - name: Inspect current OS permissions without prompts
+        id: preflight
+        if: always() && steps.export.outcome == 'success' && steps.controls.outcome == 'success'
+        run: python scripts/probe_macos_input.py --output builds/desktop-playability/macos-input-preflight
+      - name: Original ordinary native menu controls
+        id: menu
+        if: always() && steps.export.outcome == 'success' && steps.controls.outcome == 'success' && steps.preflight.outcome == 'success'
+        timeout-minutes: 6
+        run: python scripts/verify_macos_menu.py --preflight builds/desktop-playability/macos-input-preflight/results.json --output builds/desktop-playability/macos-menu-input
+      - name: Explicit owned AX target with genuine ordinary OS input
+        if: always() && steps.export.outcome == 'success' && steps.controls.outcome == 'success' && steps.preflight.outcome == 'success' && steps.menu.outcome == 'success'
+        timeout-minutes: 6
+        run: python scripts/verify_macos_ordinary.py --deploy-target owned-ax --preflight builds/desktop-playability/macos-input-preflight/results.json --output builds/desktop-playability/macos-ordinary-owned-ax
+      - name: Preserve all original source-bound packages and failed attempts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-mac-semantic-full-${{ github.sha }}
+          path: builds/desktop-playability/
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Package bounded original QA receipts
+        if: always()
+        run: python scripts/package_qa_receipts.py --source builds/desktop-playability --output builds/qa-receipts/qa-receipts.zip
+      - name: Preserve independently downloadable original QA receipts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-mac-semantic-receipts-${{ github.sha }}
+          path: builds/qa-receipts/qa-receipts.zip
+          compression-level: 0
+          if-no-files-found: warn
+          retention-days: 14
+      - name: Preserve independently downloadable original QA logs and pixels
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-mac-semantic-qa-${{ github.sha }}
+          path: |
+            builds/desktop-playability/**/*.json
+            builds/desktop-playability/**/*.jsonl
+            builds/desktop-playability/**/*.log
+            builds/desktop-playability/**/*.png
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14
