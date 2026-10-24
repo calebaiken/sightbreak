@@ -1,0 +1,167 @@
+{
+  "source": "bc9f945d7fb0741307504381f4b95b2fa993e392",
+  "commit_count": 1,
+  "shallow": "true",
+  "status": "",
+  "index_initialized_before_tests": true,
+  "local_object_alternate": "/workspace/sightbreak/.git/objects",
+  "scope": "Own initialized depth-one sparse tree; local alternates expose other objects, not self-contained clone/closure proof",
+  "commands": [
+    {
+      "command": [
+        "git",
+        "init",
+        "/workspace/reviews/m5-objective-decision-r3-source/.local/depth-one-source"
+      ],
+      "exit": 0,
+      "stdout": "Initialized empty Git repository in /workspace/reviews/m5-objective-decision-r3-source/.local/depth-one-source/.git/\n",
+      "stderr": "hint: Using 'master' as the name for the initial branch. This default branch name\nhint: will change to \"main\" in Git 3.0. To configure the initial branch name\nhint: to use in all of your new repositories, which will suppress this warning,\nhint: call:\nhint:\nhint: \tgit config --global init.defaultBranch <name>\nhint:\nhint: Names commonly chosen instead of 'master' are 'main', 'trunk' and\nhint: 'development'. The just-created branch can be renamed via this command:\nhint:\nhint: \tgit branch -m <name>\nhint:\nhint: Disable this message with \"git config set advice.defaultBranchName false\"\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/m5-objective-decision-r3-source",
+        "rev-parse",
+        "--git-common-dir"
+      ],
+      "exit": 0,
+      "stdout": "/workspace/sightbreak/.git\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/m5-objective-decision-r3-source/.local/depth-one-source",
+        "update-ref",
+        "refs/heads/frozen",
+        "bc9f945d7fb0741307504381f4b95b2fa993e392"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/m5-objective-decision-r3-source/.local/depth-one-source",
+        "symbolic-ref",
+        "HEAD",
+        "refs/heads/frozen"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/m5-objective-decision-r3-source/.local/depth-one-source",
+        "sparse-checkout",
+        "init",
+        "--cone"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/m5-objective-decision-r3-source/.local/depth-one-source",
+        "sparse-checkout",
+        "set",
+        "scripts",
+        "game",
+        ".claude",
+        ".github",
+        "backend",
+        "server",
+        "tools",
+        "docs/reports/gauntlet/m5-objective-observability/correction-r2/source-reference",
+        "docs/reports/gauntlet/m5-objective-observability-r3-20261024"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/m5-objective-decision-r3-source/.local/depth-one-source",
+        "read-tree",
+        "-mu",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/m5-objective-decision-r3-source/.local/depth-one-source",
+        "update-index",
+        "--refresh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/m5-objective-decision-r3-source/.local/depth-one-source",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "bc9f945d7fb0741307504381f4b95b2fa993e392\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/m5-objective-decision-r3-source/.local/depth-one-source",
+        "rev-list",
+        "--count",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/m5-objective-decision-r3-source/.local/depth-one-source",
+        "rev-parse",
+        "--is-shallow-repository"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/m5-objective-decision-r3-source/.local/depth-one-source",
+        "status",
+        "--porcelain"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ]
+}

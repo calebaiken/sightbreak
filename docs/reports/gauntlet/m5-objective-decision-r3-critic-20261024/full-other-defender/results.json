@@ -1,0 +1,26 @@
+{
+  "cpu_affinity": [
+    4
+  ],
+  "cases": [
+    {
+      "name": "other_defender_retake_cover",
+      "expected_accepted": true,
+      "accepted": true,
+      "error": null,
+      "met_expectation": true,
+      "input_sha256": "c3252ad9b9d2148d02ee6d6b40309affdbc70ed45f4ae746a3aa102673cdace5",
+      "source_basis": "bot_ai planted non-nearest defender receives retake_cover; nearest role comes from protected live all-bot state."
+    },
+    {
+      "name": "other_defender_forges_defuser",
+      "expected_accepted": false,
+      "accepted": false,
+      "error": "defuser role contradicts protected identity",
+      "met_expectation": true,
+      "input_sha256": "4fe6a4363145134e6539d661acff1d5a798231a5ae465a56388139eff7747141",
+      "source_basis": "bot_ai planted non-nearest defender receives retake_cover; nearest role comes from protected live all-bot state."
+    }
+  ],
+  "passed": true
+}
