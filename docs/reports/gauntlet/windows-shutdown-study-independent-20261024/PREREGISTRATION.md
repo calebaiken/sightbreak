@@ -64,3 +64,41 @@ must remain blocked: it is never native admission or a whole release gate. A
 real supported false success requires REJECT and a separately registered fix,
 not mutation of the frozen builder. Seal report/source bindings, commit and push
 the own review branch, and send supported findings to root/builder.
+
+## Registered source-derived challenges (before execution)
+
+After static inspection of the frozen source, register these exact independent
+checks. No native action or study-model test has run yet.
+
+1. In a new exact-source own view, compare a clean baseline binding with a
+   materialized MODEL_PATHS file changed while its index entry is skip-worktree.
+   Preserve original and altered bytes plus Git status/index flags. An unchanged
+   binding despite altered executable source falsifies physical source binding;
+   the separate public retention blocker must still remain BLOCKED.
+2. Replay the actual public collect path using the real fixed preflight and exact
+   source, while replacing WindowsOwner, real_driver and runtime_identity with
+   assertion sentinels. All must remain uncalled. Separately replay preflight
+   exit2 and its actual eight-or-more unknown/incomplete retention reasons.
+3. Construct a finite model representing three indivisible21MiB evidence files,
+   zero OCR bytes and other families/overhead chosen explicitly: total63MiB and
+   maximum21MiB do not give a partition into two32MiB bins. Record the returned
+   model-only status without mislabeling it public execution admission. Actual
+   complete_archives must reject these same files atomically, retaining bytes.
+4. Create an actual complete STORED archive near the inner32MiB limit and wrap it
+   in another STORED ZIP as artifact transport does. Count exact resulting bytes;
+   a fitting inner archive is insufficient to certify the original outer limit.
+   This checks a documented outstanding delivery bound, not an ADMITTED bypass.
+5. Challenge trial_evidence with a passed=true result whose required native logs,
+   seed initial events and OCR receipts are absent; record whether it labels that
+   incomplete evidence strict-passed. Pair with present logs containing a strict
+   warning and a truncated OCR receipt. Any success interpretation will distinguish
+   generated evidence trust from an actual source-emittable native outcome.
+6. Re-run fixed order/failure/identity/audit/one-shot-safety controls via the actual
+   maintained28 pure methods and earlier110 methods; independently vary driver
+   exceptions against optimistic evidence and final ownership failures. No result
+   from cleanup may repair strict-flow failure or allow a replacement arm.
+
+Source-union verification additionally enumerates all original protected paths,
+all512 non-doc path/mode/blob entries, direct physical bytes of materialized files,
+and exact default-driver erasure. Review uses a separate exact-source view so
+review-document commits cannot be substituted for the source HEAD requirement.
