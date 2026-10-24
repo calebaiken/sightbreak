@@ -1,0 +1,28 @@
+{
+  "source": "2d4214c4d3314df568796f0a6f3a38fc357db318",
+  "reader_sha256": "d2cab3af7e441615a37caedb259b1311eb0b5b1cde46719c1000181223facba1",
+  "methods": 105,
+  "per_module": {
+    "test_input_consumption_absorbing": 10,
+    "test_input_consumption_expiry": 20,
+    "test_input_consumption_identity": 6,
+    "test_input_consumption_lifecycle": 7,
+    "test_input_consumption_observation": 19,
+    "test_input_consumption_receipts": 2,
+    "test_input_consumption_state": 13,
+    "test_input_consumption_stream": 10,
+    "test_input_consumption_transitions": 18
+  },
+  "exact_deadline_cases": 40,
+  "expected_invalid": 32,
+  "expected_consistent": 8,
+  "closed_timer_queries": 7362,
+  "closed_timer_statuses": {
+    "CONSISTENT": 1134,
+    "INVALID": 6186,
+    "UNKNOWN": 42
+  },
+  "prior_closed_projection_queries": 6084,
+  "prior_concrete_histories_oneway": 256,
+  "scope": "Builder evidence only; independent model/full-source review pending; no actual replay"
+}
