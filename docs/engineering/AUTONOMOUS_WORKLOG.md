@@ -629,3 +629,16 @@ is established. Builder normal game-lifetime inspection is read-only and cannot
 approve a cause or fix without evidence. Corrected NEXT_SESSION opening damage
 and relocated its stale source-only collector paragraph into historical context,
 preserving the text. G1–G19 stay open; no native retry or new admission.
+
+## 2026-10-24 10:40 UTC — Native diagnostic result and continued implementations
+
+Retained final snapshots acbe3943/f8049be4/2894c8c8 (71/1304/73 files) with all1448
+original index identities/modes verified and root-only extras preserved. Initial
+raw whitespace failure is retained unchanged;16 exact Windows raw paths have
+scoped Git exceptions, while runtime strict gates remain binding. Root objective
+componentbc9f945d changes two source files and adds a current451-path manifest;
+15 tests and four regenerated independent negatives pass, remaining eight fail.
+Independent component review is active. Optional-reader R4 has six new independent
+false accepts; next iteration continues. Route-clock fixed-boundary implementation
+under prereg e46680e4 is active after the earlier-flow inconclusive native result.
+No native retry, deployment, merge, credential change or paid action.

@@ -1,0 +1,165 @@
+{
+  "scope": "Own initialized depth-one sparse repository using local alternates; not a self-contained clone or fetched complete object closure",
+  "source": "342c3641ab2fccd1fc875c84188a8395a9b93a96",
+  "commit_count": 1,
+  "is_shallow": "true",
+  "status": "",
+  "index_initialized": true,
+  "object_alternate": "/workspace/sightbreak/.git/objects",
+  "commands": [
+    {
+      "command": [
+        "git",
+        "init",
+        "/workspace/reviews/windows-input-consumption-r3-fresh-source/.local/depth-one-source"
+      ],
+      "exit": 0,
+      "stdout": "Initialized empty Git repository in /workspace/reviews/windows-input-consumption-r3-fresh-source/.local/depth-one-source/.git/\n",
+      "stderr": "hint: Using 'master' as the name for the initial branch. This default branch name\nhint: will change to \"main\" in Git 3.0. To configure the initial branch name\nhint: to use in all of your new repositories, which will suppress this warning,\nhint: call:\nhint:\nhint: \tgit config --global init.defaultBranch <name>\nhint:\nhint: Names commonly chosen instead of 'master' are 'main', 'trunk' and\nhint: 'development'. The just-created branch can be renamed via this command:\nhint:\nhint: \tgit branch -m <name>\nhint:\nhint: Disable this message with \"git config set advice.defaultBranchName false\"\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/windows-input-consumption-r3-fresh-source",
+        "rev-parse",
+        "--git-common-dir"
+      ],
+      "exit": 0,
+      "stdout": "/workspace/sightbreak/.git\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/windows-input-consumption-r3-fresh-source/.local/depth-one-source",
+        "update-ref",
+        "refs/heads/frozen",
+        "342c3641ab2fccd1fc875c84188a8395a9b93a96"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/windows-input-consumption-r3-fresh-source/.local/depth-one-source",
+        "symbolic-ref",
+        "HEAD",
+        "refs/heads/frozen"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/windows-input-consumption-r3-fresh-source/.local/depth-one-source",
+        "sparse-checkout",
+        "init",
+        "--cone"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/windows-input-consumption-r3-fresh-source/.local/depth-one-source",
+        "sparse-checkout",
+        "set",
+        "scripts",
+        "game",
+        ".github",
+        ".claude",
+        "server",
+        "docs/reports/media/art-v9/hands/logs",
+        "docs/reports/gauntlet/native-layout-ocr"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/windows-input-consumption-r3-fresh-source/.local/depth-one-source",
+        "read-tree",
+        "-mu",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/windows-input-consumption-r3-fresh-source/.local/depth-one-source",
+        "update-index",
+        "--refresh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/windows-input-consumption-r3-fresh-source/.local/depth-one-source",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "342c3641ab2fccd1fc875c84188a8395a9b93a96\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/windows-input-consumption-r3-fresh-source/.local/depth-one-source",
+        "rev-list",
+        "--count",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/windows-input-consumption-r3-fresh-source/.local/depth-one-source",
+        "status",
+        "--porcelain"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/reviews/windows-input-consumption-r3-fresh-source/.local/depth-one-source",
+        "rev-parse",
+        "--is-shallow-repository"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    }
+  ]
+}

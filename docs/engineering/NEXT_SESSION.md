@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-24 10:13 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-24 10:40 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. No native goal ID has been verified. Read AGENTS.md and the canonical
@@ -22,58 +22,71 @@ root ref was stale because the fetch configuration covers main; actual ls-remote
 and GitHub PR metadata agree. Never reset the newer local work to that stale ref.
 No shared merge, history rewrite, release or production deployment is authorized.
 
-**Active diagnostic: review this existing attempt; do not redispatch.**
-Exact source `7101350e5d0a2f6e4afb9a913b5b1bcf2107857a` is source-accepted by
-`3d07b3ec` after `1285a984`. Builder handoff `a936ae96` and source findings are in
-`/workspace/sightbreak-windows-reopened-shutdown`, branch
-`codex/windows-reopened-shutdown-diagnostics-20261024`. Both source views pass
-182 methods (179 passes, three existing skips), plus independent controls. The
-whole game tree equals c324. Only explicit default-off reopened engine verbosity,
-a Windows workflow Boolean, validation invocation and four-method test are added.
-Root integration `874c968c` proves all 508 non-doc modes/types/blobs/bytes match.
-The source critic's unrelated canonical updates were excluded while its exact
-report was retained; no older NEXT/WORKLOG replaced current mission state.
+**Completed verbose diagnostic: INCONCLUSIVE; do not redispatch.**
+Run40083894472/job120842796227/attempt1 at exact7101350e completed FAILURE at
+2026-10-24T10:19:42Z. Independent final2894c8c8 is retained in
+`docs/reports/gauntlet/windows-reopened-verbose-actual-20261024/REVIEW.md`.
+The living flow failed BEFORE reopening on the strict route sleep-boundary guard.
+Initial/reopened exits are null; only client.log exists. There are no verbose
+leak identities or retaining-owner findings. Original40080238905 three-object
+shutdown FAIL remains binding. No retry or new native action is admitted.
 
-Qualifier `qualifier/windows-reopened-verbose-7101350e-20261024` was created
-only after empty actual absence check ec1067, then read back at exact710. Root
-creation receipts are committed/pushed in f05fe31e. Fresh actual critic `/root/reopened_verbose_actual_critic_20261024` preregistered
-f44d6dd4 and admitted78e972bc. Root release43dbc058 was committed/pushed before
-ONE dispatch. Active run40083894472, job120842796227, attempt1, created
-2026-10-24T09:55:51Z, exact710 on its fixed qualifier. Inputs are lane=windows,
-observe_windows_input=true and verbose_reopened_shutdown=true. Exact tool and
-release receipts are in this component's ROOT_DISPATCH_RECEIPTS.json. The critic
-is reactivated for this same run. Dispatch receipts and active-run state were
-committed/pushed as `707d6e54`. Literal release commit/push output was
-also recovered from the original `/workspace/root-verbose-actual-release-*.log`
-files and retained with byte identities in ROOT_RELEASE_TOOL_OUTPUTS.json. At09:59:47UTC its native regressions were active;
-no complete diagnostic raw or leak-type finding had been acquired. No redispatch, rerun or manual continuation. Original300-second flow,20-second close and every
-other original schedule/gate stay binding. No arbitrary drain/sleep/owner fix.
-Verbose output can identify classes/IDs/refcounts and some paths, not an allocation
-stack or retaining owner; a non-reproduction is INCONCLUSIVE, not a fix.
+Official timing records a requested PULSE budget0.12567175974707734s,
+hold_until768.093671759747, and API down/release brackets767.968/768.093.
+This does not record the literal sleep(wait), its entry/return or the immediate
+clock sample at the failing comparison. Actual physical short sleep is unproven.
+Pinned CPython3.12.10 source uses Windows GetTickCount64 for monotonic time and
+a separate relative waitable timer for sleep. The next fix must preserve the
+original fixed hold boundary and operation deadline; do not weaken either.
 
-**Additional active source work: preserve these owned checkouts.**
-The verbose run's living/settings step30 is FAILURE as of10:08:42UTC; its
-full-match step33 is active as of10:11:19UTC. Supported job-log retrieval returned
-404 BlobNotFound. There is no supported leak-class finding until official raw.
-No rerun or new native action is released.
+Both bounded archives,224 receipt/QA overlaps,27 offline originals and full job
+log are retained. The143,552,176-byte development package was not requested;
+binary reparse stays blocked. The critic's initial LF validation-digest prediction
+failed; exact pinned Git Windows filters independently reproduce actual225f4d95
+and old01ebd70c. All508 Git source identities and53 old files remain exact.
+Raw CRLF/whitespace is preserved; root's initial raw-whitespace failure is retained
+as compressed output, with exceptions limited to16 exact raw evidence paths.
 
-Fresh optional-reader critic `/root/input_reader_r3_fresh_critic_20261024` owns
-`/workspace/reviews/windows-input-consumption-r3-fresh-source`, prereg `b22c2790`.
-R3 exact `342c3641` passes the old38 expectations but preliminary new tests expose
-nine false accepts; final source verdict is pending. Builder
-`/root/input_reader_r4_builder_20261024` owns new sparse
-`/workspace/sightbreak-windows-input-consumption-r4`, branch
-`codex/windows-input-consumption-r4-20261024`, exact342 base/shared-object storage.
-Only read-only investigation is active until final supported critic fixtures and
-pre-edit criteria are frozen. Preserve old R3 untracked packaging. No optional
-reader is integrated into root and no runtime/controller/native change is allowed.
+**Active implementations and independent reviews; preserve these checkouts.**
 
-Independent objective reviewer `/root/objective_r2_review_recovery_20261024` has
-resumed the related owned reviewer checkout
-`/workspace/reviews/m5-objective-observability-r2-fresh-source` at `4e9ef3c3`.
-Its existing own/depth-one raw evidence is preserved. It is verifying the retained
-12 false accepts and completing the interrupted source-only verdict; no native
-or production edits. All original contradictory-no-op rig history stays explicit.
+- Route-clock builder `/root/windows_shutdown_investigation_20261024` owns
+  `/workspace/sightbreak-windows-route-clock`, branch
+  `codex/windows-route-clock-boundary-20261024`, base7101350e, prereg e46680e4.
+  Implementation/pure tests are in progress. Fixed-H residual waits retain the
+  same clock and original deadline. An independent elapsed-only watchdog can
+  reject a stalled clock using only the original operation's remaining budget;
+  absolute monotonic/perf-counter epochs must never be mixed. All attempted UP
+  calls must run even when timing reads fail. No source/native acceptance yet.
+  Existing independent critic `/root/objective_r2_review_recovery_20261024` has
+  preregistered a separate new source review. Await frozen handoff, independent
+  critique and improvement before any separately admitted native qualification.
+- Optional input reader R3 exact342c3641 is independently REJECTED f8049be4:
+  eleven new false accepts,43/54 expectations versus R2 34/54. Historical source-
+  inconsistent positives are adjudicated and kept unchanged. R4 frozen642dd0e0,
+  builder handoff d139124e, owns `/workspace/sightbreak-windows-input-consumption-r4`,
+  branch `codex/windows-input-consumption-r4-20261024`. Both builder views pass219
+  methods with three old skips and92 required verdicts. Independent R4 review in
+  `/workspace/reviews/windows-input-reader-r4-source-20261024` nevertheless finds
+  six false accepts in13 fresh cases (7/13 met), reproduced at depth one. Final
+  report is pending; R4 remains blocked. Builder is preparing the next correction.
+  Preserve R3 untracked packaging and all R4 sources/failures. No optional reader
+  is integrated into root, and no runtime/controller/native change is allowed.
+- Objective R2 finalacbe3943 independently REJECTS all12 new negative receipts in
+  both source views, preserving the old contradictory-no-op history. Root built
+  the first R3 decision component in `/workspace/sightbreak-objective-observability-r3`,
+  branch `codex/m5-objective-observability-r3-20261024`: frozenbc9f945d, handoff
+  b2370e68. Four source-impossible decisions now reject;15 maintained tests and
+  exact positive/four-negative capture pass. All513 tracked paths outside docs
+  preserve modes/blobs/bytes except two source files; game is unchanged. The
+  source-positive fixture's wrong defuse destination was independently adjudicated
+  before correction, with originals preserved. Full13-case rig still exits1 for
+  the remaining EIGHT false accepts. Independent component critic owns
+  `/workspace/reviews/m5-objective-decision-r3-source`, prereg78f39ddb. No whole-
+  reader/native/API/quality acceptance; continue the eight remaining defects.
+
+The environment refused another agent thread. Existing independent agents are
+reused and this limitation is explicit; no new fresh thread or extra secondary
+review is claimed. No account, model or environment switch bypassed a limit.
 
 **Completed Windows qualification: overall FAIL, preserve all originals.**
 Run40080238905/job120832097220/attempt1 at exactc324 completed FAILURE at

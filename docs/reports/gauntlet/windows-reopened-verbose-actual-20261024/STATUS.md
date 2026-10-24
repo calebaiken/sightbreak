@@ -1,11 +1,8 @@
-# Actual diagnostic status
+# Final diagnostic status
 
-The sole released run40083894472/attempt1/job120842796227 is active. Exact source,
-ref/workflow, all three dispatch inputs and root release/dispatch receipts match
-admission78e972bc. Initial status and later step summaries are retained separately
-from actual raw. At10:04:00UTC, step29 was active and living step30 was pending.
-
-Complete official raw is pending; no leak/type, clean shutdown, HUD, progression
-or whole-product acceptance is claimed. Original40080238905 remains FAIL. The
-offline decoder is prepared and its conservative corrections/pure controls are
-retained. No local native action, export, rerun, download bypass or cleanup ran.
+INCONCLUSIVE_EARLIER_FLOW_FAILURE. Run40083894472/attempt1/job120842796227
+completed2026-10-24T10:19:42Z with workflow/job failure. Living route failed before
+reopened launch; no verbose leaked-instance or ResourceCache rows exist for that
+process. Original40080238905 remains FAIL. See REVIEW.md and the exact retained
+archives/originals. No further native run, teardown correction or product gate
+is released by this report.

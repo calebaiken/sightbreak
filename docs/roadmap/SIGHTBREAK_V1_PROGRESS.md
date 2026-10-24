@@ -6,33 +6,43 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-Mission remains IN PROGRESS / PRIMARY. Issue25 and committed mission records
-persist it. Native goal creation/ID lookup is unavailable; no native ID is claimed.
+Mission remains IN PROGRESS / PRIMARY, recorded in issue25 and committed mission
+files. No native goal creation/ID lookup exists; no native goal ID is claimed.
 
-Independent final6801f592 FAILS actual Windows40080238905 at sourcec324. Bounded
-ordinary input, corrected route/settings/focus behavior,16 native suites/29,567
-checks and12-round6:6DRAW/120XP250offline-credit reopen equality verify. The
-reopened process exits0 but leaks three ObjectDB instances; later checks remain
-UNREACHED. Driver-warning and large-binary-reparse limits remain explicit.
+Independent Windows final6801f592 FAILS actual40080238905 at c324. Bounded
+ordinary input, route/settings/focus,16 native suites/29,567 checks, objectives
+and12-round6:6DRAW/120XP250earned offline-credit reopen equality verify. Reopened
+exit0 leaks three ObjectDB instances; later success guards are UNREACHED. Strict
+ANGLE warnings and untransferred binary limits remain explicit.
 
-Default-off reopened-only verbose source7101350e is independently accepted by
-3d07b3ec and integrated874c968c with all508 non-doc identities equal. Whole game
-source is unchanged; no leak cause/fix is established. Fresh actual diagnostic
-preregistrationf44d6dd4/admission78e972bc and pushed root release43dbc058
-preceded the sole dispatch. Run40083894472/job120842796227/attempt1 is active
-on its fixed qualifier at exact710, created09:55:51UTC. Review this existing
-attempt; no redispatch or rerun. Current dispatch receipts are committed707d6e54.
+Verbose diagnostic40083894472 at710 completes FAILURE10:19:42UTC; independent
+final2894c8c8 is INCONCLUSIVE_EARLIER_FLOW_FAILURE. It fails the route sleep guard
+BEFORE reopening, so no verbose leak identity exists. Native pulse budget/API
+brackets are preserved; literal sleep duration and clock resolution are absent.
+A separately preregistered fixed-boundary clock correction is being built and
+independently reviewed; no retry or new native action is admitted.
 
-Strict fingerprint-type correction8da2add4 remains independently accepted by
-3a0fcddb:69 maintained+10 original methods and190 fresh cases pass both views,
-with original raw/archive preservation. The Linux V-Sync blocker persists.
-Collector source/native preflight remain scoped accepted; coverage/overhead and
-physical latency are unverified. Mac a96a7ae5 has a partial independent defect
-finding and automated review stop, with no source/native acceptance. Touch
-numeric/strict/descendant-cleanup FAIL remains binding. All whole G1–G19 and
-human/physical/CS2/Intel/mobile-runtime/Steam gates remain open.
+Optional input-reader R3 is REJECTED f8049be4 for11 new false accepts. R4 source
+642dd0e0/handoff d139124e passes219 maintained methods/3 old skips and92 builder
+verdicts in both views, but independent tests find6 further false accepts in13
+cases. It remains blocked. Historical contradictory positive fixtures and every
+failed iteration stay unchanged; further source correction is active.
 
-Exact sources, artifacts, failures and next commands are in
+Objective R2 finalacbe3943 REJECTS12 negative receipts in both views. Root-built
+R3 decision componentbc9f945d/handoff b2370e68 rejects four defects, with15 tests
+and exact captured inputs passing. Independent component review is active;
+EIGHT known source-consistency gaps still block the whole reader/native readiness.
+Both optional readers and this objective component remain outside root game code.
+
+Linux strict-type correction8da2add4 remains source-accepted3a0fcddb; V-Sync
+software-driver blocker persists. Collector source/local preflight are scoped
+accepted; coverage/overhead and physical latency remain unknown. Mac a96a7ae5
+has a partial defect finding and automated possible-cybersecurity-risk review stop,
+with no final acceptance/retry. Touch numeric/strict/descendant cleanup FAIL stays
+binding. All whole G1–G19,8.5/category/human/physical/CS2/Intel/mobile/Steam gates
+remain open. G20 verifies initialization only.
+
+Exact sources, artifacts, failures and next actions are in
 [NEXT_SESSION](../engineering/NEXT_SESSION.md).
 
 A separate future market-harness guard is independently accepted at

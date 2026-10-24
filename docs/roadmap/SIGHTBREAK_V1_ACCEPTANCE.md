@@ -133,3 +133,12 @@ no final actual diagnostic finding exists yet. Linux strict-type source-only
 acceptance remains scoped; Mac source review was stopped by an automated possible-
 cybersecurity-risk flag after a partial defect finding, with no final verdict or
 retry. Whole gates, thresholds and external requirements remain unchanged.
+
+At 2026-10-24 10:40 UTC, verbose Windows40083894472 is independently INCONCLUSIVE2894c8c8:
+route timing failed before reopen, no leak identities; original three-object FAIL
+remains. Strict boundaries are unchanged. Optional-reader R3 is REJECTED f8049be4;
+R4 has six further independent false accepts despite builder tests passing.
+Objective R2 is REJECTED acbe3943; first R3 decision componentbc9f945d has bounded
+passing tests and pending independent review, with eight other defects blocking
+readiness. A fixed-boundary route-clock implementation is active under separate
+source review; no new native admission. Whole gates and external blockers unchanged.

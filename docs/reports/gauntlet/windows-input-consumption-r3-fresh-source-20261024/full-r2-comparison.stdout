@@ -1,0 +1,35 @@
+{
+  "scope": "Independent pure source critique; no native or complete-acquisition claim",
+  "checkout_head": "b22c2790f9f960669832053bceb8f93ddb78e827",
+  "frozen_source": "342c3641ab2fccd1fc875c84188a8395a9b93a96",
+  "reader_path": "/workspace/reviews/windows-input-consumption-r3-fresh-source/docs/reports/gauntlet/windows-input-consumption-r3-fresh-source-20261024/r2-reader.py",
+  "reader_sha256": "555632cafffa24f9ffc8514bba530f138feea455a83f42b2600d77d27d6aa23e",
+  "cpu_affinity": [
+    4
+  ],
+  "cases_total": 52,
+  "expectations_met": 33,
+  "false_accepts": [
+    "bound_generation_never_connected",
+    "bound_peer_never_connected",
+    "binding_before_connection",
+    "same_generation_rebound_to_other_actor",
+    "first_accept_before_first_receive",
+    "one_command_two_sequence_endpoints",
+    "welcome_claims_unobserved_attempt",
+    "same_peer_second_live_generation",
+    "binding_counter_claims_hidden_lifecycle_event",
+    "emitted_reason_counter_does_not_increment",
+    "latest_accepted_deleted_without_reset",
+    "direct_accepted_has_empty_queue",
+    "consumed_ack_disagrees_with_command",
+    "consumed_actor_projection_disagrees",
+    "second_accept_without_receive_counter_increment",
+    "accepted_latest_differs_from_synchronous_receive",
+    "second_peer_pop_without_any_acceptance"
+  ],
+  "false_rejects": [
+    "accepted_unordered_two_command_batch",
+    "valid_batch_endpoints_2_1"
+  ]
+}
