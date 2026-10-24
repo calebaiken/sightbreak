@@ -14,8 +14,9 @@ Collector-only c3241514 is independently ACCEPTED SOURCE ONLY by a379a268:
 full507-path composition and both178-method source runs verify, with three old
 Windows skips. The rejected optional reader remains separate. Independent native preflight22b28729 accepts742checks/0 in14.830052s, with
 source/UID/log/isolation/observed-cleanup scope. Root integrationb436a641 matches
-all507 candidate non-doc identities. Actual Windows trial is being admitted at
-fixedc324; ordinary input and living/settings/focus failures remain unresolved.
+all507 candidate non-doc identities. One admitted Windows run40080238905/job120832097220 is active at fixedc324
+under release2d17a3ab. Ordinary input and living/settings/focus failures remain
+unresolved until actual independent review.
 
 Root completed strict fingerprint-type correction8da2add4, independently
 ACCEPTED SOURCE ONLY by3a0fcddb. All69 maintained plus10 original methods pass

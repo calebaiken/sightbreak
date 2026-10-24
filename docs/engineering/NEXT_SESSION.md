@@ -45,10 +45,14 @@ Qualifier `qualifier/windows-collector-c324-20261024` is fixed at exact c324.
 Actual absent/create/readback receipts are committed and pushed in817f7a83 at
 `docs/reports/gauntlet/windows-collector-actual-20261024/ROOT_QUALIFIER_CREATION.json`.
 Fresh actual critic `/root/windows_collector_actual_critic_20261024` preregistered
-728906f9 and prepared74f17acd/06a6edb8; final admission is pending these receipts.
-Read it, commit/push ONE root release, then use existing desktop-alpha workflow
-with lane=windows and observe_windows_input=true. No such dispatch is released
-or started yet. Preserve original ordinary240-second/no-delay schedule, separate
+728906f9 and prepared74f17acd/06a6edb8; final admissionc0ad241c was read and integrated. The existing desktop-alpha
+workflow uses lane=windows and observe_windows_input=true. Root release2d17a3ab was committed/pushed before the sole dispatch. Actual run
+40080238905, job120832097220, attempt1, created2026-10-24T09:00:29Z, is ACTIVE.
+Source c324/ref/inputs are exact; actual tool receipts are in
+`docs/reports/gauntlet/windows-collector-actual-20261024/ROOT_DISPATCH_RECEIPTS.json`.
+Fresh critic is reactivated and monitoring this same run. At09:03:53UTC, export/
+package inspection passed and16 native regressions were active; no gameplay
+verdict. Do not dispatch again, rerun or alter the qualifier. Preserve original ordinary240-second/no-delay schedule, separate
 delayed controls, living/settings/focus and earned-progression gates.
 
 **Completed bounded collector source and native preflight.**
@@ -65,7 +69,8 @@ follows from source review.
 Frozen runtime checkout `/workspace/sightbreak-collector-preflight-c324` is clean,
 detached at exact c324; all 507 non-doc files are materialized and byte-bound.
 Initialization proof `/workspace/collector-preflight-c324-initialized.json` retains
-the first sparse tools omission and successful full repeat. No engine ran.
+the first sparse tools omission and successful full repeat. No engine ran during
+initialization.
 Fresh actual critic `/root/collector_native_preflight_critic_20261024` preregistered
 15cdc599. Root rejected the first wrapper's late-exit boundary before execution;
 corrected b82be2a4 preserves420/5 and ten pure controls. Root release236413df was
@@ -80,7 +85,7 @@ sampling/one empty terminal sample remain limits. Source cache stays absent.
 Expected unchanged movement_prediction suite is 742 checks: 725 existing +17
 new collector gates/projection/disabled-state controls. Pinned Godot4.7.2,
 CPUs0,1 for child runtime, CPU4 for supervisor/analysis, original phase timeouts,
-whole420 seconds and owned cleanup5 seconds are binding. Output is fixed fresh
+whole420 seconds and owned cleanup5 seconds are binding. Preserve occupied output
 `builds/collector-native-preflight-c324-20261024/native` under frozen checkout.
 The sole local preflight is terminal; no retry is allowed. Enabled trace emission,
 export and actual Windows input require the separate upcoming actual admission.
@@ -109,8 +114,11 @@ traces pass and one valid unordered batch fails. ReaderR3 `342c3641` is frozen
 with uncommitted packaging results in `/workspace/sightbreak-windows-input-consumption-r2`,
 branch `codex/windows-input-consumption-r3-20261023`; no final independent verdict.
 The collector intentionally excludes that reader, its tests and validate changes.
-Mac `/workspace/sightbreak-mac-semantic-deploy` remains at preregistration
-`8b6bdacc` with uncommitted persistent-target/CI-recipe work. Do not overwrite it.
+Mac `/workspace/sightbreak-mac-semantic-deploy` was preserved at preregistration
+8b6bdacc with nine uncommitted paths. Builder `/root/mac_semantic_resume_builder_20261024`
+is now resuming that same owned work, preserving an UNVERIFIED recovery snapshot
+before edits, CPU4/pure-only. Inspect its current HEAD/status before any action;
+no native or CI release exists.
 Ordinary Mac gameplay is unverified despite the accepted read-only AX evidence.
 Bot objectiveR2 remains unqualified: the fresh review checkout is
 `/workspace/reviews/m5-objective-observability-r2-fresh-source` at4e9ef3c3;
