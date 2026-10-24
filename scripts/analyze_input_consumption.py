@@ -840,6 +840,47 @@ def deterministic_stream_constraints(row, prior, owners_before, bindings, *, con
              'new/absent stream has queued input or an ACK')
 
 
+class StreamObservationIntervals:
+    """Necessary per-stream facts, even after receipt ownership is uncertain.
+
+    Counts and skipped state are global. They bound a selected peer's possible
+    changes without assigning anonymous calls to it or reconstructing its queue.
+    """
+    def __init__(self):
+        self.previous = {}
+
+    def observe(self, row, live_bindings):
+        identity = row['peer'], row['generation']
+        if row['role'] != 'authority' or identity not in live_bindings:
+            return
+        key = (*identity, row['authority_epoch'])
+        previous = self.previous.get(key)
+        if previous is not None:
+            def delta(stage):
+                return row['counters'].get(stage, 0) - previous['counters'].get(stage, 0)
+            accepted, consumed = delta('input_accepted'), delta('input_consumed')
+            skipped = row['stream_skipped'] - previous['stream_skipped']
+            need(row['stream_ack'] >= previous['stream_ack'],
+                 'stream ACK regressed/cleared without reset')
+            if consumed == 0:
+                need(row['stream_ack'] == previous['stream_ack'],
+                     'stream ACK changed without a consumed call')
+            elif (row['latest']['input_consumed']['peer'],
+                  row['latest']['input_consumed']['generation']) == identity:
+                need(row['stream_ack'] == row['latest']['input_consumed']['sequence'],
+                     'stream ACK differs from its latest immutable pop')
+            need(skipped >= 0, 'skipped state regressed inside a live stream epoch')
+            need(max(0, previous['queue_count'] - consumed - skipped)
+                 <= row['queue_count']
+                 <= min(120, previous['queue_count'] + 12 * accepted),
+                 'queue cardinality has no accepted/pop/skipped transition')
+        self.previous[key] = row
+        if row['reason'] == 'peer_disconnected':
+            # The hook precedes forget(); its row still describes the old stream.
+            self.previous = {key: value for key, value in self.previous.items()
+                             if key[:2] != identity}
+
+
 class PacketProjectionHistory:
     """Compare only receive/outcome projections with a proved call ordinal.
 
@@ -995,6 +1036,7 @@ def analyze_role(rows, role):
     inference_rows = []
     failed_connections = set()
     packets = PacketProjectionHistory()
+    stream_intervals = StreamObservationIntervals()
     expiry_unknowns = []
     lifecycle_history = {}
     for row in rows:
@@ -1123,6 +1165,7 @@ def analyze_role(rows, role):
             saturations.append(row['index'])
         deterministic_stream_constraints(row, prior, owners_before, bindings,
                                          connection_succeeded=not failed_connection)
+        stream_intervals.observe(row, owners_before | live_bindings)
         packets.observe(row)
         inference_rows.append((row, owners_before))
         if role == 'authority' and reason == 'input_accepted':
