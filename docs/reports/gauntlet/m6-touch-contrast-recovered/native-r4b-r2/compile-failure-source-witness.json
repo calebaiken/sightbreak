@@ -1,0 +1,52 @@
+{
+  "exact_candidate": "b001fc5087960729535f63c896b40d6dc25bd272",
+  "original_script_sha256": "afa8fa5b311e20eca4f71fc8d3e46a5f7adb8fce65e0c5dfda4c53851c9219de",
+  "log": "import-candidate.log",
+  "source_lines": [
+    {
+      "line": 208,
+      "text": "\tvar draw_scale := effective_scale()"
+    },
+    {
+      "line": 209,
+      "text": "\tfor key in positions:"
+    },
+    {
+      "line": 210,
+      "text": "\t\tif key == \"move\": continue"
+    },
+    {
+      "line": 211,
+      "text": "\t\tvar point := control_point(key)"
+    },
+    {
+      "line": 212,
+      "text": "\t\tvar r := radius(key)"
+    },
+    {
+      "line": 213,
+      "text": "\t\t# The compact plate stays within the existing 1.25-radius hit region."
+    },
+    {
+      "line": 214,
+      "text": "\t\tvar compact := key != \"fire\" and r < 32.0"
+    },
+    {
+      "line": 215,
+      "text": "\t\tvar paint_r := minf(r * 1.25, maxf(r, 26.0)) if compact else r"
+    },
+    {
+      "line": 216,
+      "text": "\t\tvar rim_r := paint_r + 1.0 if compact else paint_r"
+    },
+    {
+      "line": 217,
+      "text": "\t\tvar rim_shadow := 3.5 if compact else 5.25"
+    },
+    {
+      "line": 218,
+      "text": "\t\tvar icon_y := -13.0 if compact else -8.0"
+    }
+  ],
+  "source_edited": false
+}

@@ -33,3 +33,27 @@ If execution must end, update NEXT_SESSION with branch/commit, incomplete change
 failing tests, blockers and exact next commands. Never claim background execution.
 Apply No AI Slop to player-facing copy and project communications while preserving
 SIGHTBREAK terminology, accessibility, meaning and precision.
+
+# Workspace size and recovery
+
+The report tree is large. Create new worktrees with `--no-checkout`, select
+sparse code/instruction paths and the specific component report directories,
+then populate only that new empty own checkout at the exact base. Avoid the
+whole gauntlet directory by default. Preserve existing worktrees, ignored raw
+outputs and HEADs when omitting tracked copies to recover storage.
+
+Full aggregate validation also needs the tracked
+`docs/reports/media/art-v9/hands/logs` fixtures. Saved layout OCR tests need
+`docs/reports/gauntlet/native-layout-ocr`. A missing sparse fixture is a retained
+setup failure; restore the exact tracked files and use fresh evidence output.
+Do not skip the check or reinterpret that failure as passing.
+
+After an executor interruption, inspect actual local HEAD/status before fetching
+or integrating recovery notes. The last observed local root may contain unpushed
+commits. Never reset it to the older remote head.
+
+When network access permits, push an own committed checkpoint before a long
+native run or session end. Keep unverified candidates labeled as such. A local
+commit alone may be absent from a restored executor snapshot; retain bounded
+source-bound evidence in the pushed own branch without credentials or copied
+third-party media. Never force-push or replace another contributor's history.

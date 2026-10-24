@@ -1,0 +1,95 @@
+{
+  "source_receipt_commit": "6e5e8988f44541d057bcab398ba64d1956ae7d46",
+  "source_receipt_path": "docs/reports/gauntlet/windows-collector-actual-20261024/ROOT_DISPATCH_RECEIPTS.json",
+  "source_receipt_sha256": "ba8b8e9e3acfa0099228816027ddddfd439ff9d39625c76b7b86d3e548c49196",
+  "dispatch": {
+    "repository": "calebaiken/sightbreak",
+    "workflow": "desktop-alpha.yml",
+    "source": "c32415148db1f110bbc7eadfca3793d4693429ff",
+    "ref": "qualifier/windows-collector-c324-20261024",
+    "inputs": {
+      "lane": "windows",
+      "observe_windows_input": true
+    },
+    "root_release": "2d17a3ab4e74ae7394a65726b322cc6a0f8342b1",
+    "dispatch_clock": {
+      "current_time": "2026-10-24 09:00:26 UTC"
+    },
+    "dispatch_initial": {
+      "chunk_id": "8884c4",
+      "wall_time_seconds": 1.001404603,
+      "session_id": 16548,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "dispatch_terminal": {
+      "chunk_id": "4d5464",
+      "wall_time_seconds": 2.1292e-05,
+      "exit_code": 0,
+      "original_token_count": 0,
+      "output": ""
+    },
+    "run_lookup": {
+      "chunk_id": "a10c8d",
+      "wall_time_seconds": 0.807713578,
+      "exit_code": 0,
+      "original_token_count": 65,
+      "output": "[{\"conclusion\":\"\",\"createdAt\":\"2026-10-24T09:00:29Z\",\"databaseId\":40080238905,\"event\":\"workflow_dispatch\",\"headSha\":\"c32415148db1f110bbc7eadfca3793d4693429ff\",\"status\":\"in_progress\",\"url\":\"https://github.com/calebaiken/sightbreak/actions/runs/40080238905\"}]\n"
+    },
+    "run": {
+      "id": 40080238905,
+      "created_at": "2026-10-24T09:00:29Z",
+      "event": "workflow_dispatch",
+      "url": "https://github.com/calebaiken/sightbreak/actions/runs/40080238905",
+      "job_id": 120832097220,
+      "attempt": 1
+    },
+    "scope": "Exactly one dispatch; statuses are observations, not independent gameplay acceptance. No retry/rerun authorized."
+  },
+  "commits": [
+    {
+      "commit": "728906f9d44b6946008c5b2b84f9e8a7d8f39ec9",
+      "author_unix": 1792832058,
+      "commit_unix": 1792832058
+    },
+    {
+      "commit": "c0ad241c8d501a65732529a063cc5a5f4e56520f",
+      "author_unix": 1792832340,
+      "commit_unix": 1792832340
+    },
+    {
+      "commit": "2d17a3ab4e74ae7394a65726b322cc6a0f8342b1",
+      "author_unix": 1792832410,
+      "commit_unix": 1792832410
+    }
+  ],
+  "original_root_release_logs": [
+    {
+      "path": "/workspace/root-windows-collector-release-commit.log",
+      "bytes": 232,
+      "sha256": "4afeba164a8b2ca9adfaf9b1ea7dd7d89d3ce6315f3848ad62ffdc1dd18ee077",
+      "observed_mtime_ns": 1792832410397977448,
+      "text": "[codex/v1-executor-recovery-20261023 2d17a3ab] Release one independently admitted Windows collector trial\n 1 file changed, 34 insertions(+)\n create mode 100644 docs/reports/gauntlet/windows-collector-actual-20261024/ROOT_RELEASE.md\n"
+    },
+    {
+      "path": "/workspace/root-windows-collector-release-push.log",
+      "bytes": 146,
+      "sha256": "f67e3fde8a53411a8a172f439c5380846fed1fff3cf0c2412fcae0868769fee5",
+      "observed_mtime_ns": 1792832412381955511,
+      "text": "To https://github.com/calebaiken/sightbreak.git\n   817f7a83..2d17a3ab  codex/v1-executor-recovery-20261023 -> codex/v1-executor-recovery-20261023\n"
+    }
+  ],
+  "checks": {
+    "prereg_before_admission_before_release": true,
+    "release_commit_before_dispatch_clock": true,
+    "exact_inputs": true,
+    "same_source_ref_run_attempt_job": true,
+    "event_and_creation_match": true,
+    "dispatch_terminal_exit_zero": true
+  },
+  "limits": [
+    "Commit author/time and retained filesystem mtimes are metadata; root supplies the actual pushed-before-dispatch ordering, supported by original successful push stdout.",
+    "Independent API initial run identity and actual later job commands supplement the dispatch receipt.",
+    "This chronology review launches no workflow/native process and does not evaluate gameplay."
+  ]
+}

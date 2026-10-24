@@ -1,0 +1,35 @@
+{
+  "engine_commit": "ed1daf0bf001b61586d9930840f2f1394092c079",
+  "retrieved_at_utc": "2026-10-23T11:02:57Z",
+  "documents": [
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf001b61586d9930840f2f1394092c079/doc/classes/Font.xml",
+      "sha256": "d330bf65b8bedd7e6388cfafb7ec957508b342931f179730830879d842c2bf83",
+      "bytes": 22403,
+      "matches_proposal_hash": true,
+      "descriptions": {
+        "draw_string": "Draw [param text] into a canvas item using the font, at a given position, with [param modulate] color, optionally clipping the width and aligning horizontally. [param pos] specifies the baseline, not the top. To draw from the top, [i]ascent[/i] must be added to the Y axis. If [param oversampling] is greater than zero, it is used as font oversampling factor, otherwise viewport oversampling settings are used. See also [method CanvasItem.draw_string].",
+        "get_char_size": "Returns the size of a character. Does not take kerning into account. [b]Note:[/b] Do not use this function to calculate width of the string character by character, use [method get_string_size] or [TextLine] instead. The height returned is the font height (see also [method get_height]) and has no relation to the glyph height.",
+        "get_string_size": "Returns the size of a bounding box of a single-line string, taking kerning, advance and subpixel positioning into account. See also [method get_multiline_string_size] and [method draw_string]. For example, to get the string size as displayed by a single-line Label, use: [codeblocks] [gdscript] var string_size = $Label.get_theme_font(\"font\").get_string_size($Label.text, HORIZONTAL_ALIGNMENT_LEFT, -1, $Label.get_theme_font_size(\"font_size\")) [/gdscript] [csharp] Label label = GetNode<Label>(\"Label\"); Vector2 stringSize = label.GetThemeFont(\"font\").GetStringSize(label.Text, HorizontalAlignment.Left, -1, label.GetThemeFontSize(\"font_size\")); [/csharp] [/codeblocks] [b]Note:[/b] Since kerning, advance and subpixel positioning are taken into account by [method get_string_size], using separate [method get_string_size] calls on substrings of a string then adding the results together will return a different result compared to using a single [method get_string_size] call on the full string. [b]Note:[/b] Real height of the string is context-dependent and can be significantly different from the value returned by [method get_height]."
+      }
+    },
+    {
+      "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf001b61586d9930840f2f1394092c079/doc/classes/TextServer.xml",
+      "sha256": "4fe070c4e94d6715815273bbec5d44f1838b55b48cb015690ffde4dcaac637fe",
+      "bytes": 109523,
+      "matches_proposal_hash": true,
+      "descriptions": {
+        "create_shaped_text": "Creates a new buffer for complex text layout, with the given [param direction] and [param orientation]. To free the resulting buffer, use [method free_rid] method. [b]Note:[/b] Direction is ignored if server does not support [constant FEATURE_BIDI_LAYOUT] feature (supported by [TextServerAdvanced]). [b]Note:[/b] Orientation is ignored if server does not support [constant FEATURE_VERTICAL_LAYOUT] feature (supported by [TextServerAdvanced]).",
+        "font_get_glyph_advance": "Returns glyph advance (offset of the next glyph). [b]Note:[/b] Advance for glyphs outlines is the same as the base glyph advance and is not saved.",
+        "font_get_glyph_offset": "Returns glyph offset from the baseline.",
+        "font_get_glyph_size": "Returns size of the glyph.",
+        "font_get_glyph_texture_idx": "Returns index of the cache texture containing the glyph.",
+        "font_get_glyph_uv_rect": "Returns rectangle in the cache texture containing the glyph.",
+        "free_rid": "Frees an object created by this [TextServer].",
+        "shaped_text_add_string": "Adds text span and font to draw it to the text buffer.",
+        "shaped_text_get_glyphs": "Returns an array of glyphs in the visual order."
+      }
+    }
+  ],
+  "scope": "independently retrieved official pinned API; no native glyph metrics"
+}

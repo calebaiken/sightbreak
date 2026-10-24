@@ -9,7 +9,8 @@ Completion condition: every defined v1.0 release-candidate acceptance gate is in
 Scope: full product development, integration, stability, player experience and release preparation.
 
 Persistent tracker: [GitHub issue #25](https://github.com/calebaiken/sightbreak/issues/25).
-No native Codex goal-registration API is exposed in this session. The connected Linear
+No native Codex goal creation/update API or goal ID is exposed in this session;
+only the active goal's stop operation is available. The connected Linear
 project service requires reauthentication; no goal was registered there. Issue #25 is
 the supported external task record, with status/priority declared in its description.
 Repository records remain the authoritative recoverable development state.

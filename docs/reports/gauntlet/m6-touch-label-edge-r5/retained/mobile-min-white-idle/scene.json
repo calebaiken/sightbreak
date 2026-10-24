@@ -1,0 +1,720 @@
+{
+	"action_order": [
+		"fire",
+		"jump",
+		"crouch",
+		"reload",
+		"interact",
+		"grenade",
+		"smoke",
+		"buy",
+		"pause",
+		"switch",
+		"score",
+		"move"
+	],
+	"actions": [],
+	"alphas": {
+		"active_icon": 0.899999976158142,
+		"active_label": 1.0,
+		"backdrop": 0.860000014305115,
+		"badge_paint": 0.899999976158142,
+		"border": 0.949999988079071,
+		"component_buy": 0.860000014305115,
+		"component_crouch": 0.860000014305115,
+		"component_fire": 0.860000014305115,
+		"component_grenade": 0.349999994039536,
+		"component_interact": 0.860000014305115,
+		"component_jump": 0.860000014305115,
+		"component_move": 0.899999976158142,
+		"component_pause": 0.860000014305115,
+		"component_reload": 0.860000014305115,
+		"component_score": 0.860000014305115,
+		"component_smoke": 0.860000014305115,
+		"component_switch": 0.860000014305115,
+		"empty_count": 1.0,
+		"icon_surround": 0.400000005960464,
+		"inactive_icon": 0.349999994039536,
+		"inactive_label": 0.400000005960464,
+		"joystick_knob": 0.899999976158142,
+		"joystick_ring": 0.949999988079071,
+		"label_surround": 0.400000005960464,
+		"ready_count": 1.0
+	},
+	"background": "/workspace/sightbreak-touch-contrast-native-recovered-r4b-r3/backgrounds/mobile-min-white.png",
+	"background_sha256": "cc96539c084dd80c76c68b6bd50c873c9e8a6d2f910077eaddb48448a476a89a",
+	"counts": {
+		"grenade": 0,
+		"smoke": 1
+	},
+	"effective_scale": 0.7,
+	"geometry": {
+		"buy": {
+			"hit_radius": 31.0,
+			"point": [
+				184.320007324219,
+				259.200012207031
+			],
+			"radius": 19.6,
+			"resolved_position": [
+				0.170000001788139,
+				0.360000014305115
+			]
+		},
+		"crouch": {
+			"hit_radius": 31.0,
+			"point": [
+				739.840026855469,
+				597.599975585938
+			],
+			"radius": 19.6,
+			"resolved_position": [
+				0.790000021457672,
+				0.829999983310699
+			]
+		},
+		"fire": {
+			"hit_radius": 35.0,
+			"point": [
+				829.440002441406,
+				381.599975585938
+			],
+			"radius": 28.0,
+			"resolved_position": [
+				0.889999985694885,
+				0.529999971389771
+			]
+		},
+		"grenade": {
+			"hit_radius": 31.0,
+			"point": [
+				551.679992675781,
+				576.0
+			],
+			"radius": 19.6,
+			"resolved_position": [
+				0.579999983310699,
+				0.800000011920929
+			]
+		},
+		"interact": {
+			"hit_radius": 31.0,
+			"point": [
+				614.399963378906,
+				439.200012207031
+			],
+			"radius": 19.6,
+			"resolved_position": [
+				0.649999976158142,
+				0.610000014305115
+			]
+		},
+		"jump": {
+			"hit_radius": 31.0,
+			"point": [
+				847.360046386719,
+				518.400024414062
+			],
+			"radius": 19.6,
+			"resolved_position": [
+				0.910000026226044,
+				0.720000028610229
+			]
+		},
+		"move": {
+			"hit_radius": 56.875,
+			"point": [
+				148.479995727539,
+				532.799987792969
+			],
+			"radius": 45.5,
+			"resolved_position": [
+				0.129999995231628,
+				0.740000009536743
+			]
+		},
+		"pause": {
+			"hit_radius": 31.0,
+			"point": [
+				892.159973144531,
+				50.4000015258789
+			],
+			"radius": 19.6,
+			"resolved_position": [
+				0.959999978542328,
+				0.0700000002980232
+			]
+		},
+		"reload": {
+			"hit_radius": 31.0,
+			"point": [
+				712.9599609375,
+				446.399993896484
+			],
+			"radius": 19.6,
+			"resolved_position": [
+				0.759999990463257,
+				0.620000004768372
+			]
+		},
+		"score": {
+			"hit_radius": 31.0,
+			"point": [
+				85.7599945068359,
+				259.200012207031
+			],
+			"radius": 19.6,
+			"resolved_position": [
+				0.0599999986588955,
+				0.360000014305115
+			]
+		},
+		"smoke": {
+			"hit_radius": 31.0,
+			"point": [
+				650.239990234375,
+				576.0
+			],
+			"radius": 19.6,
+			"resolved_position": [
+				0.689999997615814,
+				0.800000011920929
+			]
+		},
+		"switch": {
+			"hit_radius": 31.0,
+			"point": [
+				847.360046386719,
+				655.200012207031
+			],
+			"radius": 19.6,
+			"resolved_position": [
+				0.910000026226044,
+				0.910000026226044
+			]
+		}
+	},
+	"held": false,
+	"id": "mobile-min-white-idle",
+	"images": {
+		"active_icon-black.png": "96869152b133957c0abfb376c95a80b5ce8813078f4d66a788854c593f12e8b0",
+		"active_icon-footprint.png": "a37bcfaef740a11c4beb0e75a6aa4ba0fd85a066a844f978a9af9d7424c55505",
+		"active_icon-underlay.png": "96869152b133957c0abfb376c95a80b5ce8813078f4d66a788854c593f12e8b0",
+		"active_icon-white.png": "8f28e5b2922395c43d9ebf2c10ff975e7c351211f1981e0038ec23a2a73e179f",
+		"active_label-black.png": "f0ee465e9e1d97060b5edfed5f741dff313550f1dda6892261c4e51b0c850a86",
+		"active_label-footprint.png": "22587e46ec2e42d618b1f326f5c3aefc221f9a49e92747ef2069259cca2ffb70",
+		"active_label-underlay.png": "89400538fc5d9898fa014ea32e9ea82e958e411a9cb9b601d53fb37241beb868",
+		"active_label-white.png": "a7d65a4f0823e0c59300bfd4c479bdf2c81f60fa5803343d609bba3d0f838ce4",
+		"badge_paint-footprint.png": "da36602cda51a2f4b284bd87c8b5611227e7176b7cea3c839efd03599d0f454a",
+		"border-black.png": "f9f11320e10a3880887280afc6c2f3ebae8f3a8c5a16103ef3da11ddff78eb81",
+		"border-footprint.png": "bdc9fdad2e38439847063fd67dc08200f21044e03604348c18c1d69deb8d9215",
+		"border-underlay.png": "52d61f53803987b721843caec0b9c1645336b7f870e4bfcbbdcbce0a6855d5c3",
+		"border-white.png": "b87025501f5ef9c8e4cff1fd6169162de2686c4e8f7280d0ab3e00ab842a0f31",
+		"component_buy-black.png": "c21f6923ca7b26009793b53295b1f0f0f2b65604ccd0208fbf9b946b3874babf",
+		"component_buy-footprint.png": "e636246fa7023e69013d3cf4dfee011d790efe9ba1c6684813ab328167f1b7e7",
+		"component_buy-underlay.png": "2ab20ab195286ae89572d669d6dfc34c4e1bfa1cc4c1c854757ab298a42937ab",
+		"component_buy-white.png": "2ab20ab195286ae89572d669d6dfc34c4e1bfa1cc4c1c854757ab298a42937ab",
+		"component_crouch-black.png": "3d61cc04788a03c4aba308e7520c1fe3025d57a6894ab7b793461e5e81f4db13",
+		"component_crouch-footprint.png": "7f74729fcc34a171dca7d0c7405ec14a6073e4e20b4155ebb0e95dcf8b98a961",
+		"component_crouch-underlay.png": "7f8b96b74d7712c7e1b0ac5131b5b415854c07b46029ae0e149284e83b5a8223",
+		"component_crouch-white.png": "7f8b96b74d7712c7e1b0ac5131b5b415854c07b46029ae0e149284e83b5a8223",
+		"component_fire-black.png": "61d710d59721f60d0351095ff0b419266a115cde7d8ea8174426c4a8e426c1ae",
+		"component_fire-footprint.png": "4e87405e83729005c6c1fc6dd9f28a9088dec77de5b29b9bb4387d8fa558c221",
+		"component_fire-underlay.png": "a2669c83bb8318a9687156b3729d791abfcdbdc7dcb539dbf15f5575453debab",
+		"component_fire-white.png": "a2669c83bb8318a9687156b3729d791abfcdbdc7dcb539dbf15f5575453debab",
+		"component_grenade-black.png": "f34f41822d19ce85523a9a2b261daa6ec59d02baab54dd47ffa7d97cb7c669c5",
+		"component_grenade-footprint.png": "21d50651562852a2cbf9b1817ecc4f62a0f4c505b7475f3e532207bc56dd957b",
+		"component_grenade-underlay.png": "1dc74e868fd82ed9e471d5dac175cc852f2bfd7d22ff9dc22f12529a07106b45",
+		"component_grenade-white.png": "1dc74e868fd82ed9e471d5dac175cc852f2bfd7d22ff9dc22f12529a07106b45",
+		"component_interact-black.png": "8c66b4a7f122f2b13a23ea1a6972851642624754317d8789945418c74dfcb641",
+		"component_interact-footprint.png": "d85f899c072f43de5154591d43cc694ae1b7c5d1685e17d67377b0fb20295c21",
+		"component_interact-underlay.png": "c876108b16c9fe19cfb55730f28d32152f9dfd727811bcf6b9db69bc2648cd6c",
+		"component_interact-white.png": "c876108b16c9fe19cfb55730f28d32152f9dfd727811bcf6b9db69bc2648cd6c",
+		"component_jump-black.png": "306fad494b4df011c1003255731ea5caf69cf0a6473568735220effe613fad50",
+		"component_jump-footprint.png": "48ac762659e4091a006986db0bf50af1035c1dc0b0ec7cec787fede49e7a4e15",
+		"component_jump-underlay.png": "194365743cedeb971119224a4144eecc87f682c752286cb1bffc30af2c3d5613",
+		"component_jump-white.png": "194365743cedeb971119224a4144eecc87f682c752286cb1bffc30af2c3d5613",
+		"component_pause-black.png": "1f7e84f4313c8949f791020053183a4bce85b99225cd7fb384b08332aca4a62f",
+		"component_pause-footprint.png": "adaf30d4b47339343e91a8bb3744e7da488babc601a949d61f07e3befd4bf13a",
+		"component_pause-underlay.png": "d1be3e16bd40542c491f80b2167ab737790f391c1872b66124e91ab3db3e4ecd",
+		"component_pause-white.png": "d1be3e16bd40542c491f80b2167ab737790f391c1872b66124e91ab3db3e4ecd",
+		"component_reload-black.png": "f32efe81e06a1452135e5908cb6d52242c5605bb77ed69c3985a0f2f3ab8e0f9",
+		"component_reload-footprint.png": "62b89809c55a3b2dfcf21bc59010074715312b57adf30a63937d2d8289fce6d4",
+		"component_reload-underlay.png": "6cc311e60bf377d144ca2ddfc3c85ea22efd50b06e1879eb5caf7e6ab68b3d00",
+		"component_reload-white.png": "6cc311e60bf377d144ca2ddfc3c85ea22efd50b06e1879eb5caf7e6ab68b3d00",
+		"component_score-black.png": "ae92f844dc289a400eb16d75dbdb6eb2f80819ecd79598857366aebc342a60c0",
+		"component_score-footprint.png": "c95d6b754aa66d7e6b348cceb450e78187b32a4b9fcfb573944514c2c4d0b523",
+		"component_score-underlay.png": "38c7261e507fee4ac69ba3b335069acfcc400c50fc11a2ad177b1d4fb8a9faf0",
+		"component_score-white.png": "38c7261e507fee4ac69ba3b335069acfcc400c50fc11a2ad177b1d4fb8a9faf0",
+		"component_smoke-black.png": "505ad725df4b3df0923b691ea288a0bba9e81b5019b649bb2f61b4ae54b57dc9",
+		"component_smoke-footprint.png": "5f9213bf0949942bac7901c8c6b3e02639b5d861160bd123a845aae3610073de",
+		"component_smoke-underlay.png": "ecc6202ae507ab54771db909b56ec18ca0f3bf558210a5e199be206f691e6852",
+		"component_smoke-white.png": "ecc6202ae507ab54771db909b56ec18ca0f3bf558210a5e199be206f691e6852",
+		"component_switch-black.png": "112c04dfac62fd036b0eadcea717d07c49962dc5c936c3a82825f05a457b7de7",
+		"component_switch-footprint.png": "b00f4002349969691cb51919462f5ebc7204c78f2716f840ad4d6a474cf328b2",
+		"component_switch-underlay.png": "393b14a66919b59f98e30ed9b87d3c34c40fbb0a23b501c97ba10bed2acb7a23",
+		"component_switch-white.png": "393b14a66919b59f98e30ed9b87d3c34c40fbb0a23b501c97ba10bed2acb7a23",
+		"empty_count-black.png": "169334c0a955e3e80b27fb0ec05cdccac2cf7680ed1bde7d2ad472b7560f6100",
+		"empty_count-footprint.png": "463073372e2c9d1bc6a7450f09b0834473dfe158ca60324d97d9ccf91b222a79",
+		"empty_count-underlay.png": "de5b0bfa168e5dc6b0975ff2c50a05e69c402c4a417209b3de386361831afde8",
+		"empty_count-white.png": "a7d65a4f0823e0c59300bfd4c479bdf2c81f60fa5803343d609bba3d0f838ce4",
+		"held_fill-footprint.png": "1f51aa8bfd0cfb8d00a4349f0f0c1036f2de5c1f33864de525682d178e597d1f",
+		"icon_surround-footprint.png": "84f0ce05324c60db8e4282ab0ad921164b014498e2452b07344f8949f4d06a27",
+		"inactive_icon-black.png": "aa0545a1d58c729936af57498cfa37f882ce5d44309cf85dc6e2812ca2731393",
+		"inactive_icon-footprint.png": "e3a1e72be1e5b110f1b8552666b7cb3a211d8eb71ca977ad339f764b32710554",
+		"inactive_icon-underlay.png": "cc9f65f4b490355db4ba0771cb7780bd6959a161ab14a3fc5dbbb87948e98e2d",
+		"inactive_icon-white.png": "ecd3f34eeaee2e2acde08e00b2e92a4ec7f303e17acbf004babdae69a70a43f9",
+		"inactive_label-black.png": "a6f02684a6100bf62731e249162302921d6b4ce6be5aa53ed85b6b7291284b8b",
+		"inactive_label-footprint.png": "583b1df32845bb6db17f9e9411786de7e737a39dd643bab7667ee5e10b4209c4",
+		"inactive_label-underlay.png": "cfb24a99853b00454a3848bb5269439a6f2bd54f5d7970cfb6dcf7b15239ef2c",
+		"inactive_label-white.png": "a7d65a4f0823e0c59300bfd4c479bdf2c81f60fa5803343d609bba3d0f838ce4",
+		"joystick_knob-black.png": "32d3698ec5b07bfadb850200cffdb26dc61e8e67d9fbed0298350940dc258360",
+		"joystick_knob-footprint.png": "e6e7f96edc67ad401852cdf142d9fda3eb0f2d3f13498c20592b69259d9dbe46",
+		"joystick_knob-underlay.png": "32f7f54ba077964cf3ebfcbc6b6fdf56bb0a833e6e7bb2342a2ba2506d1620d4",
+		"joystick_knob-white.png": "74c2341abbc0a47d2f727eefc7c5f01836c15721d3a431a12b5ffeaf28b1c427",
+		"joystick_ring-black.png": "65c7043a1567c9d75ffde47aa96885ca02990023f0d58b86801c335fdd2a33ca",
+		"joystick_ring-footprint.png": "bb315e5ac990b5835cc0e37b8a37fe2ede7c44aaa302119d58615b3fced1936f",
+		"joystick_ring-underlay.png": "a1dbbadd31e7f893669473c29cf1e642ac9da3b4d132189de21b9164617bc73f",
+		"joystick_ring-white.png": "bff79f73b61f052ee61c48ae366ab8376236e481464a6d5a2ff40ea3487cba6f",
+		"label_surround-footprint.png": "4db5b9ce0588285d05dab7404d9ffdfd2da564b8a764e733ac27c37329df5d9e",
+		"normal.png": "a7d65a4f0823e0c59300bfd4c479bdf2c81f60fa5803343d609bba3d0f838ce4",
+		"original.png": "a7d65a4f0823e0c59300bfd4c479bdf2c81f60fa5803343d609bba3d0f838ce4",
+		"ready_count-black.png": "3076f7ba858762bf7d6d6da44650afd4b5332e8356795b6d70a1e13748ba3f2c",
+		"ready_count-footprint.png": "02541e8c5527396dc9696b53a5e565ce12df000341a73e3779b7384eb879dc52",
+		"ready_count-underlay.png": "eb2efdf1846713733fa95adc7f7c01d1b0d4aa160dfc7f00918fef3bf9bc320b",
+		"ready_count-white.png": "c46ec4f156ae15d895bba3a5d1089d53ffd19b5a1f31dac38036fd2e4ef26500"
+	},
+	"inset": 32,
+	"layout": "mobile-min",
+	"movement": [
+		0.0,
+		0.0
+	],
+	"ownership": {
+		"buy": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 2324,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"crouch": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 2326,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"fire": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 2946,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"grenade": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 2358,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"interact": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 2328,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"jump": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 2330,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"pause": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 2330,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"reload": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 2326,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"score": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 2324,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"smoke": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 2359,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		},
+		"switch": {
+			"method": "actual source action_at at every isolated component native pixel center; cache only within unchanged layout/scale/positions",
+			"support_pixels": 2325,
+			"unclaimed_pixels": 0,
+			"wrong_owner_pixels": 0,
+			"wrong_owner_witnesses_xy_action": []
+		}
+	},
+	"paint_geometry": {
+		"buy": {
+			"badge_center": [
+				197.256007324219,
+				246.264012207031
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 24.5,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 31.0,
+			"icon_center": [
+				184.320007324219,
+				246.200012207031
+			],
+			"label": "BUY",
+			"label_origin": [
+				172.320007324219,
+				265.200012207031
+			],
+			"label_width": 24.0,
+			"nominal_radius": 19.6,
+			"point": [
+				184.320007324219,
+				259.200012207031
+			],
+			"rim_radius": 25.5,
+			"rim_shadow": 3.5
+		},
+		"crouch": {
+			"badge_center": [
+				752.776026855469,
+				584.663975585937
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 24.5,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 31.0,
+			"icon_center": [
+				739.840026855469,
+				584.599975585938
+			],
+			"label": "LOW",
+			"label_origin": [
+				725.840026855469,
+				603.599975585938
+			],
+			"label_width": 28.0,
+			"nominal_radius": 19.6,
+			"point": [
+				739.840026855469,
+				597.599975585938
+			],
+			"rim_radius": 25.5,
+			"rim_shadow": 3.5
+		},
+		"fire": {
+			"badge_center": [
+				845.261516670455,
+				365.778461356888
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 28.0,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 35.0,
+			"icon_center": [
+				829.440002441406,
+				373.599975585938
+			],
+			"label": "FIRE",
+			"label_origin": [
+				816.940002441406,
+				398.599975585938
+			],
+			"label_width": 25.0,
+			"nominal_radius": 28.0,
+			"point": [
+				829.440002441406,
+				381.599975585938
+			],
+			"rim_radius": 28.0,
+			"rim_shadow": 5.25
+		},
+		"grenade": {
+			"badge_center": [
+				564.615992675781,
+				563.064
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 24.5,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 31.0,
+			"icon_center": [
+				551.679992675781,
+				563.0
+			],
+			"label": "FRAG",
+			"label_origin": [
+				536.179992675781,
+				582.0
+			],
+			"label_width": 31.0,
+			"nominal_radius": 19.6,
+			"point": [
+				551.679992675781,
+				576.0
+			],
+			"rim_radius": 25.5,
+			"rim_shadow": 3.5
+		},
+		"interact": {
+			"badge_center": [
+				627.335963378906,
+				426.264012207031
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 24.5,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 31.0,
+			"icon_center": [
+				614.399963378906,
+				426.200012207031
+			],
+			"label": "USE",
+			"label_origin": [
+				602.899963378906,
+				445.200012207031
+			],
+			"label_width": 23.0,
+			"nominal_radius": 19.6,
+			"point": [
+				614.399963378906,
+				439.200012207031
+			],
+			"rim_radius": 25.5,
+			"rim_shadow": 3.5
+		},
+		"jump": {
+			"badge_center": [
+				860.296046386719,
+				505.464024414063
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 24.5,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 31.0,
+			"icon_center": [
+				847.360046386719,
+				505.400024414062
+			],
+			"label": "JUMP",
+			"label_origin": [
+				831.860046386719,
+				524.400024414062
+			],
+			"label_width": 31.0,
+			"nominal_radius": 19.6,
+			"point": [
+				847.360046386719,
+				518.400024414062
+			],
+			"rim_radius": 25.5,
+			"rim_shadow": 3.5
+		},
+		"pause": {
+			"badge_center": [
+				905.095973144531,
+				37.4640015258789
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 24.5,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 31.0,
+			"icon_center": [
+				892.159973144531,
+				37.4000015258789
+			],
+			"label": "MENU",
+			"label_origin": [
+				873.659973144531,
+				56.4000015258789
+			],
+			"label_width": 37.0,
+			"nominal_radius": 19.6,
+			"point": [
+				892.159973144531,
+				50.4000015258789
+			],
+			"rim_radius": 25.5,
+			"rim_shadow": 3.5
+		},
+		"reload": {
+			"badge_center": [
+				725.8959609375,
+				433.463993896484
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 24.5,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 31.0,
+			"icon_center": [
+				712.9599609375,
+				433.399993896484
+			],
+			"label": "RELOAD",
+			"label_origin": [
+				688.9599609375,
+				452.399993896484
+			],
+			"label_width": 48.0,
+			"nominal_radius": 19.6,
+			"point": [
+				712.9599609375,
+				446.399993896484
+			],
+			"rim_radius": 25.5,
+			"rim_shadow": 3.5
+		},
+		"score": {
+			"badge_center": [
+				98.6959945068359,
+				246.264012207031
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 24.5,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 31.0,
+			"icon_center": [
+				85.7599945068359,
+				246.200012207031
+			],
+			"label": "TEAM",
+			"label_origin": [
+				69.2599945068359,
+				265.200012207031
+			],
+			"label_width": 33.0,
+			"nominal_radius": 19.6,
+			"point": [
+				85.7599945068359,
+				259.200012207031
+			],
+			"rim_radius": 25.5,
+			"rim_shadow": 3.5
+		},
+		"smoke": {
+			"badge_center": [
+				663.175990234375,
+				563.064
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 24.5,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 31.0,
+			"icon_center": [
+				650.239990234375,
+				563.0
+			],
+			"label": "SMOKE",
+			"label_origin": [
+				629.239990234375,
+				582.0
+			],
+			"label_width": 42.0,
+			"nominal_radius": 19.6,
+			"point": [
+				650.239990234375,
+				576.0
+			],
+			"rim_radius": 25.5,
+			"rim_shadow": 3.5
+		},
+		"switch": {
+			"badge_center": [
+				860.296046386719,
+				642.264012207031
+			],
+			"badge_radius": 9.0,
+			"badge_rim": 1.25,
+			"badge_shadow": 5.25,
+			"body_radius": 24.5,
+			"font_ascent": 13.0,
+			"font_descent": 4.0,
+			"font_size": 12,
+			"hit_radius": 31.0,
+			"icon_center": [
+				847.360046386719,
+				642.200012207031
+			],
+			"label": "SWAP",
+			"label_origin": [
+				830.360046386719,
+				661.200012207031
+			],
+			"label_width": 34.0,
+			"nominal_radius": 19.6,
+			"point": [
+				847.360046386719,
+				655.200012207031
+			],
+			"rim_radius": 25.5,
+			"rim_shadow": 3.5
+		}
+	},
+	"scale": 0.7,
+	"size": [
+		960,
+		720
+	]
+}

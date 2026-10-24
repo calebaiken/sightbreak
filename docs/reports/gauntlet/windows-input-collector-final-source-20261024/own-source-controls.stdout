@@ -1,0 +1,146 @@
+{
+  "passed": true,
+  "source": "c32415148db1f110bbc7eadfca3793d4693429ff",
+  "comparison_root": "11c5773eff6888c5157784c272aca144614338d4",
+  "runtime_reference": "c0738163965804297a1881905d5bb4646da40a16",
+  "handoff": "c3c974e8235933a3f147d193e2cf5338b99be438",
+  "cpu_affinity": [
+    4
+  ],
+  "initialized_head": "16d5766a4c1534280ef2a8bc8d4b439ded6c9008",
+  "shallow": "false",
+  "reachable_commits": 911,
+  "non_doc_paths": 507,
+  "changed_non_doc_paths": [
+    "game/scripts/gameplay/match.gd",
+    "game/tests/movement_prediction_test.gd",
+    "scripts/fixtures/export_integration.gd",
+    "scripts/verify_integration_export.py"
+  ],
+  "erasure_bindings": {
+    "game/scripts/gameplay/match.gd": {
+      "candidate_sha256": "80c1cc2fceeb44dd4bf8c9726a8f6a77124e649a8535a9e508ea6d904ec9f238",
+      "recovered_sha256": "2db21ed6eb27d2095e899db836b417288c8a96e5e3239c8aa7affa6bb6a54173",
+      "original_sha256": "2db21ed6eb27d2095e899db836b417288c8a96e5e3239c8aa7affa6bb6a54173",
+      "exact_erasure": true
+    },
+    "game/tests/movement_prediction_test.gd": {
+      "candidate_sha256": "574adfb0f17ce00e31b8db0eabb7ab3192e4556cd3002095bb2b6df00c94494b",
+      "recovered_sha256": "aad242761fcd1541183fd29470530e6a883ed57b0b55134e418987691b0e344d",
+      "original_sha256": "aad242761fcd1541183fd29470530e6a883ed57b0b55134e418987691b0e344d",
+      "exact_erasure": true
+    },
+    "scripts/fixtures/export_integration.gd": {
+      "candidate_sha256": "ff45b3f96864ff1298f45388977817ef0c44f7eeaccff543a27e82c292e93912",
+      "recovered_sha256": "b5621ad5e52d17b938e81a285b4e690dc2bf10ae5955c0ae43442c78e0c079e4",
+      "original_sha256": "b5621ad5e52d17b938e81a285b4e690dc2bf10ae5955c0ae43442c78e0c079e4",
+      "exact_erasure": true
+    },
+    "scripts/verify_integration_export.py": {
+      "candidate_sha256": "cf295eab7f43280803b9649a5c54bd2c2fec45a0b13427d98d7ec42463ea812e",
+      "recovered_sha256": "6de6b78597d5af681f3ee883886422b065ebe2c2f96a72f628ff52e502f698fe",
+      "original_sha256": "6de6b78597d5af681f3ee883886422b065ebe2c2f96a72f628ff52e502f698fe",
+      "exact_erasure": true
+    }
+  },
+  "source_expression_gate_cases": 960,
+  "actual_flag_ast_cases": [
+    {
+      "enabled": false,
+      "client": [
+        "game",
+        "--quit-after",
+        "10"
+      ],
+      "server": [
+        "godot",
+        "--",
+        "--output=fresh"
+      ],
+      "result": {}
+    },
+    {
+      "enabled": true,
+      "client": [
+        "game",
+        "--quit-after",
+        "10",
+        "--",
+        "--native-input-observation"
+      ],
+      "server": [
+        "godot",
+        "--",
+        "--output=fresh",
+        "--native-input-observation"
+      ],
+      "result": {
+        "input_consumption_observation": {
+          "enabled": true,
+          "scope": "Debug guest-loopback read-only stage observations; observer overhead unmeasured; original schedules, waits and pass predicates unchanged"
+        }
+      }
+    }
+  ],
+  "independent_mutations": [
+    {
+      "name": "release gate removed",
+      "rejected": true
+    },
+    {
+      "name": "guest gate removed",
+      "rejected": true
+    },
+    {
+      "name": "loopback expanded",
+      "rejected": true
+    },
+    {
+      "name": "fixture type check removed",
+      "rejected": true
+    },
+    {
+      "name": "cap expanded",
+      "rejected": true
+    },
+    {
+      "name": "batch projection unbounded",
+      "rejected": true
+    },
+    {
+      "name": "private aim projected",
+      "rejected": true
+    },
+    {
+      "name": "protected input mutated",
+      "rejected": true
+    },
+    {
+      "name": "network publication inserted",
+      "rejected": true
+    },
+    {
+      "name": "client actor privacy widened",
+      "rejected": true
+    },
+    {
+      "name": "schema rejection actor traversal",
+      "rejected": true
+    },
+    {
+      "name": "flag becomes default on",
+      "rejected": true
+    },
+    {
+      "name": "client omits user delimiter",
+      "rejected": true
+    },
+    {
+      "name": "original timeout relaxed",
+      "rejected": true
+    }
+  ],
+  "reachable_new_godot_checks": 17,
+  "new_godot_checks_executed": false,
+  "limits": "Static contracts, Python command AST and restricted finite source-expression model only. No GDScript/native/API, runtime/overhead/completeness/physical latency/reader acceptance."
+}

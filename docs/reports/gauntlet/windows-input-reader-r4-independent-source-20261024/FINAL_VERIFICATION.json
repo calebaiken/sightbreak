@@ -1,0 +1,151 @@
+{
+  "own": {
+    "fresh_total": 13,
+    "fresh_met": 7,
+    "false_accepts": [
+      "acknowledged_single_command_falsely_accepted",
+      "queue_exceeds_max_ahead",
+      "stream_rejected_without_rejection_call",
+      "rejection_counter_without_stream_rejected_state",
+      "empty_packet_projects_nonempty_endpoint",
+      "hidden_accept_latest_timestamp_regresses"
+    ],
+    "false_rejects": [],
+    "maintained_methods": 197,
+    "passes": 194,
+    "skips": 3,
+    "existing38_expectations_met": 32,
+    "existing38_total": 38,
+    "corrected38_met": 38,
+    "critic16_met": 16,
+    "adjudicated_required_met": 92,
+    "normalized_malformed_fixture_state_contradictions": {
+      "receive_wrong_epoch": [
+        {
+          "index": 5,
+          "reason": "input_accepted",
+          "stream_rejected": 0,
+          "rejection_counter": 1
+        },
+        {
+          "index": 6,
+          "reason": "input_consumed",
+          "stream_rejected": 0,
+          "rejection_counter": 1
+        },
+        {
+          "index": 7,
+          "reason": "authority_tick",
+          "stream_rejected": 0,
+          "rejection_counter": 1
+        }
+      ],
+      "receive_impossible_sequence": [
+        {
+          "index": 5,
+          "reason": "input_accepted",
+          "stream_rejected": 0,
+          "rejection_counter": 1
+        },
+        {
+          "index": 6,
+          "reason": "input_consumed",
+          "stream_rejected": 0,
+          "rejection_counter": 1
+        },
+        {
+          "index": 7,
+          "reason": "authority_tick",
+          "stream_rejected": 0,
+          "rejection_counter": 1
+        }
+      ]
+    }
+  },
+  "depth": {
+    "fresh_total": 13,
+    "fresh_met": 7,
+    "false_accepts": [
+      "acknowledged_single_command_falsely_accepted",
+      "queue_exceeds_max_ahead",
+      "stream_rejected_without_rejection_call",
+      "rejection_counter_without_stream_rejected_state",
+      "empty_packet_projects_nonempty_endpoint",
+      "hidden_accept_latest_timestamp_regresses"
+    ],
+    "false_rejects": [],
+    "maintained_methods": 197,
+    "passes": 194,
+    "skips": 3,
+    "existing38_expectations_met": 32,
+    "existing38_total": 38,
+    "corrected38_met": 38,
+    "critic16_met": 16,
+    "adjudicated_required_met": 92,
+    "normalized_malformed_fixture_state_contradictions": {
+      "receive_wrong_epoch": [
+        {
+          "index": 5,
+          "reason": "input_accepted",
+          "stream_rejected": 0,
+          "rejection_counter": 1
+        },
+        {
+          "index": 6,
+          "reason": "input_consumed",
+          "stream_rejected": 0,
+          "rejection_counter": 1
+        },
+        {
+          "index": 7,
+          "reason": "authority_tick",
+          "stream_rejected": 0,
+          "rejection_counter": 1
+        }
+      ],
+      "receive_impossible_sequence": [
+        {
+          "index": 5,
+          "reason": "input_accepted",
+          "stream_rejected": 0,
+          "rejection_counter": 1
+        },
+        {
+          "index": 6,
+          "reason": "input_consumed",
+          "stream_rejected": 0,
+          "rejection_counter": 1
+        },
+        {
+          "index": 7,
+          "reason": "authority_tick",
+          "stream_rejected": 0,
+          "rejection_counter": 1
+        }
+      ]
+    }
+  },
+  "post_test_all512_blob_modes_equal_both_views": true,
+  "new_test_origin": {
+    "path": "scripts/test_input_consumption_state.py",
+    "git_history_calls": false,
+    "imports": [
+      "from copy import deepcopy",
+      "import unittest",
+      "from analyze_input_consumption import analyze",
+      "from test_input_consumption_lifecycle import restamp",
+      "from test_input_consumption_observation import control, declared_rows, text"
+    ],
+    "final_helper_advances_snapshot_age": true,
+    "independent_snapshot_freshness_asserted_for_every_case": true
+  },
+  "limits": {
+    "reused_existing_thread": true,
+    "no_fresh_thread": true,
+    "shared_object_alternate": "/workspace/sightbreak/.git/objects",
+    "self_contained_storage": false,
+    "no_native_or_process_or_mac_tests": true,
+    "unrelated_actual40083894472_out_of_scope": true,
+    "canonical_docs_untouched": true
+  }
+}

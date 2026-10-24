@@ -1,0 +1,123 @@
+{
+  "source": "c32415148db1f110bbc7eadfca3793d4693429ff",
+  "run_id": 40080238905,
+  "records": [
+    {
+      "name": "schedules",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-collector-actual-20261024/docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/audit_input_schedules.py",
+        ".local/windows40080238905/receipts",
+        "--output",
+        "docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/r2/schedules.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.062043867001193576,
+      "stdout_sha256": "c3ad9e3eb56fb33535e729d869121e8a9cb5f70dbcda1ae04c136ff7cc54ca02",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "route",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-collector-actual-20261024/docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/audit_settings_route.py",
+        ".local/windows40080238905/receipts",
+        "--output",
+        "docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/r2/route.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.1623030819973792,
+      "stdout_sha256": "d39ca4264bd4dec8cf55c8a1a5b83858af1ca0fc7e4ddeabab60bb67665ffc64",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "pulse-api",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-collector-actual-20261024/docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/audit_route_pulses.py",
+        ".local/windows40080238905/receipts",
+        "--output",
+        "docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/r2/pulse-api.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.1257023600010143,
+      "stdout_sha256": "3b8211a7c50e41d7aa0dcd943616e34807f90ea51ed5913792a66fc90f15fae2",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "phase-captures",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-collector-actual-20261024/docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/audit_phase_captures.py",
+        ".local/windows40080238905/receipts",
+        "--full",
+        ".local/windows40080238905/full",
+        "--output",
+        "docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/r2/phase-captures.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.1362791420033318,
+      "stdout_sha256": "b5740cecab3b2be09992f346c06f1ee830563d086fb46bc0d9da0782f9524551",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "focus",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-collector-actual-20261024/docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/audit_focus_actual.py",
+        ".local/windows40080238905/receipts",
+        ".local/windows40080238905/full",
+        "--output",
+        "docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/r2/focus.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.1876276639995922,
+      "stdout_sha256": "5dbba856e67d59d0b8799b8191f196239ef63dc2f89e77a9f30abc2193b9140b",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "journey-ocr",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-collector-actual-20261024/docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/audit_journey_ocr.py",
+        ".local/windows40080238905/receipts",
+        "--output",
+        "docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/r2/journey-ocr.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.12300424099885277,
+      "stdout_sha256": "2491ea8d18db60e3de364da0c9b8be640a63155b2d7917e632846c7262b327c0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "failure-diagnostics",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-collector-actual-20261024/docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/audit_failure_diagnostics.py",
+        ".local/windows40080238905/receipts",
+        "--output",
+        "docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/r2/failure-diagnostics.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.17320043499785243,
+      "stdout_sha256": "34162252bbcd96880073baaf17140e3750d1c13fa2007c1761c49db750b00a0a",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "full-qa-crosscheck",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-collector-actual-20261024/docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/audit_full_qa.py",
+        ".local/windows40080238905/receipts",
+        ".local/windows40080238905/full",
+        "--output",
+        "docs/reports/gauntlet/windows-collector-actual-20261024/parent-audit/r2/full-qa-crosscheck.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.3139107860006334,
+      "stdout_sha256": "d2b9f11441dc85c692d627181d639a3ffbae3817700f4097b8e7770ef30a20e0",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "scope": "Pure original receipt review; script exit0 alone is not a native verdict"
+}

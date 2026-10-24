@@ -1,0 +1,43 @@
+test_after_identity_mismatch_rejected (__main__.IndependentControls.test_after_identity_mismatch_rejected) ... ok
+test_counterexample_archive_bytes_must_match_final_inventory (__main__.IndependentControls.test_counterexample_archive_bytes_must_match_final_inventory) ... FAIL
+test_counterexample_current_raw_import_leak_must_not_pass (__main__.IndependentControls.test_counterexample_current_raw_import_leak_must_not_pass) ... FAIL
+test_counterexample_current_raw_suite_leak_must_not_pass (__main__.IndependentControls.test_counterexample_current_raw_suite_leak_must_not_pass) ... FAIL
+test_exact_reserve_boundary_refuses_and_next_float_allows_launch (__main__.IndependentControls.test_exact_reserve_boundary_refuses_and_next_float_allows_launch) ... ok
+test_full_import_warning_scan_skips_suite (__main__.IndependentControls.test_full_import_warning_scan_skips_suite) ... ok
+test_observed_escaped_child_survivor_and_reuse_boundaries (__main__.IndependentControls.test_observed_escaped_child_survivor_and_reuse_boundaries) ... ok
+test_one_shot_reservation_refuses_second_attempt (__main__.IndependentControls.test_one_shot_reservation_refuses_second_attempt) ... ok
+test_pid_reuse_never_signals_observed_different_start (__main__.IndependentControls.test_pid_reuse_never_signals_observed_different_start) ... ok
+test_positive_strict_leak_fails_exit_zero_suite (__main__.IndependentControls.test_positive_strict_leak_fails_exit_zero_suite) ... ok
+test_positive_true_phases_full_flow_and_exact_argv (__main__.IndependentControls.test_positive_true_phases_full_flow_and_exact_argv) ... ok
+test_real_git_blob_guard_refuses_changed_and_missing_source (__main__.IndependentControls.test_real_git_blob_guard_refuses_changed_and_missing_source) ... ok
+test_signal_handler_and_keyboard_exceptions_cleanup_and_receipt (__main__.IndependentControls.test_signal_handler_and_keyboard_exceptions_cleanup_and_receipt) ... ok
+test_true_phase_timeout_retains_cleanup_and_finalization (__main__.IndependentControls.test_true_phase_timeout_retains_cleanup_and_finalization) ... ok
+
+======================================================================
+FAIL: test_counterexample_archive_bytes_must_match_final_inventory (__main__.IndependentControls.test_counterexample_archive_bytes_must_match_final_inventory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/audio-acquisition-fresh-source/docs/reports/gauntlet/audio-exit-lifecycle/independent-wrapper-source/review_controls.py", line 299, in test_counterexample_archive_bytes_must_match_final_inventory
+    self.assertEqual(code, 1, 'Corrupted archive accepted and original private state removed')
+AssertionError: 0 != 1 : Corrupted archive accepted and original private state removed
+
+======================================================================
+FAIL: test_counterexample_current_raw_import_leak_must_not_pass (__main__.IndependentControls.test_counterexample_current_raw_import_leak_must_not_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/audio-acquisition-fresh-source/docs/reports/gauntlet/audio-exit-lifecycle/independent-wrapper-source/review_controls.py", line 287, in test_counterexample_current_raw_import_leak_must_not_pass
+    self.assertEqual(code, 1, 'Current retained raw import contains strict leak but wrapper returned success')
+AssertionError: 0 != 1 : Current retained raw import contains strict leak but wrapper returned success
+
+======================================================================
+FAIL: test_counterexample_current_raw_suite_leak_must_not_pass (__main__.IndependentControls.test_counterexample_current_raw_suite_leak_must_not_pass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/audio-acquisition-fresh-source/docs/reports/gauntlet/audio-exit-lifecycle/independent-wrapper-source/review_controls.py", line 277, in test_counterexample_current_raw_suite_leak_must_not_pass
+    self.assertEqual(code, 1, 'Current retained raw suite contains strict leak but wrapper returned success')
+AssertionError: 0 != 1 : Current retained raw suite contains strict leak but wrapper returned success
+
+----------------------------------------------------------------------
+Ran 14 tests in 3.987s
+
+FAILED (failures=3)

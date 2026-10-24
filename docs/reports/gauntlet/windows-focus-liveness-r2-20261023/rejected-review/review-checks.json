@@ -1,0 +1,137 @@
+{
+  "source_freeze": "19304d5d736b09326d5d2503da09dc8cf7b45129",
+  "report_head": "0823ceee1b4bcf860f96cfda3344ac1e199aded0",
+  "verdict": "REJECT",
+  "scope": "pure source-only diagnostic; no native/retry acceptance or authorization",
+  "source_hashes": {
+    "scripts/native_focus_fence.py": "e829bb1601abf9b2a11c72bd03598122c3667a6b17a293746e1ecc4aca8368f1",
+    "scripts/test_native_focus_fence.py": "7e1b9043b1f37d6fab24c364d14dbd7327d310614f6ee87862c7d60b3e4b378f",
+    "scripts/fixtures/offline_focus_observations.json": "4089d937638d94d3d82736f5e19b3295dc32dace3f385ce60c3c3df9942670b3",
+    "scripts/verify_offline_export.py": "4efe650eda96d7a69371284cd908a5776b7ccb817f03c8b500c77768db784153",
+    "scripts/validate.sh": "d9562ce0a216f34653b89c8e20f0a6f36b8be7f52c8c11de0c26d185df6b1cff"
+  },
+  "source_bytes_equal_freeze": true,
+  "preservation_receipt_matches": true,
+  "pure_checks": [
+    {
+      "command": [
+        "python3",
+        "scripts/test_native_focus_fence.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 11,
+      "skips": 0,
+      "log": "test_native_focus_fence.log",
+      "sha256": "4969189c0684771b9d4a352a8fbc4894bf0821d06ac5cefb7a2ed5999dd7a482"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/test_offline_capture_fences.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 15,
+      "skips": 0,
+      "log": "test_offline_capture_fences.log",
+      "sha256": "1ee1bacbfd3876620629a89e8e84da4e80879c1b4719ea053734665a1c666d34"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/test_macos_menu.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 11,
+      "skips": 0,
+      "log": "test_macos_menu.log",
+      "sha256": "a82fede650f5b0d3a019fc6729a5b4ab0a030139ae9f01aedef98de026159b36"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/test_native_observation.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 7,
+      "skips": 3,
+      "log": "test_native_observation.log",
+      "sha256": "a2a24356f81b99b3317ff4cb81f4d6c3d3d0811f4f6f11ba93cc9f2ed80d6838"
+    },
+    {
+      "command": [
+        "python3",
+        "scripts/test_offline_export_ocr.py",
+        "-v"
+      ],
+      "exit": 0,
+      "methods": 5,
+      "skips": 0,
+      "log": "test_offline_export_ocr.log",
+      "sha256": "27654309c972a44f9308d625cb595fc08e60613a43bbd5d7e5a6bab259deb0c8"
+    }
+  ],
+  "pure_methods": 49,
+  "original_timeline_equal": true,
+  "fixture_raw_states_equal_original": true,
+  "declared_probe_cases": 77,
+  "probe_assertions": 49,
+  "full_raw_cases_retained": 19,
+  "retained_files": {
+    "REPORT.md": {
+      "bytes": 6791,
+      "sha256": "148a3fc1c0f6acf5a452f7f40203fa563c678b8155bcf6d93f96e17f3c3cc45a"
+    },
+    "counterexamples.json": {
+      "bytes": 1527158,
+      "sha256": "1cf3a514e19378a51b0caea7253bf34209dad1aeeb007518276afdb16f7374c7"
+    },
+    "original-timeline-recomputed.json": {
+      "bytes": 224980,
+      "sha256": "fc371d1b3b13d96fbeca3d0074ea58f6f60040ec89d282e8b6a9bf1749dfd6e3"
+    },
+    "probe-summary.json": {
+      "bytes": 10130,
+      "sha256": "76b5a44f83a141f9880bf4eb8d216ba8133129fba23c9b0cc7da35d6ec5977fd"
+    },
+    "probe_fence.py": {
+      "bytes": 12960,
+      "sha256": "cc2efb2fd551fb47852bef688aacb5cd92a1d83501940062c68b29d80b699248"
+    },
+    "reviewer-check-initial-failure.json": {
+      "bytes": 481,
+      "sha256": "51c7665c677b94bcefa805e0f4d27d602ec6031b947979f73627326e69e9d12d"
+    },
+    "source-preservation-recomputed.json": {
+      "bytes": 9770,
+      "sha256": "750cf7782906d68e52d60af450c9bb715d09e1ecf2af941d5da72f4ad583831c"
+    },
+    "test_macos_menu.log": {
+      "bytes": 2217,
+      "sha256": "a82fede650f5b0d3a019fc6729a5b4ab0a030139ae9f01aedef98de026159b36"
+    },
+    "test_native_focus_fence.log": {
+      "bytes": 1918,
+      "sha256": "4969189c0684771b9d4a352a8fbc4894bf0821d06ac5cefb7a2ed5999dd7a482"
+    },
+    "test_native_observation.log": {
+      "bytes": 1512,
+      "sha256": "a2a24356f81b99b3317ff4cb81f4d6c3d3d0811f4f6f11ba93cc9f2ed80d6838"
+    },
+    "test_offline_capture_fences.log": {
+      "bytes": 2431,
+      "sha256": "1ee1bacbfd3876620629a89e8e84da4e80879c1b4719ea053734665a1c666d34"
+    },
+    "test_offline_export_ocr.log": {
+      "bytes": 820,
+      "sha256": "27654309c972a44f9308d625cb595fc08e60613a43bbd5d7e5a6bab259deb0c8"
+    },
+    "verify_review.py": {
+      "bytes": 4322,
+      "sha256": "edf5b70d8f2a9a81fc7e17e4f49b5a947b0de65109e23c80f7f28d65ef088b2a"
+    }
+  }
+}

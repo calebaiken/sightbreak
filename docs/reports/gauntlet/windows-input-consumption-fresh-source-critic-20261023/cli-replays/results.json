@@ -1,0 +1,179 @@
+{
+  "scope": "CLI false success replay of supported synthetic counterexamples; expected rejecting exit1, actual exit0",
+  "cpu_affinity": [
+    4
+  ],
+  "candidate": "c0738163965804297a1881905d5bb4646da40a16",
+  "cases": [
+    {
+      "name": "stale_receive",
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-fresh-depth-one/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/stale_receive/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/stale_receive/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/cli-replays/stale_receive.json"
+      ],
+      "exit_code": 0,
+      "complete": true,
+      "stdout_sha256": "270e137a09465a1c7305c5fd532a9c3342e4c79dbde156c190333f3dc8314afe",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "receive_missing_metadata",
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-fresh-depth-one/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/receive_missing_metadata/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/receive_missing_metadata/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/cli-replays/receive_missing_metadata.json"
+      ],
+      "exit_code": 0,
+      "complete": true,
+      "stdout_sha256": "7456667b2fd02817953cc5b005ee42566043bdf9e07206f41b40cb13da312aae",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "receive_unbound_different_peer",
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-fresh-depth-one/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/receive_unbound_different_peer/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/receive_unbound_different_peer/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/cli-replays/receive_unbound_different_peer.json"
+      ],
+      "exit_code": 0,
+      "complete": true,
+      "stdout_sha256": "449a5f3d6794e20bad8bdb232c8ff26f03e5b7f01ce2e95ce889896550593b02",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "accepted_reversed_sequence_interval",
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-fresh-depth-one/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/accepted_reversed_sequence_interval/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/accepted_reversed_sequence_interval/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/cli-replays/accepted_reversed_sequence_interval.json"
+      ],
+      "exit_code": 0,
+      "complete": true,
+      "stdout_sha256": "60a1edca65312a4ed2c0dc2bd3a252d16166fc100fa6d7cd3e845bc873eaf77e",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "consumption_before_receive_accept",
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-fresh-depth-one/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/consumption_before_receive_accept/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/consumption_before_receive_accept/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/cli-replays/consumption_before_receive_accept.json"
+      ],
+      "exit_code": 0,
+      "complete": true,
+      "stdout_sha256": "08b7d43d05e0be96f85e39c559dad4fc5f2c3f9335a5f0995c09273ea276a588",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "client_send_different_transport",
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-fresh-depth-one/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/client_send_different_transport/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/client_send_different_transport/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/cli-replays/client_send_different_transport.json"
+      ],
+      "exit_code": 0,
+      "complete": true,
+      "stdout_sha256": "75da615db2839ec9af412b21e9deb16ef804ed738de739c1fd21cf6b10882628",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "client_send_unwelcomed_attempt",
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-fresh-depth-one/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/client_send_unwelcomed_attempt/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/client_send_unwelcomed_attempt/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/cli-replays/client_send_unwelcomed_attempt.json"
+      ],
+      "exit_code": 0,
+      "complete": true,
+      "stdout_sha256": "b3dee72edd05449ee09d02199128b45330d00c5dae09a33c6cabea86c3ab423f",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "client_send_different_actor",
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-fresh-depth-one/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/client_send_different_actor/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/client_send_different_actor/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/cli-replays/client_send_different_actor.json"
+      ],
+      "exit_code": 0,
+      "complete": true,
+      "stdout_sha256": "46fd9184ed53cab09ad08eb1525d4f21cb0ea8bf6f15c804c8716afede196fc7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "send_outside_pending_interval",
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-fresh-depth-one/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/send_outside_pending_interval/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/independent-controls-r3/send_outside_pending_interval/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/cli-replays/send_outside_pending_interval.json"
+      ],
+      "exit_code": 0,
+      "complete": true,
+      "stdout_sha256": "3b8665722b45c1458efa5a7d4db62f20f4515db8c181e5941535bd9119774ac7",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "authority_expiry_stage_in_client_role",
+      "command": [
+        "python3",
+        "/workspace/reviews/windows-input-consumption-fresh-depth-one/scripts/analyze_input_consumption.py",
+        "--client",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/supplemental-controls/authority_expiry_stage_in_client_role/client.log",
+        "--authority",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/supplemental-controls/authority_expiry_stage_in_client_role/authority.log",
+        "--output",
+        "/workspace/reviews/windows-input-consumption-fresh-source-critic/docs/reports/gauntlet/windows-input-consumption-fresh-source-critic-20261023/cli-replays/authority_expiry_stage_in_client_role.json"
+      ],
+      "exit_code": 0,
+      "complete": true,
+      "stdout_sha256": "8c5431c34add535c20c9fce958baca63036ffc9c5fa9f8afdeb5330c1624d73a",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

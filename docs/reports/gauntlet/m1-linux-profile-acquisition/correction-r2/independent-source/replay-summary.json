@@ -1,0 +1,74 @@
+{
+  "candidate": "f242a2f20adb3ba1d9c49feb1c6caca1bdbf52b9",
+  "native_runs": 0,
+  "runs": {
+    "original-rejected": {
+      "source_commit": "04bc153e52341228b2f0d6f4ce72f784528ef1d4",
+      "methods": 3,
+      "failures": 10,
+      "errors": 0,
+      "control_sha256": "1c13544f7079955879b2ab028cded589ef4473f691dc023ef43984b7269ec35b",
+      "source_sha256": {
+        "linux_profile_acquire.py": "c7970efe74b09dfce1bd0e0519fd6abac63b54e5707cba94937041420468938f",
+        "linux_profile_payload.py": "24d0091716f4b4867042c3e643b7582fef6db7b17581990bbdedc418fcae3a86",
+        "test_linux_profile_acquire.py": "61ccaa8a5cb4b0ed039348a9c51c008dd84fd2e875446d8a86605697920642b4",
+        "linux_profile_overhead.py": "3d495f74c7799e58616288a8812c29829c45b426ae737fcc73a5712c63782561",
+        "test_linux_profile_overhead.py": "1af3a14ea9c29a6e9c51894245110a4799d712b223065142ab8d37fd083e3557",
+        "native_log.py": "a037692315df8364843efbd9f29d5b425302f10a3a7cf347d663169f3eb0e7a1",
+        "toolchain.py": "69245ee9ee8772ea1e77eab18983f40979cf6fd6087f5114e15375127de16733"
+      }
+    },
+    "r1-rejected": {
+      "source_commit": "d0d94bec27f539b63e324c5468516ff2f0dd96d7",
+      "methods": 3,
+      "failures": 2,
+      "errors": 0,
+      "control_sha256": "8e88dc3505c89c850c39b80037250eacbfad18a9420303203e22c9e7d0155571",
+      "source_sha256": {
+        "linux_profile_acquire.py": "0a9b364fdaea31583ccbd876c0a7874bc7a07bfa95cefb158e8d46ef74bf7652",
+        "linux_profile_payload.py": "bbba56a05f860d617889dec4f65a9256e6f003f7220316a6708a5009d2d152b3",
+        "test_linux_profile_acquire.py": "afa69887da1e5aceb6d47a9273a3d366b37c47d579bf96fa4d4605a946547ecf",
+        "linux_profile_overhead.py": "3d495f74c7799e58616288a8812c29829c45b426ae737fcc73a5712c63782561",
+        "test_linux_profile_overhead.py": "1af3a14ea9c29a6e9c51894245110a4799d712b223065142ab8d37fd083e3557",
+        "native_log.py": "a037692315df8364843efbd9f29d5b425302f10a3a7cf347d663169f3eb0e7a1",
+        "toolchain.py": "69245ee9ee8772ea1e77eab18983f40979cf6fd6087f5114e15375127de16733",
+        "test_linux_profile_acquire_sealing.py": "7d4ad330a4c30a13cb71acedd8232e4c266c9f0a00549afd735287e10907fc4f"
+      }
+    },
+    "corrected-original": {
+      "source_commit": "f242a2f20adb3ba1d9c49feb1c6caca1bdbf52b9",
+      "methods": 3,
+      "failures": 0,
+      "errors": 0,
+      "control_sha256": "1c13544f7079955879b2ab028cded589ef4473f691dc023ef43984b7269ec35b",
+      "source_sha256": {
+        "linux_profile_acquire.py": "b6acb4bc2bdd613980702f2e95349cb2bc45eb7e56aa95fad9e1814f367e98ba",
+        "linux_profile_payload.py": "bbba56a05f860d617889dec4f65a9256e6f003f7220316a6708a5009d2d152b3",
+        "test_linux_profile_acquire.py": "842999034469ce566bf8c327d132da13b15b79b01c3da6f0fc46ea2483b22f10",
+        "linux_profile_overhead.py": "3d495f74c7799e58616288a8812c29829c45b426ae737fcc73a5712c63782561",
+        "test_linux_profile_overhead.py": "1af3a14ea9c29a6e9c51894245110a4799d712b223065142ab8d37fd083e3557",
+        "native_log.py": "a037692315df8364843efbd9f29d5b425302f10a3a7cf347d663169f3eb0e7a1",
+        "toolchain.py": "69245ee9ee8772ea1e77eab18983f40979cf6fd6087f5114e15375127de16733",
+        "test_linux_profile_acquire_sealing.py": "7d4ad330a4c30a13cb71acedd8232e4c266c9f0a00549afd735287e10907fc4f"
+      }
+    },
+    "corrected-boundary": {
+      "source_commit": "f242a2f20adb3ba1d9c49feb1c6caca1bdbf52b9",
+      "methods": 4,
+      "failures": 0,
+      "errors": 0,
+      "control_sha256": "efd5a1340c1bb5691e94a018a935e00731347b7b55f2b4bf6cef767e6626bd3b",
+      "source_sha256": {
+        "linux_profile_acquire.py": "b6acb4bc2bdd613980702f2e95349cb2bc45eb7e56aa95fad9e1814f367e98ba",
+        "linux_profile_payload.py": "bbba56a05f860d617889dec4f65a9256e6f003f7220316a6708a5009d2d152b3",
+        "test_linux_profile_acquire.py": "842999034469ce566bf8c327d132da13b15b79b01c3da6f0fc46ea2483b22f10",
+        "linux_profile_overhead.py": "3d495f74c7799e58616288a8812c29829c45b426ae737fcc73a5712c63782561",
+        "test_linux_profile_overhead.py": "1af3a14ea9c29a6e9c51894245110a4799d712b223065142ab8d37fd083e3557",
+        "native_log.py": "a037692315df8364843efbd9f29d5b425302f10a3a7cf347d663169f3eb0e7a1",
+        "toolchain.py": "69245ee9ee8772ea1e77eab18983f40979cf6fd6087f5114e15375127de16733",
+        "test_linux_profile_acquire_sealing.py": "7d4ad330a4c30a13cb71acedd8232e4c266c9f0a00549afd735287e10907fc4f",
+        "test_linux_profile_acquire_boundary.py": "efd5a1340c1bb5691e94a018a935e00731347b7b55f2b4bf6cef767e6626bd3b"
+      }
+    }
+  }
+}

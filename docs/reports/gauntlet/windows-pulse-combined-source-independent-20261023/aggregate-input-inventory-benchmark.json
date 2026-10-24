@@ -1,0 +1,4046 @@
+{
+  "inspected_commit": "ab2ca960",
+  "source": "28a3e294c850482475b7ab74067c08538ae6310d",
+  "inventory": [
+    {
+      "path": ".github/workflows/desktop-alpha.yml",
+      "git_blob": "eb24a4a19ca66aaa81ff3fe6d090a48d94b6ee2d",
+      "mode": "100644"
+    },
+    {
+      "path": ".github/workflows/engineering.yml",
+      "git_blob": "789d240fbf93d0005509268deb4dd775a0ad5a8d",
+      "mode": "100644"
+    },
+    {
+      "path": ".github/workflows/macos-render-diagnostic.yml",
+      "git_blob": "2790f4b000da6148c9c7983cd9c7621e710e2412",
+      "mode": "100644"
+    },
+    {
+      "path": ".github/workflows/market-refresh-pure.yml",
+      "git_blob": "a264bdaf701cd42e5e4273528f0835371b6a7bcc",
+      "mode": "100644"
+    },
+    {
+      "path": ".github/workflows/three-agent-artifacts.yml",
+      "git_blob": "1d838e522a5397474ddf75d9fc4e144607213cf0",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/app.py",
+      "git_blob": "bb15f054d622fc4f6164248a2f4453d20a3e7fff",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/bridge_fixture.py",
+      "git_blob": "b8ff2aebebb3bb2a2750c2b12284c25606962926",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/config/economy.json",
+      "git_blob": "fe7f8e0c17cbae4ecd5177835de5e0a06db5bfa0",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/config/simulation-baseline.json",
+      "git_blob": "0e3eb68eeb28e9583d1b4405c0ba20fe194ad252",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/dev-api.sh",
+      "git_blob": "8bb7360a131bab2ee70319879b0bb5b2ea53cd99",
+      "mode": "100755"
+    },
+    {
+      "path": "backend/dev-db.sh",
+      "git_blob": "d3942005473723a2aa1362f78b028217661ff606",
+      "mode": "100755"
+    },
+    {
+      "path": "backend/migrate.py",
+      "git_blob": "4a7489172c94077e79df0b02cf19f80b9fe55170",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/migrations/001_integrity.sql",
+      "git_blob": "7aaac12f4d22d4b9d4698c4e6ab9ef401a9b1e77",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/migrations/002_game_tickets.sql",
+      "git_blob": "c37f018b9b536f96940bcfc7cad83329997c57f0",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/migrations/003_loadouts.sql",
+      "git_blob": "9e70fd0529d3aaaa62e31346175297114ab86cea",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/migrations/004_market_index.sql",
+      "git_blob": "c8bb739299510670c665ba687598d7a891608051",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/models.py",
+      "git_blob": "8dc03d668a696f889d89b71c07602b02593befaa",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/pyproject.toml",
+      "git_blob": "2069a235656320af83545cd56c57d55a99355ef5",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/simulate.py",
+      "git_blob": "401b400d97e1b472629975c27fc64d67e76d4984",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/tests/test_economy.py",
+      "git_blob": "2214ba53daec34713c1535aae5f194661e4b39bf",
+      "mode": "100644"
+    },
+    {
+      "path": "backend/uv.lock",
+      "git_blob": "cc63c8426301a44a0b13d82339b1177cd0f10b90",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/ITERATION_2.md",
+      "git_blob": "0129bba8c27d84b30217c0e8f0683d450ae62f69",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/README.md",
+      "git_blob": "18f63b990e42b1e5ee37312b24cad4695419766b",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/baseline-case-result.json.gz",
+      "git_blob": "b9490ed3d9368b2048119fe03a6302322f8bf64e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/baseline-desktop.tsv.gz",
+      "git_blob": "32a4a5ae7b6216592308b37f1e77bba3b4a0442f",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/build-regressions.txt",
+      "git_blob": "3da0ee5497e28dcc0b36ba20581aa5aeb635c277",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures.json",
+      "git_blob": "f061f4831c981ba91eb34657fbf68a6dbd86ab0b",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/1280x720-hud.png",
+      "git_blob": "1fa2fd933f7d547e823a199c2c24002c0d5fd736",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/1280x800-field-menu.png",
+      "git_blob": "448fa7d5fd866569edb7f12c75057f1d23db58f5",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/1280x800-hud.png",
+      "git_blob": "d3d4fef1a4cf318ac97946089e9c87d739565f49",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/1280x800-menu.png",
+      "git_blob": "0f770fe53b51a2ac7008c5641d2f3e0eb0658a88",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/1280x800-roster.png",
+      "git_blob": "0bee82fde061676fd41c5c0e42e9f0d447d700f5",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/1280x800-settings.png",
+      "git_blob": "b22cd05bec893620d9c8a05aa798b1fb5f79ca79",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/1920x1080-field-menu.png",
+      "git_blob": "4376a169827f43ca45bbece92c547f015c561ab9",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/1920x1080-hud.png",
+      "git_blob": "919dc26815955860efe592e3a6cd81b0ddfea666",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/1920x1080-menu.png",
+      "git_blob": "5dfe78ae42e44652c529403f82f4bc4c438baa34",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/1920x1080-roster.png",
+      "git_blob": "a0f70238cda19e46b3d6e672e8c9f63e4cf9a9ea",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/1920x1080-settings.png",
+      "git_blob": "133b866da4788a72d6d01bb2fc13d7ceaf159b0c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/960x540-field-menu.png",
+      "git_blob": "23e7a546bb443a0fbb8ee0142935738c8ffadf29",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/960x540-hud.png",
+      "git_blob": "122bb29e02437b75a4b6d56f45dc39c3f1b68604",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/960x540-menu.png",
+      "git_blob": "59c4fe558b52c9278130f0cb763948ebbd653d06",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/960x540-roster.png",
+      "git_blob": "ce0ad9fec9ed41d4c43423d5baef5e8e16c89286",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/960x540-settings.png",
+      "git_blob": "a202b11442a8c4ca22229122e2e5ee55d3c0a8a1",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/desktop.png",
+      "git_blob": "5f7ef2bda2b57351aa8116f4adad619e4c755d86",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/field-menu.png",
+      "git_blob": "c08a266e8be952794d830f53d1652a3af3ef16a8",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/menu.png",
+      "git_blob": "566cd3faea526c8090a3f8c8f402776889362370",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/roster.png",
+      "git_blob": "931a23bb1ff827dcc535db24730307f3aa646c06",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/settings.png",
+      "git_blob": "d85569fa81ba1b16e5dfe8cc0df5dfbf0859784f",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/fixtures/touch.png",
+      "git_blob": "f68f265e460b6619264641f95f7543c6047f5b5b",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r1/1280x800-02-live-hud-footer.tsv.gz",
+      "git_blob": "1986377dff3d029227b2a1a727bd8650f440ef22",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r1/1280x800-02-live-hud-full.tsv.gz",
+      "git_blob": "39daabfd8d2d5a76c8d42bc5f2c429cdc8b31677",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r1/commands.txt.gz",
+      "git_blob": "52fe5a1ead01366b63b86f79ac9c64d2537f74ed",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r1/control-verification-first-failure.log.gz",
+      "git_blob": "e03939e1d12c9b2f3d31009a6c44424d79befbb7",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r1/control-verification.log.gz",
+      "git_blob": "859dc3527d6260e4572300b019c64c0bf1d4eaa2",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r1/report.md",
+      "git_blob": "c3edaa5438a51a4e001625a9ee21b28bfea48a81",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r1/verification.json.gz",
+      "git_blob": "11ad47ab73e3017f634251ce5708e7b92e453a41",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/evidence-sha256.json.gz",
+      "git_blob": "f45b93c567f56a2a48deeedbc137e42452766d05",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/fresh-image-probes.log.gz",
+      "git_blob": "d42768c0f4f37de03d87ab08a291d4119746ca8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/fresh-image-probes/counterexample-candidate-footer-analysis.png",
+      "git_blob": "82ae14249182a1a76fa0bc4c9493e8c1217c0a35",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/fresh-image-probes/counterexample-original-full-analysis.png",
+      "git_blob": "552bca2cb8cc7d3b30a7a7af5061554af42d72cf",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/fresh-image-probes/counterexample-previous-footer-analysis.png",
+      "git_blob": "c856c2d72aa2ebca9f04ce060bac495fa83f442f",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/fresh-image-probes/ocr-tsvs.tar.gz",
+      "git_blob": "086822b8187cb37fa54ca39fd70e2ae03c77bfad",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/fresh-image-probes/results.json.gz",
+      "git_blob": "b76175021cadffbfb6a7c3c00907550e52d2bb69",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/native-receipt-verification.json.gz",
+      "git_blob": "7a5ca119885c625dd2b843860cd4ec8f86ad8c6b",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/native-receipt-verification.log.gz",
+      "git_blob": "00badaf26649f4171603bfa6b1baaf9be0b599a6",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/probe_fresh_images.py.gz",
+      "git_blob": "d13544fb47ab58e729614fd39f76547aff2ca973",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/report.md",
+      "git_blob": "96bdc5e30e47bcb77b7a6d334a2e9b7ff489056b",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/saved-image-tests.log.gz",
+      "git_blob": "d2edc8703415dbc3637a9a39c6ad3fdc8e0cc0db",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/saved-image-tests/ocr-tsvs.tar.gz",
+      "git_blob": "17be8687b6c85b29c8b2ec505b5eebf6c85e4736",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/saved-image-tests/results.json.gz",
+      "git_blob": "edcc1c72ed16391793fad3275760c52a41946802",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/source-audit/report.md",
+      "git_blob": "62bccf7fc0be1583de83b8a71dc36982257075ec",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/independent-review-r2/verify_receipts.py.gz",
+      "git_blob": "fc361ff8e48de58e84cbb1e52f1c69bc254fd81e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/iteration-2-tests.txt.gz",
+      "git_blob": "406f721f04c4e8b0971ad6cdd72a6de233c680b9",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-evidence.json",
+      "git_blob": "b35c4540246f8612cfabbfa1eedf7941356443f1",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-export/export-run.json.log.gz",
+      "git_blob": "7472c11004b6d759135efec5549042e2d9fed983",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-export/export.log.gz",
+      "git_blob": "b80cb9d31ffb288413e1c59777ae19adbe7e3cf9",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-export/import.log.gz",
+      "git_blob": "06d510d5fbfb5b3bb48dd5f49bc3a3a96d03179c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-export/source.json.gz",
+      "git_blob": "9e32638b7bbe487cc87f74448c8246d342a1e4f7",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/01-menu.png",
+      "git_blob": "83a826a79c57b1e2ad421db32ee5cb94b7babd9c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/02-live-hud.png",
+      "git_blob": "1fa2fd933f7d547e823a199c2c24002c0d5fd736",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/03-tab-roster.png",
+      "git_blob": "14e5f27be302c01b667ee7866e75c5a4941e1f6c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/04-field-menu.png",
+      "git_blob": "4a6adcf8c1c6b0f7c66c1f3aafb49b019d8cedc4",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/05-field-settings.png",
+      "git_blob": "cc7915f7148caf0443427127aec657b9ca3a6ef0",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/06-touch-hud-opt-in.png",
+      "git_blob": "91b29fd0971eaeac2ed7ec7705a9bbd6fab5bc9b",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/07-keyboard-mouse-restored.png",
+      "git_blob": "7cfcada8d734e223ae425899ee5d592754f27d4c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/field-menu-check-23-ocr-original.png",
+      "git_blob": "4a6adcf8c1c6b0f7c66c1f3aafb49b019d8cedc4",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/field-menu-check-28-ocr-original.png",
+      "git_blob": "b5e591e331168b01b4e92e99990f15163879f043",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/field-settings-check-25-ocr-original.png",
+      "git_blob": "cc7915f7148caf0443427127aec657b9ca3a6ef0",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/field-settings-check-30-ocr-original.png",
+      "git_blob": "65acbac52da112d134546d3e819f25d37a289278",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/field-settings-control0-24-ocr-original.png",
+      "git_blob": "4a6adcf8c1c6b0f7c66c1f3aafb49b019d8cedc4",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/keyboard-hud-check-32-ocr-original.png",
+      "git_blob": "b7031c0eb1f5f2ceac1bf9a78b9cf58e3b6d9621",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/live-layout.log.gz",
+      "git_blob": "4ff050307d6369348eeb36843a9e73b82c25dad8",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-1-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-10-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-11-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-12-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-13-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-14-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-15-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-16-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-17-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-18-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-19-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-2-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-20-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-21-ocr-original.png",
+      "git_blob": "85ec0aaa212b9849bccf1d5ce4271fc853219ec0",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-3-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-4-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-5-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-6-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-7-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-8-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu-ready-9-ocr-original.png",
+      "git_blob": "f6d07e62bf348560409cc605f2e63480fb88a778",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/menu.log.gz",
+      "git_blob": "8134b02d31e40d6fc29654b0da073994b5b320f1",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/ocr-stderr.log.gz",
+      "git_blob": "1900844cd39c1525eac7dfcd16655ed56049a5d4",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/ocr-tsvs.tar.gz",
+      "git_blob": "8e6ae6b530376f1c7b4551c39a0507be5ff9ff90",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/results.json.gz",
+      "git_blob": "4d80cf645c5848dfb60c89e773f5b51501fb2d2d",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/tab-roster-check-22-ocr-original.png",
+      "git_blob": "ab77673e192a3ef287b3849fb2c37c288c8dc22e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/touch-field-settings-control0-29-ocr-original.png",
+      "git_blob": "b5e591e331168b01b4e92e99990f15163879f043",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/touch-hud-check-27-ocr-original.png",
+      "git_blob": "4244dcd9d85795f650ebcdfba2c5ea3f527ac108",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/touch-toggle-False-31-ocr-original.png",
+      "git_blob": "65acbac52da112d134546d3e819f25d37a289278",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/touch-toggle-True-26-ocr-original.png",
+      "git_blob": "cc7915f7148caf0443427127aec657b9ca3a6ef0",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x720/xvfb.log.gz",
+      "git_blob": "53d546bcd8c70dada7a5b3cd080523af96e5d089",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/01-menu.png",
+      "git_blob": "27f591ea7af97f63c00063a14701499b7cffb3f2",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/02-live-hud.png",
+      "git_blob": "d3d4fef1a4cf318ac97946089e9c87d739565f49",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/03-tab-roster.png",
+      "git_blob": "14b0c65e5afc91309f69b32e186ff5f98555ea03",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/04-field-menu.png",
+      "git_blob": "53354e9832ec739da05e1338f1b53b12431f71c3",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/05-field-settings.png",
+      "git_blob": "0e8f5b10267bed26a8715dd2d2880768427446d3",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/field-menu-check-22-ocr-original.png",
+      "git_blob": "53354e9832ec739da05e1338f1b53b12431f71c3",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/field-settings-check-24-ocr-original.png",
+      "git_blob": "0e8f5b10267bed26a8715dd2d2880768427446d3",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/field-settings-control0-23-ocr-original.png",
+      "git_blob": "53354e9832ec739da05e1338f1b53b12431f71c3",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/live-layout.log.gz",
+      "git_blob": "c69fcf98b1abd431390f6f77596a50af954cebc7",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-1-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-10-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-11-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-12-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-13-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-14-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-15-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-16-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-17-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-18-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-19-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-2-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-20-ocr-original.png",
+      "git_blob": "4216e31f4416e0a37e9bf3babc1a043fd719b1fd",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-3-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-4-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-5-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-6-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-7-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-8-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu-ready-9-ocr-original.png",
+      "git_blob": "ddd28ccf9e392049a3a61bbab9bdeaaeadd15e8a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/menu.log.gz",
+      "git_blob": "8134b02d31e40d6fc29654b0da073994b5b320f1",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/ocr-stderr.log.gz",
+      "git_blob": "9f6a4a48cd5ecac78a52203138c7f045468e8a54",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/ocr-tsvs.tar.gz",
+      "git_blob": "879465cab89a2b1aeb559c9f4c89af11baa3c6a2",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/results.json.gz",
+      "git_blob": "ebb19d76678c10a53e6620e7d6b6edb443f728dc",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/tab-roster-check-21-ocr-original.png",
+      "git_blob": "9ee6ef5b8a5a4dc63cad4c579f380802710037ca",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1280x800/xvfb.log.gz",
+      "git_blob": "53d546bcd8c70dada7a5b3cd080523af96e5d089",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/01-menu.png",
+      "git_blob": "5dfe78ae42e44652c529403f82f4bc4c438baa34",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/02-live-hud.png",
+      "git_blob": "919dc26815955860efe592e3a6cd81b0ddfea666",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/03-tab-roster.png",
+      "git_blob": "d86f28f4c1d2d2115913eaf3c8f8ebf5f64716ca",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/04-field-menu.png",
+      "git_blob": "b8bd40abcd456a14c3ed891007f356eaa1532d99",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/05-field-settings.png",
+      "git_blob": "b9ef7cbddec173641eafd0b55b522b404ae4abad",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/field-menu-check-17-ocr-original.png",
+      "git_blob": "b8bd40abcd456a14c3ed891007f356eaa1532d99",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/field-settings-check-19-ocr-original.png",
+      "git_blob": "b9ef7cbddec173641eafd0b55b522b404ae4abad",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/field-settings-control0-18-ocr-original.png",
+      "git_blob": "b8bd40abcd456a14c3ed891007f356eaa1532d99",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/live-layout.log.gz",
+      "git_blob": "c69fcf98b1abd431390f6f77596a50af954cebc7",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu-ready-1-ocr-original.png",
+      "git_blob": "09fc68493a90f51ef313dc72e2c47a04f0db3f0c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu-ready-10-ocr-original.png",
+      "git_blob": "09fc68493a90f51ef313dc72e2c47a04f0db3f0c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu-ready-11-ocr-original.png",
+      "git_blob": "09fc68493a90f51ef313dc72e2c47a04f0db3f0c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu-ready-12-ocr-original.png",
+      "git_blob": "09fc68493a90f51ef313dc72e2c47a04f0db3f0c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu-ready-13-ocr-original.png",
+      "git_blob": "09fc68493a90f51ef313dc72e2c47a04f0db3f0c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu-ready-14-ocr-original.png",
+      "git_blob": "09fc68493a90f51ef313dc72e2c47a04f0db3f0c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu-ready-15-ocr-original.png",
+      "git_blob": "92ddc1097c887661105ab04f8f0f6350851e78a3",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu-ready-2-ocr-original.png",
+      "git_blob": "09fc68493a90f51ef313dc72e2c47a04f0db3f0c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu-ready-3-ocr-original.png",
+      "git_blob": "09fc68493a90f51ef313dc72e2c47a04f0db3f0c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu-ready-4-ocr-original.png",
+      "git_blob": "09fc68493a90f51ef313dc72e2c47a04f0db3f0c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu-ready-5-ocr-original.png",
+      "git_blob": "09fc68493a90f51ef313dc72e2c47a04f0db3f0c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu-ready-6-ocr-original.png",
+      "git_blob": "09fc68493a90f51ef313dc72e2c47a04f0db3f0c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu-ready-7-ocr-original.png",
+      "git_blob": "09fc68493a90f51ef313dc72e2c47a04f0db3f0c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu-ready-8-ocr-original.png",
+      "git_blob": "09fc68493a90f51ef313dc72e2c47a04f0db3f0c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu-ready-9-ocr-original.png",
+      "git_blob": "09fc68493a90f51ef313dc72e2c47a04f0db3f0c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/menu.log.gz",
+      "git_blob": "8134b02d31e40d6fc29654b0da073994b5b320f1",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/ocr-stderr.log.gz",
+      "git_blob": "5e427aac90e8f220df2ebef6de18802a26772a05",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/ocr-tsvs.tar.gz",
+      "git_blob": "baade7b37a1bb267b4160e542424c8691d8637af",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/results.json.gz",
+      "git_blob": "d8a8ac96e9747e479bf6a5d2b1971bf955206926",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/tab-roster-check-16-ocr-original.png",
+      "git_blob": "b3a72e19144a66fe840c5457db1496999221c431",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/1920x1080/xvfb.log.gz",
+      "git_blob": "53d546bcd8c70dada7a5b3cd080523af96e5d089",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/01-menu.png",
+      "git_blob": "2b15f01665a70670ff49a7fd651b6acd86f90546",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/02-live-hud.png",
+      "git_blob": "122bb29e02437b75a4b6d56f45dc39c3f1b68604",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/03-tab-roster.png",
+      "git_blob": "d30321b8ad9cb2807c984a256ea98ab7dc44eab7",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/04-field-menu.png",
+      "git_blob": "6ec74dae43003e68fab9d8fc2c75f7d5c5107ffb",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/05-field-settings.png",
+      "git_blob": "6d9c2f509762912385942c6a90974e71f89a7ba9",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/field-menu-check-8-ocr-original.png",
+      "git_blob": "6ec74dae43003e68fab9d8fc2c75f7d5c5107ffb",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/field-settings-check-10-ocr-original.png",
+      "git_blob": "6d9c2f509762912385942c6a90974e71f89a7ba9",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/field-settings-control0-9-ocr-original.png",
+      "git_blob": "6ec74dae43003e68fab9d8fc2c75f7d5c5107ffb",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/live-layout.log.gz",
+      "git_blob": "c69fcf98b1abd431390f6f77596a50af954cebc7",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/menu-ready-1-ocr-original.png",
+      "git_blob": "036a8b9958a5ba556c6004e7d002065d98672a20",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/menu-ready-2-ocr-original.png",
+      "git_blob": "036a8b9958a5ba556c6004e7d002065d98672a20",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/menu-ready-3-ocr-original.png",
+      "git_blob": "036a8b9958a5ba556c6004e7d002065d98672a20",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/menu-ready-4-ocr-original.png",
+      "git_blob": "036a8b9958a5ba556c6004e7d002065d98672a20",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/menu-ready-5-ocr-original.png",
+      "git_blob": "036a8b9958a5ba556c6004e7d002065d98672a20",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/menu-ready-6-ocr-original.png",
+      "git_blob": "81c95495635be86894d5fa2c6e1688328ad8a753",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/menu.log.gz",
+      "git_blob": "8134b02d31e40d6fc29654b0da073994b5b320f1",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/ocr-stderr.log.gz",
+      "git_blob": "6c7525d269957da5c260ce9641e9a079990aa91a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/ocr-tsvs.tar.gz",
+      "git_blob": "4f973ea1f22a7aedd4bbf6123ab3740430147612",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/results.json.gz",
+      "git_blob": "59563f927943a73966db64a22955ade0b08bb2ca",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/tab-roster-check-7-ocr-original.png",
+      "git_blob": "ac786bdaf0a9e408d99fc7f255ed34451dc32e17",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/960x540/xvfb.log.gz",
+      "git_blob": "53d546bcd8c70dada7a5b3cd080523af96e5d089",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/evidence.json",
+      "git_blob": "39489d9d25c7fef144146106cedb86cbe9750b48",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/export/export-run.json.log.gz",
+      "git_blob": "bda3b79af51d97af64ba0fb7add2f809c831783e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/export/export.log.gz",
+      "git_blob": "b80cb9d31ffb288413e1c59777ae19adbe7e3cf9",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/export/import.log.gz",
+      "git_blob": "ca2231279f212fd27b71914eb3e688ec2ac73496",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/export/source.json.gz",
+      "git_blob": "11b33251edff0faac48c0f1eaeeeca90d216cca9",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-four-size-r1/results.json.gz",
+      "git_blob": "919c01dc14d627f0e50107f2a35396282a7871ec",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/06-touch-hud-opt-in.png",
+      "git_blob": "35fff08cba5b96bfa1872e428ca30aeb2ba3a361",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/field-menu-check-23.tsv.gz",
+      "git_blob": "e23f8e05b727295c350311e725b77f6c43b3de6e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/field-menu-check-28.tsv.gz",
+      "git_blob": "e23f8e05b727295c350311e725b77f6c43b3de6e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/field-settings-check-25.tsv.gz",
+      "git_blob": "24a6551fbbe7ae4abb629e0bf4c1020834772fb9",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/field-settings-check-30-ocr-original.png",
+      "git_blob": "59961732687fa5a5320d38b499345243b19e6c84",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/field-settings-control0-24.tsv.gz",
+      "git_blob": "e23f8e05b727295c350311e725b77f6c43b3de6e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/live-layout.log.gz",
+      "git_blob": "c69fcf98b1abd431390f6f77596a50af954cebc7",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-1.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-10.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-11.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-12.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-13.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-14.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-15.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-16.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-17.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-18.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-19.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-2.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-20.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-21.tsv.gz",
+      "git_blob": "9fe87094de2c66c1508c1fe5929b070f672e24c7",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-3.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-4.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-5.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-6.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-7.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-8.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu-ready-9.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/menu.log.gz",
+      "git_blob": "8134b02d31e40d6fc29654b0da073994b5b320f1",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/ocr-stderr.log.gz",
+      "git_blob": "56a66e86897edbbb90319d3f8cfaad2cd235d754",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/results.json.gz",
+      "git_blob": "5c0bb5c2490d7c462f2d88bbff45c71d9555d3c6",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/tab-roster-check-22.tsv.gz",
+      "git_blob": "22c9aa3d6353336c52288c7a50cf614619562672",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/touch-field-settings-control0-29.tsv.gz",
+      "git_blob": "e23f8e05b727295c350311e725b77f6c43b3de6e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/touch-hud-check-27.tsv.gz",
+      "git_blob": "9db0dadd8ec223ff031df1c0c9b663b9f009193d",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/touch-toggle-True-26.tsv.gz",
+      "git_blob": "24a6551fbbe7ae4abb629e0bf4c1020834772fb9",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/1280x720/xvfb.log.gz",
+      "git_blob": "53d546bcd8c70dada7a5b3cd080523af96e5d089",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r1/results.json.gz",
+      "git_blob": "d8a16c79098e3fa099f7c7380ac18339048fd5c1",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/06-touch-hud-opt-in.png",
+      "git_blob": "f80faec7baa41b21ae202bb6fda2136208aa719d",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/07-keyboard-mouse-restored.png",
+      "git_blob": "4260eb2fe67e43dca2e97498d5528ec49fcf1367",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/field-menu-check-23.tsv.gz",
+      "git_blob": "e23f8e05b727295c350311e725b77f6c43b3de6e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/field-menu-check-28.tsv.gz",
+      "git_blob": "e23f8e05b727295c350311e725b77f6c43b3de6e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/field-settings-check-25.tsv.gz",
+      "git_blob": "24a6551fbbe7ae4abb629e0bf4c1020834772fb9",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/field-settings-check-30.tsv.gz",
+      "git_blob": "08ecc5ace1dd3a862510b8885c68d42dbfbe42b8",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/field-settings-control0-24.tsv.gz",
+      "git_blob": "e23f8e05b727295c350311e725b77f6c43b3de6e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/keyboard-hud-check-32-footer.tsv.gz",
+      "git_blob": "5ac7497924209658e0215aa71b4b9b80b873549c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/keyboard-hud-check-32-ocr-original.png",
+      "git_blob": "b48b21fbcf765ee5f2b697cb229dc8e9213d7e1a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/keyboard-hud-check-32.tsv.gz",
+      "git_blob": "d2548c393279cacb1f7e86d3edef5976b40a321a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/live-layout.log.gz",
+      "git_blob": "4ff050307d6369348eeb36843a9e73b82c25dad8",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-1.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-10.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-11.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-12.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-13.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-14.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-15.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-16.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-17.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-18.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-19.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-2.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-20.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-21.tsv.gz",
+      "git_blob": "9fe87094de2c66c1508c1fe5929b070f672e24c7",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-3.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-4.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-5.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-6.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-7.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-8.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu-ready-9.tsv.gz",
+      "git_blob": "cb2700a1adea326c0530dddf87c48fe2fb303a8e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/menu.log.gz",
+      "git_blob": "8134b02d31e40d6fc29654b0da073994b5b320f1",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/ocr-stderr.log.gz",
+      "git_blob": "3f1604bd4f5a2e93d5a33ead9362f32a9ee16ba6",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/results.json.gz",
+      "git_blob": "90b4b1d5493c4ecdb24f58e3279bdd46b63714b2",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/tab-roster-check-22.tsv.gz",
+      "git_blob": "3c334a8c9554d1f3fa4d9bdf4aa262fe9a97b422",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/touch-field-settings-control0-29.tsv.gz",
+      "git_blob": "e23f8e05b727295c350311e725b77f6c43b3de6e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/touch-hud-check-27.tsv.gz",
+      "git_blob": "4b96f5ed3ad44b048b90030e717da23079b08d56",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/touch-toggle-False-31.tsv.gz",
+      "git_blob": "08ecc5ace1dd3a862510b8885c68d42dbfbe42b8",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/touch-toggle-True-26.tsv.gz",
+      "git_blob": "24a6551fbbe7ae4abb629e0bf4c1020834772fb9",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/1280x720/xvfb.log.gz",
+      "git_blob": "53d546bcd8c70dada7a5b3cd080523af96e5d089",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/native-r2/results.json.gz",
+      "git_blob": "7ede3a283823dd136a73421c0fddb46d3402bf9d",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/observation-regressions.txt",
+      "git_blob": "6f1308a482602feacba199f99b49451fbacece3b",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r1/desktop-footer.tsv.gz",
+      "git_blob": "7df0374464c1a7a206f3a16c8f34ace312c0018e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r1/desktop-full.tsv.gz",
+      "git_blob": "32a4a5ae7b6216592308b37f1e77bba3b4a0442f",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r1/erased-footer-counterexample-footer.tsv.gz",
+      "git_blob": "8aa447ae6e0a7fad955459153844a95e865fdf9c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r1/erased-footer-counterexample-full.tsv.gz",
+      "git_blob": "c69af47558512f44d13b511f6fac468e3650cc62",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r1/field-menu-footer.tsv.gz",
+      "git_blob": "a903946ee080f2c37a8644ce14462eace622dfc2",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r1/field-menu-full.tsv.gz",
+      "git_blob": "e23f8e05b727295c350311e725b77f6c43b3de6e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r1/menu-footer.tsv.gz",
+      "git_blob": "947d4aff7665bb848a19617bcde623ece1934dc0",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r1/menu-full.tsv.gz",
+      "git_blob": "3ca941b6afb54c5e635df25af6891897fe4e5525",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r1/results.json",
+      "git_blob": "52e794f0cc34eb90b6c90bdc98354183e1074c5a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r1/roster-footer.tsv.gz",
+      "git_blob": "c440562109568014e2eb436b7e1a5bf68a168eb8",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r1/roster-full.tsv.gz",
+      "git_blob": "8ab7e1d32041867ead3ed71f2884f00abbb37848",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r1/settings-footer.tsv.gz",
+      "git_blob": "9011b7cd7073a712250c2f7e1ddfc0e5a84b96aa",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r1/settings-full.tsv.gz",
+      "git_blob": "24a6551fbbe7ae4abb629e0bf4c1020834772fb9",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r1/touch-footer.tsv.gz",
+      "git_blob": "ca040b8a3fbfba26d444ec22168861f855d7b412",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r1/touch-full.tsv.gz",
+      "git_blob": "b5bd903100ddb392d6dc554cd942e18b2f400774",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1280x720-hud-footer.tsv.gz",
+      "git_blob": "5889494c265750947701fef0a436d854f2624952",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1280x720-hud-full.tsv.gz",
+      "git_blob": "4ac73a5af73a1336d617bf7b6afab724652dfd5a",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1280x800-field-menu-footer.tsv.gz",
+      "git_blob": "b913c73e3c3f78a0456b36481dc283557ce99a1b",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1280x800-field-menu-full.tsv.gz",
+      "git_blob": "fd71deb99ce57f6f08010681468fb3fb622ccaef",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1280x800-hud-footer.tsv.gz",
+      "git_blob": "5889494c265750947701fef0a436d854f2624952",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1280x800-hud-full.tsv.gz",
+      "git_blob": "39daabfd8d2d5a76c8d42bc5f2c429cdc8b31677",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1280x800-menu-footer.tsv.gz",
+      "git_blob": "d6f2830f75d01948e0f0189e7e456a5a273ffa92",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1280x800-menu-full.tsv.gz",
+      "git_blob": "7a0246522eb9cd20ab321f21c77d54931bc2a7e8",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1280x800-roster-footer.tsv.gz",
+      "git_blob": "5889494c265750947701fef0a436d854f2624952",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1280x800-roster-full.tsv.gz",
+      "git_blob": "a0277b1e2434ec28c83c2c1f18608e3ac6c19161",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1280x800-settings-footer.tsv.gz",
+      "git_blob": "b913c73e3c3f78a0456b36481dc283557ce99a1b",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1280x800-settings-full.tsv.gz",
+      "git_blob": "b971fa60e6f42b80f8c089183bc8d503a41f59cd",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1920x1080-field-menu-footer.tsv.gz",
+      "git_blob": "d87b3388ed06ec2852145af07e11d9f0a83d2ac5",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1920x1080-field-menu-full.tsv.gz",
+      "git_blob": "58f69a71c06c3166743a7e4195c3bbaacd702e40",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1920x1080-hud-footer.tsv.gz",
+      "git_blob": "2a7c1c4898df61969eccb4b02689fe777d2deadc",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1920x1080-hud-full.tsv.gz",
+      "git_blob": "95f6b37903898657e43fadf3323e6abb2d2c436d",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1920x1080-menu-footer.tsv.gz",
+      "git_blob": "75cd77b2ebc5580dc3d02884d43a4bc160a2c77c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1920x1080-menu-full.tsv.gz",
+      "git_blob": "0ecb9d4eeb1795dc45c94028285d4326193fa963",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1920x1080-roster-footer.tsv.gz",
+      "git_blob": "2a7c1c4898df61969eccb4b02689fe777d2deadc",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1920x1080-roster-full.tsv.gz",
+      "git_blob": "d44b166eb721108c80e9255a75764313e4f3d76d",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1920x1080-settings-footer.tsv.gz",
+      "git_blob": "d87b3388ed06ec2852145af07e11d9f0a83d2ac5",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/1920x1080-settings-full.tsv.gz",
+      "git_blob": "b411067ecc5c7d60e8aa9716f9f8adc9c0727e22",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/960x540-field-menu-footer.tsv.gz",
+      "git_blob": "51320c5e5cec0f9f36f7c332e94cbb21c711f6fe",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/960x540-field-menu-full.tsv.gz",
+      "git_blob": "7029158e289b51eae63c625a22ea524442129040",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/960x540-hud-footer.tsv.gz",
+      "git_blob": "65f9e9570eee9eda317f302afc2206fca124d99b",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/960x540-hud-full.tsv.gz",
+      "git_blob": "838756b0fa253a67add4d282e11da30df74567f5",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/960x540-menu-footer.tsv.gz",
+      "git_blob": "530d9f2b408da3f336736e3b90418922e239db3e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/960x540-menu-full.tsv.gz",
+      "git_blob": "895b085b161919091b79468027cbe77f4650c01e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/960x540-roster-footer.tsv.gz",
+      "git_blob": "65f9e9570eee9eda317f302afc2206fca124d99b",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/960x540-roster-full.tsv.gz",
+      "git_blob": "92fcb48c5d69ce14f4e5fffaa499ed1e81f860bc",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/960x540-settings-footer.tsv.gz",
+      "git_blob": "51320c5e5cec0f9f36f7c332e94cbb21c711f6fe",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/960x540-settings-full.tsv.gz",
+      "git_blob": "6442a654414ae301d5f99a16a7339f469a7b516f",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/desktop-footer.tsv.gz",
+      "git_blob": "5889494c265750947701fef0a436d854f2624952",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/desktop-full.tsv.gz",
+      "git_blob": "32a4a5ae7b6216592308b37f1e77bba3b4a0442f",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/erased-footer-counterexample-footer.tsv.gz",
+      "git_blob": "2d19172dd49f8c3625e48de604d5302a0a6ab244",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/erased-footer-counterexample-full.tsv.gz",
+      "git_blob": "924526c7909a044217ec49b186b289b8d813f296",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/field-menu-footer.tsv.gz",
+      "git_blob": "b913c73e3c3f78a0456b36481dc283557ce99a1b",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/field-menu-full.tsv.gz",
+      "git_blob": "e23f8e05b727295c350311e725b77f6c43b3de6e",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/menu-footer.tsv.gz",
+      "git_blob": "b95419e59c78c6407afa606a80593ae766760d08",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/menu-full.tsv.gz",
+      "git_blob": "3ca941b6afb54c5e635df25af6891897fe4e5525",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/results.json",
+      "git_blob": "3917a763d44fc489379954f864d1dd079cdc4bc8",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/roster-footer.tsv.gz",
+      "git_blob": "5889494c265750947701fef0a436d854f2624952",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/roster-full.tsv.gz",
+      "git_blob": "8ab7e1d32041867ead3ed71f2884f00abbb37848",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/settings-footer.tsv.gz",
+      "git_blob": "b913c73e3c3f78a0456b36481dc283557ce99a1b",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/settings-full.tsv.gz",
+      "git_blob": "24a6551fbbe7ae4abb629e0bf4c1020834772fb9",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/touch-footer.tsv.gz",
+      "git_blob": "5889494c265750947701fef0a436d854f2624952",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/saved-image-r2/touch-full.tsv.gz",
+      "git_blob": "b5bd903100ddb392d6dc554cd942e18b2f400774",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/gauntlet/native-layout-ocr/targeted-tests.txt.gz",
+      "git_blob": "edc48608bfca913ded5dbdfefd27f6867c78591c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/media/art-v9/hands/logs/clip_contact.csv",
+      "git_blob": "4f3c8cb4088ec7dd33f2eb141b3598eeaf73e78c",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/media/art-v9/hands/logs/clip_contact.glb.sha256",
+      "git_blob": "7894a04d5f35df719359a1adfb822570cc428741",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/reports/media/art-v9/hands/logs/clip_contact_calm.csv",
+      "git_blob": "4f3c8cb4088ec7dd33f2eb141b3598eeaf73e78c",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/environments/relay_sky.tres",
+      "git_blob": "654e47b1dc428895406969253a0b68d5eb7ccd25",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/icon.svg",
+      "git_blob": "a9bf7a6ca6cd0cfdf61f963349c9715f88b9b04e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/icon.svg.import",
+      "git_blob": "a2a74038da270192cf33afe444c79696c3501661",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/asphalt.png",
+      "git_blob": "1091e72e72acae0deb7ff7f9a10be4ee0278dc64",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/asphalt.png.import",
+      "git_blob": "4b402576e114968dd34d107d9b2be07efac9d7e2",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/asphalt_normal.png",
+      "git_blob": "9806b05215a6a0a245118114dddfe865f615c8ef",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/asphalt_normal.png.import",
+      "git_blob": "2fa4160b4f91c6a1c184e2b10bbfb3dc7f5f5f9e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/asphalt_roughness.png",
+      "git_blob": "c2eed56388067814d39babdcef0c0abdb98f1887",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/asphalt_roughness.png.import",
+      "git_blob": "c99b7e0c71c441e5c7b6b1c42aa72ffd7a929805",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/concrete.png",
+      "git_blob": "850af89a73cfda9c9a1cc8267e8c1270243a2f1e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/concrete.png.import",
+      "git_blob": "90573851c1e392fbf0733576466c98cf7ef4758b",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/concrete_normal.png",
+      "git_blob": "6090a9c4118dc108e789e896c7f5127297484bc3",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/concrete_normal.png.import",
+      "git_blob": "58c20fa698c00ce4d414e309326c2aa8e717346a",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/concrete_roughness.png",
+      "git_blob": "dbff504516c3e1d2a4c3d8d1165c770b620bf949",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/concrete_roughness.png.import",
+      "git_blob": "ed003d9c08266c96f9d70acfa4bd9c18f7972ef6",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/painted_metal.png",
+      "git_blob": "fc37bd63c77b0fa6d682519b2464be74ba6c79cc",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/painted_metal.png.import",
+      "git_blob": "2812bae7da42111fec088d941f1b058e39434bdb",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/painted_metal_normal.png",
+      "git_blob": "e732a67ed77a5efc244625ee20b624011c43e1c0",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/painted_metal_normal.png.import",
+      "git_blob": "cf44c72ee5c58e4461627379cfd25ad665719071",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/painted_metal_roughness.png",
+      "git_blob": "7201e584dd7447de2026134a6cede3211255322f",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/materials/painted_metal_roughness.png.import",
+      "git_blob": "a8d25424da6dc40629ea95c702a380adf3563e4f",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar.glb",
+      "git_blob": "5fede01d0bba4cadc477d75482589c4d9e9b6aad",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar.glb.import",
+      "git_blob": "4b4fb0f7edcc3e2d60b07fbd3256f81e16c3ecfa",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_albedo.png",
+      "git_blob": "c268b3dbad0499710d1e3f64cc7f556a4a9672ef",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_albedo.png.import",
+      "git_blob": "560754fe6a5b4114bf5262418d6c036fc02aef0f",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms.glb",
+      "git_blob": "159af6a305f97e43658c61a6f9d279fba00f5411",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms.glb.import",
+      "git_blob": "108572ee1a81251c7bcf4a2b097930220a849f2d",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_albedo.png",
+      "git_blob": "f0b41d0f3741eed77b27d8a16dfc72c346ea21b6",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_albedo.png.import",
+      "git_blob": "9bca2a701fcee90cd206215f3ad095034a23206e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_normal.png",
+      "git_blob": "eccb6af12283cb99628f2235e5fd746e15bb7d1e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_normal.png.import",
+      "git_blob": "8beca535f320d153bb69380ce2221321ff889bbf",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_orm.png",
+      "git_blob": "a5d567d87352f013485758b822faa4b06e420b0c",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_arms_orm.png.import",
+      "git_blob": "c0831f44ce0de26f7f344f429f78c7a56d1f9b2f",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_body.tres",
+      "git_blob": "9cf39175fa98184f63b7c42077d4482ca6d7f774",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands.glb",
+      "git_blob": "69c69fa414f13acfc937c6f00780f28dd4d38a53",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands.glb.import",
+      "git_blob": "8d4f293400fdd12c2a7744a9e88db0666cf659b2",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands.tres",
+      "git_blob": "028a75a46a480cc4a534ea958380f85d249a292c",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_albedo.png",
+      "git_blob": "db6acd004e7e649c9d40064dec26cb724b39bece",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_albedo.png.import",
+      "git_blob": "cd392a06b97db889373a371993c73fc5982a2bb0",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_normal.png",
+      "git_blob": "94880e6aa9b5ced3a1e831f7255caff822fb1626",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_normal.png.import",
+      "git_blob": "b2d3dd92b81ed6ea35ced7d0062e8aaf0d6f76ed",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_orm.png",
+      "git_blob": "2f3630d72e8145d782c1d9c9f1daa3ab54b813be",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_hands_orm.png.import",
+      "git_blob": "a6ffebc547f355455757e6690b84387c1a4c2ce0",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_normal.png",
+      "git_blob": "9127c6eeedb31b94dbb6c2814dab6f3aed9adfe5",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_normal.png.import",
+      "git_blob": "7eff2d0e1a0b3b8eaa9c9538c662809165273b0f",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_orm.png",
+      "git_blob": "251e41cbc00341868e20769842474cd83ef6e066",
+      "mode": "100644"
+    },
+    {
+      "path": "game/assets/weapons/relay_ar/relay_ar_orm.png.import",
+      "git_blob": "fd9e341668dfe21ce99d6c4f1eed6600678bab94",
+      "mode": "100644"
+    },
+    {
+      "path": "game/export_presets.cfg",
+      "git_blob": "9abdc8c5baead637ab7ac26841c2e1fa2a9a5ca6",
+      "mode": "100644"
+    },
+    {
+      "path": "game/main.tscn",
+      "git_blob": "d5d17595a4f3ba40788c24a73fb903660affdfc6",
+      "mode": "100644"
+    },
+    {
+      "path": "game/project.godot",
+      "git_blob": "cdfef244f9afe3415dcb8c2c1f6f3d04a1967a56",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/actor.gd",
+      "git_blob": "430169676a1fedef687bd156d579e827cf0e6182",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/actor.gd.uid",
+      "git_blob": "1f9255be4e01cbbe9694518e471d88f9693a486f",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/arena.gd",
+      "git_blob": "d70e4ac4f9a3f16948743849e5ea98cba7a7a5a9",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/arena.gd.uid",
+      "git_blob": "c8f162af297a0118714b2a88e0dbf33d0d476b76",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/bot_ai.gd",
+      "git_blob": "403dd72df8dc5a9a9321ff8fb59aa545b4de7248",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/bot_ai.gd.uid",
+      "git_blob": "9883e43bf0b5450d14f1bc243ff04302c12d183f",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/combat_effects.gd",
+      "git_blob": "690ac3d0b2ae370e375cd11615002c36a75966fb",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/combat_effects.gd.uid",
+      "git_blob": "18d83ab1a71dbf9e51a935d4260b589a74b897a0",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/match.gd",
+      "git_blob": "b994a2cd40be160dc29bd8ed63646c7ceb01190a",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/match.gd.uid",
+      "git_blob": "3c9c1ecbcbfb0daab047a65480c145080e571bf1",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/reload_audio.gd",
+      "git_blob": "83624ffe5075b68b1f07f5dfe9b65dd2824c499d",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/reload_audio.gd.uid",
+      "git_blob": "3a5c17b6e787eb456fab7c4cb5be7e6621682f89",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/reload_phases.gd",
+      "git_blob": "21c1c8046cb5182fce6233b7a81035753e10139e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/reload_phases.gd.uid",
+      "git_blob": "4b7a6492d6c84a3643f037860671a2b2a728fcef",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/utility.gd",
+      "git_blob": "4f61d29639f18761dbafde3ffa2f4f5fe434aa0e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/utility.gd.uid",
+      "git_blob": "5a3617a5dd255ac4c295f5c59713265d984b7653",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/viewmodel_shading.gd",
+      "git_blob": "00c64573c1f294e7895665bb79846b83e66380ef",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/viewmodel_shading.gd.uid",
+      "git_blob": "742eaeb7df681aad1e16ae6a01f28daf39e9d25b",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/weapon_model.gd",
+      "git_blob": "e5ecdff0b8ef5f039e81233b9b8f79df41e8c2ae",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/weapon_model.gd.uid",
+      "git_blob": "aac3b001612af78082334e19fa34603a28bf86f1",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/weapons.gd",
+      "git_blob": "89431953e3fc9c34341c43cdc24ca858bc2d44e2",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/gameplay/weapons.gd.uid",
+      "git_blob": "23819f565cb13b904a79ce7f2a4eda9512479f95",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/main.gd",
+      "git_blob": "996edab146d70c72f654876259f2fb16eb5b5a65",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/main.gd.uid",
+      "git_blob": "6d84d705691de47fb1cea57d3d70034519423ca4",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/economy_bridge.gd",
+      "git_blob": "870cba1d87c84ec5a714a7eeef6f9376ae4ccd03",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/economy_bridge.gd.uid",
+      "git_blob": "d3226d362a983d1125ef837d1ede6e5d8ea25fb9",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/hit_history.gd",
+      "git_blob": "24fce18e94307ff5e4b908a24ec6a05050362e27",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/hit_history.gd.uid",
+      "git_blob": "cb99a1a2bced8afddba27e1590017b3435c72ecf",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/input_gate.gd",
+      "git_blob": "bf23a5b8c6e634121fca9f5daeb2a4d731ff6538",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/input_gate.gd.uid",
+      "git_blob": "a28a8edabb6db1fe34ce9f7a5305a4b4eadc10d6",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/input_stream.gd",
+      "git_blob": "f0516be1ab2416d36ba3b62f37083f371364f3a4",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/input_stream.gd.uid",
+      "git_blob": "e3e4a54c1e2265d10fb9183396d7e067507b7581",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/movement_prediction.gd",
+      "git_blob": "f83dc4514c6c2f64f582b1860f0c3fd65ccd66cf",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/movement_prediction.gd.uid",
+      "git_blob": "7a7a4e134bb30b8e8a0a9eae0fca53aab3f1e937",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/movement_step.gd",
+      "git_blob": "8350095e0096ab97c6098e9b982c596102af8ee5",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/movement_step.gd.uid",
+      "git_blob": "eabb524c069235b09395dfa75b38bc3a0f0e8583",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/peer_lifecycle.gd",
+      "git_blob": "2ccaf99bc18f1f76ad94089190e4d31ece4a90eb",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/peer_lifecycle.gd.uid",
+      "git_blob": "d659d1b097be90fec9d835a3c5321f7e0bf9b742",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/reconnect_policy.gd",
+      "git_blob": "6912de1d4309778bdcb707ace00465c001cea985",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/reconnect_policy.gd.uid",
+      "git_blob": "84d8057108554df36c2ce521b81800b724827912",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/result_outbox.gd",
+      "git_blob": "5e66816d9e6092f955acb58ab17794b7ea0e3e99",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/result_outbox.gd.uid",
+      "git_blob": "cc3af4a907b31a9c4082e2ebc637a58b5c96d21d",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/snapshot_buffer.gd",
+      "git_blob": "5787cd7dbac005085b85f40a5976c411a42364f9",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/snapshot_buffer.gd.uid",
+      "git_blob": "5c92879d26c803a69b6a5eec35a0a29b3c0b29c0",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/snapshot_schema.gd",
+      "git_blob": "ffd4fde4a263aa9c656a39327dec39ebe421ba60",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/snapshot_schema.gd.uid",
+      "git_blob": "d3d3d86a0a5c0522bc61e22b3082e5d7e2876751",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/state_privacy.gd",
+      "git_blob": "6bc4e5bbf0961034b4c32d25702983150d28567c",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/network/state_privacy.gd.uid",
+      "git_blob": "364e28b72b7fdfdd52ec28f57411627d0fde8cc3",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/offline_diagnostics.gd",
+      "git_blob": "b5908b682731dcf45381a11eeb197e85b72dc7a1",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/offline_diagnostics.gd.uid",
+      "git_blob": "f8e89af0495e2891d89f299735b92e90d273619f",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/profile.gd",
+      "git_blob": "f5d230e3bdcd9014d96bc2a108869c1c58624d0e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/profile.gd.uid",
+      "git_blob": "8137e6fb6d4706532d754136f1088b357df1b9c1",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/case_reveal.gd",
+      "git_blob": "c45a380de27f353c190affe367d2cfccbb70adb3",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/case_reveal.gd.uid",
+      "git_blob": "2a55813298c802b9f4e2243b158a81f208aaa23e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/confirm_sheet.gd",
+      "git_blob": "8e8fd6d02db8bb3caf2838f76194ed2b68d2ba4e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/confirm_sheet.gd.uid",
+      "git_blob": "49f859d22d7b935d42186401055ee00bdd69bdb8",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/cosmetic_material.gd",
+      "git_blob": "483f05c3b66be720a660ccb044a929abcf1e2526",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/cosmetic_material.gd.uid",
+      "git_blob": "be28b52007d1d4fe6864f5e0761441bbec5d474f",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/design_tokens.gd",
+      "git_blob": "544831bb702600249c7faa90e20bee87536ae0d1",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/design_tokens.gd.uid",
+      "git_blob": "824e778229c64a8607e2379166ef4a3734966ff3",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/display_models.gd",
+      "git_blob": "22f85a3aa4073a23211f8e1b8d57d46dc3989df0",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/display_models.gd.uid",
+      "git_blob": "02273a554e12be28d8ef17caf89dd792f0daaadf",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/economy_api.gd",
+      "git_blob": "595662a12bdc3828b78decb8b7c3c341faddb346",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/economy_api.gd.uid",
+      "git_blob": "8e6a6fe0e603af8b278ba3ad2d8a7cd002cc32bd",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/economy_ui.gd",
+      "git_blob": "c482c553264781db2a66a373ab4e4496fb59531a",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/economy_ui.gd.uid",
+      "git_blob": "36963dfa7b92525c9c560def0d6778714834a0fe",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/item_inspector.gd",
+      "git_blob": "834c08b346ae558c1d6f5bb2e961d164ea764d55",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/item_inspector.gd.uid",
+      "git_blob": "e66d56b37a18e7d3d43ea62ee2dce61bb341e538",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/radar.gd",
+      "git_blob": "d17c52ee6be54438c52660e31b981753f76abeec",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/radar.gd.uid",
+      "git_blob": "31f2402f7b1ae5115751553845e3981e788882f0",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/safe_area.gd",
+      "git_blob": "a05b2a13bdc78b9ba64e11343d88245178452473",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/safe_area.gd.uid",
+      "git_blob": "bb31445f79b74a191b68bdad24a4ace5a251375a",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/touch_controls.gd",
+      "git_blob": "4c13c454f1935491110fc682058a36ee53c2c926",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/touch_controls.gd.uid",
+      "git_blob": "00f6091a47f82f84a31b54b0b9785ccd79d836f4",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/transaction_journal.gd",
+      "git_blob": "cbac7a494f14c88127196c848a3f874892e7b94c",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/transaction_journal.gd.uid",
+      "git_blob": "6b9eeeab5e36978a061ba51797c9aedf7264e5f3",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/weapon_glyph.gd",
+      "git_blob": "cfb16cf3b2c4533f1594de09649b195c58fb019d",
+      "mode": "100644"
+    },
+    {
+      "path": "game/scripts/ui/weapon_glyph.gd.uid",
+      "git_blob": "417bc046f46d268ef71720cc6cc6f9140b81e2d0",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/account_match_probe.gd",
+      "git_blob": "0d15d044e1f54d53945fa5d915cde8538f7386c3",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/account_match_probe.gd.uid",
+      "git_blob": "0946950d1262217a71c68bc8b0a941aa3e4bfabe",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/account_network_probe.gd",
+      "git_blob": "ec511af01ed2c2a64c159ad3d4e4e1f0b13cd859",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/account_network_probe.gd.uid",
+      "git_blob": "34b1ebb55945ff4b5849126e4cad4c5a1900a425",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/activity_provenance_probe.gd",
+      "git_blob": "a3767a311c09c04ab1502c18968180250ac8de93",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/activity_provenance_probe.gd.uid",
+      "git_blob": "5b493c5537998ee0536ad0ca2f40a86b67b853bc",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/activity_provenance_test.gd",
+      "git_blob": "128c6a85d8c8100fc3f0f6462140bcb789b7d40b",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/activity_provenance_test.gd.uid",
+      "git_blob": "8d577e09cd2c161a9da18d7562b156548fb3ab40",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/actor_test.gd",
+      "git_blob": "e4c1f41cfdda2a97b4ba778c1b9ab6658fe829d9",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/actor_test.gd.uid",
+      "git_blob": "ea39fd4c70a0cd2128158d70fa4a971acad718ab",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/admission_capacity_probe.gd",
+      "git_blob": "42aa8abfd36ffe585bf0d59fa4c03cc0a63a2e6e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/admission_capacity_probe.gd.uid",
+      "git_blob": "2447ba36614fada2b788315eeae16e865bf8e637",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/armory_state_test.gd",
+      "git_blob": "a72df59ee032ff80591a12187cbff81de5cae344",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/armory_state_test.gd.uid",
+      "git_blob": "b020178f497d687eefb40d7ad1e4f14a717fdff5",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/armory_ui_test.gd",
+      "git_blob": "1c588aa365c190875a5c5063fd1e4e993525602e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/armory_ui_test.gd.uid",
+      "git_blob": "903c2ea6c734a3defe2d6f716c257dc59e73cf83",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/authority_order_test.gd",
+      "git_blob": "dbad899a925f984e656c396eb0ec90e92d50f0a6",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/authority_order_test.gd.uid",
+      "git_blob": "b9b6e1db195792eb3367d363c7a4c017833b4e68",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_ai_regression_test.gd",
+      "git_blob": "76805cef0b4f547bcda09eb49911ffbc42de09bf",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_ai_regression_test.gd.uid",
+      "git_blob": "925c968e39d0108e44bd3e236c858e29b7676957",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_dry_weapon_test.gd",
+      "git_blob": "5a287612402a53d231dd96b10d772da140c16846",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_dry_weapon_test.gd.uid",
+      "git_blob": "a584488847c7fa814d96a17d50344e5d3ae28dfa",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_exhausted_primary_probe.gd",
+      "git_blob": "4b87b4f77dab76470120a71b69945cc072f196ae",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_exhausted_primary_probe.gd.uid",
+      "git_blob": "237e884deaca3407c9412f58a9cc8e31d970b8c0",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_exhausted_primary_test.gd",
+      "git_blob": "5ec2a743b646ddf0f21b127fa50acf3f2bcb2f4b",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_exhausted_primary_test.gd.uid",
+      "git_blob": "b3a2ec6c4ef37374f0acdc05453747d77c870a5e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_lifecycle_test.gd",
+      "git_blob": "73c993a06b7a9f842eea9893a48bc6e9dc535909",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_lifecycle_test.gd.uid",
+      "git_blob": "8b7459a582b5127f55b1e8360b00b2552f39beb5",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_match_test.gd",
+      "git_blob": "14066b9affc9714be70e7a6f8b6771c8fb3ec8b6",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_match_test.gd.uid",
+      "git_blob": "042f7689fda6da2f45b1d097fa77ad7f5562a968",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_squad_observation.gd",
+      "git_blob": "369397a4b5a5b1ab1f310b1d00b24b67bbb0f402",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_squad_observation.gd.uid",
+      "git_blob": "a97ccb28034bd7e0cbbf343e5a9613e50e7f8e13",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_squad_symmetry_test.gd",
+      "git_blob": "d4a22f832db01d640770560d5221ba80015bfe2e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bot_squad_symmetry_test.gd.uid",
+      "git_blob": "cf52a74ae3d7601a9ab3b184e2d231d636a42a0a",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bridge_transport_test.gd",
+      "git_blob": "24a6f33e3d2e71263095cb9d83b3023ea9463332",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/bridge_transport_test.gd.uid",
+      "git_blob": "948de3e85901a981fda0a10577f1d3b414b4b583",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/combat_presentation_capture.gd",
+      "git_blob": "fdb8fb9bf1a9c2de78c19eb0d73a3690ff399679",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/combat_presentation_capture.gd.uid",
+      "git_blob": "3175cbe9a9c3e57706a648f0d4e6faf7b7e4aa35",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/connection_lifecycle_probe.gd",
+      "git_blob": "1f0854b99481955f58dc6da80a36e0c99c4c13bb",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/connection_lifecycle_probe.gd.uid",
+      "git_blob": "38bfa60fcf1f6e03ff6862f3881482e4561858a2",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/cosmetic_lifecycle_test.gd",
+      "git_blob": "2d0919efefc9ee1f417a8fd1b45e4d0888266bb1",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/cosmetic_lifecycle_test.gd.uid",
+      "git_blob": "b62986af789f6f50ad0571c4d562fa9d980c6623",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/cosmetic_presentation_test.gd",
+      "git_blob": "06c36a0f8534b7f27a340645550cf21e4fe92c5b",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/cosmetic_presentation_test.gd.uid",
+      "git_blob": "2af06435554d95c7e1cc333145b268ce0707c446",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/economy_recovery_test.gd",
+      "git_blob": "94e53cbae3cee5e355bae603b05b6578f18570b4",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/economy_recovery_test.gd.uid",
+      "git_blob": "da94244ad9377cde44a9b8a424f950ee2c84f447",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/economy_ui_test.gd",
+      "git_blob": "d63703e9a69bda72d0c7e4278b24db82ead3d86c",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/economy_ui_test.gd.uid",
+      "git_blob": "6f211f02341a3ea8721493f13bbf2abcd5b2be61",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/environment_probe.gd",
+      "git_blob": "aaf52f081d0fa885378614ee75e7b6f69899d932",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/environment_probe.gd.uid",
+      "git_blob": "b88460f97b45dd30c32ee47bcad11292a6b378b2",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/fixtures/backend_world.json",
+      "git_blob": "5bacf2d8c524eddd57ecdcbabf8df327cb4fc8b3",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/gunplay_rules_probe.gd",
+      "git_blob": "f9c29705fa6ad2f7e24274f33e0525ad178d53c0",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/gunplay_rules_probe.gd.uid",
+      "git_blob": "e888ada968918528a256b944afd0acdbb3c3956f",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/handshake_attack_probe.gd",
+      "git_blob": "b06ad40e9344de015804f58a9025425ba8e7e1e2",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/handshake_attack_probe.gd.uid",
+      "git_blob": "809c05b816cb64a19e3e439efe435bba59932946",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/handshake_server_probe.gd",
+      "git_blob": "7d80e89bd194f7b81ab0578db77608ed9b7ac863",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/handshake_server_probe.gd.uid",
+      "git_blob": "f40bf7fb6b5b6afbd9da8152e37376796709c545",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/hit_feedback_test.gd",
+      "git_blob": "d312b02e63836e544ca25534c10d5e87611b1e90",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/hit_feedback_test.gd.uid",
+      "git_blob": "3758990f741c9b478d44a19a23a46e72a8a2981e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/hit_history_test.gd",
+      "git_blob": "02b09c9b6898fa5e65c98294e6cef670b76250f4",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/hit_history_test.gd.uid",
+      "git_blob": "9db64f85877514fef0bb9d31325956140f0583cb",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/hit_volume_test.gd",
+      "git_blob": "971c5ac3d9743971341bb71a80b09b0e0516b912",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/hit_volume_test.gd.uid",
+      "git_blob": "bf99de2bf117d1f4f319bf67a23a0d0a42f87a2b",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/hud_objective_hint_test.gd",
+      "git_blob": "69c52ab0c565a0960cf12b64b96e6fe5508c2d20",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/hud_objective_hint_test.gd.uid",
+      "git_blob": "fe5a37af6b3d15493b0bc3a82006ad88db13290e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/hud_overflow_test.gd",
+      "git_blob": "0f45f3446817d119a7012f0f747a5db7cea279e3",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/hud_overflow_test.gd.uid",
+      "git_blob": "3f9c05020905b58ce7e182c89d7ac33fe22dc6cf",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/independent_reconnect_review_test.gd",
+      "git_blob": "77cd3773a1419eeab3c4160174a848b480c4b91e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/independent_reconnect_review_test.gd.uid",
+      "git_blob": "ae6c635b56cfa81e6e0115945f853640689cf036",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/independent_resume_admission_test.gd",
+      "git_blob": "aa2b42a2fd39eeeff7f553caa1997129ad2b6124",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/independent_resume_admission_test.gd.uid",
+      "git_blob": "8f865e68653bf4f32c4d0f1c94cac878d8a390f0",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/independent_resume_alias_test.gd",
+      "git_blob": "3a7119c9612ca51f5546456912bdb81fc003b9b9",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/independent_resume_alias_test.gd.uid",
+      "git_blob": "5bc379670f054babf1badb1a9df02d304f61dc81",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/input_freshness_probe.gd",
+      "git_blob": "273bc998ef6370f698bba71b7a9e3f27add785fc",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/input_freshness_probe.gd.uid",
+      "git_blob": "5da43815513e284ec63fc1990d7cfbc33a5763d2",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/input_lifecycle_test.gd",
+      "git_blob": "b8767fbafe114a9b9b3bbb8f8e04fefca23c50a4",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/input_lifecycle_test.gd.uid",
+      "git_blob": "8e39160ffd82960212c286af618b1d6cadfb8819",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/input_mode_test.gd",
+      "git_blob": "e720077619b4b77a4a63fdbd445c305e0cb7a9fa",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/input_mode_test.gd.uid",
+      "git_blob": "488325abfeb7cf69bab03f1408dd0b7f18d48a73",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/input_stream_test.gd",
+      "git_blob": "58eb11d5fc981f2ef7f886bace5c447570942305",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/input_stream_test.gd.uid",
+      "git_blob": "3e3baeac666a61f12018bf482463c2d2fe0d3cb3",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/integration_actor_lifecycle_test.gd",
+      "git_blob": "41649902feda54283f1a669864f85bb650884cb6",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/integration_actor_lifecycle_test.gd.uid",
+      "git_blob": "f812b46ec0f4a25ec0d8dfb3d2ed96f5eada3f39",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/integration_aspect_probe.gd",
+      "git_blob": "93ce7396f2a56715b551536e97c14347ec41c00d",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/integration_aspect_probe.gd.uid",
+      "git_blob": "976d0c797b77edd440e2d8e9432071f391c011c9",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/integration_render_profile.gd",
+      "git_blob": "d2a226bc73c0c39ee9a0caca0ce1eabcf15b6a81",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/integration_render_profile.gd.uid",
+      "git_blob": "cbcc559fbcfa5428d0499528e4a54ca66c177a80",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/landscape_ui_test.gd",
+      "git_blob": "61332a14c0a252d9cb61f485d6cacbe47b2cdf99",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/landscape_ui_test.gd.uid",
+      "git_blob": "03b2bec9be88c219762d957a801144ca4188c651",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/lost_welcome_test.gd",
+      "git_blob": "25a10368524115aa8d4870a845ef50a04f3f8c19",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/lost_welcome_test.gd.uid",
+      "git_blob": "ed1998e9ff6c5ddba627370da0dfc5a9e2fedfe1",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/main_test.gd",
+      "git_blob": "f0d7a22b584985f30ce5797aee910666b898f3f5",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/main_test.gd.uid",
+      "git_blob": "a53033d305d6144c77d60be002972b8ccb63460e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/match_test.gd",
+      "git_blob": "3056d92afc3ce1c8e65c783728281aac6704828c",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/match_test.gd.uid",
+      "git_blob": "412a448550910a46c92235e4bb61da718905efdc",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/menu_capture.gd",
+      "git_blob": "2f3f8fc73b92cd4be53798885ee5da06abfae478",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/menu_capture.gd.uid",
+      "git_blob": "879eca2b09ef3fcdd3807dd61a6ad267a4dcfd9f",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/menu_contrast_probe.gd",
+      "git_blob": "f30e1f27fba4de2bf7d5c2dd946a5bf6b4d16b56",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/menu_contrast_probe.gd.uid",
+      "git_blob": "288bfeb7cf9658da3d17f1ec205669f2004f62d6",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/menu_focus_test.gd",
+      "git_blob": "01292e5995f07ce927f18c6132d5a7e1b86a23c1",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/menu_focus_test.gd.uid",
+      "git_blob": "e89d9f76a6085400d2f2aa6d01cec6b21b5d90d3",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/menu_occlusion_probe.gd",
+      "git_blob": "75e1fe48825b7687cdbc84eec8b7510b4e7c043e",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/menu_occlusion_probe.gd.uid",
+      "git_blob": "f3aa1e6a8b95f202b1e82d6eabcfe3c8bf56c410",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/menu_state_test.gd",
+      "git_blob": "7162f3f15db1ab0b00fa697f6d6b25e97f57b37b",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/menu_state_test.gd.uid",
+      "git_blob": "734cd066af339350b05a6164afaeab2f66466588",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/movement_prediction_test.gd",
+      "git_blob": "74e30418680a9bcf74a03c0b0429887fae324cc7",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/movement_prediction_test.gd.uid",
+      "git_blob": "177f61047f27205207026650066fc2d63605fe15",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/native_economy_test.gd",
+      "git_blob": "bbc5bed2b6097b585a1dd9bead28549ddc833270",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/native_economy_test.gd.uid",
+      "git_blob": "157435345da115ccfbae8883b372e96391fac1ee",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/network_probe.gd",
+      "git_blob": "aa82cc5b3e325da9f43614109bec8ecfadd9733d",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/network_probe.gd.uid",
+      "git_blob": "96eaca14b5e4775c07dcfde295890a10d425a189",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/network_profile.gd",
+      "git_blob": "466c2faab1c5a0c03770ac8758459926c8c8ccfa",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/network_profile.gd.uid",
+      "git_blob": "51883a5fec1076868c35c14c2ddbc63bd47813bb",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/network_simulation_probe.gd",
+      "git_blob": "5594fc67a9a22480d817a365c0dc9d0be4262dd7",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/network_simulation_probe.gd.uid",
+      "git_blob": "9f95aff3946d57c486d362bfd907c79e43102c28",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/offline_diagnostics_test.gd",
+      "git_blob": "8a61d5a0db19c4e1f944c09bbf26d3910964b4bb",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/offline_diagnostics_test.gd.uid",
+      "git_blob": "67bb9cfbc9010c92f86bb3214128a17cf5d4e535",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/paint_visibility_test.gd",
+      "git_blob": "2238de6ca1133f00572715333b94d7b825560391",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/paint_visibility_test.gd.uid",
+      "git_blob": "6e866606b146bc8bfe2a57ed7c412fa4ab520b20",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/peer_lifecycle_test.gd",
+      "git_blob": "fabf876f82f0c81a78503f4f342623543b5c2846",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/peer_lifecycle_test.gd.uid",
+      "git_blob": "bc3b62bb6fc6ca1231374f7c42e19bb23b686f1c",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/postgres_receipt_probe.gd",
+      "git_blob": "ed1d8532ff1edd6666ca7e8fcf8cb00ed1e15142",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/postgres_receipt_probe.gd.uid",
+      "git_blob": "940f06f1bcd806629efbfe25f8dcf8590b42fe51",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/profile_test.gd",
+      "git_blob": "ff21f56150dc2f504f315a629c9364889c5da434",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/profile_test.gd.uid",
+      "git_blob": "23da56a730ef3fe60a1e40e8da992f2b4d5ebe54",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/protocol_client_probe.gd",
+      "git_blob": "e628cbbed5127d2b69ed4e2aed8a1036f20e9f52",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/protocol_client_probe.gd.uid",
+      "git_blob": "78f0704d9845dd9225c5765edd11d75034e9cdc9",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/receipt_lifecycle_probe.gd",
+      "git_blob": "238d9215e4f421d38da16d2b625f5245bfec03d9",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/receipt_lifecycle_probe.gd.uid",
+      "git_blob": "4a807f1f89cc2798502088c617f9773bf68e0fd1",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reconnect_policy_test.gd",
+      "git_blob": "5f324808ad1313e3f4da0731d095588a56d8fb28",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reconnect_policy_test.gd.uid",
+      "git_blob": "a9facd4e049de7027db4cba25c81f224a8c1e5fe",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_audio_capture.gd",
+      "git_blob": "fdd8601522b122320f9e23ebbd3c6e666b5306ac",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_audio_capture.gd.uid",
+      "git_blob": "fa66d4339785ba536510f4501dbaa7cf60133489",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_audio_test.gd",
+      "git_blob": "b8e2bc74f7c39efd1cb4592ed4b3277d2125786d",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_audio_test.gd.uid",
+      "git_blob": "1670f1a6d54776cf69a18a3920dfd534df9313c6",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_discolour_probe.gd",
+      "git_blob": "7da289a304ed44958bc49bb70fb403ad427f0a07",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_discolour_probe.gd.uid",
+      "git_blob": "fe2d1b81ac228bf5ea909c0fa1d4383f0e561320",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_legibility_probe.gd",
+      "git_blob": "b394a5184e85dd180f9c34adf36b08e33a2b6f2d",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_legibility_probe.gd.uid",
+      "git_blob": "a1957647854059b3b86c05202fd15af73d89d739",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_perf_probe.gd",
+      "git_blob": "5f9e948bc59449ec6ca576ead787800bebd9b703",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_perf_probe.gd.uid",
+      "git_blob": "8b7ae4e094654b547fd620467f7574253a719c28",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_sequence_capture.gd",
+      "git_blob": "be240c59728e98e5c31ccfec5f3d94be12d8757b",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_sequence_capture.gd.uid",
+      "git_blob": "c4b32615ad83144c03ab0dcf317621eca33f5bbc",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_sequence_test.gd",
+      "git_blob": "6a059d9352fcb3fe94e84876ec3697f85b8381a2",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_sequence_test.gd.uid",
+      "git_blob": "95a221c71325b5273d01ac0ce929ca0eb3ad1b4c",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_visibility_test.gd",
+      "git_blob": "c2e14d404a60038f1d153c63d9be57c7eb693f8f",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reload_visibility_test.gd.uid",
+      "git_blob": "d4341577b2e8ad4532cba81f33d210663f3b8b63",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/render_benchmark.gd",
+      "git_blob": "69b90c06249b4c47fb0efcb9800d0b451a0ebe5b",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/render_benchmark.gd.uid",
+      "git_blob": "7a075bd7b1b6418aecd5c06151fb26b3f9ca46b4",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/render_budget_test.gd",
+      "git_blob": "993a8acce12a79084775ff914f49bc93d82148d6",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/render_budget_test.gd.uid",
+      "git_blob": "4ed8cc9351d60c18a5f95476ee049f0360cfea7f",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/render_lifecycle_test.gd",
+      "git_blob": "e7521c043ce4f6e9f6ed05615bc6e0af8951d969",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/render_lifecycle_test.gd.uid",
+      "git_blob": "1cccbd3b89559e8a8c56c918998b13f4e0f76f99",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/render_probe.gd",
+      "git_blob": "c6ef90c797b6ff770b8f37c64a390946099f4ccb",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/render_probe.gd.uid",
+      "git_blob": "eda0e1db1b698fbfd4cc4f5b71ac68d65b6aab15",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/result_outbox_crash_probe.gd",
+      "git_blob": "f83d72f077443b70f9c6558731e3c3fdc884c5eb",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/result_outbox_crash_probe.gd.uid",
+      "git_blob": "f001e7e96ea66219355e19ee50a8f23f05b55ec9",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/result_outbox_test.gd",
+      "git_blob": "9728ba452d3d9e091be63961e4116ebd311ffa13",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/result_outbox_test.gd.uid",
+      "git_blob": "e5ed88c9d3cb15f6363c8bb15a546515e1b1c7b5",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/resume_auth_loss_test.gd",
+      "git_blob": "f0920b3b6e1f42fe08bac14f69b4cb30c76ae9ed",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/resume_auth_loss_test.gd.uid",
+      "git_blob": "37ac5bd850e0ba2c2582601b691194e29117652a",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reward_bridge_test.gd",
+      "git_blob": "e8aaa062c80e2910cceda3107e4d3ed42a53b149",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/reward_bridge_test.gd.uid",
+      "git_blob": "eb3caf9d5c43138f6e89c495afe26328628d4fb3",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/smoke_presentation_test.gd",
+      "git_blob": "3700d464b867c3ccb12b40bc8e865a6492ee7f97",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/smoke_presentation_test.gd.uid",
+      "git_blob": "1ecc92d49b7b1f7eac20cf612a0e565ccf3b6097",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/smoke_render_probe.gd",
+      "git_blob": "e2216f72c8904251c22eab67582bd82c0f7ca9f7",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/smoke_render_probe.gd.uid",
+      "git_blob": "4de7d64736456b64cd3f0104f80e9e9603115a4d",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/smoke_visual_capture.gd",
+      "git_blob": "80d657246aadb7bb86e7b03a246bef450b78f231",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/smoke_visual_capture.gd.uid",
+      "git_blob": "b7efd7c415f7d4adac2741caa4548d4160ace133",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/snapshot_buffer_test.gd",
+      "git_blob": "cdc93e39a1fd0f0f4c0e503f160a782cf45cfb58",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/snapshot_buffer_test.gd.uid",
+      "git_blob": "4168b85cf0c03305a123309f5341984769a01f60",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/state_privacy_test.gd",
+      "git_blob": "d1fda5b44bf71ad2c178db477df24eb40eb78637",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/state_privacy_test.gd.uid",
+      "git_blob": "fc007ac84d79f3b9f93f100f697a28f35d4132c8",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/touch_test.gd",
+      "git_blob": "8315298878007e159ce60c0bc373977badd9f976",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/touch_test.gd.uid",
+      "git_blob": "268e5dc001bde46b2eaeb59b5a6a5f70ef037840",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/transaction_crash_probe.gd",
+      "git_blob": "ede200db5a6f32c0aeba65b09be67cce8c1fa977",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/transaction_crash_probe.gd.uid",
+      "git_blob": "9c53c471c8e3d2691f839938eb8400bb3e27a422",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/transaction_journal_test.gd",
+      "git_blob": "8ecb954c89972fda55e520e03b38eb4b966c9abc",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/transaction_journal_test.gd.uid",
+      "git_blob": "13f346c682a35fa5800cfd3bd52897d9c3e7b339",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/transaction_lock_probe.gd",
+      "git_blob": "898adbead22757f25c5b63d7b4c89b995eb0c553",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/transaction_lock_probe.gd.uid",
+      "git_blob": "18e624b5f08c9b7d9cae6377ed3bec2f9894090a",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/ux_contract_test.gd",
+      "git_blob": "8590c4b1b8d26cedb0e12428a6510ee150e3b946",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/ux_contract_test.gd.uid",
+      "git_blob": "dce2ef3ff1ad2e2d24752ce3a22d7f1d2310ae47",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/viewmodel_light_probe.gd",
+      "git_blob": "cf37319b052fe4df32fab66e92c531aabd9b2644",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/viewmodel_light_probe.gd.uid",
+      "git_blob": "3b20db0712fade35deb0873644026114751f4a84",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/visual_scene.gd",
+      "git_blob": "d4cdad0be8db065838e03a314910b5c3ee1a7996",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/visual_scene.gd.uid",
+      "git_blob": "35e3642b3dddcd112c26a821f7abb0e02c877c9b",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/weapon_art_capture.gd",
+      "git_blob": "54790ae31b8b43222c9b91e0ba0a97b25a674032",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/weapon_art_capture.gd.uid",
+      "git_blob": "92dfaa0bbdf1d8e460438b1348083b51139e88d6",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/weapon_art_test.gd",
+      "git_blob": "b75626ad3771c987089c34cf964b5b74b2467288",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/weapon_art_test.gd.uid",
+      "git_blob": "ec742a3383ab19ed5886a3fb9c8df03a8fede008",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/weapon_integrity_test.gd",
+      "git_blob": "a2498927ff15c54199568f89449190a05208f091",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/weapon_integrity_test.gd.uid",
+      "git_blob": "2c264b926df3c304882b477874b0fd4af461a49b",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/weapon_motion_capture.gd",
+      "git_blob": "6effad5c3dd2934164d74ea22059daa7deb0f067",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/weapon_motion_capture.gd.uid",
+      "git_blob": "b7763d7e193ae7300b3bbcd89a553b787698ddba",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/weapon_render_benchmark.gd",
+      "git_blob": "c71d7fe5b5ba91d0886abdc85f405238468b92ef",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/weapon_render_benchmark.gd.uid",
+      "git_blob": "b52d093359c73a18f12d18f571b07feecdeea2c6",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/world_test.gd",
+      "git_blob": "412d021c383c7bba7774be0d7398d9deee8a6c36",
+      "mode": "100644"
+    },
+    {
+      "path": "game/tests/world_test.gd.uid",
+      "git_blob": "a8dcb16c12c380d45bc66376e5cecad54896111c",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/build_manifest.py",
+      "git_blob": "3087a172f8a6194d0ce7b6ada078703653dbb626",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/capture_desktop_layouts.py",
+      "git_blob": "8a749bd9474fe27603e41b388cc4966ba0bbce74",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/capture_reload_matrix.sh",
+      "git_blob": "40ad8175b25c1b90d1c86ca223dbeedf33f6d381",
+      "mode": "100755"
+    },
+    {
+      "path": "scripts/diagnose_macos_render.py",
+      "git_blob": "02cd54571acc098383abdea618b8ba360a908c97",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/diagnose_macos_startup.py",
+      "git_blob": "7e9d13ee0ba394a35e693d6b98c34e5c774e310d",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/diagnose_native_input_mode.py",
+      "git_blob": "07adeca365aead7d5b28d2b27810b11e75120e47",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/diagnostics/linux_profile_overhead.gd",
+      "git_blob": "645b713e2d670f09aaea30ed0a6116086f0ec9f7",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/diagnostics/linux_profile_overhead.tscn",
+      "git_blob": "7173fa6746e961698cc980f70188b9973135a117",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/diagnostics/render_feature_probe.gd",
+      "git_blob": "c83f164a81de623541453bd860210bbae18f3066",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/export.py",
+      "git_blob": "6d36a11a839c5eddd01e98effe229e824a220703",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/export.sh",
+      "git_blob": "6280ac67df8f54b9c73cf3609fa7f0d029baf259",
+      "mode": "100755"
+    },
+    {
+      "path": "scripts/export_catalog_fixture.py",
+      "git_blob": "efdf852607b2b308b341e0e47dbbc4c507ed6a83",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/export_ios.py",
+      "git_blob": "a1c9cffbc5a73aa80c772ebf508064b392d4a6ef",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/fixtures/export_integration.gd",
+      "git_blob": "fc2024e15ec2bf88bfc9f86bf1667afbdbe83991",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/fixtures/macos_ordinary_source/default_capture_body.swift.txt",
+      "git_blob": "d9f969a4670a53d201623d4de602512016d668a8",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/fixtures/macos_ordinary_source/reference.json",
+      "git_blob": "913309766284102e53296a99c1bd238d19ad9bd0",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/fixtures/native_log/.gitattributes",
+      "git_blob": "b4a8de09425eed6f5ac606bf25dd02a0ac099af4",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/fixtures/native_log/input-mode.log",
+      "git_blob": "29fe318726e0519bc43130d289692e72e4be232b",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/fixtures/native_log/provenance.json",
+      "git_blob": "952f6829ec1e14ec2d0d7981cebafcffc06614b5",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/fixtures/network_soak.gd",
+      "git_blob": "cbd7213be8c2cd566556309628c87dfe4715687e",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/fixtures/offline_capture_observations.json",
+      "git_blob": "0d9bd7288f505e708ff883d681a3533085828e78",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/fixtures/offline_focus_observations.json",
+      "git_blob": "eab4fa14aeea2ef65e9ded227edc06fc94e6a9ff",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/generate_surfaces.py",
+      "git_blob": "c1208cc86e8b10deee85d0467dc3995cb0c40b40",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/godot.sh",
+      "git_blob": "1c6f6c925d0f46b754028e358a81a582274eddcf",
+      "mode": "100755"
+    },
+    {
+      "path": "scripts/linux_frame_sampler.py",
+      "git_blob": "0e53d94919f9ada6c43d26e435fdfddcb06e2a6d",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/linux_profile_overhead.py",
+      "git_blob": "7f52e724c739918c79e1c8c0547fa897f5f18f03",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/macos_deploy_ocr.py",
+      "git_blob": "e02434fc9777b92cb6f945a8adc7ffe2a42aa6c9",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/macos_native_input.py",
+      "git_blob": "98990989c69393a55a0e6e9ff8f208cf8c321c78",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/macos_ordinary_input.py",
+      "git_blob": "9e11a896c1e4b60772ce4605749b0834b469109d",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/macos_window_capture.swift",
+      "git_blob": "0a95764f8531ea841e495695ecdbece2d642b31d",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/measure_bot_squad_symmetry.py",
+      "git_blob": "96ca40de764257d167341bac042aca2dead0ae91",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/native_approach.py",
+      "git_blob": "ee8e6617a7e9512fc958d7fe95818475ad48bccd",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/native_focus_fence.py",
+      "git_blob": "f578b9f7b72ae50ae262fae883f708054fa1aa1d",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/native_log.py",
+      "git_blob": "4394d69d5813e33184f0e269e5b383061fc21c33",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/native_observation.py",
+      "git_blob": "8c36c7f3e30866c512923da9c94257ad175c857b",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/native_settings_route.py",
+      "git_blob": "f573964dd5596b5b74ffcbc8b8400188f30789b8",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/package_qa_receipts.py",
+      "git_blob": "0410baac440c7b5d31346daf86b484d7383d2aa0",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/postgres_receipt_oracle.py",
+      "git_blob": "343a698dedfbeb22139af136bb200e28bc511fb7",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/probe_macos_input.py",
+      "git_blob": "d4d1a5944446fe808dc6d10cb824e0473f1a31a5",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/profile_import.py",
+      "git_blob": "b6b6e9bf61d454d51de924bd4c1b75b16047f5ec",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/profile_render.sh",
+      "git_blob": "3b65be9eaeca79442035d468925f6fe56c6ae801",
+      "mode": "100755"
+    },
+    {
+      "path": "scripts/qualify_ios_compile.py",
+      "git_blob": "67ced21eee201fe906a9bb376e8c2fc985a22114",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/reload_negative_controls.py",
+      "git_blob": "3f28ec5de194d36e642ff707c93122f5a7329b3d",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/run_native_regressions.py",
+      "git_blob": "843dba19da88a5b2d20bc5977031fbcd29ad776d",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/run_network_campaign.py",
+      "git_blob": "edd59163200ff036c559fd13381fd78b9fe696fe",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/serve-account-match.sh",
+      "git_blob": "c626a3aeb838ed9c07cf2ed29c1abc7a051e60ee",
+      "mode": "100755"
+    },
+    {
+      "path": "scripts/session_brief.sh",
+      "git_blob": "8ae0f172de0a5affdaa9f9bc6559afda606bcebf",
+      "mode": "100755"
+    },
+    {
+      "path": "scripts/setup-android.sh",
+      "git_blob": "a1d19b0bff58d0b2b1483092655ba55817525d56",
+      "mode": "100755"
+    },
+    {
+      "path": "scripts/setup.sh",
+      "git_blob": "c6320c8dc0b55e4988ec7a3cc4e9ca2a82a15d4f",
+      "mode": "100755"
+    },
+    {
+      "path": "scripts/simulate_network.py",
+      "git_blob": "199e2177828925065fed35f7a25e2863a9a933da",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_account_isolated.py",
+      "git_blob": "0ed38bc7a459074cb17635ca97bc3a1cfc1d3e83",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_account_match.py",
+      "git_blob": "bf2b10819f65cfc83a7726f4d7584e3e3a5be9b5",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_account_match_output.py",
+      "git_blob": "a5f9f5f87b64ca92df5575f229d78222b6d8eec6",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_account_network.py",
+      "git_blob": "afc28a50db874d10d1c4d28c7353c500cfb2c5c5",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_account_network_output.py",
+      "git_blob": "d59bdcf5c867693686a413ecfb0b9d58343b9db1",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_activity_provenance.py",
+      "git_blob": "08d7fd43dae9fa1670aac0674f20d3ece8cd8725",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_admission_capacity.py",
+      "git_blob": "a3e47e461d6685407476b580cf1a704895306505",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_bridge_transport.py",
+      "git_blob": "dcc118d8b434faa0e6f472c19f7ac6109ee9bd9c",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_build_manifest.py",
+      "git_blob": "763519e2bab83d8fc06aead292edc6139479537b",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_connection_lifecycle.py",
+      "git_blob": "f46affcfb98fec6a7bd10ee32086f3832656a5a9",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_diagnose_native_input_mode.py",
+      "git_blob": "2a57ea9bf1d7db58afb005043f0ec18750598d4e",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_focus_resume_timing.py",
+      "git_blob": "910905ca23c5aea320d578dfc07c51940d7d9cd6",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_full_account_reconnect.py",
+      "git_blob": "bf91f2d03439a7f074dfa871dd5907c40ab54391",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_handshake_hardening.sh",
+      "git_blob": "be0962fc35aab7a30be572d3a23346abd46b54f0",
+      "mode": "100755"
+    },
+    {
+      "path": "scripts/test_hud_fixture_cleanup.py",
+      "git_blob": "b59b44b39628b53b191d742a3914c8d42d651be7",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_input_freshness.py",
+      "git_blob": "83a7ba2c2038873bff46389f3a45b8a16d96aa4d",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_linux_frame_sampler.py",
+      "git_blob": "d4d57a75e396807e241ad65f3d26765b15187ca8",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_linux_gpu_profile.py",
+      "git_blob": "5e705dacb35a5bc67775234c954840c19aceb133",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_linux_profile_overhead.py",
+      "git_blob": "27a87a20511c3be27d049644da6eb2e03a418cc8",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_macos_deploy_ocr.py",
+      "git_blob": "fa6935caa24486bad70a521748d2b51201359334",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_macos_focus.py",
+      "git_blob": "c9d06c71fb0496bdf63c93b45c9b19039f911d37",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_macos_menu.py",
+      "git_blob": "096863d28d29324444ede8f01bb4954708398268",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_macos_ordinary.py",
+      "git_blob": "0ecc429464dfe2c05e87a03b28cf5c7f130d36c6",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_macos_ordinary_controller.py",
+      "git_blob": "380562c83018bcd4e8a158bc5dd7fac421a8e296",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_macos_ordinary_paths.py",
+      "git_blob": "063aa66aaba312540836d59c927587767519973c",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_macos_ordinary_startup.py",
+      "git_blob": "bf0148661819519a647296feef8408f7a2d6b601",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_macos_render_diagnostic.py",
+      "git_blob": "d3385b37bd225f30b8b5da5da6ccf5115380c2d0",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_macos_screen_identity.py",
+      "git_blob": "2f8ee27ad8eb78484dc4dc7c8698429d76ca33e1",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_native_approach.py",
+      "git_blob": "9b358f64564f0512ff34045beab1316d759bc38d",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_native_economy.py",
+      "git_blob": "d0c348f2e68b57a2bfafa4ebf750204f795f3376",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_native_first_leak.py",
+      "git_blob": "b49f35c745f0a77c2f32b1dcef31ac18d9824794",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_native_focus_fence.py",
+      "git_blob": "73e6004002d47f0ded509b80dfc5876f25e18b31",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_native_log.py",
+      "git_blob": "c316d4be50ad5d21c0e8c021fc5ddfe8ea9df094",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_native_observation.py",
+      "git_blob": "076e6da2d5b8eb402305a259e1a63e41585eecf4",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_native_settings_route.py",
+      "git_blob": "ec2bed259ef0eff4295503ed58a242a43e8837e9",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_native_suite_cleanup.py",
+      "git_blob": "3fec6a0b93ad0c34585cec72abdcc0e2dfbb8dfe",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_native_suite_isolation.py",
+      "git_blob": "ea55e62a86b8ad0a16502b9e69c0e1e202748d0f",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_native_window_lifetime.py",
+      "git_blob": "10d0451fd3e6b17c5e15e2965eee125065b805a1",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_network.sh",
+      "git_blob": "0abe219e9b2809c100ba00248edffdb08fe6968a",
+      "mode": "100755"
+    },
+    {
+      "path": "scripts/test_network_soak.py",
+      "git_blob": "505c53c4d519e0ee11c586cacb9a6eaea1c0339d",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_offline_capture_fences.py",
+      "git_blob": "37066ca150d0bfdc5b1f88e4c019ec152e49a594",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_offline_export_ocr.py",
+      "git_blob": "b79391feb95e64fc83694ee02fd5c7dd1ccaf8e4",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_offline_role_guidance.py",
+      "git_blob": "8930acce08e02c3c4bab2ade0611c9223b118a90",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_package_qa_receipts.py",
+      "git_blob": "6980ddf5e74631c5601b6b32c2b088266e61122d",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_postgres_receipt_guards.py",
+      "git_blob": "9433ec19fe49868fa80400830561a443c13edc5e",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_postgres_receipt_oracle.py",
+      "git_blob": "9caf8f8b6358316b3c17664733b56e3b6ca0f56e",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_postgres_receipt_recovery.py",
+      "git_blob": "60a2ec8c46720b248868ca211b1fa980fd2d8f8a",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_postgres_receipt_refresh.py",
+      "git_blob": "6980feeb48bab86a2ad672354366113cfb735b4a",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_probe_macos_input.py",
+      "git_blob": "3ae39435dc16bd11b1f7abc22a23cca18a6cea5c",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_protocol_compat.sh",
+      "git_blob": "f940354005035308ca2c5813cb3191fd1a605df4",
+      "mode": "100755"
+    },
+    {
+      "path": "scripts/test_qualify_ios_compile.py",
+      "git_blob": "ec384d960425e0682d8313b955842cd388f537d0",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_reload_contact.py",
+      "git_blob": "fd9a450a99d8396e7b1b48eb56476a36c118dec8",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_render.sh",
+      "git_blob": "422c7598c034a9f7252d0a4b4c1b2f9cc96f2138",
+      "mode": "100755"
+    },
+    {
+      "path": "scripts/test_rendered_layout_hud.py",
+      "git_blob": "67caaf5fe483e0a8885fb78a5ab401fa48a3a289",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_result_outbox.py",
+      "git_blob": "b417a5f2187db6bd60bc5a37a01d223cbf7341ee",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_reward_bridge.py",
+      "git_blob": "2ecdb38b9d7ae52b96e0cc470468ddc0c411cb58",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/test_transaction_restart_oracle.py",
+      "git_blob": "eca6801a1e64a74e85b8c20ab11f6eec907d2ca2",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/toolchain.py",
+      "git_blob": "216e38b5c45bace1fef79519ffe99527267b911b",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/validate.sh",
+      "git_blob": "adf2f6c08142e1526dcea8477069783a15fc450f",
+      "mode": "100755"
+    },
+    {
+      "path": "scripts/validate_matrix.py",
+      "git_blob": "3c4de7f4e8768dcb5d66e1cc2af4f1fbae4c257e",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/validate_transaction_restart.py",
+      "git_blob": "eaab554bdf01968abf9dde8f30dae4213b16a138",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/verify_builds.py",
+      "git_blob": "f9b4b936c8327f1ab5dae7cff3a926ac5053ec9c",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/verify_integration_export.py",
+      "git_blob": "99bd4200523971528eb1d71709c56890e595d511",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/verify_macos_menu.py",
+      "git_blob": "b4a87bfa45de3515632c8f1ed2aeda2e5ea8b3d7",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/verify_macos_ordinary.py",
+      "git_blob": "e263e846bb3ba5240d8adc574baaea862f313e85",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/verify_offline_export.py",
+      "git_blob": "f5d4d2a918cb9a085264777e926b4f6b19102ec9",
+      "mode": "100644"
+    },
+    {
+      "path": "scripts/verify_offline_match.py",
+      "git_blob": "e242ed83ddd332c0624df6f2ec59ad689d181b52",
+      "mode": "100644"
+    },
+    {
+      "path": "server/result_outbox.py",
+      "git_blob": "0fe0438c719109b4573eb1019b361e63375d7b4a",
+      "mode": "100644"
+    },
+    {
+      "path": "server/tests/test_result_outbox.py",
+      "git_blob": "370530d97c661fb8cdc2cdea49b45dcf826826bf",
+      "mode": "100644"
+    },
+    {
+      "path": "server/tests/test_supervision.py",
+      "git_blob": "2dd3e1ff5703d4e9e8bf203f9ccaef23be4304b3",
+      "mode": "100644"
+    }
+  ]
+}

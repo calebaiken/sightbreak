@@ -1,0 +1,705 @@
+{
+  "run_id": 39916539053,
+  "cases": [
+    {
+      "scenario": "plant",
+      "checks": {
+        "full_original_fixture_passed": true,
+        "natural_device_resolution_recorded": true,
+        "conservative_next_buy_bound_below_original_12_seconds": true,
+        "next_round_buy_same_local_id_living": true,
+        "clean_normal_close_and_reopen": true,
+        "original_restart_comparison_passed": true,
+        "same_living_attacker_at_role_observation_and_capture": true,
+        "native_role_partial_flag_passed": true
+      },
+      "resolution_observation": {
+        "event": "observed",
+        "seconds": 76.34300000000007,
+        "wall_unix_msec": 1792740346914,
+        "held_keys": [],
+        "label": "Natural objective round resolution",
+        "observed": {
+          "wall_msec": 75568,
+          "drawn_frames": 412,
+          "phase": "post",
+          "round_number": 1,
+          "elapsed": 39.4166666666657,
+          "simulation_tick": 2365,
+          "objective_state": "defused",
+          "interaction_progress": 0.0,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": false,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 3000,
+            "deaths": 1,
+            "grenades": 1,
+            "health": 0.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.800800025463104,
+            "position": [
+              -15.0,
+              6.0761347413063e-05,
+              7.79277944564819
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 0,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.14159256616701
+          }
+        },
+        "native_state": {
+          "target_window": 786736,
+          "foreground_window": 786736,
+          "target_focused": true,
+          "lmb_down": false,
+          "keys_down": {
+            "r": false,
+            "d": false,
+            "w": false
+          },
+          "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+        }
+      },
+      "resolution_capture_action": {
+        "event": "capture_end",
+        "seconds": 76.57799999999997,
+        "wall_unix_msec": 1792740347149,
+        "held_keys": [],
+        "capture": "07-objective-round-resolved",
+        "dimensions": [
+          976,
+          549
+        ],
+        "render_freshness": {
+          "expected_phase": "post",
+          "expected_round": 1,
+          "before_drawn_frames": 412,
+          "ready_drawn_frames": 415,
+          "after_capture_drawn_frames": 415
+        },
+        "observed": {
+          "wall_msec": 75740,
+          "drawn_frames": 415,
+          "phase": "post",
+          "round_number": 1,
+          "elapsed": 39.6333333333324,
+          "simulation_tick": 2378,
+          "objective_state": "defused",
+          "interaction_progress": 0.0,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": false,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 3000,
+            "deaths": 1,
+            "grenades": 1,
+            "health": 0.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.800800025463104,
+            "position": [
+              -15.0,
+              6.0761347413063e-05,
+              7.79277944564819
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 0,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.14159256616701
+          }
+        },
+        "native_state": {
+          "target_window": 786736,
+          "foreground_window": 786736,
+          "target_focused": true,
+          "lmb_down": false,
+          "keys_down": {
+            "r": false,
+            "d": false,
+            "w": false
+          },
+          "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+        }
+      },
+      "next_buy_observation": {
+        "event": "observed",
+        "seconds": 81.71800000000007,
+        "wall_unix_msec": 1792740352291,
+        "held_keys": [],
+        "label": "Natural next round after objective resolution",
+        "observed": {
+          "wall_msec": 80949,
+          "drawn_frames": 463,
+          "phase": "buy",
+          "round_number": 2,
+          "elapsed": 44.6166666666654,
+          "simulation_tick": 2677,
+          "objective_state": "carried",
+          "interaction_progress": 0.0,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 3000,
+            "deaths": 1,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              -4.40000009536743,
+              -0.000745564699172974,
+              -21.0
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.14159256616701
+          }
+        },
+        "native_state": {
+          "target_window": 786736,
+          "foreground_window": 786736,
+          "target_focused": true,
+          "lmb_down": false,
+          "keys_down": {
+            "r": false,
+            "d": false,
+            "w": false
+          },
+          "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+        }
+      },
+      "next_buy_capture_action": {
+        "event": "capture_end",
+        "seconds": 82.07799999999997,
+        "wall_unix_msec": 1792740352656,
+        "held_keys": [],
+        "capture": "08-natural-next-round",
+        "dimensions": [
+          976,
+          549
+        ],
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 2,
+          "before_drawn_frames": 463,
+          "ready_drawn_frames": 466,
+          "after_capture_drawn_frames": 466
+        },
+        "observed": {
+          "wall_msec": 81184,
+          "drawn_frames": 466,
+          "phase": "buy",
+          "round_number": 2,
+          "elapsed": 44.8333333333321,
+          "simulation_tick": 2690,
+          "objective_state": "carried",
+          "interaction_progress": 0.0,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 3000,
+            "deaths": 1,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              -4.40000009536743,
+              -0.000745564699172974,
+              -21.0
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.14159256616701
+          }
+        },
+        "native_state": {
+          "target_window": 786736,
+          "foreground_window": 786736,
+          "target_focused": true,
+          "lmb_down": false,
+          "keys_down": {
+            "r": false,
+            "d": false,
+            "w": false
+          },
+          "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+        }
+      },
+      "next_buy_conservative_wall_upper_bound_seconds": 5.1400000000001,
+      "profile_files_retained": [],
+      "restart_scope": "Incomplete objective round; no training save is created. Frozen controller compares the initial defaults when the file is absent. Clean default-profile restart is not proof of loading an earned disk profile.",
+      "role_observation": {
+        "event": "observed",
+        "seconds": 58.639999999999986,
+        "wall_unix_msec": 1792740329218,
+        "held_keys": [],
+        "label": "Actual attacker HUD restores post-plant role guidance",
+        "observed": {
+          "wall_msec": 57832,
+          "drawn_frames": 272,
+          "phase": "live",
+          "round_number": 1,
+          "elapsed": 25.7666666666665,
+          "simulation_tick": 1546,
+          "objective_state": "planted",
+          "interaction_progress": 0.0,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 1100,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.800800025463104,
+            "position": [
+              -15.0,
+              6.0761347413063e-05,
+              7.79277944564819
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 0,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.14159256616701
+          }
+        },
+        "native_state": {
+          "target_window": 786736,
+          "foreground_window": 786736,
+          "target_focused": true,
+          "lmb_down": false,
+          "keys_down": {
+            "r": false,
+            "d": false,
+            "w": false
+          },
+          "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+        }
+      },
+      "role_capture_action": {
+        "event": "capture_end",
+        "seconds": 59.40600000000006,
+        "wall_unix_msec": 1792740329972,
+        "held_keys": [],
+        "capture": "06b-postplant-role-guidance",
+        "dimensions": [
+          976,
+          549
+        ],
+        "render_freshness": {
+          "expected_phase": "live",
+          "expected_round": 1,
+          "before_drawn_frames": 272,
+          "ready_drawn_frames": 275,
+          "after_capture_drawn_frames": 275
+        },
+        "observed": {
+          "wall_msec": 58570,
+          "drawn_frames": 275,
+          "phase": "live",
+          "round_number": 1,
+          "elapsed": 26.1999999999998,
+          "simulation_tick": 1572,
+          "objective_state": "planted",
+          "interaction_progress": 0.0,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 1100,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -0.800800025463104,
+            "position": [
+              -15.0,
+              6.0761347413063e-05,
+              7.79277944564819
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 0,
+            "team": 0,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -3.14159256616701
+          }
+        },
+        "native_state": {
+          "target_window": 786736,
+          "foreground_window": 786736,
+          "target_focused": true,
+          "lmb_down": false,
+          "keys_down": {
+            "r": false,
+            "d": false,
+            "w": false
+          },
+          "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+        }
+      },
+      "role_status_scope": "The action projection does not serialize ui.status_text. Exact frozen predicate and original native PNG supply the status-text evidence; inspect the PNG directly.",
+      "all_stage_checks_passed": true
+    },
+    {
+      "scenario": "defuse",
+      "checks": {
+        "full_original_fixture_passed": true,
+        "natural_device_resolution_recorded": true,
+        "conservative_next_buy_bound_below_original_12_seconds": true,
+        "next_round_buy_same_local_id_living": true,
+        "clean_normal_close_and_reopen": true,
+        "original_restart_comparison_passed": true
+      },
+      "resolution_observation": {
+        "event": "observed",
+        "seconds": 63.98400000000004,
+        "wall_unix_msec": 1792740421913,
+        "held_keys": [],
+        "label": "Natural objective round resolution",
+        "observed": {
+          "wall_msec": 63055,
+          "drawn_frames": 295,
+          "phase": "post",
+          "round_number": 1,
+          "elapsed": 28.3666666666663,
+          "simulation_tick": 1702,
+          "objective_state": "defused",
+          "interaction_progress": 1.00333333333333,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 3800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -1.20120000839233,
+            "position": [
+              -17.1222343444824,
+              0.000156247988343239,
+              9.0
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 0,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -1.57079994678497
+          }
+        },
+        "native_state": {
+          "target_window": 5308528,
+          "foreground_window": 5308528,
+          "target_focused": true,
+          "lmb_down": false,
+          "keys_down": {
+            "r": false,
+            "d": false,
+            "w": false
+          },
+          "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+        }
+      },
+      "resolution_capture_action": {
+        "event": "capture_end",
+        "seconds": 64.26599999999996,
+        "wall_unix_msec": 1792740422189,
+        "held_keys": [],
+        "capture": "07-objective-round-resolved",
+        "dimensions": [
+          976,
+          549
+        ],
+        "render_freshness": {
+          "expected_phase": "post",
+          "expected_round": 1,
+          "before_drawn_frames": 295,
+          "ready_drawn_frames": 298,
+          "after_capture_drawn_frames": 300
+        },
+        "observed": {
+          "wall_msec": 63548,
+          "drawn_frames": 300,
+          "phase": "post",
+          "round_number": 1,
+          "elapsed": 28.7999999999996,
+          "simulation_tick": 1728,
+          "objective_state": "defused",
+          "interaction_progress": 1.00333333333333,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 3800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": -1.20120000839233,
+            "position": [
+              -17.1222343444824,
+              0.000156247988343239,
+              9.0
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 0,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": -1.57079994678497
+          }
+        },
+        "native_state": {
+          "target_window": 5308528,
+          "foreground_window": 5308528,
+          "target_focused": true,
+          "lmb_down": false,
+          "keys_down": {
+            "r": false,
+            "d": false,
+            "w": false
+          },
+          "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+        }
+      },
+      "next_buy_observation": {
+        "event": "observed",
+        "seconds": 69.17200000000003,
+        "wall_unix_msec": 1792740427097,
+        "held_keys": [],
+        "label": "Natural next round after objective resolution",
+        "observed": {
+          "wall_msec": 68387,
+          "drawn_frames": 339,
+          "phase": "buy",
+          "round_number": 2,
+          "elapsed": 33.1333333333327,
+          "simulation_tick": 1988,
+          "objective_state": "carried",
+          "interaction_progress": 0.0,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 3800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              -4.40000009536743,
+              0.000195310218259692,
+              20.5
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.0
+          }
+        },
+        "native_state": {
+          "target_window": 5308528,
+          "foreground_window": 5308528,
+          "target_focused": true,
+          "lmb_down": false,
+          "keys_down": {
+            "r": false,
+            "d": false,
+            "w": false
+          },
+          "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+        }
+      },
+      "next_buy_capture_action": {
+        "event": "capture_end",
+        "seconds": 69.51599999999996,
+        "wall_unix_msec": 1792740427439,
+        "held_keys": [],
+        "capture": "08-natural-next-round",
+        "dimensions": [
+          976,
+          549
+        ],
+        "render_freshness": {
+          "expected_phase": "buy",
+          "expected_round": 2,
+          "before_drawn_frames": 339,
+          "ready_drawn_frames": 341,
+          "after_capture_drawn_frames": 341
+        },
+        "observed": {
+          "wall_msec": 68510,
+          "drawn_frames": 341,
+          "phase": "buy",
+          "round_number": 2,
+          "elapsed": 33.3499999999994,
+          "simulation_tick": 2001,
+          "objective_state": "carried",
+          "interaction_progress": 0.0,
+          "local_contribution": 1,
+          "local_actor": {
+            "alive": true,
+            "ammo": 15,
+            "assists": 0,
+            "credits": 3800,
+            "deaths": 0,
+            "grenades": 1,
+            "health": 100.0,
+            "id": 1,
+            "inventory": [
+              "sidearm"
+            ],
+            "kills": 0,
+            "pitch": 0.0,
+            "position": [
+              -4.40000009536743,
+              0.000195310218259692,
+              20.5
+            ],
+            "reload": 0.0,
+            "reserve": 60,
+            "smokes": 1,
+            "team": 1,
+            "velocity": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "weapon": "sidearm",
+            "yaw": 0.0
+          }
+        },
+        "native_state": {
+          "target_window": 5308528,
+          "foreground_window": 5308528,
+          "target_focused": true,
+          "lmb_down": false,
+          "keys_down": {
+            "r": false,
+            "d": false,
+            "w": false
+          },
+          "state_source": "GetForegroundWindow/GetAsyncKeyState; zero is not delivery proof"
+        }
+      },
+      "next_buy_conservative_wall_upper_bound_seconds": 4.906000000000063,
+      "profile_files_retained": [],
+      "restart_scope": "Incomplete objective round; no training save is created. Frozen controller compares the initial defaults when the file is absent. Clean default-profile restart is not proof of loading an earned disk profile.",
+      "all_stage_checks_passed": true
+    }
+  ],
+  "all_stage_checks_passed": true,
+  "scope": "Read-only reconstruction of transferred original actions/events/results. No engine or OCR runs."
+}

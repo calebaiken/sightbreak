@@ -1,0 +1,186 @@
+{
+  "checks": {
+    "run_source_event_attempt": true,
+    "only_diagnostic_job_executed": true,
+    "exact_source_receipts_agree": true,
+    "bound_source_fingerprints": {
+      "verify_macos_ax_read_only.py": true,
+      "probe_macos_ax.py": true,
+      "macos_ax_contract.py": true,
+      "macos_ax_appkit.py": true,
+      "macos_window_capture.swift": true
+    },
+    "source_clean_receipt": true,
+    "all_capture_retained_hashes": true,
+    "accepted_capture_hashes": true,
+    "ax_file_digest": true,
+    "ax_log_identical_json": true,
+    "pure_original_request_validator": true,
+    "pure_original_native_menu_binding": true,
+    "independent_owned_rows_binding": true,
+    "expected_rejections": {
+      "collection": {
+        "rejected": true,
+        "message": "AX traversal did not complete"
+      },
+      "ordinary_point_eight_deploy": {
+        "rejected": true,
+        "message": "Expected one exact confident in-bounds native label: DEPLOY \u00b7 OFFLINE 5V5"
+      }
+    },
+    "original_app_inventory_matches_manifest": true,
+    "staged_original_entries_unchanged": true,
+    "only_private_override_added": true,
+    "private_override_hash": true,
+    "binary_and_pck_receipt_agree": true,
+    "default_userdata_unchanged": true,
+    "private_profile_absent": true,
+    "no_retained_stock_trace": true,
+    "no_finalization_failures": true,
+    "all_ten_groups_gone_without_signal": true,
+    "strict_native_logs_clear": true,
+    "all_seven_png_dimensions_agree": true,
+    "observed_stage_bounds_hold": true,
+    "zero_events_prompts_one_focus": true,
+    "read_api_allowlist": true,
+    "no_native_derived_replacement": true
+  },
+  "durations": {
+    "whole_seconds": 51.57979066600001,
+    "compile_upper_bound_seconds": 18.350414874999956,
+    "first_owned_window_absolute_seconds": 28.450390416000005,
+    "menu_upper_bound_from_first_owned_to_flow_end_seconds": 23.129400250000003,
+    "observed_focus_request_to_focus_observed_seconds": 0.3283034589999829,
+    "capture_seconds": {
+      "00-startup-menu-1": 3.863420667000014,
+      "00-startup-menu-2": 2.257855333000009,
+      "00-startup-menu-3": 2.47911795899995,
+      "00-startup-menu-4": 2.3567498749999913,
+      "00-startup-menu-5": 2.272093792000021,
+      "00-startup-menu-6": 3.0588103750000073,
+      "01-focused-menu": 2.723181959000044
+    },
+    "observer_child_receipt_seconds": 0.5379954999999654,
+    "observer_parent_elapsed_seconds": 0.8696166249999919,
+    "ordinary_close_upper_bound_from_ax_command_seconds": 2.797465250000016
+  },
+  "pngs": [
+    {
+      "name": "00-startup-menu-1.png",
+      "bytes": 39395,
+      "sha256": "e55c3a98f6e09b34e3a5768b41fbc605a2475776fd5193b7420eba62d8f37bf1",
+      "dimensions": [
+        1024,
+        684
+      ],
+      "receipt_dimensions_agree": true,
+      "passed": true
+    },
+    {
+      "name": "00-startup-menu-2.png",
+      "bytes": 38389,
+      "sha256": "735ee3af8eb1d16283fbf26c89c9591581ecf1ed984fd5d3e9ae2f4e0c3674b1",
+      "dimensions": [
+        1004,
+        664
+      ],
+      "receipt_dimensions_agree": true,
+      "passed": true
+    },
+    {
+      "name": "00-startup-menu-3.png",
+      "bytes": 38389,
+      "sha256": "735ee3af8eb1d16283fbf26c89c9591581ecf1ed984fd5d3e9ae2f4e0c3674b1",
+      "dimensions": [
+        1004,
+        664
+      ],
+      "receipt_dimensions_agree": true,
+      "passed": true
+    },
+    {
+      "name": "00-startup-menu-4.png",
+      "bytes": 38389,
+      "sha256": "735ee3af8eb1d16283fbf26c89c9591581ecf1ed984fd5d3e9ae2f4e0c3674b1",
+      "dimensions": [
+        1004,
+        664
+      ],
+      "receipt_dimensions_agree": true,
+      "passed": true
+    },
+    {
+      "name": "00-startup-menu-5.png",
+      "bytes": 38389,
+      "sha256": "735ee3af8eb1d16283fbf26c89c9591581ecf1ed984fd5d3e9ae2f4e0c3674b1",
+      "dimensions": [
+        1004,
+        664
+      ],
+      "receipt_dimensions_agree": true,
+      "passed": true
+    },
+    {
+      "name": "00-startup-menu-6.png",
+      "bytes": 392586,
+      "sha256": "54b99ddbc80a69f13e7f7decc82ec9247cb15aa4eedfe442b68de47c654c9d48",
+      "dimensions": [
+        1004,
+        664
+      ],
+      "receipt_dimensions_agree": true,
+      "passed": true
+    },
+    {
+      "name": "01-focused-menu.png",
+      "bytes": 386237,
+      "sha256": "9abb4debf0e04f4688dbe1357977ade41eda46d8f9ffd892dbd2f19e3078a051",
+      "dimensions": [
+        1004,
+        664
+      ],
+      "receipt_dimensions_agree": true,
+      "passed": true
+    }
+  ],
+  "log_strict_signatures": {
+    "macos/export.log": false,
+    "macos/export-run.json.log": false,
+    "macos/import.log": false,
+    "ax-read-only/01-focused-menu.log": false,
+    "ax-read-only/00-startup-menu-1.log": false,
+    "ax-read-only/00-startup-menu-2.log": false,
+    "ax-read-only/client.log": false,
+    "ax-read-only/ax-observer.log": false,
+    "ax-read-only/00-startup-menu-5.log": false,
+    "ax-read-only/00-startup-menu-3.log": false,
+    "ax-read-only/compile-capture-helper.log": false,
+    "ax-read-only/engine.log": false,
+    "ax-read-only/00-startup-menu-6.log": false,
+    "ax-read-only/00-startup-menu-4.log": false
+  },
+  "observed_ax": {
+    "receipt_bytes": 2083,
+    "snapshots": 1,
+    "nodes": 3,
+    "max_depth": 1,
+    "api_calls": 75,
+    "observer_trusted": true,
+    "failure": {
+      "message": "Required AX attribute unavailable: AXTitle code=-25212",
+      "type": "RuntimeError"
+    },
+    "complete": false
+  },
+  "source_reported_hashes": {
+    "source_dirty": false,
+    "source_validation_sha256": "7b62d3ce7e6b0b57fc150d930f923e8d044db1b0393adc7aedf90822a70c39ea",
+    "source_commit": "d6cb78aa4b0bc5a8265d9b82a0d379b4ee386e53",
+    "source_game_tree": "55691684d31d44f1680141954bbe530443de9d1f",
+    "source_content_sha256": "bcb872f6998ed8504c852dee354ab0acf5b6f19e58e40717267a1927e6d68a50",
+    "source_game_dirty": false
+  },
+  "binary_and_pck_transferred": false,
+  "individual_native_call_elapsed_and_CF_release_counts_recorded": false,
+  "original_job_log_sha256": "96ed57e769841fd0a2b4df798b8e976a16c01154820d35331d57adf57612091e"
+}

@@ -1,0 +1,272 @@
+{
+  "source_commit": "49ae54b0e4f5d880bdf06e4eb783a616b2dff684",
+  "run_id": 39940242244,
+  "records": [
+    {
+      "name": "source-Windows-recomputed",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_windows_source.py",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023",
+        ".local/native49/receipts",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/source-Windows-recomputed.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 8.518428577001032,
+      "log_bytes": 29,
+      "log_sha256": "9aeada68f3b0687361bffbbe4723f5a2e0aa2da2948d6fbc528c43b108530535"
+    },
+    {
+      "name": "raw-recomputed",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/verify_receipts.py",
+        ".local/native49/receipts",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/raw-recomputed.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 4.391795586998342,
+      "log_bytes": 519,
+      "log_sha256": "3b9d8026b5fb619815809521d21752e0b321c3e114c149e0664f0a96dde84d1f"
+    },
+    {
+      "name": "native-commands-recomputed",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_native_commands.py",
+        ".local/native49/receipts",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/native-commands-recomputed.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 4.6181717600011325,
+      "log_bytes": 82,
+      "log_sha256": "254ccae09101fa4f6dfbbd4ca0cb2fbe1af9e1cafdfa04da211f93fc9de2f66e"
+    },
+    {
+      "name": "input-schedules-recomputed",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_input_schedules.py",
+        ".local/native49/receipts",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/input-schedules-recomputed.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.5036077999975532,
+      "log_bytes": 292,
+      "log_sha256": "1367efd6849db5389b4b8314e2ee8b7bb6935a78edf2c86df4f120f4fe69eee8"
+    },
+    {
+      "name": "route-pulses-recomputed",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_route_pulses.py",
+        ".local/native49/receipts",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/route-pulses-recomputed.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.5240974160005862,
+      "log_bytes": 142,
+      "log_sha256": "99dd3925438e4318601057fe09ee0d50e9be0c9582d08f7d8d652d6df35402c8"
+    },
+    {
+      "name": "exhausted-observable-recomputed",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_exhausted_native.py",
+        ".local/native49/receipts/evidence/regressions/bot_exhausted_primary.log",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/exhausted-observable-recomputed.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 4.830637006998586,
+      "log_bytes": 243,
+      "log_sha256": "f49becb4c6edea776a547b4ee70692ee63b2b01bf19af58f3c9a3d8896a2f5c5"
+    },
+    {
+      "name": "journey-OCR-recomputed",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_journey_ocr.py",
+        ".local/native49/receipts",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/journey-OCR-recomputed.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.34276816800047527,
+      "log_bytes": 61,
+      "log_sha256": "264caa8900c54537003c43ec5c65044dbd23e851d63239ab516f280c13628c89"
+    },
+    {
+      "name": "phase-captures-recomputed",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_phase_captures.py",
+        ".local/native49/receipts",
+        "--full",
+        ".local/native49/full",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/phase-captures-recomputed.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.35105619500245666,
+      "log_bytes": 167,
+      "log_sha256": "f7ecb73fa83cecb971ed9161f2b9865aaad6ee62f001455cddf175f82a2dd7b1"
+    },
+    {
+      "name": "focus-actual-recomputed",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_focus_actual.py",
+        ".local/native49/receipts",
+        ".local/native49/full",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/focus-actual-recomputed.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.4423503990001336,
+      "log_bytes": 702,
+      "log_sha256": "a1ba353bffb6cc7f0ea388f41bc09b0468455b53eaddcd31a0797eb84c8cbb77"
+    },
+    {
+      "name": "objective-stages-recomputed",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_objective_stages.py",
+        ".local/native49/receipts",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/objective-stages-recomputed.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.29216399700089823,
+      "log_bytes": 150,
+      "log_sha256": "0038a80a31c1bc8111e9f1da6a4f063e964de9872a68f91cc1e5416b45b4df7b"
+    },
+    {
+      "name": "settings-route-recomputed",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_settings_route.py",
+        ".local/native49/receipts",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/settings-route-recomputed.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.3267401670018444,
+      "log_bytes": 146,
+      "log_sha256": "8763856986cda7f468381ac9d54f5195dc9d260055452b25c95c0fee1e505841"
+    },
+    {
+      "name": "failure-diagnostics",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_failure_diagnostics.py",
+        ".local/native49/receipts",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/failure-diagnostics.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.5423107900023751,
+      "log_bytes": 1519,
+      "log_sha256": "78e08c38234d63dc6f8d3ab8208f6c02219d665e1914688e6b33e1b02bb3553f"
+    },
+    {
+      "name": "raw-sources-logs-recomputed",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_raw_sources_logs.py",
+        ".local/native49/receipts",
+        "--source-audit",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/source-Windows-recomputed.json",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/raw-sources-logs-recomputed.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 3.428793859999132,
+      "log_bytes": 738,
+      "log_sha256": "a650bdf3fb008ef6f65162d13267d3062a926ceb377268e896f6d63a32776785"
+    },
+    {
+      "name": "export-identity-recomputed",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_export_identity.py",
+        ".local/native49/receipts",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/source-Windows-recomputed.json",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/export-identity-recomputed.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.2981765370022913,
+      "log_bytes": 197,
+      "log_sha256": "113fbd9fe53e959a6fbffcb904dafc94bf4b7289ea3fc9d819547edfcbae3626"
+    },
+    {
+      "name": "full-QA-crosscheck",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_full_qa.py",
+        ".local/native49/receipts",
+        ".local/native49/full",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/full-QA-crosscheck.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.805394217997673,
+      "log_bytes": 115,
+      "log_sha256": "79ae7ee19c57cb5ab016ef15279138e24010e823a72a4382f5a610ac55472f52"
+    },
+    {
+      "name": "gunplay-recomputed",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_gunplay.py",
+        ".local/native49/receipts/evidence/regressions/gunplay_rules.log",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/gunplay-recomputed.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.42542328300260124,
+      "log_bytes": 51,
+      "log_sha256": "0b817d14790d18c1aebd6787694f6a1c590d4e187110dd3d20e7468c465fd72f"
+    },
+    {
+      "name": "dry-observable-recomputed",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/recompute_dry_observable.py",
+        "--mode",
+        "candidate",
+        ".local/native49/receipts/evidence/regressions/bot_dry_weapon.log",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/dry-observable-recomputed.json"
+      ],
+      "exit": 0,
+      "wall_seconds": 0.22785623600066174,
+      "log_bytes": 445,
+      "log_sha256": "618682a002174dd35008c0202f9cfe9ad5448e4b642abff6331be4567c3ffe45"
+    },
+    {
+      "name": "runtime-completeness",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "/workspace/reviews/windows-pulse-native-fresh-20261023/docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit_runtime_complete.py",
+        ".local/native49/receipts",
+        ".local/native49/full",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1",
+        "--output",
+        "docs/reports/gauntlet/windows-pulse-native-fresh-20261023/audit-r1/runtime-completeness.json"
+      ],
+      "exit": 1,
+      "wall_seconds": 0.10367472999860183,
+      "log_bytes": 410,
+      "log_sha256": "eab7f4c304528b0885dd42ea34f495efa53f7a419d06f7c4c323f1b713ad9efa"
+    }
+  ],
+  "scope": "Read-only pure review of retained native original outputs; no engine, OCR, native input, compiler or CI."
+}

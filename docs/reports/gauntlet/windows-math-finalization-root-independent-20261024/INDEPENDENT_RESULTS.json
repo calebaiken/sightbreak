@@ -1,0 +1,52 @@
+{
+  "baseline-adapted": {
+    "source_cases": 15,
+    "matches": 7
+  },
+  "own-r2-adapted": {
+    "source_cases": 15,
+    "matches": 15
+  },
+  "depth-adapted": {
+    "source_cases": 15,
+    "matches": 15
+  },
+  "own-r2-selected": {
+    "methods": 96,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "forbidden_calls": []
+  },
+  "depth-selected": {
+    "methods": 96,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "forbidden_calls": []
+  },
+  "own-r2-coupled": {
+    "cases": 3,
+    "matched": 3
+  },
+  "depth-coupled": {
+    "cases": 3,
+    "matched": 3
+  },
+  "changed_definitions": [
+    "WindowsJob.close_held",
+    "PipeRetention.close",
+    "Audit.receipt",
+    "supervise",
+    "cleanup_unreturned",
+    "execute_prepared"
+  ],
+  "new_definitions": [
+    "ResourceFinalizationError",
+    "close_stream_resources",
+    "finalization_error",
+    "finalize_resources"
+  ],
+  "public_collect_AST_exact": true,
+  "scope": "Independent source/finalization/audit comparison only; no native/SDK/API admission"
+}

@@ -1,0 +1,396 @@
+{
+  "candidate": "7d8ec7dda37764e0f45fd2ea1e8d330f84bc2508",
+  "source_root": "/workspace/reviews/windows-input-reader-r5-independent-20261024",
+  "reader_path": "docs/reports/gauntlet/windows-input-reader-r5-independent-20261024/controls/r4-analyze_input_consumption.py",
+  "reader_sha256": "207beebe124a1ad5928a154fb77c99d2e43864ce236751dc7ce985878181bcb2",
+  "cpu_affinity": [
+    4
+  ],
+  "cases": 30,
+  "passed": 11,
+  "false_accepts": [
+    "coalesced_single_already_acknowledged",
+    "coalesced_single_above_window",
+    "coalesced_accepted_wrong_epoch",
+    "coalesced_accepted_over_batch_cap",
+    "direct_single_command_inflates_queue_2",
+    "direct_single_command_inflates_queue_120",
+    "ack_advances_without_consumption",
+    "ack_zero_without_consumption",
+    "ack_clears_without_reset",
+    "queue_appears_without_acceptance",
+    "cached_snapshot_disappears",
+    "cached_snapshot_restamped",
+    "cached_snapshot_header_changes",
+    "cache_precedes_first_applied_counter",
+    "first_snapshot_time_3999",
+    "partial_rejected_state_survives_replacement",
+    "live_binding_cannot_reset_rejected_state",
+    "zero_peers_without_epoch_cannot_reset",
+    "coalesced_latest_time_offset_-1"
+  ],
+  "false_rejects": [],
+  "results": [
+    {
+      "name": "admitted_declared_pipeline",
+      "expected": true,
+      "actual": true,
+      "met_expectation": true,
+      "paired_control": null,
+      "source_basis": "Retained schema-positive fixture; no engine-model claim.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "f72de48f96e1f21f9055651cab25d99959de26b1c4df99e336941c0a3f0b6b42"
+      }
+    },
+    {
+      "name": "coalesced_single_fresh",
+      "expected": true,
+      "actual": true,
+      "met_expectation": true,
+      "paired_control": null,
+      "source_basis": "ACK1, fresh2 can be staged; identical fire/reload/moving edge fields permit coalescing.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "d259d8582559712a4016e9a3b95972692da9b6d000341d1672ac5bfbc48530e2"
+      }
+    },
+    {
+      "name": "coalesced_single_already_acknowledged",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "coalesced_single_fresh",
+      "source_basis": "InputStream14-47 requires correct epoch, count<=12, every sequence<=ACK+120 and at least one sequence>ACK, including hidden accept calls.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "1cf500470eb336565b62a576a2da80e84b8e7523528fb5cf1e0d025849bb52ce"
+      }
+    },
+    {
+      "name": "coalesced_single_above_window",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "coalesced_single_fresh",
+      "source_basis": "InputStream14-47 requires correct epoch, count<=12, every sequence<=ACK+120 and at least one sequence>ACK, including hidden accept calls.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "a9369dd04630c7dcc4becb40235233d77cf54b84fb668f2e401dc3764cd6cea6"
+      }
+    },
+    {
+      "name": "coalesced_accepted_wrong_epoch",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "coalesced_single_fresh",
+      "source_basis": "InputStream14-47 requires correct epoch, count<=12, every sequence<=ACK+120 and at least one sequence>ACK, including hidden accept calls.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "ee418eee296abfda835556650c402680c0663fcf5a89f487ebe0eccdfce2eb6e"
+      }
+    },
+    {
+      "name": "coalesced_accepted_over_batch_cap",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "coalesced_single_fresh",
+      "source_basis": "InputStream14-47 requires correct epoch, count<=12, every sequence<=ACK+120 and at least one sequence>ACK, including hidden accept calls.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "d4e3b645ed27a4e79021ad5dc4994bdfc119a1e6e1e4db9c4beef012c8b1ae1c"
+      }
+    },
+    {
+      "name": "coalesced_stale_endpoints_hidden_fresh_middle",
+      "expected": true,
+      "actual": true,
+      "met_expectation": true,
+      "paired_control": null,
+      "source_basis": "Possible commands[stale1,false;fresh2,true;stale1,false] expose1/1,count3,fire1; middle fresh sequence is unobserved.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "aad2763daac4e2b72d6495abab21f1e4be1792f47d67cc4c3493bac0730c0ad6"
+      }
+    },
+    {
+      "name": "direct_single_command_inflates_queue_2",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "admitted_declared_pipeline",
+      "source_basis": "A synchronous count1 accept after the direct receive observed queue0 can add at most one unique pending command.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "538661fc726619c6816e59a7d5559bf39167f815db21a821f98321ffeaba621f"
+      }
+    },
+    {
+      "name": "direct_single_command_inflates_queue_120",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "admitted_declared_pipeline",
+      "source_basis": "A synchronous count1 accept after the direct receive observed queue0 can add at most one unique pending command.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "ab44b836d4c8de1d8b8d868c0d119bee3641c675e76883e43e19ea17cab23732"
+      }
+    },
+    {
+      "name": "ack_advances_without_consumption",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "unchanged_tick",
+      "source_basis": "Same live binding/epoch, unchanged accept/consume counters/latest: pop alone updates ACK, accept alone adds queued commands; forget/reset would need an observed lifecycle/epoch boundary.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "b817a066ac0a48f80703de2b9c00bd9a3b4564f6fdfd37c1e8ea67216e2e9adc"
+      }
+    },
+    {
+      "name": "ack_zero_without_consumption",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "unchanged_tick",
+      "source_basis": "Same live binding/epoch, unchanged accept/consume counters/latest: pop alone updates ACK, accept alone adds queued commands; forget/reset would need an observed lifecycle/epoch boundary.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "d100565007e3e8dbfe58f64f8ef8aeda8b29c1540dd1d17abb9acdc063cc1897"
+      }
+    },
+    {
+      "name": "ack_clears_without_reset",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "unchanged_tick",
+      "source_basis": "Same live binding/epoch, unchanged accept/consume counters/latest: pop alone updates ACK, accept alone adds queued commands; forget/reset would need an observed lifecycle/epoch boundary.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "5dbac5244ad3de76fb0057c9246984e6744bba2a311913c5bea860e761dd8121"
+      }
+    },
+    {
+      "name": "queue_appears_without_acceptance",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "unchanged_tick",
+      "source_basis": "Same live binding/epoch, unchanged accept/consume counters/latest: pop alone updates ACK, accept alone adds queued commands; forget/reset would need an observed lifecycle/epoch boundary.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "ff7520bc3cd0e8687330035a1e71362f0644aec1599da563dab1c67d74dddeea"
+      }
+    },
+    {
+      "name": "unchanged_tick",
+      "expected": true,
+      "actual": true,
+      "met_expectation": true,
+      "paired_control": null,
+      "source_basis": "Unchanged ACK/queue/latest with another ordinary authority tick is possible.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "3f0340019ddeb0f8a913943515ab9d990eaf09ad705848a3ddb22bcc12fb33fb"
+      }
+    },
+    {
+      "name": "cached_snapshot_disappears",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "admitted_declared_pipeline",
+      "source_basis": "Match1283-1289 writes cached snapshot and latest from the same header at a counted snapshot_applied call; unchanged count/latest cannot clear, restamp or alter the cached copy.",
+      "inputs": {
+        "client_sha256": "14ea592f6c0520c193ed4933c7b87e9515e2ccf6c098ac7b2c63c653294ff123",
+        "authority_sha256": "f72de48f96e1f21f9055651cab25d99959de26b1c4df99e336941c0a3f0b6b42"
+      }
+    },
+    {
+      "name": "cached_snapshot_restamped",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "admitted_declared_pipeline",
+      "source_basis": "Match1283-1289 writes cached snapshot and latest from the same header at a counted snapshot_applied call; unchanged count/latest cannot clear, restamp or alter the cached copy.",
+      "inputs": {
+        "client_sha256": "ed54836785118262580e2336b71a6c09d7ffb18aadd876ff43e7820de06aac84",
+        "authority_sha256": "f72de48f96e1f21f9055651cab25d99959de26b1c4df99e336941c0a3f0b6b42"
+      }
+    },
+    {
+      "name": "cached_snapshot_header_changes",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "admitted_declared_pipeline",
+      "source_basis": "Match1283-1289 writes cached snapshot and latest from the same header at a counted snapshot_applied call; unchanged count/latest cannot clear, restamp or alter the cached copy.",
+      "inputs": {
+        "client_sha256": "2a0add49e3a96f3c64c212f37343d5953e891fe09ae10101f1919f03b7be6c35",
+        "authority_sha256": "f72de48f96e1f21f9055651cab25d99959de26b1c4df99e336941c0a3f0b6b42"
+      }
+    },
+    {
+      "name": "cache_precedes_first_applied_counter",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "admitted_declared_pipeline",
+      "source_basis": "The cache starts empty and is written only after the snapshot_applied counter increment.",
+      "inputs": {
+        "client_sha256": "e1cccbf78701101f698e62bc4072b447a53bbbc09dedeca0b219e2cdfd3b8a9c",
+        "authority_sha256": "f72de48f96e1f21f9055651cab25d99959de26b1c4df99e336941c0a3f0b6b42"
+      }
+    },
+    {
+      "name": "first_snapshot_time_3999",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "admitted_declared_pipeline",
+      "source_basis": "Welcome4000 precedes apply_snapshot; first counted call lies within[4000,5000], then its cache persists.",
+      "inputs": {
+        "client_sha256": "26498ffc969c8dd8065fb649a905f9f77040403e7d668c826b299d48d29dacb8",
+        "authority_sha256": "f72de48f96e1f21f9055651cab25d99959de26b1c4df99e336941c0a3f0b6b42"
+      }
+    },
+    {
+      "name": "first_snapshot_time_4500",
+      "expected": true,
+      "actual": true,
+      "met_expectation": true,
+      "paired_control": "admitted_declared_pipeline",
+      "source_basis": "Welcome4000 precedes apply_snapshot; first counted call lies within[4000,5000], then its cache persists.",
+      "inputs": {
+        "client_sha256": "a6b69164b31e86ef62273b045b12994c43ec985d7b25574c48cc3a549b261c1e",
+        "authority_sha256": "f72de48f96e1f21f9055651cab25d99959de26b1c4df99e336941c0a3f0b6b42"
+      }
+    },
+    {
+      "name": "two_coalesced_rejections_same_stream",
+      "expected": true,
+      "actual": true,
+      "met_expectation": true,
+      "paired_control": null,
+      "source_basis": "Two malformed receives each increment stream state and observer counter; neither changes queue/ACK.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "0281d1b15b43995cd4393860d93da352d79ef720505fb6ae57f239e10b88b945"
+      }
+    },
+    {
+      "name": "full_stream_replacement_reset",
+      "expected": true,
+      "actual": true,
+      "met_expectation": true,
+      "paired_control": "full_stream_replacement_reset",
+      "source_basis": "Without new rejects, old rejected2 either survives no replacement or a new SBInputStream resets it to0; no source operation decrements2 to1.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "ba985f0485bb3bf4e44e45a3e49a9fe5d60c2decda3d0d0137c5a8793fe675e5"
+      }
+    },
+    {
+      "name": "epoch_change_retains_old_stream_state",
+      "expected": true,
+      "actual": true,
+      "met_expectation": true,
+      "paired_control": "full_stream_replacement_reset",
+      "source_basis": "Without new rejects, old rejected2 either survives no replacement or a new SBInputStream resets it to0; no source operation decrements2 to1.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "3344b48917630a936fde143660bda7de65aa1b061cdfda4131b44787d0285cda"
+      }
+    },
+    {
+      "name": "partial_rejected_state_survives_replacement",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "full_stream_replacement_reset",
+      "source_basis": "Without new rejects, old rejected2 either survives no replacement or a new SBInputStream resets it to0; no source operation decrements2 to1.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "473a6dce17bba4fa9ced8bb448f2c8e808ffe44bb10ebfd070fadfd1b984e683"
+      }
+    },
+    {
+      "name": "live_binding_cannot_reset_rejected_state",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "two_coalesced_rejections_same_stream",
+      "source_basis": "Stream replacement requires zero bound peers; live binding plus epoch advance cannot clear rejected count.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "a08d05635b541249ce888aefb79707767948a85c9d8817d2f9fe23f8612331b2"
+      }
+    },
+    {
+      "name": "zero_peers_without_epoch_cannot_reset",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "full_stream_replacement_reset",
+      "source_basis": "A replacement advances authority_epoch; without that change rejected state cannot drop.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "8873cdd0e98dffedf45028b74aae5f2b945886bc1e6ce65d0b2d9b46835998aa"
+      }
+    },
+    {
+      "name": "coalesced_latest_time_offset_-1",
+      "expected": false,
+      "actual": true,
+      "met_expectation": false,
+      "paired_control": "coalesced_single_fresh",
+      "source_basis": "New latest call must lie between prior emitted wall11000 and current12000, inclusive.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "c44e213dfeb0078431ebcabfa080deb46e881f9d59f52af537d5c0b6ee8f0696"
+      }
+    },
+    {
+      "name": "coalesced_latest_time_offset_0",
+      "expected": true,
+      "actual": true,
+      "met_expectation": true,
+      "paired_control": "coalesced_single_fresh",
+      "source_basis": "New latest call must lie between prior emitted wall11000 and current12000, inclusive.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "1e0c7d93366496f07211d6e66de49844d3fb71b360a2f107cfbd984c06fcbcc0"
+      }
+    },
+    {
+      "name": "coalesced_latest_time_offset_500",
+      "expected": true,
+      "actual": true,
+      "met_expectation": true,
+      "paired_control": "coalesced_single_fresh",
+      "source_basis": "New latest call must lie between prior emitted wall11000 and current12000, inclusive.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "6e24929aa096e7c59a9cd5b70d2f7dd0b083107e9dc7de519331f8c8256a4d15"
+      }
+    },
+    {
+      "name": "coalesced_latest_time_offset_1001",
+      "expected": false,
+      "actual": false,
+      "met_expectation": true,
+      "paired_control": "coalesced_single_fresh",
+      "source_basis": "New latest call must lie between prior emitted wall11000 and current12000, inclusive.",
+      "inputs": {
+        "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+        "authority_sha256": "5eab8b8b0a624831f6319c42791f5f20d19e1479a564b2d3396fd8737e298e7c"
+      }
+    }
+  ],
+  "native_executed": false
+}

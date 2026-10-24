@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "purpose": "Retained orchestration receipt; terminal tool wait time is not whole wrapper wall time",
+  "source_commit": "f242a2f20adb3ba1d9c49feb1c6caca1bdbf52b9",
+  "command": "mkdir -p .local && python3 -B scripts/linux_profile_acquire.py --execute-frozen-source f242a2f20adb3ba1d9c49feb1c6caca1bdbf52b9 > .local/linux-profile-acquisition-r1-wrapper.stdout 2> .local/linux-profile-acquisition-r1-wrapper.stderr",
+  "cwd": "/workspace/sightbreak-linux-profile-acquisition",
+  "initial_tool_result": {
+    "chunk_id": "f137db",
+    "wall_time_seconds": 1.00032621,
+    "session_id": 55816,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "terminal_tool_result": {
+    "chunk_id": "0aa15f",
+    "wall_time_seconds": 0.000030041,
+    "exit_code": 1,
+    "original_token_count": 0,
+    "output": ""
+  },
+  "terminal_observed_utc": "2026-10-23 09:28:33 UTC",
+  "session_id": 55816,
+  "notes": [
+    "Initial result is the stored raw exec tool return, not a start timestamp.",
+    "Terminal result transcribed exactly from root write_stdin response following automatic context recovery.",
+    "No whole elapsed time inferred from terminal polling response."
+  ]
+}

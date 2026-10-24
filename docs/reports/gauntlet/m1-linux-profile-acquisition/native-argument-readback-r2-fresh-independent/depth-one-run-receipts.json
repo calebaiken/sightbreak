@@ -1,0 +1,99 @@
+[
+  {
+    "name": "acquisition",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_linux_profile_acquire*.py",
+      "-v"
+    ],
+    "cwd": "/workspace/reviews/linux-native-fingerprint-types-depth-one",
+    "started_utc": "2026-10-24T08:32:10.269392+00:00",
+    "ended_utc": "2026-10-24T08:32:25.282641+00:00",
+    "exit_code": 0,
+    "affinity": [
+      4
+    ]
+  },
+  {
+    "name": "fixture",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_linux_profile_overhead.py",
+      "-v"
+    ],
+    "cwd": "/workspace/reviews/linux-native-fingerprint-types-depth-one",
+    "started_utc": "2026-10-24T08:32:25.282720+00:00",
+    "ended_utc": "2026-10-24T08:32:25.852914+00:00",
+    "exit_code": 0,
+    "affinity": [
+      4
+    ]
+  },
+  {
+    "name": "readback",
+    "argv": [
+      "python3",
+      "-B",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "scripts",
+      "-p",
+      "test_linux_profile_thread_readback.py",
+      "-v"
+    ],
+    "cwd": "/workspace/reviews/linux-native-fingerprint-types-depth-one",
+    "started_utc": "2026-10-24T08:32:25.852954+00:00",
+    "ended_utc": "2026-10-24T08:32:26.158764+00:00",
+    "exit_code": 0,
+    "affinity": [
+      4
+    ]
+  },
+  {
+    "name": "original-independent",
+    "argv": [
+      "python3",
+      "-B",
+      "docs/reports/gauntlet/m1-linux-profile-acquisition/native-argument-readback-independent/test_independent_controls.py",
+      "-v"
+    ],
+    "cwd": "/workspace/reviews/linux-native-fingerprint-types-depth-one",
+    "started_utc": "2026-10-24T08:32:26.158801+00:00",
+    "ended_utc": "2026-10-24T08:32:26.523864+00:00",
+    "exit_code": 0,
+    "affinity": [
+      4
+    ]
+  },
+  {
+    "name": "fresh-adversarial",
+    "argv": [
+      "python3",
+      "-B",
+      "docs/reports/gauntlet/m1-linux-profile-acquisition/native-argument-readback-r2-fresh-independent/test_fingerprint_types.py"
+    ],
+    "cwd": "/workspace/reviews/linux-native-fingerprint-types-depth-one",
+    "started_utc": "2026-10-24T08:32:26.524128+00:00",
+    "ended_utc": "2026-10-24T08:32:26.839939+00:00",
+    "exit_code": 0,
+    "affinity": [
+      4
+    ]
+  }
+]

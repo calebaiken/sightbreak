@@ -1,0 +1,105 @@
+{
+  "methods": 4,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "results": [
+    {
+      "mode": "valid",
+      "exit_code": 1,
+      "passed": false,
+      "phases": {
+        "version": true,
+        "artifact": true,
+        "block": true,
+        "finalize": true
+      },
+      "raw_manifest_binds_changed_file": false,
+      "error": null,
+      "overall": true,
+      "after_restore": true,
+      "mutated": true,
+      "first_sha256": "edff16c1721dd4ae989cadf29a01f574ae8d51b118221f664725bd6980bbba5d",
+      "changed_sha256": "8472a9d12b94b6ea952699d4b573f064f00e6d7999e08ed17498dc2c0965aafa",
+      "raw_validator_observed_changed_bytes": true,
+      "control": "adapted-final-raw-log-read"
+    },
+    {
+      "control": "publication-source-deadline",
+      "finish": 60.999,
+      "receipt": {
+        "boundary": "after output-manifest readback and before overall publication",
+        "scope": "Exact clean source HEAD and tracked game/scripts Git-blob inventory during this observation; no immutability assertion afterward",
+        "source_commit": "cccccccccccccccccccccccccccccccccccccccc",
+        "started_monotonic": 60,
+        "deadline_monotonic": 61,
+        "passed": true,
+        "source_files": 1,
+        "ended_monotonic": 60.999
+      }
+    },
+    {
+      "control": "publication-source-deadline",
+      "finish": 61.0,
+      "receipt": {
+        "boundary": "after output-manifest readback and before overall publication",
+        "scope": "Exact clean source HEAD and tracked game/scripts Git-blob inventory during this observation; no immutability assertion afterward",
+        "source_commit": "cccccccccccccccccccccccccccccccccccccccc",
+        "started_monotonic": 60,
+        "deadline_monotonic": 61,
+        "passed": false,
+        "error": "Acquisition deadline: publication source observation:complete",
+        "error_type": "TimeoutError",
+        "ended_monotonic": 61.0
+      }
+    },
+    {
+      "control": "publication-source-deadline",
+      "finish": 61.001,
+      "receipt": {
+        "boundary": "after output-manifest readback and before overall publication",
+        "scope": "Exact clean source HEAD and tracked game/scripts Git-blob inventory during this observation; no immutability assertion afterward",
+        "source_commit": "cccccccccccccccccccccccccccccccccccccccc",
+        "started_monotonic": 60,
+        "deadline_monotonic": 61,
+        "passed": false,
+        "error": "Acquisition deadline: publication source observation:complete",
+        "error_type": "TimeoutError",
+        "ended_monotonic": 61.001
+      }
+    },
+    {
+      "mode": "valid",
+      "exit_code": 0,
+      "passed": true,
+      "phases": {
+        "version": true,
+        "artifact": true,
+        "block": true,
+        "finalize": true
+      },
+      "raw_manifest_binds_changed_file": false,
+      "error": null,
+      "control": "positive"
+    },
+    {
+      "mode": "valid",
+      "exit_code": 1,
+      "passed": false,
+      "phases": {
+        "version": true,
+        "artifact": true,
+        "block": true,
+        "finalize": true
+      },
+      "raw_manifest_binds_changed_file": false,
+      "error": null,
+      "mutated": true,
+      "sources_checked": 4,
+      "real_source_checker_rejects_changed_source": "Source is not exact and clean",
+      "checks_at_mutation": 3,
+      "control": "source-during-manifest-publication"
+    }
+  ],
+  "imported_source": "/tmp/critic-r2-replay-jjzti7ig/scripts/linux_profile_acquire.py"
+}

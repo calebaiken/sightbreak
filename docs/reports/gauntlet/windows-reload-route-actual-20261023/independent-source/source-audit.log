@@ -1,0 +1,106 @@
+{
+  "candidate": "ea6c330a272f17a8a68ef94af868c70bda95a91e",
+  "baseline": "49ae54b0e4f5d880bdf06e4eb783a616b2dff684",
+  "changed_code_paths": [
+    "scripts/native_approach.py",
+    "scripts/test_native_route_pulse.py"
+  ],
+  "trees": {
+    "game": {
+      "49ae54b0e4f5d880bdf06e4eb783a616b2dff684": "1632ae1175028665ddb4cb72e0afba56f723de5d",
+      "ea6c330a272f17a8a68ef94af868c70bda95a91e": "1632ae1175028665ddb4cb72e0afba56f723de5d"
+    },
+    ".github": {
+      "49ae54b0e4f5d880bdf06e4eb783a616b2dff684": "fda456f476598b556444836a365a42e685b2437c",
+      "ea6c330a272f17a8a68ef94af868c70bda95a91e": "fda456f476598b556444836a365a42e685b2437c"
+    },
+    "server": {
+      "49ae54b0e4f5d880bdf06e4eb783a616b2dff684": "667e900f73c12d75f6824d4befcadeae4223050e",
+      "ea6c330a272f17a8a68ef94af868c70bda95a91e": "667e900f73c12d75f6824d4befcadeae4223050e"
+    },
+    "backend": {
+      "49ae54b0e4f5d880bdf06e4eb783a616b2dff684": "67027b4fa17674ef067c84401af76eb1524419ac",
+      "ea6c330a272f17a8a68ef94af868c70bda95a91e": "67027b4fa17674ef067c84401af76eb1524419ac"
+    }
+  },
+  "bindings": [
+    {
+      "path": "scripts/verify_offline_export.py",
+      "baseline_bytes": 65897,
+      "baseline_sha256": "ddeb838c1cf3682e0fcf11b098f1f175c4d51ac3eadb85878932290547635308",
+      "candidate_bytes": 65897,
+      "candidate_sha256": "ddeb838c1cf3682e0fcf11b098f1f175c4d51ac3eadb85878932290547635308",
+      "same": true
+    },
+    {
+      "path": "scripts/native_settings_route.py",
+      "baseline_bytes": 6021,
+      "baseline_sha256": "7ca33fde40a35e7383d8225abc23dbb8d9e2b59c0d16d6c90572c6110c85a102",
+      "candidate_bytes": 6021,
+      "candidate_sha256": "7ca33fde40a35e7383d8225abc23dbb8d9e2b59c0d16d6c90572c6110c85a102",
+      "same": true
+    },
+    {
+      "path": "scripts/fixtures/export_integration.gd",
+      "baseline_bytes": 7493,
+      "baseline_sha256": "b5621ad5e52d17b938e81a285b4e690dc2bf10ae5955c0ae43442c78e0c079e4",
+      "candidate_bytes": 7493,
+      "candidate_sha256": "b5621ad5e52d17b938e81a285b4e690dc2bf10ae5955c0ae43442c78e0c079e4",
+      "same": true
+    },
+    {
+      "path": "scripts/verify_integration_export.py",
+      "baseline_bytes": 52882,
+      "baseline_sha256": "6de6b78597d5af681f3ee883886422b065ebe2c2f96a72f628ff52e502f698fe",
+      "candidate_bytes": 52882,
+      "candidate_sha256": "6de6b78597d5af681f3ee883886422b065ebe2c2f96a72f628ff52e502f698fe",
+      "same": true
+    },
+    {
+      "path": "scripts/validate.sh",
+      "baseline_bytes": 8981,
+      "baseline_sha256": "d7c87f91a61caee769a37f1d5f97c3e1efa17015a85ba82823e7a153f4063d4f",
+      "candidate_bytes": 8981,
+      "candidate_sha256": "d7c87f91a61caee769a37f1d5f97c3e1efa17015a85ba82823e7a153f4063d4f",
+      "same": true
+    },
+    {
+      "path": "scripts/build_manifest.py",
+      "baseline_bytes": 11707,
+      "baseline_sha256": "64482563194b3a0bcbc766fa7bedbb064f055e2bba34f82bb743f221aa6f0560",
+      "candidate_bytes": 11707,
+      "candidate_sha256": "64482563194b3a0bcbc766fa7bedbb064f055e2bba34f82bb743f221aa6f0560",
+      "same": true
+    },
+    {
+      "path": "scripts/native_approach.py",
+      "baseline_bytes": 6370,
+      "baseline_sha256": "d58b9530958e746a487ed45cf57e8dc2012df6ef0676173f63be2d054efeb6b0",
+      "candidate_bytes": 6528,
+      "candidate_sha256": "6b7ce3418b396fffb544e0938954b16d239fbd4a426ec882ba9c287d0b1e7728",
+      "same": false
+    },
+    {
+      "path": "scripts/test_native_route_pulse.py",
+      "baseline_bytes": 20550,
+      "baseline_sha256": "00c31db63546cce15ea91fb11f0d21aadb9882e7b998bbece3b3763b34d88855",
+      "candidate_bytes": 26337,
+      "candidate_sha256": "feb50da7087a4c1e354c9a6e89741658543dd52dd7b0ee2b2484e0e42284a905",
+      "same": false
+    }
+  ],
+  "depth_one": {
+    "root": "/workspace/reviews/windows-initial-pulse-fresh-source/.local/depth-one-source",
+    "head": "ea6c330a272f17a8a68ef94af868c70bda95a91e",
+    "shallow": "true",
+    "commit_count": 1,
+    "status": "",
+    "parent_lookup_exit": 128,
+    "parent_lookup_stderr": "fatal: Needed a single revision\n",
+    "baseline_object_lookup_exit": 128,
+    "baseline_object_lookup_stderr": "fatal: Not a valid object name 49ae54b0e4f5d880bdf06e4eb783a616b2dff684^{commit}\n",
+    "alternates_file_exists": false
+  },
+  "populated_file_count": 422,
+  "all_checks_passed": true
+}

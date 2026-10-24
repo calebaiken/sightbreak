@@ -1,0 +1,88 @@
+{
+  "qualifier_ref": "refs/heads/qualifier/windows-route-clock-4cf6ac8e-20261024",
+  "source_commit": "4cf6ac8e744603ed6af122a362036d276754cc76",
+  "workflow": ".github/workflows/desktop-alpha.yml",
+  "inputs": {
+    "lane": "windows",
+    "observe_windows_input": true,
+    "verbose_reopened_shutdown": true
+  },
+  "windows_living_controller_argv_after_python": [
+    "scripts/verify_offline_export.py",
+    "--target",
+    "windows",
+    "--hosted-render-priority",
+    "below-normal",
+    "--display",
+    ":102",
+    "--timeout",
+    "300",
+    "--output",
+    "builds/desktop-playability/offline-input",
+    "--reopened-verbose"
+  ],
+  "native_initial_template": [
+    "<exact exported executable>",
+    "--audio-driver",
+    "Dummy",
+    "--position",
+    "0,0",
+    "--resolution",
+    "<measured native WxH>",
+    "--",
+    "--offline-validation",
+    "--offline-trace-dir=<owned offline-input>/initial-offline-trace"
+  ],
+  "native_reopened_template": [
+    "<same exported executable>",
+    "--audio-driver",
+    "Dummy",
+    "--position",
+    "0,0",
+    "--resolution",
+    "<same measured native WxH>",
+    "--verbose",
+    "--",
+    "--offline-validation",
+    "--offline-trace-dir=<same owned offline-input>/restart-profile-trace"
+  ],
+  "normal_input_client_server_have_no_new_verbose": true,
+  "server_observation_same_as_original": "--native-input-observation remains a user argument in the existing ordinary observer step",
+  "engine_verbose_count_reopened": 1,
+  "verbose_before_separator": true,
+  "original_whole_budget_seconds": 300,
+  "original_close_budget_seconds": 20,
+  "no_retry_or_manual_continuation": true,
+  "runtime_source_acceptance_is_not_actual_acceptance": true,
+  "offline_command_rows_exact_names_order": [
+    "client",
+    "reopened"
+  ],
+  "offline_command_rows_exact_count": 2,
+  "offline_pids_distinct_positive_non_boolean_integers": true,
+  "Windows_validation_sha256": "e0e223328351507a02d6b63b845531324c2e432e29e86eebed07740c45a2c496",
+  "new_scalar_debug_trace": "omitted/default-off",
+  "source_clock_receipts": {
+    "clock": "time.monotonic",
+    "sleep": "time.sleep",
+    "elapsed_clock": "time.perf_counter",
+    "source_method": "WinUI.key_pulse",
+    "accepted_source_scope": "Residual waits target the same fixed monotonic boundary; independent elapsed watchdog consumes only original operation budget",
+    "required_if_successful_pulse_reached": [
+      "status API_RETURNED_WITH_OS_RELEASE",
+      "hold_until_monotonic <= absolute_deadline",
+      "finished_monotonic >= hold_until_monotonic and < absolute_deadline",
+      "release_complete true and no release_errors",
+      "literal positive first_wait/last_wait residual requests within original target",
+      "sleep_calls non-Boolean integer",
+      "finite operation_initial_monotonic/elapsed_watchdog_start/budget fields",
+      "all original OS/owner/neutral and per-key/release checks"
+    ],
+    "limits": [
+      "No exact physical hold or clock-resolution result from API brackets alone",
+      "Record missing literal wait/clock samples as unmeasured",
+      "No renewed deadline or sliding target",
+      "A successful source model is not actual execution"
+    ]
+  }
+}

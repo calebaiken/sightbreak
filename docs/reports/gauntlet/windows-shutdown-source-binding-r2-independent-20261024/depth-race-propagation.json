@@ -1,0 +1,102 @@
+{
+  "source": "b6da3aecfc2d88443c5e0757a9bd9320122a1d4d",
+  "cpu": [
+    4
+  ],
+  "native_invocations": 0,
+  "expected": "REJECT",
+  "actual": "BIND",
+  "error": null,
+  "input": {
+    "scripts/verify_offline_export.py": "666978747572650a",
+    "scripts/verify_integration_export.py": "666978747572650a",
+    "scripts/native_observation.py": "666978747572650a",
+    "game/scripts/offline_diagnostics.gd": "666978747572650a",
+    "scripts/shutdown_study_retention.py": "666978747572650a",
+    "runtime/race.txt": "6f726967696e616c2062797465730a"
+  },
+  "changed_bytes_hex": "6368616e676564212062797465730a",
+  "current_bytes_hex": "6368616e676564212062797465730a",
+  "before": {
+    "inode": 73362,
+    "size": 15,
+    "mtime_ns": 1792850833217201876,
+    "ctime_ns": 1792850833217201876
+  },
+  "after": {
+    "inode": 73362,
+    "size": 15,
+    "mtime_ns": 1792850833217201876,
+    "ctime_ns": 1792850833246670549
+  },
+  "returned_binding": {
+    "commit": "8e3bb2a653b8df929326e8973a31c782ee158605",
+    "non_doc_union_sha256": "e71eb8c36620586f9dbf8f0ada9536952379496de007be15e552a95d1a47f877",
+    "non_doc_paths": 6,
+    "model_sources": {
+      "scripts/verify_offline_export.py": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+      "scripts/verify_integration_export.py": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+      "scripts/native_observation.py": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+      "game/scripts/offline_diagnostics.gd": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+      "scripts/shutdown_study_retention.py": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f"
+    },
+    "physical_sources": {
+      "game/scripts/offline_diagnostics.gd": {
+        "bytes": 8,
+        "sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+        "canonical_sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+        "canonical_mode": "100644",
+        "physical_mode": "100644",
+        "checkout_conversion": "none",
+        "mode_scope": "POSIX owner executable bit"
+      },
+      "runtime/race.txt": {
+        "bytes": 15,
+        "sha256": "45c0b761a6c6640319e6cddeb492718532f70161ed9174c75ca7f1158c508b2f",
+        "canonical_sha256": "45c0b761a6c6640319e6cddeb492718532f70161ed9174c75ca7f1158c508b2f",
+        "canonical_mode": "100644",
+        "physical_mode": "100644",
+        "checkout_conversion": "none",
+        "mode_scope": "POSIX owner executable bit"
+      },
+      "scripts/native_observation.py": {
+        "bytes": 8,
+        "sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+        "canonical_sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+        "canonical_mode": "100644",
+        "physical_mode": "100644",
+        "checkout_conversion": "none",
+        "mode_scope": "POSIX owner executable bit"
+      },
+      "scripts/shutdown_study_retention.py": {
+        "bytes": 8,
+        "sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+        "canonical_sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+        "canonical_mode": "100644",
+        "physical_mode": "100644",
+        "checkout_conversion": "none",
+        "mode_scope": "POSIX owner executable bit"
+      },
+      "scripts/verify_integration_export.py": {
+        "bytes": 8,
+        "sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+        "canonical_sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+        "canonical_mode": "100644",
+        "physical_mode": "100644",
+        "checkout_conversion": "none",
+        "mode_scope": "POSIX owner executable bit"
+      },
+      "scripts/verify_offline_export.py": {
+        "bytes": 8,
+        "sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+        "canonical_sha256": "e80b71cd14d3cbd65f4173abcbfcf01a545dbca32a72d575108b553a648cc96f",
+        "canonical_mode": "100644",
+        "physical_mode": "100644",
+        "checkout_conversion": "none",
+        "mode_scope": "POSIX owner executable bit"
+      }
+    }
+  },
+  "git_status_after": " M runtime/race.txt\n",
+  "scope": "Mutation within physical helper read call; not whole-filesystem atomicity"
+}

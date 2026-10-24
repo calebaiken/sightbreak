@@ -1,0 +1,507 @@
+{
+  "root": "/workspace/reviews/linux-packed-import-fresh-source",
+  "tests_run": 10,
+  "passed": true,
+  "rows": [
+    {
+      "case": "ECFG-tail",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "d9d21fcc33dba4910b70539286fdbe5ec1654182ca0f3a1ab2325f6b300ad9fa",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected trailing binary bytes"
+    },
+    {
+      "case": "ECFG-count",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "f92e614d661896acbe20b17e421f32998332ae39cafeac7741479bfa5bc6315a",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Invalid project property count"
+    },
+    {
+      "case": "ECFG-boolean-type",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "096fe07bcee830213ebd352f29e022ebf5eb1f79a8d60207483a45dcd187a219",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Wrong packed project setting: debug/settings/stdout/print_gpu_profile"
+    },
+    {
+      "case": "ECFG-selector",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "117f08a991720600eb07a7261111190c2d0a6fdad2f4fb4a9b89ff5326421495",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Undeclared packed critical feature variant: display/window/size/viewport_width.linux"
+    },
+    {
+      "case": "ledger-source",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "e1e565191d6f3bd903a7a6e1669e3264803a51ba70e07a6aa9dc4a5d02a644fa",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Missing/changed text source: diagnostics/source_ledger.json"
+    },
+    {
+      "case": "BOM prefix",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "873c9a05f9769aa0b38cff30e1abbe258e2c86562a8146dcba30915c25697685",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected import syntax"
+    },
+    {
+      "case": "leading NUL",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "28c10445dbdc5be1321c2806af3ba98bc2f2846cc766f0ac600ce59c42f2da47",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Invalid packed import terminator"
+    },
+    {
+      "case": "one NUL but missing LF",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "bf0cb1b18eb11d5b2847c41d5bd623b8347193a6b8abb3a3f2142b2c8eaa1d1a",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Invalid packed import terminator"
+    },
+    {
+      "case": "trailing space after NUL",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "b7f7e2b47426a60950505e18cc1b7fdcf856a384ad257bde699446b972e14241",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Invalid packed import terminator"
+    },
+    {
+      "case": "two spaced NULs",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "d5f5cd41680b608df3d25e4600a5eb8b0fc2f6ac1900506a18094e8b11a95591",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Invalid packed import terminator"
+    },
+    {
+      "case": "overlong UTF8 NUL",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "cd367f9928eed27c3ac43882bd050283bb73afe821e2bc123bbf87cd9f53ae2a",
+      "rejected": true,
+      "error_type": "UnicodeDecodeError",
+      "error": "'utf-8' codec can't decode byte 0xc0 in position 22: invalid start byte"
+    },
+    {
+      "case": "UTF8 surrogate",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "25c08d083768621d99c825d20a394e76926135014eff6dca599361167c615881",
+      "rejected": true,
+      "error_type": "UnicodeDecodeError",
+      "error": "'utf-8' codec can't decode byte 0xed in position 22: invalid continuation byte"
+    },
+    {
+      "case": "UTF8 out of range",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "e5f23f0561e1bd0f0098509bca11eba9f2dbbceaa4aaff007aa3b70057eecb2e",
+      "rejected": true,
+      "error_type": "UnicodeDecodeError",
+      "error": "'utf-8' codec can't decode byte 0xf4 in position 22: invalid continuation byte"
+    },
+    {
+      "case": "escaped duplicate metadata key",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "331e9b695db6a6fa34b273f8006488bed60be3cb87dfd0cad6f818f3f7d7bc2d",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Duplicate import JSON key"
+    },
+    {
+      "case": "metadata number overflow",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "9816b574003b8bcf1cddf693e055347db9be32b1a82a2f7a53a008b9ac6f97cc",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Nonfinite JSON number"
+    },
+    {
+      "case": "negative infinity",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "c015f939fd7c60b5253e252010fef82f597a69fc030a0979c6e840d4f316d820",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Nonfinite JSON constant"
+    },
+    {
+      "case": "metadata JSON trailing array",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "cbd07f5e31516c5becbf841903d7158767814a191e10257db525a15a4bf7582d",
+      "rejected": true,
+      "error_type": "JSONDecodeError",
+      "error": "Extra data: line 3 column 2 (char 25)"
+    },
+    {
+      "case": "metadata JSON trailing null",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "838d9aff52a2bf2fb513b0e4fd8147eedd379d122043e30d3a75d01768ddc328",
+      "rejected": true,
+      "error_type": "JSONDecodeError",
+      "error": "Extra data: line 3 column 2 (char 25)"
+    },
+    {
+      "case": "semicolon after JSON",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "0ed84926e04b76533cd7b5718c62df6ebd0e76ed4a57d8f4ed9a7cce30eef5ea",
+      "rejected": true,
+      "error_type": "JSONDecodeError",
+      "error": "Extra data: line 3 column 2 (char 25)"
+    },
+    {
+      "case": "metadata extra close brace",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "a5d2a228ac9db5b4fa30a0807df573f77062cfd74ae9931bd5a2baa508acdb36",
+      "rejected": true,
+      "error_type": "JSONDecodeError",
+      "error": "Extra data: line 3 column 2 (char 25)"
+    },
+    {
+      "case": "metadata wrong false case",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "82bee2f5a4f5c26db4a9f7c8d6aa6cb6512ff271e432cc718cefbc165567ee90",
+      "rejected": true,
+      "error_type": "JSONDecodeError",
+      "error": "Expecting value: line 2 column 17 (char 18)"
+    },
+    {
+      "case": "metadata unquoted key",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "03d80821fbac3ce4aef247e8f4759d76a2ac3e7d166b69debe915dd8be31bf45",
+      "rejected": true,
+      "error_type": "JSONDecodeError",
+      "error": "Expecting property name enclosed in double quotes: line 2 column 1 (char 2)"
+    },
+    {
+      "case": "escaped control key",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "6992b0b4f5a4ebfa2d098228c39b96949b869b2b4ae876363710c8a7973c81ae",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Changed import remap: assets/icon.svg.import"
+    },
+    {
+      "case": "escaped section delimiter",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "29a0e67d389878781d73359c8a234c3c7f38b028883b62ab0b5cf06ebc2926b9",
+      "rejected": true,
+      "error_type": "JSONDecodeError",
+      "error": "Extra data: line 4 column 1 (char 26)"
+    },
+    {
+      "case": "assignment before section",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "a23c0f7138a1580c879fa7d6e2afe34c4b04613c6fb3e86e52729be7945c822a",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Import assignment outside section"
+    },
+    {
+      "case": "duplicate assignment identical",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "db3d923cc74eb7672376e1714ccc13f51d8337be577afcc8ef196d640798639b",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Duplicate import key"
+    },
+    {
+      "case": "raw control before section 1",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "938ed82f870d1382365b2c0721022589e3c36d5da4e372ef4e000ad1a5d3c31d",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected import text control"
+    },
+    {
+      "case": "raw control before section 9",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "7998d290e386e5cc2a267d9ef820dc1819c1269bbef4f1f4601cdf413e4d682a",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected import text control"
+    },
+    {
+      "case": "raw control before section 11",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "b8509fa5214fe98c4bcfd83433107417c540772e9ac1d16319313fed63205f57",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected import text control"
+    },
+    {
+      "case": "raw control before section 12",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "933d5aaa9a531df94fd415f07ea5f2728f02e53b361d0a76b67b1b3ba6a0c46e",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected import text control"
+    },
+    {
+      "case": "raw control before section 13",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "4e5d288431859e2d2d11e104cf24f4055f81239155eacf66c4f5301c66fb16a4",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected import text control"
+    },
+    {
+      "case": "raw control before section 31",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "16c5a7e0e84ab02c66cac6cf6d01fa836fe18868e3a2037b41685ba7f066af60",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected import text control"
+    },
+    {
+      "case": "raw control before section 127",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "6cb4937746fa82dcc75cb9b55d29eec6be0bd195408570b44b879ef6e879b8df",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected import text control"
+    },
+    {
+      "case": "raw control before section 128",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "172cdcb217d3e40bd75b1252584a7d0c5e422049fd210b820faf4a31b6ba4f65",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected import text control"
+    },
+    {
+      "case": "raw control before section 133",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "8c451b8827479af7f1b279914366d2a20c2269d5d5e612adc6110ecd83c2f423",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected import text control"
+    },
+    {
+      "case": "raw control before section 159",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "f69a786ea42202dc8cd737e305ee4f079484ae43ca396262f5d2e98e7b6e1efe",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected import text control"
+    },
+    {
+      "case": "nested duplicate key escaped=False",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "2dc08a9494068edb8c11a434cb011be97b3bfc5034a5c11cadd86e1369a81101",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Duplicate import JSON key"
+    },
+    {
+      "case": "nested duplicate key escaped=True",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "8ceff113b904d191320fe2a7cb617799481fb16457cc79c4701273a99acb158c",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Duplicate import JSON key"
+    },
+    {
+      "case": "actual failing bytes in synthetic valid pack",
+      "original_error": "Extra data: line 4 column 1 (char 26)",
+      "candidate_passed": true,
+      "resources": 9,
+      "native": false
+    },
+    {
+      "case": "traversal-path",
+      "rejected": true,
+      "error": "Unsafe/test pack path: '../evil'",
+      "resource_hashes_rebuilt_before_structure_mutation": true
+    },
+    {
+      "case": "absolute-path",
+      "rejected": true,
+      "error": "Unsafe/test pack path: '/evil'",
+      "resource_hashes_rebuilt_before_structure_mutation": true
+    },
+    {
+      "case": "test-path",
+      "rejected": true,
+      "error": "Unsafe/test pack path: 'tests/evil'",
+      "resource_hashes_rebuilt_before_structure_mutation": true
+    },
+    {
+      "case": "oversize-path",
+      "rejected": true,
+      "error": "Invalid padded resource path",
+      "resource_hashes_rebuilt_before_structure_mutation": true
+    },
+    {
+      "case": "zero-path-size",
+      "rejected": true,
+      "error": "Invalid padded resource path",
+      "resource_hashes_rebuilt_before_structure_mutation": true
+    },
+    {
+      "case": "duplicate-path",
+      "rejected": true,
+      "error": "Duplicate/empty/out-of-range/encrypted resource",
+      "resource_hashes_rebuilt_before_structure_mutation": true
+    },
+    {
+      "case": "resource-size-overrun",
+      "rejected": true,
+      "error": "Duplicate/empty/out-of-range/encrypted resource",
+      "resource_hashes_rebuilt_before_structure_mutation": true
+    },
+    {
+      "case": "resource-overlap",
+      "rejected": true,
+      "error": "Overlapping resources",
+      "resource_hashes_rebuilt_before_structure_mutation": true
+    },
+    {
+      "case": "directory-tail",
+      "rejected": true,
+      "error": "Nonzero pack directory tail",
+      "resource_hashes_rebuilt_before_structure_mutation": true
+    },
+    {
+      "case": "template-byte",
+      "rejected": true,
+      "error": "Wrong ELF type/architecture",
+      "resource_hashes_rebuilt_before_structure_mutation": true
+    },
+    {
+      "case": "trailer-length",
+      "rejected": true,
+      "error": "Invalid embedded trailer",
+      "resource_hashes_rebuilt_before_structure_mutation": true
+    },
+    {
+      "case": "matching unsafe target .godot/imported/../outside.ctex",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "ead96df4d667f3534aaa9be7d4a47daf224d6231471ce44ba6b49ef663f10e75",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unsafe/test pack path: '.godot/imported/../outside.ctex'"
+    },
+    {
+      "case": "matching unsafe target .godot/imported/./a.ctex",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "8955306154765af3b85622c8d7e84f2fba41c91b40f221dd94f30684e3c474e3",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unsafe/test pack path: '.godot/imported/./a.ctex'"
+    },
+    {
+      "case": "matching unsafe target .godot/imported//a.ctex",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "e934b32e958b25e85a087c351cb3c3a9cb05a0216d69d0abb2f7b771cbf18a1a",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unsafe/test pack path: '.godot/imported//a.ctex'"
+    },
+    {
+      "case": "matching unsafe target .godot/imported/tests/a.ctex",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "d64778d65720c3cc5fc190b2b35140b3d2aec4b711fcfc7415928290a5ed6b88",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unsafe/test pack path: '.godot/imported/tests/a.ctex'"
+    },
+    {
+      "case": "matching unsafe target .godot/imported/back\\slash.ctex",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "fc15f35e24b8101769cb952e1148872cea85d868f5cd3a3819672ab8d6501645",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unsafe/test pack path: '.godot/imported/back\\\\slash.ctex'"
+    },
+    {
+      "case": "staged terminal NUL",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "ad9a7b7989bb8c5323e1c4c89a2c0f2a5300fbba67065ce2aadc16a61fcbca68",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected import text control"
+    },
+    {
+      "case": "staged invalid UTF8",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "ad9a7b7989bb8c5323e1c4c89a2c0f2a5300fbba67065ce2aadc16a61fcbca68",
+      "rejected": true,
+      "error_type": "UnicodeDecodeError",
+      "error": "'utf-8' codec can't decode byte 0xff in position 22: invalid start byte"
+    },
+    {
+      "case": "staged raw tab comment",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "ad9a7b7989bb8c5323e1c4c89a2c0f2a5300fbba67065ce2aadc16a61fcbca68",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected import text control"
+    },
+    {
+      "case": "staged duplicate deps",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "ad9a7b7989bb8c5323e1c4c89a2c0f2a5300fbba67065ce2aadc16a61fcbca68",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Duplicate import section"
+    },
+    {
+      "case": "staged duplicate params",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "ad9a7b7989bb8c5323e1c4c89a2c0f2a5300fbba67065ce2aadc16a61fcbca68",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Duplicate import section"
+    },
+    {
+      "case": "staged escaped duplicate metadata",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "ad9a7b7989bb8c5323e1c4c89a2c0f2a5300fbba67065ce2aadc16a61fcbca68",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Duplicate import JSON key"
+    },
+    {
+      "case": "MD5 rejection precedes any packed remap parse",
+      "rejected": true,
+      "parser_calls": 0
+    },
+    {
+      "case": "staged semantic parse uses frozen first byte read",
+      "import_byte_reads": 1,
+      "passed": true,
+      "scope": "No filesystem immutability claim after this read"
+    },
+    {
+      "case": "extra-import",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "8db5af964339a320c47b441600d8592a83a61735af44612900d179888aafba88",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected or missing pack resources: ['assets/unbound.import']"
+    },
+    {
+      "case": "extra-text",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "a4e074c5df0b63659401d3df17c32f7010824b0a86677ee0261335b5d3c0787c",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Unexpected or missing pack resources: ['unbound.txt']"
+    },
+    {
+      "case": "changed-cache",
+      "all_resource_MD5s_verified": true,
+      "ELF_sha256": "797b83ed0c4bea0759136dea23ce4840fcb8222fda8b229c57a38cde01aad0fb",
+      "rejected": true,
+      "error_type": "Invalid",
+      "error": "Missing/changed import cache: .godot/imported/icon.svg-56083ea2a1f1a4f1e49773bdc6d7826c.ctex"
+    }
+  ]
+}

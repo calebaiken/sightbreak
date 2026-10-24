@@ -1,0 +1,15 @@
+{
+  "scope": "Workflow source adapter only; no dispatch/native acceptance",
+  "preregistration": "b4145dde093fa77604ff7a073ab8a8e7167897f9",
+  "base_sha256": "5b662868c7cdc80f77ebb8c6767ff1d6b983a81870e668effabe95bd1cdde075",
+  "candidate_sha256": "5f59b1e2eb4d1b945c0bf3958d403d3d0166ae7ce8e01a5488e29e9171b62c7a",
+  "reverse_transform_byte_exact": true,
+  "yaml_parsed": true,
+  "default_false": true,
+  "fixed_windows_only_flag_expression": true,
+  "selected_step": {
+    "name": "Real exported keyboard and pointer input (Windows/Linux)",
+    "if": "always() && steps.export.outcome == 'success' && runner.os != 'macOS'",
+    "run": "python scripts/verify_integration_export.py --target ${{ matrix.target }} --visit-armory --timeout 240 --output builds/desktop-playability/native-input ${{ runner.os == 'Windows' && inputs.observe_windows_input && '--observe-input-consumption' || '' }}"
+  }
+}

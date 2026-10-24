@@ -54,6 +54,10 @@ func start() -> void:
 	game = TacticalMatch.new()
 	game.name = "Match"
 	game.configure({"mode":"server","port":27020,"name":"Export UI authority fixture"})
+	# BEGIN INPUT OBSERVATION FIXTURE
+	if "--native-input-observation" in OS.get_cmdline_user_args():
+		game._native_input_configure(game.options.merged({"_native_input_fixture":true}))
+	# END INPUT OBSERVATION FIXTURE
 	host.add_child(game)
 	game.notification.connect(func(message): print("SERVER_NOTICE "+message))
 	game._bot_clock = 1000

@@ -1,0 +1,142 @@
+{
+  "supported_underlay_mismatch": {
+    "true_contrast": 1.5444704597058323,
+    "changed": {
+      "support_pixels": 54,
+      "outside_changed": 0,
+      "negative_diagnostic_pixels": 0,
+      "nonneutral_coverage_pixels": 0,
+      "max_fit_residual_codes": 0.0,
+      "inferred_rgb": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "inferred_rgb_interval": [
+        [
+          0.9844357976653697,
+          0.9844357976653697,
+          0.9844357976653697
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "primitive_alpha": 1.0,
+      "contrast_lower_bound": 18.72418043364822,
+      "worst_pixel_yx": [
+        1,
+        1
+      ],
+      "worst_underlay_rgb": [
+        13,
+        13,
+        13
+      ],
+      "low_coverage_pixels": 18,
+      "strong_coverage_pixels": 18,
+      "observed_strong_min": 19.435548355403956,
+      "resolved": true
+    },
+    "false_accept": true,
+    "required": "Reject changed suppressed underlay on glyph support."
+  },
+  "outside_diagnostics_mismatch": {
+    "changed": {
+      "support_pixels": 54,
+      "outside_changed": 0,
+      "negative_diagnostic_pixels": 0,
+      "nonneutral_coverage_pixels": 0,
+      "max_fit_residual_codes": 0.0,
+      "inferred_rgb": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "inferred_rgb_interval": [
+        [
+          0.9844357976653697,
+          0.9844357976653697,
+          0.9844357976653697
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "primitive_alpha": 1.0,
+      "contrast_lower_bound": 18.72418043364822,
+      "worst_pixel_yx": [
+        1,
+        1
+      ],
+      "worst_underlay_rgb": [
+        13,
+        13,
+        13
+      ],
+      "low_coverage_pixels": 18,
+      "strong_coverage_pixels": 18,
+      "observed_strong_min": 19.435548355403956,
+      "resolved": true
+    },
+    "false_accept": true,
+    "required": "Reject black/white diagnostic changes outside their support."
+  },
+  "later_layer_occlusion": {
+    "actual_full_glyph_contrast": 1.191236415402931,
+    "changed": {
+      "support_pixels": 53,
+      "outside_changed": 0,
+      "negative_diagnostic_pixels": 0,
+      "nonneutral_coverage_pixels": 0,
+      "max_fit_residual_codes": 0.0,
+      "inferred_rgb": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "inferred_rgb_interval": [
+        [
+          0.8571428571428571,
+          0.8571428571428571,
+          0.8571428571428571
+        ],
+        [
+          1.0,
+          1.0,
+          1.0
+        ]
+      ],
+      "primitive_alpha": 1.0,
+      "contrast_lower_bound": 14.96875806971673,
+      "worst_pixel_yx": [
+        1,
+        2
+      ],
+      "worst_underlay_rgb": [
+        1,
+        1,
+        1
+      ],
+      "low_coverage_pixels": 53,
+      "strong_coverage_pixels": 0,
+      "observed_strong_min": null,
+      "resolved": true
+    },
+    "false_accept": true,
+    "required": "Separate AA from later-layer occlusion or fail unresolved."
+  },
+  "invented_matrix_missing_binding_and_unresolved_inactive": {
+    "scenes": 32,
+    "errors": [],
+    "pass": true,
+    "inactive_rows": 64,
+    "unresolved_inactive_rows": 64,
+    "false_accept": true,
+    "required": "Require exact matrix, source/native/background binding, and resolved inactive rows."
+  }
+}

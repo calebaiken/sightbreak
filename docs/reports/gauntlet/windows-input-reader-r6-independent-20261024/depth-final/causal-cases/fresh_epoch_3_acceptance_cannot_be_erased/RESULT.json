@@ -1,0 +1,136 @@
+{
+  "name": "fresh_epoch_3_acceptance_cannot_be_erased",
+  "expected": "INVALID",
+  "source_events": [
+    {
+      "event": "connect",
+      "peer": 9,
+      "generation": 1
+    },
+    {
+      "event": "accept",
+      "peer": 9,
+      "epoch": 1,
+      "commands": [
+        {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "queue": {
+        "1": {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    },
+    {
+      "event": "pop",
+      "peer": 9,
+      "command": {
+        "sequence": 1,
+        "fire": true,
+        "reload": false,
+        "move": [
+          0.0,
+          0.0
+        ]
+      },
+      "queue": {}
+    },
+    {
+      "event": "reset_epoch",
+      "epoch": 3
+    },
+    {
+      "event": "accept",
+      "peer": 9,
+      "epoch": 3,
+      "commands": [
+        {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "queue": {
+        "1": {
+          "sequence": 1,
+          "fire": true,
+          "reload": false,
+          "move": [
+            0.0,
+            0.0
+          ]
+        }
+      }
+    }
+  ],
+  "source_basis": "",
+  "counterfactual": true,
+  "actual": "INVALID",
+  "matched": true,
+  "result": {
+    "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+    "diagnostic_complete": false,
+    "transition_status": "INVALID",
+    "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+    "roles": {
+      "client": {
+        "records": 7,
+        "coverage": [
+          "client_attempt",
+          "client_connected",
+          "client_tick",
+          "input_send_called",
+          "ready",
+          "snapshot_applied",
+          "welcome_received"
+        ],
+        "counters": {
+          "ready": 1,
+          "client_attempt": 1,
+          "client_connected": 1,
+          "welcome_received": 1,
+          "client_tick": 2,
+          "snapshot_applied": 1,
+          "input_send_called": 1
+        },
+        "max_observation_gap_msec": 1000,
+        "max_snapshot_age_msec": 3000,
+        "pending_saturation_indices": [],
+        "accepted_events": [],
+        "consumed_events": [],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [
+          {
+            "transport_id": 9,
+            "local_attempt": 1,
+            "local_id": 1,
+            "wall_unix_msec": 113000
+          }
+        ],
+        "binding_events": [],
+        "local_attempts": 1
+      }
+    },
+    "errors": [
+      "authority: stream transition contradicts definite immutable commands"
+    ]
+  }
+}

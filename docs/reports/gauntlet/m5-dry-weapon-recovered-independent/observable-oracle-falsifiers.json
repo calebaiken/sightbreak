@@ -1,0 +1,68 @@
+{
+  "kind": "pure derived-log oracle falsifiers; not engine runs",
+  "source_log_sha256": "54982dfa591dbdaa5d213d4b0f53040dc6aa657e9a9d20813a3405c210298347",
+  "controls": [
+    {
+      "control": "wrong_requested",
+      "exit": 1,
+      "rejected": true,
+      "errors": [
+        "Case ('easy', 'rifle_dry'): requested expected 'rifle', got '__incorrect__'"
+      ]
+    },
+    {
+      "control": "wrong_reserve",
+      "exit": 1,
+      "rejected": true,
+      "errors": [
+        "Case ('easy', 'rifle_dry'): reserve expected 60, got 999"
+      ]
+    },
+    {
+      "control": "wrong_deploy_timer",
+      "exit": 1,
+      "rejected": true,
+      "errors": [
+        "Step ('easy', 'idle', 0): deploy_remaining expected 0.3, got 0"
+      ]
+    },
+    {
+      "control": "wrong_summary",
+      "exit": 1,
+      "rejected": true,
+      "errors": [
+        "Sequence ('easy', 'idle'): dry_equips expected 1, got 0"
+      ]
+    },
+    {
+      "control": "false_baseline_pass",
+      "exit": 1,
+      "rejected": true,
+      "errors": [
+        "Result: failures expected 40, got 0",
+        "Result: passed expected False, got True"
+      ]
+    },
+    {
+      "control": "missing_step",
+      "exit": 1,
+      "rejected": true,
+      "errors": [
+        "Raw has 48 sequence steps",
+        "All expected sequence steps observed"
+      ]
+    },
+    {
+      "control": "duplicate_case",
+      "exit": 1,
+      "rejected": true,
+      "errors": [
+        "Raw has 84 cases",
+        "Duplicate case ('easy', 'rifle_dry')",
+        "Exact expected in-engine assertion failure labels",
+        "Result: failures expected 41, got 40"
+      ]
+    }
+  ],
+  "all_rejected": true
+}

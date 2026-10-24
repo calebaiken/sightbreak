@@ -1,0 +1,134 @@
+test_unavailable_prelaunch_observer_does_not_create_native_process (test_fov_math_reference.SupervisorControls.test_unavailable_prelaunch_observer_does_not_create_native_process) ... ok
+test_intended_root_pid_is_retained_but_does_not_replace_failed_readback (test_fov_math_reference.SupervisorControls.test_intended_root_pid_is_retained_but_does_not_replace_failed_readback) ... ERROR
+test_direct_root_binding_checks_parent_and_birth_before_ownership (test_fov_math_reference.SupervisorControls.test_direct_root_binding_checks_parent_and_birth_before_ownership) ... ERROR
+test_live_popen_root_cannot_vanish_with_empty_discovery (test_fov_math_reference.SupervisorControls.test_live_popen_root_cannot_vanish_with_empty_discovery) ... FAIL
+test_bound_exited_popen_root_has_explicit_wait_status (test_fov_math_reference.SupervisorControls.test_bound_exited_popen_root_has_explicit_wait_status) ... ERROR
+test_existing_task_missing_interface_and_existing_parent_missing_tasks_fail (test_fov_math_reference.ProcInterfaceControls.test_existing_task_missing_interface_and_existing_parent_missing_tasks_fail) ... FAIL
+test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail (test_fov_math_reference.ProcInterfaceControls.test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail) ... 
+  test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail (test_fov_math_reference.ProcInterfaceControls.test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail) (token='0') ... FAIL
+  test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail (test_fov_math_reference.ProcInterfaceControls.test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail) (token='-1') ... FAIL
+  test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail (test_fov_math_reference.ProcInterfaceControls.test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail) (token='abc') ... ERROR
+  test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail (test_fov_math_reference.ProcInterfaceControls.test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail) (token='1.5') ... ERROR
+  test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail (test_fov_math_reference.ProcInterfaceControls.test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail) (token='１２３') ... FAIL
+test_departed_thread_is_distinct_from_missing_children_on_live_thread (test_fov_math_reference.ProcInterfaceControls.test_departed_thread_is_distinct_from_missing_children_on_live_thread) ... ok
+test_supervisor_preflight_checks_interface_before_subreaper_mutation (test_fov_math_reference.ProcInterfaceControls.test_supervisor_preflight_checks_interface_before_subreaper_mutation) ... FAIL
+
+======================================================================
+ERROR: test_intended_root_pid_is_retained_but_does_not_replace_failed_readback (test_fov_math_reference.SupervisorControls.test_intended_root_pid_is_retained_but_does_not_replace_failed_readback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-process-exact-depth1-20261024/scripts/test_fov_math_reference.py", line 346, in test_intended_root_pid_is_retained_but_does_not_replace_failed_readback
+    self.assertEqual(report['spawned_pid'],100);self.assertFalse(report['passed'])
+                     ~~~~~~^^^^^^^^^^^^^^^
+KeyError: 'spawned_pid'
+
+======================================================================
+ERROR: test_direct_root_binding_checks_parent_and_birth_before_ownership (test_fov_math_reference.SupervisorControls.test_direct_root_binding_checks_parent_and_birth_before_ownership)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-process-exact-depth1-20261024/scripts/test_fov_math_reference.py", line 357, in test_direct_root_binding_checks_parent_and_birth_before_ownership
+    with self.assertRaisesRegex(RuntimeError,'parent|birth'):tree.bind_root()
+                                                             ^^^^^^^^^^^^^^
+AttributeError: 'OwnedTree' object has no attribute 'bind_root'
+
+======================================================================
+ERROR: test_bound_exited_popen_root_has_explicit_wait_status (test_fov_math_reference.SupervisorControls.test_bound_exited_popen_root_has_explicit_wait_status)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-process-exact-depth1-20261024/scripts/test_fov_math_reference.py", line 371, in test_bound_exited_popen_root_has_explicit_wait_status
+    tree=acquisition.OwnedTree(kernel,100);tree.bind_root();clock.sleep(.2)
+                                           ^^^^^^^^^^^^^^
+AttributeError: 'OwnedTree' object has no attribute 'bind_root'
+
+======================================================================
+ERROR: test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail (test_fov_math_reference.ProcInterfaceControls.test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail) (token='abc')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-process-exact-depth1-20261024/scripts/test_fov_math_reference.py", line 407, in test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail
+    with self.subTest(token=token),self.assertRaisesRegex(RuntimeError,'malformed'):acquisition.LinuxKernel().children(50)
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/objective-perception-math-independent-20261024/docs/reports/gauntlet/objective-perception-math-independent-20261024/process-source-r2/acquire_old550_preserved.py", line 85, in children
+    try:result.update(int(p) for p in (task/'children').read_text().split())
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/objective-perception-math-independent-20261024/docs/reports/gauntlet/objective-perception-math-independent-20261024/process-source-r2/acquire_old550_preserved.py", line 85, in <genexpr>
+    try:result.update(int(p) for p in (task/'children').read_text().split())
+                      ^^^^^^
+ValueError: invalid literal for int() with base 10: 'abc'
+
+======================================================================
+ERROR: test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail (test_fov_math_reference.ProcInterfaceControls.test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail) (token='1.5')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-process-exact-depth1-20261024/scripts/test_fov_math_reference.py", line 407, in test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail
+    with self.subTest(token=token),self.assertRaisesRegex(RuntimeError,'malformed'):acquisition.LinuxKernel().children(50)
+                                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/objective-perception-math-independent-20261024/docs/reports/gauntlet/objective-perception-math-independent-20261024/process-source-r2/acquire_old550_preserved.py", line 85, in children
+    try:result.update(int(p) for p in (task/'children').read_text().split())
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/objective-perception-math-independent-20261024/docs/reports/gauntlet/objective-perception-math-independent-20261024/process-source-r2/acquire_old550_preserved.py", line 85, in <genexpr>
+    try:result.update(int(p) for p in (task/'children').read_text().split())
+                      ^^^^^^
+ValueError: invalid literal for int() with base 10: '1.5'
+
+======================================================================
+FAIL: test_live_popen_root_cannot_vanish_with_empty_discovery (test_fov_math_reference.SupervisorControls.test_live_popen_root_cannot_vanish_with_empty_discovery)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-process-exact-depth1-20261024/scripts/test_fov_math_reference.py", line 365, in test_live_popen_root_cannot_vanish_with_empty_discovery
+    self.assertFalse(result['passed']);self.assertTrue(process.killed)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_existing_task_missing_interface_and_existing_parent_missing_tasks_fail (test_fov_math_reference.ProcInterfaceControls.test_existing_task_missing_interface_and_existing_parent_missing_tasks_fail)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-process-exact-depth1-20261024/scripts/test_fov_math_reference.py", line 391, in test_existing_task_missing_interface_and_existing_parent_missing_tasks_fail
+    with self.assertRaisesRegex(RuntimeError,'existing task'):acquisition.LinuxKernel().children(50)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail (test_fov_math_reference.ProcInterfaceControls.test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail) (token='0')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-process-exact-depth1-20261024/scripts/test_fov_math_reference.py", line 407, in test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail
+    with self.subTest(token=token),self.assertRaisesRegex(RuntimeError,'malformed'):acquisition.LinuxKernel().children(50)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail (test_fov_math_reference.ProcInterfaceControls.test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail) (token='-1')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-process-exact-depth1-20261024/scripts/test_fov_math_reference.py", line 407, in test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail
+    with self.subTest(token=token),self.assertRaisesRegex(RuntimeError,'malformed'):acquisition.LinuxKernel().children(50)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail (test_fov_math_reference.ProcInterfaceControls.test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail) (token='１２３')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-process-exact-depth1-20261024/scripts/test_fov_math_reference.py", line 407, in test_multiple_thread_lists_deduplicate_and_invalid_pid_tokens_fail
+    with self.subTest(token=token),self.assertRaisesRegex(RuntimeError,'malformed'):acquisition.LinuxKernel().children(50)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: RuntimeError not raised
+
+======================================================================
+FAIL: test_supervisor_preflight_checks_interface_before_subreaper_mutation (test_fov_math_reference.ProcInterfaceControls.test_supervisor_preflight_checks_interface_before_subreaper_mutation)
+----------------------------------------------------------------------
+RuntimeError: cannot enable owned child subreaper
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/reviews/objective-perception-process-exact-depth1-20261024/scripts/test_fov_math_reference.py", line 426, in test_supervisor_preflight_checks_interface_before_subreaper_mutation
+    with patch.object(acquisition.ctypes,'CDLL') as libc,self.assertRaisesRegex(RuntimeError,'interface absent'):
+                                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "interface absent" does not match "cannot enable owned child subreaper"
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.063s
+
+FAILED (failures=6, errors=5)

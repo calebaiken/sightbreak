@@ -1,0 +1,43 @@
+{
+  "source_commit": "705de40383b1789d1a3eae42ab17ac3e7f9ef5ef",
+  "script_sha256_before_and_after": "af4a712cdd9f195203ad4caec4c9351da4a0ebf221d80ef23e54cd2ec3489813",
+  "original_script_unchanged": true,
+  "original_rerun_exit": 1,
+  "original_rerun_equal_to_preserved_result": true,
+  "assertion_is_valid": true,
+  "identical_inputs": true,
+  "controls": [
+    {
+      "name": "valid_maintained_synthetic_receipt",
+      "mutation_changes_input": false,
+      "mutation_ast": "Lambda(args=arguments(posonlyargs=[], args=[arg(arg='rows')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=Constant(value=None))",
+      "expected_rejection": false,
+      "accepted": true,
+      "serialized_input_sha256": "52b2b8f0a10945bcbd4cef43fce3f0df73f32457a8438a2dc9b15e22e6b8387f"
+    },
+    {
+      "name": "forward_rows_have_no_dt_pose_command_objective_or_progress",
+      "mutation_changes_input": false,
+      "mutation_ast": "Lambda(args=arguments(posonlyargs=[], args=[arg(arg='rows')], kwonlyargs=[], kw_defaults=[], defaults=[]), body=Constant(value=None))",
+      "expected_rejection": true,
+      "accepted": true,
+      "serialized_input_sha256": "52b2b8f0a10945bcbd4cef43fce3f0df73f32457a8438a2dc9b15e22e6b8387f"
+    }
+  ],
+  "defective_negative_control": "forward_rows_have_no_dt_pose_command_objective_or_progress",
+  "raw_original_cases": 20,
+  "raw_original_unexpected_acceptances": 14,
+  "corrected_distinct_cases": 19,
+  "actual_mutation_controls": 18,
+  "accepted_mutated_receipts": 13,
+  "rejected_mutated_receipts": 5,
+  "baseline_acceptance_smoke_cases": 1,
+  "baseline_forward_rows": 120,
+  "baseline_forward_row_keys": [
+    "label",
+    "tick"
+  ],
+  "interpretation": "The original negative is a no-op with the opposite expectation to the identical baseline smoke case. Exclude it from independent mutation counts. The baseline is not proven complete/valid; its missing forward fields are a direct schema observation, not an independent deletion falsifier. Other actual mutation acceptances and the original source rejection remain.",
+  "native_executed": false,
+  "new_candidate_reviewed": false
+}

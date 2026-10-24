@@ -1,0 +1,13 @@
+{
+  "command": [
+    "git",
+    "diff",
+    "--cached",
+    "--check"
+  ],
+  "exit": 2,
+  "cause": "Original decoded Windows job log preserves21894 CRLF lines; Git reports CR as trailing whitespace.",
+  "tool_output_truncated": true,
+  "original_bytes_unchanged": true,
+  "correction": "Report-local job-log-original.txt -text -diff; authored code/prose still checked normally."
+}

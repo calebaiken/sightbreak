@@ -38,6 +38,8 @@ run_godot lost-welcome --headless --script res://tests/lost_welcome_test.gd
 run_godot resume-alias --headless --script res://tests/independent_resume_alias_test.gd
 run_godot resume-auth-loss --headless --script res://tests/resume_auth_loss_test.gd
 run_godot bot-ai-regression --headless --script res://tests/bot_ai_regression_test.gd
+run_godot bot-dry-weapon --headless --audio-driver Dummy --script res://tests/bot_dry_weapon_test.gd
+run_godot bot-exhausted-primary --headless --audio-driver Dummy --script res://tests/bot_exhausted_primary_test.gd
 run_godot bot-squad-symmetry --headless --script res://tests/bot_squad_symmetry_test.gd
 run_godot bots --headless --script res://tests/bot_match_test.gd
 run_godot bot-lifecycle --headless --script res://tests/bot_lifecycle_test.gd
@@ -106,8 +108,14 @@ if [[ "${1:-}" == --backend ]]; then
   .venv/bin/python backend/simulate.py
 fi
 python3 scripts/test_build_manifest.py
+python3 scripts/test_native_log.py -v
+python3 scripts/test_reopened_shutdown_diagnostic.py -v
 python3 scripts/test_native_observation.py -v
 python3 scripts/test_offline_role_guidance.py -v
 python3 scripts/test_offline_export_ocr.py -v
 python3 scripts/test_offline_capture_fences.py -v
+python3 scripts/test_native_focus_fence.py -v
+python3 scripts/test_focus_resume_timing.py -v
+python3 scripts/test_native_settings_route.py -v
+python3 scripts/test_native_route_pulse.py -v
 printf 'Validation completed. Logs: %s\n' "$validation_dir"

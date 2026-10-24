@@ -1,0 +1,218 @@
+{
+  "rejected_source_commit": "12901729f7be29d0f64d87a0d92219a84500f1a6",
+  "rejected_controller_sha256": "0ac3d807971988ca184575964f7a8571475a52bc3654b4afb00093c5e33fe1b0",
+  "candidate_controller_sha256": "3d495f74c7799e58616288a8812c29829c45b426ae737fcc73a5712c63782561",
+  "unchanged_critic_audit_sha256": "6b7f4d19816e3c7d85d13f5f73806401242adfc780855baf089936745a187a21",
+  "critic_function_ast_segments_unchanged": true,
+  "helper_note": "Maintained manual_record adds timing evidence; other original synthetic fixture data remain. Fake cleanup replaces invented-PID teardown only. Virtual timers are mocked; no native process or clock delay.",
+  "rejected_source": {
+    "events": {
+      "readiness": {
+        "accepted": true
+      },
+      "cold_endpoint": {
+        "accepted": true
+      },
+      "deadline": {
+        "passed": true,
+        "launched_clients": 4,
+        "error": null,
+        "conditions": [
+          {
+            "exit_code": 0,
+            "timeout": false,
+            "timing": null,
+            "error": null
+          },
+          {
+            "exit_code": 0,
+            "timeout": false,
+            "timing": null,
+            "error": null
+          },
+          {
+            "exit_code": 0,
+            "timeout": false,
+            "timing": null,
+            "error": null
+          },
+          {
+            "exit_code": 0,
+            "timeout": false,
+            "timing": null,
+            "error": null
+          }
+        ]
+      }
+    },
+    "function_results": {
+      "dead_display": {
+        "old_falsifier_assertion_still_holds": true,
+        "result": {
+          "accepted_readiness": true,
+          "owned_xvfb_exit_code": 1,
+          "socket_path_checks": 2,
+          "native_processes_started": 0
+        }
+      },
+      "late_condition": {
+        "old_falsifier_assertion_still_holds": true,
+        "result": {
+          "block_passed": true,
+          "conditions": [
+            {
+              "elapsed_virtual_seconds": 181.047,
+              "wait_timeout_seconds": 0.001
+            },
+            {
+              "elapsed_virtual_seconds": 181.04700000000005,
+              "wait_timeout_seconds": 0.001
+            },
+            {
+              "elapsed_virtual_seconds": 181.04700000000003,
+              "wait_timeout_seconds": 0.001
+            },
+            {
+              "elapsed_virtual_seconds": 181.04700000000003,
+              "wait_timeout_seconds": 0.001
+            }
+          ],
+          "declared_hard_bound_seconds": 180,
+          "native_processes_started": 0
+        }
+      },
+      "invalid_cold_clock": {
+        "old_falsifier_assertion_still_holds": true,
+        "result": {
+          "evaluator_comparable": true,
+          "nonfinite_cold_anchor": "inf",
+          "full_run_block_acceptance_claimed": false,
+          "scope": "Evaluator only; later strict JSON publication rejects infinity."
+        }
+      }
+    }
+  },
+  "corrected_source": {
+    "events": {
+      "readiness": {
+        "accepted": false,
+        "error_type": "Invalid",
+        "error": "Xvfb readiness failure: owned server exited or changed identity"
+      },
+      "deadline": {
+        "passed": false,
+        "launched_clients": 1,
+        "error": "Incomplete condition: Condition deadline at final host observed",
+        "conditions": [
+          {
+            "exit_code": -15,
+            "timeout": true,
+            "timing": {
+              "bound_seconds": 180,
+              "started_monotonic_seconds": 0.0,
+              "deadline_monotonic_seconds": 180.0,
+              "observations": [
+                {
+                  "stage": "native observations:entry",
+                  "monotonic_seconds": 0.0,
+                  "elapsed_seconds": 0.0
+                },
+                {
+                  "stage": "client spawned",
+                  "monotonic_seconds": 178.0,
+                  "elapsed_seconds": 178.0
+                },
+                {
+                  "stage": "before ready.json",
+                  "monotonic_seconds": 178.0,
+                  "elapsed_seconds": 178.0
+                },
+                {
+                  "stage": "published ready.json",
+                  "monotonic_seconds": 178.0,
+                  "elapsed_seconds": 178.0
+                },
+                {
+                  "stage": "read ready.json",
+                  "monotonic_seconds": 178.0,
+                  "elapsed_seconds": 178.0
+                },
+                {
+                  "stage": "owned launch observed",
+                  "monotonic_seconds": 178.0,
+                  "elapsed_seconds": 178.0
+                },
+                {
+                  "stage": "initial host observed",
+                  "monotonic_seconds": 178.0,
+                  "elapsed_seconds": 178.0
+                },
+                {
+                  "stage": "begin acknowledged",
+                  "monotonic_seconds": 179.947,
+                  "elapsed_seconds": 179.947
+                },
+                {
+                  "stage": "before metrics.json",
+                  "monotonic_seconds": 179.947,
+                  "elapsed_seconds": 179.947
+                },
+                {
+                  "stage": "published metrics.json",
+                  "monotonic_seconds": 179.947,
+                  "elapsed_seconds": 179.947
+                },
+                {
+                  "stage": "read metrics.json",
+                  "monotonic_seconds": 179.947,
+                  "elapsed_seconds": 179.947
+                },
+                {
+                  "stage": "final host observed",
+                  "monotonic_seconds": 181.047,
+                  "elapsed_seconds": 181.047
+                },
+                {
+                  "stage": "owned cleanup ended",
+                  "monotonic_seconds": 181.047,
+                  "elapsed_seconds": 181.047
+                },
+                {
+                  "stage": "condition rejected",
+                  "monotonic_seconds": 181.047,
+                  "elapsed_seconds": 181.047
+                }
+              ],
+              "ended_monotonic_seconds": 181.047,
+              "elapsed_seconds": 181.047
+            },
+            "error": "Condition deadline at final host observed"
+          }
+        ]
+      },
+      "cold_endpoint": {
+        "accepted": false,
+        "error_type": "Invalid",
+        "error": "Invalid pre-anchor clock"
+      }
+    },
+    "function_results": {
+      "dead_display": {
+        "old_falsifier_assertion_still_holds": false,
+        "exception_type": "AssertionError",
+        "exception": ""
+      },
+      "late_condition": {
+        "old_falsifier_assertion_still_holds": false,
+        "exception_type": "AssertionError",
+        "exception": "Incomplete condition: Condition deadline at final host observed"
+      },
+      "invalid_cold_clock": {
+        "old_falsifier_assertion_still_holds": false,
+        "exception_type": "Invalid",
+        "exception": "Invalid pre-anchor clock"
+      }
+    }
+  },
+  "engine_import_compile_uid_export_profiler_native_ocr_ci_runs": 0
+}

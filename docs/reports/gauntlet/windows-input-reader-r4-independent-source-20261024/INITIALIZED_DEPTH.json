@@ -1,0 +1,64 @@
+{
+  "source": "642dd0e0543698cae5d90b9046d5875beabed111",
+  "depth": "/workspace/reviews/windows-input-reader-r4-exact-depth1-20261024",
+  "shared_alternate": "/workspace/sightbreak/.git/objects",
+  "self_contained": false,
+  "initialized": true,
+  "materialized_non_doc_count": 512,
+  "all_blob_modes_equal": true,
+  "tracked_index_count": 11728,
+  "proof": [
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "642dd0e0543698cae5d90b9046d5875beabed111\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "rev-list",
+        "--count",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "1\n",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "--verify",
+        "HEAD^"
+      ],
+      "exit": 128,
+      "stdout": "",
+      "stderr": "fatal: Needed a single revision\n"
+    },
+    {
+      "command": [
+        "git",
+        "status",
+        "--porcelain=v1"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "rev-parse",
+        "--is-shallow-repository"
+      ],
+      "exit": 0,
+      "stdout": "true\n",
+      "stderr": ""
+    }
+  ]
+}

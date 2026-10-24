@@ -22,9 +22,11 @@ from native_log import failed
 
 SUITES = ('actor', 'match', 'authority_order', 'state_privacy', 'movement_prediction', 'peer_lifecycle',
           'input_mode', 'menu_focus', 'offline_diagnostics', 'hud_objective_hint',
-          'activity_provenance', 'bot_squad_symmetry', 'transaction_journal', 'gunplay_rules')
+          'activity_provenance', 'bot_squad_symmetry', 'bot_dry_weapon', 'bot_exhausted_primary', 'transaction_journal', 'gunplay_rules')
 SUITE_ARGUMENTS = {
     'gunplay_rules': ['--headless', '--audio-driver', 'Dummy', '--script', 'res://tests/gunplay_rules_probe.gd'],
+    'bot_dry_weapon': ['--headless', '--audio-driver', 'Dummy', '--script', 'res://tests/bot_dry_weapon_test.gd'],
+    'bot_exhausted_primary': ['--headless', '--audio-driver', 'Dummy', '--script', 'res://tests/bot_exhausted_primary_test.gd'],
 }
 PROBE = '''extends SceneTree
 func _initialize() -> void:

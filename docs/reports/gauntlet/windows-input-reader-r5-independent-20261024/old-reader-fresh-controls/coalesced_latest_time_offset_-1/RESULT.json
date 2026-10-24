@@ -1,0 +1,132 @@
+{
+  "name": "coalesced_latest_time_offset_-1",
+  "expected": false,
+  "actual": true,
+  "met_expectation": false,
+  "paired_control": "coalesced_single_fresh",
+  "source_basis": "New latest call must lie between prior emitted wall11000 and current12000, inclusive.",
+  "inputs": {
+    "client_sha256": "751af7160625104ac7f7b182e677477f8dd075a87a270b04423d028856c24526",
+    "authority_sha256": "c44e213dfeb0078431ebcabfa080deb46e881f9d59f52af537d5c0b6ee8f0696"
+  },
+  "result": {
+    "scope": "Debug read-only stage observations; no qualification, physical latency or unobserved cause claim",
+    "diagnostic_complete": true,
+    "cause_status": "UNRESOLVED; observations identify executed stages and gaps only",
+    "roles": {
+      "client": {
+        "records": 7,
+        "coverage": [
+          "client_attempt",
+          "client_connected",
+          "client_tick",
+          "input_send_called",
+          "ready",
+          "snapshot_applied",
+          "welcome_received"
+        ],
+        "counters": {
+          "ready": 1,
+          "client_attempt": 1,
+          "client_connected": 1,
+          "welcome_received": 1,
+          "client_tick": 2,
+          "snapshot_applied": 1,
+          "input_send_called": 1
+        },
+        "max_observation_gap_msec": 1000,
+        "max_snapshot_age_msec": 3000,
+        "pending_saturation_indices": [],
+        "accepted_events": [],
+        "consumed_events": [],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [
+          {
+            "transport_id": 9,
+            "local_attempt": 1,
+            "local_id": 1,
+            "wall_unix_msec": 104000
+          }
+        ],
+        "binding_events": [],
+        "local_attempts": 1
+      },
+      "authority": {
+        "records": 8,
+        "coverage": [
+          "authority_tick",
+          "input_accepted",
+          "input_consumed",
+          "input_received",
+          "peer_bound",
+          "peer_connected",
+          "ready"
+        ],
+        "counters": {
+          "ready": 1,
+          "peer_connected": 1,
+          "peer_bound": 1,
+          "input_received": 2,
+          "input_accepted": 2,
+          "input_consumed": 1,
+          "authority_tick": 2
+        },
+        "max_observation_gap_msec": 5000,
+        "max_snapshot_age_msec": -1,
+        "pending_saturation_indices": [],
+        "accepted_events": [
+          {
+            "index": 5,
+            "epoch": 1,
+            "count": 1,
+            "first": 1,
+            "last": 1,
+            "fire": 1,
+            "reload": 0,
+            "moving": 0,
+            "wall_msec": 9000
+          }
+        ],
+        "consumed_events": [
+          {
+            "index": 6,
+            "sequence": 1,
+            "fire": true,
+            "reload": false,
+            "move": [
+              0.0,
+              0.0
+            ],
+            "peer": 9,
+            "actor": 1,
+            "generation": 1,
+            "wall_msec": 10000
+          }
+        ],
+        "expiry_events": [],
+        "disconnect_events": [],
+        "welcome_events": [],
+        "binding_events": [
+          {
+            "peer": 9,
+            "generation": 1,
+            "bound_actor": 1,
+            "wall_unix_msec": 103000
+          }
+        ],
+        "local_attempts": 0
+      }
+    },
+    "errors": [],
+    "attempt_generation_links": [
+      {
+        "client_local_attempt": 1,
+        "peer": 9,
+        "generation": 1,
+        "bound_actor": 1,
+        "wall_unix_msec": 103000
+      }
+    ]
+  }
+}

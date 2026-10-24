@@ -1,0 +1,120 @@
+{
+  "scope": "Exact handoff, local depth-one blob-filtered Git checkout; pure tests only, no CI/native execution",
+  "identity": {
+    "head": "a282b3f55c4014072144f3184e91fbefbafc0077",
+    "shallow": "true",
+    "tested_source_sha256": "ef9a6505763fa7d1fdb2db9d03a0717a8993d26c52fedfc975b8927614812927"
+  },
+  "result": "REPRODUCED_SOURCE_CONTROL_FAILURE",
+  "commands": [
+    {
+      "label": "shallow-clone",
+      "command": [
+        "git",
+        "clone",
+        "--depth",
+        "1",
+        "--filter=blob:none",
+        "--no-checkout",
+        "--single-branch",
+        "--branch",
+        "codex/m2-mac-derived-ocr",
+        "--upload-pack=git -c uploadpack.allowFilter=true upload-pack",
+        "file:///workspace/sightbreak-mac-derived-ocr",
+        "/tmp/sightbreak-ocr-shallow-falsifier-hpf8nkjt/checkout"
+      ],
+      "cwd": "/workspace/reviews/mac-derived-ocr-fresh-source",
+      "exit_code": 0,
+      "seconds": 0.07708563699998194,
+      "log": "shallow-clone.txt",
+      "bytes": 74,
+      "sha256": "c229fe73e471508e3c6ec623442c7044a0c063c43eff8a1e2dd77da18a4ad02f"
+    },
+    {
+      "label": "shallow-sparse",
+      "command": [
+        "git",
+        "sparse-checkout",
+        "set",
+        "--cone",
+        "scripts",
+        "docs/reports/gauntlet/m2-mac-derived-ocr"
+      ],
+      "cwd": "/tmp/sightbreak-ocr-shallow-falsifier-hpf8nkjt/checkout",
+      "exit_code": 0,
+      "seconds": 0.004389897001601639,
+      "log": "shallow-sparse.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "label": "shallow-checkout",
+      "command": [
+        "git",
+        "checkout"
+      ],
+      "cwd": "/tmp/sightbreak-ocr-shallow-falsifier-hpf8nkjt/checkout",
+      "exit_code": 0,
+      "seconds": 0.5517134950005129,
+      "log": "shallow-checkout.txt",
+      "bytes": 120,
+      "sha256": "d2637bafd0e5b82a2bed59de016f0d965e37698f4bc6fdd1d13bd76e23eba99d"
+    },
+    {
+      "label": "shallow-head",
+      "command": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "cwd": "/tmp/sightbreak-ocr-shallow-falsifier-hpf8nkjt/checkout",
+      "exit_code": 0,
+      "seconds": 0.002417312000034144,
+      "log": "shallow-head.txt",
+      "bytes": 41,
+      "sha256": "fe9fa2a7d6a0e5f661657e0fe48f6d0b22685a0223fd93593fd4fc518f7aea43"
+    },
+    {
+      "label": "shallow-shallow",
+      "command": [
+        "git",
+        "rev-parse",
+        "--is-shallow-repository"
+      ],
+      "cwd": "/tmp/sightbreak-ocr-shallow-falsifier-hpf8nkjt/checkout",
+      "exit_code": 0,
+      "seconds": 0.0033346399995934917,
+      "log": "shallow-shallow.txt",
+      "bytes": 5,
+      "sha256": "a17fcf0a2f50e2d495e4f90ce263410edc183add6c62699a2facbccf60410f74"
+    },
+    {
+      "label": "shallow-baseline-absent",
+      "command": [
+        "git",
+        "show",
+        "c08889b:scripts/macos_window_capture.swift"
+      ],
+      "cwd": "/tmp/sightbreak-ocr-shallow-falsifier-hpf8nkjt/checkout",
+      "exit_code": 128,
+      "seconds": 0.004461886999706621,
+      "log": "shallow-baseline-absent.txt",
+      "bytes": 38,
+      "sha256": "33e899f4ed32a39a6aab181e0f65f2781bd4bba9733fb514efcfbcd375c9b265"
+    },
+    {
+      "label": "shallow-deploy-controls",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_deploy_ocr.py",
+        "-v"
+      ],
+      "cwd": "/tmp/sightbreak-ocr-shallow-falsifier-hpf8nkjt/checkout",
+      "exit_code": 1,
+      "seconds": 0.35749626200049534,
+      "log": "shallow-deploy-controls.txt",
+      "bytes": 3783,
+      "sha256": "9bc72749cbf3e0889491f691493751e910c482473fb26990550f775fe848c66d"
+    }
+  ]
+}

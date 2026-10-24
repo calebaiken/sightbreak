@@ -1,0 +1,49 @@
+{
+  "source": "c08889b8c1118c89e83c151079df4dc224076760",
+  "scope": "Pure replay of original JSON and two explicit single-field counterexamples; no OCR or native process",
+  "command": "python3 pure original-selector baseline; exact code retained in PREREGISTRATION.md",
+  "cases": [
+    {
+      "case": "original",
+      "deploy_observation": {
+        "box_normalized_bottom_left": [
+          0.10991379109608065,
+          0.5179153098445015,
+          0.16810344984806866,
+          0.019735292497887746
+        ],
+        "confidence": 0.5,
+        "text": "DEPLOY \u2022 OFFLINE 5V5"
+      },
+      "error": "Expected one exact confident in-bounds native label: DEPLOY \u00b7 OFFLINE 5V5"
+    },
+    {
+      "case": "middle_dot_only",
+      "deploy_observation": {
+        "box_normalized_bottom_left": [
+          0.10991379109608065,
+          0.5179153098445015,
+          0.16810344984806866,
+          0.019735292497887746
+        ],
+        "confidence": 0.5,
+        "text": "DEPLOY \u00b7 OFFLINE 5V5"
+      },
+      "error": "Expected one exact confident in-bounds native label: DEPLOY \u00b7 OFFLINE 5V5"
+    },
+    {
+      "case": "confidence_only",
+      "deploy_observation": {
+        "box_normalized_bottom_left": [
+          0.10991379109608065,
+          0.5179153098445015,
+          0.16810344984806866,
+          0.019735292497887746
+        ],
+        "confidence": 0.8,
+        "text": "DEPLOY \u2022 OFFLINE 5V5"
+      },
+      "error": "Expected one exact confident in-bounds native label: DEPLOY \u00b7 OFFLINE 5V5"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "target": "c32415148db1f110bbc7eadfca3793d4693429ff",
+  "root": "11c5773eff6888c5157784c272aca144614338d4",
+  "affinity": [
+    4
+  ],
+  "erasure": {
+    "game/scripts/gameplay/match.gd": {
+      "original_sha256": "2db21ed6eb27d2095e899db836b417288c8a96e5e3239c8aa7affa6bb6a54173",
+      "erased_sha256": "2db21ed6eb27d2095e899db836b417288c8a96e5e3239c8aa7affa6bb6a54173",
+      "equal": true
+    },
+    "game/tests/movement_prediction_test.gd": {
+      "original_sha256": "aad242761fcd1541183fd29470530e6a883ed57b0b55134e418987691b0e344d",
+      "erased_sha256": "aad242761fcd1541183fd29470530e6a883ed57b0b55134e418987691b0e344d",
+      "equal": true
+    },
+    "scripts/fixtures/export_integration.gd": {
+      "original_sha256": "b5621ad5e52d17b938e81a285b4e690dc2bf10ae5955c0ae43442c78e0c079e4",
+      "erased_sha256": "b5621ad5e52d17b938e81a285b4e690dc2bf10ae5955c0ae43442c78e0c079e4",
+      "equal": true
+    },
+    "scripts/verify_integration_export.py": {
+      "original_sha256": "6de6b78597d5af681f3ee883886422b065ebe2c2f96a72f628ff52e502f698fe",
+      "erased_sha256": "6de6b78597d5af681f3ee883886422b065ebe2c2f96a72f628ff52e502f698fe",
+      "equal": true
+    }
+  },
+  "positive_source_controls": [
+    "exact release/flag/account/ticket admission guard retained",
+    "only applied snapshots traverse actor array"
+  ],
+  "mutation_negative_controls": [
+    "protected simulation tick initialization mutation rejected by erasure",
+    "release gate deletion rejected",
+    "unguarded actor traversal rejected"
+  ],
+  "limitations": "These are byte/source assertions, not execution of GDScript or proof of native/API/timing behavior."
+}

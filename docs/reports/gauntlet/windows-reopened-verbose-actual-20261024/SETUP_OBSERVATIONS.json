@@ -1,0 +1,57 @@
+{
+  "scope": "Retained setup tool observations; no native attempt was made",
+  "events": [
+    {
+      "tool_chunk_id": "8ceb10",
+      "exit_code": 1,
+      "command": "taskset -c 4 python .../bind_preparation.py",
+      "failure": "AssertionError: backend/app.py",
+      "reason": "Builder-owned source checkout is sparse; unchanged tracked backend path was not materialized",
+      "resolution": "Materialized all508 exact non-doc candidate paths only in own sparse review checkout; binding helper now verifies own initialized view and inventories builder omissions"
+    },
+    {
+      "tool_chunk_id": "a273a7",
+      "exit_code": 1,
+      "child_exit_code": 129,
+      "failure": "error: unknown option no-cone",
+      "command_child": [
+        "git",
+        "sparse-checkout",
+        "add",
+        "--no-cone",
+        "--stdin"
+      ],
+      "resolution": "Existing non-cone configuration retained; successful git sparse-checkout add --stdin materialized own exact source"
+    },
+    {
+      "tool_chunk_id": "1d27f0",
+      "exit_code": 0,
+      "command": "taskset -c 4 python .../bind_preparation.py",
+      "result": "508 exact source paths/modes and53 old raw files verified"
+    },
+    {
+      "phase": "actual read-only preparation",
+      "tool_chunk": "324662",
+      "exit_code": 2,
+      "failure": "Guessed scripts/native_route_pulse.py absent",
+      "resolution": "Read exact function in scripts/verify_integration_export.py; no source mutation"
+    },
+    {
+      "phase": "official job-log local retention",
+      "failure": "Large argv serialization rejected Argument list too long before write; next orchestration syntax failed before any tool call",
+      "resolution": "Persisted the already obtained1.23MB supported log through a single local stdin write; artifact transfers remained supported20.9/23.2MB downloads under32MiB"
+    },
+    {
+      "phase": "terminal job timestamp metadata",
+      "failure": "GitHub Fetch direct-job URL unsupported400",
+      "resolution": "Read the same fixed public job metadata with existing same-account gh CLI; no artifact route/cap change"
+    },
+    {
+      "phase": "validation byte prediction",
+      "failure": "Preregistered LF-only validation digest differs from actual Windows bytes; first extraction failures retained",
+      "resolution": "Separate pure Git Windows-filter reconstruction reproduces actual candidate225f4d95 and original01ebd70c from pinned identities; immutable preregistration retained"
+    }
+  ],
+  "initial_unpinned_read_only_commands_disclosed": true,
+  "subsequent_commands_pinned_cpu4": true
+}

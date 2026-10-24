@@ -1,0 +1,135 @@
+test_each_required_label_rejects_missing_foreign_partial_low_confidence_or_ambiguity (__main__.ScreenIdentity.test_each_required_label_rejects_missing_foreign_partial_low_confidence_or_ambiguity) ... ERROR
+test_every_required_box_must_be_positive_finite_and_inside_original_image (__main__.ScreenIdentity.test_every_required_box_must_be_positive_finite_and_inside_original_image) ... ERROR
+test_mixed_screen_labels_do_not_qualify_either_screen (__main__.ScreenIdentity.test_mixed_screen_labels_do_not_qualify_either_screen) ... ERROR
+test_original_returned_masthead_remains_below_threshold (__main__.ScreenIdentity.test_original_returned_masthead_remains_below_threshold) ... ERROR
+test_originals_are_byte_exact_and_all_three_screens_are_distinguished (__main__.ScreenIdentity.test_originals_are_byte_exact_and_all_three_screens_are_distinguished) ... ERROR
+test_settings_requires_exact_unique_heading_at_same_threshold (__main__.ScreenIdentity.test_settings_requires_exact_unique_heading_at_same_threshold) ... ERROR
+test_threshold_boundary_and_normalization_are_exact (__main__.ScreenIdentity.test_threshold_boundary_and_normalization_are_exact) ... ERROR
+
+======================================================================
+ERROR: test_each_required_label_rejects_missing_foreign_partial_low_confidence_or_ambiguity (__main__.ScreenIdentity.test_each_required_label_rejects_missing_foreign_partial_low_confidence_or_ambiguity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_screen_identity.py", line 44, in test_each_required_label_rejects_missing_foreign_partial_low_confidence_or_ambiguity
+    capture = original('03-returned-menu.json')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_screen_identity.py", line 16, in original
+    return json.loads((FIXTURES / name).read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/reviews/mac-derived-ocr-fresh-source/docs/reports/gauntlet/m2-macos-screen-identity/fixtures/03-returned-menu.json'
+
+======================================================================
+ERROR: test_every_required_box_must_be_positive_finite_and_inside_original_image (__main__.ScreenIdentity.test_every_required_box_must_be_positive_finite_and_inside_original_image)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_screen_identity.py", line 61, in test_every_required_box_must_be_positive_finite_and_inside_original_image
+    capture = original(source)
+              ^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_screen_identity.py", line 16, in original
+    return json.loads((FIXTURES / name).read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/reviews/mac-derived-ocr-fresh-source/docs/reports/gauntlet/m2-macos-screen-identity/fixtures/03-returned-menu.json'
+
+======================================================================
+ERROR: test_mixed_screen_labels_do_not_qualify_either_screen (__main__.ScreenIdentity.test_mixed_screen_labels_do_not_qualify_either_screen)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_screen_identity.py", line 67, in test_mixed_screen_labels_do_not_qualify_either_screen
+    home, settings = original('03-returned-menu.json'), original('02-field-settings.json')
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_screen_identity.py", line 16, in original
+    return json.loads((FIXTURES / name).read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/reviews/mac-derived-ocr-fresh-source/docs/reports/gauntlet/m2-macos-screen-identity/fixtures/03-returned-menu.json'
+
+======================================================================
+ERROR: test_original_returned_masthead_remains_below_threshold (__main__.ScreenIdentity.test_original_returned_masthead_remains_below_threshold)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_screen_identity.py", line 33, in test_original_returned_masthead_remains_below_threshold
+    capture = original('03-returned-menu.json')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_screen_identity.py", line 16, in original
+    return json.loads((FIXTURES / name).read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/reviews/mac-derived-ocr-fresh-source/docs/reports/gauntlet/m2-macos-screen-identity/fixtures/03-returned-menu.json'
+
+======================================================================
+ERROR: test_originals_are_byte_exact_and_all_three_screens_are_distinguished (__main__.ScreenIdentity.test_originals_are_byte_exact_and_all_three_screens_are_distinguished)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_screen_identity.py", line 21, in test_originals_are_byte_exact_and_all_three_screens_are_distinguished
+    provenance = json.loads((FIXTURES / 'provenance.json').read_text())
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/reviews/mac-derived-ocr-fresh-source/docs/reports/gauntlet/m2-macos-screen-identity/fixtures/provenance.json'
+
+======================================================================
+ERROR: test_settings_requires_exact_unique_heading_at_same_threshold (__main__.ScreenIdentity.test_settings_requires_exact_unique_heading_at_same_threshold)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_screen_identity.py", line 76, in test_settings_requires_exact_unique_heading_at_same_threshold
+    capture = original('02-field-settings.json')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_screen_identity.py", line 16, in original
+    return json.loads((FIXTURES / name).read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/reviews/mac-derived-ocr-fresh-source/docs/reports/gauntlet/m2-macos-screen-identity/fixtures/02-field-settings.json'
+
+======================================================================
+ERROR: test_threshold_boundary_and_normalization_are_exact (__main__.ScreenIdentity.test_threshold_boundary_and_normalization_are_exact)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_screen_identity.py", line 85, in test_threshold_boundary_and_normalization_are_exact
+    capture = original('03-returned-menu.json')
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/reviews/mac-derived-ocr-fresh-source/scripts/test_macos_screen_identity.py", line 16, in original
+    return json.loads((FIXTURES / name).read_text())
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1027, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py", line 1013, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/workspace/reviews/mac-derived-ocr-fresh-source/docs/reports/gauntlet/m2-macos-screen-identity/fixtures/03-returned-menu.json'
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.006s
+
+FAILED (errors=7)

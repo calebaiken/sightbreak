@@ -1,0 +1,146 @@
+{
+  "source": "/workspace/reviews/objective-perception-process-exact-depth1-20261024",
+  "methods": 6,
+  "failures": 5,
+  "errors": 0,
+  "skips": 0,
+  "scope": "Pure fake states and own local Git metadata; no engine/process/helper/proc probe or real signal",
+  "results": {
+    "direct_root_empty_discovery": {
+      "passed": true,
+      "signals": [
+        {
+          "pid": 100,
+          "start_ticks": 123,
+          "signal": 15
+        }
+      ],
+      "reaped": [],
+      "survivors": [],
+      "stream_drain_error": null,
+      "root_birth_bound": true,
+      "root_exit_code": -9,
+      "root_popen_waited": true
+    },
+    "observer_exception": {
+      "error": "declared observer error",
+      "cleanup_error": "OSError: declared observer error",
+      "fake_returncode": -9,
+      "terminal_code_persisted": false
+    },
+    "original_scalar_failure_preserved": true,
+    "physical_source_controls": [
+      {
+        "name": "component-byte",
+        "path": "tools/fov_math_reference/reference.gd",
+        "git_status": "",
+        "git_diff_exit": 0,
+        "physical_sha256": "8d5253d6bdee4d7a91f012c2eb32620521dd8f26a7c320775a464ef40eb29e6a",
+        "expected_sha256": "d0d42198ca6d70ece17224c8e5b28eb2ae1b27a568ca2b158fcfb72f37dfd9e5",
+        "physical_mode": "0o600",
+        "expected_mode": "0o600",
+        "guard_rejected": false,
+        "error": null,
+        "returned_binding_equal_to_baseline": false
+      },
+      {
+        "name": "component-mode",
+        "path": "tools/fov_math_reference/project.godot",
+        "git_status": "",
+        "git_diff_exit": 0,
+        "physical_sha256": "ac147de9e3c307335b7dc7fa837f994f775dee5d46c81039bf04a2de5117626f",
+        "expected_sha256": "ac147de9e3c307335b7dc7fa837f994f775dee5d46c81039bf04a2de5117626f",
+        "physical_mode": "0o711",
+        "expected_mode": "0o600",
+        "guard_rejected": false,
+        "error": null,
+        "returned_binding_equal_to_baseline": true
+      },
+      {
+        "name": "imported-native-log-byte",
+        "path": "scripts/native_log.py",
+        "git_status": "",
+        "git_diff_exit": 0,
+        "physical_sha256": "af3f2a71c3cd54948dc014a62dc09b32fca6adce570a9ed78d7446af17e4645b",
+        "expected_sha256": "8684252c3ec4ca466fe24a31f938a7614b8ce993c91041b0a2c42d2d483f94e1",
+        "physical_mode": "0o600",
+        "expected_mode": "0o600",
+        "guard_rejected": false,
+        "error": null,
+        "returned_binding_equal_to_baseline": true
+      }
+    ],
+    "queued_parent_reuse": {
+      "seen": [
+        {
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 123
+        },
+        {
+          "pid": 200,
+          "state": "R",
+          "ppid": 100,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 456
+        },
+        {
+          "pid": 300,
+          "state": "R",
+          "ppid": 200,
+          "pgrp": 777,
+          "session": 777,
+          "start_ticks": 789
+        }
+      ],
+      "fake_signals": [
+        [
+          100,
+          15
+        ],
+        [
+          300,
+          15
+        ]
+      ],
+      "unrelated_child_pid": 300,
+      "reused_parent_pid": 200
+    },
+    "stale_child_parent": {
+      "seen": [
+        {
+          "pid": 100,
+          "state": "R",
+          "ppid": 50,
+          "pgrp": 100,
+          "session": 100,
+          "start_ticks": 123
+        },
+        {
+          "pid": 200,
+          "state": "R",
+          "ppid": 999,
+          "pgrp": 777,
+          "session": 777,
+          "start_ticks": 456
+        }
+      ],
+      "fake_signals": [
+        [
+          100,
+          15
+        ],
+        [
+          200,
+          15
+        ]
+      ],
+      "unrelated_pid": 200,
+      "actual_parent": 999
+    }
+  }
+}

@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/reviews/linux-profile-acquisition-r2-native/docs/reports/gauntlet/m1-linux-profile-acquisition/native-r2-independent/verify_actual.py", line 555, in <module>
+    main()
+  File "/workspace/reviews/linux-profile-acquisition-r2-native/docs/reports/gauntlet/m1-linux-profile-acquisition/native-r2-independent/verify_actual.py", line 441, in main
+    check(bool(seen), 'native_engine_independently_observed:' + native['label'])
+  File "/workspace/reviews/linux-profile-acquisition-r2-native/docs/reports/gauntlet/m1-linux-profile-acquisition/native-r2-independent/verify_actual.py", line 34, in check
+    raise AssertionError(name + ': ' + repr(detail))
+AssertionError: native_engine_independently_observed:version: None

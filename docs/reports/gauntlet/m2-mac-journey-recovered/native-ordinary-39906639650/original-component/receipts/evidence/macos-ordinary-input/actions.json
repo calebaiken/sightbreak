@@ -1,0 +1,195 @@
+[
+  {
+    "event": "helper_command",
+    "seconds": 2.3157534169999963,
+    "name": "compile-capture-helper",
+    "command": [
+      "xcrun",
+      "swiftc",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-target",
+      "arm64-apple-macos14.0",
+      "/Users/runner/work/sightbreak/sightbreak/scripts/macos_window_capture.swift",
+      "-framework",
+      "AppKit",
+      "-framework",
+      "CoreGraphics",
+      "-framework",
+      "ScreenCaptureKit",
+      "-framework",
+      "Vision",
+      "-framework",
+      "ImageIO",
+      "-framework",
+      "UniformTypeIdentifiers",
+      "-o",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/macos-window-capture"
+    ],
+    "budget_seconds": 60
+  },
+  {
+    "event": "stage_begin",
+    "seconds": 4.772995084000058,
+    "label": "Exact owned visible native window",
+    "budget_seconds": 30
+  },
+  {
+    "event": "stage_complete",
+    "seconds": 13.365687417000004,
+    "label": "Exact owned visible native window"
+  },
+  {
+    "event": "observer_before_background_capture",
+    "seconds": 13.432095167000057,
+    "native_state": {
+      "foreground_pid": 324,
+      "controller_pid": 13984,
+      "target_pid": 14158,
+      "foreground_is_controller": false,
+      "target_window": 54,
+      "pinned_bounds_points": [
+        0.0,
+        25.0,
+        1024.0,
+        684.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": false,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    }
+  },
+  {
+    "event": "helper_command",
+    "seconds": 13.488318417000073,
+    "name": "00-background-window",
+    "command": [
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/macos-window-capture",
+      "--pid",
+      "14158",
+      "--window",
+      "54",
+      "--png",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-background-window.png",
+      "--report",
+      "/Users/runner/work/sightbreak/sightbreak/builds/desktop-playability/macos-ordinary-input/00-background-window.json"
+    ],
+    "budget_seconds": 25
+  },
+  {
+    "event": "background_capture_failed",
+    "seconds": 16.35623054200005,
+    "type": "RuntimeError",
+    "message": "Owned visible window or its geometry changed before input"
+  },
+  {
+    "event": "focus_before_request",
+    "seconds": 16.363537542000017,
+    "focus_budget_seconds": 5,
+    "native_state": {
+      "foreground_pid": 324,
+      "controller_pid": 13984,
+      "target_pid": 14158,
+      "foreground_is_controller": false,
+      "target_window": 54,
+      "pinned_bounds_points": [
+        0.0,
+        25.0,
+        1024.0,
+        684.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": true,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    }
+  },
+  {
+    "event": "focus_request_returned",
+    "seconds": 16.39929916699998,
+    "api": "NSRunningApplication.activateWithOptions:",
+    "activation_options": 3,
+    "request_accepted": true,
+    "native_state": {
+      "foreground_pid": 324,
+      "controller_pid": 13984,
+      "target_pid": 14158,
+      "foreground_is_controller": false,
+      "target_window": 54,
+      "pinned_bounds_points": [
+        0.0,
+        25.0,
+        1024.0,
+        684.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": true,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    }
+  },
+  {
+    "event": "focus_sample",
+    "seconds": 16.53298058400003,
+    "focus_seconds": 0.17001974999993763,
+    "before_run_loop": {
+      "foreground_pid": 324,
+      "controller_pid": 13984,
+      "target_pid": 14158,
+      "foreground_is_controller": false,
+      "target_window": 54,
+      "pinned_bounds_points": [
+        0.0,
+        25.0,
+        1024.0,
+        684.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": true,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    },
+    "run_loop": {
+      "api": "CFRunLoopRunInMode",
+      "mode": "kCFRunLoopDefaultMode",
+      "requested_seconds": 0.05,
+      "elapsed_seconds": 0.12518533299999035,
+      "return_code": 3,
+      "controller_main_run_loop": true
+    },
+    "after_run_loop": {
+      "foreground_pid": 14158,
+      "controller_pid": 13984,
+      "target_pid": 14158,
+      "foreground_is_controller": false,
+      "target_window": 54,
+      "pinned_bounds_points": [
+        0.0,
+        25.0,
+        1024.0,
+        684.0
+      ],
+      "target_application_available": true,
+      "state_source": "Raw NSWorkspace/NSRunningApplication before or after an explicit run-loop turn",
+      "target_active": true,
+      "target_hidden": false,
+      "target_terminated": false,
+      "target_finished_launching": true,
+      "target_activation_policy": 0
+    }
+  }
+]

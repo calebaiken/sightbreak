@@ -1,0 +1,169 @@
+{
+  "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/io/resource.cpp",
+  "sha256": "d6bf138aae0c24f06c1456e20d4bcc37cc47d7bac4616cc8e7cb3934b3bfffd2",
+  "bytes": 28597,
+  "anchors": [
+    {
+      "line": 92,
+      "context": [
+        "\t{",
+        "\t\tMutexLock lock(ResourceCache::lock);",
+        "",
+        "\t\tif (!path_cache.is_empty()) {",
+        "\t\t\tResourceCache::resources.erase(path_cache);",
+        "\t\t}",
+        "",
+        "\t\tpath_cache = \"\";",
+        "",
+        "\t\tRef<Resource> existing = ResourceCache::get_ref(p_path);",
+        "",
+        "\t\tif (existing.is_valid()) {",
+        "\t\t\tif (p_take_over) {"
+      ]
+    },
+    {
+      "line": 102,
+      "context": [
+        "",
+        "\t\tif (existing.is_valid()) {",
+        "\t\t\tif (p_take_over) {",
+        "\t\t\t\texisting->path_cache = String();",
+        "\t\t\t\tResourceCache::resources.erase(p_path);",
+        "\t\t\t} else {",
+        "\t\t\t\tERR_FAIL_MSG(vformat(\"Another resource is loaded from path '%s' (possible cyclic resource inclusion).\", p_path));",
+        "\t\t\t}",
+        "\t\t}",
+        "",
+        "\t\tpath_cache = p_path;",
+        "",
+        "\t\tif (!path_cache.is_empty()) {"
+      ]
+    },
+    {
+      "line": 111,
+      "context": [
+        "",
+        "\t\tpath_cache = p_path;",
+        "",
+        "\t\tif (!path_cache.is_empty()) {",
+        "\t\t\tResourceCache::resources[path_cache] = this;",
+        "\t\t}",
+        "\t}",
+        "",
+        "\t_resource_path_changed();",
+        "}",
+        "",
+        "String Resource::get_path() const {",
+        "\treturn path_cache;"
+      ]
+    },
+    {
+      "line": 798,
+      "context": [
+        "",
+        "\tMutexLock lock(ResourceCache::lock);",
+        "\t// Only unregister from the cache if this is the actual resource listed there.",
+        "\t// (Other resources can have the same value in `path_cache` if loaded with `CACHE_IGNORE`.)",
+        "\tHashMap<String, Resource *>::Iterator E = ResourceCache::resources.find(path_cache);",
+        "\tif (likely(E && E->value == this)) {",
+        "\t\tResourceCache::resources.remove(E);",
+        "\t}",
+        "}",
+        "",
+        "HashMap<String, Resource *> ResourceCache::resources;",
+        "#ifdef TOOLS_ENABLED",
+        "HashMap<String, HashMap<String, String>> ResourceCache::resource_path_cache;"
+      ]
+    },
+    {
+      "line": 800,
+      "context": [
+        "\t// Only unregister from the cache if this is the actual resource listed there.",
+        "\t// (Other resources can have the same value in `path_cache` if loaded with `CACHE_IGNORE`.)",
+        "\tHashMap<String, Resource *>::Iterator E = ResourceCache::resources.find(path_cache);",
+        "\tif (likely(E && E->value == this)) {",
+        "\t\tResourceCache::resources.remove(E);",
+        "\t}",
+        "}",
+        "",
+        "HashMap<String, Resource *> ResourceCache::resources;",
+        "#ifdef TOOLS_ENABLED",
+        "HashMap<String, HashMap<String, String>> ResourceCache::resource_path_cache;",
+        "#endif",
+        ""
+      ]
+    },
+    {
+      "line": 804,
+      "context": [
+        "\t\tResourceCache::resources.remove(E);",
+        "\t}",
+        "}",
+        "",
+        "HashMap<String, Resource *> ResourceCache::resources;",
+        "#ifdef TOOLS_ENABLED",
+        "HashMap<String, HashMap<String, String>> ResourceCache::resource_path_cache;",
+        "#endif",
+        "",
+        "Mutex ResourceCache::lock;",
+        "#ifdef TOOLS_ENABLED",
+        "RWLock ResourceCache::path_cache_lock;",
+        "#endif"
+      ]
+    },
+    {
+      "line": 814,
+      "context": [
+        "#ifdef TOOLS_ENABLED",
+        "RWLock ResourceCache::path_cache_lock;",
+        "#endif",
+        "",
+        "void ResourceCache::clear() {",
+        "\tif (!resources.is_empty()) {",
+        "\t\tif (OS::get_singleton()->is_stdout_verbose()) {",
+        "\t\t\tERR_PRINT(vformat(\"%d resources still in use at exit.\", resources.size()));",
+        "\t\t\tfor (const KeyValue<String, Resource *> &E : resources) {",
+        "\t\t\t\tprint_line(vformat(\"Resource still in use: %s (%s)\", E.key, E.value->get_class()));",
+        "\t\t\t}",
+        "\t\t} else {",
+        "\t\t\tERR_PRINT(vformat(\"%d resources still in use at exit (run with --verbose for details).\", resources.size()));"
+      ]
+    },
+    {
+      "line": 819,
+      "context": [
+        "\tif (!resources.is_empty()) {",
+        "\t\tif (OS::get_singleton()->is_stdout_verbose()) {",
+        "\t\t\tERR_PRINT(vformat(\"%d resources still in use at exit.\", resources.size()));",
+        "\t\t\tfor (const KeyValue<String, Resource *> &E : resources) {",
+        "\t\t\t\tprint_line(vformat(\"Resource still in use: %s (%s)\", E.key, E.value->get_class()));",
+        "\t\t\t}",
+        "\t\t} else {",
+        "\t\t\tERR_PRINT(vformat(\"%d resources still in use at exit (run with --verbose for details).\", resources.size()));",
+        "\t\t}",
+        "\t}",
+        "",
+        "\tresources.clear();",
+        "}"
+      ]
+    },
+    {
+      "line": 873,
+      "context": [
+        "",
+        "\treturn ref;",
+        "}",
+        "",
+        "void ResourceCache::get_cached_resources(List<Ref<Resource>> *p_resources) {",
+        "\tMutexLock mutex_lock(lock);",
+        "",
+        "\tLocalVector<String> to_remove;",
+        "",
+        "\tfor (KeyValue<String, Resource *> &E : resources) {",
+        "\t\tRef<Resource> ref = Ref<Resource>(E.value);",
+        "",
+        "\t\tif (ref.is_null()) {"
+      ]
+    }
+  ]
+}

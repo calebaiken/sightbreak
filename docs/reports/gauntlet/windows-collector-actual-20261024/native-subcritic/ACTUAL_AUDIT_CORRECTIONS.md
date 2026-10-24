@@ -1,0 +1,5 @@
+# Actual audit failures and corrections
+
+actual-r1 native and strict log audits completed. Provenance reported startup_original_graphical_PNG_retained=false because the auditor searched the bounded raw-receipt artifact, which deliberately excludes PNGs. This is an auditor artifact-selection mistake, not missing candidate evidence. Inspection found the original verification/windows-menu.png (305088bytes) in the official fullQA replica. All237 bounded files independently match fullQA counterparts byte for byte; fullQA adds83 PNGs. The corrected auditor accepts an explicit --full source for the graphical PNG, retains its original path/hash, and writes fresh actual-r2 output. actual-r1 is retained unchanged.
+
+Three source-read setup commands requested nonexistent scripts/build_desktop.py, scripts/native_regression_isolation.py and scripts/native_failure_diagnostics.py. Their missing-file errors are preparation failures; no native tool launched. Source preparation attempt1 also failed on irrelevant sparse documentation attributes, as retained in source-preparation/AUDIT_FAILURE.txt. Method-review fixes are recorded in METHOD_REVIEW.md.

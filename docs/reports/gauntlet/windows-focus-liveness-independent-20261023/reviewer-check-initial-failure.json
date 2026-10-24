@@ -1,0 +1,7 @@
+{
+  "command": ["python3", "docs/reports/gauntlet/windows-focus-liveness-independent-20261023/verify_review.py"],
+  "exit": 1,
+  "exception": "AssertionError: test_macos_menu",
+  "reason": "The first reviewer log parser required OK to be the final line; the maintained Mac test emits captured output after the unittest summary.",
+  "correction": "Check an exact OK or OK (skipped=N) summary line anywhere in the original output. Test log bytes and test source remain unchanged."
+}

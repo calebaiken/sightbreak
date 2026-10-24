@@ -1,0 +1,72 @@
+{
+  "engine_revision": "ed1daf0bf",
+  "source_reader": "existing helper thread reused for read-only source research; no native execution",
+  "sources": [
+    {
+      "path": "core/io/json.h",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/io/json.h",
+      "sha256": "168faeef28141b82d47cad0796f5412174466e2c3cdd98d93586a0e25ed313d1",
+      "anchors": "90: fourth stringify argument is full_precision"
+    },
+    {
+      "path": "core/io/json.cpp",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/io/json.cpp",
+      "sha256": "3e15e166841d96466ee2890f5e9340f7ffcd9e06c4211229881c019eeeb069d5",
+      "anchors": "76-108: signed-zero JSON and finite/special handling; full_precision chooses scientific formatting"
+    },
+    {
+      "path": "core/string/ustring.cpp",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/string/ustring.cpp",
+      "sha256": "fc403ff50652c5258bcf28d4b5ab5ac377301b656763c7ad87d9cf748bbbb903",
+      "anchors": "1619-1634: num_scientific uses grisu2::to_chars; not fixed17digit formatting"
+    },
+    {
+      "path": "core/variant/variant_call.cpp",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/variant/variant_call.cpp",
+      "sha256": "d8d2add6e88fc77ec1243410704d56de3d6c42ad02902e58f15fe52e6368ba2d",
+      "anchors": "1129-1139: PackedByteArray float/double encoders"
+    },
+    {
+      "path": "core/io/marshalls.h",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/io/marshalls.h",
+      "sha256": "5df7071512c176f3c21405f6c070a46ac5a8fca1bddbee0dd317f57e3ae2f3e5",
+      "anchors": "76-115: float/double bytes low byte first"
+    },
+    {
+      "path": "main/main.cpp",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/main/main.cpp",
+      "sha256": "1831257f5c8eb0707d278f04b21b1e4b3ba863f8dca5cab36022d4b19e36b8c1",
+      "anchors": "4368-4389 SceneTree script loader;4497-4501 project autoloads still load"
+    },
+    {
+      "path": "core/os/main_loop.cpp",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/os/main_loop.cpp",
+      "sha256": "0c258821e904788dab1bd243ec7445157259589265e36c24dcdd8b49293a4466",
+      "anchors": "57-59: _initialize dispatch"
+    },
+    {
+      "path": "scene/main/scene_tree.cpp",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/scene/main/scene_tree.cpp",
+      "sha256": "eed6dbff323344efff19f2de6763705aff062a76e00fd7cbe42a4ee849b7e5a4",
+      "anchors": "586-591 initialization ordering;886-890 quit code/flag"
+    },
+    {
+      "path": "core/os/os.cpp",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/os/os.cpp",
+      "sha256": "9c5dab86487ea5dfa7391336510aec451717891f312cfec89aeb0a8b75a898f1",
+      "anchors": "513-521 single/double feature reflect compile precision"
+    },
+    {
+      "path": "core/math/vector3.h",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/math/vector3.h",
+      "sha256": "60bd8b6351a45b4e0927bbbda7b605b89ebe0572173c7dc2a1d121f33c9d5ae9",
+      "anchors": "252-254 dot;532-571 normalization squared products/sqrt/component division"
+    },
+    {
+      "path": "core/math/math_defs.h",
+      "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/math/math_defs.h",
+      "sha256": "db5046323f7cc8a6d6340c0303c0bd02e399768a8b11b2df8b88654540eb3fdd",
+      "anchors": "143-147 real_t precision"
+    }
+  ]
+}

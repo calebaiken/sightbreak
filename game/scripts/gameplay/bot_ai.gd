@@ -559,6 +559,12 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) ->
 
 	var spec: Dictionary = SBWeapons.get_weapon(actor.weapon_id)
 	var magazine: int = int(spec.magazine)
+	var exhausted_sidearm_fallback := false
+	if bool(profile.get("sidearm_fallback", true)) and ["smg", "rifle", "marksman"].has(actor.weapon_id) and actor.ammo == 0 and actor.reserve == 0 and actor.inventory.has("sidearm") and not interact:
+		# Only a recorded holstered sidearm can extend the existing close fallback.
+		if actor._ammo_store.has("sidearm"):
+			var stored_sidearm: Vector2i = actor._ammo_store["sidearm"]
+			exhausted_sidearm_fallback = stored_sidearm.x > 0 or stored_sidearm.y > 0
 
 	if target != null:
 		if int(state.get("target", 0)) != target.actor_id:
@@ -574,6 +580,8 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) ->
 		var target_distance: float = actor.position.distance_to(target.position)
 		# Emergency sidearm transition when primary runs dry in close-to-mid combat.
 		if bool(profile.get("sidearm_fallback", true)) and actor.ammo == 0 and actor.weapon_id != "sidearm" and actor.inventory.has("sidearm") and target_distance < 20.0 and not interact:
+			requested_weapon = "sidearm"
+		elif exhausted_sidearm_fallback and target_distance <= float(SBWeapons.get_weapon("sidearm").range):
 			requested_weapon = "sidearm"
 
 		var aim: Vector3 = target.position + Vector3(0.0, 1.15, 0.0) - (actor.position + Vector3(0.0, 1.5, 0.0))
@@ -627,11 +635,16 @@ static func compute_bot_input(match_node: Node, actor: SBActor, delta: float) ->
 		state["reaction"] = 0.0
 		state["burst_time"] = 0.0
 		state["burst_cooldown"] = 0.0
+		if exhausted_sidearm_fallback:
+			requested_weapon = "sidearm"
 
 		# Switch back to primary rifle/smg/marksman when out of immediate combat if holding sidearm with primary ammo available.
 		if actor.weapon_id == "sidearm" and actor.inventory.size() > 1:
 			for w_id in ["rifle", "marksman", "smg"]:
 				if actor.inventory.has(w_id):
+					# Missing holstered state keeps the actor's normal equip defaults.
+					if actor._ammo_store.get(w_id, Vector2i(-1, -1)) == Vector2i.ZERO:
+						continue
 					requested_weapon = w_id
 					break
 

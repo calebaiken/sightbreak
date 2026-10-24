@@ -436,6 +436,188 @@ class WinUI:
             raise RuntimeError('Cannot map native Windows key: ' + name)
         self._input(1, flags=0x8 | (0 if down else 0x2), scan=scan)
 
+    def key_pulse(self, names, seconds, *, deadline, receipt, clock=time.monotonic, sleep=time.sleep,
+                  elapsed_clock=time.perf_counter):
+        """Route-only in-process dispatch; receipts are API/OS observations.
+
+        All evidence stays in memory until attempted keys have been released.
+        SendInput return and OS bitmaps do not prove game consumption or a
+        physical hold interval. Existing key() schedules remain unchanged.
+        """
+        receipt.update(status='IN_PROGRESS', keys=list(names) if isinstance(names, (tuple, list)) else names, requested_seconds=seconds,
+                       absolute_deadline=deadline, edges=[], os_states=[], down_checks=[], attempted_keys=[],
+                       released_keys=[], release_errors=[], release_complete=False,
+                       scope='in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified')
+        attempted, failure = [], None
+        pinned_window, pinned_pid = self.window, self.pid
+
+        last_clock = last_elapsed = watchdog_start = operation_remaining = None
+        watchdog_remaining = None
+
+        def checked_clock():
+            nonlocal last_clock
+            value = clock()
+            if (type(value) not in (int, float) or not float('-inf') < value < float('inf')
+                    or (last_clock is not None and value < last_clock)):
+                raise RuntimeError('Native route pulse clock is invalid or moved backward')
+            last_clock = value
+            return value
+
+        def budget():
+            nonlocal last_elapsed, watchdog_start, operation_remaining, watchdog_remaining
+            elapsed = elapsed_clock()
+            if (type(elapsed) not in (int, float) or not float('-inf') < elapsed < float('inf')
+                    or (last_elapsed is not None and elapsed < last_elapsed)):
+                raise RuntimeError('Native route pulse elapsed watchdog is invalid or moved backward')
+            last_elapsed = elapsed
+            now = checked_clock()
+            if watchdog_start is None:
+                watchdog_start = elapsed
+                operation_remaining = deadline - now
+                if not float('-inf') < operation_remaining < float('inf'):
+                    raise RuntimeError('Native route pulse operation budget is not finite')
+                receipt.update(operation_initial_monotonic=now,
+                               elapsed_watchdog_start=elapsed,
+                               elapsed_watchdog_budget_seconds=operation_remaining)
+            watchdog_remaining = operation_remaining - (elapsed - watchdog_start)
+            if now >= deadline or watchdog_remaining <= 0:
+                raise TimeoutError('Original route deadline expired during native key pulse')
+            return now
+
+        def state(label, samples=None):
+            begin = checked_clock()
+            owner = C.c_uint32()
+            visible = bool(self.window and self.user.IsWindowVisible(self.window))
+            thread = self.user.GetWindowThreadProcessId(self.window, C.byref(owner)) if self.window else 0
+            foreground = self.user.GetForegroundWindow()
+            value = {'label': label, 'read_begin_monotonic': begin, 'read_end_monotonic': checked_clock(),
+                     'target_window': self.window, 'expected_pid': self.pid, 'window_pid': owner.value,
+                     'window_thread': thread, 'visible': visible, 'foreground_window': foreground,
+                     'keys_down': {name: bool(self.user.GetAsyncKeyState(ord(name.upper())) & 0x8000)
+                                   for name in ('w', 'a', 's', 'd')},
+                     'lmb_down': bool(self.user.GetAsyncKeyState(0x01) & 0x8000)}
+            value['read_end_monotonic'] = checked_clock()
+            (receipt['os_states'] if samples is None else samples).append(value)
+            if (self.window != pinned_window or self.pid != pinned_pid
+                    or not visible or not thread or type(pinned_pid) is not int or pinned_pid <= 0
+                    or owner.value != pinned_pid or foreground != pinned_window):
+                raise RuntimeError('Native route pulse lost its owned visible focused window')
+            return value
+
+        def edge(name, down):
+            row = {'key': name, 'down': down}
+            receipt['edges'].append(row)
+            timing_failure = None
+            try:
+                try:
+                    row['before_monotonic'] = checked_clock()
+                except BaseException as error:
+                    timing_failure = error
+                    row['before_clock_error'] = type(error).__name__ + ': ' + str(error)
+                    if down:
+                        raise
+                self.key(name, down)
+            except BaseException as error:
+                row['error'] = type(error).__name__ + ': ' + str(error)
+                raise
+            finally:
+                try:
+                    row['after_monotonic'] = checked_clock()
+                except BaseException as error:
+                    row['after_clock_error'] = type(error).__name__ + ': ' + str(error)
+                    if timing_failure is None:
+                        timing_failure = error
+            if timing_failure is not None:
+                raise timing_failure
+
+        try:
+            if (not isinstance(names, (tuple, list)) or not 1 <= len(names) <= 2
+                    or any(type(name) is not str or name not in ('w', 'a', 's', 'd') for name in names)
+                    or len(set(names)) != len(names)
+                    or {'w', 's'} <= set(names) or {'a', 'd'} <= set(names)
+                    or type(seconds) not in (int, float) or not 0 < seconds <= 2.5
+                    or type(deadline) not in (int, float) or not float('-inf') < deadline < float('inf')):
+                raise RuntimeError('Invalid bounded native route key pulse')
+            budget()
+            before = state('before_down')
+            if before['lmb_down'] or any(before['keys_down'].values()):
+                raise RuntimeError('Native route key pulse requires physically neutral controls')
+            budget()
+            receipt['hold_until_monotonic'] = min(budget() + seconds, deadline)
+            try:
+                for name in names:
+                    budget()
+                    check = {'key': name, 'owned_keys': list(attempted), 'os_states': [],
+                             'read_begin_monotonic': checked_clock(), 'status': 'IN_PROGRESS'}
+                    receipt['down_checks'].append(check)
+                    try:
+                        current = state('before_key_down', check['os_states'])
+                        if (current['lmb_down'] or any(down and key not in attempted
+                                                      for key, down in current['keys_down'].items())):
+                            raise RuntimeError('Native route key pulse observed unowned controls before down')
+                        budget()
+                        if budget() >= receipt['hold_until_monotonic']:
+                            raise TimeoutError('Native route checks exhausted its requested pulse window')
+                        check['status'] = 'CHECKED'
+                    except BaseException as error:
+                        check.update(status='FAILED', error_type=type(error).__name__, error=str(error))
+                        raise
+                    finally:
+                        check['read_end_monotonic'] = checked_clock()
+                    attempted.append(name)
+                    receipt['attempted_keys'].append(name)
+                    edge(name, True)
+                state('after_down')
+                budget()
+                now = budget()
+                wait = receipt['hold_until_monotonic'] - now
+                if wait <= 0:
+                    raise TimeoutError('Native route dispatch exhausted its requested pulse window')
+                receipt['sleep_calls'] = 0
+                while wait > 0:
+                    # A relative timer can return before a coarse monotonic tick.
+                    # Keep the original boundary; never restart the requested hold.
+                    wait = min(wait, watchdog_remaining)
+                    sample = {'before_monotonic': now, 'requested_sleep_seconds': wait}
+                    receipt.setdefault('first_wait', sample)
+                    receipt['last_wait'] = sample
+                    receipt['sleep_calls'] += 1
+                    sleep(wait)
+                    now = budget()
+                    sample['after_monotonic'] = now
+                    wait = receipt['hold_until_monotonic'] - now
+
+            except BaseException as error:
+                failure = error
+            finally:
+                for name in attempted:
+                    try:
+                        edge(name, False)
+                        receipt['released_keys'].append(name)
+                    except BaseException as error:
+                        receipt['release_errors'].append(type(error).__name__ + ': ' + str(error))
+                try:
+                    after = state('after_release')
+                    receipt['release_complete'] = (not receipt['release_errors'] and not after['lmb_down']
+                                                   and not any(after['keys_down'].values()))
+                except BaseException as error:
+                    receipt['release_errors'].append(type(error).__name__ + ': ' + str(error))
+            if failure is not None:
+                raise failure
+            if receipt['release_errors'] or not receipt['release_complete']:
+                raise RuntimeError('Native route pulse could not verify OS control release')
+            finished = budget()
+            receipt.update(status='API_RETURNED_WITH_OS_RELEASE', finished_monotonic=finished)
+            return receipt
+        except BaseException as error:
+            receipt.update(status='FAILED', error_type=type(error).__name__, error=str(error))
+            try:
+                receipt['finished_monotonic'] = checked_clock()
+            except BaseException as clock_error:
+                receipt['finished_monotonic'] = None
+                receipt['finished_clock_error'] = type(clock_error).__name__ + ': ' + str(clock_error)
+            raise
+
     def button(self, down):
         self._input(0, flags=0x2 if down else 0x4)
 
@@ -496,6 +678,10 @@ def main():
                         help='Diagnostic comparison only: retain legacy capture while LMB is held, or capture after release; qualification gates are unchanged')
     parser.add_argument('--fire-capture-delay', type=float, default=0,
                         help='Explicit synthetic capture pressure in seconds (0..10); delays only the fire screenshot and is recorded separately from spontaneous failures')
+    # BEGIN INPUT OBSERVATION FLAG
+    parser.add_argument('--observe-input-consumption', action='store_true',
+                        help='Opt-in debug guest-loopback stage observations; unchanged schedules and gates, unmeasured observer overhead')
+    # END INPUT OBSERVATION FLAG
     args = parser.parse_args()
     if args.target != ('windows' if os.name == 'nt' else 'linux') or platform.system() not in ('Linux', 'Windows'):
         parser.error('Execute the selected export on its matching native Linux/Windows host; macOS input is UNVERIFIED')
@@ -520,6 +706,10 @@ def main():
     result = {'passed': False, 'target': args.target, 'host': platform.platform(),
               'input_schedule': args.input_schedule, 'synthetic_fire_capture_delay_seconds': args.fire_capture_delay,
               'qualification_note': 'Any nonzero synthetic capture pressure is a diagnostic experiment, not physical performance or a spontaneous Windows failure'}
+    # BEGIN INPUT OBSERVATION RESULT
+    if args.observe_input_consumption:
+        result['input_consumption_observation'] = {'enabled': True, 'scope': 'Debug guest-loopback read-only stage observations; observer overhead unmeasured; original schedules, waits and pass predicates unchanged'}
+    # END INPUT OBSERVATION RESULT
     (output / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
     started = time.monotonic()
     deadline = started + args.timeout
@@ -675,6 +865,10 @@ def main():
         server_command = toolchain.command('--headless', *accessibility_flags, '--script', str(ROOT / 'scripts/fixtures/export_integration.gd'), '--', '--output=' + str(output))
         if args.reload_mode == 'authority':
             server_command.append('--automatic-reload')
+        # BEGIN INPUT OBSERVATION SERVER COMMAND
+        if args.observe_input_consumption:
+            server_command.append('--native-input-observation')
+        # END INPUT OBSERVATION SERVER COMMAND
         server = launch('server', server_command, env, ROOT)
         wait_for(lambda: server_has('SIGHTBREAK_SERVER_READY'), 15, 'Authority readiness', server)
         client_command = [str(executable), '--audio-driver', 'Dummy', '--position', '0,0', *accessibility_flags]
@@ -682,6 +876,10 @@ def main():
             client_command += ['--resolution', f'{ui.width}x{ui.height}']
         if args.quit_after:
             client_command += ['--quit-after', str(args.quit_after)]
+        # BEGIN INPUT OBSERVATION CLIENT COMMAND
+        if args.observe_input_consumption:
+            client_command += ['--', '--native-input-observation']
+        # END INPUT OBSERVATION CLIENT COMMAND
         client = launch('client', client_command, env)
         if args.target == 'windows':
             ui.pid = client.pid

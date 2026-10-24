@@ -1,0 +1,70 @@
+test_after_release_read_failure_retains_all_edges (__main__.IndependentPulseControls.test_after_release_read_failure_retains_all_edges) ... ok
+test_all_observed_external_inputs_prevent_injection (__main__.IndependentPulseControls.test_all_observed_external_inputs_prevent_injection) ... ok
+test_dispatch_cost_consumes_hold (__main__.IndependentPulseControls.test_dispatch_cost_consumes_hold) ... ok
+test_early_sleep_return_fails_and_releases (__main__.IndependentPulseControls.test_early_sleep_return_fails_and_releases) ... ok
+test_failed_release_retains_controller_held_keys_for_outer_cleanup (__main__.IndependentPulseControls.test_failed_release_retains_controller_held_keys_for_outer_cleanup) ... ok
+test_late_callback_is_not_accepted_as_approach_completion (__main__.IndependentPulseControls.test_late_callback_is_not_accepted_as_approach_completion) ... ok
+test_late_preflight_never_injects (__main__.IndependentPulseControls.test_late_preflight_never_injects) ... ok
+test_late_successful_sleep_up_and_os_read_fail_same_cap (__main__.IndependentPulseControls.test_late_successful_sleep_up_and_os_read_fail_same_cap) ... ok
+test_mapping_failure_keeps_previous_owned_release (__main__.IndependentPulseControls.test_mapping_failure_keeps_previous_owned_release) ... ok
+test_observed_later_external_key_is_not_claimed_as_owned_release (__main__.IndependentPulseControls.test_observed_later_external_key_is_not_claimed_as_owned_release) ... ok
+test_partial_dispatch_exception_and_interrupt_release_every_attempt (__main__.IndependentPulseControls.test_partial_dispatch_exception_and_interrupt_release_every_attempt) ... ok
+test_post_dispatch_target_rebind_fails_and_releases (__main__.IndependentPulseControls.test_post_dispatch_target_rebind_fails_and_releases) ... ok
+test_post_down_read_and_sleep_errors_release (__main__.IndependentPulseControls.test_post_down_read_and_sleep_errors_release) ... ok
+test_preflight_focus_owner_visibility_thread_and_pin (__main__.IndependentPulseControls.test_preflight_focus_owner_visibility_thread_and_pin) ... ok
+test_pulse_callback_publishes_after_release_and_preserves_error (__main__.IndependentPulseControls.test_pulse_callback_publishes_after_release_and_preserves_error) ... ok
+test_real_key_mapping_and_sendinput_flags_and_receipt (__main__.IndependentPulseControls.test_real_key_mapping_and_sendinput_flags_and_receipt) ... ok
+test_route_keeps_same_cap_when_after_trace_is_late (__main__.IndependentPulseControls.test_route_keeps_same_cap_when_after_trace_is_late) ... ok
+test_trace_after_failure_keeps_release_and_full_receipt (__main__.IndependentPulseControls.test_trace_after_failure_keeps_release_and_full_receipt) ... ok
+test_trace_before_lateness_prevents_down_and_retains_failure (__main__.IndependentPulseControls.test_trace_before_lateness_prevents_down_and_retains_failure) ... ok
+test_two_key_dispatch_stops_when_focus_changes_after_first_down (__main__.IndependentPulseControls.test_two_key_dispatch_stops_when_focus_changes_after_first_down) ... FAIL
+test_two_key_dispatch_stops_when_owner_changes_after_first_down (__main__.IndependentPulseControls.test_two_key_dispatch_stops_when_owner_changes_after_first_down) ... FAIL
+test_unknown_initial_os_read_fails_without_down (__main__.IndependentPulseControls.test_unknown_initial_os_read_fails_without_down) ... ok
+test_up_interrupt_keeps_later_key_release_attempt (__main__.IndependentPulseControls.test_up_interrupt_keeps_later_key_release_attempt) ... ok
+
+======================================================================
+FAIL: test_two_key_dispatch_stops_when_focus_changes_after_first_down (__main__.IndependentPulseControls.test_two_key_dispatch_stops_when_focus_changes_after_first_down)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/windows-route-pulse-source/docs/reports/gauntlet/windows-route-pulse-independent-20261023/independent_controls.py", line 251, in test_two_key_dispatch_stops_when_focus_changes_after_first_down
+    self.assertEqual(unsafe, [], 'A second down was injected after focus was lost')
+AssertionError: Lists differ: [{'key': 'd', 'down': True, 'time': 0.005,[56 chars]: 8}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'key': 'd', 'down': True, 'time': 0.005, 'foreground': 99, 'owner': 12, 'visible': True, 'flags': 8}
+
++ []
+- [{'down': True,
+-   'flags': 8,
+-   'foreground': 99,
+-   'key': 'd',
+-   'owner': 12,
+-   'time': 0.005,
+-   'visible': True}] : A second down was injected after focus was lost
+
+======================================================================
+FAIL: test_two_key_dispatch_stops_when_owner_changes_after_first_down (__main__.IndependentPulseControls.test_two_key_dispatch_stops_when_owner_changes_after_first_down)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/windows-route-pulse-source/docs/reports/gauntlet/windows-route-pulse-independent-20261023/independent_controls.py", line 260, in test_two_key_dispatch_stops_when_owner_changes_after_first_down
+    self.assertEqual(unsafe, [], 'A second down was injected after target ownership was lost')
+AssertionError: Lists differ: [{'key': 'd', 'down': True, 'time': 0.005,[56 chars]: 8}] != []
+
+First list contains 1 additional elements.
+First extra element 0:
+{'key': 'd', 'down': True, 'time': 0.005, 'foreground': 34, 'owner': 99, 'visible': True, 'flags': 8}
+
++ []
+- [{'down': True,
+-   'flags': 8,
+-   'foreground': 34,
+-   'key': 'd',
+-   'owner': 99,
+-   'time': 0.005,
+-   'visible': True}] : A second down was injected after target ownership was lost
+
+----------------------------------------------------------------------
+Ran 23 tests in 0.061s
+
+FAILED (failures=2)

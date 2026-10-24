@@ -1,0 +1,158 @@
+{
+  "working_directory": "/workspace/reviews/m5-objective-handoff-b-source",
+  "candidate": "102d79f22082b9c077e2feaccefc84f8985c5875",
+  "preregistration": "722e27a7e493a87859675685f6f7ef945be6d17e",
+  "scope": "Actual exec tool exits; original13 exit1 remains blocking, no native calls or future-builder reads",
+  "commands": [
+    {
+      "name": "full-controls",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/m5-objective-handoff-b-critic-20261024/review_b.py",
+        "--source",
+        ".",
+        "--output",
+        "docs/reports/gauntlet/m5-objective-handoff-b-critic-20261024/full-controls"
+      ],
+      "environment": {
+        "PYTHONHASHSEED": "0"
+      },
+      "actual_exit_code": 0,
+      "stdout": "full-controls.stdout",
+      "stderr": "full-controls.stderr"
+    },
+    {
+      "name": "full-maintained",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "scripts/test_bot_objective_observation.py",
+        "-v"
+      ],
+      "environment": {},
+      "actual_exit_code": 0,
+      "stdout": "full-maintained.stdout",
+      "stderr": "full-maintained.stderr"
+    },
+    {
+      "name": "full-original13",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/m5-objective-handoff-b-critic-20261024/capture_original_controls.py",
+        "--source",
+        ".",
+        "--rig",
+        "docs/reports/gauntlet/m5-objective-observability-r3-20261024/original-fresh-controls.py",
+        "--output",
+        "docs/reports/gauntlet/m5-objective-handoff-b-critic-20261024/full-original13"
+      ],
+      "environment": {
+        "PYTHONHASHSEED": "0"
+      },
+      "actual_exit_code": 1,
+      "stdout": "full-original13.stdout",
+      "stderr": "full-original13.stderr"
+    },
+    {
+      "name": "full-source-bindings",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/m5-objective-handoff-b-critic-20261024/bind_source.py",
+        "--source",
+        ".",
+        "--output",
+        "docs/reports/gauntlet/m5-objective-handoff-b-critic-20261024/full-source-bindings.json"
+      ],
+      "environment": {},
+      "actual_exit_code": 0,
+      "stdout": "full-source-bindings.stdout",
+      "stderr": "full-source-bindings.stderr"
+    },
+    {
+      "name": "depth-one-controls",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/m5-objective-handoff-b-critic-20261024/review_b.py",
+        "--source",
+        ".local/depth-one-source",
+        "--output",
+        "docs/reports/gauntlet/m5-objective-handoff-b-critic-20261024/depth-one-controls"
+      ],
+      "environment": {
+        "PYTHONHASHSEED": "0"
+      },
+      "actual_exit_code": 0,
+      "stdout": "depth-one-controls.stdout",
+      "stderr": "depth-one-controls.stderr"
+    },
+    {
+      "name": "depth-one-maintained",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        ".local/depth-one-source/scripts/test_bot_objective_observation.py",
+        "-v"
+      ],
+      "environment": {},
+      "actual_exit_code": 0,
+      "stdout": "depth-one-maintained.stdout",
+      "stderr": "depth-one-maintained.stderr"
+    },
+    {
+      "name": "depth-one-original13",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/m5-objective-handoff-b-critic-20261024/capture_original_controls.py",
+        "--source",
+        ".local/depth-one-source",
+        "--rig",
+        ".local/depth-one-source/docs/reports/gauntlet/m5-objective-observability-r3-20261024/original-fresh-controls.py",
+        "--output",
+        "docs/reports/gauntlet/m5-objective-handoff-b-critic-20261024/depth-one-original13"
+      ],
+      "environment": {
+        "PYTHONHASHSEED": "0"
+      },
+      "actual_exit_code": 1,
+      "stdout": "depth-one-original13.stdout",
+      "stderr": "depth-one-original13.stderr"
+    },
+    {
+      "name": "depth-one-source-bindings",
+      "command": [
+        "taskset",
+        "-c",
+        "4",
+        "python3",
+        "docs/reports/gauntlet/m5-objective-handoff-b-critic-20261024/bind_source.py",
+        "--source",
+        ".local/depth-one-source",
+        "--output",
+        "docs/reports/gauntlet/m5-objective-handoff-b-critic-20261024/depth-one-source-bindings.json"
+      ],
+      "environment": {},
+      "actual_exit_code": 0,
+      "stdout": "depth-one-source-bindings.stdout",
+      "stderr": "depth-one-source-bindings.stderr"
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "source": "/workspace/reviews/windows-input-reader-r4-exact-depth1-20261024",
+  "reader_sha256": "207beebe124a1ad5928a154fb77c99d2e43864ce236751dc7ce985878181bcb2",
+  "cases": [
+    {
+      "name": "declared_source_corrected_control",
+      "expected": true,
+      "actual": true,
+      "expectation_met": true,
+      "source_basis": "The maintained corrected shared fixture is an explicit synthetic control, not native capture.",
+      "paired_control": null,
+      "snapshot_freshness_independently_valid": true
+    },
+    {
+      "name": "fresh_single_command_above_ack",
+      "expected": true,
+      "actual": true,
+      "expectation_met": true,
+      "source_basis": "InputStream14-47 permits sequence2 after ACK1; existing actor controls remain sequence1 until next pop.",
+      "paired_control": null,
+      "snapshot_freshness_independently_valid": true
+    },
+    {
+      "name": "acknowledged_single_command_falsely_accepted",
+      "expected": false,
+      "actual": true,
+      "expectation_met": false,
+      "source_basis": "InputStream24-38: packet count1 sequence1 with ACK1 has no staged command and MUST reject.",
+      "paired_control": "fresh_single_command_above_ack",
+      "snapshot_freshness_independently_valid": true
+    },
+    {
+      "name": "queue_exceeds_max_ahead",
+      "expected": false,
+      "actual": true,
+      "expectation_met": false,
+      "source_basis": "InputStream5,24-47: queue keys remain unique in (ACK,ACK+120]; pop deletes, forget/reset clears. Queue121 is impossible.",
+      "paired_control": "declared_source_corrected_control",
+      "snapshot_freshness_independently_valid": true
+    },
+    {
+      "name": "stream_rejected_without_rejection_call",
+      "expected": false,
+      "actual": true,
+      "expectation_met": false,
+      "source_basis": "InputStream14-47 increments rejected once for each failed accept, followed synchronously by Match1068 rejection observation. No rejection counter or call exists here.",
+      "paired_control": "declared_source_corrected_control",
+      "snapshot_freshness_independently_valid": true
+    },
+    {
+      "name": "empty_malformed_receive_then_valid",
+      "expected": true,
+      "actual": true,
+      "expectation_met": true,
+      "source_basis": "Match1249-1264 projects an empty commands array as count0,endpoints-1/-1,actions0. RPC rejection does not print; changed valid receive does print before acceptance.",
+      "paired_control": null,
+      "snapshot_freshness_independently_valid": true
+    },
+    {
+      "name": "rejection_counter_without_stream_rejected_state",
+      "expected": false,
+      "actual": true,
+      "expectation_met": false,
+      "source_basis": "InputStream rejection increments rejected before synchronous Match input_stream_rejected hook; a rejection counter1 cannot have stream_rejected0.",
+      "paired_control": "empty_malformed_receive_then_valid",
+      "snapshot_freshness_independently_valid": true
+    },
+    {
+      "name": "nondictionary_malformed_receive_then_valid",
+      "expected": true,
+      "actual": true,
+      "expectation_met": true,
+      "source_basis": "Match1256 skips nondictionaries while count retains raw array size. Two nondictionary values project endpoints-1/-1 and zero actions.",
+      "paired_control": null,
+      "snapshot_freshness_independently_valid": true
+    },
+    {
+      "name": "empty_packet_projects_nonempty_endpoint",
+      "expected": false,
+      "actual": true,
+      "expectation_met": false,
+      "source_basis": "Match1249-1264 initializes first/last=-1 and only changes them while visiting dictionary commands. Empty count0 cannot project sequence21.",
+      "paired_control": "empty_malformed_receive_then_valid",
+      "snapshot_freshness_independently_valid": true
+    },
+    {
+      "name": "hidden_accept_timestamp_after_prior_row",
+      "expected": true,
+      "actual": true,
+      "expectation_met": true,
+      "source_basis": "Match1295 coalesces same action aggregates while global counters and latest advance. Hidden receive/accept occur after preceding emitted row.",
+      "paired_control": null,
+      "snapshot_freshness_independently_valid": true
+    },
+    {
+      "name": "hidden_accept_latest_timestamp_regresses",
+      "expected": false,
+      "actual": true,
+      "expectation_met": false,
+      "source_basis": "Time.get_ticks_msec sampled by Match1269 is monotonic; stage calls after prior emitted row cannot acquire timestamp1 after prior wall11000.",
+      "paired_control": "hidden_accept_timestamp_after_prior_row",
+      "snapshot_freshness_independently_valid": true
+    },
+    {
+      "name": "inserted_client_tick_freshness_control",
+      "expected": true,
+      "actual": true,
+      "expectation_met": true,
+      "source_basis": "New client_tick advances all current timing, snapshot_age and its stage counter.",
+      "paired_control": null,
+      "snapshot_freshness_independently_valid": true
+    },
+    {
+      "name": "inserted_client_tick_counter_only_falsifier",
+      "expected": false,
+      "actual": false,
+      "expectation_met": true,
+      "source_basis": "Only client_tick counter is changed relative to the paired current fresh event. No stale snapshot confound.",
+      "paired_control": "inserted_client_tick_freshness_control",
+      "snapshot_freshness_independently_valid": true
+    }
+  ],
+  "total": 13,
+  "met": 7,
+  "false_accepts": [
+    "acknowledged_single_command_falsely_accepted",
+    "queue_exceeds_max_ahead",
+    "stream_rejected_without_rejection_call",
+    "rejection_counter_without_stream_rejected_state",
+    "empty_packet_projects_nonempty_endpoint",
+    "hidden_accept_latest_timestamp_regresses"
+  ],
+  "false_rejects": []
+}

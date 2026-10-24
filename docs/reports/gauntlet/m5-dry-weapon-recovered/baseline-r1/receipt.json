@@ -1,0 +1,57 @@
+{
+  "label": "baseline-r1",
+  "command": [
+    "./scripts/godot.sh",
+    "--headless",
+    "--audio-driver",
+    "Dummy",
+    "--script",
+    "res://tests/bot_dry_weapon_test.gd"
+  ],
+  "cwd": "/workspace/sightbreak-bot-dry-weapon-recovered",
+  "source_head": "b0635964c6b819ed41a9568afdb0b5068c3d5577",
+  "timeout_seconds": 120,
+  "private_state_dir": "/workspace/sightbreak-bot-dry-weapon-recovered/.local/dry-weapon-baseline-r1-state",
+  "controller_sha256": "143253ae25b882cb22734d190aae57fe6405c65b1038c886875af9008f3e7086",
+  "runtime_log_sha256": "54982dfa591dbdaa5d213d4b0f53040dc6aa657e9a9d20813a3405c210298347",
+  "engine_processes_before": [],
+  "pid": 4164,
+  "sid": 4164,
+  "observed_owned_processes": [
+    {
+      "pid": 4164,
+      "ppid": 4142,
+      "pgrp": 4164,
+      "sid": 4164,
+      "start_ticks": 397552,
+      "state": "R",
+      "argv": [
+        "/workspace/tools/godot-4.7.2/Godot_v4.7.2-stable_linux.x86_64",
+        "--path",
+        "/workspace/sightbreak-bot-dry-weapon-recovered/game",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "res://tests/bot_dry_weapon_test.gd"
+      ]
+    }
+  ],
+  "exit_code": 1,
+  "timed_out": false,
+  "duration_seconds": 1.2688598590002584,
+  "cleanup_signals": [],
+  "owned_processes_after": [],
+  "engine_processes_after": [],
+  "tracked_source_unchanged": true,
+  "fixture_result": [
+    {
+      "cases": 84,
+      "checks": 590,
+      "failures": 40,
+      "passed": false,
+      "sequence_steps": 48
+    }
+  ],
+  "error_lines": []
+}

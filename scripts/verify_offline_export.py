@@ -26,6 +26,8 @@ from build_manifest import BUILDS, OUTPUTS, source, validate_record
 from PIL import Image, ImageChops
 from native_log import failed
 from native_observation import read_observation_json
+from native_focus_fence import FocusContextFence, FocusPreconditionLost, fresh_focus_movement
+from native_settings_route import relocate_settings_actor
 from verify_integration_export import NativeUI, WinUI, windows_job
 import toolchain
 
@@ -198,6 +200,8 @@ def main():
     parser.add_argument('--timeout', type=float, default=300, help='Whole-flow wall deadline, plus separately bounded failure cleanup')
     parser.add_argument('--tesseract', default=os.environ.get('TESSERACT_BIN') or shutil.which('tesseract'))
     parser.add_argument('--hosted-render-priority', choices=('inherited', 'below-normal'), default='inherited')
+    parser.add_argument('--reopened-verbose', action='store_true',
+                        help='Diagnostic engine verbosity for only the reopened process; original deadlines and strict gates apply')
     args = parser.parse_args()
     if args.target != ('windows' if os.name == 'nt' else 'linux') or platform.system() not in ('Linux', 'Windows'):
         parser.error('Run the selected export on native Linux/Windows; macOS gameplay input is UNVERIFIED')
@@ -546,16 +550,26 @@ def main():
                 state = read_observation_json(initial_trace / 'status.json')
             except (OSError, ValueError):
                 return {}
-            if state.get('scope') != 'debug_offline_read_only_observation':
-                raise RuntimeError('Unexpected offline observation scope')
             result['last_offline_observation'] = state
+            if not isinstance(state, dict) or state.get('scope') != 'debug_offline_read_only_observation':
+                error = RuntimeError('Unexpected offline observation scope')
+                error.observation_state = state
+                raise error
             return state
 
         def observed(predicate, seconds, label, after=-1):
             latest = {}
             def ready():
                 nonlocal latest
-                latest = offline_observation()
+                validate = getattr(predicate, 'validate_observation', None)
+                try:
+                    latest = offline_observation()
+                except RuntimeError as error:
+                    if validate is not None and hasattr(error, 'observation_state'):
+                        validate(error.observation_state)
+                    raise
+                if validate is not None and latest != {}:
+                    validate(latest)
                 return latest.get('wall_msec', -1) > after and predicate(latest)
             wait_for(ready, seconds, label, client)
             trace('offline_observation', label=label, state=latest)
@@ -718,8 +732,36 @@ def main():
         purchased_hud = read_hud('06e-purchased-smg')
         if purchased_hud['ammo'] != 30 or purchased_hud['reserve'] != 120:
             raise RuntimeError('Authoritative requisition did not equip the purchased SMG')
+        second_live_until = min(deadline, time.monotonic() + 35)
         wait_for(lambda: (out / 'client.log').read_text(encoding='utf-8', errors='replace').count('MATCH: Round live.') >= 2,
-                 35, 'Second active round for weapon switching', client)
+                 transition_budget(second_live_until, 'Second active round for weapon switching'),
+                 'Second active round for weapon switching', client)
+        # This fixed ordinary-control route changes the test scenario: use the
+        # existing freight container before spending time in settings captures.
+        # Readiness and walking share the original 35s cap; no new life or budget.
+        settings_route_start = observed(lambda state: state.get('phase') != 'buy',
+                                        transition_budget(second_live_until, 'Living settings route start'),
+                                        'Living second-round player before fixed settings route',
+                                        next_round_receipt['after_capture']['wall_msec'])
+        settings_route = result['settings_cover_route'] = {}
+        def settings_route_pulse(names, seconds, until):
+            remaining()
+            receipt = {}
+            settings_route.setdefault('native_pulses', []).append(receipt)
+            trace('settings_route_native_pulse_before', keys=list(names), requested_seconds=seconds)
+            held_keys.update(names)
+            try:
+                return ui.key_pulse(names, seconds, deadline=until, receipt=receipt)
+            finally:
+                if receipt.get('release_complete') or not receipt.get('attempted_keys'):
+                    held_keys.difference_update(names)
+                trace('settings_route_native_pulse_after', receipt=receipt)
+        relocate_settings_actor(settings_route_start, actor_id=initial_offline['local_actor']['id'], round_number=2,
+                                observe=offline_observation, key=key, pause=pause,
+                                record=lambda event, **data: trace('settings_route_' + event, **data),
+                                deadline=second_live_until, receipt=settings_route,
+                                pulse=settings_route_pulse if args.target == 'windows' else None)
+        transition_budget(second_live_until, 'Completed fixed settings route before weapon switching')
         tap('2')
         capture('06f-switched-sidearm')
         switched_hud = read_hud('06f-switched-sidearm')
@@ -811,7 +853,8 @@ def main():
         if initial_exit != 0:
             raise RuntimeError('Initial native client did not exit cleanly')
         loaded_trace = out / 'restart-profile-trace'
-        reopened = launch('reopened', [str(executable), '--audio-driver', 'Dummy', *flags, '--',
+        reopened = launch('reopened', [str(executable), '--audio-driver', 'Dummy', *flags,
+                                     *(['--verbose'] if args.reopened_verbose else []), '--',
                                      '--offline-validation', '--offline-trace-dir=' + str(loaded_trace)], env)
         client = reopened
         if args.target == 'windows':
@@ -853,15 +896,34 @@ def main():
                                and state.get('time_scale') == 1
                                and state.get('phase') == 'live' and state.get('local_actor', {}).get('alive') is True,
                                60, 'Fresh stock match reaches a living active player before native focus loss', loaded['wall_msec'])
-        def require_focus_context(state):
-            if (state.get('phase') != 'live' or state.get('round_number') != focus_start['round_number']
-                    or state.get('time_scale') != 1
-                    or state.get('local_actor', {}).get('id') != focus_start['local_actor']['id']):
-                raise RuntimeError('Native focus validation changed live round, actor, or simulation speed')
+        focus_receipt = result['native_focus_recovery'] = {
+            'scope': 'fresh stock match after settings restart', 'passed': False,
+            'context_fence': {}, 'fresh_press': {}, 'capture_context': {}}
+        fence = FocusContextFence(focus_start, focus_receipt['context_fence'])
+
+        def require_focus_context(state, stage='focus_context', **context):
+            return fence.require(state, stage, **context)
+
+        def focus_raw_observation():
+            try:
+                return offline_observation()
+            except RuntimeError as error:
+                if not hasattr(error, 'observation_state'):
+                    raise
+                return error.observation_state
+
+        def focus_observed(predicate, seconds, label, after=-1):
+            def checked(state):
+                require_focus_context(state, label)
+                return predicate(state)
+            checked.validate_observation = lambda state: fence.validate_observation(state, label + ':before_freshness')
+            return observed(checked, seconds, label, after)
+
+        require_focus_context(focus_raw_observation(), 'before_held_w_down', focused=True, paused=False)
         try:
             key('w', True)
             button(True)
-            input_ack = observed(lambda state: state.get('local_input', {}).get('fire') is True
+            input_ack = focus_observed(lambda state: state.get('local_input', {}).get('fire') is True
                                  and state.get('local_input', {}).get('move', [0, 0]) != [0, 0],
                                  10, 'Game consumed physical W and LMB before native focus loss', focus_start['wall_msec'])
             require_focus_context(input_ack)
@@ -870,6 +932,7 @@ def main():
                     or input_ack.get('ui', {}).get('paused') is not False):
                 raise RuntimeError('Physical input acknowledgment lost the living active focus-test context')
             trace('native_focus_held_input_acknowledged', state=input_ack)
+            focus_receipt['held_input_acknowledged'] = input_ack
             trace('native_focus_loss_before', method='XSetInputFocus(root)' if args.target == 'linux' else 'ShowWindow(SW_MINIMIZE)')
             if args.target == 'linux':
                 ui.x.XSetInputFocus(ui.d, ui.x.XDefaultRootWindow(ui.d), 1, 0)
@@ -877,26 +940,34 @@ def main():
             else:
                 ui.user.ShowWindow(ui.window, 6)  # SW_MINIMIZE
             trace('native_focus_loss_after')
-            lost = observed(lambda state: state.get('ui', {}).get('focused') is False
+            lost = focus_observed(lambda state: state.get('ui', {}).get('focused') is False
                             and state.get('ui', {}).get('paused') is True,
                             10, 'Native focus loss pauses actual offline match', focus_start['wall_msec'])
             require_focus_context(lost)
+            focus_receipt['lost'] = lost
             trace('native_focus_restore_before')
             if args.target == 'windows':
                 ui.user.ShowWindow(ui.window, 9)  # SW_RESTORE; focus_game retains the same HWND
             wait_for(ui.focus_game, 10, 'Restore actual native input focus', client)
             trace('native_focus_restore_after')
-            restored = observed(lambda state: state.get('ui', {}).get('focused') is True,
+            restored = focus_observed(lambda state: state.get('ui', {}).get('focused') is True,
                                 10, 'Actual game observes restored focus', lost['wall_msec'])
             require_focus_context(restored)
             if restored['ui'].get('paused') is not True or restored['ui'].get('mouse_mode') != 0:
                 raise RuntimeError('Native focus restoration resumed gameplay or hid the pointer without explicit resume')
+            focus_receipt['restored_paused'] = restored
+            focus_receipt['capture_context']['11a-restored-focus-still-paused'] = {'before': restored}
             capture('11a-restored-focus-still-paused')
-            tap('Escape')
-            guarded = observed(lambda state: state.get('ui', {}).get('paused') is False,
+            after_capture = focus_raw_observation()
+            focus_receipt['capture_context']['11a-restored-focus-still-paused']['after'] = after_capture
+            require_focus_context(after_capture, 'after_restored_pause_capture', focused=True, paused=True)
+            key('Escape', True)
+            pause(.3)
+            key('Escape', False)
+            guarded = focus_observed(lambda state: state.get('ui', {}).get('paused') is False,
                                10, 'Explicit resume with W and LMB still physically held', restored['wall_msec'])
             baseline_actor = restored['local_actor']
-            guard_samples = []
+            guard_samples = focus_receipt['held_neutral_samples'] = []
             def check_guard(state, stable_position=None):
                 require_focus_context(state)
                 inputs, actor = state.get('local_input', {}), state.get('local_actor', {})
@@ -917,37 +988,36 @@ def main():
             # Neutral input must hold throughout its bounded natural decay.
             settle_start = guarded['elapsed']
             while any(abs(guarded['local_actor']['velocity'][axis]) > .01 for axis in (0, 2)):
-                guarded = observed(lambda state: True, 10, 'Neutral held input while ordinary inertia settles',
+                guarded = focus_observed(lambda state: True, 10, 'Neutral held input while ordinary inertia settles',
                                    guarded['wall_msec'])
                 check_guard(guarded)
                 if guarded['elapsed'] - settle_start > 1.0:
                     raise RuntimeError('Neutral movement inertia failed to settle within one simulation second')
             stable_position = guarded['local_actor']['position'][:]
             for index in range(2):
-                guarded = observed(lambda state: True, 10, 'Fresh held-input guard sample ' + str(index + 1),
+                guarded = focus_observed(lambda state: True, 10, 'Fresh held-input guard sample ' + str(index + 1),
                                    guarded['wall_msec'])
                 check_guard(guarded, stable_position)
+            focus_receipt['capture_context']['11b-resumed-held-input-neutral'] = {'before': guarded}
             capture('11b-resumed-held-input-neutral')
+            after_capture = focus_raw_observation()
+            focus_receipt['capture_context']['11b-resumed-held-input-neutral']['after'] = after_capture
+            require_focus_context(after_capture, 'after_held_neutral_capture', focused=True, paused=False)
         finally:
             key('w', False)
             button(False)
-        released = observed(focus_controls_released,
+        released = focus_observed(focus_controls_released,
                             10, 'Released held focus-test controls', guarded['wall_msec'])
-        require_focus_context(released)
-        try:
-            key('w', True)
-            moved = observed(lambda state: state.get('local_actor', {}).get('alive') is True
-                             and state.get('local_input', {}).get('move', [0, 0]) != [0, 0]
-                             and state.get('local_actor', {}).get('position') != released['local_actor']['position'],
-                             10, 'Fresh W press moves actual player after focus recovery', released['wall_msec'])
-            require_focus_context(moved)
-        finally:
-            key('w', False)
+        focus_receipt['released'] = released
+        moved = fresh_focus_movement(fence=fence, released=released, snapshot=focus_raw_observation,
+                                    observed=observed, key=key, receipt=focus_receipt['fresh_press'])
+        focus_receipt['capture_context']['11c-fresh-press-movement'] = {'before': moved}
         capture('11c-fresh-press-movement')
-        result['native_focus_recovery'] = {'scope': 'fresh stock match after settings restart', 'held_input_acknowledged': input_ack,
-                                           'lost': lost, 'restored_paused': restored,
-                                           'held_neutral_samples': guard_samples, 'released': released,
-                                           'fresh_press_movement': moved}
+        after_capture = focus_raw_observation()
+        focus_receipt['capture_context']['11c-fresh-press-movement']['after'] = after_capture
+        require_focus_context(after_capture, 'after_fresh_movement_capture', focused=True, paused=False)
+        focus_receipt['context_fence']['status'] = 'LIVING_CONTEXT_PRESERVED_THROUGH_CAPTURE'
+        focus_receipt.update(passed=True, fresh_press_movement=moved)
         ui.request_close()
         reopened.wait(timeout=min(20, remaining()))
         reopened_exit = reopened.returncode
@@ -976,6 +1046,9 @@ def main():
                       limits='Screenshots require visual review; no physical-device/performance acceptance. Linux isolated automation disables accessibility and D-Bus portals; their coverage remains UNVERIFIED.')
     except (Exception, SystemExit) as error:
         result.update(passed=False, error=str(error), source=before, artifact_source=manifest)
+        if (isinstance(error, FocusPreconditionLost)
+                or result.get('native_focus_recovery', {}).get('context_fence', {}).get('status') == 'FOCUS_PRECONDITION_LOST'):
+            result['failure_kind'] = 'FOCUS_PRECONDITION_LOST'
         trace('failure', error=str(error))
     finally:
         cleanup_errors = []

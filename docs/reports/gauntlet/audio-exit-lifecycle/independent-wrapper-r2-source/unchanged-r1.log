@@ -1,0 +1,27 @@
+test_after_identity_mismatch_rejected (__main__.IndependentControls.test_after_identity_mismatch_rejected) ... ok
+test_counterexample_archive_bytes_must_match_final_inventory (__main__.IndependentControls.test_counterexample_archive_bytes_must_match_final_inventory) ... FAIL
+test_counterexample_current_raw_import_leak_must_not_pass (__main__.IndependentControls.test_counterexample_current_raw_import_leak_must_not_pass) ... ok
+test_counterexample_current_raw_suite_leak_must_not_pass (__main__.IndependentControls.test_counterexample_current_raw_suite_leak_must_not_pass) ... ok
+test_exact_reserve_boundary_refuses_and_next_float_allows_launch (__main__.IndependentControls.test_exact_reserve_boundary_refuses_and_next_float_allows_launch) ... ok
+test_full_import_warning_scan_skips_suite (__main__.IndependentControls.test_full_import_warning_scan_skips_suite) ... ok
+test_observed_escaped_child_survivor_and_reuse_boundaries (__main__.IndependentControls.test_observed_escaped_child_survivor_and_reuse_boundaries) ... ok
+test_one_shot_reservation_refuses_second_attempt (__main__.IndependentControls.test_one_shot_reservation_refuses_second_attempt) ... ok
+test_pid_reuse_never_signals_observed_different_start (__main__.IndependentControls.test_pid_reuse_never_signals_observed_different_start) ... ok
+test_positive_strict_leak_fails_exit_zero_suite (__main__.IndependentControls.test_positive_strict_leak_fails_exit_zero_suite) ... ok
+test_positive_true_phases_full_flow_and_exact_argv (__main__.IndependentControls.test_positive_true_phases_full_flow_and_exact_argv) ... ok
+test_real_git_blob_guard_refuses_changed_and_missing_source (__main__.IndependentControls.test_real_git_blob_guard_refuses_changed_and_missing_source) ... ok
+test_signal_handler_and_keyboard_exceptions_cleanup_and_receipt (__main__.IndependentControls.test_signal_handler_and_keyboard_exceptions_cleanup_and_receipt) ... ok
+test_true_phase_timeout_retains_cleanup_and_finalization (__main__.IndependentControls.test_true_phase_timeout_retains_cleanup_and_finalization) ... ok
+
+======================================================================
+FAIL: test_counterexample_archive_bytes_must_match_final_inventory (__main__.IndependentControls.test_counterexample_archive_bytes_must_match_final_inventory)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/reviews/audio-acquisition-r2-fresh-source/docs/reports/gauntlet/audio-exit-lifecycle/independent-wrapper-r2-source/unchanged_r1_controls.py", line 301, in test_counterexample_archive_bytes_must_match_final_inventory
+    self.assertTrue(r['private_state_removed'])
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 14 tests in 2.992s
+
+FAILED (failures=1)

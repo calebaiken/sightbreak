@@ -1,0 +1,33 @@
+{
+  "scope": "Pure reproduction using owned aliased TMPDIR only; no engine/native/OCR",
+  "source": "0100ecdd922ee6022be332c6e4bc29fdda08823d",
+  "commands": [
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary.py",
+        "-v"
+      ],
+      "exit_code": 1,
+      "seconds": 0.26619423299962364,
+      "log": "test_macos_ordinary.txt",
+      "bytes": 7054,
+      "sha256": "9f6cd506c51570e8ad5be5a74f9f95d7be6e065b84f17600f539248eedfc4882",
+      "guard_rejection_seen": true
+    },
+    {
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python",
+        "scripts/test_macos_ordinary_controller.py",
+        "-v"
+      ],
+      "exit_code": 1,
+      "seconds": 0.2687090050003462,
+      "log": "test_macos_ordinary_controller.txt",
+      "bytes": 30566,
+      "sha256": "3e0ac81bb0fb641b94dc1500f015ff4176c60c201a919c01f886de2cc268e3e3",
+      "guard_rejection_seen": true
+    }
+  ],
+  "both_original_commands_fail_for_alias_guard": true
+}
