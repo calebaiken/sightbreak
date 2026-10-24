@@ -1,0 +1,507 @@
+{
+  "source": "b16b012d720c0981cfc28146a651b3ba5f8a9caa",
+  "cpu": [
+    4
+  ],
+  "actual_native_invocations": 0,
+  "controls": 16,
+  "source_controls": [
+    {
+      "name": "normal",
+      "matched": true,
+      "obligations": {
+        "structured_failed_or_success_return": true,
+        "owned_close_attempted": true,
+        "final_times_recorded": true,
+        "prefailure_audit_retained": true
+      },
+      "resources": {
+        "sinks": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "pipes": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "owned_extra": {
+          "token": 502,
+          "attempts": 0,
+          "closed": false
+        },
+        "job_close_calls": 1,
+        "job_closed": true,
+        "process_waited": true
+      },
+      "escaped_type": null
+    },
+    {
+      "name": "close_error",
+      "matched": false,
+      "obligations": {
+        "structured_failed_or_success_return": false,
+        "owned_close_attempted": false,
+        "final_times_recorded": false
+      },
+      "resources": {
+        "sinks": {
+          "stdout": {
+            "attempts": 1,
+            "closed": false
+          },
+          "stderr": {
+            "attempts": 0,
+            "closed": false
+          }
+        },
+        "pipes": {
+          "stdout": {
+            "attempts": 0,
+            "closed": false
+          },
+          "stderr": {
+            "attempts": 0,
+            "closed": false
+          }
+        },
+        "owned_extra": {
+          "token": 502,
+          "attempts": 0,
+          "closed": false
+        },
+        "job_close_calls": 0,
+        "job_closed": false,
+        "process_waited": true
+      },
+      "escaped_type": "OSError"
+    },
+    {
+      "name": "unexpected_close_error",
+      "matched": false,
+      "obligations": {
+        "structured_failed_or_success_return": false,
+        "owned_close_attempted": false,
+        "final_times_recorded": false
+      },
+      "resources": {
+        "sinks": {
+          "stdout": {
+            "attempts": 1,
+            "closed": false
+          },
+          "stderr": {
+            "attempts": 0,
+            "closed": false
+          }
+        },
+        "pipes": {
+          "stdout": {
+            "attempts": 0,
+            "closed": false
+          },
+          "stderr": {
+            "attempts": 0,
+            "closed": false
+          }
+        },
+        "owned_extra": {
+          "token": 502,
+          "attempts": 0,
+          "closed": false
+        },
+        "job_close_calls": 0,
+        "job_closed": false,
+        "process_waited": true
+      },
+      "escaped_type": "OSError"
+    },
+    {
+      "name": "state_error",
+      "matched": false,
+      "obligations": {
+        "structured_failed_or_success_return": false,
+        "owned_close_attempted": false,
+        "final_times_recorded": false
+      },
+      "resources": {
+        "sinks": {
+          "stdout": {
+            "attempts": 0,
+            "closed": false
+          },
+          "stderr": {
+            "attempts": 0,
+            "closed": false
+          }
+        },
+        "pipes": {
+          "stdout": {
+            "attempts": 0,
+            "closed": false
+          },
+          "stderr": {
+            "attempts": 0,
+            "closed": false
+          }
+        },
+        "owned_extra": {
+          "token": 502,
+          "attempts": 0,
+          "closed": false
+        },
+        "job_close_calls": 0,
+        "job_closed": false,
+        "process_waited": true
+      },
+      "escaped_type": "OSError"
+    },
+    {
+      "name": "flush_error",
+      "matched": true,
+      "obligations": {
+        "structured_failed_or_success_return": true,
+        "owned_close_attempted": true,
+        "final_times_recorded": true
+      },
+      "resources": {
+        "sinks": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "pipes": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "owned_extra": {
+          "token": 502,
+          "attempts": 0,
+          "closed": false
+        },
+        "job_close_calls": 1,
+        "job_closed": true,
+        "process_waited": true
+      },
+      "escaped_type": null
+    },
+    {
+      "name": "late_close",
+      "matched": true,
+      "obligations": {
+        "structured_failed_or_success_return": true,
+        "owned_close_attempted": true,
+        "final_times_recorded": true
+      },
+      "resources": {
+        "sinks": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "pipes": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "owned_extra": {
+          "token": 502,
+          "attempts": 0,
+          "closed": false
+        },
+        "job_close_calls": 1,
+        "job_closed": true,
+        "process_waited": true
+      },
+      "escaped_type": null
+    },
+    {
+      "name": "pipe_error",
+      "matched": false,
+      "obligations": {
+        "structured_failed_or_success_return": true,
+        "owned_close_attempted": true,
+        "final_times_recorded": true,
+        "prefailure_audit_retained": false
+      },
+      "resources": {
+        "sinks": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "pipes": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "owned_extra": {
+          "token": 502,
+          "attempts": 0,
+          "closed": false
+        },
+        "job_close_calls": 1,
+        "job_closed": true,
+        "process_waited": true
+      },
+      "escaped_type": null
+    },
+    {
+      "name": "query_error",
+      "matched": false,
+      "obligations": {
+        "structured_failed_or_success_return": true,
+        "owned_close_attempted": true,
+        "final_times_recorded": true,
+        "prefailure_audit_retained": false
+      },
+      "resources": {
+        "sinks": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "pipes": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "owned_extra": {
+          "token": 502,
+          "attempts": 0,
+          "closed": false
+        },
+        "job_close_calls": 1,
+        "job_closed": true,
+        "process_waited": true
+      },
+      "escaped_type": null
+    },
+    {
+      "name": "unexpected",
+      "matched": false,
+      "obligations": {
+        "structured_failed_or_success_return": true,
+        "owned_close_attempted": true,
+        "final_times_recorded": true,
+        "prefailure_audit_retained": false
+      },
+      "resources": {
+        "sinks": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "pipes": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "owned_extra": {
+          "token": 502,
+          "attempts": 1,
+          "closed": true
+        },
+        "job_close_calls": 1,
+        "job_closed": true,
+        "process_waited": true
+      },
+      "escaped_type": null
+    },
+    {
+      "name": "no_eof",
+      "matched": true,
+      "obligations": {
+        "structured_failed_or_success_return": true,
+        "owned_close_attempted": true,
+        "final_times_recorded": true
+      },
+      "resources": {
+        "sinks": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "pipes": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "owned_extra": {
+          "token": 502,
+          "attempts": 0,
+          "closed": false
+        },
+        "job_close_calls": 1,
+        "job_closed": true,
+        "process_waited": true
+      },
+      "escaped_type": null
+    },
+    {
+      "name": "overflow",
+      "matched": true,
+      "obligations": {
+        "structured_failed_or_success_return": true,
+        "owned_close_attempted": true,
+        "final_times_recorded": true
+      },
+      "resources": {
+        "sinks": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "pipes": {
+          "stdout": {
+            "attempts": 1,
+            "closed": true
+          },
+          "stderr": {
+            "attempts": 1,
+            "closed": true
+          }
+        },
+        "owned_extra": {
+          "token": 502,
+          "attempts": 0,
+          "closed": false
+        },
+        "job_close_calls": 1,
+        "job_closed": true,
+        "process_waited": true
+      },
+      "escaped_type": null
+    },
+    {
+      "name": "direct_pipe_close_first_error",
+      "matched": false,
+      "obligations": null,
+      "resources": [
+        {
+          "name": "stdout-sink",
+          "fail": true,
+          "attempts": 1,
+          "closed": false
+        },
+        {
+          "name": "stderr-sink",
+          "fail": false,
+          "attempts": 0,
+          "closed": false
+        },
+        {
+          "name": "stdout-pipe",
+          "fail": false,
+          "attempts": 0,
+          "closed": false
+        },
+        {
+          "name": "stderr-pipe",
+          "fail": false,
+          "attempts": 0,
+          "closed": false
+        }
+      ],
+      "escaped_type": null
+    },
+    {
+      "name": "direct_held_close_first_error",
+      "matched": false,
+      "obligations": null,
+      "resources": null,
+      "escaped_type": null
+    }
+  ],
+  "robustness_only": [
+    {
+      "name": "coverage_observation_1_1",
+      "matched": true
+    },
+    {
+      "name": "coverage_observation_1_2",
+      "matched": false
+    },
+    {
+      "name": "coverage_observation_2_2",
+      "matched": true
+    }
+  ]
+}

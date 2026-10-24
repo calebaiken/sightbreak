@@ -102,3 +102,16 @@ WindowsJob and Popen entry. Validate retained BLOCKED output and source copies
 without reading any SDK archive. Full526 source/protected523 proof and all sealed
 builder manifest files are checked directly. Repeat fresh/selected controls in
 an initialized depth-one source view with disclosed shared objects, separate raw.
+
+## Additive model-fidelity refinement before final replay
+
+R1 source/raw are preserved. Before final replay refine the fake stream dependency
+to use ACTUAL PipeRetention.attach/poll/state/close over injected nonblocking read
+and set_blocking functions, actual distinct sink wrappers/pipes, and deterministic
+raw bytes. Overflow must literally exceed the source8MiB cap, not merely report
+an inconsistent True flag. Unexpected child creation occurs only after fake Popen
+returns/creates the root, preserving the controller-only baseline. State failure
+is a single final-state allocation exception after a successful body check, not
+an invented persistent IO operation in the pure state function. No candidate
+source or target changes. The unestablished final-total schedule remains model-
+only, excluded from verdict; all earlier outputs stay intact.
