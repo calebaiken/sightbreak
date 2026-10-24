@@ -1,0 +1,30 @@
+{
+  "candidate": "7d8ec7dda37764e0f45fd2ea1e8d330f84bc2508",
+  "source_root": "/workspace/reviews/windows-input-reader-r5-independent-depth-one-20261024",
+  "reader_path": "/workspace/reviews/windows-input-reader-r5-independent-depth-one-20261024/scripts/analyze_input_consumption.py",
+  "reader_sha256": "c0fe4d9f078a28043a7c89eaef2b0402ca03c486fb3a8c781040a5e6e517f7e0",
+  "cpu_affinity": [
+    4
+  ],
+  "cases": 30,
+  "passed": 15,
+  "false_accepts": [
+    "coalesced_single_already_acknowledged",
+    "coalesced_single_above_window",
+    "coalesced_accepted_wrong_epoch",
+    "coalesced_accepted_over_batch_cap",
+    "direct_single_command_inflates_queue_2",
+    "direct_single_command_inflates_queue_120",
+    "ack_advances_without_consumption",
+    "ack_zero_without_consumption",
+    "ack_clears_without_reset",
+    "queue_appears_without_acceptance",
+    "cached_snapshot_disappears",
+    "cached_snapshot_restamped",
+    "cached_snapshot_header_changes",
+    "cache_precedes_first_applied_counter",
+    "partial_rejected_state_survives_replacement"
+  ],
+  "false_rejects": [],
+  "native_executed": false
+}
