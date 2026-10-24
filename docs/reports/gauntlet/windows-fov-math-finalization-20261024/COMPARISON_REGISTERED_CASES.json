@@ -1,0 +1,130 @@
+{
+  "scope": "builder pure comparison only; defensive1-to2 case excluded/no native claim",
+  "criteria": [
+    "structured serializable result",
+    "expected passed bool",
+    "all sink/pipe/job close calls attempted",
+    "finished retained",
+    "original monitor Audit retained",
+    "distinct owned handle sibling attempted if present"
+  ],
+  "cases": [
+    {
+      "id": "normal",
+      "kwargs": {},
+      "passed": true
+    },
+    {
+      "id": "flush-failure",
+      "kwargs": {
+        "flush_fail": true
+      },
+      "passed": false
+    },
+    {
+      "id": "sink-stdout",
+      "kwargs": {
+        "sink_fail": [
+          "stdout"
+        ]
+      },
+      "passed": false
+    },
+    {
+      "id": "sink-stderr",
+      "kwargs": {
+        "sink_fail": [
+          "stderr"
+        ]
+      },
+      "passed": false
+    },
+    {
+      "id": "sink-both",
+      "kwargs": {
+        "sink_fail": [
+          "stdout",
+          "stderr"
+        ]
+      },
+      "passed": false
+    },
+    {
+      "id": "pipe-stdout",
+      "kwargs": {
+        "pipe_fail": [
+          "stdout"
+        ]
+      },
+      "passed": false
+    },
+    {
+      "id": "pipe-stderr",
+      "kwargs": {
+        "pipe_fail": [
+          "stderr"
+        ]
+      },
+      "passed": false
+    },
+    {
+      "id": "final-state-before",
+      "kwargs": {
+        "state_fail": [
+          2
+        ]
+      },
+      "passed": false
+    },
+    {
+      "id": "core-and-final-state",
+      "kwargs": {
+        "state_fail": [
+          1,
+          2,
+          3
+        ]
+      },
+      "passed": false
+    },
+    {
+      "id": "query-after-coherent",
+      "kwargs": {
+        "query_fail": true
+      },
+      "passed": false
+    },
+    {
+      "id": "read-after-coherent",
+      "kwargs": {
+        "read_fail": true
+      },
+      "passed": false
+    },
+    {
+      "id": "distinct-owned-handles",
+      "kwargs": {
+        "extra": [
+          300,
+          301
+        ],
+        "fail_handle": 1300
+      },
+      "passed": false
+    },
+    {
+      "id": "overflow",
+      "kwargs": {
+        "overflow": true
+      },
+      "passed": false
+    },
+    {
+      "id": "no-eof-late",
+      "kwargs": {
+        "no_eof": true
+      },
+      "passed": false
+    }
+  ]
+}

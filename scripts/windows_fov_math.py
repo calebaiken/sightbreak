@@ -6,6 +6,7 @@ Pure injected models exercise the proposed supervisor; they prove no Windows API
 """
 import argparse
 import ctypes as C
+from copy import deepcopy
 import hashlib
 import json
 import os
@@ -53,6 +54,75 @@ SOURCE_FILES = (
 def require(value, message):
     if not value:
         raise ValueError(message)
+
+
+def finalization_error(operation,error):
+    return dict(operation=operation,error_type=type(error).__name__,error=str(error)[:512])
+
+
+class ResourceFinalizationError(ValueError):
+    def __init__(self,message,report):
+        super().__init__(message)
+        self.report=report
+
+
+def close_stream_resources(streams,process=None):
+    """Attempt every known sink/unique pipe; one failure never skips siblings."""
+    report=dict(complete=True,attempts=[],errors=[])
+    seen=set()
+    def close(operation,resource):
+        if resource is None:return
+        if id(resource) in seen:
+            report['attempts'].append(dict(operation=operation,alias_of_prior=True));return
+        seen.add(id(resource));attempt=dict(operation=operation,close_returned=False)
+        report['attempts'].append(attempt)
+        try:
+            resource.close();attempt['close_returned']=True
+            attempt['closed_after']=getattr(resource,'closed',True)
+            require(attempt['closed_after'] is True,'resource closure not observed')
+        except BaseException as error:report['errors'].append(finalization_error(operation,error))
+    try:
+        sinks=list(streams.files.items()) if streams is not None else []
+    except BaseException as error:
+        sinks=[];report['errors'].append(finalization_error('sink inventory',error))
+    for name,resource in sinks:close('sink/'+str(name),resource)
+    try:pipes=getattr(streams,'pipes',{}) if streams is not None else {}
+    except BaseException as error:
+        pipes={};report['errors'].append(finalization_error('pipe inventory',error))
+    for name in LIMITS:
+        try:resource=pipes.get(name)
+        except BaseException as error:
+            resource=None;report['errors'].append(finalization_error('pipe lookup/'+name,error))
+        close('pipe/'+name,resource)
+        # The returned Popen pipes remain owned even if attach failed.
+        try:resource=getattr(process,name,None) if process is not None else None
+        except BaseException as error:
+            resource=None;report['errors'].append(finalization_error('Popen pipe lookup/'+name,error))
+        close('Popen pipe/'+name,resource)
+    report['complete']=not report['errors']
+    return report
+
+
+def finalize_resources(streams,job,process=None):
+    """Structured best-effort finalization; never closes controller's outer job."""
+    report=dict(complete=True,errors=[],stream_states={})
+    def snapshot(label):
+        if streams is None:return
+        try:
+            value=streams.state();report['stream_states'][label]=value
+            require(type(value) is dict and value.get('complete') is True,'incomplete native stream coverage')
+        except BaseException as error:report['errors'].append(finalization_error('stream state/'+label,error))
+    snapshot('before_close')
+    report['stream_resources']=close_stream_resources(streams,process)
+    report['errors'].extend(report['stream_resources']['errors'])
+    snapshot('after_close')
+    if job is not None:
+        try:report['job_handles']=dict(call_completed=True,report=job.close_held())
+        except BaseException as error:
+            report['job_handles']=dict(call_completed=False,report=getattr(error,'report',None))
+            report['errors'].append(finalization_error('job owned handles',error))
+    report['complete']=not report['errors']
+    return report
 
 
 def digest(path, algorithm='sha256', *, deadline=None, clock=time.monotonic):
@@ -263,8 +333,19 @@ class WindowsJob:
         if not identity['exited']:self.ok(self.k.TerminateProcess(handle,1), 'terminate held owned process')
 
     def close_held(self):
-        for handle in self.owned_handles:self.ok(self.k.CloseHandle(handle), 'close owned identity handle')
-        self.owned_handles=[]  # Popen owns root handle; outer job remains held.
+        report=dict(complete=True,attempts=[],errors=[]);remaining=[]
+        for handle in self.owned_handles:
+            attempt=dict(handle=int(handle),close_returned=False);report['attempts'].append(attempt)
+            try:
+                self.ok(self.k.CloseHandle(handle), 'close owned identity handle')
+                attempt['close_returned']=True
+            except BaseException as error:
+                remaining.append(handle);report['errors'].append(finalization_error('owned handle/'+str(int(handle)),error))
+        self.owned_handles=remaining  # Failed handles stay owned until teardown.
+        report['complete']=not report['errors']
+        if report['errors']:raise ResourceFinalizationError('owned identity handle finalization failed',report)
+        return report  # Popen owns root handle; outer job remains held.
+
 
 
 class PipeRetention:
@@ -303,9 +384,10 @@ class PipeRetention:
                     complete=all(self.eof.values()) and not any(truncated.values()) and not self.errors)
 
     def close(self):
-        for file in self.files.values():file.close()
-        for pipe in self.pipes.values():
-            if not pipe.closed:pipe.close()
+        report=close_stream_resources(self)
+        if not report['complete']:raise ResourceFinalizationError('stream finalization failed',report)
+        return report
+
 
 
 class Audit:
@@ -328,12 +410,12 @@ class Audit:
         return self.root_identity
 
     def receipt(self):
-        return dict(samples=self.samples,transitions=self.events,last=self.last,root=self.root_identity)
+        return deepcopy(dict(samples=self.samples,transitions=self.events,last=self.last,root=self.root_identity))
 
 
-def supervise(process,job,streams,deadline,*,clock=time.monotonic,sleep=time.sleep):
+def supervise(process,job,streams,deadline,*,clock=time.monotonic,sleep=time.sleep,audit=None):
     """Fixed absolute deadline through observed completion and EOF."""
-    audit=Audit(job,process)
+    audit=Audit(job,process) if audit is None else audit
     # Stream sinks already exist; attach must precede any native identity query.
     streams.attach(process)
     job.bind(process)
@@ -393,10 +475,13 @@ def safety_cleanup(process,job,streams,deadline,*,clock=time.monotonic,sleep=tim
 
 def cleanup_unreturned(job,streams,deadline,*,clock=time.monotonic,sleep=time.sleep):
     """Popen raised: explicit job remains owned even without returned root handle."""
-    result=dict(passed=False,root_handle_returned=False,terminated=[],errors=[],identity_coverage_complete=False)
+    result=dict(passed=False,root_handle_returned=False,terminated=[],errors=[],identity_coverage_complete=False,cumulative_total_max=0)
+    coverage_uninterrupted=True
     while clock()<deadline:
         try:
             sample=job.sample();result['last']=sample
+            result['cumulative_total_max']=max(result['cumulative_total_max'],sample['total'])
+            coverage_uninterrupted &= sample['total']==1 and sample['active']==1 and sample['ids']==[job.pid]
             for pid in sample['ids']:
                 if pid==job.pid:continue
                 identity=job.hold_unexpected(pid)
@@ -405,9 +490,10 @@ def cleanup_unreturned(job,streams,deadline,*,clock=time.monotonic,sleep=time.sl
                 if pid not in result['terminated']:result['terminated'].append(pid)
             if sample['active']==1 and sample['ids']==[job.pid]:
                 result['passed']=True
-                result['identity_coverage_complete']=sample['total']==1
+                result['identity_coverage_complete']=coverage_uninterrupted
                 break
         except BaseException as error:
+            coverage_uninterrupted=False
             if len(result['errors'])<16:result['errors'].append(type(error).__name__+': '+str(error)[:512])
         if streams is not None:
             try:streams.poll(deadline,clock)
@@ -415,8 +501,12 @@ def cleanup_unreturned(job,streams,deadline,*,clock=time.monotonic,sleep=time.sl
         sleep(min(.01,max(0,deadline-clock())))
     try:
         sample=job.sample();result['final']=sample
+        result['cumulative_total_max']=max(result['cumulative_total_max'],sample['total'])
+        coverage_uninterrupted &= sample['total']==1 and sample['active']==1 and sample['ids']==[job.pid]
         result['passed']=result['passed'] and sample['active']==1 and sample['ids']==[job.pid]
-    except BaseException as error:result.update(passed=False,final_error=str(error)[:512])
+    except BaseException as error:
+        coverage_uninterrupted=False;result.update(passed=False,final_error=str(error)[:512])
+    result['identity_coverage_complete']=result['passed'] and coverage_uninterrupted and not result['errors']
     result['finished']=clock()
     return result
 
@@ -452,7 +542,7 @@ def execute_prepared(engine,target,output,payload,deadline,*,clock=time.monotoni
     isolated output. Every post-spawn path retains streams and owned accounting.
     """
     result=dict(passed=False,native_invocations=0,spawn_attempts=0,popen_returned=False)
-    process=job=streams=None
+    process=job=streams=audit=None
     started=clock()
     try:
         require(clock()<deadline,'preparation deadline expired')
@@ -476,7 +566,8 @@ def execute_prepared(engine,target,output,payload,deadline,*,clock=time.monotoni
                                 stdout=subprocess.PIPE,stderr=subprocess.PIPE,stdin=subprocess.DEVNULL,
                                 close_fds=True,bufsize=0,creationflags=0)
         result.update(popen_pid=process.pid,popen_returned=True,native_invocations=1)
-        result.update(supervise(process,job,streams,deadline,clock=clock,sleep=sleep))
+        audit=Audit(job,process)
+        result.update(supervise(process,job,streams,deadline,clock=clock,sleep=sleep,audit=audit))
         require(result['exit_code']==0,'native process failed')
         # Final ordinary cleanup/accounting is inside the original whole deadline.
         final=job.sample();root=job.root(process)
@@ -495,6 +586,9 @@ def execute_prepared(engine,target,output,payload,deadline,*,clock=time.monotoni
     except BaseException as error:
         result.update(passed=False,error_type=type(error).__name__,error=str(error)[:4096])
     finally:
+        if audit is not None:
+            try:result['audit']=audit.receipt()
+            except BaseException as error:result.update(passed=False,audit_snapshot_error=finalization_error('terminal audit snapshot',error))
         if process is not None:
             # Always retain final accounting, even if attach/bind/monitor failed.
             if not result['passed']:
@@ -511,15 +605,15 @@ def execute_prepared(engine,target,output,payload,deadline,*,clock=time.monotoni
         if process is None and job is not None:
             try:result['failure_cleanup']=cleanup_unreturned(job,streams,clock()+FAILURE_CLEANUP,clock=clock,sleep=sleep)
             except BaseException as error:result['cleanup_error']=type(error).__name__+': '+str(error)[:4096]
-        if streams is not None:
-            result['streams']=streams.state()
-            if not result['streams']['complete']:result['passed']=False
-            streams.close()
-        if job is not None:
-            try:job.close_held()
-            except BaseException as error:result.update(passed=False,handle_close_error=str(error)[:4096])
-        result['finished']=clock();result['elapsed']=result['finished']-started
-        if result['passed'] and result['finished']>=deadline:result.update(passed=False,error='whole deadline expired before final return')
+        finalization=finalize_resources(streams,job,process)
+        result['finalization']=finalization
+        states=finalization['stream_states']
+        if states:result['streams']=states.get('after_close',states.get('before_close'))
+        if not finalization['complete']:result['passed']=False
+        try:
+            result['finished']=clock();result['elapsed']=result['finished']-started
+            if result['passed'] and result['finished']>=deadline:result.update(passed=False,error='whole deadline expired before final return')
+        except BaseException as error:result.update(passed=False,final_timing_error=finalization_error('final clock',error))
     return result
 
 
