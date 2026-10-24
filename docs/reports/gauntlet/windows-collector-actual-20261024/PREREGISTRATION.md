@@ -113,8 +113,9 @@ latency/performance claim. The largest actual remaining gap must be named.
    and E holds, original15-second stopped movement gate/0.45m endpoint tolerance,
    interrupted-action reset, genuine uninterrupted action contribution and credit
    effects, natural device resolution and next BUY, then normal close and default
-   restart. Require original fixed-step action timelines (plant180 ticks,
-   defuse300 ticks) and original next-BUY12 seconds. Preserve the exact source
+   restart. Require the original three/five simulation-second action timelines
+   with their declared one60Hz-tick tolerance, report actual180/300-tick counts
+   where observed, and retain original next-BUY12 seconds. Preserve the exact source
    life requirements; baseline plant actor dies by natural resolution, so no new
    invented living-through-resolution gate or claim is allowed. These fixtures
    create no earned save and cannot produce online value.
