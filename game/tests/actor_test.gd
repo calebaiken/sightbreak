@@ -221,8 +221,9 @@ func _run() -> void:
 	for i in range(100):
 		effects.casing(Vector3.ZERO, Vector3.RIGHT)
 		effects.impact(Vector3.ZERO, Vector3.UP, false)
-	check(effects.get_child_count() == 3, "rapid effects reuse exactly three mesh pools")
-	check(effects._pools.casings.slots.size() == 24 and effects._pools.sparks.slots.size() == 40 and effects._pools.dust.slots.size() == 12, "effects cannot grow beyond fixed 76-instance budget")
+	check(effects.get_child_count() == 4, "rapid effects reuse exactly four mesh pools: casings, sparks, dust and bullet holes")
+	check(effects._pools.casings.slots.size() == 24 and effects._pools.sparks.slots.size() == 40 and effects._pools.dust.slots.size() == 12, "timed effects cannot grow beyond fixed 76-instance budget")
+	check(effects.hole_count() <= effects.HOLE_MAX and effects._holes.instance_count == effects.HOLE_MAX, "bullet holes cannot grow beyond their fixed pool")
 	effects._process(1.0)
 	var live := 0
 	for pool in effects._pools.values():
