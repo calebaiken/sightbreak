@@ -23,6 +23,8 @@ const SURFACE_ROUGHNESS := {
 var _detail_quality := true
 var _surface_materials: Dictionary = {}
 
+const LAYOUT_REVISION := 2
+const NAVIGATION_STEP := 2
 var sites: Array[Vector3] = [Vector3(-15, 0, 10), Vector3(15, 0, 10)]
 var attack_spawns: Array[Vector3] = []
 var defend_spawns: Array[Vector3] = []
@@ -32,6 +34,10 @@ var _navigation := AStar3D.new()
 var _materials: Dictionary = {}
 var _box_visuals: Array[MeshInstance3D] = []
 var presentation_stats: Dictionary = {}
+## Number of solids the tactical layout (revision 2) adds on top of the original 25 obstacles.
+var layout_solids := 0
+## Containers whose hardware fittings are added by _add_cargo_fittings: [position, length, along_x].
+var _fitted_cargo: Array = []
 var roof_equipment_bounds: Array[AABB] = []
 ## Footprints of solids that stand on the yard floor, for contact occlusion.
 var contact_footprints: Array[Rect2] = []
@@ -117,24 +123,33 @@ func _label(text: String, at: Vector3, color: Color, size: int = 110, turn: floa
 	label.position = at
 	label.rotation.y = turn
 
-func _container(at: Vector3, color: Color, length: float = 7.0) -> void:
-	_box(at + Vector3(0, 1.55, 0), Vector3(3.0, 3.1, length), color, true, true, "metal")
+## Freight container. `length` runs along z by default; `along_x` lays it along x. Every part is
+## described in the z-aligned frame and mapped, so ribs, doors and placards stay consistent.
+func _container(at: Vector3, color: Color, length: float = 7.0, along_x: bool = false, tag: String = "RY / 07\nFREIGHT SYSTEMS") -> void:
+	var fit := func(local: Vector3) -> Vector3: return Vector3(local.z, local.y, local.x) if along_x else local
+	_box(at + fit.call(Vector3(0, 1.55, 0)), fit.call(Vector3(3.0, 3.1, length)), color, true, true, "metal")
 	for z in range(int(length / 0.65)):
-		_box(at + Vector3(-1.53, 1.55, -length * 0.5 + z * 0.65 + 0.25), Vector3(0.08, 2.85, 0.10), color.lightened(0.13), false)
-		_box(at + Vector3(1.53, 1.55, -length * 0.5 + z * 0.65 + 0.25), Vector3(0.08, 2.85, 0.10), color.lightened(0.13), false)
-	_box(at + Vector3(0, 3.12, 0), Vector3(3.12, 0.14, length + 0.12), color.darkened(0.2), false)
+		_box(at + fit.call(Vector3(-1.53, 1.55, -length * 0.5 + z * 0.65 + 0.25)), fit.call(Vector3(0.08, 2.85, 0.10)), color.lightened(0.13), false)
+		_box(at + fit.call(Vector3(1.53, 1.55, -length * 0.5 + z * 0.65 + 0.25)), fit.call(Vector3(0.08, 2.85, 0.10)), color.lightened(0.13), false)
+	_box(at + fit.call(Vector3(0, 3.12, 0)), fit.call(Vector3(3.12, 0.14, length + 0.12)), color.darkened(0.2), false)
 	for end in [-1, 1]:
 		var z := float(end) * (length * 0.5 + 0.025)
-		_box(at + Vector3(0, 1.55, z), Vector3(0.035, 2.75, 0.04), color.darkened(0.5), false)
+		_box(at + fit.call(Vector3(0, 1.55, z)), fit.call(Vector3(0.035, 2.75, 0.04)), color.darkened(0.5), false)
 		for x in [-0.95, -0.38, 0.38, 0.95]:
-			_box(at + Vector3(x, 1.55, z + end * 0.023), Vector3(0.045, 2.75, 0.06), Color("545e60"), false)
-			_box(at + Vector3(x, 1.1, z + end * 0.064), Vector3(0.18, 0.06, 0.035), Color("8b938d"), false)
-		_box(at + Vector3(0, 0.13, z), Vector3(2.9, 0.12, 0.08), Color("283339"), false)
-		_box(at + Vector3(0, 2.97, z), Vector3(2.9, 0.12, 0.08), color.darkened(0.35), false)
+			_box(at + fit.call(Vector3(x, 1.55, z + end * 0.023)), fit.call(Vector3(0.045, 2.75, 0.06)), Color("545e60"), false)
+			_box(at + fit.call(Vector3(x, 1.1, z + end * 0.064)), fit.call(Vector3(0.18, 0.06, 0.035)), Color("8b938d"), false)
+		_box(at + fit.call(Vector3(0, 0.13, z)), fit.call(Vector3(2.9, 0.12, 0.08)), Color("283339"), false)
+		_box(at + fit.call(Vector3(0, 2.97, z)), fit.call(Vector3(2.9, 0.12, 0.08)), color.darkened(0.35), false)
+	# The plate is as long as the longest stencil line (about 0.175 m a character), never longer than the container.
+	var longest := 0
+	for line in tag.split("\n"):
+		longest = maxi(longest, line.length())
+	var plate: float = clampf(float(longest) * 0.175 + 0.3, 1.9, maxf(1.9, length - 0.4))
 	for side in [-1.0, 1.0]:
 		# A painted placard backs the stencil so the text never shares a plane with the ribs.
-		_box(at + Vector3(side * 1.585, 2.1, 0), Vector3(0.02, 0.62, 1.78), color.darkened(0.42), false)
-		_label("RY / 07\nFREIGHT SYSTEMS", at + Vector3(side * 1.605, 2.1, 0), Color("c2c4af"), 39, side * PI * 0.5)
+		_box(at + fit.call(Vector3(side * 1.585, 2.1, 0)), fit.call(Vector3(0.02, 0.92, plate)), color.darkened(0.42), false)
+		var turn: float = (0.0 if side > 0.0 else PI) if along_x else side * PI * 0.5
+		_label(tag, at + fit.call(Vector3(side * 1.605, 2.1, 0)), Color("c2c4af"), 39, turn)
 
 
 func _build() -> void:
@@ -205,6 +220,9 @@ func _build() -> void:
 		_box(Vector3(x, 0.012, -20), Vector3(2, 0.018, 0.14), Color("b6a273"), false)
 	_label("SIGHTBREAK  //  RELAY YARD", Vector3(0, 6.1, 23.10), Color("c4ceca"), 70, PI)
 	_label("01  FREIGHT   ←      →   RELAY  02", Vector3(0, 3.8, -23.4), Color("c9d6dc"), 85, 0)
+	var obstacles_before := _obstacles.size()
+	_add_tactical_layout()
+	layout_solids = _obstacles.size() - obstacles_before
 	_add_environment_detail()
 	_add_transfer_architecture()
 	_add_service_infrastructure()
@@ -213,6 +231,41 @@ func _build() -> void:
 	for i in range(5):
 		attack_spawns.append(Vector3((i - 2) * 2.2, 0.05, -21))
 		defend_spawns.append(Vector3((i - 2) * 2.2, 0.05, 20.5))
+
+## Revision 2 tactical layout (the first revision was an open 48 m pad with fifteen pieces of cover).
+## Spawns, sites and the outer shell are unchanged. These solids give the yard routes, corners and
+## staged approaches: a screen with three exits hides the attacker spawn from the yard, blocks sit
+## behind each exit so no lane is a straight shot, and a wall shields each site from its lane.
+## Everything here is measured by tests/map_sightline_probe.gd and tests/bot_objective_metrics.gd.
+func _add_tactical_layout() -> void:
+	var red := Color("5d3034")
+	var teal := Color("30464f")
+	var grey := Color("7f8988")
+	# Attacker marshalling screen at z = -17. Two exits: west x -19..-14 and east x 14..19. The middle of the screen is
+	# solid: a 6 to 8 m mid exit opened a 30 m shooting lane down the centre and, with a baffle in it, left two passes the
+	# bots could not path through. Mid is reached from the side lanes through the crossings at z -6.5..0 instead.
+	_layout_container(Vector3(-21.5, 0, -17), grey, 5.0, true, "RY / 21\nGATE STOCK")
+	_layout_container(Vector3(-9, 0, -17), red, 10.0, true, "RY / 22\nWEST TRANSFER")
+	_layout_container(Vector3(0, 0, -17), grey, 8.0, true, "RY / 61\nRELAY PARTS")
+	_layout_container(Vector3(9, 0, -17), teal, 10.0, true, "RY / 23\nEAST TRANSFER")
+	_layout_container(Vector3(21.5, 0, -17), grey, 5.0, true, "RY / 24\nGATE STOCK")
+	for side in [-1.0, 1.0]:
+		var tint := red if side < 0.0 else teal
+		var west: bool = side < 0.0
+		# A block three metres beyond each exit: the first thing an attacker sees is a corner, not a lane.
+		_layout_container(Vector3(side * 16.5, 0, -11), grey, 6.0, true, "RY / 31\nCABLE DRUMS" if west else "RY / 32\nSPARE PLATES")
+		# A divider across each side lane at z = -2 leaves two 2.5 m doors, so the lane is crossed in two hops.
+		_layout_container(Vector3(side * 13.5, 0, -2), tint, 5.0, true, "RY / 41\nLANE STOCK" if west else "RY / 42\nLANE STOCK")
+		# A shield north of each site breaks the lane's long line to it; entrances are either side.
+		_layout_container(Vector3(side * 17.5, 0, 4.5), tint, 5.0, true, "RY / 51\nSITE A ENTRY" if west else "RY / 52\nSITE B ENTRY")
+	# The two long spines reach on past the lane crossing so each site sits in its own compartment: the
+	# defender at mid no longer sees across to a site, and the site-to-site line along z = 10 is cut.
+	_layout_container(Vector3(-7, 0, 11), red, 6.0, false, "RY / 71\nSITE A STORES")
+	_layout_container(Vector3(7, 0, 11), teal, 6.0, false, "RY / 72\nSITE B STORES")
+
+func _layout_container(at: Vector3, color: Color, length: float, along_x: bool, tag: String) -> void:
+	_container(at, color, length, along_x, tag)
+	_fitted_cargo.append([at, length, along_x])
 
 func is_at_site(at: Vector3) -> int:
 	for i in range(sites.size()):
@@ -229,8 +282,9 @@ func _clear_path(from: Vector3, to: Vector3) -> bool:
 	return true
 
 func _build_navigation() -> void:
-	for x in range(-21, 22, 3):
-		for z in range(-21, 22, 3):
+	# A 2 m grid: the revision 2 corridors are 3.5 to 6 m wide, narrower than the 3 m grid could follow.
+	for x in range(-22, 23, NAVIGATION_STEP):
+		for z in range(-22, 23, NAVIGATION_STEP):
 			var at := Vector3(x, 0, z)
 			if _clear_path(at, at + Vector3(0.01, 0, 0.01)):
 				_navigation.add_point(waypoints.size(), at)
@@ -319,8 +373,8 @@ func _add_environment_detail() -> void:
 	for x in [-12, 12]:
 		for z in range(-20, 19, 4):
 			_box(Vector3(x, 0.030, z), Vector3(0.095, 0.004, 1.65), paint.darkened(0.18), false)
-	_floor_text("01 / FREIGHT", Vector3(-15, 0.03, -18), Color("b4a077"), 85)
-	_floor_text("02 / RELAY", Vector3(15, 0.03, -18), Color("79a4aa"), 85)
+	_floor_text("01 / FREIGHT", Vector3(-16.5, 0.03, -17), Color("b4a077"), 48)
+	_floor_text("02 / RELAY", Vector3(16.5, 0.03, -17), Color("79a4aa"), 48)
 	_floor_text("KEEP CLEAR", Vector3(0, 0.03, -6), Color("8c9490"), 60)
 	# Wall base, upright concrete panel seams, and raised utility conduit.
 	for side in [-1, 1]:
@@ -596,26 +650,29 @@ func _add_service_infrastructure() -> void:
 
 func _add_cargo_fittings() -> void:
 	var cargo: Array = [
-		[Vector3(-7, 0, -11), 9.0], [Vector3(7, 0, -11), 9.0],
-		[Vector3(-7, 0, 4), 8.0], [Vector3(7, 0, 4), 8.0],
-		[Vector3(-20, 0, 0), 5.0], [Vector3(20, 0, 0), 5.0]
+		[Vector3(-7, 0, -11), 9.0, false], [Vector3(7, 0, -11), 9.0, false],
+		[Vector3(-7, 0, 4), 8.0, false], [Vector3(7, 0, 4), 8.0, false],
+		[Vector3(-20, 0, 0), 5.0, false], [Vector3(20, 0, 0), 5.0, false]
 	]
+	cargo.append_array(_fitted_cargo)
 	for entry in cargo:
 		var at: Vector3 = entry[0]
 		var length: float = entry[1]
+		# Hardware is described in the z-aligned frame and mapped, as in _container.
+		var fit := func(local: Vector3) -> Vector3: return Vector3(local.z, local.y, local.x) if bool(entry[2]) else local
 		for side in [-1, 1]:
 			# Heavy corner castings, bottom rails, door hinges and small data plates.
-			_box(at + Vector3(side * 1.49, 0.14, 0), Vector3(0.12, 0.23, length), INDUSTRIAL_STEEL, false)
+			_box(at + fit.call(Vector3(side * 1.49, 0.14, 0)), fit.call(Vector3(0.12, 0.23, length)), INDUSTRIAL_STEEL, false)
 			for end in [-1, 1]:
 				for y in [0.14, 2.97]:
-					_box(at + Vector3(side * 1.49, y, end * (length * 0.5 - 0.09)), Vector3(0.20, 0.27, 0.24), INDUSTRIAL_STEEL, false)
-					_box(at + Vector3(side * 1.59, y, end * (length * 0.5 - 0.09)), Vector3(0.014, 0.095, 0.10), Color("101b23"), false)
+					_box(at + fit.call(Vector3(side * 1.49, y, end * (length * 0.5 - 0.09))), fit.call(Vector3(0.20, 0.27, 0.24)), INDUSTRIAL_STEEL, false)
+					_box(at + fit.call(Vector3(side * 1.59, y, end * (length * 0.5 - 0.09))), fit.call(Vector3(0.014, 0.095, 0.10)), Color("101b23"), false)
 				for y in [0.52, 1.55, 2.55]:
-					_box(at + Vector3(side * 1.34, y, end * (length * 0.5 + 0.06)), Vector3(0.20, 0.10, 0.08), PANEL_PAINT, false)
-			_box(at + Vector3(side * 1.588, 0.86, -length * 0.30), Vector3(0.026, 0.35, 0.75), INDUSTRIAL_STEEL, false)
-			_box(at + Vector3(side * 1.605, 0.86, -length * 0.30), Vector3(0.014, 0.17, 0.47), Color("b0b7aa"), false)
+					_box(at + fit.call(Vector3(side * 1.34, y, end * (length * 0.5 + 0.06))), fit.call(Vector3(0.20, 0.10, 0.08)), PANEL_PAINT, false)
+			_box(at + fit.call(Vector3(side * 1.588, 0.86, -length * 0.30)), fit.call(Vector3(0.026, 0.35, 0.75)), INDUSTRIAL_STEEL, false)
+			_box(at + fit.call(Vector3(side * 1.605, 0.86, -length * 0.30)), fit.call(Vector3(0.014, 0.17, 0.47)), Color("b0b7aa"), false)
 			for z in [-length * 0.40, length * 0.40]:
-				_box(at + Vector3(side * 1.582, 0.25, z), Vector3(0.025, 0.12, 0.44), WEATHERED_GOLD, false)
+				_box(at + fit.call(Vector3(side * 1.582, 0.25, z)), fit.call(Vector3(0.025, 0.12, 0.44)), WEATHERED_GOLD, false)
 	# Reinforced transit cases with handles, latches and raised corner guards.
 	for at in [Vector3(-14, 0.65, -5), Vector3(14, 0.65, -5), Vector3(-18, 0.65, 13), Vector3(18, 0.65, 13), Vector3(0, 0.65, 8), Vector3(-3, 0.65, -1), Vector3(3, 0.65, -1)]:
 		for end in [-1, 1]:

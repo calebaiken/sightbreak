@@ -15,7 +15,10 @@ func run() -> void:
 	var arena := Arena.new()
 	root.add_child(arena)
 	await process_frame
-	check(arena._obstacles.size() == 25, "presentation preserves all 25 navigation obstacles")
+	# Revision 1 had 25 obstacles (4 walls, 6 containers, 9 crates, 6 poles). Revision 2 adds a declared
+	# set of 12 layout solids; every other presentation change must still add none.
+	check(Arena.LAYOUT_REVISION == 2 and arena.layout_solids == 13, "revision 2 layout adds exactly its 13 declared solids")
+	check(arena._obstacles.size() == 25 + arena.layout_solids, "presentation preserves the 25 original navigation obstacles beside the layout solids")
 	check(arena.sites == [Vector3(-15, 0, 10), Vector3(15, 0, 10)], "objective coordinates remain unchanged")
 	check(arena.attack_spawns.size() == 5 and arena.defend_spawns.size() == 5, "ten unchanged spawn locations")
 	check(arena.waypoints.size() > 100, "walkable route graph remains populated")
@@ -27,7 +30,7 @@ func run() -> void:
 	check(arena.presentation_stats.static_batches < 130, "repeated geometry shares bounded material batches")
 	check(arena.get_child_count() < 250, "temporary box parents released after batching")
 	var bodies := arena.find_children("*", "StaticBody3D", true, false)
-	check(bodies.size() == 26, "decorative improvements add no walkable collision obstacles")
+	check(bodies.size() == 26 + arena.layout_solids, "decorative improvements add no walkable collision obstacles")
 	var roof_supported := arena.roof_equipment_bounds.size() == 6
 	for equipment: AABB in arena.roof_equipment_bounds:
 		var west := equipment.get_center().x < 0
