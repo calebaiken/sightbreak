@@ -44,8 +44,13 @@ def physical_source_file(path, expected, mode, *, windows=False):
     require(mode in ('100644','100755'),'unsupported source mode: '+mode)
     actual=path.read_bytes()
     after=path.lstat()
-    require((before.st_dev,before.st_ino,before.st_size,before.st_mtime_ns,before.st_mode)==
-            (after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns,after.st_mode),
+    def identity(value):
+        return (value.st_dev,value.st_ino,value.st_size,value.st_mtime_ns,value.st_ctime_ns,value.st_mode)
+    require(identity(before)==identity(after),
+            'source changed during physical read: '+str(path))
+    repeated=path.read_bytes()
+    final=path.lstat()
+    require(actual==repeated and identity(before)==identity(final),
             'source changed during physical read: '+str(path))
     conversion='none'
     if actual!=expected:
@@ -60,6 +65,7 @@ def physical_source_file(path, expected, mode, *, windows=False):
     require(measured_mode is None or measured_mode==mode,'physical source executable mode differs: '+str(path))
     return dict(bytes=len(actual),sha256=sha(actual),canonical_sha256=sha(expected),
                 canonical_mode=mode,physical_mode=measured_mode,checkout_conversion=conversion,
+                read_observations=2,change_metadata_scope='Windows NTFS ChangeTime unmeasured' if windows else 'POSIX st_ctime_ns',
                 mode_scope='NTFS executable bits not measured' if windows else 'POSIX owner executable bit')
 
 

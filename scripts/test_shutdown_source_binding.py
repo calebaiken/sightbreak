@@ -93,5 +93,40 @@ class PhysicalSourceControls(unittest.TestCase):
         with patch.object(Path,'read_bytes',racing),self.assertRaisesRegex(ValueError,'changed during physical read'):
             retention.physical_source_file(path,self.files['runtime/unlisted.py'],'100644')
 
+    def test_same_length_edit_with_restored_mtime_is_rejected(self):
+        path=self.root/'runtime/unlisted.py';before=path.stat();original=Path.read_bytes
+        count=0
+        def racing(target):
+            nonlocal count
+            data=original(target)
+            if target==path:
+                count+=1
+                if count==1:
+                    target.write_bytes(b'X'*len(data))
+                    os.utime(target,ns=(before.st_atime_ns,before.st_mtime_ns))
+            return data
+        with patch.object(Path,'read_bytes',racing),self.assertRaisesRegex(ValueError,'changed during physical read'):
+            retention.physical_source_file(path,self.files['runtime/unlisted.py'],'100644')
+        self.assertNotEqual(path.read_bytes(),self.files['runtime/unlisted.py'])
+
+    def test_second_bytes_reject_first_read_mutation_even_with_constant_metadata(self):
+        path=self.root/'runtime/unlisted.py';before=path.lstat();original=Path.read_bytes;count=0
+        def racing(target):
+            nonlocal count
+            data=original(target)
+            if target==path:
+                count+=1
+                if count==1:target.write_bytes(b'X'*len(data))
+            return data
+        with patch.object(Path,'read_bytes',racing),patch.object(Path,'lstat',return_value=before),self.assertRaisesRegex(ValueError,'changed during physical read'):
+            retention.physical_source_file(path,self.files['runtime/unlisted.py'],'100644',windows=True)
+        self.assertEqual(count,2)
+
+    def test_unchanged_double_read_reports_the_platform_observation_limit(self):
+        path=self.root/'runtime/unlisted.py'
+        record=retention.physical_source_file(path,self.files['runtime/unlisted.py'],'100644',windows=True)
+        self.assertEqual(record['read_observations'],2)
+        self.assertEqual(record['change_metadata_scope'],'Windows NTFS ChangeTime unmeasured')
+
 
 if __name__=='__main__':unittest.main()
