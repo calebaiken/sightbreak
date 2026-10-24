@@ -36,6 +36,12 @@ def literal_timer_outcomes(rows):
     if not rows or rows[0]['reason']!='peer_connected':return None
     first=rows[0];age=first['input_age_msec'];c=first['wall_msec']-age
     if age<0 or c<0 or age+first['deadline_remaining_msec']!=JOIN:return None
+    for previous,current in zip(rows,rows[1:]):
+        old_last=previous['wall_msec']-previous['input_age_msec'];new_last=current['wall_msec']-current['input_age_msec']
+        extra=current.get('counters',{}).get('input_accepted',0)-previous.get('counters',{}).get('input_accepted',0)
+        if current['joined'] and previous['joined'] and new_last>old_last:
+            if current['reason'] not in {'peer_bound','input_accepted'} and extra>0:return None
+            if current['reason']=='input_accepted' and extra>1:return None
     choices=[None]
     reject_times={row['wall_msec']+row['deadline_remaining_msec']-REJECT for row in rows}
     for reject_at,cut in itertools.product(sorted(reject_times),range(1,len(rows))):
