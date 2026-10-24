@@ -617,3 +617,6 @@ all route guards. Root release e587392d starts one exact f242a2f Linux controlle
 measurement after actual precriteria 4e97721b; heavy local work is held. Touch
 108d1cdc is source-ready, no new native; Mac AX component source implementation
 continues. Mission remains ACTIVE; continue exact NEXT_SESSION queue.
+
+
+2026-10-24: independent exact Windows collector source review, own codex/critic-windows-input-collector-final-20261024 after prereg16d5766a. ACCEPT SOURCE ONLY c3241514 against root11c5773e/four exact c073 files. Own and initialized disclosed-alternate depth1:178 methods/3oldskips, source union/erasure,960 admission cases/14negatives,90adapter contexts,14accepted route methods/147guards,3stage methods pass. Historical23 rig failure preserved/reproduced on unchanged root; no candidate source changed. Enabled runtime/API/overhead, physical timing, complete coverage and reader acceptance remain unverified. Report: docs/reports/gauntlet/windows-input-collector-final-source-20261024/REVIEW.md. No native or CI release.

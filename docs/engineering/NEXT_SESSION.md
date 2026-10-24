@@ -1,3 +1,21 @@
+## Independent collector review checkpoint — 2026-10-24
+
+Own review /workspace/reviews/windows-input-collector-final-source, branch
+codex/critic-windows-input-collector-final-20261024. Exact c3241514 is ACCEPT
+SOURCE ONLY; final report docs/reports/gauntlet/windows-input-collector-final-source-20261024/REVIEW.md
+and manifest retain own/depth1 178 methods (175 pass/3 old skips), full 507-path
+union/four erasures, 960 admission cases/14 mutation controls, 90 adapter contexts,
+14 accepted route methods/147 guard subcases and 3 named-stage methods. Historical
+23-method rig still has 1 failure/1 error on both candidate and unchanged root;
+its obsolete positional-read assumptions and replacement stage controls are explicit.
+Initialized exact depth1 shares the disclosed object alternate; reachable history
+is one commit with HEAD^ absent, storage is not self-contained. Initial read-only
+setup affinity deviation and first custom harness error are retained. No native,
+Godot/API, export, render, CI, real OS input or cleanup ran. Enabled observer and
+overhead remain the largest gap; reader c073/R2 remain rejected, separate R3 is
+unqualified. Next action belongs to root: separately preregister bounded pinned
+Godot compilation/API preflight. This report releases no native or CI run.
+
 # Next session
 
 Updated 2026-10-23, 12:05 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
