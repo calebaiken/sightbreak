@@ -1,0 +1,35 @@
+{
+  "scope": "Retained setup tool observations; no native attempt was made",
+  "events": [
+    {
+      "tool_chunk_id": "8ceb10",
+      "exit_code": 1,
+      "command": "taskset -c 4 python .../bind_preparation.py",
+      "failure": "AssertionError: backend/app.py",
+      "reason": "Builder-owned source checkout is sparse; unchanged tracked backend path was not materialized",
+      "resolution": "Materialized all508 exact non-doc candidate paths only in own sparse review checkout; binding helper now verifies own initialized view and inventories builder omissions"
+    },
+    {
+      "tool_chunk_id": "a273a7",
+      "exit_code": 1,
+      "child_exit_code": 129,
+      "failure": "error: unknown option no-cone",
+      "command_child": [
+        "git",
+        "sparse-checkout",
+        "add",
+        "--no-cone",
+        "--stdin"
+      ],
+      "resolution": "Existing non-cone configuration retained; successful git sparse-checkout add --stdin materialized own exact source"
+    },
+    {
+      "tool_chunk_id": "1d27f0",
+      "exit_code": 0,
+      "command": "taskset -c 4 python .../bind_preparation.py",
+      "result": "508 exact source paths/modes and53 old raw files verified"
+    }
+  ],
+  "initial_unpinned_read_only_commands_disclosed": true,
+  "subsequent_commands_pinned_cpu4": true
+}

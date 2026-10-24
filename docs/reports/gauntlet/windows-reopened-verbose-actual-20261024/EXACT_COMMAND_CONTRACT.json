@@ -1,0 +1,57 @@
+{
+  "qualifier_ref": "refs/heads/qualifier/windows-reopened-verbose-7101350e-20261024",
+  "source_commit": "7101350e5d0a2f6e4afb9a913b5b1bcf2107857a",
+  "workflow": ".github/workflows/desktop-alpha.yml",
+  "inputs": {
+    "lane": "windows",
+    "observe_windows_input": true,
+    "verbose_reopened_shutdown": true
+  },
+  "windows_living_controller_argv_after_python": [
+    "scripts/verify_offline_export.py",
+    "--target",
+    "windows",
+    "--hosted-render-priority",
+    "below-normal",
+    "--display",
+    ":102",
+    "--timeout",
+    "300",
+    "--output",
+    "builds/desktop-playability/offline-input",
+    "--reopened-verbose"
+  ],
+  "native_initial_template": [
+    "<exact exported executable>",
+    "--audio-driver",
+    "Dummy",
+    "--position",
+    "0,0",
+    "--resolution",
+    "<measured native WxH>",
+    "--",
+    "--offline-validation",
+    "--offline-trace-dir=<owned offline-input>/initial-offline-trace"
+  ],
+  "native_reopened_template": [
+    "<same exported executable>",
+    "--audio-driver",
+    "Dummy",
+    "--position",
+    "0,0",
+    "--resolution",
+    "<same measured native WxH>",
+    "--verbose",
+    "--",
+    "--offline-validation",
+    "--offline-trace-dir=<same owned offline-input>/restart-profile-trace"
+  ],
+  "normal_input_client_server_have_no_new_verbose": true,
+  "server_observation_same_as_original": "--native-input-observation remains a user argument in the existing ordinary observer step",
+  "engine_verbose_count_reopened": 1,
+  "verbose_before_separator": true,
+  "original_whole_budget_seconds": 300,
+  "original_close_budget_seconds": 20,
+  "no_retry_or_manual_continuation": true,
+  "runtime_source_acceptance_is_not_actual_acceptance": true
+}
