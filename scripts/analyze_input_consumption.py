@@ -862,17 +862,27 @@ class StreamObservationIntervals:
             skipped = row['stream_skipped'] - previous['stream_skipped']
             need(row['stream_ack'] >= previous['stream_ack'],
                  'stream ACK regressed/cleared without reset')
-            if consumed == 0:
+            local_min = local_max = 0
+            if consumed:
+                last_owner = (row['latest']['input_consumed']['peer'],
+                              row['latest']['input_consumed']['generation'])
+                local_min = int(last_owner == identity)
+                local_max = consumed - int(last_owner != identity)
+                if local_min:
+                    need(row['stream_ack'] == row['latest']['input_consumed']['sequence'],
+                         'stream ACK differs from its latest immutable pop')
+            if local_max == 0:
                 need(row['stream_ack'] == previous['stream_ack'],
                      'stream ACK changed without a consumed call')
-            elif (row['latest']['input_consumed']['peer'],
-                  row['latest']['input_consumed']['generation']) == identity:
-                need(row['stream_ack'] == row['latest']['input_consumed']['sequence'],
-                     'stream ACK differs from its latest immutable pop')
             need(skipped >= 0, 'skipped state regressed inside a live stream epoch')
-            need(max(0, previous['queue_count'] - consumed - skipped)
+            skipped_min = skipped if consumed == local_min == 1 else 0
+            skipped_max = min(skipped, 118 * local_max)
+            if local_min:
+                need(row['stream_ack'] >= max(previous['stream_ack'], 0) + local_min + skipped_min,
+                     'nonnull local pops did not advance stream ACK by consumed/skipped ranks')
+            need(max(0, previous['queue_count'] - local_max - skipped_max)
                  <= row['queue_count']
-                 <= min(120, previous['queue_count'] + 12 * accepted),
+                 <= min(120, previous['queue_count'] + 12 * accepted - local_min - skipped_min),
                  'queue cardinality has no accepted/pop/skipped transition')
         self.previous[key] = row
         if row['reason'] == 'peer_disconnected':

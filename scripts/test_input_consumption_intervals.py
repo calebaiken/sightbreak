@@ -170,6 +170,35 @@ class IntervalNecessities(unittest.TestCase):
         self.assertEqual(model.rows[-1]['stream_ack'], 1)
         self.assertEqual(self.analyze(model.rows), 'UNKNOWN')
 
+    def test_sole_other_peer_pop_cannot_advance_selected_ack(self):
+        for sequence in (2, 12, 62, 121):
+            with self.subTest(sequence=sequence):
+                model = uncertain_history()
+                model.rpc(10, sequence, 16200, 16200)
+                model.complete_tick(18000)
+                model.select(9, 18100)
+                model.complete_tick(19500)
+                self.assertEqual(model.rows[-1]['latest']['input_consumed']['peer'], 10)
+                self.assertEqual(model.rows[-1]['stream_ack'], 2)
+                self.assertEqual(self.analyze(model.rows), 'UNKNOWN')
+                bad = deepcopy(model.rows)
+                bad[-1]['stream_ack'] = 3
+                self.assertEqual(self.analyze(bad), 'INVALID')
+
+    def test_guaranteed_local_pop_cannot_replay_an_acknowledged_identity(self):
+        for sequence in (3, 12, 62, 122):
+            with self.subTest(sequence=sequence):
+                model = uncertain_history()
+                model.rpc(9, sequence, 16200, 16200)
+                model.complete_tick(18000)
+                model.complete_tick(19500)
+                self.assertEqual(model.rows[-1]['latest']['input_consumed']['peer'], 9)
+                self.assertEqual(self.analyze(model.rows), 'UNKNOWN')
+                bad = deepcopy(model.rows)
+                bad[-1]['stream_ack'] = 2
+                bad[-1]['latest']['input_consumed']['sequence'] = 2
+                self.assertEqual(self.analyze(bad), 'INVALID')
+
 
 if __name__ == '__main__':
     unittest.main()
