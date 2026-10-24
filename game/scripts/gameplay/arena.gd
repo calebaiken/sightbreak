@@ -21,6 +21,8 @@ const SURFACE_ROUGHNESS := {
 	"metal": preload("res://assets/materials/painted_metal_roughness.png")
 }
 var _detail_quality := true
+var _environment: Environment
+var _sun: DirectionalLight3D
 var _surface_materials: Dictionary = {}
 
 var sites: Array[Vector3] = [Vector3(-15, 0, 10), Vector3(15, 0, 10)]
@@ -43,6 +45,18 @@ const INDUSTRIAL_STEEL := Color("344148")
 const WEATHERED_GOLD := Color("ae935c")
 const SAFETY_CRIMSON := Color("9c4344")
 const PANEL_PAINT := Color("6f7b7c")
+# Sun and shadow fill. The original 0.41 ambient left 19-32% of the defender-side frame below luminance 40 (a
+# near-black navy that hides dark-clad players); 0.85 with a slightly lower sun brings that to about zero while the
+# lit/shaded floor ratio stays near 5:1. Evidence: docs/art/GRAPHICS_BACKLOG.md (M6, variant C).
+const AMBIENT_ENERGY := 0.85
+const SUN_ENERGY := 1.05
+# Screen-space ambient occlusion, ULTRA only. Its measured effect on this map is small (under 1% of pixels darker
+# by more than 6 levels) because contact skirts already ground the props, so it stays conservative.
+const SSAO_RADIUS := 0.8
+const SSAO_INTENSITY := 1.0
+const SSAO_POWER := 1.5
+const SSAO_HORIZON := 0.3
+const SSAO_LIGHT_AFFECT := 0.0
 
 func _ready() -> void:
 	name = "RelayYard"
@@ -63,7 +77,8 @@ func _material(color: Color, roughness: float = 0.85, emission: bool = false, su
 		result.uv1_triplanar = true
 		result.uv1_world_triplanar = true
 		result.uv1_scale = Vector3.ONE * 0.5
-		result.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS
+		# Anisotropic: the level is the viewport's (SBGraphicsQuality); at "disabled" this is plain trilinear.
+		result.texture_filter = BaseMaterial3D.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS_ANISOTROPIC
 		result.roughness = 0.65 if surface == "metal" else 0.94
 		result.metallic = 0.38 if surface == "metal" else 0.0
 		result.normal_texture = SURFACE_NORMALS[surface]
@@ -144,7 +159,7 @@ func _build() -> void:
 	env.sky = RELAY_SKY
 	env.ambient_light_source = Environment.AMBIENT_SOURCE_COLOR
 	env.ambient_light_color = Color("aabfcf")
-	env.ambient_light_energy = 0.41
+	env.ambient_light_energy = AMBIENT_ENERGY
 	env.tonemap_mode = Environment.TONE_MAPPER_FILMIC
 	# Depth-range haze only beyond the play space: the far hall and skyline gain
 	# separation while every sightline inside the 48 m yard keeps full contrast.
@@ -157,11 +172,13 @@ func _build() -> void:
 	env.fog_light_color = Color("a3b2b9")
 	env.fog_sky_affect = 0.0
 	environment.environment = env
+	_environment = env
 	add_child(environment)
 	var sun := DirectionalLight3D.new()
+	_sun = sun
 	sun.rotation_degrees = Vector3(-40, -32, 0)
 	sun.light_color = Color("ffe4bd")
-	sun.light_energy = 1.18
+	sun.light_energy = SUN_ENERGY
 	sun.shadow_enabled = true
 	# The yard is 48 m across: two cascades cover it, and each cascade re-renders
 	# every caster, so four splits nearly doubled shadow submission for no gain.
@@ -169,6 +186,7 @@ func _build() -> void:
 	sun.directional_shadow_split_1 = 0.22
 	sun.directional_shadow_max_distance = 60
 	add_child(sun)
+	apply_graphics(SBGraphicsQuality.config(SBGraphicsQuality.current))
 	_box(Vector3(0, -0.3, 0), Vector3(48, 0.6, 48), Color("3c464d"), true, false, "asphalt")
 	_box(Vector3(-24, 3, 0), Vector3(1, 6, 49), Color("5a6a73"), true, true, "concrete")
 	_box(Vector3(24, 3, 0), Vector3(1, 6, 49), Color("5a6a73"), true, true, "concrete")
@@ -628,6 +646,22 @@ func _add_cargo_fittings() -> void:
 		for x in [-1.16, 1.16]:
 			for z in [-1.16, 1.16]:
 				_box(at + Vector3(x, 0.60, z), Vector3(0.21, 0.22, 0.21), INDUSTRIAL_STEEL, false)
+
+## One graphics tier (see SBGraphicsQuality): the surface detail maps, the sun shadow, and the post-resolved tonemap
+## and ambient occlusion on the tiers that carry them. Identity colour adjustment is what switches Compatibility to
+## the post pass; it does not alter the grade.
+func apply_graphics(settings: Dictionary) -> void:
+	apply_detail_quality(bool(settings.detail_maps))
+	if is_instance_valid(_sun):
+		_sun.shadow_enabled = bool(settings.shadows)
+	if _environment != null:
+		_environment.adjustment_enabled = bool(settings.post)
+		_environment.ssao_enabled = bool(settings.ssao) and bool(settings.post)
+		_environment.ssao_radius = SSAO_RADIUS
+		_environment.ssao_intensity = SSAO_INTENSITY
+		_environment.ssao_power = SSAO_POWER
+		_environment.ssao_horizon = SSAO_HORIZON
+		_environment.ssao_light_affect = SSAO_LIGHT_AFFECT
 
 func apply_detail_quality(high_quality: bool) -> void:
 	_detail_quality = high_quality

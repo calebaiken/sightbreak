@@ -726,7 +726,7 @@ func populate_settings(rows: VBoxContainer) -> void:
 	section(rows, "DISPLAY & PERFORMANCE")
 	if not OS.has_feature("mobile"):
 		setting_choice(rows, "WINDOW MODE", ["WINDOWED", "BORDERLESS FULLSCREEN", "EXCLUSIVE FULLSCREEN"], int(profile.data.settings.window_mode), func(index: int): profile.data.settings.window_mode = index; profile.save(); apply_settings())
-	setting_choice(rows, "GRAPHICS", ["LOW  ·  NO SHADOWS", "STANDARD"], int(profile.data.settings.graphics_quality), func(index: int): profile.data.settings.graphics_quality = index; profile.save(); apply_settings())
+	setting_choice(rows, "GRAPHICS", SBGraphicsQuality.available_labels(), SBGraphicsQuality.clamp_tier(int(profile.data.settings.graphics_quality)), func(index: int): profile.data.settings.graphics_quality = index; profile.save(); apply_settings())
 	setting_slider(rows, "3D RENDER SCALE", "render_scale", 0.5, 1.0, 0.05, true)
 	var limits := [30, 60, 90, 120]
 	setting_choice(rows, "FRAME LIMIT", limits, limits.find(int(profile.data.settings.fps_limit)), func(index: int): profile.data.settings.fps_limit = limits[index]; profile.save(); apply_settings())
@@ -782,16 +782,7 @@ func apply_settings() -> void:
 	Engine.max_fps = int(profile.data.settings.fps_limit)
 	AudioServer.set_bus_volume_db(0, linear_to_db(maxf(0.001, float(profile.data.settings.volume))))
 	if not is_inside_tree(): return
-	var high_quality := int(profile.data.settings.graphics_quality) > 0
-	SBUtility.high_quality_smoke = high_quality
-	get_viewport().msaa_3d = Viewport.MSAA_2X if high_quality else Viewport.MSAA_DISABLED
-	# The 3D world can render below native resolution (the HUD stays sharp): the
-	# main fill-rate control on phones. Compatibility supports bilinear scaling.
-	get_viewport().scaling_3d_mode = Viewport.SCALING_3D_MODE_BILINEAR
-	get_viewport().scaling_3d_scale = clampf(float(profile.data.settings.render_scale), 0.5, 1.0)
-	for light in find_children("*", "DirectionalLight3D", true, false): light.shadow_enabled = high_quality
-	for node in find_children("*", "Node3D", true, false):
-		if node.has_method("apply_detail_quality"): node.apply_detail_quality(high_quality)
+	SBGraphicsQuality.apply(self, get_viewport(), int(profile.data.settings.graphics_quality), float(profile.data.settings.render_scale))
 
 func open_economy(tab: String) -> void:
 	screen = "economy"
