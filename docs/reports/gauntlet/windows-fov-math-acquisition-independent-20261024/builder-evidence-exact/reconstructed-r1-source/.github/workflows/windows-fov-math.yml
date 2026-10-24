@@ -1,0 +1,67 @@
+name: Isolated Windows math source preparation
+on:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: Exact independently admitted detached source commit
+        type: string
+        required: true
+      manifest_path:
+        description: Exact committed source manifest path
+        type: string
+        required: true
+      manifest_sha256:
+        description: Independent root release manifest SHA256
+        type: string
+        required: true
+permissions:
+  contents: read
+jobs:
+  isolated-math:
+    if: github.event.repository.private == false && github.sha == inputs.source && github.run_attempt == 1
+    runs-on: windows-2025
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          ref: ${{ inputs.source }}
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.12.10'
+      # Source preparation only. Public preflight is BLOCKED before SDK/API/Popen.
+      # No download/version probe/import/export/game/native helper is installed.
+      - name: Fixed one-attempt blocked acquisition preflight
+        id: acquisition
+        shell: pwsh
+        env:
+          MATH_SOURCE: ${{ inputs.source }}
+          MATH_MANIFEST: ${{ inputs.manifest_path }}
+          MATH_MANIFEST_SHA256: ${{ inputs.manifest_sha256 }}
+        run: |
+          python scripts/windows_fov_math.py collect --output "$env:RUNNER_TEMP/math-${{ github.run_id }}-1" --archive "$env:RUNNER_TEMP/unprovisioned-sdk.zip" --manifest "$env:MATH_MANIFEST" --manifest-sha256 "$env:MATH_MANIFEST_SHA256" --source "$env:MATH_SOURCE"
+          exit $LASTEXITCODE
+      - name: Preserve complete preflight failures within fixed two-part contract
+        if: always() && steps.acquisition.outcome != 'skipped'
+        shell: pwsh
+        run: |
+          python scripts/windows_fov_math.py package --root "$env:RUNNER_TEMP/math-${{ github.run_id }}-1" --output "$env:RUNNER_TEMP/math-archives-${{ github.run_id }}-1"
+          exit $LASTEXITCODE
+      - name: Retain first bounded original archive
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: math-primitives-part1-${{ github.sha }}
+          path: ${{ runner.temp }}/math-archives-${{ github.run_id }}-1/math-1.zip
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 14
+      - name: Retain second bounded original archive
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: math-primitives-part2-${{ github.sha }}
+          path: ${{ runner.temp }}/math-archives-${{ github.run_id }}-1/math-2.zip
+          compression-level: 0
+          if-no-files-found: error
+          retention-days: 14
