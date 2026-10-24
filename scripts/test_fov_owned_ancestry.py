@@ -1,7 +1,13 @@
 """Pure owned-process edge tests; no real child, pidfd or signal is used."""
 import unittest
+import ast
+import hashlib
+import json
+from pathlib import Path
+from unittest.mock import patch
 import acquire_fov_math_reference as acquisition
 from test_fov_math_reference import FakeKernel
+from test_fov_binary_input import erase_ancestry_class,ancestry_baseline_segments
 
 
 def child(pid,parent,birth):
@@ -99,6 +105,51 @@ class OwnedAncestryControls(unittest.TestCase):
         tree.signal_all(15)
         self.assertEqual({pid for pid,_ in kernel.sent},{100,200,300})
         self.assertIn(999,kernel.table)
+
+
+class AncestryProtectionControls(unittest.TestCase):
+    def setUp(self):
+        root=Path(__file__).resolve().parents[1]
+        raw=(root/'scripts/acquire_fov_math_reference.py').read_bytes()
+        self.process=raw[raw.index(b'class LinuxKernel:'):raw.index(b'def acquire(')]
+        self.baseline=ancestry_baseline_segments()['owned_tree']['text'].encode()
+        self.expected=json.loads((root/'scripts/fixtures/fov_binary_protected_segments.json').read_text())['process_classes']['sha256']
+
+    def digest(self,raw):
+        return hashlib.sha256(erase_ancestry_class(raw,'OwnedTree',self.baseline)).hexdigest()
+
+    def test_exact_scoped_reconstruction_keeps_original_process_hash(self):
+        self.assertEqual(self.digest(self.process),self.expected)
+
+    def test_adjacent_comments_helpers_and_other_decorators_cannot_disappear(self):
+        for addition in (b'# outside admitted class\n',b'def outside_guard():\n    return 1\n\n',b'@outside_decorator\n'):
+            with self.subTest(addition=addition):
+                changed=self.process.replace(b'class Streams:',addition+b'class Streams:',1)
+                self.assertNotEqual(self.digest(changed),self.expected)
+
+    def test_decorator_before_admitted_class_stays_outside_erasure(self):
+        changed=self.process.replace(b'class OwnedTree:',b'@unapproved_decorator\nclass OwnedTree:',1)
+        self.assertNotEqual(self.digest(changed),self.expected)
+
+    def test_duplicate_missing_nonclass_and_malformed_class_bounds_reject(self):
+        for changed in (self.process+b'\nclass OwnedTree:\n    pass\n',self.process.replace(b'class OwnedTree:',b'class OtherTree:',1)):
+            with self.subTest(changed=changed[-40:]),self.assertRaises(ValueError):
+                erase_ancestry_class(changed,'OwnedTree',self.baseline)
+        for donor in (b'def OwnedTree():\n    pass\n',self.baseline+b'\ndef outside():\n    pass\n'):
+            with self.subTest(donor=donor[-40:]),self.assertRaises(ValueError):
+                erase_ancestry_class(self.process,'OwnedTree',donor)
+        module=ast.parse(self.process)
+        next(n for n in module.body if isinstance(n,ast.ClassDef) and n.name=='OwnedTree').end_lineno=10**8
+        with patch('test_fov_binary_input.ast.parse',return_value=module),self.assertRaisesRegex(ValueError,'bounds'):
+            erase_ancestry_class(self.process,'OwnedTree',self.baseline)
+
+    def test_unrelated_test_method_edit_is_visible_after_fake_kernel_reconstruction(self):
+        root=Path(__file__).resolve().parents[1];raw=(root/'scripts/test_fov_math_reference.py').read_bytes()
+        donor=ancestry_baseline_segments()['fake_kernel']['text'].encode()
+        before=erase_ancestry_class(raw,'FakeKernel',donor)
+        changed=raw.replace(b'def test_one_isolated_pinned_invocation_and_complete_success(self):',
+                            b'def test_one_isolated_pinned_invocation_and_complete_success(self):\n        self.fail("outside scope")',1)
+        self.assertNotEqual(erase_ancestry_class(changed,'FakeKernel',donor),before)
 
 
 if __name__=='__main__':unittest.main()

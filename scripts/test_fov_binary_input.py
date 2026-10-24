@@ -1,4 +1,5 @@
 """Exact binary transport/schema controls only; no native/proc/helper execution."""
+import ast
 import copy
 import json
 import math
@@ -15,6 +16,41 @@ ROOT=Path(__file__).resolve().parents[1]
 WIRE=ROOT/'tools/fov_math_reference'/r.BINARY_CASES_NAME
 PAYLOAD=json.loads(WIRE.read_text())
 ACTUAL=json.loads((ROOT/'scripts/fixtures/fov_actual_input_roundtrip_550.json').read_text())
+
+
+def ancestry_baseline_segments():
+    value=json.loads((ROOT/'scripts/fixtures/fov_owned_ancestry_baseline_segments.json').read_text())
+    if set(value)!={'schema','source','owned_tree','fake_kernel'} or type(value['schema']) is not int or value['schema']!=1 or value['source']!='329d3ff56e686fccdefa04151667ecb7841c3d64':
+        raise ValueError('unexpected ancestry baseline identity')
+    for key in ('owned_tree','fake_kernel'):
+        segment=value[key]
+        if type(segment) is not dict or set(segment)!={'text','sha256'} or type(segment['text']) is not str or r.sha(segment['text'].encode())!=segment['sha256']:
+            raise ValueError('changed ancestry baseline segment')
+    return value
+
+
+def erase_ancestry_class(source,name,donor):
+    """Replace exactly one AST class span; preserve every adjacent source byte."""
+    if type(source) is not bytes or type(donor) is not bytes or type(name) is not str:
+        raise ValueError('typed ancestry source/class required')
+    def span(raw,*,donating=False):
+        module=ast.parse(raw)
+        matches=[node for node in module.body if isinstance(node,ast.ClassDef) and node.name==name]
+        if len(matches)!=1 or (donating and (len(module.body)!=1 or matches[0].decorator_list)):
+            raise ValueError('one top-level '+name+' class required')
+        node=matches[0];lines=raw.splitlines(keepends=True)
+        bounds=(node.lineno,node.end_lineno,node.col_offset,node.end_col_offset)
+        if any(type(value) is not int for value in bounds) or not (1<=node.lineno<=node.end_lineno<=len(lines)):
+            raise ValueError('invalid ancestry class bounds')
+        if not (0<=node.col_offset<=len(lines[node.lineno-1].rstrip(b'\r\n')) and 0<=node.end_col_offset<=len(lines[node.end_lineno-1].rstrip(b'\r\n'))):
+            raise ValueError('invalid ancestry class bounds')
+        start=sum(map(len,lines[:node.lineno-1]))+node.col_offset
+        end=sum(map(len,lines[:node.end_lineno-1]))+node.end_col_offset
+        if not (0<=start<end<=len(raw)) or not raw[start:].startswith(b'class ') or raw[end-1] in b' \t\r\n':
+            raise ValueError('invalid ancestry class bounds')
+        return start,end
+    start,end=span(source);first,last=span(donor,donating=True)
+    return source[:start]+donor[first:last]+source[end:]
 
 
 def rehash(row):row['transport_sha256']=r.sha(r.canonical({k:v for k,v in row.items() if k!='transport_sha256'}))
@@ -137,9 +173,13 @@ class ProtectedSourceControls(unittest.TestCase):
         module=(ROOT/'scripts/fov_math_reference.py').read_bytes();legacy=protection['legacy_module']
         self.assertEqual(r.sha(module[:legacy['bytes']]),legacy['sha256'])
         acquisition=(ROOT/'scripts/acquire_fov_math_reference.py').read_bytes()
-        self.assertEqual(r.sha(acquisition[acquisition.index(b'class LinuxKernel:'):acquisition.index(b'def acquire(')]),protection['process_classes']['sha256'])
+        ancestry=ancestry_baseline_segments()
+        process=acquisition[acquisition.index(b'class LinuxKernel:'):acquisition.index(b'def acquire(')]
+        process=erase_ancestry_class(process,'OwnedTree',ancestry['owned_tree']['text'].encode())
+        self.assertEqual(r.sha(process),protection['process_classes']['sha256'])
         self.assertEqual(r.sha(acquisition[acquisition.index(b'    finally:\n        if tree is not None:'):acquisition.index(b'\n\ndef main():')]),protection['acquisition_finally']['sha256'])
         tests=(ROOT/'scripts/test_fov_math_reference.py').read_bytes()
+        tests=erase_ancestry_class(tests,'FakeKernel',ancestry['fake_kernel']['text'].encode())
         start=tests.index(b'def declared_binary_records():');end=tests.index(b'class CorpusAndSchemaControls',start)
         erased=tests[:start]+tests[end:]
         erased=erased.replace(b'def setUpClass(cls):cls.raw=encoded(declared_binary_records())',b'def setUpClass(cls):cls.raw=encoded(declared_records())')
