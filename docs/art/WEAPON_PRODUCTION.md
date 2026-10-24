@@ -40,6 +40,19 @@ The standard every first-person weapon follows, using the Relay AR as the worked
 
 The first-person node therefore holds seven draw nodes since v8: body, grip, two paint parts, magazine, hands (or rigged arms) and muzzle flash (`weapon_art_test.gd` allows seven). During a reload the spare magazine and, after a shot, the muzzle smoke are two more (nine nodes counted by `reload_perf_probe.gd`; draw calls 31 ready, 34 mid-reload on the host's renderer, against 30 and 33 at `fceefa1`). The magazine's cartridge is one more draw. The procedural rifle used five draws plus the magazine detail.
 
+## Kestrel 9 (sidearm), v1
+
+- **What it is:** an original compact 9 mm service pistol built for SIGHTBREAK, not a copy of any real or game model. Distinguishing features: a faceted hex-section slide with two sight teeth and a hooked front end (the "beak"), a 17 degree raked grip that matches the Relay AR's, six stadium serration slots per flank, an ejection port with a visible extractor, an open square trigger guard with a three-slot accessory rail, and a squared tan magazine foot.
+- **Scale:** 0.1955 m overall, 0.1435 m high with the magazine, bore on the same 0.025 m axis as the rifle. Placed in first person at scale 1.05 (a real-scale pistol reads small at a viewmodel field of view built for a 0.95 m rifle).
+- **Parts (19 objects):** slide with sight pockets, striker plate, rear sight, front sight with a brass bead (4.4 mm, the aiming dot), barrel and collar, chamber block, extractor, guide rod, frame and grip, trigger, slide stop, magazine release and boss, three pins, and the magazine with its top round.
+- **Mesh groups:** `paint_slide` (takes the cosmetic finish), `grip`, `magazine` + `magazine_rounds`, `body`.
+- **Triangles:** 6,954 for the pistol (budget 14,000): `paint_slide` 1,266, `grip` 1,336, `magazine` 962 + 164, `body` 3,226. The hands (`kestrel_9_hands`, static) are 9,800 (budget 10,000).
+- **Draws in first person:** body, slide, grip, magazine (+ round), hands, muzzle flash: within the seven the weapon art test allows.
+- **Textures:** albedo, ORM and normal at 1024 for the pistol and for the hands (`game/assets/weapons/kestrel_9/`).
+- **Hands:** `tools/art/kestrel_9_hands.py` reuses the Relay AR hands' building blocks. The firing hand lies on the right face of the grip with its index finger along the frame to the trigger and its thumb forward on the left; the support hand lies on the left face with its fingers over the firing hand's and its thumb along the dust cover; forearms run back and down out of frame. There are no rigged arms for the pistol: a reload tilts the pistol and moves its magazine.
+- **Lessons recorded here:** the front bead was first built at the model origin (z 0) because `lathe` takes its centre from the caller; the magazine baked 81% almost fully occluded (it seats inside the grip) and drew black, fixed with `rebake_part_ao.py` and `patch_part_ao.py` (0.8% after); the shared flash mesh is sized for a rifle and covered the pistol's sights, so the model reports `flash_scale` 0.62; the rifle's grip darkening (0.24) drew the pistol's frame as a black column, so it uses 0.55 with a fill floor.
+- **Measured and judged:** see `docs/reports/gauntlet/kestrel-9-v1/`. Two blind rounds against the procedural sidearm: six pairs to none each time, 29.5 then 35 of 60 against about 24. Open defects the critic ranked: the pistol and arms cover the middle of the view; the slide is one near-black material with thin sight nubs; the hands are lumpy and no reload motion reaches the magazine.
+
 ## Gameplay contract (unchanged)
 
 | Contract | How the authored rifle meets it | Verified by |
