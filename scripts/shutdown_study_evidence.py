@@ -51,6 +51,18 @@ def integer(value,minimum=0):
 def pid(value):return integer(value,1) and value<=0xffffffff
 
 
+def unsigned(value,bits,minimum=0):
+    return integer(value,minimum) and value<2**bits
+
+
+def owned_identity(value):
+    need(type(value) is dict and pid(value.get('pid')) and
+         unsigned(value.get('creation_filetime'),64,1) and
+         unsigned(value.get('handle_value'),64,1) and
+         value.get('member_of_outer_job') is True,'invalid owned process identity')
+    return value['pid'],value['creation_filetime'],value['handle_value']
+
+
 def digest(data):return hashlib.sha256(data).hexdigest()
 
 
@@ -145,6 +157,7 @@ def snapshot_shape(value):
         for field in ('ammo','reserve','credits','grenades','smokes','kills','deaths','assists'):need(integer(actor.get(field)),'actor counter invalid: '+field)
         need(type(actor.get('weapon')) is str and type(actor.get('inventory')) is list,'actor weapon/inventory absent')
     ids=[actor['id'] for actor in actors];need(len(ids)==len(set(ids)) and local['id'] in ids,'actor identity duplicated/unbound')
+    need(same(local,actors[ids.index(local['id'])]),'snapshot local actor differs from actor projection')
     need(value['local_input'].keys()>={'interact','fire','reload','move'} and all(type(value['local_input'][key]) is bool for key in ('interact','fire','reload')) and vector(value['local_input']['move'],2),'local input snapshot incomplete')
     ui=value['ui'];need(type(ui) is dict and all(field in ui for field in ('screen','paused','focused','waiting_for_input_release','window_size')) and type(ui['screen']) is str and all(type(ui[field]) is bool for field in ('paused','focused','waiting_for_input_release')) and type(ui['window_size']) is list and len(ui['window_size'])==2 and all(integer(v,1) for v in ui['window_size']),'UI snapshot incomplete')
     need(all(field in ui for field in ('status_text','scoreboard_visible','touch_controls','capabilities','mouse_mode','window_mode')) and type(ui['status_text']) is str and all(type(ui[field]) is bool for field in ('scoreboard_visible','touch_controls')) and type(ui['capabilities']) is dict and integer(ui['mouse_mode']) and integer(ui['window_mode']),'UI diagnostic fields incomplete')
@@ -265,13 +278,13 @@ class Evidence:
             width,height=map(int,command[6].split('x'));need(640<=width<=1280 and width%16==0 and height==width*9//16,'native requested resolution differs from source')
             if name=='client':requested_resolution=command[6]
             need(command[6]==requested_resolution,'native requested resolution changed across restart')
-            expected_tail=['--audio-driver','Dummy','--position','0,0','--resolution',requested_resolution]+(['--verbose'] if name=='reopened' and self.trial['verbose'] else [])+['--','--offline-validation','--offline-trace-dir='+str(self.root/trace)]
+            expected_tail=['--audio-driver','Dummy','--position','0,0','--resolution',requested_resolution]+(['--verbose'] if name=='reopened' and self.trial['verbose'] else [])+['--','--offline-validation','--offline-trace-dir='+str(self.root.resolve()/trace)]
             need(command[1:]==expected_tail,'native argv/trace/verbosity differs')
         begins={row['capture']:row['seconds'] for row in self.actions if row['event']=='capture_begin'}
         ends={row['capture']:row['seconds'] for row in self.actions if row['event']=='capture_end'}
         need(self.commands[0]['started_seconds']<=begins['01-menu'] and ends['08-return-menu']<=self.commands[1]['started_seconds']<=begins['09-reopened-menu'],'native launch/capture order differs')
         need(len(set(self.pids.values()))==2 and self.commands[0]['started_seconds']<=self.commands[1]['started_seconds'],'native PID/start order differs')
-        need(self.result_data.get('profile_observation_path')==str(self.root/PROFILE_PATH),'saved profile path differs')
+        need(self.result_data.get('profile_observation_path')==str(self.root.resolve()/PROFILE_PATH),'saved profile path differs')
     def traces_and_profile(self):
         self.initials=[];trace_receipts=[]
         for trace in TRACES:
@@ -339,25 +352,40 @@ class Evidence:
         need([row.get('event') for row in observations]==['native_launch','close_wait_finished','native_launch','close_wait_finished'],'observer callback order differs')
         queries=trial['job_queries'];need(type(queries) is list and len(queries)==2,'before/after job queries missing')
         before,after=queries;baseline=before['baseline_pid'];handle=before['job_handle']
-        need(pid(baseline) and integer(handle,1) and handle<=0xffffffffffffffff,'owned controller identity missing')
+        need(pid(baseline) and unsigned(handle,64,1),'owned controller identity missing')
         need([row.get('label') for row in queries]==['trial'+str(trial['index'])+'/before','trial'+str(trial['index'])+'/after'],'before/after query labels differ')
         for row in queries:
             need(row.get('verified') is True and row.get('baseline_pid')==baseline and row.get('job_handle')==handle and row.get('active_processes')==1 and type(row.get('active_processes')) is int and row.get('process_ids')==[baseline],'before/after ownership unresolved')
         all_queries=[before,*[row['job'] for row in observations],after]
-        controller_identity=None
+        controller_identity=None;previous_held={}
         for row in all_queries:
-            need(row.get('verified') is True and row.get('job_handle')==handle and row.get('baseline_pid')==baseline and integer(row.get('total_processes'),1) and integer(row.get('terminated_processes')) and integer(row.get('active_processes'),1),'job accounting incomplete')
+            need(row.get('verified') is True and unsigned(row.get('job_handle'),64,1) and row['job_handle']==handle and pid(row.get('baseline_pid')) and row['baseline_pid']==baseline and integer(row.get('total_processes'),1) and integer(row.get('terminated_processes')) and integer(row.get('active_processes'),1),'job accounting incomplete')
             need(type(row.get('process_ids')) is list and len(row['process_ids'])==row['active_processes'] and len(set(row['process_ids']))==len(row['process_ids']) and baseline in row['process_ids'] and all(integer(value,1) and value<=0xffffffff for value in row['process_ids']),'job process list incomplete')
             need(row['total_processes']>=row['active_processes'] and row['total_processes']<=0xffffffff and row['terminated_processes']<=row['total_processes'] and row['active_processes']<=4096 and number(row.get('monotonic')) and integer(row.get('wall_unix_ns'),1),'job count/clock invalid')
             held=row.get('held_processes');need(type(held) is list and bool(held),'held process evidence absent')
-            need(all(type(p) is dict and integer(p.get('pid'),1) and integer(p.get('creation_filetime'),1) and integer(p.get('handle_value'),1) and type(p.get('observed_exited')) is bool and integer(p.get('exit_code')) for p in held),'held process types incomplete')
+            need(all(type(p) is dict and pid(p.get('pid')) and unsigned(p.get('creation_filetime'),64,1) and unsigned(p.get('handle_value'),64,1) and type(p.get('observed_exited')) is bool and unsigned(p.get('exit_code'),32) for p in held),'held process types incomplete')
             need(len({(p['pid'],p['creation_filetime']) for p in held})==len(held) and len({p['handle_value'] for p in held})==len(held) and row['total_processes']>=len(held),'duplicate/unaccounted held process identities')
+            held_by_birth={(p['pid'],p['creation_filetime']):p for p in held}
+            need(previous_held.keys()<=held_by_birth.keys(),'held process history disappeared')
+            for key,old in previous_held.items():
+                current=held_by_birth[key]
+                need(current['handle_value']==old['handle_value'],'held birth changed handle')
+                if old['observed_exited']:
+                    need(current['observed_exited'] and current['exit_code']==old['exit_code'],'observed process completion regressed')
+            previous_held=held_by_birth
+            processes=row.get('processes')
+            need(type(processes) is list and [p.get('pid') if type(p) is dict else None for p in processes]==row['process_ids'],'active process identities missing or misordered')
+            for process in processes:
+                process_id,birth,process_handle=owned_identity(process)
+                need((process_id,birth) in held_by_birth and held_by_birth[(process_id,birth)]['handle_value']==process_handle,'active identity differs from held birth')
             controller=[p for p in held if p.get('pid')==baseline]
             need(len(controller)==1 and controller[0].get('observed_exited') is False and controller[0].get('exit_code')==259 and integer(controller[0].get('creation_filetime'),1) and integer(controller[0].get('handle_value'),1),'alive controller birth evidence missing')
             current=(controller[0]['creation_filetime'],controller[0]['handle_value'])
             if controller_identity is None:controller_identity=current
             need(current==controller_identity,'controller held birth/handle changed')
         need(all(a['total_processes']<=b['total_processes'] and a['terminated_processes']<=b['terminated_processes'] for a,b in zip(all_queries,all_queries[1:])),'job cumulative accounting regressed')
+        need(all(a['monotonic']<=b['monotonic'] for a,b in zip(all_queries,all_queries[1:])),'job query clock order regressed')
+        need(before['monotonic']<=start and finish<=after['monotonic'],'job query does not enclose trial interval')
         need(after['total_processes']-before['total_processes']>=51,'known successful driver descendants absent from accounting')
         receipts=self.result_data.get('shutdown_study_observations');need(type(receipts) is list and len(receipts)==2,'two result close receipts missing')
         need([r.get('process') for r in receipts]==['client','reopened'],'close order differs')
@@ -366,8 +394,14 @@ class Evidence:
             launch,closed=observations[2*index:2*index+2]
             for callback in (launch,closed):
                 need(not callback.get('ownership_error') and number(callback.get('monotonic')) and start<=callback['monotonic']<=finish and integer(callback.get('wall_unix_ns'),1),'observer clock/ownership invalid')
+                query=callback['job']
+                need(query.get('label')=='trial'+str(trial['index'])+'/'+callback['event'],'callback job label differs')
+                need(callback['monotonic']<=query['monotonic']<=finish,'callback query clock differs')
+            need(launch['job']['monotonic']<=closed['monotonic'],'launch query follows close callback')
             process_id=self.pids[name];need(launch.get('name')==name and launch.get('pid')==process_id and type(launch.get('pid')) is int,'native launch PID/name differs')
-            birth=launch.get('native_root_identity');need(type(birth) is dict and birth.get('pid')==process_id and type(birth.get('pid')) is int and birth.get('member_of_outer_job') is True and integer(birth.get('creation_filetime'),1) and birth['creation_filetime']<=0xffffffffffffffff and integer(birth.get('handle_value'),1) and birth['handle_value']<=0xffffffffffffffff,'owned root birth identity absent')
+            birth=launch.get('native_root_identity');owned_identity(birth);need(birth['pid']==process_id,'owned root PID differs')
+            active=[p for p in launch['job']['processes'] if p['pid']==process_id]
+            need(not active or same(active[0],birth),'launch root differs from active birth')
             births[name]=birth
             completed=[p for p in after['held_processes'] if p.get('pid')==process_id and p.get('creation_filetime')==birth['creation_filetime'] and p.get('handle_value')==birth['handle_value']]
             need(len(completed)==1 and completed[0].get('observed_exited') is True and type(completed[0].get('exit_code')) is int and completed[0]['exit_code']==0,'owned root exit/birth association absent')
@@ -380,6 +414,7 @@ class Evidence:
             origins_upper.extend((launch['monotonic']-command['started_seconds'],clocks[0]))
             origins_lower.extend((closed['monotonic']-self.result_data['elapsed_seconds'],clocks[2]-300))
         need(observations[1]['monotonic']<=observations[2]['monotonic'],'reopened launched before initial close')
+        need(observations[1]['job']['monotonic']<=observations[2]['monotonic'],'initial close query follows reopened launch')
         need(max(origins_lower)<=min(origins_upper),'no possible source driver start fits observed clocks')
         need(all(row['started_seconds']<=self.result_data['elapsed_seconds'] for row in self.commands),'command beyond driver elapsed')
         need(all(row['seconds']<=self.result_data['elapsed_seconds'] for row in self.actions) and all(row['finished_seconds']<=self.result_data['elapsed_seconds'] for row in self.ocr),'action/OCR beyond driver elapsed')

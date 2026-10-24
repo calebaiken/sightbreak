@@ -1,0 +1,24 @@
+test_fresh_capture_collision_never_calls_main_or_overwrites (test_shutdown_study_evidence.WrapperTests.test_fresh_capture_collision_never_calls_main_or_overwrites) ... ok
+test_invocation_failure_retains_both_full_streams_and_original_error (test_shutdown_study_evidence.WrapperTests.test_invocation_failure_retains_both_full_streams_and_original_error) ... ok
+test_partial_copy_error_retains_partial_and_full_originals (test_shutdown_study_evidence.WrapperTests.test_partial_copy_error_retains_partial_and_full_originals) ... ok
+test_publication_collision_keeps_original_and_both_capture_streams (test_shutdown_study_evidence.WrapperTests.test_publication_collision_keeps_original_and_both_capture_streams) ... ok
+test_publication_receipt_error_preserves_original_invocation_cause (test_shutdown_study_evidence.WrapperTests.test_publication_receipt_error_preserves_original_invocation_cause) ... FAIL
+test_real_wrapper_fake_success_passes_empty_guard_and_keeps_full_capture (test_shutdown_study_evidence.WrapperTests.test_real_wrapper_fake_success_passes_empty_guard_and_keeps_full_capture) ... ok
+
+======================================================================
+FAIL: test_publication_receipt_error_preserves_original_invocation_cause (test_shutdown_study_evidence.WrapperTests.test_publication_receipt_error_preserves_original_invocation_cause)
+----------------------------------------------------------------------
+RuntimeError: original fake invocation failure
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-shutdown-evidence-completeness-r2/scripts/test_shutdown_study_evidence.py", line 234, in test_publication_receipt_error_preserves_original_invocation_cause
+    with self.assertRaisesRegex(RuntimeError,'publication failed') as caught:self.invoke(fail)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: "publication failed" does not match "original fake invocation failure"
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.004s
+
+FAILED (failures=1)

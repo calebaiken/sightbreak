@@ -317,11 +317,13 @@ def real_driver(arguments,observer,directory):
                     shutil.copyfileobj(reader,writer)
             except BaseException as error:publication_errors.append(dict(path=str(target),error=type(error).__name__+': '+str(error)))
         try:
-            write(capture/'publication.json',dict(invocation_error=None if invocation_error is None else
+            publication=dict(invocation_error=None if invocation_error is None else
                   type(invocation_error).__name__+': '+str(invocation_error),publication_errors=publication_errors,
                   capture_scope='Complete original streams retained; publication never overwrites',
                   files=[dict(path=name,bytes=(capture/name).stat().st_size,sha256=retention.sha((capture/name).read_bytes()))
-                         for name in ('controller-stdout.log','controller-stderr.log') if (capture/name).is_file()]))
+                         for name in ('controller-stdout.log','controller-stderr.log') if (capture/name).is_file()])
+            with (capture/'publication.json').open('x',encoding='utf-8') as receipt:
+                receipt.write(json.dumps(publication,indent=2,allow_nan=False)+'\n')
         except BaseException as error:
             publication_errors.append(dict(path=str(capture/'publication.json'),error=type(error).__name__+': '+str(error)))
     if publication_errors:raise RuntimeError('Controller stream publication failed; originals and partial files retained: '+str(publication_errors)) from invocation_error
