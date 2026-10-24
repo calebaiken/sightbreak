@@ -18,7 +18,7 @@ Godot compilation/API preflight. This report releases no native or CI run.
 
 # Next session
 
-Updated 2026-10-24 08:40 UTC. Continue **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-24 09:53 UTC.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. No native goal ID has been verified. Read AGENTS.md and the canonical
@@ -40,25 +40,59 @@ root ref was stale because the fetch configuration covers main; actual ls-remote
 and GitHub PR metadata agree. Never reset the newer local work to that stale ref.
 No shared merge, history rewrite, release or production deployment is authorized.
 
-**Active Windows trial: review the existing attempt; do not redispatch.**
-Run [40080238905](https://github.com/calebaiken/sightbreak/actions/runs/40080238905),
-job120832097220, attempt1, exactc324 on
-`qualifier/windows-collector-c324-20261024`, created09:00:29 UTC. Preregistration
-728906f9, final admissionc0ad241c and root release2d17a3ab precede the sole
-request. Exact request and qualifier receipts are committed in the component's
-ROOT_DISPATCH_RECEIPTS.json and ROOT_QUALIFIER_CREATION.json. Critic
-`/root/windows_collector_actual_critic_20261024` owns actual reconstruction.
+**Next action: admit one reopened-only verbose diagnostic.**
+Exact source `7101350e5d0a2f6e4afb9a913b5b1bcf2107857a` is source-accepted by
+`3d07b3ec` after `1285a984`. Builder handoff `a936ae96` and source findings are in
+`/workspace/sightbreak-windows-reopened-shutdown`, branch
+`codex/windows-reopened-shutdown-diagnostics-20261024`. Both source views pass
+182 methods (179 passes, three existing skips), plus independent controls. The
+whole game tree equals c324. Only explicit default-off reopened engine verbosity,
+a Windows workflow Boolean, validation invocation and four-method test are added.
+Root integration `874c968c` proves all 508 non-doc modes/types/blobs/bytes match.
+The source critic's unrelated canonical updates were excluded while its exact
+report was retained; no older NEXT/WORKLOG replaced current mission state.
 
-At09:19:16 UTC the stock full-match step remains active within its original
-1,800 seconds. Living/settings step30 failed; selected overall qualification
-therefore cannot pass. Other reached producer steps report success, including
-ordinary undelayed input, both delayed wrappers and plant. Do not promote those
-statuses before raw verification. Supported partial logs end mid-record; they
-show the living route and focus capture markers were reached, then the exact
-source raises `Reopened export failed clean shutdown` at line1022. Reopened
-exit versus strict-log cause remains UNKNOWN until official originals arrive.
-Original failures, limits, budgets and one-tick objective tolerance remain intact.
-No retry, rerun, alternate reference or new native lane is released.
+Qualifier `qualifier/windows-reopened-verbose-7101350e-20261024` was created
+only after empty actual absence check ec1067, then read back at exact710. Root
+creation receipts are committed/pushed in f05fe31e. Fresh actual critic
+`/root/reopened_verbose_actual_critic_20261024` preregistered f44d6dd4 and is
+finishing admission. Read that final admission, commit/push ONE root release,
+then issue the exact existing workflow with lane=windows,
+observe_windows_input=true and verbose_reopened_shutdown=true. No release or
+verbose dispatch exists yet. Original300-second flow,20-second close and every
+other original schedule/gate stay binding. No arbitrary drain/sleep/owner fix.
+Verbose output can identify classes/IDs/refcounts and some paths, not an allocation
+stack or retaining owner; a non-reproduction is INCONCLUSIVE, not a fix.
+
+**Completed Windows qualification: overall FAIL, preserve all originals.**
+Run40080238905/job120832097220/attempt1 at exactc324 completed FAILURE at
+2026-10-24 09:20:40 UTC. Preregistration728906f9, admissionc0ad241c and root
+release2d17a3ab precede its sole request. Independent final6801f592 is pushed and
+retained in root. See `docs/reports/gauntlet/windows-collector-actual-20261024/REPORT.md`.
+
+Bounded behavioral reconstruction passes16 native suites/29,567 checks, ordinary
+four shots/nativeR30:86, both delayed controls, six guarded route pulses to a
+stopped0.209445m endpoint within12.453s of35, settings0.0028→0.0051 runtime/disk,
+LEAVE/reopen and living focus predicates. Objectives retain180/300-tick holds.
+The12-round6:6DRAW earns120XP/250offline credits with one history and exact reopen
+equality. Neither hosted timing nor this automated match qualifies human feel,
+representative bot quality or physical performance. Collector234 canonical rows
+have allowed projections, but coverage/overhead and some links stay UNKNOWN.
+
+Both living-flow exports exit0; reopened.log reports THREE ObjectDB leaks. No
+classes or owner are in the691-byte log. Whole living flow fails at111.141s;
+post-close profile/source/descendant-accounting success guards are UNREACHED.
+Independent final saved/runtime equality does not invent those guard executions.
+Preregistered warnings also FAIL:23 ANGLE fallback occurrences across originals
+and copies. Original native_log.py rejects the leak and allows generic warnings;
+that distinction is retained, with no retroactive lowering of either criterion.
+
+Official fullQA24,246,833bytes/320members/83PNGs and receipts24,256,655bytes/
+238members are retained unchanged in the report. The146,423,542-byte development
+artifact was not requested; independent EXE/PCK/embeddedUID reparse stays BLOCKED.
+Raw originals: `/workspace/reviews/windows-collector-actual-20261024/.local/windows40080238905/full`.
+No rerun/alternate reference of the completed qualification is authorized. The
+new verbose candidate is a separate diagnostic, not a substitute passing run.
 
 **Completed bounded collector source and native preflight.**
 Collector-only source `c32415148db1f110bbc7eadfca3793d4693429ff`, reports handoff
