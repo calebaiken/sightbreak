@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-24 13:00 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
+Updated 2026-10-24 13:26 UTC. **SIGHTBREAK — Steam-Ready v1.0**,
 IN PROGRESS / PRIMARY, [issue #25](https://github.com/calebaiken/sightbreak/issues/25).
 No native goal creation/update API or goal ID is exposed; only stop-goal is
 available. No native goal ID has been verified. Read AGENTS.md and the canonical
@@ -21,6 +21,86 @@ baseline remain `4d8cdb33`. Draft PR31 is open over PR27. The initial remote-tra
 root ref was stale because the fetch configuration covers main; actual ls-remote
 and GitHub PR metadata agree. Never reset the newer local work to that stale ref.
 No shared merge, history rewrite, release or production deployment is authorized.
+
+## Current execution checkpoint — 2026-10-24 13:26 UTC
+
+Root branch codex/v1-executor-recovery-20261023 / draft PR31; permanent mission
+issue25 stays IN PROGRESS / PRIMARY. No native goal ID is exposed. All whole
+G1–G19 remain open; G20 is initialization only. No merge/release is authorized.
+
+Windows40089125575 is COMPLETED/SUCCESS but independently FAIL_WARNINGS/e88d2cb9;
+leak result is INCONCLUSIVE_NONREPRODUCTION. Reopened verbose exit0 does not fix
+original40080238905 three-object failure. Strict ANGLE/native/physical gates stay.
+No existing Windows attempt may be rerun; all original archives remain.
+
+The sole admitted FOV math attempt at550e96c9 was consumed at13:07:44UTC after
+pushed releasea260bfda: tool314ec8 exits1. Required native root identity/session
+was not observed. Complete stdout770593B/stderr0 reach EOF; all9 originals are now
+committed/byte-verified in29a580e0 after critic caught logs ignored by first65d04cca
+commit. No raw data was lost or normalized. Independent actual review is active.
+It also finds18 input-scalar bit mismatches from native JSON decoding (one yaw
+2ULPs); strict input-roundtrip validation rejects them. This stream is FAILED,
+not a qualified numerical reference. No retry/alternate payload/output is admitted.
+
+Root implemented process-observation correctionb6f25804, handoffb770ccc1, separate
+branch codex/fov-math-process-observation-20261024, checkout
+/workspace/sightbreak-fov-math-process-observation.36 pure checks pass.519 physical
+source identities/2 changed/517 protected,588-case/nativekernel bytes unchanged.
+It preflights the required process interface, directly binds the Popen root by
+parent/birth/pidfd, and requires terminal root wait accounting. Actual own-self
+interface receipt shows existing /proc/self/task/75416 lacks children file.
+Corrected source must block before launch here; unavailable discovery cannot
+become an empty-tree cleanup pass. Independent source verdict is pending.
+
+Existing builder is preparing exact binary input transport in a NEW own branch
+fromb770, source/pure only: preserve588 semantic values/oldpayload/raw, decode
+validated little-endian input bits, keep strict output/input checks and process
+block. No native/CI/version probe. Existing math critic finishes actual rejection,
+then separately registers source-fix/codec targets before review. No acceptance
+transfers from pure passes or original nominal models.
+
+Optional reader final candidatec8827e7d (prior0d retained with header-lag failure)
+is awaiting sealed builder handoff in /workspace/sightbreak-windows-input-consumption-r6.
+Its75 focused methods/139 corpus verdicts pass. Independent captured60e619 core
+assessment5c5aca24 passes36948/36948 generated histories plus13queue/5aggregate,
+with5896 feasible/31052 infeasible outcomes; no unexpected UNKNOWN. This does NOT
+approve c882, whole-reader or native behavior. Existing final critic prerega95d15d4,
+/workspace/reviews/windows-input-reader-r6-independent-20261024, will test exact
+source/full/depth/localpeer-cache generation/epoch/order after sealed handoff.
+R5c909a9cb REJECT15false accepts remains; no optional reader is in root gameplay.
+
+Four-trial shutdown controller sourcec90fedfd/handoff239fa222 is frozen/pushed on
+codex/windows-shutdown-bounded-study-20261024 at
+/workspace/sightbreak-windows-shutdown-bounded-study.28 dedicated pure methods and
+110 existing focused checks pass; default-driver erasure/game preservation verify.
+Independent source review is pending. Real source-bound preflight exits2/BLOCKED,
+before WindowsOwner/driver/export. Study native invocations0. Required evidence
+has no finite complete bound under unchanged TWO32MiB archive contract; permitted
+OCR prefixes alone sum128MiB acrossfour arms vs64MiB total, while logs/trace/state
+lack aggregate maxima. Observed old living7,961,342B/7,928,728B and dedup savings
+are not future bounds. Lossless two-archive packager rejects oversize/index/mutation
+atomically, never drops required files. Outer upload-wrapper overhead is unmeasured.
+No capacity increase alone bounds unspecified streams; changing retention/schedule/
+capacity needs a concrete separately reviewed contract and owner approval.
+
+Next work: finish existing actual math critique; independent source-only review
+ofb6; implement/review binary input codec without native invocation; finish R6
+exact-source review and supported fixes; independent source review of blocked
+shutdown design. Then resume source-faithful C FOV fixes. C scoree25b4f76 evidence
+is sealed5fd94d8b/6da0d459 (27pass/equivalent12of13; remaining FOV gap); seven of54
+schema-fixture geometries remain outside the588 primitive corpus, with scalar/
+recent context also requiring exact binding. Original fixtures remain unchanged.
+
+Automatable gates: source/model/corpus/codec/packaging correctness and reviews.
+Current execution blockers: missing required process-observation interface,
+shutdown complete-retention contract, strict software-driver warnings and large
+untransferred artifacts. External gates: actual physical Windows/Linux/macOS/mobile
+play/performance, human8.5/CS2 comparisons, Intel coverage, signing/Steam owner
+credentials and release sign-off. Automated Mac possible-cybersecurity-risk review
+stop remains binding; no retry, final verdict or native release. No model/account/
+environment switch or new-reviewer duplication bypasses limits.
+
+## Retained earlier checkpoints (superseded above)
 
 ## Sole math attempt consumed — do not rerun
 
@@ -139,7 +219,7 @@ Next actions, in order of independent dependencies:
    counterexamples; freeze only after model/coverage assessment, then independent
    full-source/depth/regression review. UNKNOWN never becomes an unsupported pass.
 3. Seal root C score evidence in /workspace/sightbreak-objective-perception;
-   fixed27 passes/equivalent12-of13 evidence is currently uncommitted. Use actual
+   fixed27 passes/equivalent12-of13 evidence is sealed5fd94d8b/6da0d459. Use actual
    native math findings to preregister FOV fixture/numeric correction; retain old
    bytes and reject unsupported transfer. No C whole-reader readiness yet.
 4. Existing shutdown builder /root/windows_shutdown_investigation_20261024 is

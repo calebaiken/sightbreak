@@ -1,0 +1,46 @@
+{
+  "original_runs": [
+    {
+      "run": "40080238905",
+      "files": 53,
+      "bytes": 7961342
+    },
+    {
+      "run": "40089125575",
+      "files": 53,
+      "bytes": 7928728
+    }
+  ],
+  "two_observed_originals_bytes": 15890070,
+  "two_observed_deduplicated_bytes": 14470373,
+  "duplicates_saved_bytes": 1419697,
+  "observed_replicas_four_trial_raw_bytes": 31780140,
+  "observed_replicas_are_not_future_trials": true,
+  "original_archive_count": 2,
+  "original_per_archive_bytes": 33554432,
+  "total_capacity_bytes": 67108864,
+  "prefix_contract_formula": "4 trials * 16 OCR stdout files * 2MiB retained-prefix cap =128MiB",
+  "prefix_conservative_cap_sum_bytes": 134217728,
+  "required_other_families": [
+    "22 named PNGs +1 overwritten OCR PNG per trial",
+    "native combined stdout/stderr and OCR stderr",
+    "events/status/actions/results/commands/profile/state partial files",
+    "controller/job/source/export records and ZIP directory/index/delivery overhead"
+  ],
+  "unbounded_contract_families": [
+    "native log bytes",
+    "OCR stderr bytes",
+    "PNG dimensions/encoded bytes",
+    "JSONL event line bytes",
+    "aggregate actions/results/status/state bytes",
+    "all output file count/names"
+  ],
+  "dedup_worst_case": "All distinct future bytes may be unique. Required record paths/order/identities still need lossless index. Duplicate savings in old runs do not provide a future guarantee.",
+  "compression_worst_case": "Lossless compression cannot guarantee reduction for every allowed input; no guessed ratio or observed ZIP ratio used. STORED remains lossless; partition failure publishes nothing.",
+  "classification": "BLOCKED_BEFORE_EXECUTION",
+  "choices": [
+    "Keep unchanged source/schedules/two32MiB limits and retain BLOCKED; no acquisition.",
+    "A separate approved retention-capacity/count change would require a new concrete finite bound and admission; increasing capacity alone does not bound unspecified streams.",
+    "A separate reviewed producer/retention/schedule contract change could establish finite lossless maxima; it would no longer be this unchanged bounded study. No truncation, privacy change or dropped failure is proposed."
+  ]
+}

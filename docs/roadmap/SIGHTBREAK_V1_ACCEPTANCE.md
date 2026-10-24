@@ -162,3 +162,14 @@ history and correct per-peer ownership before readiness. FOV math550e96c9 has no
 native invocation; concrete admission/root release pending. Four-trial shutdown
 study is source/pure preparation only. All whole gates, physical/human/signing/
 Steam dependencies, strict warnings, limits and automated Mac review stop remain.
+
+At 2026-10-24 13:26 UTC, sole pinned math550 attempt is FAILED on unobserved
+root identity and18 independently found input-bit mismatches; no retry/qualified
+numeric reference. Source-only process fixb6f25804 passes36 pure checks but awaits
+independent review and must block on this environment's missing children interface.
+Codec preparation preserves exactbits without weakening cutoffs. R6 captured-core
+assessment5c5aca24 passes36948 generated cases, not finalc882/whole-reader approval.
+Shutdown sourcec90/239fa222 passes28 dedicated controls, but real preflightBLOCKED:
+complete retention has no finite proof under two32MiB limits. No study launch.
+All whole-release, strict warning, physical/human/Steam and Mac review-stop gates
+remain unchanged. See current NEXT_SESSION for exact branches/source and actions.
