@@ -31,6 +31,7 @@ func run() -> void:
 		check(bool(higher.ssao) or not bool(lower.ssao), "Tier %d never drops ambient occlusion" % tier)
 		check(bool(higher.post) or not bool(lower.post), "Tier %d never drops the post pass" % tier)
 		check(int(higher.aniso) >= int(lower.aniso), "Tier %d never lowers texture filtering" % tier)
+		check(int(higher.impact_holes) >= int(lower.impact_holes), "Tier %d never keeps fewer bullet holes" % tier)
 	check(SBGraphicsQuality.clamp_tier(3, false) == SBGraphicsQuality.ULTRA and SBGraphicsQuality.clamp_tier(-4, false) == SBGraphicsQuality.LOW, "Desktop accepts every tier")
 	check(SBGraphicsQuality.clamp_tier(3, true) == SBGraphicsQuality.MOBILE_MAX and SBGraphicsQuality.clamp_tier(2, true) == SBGraphicsQuality.MOBILE_MAX, "Phones and tablets stop at MEDIUM")
 	check(SBGraphicsQuality.available_labels(true).size() == 2 and SBGraphicsQuality.available_labels(false).size() == 4, "The settings screen offers only tiers the platform may run")

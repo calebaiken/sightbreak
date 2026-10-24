@@ -28,15 +28,16 @@ const LABELS: Array[String] = [
 ##   post: resolve the tonemap in a post pass (keeps sunlit surfaces from clipping; costs one full-screen pass)
 ##   ssao: screen-space ambient occlusion, half resolution (needs post)
 ##   aniso: anisotropic filtering of the surface textures at grazing angles
+##   impact_holes: how many bullet holes stay on the walls (one pooled draw; the ring replaces the oldest)
 const TIERS: Array[Dictionary] = [
 	{"shadows": false, "msaa": Viewport.MSAA_DISABLED, "detail_maps": false, "smoke_full": false,
-		"post": false, "ssao": false, "aniso": Viewport.ANISOTROPY_DISABLED},
+		"post": false, "ssao": false, "aniso": Viewport.ANISOTROPY_DISABLED, "impact_holes": 12},
 	{"shadows": true, "msaa": Viewport.MSAA_2X, "detail_maps": true, "smoke_full": true,
-		"post": false, "ssao": false, "aniso": Viewport.ANISOTROPY_DISABLED},
+		"post": false, "ssao": false, "aniso": Viewport.ANISOTROPY_DISABLED, "impact_holes": 32},
 	{"shadows": true, "msaa": Viewport.MSAA_2X, "detail_maps": true, "smoke_full": true,
-		"post": true, "ssao": false, "aniso": Viewport.ANISOTROPY_4X},
+		"post": true, "ssao": false, "aniso": Viewport.ANISOTROPY_4X, "impact_holes": 48},
 	{"shadows": true, "msaa": Viewport.MSAA_4X, "detail_maps": true, "smoke_full": true,
-		"post": true, "ssao": true, "aniso": Viewport.ANISOTROPY_16X},
+		"post": true, "ssao": true, "aniso": Viewport.ANISOTROPY_16X, "impact_holes": 64},
 ]
 
 ## The tier a freshly built world starts with; apply() keeps it current.

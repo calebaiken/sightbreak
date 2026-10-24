@@ -73,6 +73,26 @@ Limits: a model from the same family judged stills from a software rasteriser, s
 
 Also tried and rejected: `tonemap_white` 1.5, 2.0 and 3.0 with matching exposure left the clipped fraction unchanged (2.8% in view 11) on MEDIUM, so the single-pass tonemapper has no usable highlight knob. The post pass (HIGH) is the only measured fix.
 
+## Combat impacts (M8)
+
+Before: every world hit threw the same four sparks and one grey puff, whatever it hit, and left nothing. Now (`game/scripts/gameplay/combat_effects.gd`):
+
+| Surface | Sparks | Puff | Hole |
+| --- | --- | --- | --- |
+| Steel (container) | 5, warm, large and fast | small, light grey | 15 cm, dark steel |
+| Concrete (walls) | 2, pale chips | full size, pale | 20 cm |
+| Asphalt (floor) | 1 | small, dark grit | 16 cm |
+| Other (crates) | 4, as before | full size, tan | 17 cm |
+
+- The surface is found by a local physics query at the hit (the `surface` meta that `RelayYard._box` puts on its solids), so the network message is unchanged and a client finds the same answer from the same arena.
+- A hole is one textured quad lying 6 mm off the surface, in one pooled multi-mesh (64 instances, one draw call, 128 primitives). The ring that is actually used follows the tier: LOW 12, MEDIUM 32, HIGH 48, ULTRA 64, oldest replaced first. A tier drop clears holes that no longer fit.
+- Holes clear when the match's `round_number` changes, which needs no change to `match.gd` (clients receive the round in the snapshot).
+- A hit on an operator is unchanged: sparks only, no hole, no surface lookup.
+- Measured: puffs are lit, and render about three times brighter than their instance tint, so the first tints rendered snow white. Tints are now set from a probe (`docs/reports/gauntlet/impact-vfx-m8/data/dust_probe.gd`) to land between 0.5 and 0.8 sRGB.
+- Blind comparison, 16 pairs: new 14, tie 2, old 0. Its findings: marks help at about 4 m and are nearly invisible beyond about 12 m (a 2 to 6 px speck); the old steel puff was oversized and covered the lettering; the old puffs were clipped white on asphalt. Not judgeable from stills: timing, motion, sound.
+
+Open: tracers; a muzzle flash better than one prism; marks that are decals (surface-projected) rather than quads, if curved or sloped geometry arrives; a fade for the last marks before a replacement.
+
 ## Relative cost (software rasteriser, relative only)
 
 Median frame time over 40 frames at each of 12 views, same host and load, llvmpipe at 1280x720: LOW 114 ms, MEDIUM 464 ms, HIGH 450 ms, ULTRA 503 ms (median of the 12 view medians; per-view files `m6-final/tier*-timings.json`). The ordering says MEDIUM, HIGH and ULTRA cost about the same on a CPU rasteriser and LOW is four times cheaper (shadows off). It says nothing about GPU frame time: the post pass and SSAO are bandwidth work that a CPU rasteriser prices differently from a phone or a desktop GPU. A device frame-time record is still owed before any tier is raised on a phone.
@@ -97,7 +117,7 @@ Scores before: lighting 4, grounding 4, materials 3, edges 5, depth 2, colour st
 1. Operator-in-shadow readability capture, then tune fill if a dark-clad silhouette loses contrast.
 2. Skyline behind the attacker-end wall (defect 1) and a soft sun glow (6).
 3. Crane cable and hoist fix (9), floor texture rework against moiré (3), decal wear (7).
-4. Surface-aware bullet-hole decals (Compatibility supports 8 decals per surface, 64 per view) and impact effects.
+4. Tracers and a better muzzle flash (bullet holes and surface-aware impacts are done in M8).
 5. Weapon art for the Kestrel 9, Vectorline and Longwatch (separate gauntlet).
 6. LightmapGI bake for one environment section: baking needs a RenderingDevice, so it must run on a machine with a GPU.
 7. Device frame-time baselines (Windows, macOS, Linux, Android, iOS) before any tier is raised on a phone.

@@ -20,6 +20,7 @@ run_godot hit-volume --headless --script res://tests/hit_volume_test.gd
 run_godot hit-history --headless --script res://tests/hit_history_test.gd
 run_godot render-budget --headless --script res://tests/render_budget_test.gd
 run_godot graphics-quality --headless --script res://tests/graphics_quality_test.gd
+run_godot combat-impact --headless --script res://tests/combat_impact_test.gd
 run_godot smoke-presentation --headless --script res://tests/smoke_presentation_test.gd
 run_godot match --headless --script res://tests/match_test.gd
 run_godot authority-order --headless --script res://tests/authority_order_test.gd

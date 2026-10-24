@@ -98,6 +98,9 @@ func _box(at: Vector3, size: Vector3, color: Color, solid: bool = true, nav_bloc
 	var node: Node3D = StaticBody3D.new() if solid else Node3D.new()
 	add_child(node)
 	node.position = at
+	if solid and surface != "":
+		# What a bullet hit here is made of: SBCombatEffects reads it to pick sparks, dust and a hole.
+		node.set_meta("surface", surface)
 	var mesh := MeshInstance3D.new()
 	var box := BoxMesh.new()
 	box.size = size
