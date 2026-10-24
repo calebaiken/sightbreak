@@ -1,0 +1,137 @@
+[
+  {
+    "path": "r1/candidate.stderr",
+    "sha256": "09f3b059440134e491e59e35a9032f61c819bb2ca04dbda69a7580de906474f2",
+    "summary": [
+      "Ran 10 tests in 0.179s",
+      "",
+      "FAILED (failures=1)"
+    ],
+    "failure_records": [
+      "test_timer_contradiction_precedes_packet_origin_unknown (test_input_consumption_foundation_enforcement.AuthorityFoundationEnforcement.test_timer_contradiction_precedes_packet_origin_unknown)"
+    ]
+  },
+  {
+    "path": "r2/candidate.stderr",
+    "sha256": "a6e7d2b571f64595a974e1acc0548702d1a5415578d0933c92dc9d251eb059ff",
+    "summary": [
+      "Ran 115 tests in 1.396s",
+      "",
+      "FAILED (failures=35, errors=1)"
+    ],
+    "failure_records": [
+      "test_fresh_generation_after_retirement_can_reuse_peer_and_actor (test_input_consumption_lifecycle.InputObservationLifecycleControls.test_fresh_generation_after_retirement_can_reuse_peer_and_actor)",
+      "test_retired_generation_cannot_consume_even_when_actor_id_is_reused (test_input_consumption_observation.InputConsumptionControls.test_retired_generation_cannot_consume_even_when_actor_id_is_reused)",
+      "test_fresh_peer_needs_acceptance_progress_but_not_a_direct_accept_row (test_input_consumption_state.InputObservationStateControls.test_fresh_peer_needs_acceptance_progress_but_not_a_direct_accept_row)",
+      "test_queued_duplicate_accepts_without_queue_growth_or_command_replacement (test_input_consumption_state.InputObservationStateControls.test_queued_duplicate_accepts_without_queue_growth_or_command_replacement)",
+      "test_empty_array_has_no_endpoints_but_nondictionaries_are_observable (test_input_consumption_stream.InputObservationStreamControls.test_empty_array_has_no_endpoints_but_nondictionaries_are_observable) (count=0, first=-1, last=-1)",
+      "test_empty_array_has_no_endpoints_but_nondictionaries_are_observable (test_input_consumption_stream.InputObservationStreamControls.test_empty_array_has_no_endpoints_but_nondictionaries_are_observable) (count=2, first=-1, last=-1)",
+      "test_hidden_metadata_calls_stay_inside_observed_time_interval (test_input_consumption_stream.InputObservationStreamControls.test_hidden_metadata_calls_stay_inside_observed_time_interval) (offset=0)",
+      "test_hidden_metadata_calls_stay_inside_observed_time_interval (test_input_consumption_stream.InputObservationStreamControls.test_hidden_metadata_calls_stay_inside_observed_time_interval) (offset=500)",
+      "test_hidden_metadata_calls_stay_inside_observed_time_interval (test_input_consumption_stream.InputObservationStreamControls.test_hidden_metadata_calls_stay_inside_observed_time_interval) (offset=1000)",
+      "test_live_binding_round_epoch_change_keeps_rejection_state (test_input_consumption_stream.InputObservationStreamControls.test_live_binding_round_epoch_change_keeps_rejection_state)",
+      "test_only_fully_exposed_batches_need_a_fresh_endpoint (test_input_consumption_stream.InputObservationStreamControls.test_only_fully_exposed_batches_need_a_fresh_endpoint) (first=2, last=1, count=2)",
+      "test_only_fully_exposed_batches_need_a_fresh_endpoint (test_input_consumption_stream.InputObservationStreamControls.test_only_fully_exposed_batches_need_a_fresh_endpoint) (first=2, last=2, count=2)",
+      "test_only_fully_exposed_batches_need_a_fresh_endpoint (test_input_consumption_stream.InputObservationStreamControls.test_only_fully_exposed_batches_need_a_fresh_endpoint) (first=1, last=1, count=3)",
+      "test_queue_window_bound_includes_valid_full_queue_and_later_ticks (test_input_consumption_stream.InputObservationStreamControls.test_queue_window_bound_includes_valid_full_queue_and_later_ticks)",
+      "test_rejection_state_and_calls_agree_in_both_directions (test_input_consumption_stream.InputObservationStreamControls.test_rejection_state_and_calls_agree_in_both_directions)",
+      "test_single_command_is_fresh_and_inside_ack_window (test_input_consumption_stream.InputObservationStreamControls.test_single_command_is_fresh_and_inside_ack_window) (sequence=2)",
+      "test_single_command_is_fresh_and_inside_ack_window (test_input_consumption_stream.InputObservationStreamControls.test_single_command_is_fresh_and_inside_ack_window) (sequence=121)",
+      "test_unchanged_metadata_can_remain_older_than_current_interval (test_input_consumption_stream.InputObservationStreamControls.test_unchanged_metadata_can_remain_older_than_current_interval)",
+      "test_zero_peer_lobby_reset_retains_history_and_allows_new_rejections (test_input_consumption_stream.InputObservationStreamControls.test_zero_peer_lobby_reset_retains_history_and_allows_new_rejections)",
+      "test_delayed_selected_stream_uses_its_owned_header_not_global_latest (test_input_consumption_transitions.InputObservationTransitionControls.test_delayed_selected_stream_uses_its_owned_header_not_global_latest)",
+      "test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts (test_input_consumption_transitions.InputObservationTransitionControls.test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts) (accepted_epoch=1, queued=0)",
+      "test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts (test_input_consumption_transitions.InputObservationTransitionControls.test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts) (accepted_epoch=2, queued=1)",
+      "test_explicit_unselected_pop_is_inferred_when_prior_state_proves_it (test_input_consumption_transitions.InputObservationTransitionControls.test_explicit_unselected_pop_is_inferred_when_prior_state_proves_it)",
+      "test_exposed_queue_pops_oldest_instead_of_latest_accepted_packet (test_input_consumption_transitions.InputObservationTransitionControls.test_exposed_queue_pops_oldest_instead_of_latest_accepted_packet)",
+      "test_hidden_accept_before_hidden_pop_uses_pre_pop_ack_interval (test_input_consumption_transitions.InputObservationTransitionControls.test_hidden_accept_before_hidden_pop_uses_pre_pop_ack_interval)",
+      "test_large_duplicate_batch_cannot_erase_earlier_immutable_intent (test_input_consumption_transitions.InputObservationTransitionControls.test_large_duplicate_batch_cannot_erase_earlier_immutable_intent)",
+      "test_multi_peer_forced_flow_passes_but_ambiguous_header_is_unknown (test_input_consumption_transitions.InputObservationTransitionControls.test_multi_peer_forced_flow_passes_but_ambiguous_header_is_unknown)",
+      "test_receipt_aggregate_retains_one_joint_payload_history_across_pops (test_input_consumption_transitions.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops) (total=1, first=False, second=True, hidden=False)",
+      "test_receipt_aggregate_retains_one_joint_payload_history_across_pops (test_input_consumption_transitions.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops) (total=0, first=False, second=False, hidden=True)",
+      "test_receipt_aggregate_retains_one_joint_payload_history_across_pops (test_input_consumption_transitions.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops) (total=2, first=True, second=True, hidden=True)",
+      "test_same_stream_ack_and_queue_need_corresponding_calls (test_input_consumption_transitions.InputObservationTransitionControls.test_same_stream_ack_and_queue_need_corresponding_calls)",
+      "test_shared_accepted_validation_covers_hidden_calls (test_input_consumption_transitions.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls) (sequence=2, count=1, epoch=1)",
+      "test_shared_accepted_validation_covers_hidden_calls (test_input_consumption_transitions.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls) (sequence=1, count=3, epoch=1)",
+      "test_interleaved_global_activity_does_not_prove_local_advance (test_input_consumption_expiry.ExpiryHistoryControls.test_interleaved_global_activity_does_not_prove_local_advance)",
+      "test_missing_legacy_connected_foundation_stays_unknown_then_later_invalid (test_input_consumption_expiry.ExpiryHistoryControls.test_missing_legacy_connected_foundation_stays_unknown_then_later_invalid)",
+      "test_new_positive_lifecycle_projection_and_old_helper_unchanged (test_input_consumption_expiry.FullExpiryReaderControls.test_new_positive_lifecycle_projection_and_old_helper_unchanged)"
+    ]
+  },
+  {
+    "path": "r3/candidate.stderr",
+    "sha256": "46570028aa71c9e500fb99549d6f296b47372bcfd1c165bf47f5312fbc54d691",
+    "summary": [
+      "Ran 11 tests in 0.037s",
+      "",
+      "OK"
+    ],
+    "failure_records": []
+  },
+  {
+    "path": "r3/frozen-baseline.stderr",
+    "sha256": "f14cee446b5aa10048f957cae79d6f4d4a060d0724a99cf8edf7a9193f5e136e",
+    "summary": [
+      "Ran 18 tests in 0.097s",
+      "",
+      "OK"
+    ],
+    "failure_records": []
+  },
+  {
+    "path": "r3/literal-maintained.stderr",
+    "sha256": "8471e4a1e46f8cc57e50c1ff742cc90eaed7f0ac122cc5748f230168d975ccbd",
+    "summary": [
+      "Ran 134 tests in 3.213s",
+      "",
+      "FAILED (failures=44, errors=1)"
+    ],
+    "failure_records": [
+      "test_fresh_generation_after_retirement_can_reuse_peer_and_actor (test_input_consumption_lifecycle.InputObservationLifecycleControls.test_fresh_generation_after_retirement_can_reuse_peer_and_actor)",
+      "test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes) (id='connected/missing-age')",
+      "test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes) (id='connected/wrong-sum')",
+      "test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes) (id='connected/joined-before-admission')",
+      "test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes) (id='generation/skipped-first')",
+      "test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes) (id='bound/future-last')",
+      "test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes) (id='received/invented-active')",
+      "test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes) (id='tick/future-rejection')",
+      "test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes (test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_known_schema_valid_source_negatives_are_frozen_as_preedit_false_completes) (id='tick/joined-lost')",
+      "test_minimal_authority_delta_preserves_original_whole_rows_and_other_fields (test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_minimal_authority_delta_preserves_original_whole_rows_and_other_fields)",
+      "test_preedit_reader_false_complete_baseline_and_versioned_positive_are_separate (test_input_consumption_foundation_model.VersionedPreEditConstructionControls.test_preedit_reader_false_complete_baseline_and_versioned_positive_are_separate)",
+      "test_retired_generation_cannot_consume_even_when_actor_id_is_reused (test_input_consumption_observation.InputConsumptionControls.test_retired_generation_cannot_consume_even_when_actor_id_is_reused)",
+      "test_fresh_peer_needs_acceptance_progress_but_not_a_direct_accept_row (test_input_consumption_state.InputObservationStateControls.test_fresh_peer_needs_acceptance_progress_but_not_a_direct_accept_row)",
+      "test_queued_duplicate_accepts_without_queue_growth_or_command_replacement (test_input_consumption_state.InputObservationStateControls.test_queued_duplicate_accepts_without_queue_growth_or_command_replacement)",
+      "test_empty_array_has_no_endpoints_but_nondictionaries_are_observable (test_input_consumption_stream.InputObservationStreamControls.test_empty_array_has_no_endpoints_but_nondictionaries_are_observable) (count=0, first=-1, last=-1)",
+      "test_empty_array_has_no_endpoints_but_nondictionaries_are_observable (test_input_consumption_stream.InputObservationStreamControls.test_empty_array_has_no_endpoints_but_nondictionaries_are_observable) (count=2, first=-1, last=-1)",
+      "test_hidden_metadata_calls_stay_inside_observed_time_interval (test_input_consumption_stream.InputObservationStreamControls.test_hidden_metadata_calls_stay_inside_observed_time_interval) (offset=0)",
+      "test_hidden_metadata_calls_stay_inside_observed_time_interval (test_input_consumption_stream.InputObservationStreamControls.test_hidden_metadata_calls_stay_inside_observed_time_interval) (offset=500)",
+      "test_hidden_metadata_calls_stay_inside_observed_time_interval (test_input_consumption_stream.InputObservationStreamControls.test_hidden_metadata_calls_stay_inside_observed_time_interval) (offset=1000)",
+      "test_live_binding_round_epoch_change_keeps_rejection_state (test_input_consumption_stream.InputObservationStreamControls.test_live_binding_round_epoch_change_keeps_rejection_state)",
+      "test_only_fully_exposed_batches_need_a_fresh_endpoint (test_input_consumption_stream.InputObservationStreamControls.test_only_fully_exposed_batches_need_a_fresh_endpoint) (first=2, last=1, count=2)",
+      "test_only_fully_exposed_batches_need_a_fresh_endpoint (test_input_consumption_stream.InputObservationStreamControls.test_only_fully_exposed_batches_need_a_fresh_endpoint) (first=2, last=2, count=2)",
+      "test_only_fully_exposed_batches_need_a_fresh_endpoint (test_input_consumption_stream.InputObservationStreamControls.test_only_fully_exposed_batches_need_a_fresh_endpoint) (first=1, last=1, count=3)",
+      "test_queue_window_bound_includes_valid_full_queue_and_later_ticks (test_input_consumption_stream.InputObservationStreamControls.test_queue_window_bound_includes_valid_full_queue_and_later_ticks)",
+      "test_rejection_state_and_calls_agree_in_both_directions (test_input_consumption_stream.InputObservationStreamControls.test_rejection_state_and_calls_agree_in_both_directions)",
+      "test_single_command_is_fresh_and_inside_ack_window (test_input_consumption_stream.InputObservationStreamControls.test_single_command_is_fresh_and_inside_ack_window) (sequence=2)",
+      "test_single_command_is_fresh_and_inside_ack_window (test_input_consumption_stream.InputObservationStreamControls.test_single_command_is_fresh_and_inside_ack_window) (sequence=121)",
+      "test_unchanged_metadata_can_remain_older_than_current_interval (test_input_consumption_stream.InputObservationStreamControls.test_unchanged_metadata_can_remain_older_than_current_interval)",
+      "test_zero_peer_lobby_reset_retains_history_and_allows_new_rejections (test_input_consumption_stream.InputObservationStreamControls.test_zero_peer_lobby_reset_retains_history_and_allows_new_rejections)",
+      "test_delayed_selected_stream_uses_its_owned_header_not_global_latest (test_input_consumption_transitions.InputObservationTransitionControls.test_delayed_selected_stream_uses_its_owned_header_not_global_latest)",
+      "test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts (test_input_consumption_transitions.InputObservationTransitionControls.test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts) (accepted_epoch=1, queued=0)",
+      "test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts (test_input_consumption_transitions.InputObservationTransitionControls.test_epoch_boundary_uses_acceptance_epoch_and_preserves_new_receipts) (accepted_epoch=2, queued=1)",
+      "test_explicit_unselected_pop_is_inferred_when_prior_state_proves_it (test_input_consumption_transitions.InputObservationTransitionControls.test_explicit_unselected_pop_is_inferred_when_prior_state_proves_it)",
+      "test_exposed_queue_pops_oldest_instead_of_latest_accepted_packet (test_input_consumption_transitions.InputObservationTransitionControls.test_exposed_queue_pops_oldest_instead_of_latest_accepted_packet)",
+      "test_hidden_accept_before_hidden_pop_uses_pre_pop_ack_interval (test_input_consumption_transitions.InputObservationTransitionControls.test_hidden_accept_before_hidden_pop_uses_pre_pop_ack_interval)",
+      "test_large_duplicate_batch_cannot_erase_earlier_immutable_intent (test_input_consumption_transitions.InputObservationTransitionControls.test_large_duplicate_batch_cannot_erase_earlier_immutable_intent)",
+      "test_multi_peer_forced_flow_passes_but_ambiguous_header_is_unknown (test_input_consumption_transitions.InputObservationTransitionControls.test_multi_peer_forced_flow_passes_but_ambiguous_header_is_unknown)",
+      "test_receipt_aggregate_retains_one_joint_payload_history_across_pops (test_input_consumption_transitions.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops) (total=1, first=False, second=True, hidden=False)",
+      "test_receipt_aggregate_retains_one_joint_payload_history_across_pops (test_input_consumption_transitions.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops) (total=0, first=False, second=False, hidden=True)",
+      "test_receipt_aggregate_retains_one_joint_payload_history_across_pops (test_input_consumption_transitions.InputObservationTransitionControls.test_receipt_aggregate_retains_one_joint_payload_history_across_pops) (total=2, first=True, second=True, hidden=True)",
+      "test_same_stream_ack_and_queue_need_corresponding_calls (test_input_consumption_transitions.InputObservationTransitionControls.test_same_stream_ack_and_queue_need_corresponding_calls)",
+      "test_shared_accepted_validation_covers_hidden_calls (test_input_consumption_transitions.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls) (sequence=2, count=1, epoch=1)",
+      "test_shared_accepted_validation_covers_hidden_calls (test_input_consumption_transitions.InputObservationTransitionControls.test_shared_accepted_validation_covers_hidden_calls) (sequence=1, count=3, epoch=1)",
+      "test_missing_legacy_connected_foundation_stays_unknown_then_later_invalid (test_input_consumption_expiry.ExpiryHistoryControls.test_missing_legacy_connected_foundation_stays_unknown_then_later_invalid)",
+      "test_new_positive_lifecycle_projection_and_old_helper_unchanged (test_input_consumption_expiry.FullExpiryReaderControls.test_new_positive_lifecycle_projection_and_old_helper_unchanged)"
+    ]
+  }
+]
