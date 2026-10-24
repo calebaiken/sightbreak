@@ -20,7 +20,7 @@ import time
 from build_manifest import ROOT, source
 from native_log import failed
 from verify_integration_export import NativeUI, frozen_export, unchanged_export
-from offline_hud import parse_hud_text
+from offline_hud import parse_hud_text, require_paused_training
 from export_flow import entry, prepare_flow_output
 from matrix_process import run_process
 
@@ -77,7 +77,7 @@ def main(supervised=False):
     out = prepare_flow_output(args.output, supervised)
     executable = ROOT / 'builds/linux/sightbreak.x86_64'
     manifest, before, digest = frozen_export(executable, out)
-    logs, processes, events = [], [], []
+    logs, processes, events, inspection_pauses = [], [], [], []
     ui = client = None
     started = time.monotonic()
 
@@ -104,25 +104,36 @@ def main(supervised=False):
         (out / 'actions.json').write_text(json.dumps(events, indent=2) + '\n')
         print(name, flush=True)
 
-    def read_hud(name):
+    def image_text(name, box, label):
         from PIL import Image
-        image = Image.open(out / (name + '.png'))
-        def text(box, label):
+        with Image.open(out / (name + '.png')) as image:
             crop = image.crop(box)
             crop = crop.resize((crop.width * 3, crop.height * 3))
             data = io.BytesIO()
             crop.save(data, format='PNG')
             return ocr_text([args.tesseract, 'stdin', 'stdout', '--psm', '6'], data.getvalue(),
-                            started + args.timeout, out / (name + '-' + label + '-ocr'))
-        status = text((0, 630, 450, 720), 'status')
-        ammo_text = text((980, 625, 1280, 710), 'ammo')
+                             started + args.timeout, out / (name + '-' + label + '-ocr'))
+
+    def read_hud(name):
+        status = image_text(name, (0, 630, 450, 720), 'status')
+        ammo_text = image_text(name, (980, 625, 1280, 710), 'ammo')
         return parse_hud_text(status, ammo_text)
 
-    def tap(key):
+    def tap(key, settle=1.0):
         ui.key(key, True)
         time.sleep(.3)
         ui.key(key, False)
-        time.sleep(1)
+        time.sleep(settle)
+
+    def pause_for_inspection(name):
+        # Pause through the same Escape menu available to an offline player.
+        # Capture live HUD frames BEFORE pausing, then keep expensive OCR from
+        # leaving the player exposed. Never disable bots or change game state.
+        tap('Escape', settle=.35)
+        capture(name)
+        text = image_text(name, (40, 40, 780, 210), 'pause')
+        require_paused_training(text)
+        inspection_pauses.append({'image': name + '.png', 'pause_ocr': text})
 
     try:
         launch('xvfb', [args.xvfb, args.display, '-screen', '0', '1280x720x24', '-nolisten', 'tcp'])
@@ -135,9 +146,9 @@ def main(supervised=False):
         client_command = [str(executable), '--audio-driver', 'Dummy']
         if args.quit_after:
             client_command += ['--quit-after', str(args.quit_after)]
+        ui = NativeUI(args.display)
         unchanged_export(executable, manifest, before, digest)
         client = launch('client', client_command, env)
-        ui = NativeUI(args.display)
         wait_for(lambda: ui.focus_game() and ui.menu_visible(), 60, 'Native menu')
         capture('01-menu')
         for _ in range(3):
@@ -169,36 +180,42 @@ def main(supervised=False):
             ui.button(False)
             time.sleep(.35)
         capture('05-after-fire')
+        pause_for_inspection('05-inspection-pause')
         fired_hud = read_hud('05-after-fire')
         if not 0 < fired_hud['ammo'] < 15 or fired_hud['reserve'] != 60:
             raise RuntimeError('Native fire did not deplete the initial sidearm magazine')
+        tap('Escape', settle=.15)
+        capture('05b-resumed')
         ui.key('r', True)
         time.sleep(1.0)
         ui.key('r', False)
         time.sleep(2.5)
         capture('06-after-reload')
+        pause_for_inspection('06-inspection-pause')
         reloaded_hud = read_hud('06-after-reload')
         if reloaded_hud['ammo'] != 15 or reloaded_hud['reserve'] >= fired_hud['reserve'] or sum(reloaded_hud[k] for k in ('ammo', 'reserve')) != sum(fired_hud[k] for k in ('ammo', 'reserve')):
             raise RuntimeError('Native offline reload did not conserve rendered ammunition')
-        tap('Escape')
         capture('07-field-menu')
         ui.click(640, 318)
         wait_for(ui.menu_visible, 30, 'Return from offline match')
         capture('08-return-menu')
         if client.poll() is not None:
             raise RuntimeError('Client exited before completion-driven native close')
-        ui.request_close()
+        close_receipt = ui.request_close()
         client.wait(timeout=max(1, args.timeout - (time.monotonic() - started)))
         if client.returncode != 0 or failed((out / 'client.log').read_text()):
             raise RuntimeError('Export failed clean termination or native log gate')
         unchanged_export(executable, manifest, before, digest)
         result = {'source': before, 'executable_sha256': digest, 'events': events,
                   'exit': client.returncode, 'clean_exit': True, 'passed': True,
-                  'fired_hud': fired_hud, 'reloaded_hud': reloaded_hud,
-                  'exit_method': 'completion-driven native WM_DELETE_WINDOW; separate wall-clock watchdog',
+                   'fired_hud': fired_hud, 'reloaded_hud': reloaded_hud,
+                   'ocr_inspection': {'method': 'Native offline Escape pause; live HUD frames captured before pause',
+                                      'pauses': inspection_pauses},
+                   'exit_method': 'completion-driven native WM_DELETE_WINDOW; separate wall-clock watchdog',
+                   'window_close': close_receipt,
                   'premature_exit_control_frames': args.quit_after,
                   'controller_sha256': hashlib.file_digest(Path(__file__).open('rb'), 'sha256').hexdigest(),
-                  'limits': 'Screenshots require visual review; no private authority instrumentation or mobile performance claim.'}
+                   'limits': 'Screenshots require visual review; offline inspection uses the ordinary pause menu, not continuous-match play; no private authority instrumentation or mobile performance claim.'}
         (out / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
         print(json.dumps(result), flush=True)
     except Exception as error:

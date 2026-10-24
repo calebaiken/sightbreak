@@ -1,0 +1,1638 @@
+{
+  "note": "Independent state/byte-consistency checks, not a rerun/reconstruction of the probe authors 21 hidden assertions.",
+  "total": 326,
+  "verified": 326,
+  "failed": [],
+  "checks": [
+    {
+      "name": "sample-bd249c/one_engine_result_line",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/engine_result_equals_saved_result_core",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/recorded_process_receipts_complete_exit_zero",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/result_actual_exit_matches_probe_receipt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/no_unexpected_native_error_lines",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/event_count_15",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fresh_batch/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fresh_batch/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fresh_batch/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fresh_batch/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fresh_batch/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fresh_batch/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fresh_batch/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fresh_batch/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fresh_batch/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/identical_queued_retry/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/identical_queued_retry/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/identical_queued_retry/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/identical_queued_retry/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/identical_queued_retry/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/identical_queued_retry/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/identical_queued_retry/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/identical_queued_retry/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/identical_queued_retry/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/identical_queued_retry/queued_unacked_retry_accepted",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/identical_queued_retry/queued_retry_does_not_mutate_queue",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/altered_queued_retry/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/altered_queued_retry/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/altered_queued_retry/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/altered_queued_retry/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/altered_queued_retry/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/altered_queued_retry/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/altered_queued_retry/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/altered_queued_retry/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/altered_queued_retry/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/altered_queued_retry/queued_unacked_retry_accepted",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/altered_queued_retry/queued_retry_does_not_mutate_queue",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_first/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_first/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_first/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_first/pop_leaves_rate_and_rejected_unchanged",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_first/popped_payload_is_original_queued_value",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_first/exactly_one_queue_element_removed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_first/ack_advances_to_popped_sequence",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/partially_acked_retry/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/partially_acked_retry/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/partially_acked_retry/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/partially_acked_retry/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/partially_acked_retry/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/partially_acked_retry/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/partially_acked_retry/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/partially_acked_retry/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/partially_acked_retry/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/partially_acked_retry/queued_unacked_retry_accepted",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/partially_acked_retry/queued_retry_does_not_mutate_queue",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_second/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_second/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_second/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_second/pop_leaves_rate_and_rejected_unchanged",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_second/popped_payload_is_original_queued_value",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_second/exactly_one_queue_element_removed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_second/ack_advances_to_popped_sequence",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_identical_replay/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_identical_replay/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_identical_replay/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_identical_replay/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_identical_replay/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_identical_replay/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_identical_replay/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_identical_replay/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_identical_replay/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_identical_replay/actually_fully_acked_not_queued_unacked",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_identical_replay/replay_does_not_repopulate_queue_or_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_altered_replay/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_altered_replay/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_altered_replay/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_altered_replay/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_altered_replay/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_altered_replay/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_altered_replay/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_altered_replay/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_altered_replay/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_altered_replay/actually_fully_acked_not_queued_unacked",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/fully_acked_altered_replay/replay_does_not_repopulate_queue_or_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/mixed_acked_and_new_intent/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/mixed_acked_and_new_intent/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/mixed_acked_and_new_intent/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/mixed_acked_and_new_intent/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/mixed_acked_and_new_intent/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/mixed_acked_and_new_intent/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/mixed_acked_and_new_intent/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/mixed_acked_and_new_intent/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/mixed_acked_and_new_intent/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/new_intent_queued_retry/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/new_intent_queued_retry/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/new_intent_queued_retry/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/new_intent_queued_retry/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/new_intent_queued_retry/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/new_intent_queued_retry/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/new_intent_queued_retry/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/new_intent_queued_retry/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/new_intent_queued_retry/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/new_intent_queued_retry/queued_unacked_retry_accepted",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/new_intent_queued_retry/queued_retry_does_not_mutate_queue",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_new_intent/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_new_intent/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_new_intent/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_new_intent/pop_leaves_rate_and_rejected_unchanged",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_new_intent/popped_payload_is_original_queued_value",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_new_intent/exactly_one_queue_element_removed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/consume_new_intent/ack_advances_to_popped_sequence",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/no_duplicate_simulation/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/no_duplicate_simulation/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/no_duplicate_simulation/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/no_duplicate_simulation/pop_leaves_rate_and_rejected_unchanged",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/no_duplicate_simulation/empty_pop_state_no_change",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/old_epoch/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/old_epoch/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/old_epoch/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/old_epoch/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/old_epoch/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/old_epoch/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/old_epoch/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/old_epoch/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/old_epoch/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/old_epoch/invalid_control_rejected_no_queue_ack_mutation",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/beyond_ahead_limit/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/beyond_ahead_limit/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/beyond_ahead_limit/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/beyond_ahead_limit/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/beyond_ahead_limit/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/beyond_ahead_limit/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/beyond_ahead_limit/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/beyond_ahead_limit/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/beyond_ahead_limit/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/beyond_ahead_limit/invalid_control_rejected_no_queue_ack_mutation",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/malformed_acked_command_with_new_intent/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/malformed_acked_command_with_new_intent/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/malformed_acked_command_with_new_intent/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/malformed_acked_command_with_new_intent/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/malformed_acked_command_with_new_intent/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/malformed_acked_command_with_new_intent/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/malformed_acked_command_with_new_intent/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/malformed_acked_command_with_new_intent/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/malformed_acked_command_with_new_intent/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/malformed_acked_command_with_new_intent/invalid_control_rejected_no_queue_ack_mutation",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/original_consumption_sequence",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/only_three_nonempty_pops",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/capture_clock_nondecreasing",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-bd249c/supplied_rate_clock_nondecreasing",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/one_engine_result_line",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/engine_result_equals_saved_result_core",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/recorded_process_receipts_complete_exit_zero",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/result_actual_exit_matches_probe_receipt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/no_unexpected_native_error_lines",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/event_count_15",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fresh_batch/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fresh_batch/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fresh_batch/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fresh_batch/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fresh_batch/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fresh_batch/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fresh_batch/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fresh_batch/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fresh_batch/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/identical_queued_retry/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/identical_queued_retry/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/identical_queued_retry/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/identical_queued_retry/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/identical_queued_retry/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/identical_queued_retry/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/identical_queued_retry/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/identical_queued_retry/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/identical_queued_retry/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/identical_queued_retry/queued_unacked_retry_accepted",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/identical_queued_retry/queued_retry_does_not_mutate_queue",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/altered_queued_retry/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/altered_queued_retry/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/altered_queued_retry/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/altered_queued_retry/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/altered_queued_retry/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/altered_queued_retry/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/altered_queued_retry/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/altered_queued_retry/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/altered_queued_retry/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/altered_queued_retry/queued_unacked_retry_accepted",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/altered_queued_retry/queued_retry_does_not_mutate_queue",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_first/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_first/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_first/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_first/pop_leaves_rate_and_rejected_unchanged",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_first/popped_payload_is_original_queued_value",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_first/exactly_one_queue_element_removed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_first/ack_advances_to_popped_sequence",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/partially_acked_retry/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/partially_acked_retry/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/partially_acked_retry/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/partially_acked_retry/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/partially_acked_retry/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/partially_acked_retry/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/partially_acked_retry/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/partially_acked_retry/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/partially_acked_retry/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/partially_acked_retry/queued_unacked_retry_accepted",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/partially_acked_retry/queued_retry_does_not_mutate_queue",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_second/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_second/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_second/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_second/pop_leaves_rate_and_rejected_unchanged",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_second/popped_payload_is_original_queued_value",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_second/exactly_one_queue_element_removed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_second/ack_advances_to_popped_sequence",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_identical_replay/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_identical_replay/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_identical_replay/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_identical_replay/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_identical_replay/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_identical_replay/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_identical_replay/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_identical_replay/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_identical_replay/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_identical_replay/actually_fully_acked_not_queued_unacked",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_identical_replay/replay_does_not_repopulate_queue_or_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_altered_replay/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_altered_replay/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_altered_replay/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_altered_replay/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_altered_replay/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_altered_replay/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_altered_replay/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_altered_replay/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_altered_replay/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_altered_replay/actually_fully_acked_not_queued_unacked",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/fully_acked_altered_replay/replay_does_not_repopulate_queue_or_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/mixed_acked_and_new_intent/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/mixed_acked_and_new_intent/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/mixed_acked_and_new_intent/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/mixed_acked_and_new_intent/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/mixed_acked_and_new_intent/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/mixed_acked_and_new_intent/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/mixed_acked_and_new_intent/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/mixed_acked_and_new_intent/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/mixed_acked_and_new_intent/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/new_intent_queued_retry/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/new_intent_queued_retry/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/new_intent_queued_retry/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/new_intent_queued_retry/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/new_intent_queued_retry/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/new_intent_queued_retry/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/new_intent_queued_retry/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/new_intent_queued_retry/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/new_intent_queued_retry/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/new_intent_queued_retry/queued_unacked_retry_accepted",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/new_intent_queued_retry/queued_retry_does_not_mutate_queue",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_new_intent/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_new_intent/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_new_intent/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_new_intent/pop_leaves_rate_and_rejected_unchanged",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_new_intent/popped_payload_is_original_queued_value",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_new_intent/exactly_one_queue_element_removed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/consume_new_intent/ack_advances_to_popped_sequence",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/no_duplicate_simulation/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/no_duplicate_simulation/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/no_duplicate_simulation/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/no_duplicate_simulation/pop_leaves_rate_and_rejected_unchanged",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/no_duplicate_simulation/empty_pop_state_no_change",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/old_epoch/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/old_epoch/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/old_epoch/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/old_epoch/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/old_epoch/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/old_epoch/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/old_epoch/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/old_epoch/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/old_epoch/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/old_epoch/invalid_control_rejected_no_queue_ack_mutation",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/beyond_ahead_limit/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/beyond_ahead_limit/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/beyond_ahead_limit/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/beyond_ahead_limit/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/beyond_ahead_limit/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/beyond_ahead_limit/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/beyond_ahead_limit/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/beyond_ahead_limit/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/beyond_ahead_limit/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/beyond_ahead_limit/invalid_control_rejected_no_queue_ack_mutation",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/malformed_acked_command_with_new_intent/before_equals_previous_after",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/malformed_acked_command_with_new_intent/ack_never_decreases",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/malformed_acked_command_with_new_intent/state_has_only_component_fields",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/malformed_acked_command_with_new_intent/variant_exactly_consumed",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/malformed_acked_command_with_new_intent/variant_semantics_match_packet_json",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/malformed_acked_command_with_new_intent/variant_type_preserving_roundtrip",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/malformed_acked_command_with_new_intent/accept_does_not_advance_ack",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/malformed_acked_command_with_new_intent/rate_charged_once_each_attempt",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/malformed_acked_command_with_new_intent/rejected_counter_delta_matches_false_result",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/malformed_acked_command_with_new_intent/invalid_control_rejected_no_queue_ack_mutation",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/original_consumption_sequence",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/only_three_nonempty_pops",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/capture_clock_nondecreasing",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "sample-05ec6c/supplied_rate_clock_nondecreasing",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/event_order/0",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/serialized_packets_match/fresh_batch",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/event_order/1",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/serialized_packets_match/identical_queued_retry",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/event_order/2",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/serialized_packets_match/altered_queued_retry",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/event_order/3",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/event_order/4",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/serialized_packets_match/partially_acked_retry",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/event_order/5",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/event_order/6",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/serialized_packets_match/fully_acked_identical_replay",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/event_order/7",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/serialized_packets_match/fully_acked_altered_replay",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/event_order/8",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/serialized_packets_match/mixed_acked_and_new_intent",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/event_order/9",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/serialized_packets_match/new_intent_queued_retry",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/event_order/10",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/event_order/11",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/event_order/12",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/serialized_packets_match/old_epoch",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/event_order/13",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/serialized_packets_match/beyond_ahead_limit",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/event_order/14",
+      "verified": true,
+      "detail": null
+    },
+    {
+      "name": "cross/serialized_packets_match/malformed_acked_command_with_new_intent",
+      "verified": true,
+      "detail": null
+    }
+  ]
+}

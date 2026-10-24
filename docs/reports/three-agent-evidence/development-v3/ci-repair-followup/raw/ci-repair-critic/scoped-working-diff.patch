@@ -1,0 +1,413 @@
+diff --git a/scripts/offline_hud.py b/scripts/offline_hud.py
+index 99087b4..b4a5862 100644
+--- a/scripts/offline_hud.py
++++ b/scripts/offline_hud.py
+@@ -2,6 +2,15 @@
+ import re
+ 
+ 
++def require_paused_training(text):
++    normalized = ' '.join(text.upper().split())
++    if (not re.search(r'\bFIELD MENU\b', normalized)
++            or not re.search(r'\bTRAINING IS PAUSED\b', normalized)
++            or re.search(r'\bMATCH CONTINUES\b', normalized)):
++        raise ValueError('Rendered offline pause confirmation missing: ' + repr(text))
++    return text
++
++
+ def parse_hud_text(status, ammunition):
+     health = re.findall(r'^\s*(\d{1,3})[^A-Z0-9\n]*HEALTH\b', status.upper(), re.MULTILINE)
+     ammo = re.findall(r'(?<![\w+-])(\d+)\s*/\s*(\d+)(?!\w)', ammunition)
+diff --git a/scripts/test_export_ui.py b/scripts/test_export_ui.py
+index ae8b3df..5557b52 100644
+--- a/scripts/test_export_ui.py
++++ b/scripts/test_export_ui.py
+@@ -17,6 +17,8 @@ class NativeCloseTests(unittest.TestCase):
+         self.sent = []
+         ui = controller.NativeUI.__new__(controller.NativeUI)
+         ui.d, ui.window = 123, 456
++        ui.protocols_atom, ui.delete_atom = 7, 8
++        ui.window_protocols = Mock(return_value=[8, 9])
+         def send(display, window, propagate, mask, pointer):
+             event = C.cast(pointer, C.POINTER(controller.XEvent)).contents.xclient
+             self.sent.append((display, window, propagate, mask, event.type, event.display,
+@@ -32,6 +34,52 @@ class NativeCloseTests(unittest.TestCase):
+         self.assertEqual(self.sent, [(123, 456, 0, 0, 33, 123, 456, 7, 32, 8)])
+         ui.x.XFlush.assert_called_once_with(123)
+ 
++    def test_unadvertised_delete_protocol_is_not_sent(self):
++        ui = self.make_ui(1)
++        ui.window_protocols.return_value = [9]
++        with self.assertRaisesRegex(RuntimeError, 'does not advertise'):
++            ui.request_close()
++        self.assertEqual(self.sent, [])
++
++    def test_close_atoms_are_created_and_synchronized_before_client_launch(self):
++        ui = self.make_ui(1)
++        ui.x.XInternAtom = Mock(side_effect=[7, 8])
++        ui.x.XSync = Mock()
++        ui.prepare_close_protocols()
++        self.assertEqual(ui.x.XInternAtom.call_args_list,
++                         [unittest.mock.call(123, b'WM_PROTOCOLS', 0),
++                          unittest.mock.call(123, b'WM_DELETE_WINDOW', 0)])
++        ui.x.XSync.assert_called_once_with(123, 0)
++        self.assertEqual((ui.protocols_atom, ui.delete_atom), (7, 8))
++
++    def test_failed_atom_preparation_cannot_pass(self):
++        ui = self.make_ui(1)
++        ui.x.XInternAtom = Mock(side_effect=[7, 0])
++        ui.x.XSync = Mock()
++        with self.assertRaisesRegex(RuntimeError, 'Cannot prepare'):
++            ui.prepare_close_protocols()
++        ui.x.XSync.assert_not_called()
++
++    def test_window_protocol_query_preserves_and_frees_native_atoms(self):
++        ui = controller.NativeUI.__new__(controller.NativeUI)
++        ui.d, ui.window = 123, 456
++        values = (C.c_ulong * 2)(8, 9)
++        def query(_display, _window, atoms, count):
++            C.cast(atoms, C.POINTER(C.POINTER(C.c_ulong)))[0] = C.cast(values, C.POINTER(C.c_ulong))
++            C.cast(count, C.POINTER(C.c_int))[0] = 2
++            return 1
++        ui.x = SimpleNamespace(XGetWMProtocols=query, XFree=Mock())
++        self.assertEqual(ui.window_protocols(), [8, 9])
++        ui.x.XFree.assert_called_once()
++
++    def test_missing_window_protocol_property_is_failure(self):
++        ui = controller.NativeUI.__new__(controller.NativeUI)
++        ui.d, ui.window = 123, 456
++        ui.x = SimpleNamespace(XGetWMProtocols=Mock(return_value=0), XFree=Mock())
++        with self.assertRaisesRegex(RuntimeError, 'does not advertise'):
++            ui.window_protocols()
++        ui.x.XFree.assert_not_called()
++
+     def test_undelivered_close_is_not_a_success(self):
+         with self.assertRaisesRegex(RuntimeError, 'not delivered'):
+             self.make_ui(0).request_close()
+diff --git a/scripts/test_offline_hud.py b/scripts/test_offline_hud.py
+index ca0db21..8d8bc75 100644
+--- a/scripts/test_offline_hud.py
++++ b/scripts/test_offline_hud.py
+@@ -1,10 +1,21 @@
+ #!/usr/bin/env python3
+ """Negative controls for the exported-client living-player evidence gate."""
+ import unittest
+-from offline_hud import parse_hud_text
++from offline_hud import parse_hud_text, require_paused_training
+ 
+ 
+ class LivingHUDTests(unittest.TestCase):
++    def test_offline_pause_requires_both_rendered_labels(self):
++        text = 'FIELD MENU\nTraining is paused.\nRESUME\n'
++        self.assertEqual(require_paused_training(text), text)
++
++    def test_network_menu_and_missing_pause_proof_fail_closed(self):
++        for text in ('', 'FIELD MENU', 'Training is paused.',
++                     'FIELD MENU\nThe match continues while this menu is open.',
++                     'FIELD MENU\nTraining is paused.\nThe match continues.'):
++            with self.subTest(text=text), self.assertRaises(ValueError):
++                require_paused_training(text)
++
+     def test_actual_v2_ocr_is_recognized(self):
+         record = parse_hud_text('800 - FUNDS\n100 - HEALTH .\n', 'SIDEARM 14/60\nFRAG x1 SMOKE <1\n')
+         self.assertEqual((record['health'], record['ammo'], record['reserve']), (100, 14, 60))
+diff --git a/scripts/test_validate_matrix.py b/scripts/test_validate_matrix.py
+index c6182f4..66a91a9 100644
+--- a/scripts/test_validate_matrix.py
++++ b/scripts/test_validate_matrix.py
+@@ -4,11 +4,12 @@ import io
+ import json
+ import os
+ from pathlib import Path
++import subprocess
+ import sys
+ import tempfile
+ import time
+ import unittest
+-from unittest.mock import patch
++from unittest.mock import Mock, patch
+ 
+ import validate_matrix as matrix
+ 
+@@ -23,6 +24,21 @@ class MatrixGateTests(unittest.TestCase):
+         return matrix.run_check('control', [sys.executable, '-c', body],
+                                 self.directory, os.environ.copy(), 'fixture-commit', timeout)
+ 
++    def git_metadata(self, outputs):
++        # platform.platform() can run its own subprocess on Linux. Replace only
++        # the matrix's module reference, not subprocess.check_output globally.
++        process_api = Mock(wraps=matrix.subprocess)
++        process_api.check_output.side_effect = outputs
++        return patch.object(matrix, 'subprocess', process_api)
++
++    def test_git_metadata_mock_does_not_intercept_platform_subprocesses(self):
++        with self.git_metadata(['fixture-commit\n']):
++            actual = subprocess.check_output(
++                [sys.executable, '-c', 'print("platform subprocess")'], text=True)
++            self.assertEqual(actual.strip(), 'platform subprocess')
++            self.assertEqual(matrix.subprocess.check_output(['git', 'rev-parse', 'HEAD']),
++                             'fixture-commit\n')
++
+     def test_success_requires_clean_log_and_zero_exit(self):
+         record = self.check('print("assertion control completed")')
+         self.assertTrue(record['passed'])
+@@ -160,7 +176,9 @@ class MatrixGateTests(unittest.TestCase):
+         with patch.object(sys, 'argv', ['validate_matrix.py', '--out', str(out)]), \
+                 patch.object(matrix, 'source', return_value={'source_dirty': True}), \
+                 patch.object(matrix, 'source_snapshot', return_value={'dirty': True}), \
+-                patch.object(matrix.subprocess, 'check_output', side_effect=['fixture\n', ' M scripts/validate_matrix.py\n']), \
++                self.git_metadata(['fixture\n', ' M scripts/validate_matrix.py\n']), \
++                patch.object(matrix.platform, 'platform', side_effect=lambda: subprocess.check_output(
++                    [sys.executable, '-c', 'print("fixture-platform")'], text=True).strip()), \
+                 patch.object(matrix, 'run_check') as run:
+             self.assertEqual(matrix.main(), 1)
+         run.assert_not_called()
+@@ -187,7 +205,7 @@ class MatrixGateTests(unittest.TestCase):
+         with patch.object(sys, 'argv', ['validate_matrix.py', '--out', str(out)]), \
+                 patch.object(matrix, 'source', return_value=clean), \
+                 patch.object(matrix, 'source_snapshot', return_value=clean), \
+-                patch.object(matrix.subprocess, 'check_output', side_effect=['fixture\n', '', '']), \
++                self.git_metadata(['fixture\n', '', '']), \
+                 patch.object(matrix, 'godot_command', return_value=['fixture-native-not-executed']), \
+                 patch.object(matrix, 'godot_environment', side_effect=lambda env: env), \
+                 patch.object(matrix, 'is_windows', return_value=False), \
+@@ -220,7 +238,7 @@ class MatrixGateTests(unittest.TestCase):
+         with patch.object(sys, 'argv', ['validate_matrix.py', '--out', str(out)]), \
+                 patch.object(matrix, 'source', side_effect=[initial, final]), \
+                 patch.object(matrix, 'source_snapshot', side_effect=[initial, final]), \
+-                patch.object(matrix.subprocess, 'check_output', side_effect=['fixture\n', '', ' M changed\n']), \
++                self.git_metadata(['fixture\n', '', ' M changed\n']), \
+                 patch.object(matrix, 'godot_command', return_value=['fixture-native-not-executed']), \
+                 patch.object(matrix, 'godot_environment', side_effect=lambda env: env), \
+                 patch.object(matrix, 'is_windows', return_value=False), \
+diff --git a/scripts/verify_integration_export.py b/scripts/verify_integration_export.py
+index 14fd23e..d6c0f82 100644
+--- a/scripts/verify_integration_export.py
++++ b/scripts/verify_integration_export.py
+@@ -88,6 +88,7 @@ class NativeUI:
+         self.x.XGetGeometry.argtypes = [C.c_void_p, C.c_ulong, C.POINTER(C.c_ulong), C.POINTER(C.c_int), C.POINTER(C.c_int), C.POINTER(C.c_uint), C.POINTER(C.c_uint), C.POINTER(C.c_uint), C.POINTER(C.c_uint)]
+         self.x.XSetInputFocus.argtypes = [C.c_void_p, C.c_ulong, C.c_int, C.c_ulong]
+         self.x.XFlush.argtypes = [C.c_void_p]
++        self.x.XSync.argtypes = [C.c_void_p, C.c_int]
+         self.x.XKeysymToKeycode.argtypes = [C.c_void_p, C.c_ulong]
+         self.x.XKeysymToKeycode.restype = C.c_uint
+         self.x.XStringToKeysym.argtypes = [C.c_char_p]
+@@ -96,6 +97,8 @@ class NativeUI:
+         self.x.XCloseDisplay.argtypes = [C.c_void_p]
+         self.x.XInternAtom.argtypes = [C.c_void_p, C.c_char_p, C.c_int]
+         self.x.XInternAtom.restype = C.c_ulong
++        self.x.XGetWMProtocols.argtypes = [C.c_void_p, C.c_ulong, C.POINTER(C.POINTER(C.c_ulong)), C.POINTER(C.c_int)]
++        self.x.XGetWMProtocols.restype = C.c_int
+         self.x.XSendEvent.argtypes = [C.c_void_p, C.c_ulong, C.c_int, C.c_long, C.POINTER(XEvent)]
+         self.x.XSendEvent.restype = C.c_int
+         self.t.XTestFakeMotionEvent.argtypes = [C.c_void_p, C.c_int, C.c_int, C.c_int, C.c_ulong]
+@@ -104,6 +107,31 @@ class NativeUI:
+         self.d = self.x.XOpenDisplay(display.encode())
+         if not self.d:
+             raise RuntimeError('Cannot open native display ' + display)
++        try:
++            self.prepare_close_protocols()
++        except Exception:
++            self.close()
++            raise
++
++    def prepare_close_protocols(self):
++        # Bare Xvfb has no window manager to create these atoms. Godot 4.7.2
++        # looks up WM_DELETE_WINDOW with only_if_exists before opening its
++        # window, so this connection must prepare it BEFORE the client starts.
++        self.protocols_atom = self.x.XInternAtom(self.d, b'WM_PROTOCOLS', 0)
++        self.delete_atom = self.x.XInternAtom(self.d, b'WM_DELETE_WINDOW', 0)
++        if not self.protocols_atom or not self.delete_atom:
++            raise RuntimeError('Cannot prepare native window-close protocols')
++        self.x.XSync(self.d, 0)
++
++    def window_protocols(self):
++        atoms, count = C.POINTER(C.c_ulong)(), C.c_int()
++        try:
++            if not self.x.XGetWMProtocols(self.d, self.window, C.byref(atoms), C.byref(count)):
++                raise RuntimeError('Exported window does not advertise WM_PROTOCOLS')
++            return [atoms[index] for index in range(count.value)]
++        finally:
++            if atoms:
++                self.x.XFree(atoms)
+ 
+     def focus_game(self):
+         root, parent, count = C.c_ulong(), C.c_ulong(), C.c_uint()
+@@ -173,8 +201,10 @@ class NativeUI:
+     def request_close(self):
+         # Deliver the normal desktop window-close protocol directly. No frame
+         # budget, process signal, private game hook or window manager is needed.
+-        protocols = self.x.XInternAtom(self.d, b'WM_PROTOCOLS', 0)
+-        delete = self.x.XInternAtom(self.d, b'WM_DELETE_WINDOW', 0)
++        protocols, delete = self.protocols_atom, self.delete_atom
++        advertised = self.window_protocols()
++        if not protocols or not delete or delete not in advertised:
++            raise RuntimeError('Exported window does not advertise the prepared WM_DELETE_WINDOW')
+         event = XEvent()
+         event.xclient.type = 33  # ClientMessage
+         event.xclient.send_event = 1
+@@ -187,6 +217,8 @@ class NativeUI:
+         if not protocols or not delete or not self.x.XSendEvent(self.d, self.window, 0, 0, C.byref(event)):
+             raise RuntimeError('Native window-close request was not delivered')
+         self.x.XFlush(self.d)
++        return {'window': self.window, 'protocols_atom': protocols, 'delete_atom': delete,
++                'advertised_protocols': advertised, 'method': 'WM_DELETE_WINDOW ClientMessage'}
+ 
+     def close(self):
+         self.x.XCloseDisplay(self.d)
+@@ -268,9 +300,9 @@ def main(supervised=False):
+         client_command = [str(executable), '--audio-driver', 'Dummy']
+         if args.quit_after:
+             client_command += ['--quit-after', str(args.quit_after)]
++        ui = NativeUI(args.display)
+         unchanged_export(executable, manifest, source_before, executable_hash)
+         client = launch('client', client_command, env)
+-        ui = NativeUI(args.display)
+         wait_for(ui.focus_game, 30, 'Export window readiness', client)
+         wait_for(ui.menu_visible, 60, 'Actual native menu readiness', client)
+         ui.focus_game()
+@@ -315,7 +347,7 @@ def main(supervised=False):
+         # can lag the authority. The filenames describe capture timing only.
+         if client.poll() is not None:
+             raise RuntimeError('Client exited before completion-driven native close')
+-        ui.request_close()
++        close_receipt = ui.request_close()
+         client.wait(timeout=max(1, args.timeout - (time.monotonic() - started)))
+         (output / 'finish').write_text('finish\n')
+         server.wait(timeout=10)
+@@ -335,7 +367,8 @@ def main(supervised=False):
+                   'reload_trigger': authority['reload_trigger'],
+                   'inventory_navigation_captured': args.visit_armory,
+                   'desktop_R_key_input': 'VERIFIED via server-observed reload command' if args.reload_mode == 'keyboard' else 'UNVERIFIED',
+-                  'exit_method': 'completion-driven native WM_DELETE_WINDOW; separate wall-clock watchdog',
++                   'exit_method': 'completion-driven native WM_DELETE_WINDOW; separate wall-clock watchdog',
++                   'window_close': close_receipt,
+                   'premature_exit_control_frames': args.quit_after,
+                   'scope': 'Actual exported Linux client through native UI; source Godot authority on loopback; llvmpipe software rendering; no physical-device performance claim'}
+         (output / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
+diff --git a/scripts/verify_offline_export.py b/scripts/verify_offline_export.py
+index d297b9c..b272301 100644
+--- a/scripts/verify_offline_export.py
++++ b/scripts/verify_offline_export.py
+@@ -20,7 +20,7 @@ import time
+ from build_manifest import ROOT, source
+ from native_log import failed
+ from verify_integration_export import NativeUI, frozen_export, unchanged_export
+-from offline_hud import parse_hud_text
++from offline_hud import parse_hud_text, require_paused_training
+ from export_flow import entry, prepare_flow_output
+ from matrix_process import run_process
+ 
+@@ -77,7 +77,7 @@ def main(supervised=False):
+     out = prepare_flow_output(args.output, supervised)
+     executable = ROOT / 'builds/linux/sightbreak.x86_64'
+     manifest, before, digest = frozen_export(executable, out)
+-    logs, processes, events = [], [], []
++    logs, processes, events, inspection_pauses = [], [], [], []
+     ui = client = None
+     started = time.monotonic()
+ 
+@@ -104,25 +104,36 @@ def main(supervised=False):
+         (out / 'actions.json').write_text(json.dumps(events, indent=2) + '\n')
+         print(name, flush=True)
+ 
+-    def read_hud(name):
++    def image_text(name, box, label):
+         from PIL import Image
+-        image = Image.open(out / (name + '.png'))
+-        def text(box, label):
++        with Image.open(out / (name + '.png')) as image:
+             crop = image.crop(box)
+             crop = crop.resize((crop.width * 3, crop.height * 3))
+             data = io.BytesIO()
+             crop.save(data, format='PNG')
+             return ocr_text([args.tesseract, 'stdin', 'stdout', '--psm', '6'], data.getvalue(),
+-                            started + args.timeout, out / (name + '-' + label + '-ocr'))
+-        status = text((0, 630, 450, 720), 'status')
+-        ammo_text = text((980, 625, 1280, 710), 'ammo')
++                             started + args.timeout, out / (name + '-' + label + '-ocr'))
++
++    def read_hud(name):
++        status = image_text(name, (0, 630, 450, 720), 'status')
++        ammo_text = image_text(name, (980, 625, 1280, 710), 'ammo')
+         return parse_hud_text(status, ammo_text)
+ 
+-    def tap(key):
++    def tap(key, settle=1.0):
+         ui.key(key, True)
+         time.sleep(.3)
+         ui.key(key, False)
+-        time.sleep(1)
++        time.sleep(settle)
++
++    def pause_for_inspection(name):
++        # Pause through the same Escape menu available to an offline player.
++        # Capture live HUD frames BEFORE pausing, then keep expensive OCR from
++        # leaving the player exposed. Never disable bots or change game state.
++        tap('Escape', settle=.35)
++        capture(name)
++        text = image_text(name, (40, 40, 780, 210), 'pause')
++        require_paused_training(text)
++        inspection_pauses.append({'image': name + '.png', 'pause_ocr': text})
+ 
+     try:
+         launch('xvfb', [args.xvfb, args.display, '-screen', '0', '1280x720x24', '-nolisten', 'tcp'])
+@@ -135,9 +146,9 @@ def main(supervised=False):
+         client_command = [str(executable), '--audio-driver', 'Dummy']
+         if args.quit_after:
+             client_command += ['--quit-after', str(args.quit_after)]
++        ui = NativeUI(args.display)
+         unchanged_export(executable, manifest, before, digest)
+         client = launch('client', client_command, env)
+-        ui = NativeUI(args.display)
+         wait_for(lambda: ui.focus_game() and ui.menu_visible(), 60, 'Native menu')
+         capture('01-menu')
+         for _ in range(3):
+@@ -169,36 +180,42 @@ def main(supervised=False):
+             ui.button(False)
+             time.sleep(.35)
+         capture('05-after-fire')
++        pause_for_inspection('05-inspection-pause')
+         fired_hud = read_hud('05-after-fire')
+         if not 0 < fired_hud['ammo'] < 15 or fired_hud['reserve'] != 60:
+             raise RuntimeError('Native fire did not deplete the initial sidearm magazine')
++        tap('Escape', settle=.15)
++        capture('05b-resumed')
+         ui.key('r', True)
+         time.sleep(1.0)
+         ui.key('r', False)
+         time.sleep(2.5)
+         capture('06-after-reload')
++        pause_for_inspection('06-inspection-pause')
+         reloaded_hud = read_hud('06-after-reload')
+         if reloaded_hud['ammo'] != 15 or reloaded_hud['reserve'] >= fired_hud['reserve'] or sum(reloaded_hud[k] for k in ('ammo', 'reserve')) != sum(fired_hud[k] for k in ('ammo', 'reserve')):
+             raise RuntimeError('Native offline reload did not conserve rendered ammunition')
+-        tap('Escape')
+         capture('07-field-menu')
+         ui.click(640, 318)
+         wait_for(ui.menu_visible, 30, 'Return from offline match')
+         capture('08-return-menu')
+         if client.poll() is not None:
+             raise RuntimeError('Client exited before completion-driven native close')
+-        ui.request_close()
++        close_receipt = ui.request_close()
+         client.wait(timeout=max(1, args.timeout - (time.monotonic() - started)))
+         if client.returncode != 0 or failed((out / 'client.log').read_text()):
+             raise RuntimeError('Export failed clean termination or native log gate')
+         unchanged_export(executable, manifest, before, digest)
+         result = {'source': before, 'executable_sha256': digest, 'events': events,
+                   'exit': client.returncode, 'clean_exit': True, 'passed': True,
+-                  'fired_hud': fired_hud, 'reloaded_hud': reloaded_hud,
+-                  'exit_method': 'completion-driven native WM_DELETE_WINDOW; separate wall-clock watchdog',
++                   'fired_hud': fired_hud, 'reloaded_hud': reloaded_hud,
++                   'ocr_inspection': {'method': 'Native offline Escape pause; live HUD frames captured before pause',
++                                      'pauses': inspection_pauses},
++                   'exit_method': 'completion-driven native WM_DELETE_WINDOW; separate wall-clock watchdog',
++                   'window_close': close_receipt,
+                   'premature_exit_control_frames': args.quit_after,
+                   'controller_sha256': hashlib.file_digest(Path(__file__).open('rb'), 'sha256').hexdigest(),
+-                  'limits': 'Screenshots require visual review; no private authority instrumentation or mobile performance claim.'}
++                   'limits': 'Screenshots require visual review; offline inspection uses the ordinary pause menu, not continuous-match play; no private authority instrumentation or mobile performance claim.'}
+         (out / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
+         print(json.dumps(result), flush=True)
+     except Exception as error:

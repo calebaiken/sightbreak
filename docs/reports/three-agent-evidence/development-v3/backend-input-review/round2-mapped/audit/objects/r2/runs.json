@@ -1,0 +1,38 @@
+[
+  {
+    "label": "baseline",
+    "command": [
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\venv312\\Scripts\\python.exe",
+      "-B",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3\\scripts\\benchmark_trade_reads.py",
+      "--source",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v2-baseline",
+      "--runtime-reference",
+      "701ce2c",
+      "--out",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-trade-retention-r2-c58235f80af7\\baseline",
+      "--samples",
+      "10"
+    ],
+    "exit": 0,
+    "seconds": 52.17200000002049
+  },
+  {
+    "label": "candidate",
+    "command": [
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-env\\venv312\\Scripts\\python.exe",
+      "-B",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3\\scripts\\benchmark_trade_reads.py",
+      "--source",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-backend-trade-read-v3",
+      "--runtime-reference",
+      "4a8e9ea",
+      "--out",
+      "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-trade-retention-r2-c58235f80af7\\candidate",
+      "--samples",
+      "10"
+    ],
+    "exit": 0,
+    "seconds": 22.969000000011874
+  }
+]

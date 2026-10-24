@@ -1,0 +1,31 @@
+{
+  "passed": false,
+  "stage": "watchdog-start",
+  "status": "incomplete",
+  "watchdog_error": "Export controller exited 1; Export controller exceeded the hard wall-clock watchdog (including cleanup); process containment reported HARNESS_ERROR (see watchdog.log)",
+  "watchdog": {
+    "passed": false,
+    "status": "failed",
+    "command": [
+      "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+      "-B",
+      "/home/runner/work/sightbreak/sightbreak/scripts/verify_integration_export.py",
+      "--_export-flow-worker",
+      "--display",
+      ":106",
+      "--visit-armory",
+      "--reload-mode",
+      "keyboard",
+      "--timeout",
+      "240",
+      "--output",
+      "builds/v3-export-network"
+    ],
+    "timeout_seconds": 240.0,
+    "process_receipt": "watchdog.process.json",
+    "controller_sha256": "61352dbc66ef5b60b2929cca6984b9facdc25a05a48729af2f08f12dd5cb282c",
+    "worker_exit": 1,
+    "seconds": 240.141,
+    "error": "Export controller exited 1; Export controller exceeded the hard wall-clock watchdog (including cleanup); process containment reported HARNESS_ERROR (see watchdog.log)"
+  }
+}

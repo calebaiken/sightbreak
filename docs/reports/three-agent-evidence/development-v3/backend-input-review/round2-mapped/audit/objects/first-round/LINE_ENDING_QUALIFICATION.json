@@ -1,0 +1,143 @@
+{
+  "schema": "post-freeze-explicit-line-ending-qualification-v1",
+  "created_utc": "2026-10-19T20:15:03.172571+00:00",
+  "original_failed_check_retained": "BINDING_VALIDATION.json: K raw exact/uniform LF-to-CRLF binding false",
+  "original_verdict_and_freeze_unchanged": true,
+  "no_prior_file_superseded": true,
+  "K_recorded_app_sha256": "9f94a55f1b19858eec3ac54036601b5c26a330749454a6cb89650d51e298f020",
+  "candidate_app_blob": "16f33c94da490c77a8ab930b88d8fc0662f3fa4c",
+  "baseline_app_blob": "bb15f054d622fc4f6164248a2f4453d20a3e7fff",
+  "constructions": [
+    {
+      "construction": "raw_candidate_git_bytes",
+      "bytes": 30739,
+      "sha256": "703c20b298d734395f292d4a8c5e415e55e6f35109e9a51dcb36fbcb62647441",
+      "matches_K_recorded_fingerprint": false,
+      "CRLF_count": 0,
+      "bare_LF_count": 531,
+      "same_content_after_CRLF_to_LF_only": true
+    },
+    {
+      "construction": "all_LF",
+      "bytes": 30739,
+      "sha256": "703c20b298d734395f292d4a8c5e415e55e6f35109e9a51dcb36fbcb62647441",
+      "matches_K_recorded_fingerprint": false,
+      "CRLF_count": 0,
+      "bare_LF_count": 531,
+      "same_content_after_CRLF_to_LF_only": true
+    },
+    {
+      "construction": "all_CRLF",
+      "bytes": 31270,
+      "sha256": "8de07d0755017eb5eb6f3f21f68f8e03bf6fd2e33d71db6004bac00491228d82",
+      "matches_K_recorded_fingerprint": false,
+      "CRLF_count": 531,
+      "bare_LF_count": 0,
+      "same_content_after_CRLF_to_LF_only": true
+    },
+    {
+      "construction": "unchanged_lines_CRLF_added_or_replaced_lines_LF",
+      "bytes": 31255,
+      "sha256": "cd19d7bd5adf679f50174c718a0ab8d1a95bbb3a1deb803fd63460db059ca86a",
+      "matches_K_recorded_fingerprint": false,
+      "CRLF_count": 516,
+      "bare_LF_count": 15,
+      "same_content_after_CRLF_to_LF_only": true
+    },
+    {
+      "construction": "unchanged_lines_LF_added_or_replaced_lines_CRLF",
+      "bytes": 30754,
+      "sha256": "875921376aa7645c84ed7bdb7d1ea1081ede64671e9b50aea230e593a76ad78f",
+      "matches_K_recorded_fingerprint": false,
+      "CRLF_count": 15,
+      "bare_LF_count": 516,
+      "same_content_after_CRLF_to_LF_only": true
+    }
+  ],
+  "diff_regions": [
+    {
+      "opcode": "equal",
+      "baseline_lines_0based_halfopen": [
+        0,
+        298
+      ],
+      "candidate_lines_0based_halfopen": [
+        0,
+        298
+      ]
+    },
+    {
+      "opcode": "replace",
+      "baseline_lines_0based_halfopen": [
+        298,
+        299
+      ],
+      "candidate_lines_0based_halfopen": [
+        298,
+        299
+      ]
+    },
+    {
+      "opcode": "equal",
+      "baseline_lines_0based_halfopen": [
+        299,
+        301
+      ],
+      "candidate_lines_0based_halfopen": [
+        299,
+        301
+      ]
+    },
+    {
+      "opcode": "replace",
+      "baseline_lines_0based_halfopen": [
+        301,
+        303
+      ],
+      "candidate_lines_0based_halfopen": [
+        301,
+        303
+      ]
+    },
+    {
+      "opcode": "equal",
+      "baseline_lines_0based_halfopen": [
+        303,
+        312
+      ],
+      "candidate_lines_0based_halfopen": [
+        303,
+        312
+      ]
+    },
+    {
+      "opcode": "replace",
+      "baseline_lines_0based_halfopen": [
+        312,
+        313
+      ],
+      "candidate_lines_0based_halfopen": [
+        312,
+        324
+      ]
+    },
+    {
+      "opcode": "equal",
+      "baseline_lines_0based_halfopen": [
+        313,
+        520
+      ],
+      "candidate_lines_0based_halfopen": [
+        324,
+        531
+      ]
+    }
+  ],
+  "matching_constructions": [],
+  "scope": "Explicit reproducible line-ending hash arithmetic only, not recovered original worktree bytes, code execution authentication, or a new source safety test.",
+  "remaining_limits": [
+    "Raw candidate Git bytes do not equal the recorded worktree fingerprint.",
+    "No original measured app.py byte snapshot is claimed retained here.",
+    "Current shipping source safety remains inspection-only; retained controls remain UNEXECUTED."
+  ]
+}

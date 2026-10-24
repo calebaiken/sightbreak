@@ -88,6 +88,7 @@ class NativeUI:
         self.x.XGetGeometry.argtypes = [C.c_void_p, C.c_ulong, C.POINTER(C.c_ulong), C.POINTER(C.c_int), C.POINTER(C.c_int), C.POINTER(C.c_uint), C.POINTER(C.c_uint), C.POINTER(C.c_uint), C.POINTER(C.c_uint)]
         self.x.XSetInputFocus.argtypes = [C.c_void_p, C.c_ulong, C.c_int, C.c_ulong]
         self.x.XFlush.argtypes = [C.c_void_p]
+        self.x.XSync.argtypes = [C.c_void_p, C.c_int]
         self.x.XKeysymToKeycode.argtypes = [C.c_void_p, C.c_ulong]
         self.x.XKeysymToKeycode.restype = C.c_uint
         self.x.XStringToKeysym.argtypes = [C.c_char_p]
@@ -96,6 +97,8 @@ class NativeUI:
         self.x.XCloseDisplay.argtypes = [C.c_void_p]
         self.x.XInternAtom.argtypes = [C.c_void_p, C.c_char_p, C.c_int]
         self.x.XInternAtom.restype = C.c_ulong
+        self.x.XGetWMProtocols.argtypes = [C.c_void_p, C.c_ulong, C.POINTER(C.POINTER(C.c_ulong)), C.POINTER(C.c_int)]
+        self.x.XGetWMProtocols.restype = C.c_int
         self.x.XSendEvent.argtypes = [C.c_void_p, C.c_ulong, C.c_int, C.c_long, C.POINTER(XEvent)]
         self.x.XSendEvent.restype = C.c_int
         self.t.XTestFakeMotionEvent.argtypes = [C.c_void_p, C.c_int, C.c_int, C.c_int, C.c_ulong]
@@ -104,6 +107,31 @@ class NativeUI:
         self.d = self.x.XOpenDisplay(display.encode())
         if not self.d:
             raise RuntimeError('Cannot open native display ' + display)
+        try:
+            self.prepare_close_protocols()
+        except Exception:
+            self.close()
+            raise
+
+    def prepare_close_protocols(self):
+        # Bare Xvfb has no window manager to create these atoms. Godot 4.7.2
+        # looks up WM_DELETE_WINDOW with only_if_exists before opening its
+        # window, so this connection must prepare it BEFORE the client starts.
+        self.protocols_atom = self.x.XInternAtom(self.d, b'WM_PROTOCOLS', 0)
+        self.delete_atom = self.x.XInternAtom(self.d, b'WM_DELETE_WINDOW', 0)
+        if not self.protocols_atom or not self.delete_atom:
+            raise RuntimeError('Cannot prepare native window-close protocols')
+        self.x.XSync(self.d, 0)
+
+    def window_protocols(self):
+        atoms, count = C.POINTER(C.c_ulong)(), C.c_int()
+        try:
+            if not self.x.XGetWMProtocols(self.d, self.window, C.byref(atoms), C.byref(count)):
+                raise RuntimeError('Exported window does not advertise WM_PROTOCOLS')
+            return [atoms[index] for index in range(count.value)]
+        finally:
+            if atoms:
+                self.x.XFree(atoms)
 
     def focus_game(self):
         root, parent, count = C.c_ulong(), C.c_ulong(), C.c_uint()
@@ -173,8 +201,10 @@ class NativeUI:
     def request_close(self):
         # Deliver the normal desktop window-close protocol directly. No frame
         # budget, process signal, private game hook or window manager is needed.
-        protocols = self.x.XInternAtom(self.d, b'WM_PROTOCOLS', 0)
-        delete = self.x.XInternAtom(self.d, b'WM_DELETE_WINDOW', 0)
+        protocols, delete = self.protocols_atom, self.delete_atom
+        advertised = self.window_protocols()
+        if not protocols or not delete or delete not in advertised:
+            raise RuntimeError('Exported window does not advertise the prepared WM_DELETE_WINDOW')
         event = XEvent()
         event.xclient.type = 33  # ClientMessage
         event.xclient.send_event = 1
@@ -187,6 +217,8 @@ class NativeUI:
         if not protocols or not delete or not self.x.XSendEvent(self.d, self.window, 0, 0, C.byref(event)):
             raise RuntimeError('Native window-close request was not delivered')
         self.x.XFlush(self.d)
+        return {'window': self.window, 'protocols_atom': protocols, 'delete_atom': delete,
+                'advertised_protocols': advertised, 'method': 'WM_DELETE_WINDOW ClientMessage'}
 
     def close(self):
         self.x.XCloseDisplay(self.d)
@@ -268,9 +300,9 @@ def main(supervised=False):
         client_command = [str(executable), '--audio-driver', 'Dummy']
         if args.quit_after:
             client_command += ['--quit-after', str(args.quit_after)]
+        ui = NativeUI(args.display)
         unchanged_export(executable, manifest, source_before, executable_hash)
         client = launch('client', client_command, env)
-        ui = NativeUI(args.display)
         wait_for(ui.focus_game, 30, 'Export window readiness', client)
         wait_for(ui.menu_visible, 60, 'Actual native menu readiness', client)
         ui.focus_game()
@@ -315,7 +347,7 @@ def main(supervised=False):
         # can lag the authority. The filenames describe capture timing only.
         if client.poll() is not None:
             raise RuntimeError('Client exited before completion-driven native close')
-        ui.request_close()
+        close_receipt = ui.request_close()
         client.wait(timeout=max(1, args.timeout - (time.monotonic() - started)))
         (output / 'finish').write_text('finish\n')
         server.wait(timeout=10)
@@ -335,7 +367,8 @@ def main(supervised=False):
                   'reload_trigger': authority['reload_trigger'],
                   'inventory_navigation_captured': args.visit_armory,
                   'desktop_R_key_input': 'VERIFIED via server-observed reload command' if args.reload_mode == 'keyboard' else 'UNVERIFIED',
-                  'exit_method': 'completion-driven native WM_DELETE_WINDOW; separate wall-clock watchdog',
+                   'exit_method': 'completion-driven native WM_DELETE_WINDOW; separate wall-clock watchdog',
+                   'window_close': close_receipt,
                   'premature_exit_control_frames': args.quit_after,
                   'scope': 'Actual exported Linux client through native UI; source Godot authority on loopback; llvmpipe software rendering; no physical-device performance claim'}
         (output / 'results.json').write_text(json.dumps(result, indent=2) + '\n')

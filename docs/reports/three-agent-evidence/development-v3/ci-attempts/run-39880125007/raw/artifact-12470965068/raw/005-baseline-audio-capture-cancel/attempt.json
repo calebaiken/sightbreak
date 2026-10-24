@@ -1,0 +1,26 @@
+{
+  "name": "audio capture (cancel)",
+  "role": "baseline",
+  "control": null,
+  "command": [
+    "/home/runner/work/_temp/sightbreak-v3-controls/scripts/godot.sh",
+    "--headless",
+    "--audio-driver",
+    "Dummy",
+    "--script",
+    "res://tests/reload_audio_capture.gd",
+    "--",
+    "--scenario=cancel",
+    "--out=/home/runner/work/sightbreak/sightbreak/builds/v3-audio-controls/raw/005-baseline-audio-capture-cancel/capture"
+  ],
+  "exit": 0,
+  "seconds": 4.022,
+  "log": "native.log",
+  "process_receipt": "process.json",
+  "containment_and_artifact_errors": [],
+  "capture_sha256": {
+    "mix_cancel.wav": "c7a6cb9afa81e4d6b1fda2449c52279f93139894a98a7a7170287080dc9b7a94",
+    "voices_cancel.csv": "ff0b40efd290d0012e2b11a45c2a539761c353e86a7768e229d9dd5f44b86542",
+    "report_cancel.txt": "aaaaa779627d59d69c0519b56d6511eca3471070cce0ab05d254dbb3e6111ab5"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "row": {
+    "mode": "offline",
+    "fault": "source-mutated-at-native-init",
+    "control_passed": true,
+    "error": {
+      "type": "RuntimeError",
+      "message": "Frozen source changed during verification"
+    },
+    "controller_passed": false,
+    "synthetic_control_not_native_evidence": true
+  },
+  "trace": [
+    {
+      "t": 0.0,
+      "event": "launch",
+      "name": "xvfb",
+      "command": [
+        "synthetic-xvfb",
+        ":99998",
+        "-screen",
+        "0",
+        "1280x720x24",
+        "-nolisten",
+        "tcp"
+      ]
+    },
+    {
+      "t": 0.0,
+      "event": "native-init-atoms-and-sync",
+      "display": ":99998"
+    },
+    {
+      "t": 0.0,
+      "event": "close-display"
+    },
+    {
+      "t": 0.0,
+      "event": "terminate",
+      "name": "xvfb"
+    },
+    {
+      "t": 0.0,
+      "event": "wait",
+      "name": "xvfb",
+      "timeout": 10
+    }
+  ]
+}

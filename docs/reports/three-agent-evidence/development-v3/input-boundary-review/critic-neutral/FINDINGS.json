@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "verdict": "Not behaviorally equivalent. sample-bd249c distinguishes both fully ACKed replays by returning false/incrementing rejected, while preserving queued-unACKed and mixed-new retries in this recorded component sequence.",
+  "component_signal_advantage": "sample-bd249c",
+  "tie_on_recorded_queue_ack_rate_and_consumption": true,
+  "full_behavior_tie": false,
+  "global_network_release_winner": null,
+  "authenticated_execution": false,
+  "native_execution_performed_by_critic": false,
+  "sample_identity_guesses": null,
+  "counts": {
+    "neutral_input_files_verified": 15,
+    "events_per_sample": 15,
+    "total_events": 30,
+    "accept_attempts_per_sample": 11,
+    "pop_attempts_per_sample": 4,
+    "nonempty_pops_per_sample": 3,
+    "packet_instances_independently_decoded": 22,
+    "unique_packet_bytes": 7,
+    "independent_consistency_checks": 326,
+    "independent_consistency_check_failures": 0
+  },
+  "important_controls": {
+    "fully_acked_identical_replay": {
+      "before_ack": 2,
+      "packet_sequences": [
+        1,
+        2
+      ],
+      "queue_before_after": {},
+      "bd249c_accepted": false,
+      "05ec6c_accepted": true,
+      "bd249c_rejected_increment": 1,
+      "05ec6c_rejected_increment": 0
+    },
+    "fully_acked_altered_replay": {
+      "before_ack": 2,
+      "packet_sequences": [
+        1,
+        2
+      ],
+      "queue_before_after": {},
+      "bd249c_accepted": false,
+      "05ec6c_accepted": true,
+      "bd249c_rejected_increment": 1,
+      "05ec6c_rejected_increment": 0
+    },
+    "queued_retries": "Identical, altered, partially ACKed and sequence-3 queued retry all return true in both samples; existing queued payloads unchanged.",
+    "mutation_control": "Altered queued retry reverses movement and swaps fire values; both retain the first queued original values.",
+    "mixed_new_control": "At ACK2, packet with acknowledged sequence2 and new sequence3 queues only sequence3, accepted true in both.",
+    "consumption": "Both pop exactly original sequences1,2,3: moves +1,+1,-1; fire true,false,true. Fourth pop empty and ACK stays3.",
+    "invalid_controls": "Old epoch6, sequence124 at ACK3 (+121), and malformed acknowledged fire string before valid new sequence4 rejected without ACK/queue changes in both.",
+    "rate_clock": "Each of 11 accept attempts charges bucket once, including rejects; four pops do not charge; start1000 count11 in both. Supplied rate time1000..1600 versus recorded capture spans329..331 and327..329.",
+    "disconnect_evidence": "Absent; no lifecycle/Match/timer/UDP/actor inference supported."
+  },
+  "limits": [
+    "Only source-identity blinding: labels/keys, parent driver/probe/private/main verdict and source modules were not inspected. Behavior is visible in raw accepted/rejected outputs, and the critic has prior large-packet outcome context without its key. No label/source or cross-packet identity guesses are made.",
+    "Unsigned historical local receipts/logs, no externally supplied hash pin or signed engine/OS attestation. Native banner, complete/exit0, error arrays, and matching result records are internal corroboration, not authenticated execution or verified production-source custody.",
+    "No Match, lifecycle activity timestamps, simulation clock, timer decision, disconnect event, peer binding, UDP datagram, stock-client reconnect, actor movement/fire/ammo, privacy payload, default-prediction or live-rewind evidence exists in the component states.",
+    "Captured monotonic values span only two milliseconds per sample. Fixture-supplied rate times span 600 milliseconds. These are distinct clocks, not a 600 ms native wait or a silence/30-second expiry test; cross-process clock origins are not comparable.",
+    "Rate bucket shows 11 charges and no reset. No budget threshold, capacity exhaustion, rollover boundary, backward-clock behavior, flood load or disconnect consequence was tested.",
+    "Both 21-check/0-failure summaries are retained, but exact underlying assertion code was prohibited and not read. The independent 326 checks are data/byte/state-consistency observations, not authenticated reruns or reconstruction of those 21 assertions.",
+    "The byte parser is deliberately narrow for the observed unflagged Variant types. Exact decoded-payload agreement and roundtrip do not prove engine serializer/deserializer correctness for all types, flags, malformed raw bytes or protocol envelopes.",
+    "One deterministic short component sequence per sample; no randomization, repeat distribution, latency/CPU/performance benchmark, packet loss/reordering, queue cap exhaustion, peer authorization or reconnect challenge coverage.",
+    "A sequence distance of +121 is rejected, but exact +120/nearby acceptance boundary and full limits are not established. Old epoch 6 is rejected against observed valid epoch 7; other epoch/wrap/type cases are untested.",
+    "Malformed acknowledged command is first, then valid new command. Its whole recorded packet is rejected without queue change; reversed ordering or later-invalid partial mutation/transactional atomicity is not established.",
+    "Fire true/false/true are popped payload values. Two hypothetical rising edges under a simple latch are not shots, ammunition changes, latch survival through silence, or actor behavior.",
+    "RESULTS.json was copied and hashed only, not used as owner/aggregate verdict evidence. Hashes pin the permitted local intake snapshot and freeze contents, not withheld source origins.",
+    "Component accepted=false for fully ACKed replay offers a better non-fresh signal under the requested distinction. Whether a caller uses this boolean to renew live activity cannot be established from this packet, so no actual stale-stop or disconnect improvement is inferred.",
+    "The prior large-packet frozen directory and all identity keys remained unopened and unchanged in this follow-up. This component verdict does not amend or causally explain that verdict or close its open gates."
+  ],
+  "source_snapshot_unchanged_at_final_recheck": true,
+  "large_packet_freeze_opened_or_modified": false,
+  "freeze_before_any_key_or_source_followup": true
+}

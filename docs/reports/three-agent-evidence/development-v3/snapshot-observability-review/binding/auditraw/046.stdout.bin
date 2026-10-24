@@ -1,0 +1,70 @@
+diff --git a/game/scripts/network/movement_prediction.gd b/game/scripts/network/movement_prediction.gd
+index f83dc45..ad3256b 100644
+--- a/game/scripts/network/movement_prediction.gd
++++ b/game/scripts/network/movement_prediction.gd
+@@ -1,60 +1,65 @@
+ class_name SBMovementPrediction
+ extends RefCounted
+ ## Bounded movement replay. Server positions/collision and all combat stay final.
+ const MAX_HISTORY := 120
++const AckSnapshotDiagnostics := preload("res://scripts/network/ack_snapshot_diagnostics.gd")
++var snapshot_diagnostics := AckSnapshotDiagnostics.new()
+ var sequence := 0
+ var _grounded_override := -1
+ var epoch := -1
+ var pending: Array[Dictionary] = []
+ var visual_offset := Vector3.ZERO
+ var corrections := 0
+ var hard_corrections := 0
+ var error_samples: Array[float] = []
+ var large_corrections: Array[Dictionary] = []
+ 
+ func reset(connection: bool = false) -> void:
++	snapshot_diagnostics.clear()
+ 	pending.clear()
+ 	visual_offset = Vector3.ZERO
+ 	epoch = -1
+ 	_grounded_override = -1
+ 	if connection:
+ 		sequence = 0
+ 
+ func predict(actor: CharacterBody3D, controls: Dictionary, current_epoch: int, enabled: bool) -> void:
+ 	if epoch != current_epoch:
++		snapshot_diagnostics.begin_epoch(current_epoch)
+ 		pending.clear()
+ 		visual_offset = Vector3.ZERO
+ 		epoch = current_epoch
+ 		sequence = 0
+ 	if pending.size() >= MAX_HISTORY:
+ 		return # Bound stalled connections; no unbounded replay or sequence jump.
+ 	sequence += 1
+ 	var command := controls.duplicate()
+ 	command.sequence = sequence
+ 	command = SBInputStream.sanitize(command)
+ 	if command.is_empty():
+ 		return
+ 	if enabled:
+ 		SBMovementStep.advance(actor, command, SBMovementStep.STEP, _grounded_override)
+ 		_grounded_override = -1
+ 	pending.append({"command": command, "position": actor.global_position})
+ 
+ func packet() -> Dictionary:
+ 	var commands: Array = []
+ 	for index in range(maxi(0, pending.size() - SBInputStream.MAX_BATCH), pending.size()):
+ 		commands.append(pending[index].command)
+ 	return {"epoch": epoch, "commands": commands}
+ 
+ func reconcile(actor: CharacterBody3D, state: Dictionary, current_epoch: int, previous_position: Vector3, enabled: bool) -> void:
++	snapshot_diagnostics.observe(state, current_epoch, enabled)
+ 	var ack: int = state.get("move_ack", 0)
+ 	actor._jump_previous = bool(state.get("jump_held", false))
+ 	_grounded_override = 1 if bool(state.get("grounded", false)) else 0
+ 	if epoch != current_epoch:
+ 		pending.clear()
+ 		visual_offset = Vector3.ZERO
+ 		epoch = current_epoch
+ 		sequence = 0
+ 		return
+ 	for record: Dictionary in pending:
+ 		if int(record.command.sequence) == ack:
+ 			error_samples.append((record.position as Vector3).distance_to(state.position))

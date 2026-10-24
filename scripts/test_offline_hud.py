@@ -1,10 +1,21 @@
 #!/usr/bin/env python3
 """Negative controls for the exported-client living-player evidence gate."""
 import unittest
-from offline_hud import parse_hud_text
+from offline_hud import parse_hud_text, require_paused_training
 
 
 class LivingHUDTests(unittest.TestCase):
+    def test_offline_pause_requires_both_rendered_labels(self):
+        text = 'FIELD MENU\nTraining is paused.\nRESUME\n'
+        self.assertEqual(require_paused_training(text), text)
+
+    def test_network_menu_and_missing_pause_proof_fail_closed(self):
+        for text in ('', 'FIELD MENU', 'Training is paused.',
+                     'FIELD MENU\nThe match continues while this menu is open.',
+                     'FIELD MENU\nTraining is paused.\nThe match continues.'):
+            with self.subTest(text=text), self.assertRaises(ValueError):
+                require_paused_training(text)
+
     def test_actual_v2_ocr_is_recognized(self):
         record = parse_hud_text('800 - FUNDS\n100 - HEALTH .\n', 'SIDEARM 14/60\nFRAG x1 SMOKE <1\n')
         self.assertEqual((record['health'], record['ammo'], record['reserve']), (100, 14, 60))

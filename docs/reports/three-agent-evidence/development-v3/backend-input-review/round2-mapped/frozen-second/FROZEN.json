@@ -1,0 +1,107 @@
+{
+  "artifacts": [
+    {
+      "bytes": 33945,
+      "path": "NEUTRAL_RETENTION_VERDICT.md",
+      "sha256": "1248f66b7b80e2acbf69595ef084b164957547497f7c40c2e56c4489847fcf3e"
+    },
+    {
+      "bytes": 5569,
+      "path": "freeze_artifacts.py",
+      "sha256": "247829ebb1a3efcde6c36fc7700cca45ee35bb12a052661ff825c41c17b35f6a"
+    },
+    {
+      "bytes": 38197,
+      "path": "independent_audit.py",
+      "sha256": "0e257b497543a794da57bc7791c140f72c60044327e68d4e7e4926827e1fc137"
+    },
+    {
+      "bytes": 80758,
+      "path": "input_hashes.json",
+      "sha256": "b8b6114ef481b910e66e026b8c1039b0365e9dc72eef7eeecb057591ded15e2f"
+    },
+    {
+      "bytes": 0,
+      "path": "packet_verifier.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 841,
+      "path": "packet_verifier.stdout.json",
+      "sha256": "a16f5beace65ce145e301b8789d9d8611f1d2cacd056ec9c6d731b849041a23b"
+    },
+    {
+      "bytes": 991,
+      "path": "packet_verifier_execution.json",
+      "sha256": "4d66298db83a9e93f8f3f6558a327faf22a6b5463cf5ca8959f9595c0caba899"
+    },
+    {
+      "bytes": 455814,
+      "path": "per_workload_judgments.json",
+      "sha256": "2d6d88e4de65bea3b61843faa1d327c6731f9f17710e76265441fb07eadf1cf2"
+    }
+  ],
+  "blind_status": "Anonymous M/V only; identity key/source/repository/owner reports not inspected; no source or cross-round assignment asserted",
+  "blinding_limit": "Distinct query-count signatures and retained timestamps make behavior-level blinding imperfect across rounds. No label-to-source or cross-round mapping is asserted or used.",
+  "decision": {
+    "broad_gates": {
+      "8.5": "UNVERIFIED",
+      "concurrent_load": "UNVERIFIED",
+      "device": "UNVERIFIED",
+      "human": "UNVERIFIED",
+      "production": "UNVERIFIED",
+      "unbounded_history": "UNVERIFIED"
+    },
+    "confidence": "HIGH for retained body/row/hash/count consistency; not trusted-capture attestation or production generalization",
+    "narrow_verdict": "ACCEPT WITH QUALIFICATIONS",
+    "preferred_label": "V",
+    "qualification": "V has two descriptive latency regressions despite count ties; all eight monetary/history tables are empty and all balances zero; capture/source provenance remains withheld. No broad implementation acceptance.",
+    "statuses": {
+      "actual_response_equivalence": "PASS",
+      "captured_net_row_state_preservation": "PASS",
+      "latency_generalization": "NEEDS MORE EVIDENCE",
+      "measured_query_efficiency": {
+        "M": "FAIL",
+        "V": "PASS"
+      },
+      "packet_integrity": "PASS",
+      "source_monetary_contract_safety": "NOT EVALUATED"
+    }
+  },
+  "first_verdict_rechecked_unchanged": true,
+  "frozen_utc": "2026-10-23T00:26:09.129364+00:00",
+  "immutability_limit": "Hash-frozen and best-effort local read-only files, not WORM storage, trusted timestamp, or third-party capture attestation",
+  "packet_manifest_sha256": "dd07a3bfd69e09e27c43257be3a719d001c5d8446a9338746460829887c86d64",
+  "packet_root": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\blind-trade-retention-r2-527acf0980f8\\packet",
+  "preservation_rule": "Preserve both verdicts unchanged. Any mapping/source binding or changed judgment belongs in a separate post-unblinding addendum citing freeze hashes.",
+  "preserved_first_verdict": {
+    "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-backend-blind-verdict-20261019T194014Z\\NEUTRAL_VERDICT.md",
+    "sha256": "f76906b5b3ee735d65eedef6bf23998d274a614778fb9e76c196ba39957bfdfa",
+    "unchanged_before_and_after_audit": true
+  },
+  "r1_gap_resolution": {
+    "latency_production_concurrent_memory_unbounded_history": "OPEN",
+    "missing_full_authoritative_snapshots_and_hashes": "CLOSED for net row equality within these 14 r2 captured intervals; no transient-write proof",
+    "missing_full_sql_traces_and_bound_parameters": "OPEN",
+    "missing_received_response_bodies_and_actual_hash_proof": "CLOSED for these 168 r2 response records; no retroactive proof of original r1 captures",
+    "source_capture_provenance_adversarial_authentication_monetary_contracts": "OPEN / NOT EVALUATED"
+  },
+  "schema": "neutral-retention-r2-pre-mapping-freeze-v1",
+  "verified_totals": {
+    "M_received_responses": 84,
+    "M_timed_statement_callbacks": 23180,
+    "V_received_responses": 84,
+    "V_timed_statement_callbacks": 350,
+    "aggregate_states_reconstructed": 28,
+    "empty_table_snapshot_files": 236,
+    "full_table_snapshots": 336,
+    "received_responses": 168,
+    "snapshot_row_instances": 11728,
+    "sql_shape_entries": 58,
+    "timed_responses": 140,
+    "timed_samples": 140,
+    "warmup_responses": 28,
+    "workload_records": 14
+  },
+  "windows_read_only_attribute_requested": true
+}

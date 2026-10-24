@@ -2,6 +2,15 @@
 import re
 
 
+def require_paused_training(text):
+    normalized = ' '.join(text.upper().split())
+    if (not re.search(r'\bFIELD MENU\b', normalized)
+            or not re.search(r'\bTRAINING IS PAUSED\b', normalized)
+            or re.search(r'\bMATCH CONTINUES\b', normalized)):
+        raise ValueError('Rendered offline pause confirmation missing: ' + repr(text))
+    return text
+
+
 def parse_hud_text(status, ammunition):
     health = re.findall(r'^\s*(\d{1,3})[^A-Z0-9\n]*HEALTH\b', status.upper(), re.MULTILINE)
     ammo = re.findall(r'(?<![\w+-])(\d+)\s*/\s*(\d+)(?!\w)', ammunition)

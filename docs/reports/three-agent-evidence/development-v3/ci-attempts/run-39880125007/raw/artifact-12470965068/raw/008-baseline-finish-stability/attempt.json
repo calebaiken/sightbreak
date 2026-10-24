@@ -1,0 +1,24 @@
+{
+  "name": "finish stability",
+  "role": "baseline",
+  "control": null,
+  "command": [
+    "/home/runner/work/_temp/sightbreak-v3-controls/scripts/godot.sh",
+    "--audio-driver",
+    "Dummy",
+    "--rendering-method",
+    "gl_compatibility",
+    "--script",
+    "res://tests/reload_discolour_probe.gd",
+    "--",
+    "--assert",
+    "--conditions=base",
+    "--ticks=0,40,122,126,130,134"
+  ],
+  "exit": 0,
+  "seconds": 13.276,
+  "log": "native.log",
+  "process_receipt": "process.json",
+  "containment_and_artifact_errors": [],
+  "capture_sha256": {}
+}

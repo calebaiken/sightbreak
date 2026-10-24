@@ -1,0 +1,65 @@
+E...E..........s..
+======================================================================
+ERROR: test_dirty_source_refuses_to_launch_matrix (__main__.MatrixGateTests.test_dirty_source_refuses_to_launch_matrix)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/sightbreak/sightbreak/scripts/test_validate_matrix.py", line 165, in test_dirty_source_refuses_to_launch_matrix
+    self.assertEqual(matrix.main(), 1)
+                     ^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/scripts/validate_matrix.py", line 62, in main
+    'platform': platform.platform(), 'python': platform.python_version(), 'checks': records}
+                ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/platform.py", line 1243, in platform
+    system, node, release, version, machine, processor = uname()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/platform.py", line 863, in __iter__
+    (self.processor,)
+     ^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/functools.py", line 995, in __get__
+    val = self.func(instance)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/platform.py", line 858, in processor
+    return _unknown_as_blank(_Processor.get())
+                             ^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/platform.py", line 798, in get
+    return func() or ''
+           ^^^^^^
+  File "/usr/lib/python3.12/platform.py", line 826, in from_subprocess
+    return subprocess.check_output(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/mock.py", line 1195, in _execute_mock_call
+    result = next(effect)
+             ^^^^^^^^^^^^
+StopIteration
+
+======================================================================
+ERROR: test_inventory_keeps_existing_rows_and_adds_maintained_python_units (__main__.MatrixGateTests.test_inventory_keeps_existing_rows_and_adds_maintained_python_units)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/sightbreak/sightbreak/scripts/test_validate_matrix.py", line 196, in test_inventory_keeps_existing_rows_and_adds_maintained_python_units
+    self.assertEqual(matrix.main(), 0)
+                     ^^^^^^^^^^^^^
+  File "/home/runner/work/sightbreak/sightbreak/scripts/validate_matrix.py", line 157, in main
+    final_dirty = bool(subprocess.check_output(['git', 'status', '--porcelain', '--untracked-files=all'], cwd=ROOT, text=True).strip())
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/mock.py", line 1134, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/mock.py", line 1138, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/mock.py", line 1195, in _execute_mock_call
+    result = next(effect)
+             ^^^^^^^^^^^^
+StopIteration
+
+----------------------------------------------------------------------
+Ran 18 tests in 4.403s
+
+FAILED (errors=2, skipped=1)

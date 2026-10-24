@@ -1,0 +1,26 @@
+@rpc("any_peer", "call_remote", "unreliable_ordered", 1)
+func _input_rpc(packed: PackedByteArray) -> void:
+	if not _authority:
+		return
+	var peer_id: int = multiplayer.get_remote_sender_id()
+	if not _peer_actors.has(peer_id) or not _peer_lifecycle.allow_input(peer_id, Time.get_ticks_msec()) or packed.is_empty() or packed.size() > 1100:
+		return
+	var decoded: Variant = bytes_to_var(packed.decompress_dynamic(8192, FileAccess.COMPRESSION_DEFLATE))
+	if not decoded is Dictionary:
+		return
+	var data: Dictionary = decoded
+	if not _input_stream.accept(peer_id, data, _snapshot_generation, Time.get_ticks_msec()):
+		return
+	_peer_lifecycle.active(peer_id, Time.get_ticks_msec())
+	var clean: Dictionary = SBInputStream.sanitize(data.commands.back())
+	var id: int = int(_peer_actors[peer_id])
+	var alias: Dictionary = _resume_aliases.get(id, {})
+	if int(alias.get("peer", -1)) == peer_id and int(alias.get("generation", -1)) == int(_peer_lifecycle.peers[peer_id].generation):
+		# The stock client cannot send these inputs before processing its welcome.
+		# Retire the previous credential only after this generation proves delivery.
+		_resume_aliases.erase(id)
+	var old_look: Vector2 = actors[id].input_state.get("look", Vector2.ZERO)
+	var new_look: Vector2 = clean.look
+	if old_look.distance_to(new_look) > 0.004 or ((clean.move as Vector2).length() > 0.1 and actors[id].velocity.length() > 0.2) or (bool(clean.interact) and _interactions.has(id)):
+		_last_activity[id] = _elapsed
+	_last_peer_input[id] = _elapsed

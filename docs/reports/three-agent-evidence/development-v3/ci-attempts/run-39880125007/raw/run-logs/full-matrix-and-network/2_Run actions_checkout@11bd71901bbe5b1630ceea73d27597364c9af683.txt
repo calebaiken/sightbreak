@@ -1,0 +1,130 @@
+﻿2026-10-23T00:46:43.7874923Z ##[group]Run actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+2026-10-23T00:46:43.7876055Z with:
+2026-10-23T00:46:43.7876507Z   fetch-depth: 0
+2026-10-23T00:46:43.7876981Z   repository: calebaiken/sightbreak
+2026-10-23T00:46:43.7881281Z   token: ***
+2026-10-23T00:46:43.7881736Z   ssh-strict: true
+2026-10-23T00:46:43.7882193Z   ssh-user: git
+2026-10-23T00:46:43.7882712Z   persist-credentials: true
+2026-10-23T00:46:43.7883209Z   clean: true
+2026-10-23T00:46:43.7883656Z   sparse-checkout-cone-mode: true
+2026-10-23T00:46:43.7884181Z   fetch-tags: false
+2026-10-23T00:46:43.7884624Z   show-progress: true
+2026-10-23T00:46:43.7885071Z   lfs: false
+2026-10-23T00:46:43.7885487Z   submodules: false
+2026-10-23T00:46:43.7885947Z   set-safe-directory: true
+2026-10-23T00:46:43.7886684Z ##[endgroup]
+2026-10-23T00:46:43.8928077Z Syncing repository: calebaiken/sightbreak
+2026-10-23T00:46:43.8930844Z ##[group]Getting Git version info
+2026-10-23T00:46:43.8932107Z Working directory is '/home/runner/work/sightbreak/sightbreak'
+2026-10-23T00:46:43.8933916Z [command]/usr/bin/git version
+2026-10-23T00:46:43.8985242Z git version 2.55.0
+2026-10-23T00:46:43.9007128Z ##[endgroup]
+2026-10-23T00:46:43.9023410Z Temporarily overriding HOME='/home/runner/work/_temp/1b85b6cc-85de-41d7-af5d-a2f8503f9348' before making global git config changes
+2026-10-23T00:46:43.9025854Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-23T00:46:43.9029410Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/sightbreak/sightbreak
+2026-10-23T00:46:43.9094708Z Deleting the contents of '/home/runner/work/sightbreak/sightbreak'
+2026-10-23T00:46:43.9098767Z ##[group]Initializing the repository
+2026-10-23T00:46:43.9104609Z [command]/usr/bin/git init /home/runner/work/sightbreak/sightbreak
+2026-10-23T00:46:43.9218881Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-23T00:46:43.9220639Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-23T00:46:43.9222667Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-23T00:46:43.9223922Z hint: call:
+2026-10-23T00:46:43.9224551Z hint:
+2026-10-23T00:46:43.9225351Z hint: 	git config --global init.defaultBranch <name>
+2026-10-23T00:46:43.9226330Z hint:
+2026-10-23T00:46:43.9227277Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-23T00:46:43.9229122Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-23T00:46:43.9230481Z hint:
+2026-10-23T00:46:43.9231135Z hint: 	git branch -m <name>
+2026-10-23T00:46:43.9231884Z hint:
+2026-10-23T00:46:43.9232932Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-23T00:46:43.9234702Z Initialized empty Git repository in /home/runner/work/sightbreak/sightbreak/.git/
+2026-10-23T00:46:43.9237981Z [command]/usr/bin/git remote add origin https://github.com/calebaiken/sightbreak
+2026-10-23T00:46:43.9293903Z ##[endgroup]
+2026-10-23T00:46:43.9294820Z ##[group]Disabling automatic garbage collection
+2026-10-23T00:46:43.9299255Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-23T00:46:43.9336149Z ##[endgroup]
+2026-10-23T00:46:43.9337366Z ##[group]Setting up auth
+2026-10-23T00:46:43.9344949Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-23T00:46:43.9388679Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-23T00:46:43.9814651Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-23T00:46:43.9865826Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-23T00:46:44.0097189Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-23T00:46:44.0144495Z ##[endgroup]
+2026-10-23T00:46:44.0145615Z ##[group]Fetching the repository
+2026-10-23T00:46:44.0155297Z [command]/usr/bin/git -c protocol.version=2 fetch --prune --no-recurse-submodules origin +refs/heads/*:refs/remotes/origin/* +refs/tags/*:refs/tags/*
+2026-10-23T00:46:53.9773855Z From https://github.com/calebaiken/sightbreak
+2026-10-23T00:46:53.9775233Z  * [new branch]        astra/backend-trade-read-v3 -> origin/astra/backend-trade-read-v3
+2026-10-23T00:46:53.9776815Z  * [new branch]        astra/network-input-freshness-v3 -> origin/astra/network-input-freshness-v3
+2026-10-23T00:46:53.9778868Z  * [new branch]        astra/pr18-native-transaction-restart -> origin/astra/pr18-native-transaction-restart
+2026-10-23T00:46:53.9780443Z  * [new branch]        astra/prediction-reconciliation-v3 -> origin/astra/prediction-reconciliation-v3
+2026-10-23T00:46:53.9782103Z  * [new branch]        astra/systems-v3-recovery -> origin/astra/systems-v3-recovery
+2026-10-23T00:46:53.9783652Z  * [new branch]        claude/cs2-fidelity-art-production -> origin/claude/cs2-fidelity-art-production
+2026-10-23T00:46:53.9785414Z  * [new branch]        claude/design-research-synthesis -> origin/claude/design-research-synthesis
+2026-10-23T00:46:53.9786625Z  * [new branch]        claude/fair-actor-order-v1 -> origin/claude/fair-actor-order-v1
+2026-10-23T00:46:53.9788148Z  * [new branch]        claude/independent-audit-visual-v04 -> origin/claude/independent-audit-visual-v04
+2026-10-23T00:46:53.9789501Z  * [new branch]        claude/mission-foundation-v1 -> origin/claude/mission-foundation-v1
+2026-10-23T00:46:53.9790865Z  * [new branch]        claude/native-ui-production-v1 -> origin/claude/native-ui-production-v1
+2026-10-23T00:46:53.9792206Z  * [new branch]        claude/reconcile-v10-on-pr16 -> origin/claude/reconcile-v10-on-pr16
+2026-10-23T00:46:53.9793766Z  * [new branch]        claude/relay-yard-tactical-layout-v1 -> origin/claude/relay-yard-tactical-layout-v1
+2026-10-23T00:46:53.9795631Z  * [new branch]        claude/wip-gauntlet-T1-sunmetal -> origin/claude/wip-gauntlet-T1-sunmetal
+2026-10-23T00:46:53.9796781Z  * [new branch]        claude/wip-gauntlet-T2-lowlight -> origin/claude/wip-gauntlet-T2-lowlight
+2026-10-23T00:46:53.9798172Z  * [new branch]        codex/combat-history-foundation -> origin/codex/combat-history-foundation
+2026-10-23T00:46:53.9799374Z  * [new branch]        codex/competitive-network-systems -> origin/codex/competitive-network-systems
+2026-10-23T00:46:53.9800535Z  * [new branch]        codex/desktop-playability-p1 -> origin/codex/desktop-playability-p1
+2026-10-23T00:46:53.9801639Z  * [new branch]        codex/desktop-steam-readiness -> origin/codex/desktop-steam-readiness
+2026-10-23T00:46:53.9802684Z  * [new branch]        codex/durable-match-results -> origin/codex/durable-match-results
+2026-10-23T00:46:53.9804050Z  * [new branch]        codex/market-expected-price -> origin/codex/market-expected-price
+2026-10-23T00:46:53.9804804Z  * [new branch]        codex/network-lifecycle-v2 -> origin/codex/network-lifecycle-v2
+2026-10-23T00:46:53.9805407Z  * [new branch]        codex/network-movement-v2 -> origin/codex/network-movement-v2
+2026-10-23T00:46:53.9806051Z  * [new branch]        codex/network-validation-builds -> origin/codex/network-validation-builds
+2026-10-23T00:46:53.9806683Z  * [new branch]        codex/qa-artifact-slices -> origin/codex/qa-artifact-slices
+2026-10-23T00:46:53.9807252Z  * [new branch]        codex/reconnect-recovery -> origin/codex/reconnect-recovery
+2026-10-23T00:46:53.9808384Z  * [new branch]        codex/state-privacy-v2 -> origin/codex/state-privacy-v2
+2026-10-23T00:46:53.9809064Z  * [new branch]        codex/v1-mission-playability -> origin/codex/v1-mission-playability
+2026-10-23T00:46:53.9809803Z  * [new branch]        codex/windows-fire-ack-validation -> origin/codex/windows-fire-ack-validation
+2026-10-23T00:46:53.9810552Z  * [new branch]        codex/windows-observation-probe -> origin/codex/windows-observation-probe
+2026-10-23T00:46:53.9811474Z  * [new branch]        codex/windows-ocr-diagnosis -> origin/codex/windows-ocr-diagnosis
+2026-10-23T00:46:53.9812156Z  * [new branch]        codex/windows-playability-diagnosis -> origin/codex/windows-playability-diagnosis
+2026-10-23T00:46:53.9813488Z  * [new branch]        codex/windows-priority-playability-validation -> origin/codex/windows-priority-playability-validation
+2026-10-23T00:46:53.9815132Z  * [new branch]        gemini/tactical-bot-intelligence-v1 -> origin/gemini/tactical-bot-intelligence-v1
+2026-10-23T00:46:53.9816027Z  * [new branch]        integration/sightbreak-network-art-preview -> origin/integration/sightbreak-network-art-preview
+2026-10-23T00:46:53.9816895Z  * [new branch]        integration/sightbreak-reliability-refresh -> origin/integration/sightbreak-reliability-refresh
+2026-10-23T00:46:53.9818013Z  * [new branch]        integration/sightbreak-three-agent-alpha -> origin/integration/sightbreak-three-agent-alpha
+2026-10-23T00:46:53.9818922Z  * [new branch]        integration/sightbreak-three-agent-artifacts -> origin/integration/sightbreak-three-agent-artifacts
+2026-10-23T00:46:53.9819753Z  * [new branch]        integration/sightbreak-v3-validation -> origin/integration/sightbreak-v3-validation
+2026-10-23T00:46:53.9820341Z  * [new branch]        main                   -> origin/main
+2026-10-23T00:46:53.9821768Z [command]/usr/bin/git branch --list --remote origin/integration/sightbreak-v3-validation
+2026-10-23T00:46:53.9830342Z   origin/integration/sightbreak-v3-validation
+2026-10-23T00:46:53.9841372Z [command]/usr/bin/git rev-parse refs/remotes/origin/integration/sightbreak-v3-validation
+2026-10-23T00:46:53.9868046Z 2a026e61cabee3c66334066d45e92eb3ec6c2641
+2026-10-23T00:46:53.9873831Z ##[endgroup]
+2026-10-23T00:46:53.9874915Z ##[group]Determining the checkout info
+2026-10-23T00:46:53.9876208Z ##[endgroup]
+2026-10-23T00:46:53.9882193Z [command]/usr/bin/git sparse-checkout disable
+2026-10-23T00:46:53.9936468Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-23T00:46:53.9971425Z ##[group]Checking out the ref
+2026-10-23T00:46:53.9976467Z [command]/usr/bin/git checkout --progress --force -B integration/sightbreak-v3-validation refs/remotes/origin/integration/sightbreak-v3-validation
+2026-10-23T00:46:55.0400081Z Updating files:  85% (5883/6882)
+2026-10-23T00:46:55.0761598Z Updating files:  86% (5919/6882)
+2026-10-23T00:46:55.0800649Z Updating files:  87% (5988/6882)
+2026-10-23T00:46:55.0855878Z Updating files:  88% (6057/6882)
+2026-10-23T00:46:55.0897154Z Updating files:  89% (6125/6882)
+2026-10-23T00:46:55.0937018Z Updating files:  90% (6194/6882)
+2026-10-23T00:46:55.0981932Z Updating files:  91% (6263/6882)
+2026-10-23T00:46:55.1058476Z Updating files:  92% (6332/6882)
+2026-10-23T00:46:55.1418007Z Updating files:  93% (6401/6882)
+2026-10-23T00:46:55.1693882Z Updating files:  94% (6470/6882)
+2026-10-23T00:46:55.1893429Z Updating files:  95% (6538/6882)
+2026-10-23T00:46:55.1928722Z Updating files:  96% (6607/6882)
+2026-10-23T00:46:55.1962461Z Updating files:  97% (6676/6882)
+2026-10-23T00:46:55.2003377Z Updating files:  98% (6745/6882)
+2026-10-23T00:46:55.2053872Z Updating files:  99% (6814/6882)
+2026-10-23T00:46:55.2054465Z Updating files: 100% (6882/6882)
+2026-10-23T00:46:55.2054919Z Updating files: 100% (6882/6882), done.
+2026-10-23T00:46:55.2158573Z Switched to a new branch 'integration/sightbreak-v3-validation'
+2026-10-23T00:46:55.2163420Z branch 'integration/sightbreak-v3-validation' set up to track 'origin/integration/sightbreak-v3-validation'.
+2026-10-23T00:46:55.2234330Z ##[endgroup]
+2026-10-23T00:46:55.2283434Z [command]/usr/bin/git log -1 --format=%H
+2026-10-23T00:46:55.2311836Z 2a026e61cabee3c66334066d45e92eb3ec6c2641

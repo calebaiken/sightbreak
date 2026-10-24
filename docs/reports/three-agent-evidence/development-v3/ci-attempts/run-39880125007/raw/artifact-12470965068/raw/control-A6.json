@@ -1,0 +1,24 @@
+{
+  "control": "A6",
+  "description": "a cancelled reload does not stop its voices (real audio, a cancel as the landing starts)",
+  "edits": [
+    {
+      "path": "/home/runner/work/_temp/sightbreak-v3-controls/game/scripts/gameplay/actor.gd",
+      "old": "\t_reload_audio.stop_all() # a weapon change cancels a reload: nothing of it keeps sounding",
+      "new": "\tpass",
+      "matches": 1,
+      "newlines": "LF",
+      "before_sha256": "7904d351c5da8574f060fa823c6bcd8840a42e98bb121c9c84cf92e814383c13",
+      "after_sha256": "5d2bcb1f1891e226ca0128dd31e5cb7a8dc958b27c70e1df56f9eb78917173d2"
+    },
+    {
+      "path": "/home/runner/work/_temp/sightbreak-v3-controls/game/scripts/gameplay/actor.gd",
+      "old": "\telif _reload_visual_active and not _reload_fired.has(\"seat\"):\n\t\t_reload_audio.stop_all() # cancelled before the seat: the sounds that were playing stop with it\n",
+      "new": "",
+      "matches": 1,
+      "newlines": "LF",
+      "before_sha256": "5d2bcb1f1891e226ca0128dd31e5cb7a8dc958b27c70e1df56f9eb78917173d2",
+      "after_sha256": "6e96f0e2316f7263aa6f137dc9327c575592f0b61e2dcf4778cfbdfd086cc82e"
+    }
+  ]
+}

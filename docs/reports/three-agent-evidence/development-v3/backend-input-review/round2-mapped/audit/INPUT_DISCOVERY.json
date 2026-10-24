@@ -1,0 +1,46 @@
+{
+  "created_utc": "2026-10-23T00:54:43.777930+00:00",
+  "python": "3.13.15 (main, Sep  1 2026, 14:16:48) [MSC v.1944 64 bit (AMD64)]",
+  "executable": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-tools\\python\\cpython-3.13.15-windows-x86_64-none\\python.exe",
+  "checks": [
+    {
+      "check": "Git blob identity 866e2e1f38461fa245557c9015b6c1a1a97ad745:docs/reports/backend-trade-read-v3/identity-release-r2/mapping.json",
+      "passed": true
+    },
+    {
+      "check": "released second key supplied full hash",
+      "passed": true
+    },
+    {
+      "check": "released second key exact Git archive bytes",
+      "passed": true
+    },
+    {
+      "check": "second key binds frozen packet",
+      "passed": true
+    }
+  ],
+  "failed_checks": [],
+  "all_checks_passed": true,
+  "sources": [
+    {
+      "kind": "local",
+      "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\blind-trade-retention-r2-key-6eb0d1093bd6\\mapping.json",
+      "bytes": 113610,
+      "sha256": "28f0de31229e531e7164ce3905ae88cedcbd07ce89e62f046983000ebdecf93a"
+    },
+    {
+      "kind": "git",
+      "commit": "866e2e1f38461fa245557c9015b6c1a1a97ad745",
+      "path": "docs/reports/backend-trade-read-v3/identity-release-r2/mapping.json",
+      "blob": "39869b0e9cfa7a4f1b774aab7d33fb5594fcab0a",
+      "bytes": 113610,
+      "sha256": "28f0de31229e531e7164ce3905ae88cedcbd07ce89e62f046983000ebdecf93a",
+      "capture": "raw/0006.stdout.bin"
+    }
+  ],
+  "execution_scope": "Our stdlib file/JSON/hash/AST audit and read-only Git only; no retained runner/control, DB, pytest, app/native/service/network/index execution",
+  "mapping_read_only_after_verified_freeze": true,
+  "key_sha256": "28f0de31229e531e7164ce3905ae88cedcbd07ce89e62f046983000ebdecf93a",
+  "raw_git_path": "docs/reports/backend-trade-read-v3/retention-r2"
+}

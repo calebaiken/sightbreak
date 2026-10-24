@@ -1,0 +1,2342 @@
+{
+  "all_artifact_files_referenced": true,
+  "first_round_verdict": {
+    "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-backend-blind-verdict-20261019T194014Z\\NEUTRAL_VERDICT.md",
+    "sha256": "f76906b5b3ee735d65eedef6bf23998d274a614778fb9e76c196ba39957bfdfa",
+    "unchanged_before_and_after_audit": true
+  },
+  "original_implementation_source_commit_tree_routine_fixture_hashes": null,
+  "original_source_provenance_status": "WITHHELD_NOT_INSPECTED; no identity/source binding until after this verdict is frozen",
+  "packet_files_including_manifest": 387,
+  "packet_input_files": [
+    {
+      "bytes": 11299,
+      "path": "equivalence.json",
+      "sha256": "f2b1afc60b22afd22f6d14aa000997ebc0d63e2e7a0cd0f084261b82d896f976",
+      "verified": true
+    },
+    {
+      "bytes": 115199,
+      "path": "M/measurement.json",
+      "sha256": "e215d979528cfecc5852952171a914cfa3d067c36388ad50cc6b67258bb0c2b5",
+      "verified": true
+    },
+    {
+      "bytes": 13,
+      "path": "M/workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+      "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd",
+      "verified": true
+    },
+    {
+      "bytes": 13,
+      "path": "M/workloads/00-0-0/expected-response.json",
+      "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd",
+      "verified": true
+    },
+    {
+      "bytes": 13,
+      "path": "M/workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+      "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/after/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/after/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/after/items.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/after/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/after/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/after/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/after/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 548,
+      "path": "M/workloads/00-0-0/state/after/players.json",
+      "sha256": "5e3cdae52724dd596d586e90d997c289a60b536fca42e258ce7104a5e83c57bd",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/after/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/after/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "M/workloads/00-0-0/state/after/sessions.json",
+      "sha256": "9ae703420a8f035ec821096102fa5133d5ea2734eac9196c598842cd6a63a650",
+      "verified": true
+    },
+    {
+      "bytes": 275,
+      "path": "M/workloads/00-0-0/state/after/trades.json",
+      "sha256": "49541f9faaa942f01e546addaa1dda77501e92d059e4162f7c1344ec59296712",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/before/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/before/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/before/items.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/before/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/before/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/before/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/before/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 548,
+      "path": "M/workloads/00-0-0/state/before/players.json",
+      "sha256": "5e3cdae52724dd596d586e90d997c289a60b536fca42e258ce7104a5e83c57bd",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/before/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/00-0-0/state/before/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "M/workloads/00-0-0/state/before/sessions.json",
+      "sha256": "9ae703420a8f035ec821096102fa5133d5ea2734eac9196c598842cd6a63a650",
+      "verified": true
+    },
+    {
+      "bytes": 275,
+      "path": "M/workloads/00-0-0/state/before/trades.json",
+      "sha256": "49541f9faaa942f01e546addaa1dda77501e92d059e4162f7c1344ec59296712",
+      "verified": true
+    },
+    {
+      "bytes": 533,
+      "path": "M/workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+      "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4",
+      "verified": true
+    },
+    {
+      "bytes": 533,
+      "path": "M/workloads/01-1-0/expected-response.json",
+      "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4",
+      "verified": true
+    },
+    {
+      "bytes": 533,
+      "path": "M/workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+      "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/after/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/after/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/after/items.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/after/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/after/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/after/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/after/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 730,
+      "path": "M/workloads/01-1-0/state/after/players.json",
+      "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/after/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/after/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "M/workloads/01-1-0/state/after/sessions.json",
+      "sha256": "0a9545e9273074ef3b5322ab7bfd95a04d2e1c3bf2c98029430035970832ccea",
+      "verified": true
+    },
+    {
+      "bytes": 587,
+      "path": "M/workloads/01-1-0/state/after/trades.json",
+      "sha256": "a44789a9a8ef956c8d9d2fe6ce0623a655a8a31e8bf5be3ced4a776f4a62c9fd",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/before/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/before/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/before/items.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/before/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/before/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/before/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/before/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 730,
+      "path": "M/workloads/01-1-0/state/before/players.json",
+      "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/before/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/01-1-0/state/before/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "M/workloads/01-1-0/state/before/sessions.json",
+      "sha256": "0a9545e9273074ef3b5322ab7bfd95a04d2e1c3bf2c98029430035970832ccea",
+      "verified": true
+    },
+    {
+      "bytes": 587,
+      "path": "M/workloads/01-1-0/state/before/trades.json",
+      "sha256": "a44789a9a8ef956c8d9d2fe6ce0623a655a8a31e8bf5be3ced4a776f4a62c9fd",
+      "verified": true
+    },
+    {
+      "bytes": 1997,
+      "path": "M/workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+      "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b",
+      "verified": true
+    },
+    {
+      "bytes": 1997,
+      "path": "M/workloads/02-1-2/expected-response.json",
+      "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b",
+      "verified": true
+    },
+    {
+      "bytes": 1997,
+      "path": "M/workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+      "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/after/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/after/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 1249,
+      "path": "M/workloads/02-1-2/state/after/items.json",
+      "sha256": "6ef8a72cbfa9b928b70977ff80d86b62a43ab07ec8bfee871b1da7160ac22999",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/after/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/after/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/after/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/after/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 730,
+      "path": "M/workloads/02-1-2/state/after/players.json",
+      "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/after/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/after/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 361,
+      "path": "M/workloads/02-1-2/state/after/sessions.json",
+      "sha256": "43eae6f12ca5ff8f24d919ef5d9d492ab29d271d1bb4ebdddc575573fcab8d73",
+      "verified": true
+    },
+    {
+      "bytes": 741,
+      "path": "M/workloads/02-1-2/state/after/trades.json",
+      "sha256": "45b642830dd53b7ea02496af50b8d193dae36475c74ccd8116e128a5653ba53e",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/before/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/before/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 1249,
+      "path": "M/workloads/02-1-2/state/before/items.json",
+      "sha256": "6ef8a72cbfa9b928b70977ff80d86b62a43ab07ec8bfee871b1da7160ac22999",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/before/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/before/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/before/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/before/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 730,
+      "path": "M/workloads/02-1-2/state/before/players.json",
+      "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/before/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/02-1-2/state/before/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 361,
+      "path": "M/workloads/02-1-2/state/before/sessions.json",
+      "sha256": "43eae6f12ca5ff8f24d919ef5d9d492ab29d271d1bb4ebdddc575573fcab8d73",
+      "verified": true
+    },
+    {
+      "bytes": 741,
+      "path": "M/workloads/02-1-2/state/before/trades.json",
+      "sha256": "45b642830dd53b7ea02496af50b8d193dae36475c74ccd8116e128a5653ba53e",
+      "verified": true
+    },
+    {
+      "bytes": 12545,
+      "path": "M/workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+      "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34",
+      "verified": true
+    },
+    {
+      "bytes": 12545,
+      "path": "M/workloads/03-10-1/expected-response.json",
+      "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34",
+      "verified": true
+    },
+    {
+      "bytes": 12545,
+      "path": "M/workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+      "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/after/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/after/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 5761,
+      "path": "M/workloads/03-10-1/state/after/items.json",
+      "sha256": "d611dd497879f3f87c32b11401d48d6ffbc9e6bd0508b993457667aaa0ecfee2",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/after/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/after/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/after/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/after/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2371,
+      "path": "M/workloads/03-10-1/state/after/players.json",
+      "sha256": "ee76971a9c0fa89c50268d48b26fddc3e029963e346bdf448f9211d2c5b4c31a",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/after/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/after/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "M/workloads/03-10-1/state/after/sessions.json",
+      "sha256": "788fec76ba61134c1a6de75a99bf4a03737a8279950b141263b90597062379e4",
+      "verified": true
+    },
+    {
+      "bytes": 4190,
+      "path": "M/workloads/03-10-1/state/after/trades.json",
+      "sha256": "400c853a8a182867169b83566f2abb11dd2db6ee268d0f687e2efe29a9a264c0",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/before/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/before/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 5761,
+      "path": "M/workloads/03-10-1/state/before/items.json",
+      "sha256": "d611dd497879f3f87c32b11401d48d6ffbc9e6bd0508b993457667aaa0ecfee2",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/before/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/before/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/before/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/before/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2371,
+      "path": "M/workloads/03-10-1/state/before/players.json",
+      "sha256": "ee76971a9c0fa89c50268d48b26fddc3e029963e346bdf448f9211d2c5b4c31a",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/before/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/03-10-1/state/before/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "M/workloads/03-10-1/state/before/sessions.json",
+      "sha256": "788fec76ba61134c1a6de75a99bf4a03737a8279950b141263b90597062379e4",
+      "verified": true
+    },
+    {
+      "bytes": 4190,
+      "path": "M/workloads/03-10-1/state/before/trades.json",
+      "sha256": "400c853a8a182867169b83566f2abb11dd2db6ee268d0f687e2efe29a9a264c0",
+      "verified": true
+    },
+    {
+      "bytes": 50205,
+      "path": "M/workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+      "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010",
+      "verified": true
+    },
+    {
+      "bytes": 50205,
+      "path": "M/workloads/04-40-1/expected-response.json",
+      "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010",
+      "verified": true
+    },
+    {
+      "bytes": 50205,
+      "path": "M/workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+      "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/after/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/after/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 22881,
+      "path": "M/workloads/04-40-1/state/after/items.json",
+      "sha256": "85e3b58fd00156bd43496299ab94a53f4aa7bb8968320202229e7bfb3fb702d3",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/after/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/after/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/after/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/after/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 7891,
+      "path": "M/workloads/04-40-1/state/after/players.json",
+      "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/after/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/after/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "M/workloads/04-40-1/state/after/sessions.json",
+      "sha256": "7ce549672d7e9799c00f4570da21e9ad485c6ec0a36d8f9e28c510177a12ba20",
+      "verified": true
+    },
+    {
+      "bytes": 15970,
+      "path": "M/workloads/04-40-1/state/after/trades.json",
+      "sha256": "c52541bb90c7e2fd46dad321865bcd3514bc56b4d956b93d817728d118976b8d",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/before/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/before/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 22881,
+      "path": "M/workloads/04-40-1/state/before/items.json",
+      "sha256": "85e3b58fd00156bd43496299ab94a53f4aa7bb8968320202229e7bfb3fb702d3",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/before/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/before/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/before/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/before/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 7891,
+      "path": "M/workloads/04-40-1/state/before/players.json",
+      "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/before/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/04-40-1/state/before/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "M/workloads/04-40-1/state/before/sessions.json",
+      "sha256": "7ce549672d7e9799c00f4570da21e9ad485c6ec0a36d8f9e28c510177a12ba20",
+      "verified": true
+    },
+    {
+      "bytes": 15970,
+      "path": "M/workloads/04-40-1/state/before/trades.json",
+      "sha256": "c52541bb90c7e2fd46dad321865bcd3514bc56b4d956b93d817728d118976b8d",
+      "verified": true
+    },
+    {
+      "bytes": 607857,
+      "path": "M/workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+      "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db",
+      "verified": true
+    },
+    {
+      "bytes": 607857,
+      "path": "M/workloads/05-40-20/expected-response.json",
+      "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db",
+      "verified": true
+    },
+    {
+      "bytes": 607857,
+      "path": "M/workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+      "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/after/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/after/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 458401,
+      "path": "M/workloads/05-40-20/state/after/items.json",
+      "sha256": "7b45eee27ff06c27a36a499ea26175fb350cb9de6505b5c3524552175d149c89",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/after/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/after/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/after/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/after/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 7891,
+      "path": "M/workloads/05-40-20/state/after/players.json",
+      "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/after/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/after/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "M/workloads/05-40-20/state/after/sessions.json",
+      "sha256": "eea8f5d124da78280fa2436a4334c21556e1506999fc279ff4f2b7768e4dfbd6",
+      "verified": true
+    },
+    {
+      "bytes": 75250,
+      "path": "M/workloads/05-40-20/state/after/trades.json",
+      "sha256": "6ce0661d4acc859103a41f1f0707239cf99afad586dfbdb84b543fe06da17a36",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/before/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/before/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 458401,
+      "path": "M/workloads/05-40-20/state/before/items.json",
+      "sha256": "7b45eee27ff06c27a36a499ea26175fb350cb9de6505b5c3524552175d149c89",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/before/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/before/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/before/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/before/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 7891,
+      "path": "M/workloads/05-40-20/state/before/players.json",
+      "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/before/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/05-40-20/state/before/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "M/workloads/05-40-20/state/before/sessions.json",
+      "sha256": "eea8f5d124da78280fa2436a4334c21556e1506999fc279ff4f2b7768e4dfbd6",
+      "verified": true
+    },
+    {
+      "bytes": 75250,
+      "path": "M/workloads/05-40-20/state/before/trades.json",
+      "sha256": "6ce0661d4acc859103a41f1f0707239cf99afad586dfbdb84b543fe06da17a36",
+      "verified": true
+    },
+    {
+      "bytes": 264658,
+      "path": "M/workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+      "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b",
+      "verified": true
+    },
+    {
+      "bytes": 264658,
+      "path": "M/workloads/06-501-0/expected-response.json",
+      "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b",
+      "verified": true
+    },
+    {
+      "bytes": 264658,
+      "path": "M/workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+      "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/after/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/after/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/after/items.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/after/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/after/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/after/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/after/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 93520,
+      "path": "M/workloads/06-501-0/state/after/players.json",
+      "sha256": "c0977828d90643d618c01cc3197ad720b32bfe47fc7966b978f83b2e57d21426",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/after/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/after/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 361,
+      "path": "M/workloads/06-501-0/state/after/sessions.json",
+      "sha256": "a696f60a377ccbbf1ad124e38b94635bb41e4d783bc4954bb0b98d1688a6d8c8",
+      "verified": true
+    },
+    {
+      "bytes": 159320,
+      "path": "M/workloads/06-501-0/state/after/trades.json",
+      "sha256": "06a4b2bab54c15757bee25dc0d32fe0f097a5d9a46715779ace39d5ab4a5bfdb",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/before/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/before/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/before/items.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/before/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/before/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/before/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/before/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 93520,
+      "path": "M/workloads/06-501-0/state/before/players.json",
+      "sha256": "c0977828d90643d618c01cc3197ad720b32bfe47fc7966b978f83b2e57d21426",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/before/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "M/workloads/06-501-0/state/before/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 361,
+      "path": "M/workloads/06-501-0/state/before/sessions.json",
+      "sha256": "a696f60a377ccbbf1ad124e38b94635bb41e4d783bc4954bb0b98d1688a6d8c8",
+      "verified": true
+    },
+    {
+      "bytes": 159320,
+      "path": "M/workloads/06-501-0/state/before/trades.json",
+      "sha256": "06a4b2bab54c15757bee25dc0d32fe0f097a5d9a46715779ace39d5ab4a5bfdb",
+      "verified": true
+    },
+    {
+      "bytes": 7448,
+      "path": "METHOD.md",
+      "sha256": "7d626c47757e8b79a30448478cf9f92b01dfe39131f8727b0a2ecbef650b0757",
+      "verified": true
+    },
+    {
+      "bytes": 2570,
+      "path": "README.md",
+      "sha256": "6d5e01597fc1c07a974cbcb75104f9ea8869fafc735308f4e29114cdd2df2aab",
+      "verified": true
+    },
+    {
+      "bytes": 2972,
+      "path": "REVIEW_QUESTIONS.md",
+      "sha256": "b30b84db0b199889ecbebdc758f8eae6ff15dbd30158e1e5ab0d6b45768bfc01",
+      "verified": true
+    },
+    {
+      "bytes": 145268,
+      "path": "V/measurement.json",
+      "sha256": "b5224d198b5ba1ddb2ebb3deddd75b7305fa3387e3a4c8f062b7b27432fac896",
+      "verified": true
+    },
+    {
+      "bytes": 13,
+      "path": "V/workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+      "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd",
+      "verified": true
+    },
+    {
+      "bytes": 13,
+      "path": "V/workloads/00-0-0/expected-response.json",
+      "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd",
+      "verified": true
+    },
+    {
+      "bytes": 13,
+      "path": "V/workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+      "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/after/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/after/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/after/items.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/after/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/after/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/after/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/after/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 548,
+      "path": "V/workloads/00-0-0/state/after/players.json",
+      "sha256": "5e3cdae52724dd596d586e90d997c289a60b536fca42e258ce7104a5e83c57bd",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/after/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/after/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 361,
+      "path": "V/workloads/00-0-0/state/after/sessions.json",
+      "sha256": "943fb190959275929a7fa358cf0d0e68a2dd46bcbd2214fa5a11a508660ff16b",
+      "verified": true
+    },
+    {
+      "bytes": 275,
+      "path": "V/workloads/00-0-0/state/after/trades.json",
+      "sha256": "49541f9faaa942f01e546addaa1dda77501e92d059e4162f7c1344ec59296712",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/before/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/before/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/before/items.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/before/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/before/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/before/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/before/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 548,
+      "path": "V/workloads/00-0-0/state/before/players.json",
+      "sha256": "5e3cdae52724dd596d586e90d997c289a60b536fca42e258ce7104a5e83c57bd",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/before/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/00-0-0/state/before/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 361,
+      "path": "V/workloads/00-0-0/state/before/sessions.json",
+      "sha256": "943fb190959275929a7fa358cf0d0e68a2dd46bcbd2214fa5a11a508660ff16b",
+      "verified": true
+    },
+    {
+      "bytes": 275,
+      "path": "V/workloads/00-0-0/state/before/trades.json",
+      "sha256": "49541f9faaa942f01e546addaa1dda77501e92d059e4162f7c1344ec59296712",
+      "verified": true
+    },
+    {
+      "bytes": 533,
+      "path": "V/workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+      "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4",
+      "verified": true
+    },
+    {
+      "bytes": 533,
+      "path": "V/workloads/01-1-0/expected-response.json",
+      "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4",
+      "verified": true
+    },
+    {
+      "bytes": 533,
+      "path": "V/workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+      "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/after/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/after/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/after/items.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/after/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/after/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/after/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/after/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 730,
+      "path": "V/workloads/01-1-0/state/after/players.json",
+      "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/after/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/after/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "V/workloads/01-1-0/state/after/sessions.json",
+      "sha256": "492c0b0c5a1020191d71f65e559ff1a205b815d3fb5e46196423e8d3972e06b1",
+      "verified": true
+    },
+    {
+      "bytes": 587,
+      "path": "V/workloads/01-1-0/state/after/trades.json",
+      "sha256": "a44789a9a8ef956c8d9d2fe6ce0623a655a8a31e8bf5be3ced4a776f4a62c9fd",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/before/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/before/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/before/items.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/before/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/before/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/before/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/before/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 730,
+      "path": "V/workloads/01-1-0/state/before/players.json",
+      "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/before/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/01-1-0/state/before/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "V/workloads/01-1-0/state/before/sessions.json",
+      "sha256": "492c0b0c5a1020191d71f65e559ff1a205b815d3fb5e46196423e8d3972e06b1",
+      "verified": true
+    },
+    {
+      "bytes": 587,
+      "path": "V/workloads/01-1-0/state/before/trades.json",
+      "sha256": "a44789a9a8ef956c8d9d2fe6ce0623a655a8a31e8bf5be3ced4a776f4a62c9fd",
+      "verified": true
+    },
+    {
+      "bytes": 1997,
+      "path": "V/workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+      "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b",
+      "verified": true
+    },
+    {
+      "bytes": 1997,
+      "path": "V/workloads/02-1-2/expected-response.json",
+      "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b",
+      "verified": true
+    },
+    {
+      "bytes": 1997,
+      "path": "V/workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+      "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/after/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/after/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 1249,
+      "path": "V/workloads/02-1-2/state/after/items.json",
+      "sha256": "6ef8a72cbfa9b928b70977ff80d86b62a43ab07ec8bfee871b1da7160ac22999",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/after/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/after/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/after/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/after/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 730,
+      "path": "V/workloads/02-1-2/state/after/players.json",
+      "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/after/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/after/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "V/workloads/02-1-2/state/after/sessions.json",
+      "sha256": "641b64e670518c4f63b493dfe4c9b59ac930fc5934e560520d5fc2f2f2780b0e",
+      "verified": true
+    },
+    {
+      "bytes": 741,
+      "path": "V/workloads/02-1-2/state/after/trades.json",
+      "sha256": "45b642830dd53b7ea02496af50b8d193dae36475c74ccd8116e128a5653ba53e",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/before/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/before/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 1249,
+      "path": "V/workloads/02-1-2/state/before/items.json",
+      "sha256": "6ef8a72cbfa9b928b70977ff80d86b62a43ab07ec8bfee871b1da7160ac22999",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/before/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/before/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/before/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/before/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 730,
+      "path": "V/workloads/02-1-2/state/before/players.json",
+      "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/before/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/02-1-2/state/before/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "V/workloads/02-1-2/state/before/sessions.json",
+      "sha256": "641b64e670518c4f63b493dfe4c9b59ac930fc5934e560520d5fc2f2f2780b0e",
+      "verified": true
+    },
+    {
+      "bytes": 741,
+      "path": "V/workloads/02-1-2/state/before/trades.json",
+      "sha256": "45b642830dd53b7ea02496af50b8d193dae36475c74ccd8116e128a5653ba53e",
+      "verified": true
+    },
+    {
+      "bytes": 12545,
+      "path": "V/workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+      "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34",
+      "verified": true
+    },
+    {
+      "bytes": 12545,
+      "path": "V/workloads/03-10-1/expected-response.json",
+      "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34",
+      "verified": true
+    },
+    {
+      "bytes": 12545,
+      "path": "V/workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+      "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/after/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/after/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 5761,
+      "path": "V/workloads/03-10-1/state/after/items.json",
+      "sha256": "d611dd497879f3f87c32b11401d48d6ffbc9e6bd0508b993457667aaa0ecfee2",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/after/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/after/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/after/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/after/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2371,
+      "path": "V/workloads/03-10-1/state/after/players.json",
+      "sha256": "ee76971a9c0fa89c50268d48b26fddc3e029963e346bdf448f9211d2c5b4c31a",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/after/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/after/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "V/workloads/03-10-1/state/after/sessions.json",
+      "sha256": "a333725f83cda1598577b1951aa031e6b4b8577d2f71653651e7e6746a18f693",
+      "verified": true
+    },
+    {
+      "bytes": 4190,
+      "path": "V/workloads/03-10-1/state/after/trades.json",
+      "sha256": "400c853a8a182867169b83566f2abb11dd2db6ee268d0f687e2efe29a9a264c0",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/before/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/before/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 5761,
+      "path": "V/workloads/03-10-1/state/before/items.json",
+      "sha256": "d611dd497879f3f87c32b11401d48d6ffbc9e6bd0508b993457667aaa0ecfee2",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/before/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/before/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/before/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/before/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2371,
+      "path": "V/workloads/03-10-1/state/before/players.json",
+      "sha256": "ee76971a9c0fa89c50268d48b26fddc3e029963e346bdf448f9211d2c5b4c31a",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/before/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/03-10-1/state/before/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "V/workloads/03-10-1/state/before/sessions.json",
+      "sha256": "a333725f83cda1598577b1951aa031e6b4b8577d2f71653651e7e6746a18f693",
+      "verified": true
+    },
+    {
+      "bytes": 4190,
+      "path": "V/workloads/03-10-1/state/before/trades.json",
+      "sha256": "400c853a8a182867169b83566f2abb11dd2db6ee268d0f687e2efe29a9a264c0",
+      "verified": true
+    },
+    {
+      "bytes": 50205,
+      "path": "V/workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+      "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010",
+      "verified": true
+    },
+    {
+      "bytes": 50205,
+      "path": "V/workloads/04-40-1/expected-response.json",
+      "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010",
+      "verified": true
+    },
+    {
+      "bytes": 50205,
+      "path": "V/workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+      "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/after/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/after/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 22881,
+      "path": "V/workloads/04-40-1/state/after/items.json",
+      "sha256": "85e3b58fd00156bd43496299ab94a53f4aa7bb8968320202229e7bfb3fb702d3",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/after/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/after/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/after/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/after/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 7891,
+      "path": "V/workloads/04-40-1/state/after/players.json",
+      "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/after/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/after/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "V/workloads/04-40-1/state/after/sessions.json",
+      "sha256": "309c2a69a57856db247bb1060d5d4870b6301f1e1bf808f3ee378a10b3a54cc5",
+      "verified": true
+    },
+    {
+      "bytes": 15970,
+      "path": "V/workloads/04-40-1/state/after/trades.json",
+      "sha256": "c52541bb90c7e2fd46dad321865bcd3514bc56b4d956b93d817728d118976b8d",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/before/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/before/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 22881,
+      "path": "V/workloads/04-40-1/state/before/items.json",
+      "sha256": "85e3b58fd00156bd43496299ab94a53f4aa7bb8968320202229e7bfb3fb702d3",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/before/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/before/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/before/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/before/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 7891,
+      "path": "V/workloads/04-40-1/state/before/players.json",
+      "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/before/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/04-40-1/state/before/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "V/workloads/04-40-1/state/before/sessions.json",
+      "sha256": "309c2a69a57856db247bb1060d5d4870b6301f1e1bf808f3ee378a10b3a54cc5",
+      "verified": true
+    },
+    {
+      "bytes": 15970,
+      "path": "V/workloads/04-40-1/state/before/trades.json",
+      "sha256": "c52541bb90c7e2fd46dad321865bcd3514bc56b4d956b93d817728d118976b8d",
+      "verified": true
+    },
+    {
+      "bytes": 607857,
+      "path": "V/workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+      "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db",
+      "verified": true
+    },
+    {
+      "bytes": 607857,
+      "path": "V/workloads/05-40-20/expected-response.json",
+      "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db",
+      "verified": true
+    },
+    {
+      "bytes": 607857,
+      "path": "V/workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+      "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/after/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/after/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 458401,
+      "path": "V/workloads/05-40-20/state/after/items.json",
+      "sha256": "7b45eee27ff06c27a36a499ea26175fb350cb9de6505b5c3524552175d149c89",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/after/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/after/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/after/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/after/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 7891,
+      "path": "V/workloads/05-40-20/state/after/players.json",
+      "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/after/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/after/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "V/workloads/05-40-20/state/after/sessions.json",
+      "sha256": "15087289392f58dda2791a6be1408a6582b7d34eacba7e779d79c7f68855ea9d",
+      "verified": true
+    },
+    {
+      "bytes": 75250,
+      "path": "V/workloads/05-40-20/state/after/trades.json",
+      "sha256": "6ce0661d4acc859103a41f1f0707239cf99afad586dfbdb84b543fe06da17a36",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/before/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/before/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 458401,
+      "path": "V/workloads/05-40-20/state/before/items.json",
+      "sha256": "7b45eee27ff06c27a36a499ea26175fb350cb9de6505b5c3524552175d149c89",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/before/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/before/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/before/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/before/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 7891,
+      "path": "V/workloads/05-40-20/state/before/players.json",
+      "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/before/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/05-40-20/state/before/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "V/workloads/05-40-20/state/before/sessions.json",
+      "sha256": "15087289392f58dda2791a6be1408a6582b7d34eacba7e779d79c7f68855ea9d",
+      "verified": true
+    },
+    {
+      "bytes": 75250,
+      "path": "V/workloads/05-40-20/state/before/trades.json",
+      "sha256": "6ce0661d4acc859103a41f1f0707239cf99afad586dfbdb84b543fe06da17a36",
+      "verified": true
+    },
+    {
+      "bytes": 264658,
+      "path": "V/workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+      "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b",
+      "verified": true
+    },
+    {
+      "bytes": 264658,
+      "path": "V/workloads/06-501-0/expected-response.json",
+      "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b",
+      "verified": true
+    },
+    {
+      "bytes": 264658,
+      "path": "V/workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+      "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/after/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/after/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/after/items.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/after/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/after/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/after/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/after/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 93520,
+      "path": "V/workloads/06-501-0/state/after/players.json",
+      "sha256": "c0977828d90643d618c01cc3197ad720b32bfe47fc7966b978f83b2e57d21426",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/after/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/after/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "V/workloads/06-501-0/state/after/sessions.json",
+      "sha256": "c5e808f7cfb68bca9b65c73dce7ad88286c2ab875b618f2c5cffc2caf9c0d8b0",
+      "verified": true
+    },
+    {
+      "bytes": 159320,
+      "path": "V/workloads/06-501-0/state/after/trades.json",
+      "sha256": "06a4b2bab54c15757bee25dc0d32fe0f097a5d9a46715779ace39d5ab4a5bfdb",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/before/audit.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/before/game_tickets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/before/items.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/before/ledger.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/before/listings.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/before/loadouts.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/before/operations.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 93520,
+      "path": "V/workloads/06-501-0/state/before/players.json",
+      "sha256": "c0977828d90643d618c01cc3197ad720b32bfe47fc7966b978f83b2e57d21426",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/before/rate_buckets.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 2,
+      "path": "V/workloads/06-501-0/state/before/rewards.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "verified": true
+    },
+    {
+      "bytes": 363,
+      "path": "V/workloads/06-501-0/state/before/sessions.json",
+      "sha256": "c5e808f7cfb68bca9b65c73dce7ad88286c2ab875b618f2c5cffc2caf9c0d8b0",
+      "verified": true
+    },
+    {
+      "bytes": 159320,
+      "path": "V/workloads/06-501-0/state/before/trades.json",
+      "sha256": "06a4b2bab54c15757bee25dc0d32fe0f097a5d9a46715779ace39d5ab4a5bfdb",
+      "verified": true
+    },
+    {
+      "bytes": 4296,
+      "path": "verify_artifacts.py",
+      "sha256": "06b5f522c9bdae065ddc44482a666566772bcece9efa29c43e6ceac9792ef62b",
+      "verified": true
+    },
+    {
+      "bytes": 4448,
+      "path": "verify_packet.py",
+      "sha256": "7be904867a05fd320ecdcddf5fd1ded8660d18468d4ba854d2a2272d9ec757fe",
+      "verified": true
+    },
+    {
+      "bytes": 44664,
+      "path": "SHA256SUMS.txt",
+      "sha256": "dd07a3bfd69e09e27c43257be3a719d001c5d8446a9338746460829887c86d64",
+      "verified": true
+    }
+  ],
+  "packet_manifest_sha256_actual": "dd07a3bfd69e09e27c43257be3a719d001c5d8446a9338746460829887c86d64",
+  "packet_manifest_sha256_expected": "dd07a3bfd69e09e27c43257be3a719d001c5d8446a9338746460829887c86d64",
+  "packet_payload_files_verified": 386,
+  "packet_root": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\blind-trade-retention-r2-527acf0980f8\\packet",
+  "schema": "neutral-retention-r2-input-hashes-v1",
+  "strict_json_files_parsed": 381,
+  "verified_utc": "2026-10-19T20:11:29.345040+00:00"
+}

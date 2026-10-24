@@ -4,11 +4,12 @@ import io
 import json
 import os
 from pathlib import Path
+import subprocess
 import sys
 import tempfile
 import time
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 import validate_matrix as matrix
 
@@ -22,6 +23,21 @@ class MatrixGateTests(unittest.TestCase):
     def check(self, body, timeout=20):
         return matrix.run_check('control', [sys.executable, '-c', body],
                                 self.directory, os.environ.copy(), 'fixture-commit', timeout)
+
+    def git_metadata(self, outputs):
+        # platform.platform() can run its own subprocess on Linux. Replace only
+        # the matrix's module reference, not subprocess.check_output globally.
+        process_api = Mock(wraps=matrix.subprocess)
+        process_api.check_output.side_effect = outputs
+        return patch.object(matrix, 'subprocess', process_api)
+
+    def test_git_metadata_mock_does_not_intercept_platform_subprocesses(self):
+        with self.git_metadata(['fixture-commit\n']):
+            actual = subprocess.check_output(
+                [sys.executable, '-c', 'print("platform subprocess")'], text=True)
+            self.assertEqual(actual.strip(), 'platform subprocess')
+            self.assertEqual(matrix.subprocess.check_output(['git', 'rev-parse', 'HEAD']),
+                             'fixture-commit\n')
 
     def test_success_requires_clean_log_and_zero_exit(self):
         record = self.check('print("assertion control completed")')
@@ -160,7 +176,9 @@ class MatrixGateTests(unittest.TestCase):
         with patch.object(sys, 'argv', ['validate_matrix.py', '--out', str(out)]), \
                 patch.object(matrix, 'source', return_value={'source_dirty': True}), \
                 patch.object(matrix, 'source_snapshot', return_value={'dirty': True}), \
-                patch.object(matrix.subprocess, 'check_output', side_effect=['fixture\n', ' M scripts/validate_matrix.py\n']), \
+                self.git_metadata(['fixture\n', ' M scripts/validate_matrix.py\n']), \
+                patch.object(matrix.platform, 'platform', side_effect=lambda: subprocess.check_output(
+                    [sys.executable, '-c', 'print("fixture-platform")'], text=True).strip()), \
                 patch.object(matrix, 'run_check') as run:
             self.assertEqual(matrix.main(), 1)
         run.assert_not_called()
@@ -187,7 +205,7 @@ class MatrixGateTests(unittest.TestCase):
         with patch.object(sys, 'argv', ['validate_matrix.py', '--out', str(out)]), \
                 patch.object(matrix, 'source', return_value=clean), \
                 patch.object(matrix, 'source_snapshot', return_value=clean), \
-                patch.object(matrix.subprocess, 'check_output', side_effect=['fixture\n', '', '']), \
+                self.git_metadata(['fixture\n', '', '']), \
                 patch.object(matrix, 'godot_command', return_value=['fixture-native-not-executed']), \
                 patch.object(matrix, 'godot_environment', side_effect=lambda env: env), \
                 patch.object(matrix, 'is_windows', return_value=False), \
@@ -220,7 +238,7 @@ class MatrixGateTests(unittest.TestCase):
         with patch.object(sys, 'argv', ['validate_matrix.py', '--out', str(out)]), \
                 patch.object(matrix, 'source', side_effect=[initial, final]), \
                 patch.object(matrix, 'source_snapshot', side_effect=[initial, final]), \
-                patch.object(matrix.subprocess, 'check_output', side_effect=['fixture\n', '', ' M changed\n']), \
+                self.git_metadata(['fixture\n', '', ' M changed\n']), \
                 patch.object(matrix, 'godot_command', return_value=['fixture-native-not-executed']), \
                 patch.object(matrix, 'godot_environment', side_effect=lambda env: env), \
                 patch.object(matrix, 'is_windows', return_value=False), \

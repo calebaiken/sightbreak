@@ -1,0 +1,33 @@
+test_actual_zero_exit_and_passing_receipt (test_export_flow.FlowWatchdogTests.test_actual_zero_exit_and_passing_receipt) ... ok
+test_cleanup_exception_is_a_retained_failure (test_export_flow.FlowWatchdogTests.test_cleanup_exception_is_a_retained_failure) ... ok
+test_completed_watchdog_cannot_reuse_token_to_overwrite_evidence (test_export_flow.FlowWatchdogTests.test_completed_watchdog_cannot_reuse_token_to_overwrite_evidence) ... ok
+test_entry_new_process_group_cannot_escape (test_export_flow.FlowWatchdogTests.test_entry_new_process_group_cannot_escape) ... ok
+test_entry_normally_awaited_descendant_passes (test_export_flow.FlowWatchdogTests.test_entry_normally_awaited_descendant_passes) ... ok
+test_entry_timeout_cleans_token_bound_descendant_despite_passing_json (test_export_flow.FlowWatchdogTests.test_entry_timeout_cleans_token_bound_descendant_despite_passing_json) ... ok
+test_entry_token_bound_worker_cannot_leave_descendant_after_zero_exit (test_export_flow.FlowWatchdogTests.test_entry_token_bound_worker_cannot_leave_descendant_after_zero_exit) ... ok
+test_expired_startup_deadline_does_not_launch_worker (test_export_flow.FlowWatchdogTests.test_expired_startup_deadline_does_not_launch_worker) ... ok
+test_final_audit_cannot_turn_an_expired_deadline_into_success (test_export_flow.FlowWatchdogTests.test_final_audit_cannot_turn_an_expired_deadline_into_success) ... ok
+test_hard_deadline_retains_partial_output_and_failed_receipt (test_export_flow.FlowWatchdogTests.test_hard_deadline_retains_partial_output_and_failed_receipt) ... ok
+test_harness_error_cannot_be_hidden_by_zero_exit_and_passing_json (test_export_flow.FlowWatchdogTests.test_harness_error_cannot_be_hidden_by_zero_exit_and_passing_json) ... ok
+test_initial_failed_receipts_and_source_hash_exist_before_launch (test_export_flow.FlowWatchdogTests.test_initial_failed_receipts_and_source_hash_exist_before_launch) ... ok
+test_late_zero_exit_cannot_pass_wall_clock_deadline_including_cleanup (test_export_flow.FlowWatchdogTests.test_late_zero_exit_cannot_pass_wall_clock_deadline_including_cleanup) ... ok
+test_malformed_result_is_a_retained_failure (test_export_flow.FlowWatchdogTests.test_malformed_result_is_a_retained_failure) ... ok
+test_missing_controller_retains_initial_failure_without_launch (test_export_flow.FlowWatchdogTests.test_missing_controller_retains_initial_failure_without_launch) ... ok
+test_native_error_is_not_masked_by_passing_json (test_export_flow.FlowWatchdogTests.test_native_error_is_not_masked_by_passing_json) ... ok
+test_nonobject_result_is_a_retained_failure (test_export_flow.FlowWatchdogTests.test_nonobject_result_is_a_retained_failure) ... ok
+test_nonzero_exit_cannot_leave_a_passing_receipt (test_export_flow.FlowWatchdogTests.test_nonzero_exit_cannot_leave_a_passing_receipt) ... ok
+test_old_output_is_not_reused (test_export_flow.FlowWatchdogTests.test_old_output_is_not_reused) ... ok
+test_old_process_receipt_alone_refuses_a_new_attempt (test_export_flow.FlowWatchdogTests.test_old_process_receipt_alone_refuses_a_new_attempt) ... ok
+test_supervised_worker_requires_the_owning_token (test_export_flow.FlowWatchdogTests.test_supervised_worker_requires_the_owning_token) ... ok
+test_truthy_nonboolean_result_is_not_success (test_export_flow.FlowWatchdogTests.test_truthy_nonboolean_result_is_not_success) ... ok
+test_zero_exit_without_a_successful_flow_is_not_pass (test_export_flow.FlowWatchdogTests.test_zero_exit_without_a_successful_flow_is_not_pass) ... ok
+test_actual_subprocess_output_is_retained (test_export_flow.OCRDeadlineTests.test_actual_subprocess_output_is_retained) ... ok
+test_expired_deadline_does_not_launch_ocr (test_export_flow.OCRDeadlineTests.test_expired_deadline_does_not_launch_ocr) ... ok
+test_nonzero_ocr_is_not_parseable_success (test_export_flow.OCRDeadlineTests.test_nonzero_ocr_is_not_parseable_success) ... ok
+test_timeout_kills_ocr_and_retains_partial_streams (test_export_flow.OCRDeadlineTests.test_timeout_kills_ocr_and_retains_partial_streams) ... ok
+test_zero_exit_ocr_cannot_leave_a_late_descendant (test_export_flow.OCRDeadlineTests.test_zero_exit_ocr_cannot_leave_a_late_descendant) ... ok
+
+----------------------------------------------------------------------
+Ran 28 tests in 13.703s
+
+OK

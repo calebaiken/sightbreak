@@ -17,6 +17,8 @@ class NativeCloseTests(unittest.TestCase):
         self.sent = []
         ui = controller.NativeUI.__new__(controller.NativeUI)
         ui.d, ui.window = 123, 456
+        ui.protocols_atom, ui.delete_atom = 7, 8
+        ui.window_protocols = Mock(return_value=[8, 9])
         def send(display, window, propagate, mask, pointer):
             event = C.cast(pointer, C.POINTER(controller.XEvent)).contents.xclient
             self.sent.append((display, window, propagate, mask, event.type, event.display,
@@ -31,6 +33,52 @@ class NativeCloseTests(unittest.TestCase):
         ui.request_close()
         self.assertEqual(self.sent, [(123, 456, 0, 0, 33, 123, 456, 7, 32, 8)])
         ui.x.XFlush.assert_called_once_with(123)
+
+    def test_unadvertised_delete_protocol_is_not_sent(self):
+        ui = self.make_ui(1)
+        ui.window_protocols.return_value = [9]
+        with self.assertRaisesRegex(RuntimeError, 'does not advertise'):
+            ui.request_close()
+        self.assertEqual(self.sent, [])
+
+    def test_close_atoms_are_created_and_synchronized_before_client_launch(self):
+        ui = self.make_ui(1)
+        ui.x.XInternAtom = Mock(side_effect=[7, 8])
+        ui.x.XSync = Mock()
+        ui.prepare_close_protocols()
+        self.assertEqual(ui.x.XInternAtom.call_args_list,
+                         [unittest.mock.call(123, b'WM_PROTOCOLS', 0),
+                          unittest.mock.call(123, b'WM_DELETE_WINDOW', 0)])
+        ui.x.XSync.assert_called_once_with(123, 0)
+        self.assertEqual((ui.protocols_atom, ui.delete_atom), (7, 8))
+
+    def test_failed_atom_preparation_cannot_pass(self):
+        ui = self.make_ui(1)
+        ui.x.XInternAtom = Mock(side_effect=[7, 0])
+        ui.x.XSync = Mock()
+        with self.assertRaisesRegex(RuntimeError, 'Cannot prepare'):
+            ui.prepare_close_protocols()
+        ui.x.XSync.assert_not_called()
+
+    def test_window_protocol_query_preserves_and_frees_native_atoms(self):
+        ui = controller.NativeUI.__new__(controller.NativeUI)
+        ui.d, ui.window = 123, 456
+        values = (C.c_ulong * 2)(8, 9)
+        def query(_display, _window, atoms, count):
+            C.cast(atoms, C.POINTER(C.POINTER(C.c_ulong)))[0] = C.cast(values, C.POINTER(C.c_ulong))
+            C.cast(count, C.POINTER(C.c_int))[0] = 2
+            return 1
+        ui.x = SimpleNamespace(XGetWMProtocols=query, XFree=Mock())
+        self.assertEqual(ui.window_protocols(), [8, 9])
+        ui.x.XFree.assert_called_once()
+
+    def test_missing_window_protocol_property_is_failure(self):
+        ui = controller.NativeUI.__new__(controller.NativeUI)
+        ui.d, ui.window = 123, 456
+        ui.x = SimpleNamespace(XGetWMProtocols=Mock(return_value=0), XFree=Mock())
+        with self.assertRaisesRegex(RuntimeError, 'does not advertise'):
+            ui.window_protocols()
+        ui.x.XFree.assert_not_called()
 
     def test_undelivered_close_is_not_a_success(self):
         with self.assertRaisesRegex(RuntimeError, 'not delivered'):
