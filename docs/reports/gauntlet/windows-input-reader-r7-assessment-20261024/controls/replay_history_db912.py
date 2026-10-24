@@ -1,0 +1,9 @@
+#!/usr/bin/env python3
+import argparse,hashlib,importlib.util,json,os
+from pathlib import Path
+p=argparse.ArgumentParser();p.add_argument('--prototype',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args();assert sorted(os.sched_getaffinity(0))==[4];a.output.mkdir(parents=True,exist_ok=False);home=Path(__file__).resolve().parents[1]
+spec=importlib.util.spec_from_file_location('held_db912_history',a.prototype);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);rows=[]
+for folder in sorted((home/'history-model-v1').iterdir()):
+ if not folder.is_dir():continue
+ old=json.loads((folder/'RESULT.json').read_text());expected='CONSISTENT' if folder.name=='mixed_rejection_projection' else old['expected'];out=a.output/folder.name;out.mkdir();client=(folder/'client.txt').read_bytes();authority=(folder/'authority.txt').read_bytes();(out/'client.txt').write_bytes(client);(out/'authority.txt').write_bytes(authority);r=m.analyze(client.decode(),authority.decode());record=dict(name=folder.name,prior_expected=old['expected'],prior_actual=old['actual'],expected=expected,actual=r['transition_status'],matched=r['transition_status']==expected,versioned_policy_adjudication=folder.name=='mixed_rejection_projection',result=r);(out/'RESULT.json').write_text(json.dumps(record,indent=2)+'\n');rows.append(record)
+s=dict(scope='Held UNFROZEN db912 repeat; exact old inputs with preregistered one-status history refinement',prototype_sha256=hashlib.sha256(a.prototype.read_bytes()).hexdigest(),cases=len(rows),matches=sum(r['matched'] for r in rows),mismatches=[r for r in rows if not r['matched']],native_executed=False,cpu_affinity=[4]);(a.output/'SUMMARY.json').write_text(json.dumps(s,indent=2)+'\n');print(json.dumps(s,indent=2));raise SystemExit(bool(s['mismatches']))
