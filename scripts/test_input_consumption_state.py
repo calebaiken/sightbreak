@@ -148,6 +148,7 @@ class InputObservationStateControls(unittest.TestCase):
     def test_queued_duplicate_accepts_without_queue_growth_or_command_replacement(self):
         original = declared_rows('authority')
         duplicate = deepcopy(original[3:5])
+        duplicate[0]['queue_count'] = 1
         for row in duplicate:
             for stage in ('input_received', 'input_accepted'):
                 if stage in row['latest']:

@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Validate debug stage observations without inferring an unobserved cause."""
 import argparse
+from bisect import bisect_left
+from copy import deepcopy
 import hashlib
 import json
 import math
@@ -29,6 +31,458 @@ LATEST_STAGES = set('input_send_called input_received input_accepted input_strea
 def need(ok, message):
     if not ok:
         raise ValueError(message)
+
+
+class UnknownTransition(ValueError):
+    """The observations do not identify a sound stream context."""
+
+
+def integral_feasible(node_count, edges):
+    """Integral circulation with lower bounds, used for latent command origins."""
+    graph = [[] for _ in range(node_count + 2)]
+    balance = [0] * node_count
+    def add(u, v, capacity):
+        graph[u].append([v, capacity, len(graph[v])])
+        graph[v].append([u, 0, len(graph[u]) - 1])
+    for u, v, low, high in edges:
+        if low < 0 or high < low:
+            return False
+        add(u, v, high - low)
+        balance[u] -= low
+        balance[v] += low
+    source, sink, required = node_count, node_count + 1, 0
+    for node, value in enumerate(balance):
+        if value > 0:
+            add(source, node, value)
+            required += value
+        elif value < 0:
+            add(node, sink, -value)
+    total = 0
+    while total < required:
+        level, queue = [-1] * len(graph), [source]
+        level[source] = 0
+        for u in queue:
+            for v, capacity, _ in graph[u]:
+                if capacity and level[v] < 0:
+                    level[v] = level[u] + 1
+                    queue.append(v)
+        if level[sink] < 0:
+            return False
+        cursor = [0] * len(graph)
+        def send(amount):
+            u, path, limits = source, [], [amount]
+            while True:
+                if u == sink:
+                    pushed = limits[-1]
+                    for parent, index in path:
+                        edge = graph[parent][index]
+                        edge[1] -= pushed
+                        graph[edge[0]][edge[2]][1] += pushed
+                    return pushed
+                while cursor[u] < len(graph[u]):
+                    edge = graph[u][cursor[u]]
+                    if edge[1] and level[edge[0]] == level[u] + 1:
+                        path.append((u, cursor[u]))
+                        limits.append(min(limits[-1], edge[1]))
+                        u = edge[0]
+                        break
+                    cursor[u] += 1
+                else:
+                    if not path:
+                        return 0
+                    u, _ = path.pop()
+                    limits.pop()
+                    cursor[u] += 1
+        while True:
+            pushed = send(required - total)
+            if not pushed:
+                break
+            total += pushed
+    return True
+
+
+class ReceiptHistory:
+    """Persistent possible key origins and aggregate intent, with bounded search."""
+    @staticmethod
+    def empty():
+        return dict(groups=[], known={}, popped={}, checkpoints={})
+
+    @staticmethod
+    def domain(group):
+        return group['keys'] if group['keys'] is not None else range(group['low'], group['high'] + 1)
+
+    @staticmethod
+    def accept(history, value, count, ack):
+        result = deepcopy(history)
+        endpoints = {value['first'], value['last']}
+        if count:
+            exposed = {key for key in endpoints if key > max(ack, 0)} if value['count'] <= 2 else None
+            result['groups'].append(dict(count=count, low=min(exposed) if exposed else max(ack, 0)+1,
+                high=max(exposed) if exposed else max(ack, 0)+120, keys=exposed,
+                endpoints=endpoints, endpoint_min=max(0, (1 if value['count'] == 1 else 2) - (value['count'] - count)),
+                bounds={field:(max(0,value[field]-(value['count']-count)), min(count,value[field]))
+                        for field in ('fire','reload','moving')}, observed=0,
+                sums=dict(fire=0,reload=0,moving=0)))
+        for key in endpoints:
+            if key > max(ack, 0) and key not in result['known']:
+                candidates = {i for i, group in enumerate(result['groups']) if key in ReceiptHistory.domain(group)}
+                need(bool(candidates), 'endpoint has no feasible first receipt')
+                result['known'][key] = candidates
+        return result
+
+    @staticmethod
+    def pop(history, value):
+        sequence = value['sequence']
+        need(sequence not in history['popped'], 'receipt history replayed a popped command')
+        candidates = history['known'].get(sequence, set(range(len(history['groups']))))
+        results = []
+        for index in candidates:
+            group = history['groups'][index]
+            if sequence not in ReceiptHistory.domain(group) or group['observed'] >= group['count']:
+                continue
+            result = deepcopy(history)
+            current = result['groups'][index]
+            current['observed'] += 1
+            controls = dict(fire=int(value['fire']), reload=int(value['reload']), moving=int(value['move'] != [0.0,0.0]))
+            for field, observed in controls.items():
+                current['sums'][field] += observed
+            if not all(current['sums'][field] <= high and current['sums'][field] + current['count'] - current['observed'] >= low
+                       for field, (low, high) in current['bounds'].items()):
+                continue
+            result['popped'][sequence] = index
+            results.append(result)
+        return results
+
+    @staticmethod
+    def feasible(history, queue_count, ack):
+        groups, known, popped = history['groups'], history['known'], history['popped']
+        domains = [set(ReceiptHistory.domain(group)) - set(popped) for group in groups]
+        if sum(map(len, domains)) > 100000:
+            raise UnknownTransition('UNKNOWN receipt-origin flow exceeds bounded reader budget')
+        sequences = sorted(set().union(*domains) if domains else set())
+        # Preserve every past ACK/cardinality cutoff. A later feasible assignment
+        # must also satisfy earlier observations, not invent a different past.
+        removed = sum(group['count'] for group in groups) - queue_count
+        checkpoints = history['checkpoints']
+        if ack in checkpoints and checkpoints[ack] != removed:
+            return False
+        checkpoints[ack] = removed
+        cutoffs = sorted(checkpoints)
+        group_nodes = list(range(2, 2 + len(groups)))
+        sequence_nodes = {key:2+len(groups)+i for i,key in enumerate(sequences)}
+        first_bin = 2 + len(groups) + len(sequences)
+        bins = list(range(first_bin, first_bin + len(cutoffs) + 1))
+        next_node = first_bin + len(bins)
+        total = sum(group['count'] - group['observed'] for group in groups)
+        if not 0 <= queue_count <= total:
+            return False
+        edges = [(1,0,0,total), (bins[-1],1,queue_count,queue_count)]
+        previous = 0
+        for cutoff, node in zip(cutoffs, bins):
+            target = checkpoints[cutoff] - sum(key <= cutoff for key in popped)
+            edges.append((node,1,target-previous,target-previous))
+            previous = target
+        for index, group in enumerate(groups):
+            remaining = group['count'] - group['observed']
+            edges.append((0, group_nodes[index], remaining, remaining))
+            endpoint_node = next_node
+            next_node += 1
+            already = sum(key in group['endpoints'] and owner == index for key,owner in popped.items())
+            minimum = max(0, group['endpoint_min'] - already)
+            edges.append((group_nodes[index], endpoint_node, minimum, len(group['endpoints'])))
+            for key in domains[index]:
+                if key in known and index not in known[key]:
+                    continue
+                target = sequence_nodes[key]
+                edges.append((group_nodes[index], target, 0, 1))
+                if key in group['endpoints']:
+                    edges.append((endpoint_node, target, 0, 1))
+        for key, node in sequence_nodes.items():
+            edges.append((node, bins[bisect_left(cutoffs,key)], int(key in known), 1))
+        if any(key not in sequence_nodes and key not in popped for key in known):
+            return False
+        return integral_feasible(next_node, edges)
+
+
+def accepted_header(value, epoch, ack_low, ack_high):
+    """Existence of a valid pre-accept ACK in an observed monotonic interval."""
+    need(value['epoch'] == epoch and value['count'] in range(1, 13), 'accepted packet has wrong epoch or count')
+    need(value['first'] >= 1 and value['last'] >= 1 and (value['count'] > 1 or value['first'] == value['last']),
+         'accepted packet has invalid sequence endpoints')
+    low = max(0, ack_low, value['first'] - 120, value['last'] - 120)
+    high = max(0, ack_high)
+    if value['count'] <= 2:
+        high = min(high, max(value['first'], value['last']) - 1)
+    need(low <= high, 'accepted packet has no valid ACK context for its input window/fresh intent')
+
+
+class InputTransitions:
+    """Necessary source transitions; never reconstruct missing packet bodies."""
+    def __init__(self):
+        self.prior = None
+        self.streams = {}
+        self.accepted_calls = {}
+        self.consumed_calls = {}
+
+    @staticmethod
+    def consumed_identity(row):
+        value = row['latest'].get('input_consumed', {})
+        return (value.get('peer'), value.get('generation'))
+
+    def observe(self, row, owners_before):
+        if row['role'] != 'authority':
+            return
+        identity = row['peer'], row['generation']
+        counters = row['counters']
+        prior = self.prior
+        for key, state in self.streams.items():
+            if owners_before - {key}:
+                state['exclusive'] = False
+        delta = lambda stage, previous: counters.get(stage, 0) - previous['counters'].get(stage, 0)
+        da = delta('input_accepted', prior) if prior else 0
+        dc = delta('input_consumed', prior) if prior else 0
+        if prior:
+            need(row['authority_epoch'] >= prior['authority_epoch'], 'authority epoch regressed')
+            resets = row['authority_epoch'] > prior['authority_epoch'] and not owners_before
+            old, new = prior['stream_skipped'], row['stream_skipped']
+            possible_skip = lambda value: value == 0 or 5 <= value <= 118 * dc
+            need(possible_skip(new - old) or (resets and possible_skip(new)),
+                 'skipped stream state has no corresponding pop/reset transition')
+
+        state = self.streams.get(identity)
+        if dc:
+            consumed_owner = self.consumed_identity(row)
+            need(consumed_owner in owners_before, 'new consumed metadata has no live binding')
+            context = self.streams.get(consumed_owner)
+            value = row['latest']['input_consumed']
+            need(context and value['actor'] == context['row']['bound_actor'] and value['sequence'] > 0,
+                 'new consumed metadata disagrees with its bound stream identity')
+            if dc == 1:
+                self.consumed_calls[counters['input_consumed']] = consumed_owner
+            if consumed_owner != identity:
+                old = context['row']
+                if (old['authority_epoch'] != row['authority_epoch']
+                        or delta('input_accepted', old) != 0 or delta('input_consumed', old) != 1):
+                    raise UnknownTransition('UNKNOWN unselected consumed stream transition')
+                skipped = max(0, old['queue_count'] - 2) if old['queue_count'] > 6 else 0
+                need(row['stream_skipped'] - old['stream_skipped'] == skipped,
+                     'unselected pop has inconsistent backlog skipping')
+                inferred = {**row, 'peer': consumed_owner[0], 'generation': consumed_owner[1],
+                            'bound_actor': old['bound_actor'], 'stream_ack': value['sequence'],
+                            'queue_count': old['queue_count'] - skipped - 1}
+                required, histories = self.queue_transition(context, inferred, 0, 1, skipped)
+                self.streams[consumed_owner] = dict(row=inferred, required=required, histories=histories,
+                                                  exclusive=not (owners_before - {consumed_owner}))
+        owner = None
+        if da:
+            if row['reason'] == 'input_accepted':
+                owner = identity
+            elif len(owners_before) == 1:
+                owner = next(iter(owners_before))
+            elif da == 1 and state:
+                previous = state['row']
+                # A sole acceptance must supply a newly empty stream's pop,
+                # or its otherwise unexplained queue growth. No packet is guessed.
+                supplied_pop = (previous['queue_count'] == 0
+                                and delta('input_consumed', previous) == 1
+                                and self.consumed_identity(row) == identity
+                                and row['stream_ack'] > previous['stream_ack'])
+                if supplied_pop or row['queue_count'] > previous['queue_count']:
+                    owner = identity
+            need(bool(owners_before) or row['reason'] == 'input_accepted', 'acceptance has no live stream context')
+            if owner is None:
+                raise UnknownTransition('UNKNOWN acceptance ownership across multiple live streams')
+            context = self.streams.get(owner)
+            if context is None:
+                raise UnknownTransition('UNKNOWN prior ACK context for newly counted acceptance')
+            old = context['row']
+            validation_epoch = row['authority_epoch']
+            crossed_epoch = old['authority_epoch'] != row['authority_epoch']
+            if crossed_epoch and row['reason'] != 'input_accepted':
+                if delta('input_consumed', old):
+                    raise UnknownTransition('UNKNOWN acceptance/pop ordering across an epoch boundary')
+                validation_epoch = row['latest']['input_accepted']['epoch']
+                need(old['authority_epoch'] <= validation_epoch <= row['authority_epoch'],
+                     'accepted call claims an epoch outside its observed interval')
+                low = high = old['stream_ack'] if validation_epoch == old['authority_epoch'] else -1
+            elif row['reason'] == 'input_accepted':
+                low = high = row['stream_ack']
+            else:
+                low = old['stream_ack']
+                if owner == identity:
+                    high = row['stream_ack']
+                elif delta('input_consumed', old) == 0:
+                    high = low
+                elif self.consumed_identity(row) == owner:
+                    high = row['latest']['input_consumed']['sequence']
+                else:
+                    raise UnknownTransition('UNKNOWN hidden acceptance ACK interval for unselected stream')
+                if delta('input_consumed', old) and self.consumed_identity(row) == owner:
+                    at = row['latest']['input_accepted']['wall_msec']
+                    ct = row['latest']['input_consumed']['wall_msec']
+                    if ct < at:
+                        low = high
+                    elif at < ct or row['reason'] == 'input_consumed':
+                        high = low if delta('input_consumed', old) == 1 else max(low, high - 1)
+            accepted_header(row['latest']['input_accepted'], validation_epoch, low, high)
+            if da == 1:
+                self.accepted_calls[counters['input_accepted']] = owner
+
+        need(row['stream_ack'] == -1 or row['stream_ack'] > 0, 'stream ACK is neither absent nor a popped positive sequence')
+        if row['generation'] <= 0 or row['reason'] in {'peer_connected', 'peer_bound'}:
+            need(row['stream_ack'] == -1 and row['queue_count'] == 0, 'new/absent stream has queued input or an ACK')
+        if row['generation'] > 0:
+            required = {}
+            histories = [ReceiptHistory.empty()]
+            if state and row['reason'] not in {'peer_connected', 'peer_bound'}:
+                previous = state['row']
+                same_epoch = previous['authority_epoch'] == row['authority_epoch']
+                a, c = delta('input_accepted', previous), delta('input_consumed', previous)
+                k = row['stream_skipped'] - previous['stream_skipped']
+                exact_a = a if state['exclusive'] else (0 if a == 0 else (1 if a == 1 and owner == identity else None))
+                exact_c = c if state['exclusive'] else (0 if c == 0 else (int(self.consumed_identity(row) == identity) if c == 1 else None))
+                for stage, ledger, amount in (('input_accepted',self.accepted_calls,a), ('input_consumed',self.consumed_calls,c)):
+                    proved = [who for index,who in ledger.items() if previous['counters'].get(stage,0) < index <= counters.get(stage,0)]
+                    if len(proved) == amount:
+                        if stage == 'input_accepted':
+                            exact_a = sum(who == identity for who in proved)
+                        else:
+                            exact_c = sum(who == identity for who in proved)
+                exact_k = k if state['exclusive'] or (c == 1 and exact_c == 1) else (0 if exact_c == 0 else None)
+                if same_epoch:
+                    need(row['stream_ack'] >= previous['stream_ack'], 'stream ACK regressed/cleared without reset')
+                    if exact_c == 0:
+                        need(row['stream_ack'] == previous['stream_ack'], 'stream ACK changed without a consumed call')
+                    elif exact_c is not None:
+                        need(row['stream_ack'] > previous['stream_ack'], 'nonnull pops did not advance stream ACK')
+                    if c and self.consumed_identity(row) == identity:
+                        need(row['stream_ack'] == row['latest']['input_consumed']['sequence'], 'stream ACK differs from its latest immutable pop')
+                    need(k >= 0, 'skipped state regressed inside a live stream epoch')
+                    max_add = 12 * a if exact_a is None or exact_a else 0
+                    if a and exact_a == a and owner == identity:
+                        value = row['latest']['input_accepted']
+                        last_count = len({value['first'], value['last']}) if value['count'] <= 2 else value['count']
+                        max_add = 12 * (a - 1) + last_count
+                    cmin, cmax = (0, c) if exact_c is None else (exact_c, exact_c)
+                    kmin, kmax = (0, k) if exact_k is None else (exact_k, exact_k)
+                    need(max(0, previous['queue_count'] - cmax - kmax) <= row['queue_count'] <= min(120, previous['queue_count'] + max_add - cmin - kmin),
+                         'queue cardinality has no accepted/pop/skipped transition')
+                    need(sum(key <= row['stream_ack'] for key in state['required']) <= cmax + kmax,
+                         'ACK passed more definite keys than pop/skipping could remove')
+                    if cmin:
+                        need(row['stream_ack'] >= max(previous['stream_ack'], 0) + cmin + kmin,
+                             'ACK violates consumed/skipped unique sequence rank')
+                    if exact_a in (0, 1) and exact_c in (0, 1) and exact_k is not None:
+                        required, histories = self.queue_transition(state, row, exact_a, exact_c, exact_k)
+                    else:
+                        raise UnknownTransition('UNKNOWN unexposed local call history for persistent receipt constraints')
+                else:
+                    # Both epoch operations clear queues/ACKs. Calls may straddle
+                    # that boundary; current direct consumption still needs input.
+                    need(row['queue_count'] <= min(120, 12 * a), 'epoch reset queue has no new accepted input')
+                    need(row['stream_ack'] == -1 or c > 0, 'epoch reset ACK has no new consumed input')
+                    if a == c == 0:
+                        need(row['stream_ack'] == -1 and row['queue_count'] == 0, 'epoch reset failed to clear queue/ACK')
+                    elif a == 1 and c == 0:
+                        if row['latest']['input_accepted']['epoch'] == row['authority_epoch']:
+                            fresh = dict(row={**previous, 'authority_epoch':row['authority_epoch'],
+                                              'stream_ack':-1, 'queue_count':0},
+                                         required={}, histories=[ReceiptHistory.empty()])
+                            required, histories = self.queue_transition(fresh, row, 1, 0, 0)
+                        else:
+                            need(row['stream_ack'] == -1 and row['queue_count'] == 0,
+                                 'epoch reset retained input from an older accepted epoch')
+                    else:
+                        need(row['reason'] != 'input_consumed' or a > 0, 'epoch-reset pop has no newly accepted input')
+                        raise UnknownTransition('UNKNOWN receipt ordering across an unobserved epoch boundary')
+            self.streams[identity] = dict(row=row, required=required, histories=histories,
+                                          exclusive=not (owners_before - {identity}))
+        self.prior = row
+
+    @staticmethod
+    def check_signature(signature, value):
+        observed = dict(fire=value['fire'], reload=value['reload'], moving=value['move'] != [0.0, 0.0])
+        need(all(expected is None or observed[field] == expected for field, expected in signature.items()),
+             'popped command changed immutable queued intent')
+
+    @staticmethod
+    def queue_transition(state, row, accepts, pops, skipped):
+        """Definite keys/signatures plus cardinality; middle bodies stay unknown."""
+        packet = row['latest'].get('input_accepted')
+        additions = row['queue_count'] - state['row']['queue_count'] + pops + skipped
+        need(0 <= additions <= (packet['count'] if accepts else 0), 'queue additions exceed known accepted input')
+        orders = [('accept', 'pop'), ('pop', 'accept')] if accepts and pops else [(('accept',) if accepts else ('pop',) if pops else ())]
+        if accepts and pops:
+            at, ct = packet['wall_msec'], row['latest']['input_consumed']['wall_msec']
+            if row['reason'] == 'input_consumed' or at < ct:
+                orders = [('accept', 'pop')]
+            elif row['reason'] == 'input_accepted' or ct < at:
+                orders = [('pop', 'accept')]
+        alternatives = []
+        for order in orders:
+            required = {key: dict(value) for key, value in state['required'].items()}
+            histories = deepcopy(state['histories'])
+            ack, count, removed = state['row']['stream_ack'], state['row']['queue_count'], 0
+            try:
+                for event in order:
+                    if event == 'accept':
+                        accepted_header(packet, row['authority_epoch'], ack, ack)
+                        endpoints = {key for key in (packet['first'], packet['last']) if key > max(ack, 0)}
+                        unknown_slots = count - len(required)
+                        unseen = endpoints - set(required)
+                        need(additions >= max(int(count == 0), len(unseen) - unknown_slots), 'accepted input failed to retain definite fresh keys')
+                        if packet['count'] <= 2:
+                            need(additions <= len(unseen), 'exposed packet inflated its queued unique keys')
+                        for sequence in endpoints:
+                            if sequence not in required:
+                                required[sequence] = ({field: (packet[field] == packet['count'] if packet[field] in (0, packet['count']) else None)
+                                                       for field in ('fire', 'reload', 'moving')}
+                                                      if unknown_slots == 0 else {})
+                        count += additions
+                        need(len(required) <= count <= 120, 'accepted queue cannot contain its definite keys')
+                        histories = [ReceiptHistory.accept(history, packet, additions, ack) for history in histories]
+                    else:
+                        need(count > 0, 'empty queue cannot produce a pop')
+                        discarded = count - 2 if count > 6 else 0
+                        removed += discarded
+                        value = row['latest']['input_consumed']
+                        sequence = value['sequence']
+                        remaining = count - discarded - 1
+                        need(max(ack, 0) + discarded + 1 <= sequence
+                             and sequence + remaining <= max(ack, 0) + 120,
+                             'pop violates unique sequence order/window bounds')
+                        need(sum(key < sequence for key in required) <= discarded,
+                             'pop passed a definite older queued command')
+                        InputTransitions.check_signature(required.get(sequence, {}), value)
+                        histories = [variant for history in histories for variant in ReceiptHistory.pop(history, value)]
+                        required = {key: signature for key, signature in required.items() if key > sequence}
+                        need(len(required) <= remaining, 'pop/skipping removed a definite newer command')
+                        count = remaining
+                        ack = sequence
+                need(count == row['queue_count'] and ack == row['stream_ack'], 'queue/ACK differs from source transition')
+                need(removed == skipped, 'backlog skips differ from source transition')
+                if len(histories) > 512:
+                    raise UnknownTransition('UNKNOWN intermediate receipt alternatives exceed bounded reader budget')
+                histories = [history for history in histories if ReceiptHistory.feasible(history, count, ack)]
+                need(bool(histories), 'no persistent receipt/intent history remains feasible')
+                alternatives.append((required, histories))
+            except UnknownTransition:
+                raise
+            except ValueError:
+                continue
+        need(bool(alternatives), 'stream transition contradicts definite immutable commands')
+        required = {key: dict(value) for key, value in alternatives[0][0].items()
+                    if all(key in other for other,_ in alternatives[1:])}
+        for sequence, signature in required.items():
+            for field in signature:
+                if any(other.get(sequence, {}).get(field) != signature[field] for other,_ in alternatives[1:]):
+                    signature[field] = None
+        histories = [history for _, variants in alternatives for history in variants]
+        histories = list({json.dumps(history, sort_keys=True, default=sorted, separators=(',',':')):history
+                          for history in histories}.values())
+        if len(histories) > 128:
+            raise UnknownTransition('UNKNOWN receipt alternatives exceed bounded reader budget')
+        return required, histories
 
 
 def integer(value):
@@ -87,6 +541,7 @@ def record_valid(row):
         else:
             need(set(value) == SNAPSHOT_KEYS and all(integer(v) for v in value.values()), 'invalid snapshot header')
         need(0 <= value['wall_msec'] <= row['wall_msec'], 'future latest-stage observation')
+    need(snapshot == latest.get('snapshot_applied', {}), 'snapshot cache differs from its counted latest application')
     actor = row['actor']
     need(type(actor) is dict and (not actor or set(actor) == {'id', 'alive', 'ammo', 'reserve', 'reload', 'input'}), 'invalid own actor projection')
     if actor:
@@ -132,7 +587,9 @@ def analyze_role(rows, role):
     highest_generation = 0
     consumed, accepted, expiries, disconnects, saturations, welcomes, binding_events = [], [], [], [], [], [], []
     max_gap = 0
+    transitions = InputTransitions()
     for row in rows:
+        owners_before = set(live_bindings)
         need(row['role'] == role, 'mixed role evidence')
         need(row['index'] == (prior['index'] + 1 if prior else 1), 'missing or reordered observation index')
         need(row['reason'] != 'observation_limit', 'observer reached its hard cap; evidence truncated')
@@ -156,7 +613,7 @@ def analyze_role(rows, role):
                 # A lobby reset advances the epoch and needs zero bound peers.
                 # Its replacement stream resets state but retains observer history.
                 reset_possible = row['authority_epoch'] > prior['authority_epoch'] and not live_bindings
-                need(row['stream_rejected'] <= expected if reset_possible else row['stream_rejected'] == expected,
+                need(row['stream_rejected'] == expected or (reset_possible and row['stream_rejected'] <= rejections - previous_counters.get('input_stream_rejected', 0)),
                      'stream rejection state disagrees within observed stream lifetime')
         if prior:
             for key in ('wall_msec', 'wall_unix_msec', 'process_frames', 'physics_frames', 'drawn_frames'):
@@ -231,16 +688,7 @@ def analyze_role(rows, role):
                 need({key: incoming.get(key) for key in PACKET_KEYS - {'wall_msec'}} == {key: value[key] for key in PACKET_KEYS - {'wall_msec'}},
                      'accepted packet differs from synchronous latest receive')
                 need(row['queue_count'] > 0, 'accepted input left an empty queue')
-                need(value['epoch'] == row['authority_epoch'] and value['count'] in range(1, 13), 'accepted packet has wrong epoch or count')
-                # These are incoming array endpoints, not sorted extrema.
-                need(value['first'] >= 1 and value['last'] >= 1 and (value['count'] > 1 or value['first'] == value['last']),
-                     'accepted packet has invalid sequence endpoints')
-                ack = max(row['stream_ack'], 0)
-                need(max(value['first'], value['last']) <= ack + 120, 'accepted endpoint exceeds input sequence window')
-                # Only batches of one or two expose every command. Larger
-                # batches may hide a fresh middle command behind stale endpoints.
-                need(value['count'] > 2 or max(value['first'], value['last']) > ack,
-                     'fully exposed accepted batch contains no fresh command')
+                accepted_header(value, row['authority_epoch'], row['stream_ack'], row['stream_ack'])
                 accepted.append({'index': row['index'], **value})
             else:
                 # Receive is after the identity gate but before packet validation.
@@ -248,6 +696,7 @@ def analyze_role(rows, role):
                 received.append({'index': row['index'], **value})
         if row['pending_count'] == 120:
             saturations.append(row['index'])
+        transitions.observe(row, owners_before)
         prior = row
     if role == 'authority':
         need(bool(consumed) and bool(accepted), 'acceptance and actual consumption need distinct observed events')
@@ -260,10 +709,14 @@ def analyze_role(rows, role):
 
 def analyze(client_text, authority_text):
     report = {'scope': 'Debug read-only stage observations; no qualification, physical latency or unobserved cause claim',
-              'diagnostic_complete': False, 'cause_status': 'UNRESOLVED; observations identify executed stages and gaps only', 'roles': {}, 'errors': []}
+              'diagnostic_complete': False, 'transition_status': 'INCOMPLETE', 'cause_status': 'UNRESOLVED; observations identify executed stages and gaps only', 'roles': {}, 'errors': []}
+    unknown_errors = 0
     for role, raw in [('client', client_text), ('authority', authority_text)]:
         try:
             report['roles'][role] = analyze_role(parse_log(raw), role)
+        except UnknownTransition as error:
+            unknown_errors += 1
+            report['errors'].append(role + ': ' + str(error))
         except (ValueError, KeyError, TypeError) as error:
             report['errors'].append(role + ': ' + str(error))
     if not report['errors']:
@@ -280,6 +733,8 @@ def analyze(client_text, authority_text):
                 links.append({'client_local_attempt': welcome['local_attempt'], **candidates[0]})
         report['attempt_generation_links'] = links
     report['diagnostic_complete'] = not report['errors']
+    report['transition_status'] = ('CONSISTENT' if not report['errors'] else
+                                   'UNKNOWN' if len(report['errors']) == unknown_errors else 'INVALID')
     return report
 
 
