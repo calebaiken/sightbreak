@@ -1,0 +1,43 @@
+{
+  "path": "core/math/vector3.h",
+  "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/math/vector3.h",
+  "bytes": 20478,
+  "sha256": "60bd8b6351a45b4e0927bbbda7b605b89ebe0572173c7dc2a1d121f33c9d5ae9",
+  "ranges": [
+    {
+      "start_line": 63,
+      "end_line": 75,
+      "text": "63: \tunion {\n64: \t\t// NOLINTBEGIN(modernize-use-default-member-init)\n65: \t\tstruct {\n66: \t\t\treal_t x;\n67: \t\t\treal_t y;\n68: \t\t\treal_t z;\n69: \t\t};\n70: \n71: \t\treal_t coord[3] = { 0 };\n72: \t\t// NOLINTEND(modernize-use-default-member-init)\n73: \t};\n74: \n75: \t_FORCE_INLINE_ const real_t &operator[](int p_axis) const {"
+    },
+    {
+      "start_line": 64,
+      "end_line": 76,
+      "text": "64: \t\t// NOLINTBEGIN(modernize-use-default-member-init)\n65: \t\tstruct {\n66: \t\t\treal_t x;\n67: \t\t\treal_t y;\n68: \t\t\treal_t z;\n69: \t\t};\n70: \n71: \t\treal_t coord[3] = { 0 };\n72: \t\t// NOLINTEND(modernize-use-default-member-init)\n73: \t};\n74: \n75: \t_FORCE_INLINE_ const real_t &operator[](int p_axis) const {\n76: \t\tDEV_ASSERT((unsigned int)p_axis < 3);"
+    },
+    {
+      "start_line": 65,
+      "end_line": 77,
+      "text": "65: \t\tstruct {\n66: \t\t\treal_t x;\n67: \t\t\treal_t y;\n68: \t\t\treal_t z;\n69: \t\t};\n70: \n71: \t\treal_t coord[3] = { 0 };\n72: \t\t// NOLINTEND(modernize-use-default-member-init)\n73: \t};\n74: \n75: \t_FORCE_INLINE_ const real_t &operator[](int p_axis) const {\n76: \t\tDEV_ASSERT((unsigned int)p_axis < 3);\n77: \t\treturn coord[p_axis];"
+    },
+    {
+      "start_line": 335,
+      "end_line": 347,
+      "text": "335: \treturn res;\n336: }\n337: \n338: real_t Vector3::distance_to(const Vector3 &p_to) const {\n339: \treturn (p_to - *this).length();\n340: }\n341: \n342: real_t Vector3::distance_squared_to(const Vector3 &p_to) const {\n343: \treturn (p_to - *this).length_squared();\n344: }\n345: \n346: Vector3 Vector3::posmod(real_t p_mod) const {\n347: \treturn Vector3(Math::fposmod(x, p_mod), Math::fposmod(y, p_mod), Math::fposmod(z, p_mod));"
+    },
+    {
+      "start_line": 339,
+      "end_line": 351,
+      "text": "339: \treturn (p_to - *this).length();\n340: }\n341: \n342: real_t Vector3::distance_squared_to(const Vector3 &p_to) const {\n343: \treturn (p_to - *this).length_squared();\n344: }\n345: \n346: Vector3 Vector3::posmod(real_t p_mod) const {\n347: \treturn Vector3(Math::fposmod(x, p_mod), Math::fposmod(y, p_mod), Math::fposmod(z, p_mod));\n348: }\n349: \n350: Vector3 Vector3::posmodv(const Vector3 &p_modv) const {\n351: \treturn Vector3(Math::fposmod(x, p_modv.x), Math::fposmod(y, p_modv.y), Math::fposmod(z, p_modv.z));"
+    },
+    {
+      "start_line": 402,
+      "end_line": 414,
+      "text": "402: \treturn *this;\n403: }\n404: \n405: constexpr Vector3 Vector3::operator-(const Vector3 &p_v) const {\n406: \treturn Vector3(x - p_v.x, y - p_v.y, z - p_v.z);\n407: }\n408: \n409: constexpr Vector3 &Vector3::operator*=(const Vector3 &p_v) {\n410: \tx *= p_v.x;\n411: \ty *= p_v.y;\n412: \tz *= p_v.z;\n413: \treturn *this;\n414: }"
+    },
+    {
+      "start_line": 469,
+      "end_line": 481,
+      "text": "469: \treturn Vector3(x / p_scalar, y / p_scalar, z / p_scalar);\n470: }\n471: \n472: constexpr Vector3 Vector3::operator-() const {\n473: \treturn Vector3(-x, -y, -z);\n474: }\n475: \n476: constexpr bool Vector3::operator==(const Vector3 &p_v) const {\n477: \treturn x == p_v.x && y == p_v.y && z == p_v.z;\n478: }\n479: \n480: constexpr bool Vector3::operator!=(const Vector3 &p_v) const {\n481: \treturn x != p_v.x || y != p_v.y || z != p_v.z;"
+    }
+  ]
+}

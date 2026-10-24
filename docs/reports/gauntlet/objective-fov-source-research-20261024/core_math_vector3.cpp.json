@@ -1,0 +1,18 @@
+{
+  "path": "core/math/vector3.cpp",
+  "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/math/vector3.cpp",
+  "bytes": 5866,
+  "sha256": "1dbe4d75463a555a660002ecdaaf72de19d861c04c3b7080c6c64a754b89962e",
+  "ranges": [
+    {
+      "start_line": 137,
+      "end_line": 155,
+      "text": "137: \tbasis.rows[2] = Vector3(z * p_with.x, z * p_with.y, z * p_with.z);\n138: \treturn basis;\n139: }\n140: \n141: bool Vector3::is_equal_approx(const Vector3 &p_v) const {\n142: \treturn Math::is_equal_approx(x, p_v.x) && Math::is_equal_approx(y, p_v.y) && Math::is_equal_approx(z, p_v.z);\n143: }\n144: \n145: bool Vector3::is_same(const Vector3 &p_v) const {\n146: \treturn Math::is_same(x, p_v.x) && Math::is_same(y, p_v.y) && Math::is_same(z, p_v.z);\n147: }\n148: \n149: bool Vector3::is_zero_approx() const {\n150: \treturn Math::is_zero_approx(x) && Math::is_zero_approx(y) && Math::is_zero_approx(z);\n151: }\n152: \n153: bool Vector3::is_finite() const {\n154: \treturn Math::is_finite(x) && Math::is_finite(y) && Math::is_finite(z);\n155: }"
+    },
+    {
+      "start_line": 138,
+      "end_line": 156,
+      "text": "138: \treturn basis;\n139: }\n140: \n141: bool Vector3::is_equal_approx(const Vector3 &p_v) const {\n142: \treturn Math::is_equal_approx(x, p_v.x) && Math::is_equal_approx(y, p_v.y) && Math::is_equal_approx(z, p_v.z);\n143: }\n144: \n145: bool Vector3::is_same(const Vector3 &p_v) const {\n146: \treturn Math::is_same(x, p_v.x) && Math::is_same(y, p_v.y) && Math::is_same(z, p_v.z);\n147: }\n148: \n149: bool Vector3::is_zero_approx() const {\n150: \treturn Math::is_zero_approx(x) && Math::is_zero_approx(y) && Math::is_zero_approx(z);\n151: }\n152: \n153: bool Vector3::is_finite() const {\n154: \treturn Math::is_finite(x) && Math::is_finite(y) && Math::is_finite(z);\n155: }\n156: "
+    }
+  ]
+}

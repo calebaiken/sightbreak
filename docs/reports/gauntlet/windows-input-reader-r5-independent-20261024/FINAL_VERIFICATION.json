@@ -1,0 +1,99 @@
+{
+  "candidate": "7d8ec7dda37764e0f45fd2ea1e8d330f84bc2508",
+  "base": "642dd0e0543698cae5d90b9046d5875beabed111",
+  "handoff": "eb2dbc7cc97b337fb8e0bbf601fcb0bbfd984701",
+  "verdict": "REJECT",
+  "fresh_views": [
+    {
+      "candidate": "7d8ec7dda37764e0f45fd2ea1e8d330f84bc2508",
+      "source_root": "/workspace/reviews/windows-input-reader-r5-independent-20261024",
+      "reader_path": "/workspace/reviews/windows-input-reader-r5-independent-20261024/scripts/analyze_input_consumption.py",
+      "reader_sha256": "c0fe4d9f078a28043a7c89eaef2b0402ca03c486fb3a8c781040a5e6e517f7e0",
+      "cpu_affinity": [
+        4
+      ],
+      "cases": 30,
+      "passed": 15,
+      "false_accepts": [
+        "coalesced_single_already_acknowledged",
+        "coalesced_single_above_window",
+        "coalesced_accepted_wrong_epoch",
+        "coalesced_accepted_over_batch_cap",
+        "direct_single_command_inflates_queue_2",
+        "direct_single_command_inflates_queue_120",
+        "ack_advances_without_consumption",
+        "ack_zero_without_consumption",
+        "ack_clears_without_reset",
+        "queue_appears_without_acceptance",
+        "cached_snapshot_disappears",
+        "cached_snapshot_restamped",
+        "cached_snapshot_header_changes",
+        "cache_precedes_first_applied_counter",
+        "partial_rejected_state_survives_replacement"
+      ],
+      "false_rejects": [],
+      "native_executed": false
+    },
+    {
+      "candidate": "7d8ec7dda37764e0f45fd2ea1e8d330f84bc2508",
+      "source_root": "/workspace/reviews/windows-input-reader-r5-independent-depth-one-20261024",
+      "reader_path": "/workspace/reviews/windows-input-reader-r5-independent-depth-one-20261024/scripts/analyze_input_consumption.py",
+      "reader_sha256": "c0fe4d9f078a28043a7c89eaef2b0402ca03c486fb3a8c781040a5e6e517f7e0",
+      "cpu_affinity": [
+        4
+      ],
+      "cases": 30,
+      "passed": 15,
+      "false_accepts": [
+        "coalesced_single_already_acknowledged",
+        "coalesced_single_above_window",
+        "coalesced_accepted_wrong_epoch",
+        "coalesced_accepted_over_batch_cap",
+        "direct_single_command_inflates_queue_2",
+        "direct_single_command_inflates_queue_120",
+        "ack_advances_without_consumption",
+        "ack_zero_without_consumption",
+        "ack_clears_without_reset",
+        "queue_appears_without_acceptance",
+        "cached_snapshot_disappears",
+        "cached_snapshot_restamped",
+        "cached_snapshot_header_changes",
+        "cache_precedes_first_applied_counter",
+        "partial_rejected_state_survives_replacement"
+      ],
+      "false_rejects": [],
+      "native_executed": false
+    }
+  ],
+  "old_reader": {
+    "cases": 30,
+    "expectations_met": 11,
+    "false_accepts": 19,
+    "false_rejects": 0,
+    "reader_sha256": "207beebe124a1ad5928a154fb77c99d2e43864ce236751dc7ce985878181bcb2"
+  },
+  "retained_each_view": 108,
+  "selected_maintained_each_view": {
+    "methods": 207,
+    "passes": 204,
+    "skips": 3,
+    "failures": 0,
+    "errors": 0,
+    "excluded": {
+      "server": 11,
+      "macos_menu": 11
+    }
+  },
+  "source_paths": 513,
+  "protected_source_paths": 509,
+  "historical_copied_files_verified": 323,
+  "existing_methods_preserved": 45,
+  "assertion_calls_preserved": 79,
+  "thread_reuse": true,
+  "new_fresh_thread_created": false,
+  "cpu_affinity": [
+    4
+  ],
+  "native_executed": false,
+  "native_readiness_release": false
+}

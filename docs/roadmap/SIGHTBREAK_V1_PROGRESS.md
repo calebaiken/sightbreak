@@ -6,47 +6,78 @@ Statuses: `NOT STARTED`, `IN PROGRESS`, `FAILED`, `VERIFIED`, `BLOCKED EXTERNALL
 
 ## Current execution
 
-Mission remains IN PROGRESS / PRIMARY, recorded in issue25 and committed mission
-files. No native goal creation/ID lookup exists; no native goal ID is claimed.
+Mission remains IN PROGRESS / PRIMARY in issue25 and committed mission files.
+No native goal creation/update/lookup or verified goal ID is exposed.
 
-Independent Windows final6801f592 FAILS actual40080238905 at c324. Bounded
-ordinary input, route/settings/focus,16 native suites/29,567 checks, objectives
-and12-round6:6DRAW/120XP250earned offline-credit reopen equality verify. Reopened
-exit0 leaks three ObjectDB instances; later success guards are UNREACHED. Strict
-ANGLE warnings and untransferred binary limits remain explicit.
+Windows run40089125575/job120858007351/attempt1 at exact4cf6ac8e completed
+2026-10-24T11:35:30Z with workflow/job SUCCESS. Independent finale88d2cb9
+classifies strict qualification FAIL_WARNINGS and the leak diagnostic
+INCONCLUSIVE_NONREPRODUCTION. Sixteen native suites/29,567 checks, ordinary
+undelayed four shots/reload30:86, route/settings/focus,180/300-tick objectives,
+eight natural rounds7:1/local LOSS and exact120XP/250earned offline-credit restart
+equality reconstruct. Reopened PID6916 actually ran engine --verbose and exited0;
+its complete8,140-byte log has no leak/error match. All148 logs pass unchanged
+native_log predicates;23 warning-bearing files retain ANGLE. The original
+three-object leak in40080238905 remains unresolved. No owner/fix, physical latency,
+rendered firing response, representative performance or whole-platform pass is
+inferred. Large development artifact141,813,347B remains untransferred under the
+32MiB cap. No rerun, alternate ref/payload or duplicate native attempt is allowed.
+[Actual review](../reports/gauntlet/windows-route-clock-actual-20261024/REVIEW.md).
+The critic sealed/pushed its report before a model-capacity error prevented its
+final announcement; root recovered the exact remote report without changing models.
 
-Verbose diagnostic40083894472 at710 completes FAILURE10:19:42UTC; independent
-final2894c8c8 is INCONCLUSIVE_EARLIER_FLOW_FAILURE. It fails the route sleep guard
-BEFORE reopening, so no verbose leak identity exists. Native pulse budget/API
-brackets are preserved; literal sleep duration and clock resolution are absent.
-Fixed-boundary clock correction4cf6ac8e is independently source-accepted33212b18
-and integrated2f31bd70 with508-source equality and41 root tests. Actualadmission
-90d68181 and pushed releasee5ff0c23 preceded the sole request: run40089125575,
-job120858007351/attempt1 at exact4cf, created11:14:51UTC. Review this active
-attempt; no redispatch. Raw/native quality remains unverified.
+Objective decisionbc9f945d has scoped independent acceptancee87aa165. Handoff
+component firstf48c8461 falsely accepted a dead carrier retaining the device;
+exact failed full-stream evidence remains. Correction102d79f2/handofff7f01d3
+is independently scoped-accepted8c5923aa:44/44 controls and22 maintained methods
+in each source view. Required death-drop and valid same-tick recovery both verify.
+Whole-reader readiness is still blocked. Next target-score component sourcee25b4f76
+has27 passing maintained methods; its equivalent runtime closure meets12/13 old
+cases with FOV sole remaining false accept. This component is not independently
+accepted or integrated. The old synthetic defuse fixture also has wrong FOV
+labels; preserve originals and correct only separately adjudicated replacements.
 
-Optional input-reader R3 is REJECTED f8049be4 for11 new false accepts. R4 source
-642dd0e0/handoff d139124e passes219 maintained methods/3 old skips and92 builder
-verdicts in both views, but independent tests find6 further false accepts in13
-cases. It remains blocked. Historical contradictory positive fixtures and every
-failed iteration stay unchanged; further source correction is active.
+Pinned FOV researchfb5953c2 identifies actual Vector3 single-precision operations,
+strict dot>cutoff and separate recent-attacker logic. Native math reference
+source550e96c9/handoffb99d2185 contains588 frozen cases and exact binary companions.
+Builder27 pure checks pass; existing independent critic reports35 per source
+view passing, with final concrete admission pending. Runtime checkout
+/workspace/sightbreak-fov-math-runtime-550e96c9-r1 is clean at550e96c9,519 physical
+source identities bound. Proposed output
+/workspace/fov-math-reference-550e96c9-r1-20261024 is absent. Native invocations0;
+no compilation, serialization or numeric result is claimed. Independent concrete
+admission and pushed root release must precede the sole60s+5s acquisition.
+Missing historical in-memory bits and unmeasured cutoffs stay UNRESOLVED.
 
-Objective R2 finalacbe3943 REJECTS12 negative receipts in both views. Root-built
-R3 decision componentbc9f945d/handoff b2370e68 rejects four defects, with15 tests
-and exact captured inputs passing. Independent component review is active;
-EIGHT known source-consistency gaps still block the whole reader/native readiness.
-Both optional readers and this objective component remain outside root game code.
+Optional input-reader R4 is rejectedad12f7ae. R5 source7d8ec7dd/handoffeb2dbc7c
+is independently rejectedc909a9cb:15 false accepts in30 new cases despite108
+builder corpus expectations passing. No reader code is integrated. R6 is active
+in /workspace/sightbreak-windows-input-consumption-r6 from7d8ec7dd. Existing
+independent model assessment239792ce found ownership and correlated-payload
+history defects before readiness; builder's held draft now passes139 corpus
+verdicts/72 focused methods, with independent13+5 model replay pending. This is
+not a frozen candidate or acceptance. Preserve all original contradictory
+fixtures and explicit source-faithful replacements.
 
-Linux strict-type correction8da2add4 remains source-accepted3a0fcddb; V-Sync
-software-driver blocker persists. Collector source/local preflight are scoped
-accepted; coverage/overhead and physical latency remain unknown. Mac a96a7ae5
-has a partial defect finding and automated possible-cybersecurity-risk review stop,
-with no final acceptance/retry. Touch numeric/strict/descendant cleanup FAIL stays
-binding. All whole G1–G19,8.5/category/human/physical/CS2/Intel/mobile/Steam gates
-remain open. G20 verifies initialization only.
+Four-trial shutdown study ordinary/verbose/verbose/ordinary is defined in
+../reports/gauntlet/windows-shutdown-bounded-study-20261024/PLAN.md (root8ee93ac7).
+Dedicated controller/workflow source and pure tests are being prepared in a new
+own worktree by the existing builder. No source admission, root release or native
+study execution exists. Keep original300sflow/20sclose, unconditional owned-job
+accounting, strict warnings and artifact limits; never substitute another full
+qualification or replace failed/unreached trials.
 
-Exact sources, artifacts, failures and next actions are in
-[NEXT_SESSION](../engineering/NEXT_SESSION.md).
+Automatable work remains readers/model coverage, exact-source FOV math, bounded
+shutdown diagnosis, Linux fingerprint integration and reproducible package checks.
+External gates remain physical Windows/Linux/macOS/mobile gameplay/performance,
+human CS2 comparison/8.5-category review, Intel coverage, signing and Steam owner
+credentials/sign-off. Do not lower those gates. Linux software-driver warnings,
+touch descendant cleanup, original Windows leak and Mac ordinary gameplay remain
+open. Automated Mac source review stopped for possible cybersecurity risk;
+partial evidence is preserved, no retry/native release/final verdict. All whole
+G1–G19 stay open; G20 verifies initialization only.
+
+Exact continuation is in [NEXT_SESSION](../engineering/NEXT_SESSION.md).
 
 A separate future market-harness guard is independently accepted at
 `985a9d71`, [draft PR29](https://github.com/calebaiken/sightbreak/pull/29):

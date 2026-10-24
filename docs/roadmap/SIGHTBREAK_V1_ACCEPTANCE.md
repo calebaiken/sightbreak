@@ -151,3 +151,14 @@ release only; no dispatch/result exists yet. Whole gates remain unchanged.
 At 2026-10-24 11:25 UTC, actual Windows40089125575/job120858007351/attempt1 is active
 at4cf after pushed releasee5ff0c23. Original gates/timeouts/32MiB cap remain; no
 native acceptance follows from request/status. No rerun. Prior failures remain.
+
+At 2026-10-24 13:00 UTC, Windows40089125575 is completed: workflow SUCCESS,
+independent strict FAIL_WARNINGS/e88d2cb9, leak INCONCLUSIVE_NONREPRODUCTION.
+Reopened verbose client exit0 does not resolve original three-object failure.
+Objective handoff102d79f2 is scoped-accepted8c5923aa; scoree25b4f76 remains without
+independent acceptance and FOV remains open. Optional reader R5 is rejectedc909a9cb
+(15 fresh false accepts); R6 model assessment239792ce requires persistent feasible
+history and correct per-peer ownership before readiness. FOV math550e96c9 has no
+native invocation; concrete admission/root release pending. Four-trial shutdown
+study is source/pure preparation only. All whole gates, physical/human/signing/
+Steam dependencies, strict warnings, limits and automated Mac review stop remain.
