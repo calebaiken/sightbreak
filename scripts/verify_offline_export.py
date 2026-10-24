@@ -190,7 +190,7 @@ def capture_living_phase(name, *, actor_id, round_number, after, until,
     return receipt
 
 
-def main():
+def main(*, study_observer=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--target', choices=('linux', 'windows'), default='windows' if os.name == 'nt' else 'linux')
@@ -232,6 +232,30 @@ def main():
     deadline = started + args.timeout
     result = {'passed': False, 'target': args.target, 'host': platform.platform(),
               'controller_command': [sys.executable, *sys.argv], 'captures': []}
+    # BEGIN SHUTDOWN STUDY OBSERVATIONS
+    if study_observer is not None:
+        result['shutdown_study_observations'] = []
+
+    def study_close(process, name):
+        # Diagnostic only: preserve the original request and exact wait budget.
+        # Job queries happen after the wait, never between request and wait.
+        receipt = {'process': name, 'pid': process.pid, 'close_limit_seconds': 20,
+                   'request_before_monotonic': time.monotonic(),
+                   'request_before_wall_unix_ns': time.time_ns()}
+        try:
+            ui.request_close()
+            receipt.update(request_returned_monotonic=time.monotonic(),
+                           request_returned_wall_unix_ns=time.time_ns())
+            process.wait(timeout=min(20, remaining()))
+        except BaseException as error:
+            receipt['original_close_error'] = type(error).__name__ + ': ' + str(error)
+            raise
+        finally:
+            receipt.update(wait_finished_monotonic=time.monotonic(),
+                           wait_finished_wall_unix_ns=time.time_ns(), exit_code=process.poll())
+            result['shutdown_study_observations'].append(receipt)
+            study_observer('close_wait_finished', **receipt)
+    # END SHUTDOWN STUDY OBSERVATIONS
     (out / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
 
     def interrupted(signum, _frame):
@@ -279,6 +303,10 @@ def main():
         commands.append({'name': name, 'command': command, 'pid': process.pid,
                          'started_seconds': time.monotonic() - started})
         (out / 'commands.json').write_text(json.dumps(commands, indent=2) + '\n')
+        # BEGIN SHUTDOWN STUDY LAUNCH
+        if study_observer is not None:
+            study_observer('native_launch', name=name, pid=process.pid)
+        # END SHUTDOWN STUDY LAUNCH
         return process
 
     def wait_for(condition, seconds, label, process=None):
@@ -847,8 +875,13 @@ def main():
         click_text('LEAVE', caption='LEAVE MATCH', heading='FIELD MENU', require_context=require_leave_context)
         wait_for(ui.menu_visible, 30, 'Return from offline match', client)
         capture('08-return-menu')
-        ui.request_close()
-        client.wait(timeout=min(20, remaining()))
+        # BEGIN SHUTDOWN STUDY INITIAL CLOSE
+        if study_observer is not None:
+            study_close(client, 'client')
+        else:
+        # END SHUTDOWN STUDY INITIAL CLOSE
+            ui.request_close()
+            client.wait(timeout=min(20, remaining()))
         initial_exit = client.returncode
         if initial_exit != 0:
             raise RuntimeError('Initial native client did not exit cleanly')
@@ -1018,8 +1051,13 @@ def main():
         require_focus_context(after_capture, 'after_fresh_movement_capture', focused=True, paused=False)
         focus_receipt['context_fence']['status'] = 'LIVING_CONTEXT_PRESERVED_THROUGH_CAPTURE'
         focus_receipt.update(passed=True, fresh_press_movement=moved)
-        ui.request_close()
-        reopened.wait(timeout=min(20, remaining()))
+        # BEGIN SHUTDOWN STUDY REOPENED CLOSE
+        if study_observer is not None:
+            study_close(reopened, 'reopened')
+        else:
+        # END SHUTDOWN STUDY REOPENED CLOSE
+            ui.request_close()
+            reopened.wait(timeout=min(20, remaining()))
         reopened_exit = reopened.returncode
         if reopened_exit or failed((out / 'reopened.log').read_text(encoding='utf-8', errors='replace')):
             raise RuntimeError('Reopened export failed clean shutdown')

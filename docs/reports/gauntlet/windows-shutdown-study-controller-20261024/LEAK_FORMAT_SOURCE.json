@@ -1,0 +1,55 @@
+{
+  "url": "https://raw.githubusercontent.com/godotengine/godot/ed1daf0bf/core/object/object.cpp",
+  "sha256": "d16943098177c719820de78f664d4cde3a9c4f997f25ccfa6a1f9b7e18098bd4",
+  "bytes": 76810,
+  "anchors": [
+    {
+      "line": 2562,
+      "context": [
+        "\t\t\t\t\t\textra_info = \" - Resource path: \" + String(resource_get_path->call(obj, nullptr, 0, call_error));",
+        "\t\t\t\t\t}",
+        "\t\t\t\t\tif (obj->is_class(\"RefCounted\")) {",
+        "\t\t\t\t\t\textra_info = \" - Reference count: \" + itos((static_cast<RefCounted *>(obj))->get_reference_count());",
+        "\t\t\t\t\t}",
+        "",
+        "\t\t\t\t\tuint64_t id = uint64_t(i) | (uint64_t(object_slots[i].validator) << OBJECTDB_SLOT_MAX_COUNT_BITS) | (object_slots[i].is_ref_counted ? OBJECTDB_REFERENCE_BIT : 0);",
+        "\t\t\t\t\tDEV_ASSERT(id == (uint64_t)obj->get_instance_id()); // We could just use the id from the object, but this check may help catching memory corruption catastrophes.",
+        "\t\t\t\t\tprint_line(\"Leaked instance: \" + String(obj->get_class()) + \":\" + uitos(id) + extra_info);",
+        "",
+        "\t\t\t\t\tcount--;",
+        "\t\t\t\t}",
+        "\t\t\t}",
+        "\t\t\tprint_line(\"Hint: Leaked instances typically happen when nodes are removed from the scene tree (with `remove_child()`) but not freed (with `free()` or `queue_free()`).\");",
+        "\t\t}",
+        "\t}",
+        "",
+        "\tif (object_slots) {",
+        "\t\tmemfree(object_slots);",
+        "\t}"
+      ]
+    },
+    {
+      "line": 2567,
+      "context": [
+        "",
+        "\t\t\t\t\tuint64_t id = uint64_t(i) | (uint64_t(object_slots[i].validator) << OBJECTDB_SLOT_MAX_COUNT_BITS) | (object_slots[i].is_ref_counted ? OBJECTDB_REFERENCE_BIT : 0);",
+        "\t\t\t\t\tDEV_ASSERT(id == (uint64_t)obj->get_instance_id()); // We could just use the id from the object, but this check may help catching memory corruption catastrophes.",
+        "\t\t\t\t\tprint_line(\"Leaked instance: \" + String(obj->get_class()) + \":\" + uitos(id) + extra_info);",
+        "",
+        "\t\t\t\t\tcount--;",
+        "\t\t\t\t}",
+        "\t\t\t}",
+        "\t\t\tprint_line(\"Hint: Leaked instances typically happen when nodes are removed from the scene tree (with `remove_child()`) but not freed (with `free()` or `queue_free()`).\");",
+        "\t\t}",
+        "\t}",
+        "",
+        "\tif (object_slots) {",
+        "\t\tmemfree(object_slots);",
+        "\t}",
+        "",
+        "\tspin_lock.unlock();",
+        "}"
+      ]
+    }
+  ]
+}
