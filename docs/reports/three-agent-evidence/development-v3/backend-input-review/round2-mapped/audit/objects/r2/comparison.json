@@ -1,0 +1,222 @@
+{
+  "harness_commit": "8070436f53dd98e9529e8c21ea7b0f7e3ecb6daf",
+  "harness_sha256": "416cc212d3200b9351036b7ec205a5bb488748f19c09d7ea0ef1edc24d683dbd",
+  "verifier_sha256": "06b5f522c9bdae065ddc44482a666566772bcece9efa29c43e6ceac9792ef62b",
+  "fixture_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+  "baseline_runtime": {
+    "commit": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+    "backend_tree": "67027b4fa17674ef067c84401af76eb1524419ac"
+  },
+  "candidate_runtime": {
+    "commit": "4a8e9ea73aa8b286d9f1751b0a6b485479737294",
+    "backend_tree": "4ef756639c2e90037bce79a30e2867aebcc798a7"
+  },
+  "all_seven_workloads_retained": true,
+  "received_responses": 168,
+  "timed_responses": 140,
+  "warmup_responses": 28,
+  "full_table_snapshots": 336,
+  "snapshot_tables_per_phase": 12,
+  "rows": [
+    {
+      "trades": 0,
+      "items_per_side": 0,
+      "actual_response_sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd",
+      "actual_responses_equal": true,
+      "query_counts": {
+        "baseline": [
+          3
+        ],
+        "candidate": [
+          3
+        ]
+      },
+      "medians_ms": {
+        "baseline": 7.8575,
+        "candidate": 10.3711
+      },
+      "p95_ms": {
+        "baseline": 8.7919,
+        "candidate": 13.8509
+      },
+      "within_run_state_sha256": {
+        "baseline": "5c6dbbeb49f4c9303320515d28ed999ead0cb724b75d788999875d1b28e2d71c",
+        "candidate": "6af58974f8356a53f05b6de345d7d1dd5c71c39e4f01e99868e92959bcf97370"
+      },
+      "state_representation": "full_rows_per_table",
+      "state_equal_within_each_run": true
+    },
+    {
+      "trades": 1,
+      "items_per_side": 0,
+      "actual_response_sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4",
+      "actual_responses_equal": true,
+      "query_counts": {
+        "baseline": [
+          4
+        ],
+        "candidate": [
+          4
+        ]
+      },
+      "medians_ms": {
+        "baseline": 9.3525,
+        "candidate": 14.922799999999999
+      },
+      "p95_ms": {
+        "baseline": 10.8182,
+        "candidate": 26.9802
+      },
+      "within_run_state_sha256": {
+        "baseline": "80544ae4bb1a53c6d17f2bff9753b8495bc56dcfc2f5c8b1ed2f4472a071bfd7",
+        "candidate": "77b7d405ff9591edb88ed9e74d268c139515db7012521ae38b7b5e63eb22d20f"
+      },
+      "state_representation": "full_rows_per_table",
+      "state_equal_within_each_run": true
+    },
+    {
+      "trades": 1,
+      "items_per_side": 2,
+      "actual_response_sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b",
+      "actual_responses_equal": true,
+      "query_counts": {
+        "baseline": [
+          8
+        ],
+        "candidate": [
+          5
+        ]
+      },
+      "medians_ms": {
+        "baseline": 16.03505,
+        "candidate": 11.502600000000001
+      },
+      "p95_ms": {
+        "baseline": 19.1847,
+        "candidate": 13.0818
+      },
+      "within_run_state_sha256": {
+        "baseline": "814c8eee24a84542e22018901dc269cf7ad6d550966160ee1bbd9dab3089aff8",
+        "candidate": "8d89624b411f586024486b26e94f074e674dd32f227c3ae681182744a6d4bc6b"
+      },
+      "state_representation": "full_rows_per_table",
+      "state_equal_within_each_run": true
+    },
+    {
+      "trades": 10,
+      "items_per_side": 1,
+      "actual_response_sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34",
+      "actual_responses_equal": true,
+      "query_counts": {
+        "baseline": [
+          33
+        ],
+        "candidate": [
+          5
+        ]
+      },
+      "medians_ms": {
+        "baseline": 54.09165,
+        "candidate": 17.03545
+      },
+      "p95_ms": {
+        "baseline": 66.6315,
+        "candidate": 23.7704
+      },
+      "within_run_state_sha256": {
+        "baseline": "922579a4131b69f4d3b8725f7656d640535c7573416f65e9a9f0aa2c1dc845d1",
+        "candidate": "e09e6c13b0b29e900a88db4a5b15cf9557b04df1f0062185700077d208a6e156"
+      },
+      "state_representation": "full_rows_per_table",
+      "state_equal_within_each_run": true
+    },
+    {
+      "trades": 40,
+      "items_per_side": 1,
+      "actual_response_sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010",
+      "actual_responses_equal": true,
+      "query_counts": {
+        "baseline": [
+          123
+        ],
+        "candidate": [
+          5
+        ]
+      },
+      "medians_ms": {
+        "baseline": 202.7473,
+        "candidate": 25.5607
+      },
+      "p95_ms": {
+        "baseline": 292.4239,
+        "candidate": 54.0613
+      },
+      "within_run_state_sha256": {
+        "baseline": "93fce5b66979f2ad645308abc966c6f8c2937643ba335601afc16af2833d80ca",
+        "candidate": "50cda2ea5752aae0d0894f5fd067cfcd51b96104e6d283f50d6e3a803d225bfd"
+      },
+      "state_representation": "full_rows_per_table",
+      "state_equal_within_each_run": true
+    },
+    {
+      "trades": 40,
+      "items_per_side": 20,
+      "actual_response_sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db",
+      "actual_responses_equal": true,
+      "query_counts": {
+        "baseline": [
+          1643
+        ],
+        "candidate": [
+          8
+        ]
+      },
+      "medians_ms": {
+        "baseline": 1657.12235,
+        "candidate": 126.97364999999999
+      },
+      "p95_ms": {
+        "baseline": 1827.2075,
+        "candidate": 209.8501
+      },
+      "within_run_state_sha256": {
+        "baseline": "6fb1481a26542bb9055e14c468d1132cac4b66920e9199f9abd3e4114ca9c62c",
+        "candidate": "9810904983605577e65cb4040ef25a0bbde3681aaf2d9d7711ca007ccdb2dfee"
+      },
+      "state_representation": "full_rows_per_table",
+      "state_equal_within_each_run": true
+    },
+    {
+      "trades": 501,
+      "items_per_side": 0,
+      "actual_response_sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b",
+      "actual_responses_equal": true,
+      "query_counts": {
+        "baseline": [
+          504
+        ],
+        "candidate": [
+          5
+        ]
+      },
+      "medians_ms": {
+        "baseline": 942.1718000000001,
+        "candidate": 65.03265
+      },
+      "p95_ms": {
+        "baseline": 2704.7057,
+        "candidate": 157.8235
+      },
+      "within_run_state_sha256": {
+        "baseline": "03ad8a7859e6198a7c5918b8bfb61a3389463ddffeb1e0167350a4b08697321d",
+        "candidate": "5ae50b54c881d9b75db897b87cf39a9e9b4da17eeb81d0517b5c4c5e8a00c80e"
+      },
+      "state_representation": "full_rows_per_table",
+      "state_equal_within_each_run": true
+    }
+  ],
+  "cross_run_state_hash_equality_required": false,
+  "reason": "Independent fixture sessions have run-specific expiry timestamps; before/after equality is asserted within each run.",
+  "small_read_latency_regression_observed": true,
+  "timings_host_load_controlled": false
+}

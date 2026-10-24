@@ -1,0 +1,84 @@
+{
+  "passed": false,
+  "status": "failed",
+  "completed": true,
+  "scope": "REAL CPython-only descendant control; synthetic source identity, not a game/export pass",
+  "failures": [
+    "RuntimeError: descendant: process containment failed: descendants survived command exit; descendant: process containment reported HARNESS_ERROR; see C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\verifier-descendant-20261019-154834-904\\after\\attempt\\descendant.log"
+  ],
+  "processes": [
+    {
+      "label": "descendant",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-tools\\python\\cpython-3.13.15-windows-x86_64-none\\python.exe",
+        "-B",
+        "-c",
+        "import json,os,pathlib,subprocess,sys,time; p=subprocess.Popen([sys.executable,'-B','-c',sys.argv[1],sys.argv[4]],close_fds=True); pathlib.Path(sys.argv[2]).write_text(json.dumps({'root':os.getpid(),'child':p.pid})); deadline=time.monotonic()+8\nwhile not pathlib.Path(sys.argv[3]).exists() and time.monotonic()<deadline: time.sleep(.01)\nprint('ROOT_EXIT_ZERO',flush=True); os._exit(0)",
+        "import os,pathlib,sys,time; p=pathlib.Path(sys.argv[1]); print('DESCENDANT_READY pid='+str(os.getpid()),flush=True); deadline=time.monotonic()+8\nwhile not p.exists() and time.monotonic()<deadline: time.sleep(.01)\nprint('ERROR: verifier descendant late control',flush=True); sys.exit(23)",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\verifier-descendant-20261019-154834-904\\after\\ready.json",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\verifier-descendant-20261019-154834-904\\after\\observed",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\verifier-descendant-20261019-154834-904\\after\\returned"
+      ],
+      "log": "descendant.log",
+      "process_receipt": "descendant.process.json",
+      "receipt": {
+        "complete": true,
+        "exit": 0,
+        "errors": [
+          "descendants survived command exit"
+        ]
+      },
+      "exit": 0,
+      "timed_out": false,
+      "passed": false,
+      "failures": [
+        "descendant: process containment failed: descendants survived command exit",
+        "descendant: process containment reported HARNESS_ERROR"
+      ]
+    }
+  ],
+  "source_before": {
+    "source_commit": "control-only",
+    "source_game_tree": "not-game",
+    "source_content_sha256": "082d83296fdbf329b3901a38eabb57a45d79e893bdfcab576b43bfbddb40de48",
+    "source_validation_sha256": "acd4f228ad9e883481c66a0f3613f5ec8e3d042d5241630ecff3cb98981079c2",
+    "source_game_dirty": false,
+    "source_dirty": false
+  },
+  "source_after": {
+    "source_commit": "control-only",
+    "source_game_tree": "not-game",
+    "source_content_sha256": "082d83296fdbf329b3901a38eabb57a45d79e893bdfcab576b43bfbddb40de48",
+    "source_validation_sha256": "acd4f228ad9e883481c66a0f3613f5ec8e3d042d5241630ecff3cb98981079c2",
+    "source_game_dirty": false,
+    "source_dirty": false
+  },
+  "source_unchanged": true,
+  "physical_device_installation": "NOT TESTED",
+  "device_performance": "NOT TESTED",
+  "xcode_build": "NOT TESTED",
+  "source_commit": "control-only",
+  "source_game_tree": "not-game",
+  "source_content_sha256": "082d83296fdbf329b3901a38eabb57a45d79e893bdfcab576b43bfbddb40de48",
+  "source_validation_sha256": "acd4f228ad9e883481c66a0f3613f5ec8e3d042d5241630ecff3cb98981079c2",
+  "source_game_dirty": false,
+  "source_dirty": false
+}
+{
+  "phase": "after",
+  "expected_control_matched": true,
+  "verifier_exit": 1,
+  "passed": false,
+  "observed": {
+    "pids": {
+      "root": 2924,
+      "child": 10284
+    },
+    "root_exit": 0,
+    "child_exit": 1
+  },
+  "observer_finished": true,
+  "command_exit": 0,
+  "returned_log": "ROOT_EXIT_ZERO\nHARNESS_ERROR descendants survived command exit\n\nHARNESS_ERROR descendants survived command exit\n\nHARNESS_ERROR descendants survived the process supervisor\n",
+  "settled_log": "ROOT_EXIT_ZERO\nHARNESS_ERROR descendants survived command exit\n\nHARNESS_ERROR descendants survived command exit\n\nHARNESS_ERROR descendants survived the process supervisor\n"
+}

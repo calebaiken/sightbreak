@@ -1,0 +1,8 @@
+﻿2026-10-24T09:36:59.7288348Z ##[group]Run "$SIGHTBREAK_CONTROL_PYTHON" -c "import json, pathlib, sys; sys.path.insert(0, 'scripts'); from build_manifest import source, require_clean; receipt=source(); pathlib.Path('$GITHUB_WORKSPACE/builds/v3-audio-controls/source-after.json').write_text(json.dumps(receipt, indent=2)); require_clean(receipt); before=json.loads(pathlib.Path('$GITHUB_WORKSPACE/builds/v3-audio-controls/source-before.json').read_text()); sys.exit(0 if before == receipt else 1)"
+2026-10-24T09:36:59.7290514Z [36;1m"$SIGHTBREAK_CONTROL_PYTHON" -c "import json, pathlib, sys; sys.path.insert(0, 'scripts'); from build_manifest import source, require_clean; receipt=source(); pathlib.Path('$GITHUB_WORKSPACE/builds/v3-audio-controls/source-after.json').write_text(json.dumps(receipt, indent=2)); require_clean(receipt); before=json.loads(pathlib.Path('$GITHUB_WORKSPACE/builds/v3-audio-controls/source-before.json').read_text()); sys.exit(0 if before == receipt else 1)"[0m
+2026-10-24T09:36:59.7322469Z shell: /usr/bin/bash -e {0}
+2026-10-24T09:36:59.7322888Z env:
+2026-10-24T09:36:59.7323232Z   SIGHTBREAK_TOOLS_DIR: /home/runner/work/_temp/sightbreak-control-tools
+2026-10-24T09:36:59.7323632Z   SIGHTBREAK_STATE_DIR: /home/runner/work/_temp/sightbreak-control-state
+2026-10-24T09:36:59.7324063Z   SIGHTBREAK_CONTROL_PYTHON: /home/runner/work/_temp/sightbreak-control-python/bin/python
+2026-10-24T09:36:59.7324451Z ##[endgroup]

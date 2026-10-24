@@ -1,0 +1,36 @@
+﻿2026-10-23T00:48:40.7028546Z ##[group]Run .venv/bin/python scripts/verify_integration_export.py --display :106 --visit-armory --reload-mode keyboard --timeout 240 --output builds/v3-export-network
+2026-10-23T00:48:40.7029765Z [36;1m.venv/bin/python scripts/verify_integration_export.py --display :106 --visit-armory --reload-mode keyboard --timeout 240 --output builds/v3-export-network[0m
+2026-10-23T00:48:40.7094909Z shell: /usr/bin/bash -e {0}
+2026-10-23T00:48:40.7095209Z ##[endgroup]
+2026-10-23T00:52:40.9082818Z {
+2026-10-23T00:52:40.9083292Z   "passed": false,
+2026-10-23T00:52:40.9083659Z   "stage": "watchdog-start",
+2026-10-23T00:52:40.9084049Z   "status": "incomplete",
+2026-10-23T00:52:40.9085271Z   "watchdog_error": "Export controller exited 1; Export controller exceeded the hard wall-clock watchdog (including cleanup); process containment reported HARNESS_ERROR (see watchdog.log)",
+2026-10-23T00:52:40.9086899Z   "watchdog": {
+2026-10-23T00:52:40.9087211Z     "passed": false,
+2026-10-23T00:52:40.9087560Z     "status": "failed",
+2026-10-23T00:52:40.9087966Z     "command": [
+2026-10-23T00:52:40.9088387Z       "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+2026-10-23T00:52:40.9088915Z       "-B",
+2026-10-23T00:52:40.9089433Z       "/home/runner/work/sightbreak/sightbreak/scripts/verify_integration_export.py",
+2026-10-23T00:52:40.9090121Z       "--_export-flow-worker",
+2026-10-23T00:52:40.9090475Z       "--display",
+2026-10-23T00:52:40.9090764Z       ":106",
+2026-10-23T00:52:40.9091049Z       "--visit-armory",
+2026-10-23T00:52:40.9091376Z       "--reload-mode",
+2026-10-23T00:52:40.9091697Z       "keyboard",
+2026-10-23T00:52:40.9091983Z       "--timeout",
+2026-10-23T00:52:40.9092503Z       "240",
+2026-10-23T00:52:40.9092803Z       "--output",
+2026-10-23T00:52:40.9093141Z       "builds/v3-export-network"
+2026-10-23T00:52:40.9093493Z     ],
+2026-10-23T00:52:40.9093773Z     "timeout_seconds": 240.0,
+2026-10-23T00:52:40.9094192Z     "process_receipt": "watchdog.process.json",
+2026-10-23T00:52:40.9094907Z     "controller_sha256": "61352dbc66ef5b60b2929cca6984b9facdc25a05a48729af2f08f12dd5cb282c",
+2026-10-23T00:52:40.9095591Z     "worker_exit": 1,
+2026-10-23T00:52:40.9095908Z     "seconds": 240.141,
+2026-10-23T00:52:40.9096953Z     "error": "Export controller exited 1; Export controller exceeded the hard wall-clock watchdog (including cleanup); process containment reported HARNESS_ERROR (see watchdog.log)"
+2026-10-23T00:52:40.9098120Z   }
+2026-10-23T00:52:40.9098387Z }
+2026-10-23T00:52:40.9186902Z ##[error]Process completed with exit code 1.

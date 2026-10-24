@@ -3,7 +3,7 @@
 
 Native screenshots require independent visual inspection. This does not read
 private game state or establish physical-device performance. Normal termination
-uses the engine's frame budget; interrupted attempts remain failures.
+is a completion-driven desktop close; interrupted attempts remain failures.
 """
 import argparse
 import hashlib
@@ -14,21 +14,54 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
+import sys
 import time
 
 from build_manifest import ROOT, source
-from PIL import Image
-
 from native_log import failed
-from verify_integration_export import NativeUI
+from verify_integration_export import NativeUI, frozen_export, unchanged_export
+from offline_hud import parse_hud_text, require_paused_training
+from export_flow import entry, prepare_flow_output
+from matrix_process import run_process
 
 
-def main():
+def ocr_text(command, image, deadline, output):
+    """Bound OCR by the remaining flow deadline and retain partial failed output."""
+    remaining = deadline - time.monotonic()
+    if remaining <= 0:
+        raise TimeoutError('Offline OCR deadline expired before launch')
+    paths = {name: output.with_suffix(suffix) for name, suffix in (
+        ('image', '.input.png'), ('stdout', '.stdout.txt'), ('stderr', '.stderr.txt'),
+        ('log', '.process.log'), ('receipt', '.process.json'))}
+    with paths['image'].open('xb') as raw:
+        raw.write(image)
+    # Stream files survive an outer timeout or containment failure; no PIPE can
+    # be held open indefinitely by a descendant after the OCR root exits.
+    for name in ('stdout', 'stderr'):
+        with paths[name].open('xb'):
+            pass
+    worker = Path(__file__).with_name('ocr_process.py')
+    arguments = [sys.executable, str(worker), '--input', str(paths['image']),
+                 '--stdout', str(paths['stdout']), '--stderr', str(paths['stderr']), '--', *command]
+    with paths['log'].open('x', encoding='utf-8') as log:
+        code = run_process(arguments, cwd=output.parent, env=os.environ.copy(), log=log,
+                           result_path=paths['receipt'], timeout=min(15, remaining))
+    text = paths['log'].read_text(encoding='utf-8', errors='replace')
+    if time.monotonic() >= deadline or 'timed out' in text.lower():
+        raise TimeoutError('Offline OCR exceeded its remaining wall-clock budget')
+    if failed(text) or 'HARNESS_ERROR' in text:
+        raise RuntimeError('Offline OCR containment or process audit failed: ' + text)
+    if code != 0:
+        raise RuntimeError('Offline OCR exited ' + str(code))
+    return paths['stdout'].read_text(encoding='utf-8', errors='replace')
+
+
+def main(supervised=False):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--display', default=':104')
     parser.add_argument('--xvfb', default=os.environ.get('XVFB_BIN') or shutil.which('Xvfb'))
-    parser.add_argument('--quit-after', type=int, default=300)
+    parser.add_argument('--quit-after', type=int, default=0, help='Optional premature-exit control; normal exit is completion-driven window close')
     parser.add_argument('--timeout', type=float, default=300)
     parser.add_argument('--tesseract', default=shutil.which('tesseract'))
     args = parser.parse_args()
@@ -36,22 +69,15 @@ def main():
         parser.error('Tesseract is required to verify rendered ammunition and living-player state')
     if not args.xvfb or not re.fullmatch(r':[0-9]+', args.display):
         parser.error('Supply Xvfb and an isolated numbered display')
-    if args.quit_after <= 0 or args.timeout <= 0:
-        parser.error('Frame and timeout budgets must be positive')
+    if args.quit_after < 0 or args.timeout <= 0:
+        parser.error('Frame budget must be nonnegative and timeout positive')
     socket = Path('/tmp/.X11-unix/X' + args.display[1:])
     if socket.exists():
         parser.error('Display already in use')
-    out = args.output.resolve()
-    out.mkdir(parents=True, exist_ok=True)
-    if (out / 'results.json').exists():
-        parser.error('Use a new output directory for each attempt')
+    out = prepare_flow_output(args.output, supervised)
     executable = ROOT / 'builds/linux/sightbreak.x86_64'
-    manifest = json.loads((executable.parent / 'source.json').read_text())
-    before = source()
-    digest = hashlib.file_digest(executable.open('rb'), 'sha256').hexdigest()
-    if before['source_content_sha256'] != manifest['source_content_sha256'] or digest != manifest['artifact']['sha256']:
-        raise RuntimeError('Export does not match source and manifest')
-    logs, processes, events = [], [], []
+    manifest, before, digest = frozen_export(executable, out)
+    logs, processes, events, inspection_pauses = [], [], [], []
     ui = client = None
     started = time.monotonic()
 
@@ -63,7 +89,7 @@ def main():
         return process
 
     def wait_for(condition, seconds, label):
-        deadline = time.monotonic() + seconds
+        deadline = min(time.monotonic() + seconds, started + args.timeout)
         while time.monotonic() < deadline:
             if condition():
                 return
@@ -78,26 +104,36 @@ def main():
         (out / 'actions.json').write_text(json.dumps(events, indent=2) + '\n')
         print(name, flush=True)
 
-    def read_hud(name):
-        image = Image.open(out / (name + '.png'))
-        def text(box):
+    def image_text(name, box, label):
+        from PIL import Image
+        with Image.open(out / (name + '.png')) as image:
             crop = image.crop(box)
             crop = crop.resize((crop.width * 3, crop.height * 3))
             data = io.BytesIO()
             crop.save(data, format='PNG')
-            return subprocess.check_output([args.tesseract, 'stdin', 'stdout', '--psm', '6'], input=data.getvalue(), stderr=subprocess.DEVNULL).decode()
-        status = text((0, 630, 450, 720))
-        ammo_text = text((980, 625, 1280, 710))
-        match = re.search(r'(\d+)\s*/\s*(\d+)', ammo_text)
-        if 'ELIMINATED' in status.upper() or 'SPECTATING' in status.upper() or match is None:
-            raise RuntimeError('Rendered living-player/ammunition check failed: ' + repr((status, ammo_text)))
-        return {'ammo': int(match[1]), 'reserve': int(match[2]), 'status_ocr': status, 'ammo_ocr': ammo_text}
+            return ocr_text([args.tesseract, 'stdin', 'stdout', '--psm', '6'], data.getvalue(),
+                             started + args.timeout, out / (name + '-' + label + '-ocr'))
 
-    def tap(key):
+    def read_hud(name):
+        status = image_text(name, (0, 630, 450, 720), 'status')
+        ammo_text = image_text(name, (980, 625, 1280, 710), 'ammo')
+        return parse_hud_text(status, ammo_text)
+
+    def tap(key, settle=1.0):
         ui.key(key, True)
         time.sleep(.3)
         ui.key(key, False)
-        time.sleep(1)
+        time.sleep(settle)
+
+    def pause_for_inspection(name):
+        # Pause through the same Escape menu available to an offline player.
+        # Capture live HUD frames BEFORE pausing, then keep expensive OCR from
+        # leaving the player exposed. Never disable bots or change game state.
+        tap('Escape', settle=.35)
+        capture(name)
+        text = image_text(name, (40, 40, 780, 210), 'pause')
+        require_paused_training(text)
+        inspection_pauses.append({'image': name + '.png', 'pause_ocr': text})
 
     try:
         launch('xvfb', [args.xvfb, args.display, '-screen', '0', '1280x720x24', '-nolisten', 'tcp'])
@@ -107,8 +143,12 @@ def main():
             path = out / 'state' / directory
             path.mkdir(parents=True, exist_ok=True)
             env[key] = str(path)
-        client = launch('client', [str(executable), '--audio-driver', 'Dummy', '--quit-after', str(args.quit_after)], env)
+        client_command = [str(executable), '--audio-driver', 'Dummy']
+        if args.quit_after:
+            client_command += ['--quit-after', str(args.quit_after)]
         ui = NativeUI(args.display)
+        unchanged_export(executable, manifest, before, digest)
+        client = launch('client', client_command, env)
         wait_for(lambda: ui.focus_game() and ui.menu_visible(), 60, 'Native menu')
         capture('01-menu')
         for _ in range(3):
@@ -140,34 +180,49 @@ def main():
             ui.button(False)
             time.sleep(.35)
         capture('05-after-fire')
+        pause_for_inspection('05-inspection-pause')
         fired_hud = read_hud('05-after-fire')
         if not 0 < fired_hud['ammo'] < 15 or fired_hud['reserve'] != 60:
             raise RuntimeError('Native fire did not deplete the initial sidearm magazine')
+        tap('Escape', settle=.15)
+        capture('05b-resumed')
         ui.key('r', True)
         time.sleep(1.0)
         ui.key('r', False)
         time.sleep(2.5)
         capture('06-after-reload')
+        pause_for_inspection('06-inspection-pause')
         reloaded_hud = read_hud('06-after-reload')
         if reloaded_hud['ammo'] != 15 or reloaded_hud['reserve'] >= fired_hud['reserve'] or sum(reloaded_hud[k] for k in ('ammo', 'reserve')) != sum(fired_hud[k] for k in ('ammo', 'reserve')):
             raise RuntimeError('Native offline reload did not conserve rendered ammunition')
-        tap('Escape')
         capture('07-field-menu')
         ui.click(640, 318)
         wait_for(ui.menu_visible, 30, 'Return from offline match')
         capture('08-return-menu')
+        if client.poll() is not None:
+            raise RuntimeError('Client exited before completion-driven native close')
+        close_receipt = ui.request_close()
         client.wait(timeout=max(1, args.timeout - (time.monotonic() - started)))
         if client.returncode != 0 or failed((out / 'client.log').read_text()):
             raise RuntimeError('Export failed clean termination or native log gate')
-        if before != source():
-            raise RuntimeError('Source changed during offline validation')
+        unchanged_export(executable, manifest, before, digest)
         result = {'source': before, 'executable_sha256': digest, 'events': events,
                   'exit': client.returncode, 'clean_exit': True, 'passed': True,
-                  'fired_hud': fired_hud, 'reloaded_hud': reloaded_hud,
+                   'fired_hud': fired_hud, 'reloaded_hud': reloaded_hud,
+                   'ocr_inspection': {'method': 'Native offline Escape pause; live HUD frames captured before pause',
+                                      'pauses': inspection_pauses},
+                   'exit_method': 'completion-driven native WM_DELETE_WINDOW; separate wall-clock watchdog',
+                   'window_close': close_receipt,
+                  'premature_exit_control_frames': args.quit_after,
                   'controller_sha256': hashlib.file_digest(Path(__file__).open('rb'), 'sha256').hexdigest(),
-                  'limits': 'Screenshots require visual review; no private authority instrumentation or mobile performance claim.'}
+                   'limits': 'Screenshots require visual review; offline inspection uses the ordinary pause menu, not continuous-match play; no private authority instrumentation or mobile performance claim.'}
         (out / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
         print(json.dumps(result), flush=True)
+    except Exception as error:
+        (out / 'results.json').write_text(json.dumps({'passed': False, 'error': str(error),
+            'source': before, 'executable_sha256': digest, 'events': events,
+            'controller_sha256': hashlib.file_digest(Path(__file__).open('rb'), 'sha256').hexdigest()}, indent=2) + '\n')
+        raise
     finally:
         if ui:
             ui.close()
@@ -184,4 +239,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    raise SystemExit(entry(main, __file__))

@@ -1,0 +1,51 @@
+{
+  "provenance": "Retrospective transcription of original tool-call metadata and tool-visible results from the conversation; not contemporaneous process receipts.",
+  "original_workdir": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3",
+  "original_tool": "functions.shell",
+  "original_timeout_ms": 120000,
+  "original_execution_times_utc": null,
+  "native_stdout_stderr_separate": false,
+  "rerun_during_preservation": false,
+  "executions": [
+    {
+      "order": 1,
+      "command": "01-maintained-suite.ps1",
+      "retained_output": "../outputs/01-maintained-suite.tool-output.txt",
+      "tool_reported_exit": 1,
+      "python_native_exit_explicitly_observed": null,
+      "unittest_report": "18 cases OK"
+    },
+    {
+      "order": 2,
+      "command": "02-seven-negative-controls.ps1",
+      "retained_output": "../outputs/02-seven-negative-controls.tool-output.txt",
+      "tool_reported_exit": 1,
+      "python_native_exit_explicitly_observed": null,
+      "unittest_report": "7 test methods; 6 OK, HUD method had 2 subtest errors caused by missing args test stub"
+    },
+    {
+      "order": 3,
+      "command": "03-hud-corrected-plus-baseline.ps1",
+      "retained_output": "../outputs/03-hud-corrected-plus-baseline.tool-output.txt",
+      "tool_reported_exit": 1,
+      "python_native_exit_explicitly_observed": null,
+      "unittest_report": "19 cases OK: 18 maintained cases plus corrected HUD negative control"
+    },
+    {
+      "order": 4,
+      "command": "04-baseline-explicit-exit.ps1",
+      "retained_output": "../outputs/04-baseline-explicit-exit.tool-output.txt",
+      "tool_reported_exit": 5,
+      "python_native_exit_explicitly_observed": -1073741819,
+      "python_native_exit_hex": "0xC0000005",
+      "unittest_report": "18 cases OK before native process crash"
+    }
+  ],
+  "missing_original_material": [
+    "Temporary fixture directories and generated ZIP/log/result files (cleaned up by the original tests)",
+    "Original working-tree byte hashes",
+    "Real frozen-source receipt and commit identity for the inspected dirty working tree",
+    "Separate native stdout and stderr streams",
+    "Original test execution timestamps"
+  ]
+}

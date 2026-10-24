@@ -1,0 +1,53 @@
+{
+  "attempt_1": {
+    "directory": "attempt",
+    "failed_receipt": {
+      "passed": false,
+      "error": "'WindowsPath' object has no attribute 'fileno'",
+      "when_ns": 1792717026748092200
+    },
+    "original_driver": "attempt/private/driver-before-api-fix.py",
+    "production_import_probe_receipts": 0,
+    "interpretation": "Pre-import driver API mismatch: passes pathlib.Path as log, error WindowsPath has no fileno; no phase launch/result evidence. Version preflight occurs earlier in driver, so do not claim no native process of any kind was attempted historically. Exact helper stack not retained/audited."
+  },
+  "attempt_2": {
+    "directory": "attempt-r2",
+    "failed_receipt": {
+      "passed": false,
+      "error": "missing/ambiguous component summary",
+      "when_ns": 1792717087612354900
+    },
+    "original_driver": "attempt-r2/private/driver-before-log-fix.py",
+    "original_probe": "attempt-r2/private/probe-before-file-result.gd",
+    "engine_import_probe_receipts": [
+      {
+        "complete": true,
+        "exit": 0,
+        "errors": []
+      },
+      {
+        "complete": true,
+        "exit": 0,
+        "errors": []
+      }
+    ],
+    "stdout_lengths": [
+      0,
+      0
+    ],
+    "interpretation": "Engine phase receipts record zero exits but stdout is empty; missing/ambiguous summary correctly fails closed. No root-driver OS exit receipt in retained packet; any enclosing/root exit0 is not proof of summary/native assertions."
+  },
+  "attempt_3": {
+    "directory": "attempt-r3",
+    "successful_recorded_samples": 2,
+    "required_nonempty_engine_file_logs": 4,
+    "independent_persisted_results_match": 2,
+    "interpretation": "Driver adds explicit --log-file, requires summary and persisted result agreement, checks recorded exits/errors and >=20 checks/0 failures; module/probe post hashes checked in source. No reruns by reviewer."
+  },
+  "reviewer_failures_retained": [
+    {
+      "script": "05-verify-binding.py",
+      "error": "git show assumed game/scripts/match.gd exit128; correct target located by filename-only ls-tree and reverified in07 script."
+    }
+  ]
+}

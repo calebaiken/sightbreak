@@ -1,0 +1,26 @@
+{
+  "name": "audio capture",
+  "role": "baseline",
+  "control": null,
+  "command": [
+    "/home/runner/work/_temp/sightbreak-v3-controls/scripts/godot.sh",
+    "--headless",
+    "--audio-driver",
+    "Dummy",
+    "--script",
+    "res://tests/reload_audio_capture.gd",
+    "--",
+    "--scenario=reload",
+    "--out=/home/runner/work/sightbreak/sightbreak/builds/v3-audio-controls/raw/004-baseline-audio-capture/capture"
+  ],
+  "exit": 0,
+  "seconds": 4.022,
+  "log": "native.log",
+  "process_receipt": "process.json",
+  "containment_and_artifact_errors": [],
+  "capture_sha256": {
+    "mix_reload.wav": "47d1b7db8e910d7694297af86dc40533bccc00e52d11aa6a01ed278c16318675",
+    "voices_reload.csv": "ebdfbdd27748eb328b01856c83fb8134abdee52c12a92dee784cf4a4ab999076",
+    "report_reload.txt": "9c8a2cadfd837aea36ae8d092d90717a4b2f228d2f1893c6e74dbfa5098e3252"
+  }
+}

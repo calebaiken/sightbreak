@@ -1,0 +1,365 @@
+diff --git a/backend/app.py b/backend/app.py
+index bb15f05..16f33c9 100644
+--- a/backend/app.py
++++ b/backend/app.py
+@@ -296,11 +296,11 @@ def market_buy(listing_id:UUID,body:MarketBuy,request:Request,authorization:Auth
+         audit(db,p.id,'market_settled',listing_id=listing.id,item_id=item.id,from_player=seller.id,to_player=p.id,fee=fee)
+         return remember(db,key,h,dict(item=item_json(item),credits=p.credits,fee=fee))
+ 
+-def trade_json(t):
++def trade_json(t, items=None, names=None):
+     from sqlalchemy.orm import object_session
+     db = object_session(t)
+-    offer_items = {owner: [item_json(db.get(Item, item_id)) for item_id in ids] for owner, ids in t.offers.items()}
+-    names = {pid: db.get(Player, pid).display_name for pid in (t.a, t.b)}
++    offer_items = {owner: [item_json(items[item_id] if items is not None else db.get(Item, item_id)) for item_id in ids] for owner, ids in t.offers.items()}
++    names = {pid: names[pid] if names is not None else db.get(Player, pid).display_name for pid in (t.a, t.b)}
+     return dict(id=t.id,a=t.a,b=t.b,names=names,revision=t.revision,offers=t.offers,offer_items=offer_items,confirmations=t.confirmations,state=t.state)
+ def get_trade(db, player, trade_id):
+     trade=db.get(Trade,str(trade_id))
+@@ -310,7 +310,18 @@ def get_trade(db, player, trade_id):
+ def trades(authorization:Auth=None):
+     with DBSession(engine) as db:
+         p=authenticated(db,authorization)
+-        return {'trades':[trade_json(t) for t in db.scalars(select(Trade).where(or_(Trade.a==p.id,Trade.b==p.id)))]}
++        rows=list(db.scalars(select(Trade).where(or_(Trade.a==p.id,Trade.b==p.id))))
++        # Hydrate only this participant's trades. Keep current item metadata and
++        # original offer order; closed trades can reference already-transferred items.
++        item_ids=list({iid for t in rows for ids in t.offers.values() for iid in ids})
++        player_ids=list({pid for t in rows for pid in (t.a,t.b)})
++        items={}; names={}
++        # Bound parameter lists even when a long trade history exceeds one batch.
++        for start in range(0,len(item_ids),500):
++            items.update((item.id,item) for item in db.scalars(select(Item).where(Item.id.in_(item_ids[start:start+500]))))
++        for start in range(0,len(player_ids),500):
++            names.update(db.execute(select(Player.id,Player.display_name).where(Player.id.in_(player_ids[start:start+500]))).all())
++        return {'trades':[trade_json(t,items,names) for t in rows]}
+ @app.post('/trades',status_code=201)
+ def new_trade(body:NewTrade,request:Request,authorization:Auth=None):
+     rate(request,'trade',20)
+diff --git a/backend/tests/test_trade_reads.py b/backend/tests/test_trade_reads.py
+new file mode 100644
+index 0000000..bb6910c
+--- /dev/null
++++ b/backend/tests/test_trade_reads.py
+@@ -0,0 +1,168 @@
++"""Participant-private trade reads, checked against real PostgreSQL fixtures."""
++from datetime import datetime, timedelta, timezone
++from math import ceil
++from uuid import NAMESPACE_URL, uuid5
++
++import pytest
++from sqlalchemy import event, text
++
++from app import Base, digest, engine, now, transaction
++from models import Item, Player, Session, Trade
++from test_economy import clean_database, client  # shared destructive *_test guard/fixtures
++
++
++def fixture_id(label):
++    return str(uuid5(NAMESPACE_URL, 'sightbreak/trade-read/' + label))
++
++
++def seed_workload(count, per_side):
++    """Stable public payloads; no HTTP grants, rate-limit bypass or live accounts."""
++    viewer = fixture_id('viewer')
++    outsider = fixture_id('outsider')
++    hidden_partner = fixture_id('hidden-partner')
++    names = {viewer: 'Viewer', outsider: 'Outsider', hidden_partner: 'Hidden partner'}
++    names.update({fixture_id(f'partner/{i}'): f'Partner {i}' for i in range(count)})
++    acquired = datetime(2026, 10, 1, 12, 0, tzinfo=timezone.utc)
++    expected = []
++    with transaction() as db:
++        # PostgreSQL renders timestamptz in its session timezone on every platform.
++        acquired = db.scalar(text('SELECT CAST(:instant AS timestamptz)'), {'instant': acquired})
++        db.add_all(Player(id=pid, username='fixture_' + str(i), display_name=name,
++                          password_hash='fixture-unusable')
++                   for i, (pid, name) in enumerate(names.items()))
++        db.flush()
++        for pid, token in ((viewer, 'trade-read-viewer'), (outsider, 'trade-read-outsider')):
++            db.add(Session(token_hash=digest(token), player_id=pid,
++                           expires_at=now() + timedelta(hours=1)))
++        for i in range(count):
++            partner = fixture_id(f'partner/{i}')
++            a, b = (viewer, partner) if i % 2 == 0 else (partner, viewer)
++            tid = fixture_id(f'trade/{i}')
++            state = ('open', 'completed', 'cancelled')[i % 3]
++            reservation = 'trade:' + tid if state == 'open' else None
++            offers, metadata = {}, {}
++            for owner, receiver in ((a, b), (b, a)):
++                ids, values = [], []
++                for j in range(per_side):
++                    iid = fixture_id(f'item/{i}/{owner}/{j}')
++                    ids.append(iid)
++                    db.add(Item(id=iid, owner_id=receiver if state == 'completed' else owner,
++                                definition_id='obsidian_rare', rarity='Rare',
++                                pattern_seed=j, wear=1234, variant='standard',
++                                reservation=reservation, acquired_at=acquired))
++                    values.append(dict(id=iid, definition_id='obsidian_rare', rarity='Rare',
++                                       pattern_seed=j, wear=0.1234, variant='standard',
++                                       collection='Obsidian', kind='weapon_skin',
++                                       name='Obsidian / Carbon', reserved=reservation is not None,
++                                       trade_eligible=reservation is None,
++                                       marketplace_eligible=reservation is None,
++                                       acquired_at=acquired.isoformat()))
++                # A batch must not replace the agreed offer order with SQL/set order.
++                offers[owner], metadata[owner] = ids[::-1], values[::-1]
++            confirmations = [a] if state == 'open' else [a, b] if state == 'completed' else []
++            db.add(Trade(id=tid, a=a, b=b, revision=i + 2, offers=offers,
++                         confirmations=confirmations, state=state))
++            expected.append(dict(id=tid, a=a, b=b, names={a: names[a], b: names[b]},
++                                 revision=i + 2, offers=offers, offer_items=metadata,
++                                 confirmations=confirmations, state=state))
++        # Unrelated data must never enter the participant's response or name maps.
++        db.add(Trade(id=fixture_id('hidden-trade'), a=outsider, b=hidden_partner,
++                     offers={outsider: [], hidden_partner: []}, confirmations=[]))
++    return {'Authorization': 'Bearer trade-read-viewer'}, expected
++
++
++def canonical_trades(payload):
++    # The route has never promised top-level ordering; offer arrays DO have order.
++    return {'trades': sorted(payload['trades'], key=lambda trade: trade['id'])}
++
++
++def database_snapshot():
++    """All authoritative tables, not only the fields exposed by this endpoint."""
++    with engine.connect() as db:
++        return {name: db.execute(text(f'SELECT to_jsonb(t)::text FROM "{name}" t '
++                                     'ORDER BY to_jsonb(t)::text')).scalars().all()
++                for name in sorted(Base.metadata.tables)}
++
++
++@pytest.mark.parametrize('count,per_side', [(0, 0), (1, 0), (1, 2), (40, 1), (40, 20), (501, 0)])
++def test_trade_read_payload_privacy_and_query_budget(client, count, per_side):
++    headers, expected = seed_workload(count, per_side)
++    statements = []
++    def record(conn, cursor, statement, parameters, context, executemany):
++        statements.append(statement)
++    event.listen(engine, 'before_cursor_execute', record)
++    try:
++        response = client.get('/trades', headers=headers)
++    finally:
++        event.remove(engine, 'before_cursor_execute', record)
++    assert response.status_code == 200
++    assert canonical_trades(response.json()) == canonical_trades({'trades': expected})
++    # Authentication is two SELECTs, then the participant-only trade query.
++    # Additional reads scale in bounded 500-ID batches, not with each offer/name.
++    budget = 3 + (ceil((count + 1) / 500) if count else 0) + ceil(count * per_side * 2 / 500)
++    assert len(statements) <= budget, (len(statements), budget)
++    assert all(statement.lstrip().upper().startswith('SELECT') for statement in statements)
++
++
++def test_trade_reads_keep_current_metadata_for_closed_trades(client):
++    headers, expected = seed_workload(3, 2)
++    assert canonical_trades(client.get('/trades', headers=headers).json()) == canonical_trades({'trades': expected})
++    closed = expected[1]
++    partner = next(pid for pid in closed['names'] if pid != fixture_id('viewer'))
++    offered = closed['offer_items'][closed['a']][0]
++    consumed_key = closed['offer_items'][closed['b']][0]
++    with transaction() as db:
++        db.get(Player, partner).display_name = 'Updated partner'
++        current = db.get(Item, offered['id'])
++        current.reservation = 'market:later-listing'
++        current.owner_id = fixture_id('outsider')
++        key = db.get(Item, consumed_key['id'])
++        key.definition_id = 'key'
++        key.rarity = 'Common'
++        key.consumed = True
++    closed['names'][partner] = 'Updated partner'
++    offered.update(reserved=True, trade_eligible=False, marketplace_eligible=False)
++    consumed_key.update(definition_id='key', rarity='Common', collection='Universal',
++                        kind='key', name='Collection key', trade_eligible=False,
++                        marketplace_eligible=False)
++    assert canonical_trades(client.get('/trades', headers=headers).json()) == canonical_trades({'trades': expected})
++
++
++def test_trade_reads_preserve_repeated_historical_items(client):
++    headers, expected = seed_workload(3, 2)
++    viewer = fixture_id('viewer')
++    # A once-traded item can appear in several historical offers. It is serialized
++    # from the current Item record in each original position, just as before.
++    source, target = expected[1], expected[2]
++    target['offers'][viewer] = source['offers'][viewer][::-1]
++    target['offer_items'][viewer] = source['offer_items'][viewer][::-1]
++    with transaction() as db:
++        db.get(Trade, target['id']).offers = target['offers']
++    assert canonical_trades(client.get('/trades', headers=headers).json()) == canonical_trades({'trades': expected})
++
++
++def test_trade_read_is_read_only_and_does_not_share_participant_names(client):
++    headers, expected = seed_workload(5, 2)
++    before = database_snapshot()
++    assert canonical_trades(client.get('/trades', headers=headers).json()) == canonical_trades({'trades': expected})
++    stranger = client.get('/trades', headers={'Authorization': 'Bearer trade-read-outsider'})
++    assert stranger.status_code == 200
++    trades = stranger.json()['trades']
++    assert len(trades) == 1 and trades[0]['id'] == fixture_id('hidden-trade')
++    assert set(trades[0]['names']) == {fixture_id('outsider'), fixture_id('hidden-partner')}
++    assert database_snapshot() == before
++
++
++@pytest.mark.parametrize('condition,status', [('missing', 401), ('expired', 401), ('revoked', 401), ('inactive', 403)])
++def test_trade_read_rechecks_authentication(client, condition, status):
++    headers, _ = seed_workload(1, 1)
++    with transaction() as db:
++        if condition == 'missing':
++            headers = {}
++        elif condition == 'expired':
++            db.get(Session, digest('trade-read-viewer')).expires_at = now() - timedelta(seconds=1)
++        elif condition == 'revoked':
++            db.delete(db.get(Session, digest('trade-read-viewer')))
++        else:
++            db.get(Player, fixture_id('viewer')).active = False
++    assert client.get('/trades', headers=headers).status_code == status
+diff --git a/scripts/benchmark_trade_reads.py b/scripts/benchmark_trade_reads.py
+new file mode 100644
+index 0000000..262d363
+--- /dev/null
++++ b/scripts/benchmark_trade_reads.py
+@@ -0,0 +1,146 @@
++#!/usr/bin/env python3
++"""Matched PostgreSQL trade-read measurement; Windows/Linux, no running API needed.
++
++Set SIGHTBREAK_TEST_ADMIN_URL to a PostgreSQL admin URL. Only a newly created,
++uniquely named *_test database is populated/dropped. --source selects the backend
++under test; this script and its deterministic fixture stay fixed across revisions.
++"""
++import argparse
++from datetime import datetime, timezone
++import hashlib
++import importlib.metadata
++import json
++import math
++import os
++from pathlib import Path
++import platform
++import secrets
++import statistics
++import subprocess
++import sys
++import time
++
++import psycopg
++from psycopg import sql
++from sqlalchemy.engine import make_url
++
++ROOT = Path(__file__).resolve().parents[1]
++
++
++def sha256(path):
++    with path.open('rb') as stream:
++        return hashlib.file_digest(stream, 'sha256').hexdigest()
++
++
++def identity(root):
++    def git(*args):
++        return subprocess.check_output(['git', *args], cwd=root, text=True).strip()
++    return {'commit': git('rev-parse', 'HEAD'),
++            'backend_tree': git('rev-parse', 'HEAD:backend'),
++            'backend_dirty': git('status', '--porcelain', '--', 'backend'),
++            'backend_files': {str(p.relative_to(root)).replace('\\', '/'): sha256(p)
++                              for p in (root / 'backend').rglob('*')
++                              if p.is_file() and p.suffix in ('.py', '.sql', '.toml', '.lock', '.json')
++                              and '__pycache__' not in p.parts}}
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument('--source', type=Path, default=ROOT)
++    parser.add_argument('--out', type=Path, required=True)
++    parser.add_argument('--samples', type=int, default=10)
++    args = parser.parse_args()
++    if args.samples < 2:
++        parser.error('--samples must be at least two')
++    source = args.source.resolve()
++    args.out.mkdir(parents=True, exist_ok=False)
++    initial = identity(source)
++    if initial['backend_dirty']:
++        raise SystemExit('Backend must be committed/clean before measurement')
++    admin = make_url(os.environ['SIGHTBREAK_TEST_ADMIN_URL'])
++    if admin.get_backend_name() != 'postgresql':
++        raise SystemExit('Real PostgreSQL required')
++    database = 'sightbreak_trade_read_' + secrets.token_hex(6) + '_test'
++    db_url = admin.set(drivername='postgresql+psycopg', database=database)
++    report = {'started_at': datetime.now(timezone.utc).isoformat(), 'source': initial,
++              'harness_sha256': sha256(Path(__file__)),
++              'fixture_sha256': sha256(ROOT / 'backend/tests/test_trade_reads.py'),
++              'platform': platform.platform(), 'python': sys.version,
++              'packages': {p: importlib.metadata.version(p) for p in
++                           ('sqlalchemy', 'psycopg', 'psycopg-binary', 'fastapi', 'starlette', 'httpx', 'pytest')},
++              'database': database, 'rows': [], 'completed': False}
++    admin_dsn = admin.set(drivername='postgresql').render_as_string(hide_password=False)
++    engine = None
++    with psycopg.connect(admin_dsn, autocommit=True) as connection:
++        report['postgresql'] = connection.execute('SELECT version()').fetchone()[0]
++        connection.execute(sql.SQL('CREATE DATABASE {}').format(sql.Identifier(database)))
++    try:
++        os.environ['DATABASE_URL'] = db_url.render_as_string(hide_password=False)
++        # Use the frozen backend, but the same new measurement fixture for both.
++        sys.path[:0] = [str(source / 'backend'), str(source / 'backend/tests'),
++                        str(ROOT / 'backend/tests')]
++        from app import Base, app, engine
++        from fastapi.testclient import TestClient
++        from sqlalchemy import event, text
++        from test_trade_reads import canonical_trades, database_snapshot, seed_workload
++        Base.metadata.create_all(engine)
++        with engine.begin() as db:
++            for migration in sorted((source / 'backend/migrations').glob('*.sql')):
++                db.exec_driver_sql(migration.read_text())
++        for count, per_side in ((0, 0), (1, 0), (1, 2), (10, 1), (40, 1), (40, 20), (501, 0)):
++            with engine.begin() as db:
++                db.execute(text('TRUNCATE ' + ', '.join('"' + t + '"' for t in Base.metadata.tables) + ' CASCADE'))
++            headers, expected = seed_workload(count, per_side)
++            expected = canonical_trades({'trades': expected})
++            before = database_snapshot()
++            row = {'trades': count, 'items_per_side': per_side, 'samples': [],
++                   'budget': 3 + (math.ceil((count + 1) / 500) if count else 0) + math.ceil(count * per_side * 2 / 500)}
++            with TestClient(app) as client:
++                # Warm the pool/SQL compilation, never an ORM Session across requests.
++                for _ in range(2):
++                    response = client.get('/trades', headers=headers)
++                    assert response.status_code == 200
++                    assert canonical_trades(response.json()) == expected
++                statements = []
++                def record(conn, cursor, statement, parameters, context, executemany):
++                    statements.append(statement)
++                event.listen(engine, 'before_cursor_execute', record)
++                try:
++                    for _ in range(args.samples):
++                        statements.clear()
++                        start = time.perf_counter_ns()
++                        response = client.get('/trades', headers=headers)
++                        elapsed = (time.perf_counter_ns() - start) / 1e6
++                        assert response.status_code == 200
++                        payload = canonical_trades(response.json())
++                        assert payload == expected
++                        assert all(s.lstrip().upper().startswith('SELECT') for s in statements)
++                        row['samples'].append({'milliseconds': elapsed, 'statements': len(statements)})
++                    # SQL shapes only: never bearer tokens or bound parameters.
++                    row['sql_shapes'] = list(dict.fromkeys(statements))
++                finally:
++                    event.remove(engine, 'before_cursor_execute', record)
++            row['response_sha256'] = hashlib.sha256(json.dumps(expected, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
++            row['read_only'] = database_snapshot() == before
++            assert row['read_only']
++            durations = sorted(s['milliseconds'] for s in row['samples'])
++            row['median_ms'] = statistics.median(durations)
++            row['p95_ms'] = durations[math.ceil(len(durations) * .95) - 1]
++            row['query_counts'] = sorted({s['statements'] for s in row['samples']})
++            report['rows'].append(row)
++            (args.out / 'measurement.json').write_text(json.dumps(report, indent=2) + '\n')
++            print(json.dumps({k: row[k] for k in ('trades', 'items_per_side', 'query_counts', 'median_ms', 'p95_ms', 'read_only')}), flush=True)
++        report['final_source'] = identity(source)
++        assert report['final_source'] == initial, 'Backend changed during the measurement'
++        report['completed'] = True
++    finally:
++        if engine is not None:
++            engine.dispose()
++        with psycopg.connect(admin_dsn, autocommit=True) as connection:
++            connection.execute(sql.SQL('DROP DATABASE {} WITH (FORCE)').format(sql.Identifier(database)))
++        report['database_dropped'] = True
++        (args.out / 'measurement.json').write_text(json.dumps(report, indent=2) + '\n')
++
++
++if __name__ == '__main__':
++    main()

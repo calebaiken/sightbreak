@@ -1,0 +1,9 @@
+﻿2026-10-23T00:47:20.4992866Z ##[group]Run scripts/godot.sh --headless --editor --import --quit > "$GITHUB_WORKSPACE/builds/v3-audio-controls/import.log" 2>&1
+2026-10-23T00:47:20.4993385Z [36;1mscripts/godot.sh --headless --editor --import --quit > "$GITHUB_WORKSPACE/builds/v3-audio-controls/import.log" 2>&1[0m
+2026-10-23T00:47:20.4994188Z [36;1m"$SIGHTBREAK_CONTROL_PYTHON" -c "import json, pathlib, sys; sys.path.insert(0, 'scripts'); from build_manifest import source, require_clean; receipt=source(); require_clean(receipt); pathlib.Path('$GITHUB_WORKSPACE/builds/v3-audio-controls/source-before.json').write_text(json.dumps(receipt, indent=2))"[0m
+2026-10-23T00:47:20.5050315Z shell: /usr/bin/bash -e {0}
+2026-10-23T00:47:20.5050628Z env:
+2026-10-23T00:47:20.5050810Z   SIGHTBREAK_TOOLS_DIR: /home/runner/work/_temp/sightbreak-control-tools
+2026-10-23T00:47:20.5051086Z   SIGHTBREAK_STATE_DIR: /home/runner/work/_temp/sightbreak-control-state
+2026-10-23T00:47:20.5051387Z   SIGHTBREAK_CONTROL_PYTHON: /home/runner/work/_temp/sightbreak-control-python/bin/python
+2026-10-23T00:47:20.5051665Z ##[endgroup]

@@ -1,0 +1,30 @@
+{
+  "phase": "before",
+  "python": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-tools\\python\\cpython-3.13.15-windows-x86_64-none\\python.exe",
+  "argv": [
+    "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\final-cleanup-20261019T2006528479460Z\\run_review.py",
+    "before"
+  ],
+  "gates": {
+    "old_assertions_pass": true,
+    "windows_uncertainty_was_hidden": true,
+    "taskkill_race_was_hidden": true,
+    "linux_uncertainty_was_not_explicit": true
+  },
+  "control_outcomes": [
+    {
+      "control": "windows_dead_root",
+      "exception": null
+    },
+    {
+      "control": "linux_dead_supervisor",
+      "exception": null
+    },
+    {
+      "control": "windows_taskkill_race",
+      "exception": null
+    }
+  ],
+  "passed": true,
+  "unresolved_limit": "Linux exceptional supervisor death can leave reparented detached descendants; the fallback does not claim cleanup verified or kill unrelated PIDs."
+}

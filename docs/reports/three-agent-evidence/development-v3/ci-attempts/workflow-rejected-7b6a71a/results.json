@@ -1,0 +1,36 @@
+{
+  "utc": "2026-10-23T00:43:11.808120+00:00",
+  "scope": "Workflow source validation only; no native job executed",
+  "rejected_source": "7b6a71a683ec5d1ed42d7245395c640225058e20",
+  "run_id": "39879374637",
+  "actionlint_version": "1.7.12",
+  "actionlint_archive_sha256": "6e7241b51e6817ea6a047693d8e6fed13b31819c9a0dd6c5a726e1592d22f6e9",
+  "actionlint_exe_sha256": "54ca21be3de4c7cfa26914aa8b61bd76bf573ef3caac5f80d110558cdf241718",
+  "before_sha256": "a394388ed9020045969795a888d7e908ae2823e19a98b7bc71b8cab760dceda4",
+  "after_sha256": "1f0a1a09f045167f2b758a9a1cfcaf2a9f12db8efefe3338b5910e1df320485d",
+  "checks": [
+    {
+      "label": "before",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3-evidence\\ci-rejection-20261022\\attempt\\actionlint.exe",
+        "-no-color",
+        "-shellcheck=",
+        "-pyflakes=",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3-evidence\\ci-rejection-20261022\\attempt\\rejected-workflow.yml"
+      ],
+      "exit": 1
+    },
+    {
+      "label": "after",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3-evidence\\ci-rejection-20261022\\attempt\\actionlint.exe",
+        "-no-color",
+        "-shellcheck=",
+        "-pyflakes=",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-v3\\.github\\workflows\\v3-development.yml"
+      ],
+      "exit": 0
+    }
+  ],
+  "workflow_unchanged_during_check": true
+}

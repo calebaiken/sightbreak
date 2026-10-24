@@ -1,0 +1,23 @@
+test_parent_keeps_actual_exit (test_matrix_process.SupervisorTests.test_parent_keeps_actual_exit) ... ERROR
+
+======================================================================
+ERROR: test_parent_keeps_actual_exit (test_matrix_process.SupervisorTests.test_parent_keeps_actual_exit)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_matrix_process.py", line 208, in test_parent_keeps_actual_exit
+    code, log = self.run_parent({'complete': True, 'exit': 7, 'errors': []})
+                ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_matrix_process.py", line 201, in run_parent
+    self.assertTrue(launch.call_args.kwargs['close_fds'])
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'kwargs'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+FAILED (errors=1)
+
+Captured actual run_process HARNESS_ERROR values:
+[
+  "cannot instantiate 'WindowsPath' on your system"
+]

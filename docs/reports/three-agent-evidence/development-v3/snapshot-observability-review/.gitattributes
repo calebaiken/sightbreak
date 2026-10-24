@@ -1,0 +1,4 @@
+# Preserve the exact received bytes, including controller CRLF and raw output.
+* -text -ident -filter
+*.zip -diff -merge
+*.bin -diff -merge

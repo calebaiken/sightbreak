@@ -1,0 +1,154 @@
+test_actual_cancel_summary_and_unrelated_native_error_are_broken (__main__.independent_probes.<locals>.IndependentHarness.test_actual_cancel_summary_and_unrelated_native_error_are_broken) ... ERROR
+test_each_zero_length_capture_artifact_is_rejected (__main__.independent_probes.<locals>.IndependentHarness.test_each_zero_length_capture_artifact_is_rejected) ... ERROR
+test_failed_mock_import_is_not_caught_and_restores_glb_bytes (__main__.independent_probes.<locals>.IndependentHarness.test_failed_mock_import_is_not_caught_and_restores_glb_bytes) ... ERROR
+test_interrupted_mock_import_restores_source_and_glb_bytes (__main__.independent_probes.<locals>.IndependentHarness.test_interrupted_mock_import_restores_source_and_glb_bytes) ... ERROR
+test_missing_receipt_beside_complete_failure_cannot_be_caught (__main__.independent_probes.<locals>.IndependentHarness.test_missing_receipt_beside_complete_failure_cannot_be_caught) ... ERROR
+test_partial_multi_file_write_exception_restores_every_original_byte (__main__.independent_probes.<locals>.IndependentHarness.test_partial_multi_file_write_exception_restores_every_original_byte) ... ERROR
+test_system_exit_after_mutation_retains_attempt_and_restores_bytes (__main__.independent_probes.<locals>.IndependentHarness.test_system_exit_after_mutation_retains_attempt_and_restores_bytes) ... ERROR
+test_actual_capture_failure_report_contract (__main__.independent_probes.<locals>.IndependentClassifications.test_actual_capture_failure_report_contract) ... ERROR
+test_missing_native_completion_or_shutdown_fault_cannot_be_caught (__main__.independent_probes.<locals>.IndependentClassifications.test_missing_native_completion_or_shutdown_fault_cannot_be_caught) ... ERROR
+
+======================================================================
+ERROR: test_actual_cancel_summary_and_unrelated_native_error_are_broken (__main__.independent_probes.<locals>.IndependentHarness.test_actual_cancel_summary_and_unrelated_native_error_are_broken)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-tools\python\cpython-3.13.15-windows-x86_64-none\Lib\pathlib\_local.py", line 722, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+FileNotFoundError: [WinError 3] The system cannot find the path specified: 'C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-audio-critic-20261019T200840532200Z\\independent-probe-fixtures\\__main__.independent_probes.<locals>.IndependentHarness.test_actual_cancel_summary_and_unrelated_native_error_are_broken'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 229, in setUp
+    super().setUp()
+    ~~~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 38, in setUp
+    self.directory.mkdir(parents=True)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-tools\python\cpython-3.13.15-windows-x86_64-none\Lib\pathlib\_local.py", line 727, in mkdir
+    self.mkdir(mode, parents=False, exist_ok=exist_ok)
+    ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-tools\python\cpython-3.13.15-windows-x86_64-none\Lib\pathlib\_local.py", line 722, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+OSError: [WinError 123] The filename, directory name, or volume label syntax is incorrect: 'C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-audio-critic-20261019T200840532200Z\\independent-probe-fixtures\\__main__.independent_probes.<locals>.IndependentHarness.test_actual_cancel_summary_and_unrelated_native_error_are_broken'
+
+======================================================================
+ERROR: test_each_zero_length_capture_artifact_is_rejected (__main__.independent_probes.<locals>.IndependentHarness.test_each_zero_length_capture_artifact_is_rejected)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 229, in setUp
+    super().setUp()
+    ~~~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 38, in setUp
+    self.directory.mkdir(parents=True)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-tools\python\cpython-3.13.15-windows-x86_64-none\Lib\pathlib\_local.py", line 722, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+OSError: [WinError 123] The filename, directory name, or volume label syntax is incorrect: 'C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-audio-critic-20261019T200840532200Z\\independent-probe-fixtures\\__main__.independent_probes.<locals>.IndependentHarness.test_each_zero_length_capture_artifact_is_rejected'
+
+======================================================================
+ERROR: test_failed_mock_import_is_not_caught_and_restores_glb_bytes (__main__.independent_probes.<locals>.IndependentHarness.test_failed_mock_import_is_not_caught_and_restores_glb_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 229, in setUp
+    super().setUp()
+    ~~~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 38, in setUp
+    self.directory.mkdir(parents=True)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-tools\python\cpython-3.13.15-windows-x86_64-none\Lib\pathlib\_local.py", line 722, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+OSError: [WinError 123] The filename, directory name, or volume label syntax is incorrect: 'C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-audio-critic-20261019T200840532200Z\\independent-probe-fixtures\\__main__.independent_probes.<locals>.IndependentHarness.test_failed_mock_import_is_not_caught_and_restores_glb_bytes'
+
+======================================================================
+ERROR: test_interrupted_mock_import_restores_source_and_glb_bytes (__main__.independent_probes.<locals>.IndependentHarness.test_interrupted_mock_import_restores_source_and_glb_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 229, in setUp
+    super().setUp()
+    ~~~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 38, in setUp
+    self.directory.mkdir(parents=True)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-tools\python\cpython-3.13.15-windows-x86_64-none\Lib\pathlib\_local.py", line 722, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+OSError: [WinError 123] The filename, directory name, or volume label syntax is incorrect: 'C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-audio-critic-20261019T200840532200Z\\independent-probe-fixtures\\__main__.independent_probes.<locals>.IndependentHarness.test_interrupted_mock_import_restores_source_and_glb_bytes'
+
+======================================================================
+ERROR: test_missing_receipt_beside_complete_failure_cannot_be_caught (__main__.independent_probes.<locals>.IndependentHarness.test_missing_receipt_beside_complete_failure_cannot_be_caught)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 229, in setUp
+    super().setUp()
+    ~~~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 38, in setUp
+    self.directory.mkdir(parents=True)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-tools\python\cpython-3.13.15-windows-x86_64-none\Lib\pathlib\_local.py", line 722, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+OSError: [WinError 123] The filename, directory name, or volume label syntax is incorrect: 'C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-audio-critic-20261019T200840532200Z\\independent-probe-fixtures\\__main__.independent_probes.<locals>.IndependentHarness.test_missing_receipt_beside_complete_failure_cannot_be_caught'
+
+======================================================================
+ERROR: test_partial_multi_file_write_exception_restores_every_original_byte (__main__.independent_probes.<locals>.IndependentHarness.test_partial_multi_file_write_exception_restores_every_original_byte)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 229, in setUp
+    super().setUp()
+    ~~~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 38, in setUp
+    self.directory.mkdir(parents=True)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-tools\python\cpython-3.13.15-windows-x86_64-none\Lib\pathlib\_local.py", line 722, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+OSError: [WinError 123] The filename, directory name, or volume label syntax is incorrect: 'C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-audio-critic-20261019T200840532200Z\\independent-probe-fixtures\\__main__.independent_probes.<locals>.IndependentHarness.test_partial_multi_file_write_exception_restores_every_original_byte'
+
+======================================================================
+ERROR: test_system_exit_after_mutation_retains_attempt_and_restores_bytes (__main__.independent_probes.<locals>.IndependentHarness.test_system_exit_after_mutation_retains_attempt_and_restores_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 229, in setUp
+    super().setUp()
+    ~~~~~~~~~~~~~^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 38, in setUp
+    self.directory.mkdir(parents=True)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-tools\python\cpython-3.13.15-windows-x86_64-none\Lib\pathlib\_local.py", line 722, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+OSError: [WinError 123] The filename, directory name, or volume label syntax is incorrect: 'C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-audio-critic-20261019T200840532200Z\\independent-probe-fixtures\\__main__.independent_probes.<locals>.IndependentHarness.test_system_exit_after_mutation_retains_attempt_and_restores_bytes'
+
+======================================================================
+ERROR: test_actual_capture_failure_report_contract (__main__.independent_probes.<locals>.IndependentClassifications.test_actual_capture_failure_report_contract)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 38, in setUp
+    self.directory.mkdir(parents=True)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-tools\python\cpython-3.13.15-windows-x86_64-none\Lib\pathlib\_local.py", line 722, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+OSError: [WinError 123] The filename, directory name, or volume label syntax is incorrect: 'C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-audio-critic-20261019T200840532200Z\\independent-probe-fixtures\\__main__.independent_probes.<locals>.IndependentClassifications.test_actual_capture_failure_report_contract'
+
+======================================================================
+ERROR: test_missing_native_completion_or_shutdown_fault_cannot_be_caught (__main__.independent_probes.<locals>.IndependentClassifications.test_missing_native_completion_or_shutdown_fault_cannot_be_caught)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-v3\scripts\test_reload_negative_controls.py", line 38, in setUp
+    self.directory.mkdir(parents=True)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-tools\python\cpython-3.13.15-windows-x86_64-none\Lib\pathlib\_local.py", line 722, in mkdir
+    os.mkdir(self, mode)
+    ~~~~~~~~^^^^^^^^^^^^
+OSError: [WinError 123] The filename, directory name, or volume label syntax is incorrect: 'C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-audio-critic-20261019T200840532200Z\\independent-probe-fixtures\\__main__.independent_probes.<locals>.IndependentClassifications.test_missing_native_completion_or_shutdown_fault_cannot_be_caught'
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.025s
+
+FAILED (errors=9)

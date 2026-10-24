@@ -1,0 +1,2671 @@
+{
+  "schema": "trade-read-retained-artifacts-v2",
+  "started_at": "2026-10-19T19:44:28.355159+00:00",
+  "source": {
+    "commit": "8070436f53dd98e9529e8c21ea7b0f7e3ecb6daf",
+    "backend_tree": "4ef756639c2e90037bce79a30e2867aebcc798a7",
+    "backend_dirty": "",
+    "backend_files": {
+      "backend/app.py": "9f94a55f1b19858eec3ac54036601b5c26a330749454a6cb89650d51e298f020",
+      "backend/bridge_fixture.py": "00548df28d2ad6a8fdca9eeaed34af39e30bebbb205fb9b69b2d7112434b29db",
+      "backend/migrate.py": "0f06597968c1e0de8461083448306496f4cc53e6a0f3d94dbc0f1b0c003f1d58",
+      "backend/models.py": "5fa4e0ac4157e4ad883d4c2bf1df06d915a395c5303c063a1004aaabd071e09a",
+      "backend/pyproject.toml": "9fd253aaaa3d39616eeb076d991cd2836c4cddcc8f56d72f31776cd134ab0190",
+      "backend/simulate.py": "218299e27743c58eac64f2d5820f3320945321d3d58bdd2caee5d195c536afa2",
+      "backend/uv.lock": "c66ef08d0ef36424da51008f59e3905f544d15dbd602ed6e204c588b4ca93db5",
+      "backend/config/economy.json": "8d85944aff0a6531b8a022350cbe0562295573aff5f3bd96e474e06f192aec7a",
+      "backend/config/simulation-baseline.json": "0a7965dd37a68fd2960d6b6912dffb635fcb26ffa6f251b92a7872c688755a16",
+      "backend/migrations/001_integrity.sql": "83189d1d06cbec62db325dbcf376476bc3aa7c0984d7439bb8048360ff737392",
+      "backend/migrations/002_game_tickets.sql": "c063f4376339b013fc79cda3e6f7782c61654d51fe6e479c658f2e30a1eddd7e",
+      "backend/migrations/003_loadouts.sql": "cc8acafba73b07889b25f2b9ee594cd09094d0ff8fd34d64767e6fcde62ee017",
+      "backend/migrations/004_market_index.sql": "cc51bd7647a6bd6abb272efd9564e089c0cc3d7afa0e76586503b3225535a5af",
+      "backend/tests/test_economy.py": "d3ada3e8590fb30a5a5e812525ccaea4be3778af50903eb2d02de41e201d528a",
+      "backend/tests/test_trade_reads.py": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1"
+    }
+  },
+  "runtime_reference": {
+    "commit": "4a8e9ea73aa8b286d9f1751b0a6b485479737294",
+    "backend_tree": "4ef756639c2e90037bce79a30e2867aebcc798a7"
+  },
+  "harness_commit": "8070436f53dd98e9529e8c21ea7b0f7e3ecb6daf",
+  "harness_sha256": "416cc212d3200b9351036b7ec205a5bb488748f19c09d7ea0ef1edc24d683dbd",
+  "artifact_verifier_sha256": "06b5f522c9bdae065ddc44482a666566772bcece9efa29c43e6ceac9792ef62b",
+  "fixture_sha256": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.14 (main, Sep  1 2026, 14:17:39) [MSC v.1944 64 bit (AMD64)]",
+  "packages": {
+    "sqlalchemy": "2.1.4",
+    "psycopg": "3.3.6",
+    "psycopg-binary": "3.3.6",
+    "fastapi": "0.143.0",
+    "starlette": "1.7.0",
+    "httpx": "0.28.1",
+    "pytest": "9.1.1"
+  },
+  "database": "sightbreak_trade_read_5635c7b1f21c_test",
+  "rows": [
+    {
+      "trades": 0,
+      "items_per_side": 0,
+      "samples": [
+        {
+          "milliseconds": 9.4256,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 10.3721,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 11.9888,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 10.6796,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 12.8603,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 13.8509,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 10.0053,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 10.0112,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 10.3701,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 9.6548,
+          "statements": 3,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "canonical": {
+              "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+              "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+            },
+            "matches_expected": true
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+            "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+          },
+          "canonical": {
+            "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+            "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+          },
+          "matches_expected": true
+        },
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/00-0-0/responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+            "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+          },
+          "canonical": {
+            "file": "workloads/00-0-0/canonical-responses/f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd.json",
+            "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+          },
+          "matches_expected": true
+        }
+      ],
+      "expected_response": {
+        "file": "workloads/00-0-0/expected-response.json",
+        "sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+      },
+      "state_before": {
+        "sha256": "6af58974f8356a53f05b6de345d7d1dd5c71c39e4f01e99868e92959bcf97370",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/00-0-0/state/before/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/00-0-0/state/before/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/00-0-0/state/before/items.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/00-0-0/state/before/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/00-0-0/state/before/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/00-0-0/state/before/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/00-0-0/state/before/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/00-0-0/state/before/players.json",
+            "sha256": "5e3cdae52724dd596d586e90d997c289a60b536fca42e258ce7104a5e83c57bd",
+            "row_count": 3,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/00-0-0/state/before/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/00-0-0/state/before/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/00-0-0/state/before/sessions.json",
+            "sha256": "943fb190959275929a7fa358cf0d0e68a2dd46bcbd2214fa5a11a508660ff16b",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/00-0-0/state/before/trades.json",
+            "sha256": "49541f9faaa942f01e546addaa1dda77501e92d059e4162f7c1344ec59296712",
+            "row_count": 1,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "budget": 3,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR"
+      ],
+      "expected_response_sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd",
+      "actual_response_sha256s": [
+        "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd"
+      ],
+      "state_after": {
+        "sha256": "6af58974f8356a53f05b6de345d7d1dd5c71c39e4f01e99868e92959bcf97370",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/00-0-0/state/after/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/00-0-0/state/after/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/00-0-0/state/after/items.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/00-0-0/state/after/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/00-0-0/state/after/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/00-0-0/state/after/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/00-0-0/state/after/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/00-0-0/state/after/players.json",
+            "sha256": "5e3cdae52724dd596d586e90d997c289a60b536fca42e258ce7104a5e83c57bd",
+            "row_count": 3,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/00-0-0/state/after/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/00-0-0/state/after/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/00-0-0/state/after/sessions.json",
+            "sha256": "943fb190959275929a7fa358cf0d0e68a2dd46bcbd2214fa5a11a508660ff16b",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/00-0-0/state/after/trades.json",
+            "sha256": "49541f9faaa942f01e546addaa1dda77501e92d059e4162f7c1344ec59296712",
+            "row_count": 1,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "read_only": true,
+      "median_ms": 10.3711,
+      "p95_ms": 13.8509,
+      "query_counts": [
+        3
+      ]
+    },
+    {
+      "trades": 1,
+      "items_per_side": 0,
+      "samples": [
+        {
+          "milliseconds": 26.9802,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 24.4469,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 24.8708,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 15.3196,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 13.3227,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 15.9683,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 12.1909,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 10.5146,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 10.7266,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 14.526,
+          "statements": 4,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+              "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+            },
+            "canonical": {
+              "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+              "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+            },
+            "matches_expected": true
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+            "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+          },
+          "canonical": {
+            "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+            "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+          },
+          "matches_expected": true
+        },
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/01-1-0/responses/b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6.json",
+            "sha256": "b5f7a46350cbd0d7cf845cb29737a3644530339ffb74d1a60c743f5e2b2bb6d6"
+          },
+          "canonical": {
+            "file": "workloads/01-1-0/canonical-responses/08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4.json",
+            "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+          },
+          "matches_expected": true
+        }
+      ],
+      "expected_response": {
+        "file": "workloads/01-1-0/expected-response.json",
+        "sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+      },
+      "state_before": {
+        "sha256": "77b7d405ff9591edb88ed9e74d268c139515db7012521ae38b7b5e63eb22d20f",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/01-1-0/state/before/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/01-1-0/state/before/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/01-1-0/state/before/items.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/01-1-0/state/before/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/01-1-0/state/before/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/01-1-0/state/before/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/01-1-0/state/before/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/01-1-0/state/before/players.json",
+            "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+            "row_count": 4,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/01-1-0/state/before/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/01-1-0/state/before/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/01-1-0/state/before/sessions.json",
+            "sha256": "492c0b0c5a1020191d71f65e559ff1a205b815d3fb5e46196423e8d3972e06b1",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/01-1-0/state/before/trades.json",
+            "sha256": "a44789a9a8ef956c8d9d2fe6ce0623a655a8a31e8bf5be3ced4a776f4a62c9fd",
+            "row_count": 2,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "budget": 4,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT players.id, players.display_name \nFROM players \nWHERE players.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR)"
+      ],
+      "expected_response_sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4",
+      "actual_response_sha256s": [
+        "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4"
+      ],
+      "state_after": {
+        "sha256": "77b7d405ff9591edb88ed9e74d268c139515db7012521ae38b7b5e63eb22d20f",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/01-1-0/state/after/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/01-1-0/state/after/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/01-1-0/state/after/items.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/01-1-0/state/after/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/01-1-0/state/after/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/01-1-0/state/after/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/01-1-0/state/after/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/01-1-0/state/after/players.json",
+            "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+            "row_count": 4,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/01-1-0/state/after/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/01-1-0/state/after/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/01-1-0/state/after/sessions.json",
+            "sha256": "492c0b0c5a1020191d71f65e559ff1a205b815d3fb5e46196423e8d3972e06b1",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/01-1-0/state/after/trades.json",
+            "sha256": "a44789a9a8ef956c8d9d2fe6ce0623a655a8a31e8bf5be3ced4a776f4a62c9fd",
+            "row_count": 2,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "read_only": true,
+      "median_ms": 14.922799999999999,
+      "p95_ms": 26.9802,
+      "query_counts": [
+        4
+      ]
+    },
+    {
+      "trades": 1,
+      "items_per_side": 2,
+      "samples": [
+        {
+          "milliseconds": 11.3926,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 9.535,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 12.2469,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 12.9707,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 13.0818,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 11.3787,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 10.9572,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 11.6126,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 11.2258,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 11.9916,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+              "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+            },
+            "canonical": {
+              "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+              "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+            },
+            "matches_expected": true
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+            "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+          },
+          "canonical": {
+            "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+            "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+          },
+          "matches_expected": true
+        },
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/02-1-2/responses/a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464.json",
+            "sha256": "a2a2bd83c0c257059dce6550d8272088642a27f02fc384e6092e74efa40cd464"
+          },
+          "canonical": {
+            "file": "workloads/02-1-2/canonical-responses/d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b.json",
+            "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+          },
+          "matches_expected": true
+        }
+      ],
+      "expected_response": {
+        "file": "workloads/02-1-2/expected-response.json",
+        "sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+      },
+      "state_before": {
+        "sha256": "8d89624b411f586024486b26e94f074e674dd32f227c3ae681182744a6d4bc6b",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/02-1-2/state/before/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/02-1-2/state/before/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/02-1-2/state/before/items.json",
+            "sha256": "6ef8a72cbfa9b928b70977ff80d86b62a43ab07ec8bfee871b1da7160ac22999",
+            "row_count": 4,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/02-1-2/state/before/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/02-1-2/state/before/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/02-1-2/state/before/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/02-1-2/state/before/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/02-1-2/state/before/players.json",
+            "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+            "row_count": 4,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/02-1-2/state/before/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/02-1-2/state/before/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/02-1-2/state/before/sessions.json",
+            "sha256": "641b64e670518c4f63b493dfe4c9b59ac930fc5934e560520d5fc2f2f2780b0e",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/02-1-2/state/before/trades.json",
+            "sha256": "45b642830dd53b7ea02496af50b8d193dae36475c74ccd8116e128a5653ba53e",
+            "row_count": 2,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR)",
+        "SELECT players.id, players.display_name \nFROM players \nWHERE players.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR)"
+      ],
+      "expected_response_sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b",
+      "actual_response_sha256s": [
+        "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b"
+      ],
+      "state_after": {
+        "sha256": "8d89624b411f586024486b26e94f074e674dd32f227c3ae681182744a6d4bc6b",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/02-1-2/state/after/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/02-1-2/state/after/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/02-1-2/state/after/items.json",
+            "sha256": "6ef8a72cbfa9b928b70977ff80d86b62a43ab07ec8bfee871b1da7160ac22999",
+            "row_count": 4,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/02-1-2/state/after/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/02-1-2/state/after/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/02-1-2/state/after/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/02-1-2/state/after/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/02-1-2/state/after/players.json",
+            "sha256": "e0a4d75a0c105ef3795167dd33d3946594fe83d48dbf2074fe3b93ed7a6fa627",
+            "row_count": 4,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/02-1-2/state/after/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/02-1-2/state/after/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/02-1-2/state/after/sessions.json",
+            "sha256": "641b64e670518c4f63b493dfe4c9b59ac930fc5934e560520d5fc2f2f2780b0e",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/02-1-2/state/after/trades.json",
+            "sha256": "45b642830dd53b7ea02496af50b8d193dae36475c74ccd8116e128a5653ba53e",
+            "row_count": 2,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "read_only": true,
+      "median_ms": 11.502600000000001,
+      "p95_ms": 13.0818,
+      "query_counts": [
+        5
+      ]
+    },
+    {
+      "trades": 10,
+      "items_per_side": 1,
+      "samples": [
+        {
+          "milliseconds": 14.0982,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 13.8507,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 12.8769,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 16.3956,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 12.263,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 20.0196,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 23.7704,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 21.9099,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 18.4464,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 17.6753,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+              "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+            },
+            "canonical": {
+              "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+              "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+            },
+            "matches_expected": true
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+            "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+          },
+          "canonical": {
+            "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+            "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+          },
+          "matches_expected": true
+        },
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/03-10-1/responses/a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd.json",
+            "sha256": "a88aef75e3400baa879f0cbc2e9f3ae96a5beb9b3399270c368af890b8b8d5cd"
+          },
+          "canonical": {
+            "file": "workloads/03-10-1/canonical-responses/6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34.json",
+            "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+          },
+          "matches_expected": true
+        }
+      ],
+      "expected_response": {
+        "file": "workloads/03-10-1/expected-response.json",
+        "sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+      },
+      "state_before": {
+        "sha256": "e09e6c13b0b29e900a88db4a5b15cf9557b04df1f0062185700077d208a6e156",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/03-10-1/state/before/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/03-10-1/state/before/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/03-10-1/state/before/items.json",
+            "sha256": "d611dd497879f3f87c32b11401d48d6ffbc9e6bd0508b993457667aaa0ecfee2",
+            "row_count": 20,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/03-10-1/state/before/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/03-10-1/state/before/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/03-10-1/state/before/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/03-10-1/state/before/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/03-10-1/state/before/players.json",
+            "sha256": "ee76971a9c0fa89c50268d48b26fddc3e029963e346bdf448f9211d2c5b4c31a",
+            "row_count": 13,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/03-10-1/state/before/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/03-10-1/state/before/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/03-10-1/state/before/sessions.json",
+            "sha256": "a333725f83cda1598577b1951aa031e6b4b8577d2f71653651e7e6746a18f693",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/03-10-1/state/before/trades.json",
+            "sha256": "400c853a8a182867169b83566f2abb11dd2db6ee268d0f687e2efe29a9a264c0",
+            "row_count": 11,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR, %(id_1_12)s::VARCHAR, %(id_1_13)s::VARCHAR, %(id_1_14)s::VARCHAR, %(id_1_15)s::VARCHAR, %(id_1_16)s::VARCHAR, %(id_1_17)s::VARCHAR, %(id_1_18)s::VARCHAR, %(id_1_19)s::VARCHAR, %(id_1_20)s::VARCHAR)",
+        "SELECT players.id, players.display_name \nFROM players \nWHERE players.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR)"
+      ],
+      "expected_response_sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34",
+      "actual_response_sha256s": [
+        "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34"
+      ],
+      "state_after": {
+        "sha256": "e09e6c13b0b29e900a88db4a5b15cf9557b04df1f0062185700077d208a6e156",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/03-10-1/state/after/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/03-10-1/state/after/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/03-10-1/state/after/items.json",
+            "sha256": "d611dd497879f3f87c32b11401d48d6ffbc9e6bd0508b993457667aaa0ecfee2",
+            "row_count": 20,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/03-10-1/state/after/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/03-10-1/state/after/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/03-10-1/state/after/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/03-10-1/state/after/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/03-10-1/state/after/players.json",
+            "sha256": "ee76971a9c0fa89c50268d48b26fddc3e029963e346bdf448f9211d2c5b4c31a",
+            "row_count": 13,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/03-10-1/state/after/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/03-10-1/state/after/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/03-10-1/state/after/sessions.json",
+            "sha256": "a333725f83cda1598577b1951aa031e6b4b8577d2f71653651e7e6746a18f693",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/03-10-1/state/after/trades.json",
+            "sha256": "400c853a8a182867169b83566f2abb11dd2db6ee268d0f687e2efe29a9a264c0",
+            "row_count": 11,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "read_only": true,
+      "median_ms": 17.03545,
+      "p95_ms": 23.7704,
+      "query_counts": [
+        5
+      ]
+    },
+    {
+      "trades": 40,
+      "items_per_side": 1,
+      "samples": [
+        {
+          "milliseconds": 25.5116,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 25.8661,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 31.6041,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 24.243,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 25.6098,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 30.4129,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 54.0613,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 21.6833,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 22.2821,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 21.9607,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+              "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+            },
+            "canonical": {
+              "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+              "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+            },
+            "matches_expected": true
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+            "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+          },
+          "canonical": {
+            "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+            "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+          },
+          "matches_expected": true
+        },
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/04-40-1/responses/916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5.json",
+            "sha256": "916ad0b498b1e066f5d1c1c52066a6dfe5f4718f06b24ee8d8687bc073e827f5"
+          },
+          "canonical": {
+            "file": "workloads/04-40-1/canonical-responses/95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010.json",
+            "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+          },
+          "matches_expected": true
+        }
+      ],
+      "expected_response": {
+        "file": "workloads/04-40-1/expected-response.json",
+        "sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+      },
+      "state_before": {
+        "sha256": "50cda2ea5752aae0d0894f5fd067cfcd51b96104e6d283f50d6e3a803d225bfd",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/04-40-1/state/before/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/04-40-1/state/before/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/04-40-1/state/before/items.json",
+            "sha256": "85e3b58fd00156bd43496299ab94a53f4aa7bb8968320202229e7bfb3fb702d3",
+            "row_count": 80,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/04-40-1/state/before/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/04-40-1/state/before/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/04-40-1/state/before/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/04-40-1/state/before/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/04-40-1/state/before/players.json",
+            "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+            "row_count": 43,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/04-40-1/state/before/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/04-40-1/state/before/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/04-40-1/state/before/sessions.json",
+            "sha256": "309c2a69a57856db247bb1060d5d4870b6301f1e1bf808f3ee378a10b3a54cc5",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/04-40-1/state/before/trades.json",
+            "sha256": "c52541bb90c7e2fd46dad321865bcd3514bc56b4d956b93d817728d118976b8d",
+            "row_count": 41,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR, %(id_1_12)s::VARCHAR, %(id_1_13)s::VARCHAR, %(id_1_14)s::VARCHAR, %(id_1_15)s::VARCHAR, %(id_1_16)s::VARCHAR, %(id_1_17)s::VARCHAR, %(id_1_18)s::VARCHAR, %(id_1_19)s::VARCHAR, %(id_1_20)s::VARCHAR, %(id_1_21)s::VARCHAR, %(id_1_22)s::VARCHAR, %(id_1_23)s::VARCHAR, %(id_1_24)s::VARCHAR, %(id_1_25)s::VARCHAR, %(id_1_26)s::VARCHAR, %(id_1_27)s::VARCHAR, %(id_1_28)s::VARCHAR, %(id_1_29)s::VARCHAR, %(id_1_30)s::VARCHAR, %(id_1_31)s::VARCHAR, %(id_1_32)s::VARCHAR, %(id_1_33)s::VARCHAR, %(id_1_34)s::VARCHAR, %(id_1_35)s::VARCHAR, %(id_1_36)s::VARCHAR, %(id_1_37)s::VARCHAR, %(id_1_38)s::VARCHAR, %(id_1_39)s::VARCHAR, %(id_1_40)s::VARCHAR, %(id_1_41)s::VARCHAR, %(id_1_42)s::VARCHAR, %(id_1_43)s::VARCHAR, %(id_1_44)s::VARCHAR, %(id_1_45)s::VARCHAR, %(id_1_46)s::VARCHAR, %(id_1_47)s::VARCHAR, %(id_1_48)s::VARCHAR, %(id_1_49)s::VARCHAR, %(id_1_50)s::VARCHAR, %(id_1_51)s::VARCHAR, %(id_1_52)s::VARCHAR, %(id_1_53)s::VARCHAR, %(id_1_54)s::VARCHAR, %(id_1_55)s::VARCHAR, %(id_1_56)s::VARCHAR, %(id_1_57)s::VARCHAR, %(id_1_58)s::VARCHAR, %(id_1_59)s::VARCHAR, %(id_1_60)s::VARCHAR, %(id_1_61)s::VARCHAR, %(id_1_62)s::VARCHAR, %(id_1_63)s::VARCHAR, %(id_1_64)s::VARCHAR, %(id_1_65)s::VARCHAR, %(id_1_66)s::VARCHAR, %(id_1_67)s::VARCHAR, %(id_1_68)s::VARCHAR, %(id_1_69)s::VARCHAR, %(id_1_70)s::VARCHAR, %(id_1_71)s::VARCHAR, %(id_1_72)s::VARCHAR, %(id_1_73)s::VARCHAR, %(id_1_74)s::VARCHAR, %(id_1_75)s::VARCHAR, %(id_1_76)s::VARCHAR, %(id_1_77)s::VARCHAR, %(id_1_78)s::VARCHAR, %(id_1_79)s::VARCHAR, %(id_1_80)s::VARCHAR)",
+        "SELECT players.id, players.display_name \nFROM players \nWHERE players.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR, %(id_1_12)s::VARCHAR, %(id_1_13)s::VARCHAR, %(id_1_14)s::VARCHAR, %(id_1_15)s::VARCHAR, %(id_1_16)s::VARCHAR, %(id_1_17)s::VARCHAR, %(id_1_18)s::VARCHAR, %(id_1_19)s::VARCHAR, %(id_1_20)s::VARCHAR, %(id_1_21)s::VARCHAR, %(id_1_22)s::VARCHAR, %(id_1_23)s::VARCHAR, %(id_1_24)s::VARCHAR, %(id_1_25)s::VARCHAR, %(id_1_26)s::VARCHAR, %(id_1_27)s::VARCHAR, %(id_1_28)s::VARCHAR, %(id_1_29)s::VARCHAR, %(id_1_30)s::VARCHAR, %(id_1_31)s::VARCHAR, %(id_1_32)s::VARCHAR, %(id_1_33)s::VARCHAR, %(id_1_34)s::VARCHAR, %(id_1_35)s::VARCHAR, %(id_1_36)s::VARCHAR, %(id_1_37)s::VARCHAR, %(id_1_38)s::VARCHAR, %(id_1_39)s::VARCHAR, %(id_1_40)s::VARCHAR, %(id_1_41)s::VARCHAR)"
+      ],
+      "expected_response_sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010",
+      "actual_response_sha256s": [
+        "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010"
+      ],
+      "state_after": {
+        "sha256": "50cda2ea5752aae0d0894f5fd067cfcd51b96104e6d283f50d6e3a803d225bfd",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/04-40-1/state/after/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/04-40-1/state/after/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/04-40-1/state/after/items.json",
+            "sha256": "85e3b58fd00156bd43496299ab94a53f4aa7bb8968320202229e7bfb3fb702d3",
+            "row_count": 80,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/04-40-1/state/after/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/04-40-1/state/after/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/04-40-1/state/after/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/04-40-1/state/after/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/04-40-1/state/after/players.json",
+            "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+            "row_count": 43,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/04-40-1/state/after/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/04-40-1/state/after/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/04-40-1/state/after/sessions.json",
+            "sha256": "309c2a69a57856db247bb1060d5d4870b6301f1e1bf808f3ee378a10b3a54cc5",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/04-40-1/state/after/trades.json",
+            "sha256": "c52541bb90c7e2fd46dad321865bcd3514bc56b4d956b93d817728d118976b8d",
+            "row_count": 41,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "read_only": true,
+      "median_ms": 25.5607,
+      "p95_ms": 54.0613,
+      "query_counts": [
+        5
+      ]
+    },
+    {
+      "trades": 40,
+      "items_per_side": 20,
+      "samples": [
+        {
+          "milliseconds": 209.8501,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 126.1099,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 126.9392,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 131.3572,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 128.5398,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 178.0909,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 119.8674,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 122.9109,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 123.8375,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 127.0081,
+          "statements": 8,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+              "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+            },
+            "canonical": {
+              "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+              "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+            },
+            "matches_expected": true
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+            "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+          },
+          "canonical": {
+            "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+            "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+          },
+          "matches_expected": true
+        },
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/05-40-20/responses/cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123.json",
+            "sha256": "cf11b1712c40996892f780226dc0e8d9cc2fcbac1da67e46160d68118e0b6123"
+          },
+          "canonical": {
+            "file": "workloads/05-40-20/canonical-responses/b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db.json",
+            "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+          },
+          "matches_expected": true
+        }
+      ],
+      "expected_response": {
+        "file": "workloads/05-40-20/expected-response.json",
+        "sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+      },
+      "state_before": {
+        "sha256": "9810904983605577e65cb4040ef25a0bbde3681aaf2d9d7711ca007ccdb2dfee",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/05-40-20/state/before/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/05-40-20/state/before/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/05-40-20/state/before/items.json",
+            "sha256": "7b45eee27ff06c27a36a499ea26175fb350cb9de6505b5c3524552175d149c89",
+            "row_count": 1600,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/05-40-20/state/before/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/05-40-20/state/before/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/05-40-20/state/before/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/05-40-20/state/before/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/05-40-20/state/before/players.json",
+            "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+            "row_count": 43,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/05-40-20/state/before/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/05-40-20/state/before/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/05-40-20/state/before/sessions.json",
+            "sha256": "15087289392f58dda2791a6be1408a6582b7d34eacba7e779d79c7f68855ea9d",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/05-40-20/state/before/trades.json",
+            "sha256": "6ce0661d4acc859103a41f1f0707239cf99afad586dfbdb84b543fe06da17a36",
+            "row_count": 41,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "budget": 8,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR, %(id_1_12)s::VARCHAR, %(id_1_13)s::VARCHAR, %(id_1_14)s::VARCHAR, %(id_1_15)s::VARCHAR, %(id_1_16)s::VARCHAR, %(id_1_17)s::VARCHAR, %(id_1_18)s::VARCHAR, %(id_1_19)s::VARCHAR, %(id_1_20)s::VARCHAR, %(id_1_21)s::VARCHAR, %(id_1_22)s::VARCHAR, %(id_1_23)s::VARCHAR, %(id_1_24)s::VARCHAR, %(id_1_25)s::VARCHAR, %(id_1_26)s::VARCHAR, %(id_1_27)s::VARCHAR, %(id_1_28)s::VARCHAR, %(id_1_29)s::VARCHAR, %(id_1_30)s::VARCHAR, %(id_1_31)s::VARCHAR, %(id_1_32)s::VARCHAR, %(id_1_33)s::VARCHAR, %(id_1_34)s::VARCHAR, %(id_1_35)s::VARCHAR, %(id_1_36)s::VARCHAR, %(id_1_37)s::VARCHAR, %(id_1_38)s::VARCHAR, %(id_1_39)s::VARCHAR, %(id_1_40)s::VARCHAR, %(id_1_41)s::VARCHAR, %(id_1_42)s::VARCHAR, %(id_1_43)s::VARCHAR, %(id_1_44)s::VARCHAR, %(id_1_45)s::VARCHAR, %(id_1_46)s::VARCHAR, %(id_1_47)s::VARCHAR, %(id_1_48)s::VARCHAR, %(id_1_49)s::VARCHAR, %(id_1_50)s::VARCHAR, %(id_1_51)s::VARCHAR, %(id_1_52)s::VARCHAR, %(id_1_53)s::VARCHAR, %(id_1_54)s::VARCHAR, %(id_1_55)s::VARCHAR, %(id_1_56)s::VARCHAR, %(id_1_57)s::VARCHAR, %(id_1_58)s::VARCHAR, %(id_1_59)s::VARCHAR, %(id_1_60)s::VARCHAR, %(id_1_61)s::VARCHAR, %(id_1_62)s::VARCHAR, %(id_1_63)s::VARCHAR, %(id_1_64)s::VARCHAR, %(id_1_65)s::VARCHAR, %(id_1_66)s::VARCHAR, %(id_1_67)s::VARCHAR, %(id_1_68)s::VARCHAR, %(id_1_69)s::VARCHAR, %(id_1_70)s::VARCHAR, %(id_1_71)s::VARCHAR, %(id_1_72)s::VARCHAR, %(id_1_73)s::VARCHAR, %(id_1_74)s::VARCHAR, %(id_1_75)s::VARCHAR, %(id_1_76)s::VARCHAR, %(id_1_77)s::VARCHAR, %(id_1_78)s::VARCHAR, %(id_1_79)s::VARCHAR, %(id_1_80)s::VARCHAR, %(id_1_81)s::VARCHAR, %(id_1_82)s::VARCHAR, %(id_1_83)s::VARCHAR, %(id_1_84)s::VARCHAR, %(id_1_85)s::VARCHAR, %(id_1_86)s::VARCHAR, %(id_1_87)s::VARCHAR, %(id_1_88)s::VARCHAR, %(id_1_89)s::VARCHAR, %(id_1_90)s::VARCHAR, %(id_1_91)s::VARCHAR, %(id_1_92)s::VARCHAR, %(id_1_93)s::VARCHAR, %(id_1_94)s::VARCHAR, %(id_1_95)s::VARCHAR, %(id_1_96)s::VARCHAR, %(id_1_97)s::VARCHAR, %(id_1_98)s::VARCHAR, %(id_1_99)s::VARCHAR, %(id_1_100)s::VARCHAR, %(id_1_101)s::VARCHAR, %(id_1_102)s::VARCHAR, %(id_1_103)s::VARCHAR, %(id_1_104)s::VARCHAR, %(id_1_105)s::VARCHAR, %(id_1_106)s::VARCHAR, %(id_1_107)s::VARCHAR, %(id_1_108)s::VARCHAR, %(id_1_109)s::VARCHAR, %(id_1_110)s::VARCHAR, %(id_1_111)s::VARCHAR, %(id_1_112)s::VARCHAR, %(id_1_113)s::VARCHAR, %(id_1_114)s::VARCHAR, %(id_1_115)s::VARCHAR, %(id_1_116)s::VARCHAR, %(id_1_117)s::VARCHAR, %(id_1_118)s::VARCHAR, %(id_1_119)s::VARCHAR, %(id_1_120)s::VARCHAR, %(id_1_121)s::VARCHAR, %(id_1_122)s::VARCHAR, %(id_1_123)s::VARCHAR, %(id_1_124)s::VARCHAR, %(id_1_125)s::VARCHAR, %(id_1_126)s::VARCHAR, %(id_1_127)s::VARCHAR, %(id_1_128)s::VARCHAR, %(id_1_129)s::VARCHAR, %(id_1_130)s::VARCHAR, %(id_1_131)s::VARCHAR, %(id_1_132)s::VARCHAR, %(id_1_133)s::VARCHAR, %(id_1_134)s::VARCHAR, %(id_1_135)s::VARCHAR, %(id_1_136)s::VARCHAR, %(id_1_137)s::VARCHAR, %(id_1_138)s::VARCHAR, %(id_1_139)s::VARCHAR, %(id_1_140)s::VARCHAR, %(id_1_141)s::VARCHAR, %(id_1_142)s::VARCHAR, %(id_1_143)s::VARCHAR, %(id_1_144)s::VARCHAR, %(id_1_145)s::VARCHAR, %(id_1_146)s::VARCHAR, %(id_1_147)s::VARCHAR, %(id_1_148)s::VARCHAR, %(id_1_149)s::VARCHAR, %(id_1_150)s::VARCHAR, %(id_1_151)s::VARCHAR, %(id_1_152)s::VARCHAR, %(id_1_153)s::VARCHAR, %(id_1_154)s::VARCHAR, %(id_1_155)s::VARCHAR, %(id_1_156)s::VARCHAR, %(id_1_157)s::VARCHAR, %(id_1_158)s::VARCHAR, %(id_1_159)s::VARCHAR, %(id_1_160)s::VARCHAR, %(id_1_161)s::VARCHAR, %(id_1_162)s::VARCHAR, %(id_1_163)s::VARCHAR, %(id_1_164)s::VARCHAR, %(id_1_165)s::VARCHAR, %(id_1_166)s::VARCHAR, %(id_1_167)s::VARCHAR, %(id_1_168)s::VARCHAR, %(id_1_169)s::VARCHAR, %(id_1_170)s::VARCHAR, %(id_1_171)s::VARCHAR, %(id_1_172)s::VARCHAR, %(id_1_173)s::VARCHAR, %(id_1_174)s::VARCHAR, %(id_1_175)s::VARCHAR, %(id_1_176)s::VARCHAR, %(id_1_177)s::VARCHAR, %(id_1_178)s::VARCHAR, %(id_1_179)s::VARCHAR, %(id_1_180)s::VARCHAR, %(id_1_181)s::VARCHAR, %(id_1_182)s::VARCHAR, %(id_1_183)s::VARCHAR, %(id_1_184)s::VARCHAR, %(id_1_185)s::VARCHAR, %(id_1_186)s::VARCHAR, %(id_1_187)s::VARCHAR, %(id_1_188)s::VARCHAR, %(id_1_189)s::VARCHAR, %(id_1_190)s::VARCHAR, %(id_1_191)s::VARCHAR, %(id_1_192)s::VARCHAR, %(id_1_193)s::VARCHAR, %(id_1_194)s::VARCHAR, %(id_1_195)s::VARCHAR, %(id_1_196)s::VARCHAR, %(id_1_197)s::VARCHAR, %(id_1_198)s::VARCHAR, %(id_1_199)s::VARCHAR, %(id_1_200)s::VARCHAR, %(id_1_201)s::VARCHAR, %(id_1_202)s::VARCHAR, %(id_1_203)s::VARCHAR, %(id_1_204)s::VARCHAR, %(id_1_205)s::VARCHAR, %(id_1_206)s::VARCHAR, %(id_1_207)s::VARCHAR, %(id_1_208)s::VARCHAR, %(id_1_209)s::VARCHAR, %(id_1_210)s::VARCHAR, %(id_1_211)s::VARCHAR, %(id_1_212)s::VARCHAR, %(id_1_213)s::VARCHAR, %(id_1_214)s::VARCHAR, %(id_1_215)s::VARCHAR, %(id_1_216)s::VARCHAR, %(id_1_217)s::VARCHAR, %(id_1_218)s::VARCHAR, %(id_1_219)s::VARCHAR, %(id_1_220)s::VARCHAR, %(id_1_221)s::VARCHAR, %(id_1_222)s::VARCHAR, %(id_1_223)s::VARCHAR, %(id_1_224)s::VARCHAR, %(id_1_225)s::VARCHAR, %(id_1_226)s::VARCHAR, %(id_1_227)s::VARCHAR, %(id_1_228)s::VARCHAR, %(id_1_229)s::VARCHAR, %(id_1_230)s::VARCHAR, %(id_1_231)s::VARCHAR, %(id_1_232)s::VARCHAR, %(id_1_233)s::VARCHAR, %(id_1_234)s::VARCHAR, %(id_1_235)s::VARCHAR, %(id_1_236)s::VARCHAR, %(id_1_237)s::VARCHAR, %(id_1_238)s::VARCHAR, %(id_1_239)s::VARCHAR, %(id_1_240)s::VARCHAR, %(id_1_241)s::VARCHAR, %(id_1_242)s::VARCHAR, %(id_1_243)s::VARCHAR, %(id_1_244)s::VARCHAR, %(id_1_245)s::VARCHAR, %(id_1_246)s::VARCHAR, %(id_1_247)s::VARCHAR, %(id_1_248)s::VARCHAR, %(id_1_249)s::VARCHAR, %(id_1_250)s::VARCHAR, %(id_1_251)s::VARCHAR, %(id_1_252)s::VARCHAR, %(id_1_253)s::VARCHAR, %(id_1_254)s::VARCHAR, %(id_1_255)s::VARCHAR, %(id_1_256)s::VARCHAR, %(id_1_257)s::VARCHAR, %(id_1_258)s::VARCHAR, %(id_1_259)s::VARCHAR, %(id_1_260)s::VARCHAR, %(id_1_261)s::VARCHAR, %(id_1_262)s::VARCHAR, %(id_1_263)s::VARCHAR, %(id_1_264)s::VARCHAR, %(id_1_265)s::VARCHAR, %(id_1_266)s::VARCHAR, %(id_1_267)s::VARCHAR, %(id_1_268)s::VARCHAR, %(id_1_269)s::VARCHAR, %(id_1_270)s::VARCHAR, %(id_1_271)s::VARCHAR, %(id_1_272)s::VARCHAR, %(id_1_273)s::VARCHAR, %(id_1_274)s::VARCHAR, %(id_1_275)s::VARCHAR, %(id_1_276)s::VARCHAR, %(id_1_277)s::VARCHAR, %(id_1_278)s::VARCHAR, %(id_1_279)s::VARCHAR, %(id_1_280)s::VARCHAR, %(id_1_281)s::VARCHAR, %(id_1_282)s::VARCHAR, %(id_1_283)s::VARCHAR, %(id_1_284)s::VARCHAR, %(id_1_285)s::VARCHAR, %(id_1_286)s::VARCHAR, %(id_1_287)s::VARCHAR, %(id_1_288)s::VARCHAR, %(id_1_289)s::VARCHAR, %(id_1_290)s::VARCHAR, %(id_1_291)s::VARCHAR, %(id_1_292)s::VARCHAR, %(id_1_293)s::VARCHAR, %(id_1_294)s::VARCHAR, %(id_1_295)s::VARCHAR, %(id_1_296)s::VARCHAR, %(id_1_297)s::VARCHAR, %(id_1_298)s::VARCHAR, %(id_1_299)s::VARCHAR, %(id_1_300)s::VARCHAR, %(id_1_301)s::VARCHAR, %(id_1_302)s::VARCHAR, %(id_1_303)s::VARCHAR, %(id_1_304)s::VARCHAR, %(id_1_305)s::VARCHAR, %(id_1_306)s::VARCHAR, %(id_1_307)s::VARCHAR, %(id_1_308)s::VARCHAR, %(id_1_309)s::VARCHAR, %(id_1_310)s::VARCHAR, %(id_1_311)s::VARCHAR, %(id_1_312)s::VARCHAR, %(id_1_313)s::VARCHAR, %(id_1_314)s::VARCHAR, %(id_1_315)s::VARCHAR, %(id_1_316)s::VARCHAR, %(id_1_317)s::VARCHAR, %(id_1_318)s::VARCHAR, %(id_1_319)s::VARCHAR, %(id_1_320)s::VARCHAR, %(id_1_321)s::VARCHAR, %(id_1_322)s::VARCHAR, %(id_1_323)s::VARCHAR, %(id_1_324)s::VARCHAR, %(id_1_325)s::VARCHAR, %(id_1_326)s::VARCHAR, %(id_1_327)s::VARCHAR, %(id_1_328)s::VARCHAR, %(id_1_329)s::VARCHAR, %(id_1_330)s::VARCHAR, %(id_1_331)s::VARCHAR, %(id_1_332)s::VARCHAR, %(id_1_333)s::VARCHAR, %(id_1_334)s::VARCHAR, %(id_1_335)s::VARCHAR, %(id_1_336)s::VARCHAR, %(id_1_337)s::VARCHAR, %(id_1_338)s::VARCHAR, %(id_1_339)s::VARCHAR, %(id_1_340)s::VARCHAR, %(id_1_341)s::VARCHAR, %(id_1_342)s::VARCHAR, %(id_1_343)s::VARCHAR, %(id_1_344)s::VARCHAR, %(id_1_345)s::VARCHAR, %(id_1_346)s::VARCHAR, %(id_1_347)s::VARCHAR, %(id_1_348)s::VARCHAR, %(id_1_349)s::VARCHAR, %(id_1_350)s::VARCHAR, %(id_1_351)s::VARCHAR, %(id_1_352)s::VARCHAR, %(id_1_353)s::VARCHAR, %(id_1_354)s::VARCHAR, %(id_1_355)s::VARCHAR, %(id_1_356)s::VARCHAR, %(id_1_357)s::VARCHAR, %(id_1_358)s::VARCHAR, %(id_1_359)s::VARCHAR, %(id_1_360)s::VARCHAR, %(id_1_361)s::VARCHAR, %(id_1_362)s::VARCHAR, %(id_1_363)s::VARCHAR, %(id_1_364)s::VARCHAR, %(id_1_365)s::VARCHAR, %(id_1_366)s::VARCHAR, %(id_1_367)s::VARCHAR, %(id_1_368)s::VARCHAR, %(id_1_369)s::VARCHAR, %(id_1_370)s::VARCHAR, %(id_1_371)s::VARCHAR, %(id_1_372)s::VARCHAR, %(id_1_373)s::VARCHAR, %(id_1_374)s::VARCHAR, %(id_1_375)s::VARCHAR, %(id_1_376)s::VARCHAR, %(id_1_377)s::VARCHAR, %(id_1_378)s::VARCHAR, %(id_1_379)s::VARCHAR, %(id_1_380)s::VARCHAR, %(id_1_381)s::VARCHAR, %(id_1_382)s::VARCHAR, %(id_1_383)s::VARCHAR, %(id_1_384)s::VARCHAR, %(id_1_385)s::VARCHAR, %(id_1_386)s::VARCHAR, %(id_1_387)s::VARCHAR, %(id_1_388)s::VARCHAR, %(id_1_389)s::VARCHAR, %(id_1_390)s::VARCHAR, %(id_1_391)s::VARCHAR, %(id_1_392)s::VARCHAR, %(id_1_393)s::VARCHAR, %(id_1_394)s::VARCHAR, %(id_1_395)s::VARCHAR, %(id_1_396)s::VARCHAR, %(id_1_397)s::VARCHAR, %(id_1_398)s::VARCHAR, %(id_1_399)s::VARCHAR, %(id_1_400)s::VARCHAR, %(id_1_401)s::VARCHAR, %(id_1_402)s::VARCHAR, %(id_1_403)s::VARCHAR, %(id_1_404)s::VARCHAR, %(id_1_405)s::VARCHAR, %(id_1_406)s::VARCHAR, %(id_1_407)s::VARCHAR, %(id_1_408)s::VARCHAR, %(id_1_409)s::VARCHAR, %(id_1_410)s::VARCHAR, %(id_1_411)s::VARCHAR, %(id_1_412)s::VARCHAR, %(id_1_413)s::VARCHAR, %(id_1_414)s::VARCHAR, %(id_1_415)s::VARCHAR, %(id_1_416)s::VARCHAR, %(id_1_417)s::VARCHAR, %(id_1_418)s::VARCHAR, %(id_1_419)s::VARCHAR, %(id_1_420)s::VARCHAR, %(id_1_421)s::VARCHAR, %(id_1_422)s::VARCHAR, %(id_1_423)s::VARCHAR, %(id_1_424)s::VARCHAR, %(id_1_425)s::VARCHAR, %(id_1_426)s::VARCHAR, %(id_1_427)s::VARCHAR, %(id_1_428)s::VARCHAR, %(id_1_429)s::VARCHAR, %(id_1_430)s::VARCHAR, %(id_1_431)s::VARCHAR, %(id_1_432)s::VARCHAR, %(id_1_433)s::VARCHAR, %(id_1_434)s::VARCHAR, %(id_1_435)s::VARCHAR, %(id_1_436)s::VARCHAR, %(id_1_437)s::VARCHAR, %(id_1_438)s::VARCHAR, %(id_1_439)s::VARCHAR, %(id_1_440)s::VARCHAR, %(id_1_441)s::VARCHAR, %(id_1_442)s::VARCHAR, %(id_1_443)s::VARCHAR, %(id_1_444)s::VARCHAR, %(id_1_445)s::VARCHAR, %(id_1_446)s::VARCHAR, %(id_1_447)s::VARCHAR, %(id_1_448)s::VARCHAR, %(id_1_449)s::VARCHAR, %(id_1_450)s::VARCHAR, %(id_1_451)s::VARCHAR, %(id_1_452)s::VARCHAR, %(id_1_453)s::VARCHAR, %(id_1_454)s::VARCHAR, %(id_1_455)s::VARCHAR, %(id_1_456)s::VARCHAR, %(id_1_457)s::VARCHAR, %(id_1_458)s::VARCHAR, %(id_1_459)s::VARCHAR, %(id_1_460)s::VARCHAR, %(id_1_461)s::VARCHAR, %(id_1_462)s::VARCHAR, %(id_1_463)s::VARCHAR, %(id_1_464)s::VARCHAR, %(id_1_465)s::VARCHAR, %(id_1_466)s::VARCHAR, %(id_1_467)s::VARCHAR, %(id_1_468)s::VARCHAR, %(id_1_469)s::VARCHAR, %(id_1_470)s::VARCHAR, %(id_1_471)s::VARCHAR, %(id_1_472)s::VARCHAR, %(id_1_473)s::VARCHAR, %(id_1_474)s::VARCHAR, %(id_1_475)s::VARCHAR, %(id_1_476)s::VARCHAR, %(id_1_477)s::VARCHAR, %(id_1_478)s::VARCHAR, %(id_1_479)s::VARCHAR, %(id_1_480)s::VARCHAR, %(id_1_481)s::VARCHAR, %(id_1_482)s::VARCHAR, %(id_1_483)s::VARCHAR, %(id_1_484)s::VARCHAR, %(id_1_485)s::VARCHAR, %(id_1_486)s::VARCHAR, %(id_1_487)s::VARCHAR, %(id_1_488)s::VARCHAR, %(id_1_489)s::VARCHAR, %(id_1_490)s::VARCHAR, %(id_1_491)s::VARCHAR, %(id_1_492)s::VARCHAR, %(id_1_493)s::VARCHAR, %(id_1_494)s::VARCHAR, %(id_1_495)s::VARCHAR, %(id_1_496)s::VARCHAR, %(id_1_497)s::VARCHAR, %(id_1_498)s::VARCHAR, %(id_1_499)s::VARCHAR, %(id_1_500)s::VARCHAR)",
+        "SELECT items.id, items.owner_id, items.definition_id, items.rarity, items.pattern_seed, items.wear, items.variant, items.reservation, items.consumed, items.acquired_at \nFROM items \nWHERE items.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR, %(id_1_12)s::VARCHAR, %(id_1_13)s::VARCHAR, %(id_1_14)s::VARCHAR, %(id_1_15)s::VARCHAR, %(id_1_16)s::VARCHAR, %(id_1_17)s::VARCHAR, %(id_1_18)s::VARCHAR, %(id_1_19)s::VARCHAR, %(id_1_20)s::VARCHAR, %(id_1_21)s::VARCHAR, %(id_1_22)s::VARCHAR, %(id_1_23)s::VARCHAR, %(id_1_24)s::VARCHAR, %(id_1_25)s::VARCHAR, %(id_1_26)s::VARCHAR, %(id_1_27)s::VARCHAR, %(id_1_28)s::VARCHAR, %(id_1_29)s::VARCHAR, %(id_1_30)s::VARCHAR, %(id_1_31)s::VARCHAR, %(id_1_32)s::VARCHAR, %(id_1_33)s::VARCHAR, %(id_1_34)s::VARCHAR, %(id_1_35)s::VARCHAR, %(id_1_36)s::VARCHAR, %(id_1_37)s::VARCHAR, %(id_1_38)s::VARCHAR, %(id_1_39)s::VARCHAR, %(id_1_40)s::VARCHAR, %(id_1_41)s::VARCHAR, %(id_1_42)s::VARCHAR, %(id_1_43)s::VARCHAR, %(id_1_44)s::VARCHAR, %(id_1_45)s::VARCHAR, %(id_1_46)s::VARCHAR, %(id_1_47)s::VARCHAR, %(id_1_48)s::VARCHAR, %(id_1_49)s::VARCHAR, %(id_1_50)s::VARCHAR, %(id_1_51)s::VARCHAR, %(id_1_52)s::VARCHAR, %(id_1_53)s::VARCHAR, %(id_1_54)s::VARCHAR, %(id_1_55)s::VARCHAR, %(id_1_56)s::VARCHAR, %(id_1_57)s::VARCHAR, %(id_1_58)s::VARCHAR, %(id_1_59)s::VARCHAR, %(id_1_60)s::VARCHAR, %(id_1_61)s::VARCHAR, %(id_1_62)s::VARCHAR, %(id_1_63)s::VARCHAR, %(id_1_64)s::VARCHAR, %(id_1_65)s::VARCHAR, %(id_1_66)s::VARCHAR, %(id_1_67)s::VARCHAR, %(id_1_68)s::VARCHAR, %(id_1_69)s::VARCHAR, %(id_1_70)s::VARCHAR, %(id_1_71)s::VARCHAR, %(id_1_72)s::VARCHAR, %(id_1_73)s::VARCHAR, %(id_1_74)s::VARCHAR, %(id_1_75)s::VARCHAR, %(id_1_76)s::VARCHAR, %(id_1_77)s::VARCHAR, %(id_1_78)s::VARCHAR, %(id_1_79)s::VARCHAR, %(id_1_80)s::VARCHAR, %(id_1_81)s::VARCHAR, %(id_1_82)s::VARCHAR, %(id_1_83)s::VARCHAR, %(id_1_84)s::VARCHAR, %(id_1_85)s::VARCHAR, %(id_1_86)s::VARCHAR, %(id_1_87)s::VARCHAR, %(id_1_88)s::VARCHAR, %(id_1_89)s::VARCHAR, %(id_1_90)s::VARCHAR, %(id_1_91)s::VARCHAR, %(id_1_92)s::VARCHAR, %(id_1_93)s::VARCHAR, %(id_1_94)s::VARCHAR, %(id_1_95)s::VARCHAR, %(id_1_96)s::VARCHAR, %(id_1_97)s::VARCHAR, %(id_1_98)s::VARCHAR, %(id_1_99)s::VARCHAR, %(id_1_100)s::VARCHAR)",
+        "SELECT players.id, players.display_name \nFROM players \nWHERE players.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR, %(id_1_12)s::VARCHAR, %(id_1_13)s::VARCHAR, %(id_1_14)s::VARCHAR, %(id_1_15)s::VARCHAR, %(id_1_16)s::VARCHAR, %(id_1_17)s::VARCHAR, %(id_1_18)s::VARCHAR, %(id_1_19)s::VARCHAR, %(id_1_20)s::VARCHAR, %(id_1_21)s::VARCHAR, %(id_1_22)s::VARCHAR, %(id_1_23)s::VARCHAR, %(id_1_24)s::VARCHAR, %(id_1_25)s::VARCHAR, %(id_1_26)s::VARCHAR, %(id_1_27)s::VARCHAR, %(id_1_28)s::VARCHAR, %(id_1_29)s::VARCHAR, %(id_1_30)s::VARCHAR, %(id_1_31)s::VARCHAR, %(id_1_32)s::VARCHAR, %(id_1_33)s::VARCHAR, %(id_1_34)s::VARCHAR, %(id_1_35)s::VARCHAR, %(id_1_36)s::VARCHAR, %(id_1_37)s::VARCHAR, %(id_1_38)s::VARCHAR, %(id_1_39)s::VARCHAR, %(id_1_40)s::VARCHAR, %(id_1_41)s::VARCHAR)"
+      ],
+      "expected_response_sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db",
+      "actual_response_sha256s": [
+        "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db"
+      ],
+      "state_after": {
+        "sha256": "9810904983605577e65cb4040ef25a0bbde3681aaf2d9d7711ca007ccdb2dfee",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/05-40-20/state/after/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/05-40-20/state/after/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/05-40-20/state/after/items.json",
+            "sha256": "7b45eee27ff06c27a36a499ea26175fb350cb9de6505b5c3524552175d149c89",
+            "row_count": 1600,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/05-40-20/state/after/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/05-40-20/state/after/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/05-40-20/state/after/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/05-40-20/state/after/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/05-40-20/state/after/players.json",
+            "sha256": "a3b2bfe334bdc42c373beabbdaad929b6badb5f0e1ec67113e61562a455da619",
+            "row_count": 43,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/05-40-20/state/after/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/05-40-20/state/after/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/05-40-20/state/after/sessions.json",
+            "sha256": "15087289392f58dda2791a6be1408a6582b7d34eacba7e779d79c7f68855ea9d",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/05-40-20/state/after/trades.json",
+            "sha256": "6ce0661d4acc859103a41f1f0707239cf99afad586dfbdb84b543fe06da17a36",
+            "row_count": 41,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "read_only": true,
+      "median_ms": 126.97364999999999,
+      "p95_ms": 209.8501,
+      "query_counts": [
+        8
+      ]
+    },
+    {
+      "trades": 501,
+      "items_per_side": 0,
+      "samples": [
+        {
+          "milliseconds": 79.9295,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 87.8758,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 63.2123,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 157.8235,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 52.412,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 61.9928,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 74.5005,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 66.4153,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 63.65,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        },
+        {
+          "milliseconds": 51.4696,
+          "statements": 5,
+          "response": {
+            "status": 200,
+            "raw": {
+              "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+              "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+            },
+            "canonical": {
+              "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+              "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+            },
+            "matches_expected": true
+          }
+        }
+      ],
+      "warmups": [
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+            "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+          },
+          "canonical": {
+            "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+            "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+          },
+          "matches_expected": true
+        },
+        {
+          "status": 200,
+          "raw": {
+            "file": "workloads/06-501-0/responses/2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc.json",
+            "sha256": "2666e9a9a7a14a791fcaf1a11941f70799b27f423c72db48918ab60ffc55d6cc"
+          },
+          "canonical": {
+            "file": "workloads/06-501-0/canonical-responses/8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b.json",
+            "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+          },
+          "matches_expected": true
+        }
+      ],
+      "expected_response": {
+        "file": "workloads/06-501-0/expected-response.json",
+        "sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+      },
+      "state_before": {
+        "sha256": "5ae50b54c881d9b75db897b87cf39a9e9b4da17eeb81d0517b5c4c5e8a00c80e",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/06-501-0/state/before/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/06-501-0/state/before/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/06-501-0/state/before/items.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/06-501-0/state/before/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/06-501-0/state/before/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/06-501-0/state/before/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/06-501-0/state/before/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/06-501-0/state/before/players.json",
+            "sha256": "c0977828d90643d618c01cc3197ad720b32bfe47fc7966b978f83b2e57d21426",
+            "row_count": 504,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/06-501-0/state/before/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/06-501-0/state/before/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/06-501-0/state/before/sessions.json",
+            "sha256": "c5e808f7cfb68bca9b65c73dce7ad88286c2ab875b618f2c5cffc2caf9c0d8b0",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/06-501-0/state/before/trades.json",
+            "sha256": "06a4b2bab54c15757bee25dc0d32fe0f097a5d9a46715779ace39d5ab4a5bfdb",
+            "row_count": 502,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "budget": 5,
+      "sql_shapes": [
+        "SELECT sessions.token_hash, sessions.player_id, sessions.expires_at \nFROM sessions \nWHERE sessions.token_hash = %(pk_1)s::VARCHAR",
+        "SELECT players.id, players.username, players.display_name, players.password_hash, players.credits, players.xp, players.active, players.last_trade \nFROM players \nWHERE players.id = %(pk_1)s::VARCHAR",
+        "SELECT trades.id, trades.a, trades.b, trades.revision, trades.offers, trades.confirmations, trades.state \nFROM trades \nWHERE trades.a = %(a_1)s::VARCHAR OR trades.b = %(b_1)s::VARCHAR",
+        "SELECT players.id, players.display_name \nFROM players \nWHERE players.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR, %(id_1_3)s::VARCHAR, %(id_1_4)s::VARCHAR, %(id_1_5)s::VARCHAR, %(id_1_6)s::VARCHAR, %(id_1_7)s::VARCHAR, %(id_1_8)s::VARCHAR, %(id_1_9)s::VARCHAR, %(id_1_10)s::VARCHAR, %(id_1_11)s::VARCHAR, %(id_1_12)s::VARCHAR, %(id_1_13)s::VARCHAR, %(id_1_14)s::VARCHAR, %(id_1_15)s::VARCHAR, %(id_1_16)s::VARCHAR, %(id_1_17)s::VARCHAR, %(id_1_18)s::VARCHAR, %(id_1_19)s::VARCHAR, %(id_1_20)s::VARCHAR, %(id_1_21)s::VARCHAR, %(id_1_22)s::VARCHAR, %(id_1_23)s::VARCHAR, %(id_1_24)s::VARCHAR, %(id_1_25)s::VARCHAR, %(id_1_26)s::VARCHAR, %(id_1_27)s::VARCHAR, %(id_1_28)s::VARCHAR, %(id_1_29)s::VARCHAR, %(id_1_30)s::VARCHAR, %(id_1_31)s::VARCHAR, %(id_1_32)s::VARCHAR, %(id_1_33)s::VARCHAR, %(id_1_34)s::VARCHAR, %(id_1_35)s::VARCHAR, %(id_1_36)s::VARCHAR, %(id_1_37)s::VARCHAR, %(id_1_38)s::VARCHAR, %(id_1_39)s::VARCHAR, %(id_1_40)s::VARCHAR, %(id_1_41)s::VARCHAR, %(id_1_42)s::VARCHAR, %(id_1_43)s::VARCHAR, %(id_1_44)s::VARCHAR, %(id_1_45)s::VARCHAR, %(id_1_46)s::VARCHAR, %(id_1_47)s::VARCHAR, %(id_1_48)s::VARCHAR, %(id_1_49)s::VARCHAR, %(id_1_50)s::VARCHAR, %(id_1_51)s::VARCHAR, %(id_1_52)s::VARCHAR, %(id_1_53)s::VARCHAR, %(id_1_54)s::VARCHAR, %(id_1_55)s::VARCHAR, %(id_1_56)s::VARCHAR, %(id_1_57)s::VARCHAR, %(id_1_58)s::VARCHAR, %(id_1_59)s::VARCHAR, %(id_1_60)s::VARCHAR, %(id_1_61)s::VARCHAR, %(id_1_62)s::VARCHAR, %(id_1_63)s::VARCHAR, %(id_1_64)s::VARCHAR, %(id_1_65)s::VARCHAR, %(id_1_66)s::VARCHAR, %(id_1_67)s::VARCHAR, %(id_1_68)s::VARCHAR, %(id_1_69)s::VARCHAR, %(id_1_70)s::VARCHAR, %(id_1_71)s::VARCHAR, %(id_1_72)s::VARCHAR, %(id_1_73)s::VARCHAR, %(id_1_74)s::VARCHAR, %(id_1_75)s::VARCHAR, %(id_1_76)s::VARCHAR, %(id_1_77)s::VARCHAR, %(id_1_78)s::VARCHAR, %(id_1_79)s::VARCHAR, %(id_1_80)s::VARCHAR, %(id_1_81)s::VARCHAR, %(id_1_82)s::VARCHAR, %(id_1_83)s::VARCHAR, %(id_1_84)s::VARCHAR, %(id_1_85)s::VARCHAR, %(id_1_86)s::VARCHAR, %(id_1_87)s::VARCHAR, %(id_1_88)s::VARCHAR, %(id_1_89)s::VARCHAR, %(id_1_90)s::VARCHAR, %(id_1_91)s::VARCHAR, %(id_1_92)s::VARCHAR, %(id_1_93)s::VARCHAR, %(id_1_94)s::VARCHAR, %(id_1_95)s::VARCHAR, %(id_1_96)s::VARCHAR, %(id_1_97)s::VARCHAR, %(id_1_98)s::VARCHAR, %(id_1_99)s::VARCHAR, %(id_1_100)s::VARCHAR, %(id_1_101)s::VARCHAR, %(id_1_102)s::VARCHAR, %(id_1_103)s::VARCHAR, %(id_1_104)s::VARCHAR, %(id_1_105)s::VARCHAR, %(id_1_106)s::VARCHAR, %(id_1_107)s::VARCHAR, %(id_1_108)s::VARCHAR, %(id_1_109)s::VARCHAR, %(id_1_110)s::VARCHAR, %(id_1_111)s::VARCHAR, %(id_1_112)s::VARCHAR, %(id_1_113)s::VARCHAR, %(id_1_114)s::VARCHAR, %(id_1_115)s::VARCHAR, %(id_1_116)s::VARCHAR, %(id_1_117)s::VARCHAR, %(id_1_118)s::VARCHAR, %(id_1_119)s::VARCHAR, %(id_1_120)s::VARCHAR, %(id_1_121)s::VARCHAR, %(id_1_122)s::VARCHAR, %(id_1_123)s::VARCHAR, %(id_1_124)s::VARCHAR, %(id_1_125)s::VARCHAR, %(id_1_126)s::VARCHAR, %(id_1_127)s::VARCHAR, %(id_1_128)s::VARCHAR, %(id_1_129)s::VARCHAR, %(id_1_130)s::VARCHAR, %(id_1_131)s::VARCHAR, %(id_1_132)s::VARCHAR, %(id_1_133)s::VARCHAR, %(id_1_134)s::VARCHAR, %(id_1_135)s::VARCHAR, %(id_1_136)s::VARCHAR, %(id_1_137)s::VARCHAR, %(id_1_138)s::VARCHAR, %(id_1_139)s::VARCHAR, %(id_1_140)s::VARCHAR, %(id_1_141)s::VARCHAR, %(id_1_142)s::VARCHAR, %(id_1_143)s::VARCHAR, %(id_1_144)s::VARCHAR, %(id_1_145)s::VARCHAR, %(id_1_146)s::VARCHAR, %(id_1_147)s::VARCHAR, %(id_1_148)s::VARCHAR, %(id_1_149)s::VARCHAR, %(id_1_150)s::VARCHAR, %(id_1_151)s::VARCHAR, %(id_1_152)s::VARCHAR, %(id_1_153)s::VARCHAR, %(id_1_154)s::VARCHAR, %(id_1_155)s::VARCHAR, %(id_1_156)s::VARCHAR, %(id_1_157)s::VARCHAR, %(id_1_158)s::VARCHAR, %(id_1_159)s::VARCHAR, %(id_1_160)s::VARCHAR, %(id_1_161)s::VARCHAR, %(id_1_162)s::VARCHAR, %(id_1_163)s::VARCHAR, %(id_1_164)s::VARCHAR, %(id_1_165)s::VARCHAR, %(id_1_166)s::VARCHAR, %(id_1_167)s::VARCHAR, %(id_1_168)s::VARCHAR, %(id_1_169)s::VARCHAR, %(id_1_170)s::VARCHAR, %(id_1_171)s::VARCHAR, %(id_1_172)s::VARCHAR, %(id_1_173)s::VARCHAR, %(id_1_174)s::VARCHAR, %(id_1_175)s::VARCHAR, %(id_1_176)s::VARCHAR, %(id_1_177)s::VARCHAR, %(id_1_178)s::VARCHAR, %(id_1_179)s::VARCHAR, %(id_1_180)s::VARCHAR, %(id_1_181)s::VARCHAR, %(id_1_182)s::VARCHAR, %(id_1_183)s::VARCHAR, %(id_1_184)s::VARCHAR, %(id_1_185)s::VARCHAR, %(id_1_186)s::VARCHAR, %(id_1_187)s::VARCHAR, %(id_1_188)s::VARCHAR, %(id_1_189)s::VARCHAR, %(id_1_190)s::VARCHAR, %(id_1_191)s::VARCHAR, %(id_1_192)s::VARCHAR, %(id_1_193)s::VARCHAR, %(id_1_194)s::VARCHAR, %(id_1_195)s::VARCHAR, %(id_1_196)s::VARCHAR, %(id_1_197)s::VARCHAR, %(id_1_198)s::VARCHAR, %(id_1_199)s::VARCHAR, %(id_1_200)s::VARCHAR, %(id_1_201)s::VARCHAR, %(id_1_202)s::VARCHAR, %(id_1_203)s::VARCHAR, %(id_1_204)s::VARCHAR, %(id_1_205)s::VARCHAR, %(id_1_206)s::VARCHAR, %(id_1_207)s::VARCHAR, %(id_1_208)s::VARCHAR, %(id_1_209)s::VARCHAR, %(id_1_210)s::VARCHAR, %(id_1_211)s::VARCHAR, %(id_1_212)s::VARCHAR, %(id_1_213)s::VARCHAR, %(id_1_214)s::VARCHAR, %(id_1_215)s::VARCHAR, %(id_1_216)s::VARCHAR, %(id_1_217)s::VARCHAR, %(id_1_218)s::VARCHAR, %(id_1_219)s::VARCHAR, %(id_1_220)s::VARCHAR, %(id_1_221)s::VARCHAR, %(id_1_222)s::VARCHAR, %(id_1_223)s::VARCHAR, %(id_1_224)s::VARCHAR, %(id_1_225)s::VARCHAR, %(id_1_226)s::VARCHAR, %(id_1_227)s::VARCHAR, %(id_1_228)s::VARCHAR, %(id_1_229)s::VARCHAR, %(id_1_230)s::VARCHAR, %(id_1_231)s::VARCHAR, %(id_1_232)s::VARCHAR, %(id_1_233)s::VARCHAR, %(id_1_234)s::VARCHAR, %(id_1_235)s::VARCHAR, %(id_1_236)s::VARCHAR, %(id_1_237)s::VARCHAR, %(id_1_238)s::VARCHAR, %(id_1_239)s::VARCHAR, %(id_1_240)s::VARCHAR, %(id_1_241)s::VARCHAR, %(id_1_242)s::VARCHAR, %(id_1_243)s::VARCHAR, %(id_1_244)s::VARCHAR, %(id_1_245)s::VARCHAR, %(id_1_246)s::VARCHAR, %(id_1_247)s::VARCHAR, %(id_1_248)s::VARCHAR, %(id_1_249)s::VARCHAR, %(id_1_250)s::VARCHAR, %(id_1_251)s::VARCHAR, %(id_1_252)s::VARCHAR, %(id_1_253)s::VARCHAR, %(id_1_254)s::VARCHAR, %(id_1_255)s::VARCHAR, %(id_1_256)s::VARCHAR, %(id_1_257)s::VARCHAR, %(id_1_258)s::VARCHAR, %(id_1_259)s::VARCHAR, %(id_1_260)s::VARCHAR, %(id_1_261)s::VARCHAR, %(id_1_262)s::VARCHAR, %(id_1_263)s::VARCHAR, %(id_1_264)s::VARCHAR, %(id_1_265)s::VARCHAR, %(id_1_266)s::VARCHAR, %(id_1_267)s::VARCHAR, %(id_1_268)s::VARCHAR, %(id_1_269)s::VARCHAR, %(id_1_270)s::VARCHAR, %(id_1_271)s::VARCHAR, %(id_1_272)s::VARCHAR, %(id_1_273)s::VARCHAR, %(id_1_274)s::VARCHAR, %(id_1_275)s::VARCHAR, %(id_1_276)s::VARCHAR, %(id_1_277)s::VARCHAR, %(id_1_278)s::VARCHAR, %(id_1_279)s::VARCHAR, %(id_1_280)s::VARCHAR, %(id_1_281)s::VARCHAR, %(id_1_282)s::VARCHAR, %(id_1_283)s::VARCHAR, %(id_1_284)s::VARCHAR, %(id_1_285)s::VARCHAR, %(id_1_286)s::VARCHAR, %(id_1_287)s::VARCHAR, %(id_1_288)s::VARCHAR, %(id_1_289)s::VARCHAR, %(id_1_290)s::VARCHAR, %(id_1_291)s::VARCHAR, %(id_1_292)s::VARCHAR, %(id_1_293)s::VARCHAR, %(id_1_294)s::VARCHAR, %(id_1_295)s::VARCHAR, %(id_1_296)s::VARCHAR, %(id_1_297)s::VARCHAR, %(id_1_298)s::VARCHAR, %(id_1_299)s::VARCHAR, %(id_1_300)s::VARCHAR, %(id_1_301)s::VARCHAR, %(id_1_302)s::VARCHAR, %(id_1_303)s::VARCHAR, %(id_1_304)s::VARCHAR, %(id_1_305)s::VARCHAR, %(id_1_306)s::VARCHAR, %(id_1_307)s::VARCHAR, %(id_1_308)s::VARCHAR, %(id_1_309)s::VARCHAR, %(id_1_310)s::VARCHAR, %(id_1_311)s::VARCHAR, %(id_1_312)s::VARCHAR, %(id_1_313)s::VARCHAR, %(id_1_314)s::VARCHAR, %(id_1_315)s::VARCHAR, %(id_1_316)s::VARCHAR, %(id_1_317)s::VARCHAR, %(id_1_318)s::VARCHAR, %(id_1_319)s::VARCHAR, %(id_1_320)s::VARCHAR, %(id_1_321)s::VARCHAR, %(id_1_322)s::VARCHAR, %(id_1_323)s::VARCHAR, %(id_1_324)s::VARCHAR, %(id_1_325)s::VARCHAR, %(id_1_326)s::VARCHAR, %(id_1_327)s::VARCHAR, %(id_1_328)s::VARCHAR, %(id_1_329)s::VARCHAR, %(id_1_330)s::VARCHAR, %(id_1_331)s::VARCHAR, %(id_1_332)s::VARCHAR, %(id_1_333)s::VARCHAR, %(id_1_334)s::VARCHAR, %(id_1_335)s::VARCHAR, %(id_1_336)s::VARCHAR, %(id_1_337)s::VARCHAR, %(id_1_338)s::VARCHAR, %(id_1_339)s::VARCHAR, %(id_1_340)s::VARCHAR, %(id_1_341)s::VARCHAR, %(id_1_342)s::VARCHAR, %(id_1_343)s::VARCHAR, %(id_1_344)s::VARCHAR, %(id_1_345)s::VARCHAR, %(id_1_346)s::VARCHAR, %(id_1_347)s::VARCHAR, %(id_1_348)s::VARCHAR, %(id_1_349)s::VARCHAR, %(id_1_350)s::VARCHAR, %(id_1_351)s::VARCHAR, %(id_1_352)s::VARCHAR, %(id_1_353)s::VARCHAR, %(id_1_354)s::VARCHAR, %(id_1_355)s::VARCHAR, %(id_1_356)s::VARCHAR, %(id_1_357)s::VARCHAR, %(id_1_358)s::VARCHAR, %(id_1_359)s::VARCHAR, %(id_1_360)s::VARCHAR, %(id_1_361)s::VARCHAR, %(id_1_362)s::VARCHAR, %(id_1_363)s::VARCHAR, %(id_1_364)s::VARCHAR, %(id_1_365)s::VARCHAR, %(id_1_366)s::VARCHAR, %(id_1_367)s::VARCHAR, %(id_1_368)s::VARCHAR, %(id_1_369)s::VARCHAR, %(id_1_370)s::VARCHAR, %(id_1_371)s::VARCHAR, %(id_1_372)s::VARCHAR, %(id_1_373)s::VARCHAR, %(id_1_374)s::VARCHAR, %(id_1_375)s::VARCHAR, %(id_1_376)s::VARCHAR, %(id_1_377)s::VARCHAR, %(id_1_378)s::VARCHAR, %(id_1_379)s::VARCHAR, %(id_1_380)s::VARCHAR, %(id_1_381)s::VARCHAR, %(id_1_382)s::VARCHAR, %(id_1_383)s::VARCHAR, %(id_1_384)s::VARCHAR, %(id_1_385)s::VARCHAR, %(id_1_386)s::VARCHAR, %(id_1_387)s::VARCHAR, %(id_1_388)s::VARCHAR, %(id_1_389)s::VARCHAR, %(id_1_390)s::VARCHAR, %(id_1_391)s::VARCHAR, %(id_1_392)s::VARCHAR, %(id_1_393)s::VARCHAR, %(id_1_394)s::VARCHAR, %(id_1_395)s::VARCHAR, %(id_1_396)s::VARCHAR, %(id_1_397)s::VARCHAR, %(id_1_398)s::VARCHAR, %(id_1_399)s::VARCHAR, %(id_1_400)s::VARCHAR, %(id_1_401)s::VARCHAR, %(id_1_402)s::VARCHAR, %(id_1_403)s::VARCHAR, %(id_1_404)s::VARCHAR, %(id_1_405)s::VARCHAR, %(id_1_406)s::VARCHAR, %(id_1_407)s::VARCHAR, %(id_1_408)s::VARCHAR, %(id_1_409)s::VARCHAR, %(id_1_410)s::VARCHAR, %(id_1_411)s::VARCHAR, %(id_1_412)s::VARCHAR, %(id_1_413)s::VARCHAR, %(id_1_414)s::VARCHAR, %(id_1_415)s::VARCHAR, %(id_1_416)s::VARCHAR, %(id_1_417)s::VARCHAR, %(id_1_418)s::VARCHAR, %(id_1_419)s::VARCHAR, %(id_1_420)s::VARCHAR, %(id_1_421)s::VARCHAR, %(id_1_422)s::VARCHAR, %(id_1_423)s::VARCHAR, %(id_1_424)s::VARCHAR, %(id_1_425)s::VARCHAR, %(id_1_426)s::VARCHAR, %(id_1_427)s::VARCHAR, %(id_1_428)s::VARCHAR, %(id_1_429)s::VARCHAR, %(id_1_430)s::VARCHAR, %(id_1_431)s::VARCHAR, %(id_1_432)s::VARCHAR, %(id_1_433)s::VARCHAR, %(id_1_434)s::VARCHAR, %(id_1_435)s::VARCHAR, %(id_1_436)s::VARCHAR, %(id_1_437)s::VARCHAR, %(id_1_438)s::VARCHAR, %(id_1_439)s::VARCHAR, %(id_1_440)s::VARCHAR, %(id_1_441)s::VARCHAR, %(id_1_442)s::VARCHAR, %(id_1_443)s::VARCHAR, %(id_1_444)s::VARCHAR, %(id_1_445)s::VARCHAR, %(id_1_446)s::VARCHAR, %(id_1_447)s::VARCHAR, %(id_1_448)s::VARCHAR, %(id_1_449)s::VARCHAR, %(id_1_450)s::VARCHAR, %(id_1_451)s::VARCHAR, %(id_1_452)s::VARCHAR, %(id_1_453)s::VARCHAR, %(id_1_454)s::VARCHAR, %(id_1_455)s::VARCHAR, %(id_1_456)s::VARCHAR, %(id_1_457)s::VARCHAR, %(id_1_458)s::VARCHAR, %(id_1_459)s::VARCHAR, %(id_1_460)s::VARCHAR, %(id_1_461)s::VARCHAR, %(id_1_462)s::VARCHAR, %(id_1_463)s::VARCHAR, %(id_1_464)s::VARCHAR, %(id_1_465)s::VARCHAR, %(id_1_466)s::VARCHAR, %(id_1_467)s::VARCHAR, %(id_1_468)s::VARCHAR, %(id_1_469)s::VARCHAR, %(id_1_470)s::VARCHAR, %(id_1_471)s::VARCHAR, %(id_1_472)s::VARCHAR, %(id_1_473)s::VARCHAR, %(id_1_474)s::VARCHAR, %(id_1_475)s::VARCHAR, %(id_1_476)s::VARCHAR, %(id_1_477)s::VARCHAR, %(id_1_478)s::VARCHAR, %(id_1_479)s::VARCHAR, %(id_1_480)s::VARCHAR, %(id_1_481)s::VARCHAR, %(id_1_482)s::VARCHAR, %(id_1_483)s::VARCHAR, %(id_1_484)s::VARCHAR, %(id_1_485)s::VARCHAR, %(id_1_486)s::VARCHAR, %(id_1_487)s::VARCHAR, %(id_1_488)s::VARCHAR, %(id_1_489)s::VARCHAR, %(id_1_490)s::VARCHAR, %(id_1_491)s::VARCHAR, %(id_1_492)s::VARCHAR, %(id_1_493)s::VARCHAR, %(id_1_494)s::VARCHAR, %(id_1_495)s::VARCHAR, %(id_1_496)s::VARCHAR, %(id_1_497)s::VARCHAR, %(id_1_498)s::VARCHAR, %(id_1_499)s::VARCHAR, %(id_1_500)s::VARCHAR)",
+        "SELECT players.id, players.display_name \nFROM players \nWHERE players.id IN (%(id_1_1)s::VARCHAR, %(id_1_2)s::VARCHAR)"
+      ],
+      "expected_response_sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b",
+      "actual_response_sha256s": [
+        "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b"
+      ],
+      "state_after": {
+        "sha256": "5ae50b54c881d9b75db897b87cf39a9e9b4da17eeb81d0517b5c4c5e8a00c80e",
+        "representation": "full_rows_per_table",
+        "tables": {
+          "audit": {
+            "file": "workloads/06-501-0/state/after/audit.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "game_tickets": {
+            "file": "workloads/06-501-0/state/after/game_tickets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "items": {
+            "file": "workloads/06-501-0/state/after/items.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "ledger": {
+            "file": "workloads/06-501-0/state/after/ledger.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "listings": {
+            "file": "workloads/06-501-0/state/after/listings.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "loadouts": {
+            "file": "workloads/06-501-0/state/after/loadouts.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "operations": {
+            "file": "workloads/06-501-0/state/after/operations.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "players": {
+            "file": "workloads/06-501-0/state/after/players.json",
+            "sha256": "c0977828d90643d618c01cc3197ad720b32bfe47fc7966b978f83b2e57d21426",
+            "row_count": 504,
+            "representation": "full_rows"
+          },
+          "rate_buckets": {
+            "file": "workloads/06-501-0/state/after/rate_buckets.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "rewards": {
+            "file": "workloads/06-501-0/state/after/rewards.json",
+            "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "row_count": 0,
+            "representation": "full_rows"
+          },
+          "sessions": {
+            "file": "workloads/06-501-0/state/after/sessions.json",
+            "sha256": "c5e808f7cfb68bca9b65c73dce7ad88286c2ab875b618f2c5cffc2caf9c0d8b0",
+            "row_count": 2,
+            "representation": "full_rows"
+          },
+          "trades": {
+            "file": "workloads/06-501-0/state/after/trades.json",
+            "sha256": "06a4b2bab54c15757bee25dc0d32fe0f097a5d9a46715779ace39d5ab4a5bfdb",
+            "row_count": 502,
+            "representation": "full_rows"
+          }
+        }
+      },
+      "read_only": true,
+      "median_ms": 65.03265,
+      "p95_ms": 157.8235,
+      "query_counts": [
+        5
+      ]
+    }
+  ],
+  "completed": true,
+  "retention": {
+    "responses": "all distinct raw and canonical received bodies; hashes for every warm-up/timed response",
+    "state": "full before/after rows for every authoritative ORM table; per-table and aggregate SHA256",
+    "credentials": "fictional fixture accounts; unusable password markers and SQL session token hashes only; no bearer headers"
+  },
+  "canonicalization": {
+    "json": "UTF-8 json.dumps(sort_keys=True,separators=(comma,colon),allow_nan=False), ensure_ascii=True, no newline",
+    "response": "sort top-level trades by ID; preserve all nested arrays",
+    "state": "parse PostgreSQL to_jsonb rows; sort each table by canonical JSON bytes; aggregate sorted-key table-to-rows object"
+  },
+  "postgresql": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
+  "final_source": {
+    "commit": "8070436f53dd98e9529e8c21ea7b0f7e3ecb6daf",
+    "backend_tree": "4ef756639c2e90037bce79a30e2867aebcc798a7",
+    "backend_dirty": "",
+    "backend_files": {
+      "backend/app.py": "9f94a55f1b19858eec3ac54036601b5c26a330749454a6cb89650d51e298f020",
+      "backend/bridge_fixture.py": "00548df28d2ad6a8fdca9eeaed34af39e30bebbb205fb9b69b2d7112434b29db",
+      "backend/migrate.py": "0f06597968c1e0de8461083448306496f4cc53e6a0f3d94dbc0f1b0c003f1d58",
+      "backend/models.py": "5fa4e0ac4157e4ad883d4c2bf1df06d915a395c5303c063a1004aaabd071e09a",
+      "backend/pyproject.toml": "9fd253aaaa3d39616eeb076d991cd2836c4cddcc8f56d72f31776cd134ab0190",
+      "backend/simulate.py": "218299e27743c58eac64f2d5820f3320945321d3d58bdd2caee5d195c536afa2",
+      "backend/uv.lock": "c66ef08d0ef36424da51008f59e3905f544d15dbd602ed6e204c588b4ca93db5",
+      "backend/config/economy.json": "8d85944aff0a6531b8a022350cbe0562295573aff5f3bd96e474e06f192aec7a",
+      "backend/config/simulation-baseline.json": "0a7965dd37a68fd2960d6b6912dffb635fcb26ffa6f251b92a7872c688755a16",
+      "backend/migrations/001_integrity.sql": "83189d1d06cbec62db325dbcf376476bc3aa7c0984d7439bb8048360ff737392",
+      "backend/migrations/002_game_tickets.sql": "c063f4376339b013fc79cda3e6f7782c61654d51fe6e479c658f2e30a1eddd7e",
+      "backend/migrations/003_loadouts.sql": "cc8acafba73b07889b25f2b9ee594cd09094d0ff8fd34d64767e6fcde62ee017",
+      "backend/migrations/004_market_index.sql": "cc51bd7647a6bd6abb272efd9564e089c0cc3d7afa0e76586503b3225535a5af",
+      "backend/tests/test_economy.py": "d3ada3e8590fb30a5a5e812525ccaea4be3778af50903eb2d02de41e201d528a",
+      "backend/tests/test_trade_reads.py": "7106ccbbf657058087ed4b717143cdcea760513d8a513432b3445a2131a69eb1"
+    }
+  },
+  "database_dropped": true
+}

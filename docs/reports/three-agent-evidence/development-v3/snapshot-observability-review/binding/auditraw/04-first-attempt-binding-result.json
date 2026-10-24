@@ -1,0 +1,75 @@
+{
+  "started_utc": "2026-10-23T01:12:43.335635+00:00",
+  "completed_utc": "2026-10-23T01:12:59.649419+00:00",
+  "status": "fail",
+  "checks": 830,
+  "passed": 829,
+  "failed": 1,
+  "shipping_hash_match_counts": {
+    "baseline": {
+      "files": 124,
+      "raw_git_blob": 21,
+      "pure_lf_to_crlf_only": 103,
+      "unexplained": 0
+    },
+    "candidate": {
+      "files": 125,
+      "raw_git_blob": 21,
+      "pure_lf_to_crlf_only": 104,
+      "unexplained": 0
+    }
+  },
+  "unique_git_blobs_read": 126,
+  "unique_git_blob_bytes": 9096541,
+  "runtime_changed_paths": [
+    "scripts/network/ack_snapshot_diagnostics.gd",
+    "scripts/network/movement_prediction.gd"
+  ],
+  "mapping": {
+    "sample-M": "baseline",
+    "sample-T": "candidate"
+  },
+  "verified_git_sources": {
+    "closure": "37924d1531029b7429ee9289a266a497388001b4",
+    "original_commitments": "d5c738d367f3ba80f3cfc679e104a009d0a72183",
+    "harness": "b4b3db044fc762fbb5c9eb69da8713b316fdb496",
+    "shipping": "0fbce120d8c17db58596d280f7d8401ab2aa0937",
+    "v2": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd",
+    "candidate_and_shipping_scripts_tree": "3111af5423d229b9b04b958de9588c4ab537c1ee"
+  },
+  "checksums_scope": {
+    "original_checked": [
+      "README.md",
+      "blind-traces.zip",
+      "publication-audit.json",
+      "sample-M.json",
+      "sample-T.json"
+    ],
+    "closure_checked": [
+      "README.md",
+      "blind-traces.zip",
+      "controller/capture.json",
+      "controller/mapping.json",
+      "controller/release-receipt.json",
+      "publication-audit.json",
+      "sample-M.json",
+      "sample-T.json"
+    ],
+    "original_not_content_read": [
+      ".gitattributes",
+      "audit.json",
+      "sample-M.log",
+      "sample-T.log",
+      "source-receipt.json"
+    ],
+    "closure_not_content_read": [
+      ".gitattributes",
+      "audit.json",
+      "controller/README.md",
+      "sample-M.log",
+      "sample-T.log",
+      "source-receipt.json"
+    ]
+  },
+  "historical_execution_status": "Hash-bound author-run attestation; not authenticated process attestation; no rerun, engine/cache inspection or native execution"
+}

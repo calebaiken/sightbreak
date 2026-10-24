@@ -1,0 +1,120 @@
+{
+  "approval": false,
+  "artifact_count_excluding_ledger_receipt": 14,
+  "artifact_hashes": [
+    {
+      "bytes": 4206,
+      "path": "ANCILLARY_CONTROLS.json",
+      "sha256": "85054fc1da96c9404918804c00f64cf8dc4d4022af190f9831a68ab8fe2d8922"
+    },
+    {
+      "bytes": 1624,
+      "path": "AUDIT_SUMMARY.json",
+      "sha256": "aceb1119015f67801ef2010ea61e3fa1ac0d9f4474adad8811e8c8dc68976e8e"
+    },
+    {
+      "bytes": 24418,
+      "path": "CASE_JUDGMENTS.json",
+      "sha256": "6a6c15e1d83c632b5c31415a3d6c1e1dfd061abca41e1bc7bd024205ed4fa712"
+    },
+    {
+      "bytes": 13913,
+      "path": "REPORT.md",
+      "sha256": "b2243cfd62ab8fe2b79ad39d4f3a9defc44b140c6ffe2648777346f681a7dc8b"
+    },
+    {
+      "bytes": 33201,
+      "path": "RETAINED_ATTEMPTS.json",
+      "sha256": "c9ad362f211eeee3e771b0071420f0af24da28d12fdd709d584ad333317c3c97"
+    },
+    {
+      "bytes": 34336,
+      "path": "SOURCE_HASHES.json",
+      "sha256": "75c65ae11c5ecbec4be14dcf2b8e02b4d3e1d080ae9b77a45e6a816fd8d31f0f"
+    },
+    {
+      "bytes": 23292,
+      "path": "SOURCE_HASHES.sha256",
+      "sha256": "4180f2f9e5e2bdd12595f09efd52e7beae565c18f822b9d2ef89732f0239032f"
+    },
+    {
+      "bytes": 501,
+      "path": "audit-tooling-notes.json",
+      "sha256": "6b292f5f02cd1319f48915fd7d7378d582b94742a354c90ccd73e1b693a379a7"
+    },
+    {
+      "bytes": 375,
+      "path": "execution-status.json",
+      "sha256": "b388d62c95a83d1e8a050bd2ffe5692318227a5efc86d4861eb11d95f00333c8"
+    },
+    {
+      "bytes": 21864,
+      "path": "freeze_assessment.py",
+      "sha256": "2a7be82b9e4af89fd3d3cc2e89c54566c52fe4e98697ae1bed6002788c6ae486"
+    },
+    {
+      "bytes": 610,
+      "path": "prior-audit-attempt.json",
+      "sha256": "74499252fcda0ec60fd55e7d74adbbd7b74c4763654ab4d0a24cb86bae405669"
+    },
+    {
+      "bytes": 26160,
+      "path": "verifier.py",
+      "sha256": "09d20ecda001308a1932463a2a736cdce080b4fcdfc1911317a8a990ce49ab9e"
+    },
+    {
+      "bytes": 269251,
+      "path": "verifier.raw.json",
+      "sha256": "c80f4d38805e289655e1e6bf043b843a4f4e7ada2ab10d57629b83c188254b61"
+    },
+    {
+      "bytes": 0,
+      "path": "verifier.stderr.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "artifact_ledger": "SHA256SUMS",
+  "artifact_ledger_sha256": "0d070379f75798f9315f0cba6681c734bb8aae3fbafa7cf80d2474a5f802867e",
+  "comparison": {
+    "broader_reliability_source_safety_release": {
+      "approval": false,
+      "decision": "uncertain"
+    },
+    "economic_integrity": {
+      "decision": "tie",
+      "scope": "One settlement/item transfer per measured purchase; no later economic mutation in either retained group."
+    },
+    "original_receipt_recovery": {
+      "decision": "winner",
+      "sample": "sample-8e3f9bc622",
+      "scope": "Retained original-client kill after commit/before delivery at prices 400, 401, 10000000 only; not a contemporaneous randomized experiment."
+    },
+    "per_price": [
+      {
+        "broader_reliability": "uncertain",
+        "economic_integrity": "tie",
+        "original_receipt_recovery_winner": "sample-8e3f9bc622",
+        "price": 400
+      },
+      {
+        "broader_reliability": "uncertain",
+        "economic_integrity": "tie",
+        "original_receipt_recovery_winner": "sample-8e3f9bc622",
+        "price": 401
+      },
+      {
+        "broader_reliability": "uncertain",
+        "economic_integrity": "tie",
+        "original_receipt_recovery_winner": "sample-8e3f9bc622",
+        "price": 10000000
+      }
+    ]
+  },
+  "frozen_utc": "2026-10-24T08:50:59.547431+00:00",
+  "identity_key_requested_or_read": false,
+  "input_root": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-review-20261022T205225Z\\NEUTRAL",
+  "limits": "Unsigned local timestamp/hash receipt; tamper-evident, not hardware immutability or independent historical capture authentication. No native/DB/network/source/key access.",
+  "manifest_sha256": "746561c7caf5a57d53fcf52fca2d018cca4b044218ac6fa4190362eea7502021",
+  "method": "Exclusive creation, pinned ledger, local read-only final files; no later edits by auditor.",
+  "status": "FROZEN"
+}

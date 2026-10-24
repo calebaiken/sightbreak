@@ -1,0 +1,99 @@
+{
+  "controls": [
+    {
+      "checks": [
+        {
+          "check": "tally_and_exit_agree_in_records",
+          "consistent": true
+        }
+      ],
+      "control": "control-0e86e53e33",
+      "judgment": "retained ancillary failure; not a between-sample comparator",
+      "recorded": {
+        "calibrated": false,
+        "calibration": null,
+        "provenance_limit": "Recorded oracle outcome only. Executed probe source/hash withheld. The external DNS calibration is a different condition; it does not replace the original port-9 failure. Unmatched ancillary control, not a between-sample experiment.",
+        "returncode": 1,
+        "tally": "NATIVE_REAL_ECONOMY_QA 36/37 passed"
+      },
+      "stderr": "ERROR: an unreachable server leaves the held balance marked unconfirmed\r\r\n   at: push_error (core/variant/variant_utility.cpp:1023)\r\r\n   GDScript backtrace (most recent call first):\r\r\n       [0] check ([resource-path-withheld])\r\r\n       [1] account_states_against_the_real_server ([resource-path-withheld])\r\r\n       [2] _refresh ([resource-path-withheld])\r\r\n       [3] request ([resource-path-withheld])\r\r\n",
+      "stdout": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\r\r\n\r\r\nNATIVE_REAL_ECONOMY_QA 36/37 passed (real case reveal, marketplace, trade, account states, rejection, 401, replay, sheet; fictional isolated balances)\r\r\n",
+      "timeline": [
+        {
+          "command": [
+            "[local-path-withheld]",
+            "--headless",
+            "--path",
+            "[local-path-withheld]",
+            "--script",
+            "[local-path-withheld]"
+          ],
+          "event": "native_started",
+          "harness_pid": 16820,
+          "monotonic_ns": 253641093000000,
+          "other_native_pids": [],
+          "phase": "native-economy",
+          "pid": 18288,
+          "wall_ns": 1792715884753996500
+        },
+        {
+          "event": "native_finished",
+          "harness_pid": 16820,
+          "monotonic_ns": 253659531000000,
+          "phase": "native-economy",
+          "pid": 18288,
+          "returncode": 1,
+          "wall_ns": 1792715903189644000
+        }
+      ]
+    },
+    {
+      "checks": [
+        {
+          "check": "tally_and_exit_agree_in_records",
+          "consistent": true
+        }
+      ],
+      "control": "control-962ec4ee70",
+      "judgment": "unmatched altered condition; no replacement of original failure",
+      "recorded": {
+        "calibrated": true,
+        "calibration": "Only port-9 URL replaced by reserved .invalid DNS name",
+        "provenance_limit": "Recorded oracle outcome only. Executed probe source/hash withheld. The external DNS calibration is a different condition; it does not replace the original port-9 failure. Unmatched ancillary control, not a between-sample experiment.",
+        "returncode": 0,
+        "tally": "NATIVE_REAL_ECONOMY_QA 37/37 passed"
+      },
+      "stderr": "",
+      "stdout": "Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org\r\r\n\r\r\nNATIVE_REAL_ECONOMY_QA 37/37 passed (real case reveal, marketplace, trade, account states, rejection, 401, replay, sheet; fictional isolated balances)\r\r\n",
+      "timeline": [
+        {
+          "command": [
+            "[local-path-withheld]",
+            "--headless",
+            "--path",
+            "[local-path-withheld]",
+            "--script",
+            "[local-path-withheld]"
+          ],
+          "event": "native_started",
+          "harness_pid": 16820,
+          "monotonic_ns": 253659796000000,
+          "other_native_pids": [],
+          "phase": "native-economy",
+          "pid": 7636,
+          "wall_ns": 1792715903465256000
+        },
+        {
+          "event": "native_finished",
+          "harness_pid": 16820,
+          "monotonic_ns": 253666015000000,
+          "phase": "native-economy",
+          "pid": 7636,
+          "returncode": 0,
+          "wall_ns": 1792715909687789000
+        }
+      ]
+    }
+  ],
+  "judgment": "Unchanged port-9 oracle 36/37, exit 1 remains failed. Altered reserved-DNS oracle 37/37, exit 0 is a different unmatched condition; cannot replace original failure or compare samples."
+}

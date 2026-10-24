@@ -1,0 +1,568 @@
+{
+  "cases": [
+    {
+      "actual_recorded_exits": [
+        {
+          "exit": 1,
+          "phase": "send",
+          "pid": 22304
+        },
+        {
+          "exit": 0,
+          "phase": "recovery",
+          "pid": 24420
+        },
+        {
+          "exit": 0,
+          "phase": "second-restart",
+          "pid": 22552
+        }
+      ],
+      "case": "sample-8e3f9bc622/trial-1",
+      "consistency_checks": 135,
+      "economic_judgment": "One original commit, exact fee accounting and unique item; no later economic mutation.",
+      "evidence": {
+        "buyer_after": 1600,
+        "buyer_before": 2000,
+        "capture_end_utc": "2026-10-23T00:37:48.150115+00:00",
+        "capture_start_utc": "2026-10-23T00:37:41.048658+00:00",
+        "commit_before_kill_margin_ns": 4876900,
+        "fee_observed": 12,
+        "idempotency_key": "5b738b74-378c-4b9e-a419-73572c984d86",
+        "identities": {
+          "item": "ccd04d87-a385-4cea-8a3f-7957969dca9b",
+          "listing": "b63cfa1d-10a8-4200-85e9-14498e68fc72",
+          "owner": "f6d4a418-cc68-4701-87af-199cdfeea3d8",
+          "path": "/market/b63cfa1d-10a8-4200-85e9-14498e68fc72/buy",
+          "seller": "111bcc66-337b-4a0e-8f4f-29278ddda77d",
+          "url": "http://127.0.0.1:58017",
+          "username": "receipt_b73e60a955f8f952"
+        },
+        "operation_id": "f6d4a418-cc68-4701-87af-199cdfeea3d8:buy:b63cfa1d-10a8-4200-85e9-14498e68fc72:5b738b74-378c-4b9e-a419-73572c984d86",
+        "ordering_indexes": {
+          "01-before": 0,
+          "02-committed-before-kill": 20,
+          "03-after-kill": 24,
+          "04-after-recovery": 58,
+          "05-after-second-restart": 76,
+          "held": 19,
+          "held_discarded": 25,
+          "kill_confirmed": 23,
+          "kill_requested": 21,
+          "killed_exit": 22,
+          "request": 17,
+          "upstream_success": 18
+        },
+        "request_hash": "80aac389a7cd89d019fa9691a030a836142f8b9be7948a5e2198e41a36f14bc6",
+        "seller_after": 2388,
+        "seller_before": 2000,
+        "seller_net": 388,
+        "snapshot_economic_sha256": [
+          "1d2b70d75332556b1768e7f3531fe26aacae4c49d82a4b1aed11e03ec20f6349",
+          "3ee9a04399542fb7e1c3d273777ea55ecc6f58838a21ae559e601a8494673a8d",
+          "3ee9a04399542fb7e1c3d273777ea55ecc6f58838a21ae559e601a8494673a8d",
+          "3ee9a04399542fb7e1c3d273777ea55ecc6f58838a21ae559e601a8494673a8d",
+          "3ee9a04399542fb7e1c3d273777ea55ecc6f58838a21ae559e601a8494673a8d"
+        ],
+        "timeline_record_count": 77
+      },
+      "inconsistent_checks": [],
+      "integrity_judgment": "Retained records internally consistent; unsigned capture only.",
+      "limits": [
+        "One trial at this price, not three repeats.",
+        "No kill of recovering process; third process is a no-pending no-op check.",
+        "Unsigned author/harness capture; no independent wire/OS authentication.",
+        "No competing owner/concurrency, actual malformed-success, low-price fee boundary, or power-loss campaign.",
+        "Probe-invoked retry observed; autonomous production recovery/source-binary binding not established."
+      ],
+      "price": 400,
+      "receipt_recovery_judgment": "Original receipt recovered in fresh process.",
+      "third_process_judgment": "Fresh session, no pending receipt or economic POST, economic state unchanged; not interrupted recovery.",
+      "uncertain_transaction_retention": {
+        "initial_vs_replay_raw_response_identical": false,
+        "journal_after_kill": true,
+        "journal_after_recovery": false,
+        "journal_after_third_process": false,
+        "journal_before_kill": true,
+        "original_receipt_retry_count": 1,
+        "user_visible_uncertainty": "Not established. Stored message says Transaction confirmed before initial response delivery; may be a future success template."
+      }
+    },
+    {
+      "actual_recorded_exits": [
+        {
+          "exit": 1,
+          "phase": "send",
+          "pid": 14060
+        },
+        {
+          "exit": 0,
+          "phase": "recovery",
+          "pid": 2368
+        },
+        {
+          "exit": 0,
+          "phase": "second-restart",
+          "pid": 21868
+        }
+      ],
+      "case": "sample-8e3f9bc622/trial-2",
+      "consistency_checks": 135,
+      "economic_judgment": "One original commit, exact fee accounting and unique item; no later economic mutation.",
+      "evidence": {
+        "buyer_after": 1600,
+        "buyer_before": 2001,
+        "capture_end_utc": "2026-10-23T00:37:56.045962+00:00",
+        "capture_start_utc": "2026-10-23T00:37:48.892566+00:00",
+        "commit_before_kill_margin_ns": 5613500,
+        "fee_observed": 12,
+        "idempotency_key": "507c37e7-7de4-499d-b03e-4b60d5d1e206",
+        "identities": {
+          "item": "c7f3d941-90fe-479c-b10c-dbc60bf83f81",
+          "listing": "60ddae4f-ea23-44df-b821-af2a951abc34",
+          "owner": "1a40efcb-9ab5-46b5-ac8c-88ebd7c2b9cf",
+          "path": "/market/60ddae4f-ea23-44df-b821-af2a951abc34/buy",
+          "seller": "c45c1fb7-33af-46dc-9080-ef32e0a98081",
+          "url": "http://127.0.0.1:58072",
+          "username": "receipt_a8fe2658982bd03b"
+        },
+        "operation_id": "1a40efcb-9ab5-46b5-ac8c-88ebd7c2b9cf:buy:60ddae4f-ea23-44df-b821-af2a951abc34:507c37e7-7de4-499d-b03e-4b60d5d1e206",
+        "ordering_indexes": {
+          "01-before": 0,
+          "02-committed-before-kill": 20,
+          "03-after-kill": 24,
+          "04-after-recovery": 58,
+          "05-after-second-restart": 76,
+          "held": 19,
+          "held_discarded": 25,
+          "kill_confirmed": 23,
+          "kill_requested": 21,
+          "killed_exit": 22,
+          "request": 17,
+          "upstream_success": 18
+        },
+        "request_hash": "c749521a7c851acbd26cb012475245cf14c339715f27e57d76cf48b045767170",
+        "seller_after": 2389,
+        "seller_before": 2000,
+        "seller_net": 389,
+        "snapshot_economic_sha256": [
+          "63a50c66636b63965abe5b4c7d9e25cdacaeb79cfcfa1526eccab3d15471afc1",
+          "b00820fab3386c12a54f01c31dc2037414d80b1c620e49cee4e3e590d228f6f1",
+          "b00820fab3386c12a54f01c31dc2037414d80b1c620e49cee4e3e590d228f6f1",
+          "b00820fab3386c12a54f01c31dc2037414d80b1c620e49cee4e3e590d228f6f1",
+          "b00820fab3386c12a54f01c31dc2037414d80b1c620e49cee4e3e590d228f6f1"
+        ],
+        "timeline_record_count": 77
+      },
+      "inconsistent_checks": [],
+      "integrity_judgment": "Retained records internally consistent; unsigned capture only.",
+      "limits": [
+        "One trial at this price, not three repeats.",
+        "No kill of recovering process; third process is a no-pending no-op check.",
+        "Unsigned author/harness capture; no independent wire/OS authentication.",
+        "No competing owner/concurrency, actual malformed-success, low-price fee boundary, or power-loss campaign.",
+        "Probe-invoked retry observed; autonomous production recovery/source-binary binding not established."
+      ],
+      "price": 401,
+      "receipt_recovery_judgment": "Original receipt recovered in fresh process.",
+      "third_process_judgment": "Fresh session, no pending receipt or economic POST, economic state unchanged; not interrupted recovery.",
+      "uncertain_transaction_retention": {
+        "initial_vs_replay_raw_response_identical": false,
+        "journal_after_kill": true,
+        "journal_after_recovery": false,
+        "journal_after_third_process": false,
+        "journal_before_kill": true,
+        "original_receipt_retry_count": 1,
+        "user_visible_uncertainty": "Not established. Stored message says Transaction confirmed before initial response delivery; may be a future success template."
+      }
+    },
+    {
+      "actual_recorded_exits": [
+        {
+          "exit": 1,
+          "phase": "send",
+          "pid": 16160
+        },
+        {
+          "exit": 0,
+          "phase": "recovery",
+          "pid": 19404
+        },
+        {
+          "exit": 0,
+          "phase": "second-restart",
+          "pid": 21184
+        }
+      ],
+      "case": "sample-8e3f9bc622/trial-3",
+      "consistency_checks": 135,
+      "economic_judgment": "One original commit, exact fee accounting and unique item; no later economic mutation.",
+      "evidence": {
+        "buyer_after": 1600,
+        "buyer_before": 10001600,
+        "capture_end_utc": "2026-10-23T00:38:03.911186+00:00",
+        "capture_start_utc": "2026-10-23T00:37:56.861925+00:00",
+        "commit_before_kill_margin_ns": 5503900,
+        "fee_observed": 300000,
+        "idempotency_key": "3ea73f56-634f-4436-be82-2eaa8075e58c",
+        "identities": {
+          "item": "c5fef93f-d11d-4740-87b6-aff42a9be6c1",
+          "listing": "e03d5af6-82e6-4255-8216-5db58bac9217",
+          "owner": "f87d72ae-2943-408e-82e8-7cadd001a0d6",
+          "path": "/market/e03d5af6-82e6-4255-8216-5db58bac9217/buy",
+          "seller": "a76f7990-cb6a-4075-9aaf-443a2bbdccdc",
+          "url": "http://127.0.0.1:58122",
+          "username": "receipt_3719ded5c9a623b4"
+        },
+        "operation_id": "f87d72ae-2943-408e-82e8-7cadd001a0d6:buy:e03d5af6-82e6-4255-8216-5db58bac9217:3ea73f56-634f-4436-be82-2eaa8075e58c",
+        "ordering_indexes": {
+          "01-before": 0,
+          "02-committed-before-kill": 20,
+          "03-after-kill": 24,
+          "04-after-recovery": 58,
+          "05-after-second-restart": 76,
+          "held": 19,
+          "held_discarded": 25,
+          "kill_confirmed": 23,
+          "kill_requested": 21,
+          "killed_exit": 22,
+          "request": 17,
+          "upstream_success": 18
+        },
+        "request_hash": "80896a1c6f18070938f0c67474265087467d33c36ef7d565b5c93b1f9794c9ab",
+        "seller_after": 9702000,
+        "seller_before": 2000,
+        "seller_net": 9700000,
+        "snapshot_economic_sha256": [
+          "fe17c84d412b54b73ff2b50fd81aeaf36f532d68855581a7e2cf51404d42c312",
+          "aca1167b497b96df2c322c90b46dbba913478faef36aca216c1520e7ba0b0a9f",
+          "aca1167b497b96df2c322c90b46dbba913478faef36aca216c1520e7ba0b0a9f",
+          "aca1167b497b96df2c322c90b46dbba913478faef36aca216c1520e7ba0b0a9f",
+          "aca1167b497b96df2c322c90b46dbba913478faef36aca216c1520e7ba0b0a9f"
+        ],
+        "timeline_record_count": 77
+      },
+      "inconsistent_checks": [],
+      "integrity_judgment": "Retained records internally consistent; unsigned capture only.",
+      "limits": [
+        "One trial at this price, not three repeats.",
+        "No kill of recovering process; third process is a no-pending no-op check.",
+        "Unsigned author/harness capture; no independent wire/OS authentication.",
+        "No competing owner/concurrency, actual malformed-success, low-price fee boundary, or power-loss campaign.",
+        "Probe-invoked retry observed; autonomous production recovery/source-binary binding not established."
+      ],
+      "price": 10000000,
+      "receipt_recovery_judgment": "Original receipt recovered in fresh process.",
+      "third_process_judgment": "Fresh session, no pending receipt or economic POST, economic state unchanged; not interrupted recovery.",
+      "uncertain_transaction_retention": {
+        "initial_vs_replay_raw_response_identical": false,
+        "journal_after_kill": true,
+        "journal_after_recovery": false,
+        "journal_after_third_process": false,
+        "journal_before_kill": true,
+        "original_receipt_retry_count": 1,
+        "user_visible_uncertainty": "Not established. Stored message says Transaction confirmed before initial response delivery; may be a future success template."
+      }
+    },
+    {
+      "actual_recorded_exits": [
+        {
+          "exit": 1,
+          "phase": "send",
+          "pid": 11516
+        },
+        {
+          "exit": 0,
+          "phase": "recovery",
+          "pid": 16844
+        },
+        {
+          "exit": 0,
+          "phase": "second-restart",
+          "pid": 14204
+        }
+      ],
+      "case": "sample-ccaee51fd6/trial-1",
+      "consistency_checks": 127,
+      "economic_judgment": "One original commit, exact fee accounting and unique item; no later economic mutation.",
+      "evidence": {
+        "buyer_after": 1600,
+        "buyer_before": 2000,
+        "capture_end_utc": "2026-10-19T20:15:05.571177+00:00",
+        "capture_start_utc": "2026-10-19T20:15:00.613564+00:00",
+        "commit_before_kill_margin_ns": 2325500,
+        "fee_observed": 12,
+        "idempotency_key": "dcc30c2f-0ada-4814-82c9-36afb3e2fdaa",
+        "identities": {
+          "item": "504d51d6-a33a-4dce-b1f2-c473d941a8b7",
+          "listing": "dcbabbfa-1c9f-42ef-a7e7-e0bff7812c5b",
+          "owner": "b045224d-5943-4050-9476-14ec12eb313b",
+          "path": "/market/dcbabbfa-1c9f-42ef-a7e7-e0bff7812c5b/buy",
+          "seller": "48655e44-187a-4c43-8497-4bdd2d002462",
+          "url": "http://127.0.0.1:60031",
+          "username": "receipt_eca751dcd3c50df8"
+        },
+        "operation_id": "b045224d-5943-4050-9476-14ec12eb313b:buy:dcbabbfa-1c9f-42ef-a7e7-e0bff7812c5b:dcc30c2f-0ada-4814-82c9-36afb3e2fdaa",
+        "ordering_indexes": {
+          "01-before": 0,
+          "02-committed-before-kill": 20,
+          "03-after-kill": 24,
+          "04-after-recovery": 43,
+          "05-after-second-restart": 61,
+          "held": 19,
+          "held_discarded": 25,
+          "kill_confirmed": 23,
+          "kill_requested": 21,
+          "killed_exit": 22,
+          "request": 17,
+          "upstream_success": 18
+        },
+        "request_hash": "701d171c6395bfd6f5de7a84a0f8febbca5ee009d4a3e18263fa1525d6d3293a",
+        "seller_after": 2388,
+        "seller_before": 2000,
+        "seller_net": 388,
+        "snapshot_economic_sha256": [
+          "cd7c0fe72eb52aa1aab4e2cbd1a318d75c987b4036a23beddcd97ef567d39c8c",
+          "ebbb40490584e91529fba57d680bba6c5ae36bc2c3ea4bbb3db985bc403a6844",
+          "ebbb40490584e91529fba57d680bba6c5ae36bc2c3ea4bbb3db985bc403a6844",
+          "ebbb40490584e91529fba57d680bba6c5ae36bc2c3ea4bbb3db985bc403a6844",
+          "ebbb40490584e91529fba57d680bba6c5ae36bc2c3ea4bbb3db985bc403a6844"
+        ],
+        "timeline_record_count": 62
+      },
+      "inconsistent_checks": [],
+      "integrity_judgment": "Retained records internally consistent; unsigned capture only.",
+      "limits": [
+        "One trial at this price, not three repeats.",
+        "No kill of recovering process; third process is a no-pending no-op check.",
+        "Unsigned author/harness capture; no independent wire/OS authentication.",
+        "No competing owner/concurrency, actual malformed-success, low-price fee boundary, or power-loss campaign.",
+        "Probe-invoked retry observed; autonomous production recovery/source-binary binding not established."
+      ],
+      "price": 400,
+      "receipt_recovery_judgment": "Original-receipt recovery failed in retained scenario; account/inventory refresh only.",
+      "third_process_judgment": "Fresh session, no pending receipt or economic POST, economic state unchanged; not interrupted recovery.",
+      "uncertain_transaction_retention": {
+        "initial_vs_replay_raw_response_identical": null,
+        "journal_after_kill": false,
+        "journal_after_recovery": false,
+        "journal_after_third_process": false,
+        "journal_before_kill": false,
+        "original_receipt_retry_count": 0,
+        "user_visible_uncertainty": "Not established; pending receipt absent."
+      }
+    },
+    {
+      "actual_recorded_exits": [
+        {
+          "exit": 1,
+          "phase": "send",
+          "pid": 22392
+        },
+        {
+          "exit": 0,
+          "phase": "recovery",
+          "pid": 8528
+        },
+        {
+          "exit": 0,
+          "phase": "second-restart",
+          "pid": 23872
+        }
+      ],
+      "case": "sample-ccaee51fd6/trial-2",
+      "consistency_checks": 127,
+      "economic_judgment": "One original commit, exact fee accounting and unique item; no later economic mutation.",
+      "evidence": {
+        "buyer_after": 1600,
+        "buyer_before": 2001,
+        "capture_end_utc": "2026-10-19T20:15:10.244949+00:00",
+        "capture_start_utc": "2026-10-19T20:15:05.904758+00:00",
+        "commit_before_kill_margin_ns": 1973700,
+        "fee_observed": 12,
+        "idempotency_key": "2bd715ad-1347-43ae-80da-45a520755248",
+        "identities": {
+          "item": "3b88f033-4e0a-4ca6-801b-8db2904c6481",
+          "listing": "89f8d7cc-7889-453c-be4f-a4e1b7f0fe70",
+          "owner": "e2bb1ed2-fb2c-4a7a-abbc-f125dd0dffed",
+          "path": "/market/89f8d7cc-7889-453c-be4f-a4e1b7f0fe70/buy",
+          "seller": "dedce819-a174-4824-9cc9-656ec8dc1864",
+          "url": "http://127.0.0.1:60072",
+          "username": "receipt_13359edb6a3c337c"
+        },
+        "operation_id": "e2bb1ed2-fb2c-4a7a-abbc-f125dd0dffed:buy:89f8d7cc-7889-453c-be4f-a4e1b7f0fe70:2bd715ad-1347-43ae-80da-45a520755248",
+        "ordering_indexes": {
+          "01-before": 0,
+          "02-committed-before-kill": 20,
+          "03-after-kill": 24,
+          "04-after-recovery": 43,
+          "05-after-second-restart": 61,
+          "held": 19,
+          "held_discarded": 25,
+          "kill_confirmed": 23,
+          "kill_requested": 21,
+          "killed_exit": 22,
+          "request": 17,
+          "upstream_success": 18
+        },
+        "request_hash": "3bbb70ae187787eba7855128a7e67948a7e7af315f6b61191ec3bf90dd2978a8",
+        "seller_after": 2389,
+        "seller_before": 2000,
+        "seller_net": 389,
+        "snapshot_economic_sha256": [
+          "f63cd28f50e2bb7396df16b530c98933182c4773bf749d75acd159faa81e8039",
+          "983f7811221593baaea2bf24de4d5c9be02d65ca258a2c8e0f10de8b69f5f74e",
+          "983f7811221593baaea2bf24de4d5c9be02d65ca258a2c8e0f10de8b69f5f74e",
+          "983f7811221593baaea2bf24de4d5c9be02d65ca258a2c8e0f10de8b69f5f74e",
+          "983f7811221593baaea2bf24de4d5c9be02d65ca258a2c8e0f10de8b69f5f74e"
+        ],
+        "timeline_record_count": 62
+      },
+      "inconsistent_checks": [],
+      "integrity_judgment": "Retained records internally consistent; unsigned capture only.",
+      "limits": [
+        "One trial at this price, not three repeats.",
+        "No kill of recovering process; third process is a no-pending no-op check.",
+        "Unsigned author/harness capture; no independent wire/OS authentication.",
+        "No competing owner/concurrency, actual malformed-success, low-price fee boundary, or power-loss campaign.",
+        "Probe-invoked retry observed; autonomous production recovery/source-binary binding not established."
+      ],
+      "price": 401,
+      "receipt_recovery_judgment": "Original-receipt recovery failed in retained scenario; account/inventory refresh only.",
+      "third_process_judgment": "Fresh session, no pending receipt or economic POST, economic state unchanged; not interrupted recovery.",
+      "uncertain_transaction_retention": {
+        "initial_vs_replay_raw_response_identical": null,
+        "journal_after_kill": false,
+        "journal_after_recovery": false,
+        "journal_after_third_process": false,
+        "journal_before_kill": false,
+        "original_receipt_retry_count": 0,
+        "user_visible_uncertainty": "Not established; pending receipt absent."
+      }
+    },
+    {
+      "actual_recorded_exits": [
+        {
+          "exit": 1,
+          "phase": "send",
+          "pid": 21492
+        },
+        {
+          "exit": 0,
+          "phase": "recovery",
+          "pid": 21856
+        },
+        {
+          "exit": 0,
+          "phase": "second-restart",
+          "pid": 20904
+        }
+      ],
+      "case": "sample-ccaee51fd6/trial-3",
+      "consistency_checks": 127,
+      "economic_judgment": "One original commit, exact fee accounting and unique item; no later economic mutation.",
+      "evidence": {
+        "buyer_after": 1600,
+        "buyer_before": 10001600,
+        "capture_end_utc": "2026-10-19T20:15:15.055430+00:00",
+        "capture_start_utc": "2026-10-19T20:15:11.120838+00:00",
+        "commit_before_kill_margin_ns": 2028800,
+        "fee_observed": 300000,
+        "idempotency_key": "5790bbdf-d686-4496-8b98-43008b31abaf",
+        "identities": {
+          "item": "84c005fd-f073-42b2-835b-1973c91f70f8",
+          "listing": "d7b85a0b-cf52-4b0e-83c6-62620ea0287b",
+          "owner": "cca6e34c-9e4e-4b57-be63-01a5a8c966b4",
+          "path": "/market/d7b85a0b-cf52-4b0e-83c6-62620ea0287b/buy",
+          "seller": "92bf2c1d-1b24-46f4-893b-f9160397c386",
+          "url": "http://127.0.0.1:60113",
+          "username": "receipt_a334070a92eb3ad0"
+        },
+        "operation_id": "cca6e34c-9e4e-4b57-be63-01a5a8c966b4:buy:d7b85a0b-cf52-4b0e-83c6-62620ea0287b:5790bbdf-d686-4496-8b98-43008b31abaf",
+        "ordering_indexes": {
+          "01-before": 0,
+          "02-committed-before-kill": 20,
+          "03-after-kill": 24,
+          "04-after-recovery": 43,
+          "05-after-second-restart": 61,
+          "held": 19,
+          "held_discarded": 25,
+          "kill_confirmed": 23,
+          "kill_requested": 21,
+          "killed_exit": 22,
+          "request": 17,
+          "upstream_success": 18
+        },
+        "request_hash": "4050e9169692cf054ab64fe3506aa649dc57d4ad9a298021f89bbc5603baf1ce",
+        "seller_after": 9702000,
+        "seller_before": 2000,
+        "seller_net": 9700000,
+        "snapshot_economic_sha256": [
+          "ed96f2078a7e98c82ede965c18ddb0c1e43982ef316ec4d11fb270f3c7a940f9",
+          "2057d94c58dd6eb3665bb56d157702a854517f4fb719ac38123e8e3a633dd8fa",
+          "2057d94c58dd6eb3665bb56d157702a854517f4fb719ac38123e8e3a633dd8fa",
+          "2057d94c58dd6eb3665bb56d157702a854517f4fb719ac38123e8e3a633dd8fa",
+          "2057d94c58dd6eb3665bb56d157702a854517f4fb719ac38123e8e3a633dd8fa"
+        ],
+        "timeline_record_count": 62
+      },
+      "inconsistent_checks": [],
+      "integrity_judgment": "Retained records internally consistent; unsigned capture only.",
+      "limits": [
+        "One trial at this price, not three repeats.",
+        "No kill of recovering process; third process is a no-pending no-op check.",
+        "Unsigned author/harness capture; no independent wire/OS authentication.",
+        "No competing owner/concurrency, actual malformed-success, low-price fee boundary, or power-loss campaign.",
+        "Probe-invoked retry observed; autonomous production recovery/source-binary binding not established."
+      ],
+      "price": 10000000,
+      "receipt_recovery_judgment": "Original-receipt recovery failed in retained scenario; account/inventory refresh only.",
+      "third_process_judgment": "Fresh session, no pending receipt or economic POST, economic state unchanged; not interrupted recovery.",
+      "uncertain_transaction_retention": {
+        "initial_vs_replay_raw_response_identical": null,
+        "journal_after_kill": false,
+        "journal_after_recovery": false,
+        "journal_after_third_process": false,
+        "journal_before_kill": false,
+        "original_receipt_retry_count": 0,
+        "user_visible_uncertainty": "Not established; pending receipt absent."
+      }
+    }
+  ],
+  "comparison": {
+    "broader_reliability_source_safety_release": {
+      "approval": false,
+      "decision": "uncertain"
+    },
+    "economic_integrity": {
+      "decision": "tie",
+      "scope": "One settlement/item transfer per measured purchase; no later economic mutation in either retained group."
+    },
+    "original_receipt_recovery": {
+      "decision": "winner",
+      "sample": "sample-8e3f9bc622",
+      "scope": "Retained original-client kill after commit/before delivery at prices 400, 401, 10000000 only; not a contemporaneous randomized experiment."
+    },
+    "per_price": [
+      {
+        "broader_reliability": "uncertain",
+        "economic_integrity": "tie",
+        "original_receipt_recovery_winner": "sample-8e3f9bc622",
+        "price": 400
+      },
+      {
+        "broader_reliability": "uncertain",
+        "economic_integrity": "tie",
+        "original_receipt_recovery_winner": "sample-8e3f9bc622",
+        "price": 401
+      },
+      {
+        "broader_reliability": "uncertain",
+        "economic_integrity": "tie",
+        "original_receipt_recovery_winner": "sample-8e3f9bc622",
+        "price": 10000000
+      }
+    ]
+  },
+  "manifest_sha256": "746561c7caf5a57d53fcf52fca2d018cca4b044218ac6fa4190362eea7502021"
+}

@@ -1,0 +1,279 @@
+--- before/scripts/matrix_process.py
++++ after/scripts/matrix_process.py
+@@ -2,9 +2,10 @@
+ """Own a matrix command's descendants before it can spawn any processes.
+ 
+ Windows uses a non-inheritable Job Object, including the supervisor itself.
+-Linux uses a child subreaper, so setsid/double-fork children cannot disappear
+-when the command exits. Other POSIX hosts fail closed rather than claim that
+-a process group alone contains detached descendants. No third-party modules.
++Linux uses a child subreaper while the supervisor lives. If that owner dies,
++detached-descendant cleanup is explicitly unverified, not claimed successful.
++Other POSIX hosts fail closed: a process group alone cannot contain detached
++descendants. No third-party modules.
+ """
+ import argparse
+ import ctypes
+@@ -156,8 +157,14 @@
+         time.sleep(.01)
+ 
+ 
+-def cleanup_posix_supervisor(process):
+-    """Signal owned groups even if their leader has already exited."""
++def cleanup_posix_supervisor(process, *, cleanup_verified=False):
++    """Best-effort owned-group cleanup, not recovery of reparented children.
++
++    Only the live subreaper can attest that all its descendants were reaped.
++    After its death /proc ancestry cannot recover a detached child safely.
++    Signal the known groups even after leader exit, but report uncertainty
++    unless the supervisor completed and retained its cleanup attestation.
++    """
+     groups = {process.pid}
+     pending = [process.pid]
+     seen = set()
+@@ -178,6 +185,9 @@
+     for group in groups:
+         kill_posix_group(group)
+     process.wait(timeout=CLEANUP_TIMEOUT)
++    if not cleanup_verified:
++        raise RuntimeError('POSIX detached-descendant cleanup unverified: supervisor did not '
++                           'complete cleanup; reparented children require a durable outer owner')
+ 
+ 
+ def harness_error(log, error):
+@@ -186,15 +196,18 @@
+ 
+ 
+ def run_process(command, *, cwd, env, log, result_path, timeout):
+-    """Return the actual command exit, only after bounded descendant cleanup.
++    """Return the actual command exit after bounded cleanup attempts.
+ 
+     The parent retains a Job Object handle for cleanup even if the supervisor
+     crashes. Neither handle is inheritable. Missing/invalid receipts, launch,
+     timeout, and cleanup failures always leave HARNESS_ERROR in the raw log.
++    Linux supervisor death has no durable outer owner; explicitly report that
++    detached-child cleanup remains unverified rather than scan unrelated PIDs.
+     """
+     job = process = None
+     errors = []
+     code = 1
++    posix_cleanup_verified = False
+     try:
+         if result_path.exists():
+             raise FileExistsError('refusing to overwrite process receipt: ' + str(result_path))
+@@ -218,6 +231,8 @@
+             raise RuntimeError('invalid process-supervisor receipt')
+         code = receipt['exit']
+         errors.extend(receipt['errors'])
++        posix_cleanup_verified = (process.returncode == 0
++                                  and receipt.get('posix_cleanup_verified') is True)
+     except (OSError, RuntimeError, ValueError, subprocess.SubprocessError) as error:
+         errors.append(str(error))
+     finally:
+@@ -247,7 +262,7 @@
+                             pass
+                         else:
+                             errors.append('process group survived the process supervisor')
+-                    cleanup_posix_supervisor(process)
++                    cleanup_posix_supervisor(process, cleanup_verified=posix_cleanup_verified)
+             except (OSError, RuntimeError, subprocess.SubprocessError) as error:
+                 errors.append('supervisor cleanup failed: ' + str(error))
+         for error in errors:
+@@ -261,6 +276,7 @@
+     errors = []
+     job = None
+     owned = False
++    posix_cleanup_verified = False
+     try:
+         if os.name == 'nt':
+             if not windows_job:
+@@ -280,6 +296,7 @@
+         if owned and job is None:
+             try:
+                 cleanup_posix_children()
++                posix_cleanup_verified = True
+             except (OSError, RuntimeError) as error:
+                 errors.append('descendant cleanup failed: ' + str(error))
+         if job is not None:
+@@ -290,7 +307,10 @@
+         for error in errors:
+             print('HARNESS_ERROR ' + error, flush=True)
+         with result_path.open('x', encoding='utf-8') as result:
+-            json.dump({'complete': True, 'exit': code, 'errors': errors}, result, indent=2)
++            receipt = {'complete': True, 'exit': code, 'errors': errors}
++            if os.name != 'nt':
++                receipt['posix_cleanup_verified'] = posix_cleanup_verified
++            json.dump(receipt, result, indent=2)
+             result.write('\n')
+ 
+ 
+--- before/scripts/test_matrix_process.py
++++ after/scripts/test_matrix_process.py
+@@ -5,6 +5,7 @@
+ from pathlib import Path
+ import subprocess
+ import tempfile
++from types import SimpleNamespace
+ import unittest
+ from unittest.mock import Mock, patch
+ 
+@@ -100,6 +101,7 @@
+         self.assertEqual(self.receipt()['exit'], 0)
+         self.assertIn('descendants survived command exit', self.receipt()['errors'])
+         cleanup.assert_called_once()
++        self.assertTrue(self.receipt()['posix_cleanup_verified'])
+ 
+     def test_posix_cleanup_failure_is_retained(self):
+         process = Mock()
+@@ -113,15 +115,57 @@
+         self.assertEqual(self.receipt()['exit'], 1)
+         self.assertTrue(any('timed out' in error for error in self.receipt()['errors']))
+         self.assertTrue(any('cleanup denied' in error for error in self.receipt()['errors']))
++        self.assertFalse(self.receipt()['posix_cleanup_verified'])
+ 
+     def test_posix_kills_group_even_after_leader_exit(self):
+         process = Mock(pid=12345)
+         process.poll.return_value = 0
+         with patch.object(processes, 'posix_children', side_effect=FileNotFoundError), \
+                 patch.object(processes, 'kill_posix_group') as kill:
+-            processes.cleanup_posix_supervisor(process)
++            processes.cleanup_posix_supervisor(process, cleanup_verified=True)
+         kill.assert_called_once_with(12345)
+         process.wait.assert_called_once_with(timeout=processes.CLEANUP_TIMEOUT)
++
++    def test_posix_dead_owner_cleanup_reports_uncertainty_without_guessing_other_groups(self):
++        process = Mock(pid=41000, returncode=-9)
++        process.wait.return_value = -9
++        with patch.object(processes, 'posix_children', side_effect=FileNotFoundError), \
++                patch.object(processes, 'kill_posix_group') as kill:
++            with self.assertRaisesRegex(RuntimeError, 'detached-descendant cleanup unverified'):
++                processes.cleanup_posix_supervisor(process)
++        kill.assert_called_once_with(41000)
++        process.wait.assert_called_once_with(timeout=processes.CLEANUP_TIMEOUT)
++
++    def test_posix_parent_requires_completed_cleanup_attestation(self):
++        cases = [(None, -9, 1, False),
++                 ({'complete': True, 'exit': 7, 'errors': []}, 0, 7, False),
++                 ({'complete': True, 'exit': 0, 'errors': [], 'posix_cleanup_verified': False}, 0, 0, False),
++                 ({'complete': True, 'exit': 0, 'errors': [], 'posix_cleanup_verified': True}, -9, 0, False),
++                 ({'complete': True, 'exit': 0, 'errors': [], 'posix_cleanup_verified': True}, 0, 0, True)]
++        for receipt, supervisor_exit, expected_exit, verified in cases:
++            with self.subTest(receipt=receipt, supervisor_exit=supervisor_exit):
++                self.result.unlink(missing_ok=True)
++                process = Mock(pid=41000, returncode=supervisor_exit)
++                process.poll.return_value = supervisor_exit
++                def wait(**kwargs):
++                    if receipt is not None:
++                        self.result.write_text(json.dumps(receipt))
++                process.wait.side_effect = wait
++                log = io.StringIO()
++                fake_os = SimpleNamespace(name='posix', killpg=Mock(side_effect=ProcessLookupError))
++                with patch.object(processes, 'os', fake_os), \
++                        patch.object(processes, 'posix_children', side_effect=FileNotFoundError), \
++                        patch.object(processes, 'kill_posix_group') as kill, \
++                        patch.object(processes.subprocess, 'Popen', return_value=process):
++                    code = processes.run_process(['not-executed'], cwd=self.result.parent, env={},
++                                                 log=log, result_path=self.result, timeout=1)
++                self.assertEqual(code, expected_exit)
++                kill.assert_called_once_with(41000)
++                if verified:
++                    self.assertEqual(log.getvalue(), '')
++                else:
++                    self.assertIn('HARNESS_ERROR', log.getvalue())
++                    self.assertIn('detached-descendant cleanup unverified', log.getvalue())
+ 
+     def test_posix_detached_groups_and_individual_children_are_both_signalled(self):
+         with patch.object(processes, 'posix_children_alive', side_effect=[True, False]), \
+--- before/scripts/godot_process.py
++++ after/scripts/godot_process.py
+@@ -90,23 +90,32 @@
+ def terminate_process_tree(process, timeout=5):
+     """Reap a managed child and kill its tree, not just the wrapper process.
+ 
+-    Windows taskkill /T must run while the root is alive. POSIX also signals an
+-    exited leader's group, and snapshots nested groups before terminating it.
++    Windows taskkill /T must run while the root is alive. An exited standalone
++    root or failed taskkill cannot prove descendant cleanup and raises instead
++    of reporting success; use prelaunch matrix_process ownership for that
++    guarantee. POSIX also signals an exited leader's group, and snapshots
++    nested groups before terminating it.
+     """
+     if is_windows():
+-        if process.poll() is None:
+-            try:
+-                result = subprocess.run(['taskkill', '/PID', str(process.pid), '/T', '/F'],
+-                                        stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
+-                                        check=False, timeout=timeout)
+-            except (OSError, subprocess.TimeoutExpired) as error:
++        if process.poll() is not None:
++            process.wait(timeout=timeout)
++            raise RuntimeError('Windows descendant cleanup unverified: root already exited; '
++                               'prelaunch Job Object ownership is required')
++        try:
++            result = subprocess.run(['taskkill', '/PID', str(process.pid), '/T', '/F'],
++                                    stdout=subprocess.DEVNULL, stderr=subprocess.PIPE,
++                                    check=False, timeout=timeout)
++        except (OSError, subprocess.TimeoutExpired) as error:
++            if process.poll() is None:
+                 process.kill()
+-                process.wait(timeout=timeout)
+-                raise RuntimeError('taskkill unavailable; complete process-tree cleanup could not be verified') from error
+-            if result.returncode and process.poll() is None:
++            process.wait(timeout=timeout)
++            raise RuntimeError('taskkill unavailable; complete process-tree cleanup could not be verified') from error
++        if result.returncode:
++            if process.poll() is None:
+                 process.kill()
+-                process.wait(timeout=timeout)
+-                raise RuntimeError('taskkill could not terminate the complete process tree: ' + str(process.pid))
++            process.wait(timeout=timeout)
++            raise RuntimeError('taskkill exited ' + str(result.returncode)
++                               + '; descendant cleanup unverified: ' + str(process.pid))
+         process.wait(timeout=timeout)
+         return
+     try:
+--- before/scripts/test_godot_process.py
++++ after/scripts/test_godot_process.py
+@@ -274,13 +274,40 @@
+                 process.kill.assert_called_once()
+                 process.wait.assert_called_once_with(timeout=5)
+ 
+-    def test_windows_already_exited_child_is_reaped_without_pid_reuse_kill(self):
++    def test_windows_exited_root_is_reaped_but_descendant_cleanup_is_unverified(self):
+         process = Mock(pid=1234)
+         process.poll.return_value = 0
+         with patch.object(helper, 'is_windows', return_value=True), \
+                 patch.object(helper.subprocess, 'run') as run:
+-            helper.terminate_process_tree(process)
++            with self.assertRaisesRegex(RuntimeError, 'cleanup unverified: root already exited'):
++                helper.terminate_process_tree(process)
+         run.assert_not_called()
++        process.kill.assert_not_called()
++        process.wait.assert_called_once_with(timeout=5)
++
++    def test_windows_exited_root_cannot_produce_empty_cleanup_failures(self):
++        process = Mock(pid=1234)
++        process.poll.return_value = 0
++        with patch.object(helper, 'is_windows', return_value=True), \
++                patch.object(helper.subprocess, 'run') as run:
++            failures = helper.cleanup_processes([('exited-root', process)])
++        self.assertEqual(len(failures), 1)
++        self.assertIn('exited-root: cleanup failed:', failures[0])
++        self.assertIn('root already exited', failures[0])
++        run.assert_not_called()
++        process.kill.assert_not_called()
++
++    def test_windows_taskkill_nonzero_is_not_hidden_by_concurrent_root_exit(self):
++        process = Mock(pid=1234)
++        process.poll.side_effect = [None, 0]
++        process.wait.return_value = 0
++        with patch.object(helper, 'is_windows', return_value=True), \
++                patch.object(helper.subprocess, 'run', return_value=Mock(returncode=128)) as run:
++            failures = helper.cleanup_processes([('raced-root', process)])
++        self.assertEqual(len(failures), 1)
++        self.assertIn('taskkill exited 128; descendant cleanup unverified', failures[0])
++        run.assert_called_once()
++        process.kill.assert_not_called()
+         process.wait.assert_called_once_with(timeout=5)
+ 
+     def test_posix_cleanup_includes_nested_sessions_but_not_unrelated_group(self):

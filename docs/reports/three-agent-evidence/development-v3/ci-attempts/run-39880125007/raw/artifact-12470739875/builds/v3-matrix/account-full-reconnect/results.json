@@ -1,0 +1,47 @@
+{
+  "source": {
+    "commit": "2a026e61cabee3c66334066d45e92eb3ec6c2641",
+    "game_tree": "172704d0e82c4e74dfc35f218ab2645fd908f970",
+    "dirty": false,
+    "status": "",
+    "content_sha256": "4886bb4fb01b3769b98891c90bf80c28ee865b30f9e489acd6a309d3932b2407",
+    "source_paths": [
+      "game",
+      "scripts",
+      "backend",
+      "server",
+      ".github",
+      ".gitignore",
+      "README.md"
+    ],
+    "source_files": 362,
+    "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+    "python": "3.12.3"
+  },
+  "checks": {
+    "each_ticket_retains_its_exact_account_and_actor": true,
+    "all_ten_recovered_with_fresh_authority": true,
+    "ten_distinct_account_bindings": true,
+    "one_ticket_per_initial_admission": true,
+    "ranked_disconnect_policy_preserved": true,
+    "no_unexpected_issuance_during_recovery": true,
+    "bounded_transports": true
+  },
+  "ticket_rows": 10,
+  "consumed_tickets": 10,
+  "reward_rows": 0,
+  "total_credits": 0,
+  "expected_account_ids_by_client": {
+    "0": "b59fd759-ac2f-47d6-b57b-0922269c7285",
+    "1": "049db401-0a7f-4f3a-96f1-4a1f0fdb1bf3",
+    "2": "7a46fcfd-3e56-4c3b-846e-696ebed2fb4e",
+    "3": "2fcf8a2e-76d6-46e9-8b39-e17609f64edc",
+    "4": "930316b1-1805-4792-b974-be3138037b34",
+    "5": "872b1842-e171-4f64-ba5f-942917d3a79c",
+    "6": "cc49de4b-3373-43d2-9362-36f1a4c7fe81",
+    "7": "4f65ce65-c40d-468f-80ac-204fffb954f8",
+    "8": "e1a2e57d-94a3-4ae4-ae33-1c52821b1c4c",
+    "9": "4919db3c-d1a1-4acb-b38a-d1b509ee5665"
+  },
+  "scope": "ten real Godot clients; local PostgreSQL/HTTP; synthetic100msRTT+lostclose; no devices"
+}

@@ -1,0 +1,100 @@
+name: V3 frozen development validation
+# Isolated continuation only. Never publishes a release or changes main.
+on:
+  push:
+    branches: [integration/sightbreak-v3-validation]
+permissions:
+  contents: read
+jobs:
+  full-matrix-and-network:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0 # Protocol fixtures archive actual prior published commits.
+      - name: Prepare pinned native engine and isolated backend
+        id: setup
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgl1 libvulkan1 xvfb xauth ripgrep unzip
+          scripts/setup.sh --editor-only
+          python3 -m pip install uv==0.12.23
+          UV_PROJECT_ENVIRONMENT="$PWD/.venv" uv sync --project backend --locked --group dev
+          backend/dev-db.sh
+          scripts/godot.sh --headless --editor --import --quit
+          python3 -c "import sys; sys.path.insert(0, 'scripts'); from build_manifest import source, require_clean; require_clean(source())"
+      - name: Full maintained matrix; retain every failure
+        if: steps.setup.outcome == 'success'
+        run: xvfb-run -a .venv/bin/python scripts/validate_matrix.py --backend --protocol --render --out builds/v3-matrix
+      - name: Separate twelve-condition ten-client campaign
+        if: always() && steps.setup.outcome == 'success'
+        run: .venv/bin/python scripts/run_network_campaign.py --clients 10 --seconds 18 --port 39000 --out builds/v3-network
+      - name: Retain raw validation evidence even on failure
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-v3-validation-${{ github.sha }}
+          path: |
+            builds/v3-matrix/
+            builds/v3-network/
+            .local/validation/
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14
+  native-development-packages:
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+      - name: Prepare exact-source build toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgl1 libvulkan1 xvfb xauth libxtst6 ripgrep unzip openjdk-17-jdk tesseract-ocr
+          scripts/setup.sh
+          scripts/setup-android.sh
+          python3 -m pip install uv==0.12.23
+          uv venv .venv
+          uv pip install --python .venv/bin/python Pillow==12.0.0
+      - name: Export frozen commit (development only)
+        id: exports
+        run: |
+          scripts/export.sh linux
+          scripts/export.sh android
+          scripts/export.sh ios
+      - name: Inspect and package actual exports
+        id: package
+        run: |
+          python3 scripts/verify_builds.py
+          python3 scripts/build_manifest.py package > builds/packaging.json
+          (cd builds && sha256sum --check checksums.txt)
+          python3 scripts/verify_packaged_builds.py --output builds/v3-package-verification
+      - name: Drive actual exported network client
+        if: always() && steps.package.outcome == 'success'
+        run: .venv/bin/python scripts/verify_integration_export.py --display :106 --visit-armory --reload-mode keyboard --timeout 240 --output builds/v3-export-network
+      - name: Drive actual exported living-player offline client
+        if: always() && steps.package.outcome == 'success'
+        run: .venv/bin/python scripts/verify_offline_export.py --display :107 --timeout 300 --output builds/v3-export-offline
+      - name: Retain development artifacts and all attempted-flow evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: sightbreak-v3-development-${{ github.sha }}
+          path: |
+            builds/sightbreak-*.zip
+            builds/android/sightbreak-debug.apk
+            builds/manifest.json
+            builds/checksums.txt
+            builds/packaging.json
+            builds/verification/
+            builds/v3-package-verification/
+            builds/*/*.log
+            builds/*/source.json
+            builds/v3-export-network/
+            builds/v3-export-offline/
+          if-no-files-found: error
+          retention-days: 14

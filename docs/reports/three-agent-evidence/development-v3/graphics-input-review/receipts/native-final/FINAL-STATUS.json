@@ -1,0 +1,48 @@
+{
+  "recorded_utc": "2026-10-19T19:25:47.769845+00:00",
+  "verification_status": "inconclusive",
+  "oracle_pass_fail_verdict_available": false,
+  "reason": "Full default attempt hit 600-second time bound; supported focused range crashed after native image-readback allocation errors. Neither produced a completion marker or CSV.",
+  "not_a_visual_score_or_performance_claim": true,
+  "source_and_threshold_changes": false,
+  "native_retries_after_focused_crash": false,
+  "optional_calm_shade_oracle_runs": "not started after original driver stdout was closed by the OpenCode server restart",
+  "visual_capture_packet": "all six matched native capture configurations completed; unaffected and still blinded",
+  "attempts": [
+    {
+      "directory": "separate-tests/reload-continuity/sunlit-normal",
+      "configuration": {
+        "id": "sunlit-normal",
+        "view": "sunlit",
+        "extra": []
+      },
+      "returncode": 1,
+      "windows_exit_hex": "0x00000001",
+      "timed_out": true,
+      "completion_markers": [],
+      "completed_csv_present": false,
+      "native_allocation_error_logged": false,
+      "outcome_file": "separate-tests/reload-continuity/outcomes.json",
+      "outcome_sha256": "6d1d26d90e9a0304753a68c7db096e72cb1f6e792673067949ce9b07e2779369"
+    },
+    {
+      "directory": "separate-tests/reload-continuity-focused-56-110",
+      "configuration": {
+        "id": "sunlit-normal-focused-56-110",
+        "view": "sunlit",
+        "extra": [
+          "--from=56",
+          "--to=110"
+        ]
+      },
+      "returncode": 3221225477,
+      "windows_exit_hex": "0xC0000005",
+      "timed_out": false,
+      "completion_markers": [],
+      "completed_csv_present": false,
+      "native_allocation_error_logged": true,
+      "outcome_file": "separate-tests/reload-continuity-focused-56-110/outcomes.json",
+      "outcome_sha256": "12a4293d1640153d3248f5717721f851ba79d1c5e5ca020a31379cd0e73b5154"
+    }
+  ]
+}

@@ -1,0 +1,303 @@
+diff --git a/.github/workflows/engineering.yml b/.github/workflows/engineering.yml
+index 169d0c8..bfe82ec 100644
+--- a/.github/workflows/engineering.yml
++++ b/.github/workflows/engineering.yml
+@@ -22,8 +22,7 @@ jobs:
+           sudo apt-get install -y libgl1 libvulkan1 xvfb ripgrep unzip openjdk-17-jdk
+           scripts/setup.sh
+           python3 -m pip install uv==0.12.23
+-          uv sync --project backend --locked --group dev
+-          ln -s backend/.venv .venv
++          UV_PROJECT_ENVIRONMENT="$PWD/.venv" uv sync --project backend --locked --group dev
+           backend/dev-db.sh
+       - name: Complete matrix (retains failures)
+         run: xvfb-run -a .venv/bin/python scripts/validate_matrix.py --backend --protocol --render --out builds/ci-regressions
+diff --git a/game/export_presets.cfg b/game/export_presets.cfg
+index 403719c..468a8a1 100644
+--- a/game/export_presets.cfg
++++ b/game/export_presets.cfg
+@@ -44,8 +44,8 @@ architectures/armeabi-v7a=false
+ architectures/arm64-v8a=true
+ architectures/x86=false
+ architectures/x86_64=true
+-version/code=4
+-version/name="0.3.1-dev"
++version/code=5
++version/name="0.3.2-dev"
+ package/unique_name="com.sightbreak.game"
+ package/name="SIGHTBREAK"
+ package/signed=true
+@@ -72,8 +72,8 @@ custom_template/release=""
+ architectures/arm64=true
+ application/app_store_team_id=""
+ application/bundle_identifier="com.sightbreak.game"
+-application/short_version="0.3.1"
+-application/version="4"
++application/short_version="0.3.2"
++application/version="5"
+ application/min_ios_version="15.0"
+ application/export_project_only=true
+ application/additional_plist_content="<key>NSLocalNetworkUsageDescription</key><string>Connect to your SIGHTBREAK match server on the local network.</string>"
+diff --git a/scripts/build_manifest.py b/scripts/build_manifest.py
+index b7fa731..b1a034a 100644
+--- a/scripts/build_manifest.py
++++ b/scripts/build_manifest.py
+@@ -10,9 +10,9 @@ import zipfile
+ 
+ ROOT = pathlib.Path(__file__).resolve().parents[1]
+ BUILDS = ROOT / "builds"
+-VERSION = "0.3.1-dev"
+-BUILD_NUMBER = 4
+-IOS_VERSION = "0.3.1"
++VERSION = "0.3.2-dev"
++BUILD_NUMBER = 5
++IOS_VERSION = "0.3.2"
+ OUTPUTS = {"linux": "linux/sightbreak.x86_64", "android": "android/sightbreak-debug.apk", "ios": "ios/sightbreak.xcodeproj/project.pbxproj"}
+ 
+ 
+@@ -28,7 +28,20 @@ def source():
+             continue
+         digest.update(relative.as_posix().encode() + b"\0" + path.read_bytes() + b"\0")
+     return {"source_commit": git("rev-parse", "HEAD"), "source_game_tree": git("rev-parse", "HEAD:game"),
+-            "source_content_sha256": digest.hexdigest(), "source_game_dirty": bool(git("status", "--porcelain", "--", "game"))}
++            "source_content_sha256": digest.hexdigest(), "source_game_dirty": bool(git("status", "--porcelain", "--", "game")),
++            "source_dirty": bool(git("status", "--porcelain"))}
++
++
++def require_clean(current):
++    if current["source_game_dirty"] or current.get("source_dirty", False):
++        raise SystemExit("Commit game source and validation tooling before producing delivery packages.")
++
++
++def same_source(record, current):
++    # Identical game bytes alone do not identify the exporter/harness revision.
++    # Require the exact frozen commit, tree and on-disk bytes at every boundary.
++    return all(record.get(key) == current.get(key) for key in
++               ("source_commit", "source_game_tree", "source_content_sha256"))
+ 
+ 
+ def descriptor(path):
+@@ -48,9 +61,10 @@ def payload(target):
+ 
+ 
+ def begin(target):
++    data = source()
++    require_clean(data)
+     directory = BUILDS / target
+     directory.mkdir(parents=True, exist_ok=True)
+-    data = source()
+     data.update({"target": target, "export_completed": False,
+                  "built_at_utc": datetime.datetime.now(datetime.timezone.utc).isoformat()})
+     write_json(directory / "source.json", data)
+@@ -59,8 +73,11 @@ def begin(target):
+ def finish(target):
+     path = BUILDS / target / "source.json"
+     data = json.loads(path.read_text())
+-    if data["source_content_sha256"] != source()["source_content_sha256"]:
+-        raise SystemExit("Game source changed during export; rebuild before packaging.")
++    current = source()
++    require_clean(current)
++    require_clean(data)
++    if not same_source(data, current):
++        raise SystemExit("Frozen source changed during export; rebuild before packaging.")
+     output = BUILDS / OUTPUTS[target]
+     if not output.is_file() or output.stat().st_size == 0:
+         raise SystemExit(f"Missing export output: {output}")
+@@ -70,16 +87,14 @@ def finish(target):
+ 
+ def package():
+     current = source()
+-    if current["source_game_dirty"]:
+-        raise SystemExit("Commit game source before producing delivery packages.")
++    require_clean(current)
+     records = []
+     artifacts = []
+     for target in OUTPUTS:
+         directory = BUILDS / target
+         record = json.loads((directory / "source.json").read_text())
+         if (not record["export_completed"] or record["source_game_dirty"]
+-                or record["source_game_tree"] != current["source_game_tree"]
+-                or record["source_content_sha256"] != current["source_content_sha256"]):
++                or record.get("source_dirty", False) or not same_source(record, current)):
+             raise SystemExit(f"Stale or incomplete {target} export; rebuild all targets from current source.")
+         if descriptor(BUILDS / OUTPUTS[target]) != record["artifact"] or payload(target) != record["payload"]:
+             raise SystemExit(f"Changed {target} artifact; rebuild before packaging.")
+diff --git a/scripts/test_build_manifest.py b/scripts/test_build_manifest.py
+index 7cf1417..dd87fd9 100644
+--- a/scripts/test_build_manifest.py
++++ b/scripts/test_build_manifest.py
+@@ -63,6 +63,49 @@ class BuildManifestTests(unittest.TestCase):
+         with self.assertRaisesRegex(SystemExit, "Commit game source"):
+             manifest.package()
+ 
++    def test_dirty_tooling_rejected_before_export(self):
++        self.current["source_dirty"] = True
++        with self.assertRaisesRegex(SystemExit, "validation tooling"):
++            manifest.begin("linux")
++        self.assertFalse((self.builds / "linux/source.json").exists())
++
++    def test_dirty_source_during_export_rejected(self):
++        manifest.begin("linux")
++        self.current["source_dirty"] = True
++        with self.assertRaisesRegex(SystemExit, "validation tooling"):
++            manifest.finish("linux")
++
++    def test_commit_or_tree_change_during_export_rejected(self):
++        for key in ("source_commit", "source_game_tree"):
++            with self.subTest(key=key):
++                original = self.current[key]
++                manifest.begin("linux")
++                self.current[key] = "changed-with-same-runtime-bytes"
++                with self.assertRaisesRegex(SystemExit, "changed during export"):
++                    manifest.finish("linux")
++                self.current[key] = original
++
++    def test_identical_runtime_from_another_commit_rejected(self):
++        self.make_export("linux")
++        self.current["source_commit"] = "different-commit"
++        with self.assertRaisesRegex(SystemExit, "Stale or incomplete"):
++            manifest.package()
++
++    def test_dirty_tooling_at_packaging_rejected(self):
++        self.make_export("linux")
++        self.current["source_dirty"] = True
++        with self.assertRaisesRegex(SystemExit, "validation tooling"):
++            manifest.package()
++
++    def test_tainted_export_receipt_rejected(self):
++        self.make_export("linux")
++        path = self.builds / "linux/source.json"
++        record = json.loads(path.read_text())
++        record["source_dirty"] = True
++        path.write_text(json.dumps(record))
++        with self.assertRaisesRegex(SystemExit, "Stale or incomplete"):
++            manifest.package()
++
+     def test_changed_secondary_payload_rejected(self):
+         manifest.begin("linux")
+         (self.builds / manifest.OUTPUTS["linux"]).write_bytes(b"native fixture")
+diff --git a/scripts/verify_builds.py b/scripts/verify_builds.py
+index dd5fb33..273b6bb 100644
+--- a/scripts/verify_builds.py
++++ b/scripts/verify_builds.py
+@@ -10,7 +10,7 @@ import subprocess
+ import zipfile
+ 
+ from native_log import failed as native_log_failed
+-from build_manifest import BUILDS, ROOT, OUTPUTS, VERSION, BUILD_NUMBER, IOS_VERSION, payload, source, write_json
++from build_manifest import BUILDS, ROOT, OUTPUTS, VERSION, BUILD_NUMBER, IOS_VERSION, payload, source, write_json, require_clean, same_source
+ 
+ 
+ def packed_paths(path, embedded=False):
+@@ -54,10 +54,12 @@ def integrated_resources(paths):
+ 
+ def main():
+     build_source = source()
+-    assert not build_source["source_game_dirty"], "Commit game changes before artifact verification"
++    require_clean(build_source)
+     for target in OUTPUTS:
+         record = json.loads((BUILDS / target / "source.json").read_text())
++        require_clean(record)
+         assert record["export_completed"] and not record["source_game_dirty"], f"{target}: incomplete or uncommitted export"
++        assert same_source(record, build_source), f"{target}: different frozen source identity"
+         assert record["source_game_tree"] == build_source["source_game_tree"], f"{target}: stale game tree"
+         assert record["source_content_sha256"] == build_source["source_content_sha256"], f"{target}: stale source content"
+         assert record["payload"] == payload(target), f"{target}: artifact changed after export"
+@@ -119,7 +121,7 @@ def main():
+     assert "PRODUCT_BUNDLE_IDENTIFIER = com.sightbreak.game;" in project
+     assert f"MARKETING_VERSION = {IOS_VERSION};" in project, "Wrong iOS marketing version"
+     assert f"CURRENT_PROJECT_VERSION = {BUILD_NUMBER};" in project, "Wrong iOS build number"
+-    assert source()["source_content_sha256"] == build_source["source_content_sha256"], "Game changed during verification"
++    assert source() == build_source, "Frozen source changed during verification"
+     report = {**build_source, "passed": True, "linux_menu_smoke": True, "linux_demo_120_frames": True,
+               "linux_pck_resources": len(linux_paths), "android_assets": len(android_paths), "ios_pck_resources": len(ios_paths),
+               "test_harnesses_excluded": True, "android_signature_schemes": ["v2", "v3"],
+diff --git a/scripts/verify_integration_export.py b/scripts/verify_integration_export.py
+index e1170e9..23d89d4 100644
+--- a/scripts/verify_integration_export.py
++++ b/scripts/verify_integration_export.py
+@@ -21,7 +21,7 @@ import subprocess
+ import time
+ 
+ from PIL import ImageGrab
+-from build_manifest import source
++from build_manifest import source, require_clean, same_source
+ from native_log import failed as native_log_failed
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+@@ -143,14 +143,15 @@ def main():
+         parser.error('Display is already in use: ' + args.display)
+     output = args.output.resolve()
+     output.mkdir(parents=True, exist_ok=True)
+-    # Reject stale success records; retain each campaign in a separate directory.
+-    for name in ('finish', 'authority.json', 'results.json'):
+-        (output / name).unlink(missing_ok=True)
++    if any(output.iterdir()):
++        parser.error('Use a new empty output directory; earlier attempts are retained')
+     executable = ROOT / 'builds/linux/sightbreak.x86_64'
+     manifest = json.loads((executable.parent / 'source.json').read_text())
+     source_before = source()
+-    if manifest['source_content_sha256'] != source_before['source_content_sha256']:
+-        raise RuntimeError('Export and source authority have different runtime content')
++    require_clean(source_before)
++    require_clean(manifest)
++    if not manifest['export_completed'] or not same_source(manifest, source_before):
++        raise RuntimeError('Export and source authority have different frozen source identities')
+     executable_hash = hashlib.file_digest(executable.open('rb'), 'sha256').hexdigest()
+     if executable_hash != manifest['artifact']['sha256']:
+         raise RuntimeError('Export no longer matches its build manifest')
+@@ -257,8 +258,8 @@ def main():
+             log_text = (output / (name + '.log')).read_text()
+             if native_log_failed(log_text):
+                 raise RuntimeError(name + ': error or resource leak; inspect log')
+-        if source()['source_content_sha256'] != source_before['source_content_sha256']:
+-            raise RuntimeError('Runtime source changed during verification')
++        if source() != source_before:
++            raise RuntimeError('Frozen source changed during verification')
+         result = {'passed': True, 'artifact_source': manifest, 'authority_source': source_before,
+                   'executable_sha256': executable_hash, 'authority': authority,
+                   'client_exit': client.returncode, 'server_exit': server.returncode,
+diff --git a/scripts/verify_offline_export.py b/scripts/verify_offline_export.py
+index 499e4f9..988f962 100644
+--- a/scripts/verify_offline_export.py
++++ b/scripts/verify_offline_export.py
+@@ -16,7 +16,7 @@ import shutil
+ import subprocess
+ import time
+ 
+-from build_manifest import ROOT, source
++from build_manifest import ROOT, source, require_clean, same_source
+ from PIL import Image
+ 
+ from native_log import failed
+@@ -43,13 +43,15 @@ def main():
+         parser.error('Display already in use')
+     out = args.output.resolve()
+     out.mkdir(parents=True, exist_ok=True)
+-    if (out / 'results.json').exists():
+-        parser.error('Use a new output directory for each attempt')
++    if any(out.iterdir()):
++        parser.error('Use a new empty output directory for each attempt')
+     executable = ROOT / 'builds/linux/sightbreak.x86_64'
+     manifest = json.loads((executable.parent / 'source.json').read_text())
+     before = source()
++    require_clean(before)
++    require_clean(manifest)
+     digest = hashlib.file_digest(executable.open('rb'), 'sha256').hexdigest()
+-    if before['source_content_sha256'] != manifest['source_content_sha256'] or digest != manifest['artifact']['sha256']:
++    if not manifest['export_completed'] or not same_source(manifest, before) or digest != manifest['artifact']['sha256']:
+         raise RuntimeError('Export does not match source and manifest')
+     logs, processes, events = [], [], []
+     ui = client = None
+@@ -168,6 +170,11 @@ def main():
+                   'limits': 'Screenshots require visual review; no private authority instrumentation or mobile performance claim.'}
+         (out / 'results.json').write_text(json.dumps(result, indent=2) + '\n')
+         print(json.dumps(result), flush=True)
++    except Exception as error:
++        (out / 'results.json').write_text(json.dumps({'passed': False, 'error': str(error),
++            'source': before, 'executable_sha256': digest, 'events': events,
++            'controller_sha256': hashlib.file_digest(Path(__file__).open('rb'), 'sha256').hexdigest()}, indent=2) + '\n')
++        raise
+     finally:
+         if ui:
+             ui.close()

@@ -1,0 +1,45 @@
+{
+  "python": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-tools\\python\\cpython-3.13.15-windows-x86_64-none\\python.exe",
+  "version": "3.13.15",
+  "python_sha256": "d7d8f0813d9d4002839b775ed13fc7eb57a756bdcb102e85ab61537003ef8616",
+  "tests": [
+    {
+      "log": "test_validate_matrix.final.log",
+      "tests": 18,
+      "expected_tests": 18,
+      "passed": true
+    },
+    {
+      "log": "test_matrix_process.final.log",
+      "tests": 15,
+      "expected_tests": 15,
+      "passed": true
+    },
+    {
+      "log": "test_source_identity.log",
+      "tests": 7,
+      "expected_tests": 7,
+      "passed": true
+    },
+    {
+      "log": "test_verify_builds.final.log",
+      "tests": 67,
+      "expected_tests": 67,
+      "passed": true
+    }
+  ],
+  "gates": {
+    "before_reproduced_false_pass": true,
+    "after_failed_with_real_root_zero": true,
+    "after_harness_error_retained": true,
+    "after_no_late_write": true,
+    "after_child_did_not_finish": true,
+    "reviewed_sources_match_checkout": true,
+    "all_final_tests_pass": true
+  },
+  "passed": true,
+  "runtime_limits": [
+    "Real Windows CPython only; Linux paths mocked.",
+    "Non-Linux POSIX fails closed before launching commands."
+  ]
+}

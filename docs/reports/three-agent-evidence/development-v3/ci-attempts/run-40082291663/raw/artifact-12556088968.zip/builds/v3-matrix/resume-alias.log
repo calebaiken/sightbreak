@@ -1,0 +1,29 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SIGHTBREAK_SERVER_READY port=33543
+REVIEW_ALIAS PASS original admission
+REVIEW_ALIAS PASS original owner retired
+REVIEW_ALIAS PASS first resume committed but welcome application suppressed
+REVIEW_ALIAS PASS alias lifetime is at most twenty seconds from grant
+REVIEW_ALIAS PASS alias is tied to original credential and replacement owner
+REVIEW_ALIAS PASS live-alias challenge receives response
+REVIEW_ALIAS PASS previous alias cannot evict unconfirmed live owner
+REVIEW_ALIAS PASS busy alias request does not renew grace
+REVIEW_ALIAS PASS unconfirmed owner retired before alias reclamation
+REVIEW_ALIAS PASS same previous credential recovers after lost welcome
+REVIEW_ALIAS PASS second unconfirmed generation retired
+REVIEW_ALIAS PASS repeated lost welcome preserves single alias and original deadline
+REVIEW_ALIAS PASS replacement generation rotates current credential
+REVIEW_ALIAS PASS old alias recovers original actor before deadline
+REVIEW_ALIAS PASS first accepted input revokes previous credential for matching generation
+PROTOCOL_CLIENT_FAILED Reconnect reservation is invalid or expired. Join again for a fresh session.
+REVIEW_ALIAS PASS confirmed-session old alias is terminally invalid
+REVIEW_ALIAS PASS old alias cannot displace confirmed authority
+REVIEW_ALIAS PASS confirmed owner retired
+REVIEW_ALIAS PASS new pending alias created for expiry boundary
+REVIEW_ALIAS PASS expiry fixture owner retired
+PROTOCOL_CLIENT_FAILED Reconnect reservation is invalid or expired. Join again for a fresh session.
+REVIEW_ALIAS PASS elapsed alias deadline rejects original token
+REVIEW_ALIAS PASS expired alias has no actor authority and is removed
+REVIEW_ALIAS PASS credential tables remain bounded by actor count
+INDEPENDENT_RESUME_ALIAS checks=23 failures=0

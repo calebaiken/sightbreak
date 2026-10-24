@@ -1,0 +1,893 @@
+{
+  "attempts": [
+    {
+      "aborted_cases": [],
+      "attempt": "attempt-0049a3f2f5",
+      "classification": "preflight_failure",
+      "diagnostic_excerpts": [
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-0049a3f2f5/record-01.txt",
+          "matched_lines": [
+            {
+              "count": 1,
+              "line": "Retained tool output: RuntimeError: Native slot occupied; no concurrent Godot/import processes allowed"
+            },
+            {
+              "count": 1,
+              "line": "Exit code 1. Preflight only; no database or native client was created."
+            }
+          ]
+        }
+      ],
+      "evidence_files": [
+        "retained-attempts/attempt-0049a3f2f5/record-01.txt"
+      ],
+      "judgment": "Occupied native slot, recorded exit 1; prose says no DB/native created. Not a concurrency or competing-owner experiment.",
+      "recorded_status": null,
+      "sample_assignment": "not inferred"
+    },
+    {
+      "aborted_cases": [
+        {
+          "checks": [
+            {
+              "check": "aborted_initial_snapshot_hash",
+              "consistent": true
+            },
+            {
+              "check": "aborted_no_observed_proxy_request",
+              "consistent": true
+            },
+            {
+              "check": "aborted_native_exit_one",
+              "consistent": true
+            }
+          ],
+          "economic_table_counts": {
+            "audit": 4,
+            "items": 3,
+            "ledger": 6,
+            "listings": 1,
+            "loadouts": 0,
+            "operations": 0,
+            "players": 6,
+            "rewards": 0,
+            "trades": 0
+          },
+          "limitation": "Only before snapshot; no after snapshot, HTTP buy, commit barrier, recovery, or successful measurement retained. Exit 1 is aborted attempt, not completed recovery.",
+          "scenario": {
+            "item": "75a3b9e9-284b-4889-820b-563a972d42fd",
+            "journal": "[local-path-withheld]",
+            "listing": "01645fa9-92b5-4e66-97cc-11b3b09a7993",
+            "mode": "send",
+            "owner": "a6aea7da-540a-4224-b9af-eab1bdfa23a8",
+            "password": "[REDACTED]",
+            "path": "/market/01645fa9-92b5-4e66-97cc-11b3b09a7993/buy",
+            "payload": {
+              "expected_price": 400,
+              "idempotency_key": "87bc6661-9465-4199-9de7-cd9e44dcce62"
+            },
+            "seller": "20ce1a0c-4723-4f88-be68-1ebb2a5116ca",
+            "url": "http://127.0.0.1:65470",
+            "username": "receipt_bf8aa01e4ad61fc1"
+          },
+          "timeline": [
+            {
+              "connection_pid": 4296,
+              "database": "sightbreak_receipt_2c37296bba0267df_test",
+              "event": "postgresql_snapshot",
+              "harness_pid": 12772,
+              "monotonic_ns": 259047671000000,
+              "name": "01-before",
+              "state_sha256": "8cedb566be17eacf22456cdb407ad1ab6ca17a77799a10c4d0281be0a3b6b79f",
+              "wall_ns": 1792440765972227600
+            },
+            {
+              "command": [
+                "[local-path-withheld]",
+                "--headless",
+                "--verbose",
+                "--path",
+                "[local-path-withheld]",
+                "--script",
+                "[local-path-withheld]"
+              ],
+              "event": "native_started",
+              "harness_pid": 12772,
+              "monotonic_ns": 259047890000000,
+              "other_native_pids": [],
+              "phase": "send",
+              "pid": 18680,
+              "wall_ns": 1792440766193747500
+            },
+            {
+              "event": "native_finished",
+              "harness_pid": 12772,
+              "monotonic_ns": 259072906000000,
+              "phase": "aborted-client",
+              "pid": 18680,
+              "returncode": 1,
+              "wall_ns": 1792440791215571900
+            }
+          ]
+        }
+      ],
+      "attempt": "attempt-0664d7063a",
+      "classification": "aborted_startup_barrier_failure",
+      "diagnostic_excerpts": [
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-0664d7063a/record-01.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-0664d7063a/record-02.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-0664d7063a/record-03.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-0664d7063a/record-04.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-0664d7063a/record-05.txt",
+          "matched_lines": []
+        }
+      ],
+      "evidence_files": [
+        "retained-attempts/attempt-0664d7063a/aborted-run-1/01-before.json",
+        "retained-attempts/attempt-0664d7063a/aborted-run-1/scenario.json",
+        "retained-attempts/attempt-0664d7063a/aborted-run-1/timeline.jsonl",
+        "retained-attempts/attempt-0664d7063a/record-01.txt",
+        "retained-attempts/attempt-0664d7063a/record-02.txt",
+        "retained-attempts/attempt-0664d7063a/record-03.txt",
+        "retained-attempts/attempt-0664d7063a/record-04.txt",
+        "retained-attempts/attempt-0664d7063a/record-05.txt",
+        "retained-attempts/attempt-0664d7063a/recorded-status.json"
+      ],
+      "judgment": "Upstream response barrier not reached, completed_run_record_count 0; aborted native exit 1. Initial SQL, fixture and three events only; no post-state/recovery.",
+      "recorded_status": {
+        "completed_run_record_count": 0,
+        "error": "RuntimeError: Native request did not reach upstream response barrier",
+        "provenance_limit": "Original harness error/status, not a new replay. Other author pass flags/source identities/control arguments omitted."
+      },
+      "sample_assignment": "not inferred"
+    },
+    {
+      "aborted_cases": [
+        {
+          "checks": [
+            {
+              "check": "aborted_initial_snapshot_hash",
+              "consistent": true
+            },
+            {
+              "check": "aborted_no_observed_proxy_request",
+              "consistent": true
+            },
+            {
+              "check": "aborted_native_exit_one",
+              "consistent": true
+            }
+          ],
+          "economic_table_counts": {
+            "audit": 2,
+            "items": 1,
+            "ledger": 2,
+            "listings": 1,
+            "loadouts": 0,
+            "operations": 0,
+            "players": 2,
+            "rewards": 0,
+            "trades": 0
+          },
+          "limitation": "Only before snapshot; no after snapshot, HTTP buy, commit barrier, recovery, or successful measurement retained. Exit 1 is aborted attempt, not completed recovery.",
+          "scenario": {
+            "item": "b92ba167-f32e-46b0-b63e-3966c4db97cc",
+            "journal": "[local-path-withheld]",
+            "listing": "48fdce63-ebec-4dd8-8f8b-ba7d47c25a13",
+            "mode": "send",
+            "owner": "76ad9197-1f79-4149-bcd4-f1f4e761e85c",
+            "password": "[REDACTED]",
+            "path": "/market/48fdce63-ebec-4dd8-8f8b-ba7d47c25a13/buy",
+            "payload": {
+              "expected_price": 400,
+              "idempotency_key": "61854e38-0c6b-4759-b342-aa967a556cac"
+            },
+            "seller": "d2836201-5d30-40d1-8c72-5a5592f37c43",
+            "url": "http://127.0.0.1:60596",
+            "username": "receipt_56681befc2235eca"
+          },
+          "timeline": [
+            {
+              "connection_pid": 14344,
+              "database": "sightbreak_receipt_b22156ef3e5edce8_test",
+              "event": "postgresql_snapshot",
+              "harness_pid": 10084,
+              "monotonic_ns": 258904640000000,
+              "name": "01-before",
+              "state_sha256": "4aaeffbc87e9ad7107c8bb845c0cfc4b1860fa47a6840c9c9081acd88816a965",
+              "wall_ns": 1792440622950983200
+            },
+            {
+              "command": [
+                "[local-path-withheld]",
+                "--headless",
+                "--verbose",
+                "--path",
+                "[local-path-withheld]",
+                "--script",
+                "[local-path-withheld]"
+              ],
+              "event": "native_started",
+              "harness_pid": 10084,
+              "monotonic_ns": 258904812000000,
+              "other_native_pids": [],
+              "phase": "send",
+              "pid": 21620,
+              "wall_ns": 1792440623120979700
+            },
+            {
+              "event": "native_finished",
+              "harness_pid": 10084,
+              "monotonic_ns": 258929828000000,
+              "phase": "aborted-client",
+              "pid": 21620,
+              "returncode": 1,
+              "wall_ns": 1792440648133896500
+            }
+          ]
+        }
+      ],
+      "attempt": "attempt-637d22fb26",
+      "classification": "aborted_startup_barrier_failure",
+      "diagnostic_excerpts": [
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-637d22fb26/record-01.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-637d22fb26/record-02.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-637d22fb26/record-03.txt",
+          "matched_lines": []
+        }
+      ],
+      "evidence_files": [
+        "retained-attempts/attempt-637d22fb26/aborted-run-1/01-before.json",
+        "retained-attempts/attempt-637d22fb26/aborted-run-1/scenario.json",
+        "retained-attempts/attempt-637d22fb26/aborted-run-1/timeline.jsonl",
+        "retained-attempts/attempt-637d22fb26/record-01.txt",
+        "retained-attempts/attempt-637d22fb26/record-02.txt",
+        "retained-attempts/attempt-637d22fb26/record-03.txt",
+        "retained-attempts/attempt-637d22fb26/recorded-status.json"
+      ],
+      "judgment": "Upstream response barrier not reached, completed_run_record_count 0; aborted native exit 1. Initial SQL, fixture and three events only; no post-state/recovery.",
+      "recorded_status": {
+        "completed_run_record_count": 0,
+        "error": "RuntimeError: Native request did not reach upstream response barrier",
+        "provenance_limit": "Original harness error/status, not a new replay. Other author pass flags/source identities/control arguments omitted."
+      },
+      "sample_assignment": "not inferred"
+    },
+    {
+      "aborted_cases": [],
+      "attempt": "attempt-67c8ac3b15",
+      "classification": "preparation_database_availability_diagnostic",
+      "diagnostic_excerpts": [
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-67c8ac3b15/record-01.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-67c8ac3b15/record-02.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-67c8ac3b15/record-03.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-67c8ac3b15/record-04.txt",
+          "matched_lines": [
+            {
+              "count": 1,
+              "line": "pg_ctl: no server running"
+            }
+          ]
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-67c8ac3b15/record-05.log",
+          "matched_lines": [
+            {
+              "count": 1,
+              "line": "2026-10-22 20:33:43.721 EDT [4252] LOG:  database system is ready to accept connections"
+            },
+            {
+              "count": 1,
+              "line": "2026-10-22 20:34:30.833 EDT [4252] LOG:  server process (PID 8848) was terminated by exception 0xC0000142"
+            },
+            {
+              "count": 1,
+              "line": "2026-10-22 20:34:31.103 EDT [4252] LOG:  shutting down due to startup process failure"
+            }
+          ]
+        }
+      ],
+      "evidence_files": [
+        "retained-attempts/attempt-67c8ac3b15/record-01.txt",
+        "retained-attempts/attempt-67c8ac3b15/record-02.txt",
+        "retained-attempts/attempt-67c8ac3b15/record-03.txt",
+        "retained-attempts/attempt-67c8ac3b15/record-04.txt",
+        "retained-attempts/attempt-67c8ac3b15/record-05.log"
+      ],
+      "judgment": "Import/preparation, server-start then no-server records. DB log: recovery, ready, child exception 0xC0000142, shutdown. Not a measured transaction restart; no native exit inferred.",
+      "recorded_status": null,
+      "sample_assignment": "not inferred"
+    },
+    {
+      "aborted_cases": [],
+      "attempt": "attempt-a5efb1a60a",
+      "classification": "preparation_only",
+      "diagnostic_excerpts": [
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-a5efb1a60a/record-01.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-a5efb1a60a/record-02.txt",
+          "matched_lines": []
+        }
+      ],
+      "evidence_files": [
+        "retained-attempts/attempt-a5efb1a60a/record-01.txt",
+        "retained-attempts/attempt-a5efb1a60a/record-02.txt"
+      ],
+      "judgment": "Import/preparation output; no measured transaction outcome or process exit established.",
+      "recorded_status": null,
+      "sample_assignment": "not inferred"
+    },
+    {
+      "aborted_cases": [],
+      "attempt": "attempt-b159051dc1",
+      "classification": "resource_preflight_failure",
+      "diagnostic_excerpts": [
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-b159051dc1/record-01.txt",
+          "matched_lines": [
+            {
+              "count": 1,
+              "line": "ERROR: Out of memory"
+            },
+            {
+              "count": 1,
+              "line": "subprocess.CalledProcessError: Command '['tasklist', '/FI', 'IMAGENAME eq Godot_v4.7.2-stable_win64.exe', '/FO', 'CSV', '/NH']' returned non-zero exit status 1."
+            }
+          ]
+        }
+      ],
+      "evidence_files": [
+        "retained-attempts/attempt-b159051dc1/record-01.txt"
+      ],
+      "judgment": "Out-of-memory diagnostic; tasklist returned exit 1. Not a completed measured application runtime.",
+      "recorded_status": null,
+      "sample_assignment": "not inferred"
+    },
+    {
+      "aborted_cases": [
+        {
+          "checks": [
+            {
+              "check": "aborted_initial_snapshot_hash",
+              "consistent": true
+            },
+            {
+              "check": "aborted_no_observed_proxy_request",
+              "consistent": true
+            },
+            {
+              "check": "aborted_native_exit_one",
+              "consistent": true
+            }
+          ],
+          "economic_table_counts": {
+            "audit": 2,
+            "items": 1,
+            "ledger": 2,
+            "listings": 1,
+            "loadouts": 0,
+            "operations": 0,
+            "players": 2,
+            "rewards": 0,
+            "trades": 0
+          },
+          "limitation": "Only before snapshot; no after snapshot, HTTP buy, commit barrier, recovery, or successful measurement retained. Exit 1 is aborted attempt, not completed recovery.",
+          "scenario": {
+            "item": "c10d95dd-7f06-4e65-8250-b2534fa8ed18",
+            "journal": "[local-path-withheld]",
+            "listing": "cd7d9c9d-bdde-42fd-a4b5-53c7f12e9e29",
+            "mode": "send",
+            "owner": "4e2d2557-6171-48e8-b1e0-3133bb9e55a8",
+            "password": "[REDACTED]",
+            "path": "/market/cd7d9c9d-bdde-42fd-a4b5-53c7f12e9e29/buy",
+            "payload": {
+              "expected_price": 400,
+              "idempotency_key": "46577b89-6108-4265-a5ba-d7e8e2de7462"
+            },
+            "seller": "8d27eae7-9f75-466c-ba40-e094e395b744",
+            "url": "http://127.0.0.1:60507",
+            "username": "receipt_5c4411bafdddb7e6"
+          },
+          "timeline": [
+            {
+              "connection_pid": 18680,
+              "database": "sightbreak_receipt_e4596c5d5874ee6a_test",
+              "event": "postgresql_snapshot",
+              "harness_pid": 21984,
+              "monotonic_ns": 258677312000000,
+              "name": "01-before",
+              "state_sha256": "09dcc37f246cb857e197ad8806af5f55cddd2da97fa0ec176d42555c2e0eb4aa",
+              "wall_ns": 1792440395630351500
+            },
+            {
+              "command": [
+                "[local-path-withheld]",
+                "--headless",
+                "--path",
+                "[local-path-withheld]",
+                "--script",
+                "[local-path-withheld]"
+              ],
+              "event": "native_started",
+              "harness_pid": 21984,
+              "monotonic_ns": 258677500000000,
+              "other_native_pids": [],
+              "phase": "send",
+              "pid": 19900,
+              "wall_ns": 1792440395807150100
+            },
+            {
+              "event": "native_finished",
+              "harness_pid": 21984,
+              "monotonic_ns": 258702515000000,
+              "phase": "aborted-client",
+              "pid": 19900,
+              "returncode": 1,
+              "wall_ns": 1792440420820131200
+            }
+          ]
+        }
+      ],
+      "attempt": "attempt-b1962c484d",
+      "classification": "aborted_startup_barrier_failure",
+      "diagnostic_excerpts": [
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-b1962c484d/record-01.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-b1962c484d/record-02.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-b1962c484d/record-03.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-b1962c484d/record-04.txt",
+          "matched_lines": [
+            {
+              "count": 1,
+              "line": "RuntimeError: Native request did not reach upstream response barrier"
+            }
+          ]
+        },
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-b1962c484d/record-05.txt",
+          "matched_lines": []
+        }
+      ],
+      "evidence_files": [
+        "retained-attempts/attempt-b1962c484d/aborted-run-1/01-before.json",
+        "retained-attempts/attempt-b1962c484d/aborted-run-1/scenario.json",
+        "retained-attempts/attempt-b1962c484d/aborted-run-1/timeline.jsonl",
+        "retained-attempts/attempt-b1962c484d/record-01.txt",
+        "retained-attempts/attempt-b1962c484d/record-02.txt",
+        "retained-attempts/attempt-b1962c484d/record-03.txt",
+        "retained-attempts/attempt-b1962c484d/record-04.txt",
+        "retained-attempts/attempt-b1962c484d/record-05.txt",
+        "retained-attempts/attempt-b1962c484d/recorded-status.json"
+      ],
+      "judgment": "Upstream response barrier not reached, completed_run_record_count 0; aborted native exit 1. Initial SQL, fixture and three events only; no post-state/recovery.",
+      "recorded_status": {
+        "completed_run_record_count": 0,
+        "error": "RuntimeError: Native request did not reach upstream response barrier",
+        "provenance_limit": "Original harness error/status, not a new replay. Other author pass flags/source identities/control arguments omitted."
+      },
+      "sample_assignment": "not inferred"
+    },
+    {
+      "aborted_cases": [],
+      "attempt": "attempt-c4ee620acf",
+      "classification": "controller_compile_failure",
+      "diagnostic_excerpts": [
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-c4ee620acf/record-01.txt",
+          "matched_lines": [
+            {
+              "count": 1,
+              "line": "SystemError: <built-in function compile> returned NULL without setting an exception"
+            },
+            {
+              "count": 1,
+              "line": "[identity-withheld] exit 1"
+            }
+          ]
+        }
+      ],
+      "evidence_files": [
+        "retained-attempts/attempt-c4ee620acf/record-01.txt",
+        "retained-attempts/attempt-c4ee620acf/recorded-status.json"
+      ],
+      "judgment": "SystemError: built-in compile returned NULL without exception; recorded exit 1, completed_run_record_count 0. Not an application recovery failure.",
+      "recorded_status": {
+        "completed_run_record_count": 0,
+        "error": "SystemError: <built-in function compile> returned NULL without setting an exception",
+        "provenance_limit": "Original harness error/status, not a new replay. Other author pass flags/source identities/control arguments omitted."
+      },
+      "sample_assignment": "not inferred"
+    },
+    {
+      "aborted_cases": [],
+      "attempt": "attempt-c9da1ca161",
+      "classification": "author_summary_only",
+      "diagnostic_excerpts": [
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-c9da1ca161/record-01.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-c9da1ca161/record-02.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-c9da1ca161/record-03.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-c9da1ca161/record-04.txt",
+          "matched_lines": [
+            {
+              "count": 1,
+              "line": "run-1 recovered=True authoritative_pass=True"
+            },
+            {
+              "count": 1,
+              "line": "run-2 recovered=True authoritative_pass=True"
+            },
+            {
+              "count": 1,
+              "line": "run-3 recovered=True authoritative_pass=True"
+            }
+          ]
+        }
+      ],
+      "evidence_files": [
+        "retained-attempts/attempt-c9da1ca161/record-01.txt",
+        "retained-attempts/attempt-c9da1ca161/record-02.txt",
+        "retained-attempts/attempt-c9da1ca161/record-03.txt",
+        "retained-attempts/attempt-c9da1ca161/record-04.txt"
+      ],
+      "judgment": "Three recovered=True/authoritative_pass=True lines do not add verified cases or repeats; no pairing to sample identities inferred.",
+      "recorded_status": null,
+      "sample_assignment": "not inferred"
+    },
+    {
+      "aborted_cases": [
+        {
+          "checks": [
+            {
+              "check": "aborted_initial_snapshot_hash",
+              "consistent": true
+            },
+            {
+              "check": "aborted_no_observed_proxy_request",
+              "consistent": true
+            },
+            {
+              "check": "aborted_native_exit_one",
+              "consistent": true
+            }
+          ],
+          "economic_table_counts": {
+            "audit": 2,
+            "items": 1,
+            "ledger": 2,
+            "listings": 1,
+            "loadouts": 0,
+            "operations": 0,
+            "players": 2,
+            "rewards": 0,
+            "trades": 0
+          },
+          "limitation": "Only before snapshot; no after snapshot, HTTP buy, commit barrier, recovery, or successful measurement retained. Exit 1 is aborted attempt, not completed recovery.",
+          "scenario": {
+            "item": "f623570e-daa1-469b-ad37-a7402ce5886e",
+            "journal": "[local-path-withheld]",
+            "listing": "e0bfedd4-0b32-4e2a-ab32-6c04876d00dd",
+            "mode": "send",
+            "owner": "226c5d4e-e983-4511-b0e4-91a54643bd59",
+            "password": "[REDACTED]",
+            "path": "/market/e0bfedd4-0b32-4e2a-ab32-6c04876d00dd/buy",
+            "payload": {
+              "expected_price": 400,
+              "idempotency_key": "054cddcb-4920-422b-b8e0-cee79c75aa98"
+            },
+            "seller": "52ecb4c2-4239-4e59-9b46-d3dbda53f681",
+            "url": "http://127.0.0.1:60561",
+            "username": "receipt_a46450ab145f20c7"
+          },
+          "timeline": [
+            {
+              "connection_pid": 20472,
+              "database": "sightbreak_receipt_92b3deb142410de7_test",
+              "event": "postgresql_snapshot",
+              "harness_pid": 5580,
+              "monotonic_ns": 258828250000000,
+              "name": "01-before",
+              "state_sha256": "78e74a4116ce0a25fdc1f1be80718d1f2823fa5e687330ebf1818ab14bd34a89",
+              "wall_ns": 1792440546562915200
+            },
+            {
+              "command": [
+                "[local-path-withheld]",
+                "--headless",
+                "--path",
+                "[local-path-withheld]",
+                "--script",
+                "[local-path-withheld]"
+              ],
+              "event": "native_started",
+              "harness_pid": 5580,
+              "monotonic_ns": 258828421000000,
+              "other_native_pids": [],
+              "phase": "send",
+              "pid": 3384,
+              "wall_ns": 1792440546731442100
+            },
+            {
+              "event": "native_finished",
+              "harness_pid": 5580,
+              "monotonic_ns": 258853453000000,
+              "phase": "aborted-client",
+              "pid": 3384,
+              "returncode": 1,
+              "wall_ns": 1792440571760686100
+            }
+          ]
+        }
+      ],
+      "attempt": "attempt-cb5280e303",
+      "classification": "aborted_startup_barrier_failure",
+      "diagnostic_excerpts": [
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-cb5280e303/record-01.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-cb5280e303/record-02.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-cb5280e303/record-03.txt",
+          "matched_lines": []
+        }
+      ],
+      "evidence_files": [
+        "retained-attempts/attempt-cb5280e303/aborted-run-1/01-before.json",
+        "retained-attempts/attempt-cb5280e303/aborted-run-1/scenario.json",
+        "retained-attempts/attempt-cb5280e303/aborted-run-1/timeline.jsonl",
+        "retained-attempts/attempt-cb5280e303/record-01.txt",
+        "retained-attempts/attempt-cb5280e303/record-02.txt",
+        "retained-attempts/attempt-cb5280e303/record-03.txt",
+        "retained-attempts/attempt-cb5280e303/recorded-status.json"
+      ],
+      "judgment": "Upstream response barrier not reached, completed_run_record_count 0; aborted native exit 1. Initial SQL, fixture and three events only; no post-state/recovery.",
+      "recorded_status": {
+        "completed_run_record_count": 0,
+        "error": "RuntimeError: Native request did not reach upstream response barrier",
+        "provenance_limit": "Original harness error/status, not a new replay. Other author pass flags/source identities/control arguments omitted."
+      },
+      "sample_assignment": "not inferred"
+    },
+    {
+      "aborted_cases": [],
+      "attempt": "attempt-ce66957a7b",
+      "classification": "resource_window_failure",
+      "diagnostic_excerpts": [
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-ce66957a7b/record-01.txt",
+          "matched_lines": [
+            {
+              "count": 1,
+              "line": "Resource window unavailable after 20 minutes"
+            }
+          ]
+        }
+      ],
+      "evidence_files": [
+        "retained-attempts/attempt-ce66957a7b/record-01.txt"
+      ],
+      "judgment": "Resource window unavailable after 20 minutes; PID/free-memory preflight text only. No measured transaction or numeric process exit invented.",
+      "recorded_status": null,
+      "sample_assignment": "not inferred"
+    },
+    {
+      "aborted_cases": [],
+      "attempt": "attempt-e4716456d0",
+      "classification": "transcribed_cache_preflight_failure",
+      "diagnostic_excerpts": [
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-e4716456d0/record-01.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-e4716456d0/record-02.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-e4716456d0/record-03.txt",
+          "matched_lines": [
+            {
+              "count": 1,
+              "line": "Historical preflight outcome, transcribed from the retained tool result on 2026-10-19:"
+            },
+            {
+              "count": 1,
+              "line": "RuntimeError: Import cache must come from a clean checkout of the same game tree"
+            },
+            {
+              "count": 1,
+              "line": "Exit code 1. No [identity-withheld] database or native measurement was started."
+            }
+          ]
+        }
+      ],
+      "evidence_files": [
+        "retained-attempts/attempt-e4716456d0/record-01.txt",
+        "retained-attempts/attempt-e4716456d0/record-02.txt",
+        "retained-attempts/attempt-e4716456d0/record-03.txt"
+      ],
+      "judgment": "Transcribed mismatched cache/game tree, exit 1, no DB/native measurement. Source identifiers not mapped; later success claim does not pass this attempt.",
+      "recorded_status": null,
+      "sample_assignment": "not inferred"
+    },
+    {
+      "aborted_cases": [],
+      "attempt": "attempt-f50f658b95",
+      "classification": "startup_pipe_diagnostic",
+      "diagnostic_excerpts": [
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-f50f658b95/record-01.txt",
+          "matched_lines": [
+            {
+              "count": 1,
+              "line": "Before draining: active after 3 seconds"
+            },
+            {
+              "count": 1,
+              "line": "After communicate: exit 0"
+            }
+          ]
+        },
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-f50f658b95/record-02.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-f50f658b95/record-03.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": true,
+          "file": "retained-attempts/attempt-f50f658b95/record-04.txt",
+          "matched_lines": []
+        },
+        {
+          "empty": false,
+          "file": "retained-attempts/attempt-f50f658b95/record-05.txt",
+          "matched_lines": []
+        }
+      ],
+      "evidence_files": [
+        "retained-attempts/attempt-f50f658b95/record-01.txt",
+        "retained-attempts/attempt-f50f658b95/record-02.txt",
+        "retained-attempts/attempt-f50f658b95/record-03.txt",
+        "retained-attempts/attempt-f50f658b95/record-04.txt",
+        "retained-attempts/attempt-f50f658b95/record-05.txt"
+      ],
+      "judgment": "Probe active before pipe drain, exit 0 after communicate; probe ready. Not transaction/restart recovery or proof of all earlier failure causes.",
+      "recorded_status": null,
+      "sample_assignment": "not inferred"
+    }
+  ],
+  "audit_process_interruptions": {
+    "kind": "offline_verifier_syntax_error",
+    "previous_harness_interruption": "User reports prior invocation ended with harness disk I/O error; not a completed review and not an application runtime failure. No prior artifacts overwritten or classified as a runtime result.",
+    "retained_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-neutral-verdict-20261024T084509445459Z",
+    "runtime_failure": false,
+    "source_sha256": "15a880c9fd3d2c292551e551cdbb4ee57688762a58cf71584ed3d6faf964b473",
+    "status_sha256": "81a3321cc171b5c50817ed63b15010f2e590a52e4cc414e1809a76634c6aca4d"
+  },
+  "database_resume": {
+    "judgment": "Status return 3/no server, then start return 0 and health response: recorded availability/setup only, not another transaction recovery or power-loss test.",
+    "record": {
+      "command": [
+        "[local-path-withheld]",
+        "-D",
+        "[local-path-withheld]",
+        "-l",
+        "[local-path-withheld]",
+        "-o",
+        "-h 127.0.0.1 -p 55439 -c max_connections=30 -c shared_buffers=32MB",
+        "-t",
+        "20",
+        "-w",
+        "start"
+      ],
+      "controller_pid": 1412,
+      "finished_wall_ns": 1792715753381829000,
+      "health": [
+        "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit",
+        55439,
+        13868
+      ],
+      "returncode": 0,
+      "started_wall_ns": 1792715743592966500,
+      "status_output": "pg_ctl: no server running\n",
+      "status_returncode": 3
+    }
+  },
+  "interruption_classification": "Harness disk I/O and offline checker/bootstrap syntax errors are audit tooling events, not application runtime failures. Prior artifacts retained untouched."
+}

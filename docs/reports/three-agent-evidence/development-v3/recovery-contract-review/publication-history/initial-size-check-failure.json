@@ -1,0 +1,45 @@
+{
+  "kind": "Publication metadata failure only, not an application/test failure",
+  "error": "Final size accounting mismatch.",
+  "cause": "PowerShell Measure-Object -Property bytes did not sum OrderedDictionary keys, yielding zero aggregate counters. Per-file records and all 272 copies were correct.",
+  "actual_packet_bytes_at_failure": 3123548,
+  "cap_bytes": 3145728,
+  "initial_declared_aggregate_bytes": 0,
+  "correct_copy_bytes": 2859287,
+  "correct_omitted_bytes": 3278016,
+  "initial_metadata_hashes": [
+    {
+      "path": "COPY_VERIFICATION.json",
+      "bytes": 3545,
+      "sha256": "81307ea33158d2fc7f5c79dacb37c8466ea549caf5db70de8df5ce2fcce8e3fe"
+    },
+    {
+      "path": "OMISSIONS.json",
+      "bytes": 114021,
+      "sha256": "682ce73feb1b0ae93d426b04585ad7caee893843045ed6b3873fc79a3c6e8439"
+    },
+    {
+      "path": "PUBLICATION_LEDGER.json",
+      "bytes": 99769,
+      "sha256": "2af505a4112303fb32a4568acce8ad4d335b27c990fd5fc3552ef1a4694775f8"
+    },
+    {
+      "path": "SHA256SUMS",
+      "bytes": 36173,
+      "sha256": "f62e77a9b6a00327f3c66d7a443356568479acea72ba0eaaeaa6378db4a1cfcc"
+    },
+    {
+      "path": "REPORT.md",
+      "bytes": 10549,
+      "sha256": "528e85e7669ff8f93ffeb65b64c5f5ecf917d8de35474f9603a8287f01946c5f"
+    }
+  ],
+  "retention": "Initial COPY_VERIFICATION.json is retained verbatim. Original metadata hashes and zero-counter deltas are recorded here; corrected ledger/checksum files supersede publication metadata only. Copied/frozen artifacts and external bundles are not altered.",
+  "runtime_reexecuted": false,
+  "follow_up_read_only_check_failure": {
+    "error": "Get-History: Cannot bind parameter 'Id'; cannot convert the .gitattributes file path to System.Int64.",
+    "cause": "PowerShell's built-in H alias took precedence over a short hash-helper function name.",
+    "files_written_by_failed_follow_up": 0,
+    "scope": "Publication-only read/hash command; no frozen program or application executed. Final verification uses a non-alias helper name."
+  }
+}

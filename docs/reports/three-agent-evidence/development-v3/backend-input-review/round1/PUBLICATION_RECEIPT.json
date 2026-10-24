@@ -1,0 +1,56 @@
+{
+  "schema": "bounded-backend-evidence-publication-receipt-v1",
+  "created_utc": "2026-10-23T00:30:21.499696+00:00",
+  "all_collected_binding_checks_passed": false,
+  "packaging_checks": [
+    {
+      "check": "nested exact-byte attributes cover every current payload",
+      "passed": true,
+      "returncode": 0,
+      "attribute_records": 364,
+      "expected_records": 364
+    },
+    {
+      "check": "all publication payloads including raw logs are unignored",
+      "passed": true,
+      "missing": [],
+      "untracked_returncode": 0,
+      "tracked_returncode": 0
+    },
+    {
+      "check": "Git clean bytes preserved docs/reports/three-agent-evidence/development-v3/backend-input-review/round1/verdict/NEUTRAL_VERDICT.md",
+      "passed": true,
+      "expected_blob": "89b84707204a34cde8262593266fcb1fa1720af6",
+      "actual_stdout": "89b84707204a34cde8262593266fcb1fa1720af6\n",
+      "returncode": 0
+    },
+    {
+      "check": "Git clean bytes preserved docs/reports/three-agent-evidence/development-v3/backend-input-review/round1/verdict/FROZEN.json",
+      "passed": true,
+      "expected_blob": "df0d60d311a62f5ae98b785da54561ef8b5cd057",
+      "actual_stdout": "df0d60d311a62f5ae98b785da54561ef8b5cd057\n",
+      "returncode": 0
+    },
+    {
+      "check": "Git clean bytes preserved docs/reports/three-agent-evidence/development-v3/backend-input-review/round1/released-key/mapping.json",
+      "passed": true,
+      "expected_blob": "d5418043fa69b2061ee635c6f3980d4131e51122",
+      "actual_stdout": "d5418043fa69b2061ee635c6f3980d4131e51122\n",
+      "returncode": 0
+    },
+    {
+      "check": "Git clean bytes preserved docs/reports/three-agent-evidence/development-v3/backend-input-review/source-review/original/SOURCE_REVIEW.md",
+      "passed": true,
+      "expected_blob": "c6acad445f15dbd6f93fc0276fe3cae90ea11110",
+      "actual_stdout": "c6acad445f15dbd6f93fc0276fe3cae90ea11110\n",
+      "returncode": 0
+    }
+  ],
+  "packaging_checks_passed": true,
+  "controls": "UNEXECUTED; no retained scripts rerun",
+  "source_safety": "INSPECTION_ONLY",
+  "freeze_preserved": "cfeaa74dce6172fb222e6a7cbbefadb7383fd9169332dd51fd94865294908e8a",
+  "neutral_verdict_preserved": "f76906b5b3ee735d65eedef6bf23998d274a614778fb9e76c196ba39957bfdfa",
+  "checksum_rule": "Each PUBLISHED_SHA256SUMS.txt covers every file in its directory recursively except itself. Manifest anchors are returned outside their own payload.",
+  "supersession": "Append-only qualification; no old verdict/evidence file is superseded or rewritten."
+}

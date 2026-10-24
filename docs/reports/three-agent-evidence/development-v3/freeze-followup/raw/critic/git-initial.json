@@ -1,0 +1,59 @@
+[
+  {
+    "command": [
+      "git",
+      "status",
+      "--short",
+      "--branch"
+    ],
+    "exit": 0,
+    "stdout": "## integration/sightbreak-v3-validation\n M .github/workflows/engineering.yml\n M game/export_presets.cfg\n M game/project.godot\n M scripts/build_manifest.py\n M scripts/reload_negative_controls.py\n M scripts/run_network_campaign.py\n M scripts/simulate_network.py\n M scripts/test_build_manifest.py\n M scripts/test_connection_lifecycle.py\n M scripts/test_network_soak.py\n M scripts/validate_matrix.py\n M scripts/verify_builds.py\n M scripts/verify_integration_export.py\n M scripts/verify_offline_export.py\n?? .github/workflows/v3-development.yml\n?? docs/reports/three-agent-evidence/development-v3/backend-input-review/\n?? scripts/export_flow.py\n?? scripts/godot_process.py\n?? scripts/matrix_process.py\n?? scripts/ocr_process.py\n?? scripts/offline_hud.py\n?? scripts/test_export_flow.py\n?? scripts/test_export_ui.py\n?? scripts/test_godot_process.py\n?? scripts/test_matrix_process.py\n?? scripts/test_offline_hud.py\n?? scripts/test_reload_negative_controls.py\n?? scripts/test_source_identity.py\n?? scripts/test_validate_matrix.py\n?? scripts/test_verify_builds.py\n?? scripts/verify_packaged_builds.py\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit": 0,
+    "stdout": "320e0ef3cca01566bb5858c90a8021b136737be0\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "branch",
+      "--show-current"
+    ],
+    "exit": 0,
+    "stdout": "integration/sightbreak-v3-validation\n",
+    "stderr": ""
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--name-status"
+    ],
+    "exit": 0,
+    "stdout": "M\t.github/workflows/engineering.yml\nM\tgame/export_presets.cfg\nM\tgame/project.godot\nM\tscripts/build_manifest.py\nM\tscripts/reload_negative_controls.py\nM\tscripts/run_network_campaign.py\nM\tscripts/simulate_network.py\nM\tscripts/test_build_manifest.py\nM\tscripts/test_connection_lifecycle.py\nM\tscripts/test_network_soak.py\nM\tscripts/validate_matrix.py\nM\tscripts/verify_builds.py\nM\tscripts/verify_integration_export.py\nM\tscripts/verify_offline_export.py\n",
+    "stderr": "warning: in the working copy of '.github/workflows/engineering.yml', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'game/export_presets.cfg', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'game/project.godot', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'scripts/build_manifest.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'scripts/reload_negative_controls.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'scripts/run_network_campaign.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'scripts/simulate_network.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'scripts/test_build_manifest.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'scripts/test_connection_lifecycle.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'scripts/test_network_soak.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'scripts/validate_matrix.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'scripts/verify_builds.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'scripts/verify_integration_export.py', LF will be replaced by CRLF the next time Git touches it\nwarning: in the working copy of 'scripts/verify_offline_export.py', LF will be replaced by CRLF the next time Git touches it\n"
+  },
+  {
+    "command": [
+      "git",
+      "ls-files",
+      "--stage",
+      "--",
+      "scripts/setup.sh",
+      "scripts/setup-android.sh",
+      "scripts/export.sh",
+      "scripts/godot.sh",
+      "backend/dev-db.sh"
+    ],
+    "exit": 0,
+    "stdout": "100755 d3942005473723a2aa1362f78b028217661ff606 0\tbackend/dev-db.sh\n100755 6ef9545c14f66f9802455b902774d8ca57fa892e 0\tscripts/export.sh\n100755 19c3a11ba58a144ae14e7e1bab2facb900a798af 0\tscripts/godot.sh\n100755 a1d19b0bff58d0b2b1483092655ba55817525d56 0\tscripts/setup-android.sh\n100755 019bb9b2112d19a759e98c3d1dde437dc3aff141 0\tscripts/setup.sh\n",
+    "stderr": ""
+  }
+]

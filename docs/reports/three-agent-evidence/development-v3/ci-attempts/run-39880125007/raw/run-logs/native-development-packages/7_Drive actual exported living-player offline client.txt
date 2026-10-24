@@ -1,0 +1,50 @@
+﻿2026-10-23T00:52:40.9242528Z ##[group]Run .venv/bin/python scripts/verify_offline_export.py --display :107 --timeout 300 --output builds/v3-export-offline
+2026-10-23T00:52:40.9243674Z [36;1m.venv/bin/python scripts/verify_offline_export.py --display :107 --timeout 300 --output builds/v3-export-offline[0m
+2026-10-23T00:52:40.9309026Z shell: /usr/bin/bash -e {0}
+2026-10-23T00:52:40.9309323Z ##[endgroup]
+2026-10-23T00:53:29.7945133Z {
+2026-10-23T00:53:29.7945721Z   "passed": false,
+2026-10-23T00:53:29.7947068Z   "error": "Rendered positive-health/ammunition check failed: ('800 - FUNDS\\nELIMINATED - SPECTATING\\n', 'RELOADING 0.1s\\nFRAG x1 SMOKE x1\\n')",
+2026-10-23T00:53:29.7948727Z   "source": {
+2026-10-23T00:53:29.7949419Z     "source_commit": "2a026e61cabee3c66334066d45e92eb3ec6c2641",
+2026-10-23T00:53:29.7950477Z     "source_game_tree": "172704d0e82c4e74dfc35f218ab2645fd908f970",
+2026-10-23T00:53:29.7951839Z     "source_content_sha256": "7561f44322a7fc35a08e67ba8b3e8dd322f46a45c03ff42e684efa988c0c2407",
+2026-10-23T00:53:29.7953690Z     "source_validation_sha256": "4886bb4fb01b3769b98891c90bf80c28ee865b30f9e489acd6a309d3932b2407",
+2026-10-23T00:53:29.7956115Z     "source_game_dirty": false,
+2026-10-23T00:53:29.7956515Z     "source_dirty": false
+2026-10-23T00:53:29.7956903Z   },
+2026-10-23T00:53:29.7957548Z   "executable_sha256": "58b72b4ed0a67619f7b39e20c60b20214f6976e59b60934bc1cdf9babceaf8aa",
+2026-10-23T00:53:29.7958367Z   "events": [
+2026-10-23T00:53:29.7958704Z     "01-menu",
+2026-10-23T00:53:29.7959034Z     "02-offline-spawn",
+2026-10-23T00:53:29.7959426Z     "03-requisition",
+2026-10-23T00:53:29.7959810Z     "04-move-aim",
+2026-10-23T00:53:29.7960127Z     "05-after-fire",
+2026-10-23T00:53:29.7960465Z     "06-after-reload"
+2026-10-23T00:53:29.7960780Z   ],
+2026-10-23T00:53:29.7961244Z   "controller_sha256": "226723b88a4161b20a82ac4562c2214ea2e67f70525994c9b7ceed3f10fbde00",
+2026-10-23T00:53:29.7961888Z   "watchdog_error": "Export controller exited 1",
+2026-10-23T00:53:29.7962568Z   "watchdog": {
+2026-10-23T00:53:29.7962863Z     "passed": false,
+2026-10-23T00:53:29.7963158Z     "status": "failed",
+2026-10-23T00:53:29.7963431Z     "command": [
+2026-10-23T00:53:29.7963725Z       "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+2026-10-23T00:53:29.7964334Z       "-B",
+2026-10-23T00:53:29.7964679Z       "/home/runner/work/sightbreak/sightbreak/scripts/verify_offline_export.py",
+2026-10-23T00:53:29.7965092Z       "--_export-flow-worker",
+2026-10-23T00:53:29.7965328Z       "--display",
+2026-10-23T00:53:29.7965518Z       ":107",
+2026-10-23T00:53:29.7965702Z       "--timeout",
+2026-10-23T00:53:29.7965884Z       "300",
+2026-10-23T00:53:29.7966063Z       "--output",
+2026-10-23T00:53:29.7966269Z       "builds/v3-export-offline"
+2026-10-23T00:53:29.7966501Z     ],
+2026-10-23T00:53:29.7966691Z     "timeout_seconds": 300.0,
+2026-10-23T00:53:29.7966969Z     "process_receipt": "watchdog.process.json",
+2026-10-23T00:53:29.7967433Z     "controller_sha256": "226723b88a4161b20a82ac4562c2214ea2e67f70525994c9b7ceed3f10fbde00",
+2026-10-23T00:53:29.7967868Z     "worker_exit": 1,
+2026-10-23T00:53:29.7968074Z     "seconds": 48.805,
+2026-10-23T00:53:29.7968301Z     "error": "Export controller exited 1"
+2026-10-23T00:53:29.7968555Z   }
+2026-10-23T00:53:29.7968728Z }
+2026-10-23T00:53:29.8025900Z ##[error]Process completed with exit code 1.

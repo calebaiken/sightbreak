@@ -1,0 +1,11 @@
+299: def trade_json(t):
+300:     from sqlalchemy.orm import object_session
+301:     db = object_session(t)
+302:     offer_items = {owner: [item_json(db.get(Item, item_id)) for item_id in ids] for owner, ids in t.offers.items()}
+303:     names = {pid: db.get(Player, pid).display_name for pid in (t.a, t.b)}
+304:     return dict(id=t.id,a=t.a,b=t.b,names=names,revision=t.revision,offers=t.offers,offer_items=offer_items,confirmations=t.confirmations,state=t.state)
+309: @app.get('/trades')
+310: def trades(authorization:Auth=None):
+311:     with DBSession(engine) as db:
+312:         p=authenticated(db,authorization)
+313:         return {'trades':[trade_json(t) for t in db.scalars(select(Trade).where(or_(Trade.a==p.id,Trade.b==p.id)))]}

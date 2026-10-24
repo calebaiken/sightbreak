@@ -1,0 +1,24 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+___________ test_trade_read_payload_privacy_and_query_budget[40-20] ___________
+backend\tests\test_trade_reads.py:111: in test_trade_read_payload_privacy_and_query_budget
+    assert all(size <= 500 for size in parameter_counts), parameter_counts
+E   AssertionError: [1, 1, 2, 1600, 41]
+E   assert False
+E    +  where False = all(<generator object test_trade_read_payload_privacy_and_query_budget.<locals>.<genexpr> at 0x000001C7F8B48BA0>)
+___________ test_trade_read_payload_privacy_and_query_budget[501-0] ___________
+backend\tests\test_trade_reads.py:111: in test_trade_read_payload_privacy_and_query_budget
+    assert all(size <= 500 for size in parameter_counts), parameter_counts
+E   AssertionError: [1, 1, 2, 502]
+E   assert False
+E    +  where False = all(<generator object test_trade_read_payload_privacy_and_query_budget.<locals>.<genexpr> at 0x000001C7F8D292F0>)
+============================== warnings summary ===============================
+..\..\sightbreak-backend-trade-env\venv312\Lib\site-packages\fastapi\testclient.py:1
+  C:\Users\blith\AppData\Local\Temp\opencode\sightbreak-backend-trade-env\venv312\Lib\site-packages\fastapi\testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED backend\tests\test_trade_reads.py::test_trade_read_payload_privacy_and_query_budget[40-20]
+FAILED backend\tests\test_trade_reads.py::test_trade_read_payload_privacy_and_query_budget[501-0]
+2 failed, 1 warning in 3.54s

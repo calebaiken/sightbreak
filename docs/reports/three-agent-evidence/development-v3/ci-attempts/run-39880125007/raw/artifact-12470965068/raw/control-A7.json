@@ -1,0 +1,15 @@
+{
+  "control": "A7",
+  "description": "an unlogged reload voice plays before the first scheduled event",
+  "edits": [
+    {
+      "path": "/home/runner/work/_temp/sightbreak-v3-controls/game/tests/reload_audio_capture.gd",
+      "old": "\tactor.start_reload()\n",
+      "new": "\taudio._voices[0].stream = SBReloadAudio._streams[\"unlatch\"][1]\n\taudio._voices[0].play()\n\tactor.start_reload()\n",
+      "matches": 1,
+      "newlines": "LF",
+      "before_sha256": "8d37c5b390d537cb49c542f2fe49348bab3dfc9c9cc0f6e6057652bd6f798013",
+      "after_sha256": "64ee916d0fba36d889024d7d624176bae157564713a80e75b94157f38fde826a"
+    }
+  ]
+}

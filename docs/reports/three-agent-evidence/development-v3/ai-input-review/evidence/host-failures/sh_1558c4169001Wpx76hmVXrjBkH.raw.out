@@ -1,0 +1,14 @@
+Process terminated.
+The type initializer for 'Microsoft.PowerShell.Telemetry.ApplicationInsightsTelemetry' threw an exception.
+   at System.Environment.FailFast(System.Runtime.CompilerServices.StackCrawlMarkHandle, System.String, System.Runtime.CompilerServices.ObjectHandleOnStack, System.String)
+   at System.Environment.FailFast(System.Threading.StackCrawlMark ByRef, System.String, System.Exception, System.String)
+   at System.Environment.FailFast(System.String, System.Exception)
+   at Microsoft.PowerShell.UnmanagedPSEntry.Start(System.String[], Int32)
+   at Microsoft.PowerShell.ManagedPSEntry.Main(System.String[])
+System.TypeInitializationException: The type initializer for 'Microsoft.PowerShell.Telemetry.ApplicationInsightsTelemetry' threw an exception.
+ ---> System.OutOfMemoryException: Exception of type 'System.OutOfMemoryException' was thrown.
+   at Microsoft.PowerShell.Telemetry.ApplicationInsightsTelemetry..cctor()
+   --- End of inner exception stack trace ---
+   at Microsoft.PowerShell.Telemetry.ApplicationInsightsTelemetry.SendPSCoreStartupTelemetry(String mode, Double parametersUsed)
+   at Microsoft.PowerShell.ConsoleHost.Start(String bannerText, String helpText, Boolean issProvidedExternally)
+   at Microsoft.PowerShell.UnmanagedPSEntry.Start(String[] args, Int32 argc)

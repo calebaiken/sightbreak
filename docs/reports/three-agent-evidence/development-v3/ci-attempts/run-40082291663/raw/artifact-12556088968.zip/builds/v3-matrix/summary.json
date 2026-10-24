@@ -1,0 +1,1271 @@
+{
+  "commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+  "dirty": false,
+  "source": {
+    "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+    "source_game_tree": "9624d64bab5da8fc32b74c79b3d2997ac2eabf3f",
+    "source_content_sha256": "f3c1e5681180640b391da1ca811b4b9be9b07045ff035d27f126c4b5a3bfeb4d",
+    "source_validation_sha256": "90c81de87900ef776a68fbcac37f17bc0e74e7ed135154bf40a014ec992e68c5",
+    "source_game_dirty": false,
+    "source_dirty": false
+  },
+  "validation_source": {
+    "commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+    "game_tree": "9624d64bab5da8fc32b74c79b3d2997ac2eabf3f",
+    "dirty": false,
+    "status": "",
+    "content_sha256": "90c81de87900ef776a68fbcac37f17bc0e74e7ed135154bf40a014ec992e68c5",
+    "source_paths": [
+      "game",
+      "scripts",
+      "backend",
+      "server",
+      ".github",
+      ".gitignore",
+      "README.md"
+    ],
+    "source_files": 368
+  },
+  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "checks": [
+    {
+      "name": "import",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--editor",
+        "--import",
+        "--quit"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 4.276,
+      "log": "import.log"
+    },
+    {
+      "name": "actor",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/actor_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 2.119,
+      "log": "actor.log"
+    },
+    {
+      "name": "world",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/world_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.415,
+      "log": "world.log"
+    },
+    {
+      "name": "hit-feedback",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/hit_feedback_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.716,
+      "log": "hit-feedback.log"
+    },
+    {
+      "name": "weapon-integrity",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/weapon_integrity_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 5.727,
+      "log": "weapon-integrity.log"
+    },
+    {
+      "name": "hit-volume",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/hit_volume_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 4.624,
+      "log": "hit-volume.log"
+    },
+    {
+      "name": "hit-history",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/hit_history_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.415,
+      "log": "hit-history.log"
+    },
+    {
+      "name": "render-budget",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/render_budget_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.967,
+      "log": "render-budget.log"
+    },
+    {
+      "name": "smoke-presentation",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/smoke_presentation_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.816,
+      "log": "smoke-presentation.log"
+    },
+    {
+      "name": "match",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/match_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 1.067,
+      "log": "match.log"
+    },
+    {
+      "name": "state-privacy",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/state_privacy_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.816,
+      "log": "state-privacy.log"
+    },
+    {
+      "name": "snapshot-buffer",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/snapshot_buffer_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.265,
+      "log": "snapshot-buffer.log"
+    },
+    {
+      "name": "input-stream",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/input_stream_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.315,
+      "log": "input-stream.log"
+    },
+    {
+      "name": "movement-replay",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/movement_prediction_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 6.275,
+      "log": "movement-replay.log"
+    },
+    {
+      "name": "input-lifecycle",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/input_lifecycle_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 4.176,
+      "log": "input-lifecycle.log"
+    },
+    {
+      "name": "peer-lifecycle",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/peer_lifecycle_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.265,
+      "log": "peer-lifecycle.log"
+    },
+    {
+      "name": "result-outbox",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/result_outbox_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.265,
+      "log": "result-outbox.log"
+    },
+    {
+      "name": "reconnect-policy",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/reconnect_policy_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.265,
+      "log": "reconnect-policy.log"
+    },
+    {
+      "name": "reconnect-independent",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/independent_reconnect_review_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.515,
+      "log": "reconnect-independent.log"
+    },
+    {
+      "name": "resume-admission",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/independent_resume_admission_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 1.167,
+      "log": "resume-admission.log"
+    },
+    {
+      "name": "lost-welcome",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/lost_welcome_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.966,
+      "log": "lost-welcome.log"
+    },
+    {
+      "name": "resume-alias",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/independent_resume_alias_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 1.468,
+      "log": "resume-alias.log"
+    },
+    {
+      "name": "resume-auth-loss",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/resume_auth_loss_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 7.981,
+      "log": "resume-auth-loss.log"
+    },
+    {
+      "name": "bot-ai-regression",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/bot_ai_regression_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 1.167,
+      "log": "bot-ai-regression.log"
+    },
+    {
+      "name": "bots",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/bot_match_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.321,
+      "log": "bots.log"
+    },
+    {
+      "name": "bot-lifecycle",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/bot_lifecycle_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 96.311,
+      "log": "bot-lifecycle.log"
+    },
+    {
+      "name": "profile",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/profile_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.265,
+      "log": "profile.log"
+    },
+    {
+      "name": "touch",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/touch_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.315,
+      "log": "touch.log"
+    },
+    {
+      "name": "main",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/main_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 1.568,
+      "log": "main.log"
+    },
+    {
+      "name": "landscape",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/landscape_ui_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 156.971,
+      "log": "landscape.log"
+    },
+    {
+      "name": "ux-contract",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/ux_contract_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 22.721,
+      "log": "ux-contract.log"
+    },
+    {
+      "name": "hud-overflow",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/hud_overflow_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 8.237,
+      "log": "hud-overflow.log"
+    },
+    {
+      "name": "economy-ui",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/economy_ui_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 1.618,
+      "log": "economy-ui.log"
+    },
+    {
+      "name": "armory-ui",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/armory_ui_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.322,
+      "log": "armory-ui.log"
+    },
+    {
+      "name": "armory-state",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/armory_state_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 9.74,
+      "log": "armory-state.log"
+    },
+    {
+      "name": "menu-state",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/menu_state_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 3.322,
+      "log": "menu-state.log"
+    },
+    {
+      "name": "economy-recovery",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/economy_recovery_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.415,
+      "log": "economy-recovery.log"
+    },
+    {
+      "name": "cosmetics",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/cosmetic_presentation_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.415,
+      "log": "cosmetics.log"
+    },
+    {
+      "name": "weapon-art",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/weapon_art_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 1.168,
+      "log": "weapon-art.log"
+    },
+    {
+      "name": "integration-actor-lifecycle",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/integration_actor_lifecycle_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 1.067,
+      "log": "integration-actor-lifecycle.log"
+    },
+    {
+      "name": "reload-sequence",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/reload_sequence_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 2.872,
+      "log": "reload-sequence.log"
+    },
+    {
+      "name": "reload-audio",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--script",
+        "res://tests/reload_audio_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.816,
+      "log": "reload-audio.log"
+    },
+    {
+      "name": "reload-audio-capture",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "res://tests/reload_audio_capture.gd",
+        "--",
+        "--scenario=reload"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 4.173,
+      "log": "reload-audio-capture.log"
+    },
+    {
+      "name": "reload-audio-cancel",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "res://tests/reload_audio_capture.gd",
+        "--",
+        "--scenario=cancel"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 4.173,
+      "log": "reload-audio-cancel.log"
+    },
+    {
+      "name": "reload-audio-shot",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--headless",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "res://tests/reload_audio_capture.gd",
+        "--",
+        "--scenario=shot"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 4.174,
+      "log": "reload-audio-shot.log"
+    },
+    {
+      "name": "reload-visibility",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--audio-driver",
+        "Dummy",
+        "--rendering-method",
+        "gl_compatibility",
+        "--script",
+        "res://tests/reload_visibility_test.gd",
+        "--",
+        "--step=2"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 136.313,
+      "log": "reload-visibility.log"
+    },
+    {
+      "name": "reload-finish-sunlit",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--audio-driver",
+        "Dummy",
+        "--rendering-method",
+        "gl_compatibility",
+        "--script",
+        "res://tests/reload_discolour_probe.gd",
+        "--",
+        "--assert",
+        "--conditions=base"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 52.789,
+      "log": "reload-finish-sunlit.log"
+    },
+    {
+      "name": "reload-finish-shade",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--audio-driver",
+        "Dummy",
+        "--rendering-method",
+        "gl_compatibility",
+        "--script",
+        "res://tests/reload_discolour_probe.gd",
+        "--",
+        "--assert",
+        "--conditions=base",
+        "--view=shade"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 63.43,
+      "log": "reload-finish-shade.log"
+    },
+    {
+      "name": "viewmodel-light",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--audio-driver",
+        "Dummy",
+        "--rendering-method",
+        "gl_compatibility",
+        "--script",
+        "res://tests/viewmodel_light_probe.gd",
+        "--",
+        "--assert",
+        "--poses=ready,grab"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 51.342,
+      "log": "viewmodel-light.log"
+    },
+    {
+      "name": "reload-finish-skin",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--audio-driver",
+        "Dummy",
+        "--rendering-method",
+        "gl_compatibility",
+        "--script",
+        "res://tests/reload_discolour_probe.gd",
+        "--",
+        "--assert",
+        "--conditions=base",
+        "--skin"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 52.641,
+      "log": "reload-finish-skin.log"
+    },
+    {
+      "name": "account-output-unit",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_account_network_output.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.164,
+      "log": "account-output-unit.log"
+    },
+    {
+      "name": "worker-unit",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "server/tests",
+        "-v"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.916,
+      "log": "worker-unit.log"
+    },
+    {
+      "name": "network",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "bash",
+        "scripts/test_network.sh"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 4.973,
+      "log": "network.log"
+    },
+    {
+      "name": "network-soak",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_network_soak.py",
+        "--out",
+        "/home/runner/work/sightbreak/sightbreak/builds/v3-matrix/soak"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 64.656,
+      "log": "network-soak.log"
+    },
+    {
+      "name": "network-soak-ten",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_network_soak.py",
+        "--clients",
+        "10",
+        "--port",
+        "29840",
+        "--out",
+        "/home/runner/work/sightbreak/sightbreak/builds/v3-matrix/soak-ten"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 64.809,
+      "log": "network-soak-ten.log"
+    },
+    {
+      "name": "connection-lifecycle",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_connection_lifecycle.py",
+        "--out",
+        "/home/runner/work/sightbreak/sightbreak/builds/v3-matrix/connections"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 37.884,
+      "log": "connection-lifecycle.log"
+    },
+    {
+      "name": "bridge-transport",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_bridge_transport.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 4.476,
+      "log": "bridge-transport.log"
+    },
+    {
+      "name": "build-manifest",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_build_manifest.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.215,
+      "log": "build-manifest.log"
+    },
+    {
+      "name": "matrix-harness-unit",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_validate_matrix.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 4.576,
+      "log": "matrix-harness-unit.log"
+    },
+    {
+      "name": "matrix-process-unit",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_matrix_process.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.165,
+      "log": "matrix-process-unit.log"
+    },
+    {
+      "name": "source-identity-unit",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_source_identity.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.415,
+      "log": "source-identity-unit.log"
+    },
+    {
+      "name": "verifier-unit",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_verify_builds.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 1.867,
+      "log": "verifier-unit.log"
+    },
+    {
+      "name": "network-harness-unit",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_godot_process.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 2.571,
+      "log": "network-harness-unit.log"
+    },
+    {
+      "name": "offline-hud-unit",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_offline_hud.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.115,
+      "log": "offline-hud-unit.log"
+    },
+    {
+      "name": "export-ui-unit",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_export_ui.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.165,
+      "log": "export-ui-unit.log"
+    },
+    {
+      "name": "export-flow-unit",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_export_flow.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 9.489,
+      "log": "export-flow-unit.log"
+    },
+    {
+      "name": "negative-audio-harness-unit",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_reload_negative_controls.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.315,
+      "log": "negative-audio-harness-unit.log"
+    },
+    {
+      "name": "reload-contact",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_reload_contact.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 0.115,
+      "log": "reload-contact.log"
+    },
+    {
+      "name": "protocol-matrix",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "bash",
+        "scripts/test_protocol_compat.sh",
+        "/home/runner/work/sightbreak/sightbreak/builds/v3-matrix/protocol"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 159.163,
+      "log": "protocol-matrix.log"
+    },
+    {
+      "name": "hostile-handshake",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "bash",
+        "scripts/test_handshake_hardening.sh",
+        "/home/runner/work/sightbreak/sightbreak/builds/v3-matrix/handshake"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 51.423,
+      "log": "hostile-handshake.log"
+    },
+    {
+      "name": "catalog-fixture",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/export_catalog_fixture.py",
+        "--check"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 1.919,
+      "log": "catalog-fixture.log"
+    },
+    {
+      "name": "postgresql",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "-m",
+        "pytest",
+        "backend/tests",
+        "-q"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 7.031,
+      "log": "postgresql.log"
+    },
+    {
+      "name": "account-protocol",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_account_isolated.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 6.479,
+      "log": "account-protocol.log"
+    },
+    {
+      "name": "account-capacity",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_admission_capacity.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 6.33,
+      "log": "account-capacity.log"
+    },
+    {
+      "name": "outbox-crash",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_result_outbox.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 5.227,
+      "log": "outbox-crash.log"
+    },
+    {
+      "name": "native-economy",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_native_economy.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 5.878,
+      "log": "native-economy.log"
+    },
+    {
+      "name": "account-full-reconnect",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "scripts/test_full_account_reconnect.py",
+        "--out",
+        "/home/runner/work/sightbreak/sightbreak/builds/v3-matrix/account-full-reconnect"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 31.451,
+      "log": "account-full-reconnect.log"
+    },
+    {
+      "name": "economy-conservation",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/.venv/bin/python",
+        "backend/simulate.py"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 1.017,
+      "log": "economy-conservation.log"
+    },
+    {
+      "name": "native-render-lifecycle",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "bash",
+        "scripts/test_render.sh"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 24.418,
+      "log": "native-render-lifecycle.log"
+    },
+    {
+      "name": "native-hud-overflow",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "res://tests/hud_overflow_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 98.141,
+      "log": "native-hud-overflow.log"
+    },
+    {
+      "name": "native-paint-visibility",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "command": [
+        "/home/runner/work/sightbreak/sightbreak/scripts/godot.sh",
+        "--audio-driver",
+        "Dummy",
+        "--script",
+        "res://tests/paint_visibility_test.gd"
+      ],
+      "exit": 0,
+      "logged_errors": false,
+      "passed": true,
+      "seconds": 4.178,
+      "log": "native-paint-visibility.log"
+    },
+    {
+      "name": "nested-resource-cleanup",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "passed": true,
+      "log": "nested-resource-cleanup.json"
+    },
+    {
+      "name": "frozen-source-identity",
+      "source_commit": "4099facb21a9242d41df79fd9e75bbbea031f2e0",
+      "passed": true,
+      "log": "source-identity.json"
+    }
+  ]
+}

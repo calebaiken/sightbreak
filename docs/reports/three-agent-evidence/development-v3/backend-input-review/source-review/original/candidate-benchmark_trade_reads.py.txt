@@ -1,0 +1,146 @@
+1: #!/usr/bin/env python3
+2: """Matched PostgreSQL trade-read measurement; Windows/Linux, no running API needed.
+3: 
+4: Set SIGHTBREAK_TEST_ADMIN_URL to a PostgreSQL admin URL. Only a newly created,
+5: uniquely named *_test database is populated/dropped. --source selects the backend
+6: under test; this script and its deterministic fixture stay fixed across revisions.
+7: """
+8: import argparse
+9: from datetime import datetime, timezone
+10: import hashlib
+11: import importlib.metadata
+12: import json
+13: import math
+14: import os
+15: from pathlib import Path
+16: import platform
+17: import secrets
+18: import statistics
+19: import subprocess
+20: import sys
+21: import time
+22: 
+23: import psycopg
+24: from psycopg import sql
+25: from sqlalchemy.engine import make_url
+26: 
+27: ROOT = Path(__file__).resolve().parents[1]
+28: 
+29: 
+30: def sha256(path):
+31:     with path.open('rb') as stream:
+32:         return hashlib.file_digest(stream, 'sha256').hexdigest()
+33: 
+34: 
+35: def identity(root):
+36:     def git(*args):
+37:         return subprocess.check_output(['git', *args], cwd=root, text=True).strip()
+38:     return {'commit': git('rev-parse', 'HEAD'),
+39:             'backend_tree': git('rev-parse', 'HEAD:backend'),
+40:             'backend_dirty': git('status', '--porcelain', '--', 'backend'),
+41:             'backend_files': {str(p.relative_to(root)).replace('\\', '/'): sha256(p)
+42:                               for p in (root / 'backend').rglob('*')
+43:                               if p.is_file() and p.suffix in ('.py', '.sql', '.toml', '.lock', '.json')
+44:                               and '__pycache__' not in p.parts}}
+45: 
+46: 
+47: def main():
+48:     parser = argparse.ArgumentParser(description=__doc__)
+49:     parser.add_argument('--source', type=Path, default=ROOT)
+50:     parser.add_argument('--out', type=Path, required=True)
+51:     parser.add_argument('--samples', type=int, default=10)
+52:     args = parser.parse_args()
+53:     if args.samples < 2:
+54:         parser.error('--samples must be at least two')
+55:     source = args.source.resolve()
+56:     args.out.mkdir(parents=True, exist_ok=False)
+57:     initial = identity(source)
+58:     if initial['backend_dirty']:
+59:         raise SystemExit('Backend must be committed/clean before measurement')
+60:     admin = make_url(os.environ['SIGHTBREAK_TEST_ADMIN_URL'])
+61:     if admin.get_backend_name() != 'postgresql':
+62:         raise SystemExit('Real PostgreSQL required')
+63:     database = 'sightbreak_trade_read_' + secrets.token_hex(6) + '_test'
+64:     db_url = admin.set(drivername='postgresql+psycopg', database=database)
+65:     report = {'started_at': datetime.now(timezone.utc).isoformat(), 'source': initial,
+66:               'harness_sha256': sha256(Path(__file__)),
+67:               'fixture_sha256': sha256(ROOT / 'backend/tests/test_trade_reads.py'),
+68:               'platform': platform.platform(), 'python': sys.version,
+69:               'packages': {p: importlib.metadata.version(p) for p in
+70:                            ('sqlalchemy', 'psycopg', 'psycopg-binary', 'fastapi', 'starlette', 'httpx', 'pytest')},
+71:               'database': database, 'rows': [], 'completed': False}
+72:     admin_dsn = admin.set(drivername='postgresql').render_as_string(hide_password=False)
+73:     engine = None
+74:     with psycopg.connect(admin_dsn, autocommit=True) as connection:
+75:         report['postgresql'] = connection.execute('SELECT version()').fetchone()[0]
+76:         connection.execute(sql.SQL('CREATE DATABASE {}').format(sql.Identifier(database)))
+77:     try:
+78:         os.environ['DATABASE_URL'] = db_url.render_as_string(hide_password=False)
+79:         # Use the frozen backend, but the same new measurement fixture for both.
+80:         sys.path[:0] = [str(source / 'backend'), str(source / 'backend/tests'),
+81:                         str(ROOT / 'backend/tests')]
+82:         from app import Base, app, engine
+83:         from fastapi.testclient import TestClient
+84:         from sqlalchemy import event, text
+85:         from test_trade_reads import canonical_trades, database_snapshot, seed_workload
+86:         Base.metadata.create_all(engine)
+87:         with engine.begin() as db:
+88:             for migration in sorted((source / 'backend/migrations').glob('*.sql')):
+89:                 db.exec_driver_sql(migration.read_text())
+90:         for count, per_side in ((0, 0), (1, 0), (1, 2), (10, 1), (40, 1), (40, 20), (501, 0)):
+91:             with engine.begin() as db:
+92:                 db.execute(text('TRUNCATE ' + ', '.join('"' + t + '"' for t in Base.metadata.tables) + ' CASCADE'))
+93:             headers, expected = seed_workload(count, per_side)
+94:             expected = canonical_trades({'trades': expected})
+95:             before = database_snapshot()
+96:             row = {'trades': count, 'items_per_side': per_side, 'samples': [],
+97:                    'budget': 3 + (math.ceil((count + 1) / 500) if count else 0) + math.ceil(count * per_side * 2 / 500)}
+98:             with TestClient(app) as client:
+99:                 # Warm the pool/SQL compilation, never an ORM Session across requests.
+100:                 for _ in range(2):
+101:                     response = client.get('/trades', headers=headers)
+102:                     assert response.status_code == 200
+103:                     assert canonical_trades(response.json()) == expected
+104:                 statements = []
+105:                 def record(conn, cursor, statement, parameters, context, executemany):
+106:                     statements.append(statement)
+107:                 event.listen(engine, 'before_cursor_execute', record)
+108:                 try:
+109:                     for _ in range(args.samples):
+110:                         statements.clear()
+111:                         start = time.perf_counter_ns()
+112:                         response = client.get('/trades', headers=headers)
+113:                         elapsed = (time.perf_counter_ns() - start) / 1e6
+114:                         assert response.status_code == 200
+115:                         payload = canonical_trades(response.json())
+116:                         assert payload == expected
+117:                         assert all(s.lstrip().upper().startswith('SELECT') for s in statements)
+118:                         row['samples'].append({'milliseconds': elapsed, 'statements': len(statements)})
+119:                     # SQL shapes only: never bearer tokens or bound parameters.
+120:                     row['sql_shapes'] = list(dict.fromkeys(statements))
+121:                 finally:
+122:                     event.remove(engine, 'before_cursor_execute', record)
+123:             row['response_sha256'] = hashlib.sha256(json.dumps(expected, sort_keys=True, separators=(',', ':')).encode()).hexdigest()
+124:             row['read_only'] = database_snapshot() == before
+125:             assert row['read_only']
+126:             durations = sorted(s['milliseconds'] for s in row['samples'])
+127:             row['median_ms'] = statistics.median(durations)
+128:             row['p95_ms'] = durations[math.ceil(len(durations) * .95) - 1]
+129:             row['query_counts'] = sorted({s['statements'] for s in row['samples']})
+130:             report['rows'].append(row)
+131:             (args.out / 'measurement.json').write_text(json.dumps(report, indent=2) + '\n')
+132:             print(json.dumps({k: row[k] for k in ('trades', 'items_per_side', 'query_counts', 'median_ms', 'p95_ms', 'read_only')}), flush=True)
+133:         report['final_source'] = identity(source)
+134:         assert report['final_source'] == initial, 'Backend changed during the measurement'
+135:         report['completed'] = True
+136:     finally:
+137:         if engine is not None:
+138:             engine.dispose()
+139:         with psycopg.connect(admin_dsn, autocommit=True) as connection:
+140:             connection.execute(sql.SQL('DROP DATABASE {} WITH (FORCE)').format(sql.Identifier(database)))
+141:         report['database_dropped'] = True
+142:         (args.out / 'measurement.json').write_text(json.dumps(report, indent=2) + '\n')
+143: 
+144: 
+145: if __name__ == '__main__':
+146:     main()

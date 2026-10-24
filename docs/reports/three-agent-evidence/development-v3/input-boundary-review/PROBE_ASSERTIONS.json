@@ -1,0 +1,332 @@
+{
+  "assertions": [
+    {
+      "number": 1,
+      "probe_line": 54,
+      "predicate": "accept_trace(\"fresh_batch\", original, 1000)",
+      "label": "fresh batch accepted",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 2,
+      "probe_line": 56,
+      "predicate": "accept_trace(\"identical_queued_retry\", original, 1100)",
+      "label": "unacknowledged identical retry accepted",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 3,
+      "probe_line": 57,
+      "predicate": "state().queue == queued and int(state().ack) == 0",
+      "label": "queued duplicate changes no command identity or ack",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 4,
+      "probe_line": 58,
+      "predicate": "accept_trace(\"altered_queued_retry\", [command(1, Vector2.LEFT, false), command(2, Vector2.LEFT, true)], 1150)",
+      "label": "queued retry accepted without rewriting payload",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 5,
+      "probe_line": 59,
+      "predicate": "state().queue == queued",
+      "label": "altered duplicate cannot rewrite original movement or fire edge",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 6,
+      "probe_line": 61,
+      "predicate": "first.sequence == 1 and first.move == Vector2.RIGHT and first.fire and int(state().ack) == 1",
+      "label": "first original payload consumed once",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 7,
+      "probe_line": 62,
+      "predicate": "accept_trace(\"partially_acked_retry\", original, 1200)",
+      "label": "partially acknowledged batch still has queued intent",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 8,
+      "probe_line": 63,
+      "predicate": "stream.queues[PEER].size() == 1",
+      "label": "partially acknowledged retry does not requeue acked command",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 9,
+      "probe_line": 65,
+      "predicate": "second.sequence == 2 and second.move == Vector2.RIGHT and not second.fire and int(state().ack) == 2",
+      "label": "second original payload consumed once",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 10,
+      "probe_line": 66,
+      "predicate": "stream.queues[PEER].is_empty()",
+      "label": "queue empty after both consumed",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 11,
+      "probe_line": 69,
+      "predicate": "int(state().ack) == 2 and stream.queues[PEER].is_empty()",
+      "label": "fully acknowledged replay cannot create simulation work",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 12,
+      "probe_line": 71,
+      "predicate": "int(state().ack) == 2 and stream.queues[PEER].is_empty()",
+      "label": "altered fully acknowledged replay cannot rewrite work",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 13,
+      "probe_line": 72,
+      "predicate": "accept_trace(\"mixed_acked_and_new_intent\", [command(2), command(3, Vector2.LEFT, true)], 1400)",
+      "label": "mixed batch retains genuine newer intent",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 14,
+      "probe_line": 73,
+      "predicate": "accept_trace(\"new_intent_queued_retry\", [command(3, Vector2.LEFT, true)], 1450)",
+      "label": "genuine queued retry remains accepted",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 15,
+      "probe_line": 75,
+      "predicate": "third.sequence == 3 and third.move == Vector2.LEFT and third.fire",
+      "label": "new intent preserves original left movement and edge",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 16,
+      "probe_line": 76,
+      "predicate": "pop_trace(\"no_duplicate_simulation\").is_empty()",
+      "label": "no duplicate simulation command",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 17,
+      "probe_line": 77,
+      "predicate": "not accept_trace(\"old_epoch\", [command(4)], 1500, EPOCH - 1)",
+      "label": "old epoch rejected",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 18,
+      "probe_line": 78,
+      "predicate": "not accept_trace(\"beyond_ahead_limit\", [command(124)], 1550)",
+      "label": "120-command ahead boundary enforced",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 19,
+      "probe_line": 81,
+      "predicate": "not accept_trace(\"malformed_acked_command_with_new_intent\", [malformed, command(4)], 1600)",
+      "label": "invalid stale payload cannot bypass sanitization",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 20,
+      "probe_line": 82,
+      "predicate": "stream.queues[PEER].is_empty() and int(state().ack) == 3",
+      "label": "rejected batches do not mutate queued intent or ack",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": true,
+        "status": "independently matches recorded event values"
+      }
+    },
+    {
+      "number": 21,
+      "probe_line": 84,
+      "predicate": "not stream.queues.has(PEER) and not stream.acknowledged.has(PEER) and not stream.rates.has(PEER)",
+      "label": "disconnect forgets all stream-owned peer state",
+      "sample-bd249c": {
+        "raw_event_predicate_verified": null,
+        "status": "No post-forget state event retained; recorded aggregate 21/0 and source direct forget/three-map assertion only."
+      },
+      "sample-05ec6c": {
+        "raw_event_predicate_verified": null,
+        "status": "No post-forget state event retained; recorded aggregate 21/0 and source direct forget/three-map assertion only."
+      }
+    }
+  ],
+  "two_fully_acked_return_values_not_asserted": {
+    "probe_lines": [
+      67,
+      68,
+      69,
+      70,
+      71
+    ],
+    "checks_11_12_test_only": "ACK2 and empty queue, not accept return or lifecycle activity"
+  },
+  "forget_check": {
+    "probe_lines": [
+      83,
+      84
+    ],
+    "native_invocation_claim": "direct stream.forget(PEER), not a disconnect event",
+    "input_stream_lines_bd249c": [
+      86,
+      89
+    ],
+    "raw_state_after_forget_captured": false,
+    "scope": "Removal of three stream-owned per-peer maps only; no actor, lifecycle, timer, socket or reconnect assertion."
+  },
+  "runtime_scope": "SceneTree _initialize creates RefCounted SBInputStream and makes direct var_to_bytes/bytes_to_var -> accept/pop calls synchronously. No Match instantiation/physics/network/await/actor/lifecycle timer occurs.",
+  "gate_usage": "Both exact input_gate modules loaded as class context; sanitize references BOOLEAN_FIELDS only. validate/allow_buy are not called by this probe or InputStream.accept.",
+  "known_source_policies_not_native_boundary_proven": [
+    "rate bucket reject when count >90, reset on >=1000ms",
+    "MAX_BATCH12, MAX_AHEAD120, MAX_BACKLOG6",
+    "backlog dropping retains newest two only when queue size>6",
+    "reset_epoch queue/ack clearing",
+    "all finite/vector/angle/weapon/boolean combinations",
+    "compressed Match packet envelope and 1100-byte/8192-decompression checks"
+  ],
+  "driver_scope_limit": "matrix_process.run_process and native_log.failed are imported from outside permitted producer root and were not inspected/published. Exact driver recipe and raw receipts are retained; helper internals are not an independent execution attestation."
+}

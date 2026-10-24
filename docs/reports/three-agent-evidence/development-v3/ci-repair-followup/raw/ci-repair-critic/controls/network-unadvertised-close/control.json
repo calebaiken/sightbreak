@@ -1,0 +1,232 @@
+{
+  "row": {
+    "mode": "network",
+    "fault": "unadvertised-close",
+    "control_passed": true,
+    "error": {
+      "type": "RuntimeError",
+      "message": "Exported window does not advertise the prepared WM_DELETE_WINDOW"
+    },
+    "controller_passed": false,
+    "synthetic_control_not_native_evidence": true
+  },
+  "trace": [
+    {
+      "t": 0.0,
+      "event": "launch",
+      "name": "xvfb",
+      "command": [
+        "synthetic-xvfb",
+        ":99998",
+        "-screen",
+        "0",
+        "1280x720x24",
+        "-nolisten",
+        "tcp"
+      ]
+    },
+    {
+      "t": 0.0,
+      "event": "launch",
+      "name": "server",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ci-repair-critic-20261024T085242Z\\controls\\network-unadvertised-close\\scripts\\godot.sh",
+        "--headless",
+        "--script",
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ci-repair-critic-20261024T085242Z\\controls\\network-unadvertised-close\\scripts\\fixtures\\export_integration.gd",
+        "--",
+        "--output=C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ci-repair-critic-20261024T085242Z\\controls\\network-unadvertised-close\\evidence"
+      ]
+    },
+    {
+      "t": 0.0,
+      "event": "native-init-atoms-and-sync",
+      "display": ":99998"
+    },
+    {
+      "t": 0.0,
+      "event": "launch",
+      "name": "client",
+      "command": [
+        "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-ci-repair-critic-20261024T085242Z\\controls\\network-unadvertised-close\\builds\\linux\\sightbreak.x86_64",
+        "--audio-driver",
+        "Dummy"
+      ]
+    },
+    {
+      "t": 0.0,
+      "event": "focus"
+    },
+    {
+      "t": 0.0,
+      "event": "focus"
+    },
+    {
+      "t": 0.0,
+      "event": "capture",
+      "image": "01-exported-menu.png",
+      "overlay": null
+    },
+    {
+      "t": 0.0,
+      "event": "focus"
+    },
+    {
+      "t": 0.0,
+      "event": "click",
+      "x": 140,
+      "y": 445
+    },
+    {
+      "t": 1.0,
+      "event": "capture",
+      "image": "01b-exported-inventory.png",
+      "overlay": null
+    },
+    {
+      "t": 1.0,
+      "event": "click",
+      "x": 1208,
+      "y": 46
+    },
+    {
+      "t": 1.0,
+      "event": "capture",
+      "image": "01c-exported-menu-return.png",
+      "overlay": null
+    },
+    {
+      "t": 1.0,
+      "event": "focus"
+    },
+    {
+      "t": 1.0,
+      "event": "click",
+      "x": 248,
+      "y": 385
+    },
+    {
+      "t": 2.0,
+      "event": "capture",
+      "image": "02-exported-connect.png",
+      "overlay": null
+    },
+    {
+      "t": 2.0,
+      "event": "click",
+      "x": 640,
+      "y": 305
+    },
+    {
+      "t": 3.0,
+      "event": "capture",
+      "image": "03-exported-network-rifle.png",
+      "overlay": null
+    },
+    {
+      "t": 3.0,
+      "event": "button",
+      "down": true,
+      "overlay": null
+    },
+    {
+      "t": 3.7,
+      "event": "capture",
+      "image": "04-fire-input.png",
+      "overlay": null
+    },
+    {
+      "t": 3.7,
+      "event": "button",
+      "down": false,
+      "overlay": null
+    },
+    {
+      "t": 4.2,
+      "event": "capture",
+      "image": "05-after-fire-input.png",
+      "overlay": null
+    },
+    {
+      "t": 4.2,
+      "event": "focus"
+    },
+    {
+      "t": 4.2,
+      "event": "key",
+      "key": "r",
+      "down": true,
+      "overlay": null
+    },
+    {
+      "t": 4.2,
+      "event": "reload-accepted-unpaused"
+    },
+    {
+      "t": 4.7,
+      "event": "capture",
+      "image": "06-after-authority-reload-start.png",
+      "overlay": null
+    },
+    {
+      "t": 6.7,
+      "event": "key",
+      "key": "r",
+      "down": false,
+      "overlay": null
+    },
+    {
+      "t": 7.2,
+      "event": "capture",
+      "image": "07-after-authority-reload-completion.png",
+      "overlay": null
+    },
+    {
+      "t": 10.2,
+      "event": "capture",
+      "image": "08-settled.png",
+      "overlay": null
+    },
+    {
+      "t": 10.2,
+      "event": "request-close"
+    },
+    {
+      "t": 10.2,
+      "event": "close-display"
+    },
+    {
+      "t": 10.2,
+      "event": "terminate",
+      "name": "client"
+    },
+    {
+      "t": 10.2,
+      "event": "terminate",
+      "name": "server"
+    },
+    {
+      "t": 10.2,
+      "event": "terminate",
+      "name": "xvfb"
+    },
+    {
+      "t": 10.2,
+      "event": "wait",
+      "name": "client",
+      "timeout": 5
+    },
+    {
+      "t": 10.2,
+      "event": "wait",
+      "name": "server",
+      "timeout": 5
+    },
+    {
+      "t": 10.2,
+      "event": "wait",
+      "name": "xvfb",
+      "timeout": 5
+    }
+  ]
+}

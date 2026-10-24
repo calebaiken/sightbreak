@@ -1,0 +1,22 @@
+{
+  "shell_discovery_failures": [
+    {
+      "command": "git rev-parse --verify 2701ce2c^{commit} d2439ac^{commit} origin/astra/pr18-native-pg-evidence",
+      "exit": 1,
+      "reason": "PowerShell parsed unquoted braces; no repository write"
+    },
+    {
+      "command": "git rev-parse '2701ce2c^{commit}' 'd2439ac^{commit}' origin/astra/pr18-native-pg-evidence",
+      "exit": 1,
+      "reason": "2701ce2c not an object; interpreted user's V2+701ce2c after local object discovery"
+    }
+  ],
+  "first_manifest_check": {
+    "raw_git_blob_vs_archive_manifest": false,
+    "mismatch_counts": [
+      278,
+      286
+    ],
+    "resolution": "Preserved domain distinction; re-derived ZIP entries match all 299/307 published source hashes and both archive hashes. All differing entries match after CRLF-to-LF only. Canonical blobs are not claimed byte-identical to executed archived text."
+  }
+}

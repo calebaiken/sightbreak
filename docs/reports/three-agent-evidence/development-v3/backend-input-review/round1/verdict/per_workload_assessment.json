@@ -1,0 +1,3523 @@
+{
+  "schema": "neutral-blind-trade-read-assessment-v1",
+  "assessed_utc": "2026-10-19T19:43:21.6275673Z",
+  "packet_manifest_sha256": "d9a6ea8e0721d573bea5437e84fcc25b899d7b8172f092c4ae7d1415b3c56c36",
+  "reviewer_mode": "Independent fresh-context blind critic; anonymous labels only; no identity inference attempted",
+  "audit_execution": "PowerShell/.NET retained-file arithmetic only; no Python, application, native tests, bulk tests, database, network, repository, or identity key accessed",
+  "powershell_version": "7.6.7",
+  "environment_records_identical": true,
+  "recorded_measurement_environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.14 (main, Sep  1 2026, 14:17:39) [MSC v.1944 64 bit (AMD64)]",
+    "packages": {
+      "sqlalchemy": "2.1.4",
+      "psycopg": "3.3.6",
+      "psycopg-binary": "3.3.6",
+      "fastapi": "0.143.0",
+      "starlette": "1.7.0",
+      "httpx": "0.28.1",
+      "pytest": "9.1.1"
+    },
+    "postgresql": "PostgreSQL 17.11 on x86_64-windows, compiled by msvc-19.44.35229, 64-bit"
+  },
+  "totals": {
+    "anonymous_variants": 2,
+    "workload_pairs": 7,
+    "workload_records": 14,
+    "retained_timed_samples": 140,
+    "warmups_per_workload_stated_not_raw_retained": 2,
+    "total_stated_warmups": 28,
+    "K_timed_statement_callbacks": 350,
+    "R_timed_statement_callbacks": 23180,
+    "all_timed_statement_callbacks": 23530,
+    "K_fewer_statement_pairs": 5,
+    "tied_statement_pairs": 2,
+    "K_count_regressions": 0,
+    "sql_shape_entries_across_records": 58,
+    "all_14_medians_p95s_query_sets_budgets_recomputed": true,
+    "all_140_samples_checked": true,
+    "all_7_expected_fixture_digest_pairs_match": true,
+    "all_14_recorded_snapshot_equalities_true": true,
+    "independent_actual_response_hashes_verified": false,
+    "independent_state_hashes_verified": false
+  },
+  "decision": {
+    "narrow_verdict": "ACCEPT WITH QUALIFICATIONS",
+    "preferred_label": "K",
+    "confidence": "HIGH for retained statement counts; conditional for recorded successful equivalence/state assertions",
+    "scope": "Successful deterministic GET /trades fixtures in this retained packet only; materially fewer executed SQL callbacks without measured count regression",
+    "full_semantic_and_authoritative_safety_bar_independently_established": false,
+    "neither_label_receives_broad_acceptance": true,
+    "statuses": {
+      "packet_integrity": "PASS",
+      "measured_query_efficiency_K": "PASS",
+      "measured_query_efficiency_R": "FAIL",
+      "latency_generalization": "NEEDS MORE EVIDENCE",
+      "response_equivalence_evidence": "PASS",
+      "independently_auditable_state_preservation": "NEEDS MORE EVIDENCE",
+      "source_monetary_contract_safety": "NOT EVALUATED"
+    },
+    "response_equivalence_PASS_qualification": "Matching expected digests and reported complete assertions only; independently auditable actual-response equivalence still NEEDS MORE EVIDENCE.",
+    "broad_gates": {
+      "human": "UNVERIFIED",
+      "device": "UNVERIFIED",
+      "8.5": "UNVERIFIED",
+      "production": "UNVERIFIED",
+      "concurrent_load": "UNVERIFIED",
+      "unbounded_history": "UNVERIFIED"
+    }
+  },
+  "pairs": [
+    {
+      "row_index_0based": 0,
+      "trades": 0,
+      "items_per_side": 0,
+      "K_reference": "K/measurement.json#/rows/0",
+      "R_reference": "R/measurement.json#/rows/0",
+      "equivalence_reference": "equivalence.json#/rows/0",
+      "K_statements_every_timed_request": 3,
+      "R_statements_every_timed_request": 3,
+      "statements_saved_per_request_K_vs_R": 0,
+      "percent_fewer_statements_K_vs_R": 0.0,
+      "count_winner": "TIE",
+      "K_meets_budget": true,
+      "R_meets_budget": true,
+      "K_median_ms": 10.61035,
+      "R_median_ms": 12.743649999999999,
+      "observed_R_to_K_median_ratio_not_causal_speedup": 1.2010584005240166,
+      "K_p95_observed_max_ms": 12.4832,
+      "R_p95_observed_max_ms": 14.3006,
+      "K_timed_range_ms": [
+        10.2578,
+        12.4832
+      ],
+      "R_timed_range_ms": [
+        11.308,
+        14.3006
+      ],
+      "expected_response_sha256_equal": true,
+      "expected_response_sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd",
+      "recorded_success_assertions": "Method reports status 200 and complete canonical equality on each warm-up and timed request; no actual bodies or per-response digests retained.",
+      "recorded_authoritative_snapshot_equality": {
+        "K": true,
+        "R": true
+      },
+      "independent_state_hash_equivalence": "NOT EVALUABLE: both null/not_retained, never equality evidence"
+    },
+    {
+      "row_index_0based": 1,
+      "trades": 1,
+      "items_per_side": 0,
+      "K_reference": "K/measurement.json#/rows/1",
+      "R_reference": "R/measurement.json#/rows/1",
+      "equivalence_reference": "equivalence.json#/rows/1",
+      "K_statements_every_timed_request": 4,
+      "R_statements_every_timed_request": 4,
+      "statements_saved_per_request_K_vs_R": 0,
+      "percent_fewer_statements_K_vs_R": 0.0,
+      "count_winner": "TIE",
+      "K_meets_budget": true,
+      "R_meets_budget": true,
+      "K_median_ms": 13.09705,
+      "R_median_ms": 14.5069,
+      "observed_R_to_K_median_ratio_not_causal_speedup": 1.1076463783829182,
+      "K_p95_observed_max_ms": 14.0893,
+      "R_p95_observed_max_ms": 17.1316,
+      "K_timed_range_ms": [
+        12.2063,
+        14.0893
+      ],
+      "R_timed_range_ms": [
+        13.5115,
+        17.1316
+      ],
+      "expected_response_sha256_equal": true,
+      "expected_response_sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4",
+      "recorded_success_assertions": "Method reports status 200 and complete canonical equality on each warm-up and timed request; no actual bodies or per-response digests retained.",
+      "recorded_authoritative_snapshot_equality": {
+        "K": true,
+        "R": true
+      },
+      "independent_state_hash_equivalence": "NOT EVALUABLE: both null/not_retained, never equality evidence"
+    },
+    {
+      "row_index_0based": 2,
+      "trades": 1,
+      "items_per_side": 2,
+      "K_reference": "K/measurement.json#/rows/2",
+      "R_reference": "R/measurement.json#/rows/2",
+      "equivalence_reference": "equivalence.json#/rows/2",
+      "K_statements_every_timed_request": 5,
+      "R_statements_every_timed_request": 8,
+      "statements_saved_per_request_K_vs_R": 3,
+      "percent_fewer_statements_K_vs_R": 37.5,
+      "count_winner": "K",
+      "K_meets_budget": true,
+      "R_meets_budget": false,
+      "K_median_ms": 17.185850000000002,
+      "R_median_ms": 23.6145,
+      "observed_R_to_K_median_ratio_not_causal_speedup": 1.3740664558343054,
+      "K_p95_observed_max_ms": 18.9844,
+      "R_p95_observed_max_ms": 44.4686,
+      "K_timed_range_ms": [
+        15.8987,
+        18.9844
+      ],
+      "R_timed_range_ms": [
+        21.8596,
+        44.4686
+      ],
+      "expected_response_sha256_equal": true,
+      "expected_response_sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b",
+      "recorded_success_assertions": "Method reports status 200 and complete canonical equality on each warm-up and timed request; no actual bodies or per-response digests retained.",
+      "recorded_authoritative_snapshot_equality": {
+        "K": true,
+        "R": true
+      },
+      "independent_state_hash_equivalence": "NOT EVALUABLE: both null/not_retained, never equality evidence"
+    },
+    {
+      "row_index_0based": 3,
+      "trades": 10,
+      "items_per_side": 1,
+      "K_reference": "K/measurement.json#/rows/3",
+      "R_reference": "R/measurement.json#/rows/3",
+      "equivalence_reference": "equivalence.json#/rows/3",
+      "K_statements_every_timed_request": 5,
+      "R_statements_every_timed_request": 33,
+      "statements_saved_per_request_K_vs_R": 28,
+      "percent_fewer_statements_K_vs_R": 84.84848484848484,
+      "count_winner": "K",
+      "K_meets_budget": true,
+      "R_meets_budget": false,
+      "K_median_ms": 21.045949999999998,
+      "R_median_ms": 66.733,
+      "observed_R_to_K_median_ratio_not_causal_speedup": 3.1708238402162894,
+      "K_p95_observed_max_ms": 22.6162,
+      "R_p95_observed_max_ms": 98.3006,
+      "K_timed_range_ms": [
+        19.3631,
+        22.6162
+      ],
+      "R_timed_range_ms": [
+        65.4401,
+        98.3006
+      ],
+      "expected_response_sha256_equal": true,
+      "expected_response_sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34",
+      "recorded_success_assertions": "Method reports status 200 and complete canonical equality on each warm-up and timed request; no actual bodies or per-response digests retained.",
+      "recorded_authoritative_snapshot_equality": {
+        "K": true,
+        "R": true
+      },
+      "independent_state_hash_equivalence": "NOT EVALUABLE: both null/not_retained, never equality evidence"
+    },
+    {
+      "row_index_0based": 4,
+      "trades": 40,
+      "items_per_side": 1,
+      "K_reference": "K/measurement.json#/rows/4",
+      "R_reference": "R/measurement.json#/rows/4",
+      "equivalence_reference": "equivalence.json#/rows/4",
+      "K_statements_every_timed_request": 5,
+      "R_statements_every_timed_request": 123,
+      "statements_saved_per_request_K_vs_R": 118,
+      "percent_fewer_statements_K_vs_R": 95.9349593495935,
+      "count_winner": "K",
+      "K_meets_budget": true,
+      "R_meets_budget": false,
+      "K_median_ms": 33.625249999999994,
+      "R_median_ms": 220.83345,
+      "observed_R_to_K_median_ratio_not_causal_speedup": 6.567488717556005,
+      "K_p95_observed_max_ms": 64.6221,
+      "R_p95_observed_max_ms": 295.2011,
+      "K_timed_range_ms": [
+        31.4536,
+        64.6221
+      ],
+      "R_timed_range_ms": [
+        191.6203,
+        295.2011
+      ],
+      "expected_response_sha256_equal": true,
+      "expected_response_sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010",
+      "recorded_success_assertions": "Method reports status 200 and complete canonical equality on each warm-up and timed request; no actual bodies or per-response digests retained.",
+      "recorded_authoritative_snapshot_equality": {
+        "K": true,
+        "R": true
+      },
+      "independent_state_hash_equivalence": "NOT EVALUABLE: both null/not_retained, never equality evidence"
+    },
+    {
+      "row_index_0based": 5,
+      "trades": 40,
+      "items_per_side": 20,
+      "K_reference": "K/measurement.json#/rows/5",
+      "R_reference": "R/measurement.json#/rows/5",
+      "equivalence_reference": "equivalence.json#/rows/5",
+      "K_statements_every_timed_request": 8,
+      "R_statements_every_timed_request": 1643,
+      "statements_saved_per_request_K_vs_R": 1635,
+      "percent_fewer_statements_K_vs_R": 99.51308581862446,
+      "count_winner": "K",
+      "K_meets_budget": true,
+      "R_meets_budget": false,
+      "K_median_ms": 249.1231,
+      "R_median_ms": 3309.7489,
+      "observed_R_to_K_median_ratio_not_causal_speedup": 13.285596157080576,
+      "K_p95_observed_max_ms": 369.7471,
+      "R_p95_observed_max_ms": 4141.7075,
+      "K_timed_range_ms": [
+        236.5004,
+        369.7471
+      ],
+      "R_timed_range_ms": [
+        2854.5519,
+        4141.7075
+      ],
+      "expected_response_sha256_equal": true,
+      "expected_response_sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db",
+      "recorded_success_assertions": "Method reports status 200 and complete canonical equality on each warm-up and timed request; no actual bodies or per-response digests retained.",
+      "recorded_authoritative_snapshot_equality": {
+        "K": true,
+        "R": true
+      },
+      "independent_state_hash_equivalence": "NOT EVALUABLE: both null/not_retained, never equality evidence"
+    },
+    {
+      "row_index_0based": 6,
+      "trades": 501,
+      "items_per_side": 0,
+      "K_reference": "K/measurement.json#/rows/6",
+      "R_reference": "R/measurement.json#/rows/6",
+      "equivalence_reference": "equivalence.json#/rows/6",
+      "K_statements_every_timed_request": 5,
+      "R_statements_every_timed_request": 504,
+      "statements_saved_per_request_K_vs_R": 499,
+      "percent_fewer_statements_K_vs_R": 99.0079365079365,
+      "count_winner": "K",
+      "K_meets_budget": true,
+      "R_meets_budget": false,
+      "K_median_ms": 101.95485,
+      "R_median_ms": 1176.56865,
+      "observed_R_to_K_median_ratio_not_causal_speedup": 11.540094953795725,
+      "K_p95_observed_max_ms": 177.5231,
+      "R_p95_observed_max_ms": 3303.8036,
+      "K_timed_range_ms": [
+        90.1573,
+        177.5231
+      ],
+      "R_timed_range_ms": [
+        740.3392,
+        3303.8036
+      ],
+      "expected_response_sha256_equal": true,
+      "expected_response_sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b",
+      "recorded_success_assertions": "Method reports status 200 and complete canonical equality on each warm-up and timed request; no actual bodies or per-response digests retained.",
+      "recorded_authoritative_snapshot_equality": {
+        "K": true,
+        "R": true
+      },
+      "independent_state_hash_equivalence": "NOT EVALUABLE: both null/not_retained, never equality evidence"
+    }
+  ],
+  "workloads": [
+    {
+      "label": "K",
+      "row_index_0based": 0,
+      "source_reference": "K/measurement.json#/rows/0",
+      "trades": 0,
+      "items_per_side": 0,
+      "unique_offered_items_from_method": 0,
+      "unique_participants_from_method": 0,
+      "sample_count": 10,
+      "samples": [
+        {
+          "sample_index_0based": 0,
+          "source_reference": "K/measurement.json#/rows/0/samples/0",
+          "milliseconds": 12.2441,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 1,
+          "source_reference": "K/measurement.json#/rows/0/samples/1",
+          "milliseconds": 10.5675,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 2,
+          "source_reference": "K/measurement.json#/rows/0/samples/2",
+          "milliseconds": 10.2578,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 3,
+          "source_reference": "K/measurement.json#/rows/0/samples/3",
+          "milliseconds": 10.896,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 4,
+          "source_reference": "K/measurement.json#/rows/0/samples/4",
+          "milliseconds": 10.3363,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 5,
+          "source_reference": "K/measurement.json#/rows/0/samples/5",
+          "milliseconds": 12.4832,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 6,
+          "source_reference": "K/measurement.json#/rows/0/samples/6",
+          "milliseconds": 10.2793,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 7,
+          "source_reference": "K/measurement.json#/rows/0/samples/7",
+          "milliseconds": 10.2748,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 8,
+          "source_reference": "K/measurement.json#/rows/0/samples/8",
+          "milliseconds": 11.0247,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 9,
+          "source_reference": "K/measurement.json#/rows/0/samples/9",
+          "milliseconds": 10.6532,
+          "statements": 3,
+          "valid": true
+        }
+      ],
+      "sorted_duration_samples": [
+        {
+          "sample_index_0based": 2,
+          "milliseconds": 10.2578
+        },
+        {
+          "sample_index_0based": 7,
+          "milliseconds": 10.2748
+        },
+        {
+          "sample_index_0based": 6,
+          "milliseconds": 10.2793
+        },
+        {
+          "sample_index_0based": 4,
+          "milliseconds": 10.3363
+        },
+        {
+          "sample_index_0based": 1,
+          "milliseconds": 10.5675
+        },
+        {
+          "sample_index_0based": 9,
+          "milliseconds": 10.6532
+        },
+        {
+          "sample_index_0based": 3,
+          "milliseconds": 10.896
+        },
+        {
+          "sample_index_0based": 8,
+          "milliseconds": 11.0247
+        },
+        {
+          "sample_index_0based": 0,
+          "milliseconds": 12.2441
+        },
+        {
+          "sample_index_0based": 5,
+          "milliseconds": 12.4832
+        }
+      ],
+      "recorded_median_ms": 10.61035,
+      "recomputed_median_ms": 10.61035,
+      "decimal_median_ms": 10.61035,
+      "median_middle_samples_0based": [
+        1,
+        9
+      ],
+      "median_absolute_error_ms": 0.0,
+      "median_agrees": true,
+      "recorded_p95_ms": 12.4832,
+      "recomputed_nearest_rank_p95_ms": 12.4832,
+      "p95_rank_1based": 10,
+      "p95_sample_index_0based": 5,
+      "p95_agrees": true,
+      "recomputed_query_count_set": [
+        3
+      ],
+      "query_counts_agree": true,
+      "all_ten_statement_counts_identical": true,
+      "recorded_budget": 3,
+      "recomputed_budget": 3,
+      "meets_recorded_budget": true,
+      "expected_count_model": "3 + ceil(unique_items/500) + ceil(unique_participants/500)",
+      "count_model_agrees_all_samples": true,
+      "item_batch_sizes_implied_by_method_and_count_model": null,
+      "participant_batch_sizes_implied_by_method_and_count_model": null,
+      "unique_sql_shape_count_last_timed_request_only": 3,
+      "last_timed_request_statement_count": 3,
+      "sql_shapes": [
+        {
+          "shape_index_0based": 0,
+          "source_reference": "K/measurement.json#/rows/0/sql_shapes/0",
+          "table": "sessions",
+          "kind": "session_token_hash",
+          "utf8_sha256": "3c8fd1e700e10a9f977632bc3b8d2defe28343966cf3046cdb3222f091117192",
+          "utf8_bytes": 129,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 1,
+          "source_reference": "K/measurement.json#/rows/0/sql_shapes/1",
+          "table": "players",
+          "kind": "id_primary_key",
+          "utf8_sha256": "0add0199ca54081153a827c0c938dddc9a3db59dde2460c6d47a63660562c244",
+          "utf8_bytes": 197,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 2,
+          "source_reference": "K/measurement.json#/rows/0/sql_shapes/2",
+          "table": "trades",
+          "kind": "participant_or",
+          "utf8_sha256": "e8c8e42e00d92b7e731199637978558d38d363ceb45686beefc3f14433914c84",
+          "utf8_bytes": 183,
+          "placeholder_count": 2,
+          "first_placeholder": "a_1",
+          "last_placeholder": "b_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        }
+      ],
+      "sql_shapes_consistent": true,
+      "full_execution_trace_and_bound_parameters_retained": false,
+      "expected_response_sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd",
+      "response_digest_kind": "expected_fixture_not_actual_response",
+      "actual_response_bodies_or_digests_retained": false,
+      "recorded_snapshot_equality": true,
+      "authoritative_state_before_sha256": null,
+      "authoritative_state_after_sha256": null,
+      "independent_authoritative_state_hash_verification": "NEEDS MORE EVIDENCE",
+      "record_arithmetic_integrity": "PASS",
+      "findings": "Empty history: no item/participant enrichment queries."
+    },
+    {
+      "label": "K",
+      "row_index_0based": 1,
+      "source_reference": "K/measurement.json#/rows/1",
+      "trades": 1,
+      "items_per_side": 0,
+      "unique_offered_items_from_method": 0,
+      "unique_participants_from_method": 2,
+      "sample_count": 10,
+      "samples": [
+        {
+          "sample_index_0based": 0,
+          "source_reference": "K/measurement.json#/rows/1/samples/0",
+          "milliseconds": 12.2063,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 1,
+          "source_reference": "K/measurement.json#/rows/1/samples/1",
+          "milliseconds": 12.3059,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 2,
+          "source_reference": "K/measurement.json#/rows/1/samples/2",
+          "milliseconds": 13.382,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 3,
+          "source_reference": "K/measurement.json#/rows/1/samples/3",
+          "milliseconds": 12.439,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 4,
+          "source_reference": "K/measurement.json#/rows/1/samples/4",
+          "milliseconds": 12.7543,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 5,
+          "source_reference": "K/measurement.json#/rows/1/samples/5",
+          "milliseconds": 13.2607,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 6,
+          "source_reference": "K/measurement.json#/rows/1/samples/6",
+          "milliseconds": 12.9334,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 7,
+          "source_reference": "K/measurement.json#/rows/1/samples/7",
+          "milliseconds": 14.0893,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 8,
+          "source_reference": "K/measurement.json#/rows/1/samples/8",
+          "milliseconds": 13.8179,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 9,
+          "source_reference": "K/measurement.json#/rows/1/samples/9",
+          "milliseconds": 13.7263,
+          "statements": 4,
+          "valid": true
+        }
+      ],
+      "sorted_duration_samples": [
+        {
+          "sample_index_0based": 0,
+          "milliseconds": 12.2063
+        },
+        {
+          "sample_index_0based": 1,
+          "milliseconds": 12.3059
+        },
+        {
+          "sample_index_0based": 3,
+          "milliseconds": 12.439
+        },
+        {
+          "sample_index_0based": 4,
+          "milliseconds": 12.7543
+        },
+        {
+          "sample_index_0based": 6,
+          "milliseconds": 12.9334
+        },
+        {
+          "sample_index_0based": 5,
+          "milliseconds": 13.2607
+        },
+        {
+          "sample_index_0based": 2,
+          "milliseconds": 13.382
+        },
+        {
+          "sample_index_0based": 9,
+          "milliseconds": 13.7263
+        },
+        {
+          "sample_index_0based": 8,
+          "milliseconds": 13.8179
+        },
+        {
+          "sample_index_0based": 7,
+          "milliseconds": 14.0893
+        }
+      ],
+      "recorded_median_ms": 13.09705,
+      "recomputed_median_ms": 13.09705,
+      "decimal_median_ms": 13.09705,
+      "median_middle_samples_0based": [
+        6,
+        5
+      ],
+      "median_absolute_error_ms": 0.0,
+      "median_agrees": true,
+      "recorded_p95_ms": 14.0893,
+      "recomputed_nearest_rank_p95_ms": 14.0893,
+      "p95_rank_1based": 10,
+      "p95_sample_index_0based": 7,
+      "p95_agrees": true,
+      "recomputed_query_count_set": [
+        4
+      ],
+      "query_counts_agree": true,
+      "all_ten_statement_counts_identical": true,
+      "recorded_budget": 4,
+      "recomputed_budget": 4,
+      "meets_recorded_budget": true,
+      "expected_count_model": "3 + ceil(unique_items/500) + ceil(unique_participants/500)",
+      "count_model_agrees_all_samples": true,
+      "item_batch_sizes_implied_by_method_and_count_model": null,
+      "participant_batch_sizes_implied_by_method_and_count_model": 2,
+      "unique_sql_shape_count_last_timed_request_only": 4,
+      "last_timed_request_statement_count": 4,
+      "sql_shapes": [
+        {
+          "shape_index_0based": 0,
+          "source_reference": "K/measurement.json#/rows/1/sql_shapes/0",
+          "table": "sessions",
+          "kind": "session_token_hash",
+          "utf8_sha256": "3c8fd1e700e10a9f977632bc3b8d2defe28343966cf3046cdb3222f091117192",
+          "utf8_bytes": 129,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 1,
+          "source_reference": "K/measurement.json#/rows/1/sql_shapes/1",
+          "table": "players",
+          "kind": "id_primary_key",
+          "utf8_sha256": "0add0199ca54081153a827c0c938dddc9a3db59dde2460c6d47a63660562c244",
+          "utf8_bytes": 197,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 2,
+          "source_reference": "K/measurement.json#/rows/1/sql_shapes/2",
+          "table": "trades",
+          "kind": "participant_or",
+          "utf8_sha256": "e8c8e42e00d92b7e731199637978558d38d363ceb45686beefc3f14433914c84",
+          "utf8_bytes": 183,
+          "placeholder_count": 2,
+          "first_placeholder": "a_1",
+          "last_placeholder": "b_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 3,
+          "source_reference": "K/measurement.json#/rows/1/sql_shapes/3",
+          "table": "players",
+          "kind": "batched_id_in",
+          "utf8_sha256": "d9f8224e0a53e720cbf3a5fc4fd21ef14f32c5d235bd83d436fd49bae95c1d43",
+          "utf8_bytes": 117,
+          "placeholder_count": 2,
+          "first_placeholder": "id_1_1",
+          "last_placeholder": "id_1_2",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": true
+        }
+      ],
+      "sql_shapes_consistent": true,
+      "full_execution_trace_and_bound_parameters_retained": false,
+      "expected_response_sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4",
+      "response_digest_kind": "expected_fixture_not_actual_response",
+      "actual_response_bodies_or_digests_retained": false,
+      "recorded_snapshot_equality": true,
+      "authoritative_state_before_sha256": null,
+      "authoritative_state_after_sha256": null,
+      "independent_authoritative_state_hash_verification": "NEEDS MORE EVIDENCE",
+      "record_arithmetic_integrity": "PASS",
+      "findings": "Recorded count equals recomputed common batch budget."
+    },
+    {
+      "label": "K",
+      "row_index_0based": 2,
+      "source_reference": "K/measurement.json#/rows/2",
+      "trades": 1,
+      "items_per_side": 2,
+      "unique_offered_items_from_method": 4,
+      "unique_participants_from_method": 2,
+      "sample_count": 10,
+      "samples": [
+        {
+          "sample_index_0based": 0,
+          "source_reference": "K/measurement.json#/rows/2/samples/0",
+          "milliseconds": 18.1419,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 1,
+          "source_reference": "K/measurement.json#/rows/2/samples/1",
+          "milliseconds": 18.984,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 2,
+          "source_reference": "K/measurement.json#/rows/2/samples/2",
+          "milliseconds": 16.0126,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 3,
+          "source_reference": "K/measurement.json#/rows/2/samples/3",
+          "milliseconds": 18.9844,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 4,
+          "source_reference": "K/measurement.json#/rows/2/samples/4",
+          "milliseconds": 15.8987,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 5,
+          "source_reference": "K/measurement.json#/rows/2/samples/5",
+          "milliseconds": 17.5494,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 6,
+          "source_reference": "K/measurement.json#/rows/2/samples/6",
+          "milliseconds": 17.2493,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 7,
+          "source_reference": "K/measurement.json#/rows/2/samples/7",
+          "milliseconds": 17.0033,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 8,
+          "source_reference": "K/measurement.json#/rows/2/samples/8",
+          "milliseconds": 15.9897,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 9,
+          "source_reference": "K/measurement.json#/rows/2/samples/9",
+          "milliseconds": 17.1224,
+          "statements": 5,
+          "valid": true
+        }
+      ],
+      "sorted_duration_samples": [
+        {
+          "sample_index_0based": 4,
+          "milliseconds": 15.8987
+        },
+        {
+          "sample_index_0based": 8,
+          "milliseconds": 15.9897
+        },
+        {
+          "sample_index_0based": 2,
+          "milliseconds": 16.0126
+        },
+        {
+          "sample_index_0based": 7,
+          "milliseconds": 17.0033
+        },
+        {
+          "sample_index_0based": 9,
+          "milliseconds": 17.1224
+        },
+        {
+          "sample_index_0based": 6,
+          "milliseconds": 17.2493
+        },
+        {
+          "sample_index_0based": 5,
+          "milliseconds": 17.5494
+        },
+        {
+          "sample_index_0based": 0,
+          "milliseconds": 18.1419
+        },
+        {
+          "sample_index_0based": 1,
+          "milliseconds": 18.984
+        },
+        {
+          "sample_index_0based": 3,
+          "milliseconds": 18.9844
+        }
+      ],
+      "recorded_median_ms": 17.185850000000002,
+      "recomputed_median_ms": 17.185850000000002,
+      "decimal_median_ms": 17.18585,
+      "median_middle_samples_0based": [
+        9,
+        6
+      ],
+      "median_absolute_error_ms": 0.0,
+      "median_agrees": true,
+      "recorded_p95_ms": 18.9844,
+      "recomputed_nearest_rank_p95_ms": 18.9844,
+      "p95_rank_1based": 10,
+      "p95_sample_index_0based": 3,
+      "p95_agrees": true,
+      "recomputed_query_count_set": [
+        5
+      ],
+      "query_counts_agree": true,
+      "all_ten_statement_counts_identical": true,
+      "recorded_budget": 5,
+      "recomputed_budget": 5,
+      "meets_recorded_budget": true,
+      "expected_count_model": "3 + ceil(unique_items/500) + ceil(unique_participants/500)",
+      "count_model_agrees_all_samples": true,
+      "item_batch_sizes_implied_by_method_and_count_model": 4,
+      "participant_batch_sizes_implied_by_method_and_count_model": 2,
+      "unique_sql_shape_count_last_timed_request_only": 5,
+      "last_timed_request_statement_count": 5,
+      "sql_shapes": [
+        {
+          "shape_index_0based": 0,
+          "source_reference": "K/measurement.json#/rows/2/sql_shapes/0",
+          "table": "sessions",
+          "kind": "session_token_hash",
+          "utf8_sha256": "3c8fd1e700e10a9f977632bc3b8d2defe28343966cf3046cdb3222f091117192",
+          "utf8_bytes": 129,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 1,
+          "source_reference": "K/measurement.json#/rows/2/sql_shapes/1",
+          "table": "players",
+          "kind": "id_primary_key",
+          "utf8_sha256": "0add0199ca54081153a827c0c938dddc9a3db59dde2460c6d47a63660562c244",
+          "utf8_bytes": 197,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 2,
+          "source_reference": "K/measurement.json#/rows/2/sql_shapes/2",
+          "table": "trades",
+          "kind": "participant_or",
+          "utf8_sha256": "e8c8e42e00d92b7e731199637978558d38d363ceb45686beefc3f14433914c84",
+          "utf8_bytes": 183,
+          "placeholder_count": 2,
+          "first_placeholder": "a_1",
+          "last_placeholder": "b_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 3,
+          "source_reference": "K/measurement.json#/rows/2/sql_shapes/3",
+          "table": "items",
+          "kind": "batched_id_in",
+          "utf8_sha256": "5a9ae082600e2035ac908bd1d8e4830f2f80948b3f7f01a589bc94030a1b4b1f",
+          "utf8_bytes": 283,
+          "placeholder_count": 4,
+          "first_placeholder": "id_1_1",
+          "last_placeholder": "id_1_4",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 4,
+          "source_reference": "K/measurement.json#/rows/2/sql_shapes/4",
+          "table": "players",
+          "kind": "batched_id_in",
+          "utf8_sha256": "d9f8224e0a53e720cbf3a5fc4fd21ef14f32c5d235bd83d436fd49bae95c1d43",
+          "utf8_bytes": 117,
+          "placeholder_count": 2,
+          "first_placeholder": "id_1_1",
+          "last_placeholder": "id_1_2",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": true
+        }
+      ],
+      "sql_shapes_consistent": true,
+      "full_execution_trace_and_bound_parameters_retained": false,
+      "expected_response_sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b",
+      "response_digest_kind": "expected_fixture_not_actual_response",
+      "actual_response_bodies_or_digests_retained": false,
+      "recorded_snapshot_equality": true,
+      "authoritative_state_before_sha256": null,
+      "authoritative_state_after_sha256": null,
+      "independent_authoritative_state_hash_verification": "NEEDS MORE EVIDENCE",
+      "record_arithmetic_integrity": "PASS",
+      "findings": "Recorded count equals recomputed common batch budget."
+    },
+    {
+      "label": "K",
+      "row_index_0based": 3,
+      "source_reference": "K/measurement.json#/rows/3",
+      "trades": 10,
+      "items_per_side": 1,
+      "unique_offered_items_from_method": 20,
+      "unique_participants_from_method": 11,
+      "sample_count": 10,
+      "samples": [
+        {
+          "sample_index_0based": 0,
+          "source_reference": "K/measurement.json#/rows/3/samples/0",
+          "milliseconds": 20.9074,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 1,
+          "source_reference": "K/measurement.json#/rows/3/samples/1",
+          "milliseconds": 20.5695,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 2,
+          "source_reference": "K/measurement.json#/rows/3/samples/2",
+          "milliseconds": 21.772,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 3,
+          "source_reference": "K/measurement.json#/rows/3/samples/3",
+          "milliseconds": 22.6128,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 4,
+          "source_reference": "K/measurement.json#/rows/3/samples/4",
+          "milliseconds": 19.3631,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 5,
+          "source_reference": "K/measurement.json#/rows/3/samples/5",
+          "milliseconds": 19.9795,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 6,
+          "source_reference": "K/measurement.json#/rows/3/samples/6",
+          "milliseconds": 21.3263,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 7,
+          "source_reference": "K/measurement.json#/rows/3/samples/7",
+          "milliseconds": 20.9419,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 8,
+          "source_reference": "K/measurement.json#/rows/3/samples/8",
+          "milliseconds": 22.6162,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 9,
+          "source_reference": "K/measurement.json#/rows/3/samples/9",
+          "milliseconds": 21.15,
+          "statements": 5,
+          "valid": true
+        }
+      ],
+      "sorted_duration_samples": [
+        {
+          "sample_index_0based": 4,
+          "milliseconds": 19.3631
+        },
+        {
+          "sample_index_0based": 5,
+          "milliseconds": 19.9795
+        },
+        {
+          "sample_index_0based": 1,
+          "milliseconds": 20.5695
+        },
+        {
+          "sample_index_0based": 0,
+          "milliseconds": 20.9074
+        },
+        {
+          "sample_index_0based": 7,
+          "milliseconds": 20.9419
+        },
+        {
+          "sample_index_0based": 9,
+          "milliseconds": 21.15
+        },
+        {
+          "sample_index_0based": 6,
+          "milliseconds": 21.3263
+        },
+        {
+          "sample_index_0based": 2,
+          "milliseconds": 21.772
+        },
+        {
+          "sample_index_0based": 3,
+          "milliseconds": 22.6128
+        },
+        {
+          "sample_index_0based": 8,
+          "milliseconds": 22.6162
+        }
+      ],
+      "recorded_median_ms": 21.045949999999998,
+      "recomputed_median_ms": 21.045949999999998,
+      "decimal_median_ms": 21.04595,
+      "median_middle_samples_0based": [
+        7,
+        9
+      ],
+      "median_absolute_error_ms": 0.0,
+      "median_agrees": true,
+      "recorded_p95_ms": 22.6162,
+      "recomputed_nearest_rank_p95_ms": 22.6162,
+      "p95_rank_1based": 10,
+      "p95_sample_index_0based": 8,
+      "p95_agrees": true,
+      "recomputed_query_count_set": [
+        5
+      ],
+      "query_counts_agree": true,
+      "all_ten_statement_counts_identical": true,
+      "recorded_budget": 5,
+      "recomputed_budget": 5,
+      "meets_recorded_budget": true,
+      "expected_count_model": "3 + ceil(unique_items/500) + ceil(unique_participants/500)",
+      "count_model_agrees_all_samples": true,
+      "item_batch_sizes_implied_by_method_and_count_model": 20,
+      "participant_batch_sizes_implied_by_method_and_count_model": 11,
+      "unique_sql_shape_count_last_timed_request_only": 5,
+      "last_timed_request_statement_count": 5,
+      "sql_shapes": [
+        {
+          "shape_index_0based": 0,
+          "source_reference": "K/measurement.json#/rows/3/sql_shapes/0",
+          "table": "sessions",
+          "kind": "session_token_hash",
+          "utf8_sha256": "3c8fd1e700e10a9f977632bc3b8d2defe28343966cf3046cdb3222f091117192",
+          "utf8_bytes": 129,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 1,
+          "source_reference": "K/measurement.json#/rows/3/sql_shapes/1",
+          "table": "players",
+          "kind": "id_primary_key",
+          "utf8_sha256": "0add0199ca54081153a827c0c938dddc9a3db59dde2460c6d47a63660562c244",
+          "utf8_bytes": 197,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 2,
+          "source_reference": "K/measurement.json#/rows/3/sql_shapes/2",
+          "table": "trades",
+          "kind": "participant_or",
+          "utf8_sha256": "e8c8e42e00d92b7e731199637978558d38d363ceb45686beefc3f14433914c84",
+          "utf8_bytes": 183,
+          "placeholder_count": 2,
+          "first_placeholder": "a_1",
+          "last_placeholder": "b_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 3,
+          "source_reference": "K/measurement.json#/rows/3/sql_shapes/3",
+          "table": "items",
+          "kind": "batched_id_in",
+          "utf8_sha256": "e79cb740ddc017e70a0426832e1b88344607cc24e757d26d96e8db95b04ea497",
+          "utf8_bytes": 630,
+          "placeholder_count": 20,
+          "first_placeholder": "id_1_1",
+          "last_placeholder": "id_1_20",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 4,
+          "source_reference": "K/measurement.json#/rows/3/sql_shapes/4",
+          "table": "players",
+          "kind": "batched_id_in",
+          "utf8_sha256": "9ec34eb2149b0c49d969810bc668b01e9e981f7957d070a5a48aca73a42a7273",
+          "utf8_bytes": 308,
+          "placeholder_count": 11,
+          "first_placeholder": "id_1_1",
+          "last_placeholder": "id_1_11",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": true
+        }
+      ],
+      "sql_shapes_consistent": true,
+      "full_execution_trace_and_bound_parameters_retained": false,
+      "expected_response_sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34",
+      "response_digest_kind": "expected_fixture_not_actual_response",
+      "actual_response_bodies_or_digests_retained": false,
+      "recorded_snapshot_equality": true,
+      "authoritative_state_before_sha256": null,
+      "authoritative_state_after_sha256": null,
+      "independent_authoritative_state_hash_verification": "NEEDS MORE EVIDENCE",
+      "record_arithmetic_integrity": "PASS",
+      "findings": "Recorded count equals recomputed common batch budget."
+    },
+    {
+      "label": "K",
+      "row_index_0based": 4,
+      "source_reference": "K/measurement.json#/rows/4",
+      "trades": 40,
+      "items_per_side": 1,
+      "unique_offered_items_from_method": 80,
+      "unique_participants_from_method": 41,
+      "sample_count": 10,
+      "samples": [
+        {
+          "sample_index_0based": 0,
+          "source_reference": "K/measurement.json#/rows/4/samples/0",
+          "milliseconds": 33.2644,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 1,
+          "source_reference": "K/measurement.json#/rows/4/samples/1",
+          "milliseconds": 32.5372,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 2,
+          "source_reference": "K/measurement.json#/rows/4/samples/2",
+          "milliseconds": 35.5539,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 3,
+          "source_reference": "K/measurement.json#/rows/4/samples/3",
+          "milliseconds": 37.0519,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 4,
+          "source_reference": "K/measurement.json#/rows/4/samples/4",
+          "milliseconds": 33.3458,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 5,
+          "source_reference": "K/measurement.json#/rows/4/samples/5",
+          "milliseconds": 35.5575,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 6,
+          "source_reference": "K/measurement.json#/rows/4/samples/6",
+          "milliseconds": 32.6116,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 7,
+          "source_reference": "K/measurement.json#/rows/4/samples/7",
+          "milliseconds": 31.4536,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 8,
+          "source_reference": "K/measurement.json#/rows/4/samples/8",
+          "milliseconds": 64.6221,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 9,
+          "source_reference": "K/measurement.json#/rows/4/samples/9",
+          "milliseconds": 33.9047,
+          "statements": 5,
+          "valid": true
+        }
+      ],
+      "sorted_duration_samples": [
+        {
+          "sample_index_0based": 7,
+          "milliseconds": 31.4536
+        },
+        {
+          "sample_index_0based": 1,
+          "milliseconds": 32.5372
+        },
+        {
+          "sample_index_0based": 6,
+          "milliseconds": 32.6116
+        },
+        {
+          "sample_index_0based": 0,
+          "milliseconds": 33.2644
+        },
+        {
+          "sample_index_0based": 4,
+          "milliseconds": 33.3458
+        },
+        {
+          "sample_index_0based": 9,
+          "milliseconds": 33.9047
+        },
+        {
+          "sample_index_0based": 2,
+          "milliseconds": 35.5539
+        },
+        {
+          "sample_index_0based": 5,
+          "milliseconds": 35.5575
+        },
+        {
+          "sample_index_0based": 3,
+          "milliseconds": 37.0519
+        },
+        {
+          "sample_index_0based": 8,
+          "milliseconds": 64.6221
+        }
+      ],
+      "recorded_median_ms": 33.625249999999994,
+      "recomputed_median_ms": 33.625249999999994,
+      "decimal_median_ms": 33.62525,
+      "median_middle_samples_0based": [
+        4,
+        9
+      ],
+      "median_absolute_error_ms": 0.0,
+      "median_agrees": true,
+      "recorded_p95_ms": 64.6221,
+      "recomputed_nearest_rank_p95_ms": 64.6221,
+      "p95_rank_1based": 10,
+      "p95_sample_index_0based": 8,
+      "p95_agrees": true,
+      "recomputed_query_count_set": [
+        5
+      ],
+      "query_counts_agree": true,
+      "all_ten_statement_counts_identical": true,
+      "recorded_budget": 5,
+      "recomputed_budget": 5,
+      "meets_recorded_budget": true,
+      "expected_count_model": "3 + ceil(unique_items/500) + ceil(unique_participants/500)",
+      "count_model_agrees_all_samples": true,
+      "item_batch_sizes_implied_by_method_and_count_model": 80,
+      "participant_batch_sizes_implied_by_method_and_count_model": 41,
+      "unique_sql_shape_count_last_timed_request_only": 5,
+      "last_timed_request_statement_count": 5,
+      "sql_shapes": [
+        {
+          "shape_index_0based": 0,
+          "source_reference": "K/measurement.json#/rows/4/sql_shapes/0",
+          "table": "sessions",
+          "kind": "session_token_hash",
+          "utf8_sha256": "3c8fd1e700e10a9f977632bc3b8d2defe28343966cf3046cdb3222f091117192",
+          "utf8_bytes": 129,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 1,
+          "source_reference": "K/measurement.json#/rows/4/sql_shapes/1",
+          "table": "players",
+          "kind": "id_primary_key",
+          "utf8_sha256": "0add0199ca54081153a827c0c938dddc9a3db59dde2460c6d47a63660562c244",
+          "utf8_bytes": 197,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 2,
+          "source_reference": "K/measurement.json#/rows/4/sql_shapes/2",
+          "table": "trades",
+          "kind": "participant_or",
+          "utf8_sha256": "e8c8e42e00d92b7e731199637978558d38d363ceb45686beefc3f14433914c84",
+          "utf8_bytes": 183,
+          "placeholder_count": 2,
+          "first_placeholder": "a_1",
+          "last_placeholder": "b_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 3,
+          "source_reference": "K/measurement.json#/rows/4/sql_shapes/3",
+          "table": "items",
+          "kind": "batched_id_in",
+          "utf8_sha256": "8b2272cebcc885886f63b21e7f739cca562e23bdc51f7e90acadbbdb3f437260",
+          "utf8_bytes": 1950,
+          "placeholder_count": 80,
+          "first_placeholder": "id_1_1",
+          "last_placeholder": "id_1_80",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 4,
+          "source_reference": "K/measurement.json#/rows/4/sql_shapes/4",
+          "table": "players",
+          "kind": "batched_id_in",
+          "utf8_sha256": "b6bfd10fcbc62478baa3613cc27023fc511fc88f59f09ff92ebfe0bb110d6148",
+          "utf8_bytes": 968,
+          "placeholder_count": 41,
+          "first_placeholder": "id_1_1",
+          "last_placeholder": "id_1_41",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": true
+        }
+      ],
+      "sql_shapes_consistent": true,
+      "full_execution_trace_and_bound_parameters_retained": false,
+      "expected_response_sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010",
+      "response_digest_kind": "expected_fixture_not_actual_response",
+      "actual_response_bodies_or_digests_retained": false,
+      "recorded_snapshot_equality": true,
+      "authoritative_state_before_sha256": null,
+      "authoritative_state_after_sha256": null,
+      "independent_authoritative_state_hash_verification": "NEEDS MORE EVIDENCE",
+      "record_arithmetic_integrity": "PASS",
+      "findings": "Recorded count equals recomputed common batch budget."
+    },
+    {
+      "label": "K",
+      "row_index_0based": 5,
+      "source_reference": "K/measurement.json#/rows/5",
+      "trades": 40,
+      "items_per_side": 20,
+      "unique_offered_items_from_method": 1600,
+      "unique_participants_from_method": 41,
+      "sample_count": 10,
+      "samples": [
+        {
+          "sample_index_0based": 0,
+          "source_reference": "K/measurement.json#/rows/5/samples/0",
+          "milliseconds": 369.7471,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 1,
+          "source_reference": "K/measurement.json#/rows/5/samples/1",
+          "milliseconds": 236.5004,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 2,
+          "source_reference": "K/measurement.json#/rows/5/samples/2",
+          "milliseconds": 237.4597,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 3,
+          "source_reference": "K/measurement.json#/rows/5/samples/3",
+          "milliseconds": 256.5601,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 4,
+          "source_reference": "K/measurement.json#/rows/5/samples/4",
+          "milliseconds": 271.3211,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 5,
+          "source_reference": "K/measurement.json#/rows/5/samples/5",
+          "milliseconds": 316.9072,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 6,
+          "source_reference": "K/measurement.json#/rows/5/samples/6",
+          "milliseconds": 243.5702,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 7,
+          "source_reference": "K/measurement.json#/rows/5/samples/7",
+          "milliseconds": 253.4543,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 8,
+          "source_reference": "K/measurement.json#/rows/5/samples/8",
+          "milliseconds": 244.7919,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 9,
+          "source_reference": "K/measurement.json#/rows/5/samples/9",
+          "milliseconds": 240.1984,
+          "statements": 8,
+          "valid": true
+        }
+      ],
+      "sorted_duration_samples": [
+        {
+          "sample_index_0based": 1,
+          "milliseconds": 236.5004
+        },
+        {
+          "sample_index_0based": 2,
+          "milliseconds": 237.4597
+        },
+        {
+          "sample_index_0based": 9,
+          "milliseconds": 240.1984
+        },
+        {
+          "sample_index_0based": 6,
+          "milliseconds": 243.5702
+        },
+        {
+          "sample_index_0based": 8,
+          "milliseconds": 244.7919
+        },
+        {
+          "sample_index_0based": 7,
+          "milliseconds": 253.4543
+        },
+        {
+          "sample_index_0based": 3,
+          "milliseconds": 256.5601
+        },
+        {
+          "sample_index_0based": 4,
+          "milliseconds": 271.3211
+        },
+        {
+          "sample_index_0based": 5,
+          "milliseconds": 316.9072
+        },
+        {
+          "sample_index_0based": 0,
+          "milliseconds": 369.7471
+        }
+      ],
+      "recorded_median_ms": 249.1231,
+      "recomputed_median_ms": 249.1231,
+      "decimal_median_ms": 249.1231,
+      "median_middle_samples_0based": [
+        8,
+        7
+      ],
+      "median_absolute_error_ms": 0.0,
+      "median_agrees": true,
+      "recorded_p95_ms": 369.7471,
+      "recomputed_nearest_rank_p95_ms": 369.7471,
+      "p95_rank_1based": 10,
+      "p95_sample_index_0based": 0,
+      "p95_agrees": true,
+      "recomputed_query_count_set": [
+        8
+      ],
+      "query_counts_agree": true,
+      "all_ten_statement_counts_identical": true,
+      "recorded_budget": 8,
+      "recomputed_budget": 8,
+      "meets_recorded_budget": true,
+      "expected_count_model": "3 + ceil(unique_items/500) + ceil(unique_participants/500)",
+      "count_model_agrees_all_samples": true,
+      "item_batch_sizes_implied_by_method_and_count_model": [
+        500,
+        500,
+        500,
+        100
+      ],
+      "participant_batch_sizes_implied_by_method_and_count_model": 41,
+      "unique_sql_shape_count_last_timed_request_only": 6,
+      "last_timed_request_statement_count": 8,
+      "sql_shapes": [
+        {
+          "shape_index_0based": 0,
+          "source_reference": "K/measurement.json#/rows/5/sql_shapes/0",
+          "table": "sessions",
+          "kind": "session_token_hash",
+          "utf8_sha256": "3c8fd1e700e10a9f977632bc3b8d2defe28343966cf3046cdb3222f091117192",
+          "utf8_bytes": 129,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 1,
+          "source_reference": "K/measurement.json#/rows/5/sql_shapes/1",
+          "table": "players",
+          "kind": "id_primary_key",
+          "utf8_sha256": "0add0199ca54081153a827c0c938dddc9a3db59dde2460c6d47a63660562c244",
+          "utf8_bytes": 197,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 2,
+          "source_reference": "K/measurement.json#/rows/5/sql_shapes/2",
+          "table": "trades",
+          "kind": "participant_or",
+          "utf8_sha256": "e8c8e42e00d92b7e731199637978558d38d363ceb45686beefc3f14433914c84",
+          "utf8_bytes": 183,
+          "placeholder_count": 2,
+          "first_placeholder": "a_1",
+          "last_placeholder": "b_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 3,
+          "source_reference": "K/measurement.json#/rows/5/sql_shapes/3",
+          "table": "items",
+          "kind": "batched_id_in",
+          "utf8_sha256": "5a68970aabaf85c6a857694af0e2d086bc640ec05fe570866cb21e9381167e12",
+          "utf8_bytes": 11591,
+          "placeholder_count": 500,
+          "first_placeholder": "id_1_1",
+          "last_placeholder": "id_1_500",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 4,
+          "source_reference": "K/measurement.json#/rows/5/sql_shapes/4",
+          "table": "items",
+          "kind": "batched_id_in",
+          "utf8_sha256": "113a1bfb898d96f094a72b9aaf57ec00af9294eef0e22e90ac4ce61a70fa29ad",
+          "utf8_bytes": 2391,
+          "placeholder_count": 100,
+          "first_placeholder": "id_1_1",
+          "last_placeholder": "id_1_100",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 5,
+          "source_reference": "K/measurement.json#/rows/5/sql_shapes/5",
+          "table": "players",
+          "kind": "batched_id_in",
+          "utf8_sha256": "b6bfd10fcbc62478baa3613cc27023fc511fc88f59f09ff92ebfe0bb110d6148",
+          "utf8_bytes": 968,
+          "placeholder_count": 41,
+          "first_placeholder": "id_1_1",
+          "last_placeholder": "id_1_41",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": true
+        }
+      ],
+      "sql_shapes_consistent": true,
+      "full_execution_trace_and_bound_parameters_retained": false,
+      "expected_response_sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db",
+      "response_digest_kind": "expected_fixture_not_actual_response",
+      "actual_response_bodies_or_digests_retained": false,
+      "recorded_snapshot_equality": true,
+      "authoritative_state_before_sha256": null,
+      "authoritative_state_after_sha256": null,
+      "independent_authoritative_state_hash_verification": "NEEDS MORE EVIDENCE",
+      "record_arithmetic_integrity": "PASS",
+      "findings": "Eight executed statements, six deduplicated shapes; expected item batches 500/500/500/100 are consistent with the 500/100 unique shapes, not an independently retained multiplicity trace."
+    },
+    {
+      "label": "K",
+      "row_index_0based": 6,
+      "source_reference": "K/measurement.json#/rows/6",
+      "trades": 501,
+      "items_per_side": 0,
+      "unique_offered_items_from_method": 0,
+      "unique_participants_from_method": 502,
+      "sample_count": 10,
+      "samples": [
+        {
+          "sample_index_0based": 0,
+          "source_reference": "K/measurement.json#/rows/6/samples/0",
+          "milliseconds": 118.1071,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 1,
+          "source_reference": "K/measurement.json#/rows/6/samples/1",
+          "milliseconds": 117.3025,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 2,
+          "source_reference": "K/measurement.json#/rows/6/samples/2",
+          "milliseconds": 100.9603,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 3,
+          "source_reference": "K/measurement.json#/rows/6/samples/3",
+          "milliseconds": 177.5231,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 4,
+          "source_reference": "K/measurement.json#/rows/6/samples/4",
+          "milliseconds": 94.299,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 5,
+          "source_reference": "K/measurement.json#/rows/6/samples/5",
+          "milliseconds": 95.0207,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 6,
+          "source_reference": "K/measurement.json#/rows/6/samples/6",
+          "milliseconds": 90.1573,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 7,
+          "source_reference": "K/measurement.json#/rows/6/samples/7",
+          "milliseconds": 96.8222,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 8,
+          "source_reference": "K/measurement.json#/rows/6/samples/8",
+          "milliseconds": 107.4215,
+          "statements": 5,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 9,
+          "source_reference": "K/measurement.json#/rows/6/samples/9",
+          "milliseconds": 102.9494,
+          "statements": 5,
+          "valid": true
+        }
+      ],
+      "sorted_duration_samples": [
+        {
+          "sample_index_0based": 6,
+          "milliseconds": 90.1573
+        },
+        {
+          "sample_index_0based": 4,
+          "milliseconds": 94.299
+        },
+        {
+          "sample_index_0based": 5,
+          "milliseconds": 95.0207
+        },
+        {
+          "sample_index_0based": 7,
+          "milliseconds": 96.8222
+        },
+        {
+          "sample_index_0based": 2,
+          "milliseconds": 100.9603
+        },
+        {
+          "sample_index_0based": 9,
+          "milliseconds": 102.9494
+        },
+        {
+          "sample_index_0based": 8,
+          "milliseconds": 107.4215
+        },
+        {
+          "sample_index_0based": 1,
+          "milliseconds": 117.3025
+        },
+        {
+          "sample_index_0based": 0,
+          "milliseconds": 118.1071
+        },
+        {
+          "sample_index_0based": 3,
+          "milliseconds": 177.5231
+        }
+      ],
+      "recorded_median_ms": 101.95485,
+      "recomputed_median_ms": 101.95485,
+      "decimal_median_ms": 101.95485,
+      "median_middle_samples_0based": [
+        2,
+        9
+      ],
+      "median_absolute_error_ms": 0.0,
+      "median_agrees": true,
+      "recorded_p95_ms": 177.5231,
+      "recomputed_nearest_rank_p95_ms": 177.5231,
+      "p95_rank_1based": 10,
+      "p95_sample_index_0based": 3,
+      "p95_agrees": true,
+      "recomputed_query_count_set": [
+        5
+      ],
+      "query_counts_agree": true,
+      "all_ten_statement_counts_identical": true,
+      "recorded_budget": 5,
+      "recomputed_budget": 5,
+      "meets_recorded_budget": true,
+      "expected_count_model": "3 + ceil(unique_items/500) + ceil(unique_participants/500)",
+      "count_model_agrees_all_samples": true,
+      "item_batch_sizes_implied_by_method_and_count_model": null,
+      "participant_batch_sizes_implied_by_method_and_count_model": [
+        500,
+        2
+      ],
+      "unique_sql_shape_count_last_timed_request_only": 5,
+      "last_timed_request_statement_count": 5,
+      "sql_shapes": [
+        {
+          "shape_index_0based": 0,
+          "source_reference": "K/measurement.json#/rows/6/sql_shapes/0",
+          "table": "sessions",
+          "kind": "session_token_hash",
+          "utf8_sha256": "3c8fd1e700e10a9f977632bc3b8d2defe28343966cf3046cdb3222f091117192",
+          "utf8_bytes": 129,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 1,
+          "source_reference": "K/measurement.json#/rows/6/sql_shapes/1",
+          "table": "players",
+          "kind": "id_primary_key",
+          "utf8_sha256": "0add0199ca54081153a827c0c938dddc9a3db59dde2460c6d47a63660562c244",
+          "utf8_bytes": 197,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 2,
+          "source_reference": "K/measurement.json#/rows/6/sql_shapes/2",
+          "table": "trades",
+          "kind": "participant_or",
+          "utf8_sha256": "e8c8e42e00d92b7e731199637978558d38d363ceb45686beefc3f14433914c84",
+          "utf8_bytes": 183,
+          "placeholder_count": 2,
+          "first_placeholder": "a_1",
+          "last_placeholder": "b_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 3,
+          "source_reference": "K/measurement.json#/rows/6/sql_shapes/3",
+          "table": "players",
+          "kind": "batched_id_in",
+          "utf8_sha256": "8341f29b2447c5079927365b09e378df4e820a4160f26643698290584932339f",
+          "utf8_bytes": 11467,
+          "placeholder_count": 500,
+          "first_placeholder": "id_1_1",
+          "last_placeholder": "id_1_500",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": true
+        },
+        {
+          "shape_index_0based": 4,
+          "source_reference": "K/measurement.json#/rows/6/sql_shapes/4",
+          "table": "players",
+          "kind": "batched_id_in",
+          "utf8_sha256": "d9f8224e0a53e720cbf3a5fc4fd21ef14f32c5d235bd83d436fd49bae95c1d43",
+          "utf8_bytes": 117,
+          "placeholder_count": 2,
+          "first_placeholder": "id_1_1",
+          "last_placeholder": "id_1_2",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": true
+        }
+      ],
+      "sql_shapes_consistent": true,
+      "full_execution_trace_and_bound_parameters_retained": false,
+      "expected_response_sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b",
+      "response_digest_kind": "expected_fixture_not_actual_response",
+      "actual_response_bodies_or_digests_retained": false,
+      "recorded_snapshot_equality": true,
+      "authoritative_state_before_sha256": null,
+      "authoritative_state_after_sha256": null,
+      "independent_authoritative_state_hash_verification": "NEEDS MORE EVIDENCE",
+      "record_arithmetic_integrity": "PASS",
+      "findings": "Two distinct participant IN shapes contain 500 and 2 placeholders; five executed statements support participant chunking across 500."
+    },
+    {
+      "label": "R",
+      "row_index_0based": 0,
+      "source_reference": "R/measurement.json#/rows/0",
+      "trades": 0,
+      "items_per_side": 0,
+      "unique_offered_items_from_method": 0,
+      "unique_participants_from_method": 0,
+      "sample_count": 10,
+      "samples": [
+        {
+          "sample_index_0based": 0,
+          "source_reference": "R/measurement.json#/rows/0/samples/0",
+          "milliseconds": 11.9433,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 1,
+          "source_reference": "R/measurement.json#/rows/0/samples/1",
+          "milliseconds": 11.308,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 2,
+          "source_reference": "R/measurement.json#/rows/0/samples/2",
+          "milliseconds": 12.7294,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 3,
+          "source_reference": "R/measurement.json#/rows/0/samples/3",
+          "milliseconds": 12.0326,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 4,
+          "source_reference": "R/measurement.json#/rows/0/samples/4",
+          "milliseconds": 14.3006,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 5,
+          "source_reference": "R/measurement.json#/rows/0/samples/5",
+          "milliseconds": 13.4255,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 6,
+          "source_reference": "R/measurement.json#/rows/0/samples/6",
+          "milliseconds": 12.892,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 7,
+          "source_reference": "R/measurement.json#/rows/0/samples/7",
+          "milliseconds": 12.7098,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 8,
+          "source_reference": "R/measurement.json#/rows/0/samples/8",
+          "milliseconds": 12.7579,
+          "statements": 3,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 9,
+          "source_reference": "R/measurement.json#/rows/0/samples/9",
+          "milliseconds": 13.3491,
+          "statements": 3,
+          "valid": true
+        }
+      ],
+      "sorted_duration_samples": [
+        {
+          "sample_index_0based": 1,
+          "milliseconds": 11.308
+        },
+        {
+          "sample_index_0based": 0,
+          "milliseconds": 11.9433
+        },
+        {
+          "sample_index_0based": 3,
+          "milliseconds": 12.0326
+        },
+        {
+          "sample_index_0based": 7,
+          "milliseconds": 12.7098
+        },
+        {
+          "sample_index_0based": 2,
+          "milliseconds": 12.7294
+        },
+        {
+          "sample_index_0based": 8,
+          "milliseconds": 12.7579
+        },
+        {
+          "sample_index_0based": 6,
+          "milliseconds": 12.892
+        },
+        {
+          "sample_index_0based": 9,
+          "milliseconds": 13.3491
+        },
+        {
+          "sample_index_0based": 5,
+          "milliseconds": 13.4255
+        },
+        {
+          "sample_index_0based": 4,
+          "milliseconds": 14.3006
+        }
+      ],
+      "recorded_median_ms": 12.743649999999999,
+      "recomputed_median_ms": 12.743649999999999,
+      "decimal_median_ms": 12.74365,
+      "median_middle_samples_0based": [
+        2,
+        8
+      ],
+      "median_absolute_error_ms": 0.0,
+      "median_agrees": true,
+      "recorded_p95_ms": 14.3006,
+      "recomputed_nearest_rank_p95_ms": 14.3006,
+      "p95_rank_1based": 10,
+      "p95_sample_index_0based": 4,
+      "p95_agrees": true,
+      "recomputed_query_count_set": [
+        3
+      ],
+      "query_counts_agree": true,
+      "all_ten_statement_counts_identical": true,
+      "recorded_budget": 3,
+      "recomputed_budget": 3,
+      "meets_recorded_budget": true,
+      "expected_count_model": "3 + trades + unique_items (observational fit, not source proof)",
+      "count_model_agrees_all_samples": true,
+      "item_batch_sizes_implied_by_method_and_count_model": null,
+      "participant_batch_sizes_implied_by_method_and_count_model": null,
+      "unique_sql_shape_count_last_timed_request_only": 3,
+      "last_timed_request_statement_count": 3,
+      "sql_shapes": [
+        {
+          "shape_index_0based": 0,
+          "source_reference": "R/measurement.json#/rows/0/sql_shapes/0",
+          "table": "sessions",
+          "kind": "session_token_hash",
+          "utf8_sha256": "3c8fd1e700e10a9f977632bc3b8d2defe28343966cf3046cdb3222f091117192",
+          "utf8_bytes": 129,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 1,
+          "source_reference": "R/measurement.json#/rows/0/sql_shapes/1",
+          "table": "players",
+          "kind": "id_primary_key",
+          "utf8_sha256": "0add0199ca54081153a827c0c938dddc9a3db59dde2460c6d47a63660562c244",
+          "utf8_bytes": 197,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 2,
+          "source_reference": "R/measurement.json#/rows/0/sql_shapes/2",
+          "table": "trades",
+          "kind": "participant_or",
+          "utf8_sha256": "e8c8e42e00d92b7e731199637978558d38d363ceb45686beefc3f14433914c84",
+          "utf8_bytes": 183,
+          "placeholder_count": 2,
+          "first_placeholder": "a_1",
+          "last_placeholder": "b_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        }
+      ],
+      "sql_shapes_consistent": true,
+      "full_execution_trace_and_bound_parameters_retained": false,
+      "expected_response_sha256": "f771460c52dcc981b042605bb698fa708e379f61b47a8739ebf976b4401738cd",
+      "response_digest_kind": "expected_fixture_not_actual_response",
+      "actual_response_bodies_or_digests_retained": false,
+      "recorded_snapshot_equality": true,
+      "authoritative_state_before_sha256": null,
+      "authoritative_state_after_sha256": null,
+      "independent_authoritative_state_hash_verification": "NEEDS MORE EVIDENCE",
+      "record_arithmetic_integrity": "PASS",
+      "findings": "Recorded counts fit 3 + trades + unique offered items; repeated per-table multiplicities are inferred, not retained as traces."
+    },
+    {
+      "label": "R",
+      "row_index_0based": 1,
+      "source_reference": "R/measurement.json#/rows/1",
+      "trades": 1,
+      "items_per_side": 0,
+      "unique_offered_items_from_method": 0,
+      "unique_participants_from_method": 2,
+      "sample_count": 10,
+      "samples": [
+        {
+          "sample_index_0based": 0,
+          "source_reference": "R/measurement.json#/rows/1/samples/0",
+          "milliseconds": 13.934,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 1,
+          "source_reference": "R/measurement.json#/rows/1/samples/1",
+          "milliseconds": 14.4283,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 2,
+          "source_reference": "R/measurement.json#/rows/1/samples/2",
+          "milliseconds": 14.37,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 3,
+          "source_reference": "R/measurement.json#/rows/1/samples/3",
+          "milliseconds": 15.1068,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 4,
+          "source_reference": "R/measurement.json#/rows/1/samples/4",
+          "milliseconds": 16.5198,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 5,
+          "source_reference": "R/measurement.json#/rows/1/samples/5",
+          "milliseconds": 13.6992,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 6,
+          "source_reference": "R/measurement.json#/rows/1/samples/6",
+          "milliseconds": 17.1316,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 7,
+          "source_reference": "R/measurement.json#/rows/1/samples/7",
+          "milliseconds": 13.5115,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 8,
+          "source_reference": "R/measurement.json#/rows/1/samples/8",
+          "milliseconds": 15.3927,
+          "statements": 4,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 9,
+          "source_reference": "R/measurement.json#/rows/1/samples/9",
+          "milliseconds": 14.5855,
+          "statements": 4,
+          "valid": true
+        }
+      ],
+      "sorted_duration_samples": [
+        {
+          "sample_index_0based": 7,
+          "milliseconds": 13.5115
+        },
+        {
+          "sample_index_0based": 5,
+          "milliseconds": 13.6992
+        },
+        {
+          "sample_index_0based": 0,
+          "milliseconds": 13.934
+        },
+        {
+          "sample_index_0based": 2,
+          "milliseconds": 14.37
+        },
+        {
+          "sample_index_0based": 1,
+          "milliseconds": 14.4283
+        },
+        {
+          "sample_index_0based": 9,
+          "milliseconds": 14.5855
+        },
+        {
+          "sample_index_0based": 3,
+          "milliseconds": 15.1068
+        },
+        {
+          "sample_index_0based": 8,
+          "milliseconds": 15.3927
+        },
+        {
+          "sample_index_0based": 4,
+          "milliseconds": 16.5198
+        },
+        {
+          "sample_index_0based": 6,
+          "milliseconds": 17.1316
+        }
+      ],
+      "recorded_median_ms": 14.5069,
+      "recomputed_median_ms": 14.5069,
+      "decimal_median_ms": 14.5069,
+      "median_middle_samples_0based": [
+        1,
+        9
+      ],
+      "median_absolute_error_ms": 0.0,
+      "median_agrees": true,
+      "recorded_p95_ms": 17.1316,
+      "recomputed_nearest_rank_p95_ms": 17.1316,
+      "p95_rank_1based": 10,
+      "p95_sample_index_0based": 6,
+      "p95_agrees": true,
+      "recomputed_query_count_set": [
+        4
+      ],
+      "query_counts_agree": true,
+      "all_ten_statement_counts_identical": true,
+      "recorded_budget": 4,
+      "recomputed_budget": 4,
+      "meets_recorded_budget": true,
+      "expected_count_model": "3 + trades + unique_items (observational fit, not source proof)",
+      "count_model_agrees_all_samples": true,
+      "item_batch_sizes_implied_by_method_and_count_model": null,
+      "participant_batch_sizes_implied_by_method_and_count_model": null,
+      "unique_sql_shape_count_last_timed_request_only": 3,
+      "last_timed_request_statement_count": 4,
+      "sql_shapes": [
+        {
+          "shape_index_0based": 0,
+          "source_reference": "R/measurement.json#/rows/1/sql_shapes/0",
+          "table": "sessions",
+          "kind": "session_token_hash",
+          "utf8_sha256": "3c8fd1e700e10a9f977632bc3b8d2defe28343966cf3046cdb3222f091117192",
+          "utf8_bytes": 129,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 1,
+          "source_reference": "R/measurement.json#/rows/1/sql_shapes/1",
+          "table": "players",
+          "kind": "id_primary_key",
+          "utf8_sha256": "0add0199ca54081153a827c0c938dddc9a3db59dde2460c6d47a63660562c244",
+          "utf8_bytes": 197,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 2,
+          "source_reference": "R/measurement.json#/rows/1/sql_shapes/2",
+          "table": "trades",
+          "kind": "participant_or",
+          "utf8_sha256": "e8c8e42e00d92b7e731199637978558d38d363ceb45686beefc3f14433914c84",
+          "utf8_bytes": 183,
+          "placeholder_count": 2,
+          "first_placeholder": "a_1",
+          "last_placeholder": "b_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        }
+      ],
+      "sql_shapes_consistent": true,
+      "full_execution_trace_and_bound_parameters_retained": false,
+      "expected_response_sha256": "08bca430de63bc3080c7d34da1733e50b5d586fe21eccb450d2a7f7dfdcf5dc4",
+      "response_digest_kind": "expected_fixture_not_actual_response",
+      "actual_response_bodies_or_digests_retained": false,
+      "recorded_snapshot_equality": true,
+      "authoritative_state_before_sha256": null,
+      "authoritative_state_after_sha256": null,
+      "independent_authoritative_state_hash_verification": "NEEDS MORE EVIDENCE",
+      "record_arithmetic_integrity": "PASS",
+      "findings": "Recorded counts fit 3 + trades + unique offered items; repeated per-table multiplicities are inferred, not retained as traces."
+    },
+    {
+      "label": "R",
+      "row_index_0based": 2,
+      "source_reference": "R/measurement.json#/rows/2",
+      "trades": 1,
+      "items_per_side": 2,
+      "unique_offered_items_from_method": 4,
+      "unique_participants_from_method": 2,
+      "sample_count": 10,
+      "samples": [
+        {
+          "sample_index_0based": 0,
+          "source_reference": "R/measurement.json#/rows/2/samples/0",
+          "milliseconds": 44.4686,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 1,
+          "source_reference": "R/measurement.json#/rows/2/samples/1",
+          "milliseconds": 26.339,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 2,
+          "source_reference": "R/measurement.json#/rows/2/samples/2",
+          "milliseconds": 24.5376,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 3,
+          "source_reference": "R/measurement.json#/rows/2/samples/3",
+          "milliseconds": 23.1854,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 4,
+          "source_reference": "R/measurement.json#/rows/2/samples/4",
+          "milliseconds": 23.8872,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 5,
+          "source_reference": "R/measurement.json#/rows/2/samples/5",
+          "milliseconds": 24.0965,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 6,
+          "source_reference": "R/measurement.json#/rows/2/samples/6",
+          "milliseconds": 23.3418,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 7,
+          "source_reference": "R/measurement.json#/rows/2/samples/7",
+          "milliseconds": 22.7058,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 8,
+          "source_reference": "R/measurement.json#/rows/2/samples/8",
+          "milliseconds": 22.5835,
+          "statements": 8,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 9,
+          "source_reference": "R/measurement.json#/rows/2/samples/9",
+          "milliseconds": 21.8596,
+          "statements": 8,
+          "valid": true
+        }
+      ],
+      "sorted_duration_samples": [
+        {
+          "sample_index_0based": 9,
+          "milliseconds": 21.8596
+        },
+        {
+          "sample_index_0based": 8,
+          "milliseconds": 22.5835
+        },
+        {
+          "sample_index_0based": 7,
+          "milliseconds": 22.7058
+        },
+        {
+          "sample_index_0based": 3,
+          "milliseconds": 23.1854
+        },
+        {
+          "sample_index_0based": 6,
+          "milliseconds": 23.3418
+        },
+        {
+          "sample_index_0based": 4,
+          "milliseconds": 23.8872
+        },
+        {
+          "sample_index_0based": 5,
+          "milliseconds": 24.0965
+        },
+        {
+          "sample_index_0based": 2,
+          "milliseconds": 24.5376
+        },
+        {
+          "sample_index_0based": 1,
+          "milliseconds": 26.339
+        },
+        {
+          "sample_index_0based": 0,
+          "milliseconds": 44.4686
+        }
+      ],
+      "recorded_median_ms": 23.6145,
+      "recomputed_median_ms": 23.6145,
+      "decimal_median_ms": 23.6145,
+      "median_middle_samples_0based": [
+        6,
+        4
+      ],
+      "median_absolute_error_ms": 0.0,
+      "median_agrees": true,
+      "recorded_p95_ms": 44.4686,
+      "recomputed_nearest_rank_p95_ms": 44.4686,
+      "p95_rank_1based": 10,
+      "p95_sample_index_0based": 0,
+      "p95_agrees": true,
+      "recomputed_query_count_set": [
+        8
+      ],
+      "query_counts_agree": true,
+      "all_ten_statement_counts_identical": true,
+      "recorded_budget": 5,
+      "recomputed_budget": 5,
+      "meets_recorded_budget": false,
+      "expected_count_model": "3 + trades + unique_items (observational fit, not source proof)",
+      "count_model_agrees_all_samples": true,
+      "item_batch_sizes_implied_by_method_and_count_model": null,
+      "participant_batch_sizes_implied_by_method_and_count_model": null,
+      "unique_sql_shape_count_last_timed_request_only": 4,
+      "last_timed_request_statement_count": 8,
+      "sql_shapes": [
+        {
+          "shape_index_0based": 0,
+          "source_reference": "R/measurement.json#/rows/2/sql_shapes/0",
+          "table": "sessions",
+          "kind": "session_token_hash",
+          "utf8_sha256": "3c8fd1e700e10a9f977632bc3b8d2defe28343966cf3046cdb3222f091117192",
+          "utf8_bytes": 129,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 1,
+          "source_reference": "R/measurement.json#/rows/2/sql_shapes/1",
+          "table": "players",
+          "kind": "id_primary_key",
+          "utf8_sha256": "0add0199ca54081153a827c0c938dddc9a3db59dde2460c6d47a63660562c244",
+          "utf8_bytes": 197,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 2,
+          "source_reference": "R/measurement.json#/rows/2/sql_shapes/2",
+          "table": "trades",
+          "kind": "participant_or",
+          "utf8_sha256": "e8c8e42e00d92b7e731199637978558d38d363ceb45686beefc3f14433914c84",
+          "utf8_bytes": 183,
+          "placeholder_count": 2,
+          "first_placeholder": "a_1",
+          "last_placeholder": "b_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 3,
+          "source_reference": "R/measurement.json#/rows/2/sql_shapes/3",
+          "table": "items",
+          "kind": "id_primary_key",
+          "utf8_sha256": "da6935c39cdb99fa85b8ff8ad7a9137268f8bc866fb986ae55e7a74287442a8c",
+          "utf8_bytes": 215,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        }
+      ],
+      "sql_shapes_consistent": true,
+      "full_execution_trace_and_bound_parameters_retained": false,
+      "expected_response_sha256": "d916e390faf016ded1772727c7ecd1256824eb160a882bf62d9aa8cc0c46412b",
+      "response_digest_kind": "expected_fixture_not_actual_response",
+      "actual_response_bodies_or_digests_retained": false,
+      "recorded_snapshot_equality": true,
+      "authoritative_state_before_sha256": null,
+      "authoritative_state_after_sha256": null,
+      "independent_authoritative_state_hash_verification": "NEEDS MORE EVIDENCE",
+      "record_arithmetic_integrity": "PASS",
+      "findings": "Recorded counts fit 3 + trades + unique offered items; repeated per-table multiplicities are inferred, not retained as traces."
+    },
+    {
+      "label": "R",
+      "row_index_0based": 3,
+      "source_reference": "R/measurement.json#/rows/3",
+      "trades": 10,
+      "items_per_side": 1,
+      "unique_offered_items_from_method": 20,
+      "unique_participants_from_method": 11,
+      "sample_count": 10,
+      "samples": [
+        {
+          "sample_index_0based": 0,
+          "source_reference": "R/measurement.json#/rows/3/samples/0",
+          "milliseconds": 66.6518,
+          "statements": 33,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 1,
+          "source_reference": "R/measurement.json#/rows/3/samples/1",
+          "milliseconds": 66.518,
+          "statements": 33,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 2,
+          "source_reference": "R/measurement.json#/rows/3/samples/2",
+          "milliseconds": 98.3006,
+          "statements": 33,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 3,
+          "source_reference": "R/measurement.json#/rows/3/samples/3",
+          "milliseconds": 76.3998,
+          "statements": 33,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 4,
+          "source_reference": "R/measurement.json#/rows/3/samples/4",
+          "milliseconds": 68.693,
+          "statements": 33,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 5,
+          "source_reference": "R/measurement.json#/rows/3/samples/5",
+          "milliseconds": 65.4401,
+          "statements": 33,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 6,
+          "source_reference": "R/measurement.json#/rows/3/samples/6",
+          "milliseconds": 65.8331,
+          "statements": 33,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 7,
+          "source_reference": "R/measurement.json#/rows/3/samples/7",
+          "milliseconds": 66.8142,
+          "statements": 33,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 8,
+          "source_reference": "R/measurement.json#/rows/3/samples/8",
+          "milliseconds": 66.6469,
+          "statements": 33,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 9,
+          "source_reference": "R/measurement.json#/rows/3/samples/9",
+          "milliseconds": 68.5779,
+          "statements": 33,
+          "valid": true
+        }
+      ],
+      "sorted_duration_samples": [
+        {
+          "sample_index_0based": 5,
+          "milliseconds": 65.4401
+        },
+        {
+          "sample_index_0based": 6,
+          "milliseconds": 65.8331
+        },
+        {
+          "sample_index_0based": 1,
+          "milliseconds": 66.518
+        },
+        {
+          "sample_index_0based": 8,
+          "milliseconds": 66.6469
+        },
+        {
+          "sample_index_0based": 0,
+          "milliseconds": 66.6518
+        },
+        {
+          "sample_index_0based": 7,
+          "milliseconds": 66.8142
+        },
+        {
+          "sample_index_0based": 9,
+          "milliseconds": 68.5779
+        },
+        {
+          "sample_index_0based": 4,
+          "milliseconds": 68.693
+        },
+        {
+          "sample_index_0based": 3,
+          "milliseconds": 76.3998
+        },
+        {
+          "sample_index_0based": 2,
+          "milliseconds": 98.3006
+        }
+      ],
+      "recorded_median_ms": 66.733,
+      "recomputed_median_ms": 66.733,
+      "decimal_median_ms": 66.7330,
+      "median_middle_samples_0based": [
+        0,
+        7
+      ],
+      "median_absolute_error_ms": 0.0,
+      "median_agrees": true,
+      "recorded_p95_ms": 98.3006,
+      "recomputed_nearest_rank_p95_ms": 98.3006,
+      "p95_rank_1based": 10,
+      "p95_sample_index_0based": 2,
+      "p95_agrees": true,
+      "recomputed_query_count_set": [
+        33
+      ],
+      "query_counts_agree": true,
+      "all_ten_statement_counts_identical": true,
+      "recorded_budget": 5,
+      "recomputed_budget": 5,
+      "meets_recorded_budget": false,
+      "expected_count_model": "3 + trades + unique_items (observational fit, not source proof)",
+      "count_model_agrees_all_samples": true,
+      "item_batch_sizes_implied_by_method_and_count_model": null,
+      "participant_batch_sizes_implied_by_method_and_count_model": null,
+      "unique_sql_shape_count_last_timed_request_only": 4,
+      "last_timed_request_statement_count": 33,
+      "sql_shapes": [
+        {
+          "shape_index_0based": 0,
+          "source_reference": "R/measurement.json#/rows/3/sql_shapes/0",
+          "table": "sessions",
+          "kind": "session_token_hash",
+          "utf8_sha256": "3c8fd1e700e10a9f977632bc3b8d2defe28343966cf3046cdb3222f091117192",
+          "utf8_bytes": 129,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 1,
+          "source_reference": "R/measurement.json#/rows/3/sql_shapes/1",
+          "table": "players",
+          "kind": "id_primary_key",
+          "utf8_sha256": "0add0199ca54081153a827c0c938dddc9a3db59dde2460c6d47a63660562c244",
+          "utf8_bytes": 197,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 2,
+          "source_reference": "R/measurement.json#/rows/3/sql_shapes/2",
+          "table": "trades",
+          "kind": "participant_or",
+          "utf8_sha256": "e8c8e42e00d92b7e731199637978558d38d363ceb45686beefc3f14433914c84",
+          "utf8_bytes": 183,
+          "placeholder_count": 2,
+          "first_placeholder": "a_1",
+          "last_placeholder": "b_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 3,
+          "source_reference": "R/measurement.json#/rows/3/sql_shapes/3",
+          "table": "items",
+          "kind": "id_primary_key",
+          "utf8_sha256": "da6935c39cdb99fa85b8ff8ad7a9137268f8bc866fb986ae55e7a74287442a8c",
+          "utf8_bytes": 215,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        }
+      ],
+      "sql_shapes_consistent": true,
+      "full_execution_trace_and_bound_parameters_retained": false,
+      "expected_response_sha256": "6d5c6fbd77490d8beb68bd9180b544df36c32bc953cddccbcad3366185b26e34",
+      "response_digest_kind": "expected_fixture_not_actual_response",
+      "actual_response_bodies_or_digests_retained": false,
+      "recorded_snapshot_equality": true,
+      "authoritative_state_before_sha256": null,
+      "authoritative_state_after_sha256": null,
+      "independent_authoritative_state_hash_verification": "NEEDS MORE EVIDENCE",
+      "record_arithmetic_integrity": "PASS",
+      "findings": "Recorded counts fit 3 + trades + unique offered items; repeated per-table multiplicities are inferred, not retained as traces."
+    },
+    {
+      "label": "R",
+      "row_index_0based": 4,
+      "source_reference": "R/measurement.json#/rows/4",
+      "trades": 40,
+      "items_per_side": 1,
+      "unique_offered_items_from_method": 80,
+      "unique_participants_from_method": 41,
+      "sample_count": 10,
+      "samples": [
+        {
+          "sample_index_0based": 0,
+          "source_reference": "R/measurement.json#/rows/4/samples/0",
+          "milliseconds": 218.1965,
+          "statements": 123,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 1,
+          "source_reference": "R/measurement.json#/rows/4/samples/1",
+          "milliseconds": 228.1049,
+          "statements": 123,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 2,
+          "source_reference": "R/measurement.json#/rows/4/samples/2",
+          "milliseconds": 211.945,
+          "statements": 123,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 3,
+          "source_reference": "R/measurement.json#/rows/4/samples/3",
+          "milliseconds": 191.6203,
+          "statements": 123,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 4,
+          "source_reference": "R/measurement.json#/rows/4/samples/4",
+          "milliseconds": 220.1959,
+          "statements": 123,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 5,
+          "source_reference": "R/measurement.json#/rows/4/samples/5",
+          "milliseconds": 220.5778,
+          "statements": 123,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 6,
+          "source_reference": "R/measurement.json#/rows/4/samples/6",
+          "milliseconds": 221.0891,
+          "statements": 123,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 7,
+          "source_reference": "R/measurement.json#/rows/4/samples/7",
+          "milliseconds": 230.7752,
+          "statements": 123,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 8,
+          "source_reference": "R/measurement.json#/rows/4/samples/8",
+          "milliseconds": 239.9198,
+          "statements": 123,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 9,
+          "source_reference": "R/measurement.json#/rows/4/samples/9",
+          "milliseconds": 295.2011,
+          "statements": 123,
+          "valid": true
+        }
+      ],
+      "sorted_duration_samples": [
+        {
+          "sample_index_0based": 3,
+          "milliseconds": 191.6203
+        },
+        {
+          "sample_index_0based": 2,
+          "milliseconds": 211.945
+        },
+        {
+          "sample_index_0based": 0,
+          "milliseconds": 218.1965
+        },
+        {
+          "sample_index_0based": 4,
+          "milliseconds": 220.1959
+        },
+        {
+          "sample_index_0based": 5,
+          "milliseconds": 220.5778
+        },
+        {
+          "sample_index_0based": 6,
+          "milliseconds": 221.0891
+        },
+        {
+          "sample_index_0based": 1,
+          "milliseconds": 228.1049
+        },
+        {
+          "sample_index_0based": 7,
+          "milliseconds": 230.7752
+        },
+        {
+          "sample_index_0based": 8,
+          "milliseconds": 239.9198
+        },
+        {
+          "sample_index_0based": 9,
+          "milliseconds": 295.2011
+        }
+      ],
+      "recorded_median_ms": 220.83345,
+      "recomputed_median_ms": 220.83345,
+      "decimal_median_ms": 220.83345,
+      "median_middle_samples_0based": [
+        5,
+        6
+      ],
+      "median_absolute_error_ms": 0.0,
+      "median_agrees": true,
+      "recorded_p95_ms": 295.2011,
+      "recomputed_nearest_rank_p95_ms": 295.2011,
+      "p95_rank_1based": 10,
+      "p95_sample_index_0based": 9,
+      "p95_agrees": true,
+      "recomputed_query_count_set": [
+        123
+      ],
+      "query_counts_agree": true,
+      "all_ten_statement_counts_identical": true,
+      "recorded_budget": 5,
+      "recomputed_budget": 5,
+      "meets_recorded_budget": false,
+      "expected_count_model": "3 + trades + unique_items (observational fit, not source proof)",
+      "count_model_agrees_all_samples": true,
+      "item_batch_sizes_implied_by_method_and_count_model": null,
+      "participant_batch_sizes_implied_by_method_and_count_model": null,
+      "unique_sql_shape_count_last_timed_request_only": 4,
+      "last_timed_request_statement_count": 123,
+      "sql_shapes": [
+        {
+          "shape_index_0based": 0,
+          "source_reference": "R/measurement.json#/rows/4/sql_shapes/0",
+          "table": "sessions",
+          "kind": "session_token_hash",
+          "utf8_sha256": "3c8fd1e700e10a9f977632bc3b8d2defe28343966cf3046cdb3222f091117192",
+          "utf8_bytes": 129,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 1,
+          "source_reference": "R/measurement.json#/rows/4/sql_shapes/1",
+          "table": "players",
+          "kind": "id_primary_key",
+          "utf8_sha256": "0add0199ca54081153a827c0c938dddc9a3db59dde2460c6d47a63660562c244",
+          "utf8_bytes": 197,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 2,
+          "source_reference": "R/measurement.json#/rows/4/sql_shapes/2",
+          "table": "trades",
+          "kind": "participant_or",
+          "utf8_sha256": "e8c8e42e00d92b7e731199637978558d38d363ceb45686beefc3f14433914c84",
+          "utf8_bytes": 183,
+          "placeholder_count": 2,
+          "first_placeholder": "a_1",
+          "last_placeholder": "b_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 3,
+          "source_reference": "R/measurement.json#/rows/4/sql_shapes/3",
+          "table": "items",
+          "kind": "id_primary_key",
+          "utf8_sha256": "da6935c39cdb99fa85b8ff8ad7a9137268f8bc866fb986ae55e7a74287442a8c",
+          "utf8_bytes": 215,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        }
+      ],
+      "sql_shapes_consistent": true,
+      "full_execution_trace_and_bound_parameters_retained": false,
+      "expected_response_sha256": "95e5b462050c402fb59ac4fa52de06c93bbe8fc0c61b43e04426609243da4010",
+      "response_digest_kind": "expected_fixture_not_actual_response",
+      "actual_response_bodies_or_digests_retained": false,
+      "recorded_snapshot_equality": true,
+      "authoritative_state_before_sha256": null,
+      "authoritative_state_after_sha256": null,
+      "independent_authoritative_state_hash_verification": "NEEDS MORE EVIDENCE",
+      "record_arithmetic_integrity": "PASS",
+      "findings": "Recorded counts fit 3 + trades + unique offered items; repeated per-table multiplicities are inferred, not retained as traces."
+    },
+    {
+      "label": "R",
+      "row_index_0based": 5,
+      "source_reference": "R/measurement.json#/rows/5",
+      "trades": 40,
+      "items_per_side": 20,
+      "unique_offered_items_from_method": 1600,
+      "unique_participants_from_method": 41,
+      "sample_count": 10,
+      "samples": [
+        {
+          "sample_index_0based": 0,
+          "source_reference": "R/measurement.json#/rows/5/samples/0",
+          "milliseconds": 2876.4546,
+          "statements": 1643,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 1,
+          "source_reference": "R/measurement.json#/rows/5/samples/1",
+          "milliseconds": 3175.3972,
+          "statements": 1643,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 2,
+          "source_reference": "R/measurement.json#/rows/5/samples/2",
+          "milliseconds": 2854.5519,
+          "statements": 1643,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 3,
+          "source_reference": "R/measurement.json#/rows/5/samples/3",
+          "milliseconds": 4141.7075,
+          "statements": 1643,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 4,
+          "source_reference": "R/measurement.json#/rows/5/samples/4",
+          "milliseconds": 3444.1006,
+          "statements": 1643,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 5,
+          "source_reference": "R/measurement.json#/rows/5/samples/5",
+          "milliseconds": 3074.0316,
+          "statements": 1643,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 6,
+          "source_reference": "R/measurement.json#/rows/5/samples/6",
+          "milliseconds": 2986.0391,
+          "statements": 1643,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 7,
+          "source_reference": "R/measurement.json#/rows/5/samples/7",
+          "milliseconds": 3952.8221,
+          "statements": 1643,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 8,
+          "source_reference": "R/measurement.json#/rows/5/samples/8",
+          "milliseconds": 3891.7647,
+          "statements": 1643,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 9,
+          "source_reference": "R/measurement.json#/rows/5/samples/9",
+          "milliseconds": 4010.0293,
+          "statements": 1643,
+          "valid": true
+        }
+      ],
+      "sorted_duration_samples": [
+        {
+          "sample_index_0based": 2,
+          "milliseconds": 2854.5519
+        },
+        {
+          "sample_index_0based": 0,
+          "milliseconds": 2876.4546
+        },
+        {
+          "sample_index_0based": 6,
+          "milliseconds": 2986.0391
+        },
+        {
+          "sample_index_0based": 5,
+          "milliseconds": 3074.0316
+        },
+        {
+          "sample_index_0based": 1,
+          "milliseconds": 3175.3972
+        },
+        {
+          "sample_index_0based": 4,
+          "milliseconds": 3444.1006
+        },
+        {
+          "sample_index_0based": 8,
+          "milliseconds": 3891.7647
+        },
+        {
+          "sample_index_0based": 7,
+          "milliseconds": 3952.8221
+        },
+        {
+          "sample_index_0based": 9,
+          "milliseconds": 4010.0293
+        },
+        {
+          "sample_index_0based": 3,
+          "milliseconds": 4141.7075
+        }
+      ],
+      "recorded_median_ms": 3309.7489,
+      "recomputed_median_ms": 3309.7489,
+      "decimal_median_ms": 3309.7489,
+      "median_middle_samples_0based": [
+        1,
+        4
+      ],
+      "median_absolute_error_ms": 0.0,
+      "median_agrees": true,
+      "recorded_p95_ms": 4141.7075,
+      "recomputed_nearest_rank_p95_ms": 4141.7075,
+      "p95_rank_1based": 10,
+      "p95_sample_index_0based": 3,
+      "p95_agrees": true,
+      "recomputed_query_count_set": [
+        1643
+      ],
+      "query_counts_agree": true,
+      "all_ten_statement_counts_identical": true,
+      "recorded_budget": 8,
+      "recomputed_budget": 8,
+      "meets_recorded_budget": false,
+      "expected_count_model": "3 + trades + unique_items (observational fit, not source proof)",
+      "count_model_agrees_all_samples": true,
+      "item_batch_sizes_implied_by_method_and_count_model": null,
+      "participant_batch_sizes_implied_by_method_and_count_model": null,
+      "unique_sql_shape_count_last_timed_request_only": 4,
+      "last_timed_request_statement_count": 1643,
+      "sql_shapes": [
+        {
+          "shape_index_0based": 0,
+          "source_reference": "R/measurement.json#/rows/5/sql_shapes/0",
+          "table": "sessions",
+          "kind": "session_token_hash",
+          "utf8_sha256": "3c8fd1e700e10a9f977632bc3b8d2defe28343966cf3046cdb3222f091117192",
+          "utf8_bytes": 129,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 1,
+          "source_reference": "R/measurement.json#/rows/5/sql_shapes/1",
+          "table": "players",
+          "kind": "id_primary_key",
+          "utf8_sha256": "0add0199ca54081153a827c0c938dddc9a3db59dde2460c6d47a63660562c244",
+          "utf8_bytes": 197,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 2,
+          "source_reference": "R/measurement.json#/rows/5/sql_shapes/2",
+          "table": "trades",
+          "kind": "participant_or",
+          "utf8_sha256": "e8c8e42e00d92b7e731199637978558d38d363ceb45686beefc3f14433914c84",
+          "utf8_bytes": 183,
+          "placeholder_count": 2,
+          "first_placeholder": "a_1",
+          "last_placeholder": "b_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 3,
+          "source_reference": "R/measurement.json#/rows/5/sql_shapes/3",
+          "table": "items",
+          "kind": "id_primary_key",
+          "utf8_sha256": "da6935c39cdb99fa85b8ff8ad7a9137268f8bc866fb986ae55e7a74287442a8c",
+          "utf8_bytes": 215,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        }
+      ],
+      "sql_shapes_consistent": true,
+      "full_execution_trace_and_bound_parameters_retained": false,
+      "expected_response_sha256": "b404b245c8aa93b5cdec2b64bc00190f9698d8256c28c0d855d959678647f6db",
+      "response_digest_kind": "expected_fixture_not_actual_response",
+      "actual_response_bodies_or_digests_retained": false,
+      "recorded_snapshot_equality": true,
+      "authoritative_state_before_sha256": null,
+      "authoritative_state_after_sha256": null,
+      "independent_authoritative_state_hash_verification": "NEEDS MORE EVIDENCE",
+      "record_arithmetic_integrity": "PASS",
+      "findings": "Recorded counts fit 3 + trades + unique offered items; repeated per-table multiplicities are inferred, not retained as traces."
+    },
+    {
+      "label": "R",
+      "row_index_0based": 6,
+      "source_reference": "R/measurement.json#/rows/6",
+      "trades": 501,
+      "items_per_side": 0,
+      "unique_offered_items_from_method": 0,
+      "unique_participants_from_method": 502,
+      "sample_count": 10,
+      "samples": [
+        {
+          "sample_index_0based": 0,
+          "source_reference": "R/measurement.json#/rows/6/samples/0",
+          "milliseconds": 946.9469,
+          "statements": 504,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 1,
+          "source_reference": "R/measurement.json#/rows/6/samples/1",
+          "milliseconds": 1079.8377,
+          "statements": 504,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 2,
+          "source_reference": "R/measurement.json#/rows/6/samples/2",
+          "milliseconds": 1150.0074,
+          "statements": 504,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 3,
+          "source_reference": "R/measurement.json#/rows/6/samples/3",
+          "milliseconds": 1271.7206,
+          "statements": 504,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 4,
+          "source_reference": "R/measurement.json#/rows/6/samples/4",
+          "milliseconds": 790.8697,
+          "statements": 504,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 5,
+          "source_reference": "R/measurement.json#/rows/6/samples/5",
+          "milliseconds": 740.3392,
+          "statements": 504,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 6,
+          "source_reference": "R/measurement.json#/rows/6/samples/6",
+          "milliseconds": 1279.1273,
+          "statements": 504,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 7,
+          "source_reference": "R/measurement.json#/rows/6/samples/7",
+          "milliseconds": 3303.8036,
+          "statements": 504,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 8,
+          "source_reference": "R/measurement.json#/rows/6/samples/8",
+          "milliseconds": 1203.1299,
+          "statements": 504,
+          "valid": true
+        },
+        {
+          "sample_index_0based": 9,
+          "source_reference": "R/measurement.json#/rows/6/samples/9",
+          "milliseconds": 1400.2164,
+          "statements": 504,
+          "valid": true
+        }
+      ],
+      "sorted_duration_samples": [
+        {
+          "sample_index_0based": 5,
+          "milliseconds": 740.3392
+        },
+        {
+          "sample_index_0based": 4,
+          "milliseconds": 790.8697
+        },
+        {
+          "sample_index_0based": 0,
+          "milliseconds": 946.9469
+        },
+        {
+          "sample_index_0based": 1,
+          "milliseconds": 1079.8377
+        },
+        {
+          "sample_index_0based": 2,
+          "milliseconds": 1150.0074
+        },
+        {
+          "sample_index_0based": 8,
+          "milliseconds": 1203.1299
+        },
+        {
+          "sample_index_0based": 3,
+          "milliseconds": 1271.7206
+        },
+        {
+          "sample_index_0based": 6,
+          "milliseconds": 1279.1273
+        },
+        {
+          "sample_index_0based": 9,
+          "milliseconds": 1400.2164
+        },
+        {
+          "sample_index_0based": 7,
+          "milliseconds": 3303.8036
+        }
+      ],
+      "recorded_median_ms": 1176.56865,
+      "recomputed_median_ms": 1176.56865,
+      "decimal_median_ms": 1176.56865,
+      "median_middle_samples_0based": [
+        2,
+        8
+      ],
+      "median_absolute_error_ms": 0.0,
+      "median_agrees": true,
+      "recorded_p95_ms": 3303.8036,
+      "recomputed_nearest_rank_p95_ms": 3303.8036,
+      "p95_rank_1based": 10,
+      "p95_sample_index_0based": 7,
+      "p95_agrees": true,
+      "recomputed_query_count_set": [
+        504
+      ],
+      "query_counts_agree": true,
+      "all_ten_statement_counts_identical": true,
+      "recorded_budget": 5,
+      "recomputed_budget": 5,
+      "meets_recorded_budget": false,
+      "expected_count_model": "3 + trades + unique_items (observational fit, not source proof)",
+      "count_model_agrees_all_samples": true,
+      "item_batch_sizes_implied_by_method_and_count_model": null,
+      "participant_batch_sizes_implied_by_method_and_count_model": null,
+      "unique_sql_shape_count_last_timed_request_only": 3,
+      "last_timed_request_statement_count": 504,
+      "sql_shapes": [
+        {
+          "shape_index_0based": 0,
+          "source_reference": "R/measurement.json#/rows/6/sql_shapes/0",
+          "table": "sessions",
+          "kind": "session_token_hash",
+          "utf8_sha256": "3c8fd1e700e10a9f977632bc3b8d2defe28343966cf3046cdb3222f091117192",
+          "utf8_bytes": 129,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 1,
+          "source_reference": "R/measurement.json#/rows/6/sql_shapes/1",
+          "table": "players",
+          "kind": "id_primary_key",
+          "utf8_sha256": "0add0199ca54081153a827c0c938dddc9a3db59dde2460c6d47a63660562c244",
+          "utf8_bytes": 197,
+          "placeholder_count": 1,
+          "first_placeholder": "pk_1",
+          "last_placeholder": "pk_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        },
+        {
+          "shape_index_0based": 2,
+          "source_reference": "R/measurement.json#/rows/6/sql_shapes/2",
+          "table": "trades",
+          "kind": "participant_or",
+          "utf8_sha256": "e8c8e42e00d92b7e731199637978558d38d363ceb45686beefc3f14433914c84",
+          "utf8_bytes": 183,
+          "placeholder_count": 2,
+          "first_placeholder": "a_1",
+          "last_placeholder": "b_1",
+          "select_only": true,
+          "exact_expected_sql_text_match": true,
+          "placeholder_sequence_checked_by_exact_template": true,
+          "narrow_participant_projection": false
+        }
+      ],
+      "sql_shapes_consistent": true,
+      "full_execution_trace_and_bound_parameters_retained": false,
+      "expected_response_sha256": "8bbf30baca3b1e0d3f25f011c0b94d727946b3496037f1941d1664d24c4a823b",
+      "response_digest_kind": "expected_fixture_not_actual_response",
+      "actual_response_bodies_or_digests_retained": false,
+      "recorded_snapshot_equality": true,
+      "authoritative_state_before_sha256": null,
+      "authoritative_state_after_sha256": null,
+      "independent_authoritative_state_hash_verification": "NEEDS MORE EVIDENCE",
+      "record_arithmetic_integrity": "PASS",
+      "findings": "Recorded counts fit 3 + trades + unique offered items; repeated per-table multiplicities are inferred, not retained as traces."
+    }
+  ],
+  "blind_limitations": [
+    "Hash integrity is anchored to the supplied manifest, not independently authenticated execution or source provenance.",
+    "Measurement routine and fixture source/fingerprints are withheld; methodology assertions cannot be re-run or source-audited here.",
+    "No actual response bodies/digests, expected bodies, authoritative snapshots, state digests, bound parameters, or complete SQL traces are retained.",
+    "Canonicalization removes top-level trade-list order differences; nested offer/confirmation order is stated to remain significant.",
+    "Ten sequential warm samples per workload, non-interleaved runs, uncontrolled host load; no causal throughput or production-tail conclusions.",
+    "Only the declared seven synthetic workload pairs are assessable; absence of earlier failures/dropped original runs is not provable.",
+    "No failure/adversarial/concurrent/monetary/source tests; no human/device/8.5/production/unbounded-history acceptance."
+  ]
+}
