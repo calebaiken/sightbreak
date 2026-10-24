@@ -19,6 +19,18 @@ launches = [node for node in ast.walk(tree) if isinstance(node, ast.Call)
 assert len(launches) == 1
 assert m.WHOLE_SECONDS == 420 and m.CLEANUP_SECONDS == 5
 controls = ['one fixed runner launch site', '420/5 budgets unchanged']
+# This is the same decision used by the real monitor after child.poll().
+# A successful return code does not excuse its first observation at the deadline.
+for observed in (420.0, 420.001, 421.0):
+    stop, timed_out = m.deadline_state(0, observed, 420.0)
+    assert stop and timed_out
+controls.append('successful exit first observed at/after420 rejected')
+stop, timed_out = m.deadline_state(0, 419.999, 420.0)
+assert stop and not timed_out
+controls.append('successful exit observed justbefore420 admitted to remaining gates')
+assert m.deadline_state(None, 420.0, 420.0) == (True, True)
+assert m.deadline_state(None, 419.999, 420.0) == (False, False)
+controls.append('running child stops at420 and continues before420')
 with tempfile.TemporaryDirectory(prefix='collector-preparation-control-') as directory:
     target = Path(directory) / 'fresh'
     target.mkdir(parents=True, exist_ok=False)

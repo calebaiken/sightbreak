@@ -156,6 +156,12 @@ def clean_group(leader, seen, sample):
             'scope': 'Owned group/session and observed descendants only; finite sampling can miss short or escaped descendants'}
 
 
+def deadline_state(returncode, observed, deadline):
+    """Completion counts only when the runner is observed before the whole deadline."""
+    timed_out = observed >= deadline
+    return returncode is not None or timed_out, timed_out
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--release', type=Path, required=True)
@@ -233,11 +239,15 @@ def main():
                 while True:
                     sample('running')
                     result = child.poll()
+                    observed = time.monotonic()
+                    stop, timed_out = deadline_state(result, observed, deadline)
                     if result is not None:
                         report['runner_exit'] = result
-                        break
-                    if time.monotonic() >= deadline:
-                        timed_out = True
+                        report['runner_exit_observed_seconds'] = observed - started
+                        report['runner_exit_observed_utc'] = utc()
+                    if stop:
+                        report['execution_stop_observed_seconds'] = observed - started
+                        report['native_completion_within_whole_deadline'] = result is not None and not timed_out
                         break
                     time.sleep(min(CADENCE_SECONDS, max(0, deadline - time.monotonic())))
             finally:
@@ -245,7 +255,7 @@ def main():
                 report['cleanup'] = clean_group(child.pid, seen, sample)
                 # Reap a terminated runner without extending the five-second cleanup window.
                 report['runner_exit'] = child.poll()
-        report['whole_execution_seconds'] = sample_times[-1] - started
+        report['observation_and_cleanup_elapsed_seconds'] = sample_times[-1] - started
         report['sample_count'] = len(sample_times)
         report['maximum_sample_gap_seconds'] = max((b - a for a, b in zip(sample_times, sample_times[1:])), default=0)
         report['observed_identities'] = [{'pid': pid, 'start_ticks': ticks} for pid, ticks in sorted(seen)]
@@ -254,6 +264,7 @@ def main():
         report['source_and_uids_unchanged'] = after == before
         # Actual acceptance is independently reconstructed after root execution.
         report['passed'] = (not report['timed_out'] and report['runner_exit'] == 0
+                            and report['native_completion_within_whole_deadline']
                             and report['source_and_uids_unchanged']
                             and report['cleanup']['all_observed_identities_gone'])
     except BaseException as error:
