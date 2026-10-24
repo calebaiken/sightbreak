@@ -2,6 +2,7 @@
 """Mocked OS/clock calls only. No native input, helper process or timing proof."""
 import ast
 import ctypes as C
+import math
 from pathlib import Path
 import unittest
 
@@ -506,6 +507,197 @@ class RealKeyPerDownControls(unittest.TestCase):
             self.assertEqual((state['target_window'], state['window_pid'], state['foreground_window']), (34, 12, 34))
             self.assertFalse(state['keys_down']['a'])
         self.assertFalse(any(result['os_states'][-1]['keys_down'].values()))
+
+
+
+
+class IndependentClockPulse(MockPulse):
+    """Declared fine sleeper plus independently quantized clock, never OS timing."""
+    def __init__(self, *, tick=None, phase=0, epoch=767.968, watchdog_epoch=90000):
+        super().__init__()
+        self.edge_delay = 0
+        self.tick, self.phase, self.epoch, self.watchdog_epoch = tick, phase, epoch, watchdog_epoch
+        self.sleep_requests = []
+        self.wake_ratio = 1.0
+        self.frozen = False
+        self.clock_fault = self.watchdog_fault = None
+
+    def monotonic(self):
+        if self.clock_fault and self.events and self.events[-1][1]:
+            return self.clock_fault()
+        delta = 0 if self.frozen else self.now
+        if self.tick:
+            delta = math.floor((delta + self.phase) / self.tick) * self.tick
+        return self.epoch + delta
+
+    def elapsed(self):
+        if self.watchdog_fault and self.events and self.events[-1][1]:
+            return self.watchdog_fault()
+        return self.watchdog_epoch + self.now
+
+    def sleep(self, seconds):
+        self.sleep_requests.append((seconds, self.monotonic(), self.now))
+        if self.sleep_error:
+            raise self.sleep_error
+        # A declared relative timer rounds up to 100ns; this is a pure model.
+        self.now += math.ceil(seconds * self.wake_ratio * 10_000_000) / 10_000_000
+
+    def run(self, names=('d',), seconds=.12567175974707734, remaining=1):
+        return self.ui.key_pulse(names, seconds, deadline=self.epoch + remaining,
+                                 receipt=self.receipt, clock=self.monotonic,
+                                 sleep=self.sleep, elapsed_clock=self.elapsed)
+
+
+class RouteClockBoundaryControls(unittest.TestCase):
+    def test_valid_fine_sleep_and_15625us_tick_phases_keep_fixed_boundary(self):
+        tick = .015625
+        for epoch in (0, 767.968, 1000000):
+            for phase in (0, tick / 8, tick / 2, tick * 7 / 8):
+                for duration in (.03, .12567175974707734, 2.5):
+                    with self.subTest(epoch=epoch, phase=phase, duration=duration):
+                        trial = IndependentClockPulse(tick=tick, phase=phase, epoch=epoch)
+                        receipt = trial.run(seconds=duration, remaining=4)
+                        boundary = epoch + duration
+                        self.assertEqual(receipt['hold_until_monotonic'], boundary)
+                        self.assertGreaterEqual(receipt['finished_monotonic'], boundary)
+                        self.assertLess(receipt['finished_monotonic'], epoch + 4)
+                        self.assertGreaterEqual(trial.now + 1e-10, duration - phase)
+                        self.assertLessEqual(trial.now, duration + tick + 1e-6)
+                        for requested, observed, _ in trial.sleep_requests:
+                            self.assertGreater(requested, 0)
+                            self.assertLessEqual(requested, boundary - observed)
+                        self.assertFalse(trial.down)
+
+    def test_actual_fractional_anchors_need_residual_without_implying_physical_sleep(self):
+        trial = IndependentClockPulse(tick=.015625)
+        receipt = trial.run()
+        self.assertEqual(receipt['edges'][0]['before_monotonic'], 767.968)
+        self.assertEqual(receipt['first_wait']['after_monotonic'], 768.093)
+        self.assertGreater(receipt['sleep_calls'], 1)
+        self.assertEqual(receipt['hold_until_monotonic'], 768.093671759747)
+        self.assertGreater(trial.now, .12567175974707734)
+        # Watchdog is the operation's remaining second, not the requested hold.
+        self.assertEqual(receipt['elapsed_watchdog_budget_seconds'], 1)
+        self.assertLess(receipt['finished_monotonic'], 768.968)
+
+    def test_genuine_early_wakes_wait_only_residual_until_same_clock_target(self):
+        for tick in (None, .015625):
+            trial = IndependentClockPulse(tick=tick, phase=.003)
+            trial.wake_ratio = .35
+            receipt = trial.run()
+            self.assertGreater(receipt['sleep_calls'], 2)
+            for requested, observed, _ in trial.sleep_requests:
+                self.assertLessEqual(requested, receipt['hold_until_monotonic'] - observed)
+            self.assertGreaterEqual(receipt['finished_monotonic'], receipt['hold_until_monotonic'])
+            self.assertFalse(trial.down)
+
+    def test_watchdog_uses_elapsed_differences_with_unrelated_epochs(self):
+        for epoch, watchdog_epoch in ((767.968, 0), (0, 1000000), (1000000, -200)):
+            trial = IndependentClockPulse(tick=.015625, epoch=epoch, watchdog_epoch=watchdog_epoch)
+            receipt = trial.run()
+            self.assertEqual(receipt['elapsed_watchdog_start'], watchdog_epoch)
+            self.assertEqual(receipt['elapsed_watchdog_budget_seconds'], 1)
+            self.assertEqual(receipt['status'], 'API_RETURNED_WITH_OS_RELEASE')
+
+    def test_state_and_dispatch_cost_consume_original_hold(self):
+        trial = IndependentClockPulse()
+        trial.edge_delay, trial.state_delay = .01, .002
+        receipt = trial.run(seconds=.1)
+        self.assertAlmostEqual(receipt['hold_until_monotonic'], 767.968 + .002 + .1)
+        self.assertLess(trial.sleep_requests[0][0], .1)
+        self.assertAlmostEqual(trial.sleep_requests[0][0], receipt['hold_until_monotonic'] - trial.sleep_requests[0][1])
+
+    def test_frozen_monotonic_is_bounded_by_original_operation_watchdog(self):
+        trial = IndependentClockPulse()
+        trial.frozen = True
+        with self.assertRaisesRegex(TimeoutError, 'Original route deadline'):
+            trial.run(names=('w', 'd'), remaining=.5)
+        self.assertLessEqual(trial.now, .500001)
+        self.assertGreater(trial.now, .49)
+        self.assertEqual(trial.events[-2][0:2], ('w', False))
+        self.assertEqual(trial.events[-1][0:2], ('d', False))
+        self.assertFalse(trial.down)
+        self.assertEqual(trial.receipt['status'], 'FAILED')
+        self.assertTrue(trial.receipt['release_complete'])
+
+    def test_deadline_equality_clipping_oversleep_and_late_release_remain_failed(self):
+        for remaining, ratio, release in ((.1, 1, 0), (.08, 1, 0), (.2, 4, 0), (.2, 1, .3)):
+            with self.subTest(remaining=remaining, ratio=ratio, release=release):
+                trial = IndependentClockPulse()
+                trial.wake_ratio, trial.up_delay = ratio, release
+                with self.assertRaises(TimeoutError): trial.run(seconds=.1, remaining=remaining)
+                self.assertFalse(trial.down)
+                self.assertEqual(trial.receipt['status'], 'FAILED')
+
+    def test_invalid_backward_and_persistent_clock_errors_still_attempt_all_ups(self):
+        def broken():
+            raise OSError('declared persistent clock failure')
+        for fault in (lambda: float('nan'), lambda: float('inf'), lambda: 766, broken):
+            with self.subTest(fault=fault):
+                trial = IndependentClockPulse()
+                # Fault begins only after both down calls have returned.
+                trial.ui.key = lambda name, down: MockPulse.key(trial, name, down)
+                original = trial.monotonic
+                def clock():
+                    return fault() if len(trial.events) >= 2 else original()
+                with self.assertRaises(BaseException):
+                    trial.ui.key_pulse(('w', 'd'), .1, deadline=trial.epoch + 1,
+                                       receipt=trial.receipt, clock=clock,
+                                       sleep=trial.sleep, elapsed_clock=trial.elapsed)
+                self.assertEqual([(n, down) for n, down, _ in trial.events],
+                                 [('w', True), ('d', True), ('w', False), ('d', False)])
+                self.assertFalse(trial.down)
+                self.assertEqual(trial.receipt['status'], 'FAILED')
+
+    def test_watchdog_faults_reject_and_release_without_cross_epoch_arithmetic(self):
+        def broken():
+            raise OSError('declared watchdog failure')
+        for fault in (lambda: float('nan'), lambda: float('inf'), lambda: -1, broken):
+            with self.subTest(fault=fault):
+                trial = IndependentClockPulse()
+                trial.watchdog_fault = fault
+                with self.assertRaises(BaseException): trial.run()
+                self.assertFalse(trial.down)
+                self.assertEqual(trial.events[-1][0:2], ('d', False))
+                self.assertEqual(trial.receipt['status'], 'FAILED')
+
+    def test_exact_and_adjacent_float_targets_use_absolute_boundary(self):
+        for epoch in (0, 767.968, 1000000, 2 ** 40):
+            for side in (-1, 0, 1):
+                with self.subTest(epoch=epoch, side=side):
+                    trial = IndependentClockPulse(epoch=epoch)
+                    boundary = epoch + .125
+                    target = math.nextafter(boundary, -math.inf if side < 0 else math.inf) if side else boundary
+                    calls = []
+                    def sleep(seconds):
+                        calls.append((seconds, trial.monotonic()))
+                        trial.now = (target if len(calls) == 1 else boundary) - epoch
+                    trial.sleep = sleep
+                    receipt = trial.run(seconds=.125)
+                    self.assertEqual(len(calls), 2 if side < 0 else 1)
+                    self.assertEqual(receipt['hold_until_monotonic'], boundary)
+                    self.assertGreaterEqual(receipt['finished_monotonic'], boundary)
+                    if side < 0:
+                        self.assertGreater(calls[-1][0], 0)
+                    self.assertFalse(trial.down)
+
+    def test_finite_clock_and_deadline_cannot_create_unbounded_watchdog_budget(self):
+        trial = IndependentClockPulse(epoch=-1e308)
+        with self.assertRaisesRegex(RuntimeError, 'operation budget is not finite'):
+            trial.ui.key_pulse(('d',), .1, deadline=1e308, receipt=trial.receipt,
+                               clock=trial.monotonic, sleep=trial.sleep, elapsed_clock=trial.elapsed)
+        self.assertFalse(trial.events)
+        self.assertEqual(trial.receipt['status'], 'FAILED')
+
+    def test_sleep_interrupt_retains_failure_and_all_release_attempts(self):
+        for error in (OSError('declared sleeper failure'), KeyboardInterrupt(), SystemExit('cancel')):
+            with self.subTest(error=type(error).__name__):
+                trial = IndependentClockPulse()
+                trial.sleep_error = error
+                with self.assertRaises(type(error)): trial.run(names=('w', 'd'))
+                self.assertEqual([(n, down) for n, down, _ in trial.events],
+                                 [('w', True), ('d', True), ('w', False), ('d', False)])
+                self.assertFalse(trial.down)
 
 
 if __name__ == '__main__':

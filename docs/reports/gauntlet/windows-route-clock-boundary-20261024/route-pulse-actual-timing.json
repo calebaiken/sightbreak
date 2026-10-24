@@ -1,0 +1,236 @@
+{
+  "scope": "Direct bounded raw extraction and numeric representation of retained values; no tests or timing experiments",
+  "run_id": 40083894472,
+  "job_id": 120842796227,
+  "raw_directory": "/workspace/reviews/windows-reopened-verbose-actual-20261024/.local/windows40083894472/full/offline-input",
+  "originals": {
+    "results.json": {
+      "bytes": 355955,
+      "sha256": "f9311caf8d4e1d4c12fd15de877d9101789f06ffa05eba846d0742aeb4dfe671"
+    },
+    "actions.json": {
+      "bytes": 304031,
+      "sha256": "9da42af7f3cf3de501bbbc80e760870eb3abb1ea2776a4b6871f46d8f0e26241"
+    },
+    "commands.json": {
+      "bytes": 528,
+      "sha256": "e40382baee6dc24a68348efeccf31af59edde22e7f97436de57649f7f1ab9d35"
+    },
+    "client.log": {
+      "bytes": 875,
+      "sha256": "4e9bb068d391a12376c1d17c7d394d5e332b66239403a403702bc9b8879dd97e"
+    }
+  },
+  "failure": {
+    "error": "Native route pulse sleep returned before its requested boundary",
+    "initial_exit": null,
+    "reopened_exit": null,
+    "elapsed_seconds": 102.2349999999999,
+    "cleanup_errors": []
+  },
+  "python_controller_argv0": "C:\\hostedtoolcache\\windows\\Python\\3.12.10\\x64\\python.exe",
+  "pulse_json_pointer": "/settings_cover_route/native_pulses/1",
+  "failed_pulse": {
+    "status": "FAILED",
+    "keys": [
+      "d"
+    ],
+    "requested_seconds": 0.12567175974707734,
+    "absolute_deadline": 796.718,
+    "edges": [
+      {
+        "key": "d",
+        "down": true,
+        "before_monotonic": 767.968,
+        "after_monotonic": 767.968
+      },
+      {
+        "key": "d",
+        "down": false,
+        "before_monotonic": 768.093,
+        "after_monotonic": 768.093
+      }
+    ],
+    "os_states": [
+      {
+        "label": "before_down",
+        "read_begin_monotonic": 767.968,
+        "read_end_monotonic": 767.968,
+        "target_window": 4915590,
+        "expected_pid": 5124,
+        "window_pid": 5124,
+        "window_thread": 7724,
+        "visible": true,
+        "foreground_window": 4915590,
+        "keys_down": {
+          "w": false,
+          "a": false,
+          "s": false,
+          "d": false
+        },
+        "lmb_down": false
+      },
+      {
+        "label": "after_down",
+        "read_begin_monotonic": 767.968,
+        "read_end_monotonic": 767.968,
+        "target_window": 4915590,
+        "expected_pid": 5124,
+        "window_pid": 5124,
+        "window_thread": 7724,
+        "visible": true,
+        "foreground_window": 4915590,
+        "keys_down": {
+          "w": false,
+          "a": false,
+          "s": false,
+          "d": true
+        },
+        "lmb_down": false
+      },
+      {
+        "label": "after_release",
+        "read_begin_monotonic": 768.093,
+        "read_end_monotonic": 768.093,
+        "target_window": 4915590,
+        "expected_pid": 5124,
+        "window_pid": 5124,
+        "window_thread": 7724,
+        "visible": true,
+        "foreground_window": 4915590,
+        "keys_down": {
+          "w": false,
+          "a": false,
+          "s": false,
+          "d": false
+        },
+        "lmb_down": false
+      }
+    ],
+    "down_checks": [
+      {
+        "key": "d",
+        "owned_keys": [],
+        "os_states": [
+          {
+            "label": "before_key_down",
+            "read_begin_monotonic": 767.968,
+            "read_end_monotonic": 767.968,
+            "target_window": 4915590,
+            "expected_pid": 5124,
+            "window_pid": 5124,
+            "window_thread": 7724,
+            "visible": true,
+            "foreground_window": 4915590,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          }
+        ],
+        "read_begin_monotonic": 767.968,
+        "status": "CHECKED",
+        "read_end_monotonic": 767.968
+      }
+    ],
+    "attempted_keys": [
+      "d"
+    ],
+    "released_keys": [
+      "d"
+    ],
+    "release_errors": [],
+    "release_complete": true,
+    "scope": "in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified",
+    "hold_until_monotonic": 768.093671759747,
+    "error_type": "RuntimeError",
+    "error": "Native route pulse sleep returned before its requested boundary",
+    "finished_monotonic": 768.093
+  },
+  "actions": {
+    "152": {
+      "event": "settings_route_native_pulse_before",
+      "seconds": 101.2349999999999,
+      "wall_unix_msec": 1792836429550,
+      "held_keys": [],
+      "keys": [
+        "d"
+      ],
+      "requested_seconds": 0.12567175974707734
+    },
+    "153": {
+      "event": "settings_route_native_pulse_after",
+      "seconds": 101.42199999999991,
+      "wall_unix_msec": 1792836429740,
+      "held_keys": []
+    },
+    "162": {
+      "event": "failure",
+      "seconds": 102.0,
+      "wall_unix_msec": 1792836430328,
+      "held_keys": [],
+      "error": "Native route pulse sleep returned before its requested boundary"
+    }
+  },
+  "values": {
+    "pulse_requested_seconds": {
+      "repr": "0.12567175974707734",
+      "float_hex": "0x1.0160321127de0p-3",
+      "exact_decimal": "0.12567175974707733843160895048640668392181396484375"
+    },
+    "stored_hold_until": {
+      "repr": "768.093671759747",
+      "float_hex": "0x1.800bfd6fac561p+9",
+      "exact_decimal": "768.0936717597470533291925676167011260986328125"
+    },
+    "down_api_begin": {
+      "repr": "767.968",
+      "float_hex": "0x1.7ffbe76c8b439p+9",
+      "exact_decimal": "767.9679999999999608917278237640857696533203125"
+    },
+    "down_api_end": {
+      "repr": "767.968",
+      "float_hex": "0x1.7ffbe76c8b439p+9",
+      "exact_decimal": "767.9679999999999608917278237640857696533203125"
+    },
+    "release_api_begin": {
+      "repr": "768.093",
+      "float_hex": "0x1.800be76c8b439p+9",
+      "exact_decimal": "768.0929999999999608917278237640857696533203125"
+    },
+    "release_api_end": {
+      "repr": "768.093",
+      "float_hex": "0x1.800be76c8b439p+9",
+      "exact_decimal": "768.0929999999999608917278237640857696533203125"
+    },
+    "finished": {
+      "repr": "768.093",
+      "float_hex": "0x1.800be76c8b439p+9",
+      "exact_decimal": "768.0929999999999608917278237640857696533203125"
+    },
+    "route_deadline": {
+      "repr": "796.718",
+      "float_hex": "0x1.8e5be76c8b439p+9",
+      "exact_decimal": "796.7179999999999608917278237640857696533203125"
+    }
+  },
+  "numeric_derived": {
+    "api_bracket_difference_exact_seconds": "0.1250000000000000000000000000",
+    "stored_boundary_minus_release_exact_seconds": "0.0006717597470924374647438526154",
+    "boundary_ulp_seconds": "1.1368683772161603e-13",
+    "stored_boundary_minus_release_in_ulps": "5908861224.000000000000000000",
+    "stored_boundary_minus_down_minus_requested_exact_seconds": "1.509903313490211359331607819E-14"
+  },
+  "unrecorded": [
+    "exact clock sample at hold boundary construction",
+    "exact clock sample at wait calculation",
+    "literal sleep(wait) argument",
+    "immediate post-sleep comparison clock sample",
+    "physical sleep entry/return times",
+    "actual time.get_clock_info implementation/resolution readback"
+  ],
+  "interpretation": "Fresh post-sleep clock was below stored boundary; physical short sleep is not established. Edge rows do not bracket sleep itself."
+}

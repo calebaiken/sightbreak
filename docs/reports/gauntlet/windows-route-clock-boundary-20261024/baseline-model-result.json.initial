@@ -1,0 +1,133 @@
+{
+  "scope": "Declared pure counterexample; not physical reconstruction",
+  "fixture_sha256": "55bbde46e58fea01f40007941dfeee297928eef37ec393fb3277bb7980e4d3f3",
+  "expected_failure": "Native route pulse sleep returned before its requested boundary",
+  "pulse_receipt": {
+    "status": "FAILED",
+    "keys": [
+      "d"
+    ],
+    "requested_seconds": 0.12567175974707734,
+    "absolute_deadline": 768.968,
+    "edges": [
+      {
+        "key": "d",
+        "down": true,
+        "before_monotonic": 767.968,
+        "after_monotonic": 767.968
+      },
+      {
+        "key": "d",
+        "down": false,
+        "before_monotonic": 768.093,
+        "after_monotonic": 768.093
+      }
+    ],
+    "os_states": [
+      {
+        "label": "before_down",
+        "read_begin_monotonic": 767.968,
+        "read_end_monotonic": 767.968,
+        "target_window": 34,
+        "expected_pid": 12,
+        "window_pid": 12,
+        "window_thread": 56,
+        "visible": true,
+        "foreground_window": 34,
+        "keys_down": {
+          "w": false,
+          "a": false,
+          "s": false,
+          "d": false
+        },
+        "lmb_down": false
+      },
+      {
+        "label": "after_down",
+        "read_begin_monotonic": 767.968,
+        "read_end_monotonic": 767.968,
+        "target_window": 34,
+        "expected_pid": 12,
+        "window_pid": 12,
+        "window_thread": 56,
+        "visible": true,
+        "foreground_window": 34,
+        "keys_down": {
+          "w": false,
+          "a": false,
+          "s": false,
+          "d": true
+        },
+        "lmb_down": false
+      },
+      {
+        "label": "after_release",
+        "read_begin_monotonic": 768.093,
+        "read_end_monotonic": 768.093,
+        "target_window": 34,
+        "expected_pid": 12,
+        "window_pid": 12,
+        "window_thread": 56,
+        "visible": true,
+        "foreground_window": 34,
+        "keys_down": {
+          "w": false,
+          "a": false,
+          "s": false,
+          "d": false
+        },
+        "lmb_down": false
+      }
+    ],
+    "down_checks": [
+      {
+        "key": "d",
+        "owned_keys": [],
+        "os_states": [
+          {
+            "label": "before_key_down",
+            "read_begin_monotonic": 767.968,
+            "read_end_monotonic": 767.968,
+            "target_window": 34,
+            "expected_pid": 12,
+            "window_pid": 12,
+            "window_thread": 56,
+            "visible": true,
+            "foreground_window": 34,
+            "keys_down": {
+              "w": false,
+              "a": false,
+              "s": false,
+              "d": false
+            },
+            "lmb_down": false
+          }
+        ],
+        "read_begin_monotonic": 767.968,
+        "status": "CHECKED",
+        "read_end_monotonic": 767.968
+      }
+    ],
+    "attempted_keys": [
+      "d"
+    ],
+    "released_keys": [
+      "d"
+    ],
+    "release_errors": [],
+    "release_complete": true,
+    "scope": "in-process SendInput API brackets and GetAsyncKeyState; gameplay unverified",
+    "hold_until_monotonic": 768.093671759747,
+    "error_type": "RuntimeError",
+    "error": "Native route pulse sleep returned before its requested boundary",
+    "finished_monotonic": 768.093
+  },
+  "modeled_sleep_requests": [
+    [
+      0.12567175974709244,
+      767.968,
+      0.0
+    ]
+  ],
+  "passed": true
+}
