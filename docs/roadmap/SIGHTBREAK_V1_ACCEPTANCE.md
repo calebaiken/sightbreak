@@ -20,15 +20,13 @@ signing, credentials and unavailable hosts stay explicitly blocked until observe
 A script, simulated match, software render or successful export cannot silently
 satisfy a different gate. No deployment, Steam publication or paid action is implied.
 
-At18:10UTC, physical-source binder71b/b5 has different independent component
-acceptance0ff67211: both82methods,527physical paths/522protected, all3hidden-source
-regressions reject. Lifetime/native acquisition remains blocked. Authority R5 is
-independently REVISE43a89037 after3later ACK/queue necessities stayUNKNOWN; literal
-149 still45failureevents/1error. R6 repair begins with the exact supported23-leaf
-constructor scope only. Receipt7ef staged proposal is unexecuted under the same
-critic; prior clock-only permit is not consumer approval. Windows mathf43 remains
-component-only. Shutdown study/capability approval remains pending. No whole gate,
-release threshold or external-device/human requirement changes.
+At18:27UTC, implemented R6 code6ef / handoffb5a3 is independently reviewed next.
+The three retained ACK/queue contradictions reject while the original staysUNKNOWN;
+nine new methods/49 cases/3060 expectations pass. Literal158 is still45failures/
+1error; old assertions/helpers remain exact. Receipt7ef is independently REVISE09b.
+Linux lifetime12c is a proposal under separate pre-edit review, not API permission.
+Binder0ff and mathf43 remain narrow acceptances. Shutdown study/capability owner
+approval is pending. No whole gate or release standard changes.
 
 At 17:51 UTC, Windows math finalization/audit repair ab864/bede has independent
 component-only acceptance f43e756f: both views, 96 selected passes, 15 source cases and
