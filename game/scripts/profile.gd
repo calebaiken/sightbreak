@@ -45,6 +45,8 @@ func load_profile() -> void:
 		data.settings.fov = clampf(float(data.settings.fov), 60.0, 100.0)
 		data.settings.volume = clampf(float(data.settings.volume), 0.0, 1.0)
 		data.settings.render_scale = clampf(float(data.settings.render_scale), 0.5, 1.0)
+		# Four tiers exist; a phone clamps further when it applies one, so a profile moved between devices keeps its choice.
+		data.settings.graphics_quality = clampi(int(data.settings.graphics_quality), SBGraphicsQuality.LOW, SBGraphicsQuality.ULTRA)
 		data.settings.ui_text_scale = clampf(float(data.settings.ui_text_scale), 0.85, 1.3)
 
 func save() -> Error:
