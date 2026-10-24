@@ -169,6 +169,7 @@ class EnvelopeTests(unittest.TestCase):
     def test_cleanup_elapsed_and_wall_clock_step_are_not_invented_deadlines(self):
         row=self.result();row['elapsed_seconds']=301
         self.context['trial']['finished_monotonic']=self.context['trial']['started_monotonic']+302
+        self.context['trial']['job_queries'][-1]['monotonic']=self.context['trial']['finished_monotonic']+.01
         close=row['shutdown_study_observations'][0];close['wait_finished_wall_unix_ns']=close['request_before_wall_unix_ns']-1000
         self.context['trial']['observations'][1]['wait_finished_wall_unix_ns']=close['wait_finished_wall_unix_ns']
         self.put_result(row);self.assertTrue(self.load()['strict_passed'])
@@ -230,7 +231,12 @@ class WrapperTests(unittest.TestCase):
         self.assertTrue((self.out/'controller-stderr.log').is_file());self.assertIn(b'full controller output',(self.out.with_name('trial.controller-capture')/'controller-stdout.log').read_bytes())
     def test_publication_receipt_error_preserves_original_invocation_cause(self):
         def fail(out):print('full partial invocation output');raise RuntimeError('original fake invocation failure')
-        with patch.object(study,'write',side_effect=OSError('fake receipt write failure')):
+        original_open=Path.open
+        def receipt_open(path,*args,**kwargs):
+            if path==self.out.with_name('trial.controller-capture')/'publication.json':
+                raise OSError('fake receipt write failure')
+            return original_open(path,*args,**kwargs)
+        with patch.object(Path,'open',receipt_open):
             with self.assertRaisesRegex(RuntimeError,'publication failed') as caught:self.invoke(fail)
         self.assertIn('original fake invocation failure',str(caught.exception.__cause__))
         self.assertIn(b'full partial invocation output',(self.out.with_name('trial.controller-capture')/'controller-stdout.log').read_bytes())

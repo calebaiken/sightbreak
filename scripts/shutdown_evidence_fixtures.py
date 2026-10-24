@@ -388,7 +388,7 @@ def write_complete_trial(directory, identity, *, verbose=False, client_pid=101,
         _hud_pause('07d-explicit-resume', wall=61800, weapon='smg', ammo=30, reserve=120,
                    round_number=2, phase='live', resume=False),
     ]
-    reload_before = _snapshot(20500, phase='live', ammo=13)
+    reload_before = _snapshot(20000, phase='live', ammo=13)
     reload_started = _snapshot(20600, phase='live', ammo=13)
     reload_started['local_actor']['reload'] = 1.3
     reload_started['actors'][0] = copy.deepcopy(reload_started['local_actor'])
