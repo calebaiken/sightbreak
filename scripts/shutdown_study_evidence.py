@@ -488,7 +488,7 @@ class Evidence:
             for field in ('before','after'):snapshot_shape(capture_context[name][field])
     def producer_links(self):
         model=ProducerLinks(self)
-        for name in ('named_captures','hud_pauses','reload','settings','focus'):
+        for name in ('held_keys','named_captures','hud_pauses','reload','settings','focus'):
             self.check('producer '+name,getattr(model,name))
 
 
@@ -500,9 +500,10 @@ class ProducerLinks:
     """
     def __init__(self,evidence):
         self.e=evidence;self.result=evidence.result_data;self.actions=evidence.actions
-    def observed(self,label,state,budget=None,cap=None):
+    def observed(self,label,state,budget=None,cap=None,repeated=False):
         rows=[(index,row) for index,row in enumerate(self.actions)
               if row.get('event')=='offline_observation' and row.get('label')==label]
+        if repeated:rows=[item for item in rows if same(item[1].get('state'),state)]
         need(len(rows)==1 and same(rows[0][1].get('state'),state),'missing/mismatched observed return: '+label)
         index,row=rows[0]
         need(index>=2,'observed return lacks wait actions: '+label)
@@ -515,6 +516,41 @@ class ProducerLinks:
     def capture(self,name,event):
         rows=[(index,row) for index,row in enumerate(self.actions) if row.get('event')==event and row.get('capture')==name]
         need(len(rows)==1,'capture action missing: '+name+'/'+event);return rows[0]
+    def key(self,name,down,event):
+        rows=[(index,row) for index,row in enumerate(self.actions) if row.get('event')==event and row.get('key')==name and row.get('down') is down]
+        need(len(rows)==1,'required key edge missing: '+name+'/'+event+'/'+str(down));return rows[0]
+    def event(self,event,*,after=-1,before=None,**fields):
+        if before is None:before=len(self.actions)
+        rows=[(index,row) for index,row in enumerate(self.actions) if after<index<before and row.get('event')==event and all(same(row.get(key),value) for key,value in fields.items())]
+        need(len(rows)==1,'source operation missing/duplicated: '+event);return rows[0]
+    def held_keys(self):
+        held=set();pending=None
+        direct={'saved_hud_analysis_cleanup','saved_hud_analysis','field_settings_resume'}
+        for index,row in enumerate(self.actions):
+            event=row['event']
+            if event in ('key_before','key_after'):
+                name=row.get('key');down=row.get('down')
+                need(type(name) is str and bool(name) and type(down) is bool,'key edge types differ')
+                if event=='key_before':
+                    following=self.actions[index+1] if index+1<len(self.actions) else {}
+                    need(following.get('event')=='key_after' and following.get('key')==name and following.get('down') is down,'successful key edge lacks its after action')
+                if event=='key_after':
+                    if row.get('scope') in direct:
+                        need(name=='Escape','unexpected scoped direct key')
+                    else:
+                        previous=self.actions[index-1] if index else {}
+                        need(previous.get('event')=='key_before' and previous.get('key')==name and previous.get('down') is down,'normal key edge lacks its before action')
+                    (held.add if down else held.discard)(name)
+            if event=='settings_route_native_pulse_after':
+                need(pending is not None,'route pulse return lacks its before action')
+                receipt=row.get('receipt');need(type(receipt) is dict,'route pulse receipt absent')
+                if receipt.get('release_complete') or not receipt.get('attempted_keys'):held.difference_update(pending)
+                pending=None
+            need(row.get('held_keys')==sorted(held),'action contradicts persistent held keys')
+            if event=='settings_route_native_pulse_before':
+                need(pending is None and type(row.get('keys')) is list and bool(row['keys']) and all(type(key) is str for key in row['keys']),'route pulse keys invalid')
+                pending=row['keys'];held.update(pending)
+        need(not held and pending is None,'successful source flow leaves held input')
     @staticmethod
     def context(state,baseline,*,phase=None,fields=('id',),ui=False):
         snapshot_shape(state)
@@ -549,7 +585,12 @@ class ProducerLinks:
             need(all(state['drawn_frames']>=origin['drawn_frames']+2 for state in states[1:]),'named capture lacks two additional drawn frames')
             begin,_=self.capture(name,'capture_begin');end,_=self.capture(name,'capture_end')
             need(indices==sorted(indices) and indices[2]<begin<end<indices[3],'named observation/capture order differs')
+            previous='06b-scoreboard' if name=='06c-next-round' else '09-reopened-menu'
+            previous_end,_=self.capture(previous,'capture_end')
+            need(previous_end<indices[0],'named transaction precedes its source phase')
     def hud_pauses(self):
+        names=[row['capture'] for row in self.result['hud_analysis_pauses']]
+        need(names==sorted(names,key=CAPTURES.index),'HUD transactions changed producer order')
         for receipt in self.result['hud_analysis_pauses']:
             name=receipt['capture'];before=receipt['before'];paused=receipt['paused'];after=receipt['after_analysis']
             need(receipt.get('scope')=='ordinary native pause for saved-pixel OCR' and before['ui']['paused'] is False,'HUD pause source transaction differs')
@@ -572,6 +613,10 @@ class ProducerLinks:
                 need(resumed['ui']['paused'] is False,'HUD analysis did not resume')
                 self.counters((after,resumed));index,_=self.observed('Explicit native resume after saved-HUD OCR: '+name,resumed,budget=10)
                 need(last<index,'HUD resume precedes analysis')
+                last=index
+            next_begin,_=self.capture(CAPTURES[CAPTURES.index(name)+1],'capture_begin')
+            need(last<next_begin,'HUD transaction extends beyond next capture')
+            if name=='07d-explicit-resume':need(last_action['seconds']<=self.e.ocr[15]['started_seconds'],'LEAVE OCR precedes completed HUD analysis')
         # The source can read an already-paused HUD without appending a receipt.
         # Only the conditional require_context branch emits its extra fresh read.
     def reload(self):
@@ -598,7 +643,14 @@ class ProducerLinks:
         if pause:self.counters((before,pause['before'],pause.get('resumed',pause['after_analysis']),started))
         need(self.result['fired_hud']['ammo']==actor['ammo'] and self.result['fired_hud']['reserve']==actor['reserve'],'fired HUD differs from authoritative acknowledgement')
         need(self.result['reloaded_hud']['ammo']==15 and self.result['reloaded_hud']['reserve']<self.result['fired_hud']['reserve'] and sum(self.result['reloaded_hud'][key] for key in ('ammo','reserve'))==sum(self.result['fired_hud'][key] for key in ('ammo','reserve')),'rendered reload did not conserve ammunition')
-        need(receipt['input_seconds']<=rows[1][1]['seconds'] and rows[3][1]['seconds']<=begin_action['seconds'],'reload relative clock order differs')
+        down_before,down_action=self.key('r',True,'key_before');down_after,_=self.key('r',True,'key_after')
+        up_before,_=self.key('r',False,'key_before');up_after,_=self.key('r',False,'key_after')
+        need(begin05<down_before<down_after<rows[1][0]<up_before<up_after<rows[2][0],'reload input operation order differs')
+        need(self.e.ocr[1]['finished_seconds']<=receipt['input_seconds']<=down_action['seconds'],'reload input clock is outside its source interval')
+        combined=receipt['input_seconds']+receipt['wall_seconds_after_input']
+        # Nonnegative subtraction followed by addition can round at the final
+        # representable double. This interval adds no operation/native budget.
+        need(math.nextafter(combined,math.inf)>=rows[3][1]['seconds'] and math.nextafter(combined,-math.inf)<=begin_action['seconds'],'reload wall-duration clock does not bind ready/capture')
     def settings(self):
         receipt=self.result['native_settings_resume'];before=receipt['paused_before_settings'];changed=receipt['paused_after_settings'];resumed=receipt['resumed'];ready=receipt['capture_ready'];after=receipt['after_capture']
         pauses=[row for row in self.result['hud_analysis_pauses'] if CAPTURES.index(row['capture'])<CAPTURES.index('07-field-menu')]
@@ -649,13 +701,38 @@ class ProducerLinks:
             need(same(context.get('last_valid_state'),after),'final focus context differs')
         except RuntimeError as error:raise ValueError('focus source context: '+str(error)) from error
         labels=[('Fresh stock match reaches a living active player before native focus loss',context['baseline'],60),('Game consumed physical W and LMB before native focus loss',held,10),('Native focus loss pauses actual offline match',lost,10),('Actual game observes restored focus',restored,10)]
-        for label,state,budget in labels:self.observed(label,state,budget=budget)
-        self.observed('Explicit resume with W and LMB still physically held',neutral[0],budget=10)
+        initial=[self.observed(label,state,budget=budget)[0] for label,state,budget in labels]
+        guards=[self.observed('Explicit resume with W and LMB still physically held',neutral[0],budget=10)[0]]
         for index,state in enumerate(neutral[1:]):
             label=('Neutral held input while ordinary inertia settles' if index<len(neutral)-3 else 'Fresh held-input guard sample '+str(index-(len(neutral)-3)+1))
-            self.observed(label,state,budget=10)
-        self.observed('Released held focus-test controls',released,budget=10)
-        self.observed('Fresh W press moves actual player after focus recovery',moved,budget=10)
+            guards.append(self.observed(label,state,budget=10,repeated=index<len(neutral)-3)[0])
+        need(sum(row.get('event')=='offline_observation' and row.get('label')=='Neutral held input while ordinary inertia settles' for row in self.actions)==len(neutral)-3,'focus inertia iteration count differs')
+        release_index=self.observed('Released held focus-test controls',released,budget=10)[0]
+        move_index=self.observed('Fresh W press moves actual player after focus recovery',moved,budget=10)[0]
+        end10,_=self.capture('10-reopened-loaded-settings','capture_end')
+        begin_a,_=self.capture('11a-restored-focus-still-paused','capture_begin');end_a,_=self.capture('11a-restored-focus-still-paused','capture_end')
+        begin_b,_=self.capture('11b-resumed-held-input-neutral','capture_begin');end_b,_=self.capture('11b-resumed-held-input-neutral','capture_end')
+        begin_c,_=self.capture('11c-fresh-press-movement','capture_begin')
+        need(end10<initial[0]<initial[1]<initial[2]<initial[3]<begin_a<end_a<guards[0]<=guards[-1]<begin_b<end_b<release_index<move_index<begin_c and guards==sorted(guards),'focus source operation/capture order differs')
+        self.counters((self.result['phase_capture_fences']['10-reopened-loaded-settings']['after_capture'],context['baseline'],held,lost,restored))
+        need(held['wall_msec']>context['baseline']['wall_msec'] and lost['wall_msec']>context['baseline']['wall_msec'] and restored['wall_msec']>lost['wall_msec'],'focus observations are stale')
+        self.counters((restored,*neutral,released),fresh_wall=True)
+        need(moved['wall_msec']>before['wall_msec'],'fresh movement observation is stale')
+        down=self.event('key_before',after=initial[0],before=initial[1],key='w',down=True)[0]
+        button_down=self.event('button',after=down,before=initial[1],down=True)[0]
+        acknowledgement=self.event('native_focus_held_input_acknowledged',after=initial[1],before=initial[2],state=held)[0]
+        loss_before=self.event('native_focus_loss_before',after=acknowledgement,before=initial[2],method='ShowWindow(SW_MINIMIZE)')[0]
+        self.event('native_focus_loss_after',after=loss_before,before=initial[2])
+        restore_before=self.event('native_focus_restore_before',after=initial[2],before=initial[3])[0]
+        wait_begin=self.event('wait_begin',after=restore_before,before=initial[3],label='Restore actual native input focus',budget_seconds=10)[0]
+        wait_end=self.event('wait_completed',after=wait_begin,before=initial[3],label='Restore actual native input focus')[0]
+        self.event('native_focus_restore_after',after=wait_end,before=initial[3])
+        escape_down=self.event('key_before',after=end_a,before=guards[0],key='Escape',down=True)[0]
+        self.event('key_after',after=escape_down,before=guards[0],key='Escape',down=False)
+        w_up=self.event('key_after',after=end_b,before=release_index,key='w',down=False)[0]
+        self.event('button',after=w_up,before=release_index,down=False)
+        fresh_down=self.event('key_before',after=release_index,before=move_index,key='w',down=True)[0]
+        self.event('key_after',after=move_index,before=begin_c,key='w',down=False)
 
 
 def same(left,right):
