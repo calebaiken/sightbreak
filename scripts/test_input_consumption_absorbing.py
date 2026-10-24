@@ -194,5 +194,33 @@ class AbsorbingLifecycleControls(unittest.TestCase):
             model.observe(impossible,1);self.assertFalse(model.states)
             self.assertEqual(model.expiry(dict(impossible,reason='peer_expired',wall_msec=40000,input_age_msec=39800),1),'INVALID')
 
+    def test_source_activity_budget_excludes_known_other_peer_calls(self):
+        # Three literal updates are necessary and sufficient for +60000:
+        # each active() can advance at most IDLE-1. Other peers' observed calls
+        # cannot pay that local budget; unresolved allocations remain UNKNOWN.
+        witness=SourcePeer();witness.connected(0);admit(witness,1)
+        for clock in (30000,59999,60001):witness.active(clock)
+        self.assertEqual(witness.entry['last_input'],60001)
+        for total,other,want in [(1,0,'INVALID'),(2,0,'INVALID'),(3,0,'UNKNOWN'),(3,1,'INVALID'),(4,1,'UNKNOWN')]:
+            source=SourcePeer();source.connected(0);initial=row(source,'peer_connected',0)
+            model=candidate.LifecycleHypotheses(initial);admit(source,1);model.observe(row(source,'peer_bound',1),1)
+            model.observe(row(source,'authority_tick',2),1)
+            for _ in range(other):model.other_accepted()
+            advanced=dict(row(source,'authority_tick',60001,total),input_age_msec=0)
+            model.observe(advanced,1)
+            expiry=dict(advanced,reason='peer_expired',wall_msec=90001,input_age_msec=IDLE,deadline_remaining_msec=JOIN-90001)
+            self.assertEqual(model.expiry(expiry,1),want,(total,other))
+
+    def test_already_idle_cannot_revive_and_new_model_does_not_borrow_rejection(self):
+        source=SourcePeer();source.connected(0);initial=row(source,'peer_connected',0)
+        model=candidate.LifecycleHypotheses(initial);admit(source,1);model.observe(row(source,'peer_bound',1),1)
+        model.observe(row(source,'authority_tick',30001),1)
+        impossible=dict(row(source,'authority_tick',60001,100),input_age_msec=0)
+        model.observe(impossible,1);self.assertFalse(model.states)
+        self.assertEqual(model.expiry(dict(impossible,reason='peer_expired',wall_msec=90001,input_age_msec=IDLE,deadline_remaining_msec=JOIN-90001),1),'INVALID')
+        fresh=SourcePeer();fresh.connected(100000)
+        replacement=candidate.LifecycleHypotheses(row(fresh,'peer_connected',100000))
+        self.assertEqual(replacement.expiry(row(fresh,'peer_expired',120000),0),'CONSISTENT')
+
 
 if __name__=='__main__':unittest.main()
