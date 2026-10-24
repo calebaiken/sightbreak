@@ -27,7 +27,14 @@ class InputObservationIdentityControls(unittest.TestCase):
 
     def test_receive_keeps_malformed_prevalidation_payload_as_observation(self):
         rows = declared_rows('authority')
-        rows[3]['latest']['input_received'].update(epoch=-1, first=-1, last=-9)
+        rows[3]['latest']['input_received'].update(epoch=-1, first=-9, last=-9)
+        # Rejection does not print a row. A subsequent valid receive with the
+        # same action aggregate coalesces before the later valid acceptance.
+        malformed = deepcopy(rows[3]['latest']['input_received'])
+        for row in rows[4:]:
+            row['counters'].update(input_received=2, input_stream_rejected=1)
+            row['latest']['input_stream_rejected'] = deepcopy(malformed)
+            row['latest']['input_received']['wall_msec'] = rows[4]['wall_msec'] - 1
         self.assertTrue(self.report(authority=rows)['diagnostic_complete'])
 
     def test_accepted_interval_and_send_pending_range_are_required(self):
@@ -61,7 +68,7 @@ class InputObservationIdentityControls(unittest.TestCase):
                     row['reason'] = reason
                     rows.append(row)
                 rows.extend(original[5:])
-                counters = {}
+                counters, latest = {}, {}
                 for index, row in enumerate(rows, 1):
                     row['index'] = row['process_frames'] = row['drawn_frames'] = index
                     row['physics_frames'] = index * 2
@@ -72,8 +79,12 @@ class InputObservationIdentityControls(unittest.TestCase):
                         counters['snapshot_applied'] = 1
                         row['snapshot_age_msec'] = row['wall_msec'] - row['snapshot']['wall_msec']
                     row['counters'] = deepcopy(counters)
-                    if row['reason'] == 'input_send_called':
-                        row['latest']['input_send_called']['wall_msec'] = row['wall_msec']
+                    if row['reason'] in row['latest']:
+                        latest[row['reason']] = deepcopy(row['latest'][row['reason']])
+                        latest[row['reason']]['wall_msec'] = row['wall_msec']
+                    if row['snapshot']:
+                        latest['snapshot_applied'] = deepcopy(row['snapshot'])
+                    row['latest'] = deepcopy(latest)
                 self.assertEqual(self.report(client=rows)['diagnostic_complete'], new_welcome)
 
     def test_each_role_rejects_foreign_events_counters_and_latest(self):

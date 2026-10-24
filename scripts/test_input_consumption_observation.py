@@ -47,7 +47,7 @@ def declared_rows(role):
     """Hand-authored parser fixtures, never acquired native observations."""
     stages = (['ready', 'client_attempt', 'client_connected', 'welcome_received', 'client_tick', 'input_send_called', 'client_tick']
               if role == 'client' else ['ready', 'peer_connected', 'peer_bound', 'input_received', 'input_accepted', 'input_consumed', 'authority_tick'])
-    counters, rows = {}, []
+    counters, rows, latest = {}, [], {}
     for index, reason in enumerate(stages, 1):
         now = index * 1000 + (4000 if role == 'authority' and index >= 4 else 0)
         counters[reason] = counters.get(reason, 0) + 1
@@ -55,8 +55,11 @@ def declared_rows(role):
             counters['snapshot_applied'] = 1
         snapshot = {'tick': 50, 'epoch': 1, 'own_ack': 1, 'wall_msec': 4000} if role == 'client' and index >= 5 else {}
         bound = role == 'authority' and index >= 3
-        latest = {}
         packet = {'epoch': 1, 'count': 1, 'first': 1, 'last': 1, 'fire': 1, 'reload': 0, 'moving': 0, 'wall_msec': now}
+        if reason == 'welcome_received':
+            latest[reason] = {'tick': 50, 'epoch': 1, 'own_ack': -1, 'wall_msec': now}
+        if snapshot:
+            latest['snapshot_applied'] = deepcopy(snapshot)
         if reason in {'input_send_called', 'input_received', 'input_accepted'}:
             latest[reason] = packet
         if reason == 'input_consumed':
@@ -73,13 +76,13 @@ def declared_rows(role):
             'generation': 1 if role == 'authority' and index >= 2 else -1, 'joined': bound,
             'input_age_msec': 0 if bound else -1, 'deadline_remaining_msec': 20000 if bound else -1,
             'simulation_tick': index if role == 'authority' else 0, 'authority_epoch': 1,
-            'stream_ack': 1 if bound else -1, 'queue_count': 0, 'stream_rejected': 0, 'stream_skipped': 0,
+            'stream_ack': 1 if role == 'authority' and index >= 6 else -1, 'queue_count': int(reason == 'input_accepted'), 'stream_rejected': 0, 'stream_skipped': 0,
             'prediction_epoch': 1 if role == 'client' else -1, 'prediction_sequence': 1 if role == 'client' else 0,
             'pending_count': 1 if reason == 'input_send_called' else 0, 'pending_oldest_sequence': 1 if reason == 'input_send_called' else -1, 'pending_newest_sequence': 1 if reason == 'input_send_called' else -1,
             'snapshot': snapshot, 'snapshot_age_msec': now - snapshot['wall_msec'] if snapshot else -1,
             'local_input': control(), 'physical': {'r': False, 'lmb': False, **({'physical_mouse_fire': False, 'application_focused': True, 'paused': False, 'waiting_for_input_release': False} if role == 'client' else {})},
-            'counters': deepcopy(counters), 'latest': latest,
-            'actor': {'id': 1, 'alive': True, 'ammo': 30, 'reserve': 90, 'reload': 0.0, 'input': control()} if bound or role == 'client' else {},
+            'counters': deepcopy(counters), 'latest': deepcopy(latest),
+            'actor': {'id': 1, 'alive': True, 'ammo': 30, 'reserve': 90, 'reload': 0.0, 'input': control(1, True) if role == 'authority' and index >= 6 else control()} if bound or role == 'client' else {},
         })
     return rows
 

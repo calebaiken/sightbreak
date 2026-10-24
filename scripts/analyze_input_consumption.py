@@ -22,6 +22,8 @@ ROLE_STAGES = {
     'client': set('ready client_tick client_attempt client_connected client_connection_failed client_disconnected welcome_received input_send_called snapshot_schema_rejected snapshot_order_rejected snapshot_applied'.split()),
     'authority': set('ready authority_tick peer_connected peer_bound peer_expired peer_disconnected input_gate_rejected input_decode_rejected input_received input_stream_rejected input_accepted input_consumed'.split()),
 }
+LIFECYCLE_STAGES = set('ready client_attempt client_connected client_connection_failed client_disconnected welcome_received peer_connected peer_bound peer_expired peer_disconnected'.split())
+LATEST_STAGES = set('input_send_called input_received input_accepted input_stream_rejected input_consumed snapshot_applied snapshot_schema_rejected snapshot_order_rejected welcome_received'.split())
 
 
 def need(ok, message):
@@ -79,6 +81,7 @@ def record_valid(row):
         elif stage.startswith('input_'):
             need(set(value) == PACKET_KEYS and all(integer(v) for v in value.values()), 'invalid packet projection')
             need(value['count'] >= 0 and all(0 <= value[k] <= min(value['count'], 12) for k in ('fire', 'reload', 'moving')), 'invalid bounded packet action counts')
+            need(value['count'] != 1 or value['first'] == value['last'], 'single-command packet has unequal sequence endpoints')
         else:
             need(set(value) == SNAPSHOT_KEYS and all(integer(v) for v in value.values()), 'invalid snapshot header')
         need(0 <= value['wall_msec'] <= row['wall_msec'], 'future latest-stage observation')
@@ -111,7 +114,14 @@ def parse_log(text):
 
 def analyze_role(rows, role):
     need(bool(rows), 'no observation records for ' + role)
+    for row in rows:
+        record_valid(row)
+    coverage = set(rows[-1]['counters'])
+    need(REQUIRED[role] <= coverage, 'missing pipeline stages: ' + ','.join(sorted(REQUIRED[role] - coverage)))
+    observed_events = {row['reason'] for row in rows}
+    need(REQUIRED[role] - {'snapshot_applied'} <= observed_events, 'missing direct pipeline event records')
     prior, bindings, ended, consumed_sequences = None, {}, set(), {}
+    live_peers, binding_accept_counts, lifecycle_counts = {}, {}, {}
     connected = set()
     observed_attempts = 0
     current_welcome = None
@@ -120,14 +130,30 @@ def analyze_role(rows, role):
     consumed, accepted, expiries, disconnects, saturations, welcomes, binding_events = [], [], [], [], [], [], []
     max_gap = 0
     for row in rows:
-        record_valid(row)
         need(row['role'] == role, 'mixed role evidence')
         need(row['index'] == (prior['index'] + 1 if prior else 1), 'missing or reordered observation index')
         need(row['reason'] != 'observation_limit', 'observer reached its hard cap; evidence truncated')
+        reason, counters, latest = row['reason'], row['counters'], row['latest']
+        previous_counters = prior['counters'] if prior else {}
+        need(counters.get(reason, 0) > previous_counters.get(reason, 0), 'emitted reason did not increment its stage counter')
+        if reason in LIFECYCLE_STAGES:
+            lifecycle_counts[reason] = lifecycle_counts.get(reason, 0) + 1
+        need(all(counters.get(stage, 0) == lifecycle_counts.get(stage, 0) for stage in LIFECYCLE_STAGES),
+             'lifecycle counter has no matching observed event')
+        need(set(latest) == set(counters) & LATEST_STAGES, 'latest metadata missing from persistent stage history')
+        if role == 'authority':
+            # RPC processing has no await. Only its receive observation is
+            # captured before the synchronous accept/reject outcome.
+            need(counters.get('input_received', 0) == counters.get('input_accepted', 0) + counters.get('input_stream_rejected', 0) + int(reason == 'input_received'),
+                 'receive/accept/rejection counters disagree with synchronous pipeline')
         if prior:
             for key in ('wall_msec', 'wall_unix_msec', 'process_frames', 'physics_frames', 'drawn_frames'):
                 need(row[key] >= prior[key], 'regressed observation ' + key)
             need(all(row['counters'].get(k, 0) >= v for k, v in prior['counters'].items()), 'regressed stage counter')
+            need(set(prior['latest']) <= set(latest), 'latest metadata disappeared from persistent stage history')
+            need(all(latest[stage] == value for stage, value in prior['latest'].items()
+                     if counters.get(stage, 0) == previous_counters.get(stage, 0)),
+                 'latest metadata changed without a stage counter increment')
             max_gap = max(max_gap, row['wall_msec'] - prior['wall_msec'])
         identity = (row['peer'], row['generation'])
         if role == 'client':
@@ -139,7 +165,9 @@ def analyze_role(rows, role):
             current_welcome = None
         if row['reason'] == 'peer_connected':
             need(role == 'authority' and row['generation'] > highest_generation, 'connection generation reused or regressed')
+            need(row['peer'] not in live_peers, 'peer gained a second live generation without disconnect')
             highest_generation = row['generation']
+            live_peers[row['peer']] = row['generation']
             connected.add(identity)
         if row['reason'] == 'peer_bound':
             need(role == 'authority' and row['peer_bound'] and row['joined'] and row['generation'] > 0 and identity not in ended, 'invalid/reused retired peer generation')
@@ -147,6 +175,7 @@ def analyze_role(rows, role):
             need(identity not in bindings, 'peer generation already has an observed binding')
             need(not any(actor == row['bound_actor'] and key != identity and key not in ended for key, actor in bindings.items()), 'actor bound to two live peer generations')
             bindings[identity] = row['bound_actor']
+            binding_accept_counts[identity] = counters.get('input_accepted', 0)
             binding_events.append({k: row[k] for k in ('peer', 'generation', 'bound_actor', 'wall_unix_msec')})
         if row['reason'] == 'welcome_received':
             need(role == 'client' and row['transport_id'] > 0 and row['local_attempt'] > 0 and row['local_id'] > 0, 'welcome has no client transport/attempt identity')
@@ -154,6 +183,8 @@ def analyze_role(rows, role):
             welcomes.append({k: row[k] for k in ('transport_id', 'local_attempt', 'local_id', 'wall_unix_msec')})
         if row['reason'] in {'peer_expired', 'peer_disconnected'}:
             ended.add(identity)
+            if row['reason'] == 'peer_disconnected' and live_peers.get(row['peer']) == row['generation']:
+                del live_peers[row['peer']]
             (expiries if row['reason'] == 'peer_expired' else disconnects).append({'index': row['index'], 'peer': row['peer'], 'generation': row['generation'], 'wall_msec': row['wall_msec'], 'wall_unix_msec': row['wall_unix_msec'], 'input_age_msec': row['input_age_msec']})
         if row['reason'] == 'input_send_called':
             value = row['latest'].get('input_send_called')
@@ -168,12 +199,20 @@ def analyze_role(rows, role):
             if row['reason'] == 'input_consumed':
                 need(received and accepted, 'direct pipeline consumption precedes observed receive and acceptance')
                 need((value['peer'], value['generation'], value['actor']) == (*identity, row['bound_actor']), 'consumed identity differs from current binding')
+                need(counters.get('input_accepted', 0) > binding_accept_counts[identity], 'consumption has no acceptance counter progress since binding')
+                need(row['stream_ack'] == value['sequence'], 'consumed command differs from immediate stream ACK')
+                need(row['actor'] and row['actor']['id'] == value['actor'] and row['actor']['input'] == {key: value[key] for key in CONTROL_KEYS},
+                     'consumed command differs from immediate actor input')
                 key = (*identity, row['authority_epoch'])
                 need(value['sequence'] > consumed_sequences.get(key, 0), 'consumption sequence replayed or regressed')
                 consumed_sequences[key] = value['sequence']
                 consumed.append({'index': row['index'], **value})
             elif row['reason'] == 'input_accepted':
                 need(received, 'direct pipeline acceptance precedes observed receive')
+                incoming = latest.get('input_received', {})
+                need({key: incoming.get(key) for key in PACKET_KEYS - {'wall_msec'}} == {key: value[key] for key in PACKET_KEYS - {'wall_msec'}},
+                     'accepted packet differs from synchronous latest receive')
+                need(row['queue_count'] > 0, 'accepted input left an empty queue')
                 need(value['epoch'] == row['authority_epoch'] and value['count'] in range(1, 13), 'accepted packet has wrong epoch or count')
                 # These are incoming array endpoints, not sorted extrema.
                 need(value['first'] >= 1 and value['last'] >= 1 and (value['count'] > 1 or value['first'] == value['last']),
@@ -186,10 +225,6 @@ def analyze_role(rows, role):
         if row['pending_count'] == 120:
             saturations.append(row['index'])
         prior = row
-    coverage = set(prior['counters'])
-    need(REQUIRED[role] <= coverage, 'missing pipeline stages: ' + ','.join(sorted(REQUIRED[role] - coverage)))
-    observed_events = {row['reason'] for row in rows}
-    need(REQUIRED[role] - {'snapshot_applied'} <= observed_events, 'missing direct pipeline event records')
     if role == 'authority':
         need(bool(consumed) and bool(accepted), 'acceptance and actual consumption need distinct observed events')
     return {'records': len(rows), 'coverage': sorted(coverage), 'counters': prior['counters'], 'max_observation_gap_msec': max_gap,

@@ -9,7 +9,7 @@ from test_input_consumption_observation import declared_rows, text
 
 def restamp(rows):
     """Retain declared data while making inserted/reordered events coherent."""
-    counters = {}
+    counters, latest = {}, {}
     for index, row in enumerate(rows, 1):
         reason = row['reason']
         now = index * 1000 + (4000 if row['role'] == 'authority' and index >= 4 else 0)
@@ -21,7 +21,11 @@ def restamp(rows):
             row['snapshot_age_msec'] = now - row['snapshot']['wall_msec']
         row['counters'] = deepcopy(counters)
         if reason in row['latest']:
-            row['latest'][reason]['wall_msec'] = now
+            latest[reason] = deepcopy(row['latest'][reason])
+            latest[reason]['wall_msec'] = now
+        if row['snapshot']:
+            latest['snapshot_applied'] = deepcopy(row['snapshot'])
+        row['latest'] = deepcopy(latest)
     return rows
 
 
