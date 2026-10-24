@@ -14,7 +14,7 @@ import subprocess
 ROOT = Path(__file__).resolve().parents[1]
 REPORT = 'docs/reports/gauntlet/m5-objective-observability'
 R2 = REPORT + '/correction-r2'
-ACQUISITION_INVENTORY = 'docs/reports/gauntlet/m5-objective-observability-r4-20261024/acquisition-inventory.json'
+ACQUISITION_INVENTORY = 'docs/reports/gauntlet/m5-objective-perception-20261024/acquisition-inventory.json'
 PREFIX = 'BOT_OBJECTIVE_'
 POSES = [120, 122, 127]
 CONTROLS = ['plant', 'defuse', 'wrong_site', 'moving', 'no_interact']
@@ -262,6 +262,24 @@ def observation(obs, complete=True):
     require(dec['target_id'] == 0 or any(c['id'] == dec['target_id'] and c['reason'] == 'eligible' for c in candidates), 'unperceived target')
 
 
+def target_score(before, actor_id, candidate):
+    """Score arithmetic uses the same captured distance as the source selector."""
+    memory = before['bots'][str(actor_id)]
+    target = candidate['id']
+    score = candidate['distance']
+    if target == memory['target']:
+        score -= 4.5
+    if before['objective'] == 'carried' and target == before['carrier']:
+        score -= 3.5
+    if before['objective'] == 'planted':
+        defenders = [(math.dist(actor['position'], before['objective_position']), int(aid)) for aid, actor in before['actors'].items() if actor['alive'] and actor['team'] == 1]
+        if defenders and target == min(defenders)[1]:
+            score -= 6.0
+    if before['elapsed'] - memory['damaged_at'] < 1.2 and target == memory['attacker_id']:
+        score -= 4.0
+    return score
+
+
 def decision(row):
     require(integer(row['actor_id'], 1, 10) and integer(row['tick']) and number(row['elapsed']) and same(row['dt'], .12), 'decision tick/actor/timestep')
     state(row['before']); state(row['after']); observation(row['observation'])
@@ -300,6 +318,8 @@ def decision(row):
     selected, score = 0, vision
     for candidate in obs['candidates']:
         require((candidate['distance'] > vision) == (candidate['reason'] == 'range'), 'candidate range rejection contradicts source profile')
+        if candidate['reason'] == 'eligible':
+            require(same(candidate['score'], target_score(before, row['actor_id'], candidate)), 'candidate score contradicts source bonuses')
         if candidate['reason'] == 'eligible' and candidate['score'] < score:
             selected, score = candidate['id'], candidate['score']
     require(obs['decision']['target_id'] == selected, 'selected target contradicts scored candidates')

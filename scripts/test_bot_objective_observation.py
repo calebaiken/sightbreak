@@ -172,6 +172,52 @@ class ObjectiveOracleTests(unittest.TestCase):
     def test_decision_role_must_exist_in_source(self):
         self.mutate('DECISION', lambda r: r['label'] == 'pose_122', lambda r: r['observation']['decision'].update(role='invented_role_not_in_source'))
 
+    def test_target_score_preserves_exact_independent_bonuses(self):
+        before = protected(122)
+        before['bots']['6'].update(target=0, attacker_id=0, damaged_at=-100)
+        candidate = {'id': 1, 'distance': 10.0}
+        self.assertEqual(oracle.target_score(before, 6, candidate), 10.0)
+        before['bots']['6']['target'] = 1
+        self.assertEqual(oracle.target_score(before, 6, candidate), 5.5)
+        before['bots']['6'].update(attacker_id=1, damaged_at=before['elapsed'] - .5)
+        self.assertEqual(oracle.target_score(before, 6, candidate), 1.5)
+        before['bots']['6']['attacker_id'] = 2
+        self.assertEqual(oracle.target_score(before, 6, candidate), 5.5)
+
+    def test_target_score_accepts_legitimate_negative_total(self):
+        before = protected(122)
+        before.update(objective='carried', carrier=6)
+        before['bots']['1'].update(target=6, attacker_id=6, damaged_at=before['elapsed'] - .5)
+        self.assertEqual(oracle.target_score(before, 1, {'id': 6, 'distance': 1.0}), -11.0)
+
+    def test_recent_attacker_bonus_expires_at_strict_boundary(self):
+        before = protected(122)
+        before.update(elapsed=1.2, carrier=6)
+        before['bots']['6'].update(target=0, attacker_id=1, damaged_at=0.0)
+        self.assertEqual(oracle.target_score(before, 6, {'id': 1, 'distance': 10.0}), 10.0)
+        before['elapsed'] = math.nextafter(1.2, 0.0)
+        self.assertEqual(oracle.target_score(before, 6, {'id': 1, 'distance': 10.0}), 6.0)
+
+    def test_planted_nearest_defender_bonus_uses_device_pose(self):
+        before = protected(122)
+        before.update(objective='planted', objective_position=[-15, 0, 10])
+        before['bots']['6'].update(target=0, attacker_id=0, damaged_at=-100)
+        for aid, actor in before['actors'].items():
+            if actor['team'] == 1:
+                actor['position'] = [100 + int(aid), 0, 100]
+        before['actors']['1'].update(team=1, position=[-15, 0, 10])
+        self.assertEqual(oracle.target_score(before, 6, {'id': 1, 'distance': 10.0}), 4.0)
+        before['actors']['1']['alive'] = False
+        self.assertEqual(oracle.target_score(before, 6, {'id': 1, 'distance': 10.0}), 10.0)
+
+    def test_fabricated_eligible_score_cannot_choose_target(self):
+        def corrupt(row):
+            candidate = next(c for c in row['observation']['candidates'] if c['distance'] < 38)
+            candidate.update(reason='eligible', score=-999)
+            row['observation']['decision']['target_id'] = candidate['id']
+            row['observation'].update(target_distance=candidate['distance'], aligned=False)
+        self.mutate('DECISION', lambda r: r['label'] == 'pose_122', corrupt)
+
     def test_defuser_cannot_forge_destination_or_legal_role(self):
         def move_plan(row):
             row['observation']['plan']['destination'] = [999, 0, 999]
