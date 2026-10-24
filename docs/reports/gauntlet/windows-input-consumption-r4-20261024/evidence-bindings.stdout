@@ -1,0 +1,46 @@
+{
+  "scope": "Historic/source fixture identity only; no native acceptance",
+  "base": "342c3641ab2fccd1fc875c84188a8395a9b93a96",
+  "critic_commit": "f8049be40286fff4ce8fe09159dbcf2db6874caf",
+  "cpu_affinity": [
+    4
+  ],
+  "original_assertions": [
+    {
+      "path": "test_input_consumption_identity.py",
+      "methods": 6,
+      "assertion_calls": 7,
+      "all_original_assertion_asts_unchanged": true
+    },
+    {
+      "path": "test_input_consumption_lifecycle.py",
+      "methods": 7,
+      "assertion_calls": 9,
+      "all_original_assertion_asts_unchanged": true
+    },
+    {
+      "path": "test_input_consumption_observation.py",
+      "methods": 19,
+      "assertion_calls": 43,
+      "all_original_assertion_asts_unchanged": true
+    }
+  ],
+  "original_native_log_bytes": [
+    {
+      "path": "docs/reports/gauntlet/windows-input-consumption-r2-20261023/original-native-log-bytes/client.log",
+      "bytes": 742,
+      "sha256": "ec5fe22c681a9bd5ea0577773e9421d7f0eca6d2711b77c8c124f4cdefff4ba4",
+      "unchanged_critic_derivation": "r3-critic-frozen/original-fixtures/independent-25/original_failed_windows_untraced/client.log",
+      "normalization": "Historical rig read_text/write_text newline normalization; raw original bytes retained separately"
+    },
+    {
+      "path": "docs/reports/gauntlet/windows-input-consumption-r2-20261023/original-native-log-bytes/server.log",
+      "bytes": 1945,
+      "sha256": "61937ac0d1c75f29f790ffc339a4dabaa0a29eac65e9c5da5b4c526835ed0757",
+      "unchanged_critic_derivation": "r3-critic-frozen/original-fixtures/independent-25/original_failed_windows_untraced/authority.log",
+      "normalization": "Historical rig read_text/write_text newline normalization; raw original bytes retained separately"
+    }
+  ],
+  "full_depth_control_verdicts_identical": true,
+  "passed": true
+}

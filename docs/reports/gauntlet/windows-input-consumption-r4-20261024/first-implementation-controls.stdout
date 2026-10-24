@@ -1,0 +1,21 @@
+{
+  "scope": "Independent pure source critique; no native or complete-acquisition claim",
+  "checkout_head": "dd8d4c783a8c6f1361031843f9b1073ac37c10f1",
+  "frozen_source": "342c3641ab2fccd1fc875c84188a8395a9b93a96",
+  "reader_path": "/workspace/sightbreak-windows-input-consumption-r4/scripts/analyze_input_consumption.py",
+  "reader_sha256": "6f5497e4e475150ebf313f7a72045d22ee865fff91052c564294c03dd48e196e",
+  "cpu_affinity": [
+    4
+  ],
+  "cases_total": 54,
+  "expectations_met": 48,
+  "false_accepts": [],
+  "false_rejects": [
+    "coherent_independent_pipeline",
+    "receive_wrong_epoch",
+    "receive_impossible_sequence",
+    "consumption_outside_accepted_batch",
+    "client_send_epoch_disagrees_with_authority",
+    "coherent_control"
+  ]
+}

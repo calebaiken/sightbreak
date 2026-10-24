@@ -1,0 +1,319 @@
+{
+  "source": "3e688c8c95b61c28e60543519b258ced055e87e4",
+  "cpu_affinity": [
+    4
+  ],
+  "shallow": "true",
+  "commit_count": 1,
+  "groups": [
+    {
+      "name": "server",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "server/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.0810837970020657,
+      "methods": 11,
+      "skips": 0,
+      "log": "server.log",
+      "bytes": 1467,
+      "sha256": "8900198cb32f5b74ab772a31c1f8cc48134322d1dc9dca03a1ca204e7c93c446"
+    },
+    {
+      "name": "transaction_restart_oracle",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_transaction_restart_oracle.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.1566076669987524,
+      "methods": 7,
+      "skips": 0,
+      "log": "transaction_restart_oracle.log",
+      "bytes": 906,
+      "sha256": "b536762ab7fe86b1dabbb9a6d8d78056c7683f2bbf5f356f4aa052a9ee732624"
+    },
+    {
+      "name": "account_network_output",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_account_network_output.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.13565921099871048,
+      "methods": 4,
+      "skips": 0,
+      "log": "account_network_output.log",
+      "bytes": 512,
+      "sha256": "3aeedf83aceff11bba0e56ad9eae2dd2af441c7fcd15734d119002c81097d0ff"
+    },
+    {
+      "name": "account_match_output",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_account_match_output.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.24144037700170884,
+      "methods": 15,
+      "skips": 0,
+      "log": "account_match_output.log",
+      "bytes": 1556,
+      "sha256": "a37fe82853bd875a238c6a458655d9fd3a97d0e81c74e79bff7576e00298406d"
+    },
+    {
+      "name": "build_manifest",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_build_manifest.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.2040159659991332,
+      "methods": 24,
+      "skips": 0,
+      "log": "build_manifest.log",
+      "bytes": 2945,
+      "sha256": "07157f572f223d6aa95be3638a8e2380b52c3fde488e76cb1b89daaeb8a1ffd5"
+    },
+    {
+      "name": "native_log",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_log.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.26114546499957214,
+      "methods": 5,
+      "skips": 0,
+      "log": "native_log.log",
+      "bytes": 785,
+      "sha256": "b50c4fcf919ad1af37d6f3125a40524ca5d37843cf0da439b9c34d5f4f252d1f"
+    },
+    {
+      "name": "native_observation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_observation.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.13466305000110879,
+      "methods": 7,
+      "skips": 3,
+      "log": "native_observation.log",
+      "bytes": 1512,
+      "sha256": "a5633fd36b5c95a5ba6a7efbcc0fece867f2a94630db42da8ab156be2e7f6824"
+    },
+    {
+      "name": "offline_role_guidance",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_offline_role_guidance.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.2024325870006578,
+      "methods": 4,
+      "skips": 0,
+      "log": "offline_role_guidance.log",
+      "bytes": 726,
+      "sha256": "3d3eb212be428c63a58b1bef356c513405af3963a732b48a84c418db5015b64e"
+    },
+    {
+      "name": "offline_export_ocr",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_offline_export_ocr.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.18969198999911896,
+      "methods": 5,
+      "skips": 0,
+      "log": "offline_export_ocr.log",
+      "bytes": 820,
+      "sha256": "27654309c972a44f9308d625cb595fc08e60613a43bbd5d7e5a6bab259deb0c8"
+    },
+    {
+      "name": "offline_capture_fences",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_offline_capture_fences.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.49137378099840134,
+      "methods": 15,
+      "skips": 0,
+      "log": "offline_capture_fences.log",
+      "bytes": 2431,
+      "sha256": "ee859d8f7216bad391e977e9b8b471b57bb564fe6067154e40e644a698394d70"
+    },
+    {
+      "name": "native_focus_fence",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_focus_fence.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.3450022540018836,
+      "methods": 16,
+      "skips": 0,
+      "log": "native_focus_fence.log",
+      "bytes": 2841,
+      "sha256": "ca55b261e6af15dd269e3b8be9f84747f0b56f2710335f2aef2177a04507445b"
+    },
+    {
+      "name": "focus_resume_timing",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_focus_resume_timing.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.20058806900124182,
+      "methods": 8,
+      "skips": 0,
+      "log": "focus_resume_timing.log",
+      "bytes": 1356,
+      "sha256": "293c8970b9eab55ba5ea4d5827c95d55c84711d6b125eb79cc79ade802b79cfd"
+    },
+    {
+      "name": "native_settings_route",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_settings_route.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.20763904100022046,
+      "methods": 8,
+      "skips": 0,
+      "log": "native_settings_route.log",
+      "bytes": 1464,
+      "sha256": "d3ed38f1b11ae203eba58434bbd13b0617a22d3179a1e1b9ab849536497bf1d9"
+    },
+    {
+      "name": "native_route_pulse",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_route_pulse.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.23914560800039908,
+      "methods": 25,
+      "skips": 0,
+      "log": "native_route_pulse.log",
+      "bytes": 4308,
+      "sha256": "2c1c1925e6640337c97ed62a1e3aea8adf53fe3810338714b26967ad5efea964"
+    },
+    {
+      "name": "input_consumption_observation",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_input_consumption_observation.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.17125001400199835,
+      "methods": 19,
+      "skips": 0,
+      "log": "input_consumption_observation.log",
+      "bytes": 3444,
+      "sha256": "72b0fa69d682dda39c3843fe5d6c492817532e504c9a3f13d34a0b16d2ee2962"
+    },
+    {
+      "name": "native_approach",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_native_approach.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.16739607699855696,
+      "methods": 9,
+      "skips": 0,
+      "log": "native_approach.log",
+      "bytes": 7372,
+      "sha256": "55275f34e92522518ba0babaa9a4a28dd949462560761449b239061ff8836b72"
+    },
+    {
+      "name": "macos_menu",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_macos_menu.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.2069513200003712,
+      "methods": 11,
+      "skips": 0,
+      "log": "macos_menu.log",
+      "bytes": 2216,
+      "sha256": "28228396483b74b3adbfe833ba2d0d04487a4c959c9501a33a612ed154c2181b"
+    },
+    {
+      "name": "input_consumption_identity",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_input_consumption_identity.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.12596530800146866,
+      "methods": 6,
+      "skips": 0,
+      "log": "input_consumption_identity.log",
+      "bytes": 1106,
+      "sha256": "929cd0cb6fda2512a8a2ce544a751cb32f80367dd4bef47d7813e4d1b4bf55c8"
+    },
+    {
+      "name": "input_consumption_lifecycle",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_input_consumption_lifecycle.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.12113589100044919,
+      "methods": 7,
+      "skips": 0,
+      "log": "input_consumption_lifecycle.log",
+      "bytes": 1338,
+      "sha256": "b08a71b571d212dc8ace0577098bedadefee93f000633af35bafd46c6871a3fb"
+    },
+    {
+      "name": "input_consumption_state",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "scripts/test_input_consumption_state.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.1352248969997163,
+      "methods": 13,
+      "skips": 0,
+      "log": "input_consumption_state.log",
+      "bytes": 2329,
+      "sha256": "3ecd4ba21c96285329934ffd272ea2451055f49a0e3ee3abbc619f879989d2bd"
+    }
+  ],
+  "shell_syntax_exit": 0,
+  "total_methods": 219,
+  "maintained_methods": 173,
+  "skips": 3,
+  "passed": true
+}

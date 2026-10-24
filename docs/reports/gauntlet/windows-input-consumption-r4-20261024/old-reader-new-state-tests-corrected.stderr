@@ -1,0 +1,190 @@
+test_accepted_projection_matches_receive_but_timestamps_can_differ (__main__.InputObservationStateControls.test_accepted_projection_matches_receive_but_timestamps_can_differ) ... FAIL
+test_another_accept_requires_another_receive_even_when_coalesced (__main__.InputObservationStateControls.test_another_accept_requires_another_receive_even_when_coalesced) ... FAIL
+test_counted_metadata_stage_requires_its_persistent_projection (__main__.InputObservationStateControls.test_counted_metadata_stage_requires_its_persistent_projection) ... FAIL
+test_current_reason_must_increment_even_when_other_counters_advance (__main__.InputObservationStateControls.test_current_reason_must_increment_even_when_other_counters_advance) ... 
+  test_current_reason_must_increment_even_when_other_counters_advance (__main__.InputObservationStateControls.test_current_reason_must_increment_even_when_other_counters_advance) (role='authority') ... FAIL
+  test_current_reason_must_increment_even_when_other_counters_advance (__main__.InputObservationStateControls.test_current_reason_must_increment_even_when_other_counters_advance) (role='client') ... FAIL
+test_direct_consumption_agrees_with_ack_and_all_actor_controls (__main__.InputObservationStateControls.test_direct_consumption_agrees_with_ack_and_all_actor_controls) ... 
+  test_direct_consumption_agrees_with_ack_and_all_actor_controls (__main__.InputObservationStateControls.test_direct_consumption_agrees_with_ack_and_all_actor_controls) (key='stream_ack') ... FAIL
+  test_direct_consumption_agrees_with_ack_and_all_actor_controls (__main__.InputObservationStateControls.test_direct_consumption_agrees_with_ack_and_all_actor_controls) (key='sequence') ... FAIL
+  test_direct_consumption_agrees_with_ack_and_all_actor_controls (__main__.InputObservationStateControls.test_direct_consumption_agrees_with_ack_and_all_actor_controls) (key='fire') ... FAIL
+  test_direct_consumption_agrees_with_ack_and_all_actor_controls (__main__.InputObservationStateControls.test_direct_consumption_agrees_with_ack_and_all_actor_controls) (key='reload') ... FAIL
+  test_direct_consumption_agrees_with_ack_and_all_actor_controls (__main__.InputObservationStateControls.test_direct_consumption_agrees_with_ack_and_all_actor_controls) (key='move') ... FAIL
+test_fresh_peer_needs_acceptance_progress_but_not_a_direct_accept_row (__main__.InputObservationStateControls.test_fresh_peer_needs_acceptance_progress_but_not_a_direct_accept_row) ... FAIL
+test_latest_cannot_disappear_or_change_without_a_call (__main__.InputObservationStateControls.test_latest_cannot_disappear_or_change_without_a_call) ... 
+  test_latest_cannot_disappear_or_change_without_a_call (__main__.InputObservationStateControls.test_latest_cannot_disappear_or_change_without_a_call) (mutation='delete') ... FAIL
+  test_latest_cannot_disappear_or_change_without_a_call (__main__.InputObservationStateControls.test_latest_cannot_disappear_or_change_without_a_call) (mutation='change') ... FAIL
+test_lifecycle_counters_cannot_claim_hidden_events (__main__.InputObservationStateControls.test_lifecycle_counters_cannot_claim_hidden_events) ... 
+  test_lifecycle_counters_cannot_claim_hidden_events (__main__.InputObservationStateControls.test_lifecycle_counters_cannot_claim_hidden_events) (stage='ready') ... FAIL
+  test_lifecycle_counters_cannot_claim_hidden_events (__main__.InputObservationStateControls.test_lifecycle_counters_cannot_claim_hidden_events) (stage='peer_connected') ... FAIL
+  test_lifecycle_counters_cannot_claim_hidden_events (__main__.InputObservationStateControls.test_lifecycle_counters_cannot_claim_hidden_events) (stage='peer_bound') ... FAIL
+test_one_peer_cannot_gain_another_live_generation (__main__.InputObservationStateControls.test_one_peer_cannot_gain_another_live_generation) ... FAIL
+test_queued_duplicate_accepts_without_queue_growth_or_command_replacement (__main__.InputObservationStateControls.test_queued_duplicate_accepts_without_queue_growth_or_command_replacement) ... ok
+test_receive_outcome_counts_allow_only_current_receive_to_be_pending (__main__.InputObservationStateControls.test_receive_outcome_counts_allow_only_current_receive_to_be_pending) ... FAIL
+test_single_command_receive_endpoints_agree_before_validation (__main__.InputObservationStateControls.test_single_command_receive_endpoints_agree_before_validation) ... FAIL
+test_successful_accept_requires_nonempty_queue (__main__.InputObservationStateControls.test_successful_accept_requires_nonempty_queue) ... FAIL
+
+======================================================================
+FAIL: test_accepted_projection_matches_receive_but_timestamps_can_differ (__main__.InputObservationStateControls.test_accepted_projection_matches_receive_but_timestamps_can_differ)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 118, in test_accepted_projection_matches_receive_but_timestamps_can_differ
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_another_accept_requires_another_receive_even_when_coalesced (__main__.InputObservationStateControls.test_another_accept_requires_another_receive_even_when_coalesced)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 110, in test_another_accept_requires_another_receive_even_when_coalesced
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_counted_metadata_stage_requires_its_persistent_projection (__main__.InputObservationStateControls.test_counted_metadata_stage_requires_its_persistent_projection)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 100, in test_counted_metadata_stage_requires_its_persistent_projection
+    self.assertFalse(self.report(rows, 'client')['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_current_reason_must_increment_even_when_other_counters_advance (__main__.InputObservationStateControls.test_current_reason_must_increment_even_when_other_counters_advance) (role='authority')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 67, in test_current_reason_must_increment_even_when_other_counters_advance
+    self.assertFalse(self.report(rows, role)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_current_reason_must_increment_even_when_other_counters_advance (__main__.InputObservationStateControls.test_current_reason_must_increment_even_when_other_counters_advance) (role='client')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 67, in test_current_reason_must_increment_even_when_other_counters_advance
+    self.assertFalse(self.report(rows, role)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_direct_consumption_agrees_with_ack_and_all_actor_controls (__main__.InputObservationStateControls.test_direct_consumption_agrees_with_ack_and_all_actor_controls) (key='stream_ack')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 134, in test_direct_consumption_agrees_with_ack_and_all_actor_controls
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_direct_consumption_agrees_with_ack_and_all_actor_controls (__main__.InputObservationStateControls.test_direct_consumption_agrees_with_ack_and_all_actor_controls) (key='sequence')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 134, in test_direct_consumption_agrees_with_ack_and_all_actor_controls
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_direct_consumption_agrees_with_ack_and_all_actor_controls (__main__.InputObservationStateControls.test_direct_consumption_agrees_with_ack_and_all_actor_controls) (key='fire')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 134, in test_direct_consumption_agrees_with_ack_and_all_actor_controls
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_direct_consumption_agrees_with_ack_and_all_actor_controls (__main__.InputObservationStateControls.test_direct_consumption_agrees_with_ack_and_all_actor_controls) (key='reload')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 134, in test_direct_consumption_agrees_with_ack_and_all_actor_controls
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_direct_consumption_agrees_with_ack_and_all_actor_controls (__main__.InputObservationStateControls.test_direct_consumption_agrees_with_ack_and_all_actor_controls) (key='move')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 134, in test_direct_consumption_agrees_with_ack_and_all_actor_controls
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_fresh_peer_needs_acceptance_progress_but_not_a_direct_accept_row (__main__.InputObservationStateControls.test_fresh_peer_needs_acceptance_progress_but_not_a_direct_accept_row)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 138, in test_fresh_peer_needs_acceptance_progress_but_not_a_direct_accept_row
+    self.assertFalse(negative['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_latest_cannot_disappear_or_change_without_a_call (__main__.InputObservationStateControls.test_latest_cannot_disappear_or_change_without_a_call) (mutation='delete')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 94, in test_latest_cannot_disappear_or_change_without_a_call
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_latest_cannot_disappear_or_change_without_a_call (__main__.InputObservationStateControls.test_latest_cannot_disappear_or_change_without_a_call) (mutation='change')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 94, in test_latest_cannot_disappear_or_change_without_a_call
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_lifecycle_counters_cannot_claim_hidden_events (__main__.InputObservationStateControls.test_lifecycle_counters_cannot_claim_hidden_events) (stage='ready')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 76, in test_lifecycle_counters_cannot_claim_hidden_events
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_lifecycle_counters_cannot_claim_hidden_events (__main__.InputObservationStateControls.test_lifecycle_counters_cannot_claim_hidden_events) (stage='peer_connected')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 76, in test_lifecycle_counters_cannot_claim_hidden_events
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_lifecycle_counters_cannot_claim_hidden_events (__main__.InputObservationStateControls.test_lifecycle_counters_cannot_claim_hidden_events) (stage='peer_bound')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 76, in test_lifecycle_counters_cannot_claim_hidden_events
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_one_peer_cannot_gain_another_live_generation (__main__.InputObservationStateControls.test_one_peer_cannot_gain_another_live_generation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 84, in test_one_peer_cannot_gain_another_live_generation
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_receive_outcome_counts_allow_only_current_receive_to_be_pending (__main__.InputObservationStateControls.test_receive_outcome_counts_allow_only_current_receive_to_be_pending)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 105, in test_receive_outcome_counts_allow_only_current_receive_to_be_pending
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_single_command_receive_endpoints_agree_before_validation (__main__.InputObservationStateControls.test_single_command_receive_endpoints_agree_before_validation)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 146, in test_single_command_receive_endpoints_agree_before_validation
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+======================================================================
+FAIL: test_successful_accept_requires_nonempty_queue (__main__.InputObservationStateControls.test_successful_accept_requires_nonempty_queue)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/sightbreak-windows-input-consumption-r4/.local/old-reader-state/scripts/test_input_consumption_state.py", line 123, in test_successful_accept_requires_nonempty_queue
+    self.assertFalse(self.report(rows)['diagnostic_complete'])
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.046s
+
+FAILED (failures=20)

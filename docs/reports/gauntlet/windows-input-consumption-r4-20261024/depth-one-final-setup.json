@@ -1,0 +1,108 @@
+{
+  "scope": "Sparse source setup only; shared objects, no native execution",
+  "source": "642dd0e0543698cae5d90b9046d5875beabed111",
+  "depth": "/workspace/sightbreak-windows-input-consumption-r4/.local/depth-one-final",
+  "cpu_affinity": [
+    4
+  ],
+  "selected_directories": [
+    ".claude",
+    "scripts",
+    "game",
+    "server"
+  ],
+  "shared_object_alternate": "/workspace/sightbreak/.git/objects",
+  "independent_object_copy": false,
+  "commands": [
+    {
+      "command": [
+        "git",
+        "init",
+        "--quiet",
+        "/workspace/sightbreak-windows-input-consumption-r4/.local/depth-one-final"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/sightbreak-windows-input-consumption-r4/.local/depth-one-final",
+        "symbolic-ref",
+        "HEAD",
+        "refs/heads/r4-depth-one"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/sightbreak-windows-input-consumption-r4/.local/depth-one-final",
+        "update-ref",
+        "refs/heads/r4-depth-one",
+        "642dd0e0543698cae5d90b9046d5875beabed111"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/sightbreak-windows-input-consumption-r4/.local/depth-one-final",
+        "sparse-checkout",
+        "init",
+        "--cone",
+        "--no-sparse-index"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/sightbreak-windows-input-consumption-r4/.local/depth-one-final",
+        "sparse-checkout",
+        "set",
+        "--no-sparse-index",
+        ".claude",
+        "scripts",
+        "game",
+        "server"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/workspace/sightbreak-windows-input-consumption-r4/.local/depth-one-final",
+        "read-tree",
+        "--reset",
+        "-u",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "passed": true,
+  "depth_head": "642dd0e0543698cae5d90b9046d5875beabed111",
+  "depth_shallow": true,
+  "depth_commit_count": 1,
+  "tracked_index_paths": 11728,
+  "status": "",
+  "alternate_file": "/workspace/sightbreak-windows-input-consumption-r4/.local/depth-one-final/.git/objects/info/alternates",
+  "alternate_contents": "/workspace/sightbreak/.git/objects\n"
+}
