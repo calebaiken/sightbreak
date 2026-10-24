@@ -174,6 +174,8 @@ class ObjectiveOracleTests(unittest.TestCase):
 
     def test_target_score_preserves_exact_independent_bonuses(self):
         before = protected(122)
+        before['actors']['6'].update(alive=True, health=100)
+        before['actors']['1'].update(alive=True, health=100)
         before['actors']['6']['position'] = [0, 0, 0]
         before['actors']['1']['position'] = [10, 0, 0]
         before['bots']['6'].update(target=0, attacker_id=0, damaged_at=-100)
@@ -188,6 +190,8 @@ class ObjectiveOracleTests(unittest.TestCase):
 
     def test_target_score_accepts_legitimate_negative_total(self):
         before = protected(122)
+        before['actors']['1'].update(alive=True, health=100)
+        before['actors']['6'].update(alive=True, health=100)
         before.update(objective='carried', carrier=6)
         before['actors']['1']['position'] = [0, 0, 0]
         before['actors']['6']['position'] = [1, 0, 0]
@@ -196,6 +200,8 @@ class ObjectiveOracleTests(unittest.TestCase):
 
     def test_recent_attacker_bonus_expires_at_strict_boundary(self):
         before = protected(122)
+        before['actors']['6'].update(alive=True, health=100)
+        before['actors']['1'].update(alive=True, health=100)
         before.update(elapsed=1.2, carrier=6)
         before['actors']['6']['position'] = [0, 0, 0]
         before['actors']['1']['position'] = [10, 0, 0]
@@ -212,7 +218,7 @@ class ObjectiveOracleTests(unittest.TestCase):
         for aid, actor in before['actors'].items():
             if actor['team'] == 1:
                 actor['position'] = [100 + int(aid), 0, 100]
-        before['actors']['1'].update(team=1, position=[0, 0, 0])
+        before['actors']['1'].update(alive=True, health=100, team=1, position=[0, 0, 0])
         self.assertEqual(oracle.target_score(before, 6, {'id': 1, 'distance': 10.0}), 4.0)
         before['actors']['1']['alive'] = False
         before['actors']['2'].update(alive=True, team=1, position=[0, 0, 0])
