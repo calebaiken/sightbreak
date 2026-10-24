@@ -1,0 +1,106 @@
+{
+  "commit": "7b6f379a3f8c809d0985a64e883cbadfdd78d135",
+  "control_status": {
+    "S1_finding_shapes": "NOT_RUN",
+    "S1_positives_and_negatives": "NOT_RUN",
+    "S2_A_invalid_stage": "NOT_RUN",
+    "S2_B_blocked_stage": "NOT_RUN",
+    "S2_B_positive_after_A_exit": "NOT_RUN"
+  },
+  "engine": {
+    "exists": false,
+    "requested_path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\godot\\Godot_v4.7.2-stable_win64.exe",
+    "sha256": null
+  },
+  "fresh_attempt_required": "Existing failure/result/signal files must not be overwritten or reused",
+  "local_searches": [
+    "No Godot executable found in user profile, including hidden files",
+    "No 4.7.2 matching path found under approved OpenCode temporary root",
+    "No Godot command on PATH"
+  ],
+  "native_process_count": 0,
+  "network_count": "not independently measured",
+  "original_failure_preserved": {
+    "claims_verified": false,
+    "commit": "7b6f379a3f8c809d0985a64e883cbadfdd78d135",
+    "complete": false,
+    "failures": [
+      {
+        "error": "FileNotFoundError(2, 'No such file or directory')",
+        "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0857266917001Z\\driver.py\", line 234, in run\n    commands, env, manifest = freeze()\n                              ~~~~~~^^\n  File \"C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0857266917001Z\\driver.py\", line 148, in freeze\n    \"engine\": digest(ENGINE), \"python\": {**digest(PYTHON), \"version\": sys.version},\n              ~~~~~~^^^^^^^^\n  File \"C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0857266917001Z\\driver.py\", line 42, in digest\n    with path.open(\"rb\") as stream:\n         ~~~~~~~~~^^^^^^\n  File \"C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-tools\\python\\cpython-3.13.15-windows-x86_64-none\\Lib\\pathlib\\_local.py\", line 537, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: 'C:\\\\Users\\\\blith\\\\AppData\\\\Local\\\\Temp\\\\opencode\\\\godot\\\\Godot_v4.7.2-stable_win64.exe'\n",
+        "utc": "2026-10-24T09:02:31.122140+00:00"
+      }
+    ],
+    "finished_utc": "2026-10-24T09:02:31.395586+00:00",
+    "owner_status_unchanged": true,
+    "scope": "S1 native predicates; S2 complete journal cross-process control"
+  },
+  "post_failure_preflight_error": null,
+  "pre_import_manifest_created": false,
+  "predicate_region_byte_equal": true,
+  "prepared_inputs": [
+    {
+      "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0857266917001Z\\driver.py",
+      "sha256": "90ff049f071cdc04d37adf463285459989356ef8abe750133f29ab7ca4c36128",
+      "size": 17803
+    },
+    {
+      "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0857266917001Z\\project\\probe.gd",
+      "sha256": "bb734d09ee8a314a487a02d77c2c06706b6fb4d5583031ff72b174ba0c3dde58",
+      "size": 11121
+    },
+    {
+      "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0857266917001Z\\project\\project.godot",
+      "sha256": "1da46837698d278d587fe5230784e2b469c4bef0b06ea65750c96062b621658e",
+      "size": 351
+    },
+    {
+      "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0857266917001Z\\project\\receipt_predicates.gd",
+      "sha256": "60b5006ed7336c3755321fccb5b25069b1c975f1300a95fadd3619b978daa347",
+      "size": 808
+    },
+    {
+      "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0857266917001Z\\harness\\matrix_process.py",
+      "sha256": "829afa5defa5a43d62391cc9e42ba329a0677bfdb2330446d1fdf124bdb946d8",
+      "size": 13977
+    },
+    {
+      "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0857266917001Z\\commands.json",
+      "sha256": "25188161fe2dbb7e2d7829e3fcdf6a261777dfec876340bd0617a0403b555528",
+      "size": 1876
+    },
+    {
+      "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0857266917001Z\\record_blocked.py",
+      "sha256": "e5d483ac99cde55933a7503be04e31aa09ce62e182d4f4de10cf67d07a7d0f19",
+      "size": 3948
+    }
+  ],
+  "python": {
+    "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sightbreak-tools\\python\\cpython-3.13.15-windows-x86_64-none\\python.exe",
+    "sha256": "d7d8f0813d9d4002839b775ed13fc7eb57a756bdcb102e85ab61537003ef8616",
+    "size": 91648,
+    "version": "3.13.15 (main, Sep  1 2026, 14:16:48) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "runtime_claims_verified": false,
+  "scope": "Post-failure source-only binding verification, not native evidence",
+  "source": [
+    {
+      "byte_equal_to_git": true,
+      "git_blob_oid": "c482c553264781db2a66a373ab4e4496fb59531a",
+      "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0857266917001Z\\source\\economy_ui.gd",
+      "sha256": "a6580d176216af48c447eacaf3d293d7862fb8af0f56db7a4a3b9fd4398f450b",
+      "size": 77874,
+      "source_path": "game/scripts/ui/economy_ui.gd"
+    },
+    {
+      "byte_equal_to_git": true,
+      "git_blob_oid": "cbac7a494f14c88127196c848a3f874892e7b94c",
+      "path": "C:\\Users\\blith\\AppData\\Local\\Temp\\opencode\\sol-recovery-contract-controls-20261024T0857266917001Z\\project\\transaction_journal.gd",
+      "sha256": "3a7e060f7d5c3a65f4b983edf3c56d008cb070a8948bdcb128681bd4ce562d03",
+      "size": 6138,
+      "source_path": "game/scripts/ui/transaction_journal.gd"
+    }
+  ],
+  "status": "BLOCKED_BEFORE_ANY_NATIVE_LAUNCH",
+  "utc": "2026-10-24T09:05:31.130628+00:00"
+}

@@ -1,0 +1,323 @@
+{
+  "fresh_sessions_and_sql_clock": [
+    {
+      "input_directory": "r9/baseline/run-1",
+      "sql_clock_before_kill_request_wall_clock": true,
+      "sql_session_additions_per_phase": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "phase_token_matches_exact_new_sql_session": true,
+      "new_sql_sessions_are_original_owner": true,
+      "full_player_records_only_expected_credits_change": true,
+      "full_item_records_only_expected_transfer_and_reservation_change": true,
+      "full_listing_records_only_expected_buyer_and_sold_change": true,
+      "preexisting_operation_ledger_audit_rows_unchanged": {
+        "operations": true,
+        "ledger": true,
+        "audit": true
+      },
+      "new_operation_ledger_audit_full_column_sets": {
+        "operations": true,
+        "ledger": true,
+        "audit": true
+      },
+      "non_auth_non_get_request_counts": {
+        "recovery": 0,
+        "second-restart": 0
+      },
+      "non_auth_non_get_requests": {
+        "recovery": [],
+        "second-restart": []
+      }
+    },
+    {
+      "input_directory": "r9/baseline/run-2",
+      "sql_clock_before_kill_request_wall_clock": true,
+      "sql_session_additions_per_phase": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "phase_token_matches_exact_new_sql_session": true,
+      "new_sql_sessions_are_original_owner": true,
+      "full_player_records_only_expected_credits_change": true,
+      "full_item_records_only_expected_transfer_and_reservation_change": true,
+      "full_listing_records_only_expected_buyer_and_sold_change": true,
+      "preexisting_operation_ledger_audit_rows_unchanged": {
+        "operations": true,
+        "ledger": true,
+        "audit": true
+      },
+      "new_operation_ledger_audit_full_column_sets": {
+        "operations": true,
+        "ledger": true,
+        "audit": true
+      },
+      "non_auth_non_get_request_counts": {
+        "recovery": 0,
+        "second-restart": 0
+      },
+      "non_auth_non_get_requests": {
+        "recovery": [],
+        "second-restart": []
+      }
+    },
+    {
+      "input_directory": "r9/baseline/run-3",
+      "sql_clock_before_kill_request_wall_clock": true,
+      "sql_session_additions_per_phase": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "phase_token_matches_exact_new_sql_session": true,
+      "new_sql_sessions_are_original_owner": true,
+      "full_player_records_only_expected_credits_change": true,
+      "full_item_records_only_expected_transfer_and_reservation_change": true,
+      "full_listing_records_only_expected_buyer_and_sold_change": true,
+      "preexisting_operation_ledger_audit_rows_unchanged": {
+        "operations": true,
+        "ledger": true,
+        "audit": true
+      },
+      "new_operation_ledger_audit_full_column_sets": {
+        "operations": true,
+        "ledger": true,
+        "audit": true
+      },
+      "non_auth_non_get_request_counts": {
+        "recovery": 0,
+        "second-restart": 0
+      },
+      "non_auth_non_get_requests": {
+        "recovery": [],
+        "second-restart": []
+      }
+    },
+    {
+      "input_directory": "r10/candidate-7b6f379/run-1",
+      "sql_clock_before_kill_request_wall_clock": true,
+      "sql_session_additions_per_phase": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "phase_token_matches_exact_new_sql_session": true,
+      "new_sql_sessions_are_original_owner": true,
+      "full_player_records_only_expected_credits_change": true,
+      "full_item_records_only_expected_transfer_and_reservation_change": true,
+      "full_listing_records_only_expected_buyer_and_sold_change": true,
+      "preexisting_operation_ledger_audit_rows_unchanged": {
+        "operations": true,
+        "ledger": true,
+        "audit": true
+      },
+      "new_operation_ledger_audit_full_column_sets": {
+        "operations": true,
+        "ledger": true,
+        "audit": true
+      },
+      "non_auth_non_get_request_counts": {
+        "recovery": 1,
+        "second-restart": 0
+      },
+      "non_auth_non_get_requests": {
+        "recovery": [
+          {
+            "event": "proxy_request",
+            "wall_ns": 1792715865401245500,
+            "monotonic_ns": 253621734000000,
+            "harness_pid": 16820,
+            "phase": "recovery",
+            "method": "POST",
+            "path": "/market/b63cfa1d-10a8-4200-85e9-14498e68fc72/buy",
+            "body": {
+              "expected_price": 400,
+              "idempotency_key": "5b738b74-378c-4b9e-a419-73572c984d86"
+            },
+            "raw_utf8": "{\"expected_price\":400,\"idempotency_key\":\"5b738b74-378c-4b9e-a419-73572c984d86\"}",
+            "token_sha256": "6809aadc2ff9a7a644f54e31901dd425210433f360e2bf86a4d9330962f05e59"
+          }
+        ],
+        "second-restart": []
+      }
+    },
+    {
+      "input_directory": "r10/candidate-7b6f379/run-2",
+      "sql_clock_before_kill_request_wall_clock": true,
+      "sql_session_additions_per_phase": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "phase_token_matches_exact_new_sql_session": true,
+      "new_sql_sessions_are_original_owner": true,
+      "full_player_records_only_expected_credits_change": true,
+      "full_item_records_only_expected_transfer_and_reservation_change": true,
+      "full_listing_records_only_expected_buyer_and_sold_change": true,
+      "preexisting_operation_ledger_audit_rows_unchanged": {
+        "operations": true,
+        "ledger": true,
+        "audit": true
+      },
+      "new_operation_ledger_audit_full_column_sets": {
+        "operations": true,
+        "ledger": true,
+        "audit": true
+      },
+      "non_auth_non_get_request_counts": {
+        "recovery": 1,
+        "second-restart": 0
+      },
+      "non_auth_non_get_requests": {
+        "recovery": [
+          {
+            "event": "proxy_request",
+            "wall_ns": 1792715873142458500,
+            "monotonic_ns": 253629484000000,
+            "harness_pid": 16820,
+            "phase": "recovery",
+            "method": "POST",
+            "path": "/market/60ddae4f-ea23-44df-b821-af2a951abc34/buy",
+            "body": {
+              "expected_price": 401,
+              "idempotency_key": "507c37e7-7de4-499d-b03e-4b60d5d1e206"
+            },
+            "raw_utf8": "{\"expected_price\":401,\"idempotency_key\":\"507c37e7-7de4-499d-b03e-4b60d5d1e206\"}",
+            "token_sha256": "80d36c812424dd9be8488c99ec1c4246316bdd3ba474a42af5ba273264c02d8a"
+          }
+        ],
+        "second-restart": []
+      }
+    },
+    {
+      "input_directory": "r10/candidate-7b6f379/run-3",
+      "sql_clock_before_kill_request_wall_clock": true,
+      "sql_session_additions_per_phase": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "phase_token_matches_exact_new_sql_session": true,
+      "new_sql_sessions_are_original_owner": true,
+      "full_player_records_only_expected_credits_change": true,
+      "full_item_records_only_expected_transfer_and_reservation_change": true,
+      "full_listing_records_only_expected_buyer_and_sold_change": true,
+      "preexisting_operation_ledger_audit_rows_unchanged": {
+        "operations": true,
+        "ledger": true,
+        "audit": true
+      },
+      "new_operation_ledger_audit_full_column_sets": {
+        "operations": true,
+        "ledger": true,
+        "audit": true
+      },
+      "non_auth_non_get_request_counts": {
+        "recovery": 1,
+        "second-restart": 0
+      },
+      "non_auth_non_get_requests": {
+        "recovery": [
+          {
+            "event": "proxy_request",
+            "wall_ns": 1792715881154363500,
+            "monotonic_ns": 253637484000000,
+            "harness_pid": 16820,
+            "phase": "recovery",
+            "method": "POST",
+            "path": "/market/e03d5af6-82e6-4255-8216-5db58bac9217/buy",
+            "body": {
+              "expected_price": 10000000,
+              "idempotency_key": "3ea73f56-634f-4436-be82-2eaa8075e58c"
+            },
+            "raw_utf8": "{\"expected_price\":10000000,\"idempotency_key\":\"3ea73f56-634f-4436-be82-2eaa8075e58c\"}",
+            "token_sha256": "0669f16f7280789cd4e8fa167bc45f7d43e65dadc16e9b634354108f01b18396"
+          }
+        ],
+        "second-restart": []
+      }
+    }
+  ],
+  "controls": {
+    "original_probe_sha256": "0bde4d9c43c82c1c7b12e1d317b63fd56c950ba64a2aa6b31b3c276758678b6c",
+    "calibrated_probe_sha256": "6801fdeb21f76b9afa69c985d8b62148d7291c5b0e8ffcba0d969ac00a027832",
+    "calibration_exactly_one_url_replacement": true,
+    "original_probe_equals_canonical_source_after_crlf_to_lf_only": true,
+    "raw_outcomes": {
+      "native-economy-original": {
+        "calibrated": false,
+        "calibration": null,
+        "executed_sha256": "0bde4d9c43c82c1c7b12e1d317b63fd56c950ba64a2aa6b31b3c276758678b6c",
+        "original_sha256": "0bde4d9c43c82c1c7b12e1d317b63fd56c950ba64a2aa6b31b3c276758678b6c",
+        "passed": false,
+        "returncode": 1,
+        "tally": "NATIVE_REAL_ECONOMY_QA 36/37 passed"
+      },
+      "native-economy-dns-calibrated": {
+        "calibrated": true,
+        "calibration": "Only port-9 URL replaced by reserved .invalid DNS name",
+        "executed_sha256": "6801fdeb21f76b9afa69c985d8b62148d7291c5b0e8ffcba0d969ac00a027832",
+        "original_sha256": "0bde4d9c43c82c1c7b12e1d317b63fd56c950ba64a2aa6b31b3c276758678b6c",
+        "passed": true,
+        "returncode": 0,
+        "tally": "NATIVE_REAL_ECONOMY_QA 37/37 passed"
+      }
+    }
+  },
+  "publication_manifest_file_count": 236,
+  "publication_manifest_matches": true,
+  "publication_manifest_mismatches": [],
+  "harness_bindings": [
+    {
+      "path": "scripts/validate_native_transaction_restart.py",
+      "commit": "31438cbcea6ef08a131ae312c65b94f7e3e882c3",
+      "git_blob_sha256": "1b9489c29c8da2cbe58711da49fd6438513a48980430247586aac4837ad05373",
+      "published_measured_sha256": "1b9489c29c8da2cbe58711da49fd6438513a48980430247586aac4837ad05373",
+      "same_measured_bytes_across_both_record_sets": true,
+      "git_blob_equal_after_crlf_to_lf_only": true
+    },
+    {
+      "path": "scripts/native_transaction_restart_probe.gd",
+      "commit": "31438cbcea6ef08a131ae312c65b94f7e3e882c3",
+      "git_blob_sha256": "075e3982712ea710c3bcfa92efc7a5e03314cc401445d14e45c902e718353fbe",
+      "published_measured_sha256": "075e3982712ea710c3bcfa92efc7a5e03314cc401445d14e45c902e718353fbe",
+      "same_measured_bytes_across_both_record_sets": true,
+      "git_blob_equal_after_crlf_to_lf_only": true
+    }
+  ],
+  "price_coverage": {
+    "observed": [
+      400,
+      401,
+      10000000
+    ],
+    "observed_basis_points": 300,
+    "observed_fee_floors": [
+      12,
+      12,
+      300000
+    ],
+    "not_observed_in_restart_campaign": [
+      1,
+      33,
+      34,
+      0,
+      -1,
+      10000001,
+      "fractional",
+      "boolean",
+      "string",
+      "mismatched consent price"
+    ],
+    "note": "400/401 straddle fractional fee arithmetic but not the first zero-to-one fee boundary. One trial at each price per source, not three repeats at each price."
+  }
+}

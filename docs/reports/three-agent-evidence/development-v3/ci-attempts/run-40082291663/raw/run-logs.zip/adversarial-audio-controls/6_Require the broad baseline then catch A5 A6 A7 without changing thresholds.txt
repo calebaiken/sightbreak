@@ -1,0 +1,42 @@
+﻿2026-10-24T09:32:40.8756711Z ##[group]Run xvfb-run -a "$SIGHTBREAK_CONTROL_PYTHON" scripts/reload_negative_controls.py --only A5,A6,A7 --log "$GITHUB_WORKSPACE/builds/v3-audio-controls/summary.txt" --raw-out "$GITHUB_WORKSPACE/builds/v3-audio-controls/raw"
+2026-10-24T09:32:40.8758031Z [36;1mxvfb-run -a "$SIGHTBREAK_CONTROL_PYTHON" scripts/reload_negative_controls.py --only A5,A6,A7 --log "$GITHUB_WORKSPACE/builds/v3-audio-controls/summary.txt" --raw-out "$GITHUB_WORKSPACE/builds/v3-audio-controls/raw"[0m
+2026-10-24T09:32:40.8794878Z shell: /usr/bin/bash -e {0}
+2026-10-24T09:32:40.8795418Z env:
+2026-10-24T09:32:40.8795846Z   SIGHTBREAK_TOOLS_DIR: /home/runner/work/_temp/sightbreak-control-tools
+2026-10-24T09:32:40.8796538Z   SIGHTBREAK_STATE_DIR: /home/runner/work/_temp/sightbreak-control-state
+2026-10-24T09:32:40.8797051Z   SIGHTBREAK_CONTROL_PYTHON: /home/runner/work/_temp/sightbreak-control-python/bin/python
+2026-10-24T09:32:40.8797521Z ##[endgroup]
+2026-10-24T09:32:42.1794121Z # Baseline (no defect injected): every test passes
+2026-10-24T09:36:47.5405005Z   sequence                       passed
+2026-10-24T09:36:47.5405575Z   weapon-art                     passed
+2026-10-24T09:36:47.5405828Z   audio                          passed
+2026-10-24T09:36:47.5406182Z   audio capture                  passed
+2026-10-24T09:36:47.5406477Z   audio capture (cancel)         passed
+2026-10-24T09:36:47.5406856Z   visibility                     passed
+2026-10-24T09:36:47.5407190Z   visibility (reduced motion)    passed
+2026-10-24T09:36:47.5407461Z   finish stability               passed
+2026-10-24T09:36:47.5407718Z   light separation               passed
+2026-10-24T09:36:47.5407992Z   contact                        passed
+2026-10-24T09:36:47.5408178Z 
+2026-10-24T09:36:47.5408327Z ## A5: the reload sounds play 80 dB down (the voices are muted)
+2026-10-24T09:36:51.5640904Z   audio capture                  FAILED
+2026-10-24T09:36:51.5641678Z       ERROR: unlatch on voice 0: heard at -557 ms after the cue in capture frames with its 0 ms attack, -557 ms from the run's typical offset (peak 0.000)
+2026-10-24T09:36:51.5642364Z       ERROR: extract on voice 1: heard at -557 ms after the cue in capture frames with its 19 ms attack, -577 ms from the run's typical offset (peak 0.000)
+2026-10-24T09:36:51.5643118Z       ERROR: pouch on voice 2: heard at -1115 ms after the cue in capture frames with its 0 ms attack, -1115 ms from the run's typical offset (peak 0.000)
+2026-10-24T09:36:51.5644013Z       ERROR: land on voice 3: heard at -1300 ms after the cue in capture frames with its 0 ms attack, -1300 ms from the run's typical offset (peak 0.000)
+2026-10-24T09:36:51.5645076Z       ERROR: enter on voice 0: heard at -1672 ms after the cue in capture frames with its 7 ms attack, -1679 ms from the run's typical offset (peak 0.000)
+2026-10-24T09:36:51.5646187Z       ERROR: seat on voice 1: heard at -1765 ms after the cue in capture frames with its 0 ms attack, -1765 ms from the run's typical offset (peak 0.000)
+2026-10-24T09:36:51.5646854Z 
+2026-10-24T09:36:51.5647582Z ## A6: a cancelled reload does not stop its voices (real audio, a cancel as the landing starts)
+2026-10-24T09:36:55.6383632Z   audio capture (cancel)         FAILED
+2026-10-24T09:36:55.6384241Z       ERROR: after the cancel (and 80 ms of mixer latency) every reload voice is silent (peak 0.01783)
+2026-10-24T09:36:55.6390150Z 
+2026-10-24T09:36:55.6390700Z ## A7: an unlogged reload voice plays before the first scheduled event
+2026-10-24T09:36:59.7126850Z   audio capture                  FAILED
+2026-10-24T09:36:59.7127479Z       ERROR: nothing is audible on any reload voice before the first event (peak 0.03063)
+2026-10-24T09:36:59.7131254Z 
+2026-10-24T09:36:59.7132014Z # Summary
+2026-10-24T09:36:59.7132345Z   A5   caught
+2026-10-24T09:36:59.7132617Z   A6   caught
+2026-10-24T09:36:59.7132925Z   A7   caught
+2026-10-24T09:36:59.7133385Z   3 controls: 3 caught, 0 crashed, 0 missed, 0 invalid

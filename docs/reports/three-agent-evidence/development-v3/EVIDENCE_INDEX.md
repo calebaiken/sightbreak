@@ -1,6 +1,8 @@
 # V3 evidence index
 
-**Development validation in progress; no V3 candidate is verified.**
+**Automated development candidate independently audited at `4099fac`; release and human/device/8.5 gates remain open.**
+
+See the [candidate report and exact development downloads](../../DEVELOPMENT_V3_REPORT.md).
 
 The [live progress page](../../DEVELOPMENT_V3_PROGRESS.md) records current
 dispositions. The [validation guide](../../../engineering/DEVELOPMENT_V3_VALIDATION.md)
@@ -15,14 +17,14 @@ belong to reference `701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd`, not V3.
 | `7b6a71a683ec5d1ed42d7245395c640225058e20` | First tooling/source freeze. GitHub rejected its workflow before any job ran. |
 | [Original rejection and lint correction](ci-attempts/workflow-rejected-7b6a71a/README.md) | Original failed run retained; checksum-verified actionlint rejects the old workflow and accepts the corrected expression context. Lint is not native validation. |
 | `2a026e61cabee3c66334066d45e92eb3ec6c2641` / [run 39880125007](https://github.com/calebaiken/sightbreak/actions/runs/39880125007) | **Failed.** [Independent receipt audit](ci-attempts/run-39880125007/AUDIT.md): matrix 82/83; separate twelve-condition ten-client campaign meets its recorded gates; ten audio baseline groups pass and A5/A6/A7 are caught. Actual package inspections pass, but both exported-client flows fail. These substeps do not establish candidate acceptance. |
+| `4099facb21a9242d41df79fd9e75bbbea031f2e0` / [run 40082291663](https://github.com/calebaiken/sightbreak/actions/runs/40082291663) | **Automated development scope accepted after independent receipt audit.** [Audited evidence](ci-attempts/run-40082291663/AUDIT.md): 83/83 matrix groups, separate twelve-condition ten-client campaign, 386 passing audio baseline checks and three caught mutants, verified delivery payloads and both actual exported-client flows with normal exit. Not release, human/device or 8.5 acceptance. |
 
-The frozen game otherwise retains V2 behavior, with development version metadata
-`0.3.2-dev`, build 5. No Astra PR #18–#21 runtime is part of this CI source.
-
-The **next, not yet CI-verified integration** contains qualified backend read
-batching (`88bfc51`) and additive snapshot diagnostics (`456d9be`), plus reviewed
-matrix/X11/offline-inspection repairs. Those changes are not attributed to the
-older `2a026e6` run. The live progress page records the subsequent freeze and run.
+The older `2a026e6` source contains no Astra PR #18–#21 runtime. The successful
+`4099fac` source includes qualified backend read batching (`88bfc51`) and
+additive snapshot diagnostics (`456d9be`), plus reviewed validation repairs.
+PR18 receipt recovery, PR20 input freshness, and the newer bot/art inputs remain
+excluded. Package metadata is `0.3.2-dev`, build 5; a stale `0.3.0-dev` menu label
+is an explicit open defect, not evidence of a different executable.
 
 ## Independent input decisions
 
@@ -36,7 +38,7 @@ older `2a026e6` run. The live progress page records the subsequent freeze and ru
 | Backend PR #19 mapped retention and assurance | [Mapped review and exact retained controls](backend-input-review/round2-mapped/README.md): actual responses, net-equal snapshots, direct 500-bind negative controls and imported-fixture checks support the narrow read slice. Small-workload latency regressions, eight empty tables and the missing original app capture remain explicit. |
 | Input PR #20 native component | [Frozen neutral verdict, source binding and raw attempts](input-boundary-review/REPORT.md): queued retries preserve original commands; fully acknowledged replays are rejected by the candidate. This component run did not execute Match timers, UDP, actor fire or stock-client reconnect. The separate network-key binding remains a distinct review. |
 | Snapshot PR #21 | [Outcome freeze and post-freeze binding](snapshot-observability-review/REPORT.md): diagnostic coverage improves while captured legacy projections tie. Accepted only as additive observability; reconciled observations are not every wire snapshot or consumption-time error. Default-off instrumentation overhead is unmeasured. |
-| Receipt recovery PR #18 | Held. Normal post-commit restart examples favor recovery, but separate native controls reproduce shallow success-result validation and an unpublished staging-lock leak. Source-PR feedback is not a claim of a forged backend response or a full-client exploit. |
+| Receipt recovery PR #18 | [Frozen outcome, source and native contract evidence](recovery-contract-review/REPORT.md): held. Normal post-commit restart examples favor recovery, but separate native controls reproduce shallow success-result validation and an unpublished staging-lock leak. Source-PR feedback is not a claim of a forged backend response or a full-client exploit. |
 
 Further recovery, input-freshness, backend-retention and snapshot-diagnostic
 reviews are separate slices. A neutral outcome verdict, a source binding, a
@@ -64,12 +66,17 @@ records; none substitutes for the others.
   audio and package receipts. Archive integrity is not candidate acceptance.
 - [CI repair controls and independent critique](ci-repair-followup/README.md)
   retain 67 maintained tests, 26 synthetic controller controls, four protocol/layout
-  checks and the critic's source-custody addendum. Actual Linux/X11 retry is required.
+  checks and the critic's source-custody addendum. The later successful Linux/X11
+  retry has its own exact-source audit, not a relabeling of these controls.
+- [Successful frozen Linux run and independent artifact audit](ci-attempts/run-40082291663/AUDIT.md)
+  bind source, matrix, separate campaign, actual audio, payload bytes/modes and both
+  exported-client flows. Individual network child OS exit receipts and a separate
+  serialized UI-after source snapshot were not retained; those limits are explicit.
 - [Latest source-stable retry tooling](retry-tooling-review/README.md)
-- [Pre-commit source and staged-payload custody](retry-freeze/README.md): 2,443 ledger payloads, 44 unchanged Python files and seven exact upstream source bindings; read-only checks, not another test or acceptance run.
   records **280 normal tests plus 74 optimized verifier tests**, all actual exit 0,
   and four transferred backend files' AST/upstream-byte checks. It did not run
   PostgreSQL, the backend test suite or a new native matrix.
+- [Pre-commit source and staged-payload custody](retry-freeze/README.md): 2,443 ledger payloads, 44 unchanged Python files and seven exact upstream source bindings; read-only checks, not another test or acceptance run.
 
 Each published packet has its own byte ledger and scope/omission notes. Exact
 historical bytes and failed attempts are retained. CRLF archival data is not

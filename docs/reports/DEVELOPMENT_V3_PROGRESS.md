@@ -1,6 +1,11 @@
 # V3 integration and independent validation — live progress
 
-Status: **in progress; development only; no new candidate verified**.
+Status: **automated development candidate independently audited at `4099fac`; release and human/device/8.5 acceptance remain open**.
+
+The [candidate report, exact checksums and downloads](DEVELOPMENT_V3_REPORT.md)
+refer to source `4099facb21a9242d41df79fd9e75bbbea031f2e0` and successful
+[run 40082291663](https://github.com/calebaiken/sightbreak/actions/runs/40082291663),
+not to later documentation commits.
 
 Sol owns this integration, independent QA, validation harnesses and development
 packages. Source owners retain their branches. Main and PR #11/#16 are not
@@ -23,21 +28,22 @@ including failed/discarded trials and the unresolved original cancellation failu
 | Art reconciliation on PR #16 | `79a9591350854373076e62a4707ec84edc803756` | **Held** after frozen blind comparison: clearer shade cloth, but worse normal-pickup sleeve obstruction; no overall win |
 | Native UI / research / expected-price guard | `7e41de6` / `7dd0628` / `228c382` | Already in V2; no new source change asserted |
 | Astra durable-receipt recovery, PR #18 | `7b6f379a3f8c809d0985a64e883cbadfdd78d135` | Frozen neutral three-price restart comparison favors recovery. Separate native component controls reproduce shallow success-result validation and an unpublished staging-lock leak; both findings were posted to the source PR. **Held**, not integrated |
-| Astra trade-read batching, PR #19 | `4a8e9ea73aa8b286d9f1751b0a6b485479737294` | Qualified narrow read-batching slice accepted as local `88bfc51`. Exact direct-bind and fixture-provenance assurance sources are transferred for the next freeze; combined backend validation remains pending. Not part of the `2a026e6` CI source |
+| Astra trade-read batching, PR #19 | `4a8e9ea73aa8b286d9f1751b0a6b485479737294` | Qualified narrow read-batching slice and exact direct-bind/fixture-provenance assurance sources are included in audited `4099fac`. Not part of the older failed `2a026e6` source; not a general latency or backend-safety claim |
 | Astra input freshness, PR #20 | `f3ceaad98e089aa393c7f5fa650a52695094d979` | Frozen neutral network verdict favors the correction. Independently bound native component controls preserve queued retries and reject fully acknowledged replays; released network-key binding and integration decision remain pending |
-| Astra prediction observability, PR #21 | `0fbce120d8c17db58596d280f7d8401ab2aa0937` | Accepted locally as `456d9be` for **additive observability only** after frozen neutral and 830-check source binding. Legacy projections tie; no prediction-accuracy, transport or performance claim |
+| Astra prediction observability, PR #21 | `0fbce120d8c17db58596d280f7d8401ab2aa0937` | Included in audited `4099fac` for **additive observability only** after frozen neutral and 830-check source binding. Legacy projections tie; no prediction-accuracy, transport or performance claim |
 
-The published **74/74 matrix**, separate **12/12 ten-client campaign**, and
-exported-client flows are **V2 results**, not V3 results. They must be repeated
-on a clean frozen V3 commit before any corresponding V3 claim.
+The historical **74/74 matrix**, separate **12/12 ten-client campaign**, and
+exported-client flows remain **V2 results**, not V3 results. The new V3
+**83/83 matrix**, separate **12/12 campaign** and exported-client flows have
+their own exact-source receipts and independent audit below.
 
 ## Active slices
 
 1. Bot input independently reproduced and blocked. [Exact-head source review](https://github.com/calebaiken/sightbreak/pull/14#pullrequestreview-5576455853) and [compact raw evidence](three-agent-evidence/development-v3/ai-input-review/REPORT.md) are published. External helper aliases are diagnostics, not working-match adapters or a measured integration win.
 2. Graphics verdict frozen before mapping: 39 randomized matched pairs and six chronological sheets. [Published source-bound evidence](three-agent-evidence/development-v3/graphics-input-review/REPORT.md) finds candidate `79a9591` loses normal-pickup composition to V2 despite clearer shade cloth; the whole input is held. The conspicuous calm magazine entry belongs to the **old baseline**, not the candidate. [A separate corrected PR binding](three-agent-evidence/development-v3/graphics-pr-binding/README.md) verifies eleven visual blobs against the real PR #2 head without rewriting the packet's invalid-token failure. Separate incomplete continuity tests are not an acceptance claim.
 3. Integration provenance/process/HUD corrections were frozen at `7b6a71a683ec5d1ed42d7245395c640225058e20` for isolated CI. Critics reproduced late-descendant false-success in the matrix, export watchdog and artifact verifier; shared pre-launch containment now rejects it while retaining actual root exits. The campaign's real CPython control also rejects the escape. [Retained before/after process controls](three-agent-evidence/development-v3/process-boundary-controls/README.md) include the failures and corrected results. [The latest serial receipts](three-agent-evidence/development-v3/pre-freeze-tooling-review/README.md) retain the failed OCR cleanup attempt and its contained-worker correction. Exceptional Linux supervisor-death cleanup remains explicitly unverified and fails closed; it is not claimed to recover every detached descendant. Passing tooling controls are not native campaign results.
-4. Freeze the integration commit, run the full maintained matrix and separate twelve-condition ten-client campaign, then export and independently inspect the actual packaged bytes and executable entry points.
-5. Run completion-driven exported network and living-player offline input flows. Publish exact source, all retained attempts, checksums, independent critique and development artifacts. Source defects return to their source PR; no runtime claim precedes a new frozen-source run.
+4. Completed for `4099fac`: full maintained matrix, separate twelve-condition ten-client campaign, exports and independent inspection of actual packaged bytes and executable entry points. This is automated development scope, not release acceptance.
+5. Both completion-driven exported-client flows passed on that source. Publish exact source, retained failures, checksums, independent critique and development artifacts. PR18 contract findings remain on their source PR; any runtime correction needs a new freeze and run.
 
 ## Frozen-source CI attempts
 
@@ -45,16 +51,17 @@ on a clean frozen V3 commit before any corresponding V3 claim.
 - The narrow correction declares the three isolated audio paths in a runtime step through `$GITHUB_ENV`, using `$RUNNER_TEMP`. Checksum-verified official **actionlint 1.7.12** rejects the original source (exit 1) and accepts the corrected workflow (exit 0). This is source validation only, not a CI/native pass. [Original rejection and before/after lint evidence](three-agent-evidence/development-v3/ci-attempts/workflow-rejected-7b6a71a/README.md) are retained.
 - [Run 39880125007](https://github.com/calebaiken/sightbreak/actions/runs/39880125007), exact source `2a026e61cabee3c66334066d45e92eb3ec6c2641`: **completed with failure**. [Independent receipt audit](three-agent-evidence/development-v3/ci-attempts/run-39880125007/AUDIT.md) verified all three transport digests, 2,714 outer archive members, source digests and validation inventory. Matrix results are **82/83 groups passing**; the sole failure is the Linux unit fixture's global `subprocess` mock reaching `platform.platform()`. This is not a Godot gameplay failure, but the full matrix still fails. The separate **12 × 10-client × 18-second** campaign meets its frozen harness/data gates; individual child exit-code receipts were not retained. The disposable audio run passed **ten baseline groups / 386 checks** and genuinely caught A5/A6/A7 through eight expected assertion failures, with restoration proof retained.
 - The same audit checked all 61 members of the three inner package ZIPs, including hashes, sizes, modes and receipt identities. Packaged-build inspections and actual extracted Linux ELF / console-wrapper smoke exits passed their recorded gates. **Both full exported-client flows failed**: network firing/reload reached the settled frame but normal close exceeded the 240.141-second watchdog; offline reload inspection correctly rejected a dead/spectating player after 48.805 seconds. Screenshots and OCR agree. Substep successes do not make either flow or the candidate pass.
+- [Run 40082291663](https://github.com/calebaiken/sightbreak/actions/runs/40082291663), exact source `4099facb21a9242d41df79fd9e75bbbea031f2e0`: **all three jobs succeeded; independent artifact audit supports automated development-candidate scope**. [Full scoped audit](three-agent-evidence/development-v3/ci-attempts/run-40082291663/AUDIT.md): **83/83 matrix groups**, separate **12/12 × ten clients × 18 seconds**, ten audio baseline groups / **386 passing checks**, three genuinely caught mutations and source restoration, all delivery bytes/modes/receipts, and both actual exported-client flows. The network flow exits normally in 36.653 seconds; the inspection-paused offline flow exits normally in 50.191 seconds with positive health and ammunition conservation. Exact checksums/downloads and evidence limits are in the candidate report. This does not rewrite either earlier failure.
 
-### Repairs awaiting the next frozen Linux run
+### Repairs exercised by the successful frozen Linux retry
 
 [Retained repair controls and independent critique](three-agent-evidence/development-v3/ci-repair-followup/README.md) cover the isolated matrix mock, pre-launch X11 close-atom setup with advertised-protocol validation, and ordinary offline Field Menu pauses while OCR inspects the original live HUD frames. The local 19 matrix, 14 UI, six HUD and 28 export-flow tests all exit zero. The critic additionally ran 26 synthetic controller controls and four protocol/layout checks without finding a scoped false-pass blocker. Its HEAD-drift addendum is retained: all 22 reviewed source hashes stayed unchanged, but this was not an exact-new-commit native campaign.
 
-These repairs still require actual Linux/X11 execution. The offline flow is now explicitly **inspection-paused**, not continuous play; positive health, real input, ammunition conservation and normal clean exit remain mandatory. The source-level close diagnosis is not presented as a proven fix before the retry. No failed artifact or result is overwritten.
+The successful `4099fac` Linux/X11 receipts now corroborate pre-created and advertised close atoms, normal exit, and rendered offline pause proofs. The offline flow is explicitly **inspection-paused**, not continuous play; positive health, real input and ammunition conservation remain mandatory. No failed artifact or result is overwritten.
 
 [Pre-commit custody receipts](three-agent-evidence/development-v3/retry-freeze/README.md) verify all 2,443 published payloads in six completed packets against both physical and staged bytes. All 44 Python files still match the latest 354-execution serial run; seven accepted upstream files match exact staged Git bytes. These are source/publication audits, not another test run or frozen Linux acceptance.
 
-The next freeze also includes the qualified backend read slice and bounded snapshot observability. The latter records reconciled observations, not every accepted wire snapshot or consumption-time error. Instrumentation runs even with prediction disabled; its overhead is unmeasured. Its new UID was generated by the checksum-verified official engine in an isolated one-script import, not a full-game validation.
+The successful freeze includes the qualified backend read slice and bounded snapshot observability. The latter records reconciled observations, not every accepted wire snapshot or consumption-time error. Instrumentation runs even with prediction disabled; its overhead is unmeasured. Its new UID was generated by the checksum-verified official engine in an isolated one-script import; the subsequent full-game validation is separately recorded in this frozen run.
 
 ## Pre-freeze control receipts
 
@@ -73,8 +80,8 @@ These are tooling controls on the uncommitted integration, **not a verified V3 c
 | Final serial tooling batch | `final-tooling-serial-20261019T195617Z`: eight suites / 161 tests, all actual exit 0. Pre-freeze pure/synthetic controls only; artifact-verifier and audio suites are separate |
 | Latest source-stable serial retry | `pre-freeze-tooling-20261019/attempt-20261019T201340147085Z`: ten normal suites / **272 tests**, plus **74 optimized verifier tests**, all actual exit 0 with unchanged Python source hashes. Its preceding OCR cleanup failure is retained. These 346 test executions are pure/synthetic tooling controls, not 346 native groups |
 | Post-repair source-stable serial retry | [Retained latest receipts](three-agent-evidence/development-v3/retry-tooling-review/README.md), attempt `20261024T091611731546Z`: ten normal suites / **280 tests**, plus **74 optimized verifier tests**, all actual exit 0 with unchanged Python source hashes. Four transferred backend assurance files also pass AST and exact Git-normalized source checks; no PostgreSQL/backend test run is claimed |
-| Last bounded critic / test-only follow-up | [Original failing reproduction and corrected control](three-agent-evidence/development-v3/freeze-followup/README.md): isolate the Windows mock from shared POSIX pathlib. The existing unit passes with POSIX-initialized stdlib on Windows; all 17 matrix-process tests exit 0. Production Python is unchanged from the serial retry; actual Linux execution remains pending |
-| Audio-control harness | `negative-audio-harness-20261019T195154884107Z`: 32 pure/mocked tests exit 0; an earlier CRLF-control failure is retained. Independent source/contract critique ran those 32 tests plus nine guarded probes without finding a scoped false-pass blocker. The later `2a026e6` native captures are audited above; the next integration still needs its own frozen run |
+| Last bounded critic / test-only follow-up | [Original failing reproduction and corrected control](three-agent-evidence/development-v3/freeze-followup/README.md): isolate the Windows mock from shared POSIX pathlib. The existing unit passes with POSIX-initialized stdlib on Windows; all 17 matrix-process tests exit 0. These pre-freeze controls remain distinct from the later actual Linux matrix |
+| Audio-control harness | `negative-audio-harness-20261019T195154884107Z`: 32 pure/mocked tests exit 0; an earlier CRLF-control failure is retained. Independent source/contract critique ran those 32 tests plus nine guarded probes without finding a scoped false-pass blocker. Actual `2a026e6` and `4099fac` native captures are separately audited above |
 | Backend neutral packet | Verdict frozen at `2026-10-19T19:46:36.4321805Z`; report SHA-256 `f76906b5b3ee735d65eedef6bf23998d274a614778fb9e76c196ba39957bfdfa`. Prefers K for statement counts only; owner disclosed K=candidate after the freeze. No general latency/state-safety acceptance. [Missing-receipt request](https://github.com/calebaiken/sightbreak/pull/19#issuecomment-6275871795) and [source-assurance feedback](https://github.com/calebaiken/sightbreak/pull/19#issuecomment-6275997901) remain open |
 
 PR #19 subsequently retained actual canonical response bodies and full-table
@@ -93,7 +100,7 @@ shipping read-batching change was cherry-picked locally as `88bfc51`. Its direct
 500-bind limit and actual imported-fixture guards were transferred from the
 exact reviewed assurance commits; an independent AST and Git-normalized byte
 check passes for all four transferred files, without executing backend tests.
-Combined backend validation belongs to the next exact-source freeze.
+The later combined `4099fac` matrix passes on its own frozen source.
 This does not make the earlier CI source include it
 or turn descriptive timings into a production claim.
 
@@ -119,7 +126,8 @@ still retained.
 - Windows checkout uses `core.autocrlf=true`. The historical Linux **on-disk**
   shipping-content digest is not expected to equal a CRLF checkout digest;
   record actual bytes and Git tree separately, and do not claim a hash match.
-- Exact export identity now includes commit, game tree, physical runtime bytes and validation-source bytes. Re-attesting old exports, reusing evidence directories and packaging altered payloads/modes are rejected. These corrections still require the final frozen native/CI validation.
+- Exact export identity includes commit, game tree, physical runtime bytes and validation-source bytes. Re-attesting old exports, reusing evidence directories and packaging altered payloads/modes are rejected. The successful `4099fac` source and package identities were independently reconciled; historical failures remain retained.
+- Confirmed open presentation defect: the verified package metadata is `0.3.2-dev`, build 5, but the actual menu still renders a hard-coded `0.3.0-dev` label. Do not silently edit the tested source or call the label correct; a correction requires a new source freeze.
 - Portable native Windows launching and pre-launch outer-runner containment are implemented. Standalone cleanup cannot prove ownership retroactively after a parent exits and reports that uncertainty as failure. Linux containment requires an affirmative cleanup receipt; exceptional supervisor death can still leave detached descendants outside recoverable ownership, so it cannot pass or be called verified cleanup. Linux `/proc` resource measurements are explicitly unavailable/null on Windows, never fabricated zero measurements. Bash/X11-only matrix groups remain unavailable locally and require isolated Linux CI.
 - Shared-host memory pressure was reported by Astra. No new local ten-client campaign or editor import is being started concurrently; native bulk validation/builds are assigned to isolated CI. Existing failed/allocation-error attempts remain evidence, not gameplay regressions.
 
