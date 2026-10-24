@@ -37,6 +37,17 @@ def encoded(rows):
     return b'\n'.join((reference.PREFIX+json.dumps(r,sort_keys=True,separators=(',',':'),allow_nan=False)).encode() for r in rows)+b'\n'
 
 
+def declared_binary_records():
+    payload=json.loads((ROOT/'tools/fov_math_reference'/reference.BINARY_CASES_NAME).read_text())
+    digest=reference.sha((ROOT/'tools/fov_math_reference'/reference.BINARY_CASES_NAME).read_bytes())
+    rows=declared_records();rows[0].update(schema=2,cases_sha256=digest,input_codec=reference.INPUT_CODEC,
+                                        canonical_cases_sha256=reference.CANONICAL_CASES_SHA256)
+    for row,case in zip(rows[1:-1],payload['cases']):
+        row.update(ordinal=case['ordinal'],transport_sha256=case['transport_sha256'],decoded_input64_le=copy.deepcopy(case['input64_le']))
+    rows[-1]['cases_sha256']=digest
+    return rows
+
+
 class CorpusAndSchemaControls(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
@@ -191,7 +202,7 @@ class FakeStreams:
 
 class SupervisorControls(unittest.TestCase):
     @classmethod
-    def setUpClass(cls):cls.raw=encoded(declared_records())
+    def setUpClass(cls):cls.raw=encoded(declared_binary_records())
 
     def trial(self,*,finish=.1,code=0,survivor=False,overflow=False,stderr=b'',observer_error=False,bad_affinity=False,preflight_error=False):
         clock=FakeClock();kernel=FakeKernel(survivor=survivor,observer_error=observer_error);calls=[]

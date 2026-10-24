@@ -24,7 +24,10 @@ WHOLE_SECONDS = 60.
 CLEANUP_SECONDS = 5.
 STREAM_LIMITS = {'stdout': 8*1024*1024, 'stderr': 1024*1024}
 COMPONENT = ['scripts/fov_math_reference.py','scripts/acquire_fov_math_reference.py','scripts/test_fov_math_reference.py',
-             'tools/fov_math_reference/project.godot','tools/fov_math_reference/reference.gd','tools/fov_math_reference/cases.json']
+             'tools/fov_math_reference/project.godot','tools/fov_math_reference/reference.gd','tools/fov_math_reference/cases.json',
+             'scripts/test_fov_binary_input.py','tools/fov_math_reference/cases-binary64-v2.json',
+             'scripts/fixtures/fov_actual_input_roundtrip_550.json','scripts/fixtures/fov_binary_protected_segments.json']
+CASES_NAME = reference.BINARY_CASES_NAME
 
 
 def require(value, message):
@@ -284,18 +287,18 @@ def acquire(output,expected_source,*,clock=time.monotonic,sleep=time.sleep,proce
         binding=source_binding(expected_source,deadline=deadline,clock=clock);report['source']=binding
         require(digest(ENGINE)==ENGINE_SHA256,'pinned native engine checksum mismatch')
         require(clock()<deadline,'preparation exceeded whole deadline')
-        payload=json.loads((PROJECT/'cases.json').read_text());reference.validate_cases(payload)
+        payload=json.loads((PROJECT/CASES_NAME).read_text());reference.validate_binary_cases(payload)
         target=output/'project';target.mkdir()
-        for name in ('project.godot','reference.gd','cases.json'):shutil.copyfile(PROJECT/name,target/name)
-        payload_hash=reference.sha((target/'cases.json').read_bytes());program_hash=digest(target/'reference.gd')
-        require(payload_hash==binding['files']['tools/fov_math_reference/cases.json'] and program_hash==binding['files']['tools/fov_math_reference/reference.gd'],'copied payload mismatch')
+        for name in ('project.godot','reference.gd',CASES_NAME):shutil.copyfile(PROJECT/name,target/name)
+        payload_hash=reference.sha((target/CASES_NAME).read_bytes());program_hash=digest(target/'reference.gd')
+        require(payload_hash==binding['files']['tools/fov_math_reference/'+CASES_NAME] and program_hash==binding['files']['tools/fov_math_reference/reference.gd'],'copied payload mismatch')
         env=os.environ.copy();isolated={}
         for key,part in [('XDG_DATA_HOME','data'),('XDG_CONFIG_HOME','config'),('XDG_CACHE_HOME','cache')]:
             path=output/'user'/part;path.mkdir(parents=True);env[key]=str(path);isolated[key]=str(path)
         report['isolated_user_paths']=isolated
         require(not set(isolated)&{'HOME','CODEX_HOME'},'unsupported environment mutation')
         command=[str(ENGINE),'--headless','--path',str(target),'--script',str(target/'reference.gd'),'--',
-                 '--cases='+str(target/'cases.json'),'--expected-cases-sha256='+payload_hash]
+                 '--cases='+str(target/CASES_NAME),'--expected-cases-sha256='+payload_hash]
         report['command']=command
         kernel=kernel or LinuxKernel();kernel.enable_subreaper()
         require(clock()<deadline,'prelaunch exceeded whole deadline')
@@ -323,9 +326,9 @@ def acquire(output,expected_source,*,clock=time.monotonic,sleep=time.sleep,proce
         require(code==0,'native math process failed')
         stdout=(output/'stdout.log').read_bytes();stderr=(output/'stderr.log').read_bytes()
         require(not stderr and not failed(stdout.decode('utf-8',errors='strict')),'native strict log failure')
-        report['math']=reference.parse_output(stdout,payload,cases_sha256=payload_hash,program_sha256=program_hash)
+        report['math']=reference.parse_binary_output(stdout,payload,cases_sha256=payload_hash,program_sha256=program_hash)
         require(source_binding(expected_source,deadline=deadline,clock=clock)==binding and digest(ENGINE)==ENGINE_SHA256,'source or engine changed during math acquisition')
-        require(all(digest(target/name)==binding['files']['tools/fov_math_reference/'+name] for name in ('project.godot','reference.gd','cases.json')),'copied payload changed during acquisition')
+        require(all(digest(target/name)==binding['files']['tools/fov_math_reference/'+name] for name in ('project.godot','reference.gd',CASES_NAME)),'copied payload changed during acquisition')
         require(clock()<deadline,'validation exceeded whole acquisition deadline')
         report['passed']=True
     except BaseException as error:
