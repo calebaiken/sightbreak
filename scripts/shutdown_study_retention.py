@@ -5,7 +5,9 @@ lossless byte maxima. Old observed sizes are evidence, never future maxima.
 """
 import hashlib
 import json
+import os
 from pathlib import Path
+import stat
 import subprocess
 import tempfile
 import zipfile
@@ -34,21 +36,54 @@ def sha(value):
     return hashlib.sha256(value).hexdigest()
 
 
+def physical_source_file(path, expected, mode, *, windows=False):
+    """Compare real checkout bytes; Git index flags never establish this proof."""
+    path=Path(path)
+    before=path.lstat()
+    require(stat.S_ISREG(before.st_mode) and not path.is_symlink(),'source must be a regular physical file: '+str(path))
+    require(mode in ('100644','100755'),'unsupported source mode: '+mode)
+    actual=path.read_bytes()
+    after=path.lstat()
+    require((before.st_dev,before.st_ino,before.st_size,before.st_mtime_ns,before.st_mode)==
+            (after.st_dev,after.st_ino,after.st_size,after.st_mtime_ns,after.st_mode),
+            'source changed during physical read: '+str(path))
+    conversion='none'
+    if actual!=expected:
+        # Only ordinary Windows text checkout conversion is allowed. No Git
+        # attribute/filter command can redefine the expected frozen bytes.
+        require(windows and b'\0' not in expected and b'\r' not in expected,
+                'physical source bytes differ: '+str(path))
+        expected.decode('utf-8',errors='strict')
+        require(actual==expected.replace(b'\n',b'\r\n'),'physical source bytes differ: '+str(path))
+        conversion='Windows LF to CRLF'
+    measured_mode=None if windows else ('100755' if before.st_mode & stat.S_IXUSR else '100644')
+    require(measured_mode is None or measured_mode==mode,'physical source executable mode differs: '+str(path))
+    return dict(bytes=len(actual),sha256=sha(actual),canonical_sha256=sha(expected),
+                canonical_mode=mode,physical_mode=measured_mode,checkout_conversion=conversion,
+                mode_scope='NTFS executable bits not measured' if windows else 'POSIX owner executable bit')
+
+
 def source_binding(expected, root=ROOT):
     require(type(expected) is str and len(expected)==40 and all(c in '0123456789abcdef' for c in expected),'exact source required')
     def git(*args):
         return subprocess.check_output(['git',*args],cwd=root,timeout=20)
     require(git('rev-parse','HEAD').decode().strip()==expected,'source HEAD mismatch')
     require(not git('status','--porcelain','--untracked-files=all'),'source must be fully clean')
-    records=[]
-    for line in git('ls-tree','-r',expected).decode().splitlines():
-        identity,path=line.split('\t')
+    records=[];physical={}
+    for line in git('ls-tree','-r','-z',expected).split(b'\0'):
+        if not line:continue
+        identity,path=line.split(b'\t',1)
+        identity,path=identity.decode('ascii'),path.decode('utf-8')
         if not path.startswith('docs/'):
+            mode,kind,blob=identity.split()
+            require(kind=='blob','unexpected source object type')
+            physical[path]=physical_source_file(Path(root)/path,git('show',expected+':'+path),mode,windows=os.name=='nt')
             records.append(dict(path=path,identity=identity))
-    # Git identities also bind absent sparse source; materialized model bytes must
-    # agree with that same tree (Windows text filters may produce CRLF).
+    # Every required source is materialized and checked, including model sources.
+    # A sparse Git object alone is insufficient to authorize executing that path.
     models={path:sha(git('show',expected+':'+path)) for path in MODEL_PATHS}
-    return dict(commit=expected,non_doc_union_sha256=sha(canonical(records)),non_doc_paths=len(records),model_sources=models)
+    return dict(commit=expected,non_doc_union_sha256=sha(canonical(records)),non_doc_paths=len(records),
+                model_sources=models,physical_sources=physical)
 
 
 def fixed_model():
