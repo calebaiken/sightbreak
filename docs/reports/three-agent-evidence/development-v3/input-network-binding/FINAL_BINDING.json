@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "task": "Separate post-freeze large-network source binding, no revision of earlier frozen outcome/component packets",
+  "release_commit": "a78a0dc927fc32de33614ff5339e15750b04aa2b",
+  "mapping_sha256": "1d5b1cbed67c7fb94c2afe72c64b52b44c1b0915720cd0ddbc21151833709709",
+  "mapping_bytes": 212748,
+  "source_mapping": {
+    "H_executed": "77f204083ab5bea4dc9149d3179daf540a994de4",
+    "H_runtime": "f3ceaad98e089aa393c7f5fa650a52695094d979",
+    "T_executed": "701ce2c4d7f8b2872cf1fefa64cb6edd0cd1a3fd"
+  },
+  "recommendation": "Accept the narrow source-qualified fully-ACKed-replay freshness guard for integration consideration, preserving existing safeguards; main retains integration decision and must run new combined-source CI. Not release/full-network acceptance.",
+  "evidence_binding": {
+    "neutral_zip_payloads": 362,
+    "zip_members": 363,
+    "original_Git_counterparts_checked": 316,
+    "source_artifact_objects_checked": 11,
+    "source_artifact_disk_hashes_exact": 2,
+    "source_artifact_disk_hashes_uniform_CRLF": 9,
+    "H_run_input_hash_exact_mixed_newline_reproduction": {
+      "canonical_LF_lines": [
+        33,
+        41
+      ],
+      "other_line_endings": "CRLF",
+      "bytes": 3547,
+      "sha256": "6d344ac7892ed4f3d22003a2ca8e0a2d0813bceaa804aeff1c8d2ca7c2559c61"
+    },
+    "T_run_input_hash_uniform_CRLF": {
+      "bytes": 3264,
+      "sha256": "25e60f86e3d9d05b5e84a7f258f2775e98fbe1814a429176f417dd9db3bda19d"
+    },
+    "unexplained_checked_source_byte_mismatches": [],
+    "H_runtime_scripts_tree_identical_to_executed": "329f7816683e3c885521f50a99d6106e30bd1ba4",
+    "H_runtime_game_differences_only": [
+      "game/tests/input_freshness_probe.gd",
+      "game/tests/input_freshness_probe.gd.uid"
+    ],
+    "retention_inventory_hashes_verified": 7,
+    "retention_historical_content_blobs_not_reread": 369,
+    "release_verification_independently_reproduced": true
+  },
+  "source_vs_runtime_scope": "InputStream guard/caller/peer lifecycle clocks inspected statically; historical actual Match row/log outcomes remain frozen unsigned author-run evidence. No engine execution, no new network run, no combined-source CI.",
+  "gates_remain": [
+    "source-qualified narrow change only, not broad PR20 integration",
+    "simulation-time silence >0.3s not wall stop guarantee",
+    "30s wall expiry callback bracket, origin not retained",
+    "120-command cap still freezes fresh intent until ACK recovery",
+    "no higher-sequence proof of human presence",
+    "prediction remains default off; record-hit-history/live rewind off; protocol6",
+    "privacy counter and focused tests not retained-wire payload proof",
+    "four cleanup structures empty, not all actor ACK/input/activity/simulation state cleared",
+    "snapshot recovery trace ends8s, no30s healthy soak",
+    "replay uses modified test client early return; no stock-client long-blackout recovery proof",
+    "historical controller exit0 is not authenticated native execution or combined-source CI",
+    "previous failed/superseded attempts remain in pinned indices; no all-attempts success claim"
+  ],
+  "artifact_resolution_limit": "a78 publishes mapping+verification; counterparts are independently fetched from exact1627 evidence commit referenced by that mapping, not falsely claimed present at a78 paths.",
+  "authenticity_limit": "Hashes and local chronology bind bytes and source claims, not signed OS execution, imported cache identity, trusted timestamps, or observer-independent capture.",
+  "prior_frozen_network_and_component_evidence_not_modified": true,
+  "new_engine_or_campaign_runs": 0,
+  "new_combined_source_CI_pass": false
+}

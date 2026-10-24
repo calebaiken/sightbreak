@@ -149,6 +149,9 @@ exceptional path.
   original failed native economy test separately from its DNS-calibrated fixture.
 - PR20 input freshness remains excluded from this source. Its separate native
   component and neutral network evidence must not be credited to this run.
+  The subsequently completed [released-source binding](three-agent-evidence/development-v3/input-network-binding/REPORT.md)
+  supports consideration of the narrow guard for a future freeze, not a new
+  combined-source CI pass or a change to this candidate.
 - The newer bot and graphics inputs remain held. The graphics comparison is
   mixed, including a normal-reload composition regression; it did not clear the
   repository's seven-category 8.5 bar.

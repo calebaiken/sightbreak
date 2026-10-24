@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "assessment_scope": "blinded outcome critique before identity or implementation-source inspection",
+  "sample_labels": [
+    "sample-H",
+    "sample-T"
+  ],
+  "completed_pairs": 32,
+  "recorded_peer_processes": 64,
+  "recorded_focused_gates": 22,
+  "raw_rows": 55743,
+  "manifest_payloads_verified": 362,
+  "zip_members_verified": 363,
+  "cases_with_timeline_or_summary_difference": [],
+  "case_criteria_counts": {
+    "sample-H": {
+      "travel_window_below_0_001_m_and_mps": {
+        "pass": 16,
+        "fail": 0,
+        "not_applicable": 0
+      },
+      "simulation_silence_clear_policy": {
+        "pass": 8,
+        "fail": 0,
+        "not_applicable": 8
+      },
+      "ack_to_x_rest_below_350_ms": {
+        "pass": 8,
+        "fail": 0,
+        "not_applicable": 8
+      },
+      "later_signed_authority_left_below_minus_0_9": {
+        "pass": 12,
+        "fail": 0,
+        "not_applicable": 4
+      },
+      "standard_shots_and_ammo_preserved": {
+        "pass": 12,
+        "fail": 0,
+        "not_applicable": 4
+      },
+      "replay_no_activity_extension_and_retirement": {
+        "pass": 4,
+        "fail": 0,
+        "not_applicable": 12
+      },
+      "snapshot_queued_tail_and_recovery_preserved": {
+        "pass": 4,
+        "fail": 0,
+        "not_applicable": 12
+      }
+    },
+    "sample-T": {
+      "travel_window_below_0_001_m_and_mps": {
+        "pass": 8,
+        "fail": 8,
+        "not_applicable": 0
+      },
+      "simulation_silence_clear_policy": {
+        "pass": 0,
+        "fail": 8,
+        "not_applicable": 8
+      },
+      "ack_to_x_rest_below_350_ms": {
+        "pass": 0,
+        "fail": 8,
+        "not_applicable": 8
+      },
+      "later_signed_authority_left_below_minus_0_9": {
+        "pass": 12,
+        "fail": 0,
+        "not_applicable": 4
+      },
+      "standard_shots_and_ammo_preserved": {
+        "pass": 12,
+        "fail": 0,
+        "not_applicable": 4
+      },
+      "replay_no_activity_extension_and_retirement": {
+        "pass": 0,
+        "fail": 4,
+        "not_applicable": 12
+      },
+      "snapshot_queued_tail_and_recovery_preserved": {
+        "pass": 4,
+        "fail": 0,
+        "not_applicable": 12
+      }
+    }
+  },
+  "retained_failure_index_entries": 7,
+  "authenticity": "SHA256 binds supplied bytes, not authorship or native/OS execution; controller exit 0 not authenticated execution",
+  "all_human_device_protocol6_defaultoff_rewindoff_gates_remain": true,
+  "neutral_winner": "sample-H",
+  "tie": false,
+  "comparison_kind": "conditional historical measured safety-outcome advantage, not generic speed/latency/throughput or release approval",
+  "release_approval": false,
+  "full_safety_bar_established": false,
+  "execution_authenticated": false,
+  "ties_on_observed_metrics": [
+    "healthy steady and short input-gap motion windows",
+    "snapshot/ACK/fresh-direction recovery within eight-second observation",
+    "standard two fire shots and ammo 15 to 13",
+    "recorded privacy/protocol/default-off-mode prediction/live-rewind counters",
+    "shared focused lifecycle/authority/privacy/welcome/alias checks, subject to incomplete log detail"
+  ],
+  "coverage_gaps": [
+    "Historical recorder evidence only: pinned bytes, logs, and awaited process receipts are not signed OS/native-execution attestation; controller exit 0 does not authenticate execution.",
+    "No PCAP, datagram payload archive, send/receive timestamp list, ENet retransmission trace, or fixed replay batch bytes; no packet-by-packet replay/parser/privacy audit is possible.",
+    "Server relative-clock origin start_msec is absent. Expiry is callback-bracketed around 30 seconds, not an exact millisecond-age boundary proof.",
+    "Simulation silence policy is strict >0.3 simulation seconds, quantized at approximately 1/60 s. It is not a 300 ms observed-wall stop guarantee.",
+    "Only x position/velocity and move_x are captured. No grounded flag, y/z motion, full-vector stop, rendered output, real device input, or human-feel measurements.",
+    "Only two repeats for each deterministic application-impairment scenario and prediction mode, loopback, fixed run order and no randomized seed; no Internet-loss/reordering/jitter/distribution or statistical reliability claim.",
+    "Variable pre-observation warmup lacks role spawn/ready/latch timestamps; controller durations and startup offsets are not comparable performance outcomes.",
+    "Snapshot-gap traces end at eight seconds, only about 2.95-2.98 seconds after first accepted snapshot resumes. No post-recovery 30-second healthy-session retention soak.",
+    "The 120-command history cap still stops fresh command production until ACK processing resumes; neutralization is safer than stale movement but does not recover intent during the gap.",
+    "Replay client sequence and pending remain frozen after about 2 seconds even while accepted snapshot counters rise. This is not a normal fully processing healthy client or a duplicate-plus-continuing-fresh-intent mixed traffic test.",
+    "Authority ACK equals the observed client maximum sequence in each replay, supporting fully-ACKed replay interpretation. Missing replay bytes prevent independent proof of the exact batch structure/contents.",
+    "Queued-tail consumption and recovery are observed, with zero rejection before cap sequence ACK; this does not exhaustively prove retry preservation under loss, reorder, sequence jumps, malformed batches, or adversarial traffic.",
+    "Higher valid sequences do not authenticate human presence; indefinite valid-sequence synthetic input and exhaustive adversarial sequence cases are not established.",
+    "Fire latch, shot, ammo, release/press outcomes are captured. Jump/grenade/smoke/utility edges are not individually exposed in live rows; the three-check focused lifecycle log cannot alone prove all edge paths.",
+    "Privacy reports zero violations and the focused test logs 55 checks, but raw snapshot payloads are unavailable. Absence of a measured leak is not an independent comprehensive privacy proof.",
+    "Protocol 6, requested/default-off-mode prediction, and zero active hit-history frames match reports/receipts. Shipped configuration and implementation invariants were not inspected in this blinded outcome phase.",
+    "Focused input-stream coverage counts differ (20 versus 17). No assertion-by-assertion equivalence or causal attribution can be established without later source review. Raw counts, other checks, and expected credential denials are retained.",
+    "Seven prior unsuccessful/superseded attempt indices remain, including a native allocation crash before admission and a startup JSON/nil-access error. Their original detailed artifacts are outside this neutral packet; do not erase failures or infer an all-attempts success rate.",
+    "Source-cleanliness and unchanged-identity receipts are retained claims, not independent custody/source-identity verification. No identity map or implementation/fixture source was semantically inspected."
+  ],
+  "all_source_identities_unknown": true,
+  "source_and_mapping_review_deferred_until_after_this_freeze": true
+}
