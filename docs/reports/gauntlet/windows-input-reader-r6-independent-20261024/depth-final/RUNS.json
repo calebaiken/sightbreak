@@ -1,0 +1,226 @@
+{
+  "source": "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024",
+  "output": "/workspace/reviews/windows-input-reader-r6-independent-20261024/docs/reports/gauntlet/windows-input-reader-r6-independent-20261024/depth-final",
+  "cpu_affinity": [
+    4
+  ],
+  "records": [
+    {
+      "group": "queue-models",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-input-reader-r6-independent-20261024/docs/reports/gauntlet/windows-input-reader-r6-independent-20261024/controls/queue_oracle.py",
+        "--prototype",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/analyze_input_consumption.py",
+        "--output",
+        "/workspace/reviews/windows-input-reader-r6-independent-20261024/docs/reports/gauntlet/windows-input-reader-r6-independent-20261024/depth-final/queue-models"
+      ],
+      "exit": 0
+    },
+    {
+      "group": "aggregate-models",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-input-reader-r6-independent-20261024/docs/reports/gauntlet/windows-input-reader-r6-independent-20261024/controls/aggregate_oracle.py",
+        "--prototype",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/analyze_input_consumption.py",
+        "--output",
+        "/workspace/reviews/windows-input-reader-r6-independent-20261024/docs/reports/gauntlet/windows-input-reader-r6-independent-20261024/depth-final/aggregate-models"
+      ],
+      "exit": 0
+    },
+    {
+      "group": "generated-histories",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-input-reader-r6-independent-20261024/docs/reports/gauntlet/windows-input-reader-r6-independent-20261024/controls/generated_histories.py",
+        "--prototype",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/analyze_input_consumption.py",
+        "--output",
+        "/workspace/reviews/windows-input-reader-r6-independent-20261024/docs/reports/gauntlet/windows-input-reader-r6-independent-20261024/depth-final/generated-histories"
+      ],
+      "exit": 0
+    },
+    {
+      "group": "causal-cases",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-input-reader-r6-independent-20261024/docs/reports/gauntlet/windows-input-reader-r6-independent-20261024/controls/causal_cases.py",
+        "--source",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024",
+        "--output",
+        "/workspace/reviews/windows-input-reader-r6-independent-20261024/docs/reports/gauntlet/windows-input-reader-r6-independent-20261024/depth-final/causal-cases"
+      ],
+      "exit": 0
+    },
+    {
+      "group": "retained-controls",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-input-reader-r6-independent-20261024/docs/reports/gauntlet/windows-input-reader-r6-independent-20261024/controls/replay_controls.py",
+        "--source",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024",
+        "--output",
+        "/workspace/reviews/windows-input-reader-r6-independent-20261024/docs/reports/gauntlet/windows-input-reader-r6-independent-20261024/depth-final/retained-controls"
+      ],
+      "exit": 0
+    },
+    {
+      "group": "selected-pure",
+      "command": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+        "/workspace/reviews/windows-input-reader-r6-independent-20261024/docs/reports/gauntlet/windows-input-reader-r6-independent-20261024/controls/run_selected_pure.py",
+        "--source",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024",
+        "--output",
+        "/workspace/reviews/windows-input-reader-r6-independent-20261024/docs/reports/gauntlet/windows-input-reader-r6-independent-20261024/depth-final/selected-pure"
+      ],
+      "exit": 0
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/capture_reload_matrix.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/export.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/godot.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/profile_render.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/serve-account-match.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/session_brief.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/setup-android.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/setup.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/test_handshake_hardening.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/test_network.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/test_protocol_compat.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/test_render.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "group": "shell-syntax",
+      "command": [
+        "bash",
+        "-n",
+        "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024/scripts/validate.sh"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "all_exit_zero": true,
+  "native_executed": false
+}

@@ -1,0 +1,98 @@
+{
+  "verdict": "REJECT",
+  "source": "c8827e7d158431097a5413273b5a1e93715961b0",
+  "handoff": "abd5a57223ffe8c4481271f06884eb5fe883b96f",
+  "analyzer_sha256": "c53b1ced5743c7440d0530874115d474da2a70f2416c7515e098109837182be8",
+  "preregistration": "a95d15d4980b437eeb07e4894862c0cbc08d46a0",
+  "existing_reviewer_reused": true,
+  "fresh_thread_created": false,
+  "winner": "unchanged source emitter predicate",
+  "largest_gap": "Missing necessary lifecycle clock consistency at a claimed peer expiry",
+  "supported_false_complete_case": "own-causal-v3/joined_expiry_before_idle_and_before_deadline",
+  "paired_source_positive": "own-causal-v3/joined_idle_expiry_with_real_clock",
+  "source_bar": "game/scripts/network/peer_lifecycle.gd:53-61",
+  "fresh_complete_reader_cases": 51,
+  "fresh_matches": 50,
+  "fresh_expected_unknown": 4,
+  "fresh_false_complete": 1,
+  "source_views": [
+    {
+      "root": ".",
+      "head": "3f75481b3fc796b93abae294b437c7c71d97f4e8",
+      "physical_non_doc_paths": 515,
+      "index_modes_blobs_and_physical_bytes_exact": true
+    },
+    {
+      "root": "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024",
+      "head": "c8827e7d158431097a5413273b5a1e93715961b0",
+      "physical_non_doc_paths": 515,
+      "index_modes_blobs_and_physical_bytes_exact": true
+    }
+  ],
+  "source_union": 515,
+  "protected_paths": 511,
+  "source_unique_blobs": 517,
+  "inherited_methods": 55,
+  "inherited_assertion_asts": 100,
+  "own_and_depth_runs": [
+    {
+      "view": "own-final",
+      "pure_methods": 227,
+      "pure_pass": 224,
+      "pure_skip": 3,
+      "retained": 139,
+      "queue": 13,
+      "aggregate": 5,
+      "generated": 36948,
+      "generated_feasible": 5896,
+      "generated_infeasible": 31052,
+      "shell_syntax_checks": 13,
+      "generated_gzip_sha256": "17338d29d2f7458f222cdbcb9e8fc955ef43926925d2958c4948253f053766ea"
+    },
+    {
+      "view": "depth-final",
+      "pure_methods": 227,
+      "pure_pass": 224,
+      "pure_skip": 3,
+      "retained": 139,
+      "queue": 13,
+      "aggregate": 5,
+      "generated": 36948,
+      "generated_feasible": 5896,
+      "generated_infeasible": 31052,
+      "shell_syntax_checks": 13,
+      "generated_gzip_sha256": "17338d29d2f7458f222cdbcb9e8fc955ef43926925d2958c4948253f053766ea"
+    }
+  ],
+  "depth_proof": {
+    "source": "c8827e7d158431097a5413273b5a1e93715961b0",
+    "depth": "/workspace/reviews/windows-input-reader-r6-independent-depth-one-20261024",
+    "clean": true,
+    "shallow": true,
+    "reachable_commits": 1,
+    "parent": "0d5db0f85116ca1db2496a0f8726025ed2358e47",
+    "parent_exit": 128,
+    "parent_stderr": "fatal: Not a valid object name 0d5db0f85116ca1db2496a0f8726025ed2358e47^{commit}\n",
+    "remotes": [],
+    "alternates_present": false,
+    "alternate_environment_set": false,
+    "tracked_index_paths": 12489,
+    "pack_bytes": 32882960,
+    "pack_sha256": "ababdd0e6a72d24c4fde16584779c5c8a2a8cc2ca54723c7858b97dfad7807b5",
+    "local_bounded_object_transfer": true,
+    "network_clone": false,
+    "cpu_affinity": [
+      4
+    ],
+    "native_executed": false
+  },
+  "copied_frozen_members_verified": 426,
+  "prior_rig_and_audit_failures_preserved": true,
+  "native_executed": false,
+  "source_approved": false,
+  "cpu_affinity": [
+    4
+  ],
+  "actual_logs_replayed": false,
+  "native_admission_granted": false
+}
