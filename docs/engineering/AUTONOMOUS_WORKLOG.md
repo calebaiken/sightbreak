@@ -81,3 +81,15 @@ Branch `claude/fair-actor-order-v1` off `codex/desktop-playability-p1` (`db3981e
 
 **Validation.** `DISPLAY=:99 ./scripts/validate.sh` on the final tree: exit 0, no leak lines, no script errors. Quick suites: `tick_order_test` 73 checks, `actor_test`, `match_test` 75/75, `bot_ai_regression_test`, `bot_lifecycle_test`.
 
+
+## 2026-10-24 - Session 2: G22 qualification, gunplay PR, graphics tiers, impacts
+
+**Gunplay (PR #33).** The gunplay record on the v1 stack was already measured and reviewed; this session committed the raw seed logs it cites (a `*.log` ignore rule had kept them out of the repository; their hashes match `sha256.txt`) and opened the draft PR. PR #28 got a comment that its shuffle is superseded by the two-phase tick.
+
+**G22 qualification (PR #34).** 120 all-bot matches on the Codex stack (seeds 41-46 and 61-84, both starts, normal and hard): ids 1-5 won 50.7% of rounds (47.8 to 53.6) against 66.2% before. A fresh-context subagent re-parsed the raw logs with its own code and got the same counts; it also showed the first-attacker side effect (47.0%) is a property of first-to-7 with a defence-favoured map, not a squad bias, and that equivalence within 3 points would need about 2,000 matches. Checked mid-run: the background run had survived a container restart, so no match was lost (all 120 logs complete).
+
+**Graphics (PRs #35 and #36).** Directive: continue the graphics work. A pixel-experiment survey of what Godot 4.7.2 Compatibility really does corrected two beliefs in the repo (SSAO "unavailable": it renders, small effect, needs the post pass; shadow blur and soft-shadow level: no effect). An independent critic scored twelve native stills and ranked ten defects; its top finding (near-black shadows, 14.8% of pixels below luminance 40) was verified and fixed with a measured ambient and sun change. A second subagent judged blind pairs (labels removed, key kept outside the directory; I decoded it only afterwards): 11 of 12, then HIGH 3 wins 3 ties 0 losses. The tier table is one tested class; phones stay at MEDIUM. Impacts: first version failed my own look at the renders (holes too small, steel puff gone, dust tint ignored because lit puffs render about three times brighter); fixed, then the blind critic chose it in 14 of 16 pairs. `validate.sh` exit 0 on both branches (final commits).
+
+**Mistakes.** I first described the arena as lacking contact grounding; it already has authored contact skirts (`_build_contact_occlusion`), which is why SSAO added little. A test I wrote asserted metal throws no dust and failed validation after I tuned the table; the full run was repeated. I looked for the Godot binary in the wrong place (the tools directory is `/home/user/tools`, not `../tools`).
+
+**Not done.** No GPU, motion, sound or human judgement. The post-tuning impact render was inspected, not re-judged blind. The other graphics defects (skyline, sun disc, crane cable, moiré, materials) are ranked in `docs/art/GRAPHICS_BACKLOG.md`. Weapon art (G5) not advanced this session.

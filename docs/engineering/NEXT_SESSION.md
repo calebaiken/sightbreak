@@ -1,6 +1,6 @@
 # Next session
 
-Updated 2026-10-22 (after M3) by Claude. A fresh session should be able to continue from this file alone.
+Updated 2026-10-24 (after the G22 qualification and the graphics tiers and impacts milestones) by Claude. A fresh session should be able to continue from this file alone.
 
 ## State
 
@@ -8,6 +8,13 @@ Updated 2026-10-22 (after M3) by Claude. A fresh session should be able to conti
 - Done and verified here: native baseline of PR #23 (full suite, no failures); Relay Yard layout revision 2 (full suite exit 0, four blind critic rounds won, data independently recomputed). Details: worklog entries "Session 1" and `docs/design/RELAY_YARD_LAYOUT.md`.
 - Open defects found: **F2 is fixed on PR #28 and waits for Codex review** (ids 1-5 won 71% of normal rounds; the fixed build gives 49.9%, interval 46.8% to 53.1%, over 72 matches; hard is unresolved at 24 matches), hard difficulty rarely plants, sites bare, no long lane or elevation, mixed-layout handshake gap, native plant scenario route unverified. On the unchanged pad attackers win about a quarter of normal rounds; the layout's 59% and 67% were confounded and need re-measuring.
 - Worktrees used in session 1: `/home/user/wt/mission-foundation`, `/home/user/wt/layout`, `/home/user/wt/fair`. Toolchain `/home/user/tools/godot-4.7.2`, state dir `/home/user/sightbreak/.local`. None survives a container reset; `./scripts/setup.sh` rebuilds them. Xvfb: `Xvfb :99 -screen 0 1920x1080x24 +extension GLX +render -noreset &`.
+
+## Session 2 additions (2026-10-24)
+
+- Stacked draft PRs off `codex/v1-mission-playability` (PR #27): #33 `claude/gunplay-v1-stack` (gunplay measurements, no game code), #34 `claude/g22-qualify-two-phase-v1` (squad-share qualification, evidence only), #35 `claude/graphics-tiers-v1` (four graphics tiers, shadow fill, capture tool, `docs/art/GRAPHICS_BACKLOG.md`), and #36 `claude/combat-impact-vfx-v1` (stacked on #35: surface-aware impacts and bullet holes). Worktrees `/home/user/wt/gunplay2`, `qualify`, `gfx`, `vfx`. PR #28 is superseded for authority code (comment posted); its evidence stays.
+- The graphics ranked defect list, the measured renderer facts (what Compatibility does and does not do on 4.7.2) and the next graphics steps are in `docs/art/GRAPHICS_BACKLOG.md` on #35. Read it before touching lighting or effects. Rules learned: any post effect switches Compatibility to a post pass; shadow blur and the soft-shadow level do nothing; lit particles render about three times brighter than their tint; set every `MultiMesh.use_colors` before the instance count.
+- Graphics next, in order: operator-in-shadow readability capture; skyline behind the attacker-end wall and a softer sun disc; crate-top albedo (MEDIUM clips 2.8% in view 11), crane cable thickness, floor moiré; tracers and muzzle flash; weapon art for the three procedural weapons (G5; partial generators `tools/art/kestrel_9.py` and `vectorline.py` live uncommitted in `/home/user/wt/art`); LightmapGI needs a GPU machine; device frame-time baselines.
+- Shell notes: set `SIGHTBREAK_TOOLS_DIR=/home/user/tools` (the default path does not exist), `DISPLAY=:99` for rendering suites, and never `sleep` in the foreground; wait on a background `until` loop.
 
 ## Do next, in order
 
